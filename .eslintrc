@@ -1,0 +1,101 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "plugins": [
+    "jest"
+  ],
+  "env": {
+    "es6": true,
+    "jest/globals": true
+  },
+  "globals": {
+    "document": "readonly",
+    "btoa": "readonly",
+    "window": "writable"
+  },
+  "rules": {
+    //"linebreak-style": 0,
+   "no-param-reassign": [
+      2,
+      {
+        "props": false
+      }
+    ],
+    "react/prop-types": 1,
+    "indent": [
+      "error",
+      4,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "arrow-parens": [
+      "error",
+      "always"
+    ],
+    "no-shadow": 0,
+    "import/prefer-default-export": 0,
+    "no-bitwise": 1,
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "return"
+      },
+      {
+        "blankLine": "always",
+        "prev": [
+          "const",
+          "let",
+          "var"
+        ],
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": [
+          "const",
+          "let",
+          "var"
+        ],
+        "next": [
+          "const",
+          "let",
+          "var"
+        ]
+      }
+    ],
+    "newline-before-return": 2,
+    "react/jsx-indent-props": [
+      2,
+      "first"
+    ],
+    "react/prefer-stateless-function": [
+      "warn"
+    ],
+    "react/jsx-indent": [
+      2,
+      4
+    ],
+    "react/destructuring-assignment": 0,
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      "htmlFor"
+    ],
+    "jsx-a11y/label-has-for": [
+      2,
+      {
+        "components": [
+          "Label"
+        ],
+        "required": {
+          "every": [
+            "id"
+          ]
+        },
+        "allowChildren": false
+      }
+    ]
+  }
+}
