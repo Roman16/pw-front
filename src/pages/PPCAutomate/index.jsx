@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import ProductSearch from './components/ProductList';
 
-
-class TodoPage extends Component {
+class PPCAutomate extends Component {
     render() {
         return (
             <div>
-                PPC
+                <ProductSearch />
             </div>
         );
     }
 }
 
 
-export default TodoPage;
+export default PPCAutomate;
