@@ -37,7 +37,7 @@ class ProductItem extends Component {
 
                 </div>
                 <div className="select">
-                    <Checkbox checked />
+                    <Checkbox checked readOnly />
                 </div>
             </div>
         );

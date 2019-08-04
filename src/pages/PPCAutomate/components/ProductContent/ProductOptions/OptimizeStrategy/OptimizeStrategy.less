@@ -1,0 +1,72 @@
+.OptimizeStrategy {
+    .strategies {
+        display: grid;
+        grid-template-columns: 170px 170px 170px 170px;
+        grid-gap: 15px;
+
+    }
+
+    .StrategyItem {
+        padding: 10px;
+        border: 2px solid #C9CBD4;
+        border-radius: 8px;
+        .caption {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .params-item {
+            padding: 5px 0;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            .params-value {
+                min-width: 35px;
+                &.high {
+                    color: #6D6DF6;
+                }
+                &.mid {
+                    color: #47B881;
+                }
+                &.low {
+                    font-weight: 600;
+                    color: #656A84;
+                }
+            }
+        }
+        .strategy-control {
+            margin: 10px 0;
+            text-align: center;
+            .strategy-btn {
+                min-width: 120px;
+                background: #6D6DF6;
+                color: #fff;
+                border-radius: 8px;
+                border: 0;
+            }
+            .check {
+                font-size: 28px;
+            }
+        }
+        &.selected {
+            background: #6D6DF6;
+            border: 0;
+            color: white;
+            box-shadow: 0 12px 16px rgba(142, 147, 192, 0.2), 0 0 20px rgba(142, 147, 192, 0.16);
+
+            .params-item {
+                .params-value {
+                    font-weight: 600;
+                    color: #fff;
+                }
+            }
+            .strategy-control {
+                margin-top: 25px;
+                margin-bottom: 0;
+            }
+        }
+    }
+    .descriptions {
+        margin-top: 10px;
+        max-width: 740px;
+    }
+}

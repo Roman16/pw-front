@@ -1,0 +1,50 @@
+.ProductStatus {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    .StatusInfo {
+        .caption {
+            text-transform: capitalize;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+    }
+    .control {
+        button {
+            height: 100%;
+            min-width: 200px;
+            border: 0;
+            border-radius: 8px;
+            color: #fff;
+
+        }
+        .start {
+            background: #6D6DF6;
+        }
+        .stop {
+            background: #343C5A;
+            .icon-stop {
+                width: 15px;
+                height: 15px;
+                background: #fff;
+                border-radius: 2px;
+            }
+        }
+        .play {
+            transform: rotateZ(90deg);
+        }
+        .control-btn-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .btn-icon {
+                font-size: 18px;
+            }
+            .btn-text {
+                flex: 1;
+            }
+        }
+    }
+}
+
