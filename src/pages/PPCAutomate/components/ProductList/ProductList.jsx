@@ -9,6 +9,7 @@ import './ProductList.less';
 
 // {asin:'sdsdd',
 // sku:}
+const productItemList = [1, 2, 3, 4, 5, 6, 7, 8];
 
 class ProductList extends Component {
     constructor(props) {
@@ -20,9 +21,11 @@ class ProductList extends Component {
 
     render() {
         return (
-            <div>
+            <div className="ProductList">
                 <ProductSearch />
-                <ProductItem />
+                {productItemList.map((item) => (
+                    <ProductItem key={item} />
+                ))}
                 <Pagination />
             </div>
         );

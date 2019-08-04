@@ -14,7 +14,7 @@ class Pagination extends Component {
     render() {
         return (
             <div className="Pagination">
-                <AntPagination defaultCurrent={1} total={500} />
+                <AntPagination defaultCurrent={1} total={500} showLessItems  />
             </div>
         );
     }

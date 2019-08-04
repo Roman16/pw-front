@@ -1,9 +1,14 @@
+@import "../../../../../style/mixins.less";
+
 .Terminal {
-    background: #fff;
+    .card();
+    .main-margin();
+
     .TerminalCaption {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 10px;
         .caption {
             text-transform: capitalize;
             color: #363694;

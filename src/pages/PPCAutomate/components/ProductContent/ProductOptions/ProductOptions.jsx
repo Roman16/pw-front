@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './ProductOptions.less';
 import OptimizeOptions from './OptimizeOptions';
 import OptimizeStrategy from './OptimizeStrategy';
+import OptimizeCaption from './OptimizeCaption';
 
 class ProductOptions extends Component {
     constructor(props) {
@@ -13,11 +14,15 @@ class ProductOptions extends Component {
 
     render() {
         return (
-            <div>
-                <OptimizeOptions />
+            <div className="ProductOptions">
+                <OptimizeCaption />
+                <div className="options">
+                    <OptimizeOptions />
+                    <OptimizeStrategy />
+                </div>
 
-                <OptimizeStrategy />
             </div>
+
         );
     }
 }

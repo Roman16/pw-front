@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import ProductList from './components/ProductList';
-import ProductContent from './components/ProductContent';
+import ProductMain from './template/ProductMain';
 
 class PPCAutomate extends Component {
     render() {
         return (
             <div>
-                <ProductList />
-                <ProductContent />
+                <ProductMain />
             </div>
         );
     }

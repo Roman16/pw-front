@@ -1,3 +1,5 @@
+@desktop: 1424px;
+
 .OptimizeStrategy {
     .strategies {
         display: grid;
@@ -68,5 +70,13 @@
     .descriptions {
         margin-top: 10px;
         max-width: 740px;
+    }
+    @media (max-width: @desktop) {
+        .strategies {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 15px;
+
+        }
     }
 }
