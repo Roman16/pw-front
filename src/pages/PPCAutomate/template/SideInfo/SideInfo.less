@@ -1,0 +1,31 @@
+.SideInfo {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: grid;
+    grid-template-columns: 1fr minmax(100px, 450px);
+    background: rgba(#000, 0.6);
+    visibility: hidden;
+
+    .side-info-content {
+        transition: 0.6s;
+        transform: translateX(100%);
+    }
+    &.show {
+        visibility: visible;
+        z-index: 100;
+        .side-info-content {
+            transition: 0.6s;
+            pointer-events: none;
+            background: #fff;
+            height: 100%;
+            z-index: 101;
+            transform: translateX(0);
+
+        }
+    }
+}
+
+
