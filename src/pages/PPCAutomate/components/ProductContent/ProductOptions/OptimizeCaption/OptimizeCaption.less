@@ -13,11 +13,24 @@
         font-weight: 500;
 
     }
+
     .info {
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-right: 15px;
+
+        .additional {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            justify-content: center;
+
+            div {
+                justify-self: center;
+            }
+        }
+
         .free-trial {
             width: 25px;
             height: 20px;
@@ -29,6 +42,7 @@
             font-weight: 700;
             margin: 0 5px;
         }
+
         button {
             color: #8FD39D;
             border: 0;

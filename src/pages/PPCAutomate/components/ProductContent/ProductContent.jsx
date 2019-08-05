@@ -9,16 +9,25 @@ class ProductContent extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            isLess: false,
+
+        };
     }
 
+    toLess = () => {
+        this.setState(({ isLess }) => ({ isLess: !isLess }));
+    };
 
     render() {
+        const { isLess } = this.state;
+
+
         return (
             <div>
-                <OptimizeOptions />
+                <OptimizeOptions isLess={isLess} toLess={this.toLess} />
                 <ProductStatus />
-                <Terminal />
+                <Terminal isLess={isLess} />
             </div>
         );
     }

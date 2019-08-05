@@ -2,13 +2,13 @@
 
 .Terminal {
     .card();
-    .main-margin();
 
     .TerminalCaption {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 10px;
+
         .caption {
             text-transform: capitalize;
             color: #363694;
@@ -16,6 +16,7 @@
             font-weight: 600;
 
         }
+
         button {
             background: #6D6DF6;
             color: #fff;
@@ -30,6 +31,7 @@
         grid-template-columns: 40px 1fr;
         grid-gap: 10px;
         min-height: 60px;
+
         .index {
             height: 100%;
             display: flex;
@@ -37,11 +39,14 @@
             background: #f9f9fa;
             padding-top: 5px;
         }
+
         .content {
             max-width: 750px;
+
             .html-render {
                 position: relative;
                 padding: 5px 0;
+
                 &:after {
                     content: '';
                     position: absolute;
@@ -59,17 +64,29 @@
     }
 
     .terminal-content {
+        &.less {
+            max-height: 400px;
+        }
+
+        &.more {
+            max-height: 100%;
+
+        }
+
+        overflow-y: auto;
 
         & .TerminalItem:first-child .index {
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
         }
+
         & .TerminalItem:last-child {
             .index {
                 border-bottom-left-radius: 8px;
                 border-bottom-right-radius: 8px;
 
             }
+
             .content {
                 .html-render {
                     :after {

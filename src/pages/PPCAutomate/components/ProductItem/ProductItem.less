@@ -1,5 +1,17 @@
 .ProductItem {
     background: #fff;
+    opacity: 0.4;
+    transition: 0.3s;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &.active {
+        background: #fff;
+        opacity: 1;
+    }
+
     border-radius: 4px;
     display: flex;
     padding: 4px;

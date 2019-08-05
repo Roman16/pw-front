@@ -14,7 +14,7 @@ class ProductMain extends Component {
 
     render() {
         return (
-            <div className="ProductMain">
+            <div className="ProductMain basic-container">
                 <ProductList />
                 <ProductContent />
             </div>

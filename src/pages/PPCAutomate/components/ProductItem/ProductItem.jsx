@@ -16,8 +16,16 @@ class ProductItem extends Component {
     };
 
     render() {
+        const { isActive, onClick } = this.props;
+
+        console.log(isActive);
+
+
         return (
-            <div className="ProductItem">
+            <div
+                className={`ProductItem ${isActive ? 'active' : ''}`}
+                onClick={onClick}
+            >
                 <div className="image">
                     <img src={Rectangle} alt="" />
                 </div>

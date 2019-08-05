@@ -2,5 +2,49 @@
 @import "../../../../style/variables.less";
 
 .ProductList {
-    margin: @margin 0 0 @margin;
+    //margin: @margin 0 0 @margin;
+    display: flex;
+    flex-direction: column;
+
+    .product-list-wrapper {
+        flex: 1;
+
+    }
+
+    .product-list {
+        max-height: 750px;
+        overflow-y: auto;
+    }
+
+    .SelectProduct {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: @margin 0;
+
+        button {
+            min-width: 172px;
+            color: #fff;
+            border-radius: 8px;
+            background: #6D6DF6;
+            border: 0;
+        }
+
+        .selected-products {
+            display: flex;
+            align-items: center;
+
+            .product {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 25px;
+                height: 20px;
+                border-radius: 8px;
+                color: #fff;
+                background: #6D6DF6;
+                margin-left: 5px;
+            }
+        }
+    }
 }
