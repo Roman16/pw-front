@@ -2,31 +2,55 @@ import React, { Component } from 'react';
 import Checkbox from '../../../../../../components/Checkbox';
 import './OptimizeOptions.less';
 
-const CheckBoxItem = ({ text, value = '' }) => (
+export const CheckBoxItem = ({ text, value = '', ...props }) => (
     <div className="CheckBoxItem">
-        <Checkbox value={value}>{text}</Checkbox>
+        <Checkbox value={value} {...props}>{text}</Checkbox>
     </div>
 );
 
-const options = [
+export const options = [
     {
         text: 'Create new keywords',
         value: '',
+        description: `Lorem ipsum dolor sit amet, 
+                  consectetur adipiscing elit,
+                  sed do eiusmod tempor incididunt
+                  ut labore et dolore magna aliqua.`,
     }, {
         text: 'Add Negative',
         value: '',
+        description: `Lorem ipsum dolor sit amet, 
+                  consectetur adipiscing elit,
+                  sed do eiusmod tempor incididunt
+                  ut labore et dolore magna aliqua.`,
     }, {
         text: 'Optimize Bids',
         value: '',
+        description: `Lorem ipsum dolor sit amet, 
+                  consectetur adipiscing elit,
+                  sed do eiusmod tempor incididunt
+                  ut labore et dolore magna aliqua.`,
     }, {
         text: 'Pause Bad Keywords',
         value: '',
+        description: `Lorem ipsum dolor sit amet, 
+                  consectetur adipiscing elit,
+                  sed do eiusmod tempor incididunt
+                  ut labore et dolore magna aliqua.`,
     }, {
         text: 'Optimize PAT Compaign',
         value: '',
+        description: `Lorem ipsum dolor sit amet, 
+                  consectetur adipiscing elit,
+                  sed do eiusmod tempor incididunt
+                  ut labore et dolore magna aliqua.`,
     }, {
         text: 'Negative keywords creation',
         value: '',
+        description: `Lorem ipsum dolor sit amet, 
+                  consectetur adipiscing elit,
+                  sed do eiusmod tempor incididunt
+                  ut labore et dolore magna aliqua.`,
     },
 ];
 

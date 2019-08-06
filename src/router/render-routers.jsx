@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBrowserHistory } from 'history';
 
-import { Redirect, Route, Router, Switch } from 'react-router-dom';
+import { Redirect, Route, Router, Switch, HashRouter } from 'react-router-dom';
 
 export const history = createBrowserHistory();
 
@@ -15,7 +15,7 @@ export const next = (path) => (
 );
 
 const RenderRoutes = ({ routers }, { extraProps = {} }) => (routers ? (
-    <Router history={history}>
+    <HashRouter history={history}>
 
         <Switch>
 
@@ -44,7 +44,7 @@ const RenderRoutes = ({ routers }, { extraProps = {} }) => (routers ? (
                 />
             ))}
         </Switch>
-    </Router>
+    </HashRouter>
 
 ) : null);
 

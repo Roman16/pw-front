@@ -21,7 +21,7 @@
 .env.test.local
 .env.production.local
 src/*.css
-
+*.zip
 package-lock.json
 npm-debug.log*
 yarn-debug.log*

@@ -14,12 +14,17 @@ class ProductStatus extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            isStart: true,
+        };
     }
 
+    toStart = (status) => {
+        this.setState({ isStart: status });
+    };
 
     render() {
-        const isStart = true;
+        const { isStart } = this.state;
 
 
         return (
@@ -31,7 +36,7 @@ class ProductStatus extends Component {
                 <div className="control">
                     {isStart
                         ? (
-                            <Button className="start">
+                            <Button className="start" onClick={() => this.toStart(false)}>
                                 <div className="control-btn-content">
                                     <Icon type="caret-right" className=" btn-icon" />
                                     <div className="btn-text">
@@ -40,7 +45,7 @@ class ProductStatus extends Component {
                                 </div>
                             </Button>
                         ) : (
-                            <Button className="stop">
+                            <Button className="stop" onClick={() => this.toStart(true)}>
                                 <div className="control-btn-content">
                                     <div className="icon-stop" />
                                     <div className="btn-text">

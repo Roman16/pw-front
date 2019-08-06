@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
-
+import { CheckBoxItem, options } from '../../../OptimizeOptions';
 import './OptionInfo.less';
 
 
 class OptionInfo extends Component {
     render() {
         return (
-            <div>
-                OptionInfo
+            <div className="OptionInfo">
+                {options.map(({ text, description }) => (
+                    <div style={{ marginBottom: '20px' }} key={text}>
+                        <CheckBoxItem text={text} checked />
+                        <div>{description}</div>
+                    </div>
+                ))}
             </div>
         );
     }

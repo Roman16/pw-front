@@ -9,8 +9,6 @@ class SideInfo extends Component {
             content, show, onClose, caption,
         } = this.props;
 
-        console.log(show);
-
 
         return (
 
@@ -25,7 +23,7 @@ class SideInfo extends Component {
                     <div className="caption">
                         {caption}
                     </div>
-                    <div>
+                    <div className="info">
                         {content}
                     </div>
                 </div>
