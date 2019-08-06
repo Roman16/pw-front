@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-
+import { Icon } from 'antd';
 import './SideInfo.less';
 
 
 class SideInfo extends Component {
     render() {
-        const { children, show, onClose } = this.props;
+        const {
+            content, show, onClose, caption,
+        } = this.props;
 
         console.log(show);
 
@@ -17,7 +19,15 @@ class SideInfo extends Component {
                 <div
                     className="side-info-content"
                 >
-                    {children}
+                    <div onClick={onClose} className="close">
+                        <Icon type="close" />
+                    </div>
+                    <div className="caption">
+                        {caption}
+                    </div>
+                    <div>
+                        {content}
+                    </div>
                 </div>
 
             </div>

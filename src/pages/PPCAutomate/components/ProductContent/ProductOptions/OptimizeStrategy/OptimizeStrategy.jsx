@@ -3,9 +3,9 @@ import { Icon } from 'antd';
 import Button from '../../../../../../components/Buttons';
 import './OptimizeStrategy.less';
 
-const StrategyItem = ({ caption, selected }) => (
+export const StrategyItem = ({ caption, selected }) => (
     <div className={`StrategyItem ${selected ? 'selected' : ''}`}>
-        <div className="caption">{caption}</div>
+        <div className="caption-strategy">{caption}</div>
         <div className="params">
             <div className="params-item">
                 <div className="params-name">Spend</div>
