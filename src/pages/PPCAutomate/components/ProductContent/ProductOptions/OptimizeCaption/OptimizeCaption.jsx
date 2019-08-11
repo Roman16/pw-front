@@ -51,8 +51,6 @@ class OptimizeCaption extends Component {
         const { showInfo, typeInfo } = this.state;
         const { caption = '', content = null } = info[typeInfo];
 
-        console.log(content);
-
 
         return (
             <>

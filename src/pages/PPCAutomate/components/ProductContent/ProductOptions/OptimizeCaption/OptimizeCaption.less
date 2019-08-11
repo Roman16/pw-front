@@ -1,3 +1,4 @@
+@import "../../../../../../style/variables.less";
 @import "../../../../../../style/mixins.less";
 
 .OptimizeCaption {
@@ -59,4 +60,16 @@
         }
     }
 
+    @media (max-width: @desktop) {
+        & {
+            align-items: flex-start;
+            .info {
+                display: block;
+                .additional {
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
 }

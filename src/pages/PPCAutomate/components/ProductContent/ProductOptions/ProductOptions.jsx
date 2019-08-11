@@ -21,8 +21,17 @@ class ProductOptions extends Component {
             <div className="ProductOptions">
                 <OptimizeCaption />
                 <div className={`options ${!isLess ? 'more' : 'less'}`}>
-                    <OptimizeOptions />
-                    <OptimizeStrategy />
+                    <div className="optimize-options">
+                        <OptimizeOptions />
+                    </div>
+                    <div className="optimize-strategy">
+                        <OptimizeStrategy />
+                    </div>
+                    <div className="descriptions">
+                        Mistake: Duplicate Keywords. Keyword in ad group in campaign
+                        'duplicateCampaignName' is a duplicate of keyword 'originKeywordText' in ad
+                        group 'originAdGroupName' in campaign
+                    </div>
                 </div>
                 <div className="less-more-control">
                     <div className={`icon ${isLess ? 'more' : 'less'}`} onClick={toLess}>

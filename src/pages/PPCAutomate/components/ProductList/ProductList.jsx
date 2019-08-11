@@ -10,7 +10,6 @@ import './ProductList.less';
 
 // {asin:'sdsdd',
 // sku:}
-const productItemList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const SelectProduct = () => (
     <div className="SelectProduct">
@@ -25,8 +24,14 @@ const SelectProduct = () => (
 class ProductList extends Component {
     constructor(props) {
         super(props);
-
+        console.log(props);
         this.state = { activeItem: 1 };
+    }
+
+    componentDidMount() {
+        const { fetchProductList } = this.props;
+
+        fetchProductList(1, 2);
     }
 
     toActive = (activeItem) => {
@@ -36,6 +41,7 @@ class ProductList extends Component {
 
     render() {
         const { activeItem } = this.state;
+        const { productList } = this.props;
 
 
         return (
@@ -44,7 +50,7 @@ class ProductList extends Component {
                 <SelectProduct />
                 <div className="product-list-wrapper">
                     <div className="product-list">
-                        {productItemList.map((item) => (
+                        {productList.map((item) => (
                             <ProductItem
                                 key={item}
                                 isActive={item === activeItem}

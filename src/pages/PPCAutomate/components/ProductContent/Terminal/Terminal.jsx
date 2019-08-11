@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Icon, Tooltip } from 'antd';
 import Button from '../../../../../components/Buttons';
 import Pagination from '../../../../../components/Pagination';
 
@@ -68,6 +69,13 @@ const TerminalCaption = () => (
     <div className="TerminalCaption">
         <div className="caption">
             Last Changes Terminal
+            <Tooltip
+                placement="bottom"
+                title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            >
+
+                <Icon type="info-circle" theme="filled" />
+            </Tooltip>
         </div>
         <div>
             <Button>View All</Button>

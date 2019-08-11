@@ -50,11 +50,6 @@ class OptimizeStrategy extends Component {
                     <StrategyItem caption="Product Liquidation" />
                     <StrategyItem caption="Product Lounce" />
                 </div>
-                <div className="descriptions">
-                    Mistake: Duplicate Keywords. Keyword in ad group in campaign
-                    'duplicateCampaignName' is a duplicate of keyword 'originKeywordText' in ad
-                    group 'originAdGroupName' in campaign
-                </div>
             </div>
         );
     }

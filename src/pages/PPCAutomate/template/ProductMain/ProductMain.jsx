@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ProductList from '../../components/ProductList';
+import ProductList from '../../containers/ProductListContainer';
 import ProductContent from '../../components/ProductContent';
 import './ProductMain.less';
 
