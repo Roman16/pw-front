@@ -6,10 +6,6 @@ import OptimizeStrategy from './OptimizeStrategy';
 import OptimizeCaption from './OptimizeCaption';
 
 class ProductOptions extends Component {
-    constructor(props) {
-        super(props);
-    }
-
 
     render() {
         const { isLess, toLess } = this.props;

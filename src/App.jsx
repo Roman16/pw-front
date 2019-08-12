@@ -8,14 +8,7 @@ import store from './store';
 
 
 // https://profitwhales.com/ppc-automation/product?page=1&size=2
-axios.defaults.withCredentials = true;
-document.cookie = 'sdsd=sss;domain=profitwhales.com;path=/';
-axios.get('https://profitwhales.com/ppc-automation/product?page=1&size=2', {
-    withCredentials: true,
-})
-    .then((response) => {
-        console.log(response);
-    });
+
 
 class App extends Component {
     render() {

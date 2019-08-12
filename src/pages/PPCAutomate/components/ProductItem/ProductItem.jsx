@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Checkbox from '../../../../components/Checkbox';
-import Rectangle from '../../../../assets/img/Rectangle.svg';
+import Rectangle from '../../../../assets/img/Rectangle.png';
 
 import './ProductItem.less';
 
@@ -11,14 +11,23 @@ class ProductItem extends Component {
         this.state = {};
     }
 
-    onChange = (e) => {
-        console.log(`checked = ${e.target.checked}`);
+
+    maxText = (text) => {
+        if (text.length > 40) {
+            return `${text.slice(0, 40)}...`;
+        }
+
+
+        return text;
     };
 
-    render() {
-        const { isActive, onClick } = this.props;
 
-        console.log(isActive);
+    render() {
+        const {
+            isActive, onClick,
+            asin, captions, sku,
+            imageUrl, underOptimization,
+        } = this.props;
 
 
         return (
@@ -27,25 +36,31 @@ class ProductItem extends Component {
                 onClick={onClick}
             >
                 <div className="image">
-                    <img src={Rectangle} alt="" />
+                    <img src={imageUrl} alt="" />
                 </div>
                 <div className="content">
                     <div className="caption">
-                        LETSCOM Bluetooth Headphones
-                        IPX7 Waterproof, Wireless Sport
+                        {this.maxText(captions)}
                     </div>
                     <div className="detail">
                         <span> ASIN: </span>
-                        <span> B0799RPPS2</span>
+                        <span>
+                            {asin}
+                        </span>
                     </div>
                     <div className="detail">
                         <span> SKU: </span>
-                        <span> MY-2FTM-0MM</span>
+                        <span>
+                            {sku}
+                        </span>
                     </div>
 
                 </div>
                 <div className="select">
-                    <Checkbox checked readOnly />
+                    {underOptimization ? (
+                        <Checkbox checked readOnly />
+                    ) : null}
+
                 </div>
             </div>
         );

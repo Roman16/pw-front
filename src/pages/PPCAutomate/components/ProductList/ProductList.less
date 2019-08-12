@@ -7,8 +7,11 @@
     flex-direction: column;
 
     .product-list-wrapper {
-        flex: 1;
 
+    }
+
+    .list-pagination {
+        margin-top: @margin * 2;
     }
 
     .product-list {
@@ -23,11 +26,18 @@
         margin: @margin 0;
 
         button {
-            min-width: 172px;
+            min-width: 162px;
             color: #fff;
             border-radius: 8px;
             background: #6D6DF6;
             border: 0;
+        }
+
+        &.selected-all {
+            button {
+                background: #656A84;
+
+            }
         }
 
         .selected-products {

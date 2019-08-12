@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Input } from 'antd';
 
 import './ProductSearch.less';
@@ -6,26 +7,28 @@ import './ProductSearch.less';
 const { Search } = Input;
 
 class ProductSearch extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {};
-    }
-
-
     render() {
+        const { onChange } = this.props;
+
+
         return (
             <Search
+                maxLength={100}
                 className="ProductSearch"
                 placeholder="Searcg by product name, ASIN, or SKU"
-                onSearch={(value) => console.log(value)}
+                onChange={onChange}
             />
         );
     }
 }
 
-ProductSearch.propTypes = {};
+ProductSearch.propTypes = {
+    onChange: PropTypes.func,
+};
 
-ProductSearch.defaultProps = {};
+ProductSearch.defaultProps = {
+    onChange: () => {
+    },
+};
 
 export default ProductSearch;
