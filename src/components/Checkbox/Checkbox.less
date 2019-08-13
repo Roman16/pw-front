@@ -18,6 +18,14 @@
     }
 
     &:not(.read-only) {
+        .ant-checkbox-checked {
+            &::after {
+                border: 1px solid #6D6DF6;
+
+            }
+        }
+
+
         .ant-checkbox-checked .ant-checkbox-inner {
             background-color: #6D6DF6;
             border-color: #6D6DF6;
@@ -39,4 +47,5 @@
             }
         }
     }
+
 }

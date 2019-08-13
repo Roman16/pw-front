@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import axios from 'axios';
 import './App.less';
-import 'bootstrap/dist/css/bootstrap.css';
 import PPCAutomate from './pages/PPCAutomate';
 import store from './store';
 
