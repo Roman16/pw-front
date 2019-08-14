@@ -1,7 +1,6 @@
 @import "../../../../../../style/variables";
 
 .OptimizeStrategy {
-    margin-right: 8px;
 
     .strategies {
         display: grid;
@@ -17,9 +16,15 @@
 
     @media (max-width: @desktop) {
         .strategies {
-            display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-gap: 15px;
+
+        }
+    }
+    @media (max-width: @laptop) {
+        padding: 14px 0;
+
+        .strategies {
+            grid-template-columns: 1fr;
 
         }
     }
@@ -29,11 +34,17 @@
     padding: 10px;
     border: 2px solid #C9CBD4;
     border-radius: 8px;
+    transition: 0.3s;
 
     .caption-strategy {
+        display: flex;
         text-align: left;
         font-size: 17px;
         margin-bottom: 10px;
+    }
+
+    .strategy-checkbox {
+        display: none;
     }
 
     .params-item {
@@ -79,20 +90,72 @@
 
     &.selected {
         background: #6D6DF6;
-        border: 0;
-        color: white;
+        border-color: #6D6DF6;
         box-shadow: 0 12px 16px rgba(142, 147, 192, 0.2), 0 0 20px rgba(142, 147, 192, 0.16);
-
-        .params-item {
-            .params-value {
-                font-weight: 600;
-                color: #fff;
-            }
-        }
 
         .strategy-control {
             margin-top: 25px;
             margin-bottom: 0;
+        }
+
+        @media (min-width: @laptop) {
+            color: white;
+            .params-item {
+
+                .params-value {
+                    font-weight: 600;
+                    color: #fff;
+                }
+            }
+        }
+
+    }
+
+    @media (max-width: @laptop) {
+        & {
+            border: 1px solid #C9CBD4;
+
+            .strategy-checkbox {
+                display: block;
+                margin-right: 8px;
+            }
+
+
+            .params {
+                display: flex;
+                justify-content: space-between;
+
+                .params-item {
+                    justify-content: center;
+                    width: unset;
+
+                    .params-name {
+                        &:after {
+                            content: ':';
+                        }
+
+                        margin-right: 4px;
+                    }
+                }
+            }
+
+            .strategy-control {
+                display: none;
+            }
+
+            &.selected {
+                background: white;
+                border-color: transparent;
+
+                .params-item {
+
+                    .params-value {
+                        font-weight: 600;
+                        //color: unset;
+
+                    }
+                }
+            }
         }
     }
 }

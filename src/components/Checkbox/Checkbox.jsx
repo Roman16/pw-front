@@ -13,11 +13,13 @@ class Checkbox extends Component {
 
 
     render() {
-        const { readOnly } = this.props;
+        const { readOnly, isRound } = this.props;
 
 
         return (
-            <div className={`Checkbox ${readOnly ? 'read-only' : ''}`}>
+            <div
+                className={`Checkbox ${readOnly ? 'read-only' : ''} ${isRound ? 'round-checkbox' : ''}`}
+            >
                 <AntCheckbox {...this.props} />
             </div>
         );
@@ -26,10 +28,12 @@ class Checkbox extends Component {
 
 Checkbox.propTypes = {
     readOnly: propTypes.bool,
+    isRound: propTypes.bool,
 };
 
 Checkbox.defaultProps = {
     readOnly: false,
+    isRound: false,
 };
 
 export default Checkbox;

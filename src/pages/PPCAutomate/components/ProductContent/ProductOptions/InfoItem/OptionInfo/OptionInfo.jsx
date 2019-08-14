@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CheckBoxItem, options } from '../../../OptimizeOptions';
+import { CheckBoxItem, options } from '../../OptimizeOptions';
 import './OptionInfo.less';
 
 

@@ -2,48 +2,89 @@
 @import "../../../../../style/variables.less";
 
 .ProductOptions {
+    padding: 0 8px;
+    
     .options {
         display: grid;
-        grid-template-columns: minmax(300px, 1fr) minmax(min-content, 400px);
-        grid-template-rows: 1fr 1fr;
-        grid-template-areas: "options strategy" "descriptions strategy";
-        grid-gap: 5px 10px;
-        transition-timing-function: ease-out;
-        overflow: hidden;
-        transition: none;
+        grid-template-columns: minmax(300px, 400px) minmax(min-content, 1fr);
+        //grid-template-rows: 1fr 1fr;
+        grid-template-areas: "options strategy" ". descriptions";
+
+
+        .options-content {
+            transition-timing-function: ease-out;
+            overflow: hidden;
+            padding: 0 5px;
+
+        }
+
         .optimize-options {
             grid-area: options;
 
         }
+
         .optimize-strategy {
             grid-area: strategy;
 
+
         }
+
         .descriptions {
             grid-area: descriptions;
-            padding: 0 20px;
+
+
         }
+
         &.less {
-            max-height: 0;
-            z-index: -1;
+            .options-content {
+                max-height: 0;
+                //z-index: -1;
+            }
         }
 
         &.more {
-            max-height: 100%;
-
-        }
-        @media (min-width: @desktop) {
-            & {
+            .options-content {
+                max-height: 100%;
                 transition: 0.6s;
-                grid-template: "options strategy" ". descriptions";
+
+            }
+        }
+
+        @media (max-width: @desktop) {
+            & {
+                grid-template-areas: "options strategy" "descriptions strategy";
+                grid-template-rows: minmax(1fr, max-content) minmax(1fr, max-content);
+
+                .options-content {
+                    transition: 0.6s;
+                }
 
                 &.more {
-                    max-height: 550px;
+                    .options-content {
+                        max-height: 550px;
 
+                    }
                 }
             }
         }
+        //@media (min-width: @laptop) {
+        //    & {
+        //
+        //
+        //        grid-template: "options strategy" ". descriptions";
+        //
+        //        .more, .less {
+        //            .options-content {
+        //
+        //                max-height: 100%;
+        //
+        //            }
+        //        }
+        //
+        //    }
+        //}
     }
+
 
     .card();
 
@@ -85,4 +126,70 @@
             }
         }
     }
+
+    @media (max-width: @laptop) {
+        .options {
+            display: flex;
+            flex-direction: column;
+
+            &.more {
+                max-height: 100%;
+            }
+        }
+
+        .less-more-control {
+            //display: none;
+        }
+
+    }
+
+
+    .info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 15px;
+
+        .additional {
+            width: 100%;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            justify-content: center;
+
+            div {
+                justify-self: center;
+            }
+
+            @media (max-width: @desktop) {
+                & {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+
+                }
+            }
+        }
+
+        .free-trial {
+            width: 25px;
+            height: 20px;
+            border-radius: 8px;
+            background: #EC7F5C;
+            color: #fff;
+            display: inline-flex;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 5px;
+        }
+
+        button {
+            color: #8FD39D;
+            border: 0;
+            box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
+            border-radius: 8px;
+        }
+    }
+
 }

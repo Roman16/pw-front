@@ -2,11 +2,12 @@
 @import "../../../../../../style/mixins.less";
 
 .OptimizeCaption {
-    display: grid;
-    grid-template-columns: 300px 1fr;
+    display: flex;
     padding: 10px 0;
-    grid-gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
+    min-height: 60px;
 
     .ProductInfo {
         color: #363694;
@@ -14,61 +15,44 @@
         font-weight: 500;
         display: flex;
         align-items: center;
+
         span {
             margin-right: 10px;
         }
+
         i {
             cursor: pointer;
             color: #363694
         }
+
     }
 
-    .info {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-right: 15px;
-
-        .additional {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            justify-content: center;
-
-            div {
-                justify-self: center;
-            }
-        }
-
-        .free-trial {
-            width: 25px;
-            height: 20px;
-            border-radius: 8px;
-            background: #EC7F5C;
-            color: #fff;
-            display: inline-flex;
-            justify-content: center;
-            font-weight: 700;
-            margin: 0 5px;
-        }
-
-        button {
-            color: #8FD39D;
-            border: 0;
-            box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
-            border-radius: 8px;
-        }
-    }
 
     @media (max-width: @desktop) {
         & {
             align-items: flex-start;
-            .info {
-                display: block;
-                .additional {
-                    display: flex;
-                    justify-content: space-between;
-                }
+            min-height: 80px;
+
+            .children {
+                width: 100%;
+            }
+        }
+    }
+    @media (max-width: @laptop) {
+        & {
+            min-height: auto;
+
+            .children {
+                display: none;
+            }
+        }
+    }
+    @media (max-width: @mobile) {
+        & {
+            .ProductInfo {
+
+                width: 100%;
+                justify-content: space-between;
             }
         }
     }
