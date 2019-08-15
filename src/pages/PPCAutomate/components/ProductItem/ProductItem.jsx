@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Checkbox from '../../../../components/Checkbox';
-import Rectangle from '../../../../assets/img/Rectangle.png';
 
 import './ProductItem.less';
 

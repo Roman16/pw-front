@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import './App.less';
 import PPCAutomate from './pages/PPCAutomate';
+import PPCReport from './pages/PPCReport';
 import store from './store';
 
 
@@ -13,7 +14,7 @@ class App extends Component {
         return (
             <Provider store={store}>
 
-                <PPCAutomate />
+                <PPCReport />
             </Provider>
         );
     }
