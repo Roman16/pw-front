@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
+import Table from '../../../../../components/Table';
 
 
 const changedKeywordBidAcos = 'changedKeywordBidAcos';

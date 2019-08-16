@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Table } from 'antd';
 import PropTypes from 'prop-types';
 import KeywordsOptimization from './Tables/KeywordsOptimization';
 import './ReportTable.less';
