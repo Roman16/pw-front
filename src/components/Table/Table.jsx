@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 class Table extends Component {
     render() {
         return (
-            <div className="CardBox">
-                <AntTable {...this.props} />
+            <div className="Table">
+                <AntTable {...this.props} width="150px" />
             </div>
         );
     }

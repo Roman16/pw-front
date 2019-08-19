@@ -1,0 +1,39 @@
+@import "../../../../../style/variables.less";
+
+.TableButton {
+    display: inline-block;
+    margin: 8px;
+
+    &.active, &:hover {
+        button.ant-btn {
+            border-color: @action-color;
+            color: @action-color;
+
+        }
+
+        .count {
+            border-color: @action-color;
+
+        }
+    }
+
+    button.ant-btn {
+        min-height: 38px;
+        font-size: 14px;
+        border-radius: 8px;
+
+    }
+
+    .count {
+        font-size: 12px;
+        border: 1px solid;
+        width: 30px;
+        height: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-radius: 15px;
+        margin-left: 12px;
+    }
+}

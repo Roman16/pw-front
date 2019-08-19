@@ -1,30 +1,31 @@
 import React, { Component } from 'react';
 import { Tooltip } from 'antd';
 import Table from '../../../../../components/Table';
-import TableButton from '../TableButton';
 import { indexField, dateField, actionField } from './const';
+import TableButton from '../TableButton';
 
-const changedKeywordBidAcos = 'changedKeywordBidAcos';
-const changedKeywordBidImpression = 'changedKeywordBidImpression';
-const pausedKeywordHighAcos = 'pausedKeywordHighAcos';
-const pausedKeywordNoSales = 'pausedKeywordNoSales';
+
+const changedPATBidACoS = 'changedPATBidACoS';
+const changedPATBidImpressions = 'changedPATBidImpressions';
+const pausedManualPATHighACoS = 'pausedManualPATHighACoS';
+const pausedManualPatNoSales = 'pausedManualPatNoSales';
 
 const dataSource = [
     {
         id: '1',
         campaign: 'Mike',
         adGroup: 32,
-        keyword: '10 Downing Street',
-        matchType: '10 Downing Street',
-        info: 'test1',
+        PatType: '10 Downing Street',
+        PatIntentType: '10 Downing Street',
+        PatValue: 'test1',
     },
     {
         id: '2',
         campaign: 'Mike2',
         adGroup: 434,
-        keyword: '13 Downing Street',
-        matchType: '14 Downing Street',
-        info: 'test12',
+        PatType: '13 Downing Street',
+        PatIntentType: '14 Downing Street',
+        PatValue: 'test12',
     },
 ];
 
@@ -47,20 +48,25 @@ const defaultKeys = [
         key: 'adGroup',
     },
     {
-        title: 'Keyword',
-        dataIndex: 'keyword',
-        key: 'keyword',
+        title: 'PAT type(i)',
+        dataIndex: 'PatType',
+        key: 'PatType ',
     },
     {
-        title: 'Match Type',
-        dataIndex: 'matchType',
-        key: 'matchType',
+        title: 'Pat Intent Type',
+        dataIndex: 'PatIntentType',
+        key: 'PatIntentType',
+    },
+    {
+        title: 'Pat Value',
+        dataIndex: 'PatValue',
+        key: 'PatValue',
     },
 ];
 
 
-const columnsKeywordsOptimization = {
-    [changedKeywordBidAcos]: [
+const columnsPATOptimizations = {
+    [changedPATBidACoS]: [
         ...defaultKeys,
         {
             title: 'ACos',
@@ -72,14 +78,16 @@ const columnsKeywordsOptimization = {
             dataIndex: 'targetACoS',
             key: 'targetACoS',
         },
-
+        {
+            ...actionField,
+        },
     ],
-    [changedKeywordBidImpression]: [
+    [changedPATBidImpressions]: [
         ...defaultKeys,
         {
             title: 'Impressions',
             dataIndex: 'impressions',
-            key: 'impressions',
+            key: 'impression   s',
         },
         {
             title: 'Target Impressions',
@@ -87,6 +95,7 @@ const columnsKeywordsOptimization = {
             key: 'targetImpressions',
         }, {
             ...actionField,
+
         },
         {
             title: '',
@@ -100,7 +109,7 @@ const columnsKeywordsOptimization = {
 
         },
     ],
-    [pausedKeywordHighAcos]: [
+    [pausedManualPATHighACoS]: [
         ...defaultKeys,
         {
             title: 'ACos',
@@ -114,9 +123,10 @@ const columnsKeywordsOptimization = {
         },
         {
             ...actionField,
+
         },
     ],
-    [pausedKeywordNoSales]: [
+    [pausedManualPatNoSales]: [
         ...defaultKeys,
         {
             title: 'Average Conv. Rate',
@@ -130,6 +140,7 @@ const columnsKeywordsOptimization = {
         },
         {
             ...actionField,
+
         },
     ],
 };
@@ -139,7 +150,7 @@ class KeywordsOptimization extends Component {
         super(props);
 
         this.state = {
-            activeTable: changedKeywordBidAcos,
+            activeTable: changedPATBidACoS,
         };
     }
 
@@ -151,47 +162,45 @@ class KeywordsOptimization extends Component {
     render() {
         const { activeTable } = this.state;
 
-        console.log(activeTable);
 
         return (
             <div className="ReportItemTable">
                 <TableButton
-                    active={changedKeywordBidAcos === activeTable}
+                    active={activeTable === changedPATBidACoS}
                     onClick={() => {
-                        this.changeTable(changedKeywordBidAcos);
+                        this.changeTable(changedPATBidACoS);
                     }}
                 >
-                    Changed Keyword Bid (ACoS)
+                    Changed PAT Bid (ACoS)
                 </TableButton>
                 <TableButton
-                    active={changedKeywordBidImpression === activeTable}
+                    active={activeTable === changedPATBidImpressions}
                     onClick={() => {
-                        this.changeTable(changedKeywordBidImpression);
+                        this.changeTable(changedPATBidImpressions);
                     }}
                 >
-                    Changed Keyword Bid (Impressions)
+                    Changed PAT Bid (Impressions)
                 </TableButton>
                 <TableButton
-                    active={pausedKeywordHighAcos === activeTable}
+                    active={activeTable === pausedManualPATHighACoS}
                     onClick={() => {
-                        this.changeTable(pausedKeywordHighAcos);
+                        this.changeTable(pausedManualPATHighACoS);
                     }}
                 >
-                    Paused Keyword (High ACoS)
+                    Paused Manual PAT (High ACoS)
                 </TableButton>
                 <TableButton
-                    active={pausedKeywordNoSales === activeTable}
-
+                    active={activeTable === pausedManualPatNoSales}
                     onClick={() => {
-                        this.changeTable(pausedKeywordNoSales);
+                        this.changeTable(pausedManualPatNoSales);
                     }}
                 >
-                    Paused Keyword (No Sales)
+                    Paused Manual Pat (No Sales)
                 </TableButton>
 
                 <Table
                     dataSource={dataSource}
-                    columns={columnsKeywordsOptimization[activeTable]}
+                    columns={columnsPATOptimizations[activeTable]}
                 />
             </div>
         );
