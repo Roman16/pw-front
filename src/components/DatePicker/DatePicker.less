@@ -1,0 +1,41 @@
+@import "../../style/variables.less";
+
+.DatePicker {
+    position: relative;
+
+    .date-picker-wrapper {
+        position: absolute;
+        z-index: 1000;
+        width: 100%;
+
+        .blur-date {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+        }
+
+        .rdr-DateRange {
+            z-index: 1001;
+            position: absolute;
+            width: unset;
+            display: flex;
+
+            .rdr-PredefinedRanges {
+                display: flex;
+                background: #F5F5FF;
+                padding: 4px 8px;
+
+                a {
+                    background: unset;
+                }
+            }
+
+            .rdr-Calendar:last-child {
+                display: none;
+            }
+        }
+    }
+}

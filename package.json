@@ -8,6 +8,7 @@
     "bfj": "6.1.1",
     "bootstrap": "^4.3.1",
     "chalk": "2.4.1",
+    "date-fns": "^2.0.0",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
     "enzyme": "^3.9.0",
