@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs } from 'antd';
+import { Tabs, Icon } from 'antd';
 
-
+import Buttons from '../../../../components/Buttons';
 import KeywordsOptimization from './Tables/KeywordsOptimization';
 import DatePicker from '../../../../components/DatePicker';
 import PATsOptimization from './Tables/PATsOptimization';
@@ -61,8 +61,22 @@ class ReportTable extends Component {
     render() {
         return (
             <div className="ReportTable">
-
-                <DatePicker />
+                <div className="report-table">
+                    <h3>
+                        Changes Report
+                    </h3>
+                    <div>
+                        <span>
+                            Today Changes
+                            <span className="total-count">99+</span>
+                        </span>
+                        <DatePicker />
+                        <Buttons>
+                            Download
+                            <Icon type="cloud-download" />
+                        </Buttons>
+                    </div>
+                </div>
                 <Tabs defaultActiveKey={tabsItem[0].key}>
                     {tabsItem.map(({ tabName, key, component }) => (
                         <TabPane tab={tabName} key={key}>

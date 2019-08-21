@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Table from '../../../../../components/Table';
-import { indexField, dateField, actionField } from './const';
+import { indexField, dateField, actionField, infoField } from './const';
 import TableButton from '../TableButton';
 
 
@@ -15,6 +15,12 @@ const dataSource = [
         PatType: '10 Downing Street',
         PatIntentType: '10 Downing Street',
         PatValue: 'test1',
+        bid: 'test1',
+        customerSearchTerm: 'test1',
+        CSTClicks: 'test1',
+        CSTACOS: 'test1',
+        CSTCPC: 'test1',
+        TargeACoS: 'test1',
     },
     {
         id: '2',
@@ -67,6 +73,9 @@ const columns = {
         {
             ...actionField,
         },
+        {
+            ...infoField,
+        },
     ],
     [CreatedPATCST]: [
         ...defaultKeys,
@@ -103,11 +112,14 @@ const columns = {
         {
             ...actionField,
         },
+        {
+            ...infoField,
+        },
     ],
 
 };
 
-class KeywordsOptimization extends Component {
+class NewPats extends Component {
     constructor(props) {
         super(props);
 
@@ -152,8 +164,8 @@ class KeywordsOptimization extends Component {
     }
 }
 
-KeywordsOptimization.propTypes = {};
+NewPats.propTypes = {};
 
-KeywordsOptimization.defaultProps = {};
+NewPats.defaultProps = {};
 
-export default KeywordsOptimization;
+export default NewPats;

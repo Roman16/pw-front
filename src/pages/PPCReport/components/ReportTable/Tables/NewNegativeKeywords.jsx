@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Table from '../../../../../components/Table';
 import TableButton from '../TableButton';
 
-import { indexField, dateField, actionField } from './const';
+import { indexField, dateField, actionField, infoField } from './const';
 
 
 const highACoS = 'highACoS';
@@ -13,9 +13,12 @@ const dataSource = [
         id: '1',
         campaign: 'Mike',
         adGroup: 32,
-        PatType: '10 Downing Street',
-        PatIntentType: '10 Downing Street',
-        PatValue: 'test1',
+        customerSearchTerm: '10 Downing Street',
+        negativeMatchType: '10 Downing Street',
+        CSTACoS: 'test1',
+        target: 'test1',
+        averageConversionRate: 'test1',
+        CSTClicks: 'test1',
     },
     {
         id: '2',
@@ -74,6 +77,9 @@ const columnsNewNegativeKeywords = {
         {
             ...actionField,
         },
+        {
+            ...infoField,
+        },
     ],
     [noSales]: [
         ...defaultKeys,
@@ -89,11 +95,14 @@ const columnsNewNegativeKeywords = {
         }, {
             ...actionField,
         },
+        {
+            ...infoField,
+        },
     ],
 
 };
 
-class KeywordsOptimization extends Component {
+class NewNegativeKeywords extends Component {
     constructor(props) {
         super(props);
 
@@ -138,8 +147,8 @@ class KeywordsOptimization extends Component {
     }
 }
 
-KeywordsOptimization.propTypes = {};
+NewNegativeKeywords.propTypes = {};
 
-KeywordsOptimization.defaultProps = {};
+NewNegativeKeywords.defaultProps = {};
 
-export default KeywordsOptimization;
+export default NewNegativeKeywords;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Tooltip } from 'antd';
 import Table from '../../../../../components/Table';
 import TableButton from '../TableButton';
-import { indexField, dateField, actionField } from './const';
+import { indexField, dateField, actionField, infoField } from './const';
 
 
 const createdCampaign = 'createdCampaign';
@@ -16,9 +16,18 @@ const dataSource = [
         id: '1',
         campaign: 'Mike',
         adGroup: 32,
-        PatType: '10 Downing Street',
-        PatIntentType: '10 Downing Street',
-        PatValue: 'test1',
+        campaignTargetingType: '',
+        dailyBudget: '',
+        startDate: '',
+        defaultBid: '',
+        asin: '',
+        sku: '',
+        keyword: '',
+        bid: '',
+        CSTclicks: '',
+        CSTACOS: '',
+        CSTCPC: '',
+        TargeACoS: '',
     },
     {
         id: '2',
@@ -73,6 +82,9 @@ const columns = {
         {
             ...actionField,
         },
+        {
+            ...infoField,
+        },
     ],
     [createdAdGroup]: [
         ...defaultKeys,
@@ -87,6 +99,9 @@ const columns = {
             key: 'defaultBid',
         }, {
             ...actionField,
+        },
+        {
+            ...infoField,
         },
     ],
     [createdProductAd]: [
@@ -109,6 +124,9 @@ const columns = {
         {
             ...actionField,
         },
+        {
+            ...infoField,
+        },
     ],
     [createdCrossNegativeKeyword]: [
         ...defaultKeys,
@@ -124,6 +142,9 @@ const columns = {
         },
         {
             ...actionField,
+        },
+        {
+            ...infoField,
         },
     ],
     [createdKeywordCST]: [
@@ -171,11 +192,14 @@ const columns = {
         {
             ...actionField,
         },
+        {
+            ...infoField,
+        },
     ],
 
 };
 
-class KeywordsOptimization extends Component {
+class NewKeywords extends Component {
     constructor(props) {
         super(props);
 
@@ -244,8 +268,8 @@ class KeywordsOptimization extends Component {
     }
 }
 
-KeywordsOptimization.propTypes = {};
+NewKeywords.propTypes = {};
 
-KeywordsOptimization.defaultProps = {};
+NewKeywords.defaultProps = {};
 
-export default KeywordsOptimization;
+export default NewKeywords;

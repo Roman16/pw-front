@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Tooltip } from 'antd';
 import Table from '../../../../../components/Table';
-import { indexField, dateField, actionField } from './const';
+import {
+    indexField, dateField, actionField, infoField,
+} from './const';
 import TableButton from '../TableButton';
 
 
@@ -18,6 +20,12 @@ const dataSource = [
         PatType: '10 Downing Street',
         PatIntentType: '10 Downing Street',
         PatValue: 'test1',
+        impressions: 'test1',
+        targetImpressions: 'test1',
+        targetACoS: 'test1',
+        acos: 'test1',
+        averageConvRate: 'test1',
+        clicks: 'test1',
     },
     {
         id: '2',
@@ -81,6 +89,9 @@ const columnsPATOptimizations = {
         {
             ...actionField,
         },
+        {
+            ...infoField,
+        },
     ],
     [changedPATBidImpressions]: [
         ...defaultKeys,
@@ -98,15 +109,7 @@ const columnsPATOptimizations = {
 
         },
         {
-            title: '',
-            dataIndex: 'info',
-            key: 'info',
-            render: (text) => (
-                <Tooltip placement="bottom" title={text}>
-                    <div>Bottom</div>
-                </Tooltip>
-            ),
-
+            ...infoField,
         },
     ],
     [pausedManualPATHighACoS]: [
@@ -125,6 +128,9 @@ const columnsPATOptimizations = {
             ...actionField,
 
         },
+        {
+            ...infoField,
+        },
     ],
     [pausedManualPatNoSales]: [
         ...defaultKeys,
@@ -142,10 +148,13 @@ const columnsPATOptimizations = {
             ...actionField,
 
         },
+        {
+            ...infoField,
+        },
     ],
 };
 
-class KeywordsOptimization extends Component {
+class PATsOptimization extends Component {
     constructor(props) {
         super(props);
 
@@ -207,8 +216,8 @@ class KeywordsOptimization extends Component {
     }
 }
 
-KeywordsOptimization.propTypes = {};
+PATsOptimization.propTypes = {};
 
-KeywordsOptimization.defaultProps = {};
+PATsOptimization.defaultProps = {};
 
-export default KeywordsOptimization;
+export default PATsOptimization;

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import ReportTable from './components/ReportTable';
+import ReportMain from './template/ReportMain';
 
 class PPCReport extends Component {
     render() {
         return (
             <div>
-                <ReportTable />
+                <ReportMain />
             </div>
         );
     }

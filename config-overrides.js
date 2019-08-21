@@ -7,6 +7,7 @@ module.exports = override(
         libraryName: 'antd',
         libraryDirectory: 'es',
         style: true,
+        modifyVars: { '@primary-color': '#6D6DF6' }
     }),
     addLessLoader({
         javascriptEnabled: true

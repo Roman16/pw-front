@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Tooltip } from 'antd';
 import Table from '../../../../../components/Table';
 import TableButton from '../TableButton';
-import { indexField, dateField, actionField } from './const';
+import {
+    indexField, dateField, actionField, infoField,
+} from './const';
 
 const changedKeywordBidAcos = 'changedKeywordBidAcos';
 const changedKeywordBidImpression = 'changedKeywordBidImpression';
@@ -16,6 +18,12 @@ const dataSource = [
         adGroup: 32,
         keyword: '10 Downing Street',
         matchType: '10 Downing Street',
+        acos: 'acos',
+        targetACoS: 'targetACoS',
+        averageConvRate: 'averageConvRate',
+        impressions: 'impressions',
+        targetImpressions: 'targetImpressions',
+        clicks: '',
         info: 'test1',
     },
     {
@@ -72,6 +80,12 @@ const columnsKeywordsOptimization = {
             dataIndex: 'targetACoS',
             key: 'targetACoS',
         },
+        {
+            ...actionField,
+        },
+        {
+            ...infoField,
+        },
 
     ],
     [changedKeywordBidImpression]: [
@@ -89,15 +103,7 @@ const columnsKeywordsOptimization = {
             ...actionField,
         },
         {
-            title: '',
-            dataIndex: 'info',
-            key: 'info',
-            render: (text) => (
-                <Tooltip placement="bottom" title={text}>
-                    <div>Bottom</div>
-                </Tooltip>
-            ),
-
+            ...infoField,
         },
     ],
     [pausedKeywordHighAcos]: [
@@ -115,6 +121,9 @@ const columnsKeywordsOptimization = {
         {
             ...actionField,
         },
+        {
+            ...infoField,
+        },
     ],
     [pausedKeywordNoSales]: [
         ...defaultKeys,
@@ -130,6 +139,9 @@ const columnsKeywordsOptimization = {
         },
         {
             ...actionField,
+        },
+        {
+            ...infoField,
         },
     ],
 };
