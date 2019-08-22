@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
 import { Tooltip } from 'antd';
 import Table from '../../../../../components/Table';
 import TableButton from '../TableButton';
@@ -10,6 +12,19 @@ const changedKeywordBidAcos = 'changedKeywordBidAcos';
 const changedKeywordBidImpression = 'changedKeywordBidImpression';
 const pausedKeywordHighAcos = 'pausedKeywordHighAcos';
 const pausedKeywordNoSales = 'pausedKeywordNoSales';
+
+
+const fetchDataList = () => (
+    axios.get(`${window.BASE_URL}/ppc-report/changed-keyword-bid-acos`, {
+
+        headers: {
+            Authorization: 'Bearer INaDvhEVGFUEzhXDSpZtQ8i0PKZlb6E1pkpK99PqqnJKfCK3pGSwXuF4Y8Bq',
+        },
+    })
+        .then((response) => response)
+
+);
+
 
 const dataSource = [
     {
@@ -152,16 +167,34 @@ class KeywordsOptimization extends Component {
 
         this.state = {
             activeTable: changedKeywordBidAcos,
+            dataSource: {
+                [changedKeywordBidAcos]: [],
+                [changedKeywordBidImpression]: [...dataSource],
+                [pausedKeywordHighAcos]: [...dataSource],
+                [pausedKeywordNoSales]: [...dataSource],
+            },
         };
     }
 
+
+    componentDidMount() {
+        fetchDataList().then((res) => {
+            console.log(res);
+            this.setState(({ dataSource }) => ({
+                dataSource: {
+                    ...dataSource,
+                    changedKeywordBidAcos: [...res.data],
+                },
+            }));
+        });
+    }
 
     changeTable = (nameTable) => {
         this.setState({ activeTable: nameTable });
     };
 
     render() {
-        const { activeTable } = this.state;
+        const { activeTable, dataSource } = this.state;
 
         console.log(activeTable);
 
@@ -202,7 +235,7 @@ class KeywordsOptimization extends Component {
                 </TableButton>
 
                 <Table
-                    dataSource={dataSource}
+                    dataSource={dataSource[activeTable]}
                     columns={columnsKeywordsOptimization[activeTable]}
                 />
             </div>
