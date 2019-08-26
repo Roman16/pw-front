@@ -6,7 +6,7 @@ import { DEFAULT_PAGE_SIZE } from '../const';
 const fetchReportTable = (
     dataType, dataSubType = '', page, startDate = '', endDate = '',
 ) => (
-    axios.get('https://front1.profitwhales.com/ppc-report/get-table-data', {
+    axios.get(`${window.BASE_URL}/ppc-report/get-table-data`, {
         params: {
             'data-type': dataType,
             'data-sub-typ': dataSubType,
