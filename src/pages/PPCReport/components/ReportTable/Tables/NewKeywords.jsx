@@ -2,42 +2,17 @@ import React, { Component } from 'react';
 import { Tooltip } from 'antd';
 import Table from '../../../../../components/Table';
 import TableButton from '../TableButton';
-import { indexField, dateField, actionField, infoField } from './const';
+import {
+    indexField, dateField, actionField, infoField,
+} from './const';
+import TableApi from '../../../Hoc/TableApi';
 
 
-const createdCampaign = 'createdCampaign';
-const createdAdGroup = 'createdAdGroup';
-const createdProductAd = 'createdProductAd';
-const createdCrossNegativeKeyword = 'createdCrossNegativeKeyword';
-const createdKeywordCST = 'createdKeywordCST';
-
-const dataSource = [
-    {
-        id: '1',
-        campaign: 'Mike',
-        adGroup: 32,
-        campaignTargetingType: '',
-        dailyBudget: '',
-        startDate: '',
-        defaultBid: '',
-        asin: '',
-        sku: '',
-        keyword: '',
-        bid: '',
-        CSTclicks: '',
-        CSTACOS: '',
-        CSTCPC: '',
-        TargeACoS: '',
-    },
-    {
-        id: '2',
-        campaign: 'Mike2',
-        adGroup: 434,
-        PatType: '13 Downing Street',
-        PatIntentType: '14 Downing Street',
-        PatValue: 'test12',
-    },
-];
+const createdCampaign = 'created-campaign';
+const createdAdGroup = 'created-ad-group';
+const createdProductAd = 'created-product-ad';
+const createdCrossNegativeKeyword = 'created-cross-negative-keyword';
+const createdKeywordCST = 'created-keyword-cst';
 
 
 const defaultKeys = [
@@ -205,17 +180,46 @@ class NewKeywords extends Component {
 
         this.state = {
             activeTable: createdCampaign,
+            currentPage: 1,
+
         };
     }
 
 
-    changeTable = (nameTable) => {
-        this.setState({ activeTable: nameTable });
+    componentDidMount() {
+        const { activeTable } = this.state;
+
+        this.initialFetch(activeTable);
+    }
+
+    changeTable = (activeTable) => {
+        this.setState({
+            activeTable,
+            currentPage: 1,
+        });
+        this.initialFetch(activeTable);
+    };
+
+
+    initialFetch = (activeTable) => {
+        const { fetchData } = this.props;
+
+        fetchData(activeTable, 1);
+    };
+
+    handlePaginationChange = (currentPage) => {
+        const { activeTable } = this.state;
+        const { fetchData } = this.props;
+
+        this.setState({ currentPage });
+        fetchData(activeTable, currentPage);
     };
 
     render() {
-        const { activeTable } = this.state;
-
+        const { activeTable, currentPage } = this.state;
+        const {
+            data, loading, totalSize, showPagination,
+        } = this.props;
 
         return (
             <div className="ReportItemTable">
@@ -260,8 +264,13 @@ class NewKeywords extends Component {
                     Created Keyword (CST)
                 </TableButton>
                 <Table
-                    dataSource={dataSource}
+                    onChangePagination={this.handlePaginationChange}
+                    loading={loading}
+                    dataSource={data}
                     columns={columns[activeTable]}
+                    currentPage={currentPage}
+                    totalSize={totalSize}
+                    showPagination={showPagination}
                 />
             </div>
         );
@@ -272,4 +281,4 @@ NewKeywords.propTypes = {};
 
 NewKeywords.defaultProps = {};
 
-export default NewKeywords;
+export default TableApi(NewKeywords, 'new-keywords');

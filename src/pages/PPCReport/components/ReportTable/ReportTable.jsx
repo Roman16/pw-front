@@ -26,39 +26,103 @@ const tabsItem = [
     {
         tabName: <TabName name="Keywords Optimization" count={8} />,
         key: 'KeywordsOptimization',
-        component: <KeywordsOptimization />,
-    }, {
+        component: (ref, start, end) => (
+            <KeywordsOptimization
+                ref={ref}
+                startTime={start}
+                endTime={end}
+
+            />
+        ),
+    },
+    {
         tabName: <TabName name="PAT’s Optimization" count={8} />,
         key: 'PATsOptimization',
-        component: <PATsOptimization />,
+        component: (ref, start, end) => (
+            <PATsOptimization
+                ref={ref}
+                startTime={start}
+                endTime={end}
+
+            />
+        ),
     }, {
         tabName: <TabName name="New Keywords" count={8} />,
         key: 'NewKeywords',
-        component: <NewKeywords />,
+        component: (ref, start, end) => (
+            <NewKeywords
+                ref={ref}
+                startTime={start}
+                endTime={end}
+
+            />
+        ),
     }, {
         tabName: <TabName name="New Negative Keywords" count={8} />,
         key: 'NewNegativeKeywords',
-        component: <NewNegativeKeywords />,
+        component: (ref, start, end) => (
+            <NewNegativeKeywords
+                ref={ref}
+                startTime={start}
+                endTime={end}
+
+            />
+        ),
     }, {
         tabName: <TabName
             name={'New PAT \'s'}
             count={8}
         />,
         key: 'NewPats',
-        component: <NewPats />,
+        component: (ref, start, end) => (
+            <NewPats
+                ref={ref}
+                startTime={start}
+                endTime={end}
+
+            />
+        ),
     }, {
         tabName: <TabName
             name={'New Negative PAT\'s'}
             count={8}
         />,
         key: 'NewNegativePats',
-        component: <NewNegativePats />,
+        component: (ref, start, end) => (
+            <NewNegativePats
+                ref={ref}
+                startTime={start}
+                endTime={end}
+
+            />
+        ),
     },
 ];
 
 
 class ReportTable extends Component {
+    constructor(props) {
+        super(props);
+
+        this.myRef = React.createRef();
+        this.state = {
+            startDate: null,
+            endDate: null,
+        };
+    }
+
+    timeRange = (startDate, endDate) => {
+        this.myRef.current.changeDateRange(startDate, endDate);
+        this.setState({
+            startDate,
+            endDate,
+        });
+    };
+
     render() {
+        const { startDate, endDate } = this.state;
+
+
         return (
             <div className="ReportTable">
                 <div className="report-table">
@@ -70,7 +134,7 @@ class ReportTable extends Component {
                             Today Changes
                             <span className="total-count">99+</span>
                         </span>
-                        <DatePicker />
+                        <DatePicker timeRange={this.timeRange} />
                         <Buttons>
                             Download
                             <Icon type="cloud-download" />
@@ -80,7 +144,7 @@ class ReportTable extends Component {
                 <Tabs defaultActiveKey={tabsItem[0].key}>
                     {tabsItem.map(({ tabName, key, component }) => (
                         <TabPane tab={tabName} key={key}>
-                            {component}
+                            {component(this.myRef, startDate, endDate)}
                         </TabPane>
                     ))}
                 </Tabs>

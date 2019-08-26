@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Table from '../../../../../components/Table';
-import { indexField, dateField, actionField, infoField } from './const';
+import {
+    indexField, dateField, actionField, infoField,
+} from './const';
 import TableButton from '../TableButton';
+import TableApi from '../../../Hoc/TableApi';
 
 
-const CreatedCrossNegativePAT = 'CreatedCrossNegativePAT ';
-const CreatedPATCST = 'CreatedPATCST';
+const CreatedCrossNegativePAT = 'created-cross-negative-pat';
+const CreatedPATCST = 'created-pat-cst';
 
 const dataSource = [
     {
@@ -125,17 +128,45 @@ class NewPats extends Component {
 
         this.state = {
             activeTable: CreatedCrossNegativePAT,
+            currentPage: 1,
+
         };
     }
 
 
-    changeTable = (nameTable) => {
-        this.setState({ activeTable: nameTable });
+    componentDidMount() {
+        const { activeTable } = this.state;
+
+        this.initialFetch(activeTable);
+    }
+
+    changeTable = (activeTable) => {
+        this.setState({
+            activeTable,
+            currentPage: 1,
+        });
+        this.initialFetch(activeTable);
+    };
+
+    initialFetch = (activeTable) => {
+        const { fetchData } = this.props;
+
+        fetchData(activeTable, 1);
+    };
+
+    handlePaginationChange = (currentPage) => {
+        const { activeTable } = this.state;
+        const { fetchData } = this.props;
+
+        this.setState({ currentPage });
+        fetchData(activeTable, currentPage);
     };
 
     render() {
-        const { activeTable } = this.state;
-
+        const { activeTable, currentPage } = this.state;
+        const {
+            data, loading, totalSize, showPagination,
+        } = this.props;
 
         return (
             <div className="ReportItemTable">
@@ -156,8 +187,13 @@ class NewPats extends Component {
                     Created PAT (CST)
                 </TableButton>
                 <Table
-                    dataSource={dataSource}
+                    onChangePagination={this.handlePaginationChange}
+                    loading={loading}
+                    dataSource={data}
                     columns={columns[activeTable]}
+                    currentPage={currentPage}
+                    totalSize={totalSize}
+                    showPagination={showPagination}
                 />
             </div>
         );
@@ -168,4 +204,4 @@ NewPats.propTypes = {};
 
 NewPats.defaultProps = {};
 
-export default NewPats;
+export default TableApi(NewPats, 'new-pats');

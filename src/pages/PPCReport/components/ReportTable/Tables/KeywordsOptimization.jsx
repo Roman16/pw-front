@@ -5,36 +5,12 @@ import TableButton from '../TableButton';
 import {
     indexField, dateField, actionField, infoField,
 } from './const';
+import TableApi from '../../../Hoc/TableApi';
 
-const changedKeywordBidAcos = 'changedKeywordBidAcos';
-const changedKeywordBidImpression = 'changedKeywordBidImpression';
-const pausedKeywordHighAcos = 'pausedKeywordHighAcos';
-const pausedKeywordNoSales = 'pausedKeywordNoSales';
-
-const dataSource = [
-    {
-        id: '1',
-        campaign: 'Mike',
-        adGroup: 32,
-        keyword: '10 Downing Street',
-        matchType: '10 Downing Street',
-        acos: 'acos',
-        targetACoS: 'targetACoS',
-        averageConvRate: 'averageConvRate',
-        impressions: 'impressions',
-        targetImpressions: 'targetImpressions',
-        clicks: '',
-        info: 'test1',
-    },
-    {
-        id: '2',
-        campaign: 'Mike2',
-        adGroup: 434,
-        keyword: '13 Downing Street',
-        matchType: '14 Downing Street',
-        info: 'test12',
-    },
-];
+const changedKeywordBidAcos = 'changed-keyword-bid-acos';
+const changedKeywordBidImpression = 'changed-keyword-bid-impression';
+const pausedKeywordHighAcos = 'paused-keyword-high-acos';
+const pausedKeywordNoSales = 'paused-keyword-no-sales';
 
 
 const defaultKeys = [
@@ -67,7 +43,7 @@ const defaultKeys = [
 ];
 
 
-const columnsKeywordsOptimization = {
+const columns = {
     [changedKeywordBidAcos]: [
         ...defaultKeys,
         {
@@ -152,18 +128,45 @@ class KeywordsOptimization extends Component {
 
         this.state = {
             activeTable: changedKeywordBidAcos,
+            currentPage: 1,
         };
     }
 
+    componentDidMount() {
+        const { activeTable } = this.state;
 
-    changeTable = (nameTable) => {
-        this.setState({ activeTable: nameTable });
+        this.initialFetch(activeTable);
+    }
+
+    changeTable = (activeTable) => {
+        this.setState({
+            activeTable,
+            currentPage: 1,
+        });
+        this.initialFetch(activeTable);
+    };
+
+
+    initialFetch = (activeTable) => {
+        const { fetchData } = this.props;
+
+        fetchData(activeTable, 1);
+    };
+
+    handlePaginationChange = (currentPage) => {
+        const { activeTable } = this.state;
+        const { fetchData } = this.props;
+
+        this.setState({ currentPage });
+        fetchData(activeTable, currentPage);
     };
 
     render() {
-        const { activeTable } = this.state;
+        const { activeTable, currentPage } = this.state;
+        const {
+            data, loading, totalSize, showPagination,
+        } = this.props;
 
-        console.log(activeTable);
 
         return (
             <div className="ReportItemTable">
@@ -202,8 +205,13 @@ class KeywordsOptimization extends Component {
                 </TableButton>
 
                 <Table
-                    dataSource={dataSource}
-                    columns={columnsKeywordsOptimization[activeTable]}
+                    onChangePagination={this.handlePaginationChange}
+                    loading={loading}
+                    dataSource={data}
+                    columns={columns[activeTable]}
+                    currentPage={currentPage}
+                    totalSize={totalSize}
+                    showPagination={showPagination}
                 />
             </div>
         );
@@ -214,4 +222,4 @@ KeywordsOptimization.propTypes = {};
 
 KeywordsOptimization.defaultProps = {};
 
-export default KeywordsOptimization;
+export default TableApi(KeywordsOptimization, 'keywords-optimization');

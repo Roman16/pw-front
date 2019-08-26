@@ -2,33 +2,15 @@ import React, { Component } from 'react';
 import Table from '../../../../../components/Table';
 import TableButton from '../TableButton';
 
-import { indexField, dateField, actionField, infoField } from './const';
+import {
+    indexField, dateField, actionField, infoField,
+} from './const';
+import TableApi from '../../../Hoc/TableApi';
 
 
-const highACoS = 'highACoS';
-const noSales = 'noSales';
+const highACoS = 'created-negative-keyword-from-cst-high-acos';
+const noSales = 'created-negative-keyword-from-cst-no-sales';
 
-const dataSource = [
-    {
-        id: '1',
-        campaign: 'Mike',
-        adGroup: 32,
-        customerSearchTerm: '10 Downing Street',
-        negativeMatchType: '10 Downing Street',
-        CSTACoS: 'test1',
-        target: 'test1',
-        averageConversionRate: 'test1',
-        CSTClicks: 'test1',
-    },
-    {
-        id: '2',
-        campaign: 'Mike2',
-        adGroup: 434,
-        PatType: '13 Downing Street',
-        PatIntentType: '14 Downing Street',
-        PatValue: 'test12',
-    },
-];
 
 
 const defaultKeys = [
@@ -61,7 +43,7 @@ const defaultKeys = [
 ];
 
 
-const columnsNewNegativeKeywords = {
+const columns = {
     [highACoS]: [
         ...defaultKeys,
         {
@@ -108,17 +90,46 @@ class NewNegativeKeywords extends Component {
 
         this.state = {
             activeTable: highACoS,
+            currentPage: 1,
+
         };
     }
 
 
-    changeTable = (nameTable) => {
-        this.setState({ activeTable: nameTable });
+    componentDidMount() {
+        const { activeTable } = this.state;
+
+        this.initialFetch(activeTable);
+    }
+
+    changeTable = (activeTable) => {
+        this.setState({
+            activeTable,
+            currentPage: 1,
+        });
+        this.initialFetch(activeTable);
+    };
+
+
+    initialFetch = (activeTable) => {
+        const { fetchData } = this.props;
+
+        fetchData(activeTable, 1);
+    };
+
+    handlePaginationChange = (currentPage) => {
+        const { activeTable } = this.state;
+        const { fetchData } = this.props;
+
+        this.setState({ currentPage });
+        fetchData(activeTable, currentPage);
     };
 
     render() {
-        const { activeTable } = this.state;
-
+        const { activeTable, currentPage } = this.state;
+        const {
+            data, loading, totalSize, showPagination,
+        } = this.props;
 
         return (
             <div className="ReportItemTable">
@@ -139,8 +150,13 @@ class NewNegativeKeywords extends Component {
                     Created Negative Keyword From CST (No Sales)
                 </TableButton>
                 <Table
-                    dataSource={dataSource}
-                    columns={columnsNewNegativeKeywords[activeTable]}
+                    onChangePagination={this.handlePaginationChange}
+                    loading={loading}
+                    dataSource={data}
+                    columns={columns[activeTable]}
+                    currentPage={currentPage}
+                    totalSize={totalSize}
+                    showPagination={showPagination}
                 />
             </div>
         );
@@ -151,4 +167,4 @@ NewNegativeKeywords.propTypes = {};
 
 NewNegativeKeywords.defaultProps = {};
 
-export default NewNegativeKeywords;
+export default TableApi(NewNegativeKeywords, 'new-negative-keywords');
