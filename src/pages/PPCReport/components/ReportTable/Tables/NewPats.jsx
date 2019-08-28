@@ -1,36 +1,14 @@
 import React, { Component } from 'react';
 import Table from '../../../../../components/Table';
-import { indexField, dateField, actionField, infoField } from './const';
+import {
+    indexField, dateField, actionField, infoField,
+} from './const';
 import TableButton from '../TableButton';
+import TableApi from '../../../Hoc/TableApi';
 
 
-const CreatedCrossNegativePAT = 'CreatedCrossNegativePAT ';
-const CreatedPATCST = 'CreatedPATCST';
-
-const dataSource = [
-    {
-        id: '1',
-        campaign: 'Mike',
-        adGroup: 32,
-        PatType: '10 Downing Street',
-        PatIntentType: '10 Downing Street',
-        PatValue: 'test1',
-        bid: 'test1',
-        customerSearchTerm: 'test1',
-        CSTClicks: 'test1',
-        CSTACOS: 'test1',
-        CSTCPC: 'test1',
-        TargeACoS: 'test1',
-    },
-    {
-        id: '2',
-        campaign: 'Mike2',
-        adGroup: 434,
-        PatType: '13 Downing Street',
-        PatIntentType: '14 Downing Street',
-        PatValue: 'test12',
-    },
-];
+const CreatedCrossNegativePAT = 'created-cross-negative-pat';
+const CreatedPATCST = 'created-pat-cst';
 
 
 const defaultKeys = [
@@ -96,8 +74,8 @@ const columns = {
         },
         {
             title: 'CST ACOS',
-            dataIndex: 'CSTACOS',
-            key: 'CSTACOS',
+            dataIndex: 'CSTACoS',
+            key: 'CSTACoS',
         },
         {
             title: 'CST CPC',
@@ -106,8 +84,8 @@ const columns = {
         },
         {
             title: 'Targe ACoS',
-            dataIndex: 'TargeACoS',
-            key: 'TargeACoS',
+            dataIndex: 'TargetACoS',
+            key: 'TargetACoS',
         },
         {
             ...actionField,
@@ -125,17 +103,45 @@ class NewPats extends Component {
 
         this.state = {
             activeTable: CreatedCrossNegativePAT,
+            currentPage: 1,
+
         };
     }
 
 
-    changeTable = (nameTable) => {
-        this.setState({ activeTable: nameTable });
+    componentDidMount() {
+        const { activeTable } = this.state;
+
+        this.initialFetch(activeTable);
+    }
+
+    changeTable = (activeTable) => {
+        this.setState({
+            activeTable,
+            currentPage: 1,
+        });
+        this.initialFetch(activeTable);
+    };
+
+    initialFetch = (activeTable) => {
+        const { fetchData } = this.props;
+
+        fetchData(activeTable, 1);
+    };
+
+    handlePaginationChange = (currentPage) => {
+        const { activeTable } = this.state;
+        const { fetchData } = this.props;
+
+        this.setState({ currentPage });
+        fetchData(activeTable, currentPage);
     };
 
     render() {
-        const { activeTable } = this.state;
-
+        const { activeTable, currentPage } = this.state;
+        const {
+            data, loading, totalSize, showPagination,
+        } = this.props;
 
         return (
             <div className="ReportItemTable">
@@ -156,8 +162,13 @@ class NewPats extends Component {
                     Created PAT (CST)
                 </TableButton>
                 <Table
-                    dataSource={dataSource}
+                    onChangePagination={this.handlePaginationChange}
+                    loading={loading}
+                    dataSource={data}
                     columns={columns[activeTable]}
+                    currentPage={currentPage}
+                    totalSize={totalSize}
+                    showPagination={showPagination}
                 />
             </div>
         );
@@ -168,4 +179,4 @@ NewPats.propTypes = {};
 
 NewPats.defaultProps = {};
 
-export default NewPats;
+export default TableApi(NewPats, 'new-pats');

@@ -4,34 +4,11 @@ import {
     indexField, dateField, actionField, infoField,
 } from './const';
 import TableButton from '../TableButton';
+import TableApi from '../../../Hoc/TableApi';
 
 
-const HighACoS = 'HighACoS';
-const NoSales = 'NoSales';
-
-const dataSource = [
-    {
-        id: '1',
-        campaign: 'Mike',
-        adGroup: 32,
-        PatType: '10 Downing Street',
-        PatIntentType: '10 Downing Street',
-        PatValue: 'test1',
-        customerSearchTerm: 'test1',
-        CSTACOS: 'test1',
-        TargeACoS: 'test1',
-        averageConvRate: 'test1',
-        CSTClicks: 'test1',
-    },
-    {
-        id: '2',
-        campaign: 'Mike2',
-        adGroup: 434,
-        PatType: '13 Downing Street',
-        PatIntentType: '14 Downing Street',
-        PatValue: 'test12',
-    },
-];
+const HighACoS = 'created-negative-pat-from-cst-high-acos';
+const NoSales = 'created-negative-pat-from-cst-no-sales';
 
 
 const defaultKeys = [
@@ -80,13 +57,13 @@ const columns = {
         ...defaultKeys,
         {
             title: 'CST ACOS',
-            dataIndex: 'CSTACOS',
-            key: 'CSTACOS',
+            dataIndex: 'CSTACoS',
+            key: 'CSTACoS',
         },
         {
             title: 'Targe ACoS',
-            dataIndex: 'TargeACoS',
-            key: 'Targe ACoS',
+            dataIndex: 'target',
+            key: 'target',
         },
         {
             ...actionField,
@@ -99,8 +76,8 @@ const columns = {
         ...defaultKeys,
         {
             title: 'Average Conv. Rate',
-            dataIndex: 'averageConvRate',
-            key: 'averageConvRate',
+            dataIndex: 'averageConversionRate',
+            key: 'averageConversionRate',
         },
         {
             title: 'CST Clicks',
@@ -124,17 +101,45 @@ class NewNegativePats extends Component {
 
         this.state = {
             activeTable: HighACoS,
+            currentPage: 1,
+
         };
     }
 
 
-    changeTable = (nameTable) => {
-        this.setState({ activeTable: nameTable });
+    componentDidMount() {
+        const { activeTable } = this.state;
+
+        this.initialFetch(activeTable);
+    }
+
+    changeTable = (activeTable) => {
+        this.setState({
+            activeTable,
+            currentPage: 1,
+        });
+        this.initialFetch(activeTable);
+    };
+
+    initialFetch = (activeTable) => {
+        const { fetchData } = this.props;
+
+        fetchData(activeTable, 1);
+    };
+
+    handlePaginationChange = (currentPage) => {
+        const { activeTable } = this.state;
+        const { fetchData } = this.props;
+
+        this.setState({ currentPage });
+        fetchData(activeTable, currentPage);
     };
 
     render() {
-        const { activeTable } = this.state;
-
+        const { activeTable, currentPage } = this.state;
+        const {
+            data, loading, totalSize, showPagination,
+        } = this.props;
 
         return (
             <div className="ReportItemTable">
@@ -155,8 +160,13 @@ class NewNegativePats extends Component {
                     Created Negative PAT From CST (No Sales)
                 </TableButton>
                 <Table
-                    dataSource={dataSource}
+                    onChangePagination={this.handlePaginationChange}
+                    loading={loading}
+                    dataSource={data}
                     columns={columns[activeTable]}
+                    currentPage={currentPage}
+                    totalSize={totalSize}
+                    showPagination={showPagination}
                 />
             </div>
         );
@@ -167,4 +177,4 @@ NewNegativePats.propTypes = {};
 
 NewNegativePats.defaultProps = {};
 
-export default NewNegativePats;
+export default TableApi(NewNegativePats, 'new-negative-pats');

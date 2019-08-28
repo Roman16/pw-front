@@ -1,24 +1,21 @@
 import React from 'react';
 import { Tooltip, Icon } from 'antd';
+import moment from 'moment';
 
 export const indexField = {
     title: '',
-    dataIndex: 'index',
-    key: 'index',
+    dataIndex: 'id',
+    key: 'id',
     width: '40px',
-    render(...[, , index]) {
-        return (
-            <div>
-                {index + 1}
-            </div>
-        );
-    },
 };
 
 export const dateField = {
     title: 'Date',
     dataIndex: 'date',
     key: 'date',
+    render: (text) => (
+        moment(text).format('Y/M/D')
+    ),
 };
 
 export const actionField = {
@@ -34,7 +31,7 @@ export const infoField = {
     render: (text) => (
         <Tooltip
             placement="bottom"
-            title="Changed bid for exact keyword Keyword Text in ad group Ad Group Name in campaign Campaign Name from 2$ to 2.1$ (up 0.1$ or 5%) based on keyword ACoS 20%, 100 clicks and product target ACoS: 45% (calculated based on your product margin: 30% and selected optimization strategy: FastPPCLaunch)."
+            title={text}
         >
             <Icon type="info-circle" className="info-icon" theme="filled" />
         </Tooltip>

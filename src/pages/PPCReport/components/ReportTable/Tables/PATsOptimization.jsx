@@ -5,37 +5,13 @@ import {
     indexField, dateField, actionField, infoField,
 } from './const';
 import TableButton from '../TableButton';
+import TableApi from '../../../Hoc/TableApi';
 
 
-const changedPATBidACoS = 'changedPATBidACoS';
-const changedPATBidImpressions = 'changedPATBidImpressions';
-const pausedManualPATHighACoS = 'pausedManualPATHighACoS';
-const pausedManualPatNoSales = 'pausedManualPatNoSales';
-
-const dataSource = [
-    {
-        id: '1',
-        campaign: 'Mike',
-        adGroup: 32,
-        PatType: '10 Downing Street',
-        PatIntentType: '10 Downing Street',
-        PatValue: 'test1',
-        impressions: 'test1',
-        targetImpressions: 'test1',
-        targetACoS: 'test1',
-        acos: 'test1',
-        averageConvRate: 'test1',
-        clicks: 'test1',
-    },
-    {
-        id: '2',
-        campaign: 'Mike2',
-        adGroup: 434,
-        PatType: '13 Downing Street',
-        PatIntentType: '14 Downing Street',
-        PatValue: 'test12',
-    },
-];
+const changedPATBidACoS = 'changed-pat-bid-acos';
+const changedPATBidImpressions = 'changed-pat-bid-impressions';
+const pausedManualPATHighACoS = 'paused-manual-path-high-acos';
+const pausedManualPatNoSales = 'paused-manual-pat-no-sales';
 
 
 const defaultKeys = [
@@ -73,7 +49,7 @@ const defaultKeys = [
 ];
 
 
-const columnsPATOptimizations = {
+const columns = {
     [changedPATBidACoS]: [
         ...defaultKeys,
         {
@@ -160,17 +136,45 @@ class PATsOptimization extends Component {
 
         this.state = {
             activeTable: changedPATBidACoS,
+            currentPage: 1,
+
         };
     }
 
 
-    changeTable = (nameTable) => {
-        this.setState({ activeTable: nameTable });
+    componentDidMount() {
+        const { activeTable } = this.state;
+
+        this.initialFetch(activeTable);
+    }
+
+    changeTable = (activeTable) => {
+        this.setState({
+            activeTable,
+            currentPage: 1,
+        });
+        this.initialFetch(activeTable);
+    };
+
+    initialFetch = (activeTable) => {
+        const { fetchData } = this.props;
+
+        fetchData(activeTable, 1);
+    };
+
+    handlePaginationChange = (currentPage) => {
+        const { activeTable } = this.state;
+        const { fetchData } = this.props;
+
+        this.setState({ currentPage });
+        fetchData(activeTable, currentPage);
     };
 
     render() {
-        const { activeTable } = this.state;
-
+        const { activeTable, currentPage } = this.state;
+        const {
+            data, loading, totalSize, showPagination,
+        } = this.props;
 
         return (
             <div className="ReportItemTable">
@@ -208,8 +212,13 @@ class PATsOptimization extends Component {
                 </TableButton>
 
                 <Table
-                    dataSource={dataSource}
-                    columns={columnsPATOptimizations[activeTable]}
+                    onChangePagination={this.handlePaginationChange}
+                    loading={loading}
+                    dataSource={data}
+                    columns={columns[activeTable]}
+                    currentPage={currentPage}
+                    totalSize={totalSize}
+                    showPagination={showPagination}
                 />
             </div>
         );
@@ -220,4 +229,4 @@ PATsOptimization.propTypes = {};
 
 PATsOptimization.defaultProps = {};
 
-export default PATsOptimization;
+export default TableApi(PATsOptimization, 'pats-optimization');
