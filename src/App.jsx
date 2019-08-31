@@ -7,7 +7,7 @@ import store from './store';
 
 
 // https://profitwhales.com/ppc-automation/product?page=1&size=2
-window.BASE_URL = process.env.NODE_ENV === 'production' ? '' : 'https://front1.profitwhales.com/';
+window.BASE_URL = process.env.NODE_ENV === 'production' ? '' : 'https://front1.profitwhales.com';
 
 class App extends Component {
     render() {

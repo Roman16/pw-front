@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Icon } from 'antd';
-
+import axios from 'axios';
 import Buttons from '../../../../components/Buttons';
 import KeywordsOptimization from './Tables/KeywordsOptimization';
 import DatePicker from '../../../../components/DatePicker';
@@ -111,6 +111,12 @@ class ReportTable extends Component {
         };
     }
 
+    downloadFile = () => {
+        axios.get(`${window.BASE_URL}/download-report`).then((res) => {
+            console.log(res);
+        });
+    };
+
     timeRange = (startDate, endDate) => {
         this.myRef.current.changeDateRange(startDate, endDate);
         this.setState({
@@ -135,7 +141,7 @@ class ReportTable extends Component {
                             <span className="total-count">99+</span>
                         </span>
                         <DatePicker timeRange={this.timeRange} />
-                        <Buttons>
+                        <Buttons onClick={this.downloadFile}>
                             Download
                             <Icon type="cloud-download" />
                         </Buttons>
