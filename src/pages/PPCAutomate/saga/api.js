@@ -35,8 +35,8 @@ export const fetchProductChangeData = (productId) => (
 );
 
 
-export const saveProductData = (status, {
-    product_id, optimization_strategy, create_new_keywords,
+export const saveProductData = (status, activeProductId, {
+    optimization_strategy, create_new_keywords,
     add_negative_keywords,
     add_negative_pats,
     create_new_pats,
@@ -46,7 +46,7 @@ export const saveProductData = (status, {
     axios.get(`${window.BASE_URL}/ppc-automation/save-parameters`, {
         params: {
             status,
-            product_id,
+            product_id: activeProductId,
             optimization_strategy,
             add_negative_keywords: +add_negative_keywords,
             create_new_keywords: +create_new_keywords,

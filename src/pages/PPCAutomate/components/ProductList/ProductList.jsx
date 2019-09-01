@@ -37,6 +37,7 @@ class ProductList extends Component {
             pageNumber: 1,
         };
         this.searchTimerId = null;
+        this.prevActive = null;
     }
 
     componentDidMount() {
@@ -50,17 +51,23 @@ class ProductList extends Component {
     }
 
     selectAll = () => {
-        const { totalProduct, activeProductId } = this.props;
-
+        const {
+            totalProduct, activeProductId, setActiveProduct, onSelect,
+        } = this.props;
 
         this.setState(({ isSelectedAll }) => ({
             isSelectedAll: !isSelectedAll,
             selectedSize: !isSelectedAll ? totalProduct : 1,
         }), () => {
             const { isSelectedAll } = this.state;
-            const toSelect = isSelectedAll ? 'all' : activeProductId;
 
-            this.toActive(toSelect);
+            if (activeProductId !== 'all') {
+                this.prevActive = activeProductId;
+            }
+            const toSelect = isSelectedAll ? 'all' : this.prevActive;
+
+            onSelect(toSelect);
+            setActiveProduct(toSelect);
         });
     };
 

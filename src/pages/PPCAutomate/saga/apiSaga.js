@@ -101,6 +101,7 @@ export function* saveProductIdDataSaga({ status }) {
     try {
         const {
             dataProductId,
+            activeProductId
         } = yield select(PPCReducers);
 
 
@@ -129,7 +130,7 @@ export function* saveProductIdDataSaga({ status }) {
             });
             const {
                 data,
-            } = yield call(saveProductData, status, dataProductId);
+            } = yield call(saveProductData, status, activeProductId, dataProductId);
 
             console.log(!isEmpty(data));
             console.log(data[0]);
