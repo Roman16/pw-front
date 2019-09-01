@@ -19,6 +19,34 @@
             font-weight: 600;
             margin-bottom: 25px;
         }
+
+        .small {
+            display: none;
+        }
+
+        .large {
+            display: block;
+        }
+    }
+
+    @media (max-width: @laptop) {
+
+        .info-item {
+            grid-template-columns: 1fr;
+
+            .info-caption {
+                margin-bottom: 0;
+            }
+
+            .small {
+                display: block;
+            }
+
+            .large {
+                display: none;
+            }
+
+        }
     }
 
 }

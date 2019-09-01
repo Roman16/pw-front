@@ -91,13 +91,13 @@ class OptimizeStrategy extends Component {
     }
 
     onSelectStrategy = (strategyItem) => {
-        this.setState({
-            selectedStrategy: strategyItem,
-        });
+        // this.setState({
+        //     selectedStrategy: strategyItem,
+        // });
     };
 
     render() {
-        const { selectedStrategy } = this.state;
+        const { optimizationStrategy, onSelect } = this.props;
 
 
         return (
@@ -105,27 +105,27 @@ class OptimizeStrategy extends Component {
                 <div className="strategies">
                     <StrategyItem
                         caption="Organic (Overall) Profit"
-                        selected={selectedStrategy === 1}
-                        onSelect={() => this.onSelectStrategy(1)}
+                        selected={optimizationStrategy === 'SlowPPCLaunch'}
+                        onSelect={() => onSelect('SlowPPCLaunch')}
                         value="BoostOverallProfit"
                     />
                     <StrategyItem
                         caption="Organic Boost"
-                        selected={selectedStrategy === 2}
-                        onSelect={() => this.onSelectStrategy(2)}
+                        selected={optimizationStrategy === 'FastPPCLaunch'}
+                        onSelect={() => onSelect('FastPPCLaunch')}
                         value="BoostPPCProfit"
                     />
                     <StrategyItem
                         caption="Product Liquidation"
-                        selected={selectedStrategy === 3}
-                        onSelect={() => this.onSelectStrategy(3)}
+                        selected={optimizationStrategy === 'PPCGrowth'}
+                        onSelect={() => onSelect('PPCGrowth')}
                         value="GrowOverallSales"
 
                     />
                     <StrategyItem
                         caption="Product Lounce"
-                        selected={selectedStrategy === 4}
-                        onSelect={() => this.onSelectStrategy(4)}
+                        selected={optimizationStrategy === 'PPCProfit'}
+                        onSelect={() => onSelect('PPCProfit')}
                         value="LaunchProduct"
 
                     />

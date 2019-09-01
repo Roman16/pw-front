@@ -104,15 +104,16 @@ class Terminal extends Component {
 
 
     render() {
-        const { isLess } = this.props;
+        const { isLess, lastChanges } = this.props;
 
+        console.log(lastChanges);
 
         return (
             <div className="Terminal">
                 <TerminalCaption />
                 <div className={`terminal-content ${!isLess ? 'less' : 'more'}`}>
-                    {terminalMock.map(({ id, text }, index) => (
-                        <TerminalItem key={id} content={text} index={index} />
+                    {lastChanges.map(({ id, message, number }) => (
+                        <TerminalItem key={id} content={message} index={number} />
                     ))}
 
 

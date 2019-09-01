@@ -10,6 +10,26 @@ export const getProductList = createSelector(
         productList
     ),
 );
+export const getProductIdData = createSelector(
+    [PPCReducers], ({ dataProductId }) => (
+        dataProductId
+    ),
+);
+export const getInValidError = createSelector(
+    [PPCReducers], ({ inValidError }) => (
+        inValidError
+    ),
+);
+export const getLastChanges = createSelector(
+    [PPCReducers], ({ lastChanges }) => (
+        lastChanges
+    ),
+);
+export const getSaveProductIdData = createSelector(
+    [PPCReducers], ({ saveDataProductId }) => (
+        saveDataProductId
+    ),
+);
 export const getTotalProduct = createSelector(
     [PPCReducers], ({ totalProduct }) => (
         totalProduct

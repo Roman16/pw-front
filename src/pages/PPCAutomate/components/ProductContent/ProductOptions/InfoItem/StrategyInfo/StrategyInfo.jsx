@@ -51,9 +51,11 @@ class StrategyInfo extends Component {
                     caption, key, text, value,
                 }) => (
                     <div key={key} className="info-item">
+                        <div className="info-caption small">{caption}</div>
+
                         <StrategyItem caption={caption} value={value} />
                         <div>
-                            <div className="info-caption">{caption}</div>
+                            <div className="info-caption large">{caption}</div>
                             <div>{text}</div>
                         </div>
                     </div>

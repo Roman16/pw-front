@@ -4,6 +4,8 @@ import { Checkbox as AntCheckbox } from 'antd';
 
 import './Checkbox.less';
 
+export const { Group } = AntCheckbox;
+
 class Checkbox extends Component {
     constructor(props) {
         super(props);

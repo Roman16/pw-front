@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ProductMain from './template/ProductMain';
+import ProductMain from './containers/ProductMainContainer';
 
 class PPCAutomate extends Component {
     render() {

@@ -21,13 +21,28 @@ class ProductContent extends Component {
 
     render() {
         const { isLess } = this.state;
+        const {
+            productIdData, productIdData: { status }, updateProductIdData, saveProductIdData,
+            lastChanges, inValidError,
+        } = this.props;
 
 
         return (
             <div>
-                <OptimizeOptions isLess={isLess} toLess={this.toLess} />
-                <ProductStatus />
-                <Terminal isLess={isLess} />
+                <OptimizeOptions
+                    isLess={isLess}
+                    toLess={this.toLess}
+                    productIdData={productIdData}
+                    inValidError={inValidError}
+                    updateProductIdData={updateProductIdData}
+                />
+                <ProductStatus
+                    updateProductIdData={updateProductIdData}
+                    status={status}
+                    inValidError={inValidError}
+                    saveProductIdData={saveProductIdData}
+                />
+                <Terminal isLess={isLess} lastChanges={lastChanges} />
             </div>
         );
     }

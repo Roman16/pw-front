@@ -50,12 +50,18 @@ class ProductList extends Component {
     }
 
     selectAll = () => {
-        const { totalProduct } = this.props;
+        const { totalProduct, activeProductId } = this.props;
+
 
         this.setState(({ isSelectedAll }) => ({
             isSelectedAll: !isSelectedAll,
             selectedSize: !isSelectedAll ? totalProduct : 1,
-        }));
+        }), () => {
+            const { isSelectedAll } = this.state;
+            const toSelect = isSelectedAll ? 'all' : activeProductId;
+
+            this.toActive(toSelect);
+        });
     };
 
     onSearch = (e) => {
@@ -76,9 +82,10 @@ class ProductList extends Component {
     };
 
     toActive = (activeItemId) => {
-        const { setActiveProduct } = this.props;
+        const { setActiveProduct, onSelect } = this.props;
 
         setActiveProduct(activeItemId);
+        onSelect(activeItemId);
         this.setState({
             isSelectedAll: false,
             selectedSize: 1,
@@ -152,6 +159,7 @@ ProductList.propTypes = {
     productList: PropTypes.arrayOf(PropTypes.object),
     fetchProductList: PropTypes.func,
     setActiveProduct: PropTypes.func,
+    onSelect: PropTypes.func,
     totalProduct: PropTypes.number,
     activeProductId: PropTypes.number,
 };
@@ -161,6 +169,8 @@ ProductList.defaultProps = {
     fetchProductList: () => {
     },
     setActiveProduct: () => {
+    },
+    onSelect: () => {
     },
     totalProduct: null,
     activeProductId: null,

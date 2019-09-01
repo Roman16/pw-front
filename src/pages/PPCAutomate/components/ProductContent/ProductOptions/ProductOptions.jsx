@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './ProductOptions.less';
-import { Icon } from 'antd';
+import { Icon, Alert } from 'antd';
 import OptimizeOptions from './OptimizeOptions';
 import OptimizeStrategy from './OptimizeStrategy';
 import OptimizeCaption from './OptimizeCaption';
@@ -44,12 +44,49 @@ class ProductOptions extends Component {
         this.setState({ showInfo: false });
     };
 
+    onChangeOptions = (e) => {
+        const {
+            updateProductIdData,
+        } = this.props;
+        const localSaveData = { [e.target.name]: e.target.checked };
+
+        updateProductIdData(localSaveData);
+
+
+    };
+
+    onSelectStrategy = (optimizationStrategy) => {
+        const { updateProductIdData } = this.props;
+        const localSaveData = { optimization_strategy: optimizationStrategy };
+
+        updateProductIdData(localSaveData);
+    };
+
     render() {
         const { showInfo, typeInfo } = this.state;
-        const { isLess, toLess } = this.props;
+        const {
+            isLess, toLess, inValidError,
+            productIdData: {
+                create_new_keywords = false,
+                add_negative_keywords = false,
+                add_negative_pats = false,
+                create_new_pats = false,
+                optimize_keywords = false,
+                optimize_pats = false,
+                optimization_strategy = '',
+            },
+        } = this.props;
         const { caption = '', content = null } = info[typeInfo];
 
-        console.log(isLess);
+
+        const optionsValue = {
+            create_new_keywords,
+            add_negative_keywords,
+            add_negative_pats,
+            create_new_pats,
+            optimize_keywords,
+            optimize_pats,
+        };
 
 
         return (
@@ -59,10 +96,17 @@ class ProductOptions extends Component {
                         <div className="optimize-options">
                             <OptimizeCaption
                                 text="What do you want to automate"
-                                onClick={() =>  this.toShowInfo(OPTIONS)}
+                                onClick={() => this.toShowInfo(OPTIONS)}
                             />
                             <div className="options-content">
-                                <OptimizeOptions />
+                                <OptimizeOptions
+                                    optionsValue={optionsValue}
+                                    onChange={this.onChangeOptions}
+                                />
+                                {inValidError && (
+                                    <Alert message="select at least one option" type="error" />
+                                )}
+
                             </div>
                         </div>
                         <div className="optimize-strategy">
@@ -85,7 +129,10 @@ class ProductOptions extends Component {
                             </OptimizeCaption>
 
                             <div className="options-content">
-                                <OptimizeStrategy />
+                                <OptimizeStrategy
+                                    optimizationStrategy={optimization_strategy}
+                                    onSelect={this.onSelectStrategy}
+                                />
                             </div>
                         </div>
                         <div className="descriptions options-content">

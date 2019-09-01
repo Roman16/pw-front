@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import ProductList from '../../containers/ProductListContainer';
-import ProductContent from '../../components/ProductContent';
+import ProductContent from '../../containers/ProductContentContainer';
 import './ProductMain.less';
 
 
 class ProductMain extends Component {
-    constructor(props) {
-        super(props);
+    onSelectProduct = (productId) => {
+        const { fetchProductIdData } = this.props;
 
-        this.state = {};
-    }
-
+        fetchProductIdData(productId);
+    };
 
     render() {
         return (
             <div className="ProductMain basic-container">
-                <ProductList />
+                <ProductList onSelect={this.onSelectProduct} />
                 <ProductContent />
             </div>
         );

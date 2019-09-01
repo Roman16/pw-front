@@ -10,21 +10,18 @@ const StatusInfo = ({ caption, value = '-----' }) => (
     </div>
 );
 
+const RUNNING = 'RUNNING';
+const STOPPED = 'STOPPED';
+
 class ProductStatus extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            isStart: true,
-        };
-    }
-
     toStart = (status) => {
-        this.setState({ isStart: status });
+        const { saveProductIdData } = this.props;
+
+        saveProductIdData(status);
     };
 
     render() {
-        const { isStart } = this.state;
+        const { status } = this.props;
 
 
         return (
@@ -34,9 +31,9 @@ class ProductStatus extends Component {
                 <StatusInfo caption="Total Changes" />
                 <StatusInfo caption="Today Changes" />
                 <div className="control">
-                    {isStart
+                    {status !== RUNNING
                         ? (
-                            <Button className="start" onClick={() => this.toStart(false)}>
+                            <Button className="start" onClick={() => this.toStart(RUNNING)}>
                                 <div className="control-btn-content">
                                     <Icon type="caret-right" className=" btn-icon" />
                                     <div className="btn-text">
@@ -45,7 +42,7 @@ class ProductStatus extends Component {
                                 </div>
                             </Button>
                         ) : (
-                            <Button className="stop" onClick={() => this.toStart(true)}>
+                            <Button className="stop" onClick={() => this.toStart(STOPPED)}>
                                 <div className="control-btn-content">
                                     <div className="icon-stop" />
                                     <div className="btn-text">
