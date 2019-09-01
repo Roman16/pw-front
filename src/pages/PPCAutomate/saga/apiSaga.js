@@ -101,7 +101,7 @@ export function* saveProductIdDataSaga({ status }) {
     try {
         const {
             dataProductId,
-            activeProductId
+            activeProductId,
         } = yield select(PPCReducers);
 
 
@@ -121,7 +121,6 @@ export function* saveProductIdDataSaga({ status }) {
             optimize_keywords,
             optimize_pats].some((elem) => elem);
 
-        console.log(optionsValidate);
         if (optionsValidate) {
             yield put({
                 type: types.CHANGE_INVAILD_ERROR,
@@ -132,24 +131,11 @@ export function* saveProductIdDataSaga({ status }) {
                 data,
             } = yield call(saveProductData, status, activeProductId, dataProductId);
 
-            console.log(!isEmpty(data));
-            console.log(data[0]);
-            if (!isEmpty(data)) {
-                yield put({
-                    type: types.SET_PRODUCT_ID_DATA,
-                    data: data[0],
+            yield put({
+                type: types.SET_PRODUCT_ID_DATA,
+                data,
 
-                });
-            } else {
-                const localData = data[0].status;
-
-                console.log(localData);
-                yield put({
-                    type: types.SET_PRODUCT_ID_DATA,
-                    data: localData,
-
-                });
-            }
+            });
         } else {
             yield put({
                 type: types.CHANGE_INVAILD_ERROR,
