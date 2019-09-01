@@ -112,6 +112,7 @@ class ReportTable extends Component {
     }
 
     downloadFile = () => {
+        // https://front1.profitwhales.com/ppc-automation/save-parameters?product_id=244&optimize_keywords=1&optimization_strategy=SlowPPCLaunch&status=RUNNING
         axios.get(`${window.BASE_URL}/download-report`).then((res) => {
             console.log(res);
         });

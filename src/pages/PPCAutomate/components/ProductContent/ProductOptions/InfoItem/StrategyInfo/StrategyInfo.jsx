@@ -6,6 +6,7 @@ const info = [
     {
         key: 'strategy0',
         caption: 'Organic Profit',
+        value: 'BoostOverallProfit',
         text: `Lorem ipsum dolor sit amet,
          consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut
@@ -14,6 +15,7 @@ const info = [
     }, {
         key: 'strategy1',
         caption: 'Organic Boost',
+        value: 'BoostPPCProfit',
         text: `Lorem ipsum dolor sit amet,
          consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut
@@ -22,6 +24,7 @@ const info = [
     }, {
         key: 'strategy2',
         caption: 'Product Liquidation',
+        value: 'GrowOverallSales',
         text: `Lorem ipsum dolor sit amet,
          consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut
@@ -30,6 +33,7 @@ const info = [
     }, {
         key: 'strategy3',
         caption: 'Product Lounce',
+        value: 'LaunchProduct',
         text: `Lorem ipsum dolor sit amet,
          consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut
@@ -43,9 +47,11 @@ class StrategyInfo extends Component {
     render() {
         return (
             <div className="StrategyInfo">
-                {info.map(({ caption, key, text }) => (
+                {info.map(({
+                    caption, key, text, value,
+                }) => (
                     <div key={key} className="info-item">
-                        <StrategyItem caption={caption} />
+                        <StrategyItem caption={caption} value={value} />
                         <div>
                             <div className="info-caption">{caption}</div>
                             <div>{text}</div>

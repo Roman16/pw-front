@@ -59,7 +59,7 @@ class ProductOptions extends Component {
                         <div className="optimize-options">
                             <OptimizeCaption
                                 text="What do you want to automate"
-                                onClick={() => this.toShowInfo(OPTIONS)}
+                                onClick={() =>  this.toShowInfo(OPTIONS)}
                             />
                             <div className="options-content">
                                 <OptimizeOptions />

@@ -4,7 +4,40 @@ import Button from '../../../../../../components/Buttons';
 import Checkbox from '../../../../../../components/Checkbox';
 import './OptimizeStrategy.less';
 
-export const StrategyItem = ({ caption, selected, onSelect }) => (
+
+const strategyValue = {
+    BoostOverallProfit: {
+        Spend: 'Mid',
+        Profit: 'High',
+        ACOS: 'Mid',
+        Trafic: 'High',
+
+    },
+    BoostPPCProfit: {
+        Spend: 'Low',
+        Profit: 'Mid',
+        ACOS: 'Low',
+        Trafic: 'Low',
+    },
+    GrowOverallSales: {
+        Spend: 'High',
+        Profit: 'Mid',
+        ACOS: 'High',
+        Trafic: 'High',
+    },
+    LaunchProduct: {
+        Spend: 'Max',
+        Profit: 'Low',
+        ACOS: 'High',
+        Trafic: 'Max',
+    },
+
+};
+
+
+export const StrategyItem = ({
+    caption, selected, onSelect, value = 'BoostOverallProfit',
+}) => (
     <div className={`StrategyItem ${selected ? 'selected' : ''}`}>
         <div className="caption-strategy">
             <div className="strategy-checkbox">
@@ -15,19 +48,28 @@ export const StrategyItem = ({ caption, selected, onSelect }) => (
         <div className="params">
             <div className="params-item">
                 <div className="params-name">Spend</div>
-                <div className="params-value low">Low</div>
+                <div className={`params-value ${strategyValue[value].Spend.toLowerCase()}`}>
+                    {strategyValue[value].Spend}
+                </div>
             </div>
             <div className="params-item">
                 <div className="params-name">Profit</div>
-                <div className="params-value mid">Mid</div>
+                <div className={`params-value ${strategyValue[value].Profit.toLowerCase()}`}>
+                    {strategyValue[value].Profit}
+                </div>
             </div>
             <div className="params-item">
                 <div className="params-name">Acos</div>
-                <div className="params-value high">High</div>
+                <div className={`params-value ${strategyValue[value].ACOS.toLowerCase()}`}>
+                    {strategyValue[value].ACOS}
+                </div>
             </div>
             <div className="params-item">
                 <div className="params-name">Trafic</div>
-                <div className="params-value low">Low</div>
+                <div className={`params-value ${strategyValue[value].Trafic.toLowerCase()}`}>
+                    {strategyValue[value].Trafic}
+
+                </div>
             </div>
         </div>
         <div className="strategy-control">
@@ -62,24 +104,30 @@ class OptimizeStrategy extends Component {
             <div className="OptimizeStrategy">
                 <div className="strategies">
                     <StrategyItem
-                        caption="Organic Profit"
+                        caption="Organic (Overall) Profit"
                         selected={selectedStrategy === 1}
                         onSelect={() => this.onSelectStrategy(1)}
+                        value="BoostOverallProfit"
                     />
                     <StrategyItem
                         caption="Organic Boost"
                         selected={selectedStrategy === 2}
                         onSelect={() => this.onSelectStrategy(2)}
+                        value="BoostPPCProfit"
                     />
                     <StrategyItem
                         caption="Product Liquidation"
                         selected={selectedStrategy === 3}
                         onSelect={() => this.onSelectStrategy(3)}
+                        value="GrowOverallSales"
+
                     />
                     <StrategyItem
                         caption="Product Lounce"
                         selected={selectedStrategy === 4}
                         onSelect={() => this.onSelectStrategy(4)}
+                        value="LaunchProduct"
+
                     />
                 </div>
             </div>
