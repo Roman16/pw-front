@@ -1,6 +1,7 @@
 import PagesRouter from '../pages';
-
+import Login from '../pages/Login';
 import PPCAutomate from '../pages/PPCAutomate';
+import PPCReport from '../pages/PPCReport';
 
 const routers = [
     {
@@ -9,9 +10,19 @@ const routers = [
         component: PagesRouter,
         routes: [
             {
-                path: '/',
+                path: '/login',
+                exact: true,
+                component: Login,
+            },
+            {
+                path: '/ppc-automate',
                 exact: true,
                 component: PPCAutomate,
+            },
+            {
+                path: '/ppc-report',
+                exact: true,
+                component: PPCReport,
             },
 
         ],
