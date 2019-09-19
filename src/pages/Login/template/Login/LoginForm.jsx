@@ -56,7 +56,7 @@ class WrappedLoginForm extends React.Component {
 
                 </Row>
                 <Row type="flex" justify="start" className='form-btns'>
-                    <Col xs={24} sm={24} md={9} className='form-btns-login'><Button className="submit" onSubmit={this.onSubmit}>Log in</Button></Col>
+                    <Col xs={24} sm={24} md={9} className='form-btns-login'><Button className="submit" htmlType="submit">Log in</Button></Col>
                     <Col xs={24} sm={24} md={9} className='form-btns-signup'><Link to="/register" className="sign-up-link">Sign up</Link></Col>
                 </Row>
                 <Row className="form-details">
