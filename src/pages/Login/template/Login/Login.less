@@ -157,7 +157,8 @@
 }
 
 .form-group {
-    border: 1px solid #bdc6cf
+    border: 1px solid #bdc6cf;
+    margin-bottom: 1rem;
 }
 
 .form-group .input-form-group {
@@ -166,7 +167,8 @@
     padding-right: 24px;
     padding-top: 16px;
     padding-bottom: 16px;
-    position: relative
+    position: relative;
+    margin: 0;
 }
 
 .form-group .input-form-group:last-child {
@@ -220,18 +222,19 @@
     background: #38454f
 }
 
-.checkbox-label i {
+.ant-checkbox-inner {
     content: "";
     display: inline-block;
-    border: 2px solid #38454f;
-    width: 16px;
-    height: 16px;
-    background: #fff;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
+    border: 2px solid #38454f!important;
+    background: #fff!important;
     margin-right: 12px
 }
-
+.ant-checkbox-checked::after{
+    border: none!important;
+}
+.ant-checkbox-checked .ant-checkbox-inner{
+    background: #38454f !important;
+}
 .checkbox-label span {
     color: #7c8a95;
     font-size: 11px;
@@ -441,14 +444,6 @@
 
 .sign-page .form-bottom {
     padding-top: 15px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between
 }
 
 .sign-page .form-bottom a.forget {
@@ -459,7 +454,7 @@
 }
 
 .sign-page .form-btns {
-    padding-top: 25px
+    padding-top: 25px;
 }
 
 .sign-page .form-btns a.sign-up-link {
@@ -500,6 +495,31 @@
 .sign-page .form-btns a.sign-up-link:active {
     background: #000;
     border: 1px solid #000
+}
+
+.sign-page .form-btns-login {
+    flex: 0 0 41.666667%;
+    padding: 0 15px 0 0;
+}
+
+.sign-page .form-btns-signup {
+  flex: 0 0 41.666667%;
+  padding: 0 0 0 15px;
+}
+@media(min-width: 320px) and (max-width: 768px){
+  .sign-page .form-btns{
+    flex-direction: column;
+  }
+  .sign-page .form-btns-login {
+    padding: 0;
+  }
+
+  .sign-page .form-btns-signup {
+    padding: 0;
+  }
+  .sign-page .info-list{
+    padding-left: 0;
+  }
 }
 
 .amazon-login-wrap p {
