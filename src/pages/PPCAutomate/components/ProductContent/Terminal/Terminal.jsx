@@ -71,7 +71,7 @@ const TerminalCaption = () => (
             Last Changes Terminal
             <Tooltip
                 placement="bottom"
-                title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                title="In the changes terminal, you will see the last changes that the software performs."
             >
 
                 <Icon type="info-circle" theme="filled" />

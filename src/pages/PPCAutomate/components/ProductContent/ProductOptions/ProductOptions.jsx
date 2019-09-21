@@ -51,8 +51,6 @@ class ProductOptions extends Component {
         const localSaveData = { [e.target.name]: e.target.checked };
 
         updateProductIdData(localSaveData);
-
-
     };
 
     onSelectStrategy = (optimizationStrategy) => {
@@ -136,9 +134,10 @@ class ProductOptions extends Component {
                             </div>
                         </div>
                         <div className="descriptions options-content">
-                            {` Mistake: Duplicate Keywords. Keyword in ad group in campaign
-                        'duplicateCampaignName' is a duplicate of keyword 'originKeywordText' in ad
-                        group 'originAdGroupName' in campaign`}
+                            {` What is PAT? Product Attribute Targeting is
+                            a powerful new way to target manual Amazon Sponsored Product campaigns.
+                             It allows sellers to target ads by either
+                             ASIN or Category (brands, prices, and ratings).`}
                         </div>
                     </div>
                     <div className="less-more-control">

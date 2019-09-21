@@ -16,7 +16,7 @@ const SelectProduct = ({ onSelectAll, selectedSize, isSelectedAll = false }) => 
             All Products
         </Button>
         <div className="selected-products">
-            <span> Selected Products</span>
+            <span> Select All Products</span>
             <span className="product">{selectedSize}</span>
         </div>
 
