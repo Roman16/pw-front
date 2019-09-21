@@ -137,16 +137,25 @@ class NewPats extends Component {
         fetchData(activeTable, currentPage);
     };
 
+    componentDidUpdate(nextProps) {
+        const { totalTypeSize, updateTotalTypeSize } = this.props;
+
+        if (totalTypeSize !== nextProps.totalTypeSize) {
+            updateTotalTypeSize('new-pats', totalTypeSize);
+        }
+    }
+
     render() {
         const { activeTable, currentPage } = this.state;
         const {
-            data, loading, totalSize, showPagination,
+            data, loading, totalSize, showPagination, count,
         } = this.props;
 
         return (
             <div className="ReportItemTable">
                 <TableButton
                     active={activeTable === CreatedCrossNegativePAT}
+                    count={count[CreatedCrossNegativePAT]}
                     onClick={() => {
                         this.changeTable(CreatedCrossNegativePAT);
                     }}
@@ -155,6 +164,8 @@ class NewPats extends Component {
                 </TableButton>
                 <TableButton
                     active={activeTable === CreatedPATCST}
+                    count={count[CreatedPATCST]}
+
                     onClick={() => {
                         this.changeTable(CreatedPATCST);
                     }}

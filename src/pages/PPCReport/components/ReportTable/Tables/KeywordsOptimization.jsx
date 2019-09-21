@@ -8,7 +8,7 @@ import {
 import TableApi from '../../../Hoc/TableApi';
 
 const changedKeywordBidAcos = 'changed-keyword-bid-acos';
-const changedKeywordBidImpression = 'changed-keyword-bid-impression';
+const changedKeywordBidImpression = 'changed-keyword-bid-impressions';
 const pausedKeywordHighAcos = 'paused-keyword-high-acos';
 const pausedKeywordNoSales = 'paused-keyword-no-sales';
 
@@ -161,17 +161,26 @@ class KeywordsOptimization extends Component {
         fetchData(activeTable, currentPage);
     };
 
+    componentDidUpdate(nextProps) {
+        const { totalTypeSize, updateTotalTypeSize } = this.props;
+
+        if (totalTypeSize !== nextProps.totalTypeSize) {
+            updateTotalTypeSize('keywords-optimization', totalTypeSize);
+        }
+    }
+
     render() {
         const { activeTable, currentPage } = this.state;
         const {
-            data, loading, totalSize, showPagination,
+            data, loading, totalSize, showPagination, count,
         } = this.props;
-
 
         return (
             <div className="ReportItemTable">
                 <TableButton
                     active={changedKeywordBidAcos === activeTable}
+                    count={count[changedKeywordBidAcos]}
+
                     onClick={() => {
                         this.changeTable(changedKeywordBidAcos);
                     }}
@@ -180,6 +189,7 @@ class KeywordsOptimization extends Component {
                 </TableButton>
                 <TableButton
                     active={changedKeywordBidImpression === activeTable}
+                    count={count[changedKeywordBidImpression]}
                     onClick={() => {
                         this.changeTable(changedKeywordBidImpression);
                     }}
@@ -188,6 +198,7 @@ class KeywordsOptimization extends Component {
                 </TableButton>
                 <TableButton
                     active={pausedKeywordHighAcos === activeTable}
+                    count={count[pausedKeywordHighAcos]}
                     onClick={() => {
                         this.changeTable(pausedKeywordHighAcos);
                     }}
@@ -196,7 +207,7 @@ class KeywordsOptimization extends Component {
                 </TableButton>
                 <TableButton
                     active={pausedKeywordNoSales === activeTable}
-
+                    count={count[pausedKeywordNoSales]}
                     onClick={() => {
                         this.changeTable(pausedKeywordNoSales);
                     }}

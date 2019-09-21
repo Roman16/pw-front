@@ -12,11 +12,11 @@ const SelectProduct = ({ onSelectAll, selectedSize, isSelectedAll = false }) => 
     <div className={`SelectProduct ${isSelectedAll ? 'selected-all' : ''}`}>
 
         <Button onClick={onSelectAll}>
-            {isSelectedAll ? 'Deselect ' : 'Selected '}
+            {isSelectedAll ? 'Deselect ' : 'Select '}
             All Products
         </Button>
         <div className="selected-products">
-            <span> Select All Products</span>
+            <span> Selected All Products</span>
             <span className="product">{selectedSize}</span>
         </div>
 

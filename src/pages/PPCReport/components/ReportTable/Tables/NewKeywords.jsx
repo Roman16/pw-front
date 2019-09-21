@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Tooltip } from 'antd';
+import moment from 'moment';
 import Table from '../../../../../components/Table';
 import TableButton from '../TableButton';
 import {
@@ -53,6 +54,10 @@ const columns = {
             title: 'Start Date.',
             dataIndex: 'startDate',
             key: 'startDate',
+            render: (text) => (
+                moment(text)
+                    .format('Y/M/D')
+            ),
         },
         {
             ...actionField,
@@ -215,16 +220,25 @@ class NewKeywords extends Component {
         fetchData(activeTable, currentPage);
     };
 
+    componentDidUpdate(nextProps) {
+        const { totalTypeSize, updateTotalTypeSize } = this.props;
+
+        if (totalTypeSize !== nextProps.totalTypeSize) {
+            updateTotalTypeSize('new-keywords', totalTypeSize);
+        }
+    }
+
     render() {
         const { activeTable, currentPage } = this.state;
         const {
-            data, loading, totalSize, showPagination,
+            data, loading, totalSize, showPagination,count
         } = this.props;
 
         return (
             <div className="ReportItemTable">
                 <TableButton
                     active={createdCampaign === activeTable}
+                    count={count[createdCampaign]}
                     onClick={() => {
                         this.changeTable(createdCampaign);
                     }}
@@ -233,6 +247,8 @@ class NewKeywords extends Component {
                 </TableButton>
                 <TableButton
                     active={createdAdGroup === activeTable}
+                    count={count[createdAdGroup]}
+
                     onClick={() => {
                         this.changeTable(createdAdGroup);
                     }}
@@ -241,6 +257,8 @@ class NewKeywords extends Component {
                 </TableButton>
                 <TableButton
                     active={createdProductAd === activeTable}
+                    count={count[createdProductAd]}
+
                     onClick={() => {
                         this.changeTable(createdProductAd);
                     }}
@@ -249,6 +267,7 @@ class NewKeywords extends Component {
                 </TableButton>
                 <TableButton
                     active={createdCrossNegativeKeyword === activeTable}
+                    count={count[createdCrossNegativeKeyword]}
                     onClick={() => {
                         this.changeTable(createdCrossNegativeKeyword);
                     }}
@@ -257,6 +276,7 @@ class NewKeywords extends Component {
                 </TableButton>
                 <TableButton
                     active={createdKeywordCST === activeTable}
+                    count={count[createdKeywordCST]}
                     onClick={() => {
                         this.changeTable(createdKeywordCST);
                     }}

@@ -10,7 +10,7 @@ import TableApi from '../../../Hoc/TableApi';
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
 const changedPATBidImpressions = 'changed-pat-bid-impressions';
-const pausedManualPATHighACoS = 'paused-manual-path-high-acos';
+const pausedManualPATHighACoS = 'paused-manual-pat-high-acos';
 const pausedManualPatNoSales = 'paused-manual-pat-no-sales';
 
 
@@ -170,16 +170,26 @@ class PATsOptimization extends Component {
         fetchData(activeTable, currentPage);
     };
 
+    componentDidUpdate(nextProps) {
+        const { totalTypeSize, updateTotalTypeSize } = this.props;
+
+        if (totalTypeSize !== nextProps.totalTypeSize) {
+            updateTotalTypeSize('pats-optimization', totalTypeSize);
+        }
+    }
+
     render() {
         const { activeTable, currentPage } = this.state;
         const {
-            data, loading, totalSize, showPagination,
+            data, loading, totalSize, showPagination, count,
         } = this.props;
+
 
         return (
             <div className="ReportItemTable">
                 <TableButton
                     active={activeTable === changedPATBidACoS}
+                    count={count[changedPATBidACoS]}
                     onClick={() => {
                         this.changeTable(changedPATBidACoS);
                     }}
@@ -188,6 +198,7 @@ class PATsOptimization extends Component {
                 </TableButton>
                 <TableButton
                     active={activeTable === changedPATBidImpressions}
+                    count={count[changedPATBidImpressions]}
                     onClick={() => {
                         this.changeTable(changedPATBidImpressions);
                     }}
@@ -196,6 +207,7 @@ class PATsOptimization extends Component {
                 </TableButton>
                 <TableButton
                     active={activeTable === pausedManualPATHighACoS}
+                    count={count[pausedManualPATHighACoS]}
                     onClick={() => {
                         this.changeTable(pausedManualPATHighACoS);
                     }}
@@ -204,6 +216,7 @@ class PATsOptimization extends Component {
                 </TableButton>
                 <TableButton
                     active={activeTable === pausedManualPatNoSales}
+                    count={count[pausedManualPatNoSales]}
                     onClick={() => {
                         this.changeTable(pausedManualPatNoSales);
                     }}

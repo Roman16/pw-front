@@ -12,7 +12,6 @@ const highACoS = 'created-negative-keyword-from-cst-high-acos';
 const noSales = 'created-negative-keyword-from-cst-no-sales';
 
 
-
 const defaultKeys = [
     {
         ...indexField,
@@ -125,16 +124,25 @@ class NewNegativeKeywords extends Component {
         fetchData(activeTable, currentPage);
     };
 
+    componentDidUpdate(nextProps) {
+        const { totalTypeSize, updateTotalTypeSize } = this.props;
+
+        if (totalTypeSize !== nextProps.totalTypeSize) {
+            updateTotalTypeSize('new-negative-keywords', totalTypeSize);
+        }
+    }
+
     render() {
         const { activeTable, currentPage } = this.state;
         const {
-            data, loading, totalSize, showPagination,
+            data, loading, totalSize, showPagination,count
         } = this.props;
 
         return (
             <div className="ReportItemTable">
                 <TableButton
                     active={activeTable === highACoS}
+                    count={count[highACoS]}
                     onClick={() => {
                         this.changeTable(highACoS);
                     }}
@@ -143,6 +151,7 @@ class NewNegativeKeywords extends Component {
                 </TableButton>
                 <TableButton
                     active={activeTable === noSales}
+                    count={count[noSales]}
                     onClick={() => {
                         this.changeTable(noSales);
                     }}

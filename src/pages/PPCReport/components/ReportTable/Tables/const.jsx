@@ -14,7 +14,8 @@ export const dateField = {
     dataIndex: 'date',
     key: 'date',
     render: (text) => (
-        moment(text).format('Y/M/D')
+        moment(text)
+            .format('Y/M/D')
     ),
 };
 
@@ -23,6 +24,11 @@ export const actionField = {
     dataIndex: 'action',
     key: 'action',
     className: 'left-border',
+    render: (text) => (
+        <div>
+            <span dangerouslySetInnerHTML={{ __html: text }} />
+        </div>
+    ),
 };
 export const infoField = {
     title: '',
@@ -31,7 +37,10 @@ export const infoField = {
     render: (text) => (
         <Tooltip
             placement="bottom"
-            title={text}
+            title={(
+                <span dangerouslySetInnerHTML={{ __html: text }} />
+
+            )}
         >
             <Icon type="info-circle" className="info-icon" theme="filled" />
         </Tooltip>

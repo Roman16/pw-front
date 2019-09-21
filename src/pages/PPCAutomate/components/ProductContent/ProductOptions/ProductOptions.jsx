@@ -120,7 +120,13 @@ class ProductOptions extends Component {
                                             Days Left
                                         </div>
                                         <div>
-                                            <Button>Upgrade Now</Button>
+                                            <Button
+                                                onClick={() => {
+                                                    window.open(`${window.BASE_URL}/account/subscriptions`);
+                                                }}
+                                            >
+                                                Upgrade Now
+                                            </Button>
                                         </div>
                                     </div>
                                 </div>
@@ -146,6 +152,7 @@ class ProductOptions extends Component {
                         </div>
 
                     </div>
+
                 </div>
                 <SideInfo
                     caption={caption}
@@ -153,6 +160,7 @@ class ProductOptions extends Component {
                     content={content}
                     onClose={this.onClose}
                 />
+
             </>
         );
     }

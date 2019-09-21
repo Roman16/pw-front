@@ -3,10 +3,10 @@ import { Icon } from 'antd';
 import Button from '../../../../../components/Buttons';
 import './ProductStatus.less';
 
-const StatusInfo = ({ caption, value = '-----' }) => (
+const StatusInfo = ({ caption, value = '-----', statusColor = '' }) => (
     <div className="StatusInfo">
         <div className="caption">{caption}</div>
-        <div>{value}</div>
+        <div className={statusColor}>{value}</div>
     </div>
 );
 
@@ -23,15 +23,21 @@ class ProductStatus extends Component {
     render() {
         const { status } = this.props;
 
+        const isActive = status === RUNNING;
+
 
         return (
             <div className="ProductStatus">
-                <StatusInfo caption="Status" value="InActive" />
+                <StatusInfo
+                    caption="Status"
+                    value={isActive ? 'Active' : 'Inactive'}
+                    statusColor={isActive ? 'active' : 'inactive'}
+                />
                 <StatusInfo caption="Start Date" />
                 <StatusInfo caption="Total Changes" />
                 <StatusInfo caption="Today Changes" />
                 <div className="control">
-                    {status !== RUNNING
+                    {!isActive
                         ? (
                             <Button className="start" onClick={() => this.toStart(RUNNING)}>
                                 <div className="control-btn-content">

@@ -5,13 +5,19 @@ import './TableButton.less';
 
 class TableButton extends Component {
     render() {
-        const { children, active, onClick } = this.props;
+        const {
+            children, active, onClick, count,
+        } = this.props;
 
         return (
             <div className={`TableButton ${active ? 'active' : ''}`}>
                 <Button onClick={onClick}>
                     {children}
-                    <span className="count"> 4</span>
+                    {count && (
+                        <span className="count">
+                            {count}
+                        </span>
+                    )}
                 </Button>
             </div>
         );
@@ -25,9 +31,11 @@ TableButton.propTypes = {
     ]),
     active: PropTypes.bool,
     onClick: PropTypes.func,
+    count: PropTypes.number,
 };
 TableButton.defaultProps = {
     children: null,
+    count: null,
     active: false,
     onClick: () => {
     },

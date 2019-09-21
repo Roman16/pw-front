@@ -135,16 +135,25 @@ class NewNegativePats extends Component {
         fetchData(activeTable, currentPage);
     };
 
+    componentDidUpdate(nextProps) {
+        const { totalTypeSize, updateTotalTypeSize } = this.props;
+
+        if (totalTypeSize !== nextProps.totalTypeSize) {
+            updateTotalTypeSize('new-negative-pats', totalTypeSize);
+        }
+    }
+
     render() {
         const { activeTable, currentPage } = this.state;
         const {
-            data, loading, totalSize, showPagination,
+            data, loading, totalSize, showPagination,count
         } = this.props;
 
         return (
             <div className="ReportItemTable">
                 <TableButton
                     active={activeTable === HighACoS}
+                    count={count[HighACoS]}
                     onClick={() => {
                         this.changeTable(HighACoS);
                     }}
@@ -153,6 +162,8 @@ class NewNegativePats extends Component {
                 </TableButton>
                 <TableButton
                     active={activeTable === NoSales}
+                    count={count[NoSales]}
+
                     onClick={() => {
                         this.changeTable(NoSales);
                     }}

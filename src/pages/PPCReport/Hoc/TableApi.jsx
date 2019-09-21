@@ -9,7 +9,7 @@ const fetchReportTable = (
     axios.get(`${window.BASE_URL}/ppc-report/get-table-data`, {
         params: {
             'data-type': dataType,
-            'data-sub-typ': dataSubType,
+            'data-sub-type': dataSubType,
             page,
             size: DEFAULT_PAGE_SIZE,
             'start-date': startDate,
@@ -34,6 +34,8 @@ const TableApi = (ReportTable, tableType) => (
                 data: [],
                 loading: true,
                 totalSize: 1,
+                totalTypeSizeResp: 0,
+                count: {},
                 showPagination: false,
             };
             const {
@@ -66,20 +68,30 @@ const TableApi = (ReportTable, tableType) => (
             });
             let dataResp = [];
             let totalSizeResp = 1;
+            let totalTypeSizeResp = 0;
+            let countResp = {};
 
             this.subType = subType;
             fetchReportTable(
                 tableType, subType, page, start, end,
             )
-                .then(({ data: { data, totalSize } }) => {
+                .then(({
+                    data: {
+                        data, totalSize, totalTypeSize = 0, counts = {},
+                    },
+                }) => {
                     dataResp = data;
                     totalSizeResp = totalSize;
+                    totalTypeSizeResp = totalTypeSize;
+                    countResp = counts;
                 })
                 .finally(() => {
                     this.setState({
                         loading: false,
                         data: dataResp,
                         totalSize: totalSizeResp,
+                        totalTypeSize: totalTypeSizeResp,
+                        count: countResp,
                         showPagination: totalSizeResp > DEFAULT_PAGE_SIZE,
 
                     });
@@ -88,7 +100,7 @@ const TableApi = (ReportTable, tableType) => (
 
         render() {
             const {
-                data, loading, totalSize, showPagination,
+                data, loading, totalSize, showPagination, totalTypeSize, count,
             } = this.state;
 
 
@@ -99,6 +111,8 @@ const TableApi = (ReportTable, tableType) => (
                     loading={loading}
                     totalSize={totalSize}
                     showPagination={showPagination}
+                    totalTypeSize={totalTypeSize}
+                    count={count}
                     {...this.props}
                 />
             );
