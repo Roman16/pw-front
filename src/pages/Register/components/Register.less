@@ -1,0 +1,121 @@
+@import "../../../style/variables.less";
+@import "../../../style/mixins.less";
+
+.RegisterFormContainer {
+  background: url('../../../assets/img/sign-background.png') center top no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+  letter-spacing: .4px
+}
+
+
+.input-container {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 30px;
+}
+
+.input-container input {
+  border: 0;
+  outline: 0;
+  border-bottom: solid 2px #38454f;
+  height: 48px;
+  -webkit-border-radius: 0 !important;
+  border-radius: 0 !important;
+  color: #38454f;
+  font-family: ir;
+  font-size: 16px;
+  background: 0 0;
+  width: 100%;
+  outline: 0
+}
+
+.input-container input::-webkit-input-placeholder {
+  color: transparent
+}
+
+.input-container input::-moz-placeholder {
+  color: transparent
+}
+
+.input-container input:-ms-input-placeholder {
+  color: transparent
+}
+
+.input-container input.has-content ~ label, .input-container input:-webkit-autofill ~ label, .input-container input:focus ~ label {
+  top: -16px;
+  left: 0;
+  font-size: 12px
+}
+
+.input-container input.has-content::-webkit-input-placeholder, .input-container input:-webkit-autofill::-webkit-input-placeholder, .input-container input:focus::-webkit-input-placeholder {
+  color: #aaa
+}
+
+.input-container input.has-content::-moz-placeholder, .input-container input:-webkit-autofill::-moz-placeholder, .input-container input:focus::-moz-placeholder {
+  color: #aaa
+}
+
+.input-container input.has-content:-ms-input-placeholder, .input-container input:-webkit-autofill:-ms-input-placeholder, .input-container input:focus:-ms-input-placeholder {
+  color: #7c8a95
+}
+
+.input-container select {
+  border: 0;
+  padding: 0;
+  -webkit-box-shadow: 0 0 0 !important;
+  box-shadow: 0 0 0 !important;
+  background-color: transparent;
+  display: table;
+  letter-spacing: .16px;
+  color: #38454f;
+  width: 100%;
+  outline: 0;
+  font-family: ibm-plex-sans, Helvetica Neue, Arial, sans-serif;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  height: 48px;
+  border-bottom: solid 2px #38454f;
+  color: #38454f;
+  font-family: ir;
+  font-size: 16px
+}
+
+.input-container select ~ label {
+  top: -16px;
+  left: 0;
+  font-size: 12px
+}
+
+.input-container label {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 15px;
+  -webkit-transition: .3s;
+  -o-transition: .3s;
+  transition: .3s;
+  z-index: -1;
+  color: #38454f;
+  color: #aaa;
+  font-family: im;
+  font-size: 16px;
+  letter-spacing: 0;
+  transition: .3s;
+  color: rgba(0, 0, 0, .38)
+}
+
+.input-container .image {
+  position: absolute;
+  right: 0;
+  bottom: 4px
+}
+
+.input-container svg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto 0
+}

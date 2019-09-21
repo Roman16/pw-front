@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Login from './template/Login';
+import Login from './components/Login';
 
 class LoginPage extends Component {
     render() {

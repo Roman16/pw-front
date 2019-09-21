@@ -1,5 +1,6 @@
 import React from 'react';
-import {Form, Row, Input, Button, Checkbox, Col} from 'antd';
+import {Form, Row, Input, Button, Checkbox, Col, Select} from 'antd';
+import './LoginForm.less';
 import { Link } from 'react-router-dom';
 class WrappedLoginForm extends React.Component {
     handleSubmit = e => {

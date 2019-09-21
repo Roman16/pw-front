@@ -1,25 +1,25 @@
-import React from 'react';
-import './Login.less';
-import { Row, Col } from 'antd';
-import LoginForm from "./LoginForm";
+import React from "react";
+import {Col, Row} from "antd";
+import './Register.less';
+import RegisterForm from './RegisterForm/RegisterForm';
 
-
-class Login extends React.Component {
+class Register extends React.Component {
     render(){
         return (
-            <div className="LoginFormContainer">
+            <div className="RegisterFormContainer">
                 <div className="sign-page">
                     <div className="logo-auth">
                         <img src="/logo.svg" alt="logo" />
                     </div>
                     <Row className="container">
                         <Col xs={24} sm={24} md={12} lg={12} className="form-col">
-                            <div className="title">Log In</div>
+                            <div className="title">Create your account</div>
                             <div className="sub-title">
-                                Welcome back! Please Log In to your account <br />
-                                to access the dashboard.
+                                Getting started with Profit Whales takes only a few minutes but saves hundreds of hours, <br/>
+                                don’t believe me? Try it now.
                             </div>
-                            <LoginForm />
+                            <div className="form-title">Personal Information</div>
+                            <RegisterForm />
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} className="info-col">
                             <div className="title">
@@ -40,8 +40,8 @@ class Login extends React.Component {
     }
 }
 
-Login.propTypes = {};
+Register.propTypes = {};
 
-Login.defaultProps = {};
+Register.defaultProps = {};
 
-export default Login;
+export default Register;
