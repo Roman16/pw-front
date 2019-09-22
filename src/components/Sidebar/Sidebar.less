@@ -1,0 +1,99 @@
+@primary-default: #ccc;
+@import "../../style/variables";
+
+.Sidebar {
+    display: inline-block;
+    width: 72px;
+    min-height: 100vh;
+    background-color: #343C5A;
+    transition: 0.3s;
+
+    &.SidebarOpen {
+        width: 200px;
+    }
+
+    .SidebarHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+
+        .SidebarIcon {
+            color: #B6B6FB;
+            font-size: 18px;
+        }
+
+        .SidebarLogo {
+            width: 100px;
+            margin-right: 6px;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.SidebarMenu {
+    min-height: calc(100vh - 75px);
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    ul {
+        background-color: transparent !important;
+        box-shadow: none !important;
+
+        li {
+            font-size: 14px;
+            margin: 10px 0 !important;
+
+            a, .ant-menu-submenu-title {
+                display: flex;
+                align-items: center;
+                color: #B6B6FB !important;
+            }
+
+            i {
+                &.anticon {
+                    font-size: 30px;
+                    width: 40px;
+                    text-align: left;
+                }
+
+                &.anticon-right-circle {
+                    color: #B6B6FB;
+                }
+
+                &.ant-menu-submenu-arrow {
+                    display: none;
+                }
+            }
+
+            &.ant-menu-item-selected {
+                color: #fff !important;
+                background-color: transparent !important;
+            }
+
+            &.ant-menu-submenu-open {
+                .ant-menu-submenu-title {
+                    color: #fff !important;
+                }
+            }
+
+            &.logOut {
+                i.anticon {
+                    font-size: 24px;
+                    padding-left: 4px;
+                }
+            }
+        }
+
+        &.ant-menu-sub li {
+            height: 24px !important;
+            padding-left: 36px !important;
+            line-height: 24px !important;
+        }
+    }
+}
