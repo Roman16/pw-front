@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { func, bool, string } from 'prop-types';
 import Checkbox from '../../../../components/Checkbox';
-
 import './ProductItem.less';
 
 class ProductItem extends Component {
@@ -12,7 +12,7 @@ class ProductItem extends Component {
 
 
     maxText = (text) => {
-        if (text.length > 40) {
+        if (text && text.length > 40) {
             return `${text.slice(0, 40)}...`;
         }
 
@@ -66,8 +66,25 @@ class ProductItem extends Component {
     }
 }
 
-ProductItem.propTypes = {};
+ProductItem.propTypes = {
+    isActive: bool,
+    onClick: func,
+    asin: string,
+    captions: string,
+    sku: string,
+    imageUrl: string,
+    underOptimization: string,
+};
 
-ProductItem.defaultProps = {};
+ProductItem.defaultProps = {
+    isActive: false,
+    onClick: () => {
+    },
+    asin: null,
+    captions: null,
+    sku: null,
+    imageUrl: null,
+    underOptimization: null,
+};
 
 export default ProductItem;
