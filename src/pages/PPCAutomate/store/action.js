@@ -8,11 +8,19 @@ export const SET_PRODUCT_CHANGE_DATA = 'SET_PRODUCT_CHANGE_DATA';
 export const SET_PRODUCT_ID_DATA = 'SET_PRODUCT_ID_DATA';
 export const SAVE_PRODUCT_ID_DATA = 'SAVE_PRODUCT_ID_DATA';
 export const CHANGE_INVAILD_ERROR = 'CHANGE_INVAILD_ERROR';
+export const CHANGE_PRODUCT_LIST = 'CHANGE_PRODUCT_LIST';
 
 
 export const setProductList = (productList) => ({
     type: SET_PRODUCT_LIST,
     productList,
+
+});
+
+export const changeProductList = (changedItem, indexItem) => ({
+    type: CHANGE_PRODUCT_LIST,
+    changedItem,
+    indexItem,
 
 });
 export const setActiveProduct = (activeProductId) => ({

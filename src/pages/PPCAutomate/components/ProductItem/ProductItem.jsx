@@ -28,6 +28,8 @@ class ProductItem extends Component {
             imageUrl, underOptimization,
         } = this.props;
 
+        console.log(captions, underOptimization);
+
 
         return (
             <div
@@ -37,7 +39,7 @@ class ProductItem extends Component {
                 <div className="image">
                     <img src={imageUrl} alt="" />
                 </div>
-                <div className="content">
+                <div className="product-item-content">
                     <div className="caption">
                         {this.maxText(captions)}
                     </div>
@@ -73,7 +75,7 @@ ProductItem.propTypes = {
     captions: string,
     sku: string,
     imageUrl: string,
-    underOptimization: string,
+    underOptimization: bool,
 };
 
 ProductItem.defaultProps = {
@@ -84,7 +86,7 @@ ProductItem.defaultProps = {
     captions: null,
     sku: null,
     imageUrl: null,
-    underOptimization: null,
+    underOptimization: false,
 };
 
 export default ProductItem;
