@@ -140,7 +140,7 @@ class ReportTable extends Component {
     };
 
     downloadFile = () => {
-        axios.get(`${window.BASE_URL}/download-report`)
+        axios.get(`${window.BASE_URL}/ppc-report/download-report`)
             .then((res) => {
                 console.log(res);
             });
