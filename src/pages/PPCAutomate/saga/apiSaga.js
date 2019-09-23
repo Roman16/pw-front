@@ -4,6 +4,7 @@ import {
     fetchProductList, fetchProductData, saveProductData, fetchProductChangeData,
 } from './api';
 import { SET_PRODUCT_CHANGE_DATA } from '../store/action';
+import { CHANGE_PRODUCT_LIST } from '../store/action';
 
 const PPCReducers = ({ PPCReducers }) => PPCReducers;
 
@@ -102,8 +103,8 @@ export function* saveProductIdDataSaga({ status }) {
         const {
             dataProductId,
             activeProductId,
+            productList,
         } = yield select(PPCReducers);
-
 
         const {
             create_new_keywords = false,
@@ -131,9 +132,22 @@ export function* saveProductIdDataSaga({ status }) {
                 data,
             } = yield call(saveProductData, status, activeProductId, dataProductId);
 
+            const activeProductIndex = productList.findIndex((item) => item.id === activeProductId);
+
+            const updatedProductItem = {
+                ...productList[activeProductIndex],
+                under_optimization: data.status === 'RUNNING',
+            };
+
             yield put({
                 type: types.SET_PRODUCT_ID_DATA,
                 data,
+
+            });
+            yield put({
+                type: types.CHANGE_PRODUCT_LIST,
+                updatedProductItem,
+                activeProductIndex,
 
             });
         } else {

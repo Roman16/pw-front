@@ -119,6 +119,8 @@ class ProductList extends Component {
         } = this.state;
         const { productList, totalProduct, activeProductId } = this.props;
 
+        console.log(productList);
+
 
         return (
             <div className="ProductList">

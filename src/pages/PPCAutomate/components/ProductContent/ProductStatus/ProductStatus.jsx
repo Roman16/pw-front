@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
+import moment from 'moment';
 import Button from '../../../../../components/Buttons';
 import './ProductStatus.less';
 
@@ -21,7 +22,9 @@ class ProductStatus extends Component {
     };
 
     render() {
-        const { status } = this.props;
+        const {
+            status, createdAt, totalChanges, todayChanges,
+        } = this.props;
 
         const isActive = status === RUNNING;
 
@@ -33,9 +36,14 @@ class ProductStatus extends Component {
                     value={isActive ? 'Active' : 'Inactive'}
                     statusColor={isActive ? 'active' : 'inactive'}
                 />
-                <StatusInfo caption="Start Date" />
-                <StatusInfo caption="Total Changes" />
-                <StatusInfo caption="Today Changes" />
+                <StatusInfo
+                    caption="Start Date"
+                    value={
+                        createdAt ? moment(createdAt).format('DD/MM/Y') : null
+                    }
+                />
+                <StatusInfo caption="Total Changes" value={totalChanges} />
+                <StatusInfo caption="Today Changes" value={todayChanges} />
                 <div className="control">
                     {!isActive
                         ? (
