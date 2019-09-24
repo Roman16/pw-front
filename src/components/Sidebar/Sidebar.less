@@ -5,11 +5,16 @@
     display: inline-block;
     width: 72px;
     min-height: 100vh;
+    position: fixed;
     background-color: #343C5A;
     transition: 0.3s;
 
     &.SidebarOpen {
         width: 200px;
+
+        &+.MainContent {
+            margin-left: 200px;
+        }
     }
 
     .SidebarHeader {
@@ -32,6 +37,10 @@
             }
         }
     }
+
+    &+.MainContent {
+        margin-left: 72px;
+    }
 }
 
 .SidebarMenu {
@@ -48,6 +57,7 @@
         li {
             font-size: 14px;
             margin: 10px 0 !important;
+            transition: 0.3s !important;
 
             a, .ant-menu-submenu-title {
                 display: flex;
@@ -56,6 +66,8 @@
             }
 
             i {
+                transition: 0.3s !important;
+
                 &.anticon {
                     font-size: 30px;
                     width: 40px;
@@ -94,6 +106,118 @@
             height: 24px !important;
             padding-left: 36px !important;
             line-height: 24px !important;
+        }
+    }
+}
+
+.Sidebar:not(.SidebarOpen) {
+    .SidebarHeader {
+        justify-content: center;
+    }
+
+    .SidebarMenu {
+        .ant-menu-inline-collapsed {
+            width: 100%;
+
+            li {
+                padding: 0 16px !important;
+
+                .ant-menu-submenu-title {
+                    padding: 0 !important;
+                }
+
+                i {
+                    font-size: 22px;
+                    text-align: center;
+                }
+
+                &.logOut i {
+                    font-size: 18px;
+                    padding-left: 0;
+                }
+            }
+        }
+    }
+}
+
+.CountryActive {
+    margin: 4px;
+    padding: 12px 21px;
+    border-radius: 8px;
+    background: rgba(109, 109, 246, 0.1);
+    cursor: pointer;
+
+    &--title {
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 27px;
+            margin-right: 8px;
+        }
+
+        h5 {
+            color: #fff;
+            font-size: 14px;
+            line-height: 20px;
+            margin-bottom: 0;
+        }
+    }
+
+    &--description {
+        color: #B6B6FB;
+        font-size: 12px;
+        line-height: 16px;
+    }
+}
+
+.RegionsList {
+    .ant-popover-arrow {
+        border-bottom-color: #3A416A !important;
+        border-left-color: #3A416A !important;
+    }
+
+    .ant-popover-inner {
+        background: #3A416A;
+
+        .ant-popover-inner-content {
+            padding: 8px 20px;
+        }
+    }
+
+    .CountryList {
+        padding: 12px 0;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid rgba(109, 109, 246, 0.2);
+        }
+
+        h4 {
+            color: #fff;
+        }
+
+        .CountryItem {
+            border-bottom: none;
+            padding: 6px 0;
+
+            .ant-list-item-meta {
+                .ant-list-item-meta-avatar {
+                    margin-right: 8px;
+                }
+
+                .ant-list-item-meta-title {
+                    color: #fff;
+                    font-size: 12px;
+                    line-height: 1;
+                    margin-bottom: 4px;
+                }
+
+                .ant-list-item-meta-description {
+                    color: #B6B6FB;
+                    font-size: 10px;
+                    line-height: 16px;
+                }
+            }
         }
     }
 }

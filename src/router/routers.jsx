@@ -22,19 +22,32 @@ const routers = [
                 component: Register,
             },
             {
-                path: '/ppc-automate',
-                exact: true,
-                component: PPCAutomate,
-            },
-            {
-                path: '/ppc-report',
-                exact: true,
-                component: PPCReport,
-            },
-            {
                 path: '/product-settings',
                 exact: true,
                 component: ProductSettings,
+            },
+            {
+                path: '/ppc',
+                strict: true,
+                component: PagesRouter,
+                routes: [
+                    {
+                        path: '/ppc',
+                        exact: true,
+                        before: () => '/ppc/report',
+                    },
+                    {
+                        path: '/ppc/optimization',
+                        exact: true,
+                        component: PPCAutomate,
+                    },
+                    {
+                        path: '/ppc/report',
+                        exact: true,
+                        component: PPCReport,
+                    },
+
+                ],
             },
 
         ],
