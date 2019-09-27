@@ -3,6 +3,7 @@ import { Icon } from 'antd';
 import moment from 'moment';
 import Button from '../../../../../components/Buttons';
 import './ProductStatus.less';
+import NetMargin from '../NetMargin';
 
 const StatusInfo = ({ caption, value = '-----', statusColor = '' }) => (
     <div className="StatusInfo">
@@ -16,17 +17,25 @@ const STOPPED = 'STOPPED';
 
 class ProductStatus extends Component {
     toStart = (status) => {
-        const { saveProductIdData } = this.props;
+        const { saveProductIdData, netMargin } = this.props;
 
-        saveProductIdData(status);
+        console.log(status === RUNNING && !netMargin);
+        if (status === RUNNING && !netMargin) {
+            console.log('sdsdd');
+        } else {
+            saveProductIdData(status);
+        }
     };
 
     render() {
         const {
             status, createdAt, totalChanges, todayChanges,
+            netMargin,
         } = this.props;
 
         const isActive = status === RUNNING;
+
+        console.log(netMargin);
 
 
         return (
@@ -67,6 +76,7 @@ class ProductStatus extends Component {
                         )
                     }
                 </div>
+                <NetMargin />
             </div>
         );
     }

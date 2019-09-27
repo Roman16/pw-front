@@ -23,7 +23,7 @@ class ProductContent extends Component {
         const { isLess } = this.state;
         const {
             productIdData, productIdData: {
-                status, created_at, total_changes, today_changes,
+                status, created_at, total_changes, today_changes, net_margin = null
             }, updateProductIdData, saveProductIdData,
             lastChanges, inValidError,
         } = this.props;
@@ -41,6 +41,7 @@ class ProductContent extends Component {
                 <ProductStatus
                     updateProductIdData={updateProductIdData}
                     status={status}
+                    netMargin={net_margin}
                     createdAt={created_at}
                     totalChanges={total_changes}
                     todayChanges={today_changes}
