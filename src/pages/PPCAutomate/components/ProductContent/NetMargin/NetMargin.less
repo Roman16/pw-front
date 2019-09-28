@@ -1,0 +1,43 @@
+@import "../../../../../style/variables.less";
+@import "../../../../../style/mixins.less";
+
+.NetMargin {
+    .net-margin-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .net-margin-header {
+            text-align: center;
+
+            h2 {
+                color: @second-default-dark;
+            }
+        }
+        .product-net-margin {
+            background: @body-background;
+            display: flex;
+            padding: 8px 24px;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 8px;
+            margin: 20px 0;
+
+            & > span {
+                margin-right: 12px;
+            }
+        }
+        button.start {
+            margin-bottom: 20px ;
+            min-width: 120px;
+            background: @primary-color;
+            color: #fff;
+        }
+    }
+    .net-margin-footer {
+        text-align: center;
+        font-size: 12px;
+
+    }
+}
+
