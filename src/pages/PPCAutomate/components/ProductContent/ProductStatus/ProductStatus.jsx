@@ -16,15 +16,37 @@ const RUNNING = 'RUNNING';
 const STOPPED = 'STOPPED';
 
 class ProductStatus extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isShowModal: false,
+
+        };
+    }
+
     toStart = (status) => {
         const { saveProductIdData, netMargin } = this.props;
 
         console.log(status === RUNNING && !netMargin);
         if (status === RUNNING && !netMargin) {
             console.log('sdsdd');
+            this.setState({ isShowModal: true });
         } else {
             saveProductIdData(status);
         }
+    };
+
+    cancelModal = () => {
+        this.setState({ isShowModal: false });
+    };
+
+    setNetMargin = (value) => {
+        const { productId, setNetMargin } = this.props;
+
+        console.log(value);
+        setNetMargin(productId, value);
+        this.cancelModal();
     };
 
     render() {
@@ -32,7 +54,7 @@ class ProductStatus extends Component {
             status, createdAt, totalChanges, todayChanges,
             netMargin,
         } = this.props;
-
+        const { isShowModal } = this.state;
         const isActive = status === RUNNING;
 
         console.log(netMargin);
@@ -48,7 +70,8 @@ class ProductStatus extends Component {
                 <StatusInfo
                     caption="Start Date"
                     value={
-                        createdAt ? moment(createdAt).format('DD/MM/Y') : null
+                        createdAt ? moment(createdAt)
+                            .format('DD/MM/Y') : null
                     }
                 />
                 <StatusInfo caption="Total Changes" value={totalChanges} />
@@ -76,7 +99,13 @@ class ProductStatus extends Component {
                         )
                     }
                 </div>
-                <NetMargin />
+                {isShowModal && (
+                    <NetMargin
+                        onStart={this.setNetMargin}
+                        isShowModal={isShowModal}
+                        handleCancel={this.cancelModal}
+                    />
+                )}
             </div>
         );
     }

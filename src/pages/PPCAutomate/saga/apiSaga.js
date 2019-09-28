@@ -3,14 +3,14 @@ import * as types from '../store/action';
 import {
     fetchProductList, fetchProductData, saveProductData, fetchProductChangeData,
 } from './api';
-import { SET_PRODUCT_CHANGE_DATA } from '../store/action';
-import { CHANGE_PRODUCT_LIST } from '../store/action';
+
 
 const PPCReducers = ({ PPCReducers }) => PPCReducers;
 
 function isEmpty(obj) {
     return Object.keys(obj).length === 0;
 }
+
 
 export function* fetchProductListSaga({ searchText, pageNumber }) {
     try {
@@ -159,5 +159,14 @@ export function* saveProductIdDataSaga({ status }) {
         }
     } catch (error) {
         console.log(error);
+    }
+}
+
+export function* setNetMarginSaga({ productId, netMarginValue }) {
+    try {
+        console.log(productId, netMarginValue);
+        yield saveProductIdDataSaga({ status: 'RUNNING' });
+    } catch (e) {
+        console.log(e);
     }
 }

@@ -9,11 +9,18 @@ export const SET_PRODUCT_ID_DATA = 'SET_PRODUCT_ID_DATA';
 export const SAVE_PRODUCT_ID_DATA = 'SAVE_PRODUCT_ID_DATA';
 export const CHANGE_INVAILD_ERROR = 'CHANGE_INVAILD_ERROR';
 export const CHANGE_PRODUCT_LIST = 'CHANGE_PRODUCT_LIST';
+export const SET_NET_MARGIN = 'SET_NET_MARGIN';
 
 
 export const setProductList = (productList) => ({
     type: SET_PRODUCT_LIST,
     productList,
+
+});
+export const setNetMargin = (productId, netMarginValue) => ({
+    type: SET_NET_MARGIN,
+    productId,
+    netMarginValue,
 
 });
 
