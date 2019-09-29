@@ -23,15 +23,15 @@ const routers = [
                 component: Register,
             },
             {
-                path: '/product-settings',
-                exact: true,
-                component: ProductSettings,
-            },
-            {
                 path: '/ppc',
                 strict: true,
                 component: PagesRouterWithMain,
                 routes: [
+                    {
+                        path: '/ppc/product-settings',
+                        exact: true,
+                        component: ProductSettings,
+                    },
                     {
                         path: '/ppc',
                         exact: true,

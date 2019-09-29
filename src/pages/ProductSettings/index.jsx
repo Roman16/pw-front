@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import TableSettings from './components/TableSettings';
+import ProductSettingsMain from './template/ProductSettingsMain';
 
 class ProductSettings extends Component {
     render() {
         return (
             <div>
-                <TableSettings />
+                <ProductSettingsMain />
             </div>
         );
     }
