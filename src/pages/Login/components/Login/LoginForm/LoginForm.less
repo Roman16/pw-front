@@ -95,10 +95,7 @@
 
 .form-group .input-form-group {
   border-bottom: 1px solid #bdc6cf;
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding: 10px 24px 10px 24px;
   position: relative;
   margin: 0;
 }
@@ -119,6 +116,7 @@
   color: #38454f;
   font-size: 16px;
   line-height: 28px;
+  font-family: im;
   border: 0;
   width: 80%;
   outline: 0;
@@ -128,6 +126,11 @@
     box-shadow: none;
   }
 }
+
+.form-group .input-form-group input::-webkit-input-placeholder { color: #777777; }
+.form-group .input-form-group input:-ms-input-placeholder { color: #777777; }
+.form-group .input-form-group input::-ms-input-placeholder { color: #777777; }
+.form-group .input-form-group input::placeholder { color: #777777; }
 
 .form-group .input-form-group .pass-toggle {
   position: absolute;
