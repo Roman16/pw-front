@@ -2,7 +2,7 @@ import axios from 'axios';
 import { DEFAULT_PAGE_SIZE } from '../const';
 
 export const fetchProductList = (searchText, page) => (
-    axios.get(`${window.BASE_URL}/ppc-automation/product`, {
+    axios.get('/ppc-automation/product', {
         params: {
             search_query: encodeURI(searchText),
             page,
@@ -14,7 +14,7 @@ export const fetchProductList = (searchText, page) => (
 
 );
 export const fetchProductData = (productId) => (
-    axios.get(`${window.BASE_URL}/ppc-automation/get-parameters`, {
+    axios.get('/ppc-automation/get-parameters', {
         params: {
             product_id: productId,
             api_token: 'INaDvhEVGFUEzhXDSpZtQ8i0PKZlb6E1pkpK99PqqnJKfCK3pGSwXuF4Y8Bq',
@@ -24,7 +24,7 @@ export const fetchProductData = (productId) => (
 
 );
 export const fetchProductChangeData = (productId) => (
-    axios.get(`${window.BASE_URL}/ppc-automation/get-changes-data`, {
+    axios.get('/ppc-automation/get-changes-data', {
         params: {
             product_id: productId,
             api_token: 'INaDvhEVGFUEzhXDSpZtQ8i0PKZlb6E1pkpK99PqqnJKfCK3pGSwXuF4Y8Bq',
@@ -43,7 +43,7 @@ export const saveProductData = (status, activeProductId, {
     optimize_keywords,
     optimize_pats,
 }) => (
-    axios.get(`${window.BASE_URL}/ppc-automation/save-parameters`, {
+    axios.get('/ppc-automation/save-parameters', {
         params: {
             status,
             product_id: activeProductId,

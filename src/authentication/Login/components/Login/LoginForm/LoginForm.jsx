@@ -1,44 +1,47 @@
 import React from 'react';
-import {Form, Row, Input, Button, Checkbox, Col} from 'antd';
+import {
+    Form, Row, Input, Button, Checkbox, Col,
+} from 'antd';
 import './LoginForm.less';
 import { Link } from 'react-router-dom';
-import axios from "axios";
+import axios from 'axios';
 
 class LoginForm extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             email: '',
             password: '',
-            isLoading: false
+            isLoading: false,
         };
         this.onChange = this.onChange.bind(this);
     }
 
-    onChange = e => {
+    onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     };
 
-    onClick = e => {
+    onClick = (e) => {
         e.preventDefault();
-        axios.post(`${window.BASE_URL}/api/user/login`, {
+        axios.post('/api/user/login', {
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
         })
             .then((res) => {
-                console.log("RESPONSE RECEIVED: ", res);
+                console.log('RESPONSE RECEIVED: ', res);
             })
             .catch((err) => {
-                console.log("AXIOS ERROR: ", err);
-            })
+                console.log('AXIOS ERROR: ', err);
+            });
     };
+
     render() {
-        const {email, password } = this.state;
+        const { email, password } = this.state;
 
         return (
             <Form className="login-form">
                 <div className="form-group">
-                    <Form.Item className='input-form-group' label="E-mail">
+                    <Form.Item className="input-form-group" label="E-mail">
                         <Input
                             className="email-input"
                             type="email"
@@ -51,10 +54,10 @@ class LoginForm extends React.Component {
                         />
                     </Form.Item>
 
-                    <Form.Item className='input-form-group' label="Password">
+                    <Form.Item className="input-form-group" label="Password">
                         <Input.Password
                             className="password-input"
-                            type={'password'}
+                            type="password"
                             name="password"
                             placeholder="Type Your password here"
                             autoComplete="off"
@@ -66,18 +69,39 @@ class LoginForm extends React.Component {
                 <Row type="flex" justify="space-between" className="form-bottom">
 
                     <Checkbox>Remember me</Checkbox>
-                    <a className="login-form-forgot forget" href="https://profitwhales.com/password/reset">
+                    <a
+                        className="login-form-forgot forget"
+                        href="https://profitwhales.com/password/reset"
+                    >
                         Forgot your password?
                     </a>
 
                 </Row>
-                <Row type="flex" justify="start" className='form-btns'>
-                    <Col xs={24} sm={24} md={9} className='form-btns-login'><Button className="submit" htmlType="submit" onClick={this.onClick}>Log in</Button></Col>
-                    <Col xs={24} sm={24} md={9} className='form-btns-signup'><Link to="/register" className="sign-up-link">Sign up</Link></Col>
+                <Row type="flex" justify="start" className="form-btns">
+                    <Col xs={24} sm={24} md={9} className="form-btns-login">
+                        <Button
+                            className="submit"
+                            htmlType="submit"
+                            onClick={this.onClick}
+                        >
+Log in
+                        </Button>
+                    </Col>
+                    <Col xs={24} sm={24} md={9} className="form-btns-signup">
+                        <Link
+                            to="/register"
+                            className="sign-up-link"
+                        >
+Sign
+                        up
+                        </Link>
+                    </Col>
                 </Row>
                 <Row className="form-details">
                     <Col>
-                        By signing up, you agree to <br />
+                        By signing up, you agree to
+                        {' '}
+                        <br />
                         <a href="#">Terms and Conditions &amp; Privacy Policy</a>
                     </Col>
                 </Row>
@@ -86,7 +110,10 @@ class LoginForm extends React.Component {
                         <div className="amazon-login-wrap">
                             <p>or</p>
                             <a href="https://profitwhales.com/login/amazon">
-                                <img src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_312x64.png" alt="LWA-GOld"/>
+                                <img
+                                    src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_312x64.png"
+                                    alt="LWA-GOld"
+                                />
                             </a>
                         </div>
                     </Col>

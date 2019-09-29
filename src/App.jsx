@@ -7,7 +7,6 @@ import './App.less';
 
 
 // https://profitwhales.com/ppc-automation/product?page=1&size=2
-window.BASE_URL = process.env.NODE_ENV === 'production' ? '' : 'http://front1.profitwhales.com';
 console.log(window.env);
 console.log(window.BASE_URL);
 
