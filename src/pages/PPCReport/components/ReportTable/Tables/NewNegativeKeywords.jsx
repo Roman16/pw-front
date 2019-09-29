@@ -6,6 +6,7 @@ import {
     indexField, dateField, actionField, infoField,
 } from './const';
 import TableApi from '../../../Hoc/TableApi';
+import { TitleInfo } from '../../../../../components/Table/renders';
 
 
 const highACoS = 'created-negative-keyword-from-cst-high-acos';
@@ -51,7 +52,7 @@ const columns = {
             key: 'CSTACoS',
         },
         {
-            title: 'Target',
+            title: () => <TitleInfo title="Target" />,
             dataIndex: 'target',
             key: 'target',
         },
@@ -101,14 +102,13 @@ class NewNegativeKeywords extends Component {
         this.initialFetch(activeTable);
     }
 
-    changeTable = (activeTable) => {
-        this.setState({
-            activeTable,
-            currentPage: 1,
-        });
-        this.initialFetch(activeTable);
-    };
+    componentDidUpdate(nextProps) {
+        const { totalTypeSize, updateTotalTypeSize } = this.props;
 
+        if (totalTypeSize !== nextProps.totalTypeSize) {
+            updateTotalTypeSize('new-negative-keywords', totalTypeSize);
+        }
+    }
 
     initialFetch = (activeTable) => {
         const { fetchData } = this.props;
@@ -124,18 +124,18 @@ class NewNegativeKeywords extends Component {
         fetchData(activeTable, currentPage);
     };
 
-    componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props;
-
-        if (totalTypeSize !== nextProps.totalTypeSize) {
-            updateTotalTypeSize('new-negative-keywords', totalTypeSize);
-        }
-    }
+    changeTable = (activeTable) => {
+        this.setState({
+            activeTable,
+            currentPage: 1,
+        });
+        this.initialFetch(activeTable);
+    };
 
     render() {
         const { activeTable, currentPage } = this.state;
         const {
-            data, loading, totalSize, showPagination,count
+            data, loading, totalSize, showPagination, count,
         } = this.props;
 
         return (

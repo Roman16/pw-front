@@ -3,10 +3,10 @@
 .OptimizeStrategy {
 
     .strategies {
-        display: grid;
-        grid-template-columns: 180px 180px 180px 180px;
-        grid-gap: 15px;
-
+        //display: grid;
+        //grid-template-columns: 180px 180px 180px 180px;
+        //grid-gap: 15px;
+        display: flex;
     }
 
     //.descriptions {
@@ -16,8 +16,9 @@
 
     @media (max-width: @desktop) {
         .strategies {
+            display: grid;
+            grid-gap: 15px;
             grid-template-columns: 1fr 1fr;
-
         }
     }
     @media (max-width: @laptop) {
@@ -31,16 +32,29 @@
 }
 
 .StrategyItem {
+    width: calc(25% - 11.25px);
+    max-width: 180px;
     padding: 10px;
     border: 2px solid #C9CBD4;
     border-radius: 8px;
     transition: 0.3s;
 
+    @media (max-width: @desktop) {
+        width: 180px;
+    }
+
+    &:not(:last-child) {
+        margin-right: 15px;
+    }
+
     .caption-strategy {
-        display: flex;
+        //display: flex;
         text-align: left;
         font-size: 17px;
         margin-bottom: 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .strategy-checkbox {

@@ -1,4 +1,5 @@
 import PagesRouter from '../pages';
+import PagesRouterWithMain from '../pages/PagesRouterWithMain';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import PPCAutomate from '../pages/PPCAutomate';
@@ -22,19 +23,32 @@ const routers = [
                 component: Register,
             },
             {
-                path: '/ppc-automate',
-                exact: true,
-                component: PPCAutomate,
-            },
-            {
-                path: '/ppc-report',
-                exact: true,
-                component: PPCReport,
-            },
-            {
                 path: '/product-settings',
                 exact: true,
                 component: ProductSettings,
+            },
+            {
+                path: '/ppc',
+                strict: true,
+                component: PagesRouterWithMain,
+                routes: [
+                    {
+                        path: '/ppc',
+                        exact: true,
+                        before: () => '/ppc/report',
+                    },
+                    {
+                        path: '/ppc/optimization',
+                        exact: true,
+                        component: PPCAutomate,
+                    },
+                    {
+                        path: '/ppc/report',
+                        exact: true,
+                        component: PPCReport,
+                    },
+
+                ],
             },
 
         ],

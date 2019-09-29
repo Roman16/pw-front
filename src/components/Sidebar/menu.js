@@ -1,3 +1,57 @@
+export const regionsMenu = [
+    {
+        region: 'North America',
+        countries: [
+            {
+                name: 'US',
+                flag: 'us.svg',
+                description: 'NBI49DMDH34BG',
+                active: true,
+            },
+            {
+                name: 'Canada',
+                flag: 'canada.svg',
+                description: 'NBI49DMDH34BG',
+            },
+            {
+                name: 'Mexico',
+                flag: 'us.svg',
+                description: 'NBI49DMDH34BG',
+            },
+        ],
+    },
+    {
+        region: 'Europe',
+        countries: [
+            {
+                name: 'UK',
+                flag: 'us.svg',
+                description: 'NBI49DMDH34BG',
+            },
+            {
+                name: 'DE',
+                flag: 'us.svg',
+                description: 'NBI49DMDH34BG',
+            },
+            {
+                name: 'FR',
+                flag: 'us.svg',
+                description: 'NBI49DMDH34BG',
+            },
+            {
+                name: 'IT',
+                flag: 'us.svg',
+                description: 'NBI49DMDH34BG',
+            },
+            {
+                name: 'ES',
+                flag: 'us.svg',
+                description: 'NBI49DMDH34BG',
+            },
+        ],
+    },
+];
+
 export const menuMain = [
     {
         title: 'Zero to Hero',
@@ -11,7 +65,7 @@ export const menuMain = [
     },
     {
         title: 'PPC Automate',
-        link: '/ppc-automate',
+        link: '/ppc',
         icon: 'ppcAutomate',
         subMenu: [
             {
@@ -32,13 +86,9 @@ export const menuMain = [
             },
             {
                 title: 'Charge Report',
-                link: '/charge-report',
+                link: '/report',
             },
         ],
-    },
-    {
-        title: 'PPC Scanner',
-        link: '/ppc-scanner',
     },
 ];
 
