@@ -1,86 +1,95 @@
 import React from 'react';
-import {
-    Form, Row, Input, Button, Checkbox, Col, Select,
-} from 'antd';
+import {Form, Row, Input, Button, Checkbox, Col} from 'antd';
 import './LoginForm.less';
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
-class WrappedLoginForm extends React.Component {
-    handleSubmit = (e) => {
-        e.preventDefault();
+let data = JSON.stringify({
+    username: 'test@test.ua',
+    password: 'test@test.ua'
+});
+axios.post(`http://front1.profitwhales.com/api/user/login`, data)
+    .then((res) => {
+        console.log("RESPONSE RECEIVED: ", res);
+    })
+    .catch((err) => {
+        console.log("AXIOS ERROR: ", err);
+    });
+class LoginForm extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            isLoading: false
+        };
+        this.onChange = this.onChange.bind(this);
+    }
+
+    onChange = e => {
+        this.setState({ [e.target.name]: e.target.value });
     };
 
+    onClick = e => {
+        e.preventDefault();
+        let data = JSON.stringify({
+            username: this.state.email,
+            password: this.state.password
+        });
+        axios.post(`${window.BASE_URL}/api/user/login`, data)
+            .then((res) => {
+                console.log("RESPONSE RECEIVED: ", res);
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+            })
+    };
     render() {
-        const { getFieldDecorator } = this.props.form;
-
+        const {email, password } = this.state;
 
         return (
-            <Form onSubmit={this.handleSubmit} className="login-form">
+            <Form className="login-form">
                 <div className="form-group">
-                    <Form.Item className="input-form-group" label="E-mail">
-                        {getFieldDecorator('username', {
-                            rules: [{ required: true, message: 'Please input your username!' }],
-                        })(
-                            <Input
-                                className="email-input"
-                                type="email"
-                                name="email"
-                                id="email"
-                                autoComplete="off"
-                                placeholder="Type Your e-mail here"
-                            />,
-                        )}
+                    <Form.Item className='input-form-group' label="E-mail">
+                        <Input
+                            className="email-input"
+                            type="email"
+                            name="email"
+                            id="email"
+                            autoComplete="off"
+                            placeholder="Type Your e-mail here"
+                            value={email}
+                            onChange={this.onChange}
+                        />
                     </Form.Item>
 
-                    <Form.Item className="input-form-group" label="Password">
-                        {getFieldDecorator('password', {
-                            rules: [{ required: true, message: 'Please input your Password!' }],
-                        })(
-                            <Input.Password
-                                className="password-input"
-                                type={this.props.passwordHidden ? 'password' : 'text'}
-                                name="password"
-                                placeholder="Type Your password here"
-                                autoComplete="off"
-                            />,
-                        )}
+                    <Form.Item className='input-form-group' label="Password">
+                        <Input.Password
+                            className="password-input"
+                            type={'password'}
+                            name="password"
+                            placeholder="Type Your password here"
+                            autoComplete="off"
+                            value={password}
+                            onChange={this.onChange}
+                        />
                     </Form.Item>
                 </div>
                 <Row type="flex" justify="space-between" className="form-bottom">
-                    {getFieldDecorator('remember', {
-                        valuePropName: 'checked',
-                        initialValue: true,
-                    })(<Checkbox>Remember me</Checkbox>)}
+
+                    <Checkbox>Remember me</Checkbox>
                     <a className="login-form-forgot forget" href="https://profitwhales.com/password/reset">
                         Forgot your password?
                     </a>
 
                 </Row>
-                <Row type="flex" justify="start" className="form-btns">
-                    <Col xs={24} sm={24} md={9} className="form-btns-login">
-                        <Button
-                            className="submit"
-                            htmlType="submit"
-                        >
-Log
-                        in
-                        </Button>
-                    </Col>
-                    <Col xs={24} sm={24} md={9} className="form-btns-signup">
-                        <Link
-                            to="/register"
-                            className="sign-up-link"
-                        >
-Sign
-                        up
-                        </Link>
-                    </Col>
+                <Row type="flex" justify="start" className='form-btns'>
+                    <Col xs={24} sm={24} md={9} className='form-btns-login'><Button className="submit" htmlType="submit" onClick={this.onClick}>Log in</Button></Col>
+                    <Col xs={24} sm={24} md={9} className='form-btns-signup'><Link to="/register" className="sign-up-link">Sign up</Link></Col>
                 </Row>
                 <Row className="form-details">
                     <Col>
-                        By signing up, you agree to
-                        {' '}
-                        <br />
+                        By signing up, you agree to <br />
                         <a href="#">Terms and Conditions &amp; Privacy Policy</a>
                     </Col>
                 </Row>
@@ -89,9 +98,7 @@ Sign
                         <div className="amazon-login-wrap">
                             <p>or</p>
                             <a href="https://profitwhales.com/login/amazon">
-                                <img
-                                    src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_312x64.png"
-                                />
+                                <img src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_312x64.png" alt="LWA-GOld"/>
                             </a>
                         </div>
                     </Col>
@@ -101,6 +108,5 @@ Sign
     }
 }
 
-const LoginForm = Form.create({ name: 'normal_login' })(WrappedLoginForm);
 
 export default LoginForm;
