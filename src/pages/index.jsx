@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import RenderRoutes from '../router/render-routers';
+import MainContent from '../templates/MainContent';
 
 class PagesRouter extends Component {
     render() {
-        const { routes } = this.props.route;
+        const { route: { routes } } = this.props;
 
         return (
-            <RenderRoutes routers={routes} />
+            <MainContent>
+                <RenderRoutes routers={routes} />
+            </MainContent>
         );
     }
 }

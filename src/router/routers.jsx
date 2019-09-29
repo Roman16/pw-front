@@ -1,58 +1,62 @@
+import React from 'react';
 import PagesRouter from '../pages';
-import PagesRouterWithMain from '../pages/PagesRouterWithMain';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
+import Login from '../authentication/Login';
+import Register from '../authentication/Register';
 import PPCAutomate from '../pages/PPCAutomate';
 import PPCReport from '../pages/PPCReport';
 import ProductSettings from '../pages/ProductSettings';
+import { next } from './render-routers';
 
 const routers = [
+    {
+        path: '/login',
+        exact: true,
+        component: Login,
+    },
+    {
+        path: '/register',
+        exact: true,
+        component: Register,
+    },
     {
         path: '/',
         strict: true,
         component: PagesRouter,
-        routes: [
-            {
-                path: '/login',
-                exact: true,
-                component: Login,
-            },
-            {
-                path: '/register',
-                exact: true,
-                component: Register,
-            },
-            {
-                path: '/ppc',
-                strict: true,
-                component: PagesRouterWithMain,
-                routes: [
-                    {
-                        path: '/ppc/product-settings',
-                        exact: true,
-                        component: ProductSettings,
-                    },
-                    {
-                        path: '/ppc',
-                        exact: true,
-                        before: () => '/ppc/report',
-                    },
-                    {
-                        path: '/ppc/optimization',
-                        exact: true,
-                        component: PPCAutomate,
-                    },
-                    {
-                        path: '/ppc/report',
-                        exact: true,
-                        component: PPCReport,
-                    },
+        before: () => {
+            // todo add auth
+            console.log('check auth');
+            next();
+        },
 
-                ],
+        routes: [
+
+            {
+                path: '/product-settings',
+                exact: true,
+                component: ProductSettings,
             },
+            {
+                path: '/optimization',
+                exact: true,
+                component: PPCAutomate,
+            },
+            {
+                path: '/report',
+                exact: true,
+                component: PPCReport,
+            },
+            {
+                path: '*',
+                exact: true,
+                // todo create 404 page
+                component: () => (<div>404</div>),
+            },
+
 
         ],
+
     },
+
 ];
 
 export default routers;

@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import initialInterceptors from './authentication/interceptors';
 import App from './App';
 
 import './index.less';
+
 import * as serviceWorker from './serviceWorker';
+
+initialInterceptors();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
