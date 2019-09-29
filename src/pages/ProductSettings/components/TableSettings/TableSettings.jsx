@@ -1,121 +1,153 @@
 import React, { Component } from 'react';
+import { func, arrayOf, object } from 'prop-types';
 import { Input } from 'antd';
+import { InputCurrency } from '../../../../components/Inputs';
 import Table from '../../../../components/Table';
 import ProductItem from '../../../PPCAutomate/components/ProductItem';
 import './TableSettings.less';
+import ProductSettingsApi from '../../Hoc/ProductSettingsAPI';
 
-const dataSource = [
-    {
-        key: '1',
-        name: 'Mike',
-        age: 32,
-        address: '10 Downing Street',
-        product: {
-            asin: 'B07QDCVZ4M',
-            captions: 'PW PWtest02 (Cheerry, 1234)',
-            id: 244,
-            image_url: 'http://g-ecx.images-amazon.com/images/G/01/x-site/icons/no-img-sm._CB1275522461_.gif',
-            sku: '9A-OETJ-0U14',
-            under_optimization: false,
-        },
-    },
-    {
-        key: '2',
-        name: 'John',
-        age: 42,
-        address: '10 Downing Street',
-        product: {
-            asin: 'B07QDCVZ4M',
-            captions: 'PW PWtest02 (Cheerry, 1234)',
-            id: 244,
-            image_url: 'http://g-ecx.images-amazon.com/images/G/01/x-site/icons/no-img-sm._CB1275522461_.gif',
-            sku: '9A-OETJ-0U14',
-            under_optimization: false,
-        },
-    },
-];
+const ACTIVE = 'active';
+const PRODUCT = 'product';
+const NET_MARGIN = 'net-margin';
+const MIN_BID_MANUAL_CAMPING = 'min-bid-manual-camping';
+const MAX_BID_MANUAL_CAMPING = 'max-bid-manual-camping';
+const MIN_BID_AUTO_CAMPING = 'min-bid-auto-camping';
+const MAX_BID_AUTO_CAMPING = 'max-bid-auto-camping';
+const TOTAL_CHANGES = 'total-changes';
+const OPTIMIZATION_STATUS = 'optimization-status';
 
-const columns = [
-    {
-        title: () => (<Input.Search />),
-        dataIndex: 'product',
-        key: 'product',
-        width: 300,
-        render: ({
-            id, asin, captions, sku,
-            image_url, under_optimization,
-        }) => (
-            <ProductItem
-                asin={asin}
-                captions={captions}
-                imageUrl={image_url}
-                underOptimization={under_optimization}
-                sku={sku}
-                key={id}
-            />
-        ),
-    },
-
-    {
-        title: 'Net Margin',
-        dataIndex: 'net-margin',
-        key: 'net-margin',
-        render: () => (<Input />),
-    },
-    {
-        title: 'Min Bid (Manual Campaign)',
-        dataIndex: 'address',
-        key: 'address',
-        render: () => (<Input />),
-
-    },
-    {
-        title: 'Max Bid (Manual Campaign)',
-        dataIndex: 'address',
-        key: 'address',
-        render: () => (<Input />),
-
-    },
-    {
-        title: 'Min Bid (Auto Campaign)',
-        dataIndex: 'address',
-        key: 'address',
-        render: () => (<Input />),
-
-    },
-    {
-        title: 'Min Bid (Auto Campaign)',
-        dataIndex: 'address',
-        key: 'address',
-        render: () => (<Input />),
-
-    },
-    {
-        title: 'Total Changes',
-        dataIndex: 'address',
-        key: 'address',
-        render: () => (<Input />),
-
-    },
-    {
-        title: 'Optimization Status',
-        dataIndex: 'address',
-        key: 'address',
-        render: () => (<Input />),
-
-    },
-];
 
 class TableSettings extends Component {
+    constructor(props) {
+        super(props);
+        const { onChangeRow } = props;
+
+        this.columns = [
+            {
+                title: () => (
+                    <div className="InputSearch">
+                        <Input.Search />
+                    </div>
+                ),
+                dataIndex: PRODUCT,
+                key: PRODUCT,
+                width: 300,
+                render: ({
+                    id, asin, captions, sku,
+                    image_url,
+                }) => (
+                    <ProductItem
+                        asin={asin}
+                        captions={captions}
+                        imageUrl={image_url}
+                        sku={sku}
+                        key={id}
+                    />
+                ),
+            },
+
+            {
+                title: 'Net Margin',
+                dataIndex: NET_MARGIN,
+                key: NET_MARGIN,
+                render: (index, item, indexRow) => (
+                    <InputCurrency
+                        value={item[NET_MARGIN]}
+                        onChange={(event) => onChangeRow(event, NET_MARGIN, indexRow)}
+                    />
+                ),
+            },
+            {
+                title: 'Min Bid (Manual Campaign)',
+                dataIndex: MIN_BID_MANUAL_CAMPING,
+                key: MIN_BID_MANUAL_CAMPING,
+                render: (index, item, indexRow) => (
+                    <InputCurrency
+                        value={item[MIN_BID_MANUAL_CAMPING]}
+                        onChange={(event) => onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)}
+                    />
+                ),
+            },
+            {
+                title: 'Max Bid (Manual Campaign)',
+                dataIndex: MAX_BID_MANUAL_CAMPING,
+                key: MAX_BID_MANUAL_CAMPING,
+                render: (index, item, indexRow) => (
+                    <InputCurrency
+                        value={item[MAX_BID_MANUAL_CAMPING]}
+                        onChange={(event) => onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)}
+                    />
+                ),
+            },
+            {
+                title: 'Min Bid (Auto Campaign)',
+                dataIndex: MIN_BID_AUTO_CAMPING,
+                key: MIN_BID_AUTO_CAMPING,
+                render: (index, item, indexRow) => (
+                    <InputCurrency
+                        value={item[MIN_BID_AUTO_CAMPING]}
+                        onChange={(event) => onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)}
+                    />
+                ),
+            },
+            {
+                title: 'Max Bid (Auto Campaign)',
+                dataIndex: MAX_BID_AUTO_CAMPING,
+                key: MAX_BID_AUTO_CAMPING,
+                render: (index, item, indexRow) => (
+                    <InputCurrency
+                        value={item[MAX_BID_AUTO_CAMPING]}
+                        onChange={(event) => onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)}
+                    />
+                ),
+            },
+            {
+                title: 'Total Changes',
+                dataIndex: TOTAL_CHANGES,
+                key: TOTAL_CHANGES,
+                render: (index, item) => (
+                    <div style={{ fontWeight: 600 }}>
+                        {item[TOTAL_CHANGES]}
+                    </div>
+                ),
+            },
+            {
+                title: 'Optimization Status',
+                dataIndex: OPTIMIZATION_STATUS,
+                key: OPTIMIZATION_STATUS,
+                render: (index, item) => (
+                    <div
+                        className={`settings-status ${item[OPTIMIZATION_STATUS] === ACTIVE ? 'active' : ''}`}
+                    >
+                        {item[OPTIMIZATION_STATUS]}
+                    </div>
+                ),
+
+            },
+        ];
+    }
+
+
     render() {
+        const { dataSource } = this.props;
+
+
         return (
             <div className="TableSettings">
-                <Table dataSource={dataSource} columns={columns} />
+                <Table rowKey="id" dataSource={dataSource} columns={this.columns} />
             </div>
         );
     }
 }
 
-TableSettings.propTypes = {};
-TableSettings.defaultProps = {};
-export default TableSettings;
+TableSettings.propTypes = {
+    onChangeRow: func,
+    dataSource: arrayOf(object),
+};
+TableSettings.defaultProps = {
+    onChangeRow: () => {
+    },
+    dataSource: [],
+};
+export default ProductSettingsApi(TableSettings);
