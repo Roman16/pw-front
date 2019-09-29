@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Tooltip } from 'antd';
 import Table from '../../../../../components/Table';
 import {
     indexField, dateField, actionField, infoField,
 } from './const';
 import TableButton from '../TableButton';
 import TableApi from '../../../Hoc/TableApi';
+import { TitleInfo } from '../../../../../components/Table/renders';
 
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
@@ -32,7 +32,7 @@ const defaultKeys = [
         key: 'adGroup',
     },
     {
-        title: 'PAT type(i)',
+        title: () => <TitleInfo title="PAT type" />,
         dataIndex: 'PatType',
         key: 'PatType ',
     },
@@ -58,7 +58,7 @@ const columns = {
             key: 'acos',
         },
         {
-            title: 'Target ACoS',
+            title: () => <TitleInfo title="Target ACoS" />,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
         },
@@ -74,10 +74,10 @@ const columns = {
         {
             title: 'Impressions',
             dataIndex: 'impressions',
-            key: 'impression   s',
+            key: 'impressions',
         },
         {
-            title: 'Target Impressions',
+            title: () => <TitleInfo title="Target Impressions" />,
             dataIndex: 'targetImpressions',
             key: 'targetImpressions',
         }, {
@@ -96,7 +96,7 @@ const columns = {
             key: 'acos',
         },
         {
-            title: 'Target ACoS',
+            title: () => <TitleInfo title="Target ACoS" />,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
         },
@@ -116,7 +116,7 @@ const columns = {
             key: 'averageConvRate',
         },
         {
-            title: 'Clicks',
+            title: () => <TitleInfo title="Clicks" />,
             dataIndex: 'clicks',
             key: 'clicks',
         },
@@ -148,13 +148,13 @@ class PATsOptimization extends Component {
         this.initialFetch(activeTable);
     }
 
-    changeTable = (activeTable) => {
-        this.setState({
-            activeTable,
-            currentPage: 1,
-        });
-        this.initialFetch(activeTable);
-    };
+    componentDidUpdate(nextProps) {
+        const { totalTypeSize, updateTotalTypeSize } = this.props;
+
+        if (totalTypeSize !== nextProps.totalTypeSize) {
+            updateTotalTypeSize('pats-optimization', totalTypeSize);
+        }
+    }
 
     initialFetch = (activeTable) => {
         const { fetchData } = this.props;
@@ -170,13 +170,13 @@ class PATsOptimization extends Component {
         fetchData(activeTable, currentPage);
     };
 
-    componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props;
-
-        if (totalTypeSize !== nextProps.totalTypeSize) {
-            updateTotalTypeSize('pats-optimization', totalTypeSize);
-        }
-    }
+    changeTable = (activeTable) => {
+        this.setState({
+            activeTable,
+            currentPage: 1,
+        });
+        this.initialFetch(activeTable);
+    };
 
     render() {
         const { activeTable, currentPage } = this.state;

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Tabs, Icon } from 'antd';
+import { Tabs } from 'antd';
 import axios from 'axios';
 import Buttons from '../../../../components/Buttons';
 import KeywordsOptimization from './Tables/KeywordsOptimization';
@@ -173,7 +172,7 @@ class ReportTable extends Component {
                         <DatePicker timeRange={this.timeRange} />
                         <Buttons onClick={this.downloadFile}>
                             Download
-                            <Icon type="cloud-download" />
+                            <i className="download" />
                         </Buttons>
                     </div>
                 </div>

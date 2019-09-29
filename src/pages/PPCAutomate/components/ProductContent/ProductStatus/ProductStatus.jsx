@@ -7,6 +7,7 @@ import NetMargin from '../NetMargin';
 
 const StatusInfo = ({ caption, value = '-----', statusColor = '' }) => (
     <div className="StatusInfo">
+        {console.log(value)}
         <div className="caption">{caption}</div>
         <div className={statusColor}>{value}</div>
     </div>
@@ -70,8 +71,7 @@ class ProductStatus extends Component {
                 <StatusInfo
                     caption="Start Date"
                     value={
-                        createdAt ? moment(createdAt)
-                            .format('DD/MM/Y') : null
+                        createdAt ? moment(createdAt).format('DD/MM/Y') : undefined
                     }
                 />
                 <StatusInfo caption="Total Changes" value={totalChanges} />

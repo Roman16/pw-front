@@ -32,10 +32,23 @@
         }
 
         button {
+            display: flex;
+            align-items: center;
             margin-left: 8px;
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: bold;
             background: @action-color;
             color: #fff;
             border-radius: 8px;
+
+            i {
+                background: url('../../../../assets/img/icons/download.svg');
+                width: 24px;
+                height: 24px;
+                margin-left: 15px;
+                margin-top: -3px;
+            }
         }
     }
 
@@ -44,6 +57,10 @@
         border-radius: 8px;
         padding-top: 12px;
 
+        .ReportItemTable__Buttons {
+            display: flex;
+        }
+
         .Table {
             margin-top: 12px;
 
@@ -51,6 +68,10 @@
     }
 
     overflow-x: hidden;
+
+    .ant-tabs-bar {
+        margin-bottom: 0;
+    }
 
     .ant-tabs-tab {
         padding: 12px 0;

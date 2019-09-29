@@ -126,6 +126,7 @@ class ProductOptions extends Component {
                                                 }}
                                             >
                                                 Upgrade Now
+                                                <Icon type="arrow-up" />
                                             </Button>
                                         </div>
                                     </div>
@@ -147,10 +148,15 @@ class ProductOptions extends Component {
                         </div>
                     </div>
                     <div className="less-more-control">
-                        <div className={`icon ${isLess ? 'more' : 'less'}`} onClick={toLess}>
+                        {/* eslint-disable-next-line max-len */}
+                        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus */}
+                        <div
+                            role="button"
+                            className={`icon ${isLess ? 'more' : 'less'}`}
+                            onClick={toLess}
+                        >
                             <Icon type="up" />
                         </div>
-
                     </div>
 
                 </div>

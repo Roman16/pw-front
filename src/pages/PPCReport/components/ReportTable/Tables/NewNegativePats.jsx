@@ -5,6 +5,7 @@ import {
 } from './const';
 import TableButton from '../TableButton';
 import TableApi from '../../../Hoc/TableApi';
+import { TitleInfo } from '../../../../../components/Table/renders';
 
 
 const HighACoS = 'created-negative-pat-from-cst-high-acos';
@@ -29,12 +30,12 @@ const defaultKeys = [
         key: 'adGroup',
     },
     {
-        title: 'PAT Type',
+        title: () => <TitleInfo title="PAT Type" />,
         dataIndex: 'PatType',
         key: 'PatType',
     },
     {
-        title: 'Pat Intent Type',
+        title: () => <TitleInfo title="Pat Intent Type" />,
         dataIndex: 'PatIntentType',
         key: 'PatIntentType',
     }, {
@@ -113,13 +114,13 @@ class NewNegativePats extends Component {
         this.initialFetch(activeTable);
     }
 
-    changeTable = (activeTable) => {
-        this.setState({
-            activeTable,
-            currentPage: 1,
-        });
-        this.initialFetch(activeTable);
-    };
+    componentDidUpdate(nextProps) {
+        const { totalTypeSize, updateTotalTypeSize } = this.props;
+
+        if (totalTypeSize !== nextProps.totalTypeSize) {
+            updateTotalTypeSize('new-negative-pats', totalTypeSize);
+        }
+    }
 
     initialFetch = (activeTable) => {
         const { fetchData } = this.props;
@@ -135,18 +136,18 @@ class NewNegativePats extends Component {
         fetchData(activeTable, currentPage);
     };
 
-    componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props;
-
-        if (totalTypeSize !== nextProps.totalTypeSize) {
-            updateTotalTypeSize('new-negative-pats', totalTypeSize);
-        }
-    }
+    changeTable = (activeTable) => {
+        this.setState({
+            activeTable,
+            currentPage: 1,
+        });
+        this.initialFetch(activeTable);
+    };
 
     render() {
         const { activeTable, currentPage } = this.state;
         const {
-            data, loading, totalSize, showPagination,count
+            data, loading, totalSize, showPagination, count,
         } = this.props;
 
         return (
