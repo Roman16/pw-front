@@ -21,11 +21,10 @@ class LoginForm extends React.Component {
 
     onClick = e => {
         e.preventDefault();
-        let data = JSON.stringify({
-            username: this.state.email,
+        axios.post(`${window.BASE_URL}/api/user/login`, {
+            email: this.state.email,
             password: this.state.password
-        });
-        axios.post(`${window.BASE_URL}/api/user/login`, data)
+        })
             .then((res) => {
                 console.log("RESPONSE RECEIVED: ", res);
             })

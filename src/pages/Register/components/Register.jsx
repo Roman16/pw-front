@@ -32,6 +32,9 @@ class Register extends React.Component {
                                 <li>Tens of hours saved per week</li>
                                 <li>Thousands of dollars saved per ASIN</li>
                             </ul>
+                            <div className="btn-container">
+                                Already have an account? <a href="https://profitwhales.com/login">Login</a>
+                            </div>
                         </Col>
                     </Row>
                 </div>
