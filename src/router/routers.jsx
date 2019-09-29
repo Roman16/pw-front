@@ -1,4 +1,5 @@
 import PagesRouter from '../pages';
+import PagesRouterWithMain from '../pages/PagesRouterWithMain';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import PPCAutomate from '../pages/PPCAutomate';
@@ -29,7 +30,7 @@ const routers = [
             {
                 path: '/ppc',
                 strict: true,
-                component: PagesRouter,
+                component: PagesRouterWithMain,
                 routes: [
                     {
                         path: '/ppc',

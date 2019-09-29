@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import { DatePicker as AntDatePicker } from 'antd';
 
 import './DatePicker.less';
+import DateIcon from './DateIcon/DateIcon';
 
 const { RangePicker } = AntDatePicker;
 
@@ -11,13 +11,11 @@ class DatePicker extends Component {
     handleChange = ([start, end]) => {
         const { timeRange } = this.props;
 
-        timeRange(start.format('Y-M-D'), end.format('Y-M-D'));
-        console.log(start.format('Y-M-D'), end.format('Y-M-D'));
+        timeRange(start.format('D-M-YY'), end.format('D-M-YY'));
+        console.log(start.format('D-M-YY'), end.format('D-M-YY'));
     };
 
     render() {
-
-
         return (
             <div
                 className="DatePicker"
@@ -37,7 +35,8 @@ class DatePicker extends Component {
                         'Year to date': [moment(new Date())
                             .add(-365, 'days'), moment()],
                     }}
-                    format="YYYY/MM/DD"
+                    format="DD/MM/YY"
+                    suffixIcon={<DateIcon />}
                     onChange={this.handleChange}
                 />
             </div>

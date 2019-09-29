@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-    Menu, Icon, Button, Popover,
+    Menu, Icon, Popover,
 } from 'antd';
 import { getClassNames } from '../../utils';
 import SidebarItem from './SidebarItem';
@@ -11,13 +11,14 @@ import './Sidebar.less';
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false);
-    const [regions, setRegions] = useState(regionsMenu);
+    const [regions] = useState(regionsMenu);
     const toggleCollapsed = () => setCollapsed(!collapsed);
     const className = getClassNames('Sidebar', { SidebarOpen: !collapsed });
     const activeLink = global.location.pathname;
     const activeLinkArr = global.location.pathname.split('/');
 
-    const activeCountry = regions.map((region) => region.countries.find((country) => country.active))[0];
+    const activeCountry = regions
+        .map((region) => region.countries.find((country) => country.active))[0];
     const setActiveCountry = (country) => {
         console.log(country);
     };
@@ -35,23 +36,25 @@ const Sidebar = () => {
                 }
             </div>
             <div className="SidebarMenu">
-                <Popover
-                    placement="rightTop"
-                    overlayClassName="RegionsList"
-                    content={<RegionsMenu regions={regions} setActiveCountry={setActiveCountry} />}
-                    trigger="click"
-                >
-                    <div className="CountryActive">
-                        <div className="CountryActive--title">
-                            <img src={`/assets/img/${activeCountry.flag}`} alt="active-country" />
-                            <h5>{activeCountry.name}</h5>
-                        </div>
-                        <div className="CountryActive--description">
-                            {activeCountry.description}
-                        </div>
-                    </div>
-                </Popover>
                 <div className="MenuTop">
+                    <Popover
+                        placement="rightTop"
+                        overlayClassName="RegionsList"
+                        content={
+                            <RegionsMenu regions={regions} setActiveCountry={setActiveCountry} />
+                        }
+                        trigger="click"
+                    >
+                        <div className="CountryActive">
+                            <div className="CountryActive--title">
+                                <img src={`/assets/img/${activeCountry.flag}`} alt="active-country" />
+                                <h5>{activeCountry.name}</h5>
+                            </div>
+                            <div className="CountryActive--description">
+                                {activeCountry.description}
+                            </div>
+                        </div>
+                    </Popover>
                     <Menu
                         mode="inline"
                         theme="dark"

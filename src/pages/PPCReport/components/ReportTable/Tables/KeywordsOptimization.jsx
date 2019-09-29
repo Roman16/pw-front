@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Tooltip } from 'antd';
 import Table from '../../../../../components/Table';
+import { TitleInfo } from '../../../../../components/Table/renders';
 import TableButton from '../TableButton';
 import {
     indexField, dateField, actionField, infoField,
@@ -52,7 +52,7 @@ const columns = {
             key: 'acos',
         },
         {
-            title: 'Target ACoS',
+            title: () => <TitleInfo title="Target ACoS" />,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
         },
@@ -72,7 +72,7 @@ const columns = {
             key: 'impressions',
         },
         {
-            title: 'Target Impressions',
+            title: () => <TitleInfo title="Target Impressions" />,
             dataIndex: 'targetImpressions',
             key: 'targetImpressions',
         }, {
@@ -90,7 +90,7 @@ const columns = {
             key: 'acos',
         },
         {
-            title: 'Target ACoS',
+            title: () => <TitleInfo title="Target ACoS" />,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
         },
@@ -109,7 +109,7 @@ const columns = {
             key: 'averageConvRate',
         },
         {
-            title: 'Clicks',
+            title: () => <TitleInfo title="Clicks" />,
             dataIndex: 'clicks',
             key: 'clicks',
         },
@@ -138,14 +138,13 @@ class KeywordsOptimization extends Component {
         this.initialFetch(activeTable);
     }
 
-    changeTable = (activeTable) => {
-        this.setState({
-            activeTable,
-            currentPage: 1,
-        });
-        this.initialFetch(activeTable);
-    };
+    componentDidUpdate(nextProps) {
+        const { totalTypeSize, updateTotalTypeSize } = this.props;
 
+        if (totalTypeSize !== nextProps.totalTypeSize) {
+            updateTotalTypeSize('keywords-optimization', totalTypeSize);
+        }
+    }
 
     initialFetch = (activeTable) => {
         const { fetchData } = this.props;
@@ -161,13 +160,13 @@ class KeywordsOptimization extends Component {
         fetchData(activeTable, currentPage);
     };
 
-    componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props;
-
-        if (totalTypeSize !== nextProps.totalTypeSize) {
-            updateTotalTypeSize('keywords-optimization', totalTypeSize);
-        }
-    }
+    changeTable = (activeTable) => {
+        this.setState({
+            activeTable,
+            currentPage: 1,
+        });
+        this.initialFetch(activeTable);
+    };
 
     render() {
         const { activeTable, currentPage } = this.state;
@@ -177,43 +176,45 @@ class KeywordsOptimization extends Component {
 
         return (
             <div className="ReportItemTable">
-                <TableButton
-                    active={changedKeywordBidAcos === activeTable}
-                    count={count[changedKeywordBidAcos]}
+                <div className="ReportItemTable__Buttons">
+                    <TableButton
+                        active={changedKeywordBidAcos === activeTable}
+                        count={count[changedKeywordBidAcos]}
 
-                    onClick={() => {
-                        this.changeTable(changedKeywordBidAcos);
-                    }}
-                >
-                    Changed Keyword Bid (ACoS)
-                </TableButton>
-                <TableButton
-                    active={changedKeywordBidImpression === activeTable}
-                    count={count[changedKeywordBidImpression]}
-                    onClick={() => {
-                        this.changeTable(changedKeywordBidImpression);
-                    }}
-                >
-                    Changed Keyword Bid (Impressions)
-                </TableButton>
-                <TableButton
-                    active={pausedKeywordHighAcos === activeTable}
-                    count={count[pausedKeywordHighAcos]}
-                    onClick={() => {
-                        this.changeTable(pausedKeywordHighAcos);
-                    }}
-                >
-                    Paused Keyword (High ACoS)
-                </TableButton>
-                <TableButton
-                    active={pausedKeywordNoSales === activeTable}
-                    count={count[pausedKeywordNoSales]}
-                    onClick={() => {
-                        this.changeTable(pausedKeywordNoSales);
-                    }}
-                >
-                    Paused Keyword (No Sales)
-                </TableButton>
+                        onClick={() => {
+                            this.changeTable(changedKeywordBidAcos);
+                        }}
+                    >
+                        Changed Keyword Bid (ACoS)
+                    </TableButton>
+                    <TableButton
+                        active={changedKeywordBidImpression === activeTable}
+                        count={count[changedKeywordBidImpression]}
+                        onClick={() => {
+                            this.changeTable(changedKeywordBidImpression);
+                        }}
+                    >
+                        Changed Keyword Bid (Impressions)
+                    </TableButton>
+                    <TableButton
+                        active={pausedKeywordHighAcos === activeTable}
+                        count={count[pausedKeywordHighAcos]}
+                        onClick={() => {
+                            this.changeTable(pausedKeywordHighAcos);
+                        }}
+                    >
+                        Paused Keyword (High ACoS)
+                    </TableButton>
+                    <TableButton
+                        active={pausedKeywordNoSales === activeTable}
+                        count={count[pausedKeywordNoSales]}
+                        onClick={() => {
+                            this.changeTable(pausedKeywordNoSales);
+                        }}
+                    >
+                        Paused Keyword (No Sales)
+                    </TableButton>
+                </div>
 
                 <Table
                     onChangePagination={this.handlePaginationChange}
