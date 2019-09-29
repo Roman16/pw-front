@@ -4,17 +4,6 @@ import './LoginForm.less';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 
-let data = JSON.stringify({
-    username: 'test@test.ua',
-    password: 'test@test.ua'
-});
-axios.post(`http://front1.profitwhales.com/api/user/login`, data)
-    .then((res) => {
-        console.log("RESPONSE RECEIVED: ", res);
-    })
-    .catch((err) => {
-        console.log("AXIOS ERROR: ", err);
-    });
 class LoginForm extends React.Component {
     constructor(props){
         super(props);
