@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.19.8",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "bfj": "6.1.1",
     "bootstrap": "^4.3.1",
     "chalk": "2.4.1",

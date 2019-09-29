@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ProductContent from '../components/ProductContent';
-import { updateProductIdData, saveProductIdData } from '../store/action';
+import { updateProductIdData, saveProductIdData, setNetMargin } from '../store/action';
 import {
     getProductIdData,
     getActiveProductId,
@@ -26,6 +26,10 @@ const mapDispatchToProps = (dispatch) => ({
     saveProductIdData: (status) => (
         dispatch(saveProductIdData(status))
     ),
+    setNetMargin: (productId, netMarginValue) => (
+        dispatch(setNetMargin(productId, netMarginValue))
+    ),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductContent);
