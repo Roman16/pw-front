@@ -33,6 +33,19 @@ export const fetchProductChangeData = (productId) => (
         .then((response) => response)
 
 );
+export const setNetMargin = (productId, netMargin) => (
+    axios.post('/api/product-settings/product-margin', {
+        id: productId,
+        'net-margin': netMargin,
+    }, {
+        params: {
+            api_token: 'INaDvhEVGFUEzhXDSpZtQ8i0PKZlb6E1pkpK99PqqnJKfCK3pGSwXuF4Y8Bq',
+        },
+
+    })
+        .then((response) => response)
+
+);
 
 
 export const saveProductData = (status, activeProductId, {
