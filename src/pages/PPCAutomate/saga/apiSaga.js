@@ -2,6 +2,7 @@ import { put, call, select } from 'redux-saga/effects';
 import * as types from '../store/action';
 import {
     fetchProductList, fetchProductData, saveProductData, fetchProductChangeData,
+    setNetMargin,
 } from './api';
 
 
@@ -165,6 +166,12 @@ export function* saveProductIdDataSaga({ status }) {
 export function* setNetMarginSaga({ productId, netMarginValue }) {
     try {
         console.log(productId, netMarginValue);
+        const {
+            data,
+        } = yield call(setNetMargin, productId, netMarginValue);
+
+        console.log(data);
+
         yield saveProductIdDataSaga({ status: 'RUNNING' });
     } catch (e) {
         console.log(e);
