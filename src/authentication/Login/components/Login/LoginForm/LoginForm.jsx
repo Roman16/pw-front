@@ -13,6 +13,7 @@ class LoginForm extends React.Component {
             email: '',
             password: '',
             isLoading: false,
+            error: false
         };
         this.onChange = this.onChange.bind(this);
     }
@@ -28,11 +29,13 @@ class LoginForm extends React.Component {
             password: this.state.password,
         })
             .then((res) => {
-                console.log('RESPONSE RECEIVED: ', res);
+                console.log("RESPONSE RECEIVED: ", res);
+                localStorage.setItem("token",  res.data.access_token);
             })
             .catch((err) => {
-                console.log('AXIOS ERROR: ', err);
-            });
+                console.log("AXIOS ERROR: ", err);
+                this.setState({'error': true});
+            })
     };
 
     render() {
