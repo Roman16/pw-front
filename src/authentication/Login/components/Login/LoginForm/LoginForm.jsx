@@ -3,7 +3,10 @@ import {
     Form, Row, Input, Button, Checkbox, Col,
 } from 'antd';
 import './LoginForm.less';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import { CircleSpinner } from 'react-spinners-kit';
+import 'react-toastify/dist/ReactToastify.min.css';
 import axios from 'axios';
 
 class LoginForm extends React.Component {
@@ -13,9 +16,13 @@ class LoginForm extends React.Component {
             email: '',
             password: '',
             isLoading: false,
-            error: false
+            loginSuccess: false,
         };
         this.onChange = this.onChange.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({ isLoading: false });
     }
 
     onChange = (e) => {
@@ -24,22 +31,55 @@ class LoginForm extends React.Component {
 
     onClick = (e) => {
         e.preventDefault();
+        this.setState({ isLoading: true });
         axios.post('/api/user/login', {
             email: this.state.email,
             password: this.state.password,
         })
             .then((res) => {
-                console.log("RESPONSE RECEIVED: ", res);
-                localStorage.setItem("token",  res.data.access_token);
+                global.localStorage.setItem('token', `Bearer ${res.data.access_token}`);
+                this.setState({
+                    isLoading: false,
+                    // eslint-disable-next-line react/no-unused-state
+                    loginSuccess: true,
+                });
+                console.log(this.state);
             })
-            .catch((err) => {
-                console.log("AXIOS ERROR: ", err);
-                this.setState({'error': true});
-            })
+            .catch(() => {
+                toast.error('These credentials do not match our records.', {
+                    position: 'bottom-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+                this.setState({ isLoading: false });
+            });
     };
 
     render() {
-        const { email, password } = this.state;
+        const {
+            email, password, isLoading, loginSuccess,
+        } = this.state;
+
+        if (isLoading) {
+            return (
+                <CircleSpinner
+                    size={30}
+                    color="#686769"
+                    className="loader"
+                    loading={isLoading}
+                />
+            );
+        }
+
+        if (loginSuccess) {
+            return (
+                <Redirect to="/optimization" />
+            );
+        }
+
 
         return (
             <Form className="login-form">
@@ -105,7 +145,7 @@ Sign
                         By signing up, you agree to
                         {' '}
                         <br />
-                        <a href="#">Terms and Conditions &amp; Privacy Policy</a>
+                        <a href="/#">Terms and Conditions &amp; Privacy Policy</a>
                     </Col>
                 </Row>
                 <Row>
@@ -121,6 +161,17 @@ Sign
                         </div>
                     </Col>
                 </Row>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnVisibilityChange
+                    draggable
+                    pauseOnHover
+                />
             </Form>
         );
     }
