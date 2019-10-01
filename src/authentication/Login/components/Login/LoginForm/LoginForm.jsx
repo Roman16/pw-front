@@ -43,7 +43,6 @@ class LoginForm extends React.Component {
                     // eslint-disable-next-line react/no-unused-state
                     loginSuccess: true,
                 });
-                console.log(this.state);
             })
             .catch(() => {
                 toast.error('These credentials do not match our records.', {
