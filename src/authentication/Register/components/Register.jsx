@@ -1,10 +1,10 @@
-import React from "react";
-import {Col, Row} from "antd";
+import React from 'react';
+import { Col, Row } from 'antd';
 import './Register.less';
 import RegisterForm from './RegisterForm/RegisterForm';
 
 class Register extends React.Component {
-    render(){
+    render() {
         return (
             <div className="RegisterFormContainer">
                 <div className="sign-page">
@@ -15,7 +15,10 @@ class Register extends React.Component {
                         <Col xs={24} sm={24} md={12} lg={12} className="form-col">
                             <div className="title">Create your account</div>
                             <div className="sub-title">
-                                Getting started with Profit Whales takes only a few minutes but saves hundreds of hours, <br/>
+                                {/* eslint-disable-next-line max-len */}
+                                Getting started with Profit Whales takes only a few minutes but saves hundreds of hours,
+                                {' '}
+                                <br />
                                 don’t believe me? Try it now.
                             </div>
                             <div className="form-title">Personal Information</div>
@@ -33,7 +36,9 @@ class Register extends React.Component {
                                 <li>Thousands of dollars saved per ASIN</li>
                             </ul>
                             <div className="btn-container">
-                                Already have an account? <a href="https://profitwhales.com/login">Login</a>
+                                Already have an account?
+                                {' '}
+                                <a href="/login">Login</a>
                             </div>
                         </Col>
                     </Row>
