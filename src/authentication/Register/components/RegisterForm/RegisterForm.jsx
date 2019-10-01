@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import { Col, Row } from 'antd';
+import { ToastContainer, toast } from 'react-toastify';
+import { Redirect } from 'react-router-dom';
+import { CircleSpinner } from 'react-spinners-kit';
 
 
 class RegisterForm extends React.Component {
@@ -11,6 +14,8 @@ class RegisterForm extends React.Component {
             last_name: '',
             email: '',
             password: '',
+            registerSuccess: false,
+            isLoading: false,
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -18,7 +23,48 @@ class RegisterForm extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        axios.post('api/user/register', { user: this.state });
+        this.setState({
+            isLoading: true,
+        });
+        if (this.state.password.length <= 6) {
+            toast.error('The password must be at least 6 characters.', {
+                position: 'bottom-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+            this.setState({
+                isLoading: false,
+            });
+        }
+        axios.post('/api/user/register', {
+            password: this.state.password,
+            email: this.state.email,
+            name: this.state.name,
+            last_name: this.state.last_name,
+        })
+            .then((res) => {
+                console.log(res);
+                this.setState({
+                    registerSuccess: true,
+                    isLoading: true,
+                });
+            })
+            .catch((err) => {
+                toast.error(`${err.response.data.message}`, {
+                    position: 'bottom-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+                this.setState({
+                    isLoading: false,
+                });
+            });
     }
 
     onChange(e) {
@@ -26,6 +72,25 @@ class RegisterForm extends React.Component {
     }
 
     render() {
+        const { registerSuccess, isLoading } = this.state;
+
+        if (isLoading) {
+            return (
+                <CircleSpinner
+                    size={30}
+                    color="#686769"
+                    className="loader"
+                    loading={isLoading}
+                />
+            );
+        }
+
+        if (registerSuccess) {
+            return (
+                <Redirect to="/optimization" />
+            );
+        }
+
         return (
             <form className="form " id="payment-form2" onSubmit={this.onSubmit}>
                 <Row>
@@ -40,6 +105,8 @@ class RegisterForm extends React.Component {
                                 required
                                 autoFocus
                             />
+                            {/* eslint-disable-next-line max-len */}
+                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
                             <label>First name</label>
                         </div>
                     </Col>
@@ -52,6 +119,8 @@ class RegisterForm extends React.Component {
                                 onChange={this.onChange}
                                 required
                             />
+                            {/* eslint-disable-next-line max-len */}
+                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
                             <label>Last Name</label>
                         </div>
                     </Col>
@@ -67,6 +136,8 @@ class RegisterForm extends React.Component {
                                 onChange={this.onChange}
                                 required
                             />
+                            {/* eslint-disable-next-line max-len */}
+                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
                             <label>Email Address</label>
                         </div>
                     </Col>
@@ -81,6 +152,8 @@ class RegisterForm extends React.Component {
                                 onChange={this.onChange}
                                 required
                             />
+                            {/* eslint-disable-next-line max-len */}
+                            {/* eslint-disable-next-line jsx-a11y/label-has-for,jsx-a11y/label-has-associated-control */}
                             <label>Password</label>
                         </div>
                     </Col>
@@ -97,14 +170,14 @@ Create
                     <Col>
                         By clicking “Create Your Account” you are agreeing to our
                         {' '}
-                        <a href="#">
+                        <a href="/#">
 Terms
                         of
                         Service
                         </a>
                         and have read through our
                         {' '}
-                        <a href="#">Privacy Statement</a>
+                        <a href="/#">Privacy Statement</a>
 .
                     </Col>
                 </Row>
@@ -126,25 +199,17 @@ Terms
                         </p>
                     </Col>
                 </Row>
-                {/* <div className="row payments-row"> */}
-                {/*    <div className="col-md-5"> */}
-                {/*        <div className="row"> */}
-                {/*            <div className="col-md-6"> */}
-                {/*                <img src="img/scrill.svg" alt="scrill" /> */}
-                {/*            </div> */}
-                {/*            <div className="col-md-6"> */}
-                {/*                <img src="img/visa.svg" alt="visa" /> */}
-                {/*            </div> */}
-                {/*        </div> */}
-                {/*    </div> */}
-
-                {/*    <div className="col-md-7"> */}
-                {/*        <p> */}
-                {/*            This is a secure 128-bit ssl encrypted */}
-                {/*            payment */}
-                {/*        </p> */}
-                {/*    </div> */}
-                {/* </div> */}
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnVisibilityChange
+                    draggable
+                    pauseOnHover
+                />
             </form>
         );
     }
