@@ -1,11 +1,10 @@
 import React from 'react';
 import {
-    Form, Row, Input, Button, Checkbox, Col,
+    Form, Row, Input, Button, Checkbox, Col, Spin,
 } from 'antd';
 import './LoginForm.less';
 import { Link, Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { CircleSpinner } from 'react-spinners-kit';
 import 'react-toastify/dist/ReactToastify.min.css';
 import axios from 'axios';
 
@@ -64,12 +63,9 @@ class LoginForm extends React.Component {
 
         if (isLoading) {
             return (
-                <CircleSpinner
-                    size={30}
-                    color="#686769"
-                    className="loader"
-                    loading={isLoading}
-                />
+                <div className="example">
+                    <Spin size="large" />
+                </div>
             );
         }
 
