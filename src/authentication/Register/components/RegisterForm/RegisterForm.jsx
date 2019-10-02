@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import { Col, Row } from 'antd';
+import {
+    Col, Row, Spin,
+} from 'antd';
 import { ToastContainer, toast } from 'react-toastify';
 import { Redirect } from 'react-router-dom';
-import { CircleSpinner } from 'react-spinners-kit';
 
 
 class RegisterForm extends React.Component {
@@ -49,7 +50,7 @@ class RegisterForm extends React.Component {
                 console.log(res);
                 this.setState({
                     registerSuccess: true,
-                    isLoading: true,
+                    isLoading: false,
                 });
             })
             .catch((err) => {
@@ -76,12 +77,9 @@ class RegisterForm extends React.Component {
 
         if (isLoading) {
             return (
-                <CircleSpinner
-                    size={30}
-                    color="#686769"
-                    className="loader"
-                    loading={isLoading}
-                />
+                <div className="example">
+                    <Spin size="large" />
+                </div>
             );
         }
 
@@ -103,7 +101,6 @@ class RegisterForm extends React.Component {
                                 value={this.state.name}
                                 onChange={this.onChange}
                                 required
-                                autoFocus
                             />
                             {/* eslint-disable-next-line max-len */}
                             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
