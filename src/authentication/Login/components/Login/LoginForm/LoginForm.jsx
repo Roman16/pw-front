@@ -1,10 +1,9 @@
 import React from 'react';
 import {
-    Form, Row, Input, Button, Checkbox, Col, Spin,
+    Form, Row, Input, Button, Checkbox, Col, Spin, notification,
 } from 'antd';
 import './LoginForm.less';
 import { Link, Redirect } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import axios from 'axios';
 
@@ -44,13 +43,15 @@ class LoginForm extends React.Component {
                 });
             })
             .catch(() => {
-                toast.error('These credentials do not match our records.', {
-                    position: 'bottom-right',
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
+                notification.error({
+                    message: 'These credentials do not match our records.',
+                    style: {
+                        width: 600,
+                        marginLeft: 335 - 600,
+                    },
+                    placement: 'bottomRight',
+                    bottom: 20,
+                    duration: 5,
                 });
                 this.setState({ isLoading: false });
             });
@@ -156,17 +157,6 @@ Sign
                         </div>
                     </Col>
                 </Row>
-                <ToastContainer
-                    position="bottom-right"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnVisibilityChange
-                    draggable
-                    pauseOnHover
-                />
             </Form>
         );
     }
