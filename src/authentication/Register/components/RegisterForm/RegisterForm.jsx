@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import {
-    Col, Row, Spin,
+    Col, notification, Row, Spin,
 } from 'antd';
-import { ToastContainer, toast } from 'react-toastify';
 import { Redirect } from 'react-router-dom';
 
 
@@ -28,13 +27,15 @@ class RegisterForm extends React.Component {
             isLoading: true,
         });
         if (this.state.password.length <= 6) {
-            toast.error('The password must be at least 6 characters.', {
-                position: 'bottom-right',
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
+            notification.error({
+                message: 'The password must be at least 6 characters.',
+                style: {
+                    width: 600,
+                    marginLeft: 335 - 600,
+                },
+                placement: 'bottomRight',
+                bottom: 20,
+                duration: 5,
             });
             this.setState({
                 isLoading: false,
@@ -54,13 +55,15 @@ class RegisterForm extends React.Component {
                 });
             })
             .catch((err) => {
-                toast.error(`${err.response.data.message}`, {
-                    position: 'bottom-right',
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
+                notification.error({
+                    message: `${err.response.data.message}`,
+                    style: {
+                        width: 600,
+                        marginLeft: 335 - 600,
+                    },
+                    placement: 'bottomRight',
+                    bottom: 20,
+                    duration: 5,
                 });
                 this.setState({
                     isLoading: false,
@@ -196,17 +199,6 @@ Terms
                         </p>
                     </Col>
                 </Row>
-                <ToastContainer
-                    position="bottom-right"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnVisibilityChange
-                    draggable
-                    pauseOnHover
-                />
             </form>
         );
     }
