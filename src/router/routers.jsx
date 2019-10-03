@@ -5,6 +5,7 @@ import Register from '../authentication/Register';
 import PPCAutomate from '../pages/PPCAutomate';
 import PPCReport from '../pages/PPCReport';
 import ProductSettings from '../pages/ProductSettings';
+import NotFound from '../pages/NotFound';
 import { next } from './render-routers';
 
 const routers = [
@@ -48,8 +49,7 @@ const routers = [
             {
                 path: '*',
                 exact: true,
-                // todo create 404 page
-                component: () => (<div>404</div>),
+                component: NotFound,
             },
 
 

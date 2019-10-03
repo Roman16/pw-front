@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Login from './components/Login/index';
+import NotFound from './components/NotFound';
 
 class LoginPage extends Component {
     render() {
         return (
-            <Login />
+            <NotFound />
         );
     }
 }
