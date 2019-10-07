@@ -1,11 +1,11 @@
 import React from 'react';
 import './Login.less';
 import { Row, Col } from 'antd';
-import LoginForm from "./LoginForm/LoginForm";
+import LoginForm from './LoginForm/LoginForm';
 
 
 class Login extends React.Component {
-    render(){
+    render() {
         return (
             <div className="LoginFormContainer">
                 <div className="sign-page">
@@ -16,7 +16,9 @@ class Login extends React.Component {
                         <Col xs={24} sm={24} md={12} lg={12} className="form-col">
                             <div className="title">Log In</div>
                             <div className="sub-title">
-                                Welcome back! Please Log In to your account <br />
+                                Welcome back! Please Log In to your account
+                                {' '}
+                                <br />
                                 to access the dashboard.
                             </div>
                             <LoginForm />
