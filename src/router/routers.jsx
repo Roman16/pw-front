@@ -24,9 +24,12 @@ const routers = [
         strict: true,
         component: PagesRouter,
         before: () => {
-            // todo add auth
-            console.log('check auth');
-            next();
+            if ([null, 'null'].includes(window.localStorage.getItem('token'))) {
+                return next('/login');
+            }
+
+
+            return next();
         },
 
         routes: [

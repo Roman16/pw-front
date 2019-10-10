@@ -3,10 +3,10 @@ import Checkbox, { Group } from '../../../../../../components/Checkbox';
 import './OptimizeOptions.less';
 
 export const CheckBoxItem = ({
-                                 text,
-                                 value = '',
-                                 ...props
-                             }) => (
+    text,
+    value = '',
+    ...props
+}) => (
     <div className="CheckBoxItem">
         <Checkbox value={value} {...props}>{text}</Checkbox>
     </div>

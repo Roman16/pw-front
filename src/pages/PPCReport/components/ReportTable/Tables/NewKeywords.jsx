@@ -231,7 +231,7 @@ class NewKeywords extends Component {
     render() {
         const { activeTable, currentPage } = this.state;
         const {
-            data, loading, totalSize, showPagination,count
+            data, loading, totalSize, showPagination, count,
         } = this.props;
 
         return (
