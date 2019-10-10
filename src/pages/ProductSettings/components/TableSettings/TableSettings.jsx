@@ -10,10 +10,10 @@ import ProductSettingsApi from '../../Hoc/ProductSettingsAPI';
 const ACTIVE = 'active';
 const PRODUCT = 'product';
 const NET_MARGIN = 'net-margin';
-const MIN_BID_MANUAL_CAMPING = 'min-bid-manual-camping';
-const MAX_BID_MANUAL_CAMPING = 'max-bid-manual-camping';
-const MIN_BID_AUTO_CAMPING = 'min-bid-auto-camping';
-const MAX_BID_AUTO_CAMPING = 'max-bid-auto-camping';
+const MIN_BID_MANUAL_CAMPING = 'min-bid-manual-campaign';
+const MAX_BID_MANUAL_CAMPING = 'max-bid-manual-campaign';
+const MIN_BID_AUTO_CAMPING = 'min-bid-auto-campaign';
+const MAX_BID_AUTO_CAMPING = 'max-bid-auto-campaign';
 const TOTAL_CHANGES = 'total-changes';
 const OPTIMIZATION_STATUS = 'optimization-status';
 
@@ -21,26 +21,28 @@ const OPTIMIZATION_STATUS = 'optimization-status';
 class TableSettings extends Component {
     constructor(props) {
         super(props);
-        const { onChangeRow } = props;
+        const {
+            onChangeRow, onBlurRow, onSearchChange, onSearchBlur,
+        } = props;
 
         this.columns = [
             {
                 title: () => (
                     <div className="InputSearch">
-                        <Input.Search />
+                        <Input.Search onChange={onSearchChange} onBlur={onSearchBlur} />
                     </div>
                 ),
                 dataIndex: PRODUCT,
                 key: PRODUCT,
                 width: 300,
                 render: ({
-                    id, asin, captions, sku,
-                    image_url,
+                    id, asin, product_name, sku,
+                    product_image,
                 }) => (
                     <ProductItem
                         asin={asin}
-                        captions={captions}
-                        imageUrl={image_url}
+                        captions={product_name}
+                        imageUrl={product_image}
                         sku={sku}
                         key={id}
                     />
@@ -55,6 +57,7 @@ class TableSettings extends Component {
                     <InputCurrency
                         value={item[NET_MARGIN]}
                         onChange={(event) => onChangeRow(event, NET_MARGIN, indexRow)}
+                        onBlur={(event) => onBlurRow(event, NET_MARGIN, indexRow)}
                     />
                 ),
             },
@@ -66,6 +69,7 @@ class TableSettings extends Component {
                     <InputCurrency
                         value={item[MIN_BID_MANUAL_CAMPING]}
                         onChange={(event) => onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)}
+                        onBlur={(event) => onBlurRow(event, MIN_BID_MANUAL_CAMPING, indexRow)}
                     />
                 ),
             },
@@ -77,6 +81,7 @@ class TableSettings extends Component {
                     <InputCurrency
                         value={item[MAX_BID_MANUAL_CAMPING]}
                         onChange={(event) => onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)}
+                        onBlur={(event) => onBlurRow(event, MAX_BID_MANUAL_CAMPING, indexRow)}
                     />
                 ),
             },
@@ -88,6 +93,7 @@ class TableSettings extends Component {
                     <InputCurrency
                         value={item[MIN_BID_AUTO_CAMPING]}
                         onChange={(event) => onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)}
+                        onBlur={(event) => onBlurRow(event, MIN_BID_AUTO_CAMPING, indexRow)}
                     />
                 ),
             },
@@ -99,6 +105,7 @@ class TableSettings extends Component {
                     <InputCurrency
                         value={item[MAX_BID_AUTO_CAMPING]}
                         onChange={(event) => onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)}
+                        onBlur={(event) => onBlurRow(event, MAX_BID_AUTO_CAMPING, indexRow)}
                     />
                 ),
             },
@@ -120,7 +127,7 @@ class TableSettings extends Component {
                     <div
                         className={`settings-status ${item[OPTIMIZATION_STATUS] === ACTIVE ? 'active' : ''}`}
                     >
-                        {item[OPTIMIZATION_STATUS]}
+                        {item[OPTIMIZATION_STATUS] === ACTIVE ? 'Active' : 'Paused'}
                     </div>
                 ),
 

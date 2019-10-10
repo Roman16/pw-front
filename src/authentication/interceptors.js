@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-window.BASE_URL = process.env.NODE_ENV === 'production' ? '' : 'http://front1.profitwhales.com';
+window.BASE_URL = process.env.NODE_ENV === 'production' ? '' : 'https://front1.profitwhales.com';
 const token = global.localStorage.getItem('token');
 
 const initialInterceptors = () => {

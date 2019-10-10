@@ -7,7 +7,6 @@ export const fetchProductList = (searchText, page) => (
             search_query: encodeURI(searchText),
             page,
             size: DEFAULT_PAGE_SIZE,
-            api_token: 'INaDvhEVGFUEzhXDSpZtQ8i0PKZlb6E1pkpK99PqqnJKfCK3pGSwXuF4Y8Bq',
         },
     })
         .then((response) => response)
@@ -17,7 +16,6 @@ export const fetchProductData = (productId) => (
     axios.get('/ppc-automation/get-parameters', {
         params: {
             product_id: productId,
-            api_token: 'INaDvhEVGFUEzhXDSpZtQ8i0PKZlb6E1pkpK99PqqnJKfCK3pGSwXuF4Y8Bq',
         },
     })
         .then((response) => response)
@@ -27,7 +25,6 @@ export const fetchProductChangeData = (productId) => (
     axios.get('/ppc-automation/get-changes-data', {
         params: {
             product_id: productId,
-            api_token: 'INaDvhEVGFUEzhXDSpZtQ8i0PKZlb6E1pkpK99PqqnJKfCK3pGSwXuF4Y8Bq',
         },
     })
         .then((response) => response)
@@ -37,11 +34,6 @@ export const setNetMargin = (productId, netMargin) => (
     axios.post('/api/product-settings/product-margin', {
         id: productId,
         'net-margin': netMargin,
-    }, {
-        params: {
-            api_token: 'INaDvhEVGFUEzhXDSpZtQ8i0PKZlb6E1pkpK99PqqnJKfCK3pGSwXuF4Y8Bq',
-        },
-
     })
         .then((response) => response)
 
@@ -67,7 +59,6 @@ export const saveProductData = (status, activeProductId, {
             create_new_pats: +create_new_pats,
             optimize_keywords: +optimize_keywords,
             optimize_pats: +optimize_pats,
-            api_token: 'INaDvhEVGFUEzhXDSpZtQ8i0PKZlb6E1pkpK99PqqnJKfCK3pGSwXuF4Y8Bq',
         },
     })
         .then((response) => response)

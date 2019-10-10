@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../../components/Header';
-import Sidebar from "../../components/Sidebar";
+import Sidebar from '../../components/Sidebar';
 import Footer from '../../components/Footer';
 import './MainContent.less';
 

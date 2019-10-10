@@ -4,7 +4,6 @@ import {
 } from 'antd';
 import './LoginForm.less';
 import { Link, Redirect } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.min.css';
 import axios from 'axios';
 
 class LoginForm extends React.Component {
