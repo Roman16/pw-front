@@ -1,10 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import {
-    Col, notification, Row, Spin,
-} from 'antd';
+import { Col, notification, Row, Spin } from 'antd';
 import { Redirect } from 'react-router-dom';
-
 
 class RegisterForm extends React.Component {
     constructor(props) {
@@ -15,7 +12,7 @@ class RegisterForm extends React.Component {
             email: '',
             password: '',
             registerSuccess: false,
-            isLoading: false,
+            isLoading: false
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -24,49 +21,50 @@ class RegisterForm extends React.Component {
     onSubmit(e) {
         e.preventDefault();
         this.setState({
-            isLoading: true,
+            isLoading: true
         });
         if (this.state.password.length <= 6) {
             notification.error({
                 message: 'The password must be at least 6 characters.',
                 style: {
                     width: 600,
-                    marginLeft: 335 - 600,
+                    marginLeft: 335 - 600
                 },
                 placement: 'bottomRight',
                 bottom: 20,
-                duration: 5,
+                duration: 5
             });
             this.setState({
-                isLoading: false,
+                isLoading: false
             });
         }
-        axios.post('/api/user/register', {
-            password: this.state.password,
-            email: this.state.email,
-            name: this.state.name,
-            last_name: this.state.last_name,
-        })
-            .then((res) => {
-                console.log(res);
+        axios
+            .post('/api/user/register', {
+                password: this.state.password,
+                email: this.state.email,
+                name: this.state.name,
+                last_name: this.state.last_name
+            })
+            .then(() => {
                 this.setState({
                     registerSuccess: true,
-                    isLoading: false,
+                    isLoading: false
                 });
             })
-            .catch((err) => {
+            .catch(err => {
+                console.log('err :', err);
                 notification.error({
-                    message: `${err.response.data.message}`,
+                    message: `${err}`,
                     style: {
                         width: 600,
-                        marginLeft: 335 - 600,
+                        marginLeft: 335 - 600
                     },
                     placement: 'bottomRight',
                     bottom: 20,
-                    duration: 5,
+                    duration: 5
                 });
                 this.setState({
-                    isLoading: false,
+                    isLoading: false
                 });
             });
     }
@@ -87,9 +85,7 @@ class RegisterForm extends React.Component {
         }
 
         if (registerSuccess) {
-            return (
-                <Redirect to="/optimization" />
-            );
+            return <Redirect to="/optimization" />;
         }
 
         return (
@@ -160,25 +156,22 @@ class RegisterForm extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24}>
-                        <button id="complete_registration" type="submit" className="submit">
-Create
-                            your account
+                        <button
+                            id="complete_registration"
+                            type="submit"
+                            className="submit"
+                        >
+                            Create your account
                         </button>
                     </Col>
                 </Row>
                 <Row className="form-details">
                     <Col>
-                        By clicking “Create Your Account” you are agreeing to our
-                        {' '}
-                        <a href="/#">
-Terms
-                        of
-                        Service
-                        </a>
+                        By clicking “Create Your Account” you are agreeing to
+                        our
+                        <a href="/#">Terms of Service</a>
                         and have read through our
-                        {' '}
                         <a href="/#">Privacy Statement</a>
-.
                     </Col>
                 </Row>
                 <Row className="payments-row">
@@ -193,10 +186,7 @@ Terms
                         </Row>
                     </Col>
                     <Col xs={24} sm={24} md={14}>
-                        <p>
-                            This is a secure 128-bit ssl encrypted
-                            payment
-                        </p>
+                        <p>This is a secure 128-bit ssl encrypted payment</p>
                     </Col>
                 </Row>
             </form>

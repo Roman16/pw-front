@@ -1,59 +1,8 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 
-const dataSource = [
-    {
-        id: '1',
-        'net-margin': '0',
-        'min-bid-manual-camping': '57',
-        'max-bid-manual-camping': '57',
-        'min-bid-auto-camping': '57',
-        'max-bid-auto-camping': '57',
-        'total-changes': '1256',
-        'optimization-status': 'paused',
-        product: {
-            asin: 'B07QDCVZ4M',
-            captions: 'PW PWtest02 (Cheerry, 1234)',
-            id: 244,
-            image_url: 'http://g-ecx.images-amazon.com/images/G/01/x-site/icons/no-img-sm._CB1275522461_.gif',
-            sku: '9A-OETJ-0U14',
-        },
-    },
-    {
-        id: '2',
-        'net-margin': '0',
-        'min-bid-manual-camping': '57',
-        'max-bid-manual-camping': '57',
-        'min-bid-auto-camping': '57',
-        'max-bid-auto-camping': '57',
-        'total-changes': '1256',
-        'optimization-status': 'active',
-        product: {
-            asin: 'B07QDCVZ4M',
-            captions: 'PW PWtest02 (Cheerry, 1234)',
-            id: 244,
-            image_url: 'http://g-ecx.images-amazon.com/images/G/01/x-site/icons/no-img-sm._CB1275522461_.gif',
-            sku: '9A-OETJ-0U14',
-        },
-    }, {
-        id: '3',
-        'net-margin': '0',
-        'min-bid-manual-camping': '57',
-        'max-bid-manual-camping': '57',
-        'min-bid-auto-camping': '57',
-        'max-bid-auto-camping': '57',
-        'total-changes': '1256',
-        'optimization-status': 'active',
-        product: {
-            asin: 'B07QDCVZ4M',
-            captions: 'PW PWtest02 (Cheerry, 1234)',
-            id: 244,
-            image_url: 'http://g-ecx.images-amazon.com/images/G/01/x-site/icons/no-img-sm._CB1275522461_.gif',
-            sku: '9A-OETJ-0U14',
-        },
-    },
-];
 
+const delay = 1000; // ms
 const ProductSettingsApi = (ProductSettings) => (
     class extends Component {
         constructor(props) {
@@ -62,28 +11,91 @@ const ProductSettingsApi = (ProductSettings) => (
             this.state = {
                 dataSource: [],
             };
+            this.timerId = null;
+            this.timerIdSearch = null;
         }
 
         componentDidMount() {
             this.fetchData();
         }
 
-        fetchData = () => {
-            this.setState({ dataSource: [...dataSource] });
+        updateData = (data) => {
+            axios.post('/api/product-settings/product-margin', { ...data })
+                .then(({ data }) => {
+                    console.log(data);
+                })
+                .catch((e) => {
+                    console.log(e);
+                })
+                .finally(() => {
+                });
         };
 
-        onChangeRow = (event, item, index) => {
+        onSearchChange = (event) => {
+            const { target: { value } } = event;
+
+            clearTimeout(this.timerIdSearch);
+            this.timerIdSearch = setTimeout(() => {
+                this.fetchData(value);
+            }, delay);
+        };
+
+        onSearchBlur = (event) => {
+            const { target: { value } } = event;
+
+            clearTimeout(this.timerIdSearch);
+            this.fetchData(value);
+        };
+
+        fetchData = (searchText = '') => {
+            let dataSource = [];
+
+            axios.get('/api/product-settings', {
+                params: {
+                    search_query: searchText,
+                },
+            })
+                .then(({ data }) => {
+                    dataSource = data;
+                })
+                .catch((e) => {
+                    console.log(e);
+                })
+                .finally(() => {
+                    this.setState({ dataSource });
+                });
+        };
+
+        onChangeRow = (...args) => {
+            const dataSourceRow = this.setRowData(...args);
+
+            clearTimeout(this.timerId);
+            this.timerId = setTimeout(() => {
+                this.updateData(dataSourceRow);
+            }, delay);
+        };
+
+        setRowData = (event, item, index) => {
             const { dataSource } = this.state;
             const { target: { value } } = event;
 
             dataSource[index] = {
                 ...dataSource[index],
-                [item]: value,
+                [item]: +value,
             };
-
             this.setState({
                 dataSource: [...dataSource],
             });
+
+
+            return dataSource[index];
+        };
+
+        onBlurRow = (...args) => {
+            const dataSourceRow = this.setRowData(...args);
+
+            clearTimeout(this.timerId);
+            this.updateData(dataSourceRow);
         };
 
         render() {
@@ -95,7 +107,9 @@ const ProductSettingsApi = (ProductSettings) => (
                     {...this.props}
                     dataSource={dataSource}
                     onChangeRow={this.onChangeRow}
-
+                    onBlurRow={this.onBlurRow}
+                    onSearchChange={this.onSearchChange}
+                    onSearchBlur={this.onSearchBlur}
 
                 />
             );

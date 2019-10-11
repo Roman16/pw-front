@@ -4,6 +4,8 @@ import './Register.less';
 import RegisterForm from './RegisterForm/RegisterForm';
 
 class Register extends React.Component {
+    state = {};
+
     render() {
         return (
             <div className="RegisterFormContainer">
@@ -12,32 +14,48 @@ class Register extends React.Component {
                         <img src="/logo.svg" alt="logo" />
                     </div>
                     <Row className="container">
-                        <Col xs={24} sm={24} md={12} lg={12} className="form-col">
+                        <Col
+                            xs={24}
+                            sm={24}
+                            md={12}
+                            lg={12}
+                            className="form-col"
+                        >
                             <div className="title">Create your account</div>
                             <div className="sub-title">
                                 {/* eslint-disable-next-line max-len */}
-                                Getting started with Profit Whales takes only a few minutes but saves hundreds of hours,
-                                {' '}
+                                Getting started with Profit Whales takes only a
+                                few minutes but saves hundreds of hours,
                                 <br />
                                 don’t believe me? Try it now.
                             </div>
-                            <div className="form-title">Personal Information</div>
+                            <div className="form-title">
+                                Personal Information
+                            </div>
                             <RegisterForm />
                         </Col>
-                        <Col xs={24} sm={24} md={12} lg={12} className="info-col">
+                        <Col
+                            xs={24}
+                            sm={24}
+                            md={12}
+                            lg={12}
+                            className="info-col"
+                        >
                             <div className="title">
                                 You’ll receive this features in all plans:
                             </div>
                             <ul className="info-list">
                                 <li>AI powered PPC campaigns</li>
-                                <li>Easy to setup and launch your campaigns in few clicks</li>
+                                <li>
+                                    Easy to setup and launch your campaigns in
+                                    few clicks
+                                </li>
                                 <li>Enjoyable interface</li>
                                 <li>Tens of hours saved per week</li>
                                 <li>Thousands of dollars saved per ASIN</li>
                             </ul>
                             <div className="btn-container">
                                 Already have an account?
-                                {' '}
                                 <a href="/login">Login</a>
                             </div>
                         </Col>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Checkbox /*, { Group } */ from '../../../../../../components/Checkbox';
+import Checkbox /* , { Group } */ from '../../../../../../components/Checkbox';
 import './OptimizeOptions.less';
 
 export const CheckBoxItem = ({ text, value = '', ...props }) => (
