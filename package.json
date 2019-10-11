@@ -23,6 +23,7 @@
     "history": "^4.9.0",
     "identity-obj-proxy": "3.0.0",
     "moment": "^2.24.0",
+    "node-libpng": "^0.2.7",
     "prettier": "^1.16.4",
     "prop-types": "^15.7.2",
     "react": "^16.7.0",

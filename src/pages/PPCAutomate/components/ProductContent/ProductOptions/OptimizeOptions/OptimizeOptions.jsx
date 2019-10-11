@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import Checkbox, { Group } from '../../../../../../components/Checkbox';
+import Checkbox /* , { Group } */ from '../../../../../../components/Checkbox';
 import './OptimizeOptions.less';
 
-export const CheckBoxItem = ({
-    text,
-    value = '',
-    ...props
-}) => (
+export const CheckBoxItem = ({ text, value = '', ...props }) => (
     <div className="CheckBoxItem">
-        <Checkbox value={value} {...props}>{text}</Checkbox>
+        <Checkbox value={value} {...props}>
+            {text}
+        </Checkbox>
     </div>
 );
 // add_negative_keywords,
@@ -25,7 +23,8 @@ export const options = [
                   consectetur adipiscing elit,
                   sed do eiusmod tempor incididunt
                   ut labore et dolore magna aliqua.`,
-    }, {
+    },
+    {
         text: 'Add Negative',
         value: 'add_negative_pats',
         name: 'add_negative_pats',
@@ -33,7 +32,8 @@ export const options = [
                   consectetur adipiscing elit,
                   sed do eiusmod tempor incididunt
                   ut labore et dolore magna aliqua.`,
-    }, {
+    },
+    {
         text: 'Optimize Bids',
         value: 'optimize_pats',
         name: 'optimize_pats',
@@ -41,7 +41,8 @@ export const options = [
                   consectetur adipiscing elit,
                   sed do eiusmod tempor incididunt
                   ut labore et dolore magna aliqua.`,
-    }, {
+    },
+    {
         text: 'Pause Bad Keywords',
         value: 'create_new_keywords',
         name: 'create_new_keywords',
@@ -49,7 +50,8 @@ export const options = [
                   consectetur adipiscing elit,
                   sed do eiusmod tempor incididunt
                   ut labore et dolore magna aliqua.`,
-    }, {
+    },
+    {
         text: 'Optimize PAT Compaign',
         value: 'optimize_keywords',
         name: 'optimize_keywords',
@@ -57,7 +59,8 @@ export const options = [
                   consectetur adipiscing elit,
                   sed do eiusmod tempor incididunt
                   ut labore et dolore magna aliqua.`,
-    }, {
+    },
+    {
         text: 'Negative keywords creation',
         value: 'add_negative_keywords',
         name: 'add_negative_keywords',
@@ -75,10 +78,8 @@ class OptimizeOptions extends Component {
         this.state = {};
     }
 
-
     render() {
         const { optionsValue, onChange } = this.props;
-
 
         return (
             <div className="OptimizeOptions">

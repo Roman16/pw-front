@@ -1,6 +1,11 @@
 import {
-    SET_PRODUCT_LIST, SET_TOTAL_PRODUCT, SET_ACTIVE_PRODUCT, SET_PRODUCT_ID_DATA,
-    SET_PRODUCT_CHANGE_DATA, CHANGE_INVAILD_ERROR, CHANGE_PRODUCT_LIST,
+    SET_PRODUCT_LIST,
+    SET_TOTAL_PRODUCT,
+    SET_ACTIVE_PRODUCT,
+    SET_PRODUCT_ID_DATA,
+    SET_PRODUCT_CHANGE_DATA,
+    CHANGE_INVAILD_ERROR,
+    CHANGE_PRODUCT_LIST,
 } from './action';
 
 const defaultState = {
@@ -20,12 +25,12 @@ const PPCReducer = (state = defaultState, action) => {
                 productList: action.productList,
             };
         case CHANGE_PRODUCT_LIST:
-
             // eslint-disable-next-line no-case-declarations
             const updatedList = [...state.productList];
 
-            updatedList[action.activeProductIndex] = { ...action.updatedProductItem };
-
+            updatedList[action.activeProductIndex] = {
+                ...action.updatedProductItem,
+            };
 
             return {
                 ...state,
@@ -47,8 +52,7 @@ const PPCReducer = (state = defaultState, action) => {
                 totalProduct: action.totalProduct,
             };
         case SET_PRODUCT_ID_DATA:
-            console.log(action.data);
-
+            // console.log(action.data);
 
             return {
                 ...state,
@@ -58,14 +62,11 @@ const PPCReducer = (state = defaultState, action) => {
                 },
             };
         case SET_PRODUCT_CHANGE_DATA:
-            console.log(action.data);
-
+            // console.log(action.data);
 
             return {
                 ...state,
-                lastChanges: [
-                    ...action.data,
-                ],
+                lastChanges: [...action.data],
             };
         default:
             return state;

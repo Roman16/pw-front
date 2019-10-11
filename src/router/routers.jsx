@@ -1,10 +1,11 @@
-import React from 'react';
-import PagesRouter from '../pages';
+/* eslint-disable comma-dangle */
+// import React from 'react';
 import Login from '../authentication/Login';
 import Register from '../authentication/Register';
+import PagesRouter from '../pages';
+import ProductSettings from '../pages/ProductSettings';
 import PPCAutomate from '../pages/PPCAutomate';
 import PPCReport from '../pages/PPCReport';
-import ProductSettings from '../pages/ProductSettings';
 import NotFound from '../pages/NotFound';
 import { next } from './render-routers';
 
@@ -12,12 +13,12 @@ const routers = [
     {
         path: '/login',
         exact: true,
-        component: Login,
+        component: Login
     },
     {
         path: '/register',
         exact: true,
-        component: Register,
+        component: Register
     },
     {
         path: '/',
@@ -28,38 +29,32 @@ const routers = [
                 return next('/login');
             }
 
-
             return next();
         },
 
         routes: [
-
             {
-                path: '/product-settings',
+                path: '/ppc/product-settings',
                 exact: true,
-                component: ProductSettings,
+                component: ProductSettings
             },
             {
-                path: '/optimization',
+                path: '/ppc/optimization',
                 exact: true,
-                component: PPCAutomate,
+                component: PPCAutomate
             },
             {
-                path: '/report',
+                path: '/ppc/report',
                 exact: true,
-                component: PPCReport,
+                component: PPCReport
             },
             {
                 path: '*',
                 exact: true,
-                component: NotFound,
-            },
-
-
-        ],
-
-    },
-
+                component: NotFound
+            }
+        ]
+    }
 ];
 
 export default routers;

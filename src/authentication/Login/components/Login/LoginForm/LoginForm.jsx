@@ -1,6 +1,13 @@
 import React from 'react';
 import {
-    Form, Row, Input, Button, Checkbox, Col, Spin, notification,
+    Form,
+    Row,
+    Input,
+    Button,
+    Checkbox,
+    Col,
+    Spin,
+    notification,
 } from 'antd';
 import './LoginForm.less';
 import { Link, Redirect } from 'react-router-dom';
@@ -29,12 +36,16 @@ class LoginForm extends React.Component {
     onClick = (e) => {
         e.preventDefault();
         this.setState({ isLoading: true });
-        axios.post('/api/user/login', {
-            email: this.state.email,
-            password: this.state.password,
-        })
+        axios
+            .post('/api/user/login', {
+                email: this.state.email,
+                password: this.state.password,
+            })
             .then((res) => {
-                global.localStorage.setItem('token', `Bearer ${res.data.access_token}`);
+                global.localStorage.setItem(
+                    'token',
+                    `Bearer ${res.data.access_token}`,
+                );
                 this.setState({
                     isLoading: false,
                     // eslint-disable-next-line react/no-unused-state
@@ -58,8 +69,8 @@ class LoginForm extends React.Component {
 
     render() {
         const {
-            email, password, isLoading, loginSuccess,
-        } = this.state;
+ email, password, isLoading, loginSuccess 
+} = this.state;
 
         if (isLoading) {
             return (
@@ -70,11 +81,8 @@ class LoginForm extends React.Component {
         }
 
         if (loginSuccess) {
-            return (
-                <Redirect to="/optimization" />
-            );
+            return <Redirect to="/optimization" />;
         }
-
 
         return (
             <Form className="login-form">
@@ -104,8 +112,11 @@ class LoginForm extends React.Component {
                         />
                     </Form.Item>
                 </div>
-                <Row type="flex" justify="space-between" className="form-bottom">
-
+                <Row
+                    type="flex"
+                    justify="space-between"
+                    className="form-bottom"
+                >
                     <Checkbox>Remember me</Checkbox>
                     <a
                         className="login-form-forgot forget"
@@ -113,7 +124,6 @@ class LoginForm extends React.Component {
                     >
                         Forgot your password?
                     </a>
-
                 </Row>
                 <Row type="flex" justify="start" className="form-btns">
                     <Col xs={24} sm={24} md={9} className="form-btns-login">
@@ -122,25 +132,22 @@ class LoginForm extends React.Component {
                             htmlType="submit"
                             onClick={this.onClick}
                         >
-Log in
+                            Log in
                         </Button>
                     </Col>
                     <Col xs={24} sm={24} md={9} className="form-btns-signup">
-                        <Link
-                            to="/register"
-                            className="sign-up-link"
-                        >
-Sign
-                        up
+                        <Link to="/register" className="sign-up-link">
+                            Sign up
                         </Link>
                     </Col>
                 </Row>
                 <Row className="form-details">
                     <Col>
                         By signing up, you agree to
-                        {' '}
                         <br />
-                        <a href="/#">Terms and Conditions &amp; Privacy Policy</a>
+                        <a href="/#">
+                            Terms and Conditions &amp; Privacy Policy
+                        </a>
                     </Col>
                 </Row>
                 <Row>
@@ -160,6 +167,5 @@ Sign
         );
     }
 }
-
 
 export default LoginForm;

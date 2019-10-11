@@ -3,8 +3,9 @@ import ProductList from '../../containers/ProductListContainer';
 import ProductContent from '../../containers/ProductContentContainer';
 import './ProductMain.less';
 
-
 class ProductMain extends Component {
+    state = {};
+
     onSelectProduct = (productId) => {
         const { fetchProductIdData } = this.props;
 

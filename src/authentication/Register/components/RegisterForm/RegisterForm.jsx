@@ -1,10 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import {
-    Col, notification, Row, Spin,
+ Col, notification, Row, Spin 
 } from 'antd';
 import { Redirect } from 'react-router-dom';
-
 
 class RegisterForm extends React.Component {
     constructor(props) {
@@ -41,14 +40,14 @@ class RegisterForm extends React.Component {
                 isLoading: false,
             });
         }
-        axios.post('/api/user/register', {
-            password: this.state.password,
-            email: this.state.email,
-            name: this.state.name,
-            last_name: this.state.last_name,
-        })
-            .then((res) => {
-                console.log(res);
+        axios
+            .post('/api/user/register', {
+                password: this.state.password,
+                email: this.state.email,
+                name: this.state.name,
+                last_name: this.state.last_name,
+            })
+            .then(() => {
                 this.setState({
                     registerSuccess: true,
                     isLoading: false,
@@ -87,9 +86,7 @@ class RegisterForm extends React.Component {
         }
 
         if (registerSuccess) {
-            return (
-                <Redirect to="/optimization" />
-            );
+            return <Redirect to="/optimization" />;
         }
 
         return (
@@ -160,25 +157,22 @@ class RegisterForm extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24}>
-                        <button id="complete_registration" type="submit" className="submit">
-Create
-                            your account
+                        <button
+                            id="complete_registration"
+                            type="submit"
+                            className="submit"
+                        >
+                            Create your account
                         </button>
                     </Col>
                 </Row>
                 <Row className="form-details">
                     <Col>
-                        By clicking “Create Your Account” you are agreeing to our
-                        {' '}
-                        <a href="/#">
-Terms
-                        of
-                        Service
-                        </a>
+                        By clicking “Create Your Account” you are agreeing to
+                        our
+                        <a href="/#">Terms of Service</a>
                         and have read through our
-                        {' '}
                         <a href="/#">Privacy Statement</a>
-.
                     </Col>
                 </Row>
                 <Row className="payments-row">
@@ -193,10 +187,7 @@ Terms
                         </Row>
                     </Col>
                     <Col xs={24} sm={24} md={14}>
-                        <p>
-                            This is a secure 128-bit ssl encrypted
-                            payment
-                        </p>
+                        <p>This is a secure 128-bit ssl encrypted payment</p>
                     </Col>
                 </Row>
             </form>

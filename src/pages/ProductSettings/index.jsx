@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ProductSettingsMain from './template/ProductSettingsMain';
 
 class ProductSettings extends Component {
+    state = {};
+
     render() {
         return (
             <div>
@@ -10,6 +12,5 @@ class ProductSettings extends Component {
         );
     }
 }
-
 
 export default ProductSettings;

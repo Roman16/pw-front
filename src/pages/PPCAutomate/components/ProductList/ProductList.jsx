@@ -7,10 +7,12 @@ import Pagination from '../../../../components/Pagination';
 import './ProductList.less';
 import { DEFAULT_PAGE_SIZE } from '../../const';
 
-
-const SelectProduct = ({ onSelectAll, selectedSize, isSelectedAll = false }) => (
+const SelectProduct = ({
+    onSelectAll,
+    selectedSize,
+    isSelectedAll = false,
+}) => (
     <div className={`SelectProduct ${isSelectedAll ? 'selected-all' : ''}`}>
-
         <Button onClick={onSelectAll}>
             {isSelectedAll ? 'Deselect ' : 'Select '}
             All Products
@@ -19,15 +21,13 @@ const SelectProduct = ({ onSelectAll, selectedSize, isSelectedAll = false }) => 
             <span> Selected All Products</span>
             <span className="product">{selectedSize}</span>
         </div>
-
-
     </div>
 );
 
 class ProductList extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
+        // console.log(props);
         this.state = {
             isSelectedAll: false,
             selectedSize: 1,
@@ -42,37 +42,42 @@ class ProductList extends Component {
 
     componentDidMount() {
         const { fetchProductList } = this.props;
-        const {
-            searchText,
-            pageNumber,
-        } = this.filterList;
+        const { searchText, pageNumber } = this.filterList;
 
         fetchProductList(searchText, pageNumber);
     }
 
     selectAll = () => {
         const {
-            totalProduct, activeProductId, setActiveProduct, onSelect,
+            totalProduct,
+            activeProductId,
+            setActiveProduct,
+            onSelect,
         } = this.props;
 
-        this.setState(({ isSelectedAll }) => ({
-            isSelectedAll: !isSelectedAll,
-            selectedSize: !isSelectedAll ? totalProduct : 1,
-        }), () => {
-            const { isSelectedAll } = this.state;
+        this.setState(
+            ({ isSelectedAll }) => ({
+                isSelectedAll: !isSelectedAll,
+                selectedSize: !isSelectedAll ? totalProduct : 1,
+            }),
+            () => {
+                const { isSelectedAll } = this.state;
 
-            if (activeProductId !== 'all') {
-                this.prevActive = activeProductId;
-            }
-            const toSelect = isSelectedAll ? 'all' : this.prevActive;
+                if (activeProductId !== 'all') {
+                    this.prevActive = activeProductId;
+                }
+                const toSelect = isSelectedAll ? 'all' : this.prevActive;
 
-            onSelect(toSelect);
-            setActiveProduct(toSelect);
-        });
+                onSelect(toSelect);
+                setActiveProduct(toSelect);
+            },
+        );
     };
 
     onSearch = (e) => {
-        const { target: { value } } = e;
+        const {
+            target: { value },
+        } = e;
         const { fetchProductList } = this.props;
 
         this.filterList = {
@@ -81,11 +86,9 @@ class ProductList extends Component {
         };
 
         clearTimeout(this.searchTimerId);
-        this.searchTimerId = setTimeout(
-            () => {
-                fetchProductList(value, 1);
-            }, 300,
-        );
+        this.searchTimerId = setTimeout(() => {
+            fetchProductList(value, 1);
+        }, 300);
     };
 
     toActive = (activeItemId) => {
@@ -102,9 +105,7 @@ class ProductList extends Component {
     changePage = (page) => {
         const { fetchProductList } = this.props;
 
-        const {
-            searchText,
-        } = this.filterList;
+        const { searchText } = this.filterList;
 
         this.filterList = {
             ...this.filterList,
@@ -114,13 +115,10 @@ class ProductList extends Component {
     };
 
     render() {
-        const {
-            isSelectedAll, selectedSize,
-        } = this.state;
+        const { isSelectedAll, selectedSize } = this.state;
         const { productList, totalProduct, activeProductId } = this.props;
 
-        console.log(productList);
-
+        // console.log(productList);
 
         return (
             <div className="ProductList">
@@ -132,23 +130,29 @@ class ProductList extends Component {
                 />
                 <div className="product-list-wrapper">
                     <div className="product-list">
-                        {productList.map((
-                            {
-                                id, asin, captions, sku,
-                                image_url, under_optimization,
-                            },
-                        ) => (
-                            <ProductItem
-                                asin={asin}
-                                captions={captions}
-                                imageUrl={image_url}
-                                underOptimization={under_optimization}
-                                sku={sku}
-                                key={id}
-                                isActive={isSelectedAll || id === activeProductId}
-                                onClick={() => this.toActive(id)}
-                            />
-                        ))}
+                        {productList.map(
+                            ({
+                                id,
+                                asin,
+                                captions,
+                                sku,
+                                image_url,
+                                under_optimization,
+                            }) => (
+                                <ProductItem
+                                    asin={asin}
+                                    captions={captions}
+                                    imageUrl={image_url}
+                                    underOptimization={under_optimization}
+                                    sku={sku}
+                                    key={id}
+                                    isActive={
+                                        isSelectedAll || id === activeProductId
+                                    }
+                                    onClick={() => this.toActive(id)}
+                                />
+                            ),
+                        )}
                     </div>
                 </div>
                 {DEFAULT_PAGE_SIZE < totalProduct && (
@@ -175,12 +179,9 @@ ProductList.propTypes = {
 
 ProductList.defaultProps = {
     productList: [],
-    fetchProductList: () => {
-    },
-    setActiveProduct: () => {
-    },
-    onSelect: () => {
-    },
+    fetchProductList: () => {},
+    setActiveProduct: () => {},
+    onSelect: () => {},
     totalProduct: null,
     activeProductId: null,
 };

@@ -10,26 +10,28 @@ class ProductItem extends Component {
         this.state = {};
     }
 
-
     maxText = (text) => {
         if (text && text.length > 40) {
             return `${text.slice(0, 40)}...`;
         }
 
-
         return text;
     };
 
-
     render() {
         const {
-            isActive, onClick,
-            asin, captions, sku,
-            imageUrl, underOptimization,
+            isActive,
+            onClick,
+            asin,
+            captions,
+            sku,
+            imageUrl,
+            underOptimization,
         } = this.props;
 
-        console.log(captions, underOptimization);
+        console.log('asin :', asin);
 
+        // console.log(captions, underOptimization);
 
         return (
             <div
@@ -40,28 +42,18 @@ class ProductItem extends Component {
                     <img src={imageUrl} alt="" />
                 </div>
                 <div className="product-item-content">
-                    <div className="caption">
-                        {this.maxText(captions)}
-                    </div>
+                    <div className="caption">{this.maxText(captions)}</div>
                     <div className="detail">
                         <span> ASIN: </span>
-                        <span>
-                            {asin}
-                        </span>
+                        <span>{asin}</span>
                     </div>
                     <div className="detail">
                         <span> SKU: </span>
-                        <span>
-                            {sku}
-                        </span>
+                        <span>{sku}</span>
                     </div>
-
                 </div>
                 <div className="select">
-                    {underOptimization ? (
-                        <Checkbox checked readOnly />
-                    ) : null}
-
+                    {underOptimization ? <Checkbox checked readOnly /> : null}
                 </div>
             </div>
         );
@@ -80,8 +72,7 @@ ProductItem.propTypes = {
 
 ProductItem.defaultProps = {
     isActive: false,
-    onClick: () => {
-    },
+    onClick: () => {},
     asin: null,
     captions: null,
     sku: null,

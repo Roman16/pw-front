@@ -1,5 +1,5 @@
-@import "../../../../../style/mixins.less";
-@import "../../../../../style/variables.less";
+@import '../../../../../style/mixins.less';
+@import '../../../../../style/variables.less';
 
 .ProductOptions {
     padding: 0 8px;
@@ -8,8 +8,7 @@
         display: grid;
         grid-template-columns: minmax(300px, 400px) minmax(min-content, 1fr);
         //grid-template-rows: 1fr 1fr;
-        grid-template-areas: "options strategy" ". descriptions";
-
+        grid-template-areas: 'options strategy' '. descriptions';
 
         .options-content {
             transition-timing-function: ease-out;
@@ -28,8 +27,6 @@
 
         .descriptions {
             grid-area: descriptions;
-
-
         }
 
         &.less {
@@ -47,8 +44,11 @@
 
         @media (max-width: @desktop) {
             & {
-                grid-template-areas: "options strategy" "descriptions strategy";
-                grid-template-rows: minmax(1fr, max-content) minmax(1fr, max-content);
+                grid-template-areas: 'options strategy' 'descriptions strategy';
+                grid-template-rows: minmax(1fr, max-content) minmax(
+                        1fr,
+                        max-content
+                    );
 
                 .options-content {
                     transition: 0.6s;
@@ -57,7 +57,6 @@
                 &.more {
                     .options-content {
                         max-height: 550px;
-
                     }
                 }
             }
@@ -80,7 +79,6 @@
         //}
     }
 
-
     .card();
 
     .less-more-control {
@@ -92,7 +90,7 @@
         .icon {
             width: 36px;
             height: 34px;
-            border: 1px solid #BDC6CF;
+            border: 1px solid #bdc6cf;
             text-align: center;
             background: #fff;
 
@@ -106,7 +104,6 @@
                 border-top-right-radius: 14px;
                 border-top-left-radius: 14px;
                 border-bottom: 0;
-
             }
 
             &.more {
@@ -135,9 +132,7 @@
         .less-more-control {
             //display: none;
         }
-
     }
-
 
     .info {
         display: flex;
@@ -161,7 +156,6 @@
                     width: 100%;
                     display: flex;
                     justify-content: space-between;
-
                 }
             }
         }
@@ -170,7 +164,7 @@
             width: 25px;
             height: 20px;
             border-radius: 8px;
-            background: #EC7F5C;
+            background: #ec7f5c;
             color: #fff;
             display: inline-flex;
             justify-content: center;
@@ -179,15 +173,16 @@
         }
 
         button {
-            color: #8FD39D;
+            color: #8fd39d;
             border: 0;
-            box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
+            box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
+                0px 0px 20px rgba(142, 147, 192, 0.08);
             border-radius: 8px;
 
             &:hover {
-                box-shadow: 5px 12px 16px rgba(142, 147, 192, 0.2), 0px 0px 20px rgba(142, 147, 192, 0.2);
+                box-shadow: 5px 12px 16px rgba(142, 147, 192, 0.2),
+                    0px 0px 20px rgba(142, 147, 192, 0.2);
             }
         }
     }
-
 }

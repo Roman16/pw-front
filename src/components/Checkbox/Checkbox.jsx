@@ -13,14 +13,14 @@ class Checkbox extends Component {
         this.state = {};
     }
 
-
     render() {
         const { readOnly, isRound } = this.props;
 
-
         return (
             <div
-                className={`Checkbox ${readOnly ? 'read-only' : ''} ${isRound ? 'round-checkbox' : ''}`}
+                className={`Checkbox ${readOnly ? 'read-only' : ''} ${
+                    isRound ? 'round-checkbox' : ''
+                }`}
             >
                 <AntCheckbox {...this.props} />
             </div>

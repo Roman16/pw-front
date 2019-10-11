@@ -4,6 +4,8 @@ import './ProductSettingsMain.less';
 import Button from '../../../../components/Buttons';
 
 class ProductSettingsMain extends Component {
+    state = {};
+
     render() {
         return (
             <div className="ProductSettingsMain">
@@ -21,7 +23,9 @@ class ProductSettingsMain extends Component {
                         <div>
                             <Button
                                 onClick={() => {
-                                    window.open(`${window.BASE_URL}/account/subscriptions`);
+                                    window.open(
+                                        `${window.BASE_URL}/account/subscriptions`,
+                                    );
                                 }}
                             >
                                 Upgrade Now
@@ -30,15 +34,14 @@ class ProductSettingsMain extends Component {
                     </div>
                 </div>
                 <div className="reminder">
-                    <div className="reminder-title">
-                        Reminder
-                    </div>
+                    <div className="reminder-title">Reminder</div>
                     <div>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque augue
-                        eros, convallis a est id, sodales vulputate nisi. Cras dignissim porttitor
-                        tortor ut laoreet. Nam in metus id nunc eleifend lacinia ut nec mauris. Nunc
-                        posuere sit amet tortor ac laoreet. Pellentesque blandit fringilla
-                        ultricies.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Pellentesque augue eros, convallis a est id, sodales
+                        vulputate nisi. Cras dignissim porttitor tortor ut
+                        laoreet. Nam in metus id nunc eleifend lacinia ut nec
+                        mauris. Nunc posuere sit amet tortor ac laoreet.
+                        Pellentesque blandit fringilla ultricies.
                     </div>
                 </div>
                 <TableSettings />
@@ -49,4 +52,5 @@ class ProductSettingsMain extends Component {
 
 ProductSettingsMain.propTypes = {};
 ProductSettingsMain.defaultProps = {};
+
 export default ProductSettingsMain;
