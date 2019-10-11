@@ -143,9 +143,8 @@ class LoginForm extends React.Component {
                 </Row>
                 <Row className="form-details">
                     <Col>
-                        By signing up, you agree to 
-{' '}
-<br />
+                        By signing up, you agree to
+                        <br />
                         <a href="/#">
                             Terms and Conditions &amp; Privacy Policy
                         </a>

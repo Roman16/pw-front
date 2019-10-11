@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { Col, notification, Row, Spin } from 'antd';
+import {
+ Col, notification, Row, Spin 
+} from 'antd';
 import { Redirect } from 'react-router-dom';
 
 class RegisterForm extends React.Component {
@@ -12,7 +14,7 @@ class RegisterForm extends React.Component {
             email: '',
             password: '',
             registerSuccess: false,
-            isLoading: false
+            isLoading: false,
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -21,21 +23,21 @@ class RegisterForm extends React.Component {
     onSubmit(e) {
         e.preventDefault();
         this.setState({
-            isLoading: true
+            isLoading: true,
         });
         if (this.state.password.length <= 6) {
             notification.error({
                 message: 'The password must be at least 6 characters.',
                 style: {
                     width: 600,
-                    marginLeft: 335 - 600
+                    marginLeft: 335 - 600,
                 },
                 placement: 'bottomRight',
                 bottom: 20,
-                duration: 5
+                duration: 5,
             });
             this.setState({
-                isLoading: false
+                isLoading: false,
             });
         }
         axios
@@ -43,28 +45,27 @@ class RegisterForm extends React.Component {
                 password: this.state.password,
                 email: this.state.email,
                 name: this.state.name,
-                last_name: this.state.last_name
+                last_name: this.state.last_name,
             })
             .then(() => {
                 this.setState({
                     registerSuccess: true,
-                    isLoading: false
+                    isLoading: false,
                 });
             })
-            .catch(err => {
-                console.log('err :', err);
+            .catch((err) => {
                 notification.error({
-                    message: `${err}`,
+                    message: `${err.response.data.message}`,
                     style: {
                         width: 600,
-                        marginLeft: 335 - 600
+                        marginLeft: 335 - 600,
                     },
                     placement: 'bottomRight',
                     bottom: 20,
-                    duration: 5
+                    duration: 5,
                 });
                 this.setState({
-                    isLoading: false
+                    isLoading: false,
                 });
             });
     }
