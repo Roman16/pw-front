@@ -5,21 +5,22 @@ import store from './store';
 import RouterView from './router';
 import './App.less';
 
-
 // https://profitwhales.com/ppc-automation/product?page=1&size=2
-console.log(window.env);
-console.log(window.BASE_URL);
+// console.log(window.env);
+// console.log(window.BASE_URL);
 
 class App extends Component {
-    render() {
-        return (
-            <Provider store={store}>
-                <BrowserRouter>
-                    <RouterView />
-                </BrowserRouter>
-            </Provider>
-        );
-    }
+  state = {};
+
+  render() {
+      return (
+          <Provider store={store}>
+              <BrowserRouter>
+                  <RouterView />
+              </BrowserRouter>
+          </Provider>
+      );
+  }
 }
 
 export default App;

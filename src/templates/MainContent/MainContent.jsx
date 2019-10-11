@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Header from '../../components/Header';
-import Sidebar from "../../components/Sidebar";
-import Footer from '../../components/Footer';
+import Sidebar from '../../components/Sidebar';
+// import Header from '../../components/Header';
+// import Footer from '../../components/Footer';
 import './MainContent.less';
 
 class MainContent extends Component {
@@ -13,15 +13,12 @@ class MainContent extends Component {
             <div className="Main">
                 <Sidebar />
                 <div className="MainContent">
-                    <main className="content">
-                        {children}
-                    </main>
+                    <main className="content">{children}</main>
                 </div>
             </div>
         );
     }
 }
-
 
 MainContent.propTypes = {
     children: PropTypes.oneOfType([

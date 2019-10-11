@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Menu, Icon, Popover,
-} from 'antd';
+import { Menu, Icon, Popover } from 'antd';
 import { getClassNames } from '../../utils';
 import SidebarItem from './SidebarItem';
 import RegionsMenu from './RegionsMenu';
@@ -17,8 +15,7 @@ const Sidebar = () => {
     const activeLink = global.location.pathname;
     const activeLinkArr = global.location.pathname.split('/');
 
-    const activeCountry = regions
-        .map((region) => region.countries.find((country) => country.active))[0];
+    const activeCountry = regions.map((region) => region.countries.find((country) => country.active),)[0];
     const setActiveCountry = (country) => {
         console.log(country);
     };
@@ -26,28 +23,36 @@ const Sidebar = () => {
     return (
         <div className={className}>
             <div className="SidebarHeader">
-                <Icon className="SidebarIcon" type="menu" onClick={toggleCollapsed} />
-                {
-                    !collapsed && (
-                        <div className="SidebarLogo">
-                            <img src="/logo.svg" alt="logo" />
-                        </div>
-                    )
-                }
+                <Icon
+                    className="SidebarIcon"
+                    type="menu"
+                    onClick={toggleCollapsed}
+                />
+                {!collapsed && (
+                    <div className="SidebarLogo">
+                        <img src="/logo.svg" alt="logo" />
+                    </div>
+                )}
             </div>
             <div className="SidebarMenu">
                 <div className="MenuTop">
                     <Popover
                         placement="rightTop"
                         overlayClassName="RegionsList"
-                        content={
-                            <RegionsMenu regions={regions} setActiveCountry={setActiveCountry} />
-                        }
+                        content={(
+                            <RegionsMenu
+                                regions={regions}
+                                setActiveCountry={setActiveCountry}
+                            />
+                          )}
                         trigger="click"
                     >
                         <div className="CountryActive">
                             <div className="CountryActive--title">
-                                <img src={`/assets/img/${activeCountry.flag}`} alt="active-country" />
+                                <img
+                                    src={`/assets/img/${activeCountry.flag}`}
+                                    alt="active-country"
+                                />
                                 <h5>{activeCountry.name}</h5>
                             </div>
                             <div className="CountryActive--description">
@@ -62,7 +67,9 @@ const Sidebar = () => {
                         defaultSelectedKeys={[activeLink]}
                         defaultOpenKeys={[`/${activeLinkArr[1]}`]}
                     >
-                        { menuMain.map((item) => <SidebarItem key={item.link} item={item} />) }
+                        {menuMain.map((item) => (
+                            <SidebarItem key={item.link} item={item} />
+                        ))}
                     </Menu>
                 </div>
                 <div className="MenuBottom">
@@ -72,7 +79,9 @@ const Sidebar = () => {
                         inlineCollapsed={collapsed}
                         // defaultSelectedKeys={[activeLink]}
                     >
-                        { menuBottom.map((item) => <SidebarItem key={item.link} item={item} />) }
+                        {menuBottom.map((item) => (
+                            <SidebarItem key={item.link} item={item} />
+                        ))}
                     </Menu>
                 </div>
             </div>

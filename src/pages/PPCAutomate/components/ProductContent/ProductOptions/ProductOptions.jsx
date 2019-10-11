@@ -8,7 +8,6 @@ import { OptionInfo, StrategyInfo } from './InfoItem';
 import Button from '../../../../../components/Buttons';
 import SideInfo from '../../../template/SideInfo';
 
-
 const OPTIONS = 'options';
 const STRATEGY = 'strategy';
 
@@ -45,9 +44,7 @@ class ProductOptions extends Component {
     };
 
     onChangeOptions = (e) => {
-        const {
-            updateProductIdData,
-        } = this.props;
+        const { updateProductIdData } = this.props;
         const localSaveData = { [e.target.name]: e.target.checked };
 
         updateProductIdData(localSaveData);
@@ -63,7 +60,9 @@ class ProductOptions extends Component {
     render() {
         const { showInfo, typeInfo } = this.state;
         const {
-            isLess, toLess, inValidError,
+            isLess,
+            toLess,
+            inValidError,
             productIdData: {
                 create_new_keywords = false,
                 add_negative_keywords = false,
@@ -76,7 +75,6 @@ class ProductOptions extends Component {
         } = this.props;
         const { caption = '', content = null } = info[typeInfo];
 
-
         const optionsValue = {
             create_new_keywords,
             add_negative_keywords,
@@ -85,7 +83,6 @@ class ProductOptions extends Component {
             optimize_keywords,
             optimize_pats,
         };
-
 
         return (
             <>
@@ -102,9 +99,11 @@ class ProductOptions extends Component {
                                     onChange={this.onChangeOptions}
                                 />
                                 {inValidError && (
-                                    <Alert message="select at least one option" type="error" />
+                                    <Alert
+                                        message="select at least one option"
+                                        type="error"
+                                    />
                                 )}
-
                             </div>
                         </div>
                         <div className="optimize-strategy">
@@ -116,13 +115,17 @@ class ProductOptions extends Component {
                                     <div className="additional">
                                         <div>
                                             Free Trial
-                                            <span className="free-trial">7</span>
+                                            <span className="free-trial">
+                                                7
+                                            </span>
                                             Days Left
                                         </div>
                                         <div>
                                             <Button
                                                 onClick={() => {
-                                                    window.open(`${window.BASE_URL}/account/subscriptions`);
+                                                    window.open(
+                                                        `${window.BASE_URL}/account/subscriptions`,
+                                                    );
                                                 }}
                                             >
                                                 Upgrade Now
@@ -158,7 +161,6 @@ class ProductOptions extends Component {
                             <Icon type="up" />
                         </div>
                     </div>
-
                 </div>
                 <SideInfo
                     caption={caption}
@@ -166,7 +168,6 @@ class ProductOptions extends Component {
                     content={content}
                     onClose={this.onClose}
                 />
-
             </>
         );
     }

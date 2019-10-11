@@ -88,6 +88,10 @@ export const menuMain = [
                 title: 'Charge Report',
                 link: '/report',
             },
+            {
+                title: 'Product Settings',
+                link: '/product-settings',
+            },
         ],
     },
 ];
