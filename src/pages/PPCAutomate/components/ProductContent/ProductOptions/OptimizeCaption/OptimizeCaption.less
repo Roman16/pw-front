@@ -1,5 +1,5 @@
-@import "../../../../../../style/variables.less";
-@import "../../../../../../style/mixins.less";
+@import '../../../../../../style/variables.less';
+@import '../../../../../../style/mixins.less';
 
 .OptimizeCaption {
     display: flex;
@@ -15,6 +15,7 @@
         font-weight: 500;
         display: flex;
         align-items: center;
+        cursor: pointer;
 
         span {
             margin-right: 10px;
@@ -24,9 +25,7 @@
             cursor: pointer;
             color: @action-color-dark;
         }
-
     }
-
 
     @media (max-width: @desktop) {
         & {
@@ -50,7 +49,6 @@
     @media (max-width: @mobile) {
         & {
             .ProductInfo {
-
                 width: 100%;
                 justify-content: space-between;
             }

@@ -9,24 +9,18 @@ const ProductInfo = ({ text, onClick }) => (
     </div>
 );
 
-
 class OptimizeCaption extends Component {
+    state = {};
+
     render() {
-        const {
-            text, onClick, children,
-        } = this.props;
+        const { text, onClick, children } = this.props;
 
         return (
             <>
                 <div className="OptimizeCaption">
-                    <ProductInfo
-                        text={text}
-                        onClick={onClick}
-                    />
+                    <ProductInfo text={text} onClick={onClick} />
 
-                    <div className="children">
-                        {children}
-                    </div>
+                    <div className="children">{children}</div>
                 </div>
             </>
         );

@@ -12,7 +12,8 @@ const info = [
           sed do eiusmod tempor incididunt ut
            labore et dolore magna aliqua.Lorem 
            ipsum dolor sit amet, consectetur adipiscing `,
-    }, {
+    },
+    {
         key: 'strategy1',
         caption: 'Organic Boost',
         value: 'BoostPPCProfit',
@@ -21,7 +22,8 @@ const info = [
           sed do eiusmod tempor incididunt ut
            labore et dolore magna aliqua.Lorem 
            ipsum dolor sit amet, consectetur adipiscing `,
-    }, {
+    },
+    {
         key: 'strategy2',
         caption: 'Product Liquidation',
         value: 'GrowOverallSales',
@@ -30,7 +32,8 @@ const info = [
           sed do eiusmod tempor incididunt ut
            labore et dolore magna aliqua.Lorem 
            ipsum dolor sit amet, consectetur adipiscing `,
-    }, {
+    },
+    {
         key: 'strategy3',
         caption: 'Product Lounce',
         value: 'LaunchProduct',
@@ -42,14 +45,15 @@ const info = [
     },
 ];
 
-
 class StrategyInfo extends Component {
+    state = {};
+
     render() {
         return (
             <div className="StrategyInfo">
                 {info.map(({
-                    caption, key, text, value,
-                }) => (
+ caption, key, text, value 
+}) => (
                     <div key={key} className="info-item">
                         <div className="info-caption small">{caption}</div>
 
@@ -60,7 +64,6 @@ class StrategyInfo extends Component {
                         </div>
                     </div>
                 ))}
-
             </div>
         );
     }
