@@ -41,7 +41,7 @@ export function* fetchProductListSaga({ searchText, pageNumber }) {
             });
         }
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 }
 

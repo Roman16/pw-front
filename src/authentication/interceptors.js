@@ -8,7 +8,7 @@ const token = global.localStorage.getItem('token');
 const initialInterceptors = () => {
     axios.interceptors.request.use((config) => {
         config.baseURL = window.BASE_URL;
-        // config.headers.Authorization = token;
+        config.headers.Authorization = token ? token : true;
 
         return config;
     });

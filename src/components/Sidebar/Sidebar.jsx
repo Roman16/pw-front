@@ -15,6 +15,7 @@ const Sidebar = () => {
     const activeLink = global.location.pathname;
     const activeLinkArr = global.location.pathname.split('/');
     const activeCountry = regions.map((region) => region.countries.find((country) => country.active))[0];
+
     const setActiveCountry = (country) => {
         console.log(country);
     };
@@ -79,10 +80,10 @@ const Sidebar = () => {
                         mode="inline"
                         theme="dark"
                         inlineCollapsed={collapsed}
-                        // defaultSelectedKeys={[activeLink]}
+                        defaultSelectedKeys={[activeLink]}
                     >
                         {menuBottom.map((item) => (
-                            <SidebarItem key={item.link} item={item} />
+                            <SidebarItem key={item.icon} item={item} />
                         ))}
                     </Menu>
                 </div>
