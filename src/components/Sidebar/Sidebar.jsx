@@ -14,8 +14,7 @@ const Sidebar = () => {
     const className = getClassNames('Sidebar', { SidebarOpen: !collapsed });
     const activeLink = global.location.pathname;
     const activeLinkArr = global.location.pathname.split('/');
-
-    const activeCountry = regions.map((region) => region.countries.find((country) => country.active),)[0];
+    const activeCountry = regions.map((region) => region.countries.find((country) => country.active))[0];
     const setActiveCountry = (country) => {
         console.log(country);
     };
@@ -34,6 +33,7 @@ const Sidebar = () => {
                     </div>
                 )}
             </div>
+
             <div className="SidebarMenu">
                 <div className="MenuTop">
                     <Popover
@@ -44,7 +44,7 @@ const Sidebar = () => {
                                 regions={regions}
                                 setActiveCountry={setActiveCountry}
                             />
-                          )}
+                            )}
                         trigger="click"
                     >
                         <div className="CountryActive">
@@ -60,6 +60,7 @@ const Sidebar = () => {
                             </div>
                         </div>
                     </Popover>
+
                     <Menu
                         mode="inline"
                         theme="dark"
@@ -72,6 +73,7 @@ const Sidebar = () => {
                         ))}
                     </Menu>
                 </div>
+
                 <div className="MenuBottom">
                     <Menu
                         mode="inline"

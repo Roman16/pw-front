@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const IconFont = Icon.createFromIconfontCN({
     scriptUrl: '/assets/icons/iconfont.js',
@@ -12,14 +13,22 @@ const ItemIcon = ({ icon, isSub, ...props }) => {
 
     return (
         icon
-            ? <IconFont {...props} type={`icon-${icon}`} />
-            : <Icon {...props} type="right-circle" theme="filled" />
+            ? <IconFont {...props} type={`icon-${icon}`}/>
+            : <Icon {...props} type="right-circle" theme="filled"/>
     );
 };
 
 ItemIcon.propTypes = {
     icon: PropTypes.string,
     isSub: PropTypes.bool,
+};
+
+const logOut = () => {
+    delete axios.defaults.headers.common["Authorization"];
+
+    global.localStorage.removeItem(
+        'token',
+    );
 };
 
 const SidebarItem = ({ item, parentLink = '', ...props }) => (
@@ -31,7 +40,7 @@ const SidebarItem = ({ item, parentLink = '', ...props }) => (
                 key={`${item.link}`}
                 title={(
                     <span>
-                        <ItemIcon icon={item.icon} isSub={!!parentLink} />
+                        <ItemIcon icon={item.icon} isSub={!!parentLink}/>
                         <span>{item.title}</span>
                     </span>
                 )}
@@ -48,12 +57,20 @@ const SidebarItem = ({ item, parentLink = '', ...props }) => (
             </Menu.SubMenu>
         )
         : (
-            <Menu.Item {...props} className={item.className} key={item.link}>
-                <Link to={parentLink + item.link}>
-                    <ItemIcon icon={item.icon} isSub={!!parentLink} />
-                    <span>{item.title}</span>
-                </Link>
-            </Menu.Item>
+            item.className === 'logOut' ?
+                <Menu.Item {...props} className={item.className} key={item.link} onClick={logOut}>
+                    <Link to={parentLink + item.link}>
+                        <ItemIcon icon={item.icon} isSub={!!parentLink}/>
+                        <span>{item.title}</span>
+                    </Link>
+                </Menu.Item>
+                :
+                <Menu.Item {...props} className={item.className} key={item.link}>
+                    <Link to={parentLink + item.link}>
+                        <ItemIcon icon={item.icon} isSub={!!parentLink}/>
+                        <span>{item.title}</span>
+                    </Link>
+                </Menu.Item>
         )
 );
 

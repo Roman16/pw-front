@@ -27,8 +27,10 @@ class Login extends React.Component {
                                 <br />
                                 to access the dashboard.
                             </div>
+
                             <LoginForm />
                         </Col>
+
                         <Col
                             xs={24}
                             sm={24}

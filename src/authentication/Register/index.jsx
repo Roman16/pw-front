@@ -3,9 +3,6 @@ import Register from './components/Register';
 
 class RegisterPage extends Component {
     render() {
-        console.log('here');
-
-
         return (
             <Register />
         );

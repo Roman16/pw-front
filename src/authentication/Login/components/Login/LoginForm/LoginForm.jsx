@@ -36,11 +36,19 @@ class LoginForm extends React.Component {
     onClick = (e) => {
         e.preventDefault();
         this.setState({ isLoading: true });
-        axios
-            .post('/api/user/login', {
-                email: this.state.email,
-                password: this.state.password,
-            })
+
+        const headers = {
+            'Authorization': true
+        };
+
+        let data = {
+            email: this.state.email,
+            password: this.state.password,
+        };
+
+        axios.post('/api/user/login', data, {
+            headers: headers
+        })
             .then((res) => {
                 global.localStorage.setItem(
                     'token',
@@ -69,19 +77,19 @@ class LoginForm extends React.Component {
 
     render() {
         const {
- email, password, isLoading, loginSuccess 
-} = this.state;
+            email, password, isLoading, loginSuccess
+        } = this.state;
 
         if (isLoading) {
             return (
                 <div className="example">
-                    <Spin size="large" />
+                    <Spin size="large"/>
                 </div>
             );
         }
 
         if (loginSuccess) {
-            return <Redirect to="/optimization" />;
+            return <Redirect to="/ppc/optimization"/>;
         }
 
         return (
@@ -125,6 +133,7 @@ class LoginForm extends React.Component {
                         Forgot your password?
                     </a>
                 </Row>
+
                 <Row type="flex" justify="start" className="form-btns">
                     <Col xs={24} sm={24} md={9} className="form-btns-login">
                         <Button
@@ -135,21 +144,24 @@ class LoginForm extends React.Component {
                             Log in
                         </Button>
                     </Col>
+
                     <Col xs={24} sm={24} md={9} className="form-btns-signup">
                         <Link to="/register" className="sign-up-link">
                             Sign up
                         </Link>
                     </Col>
                 </Row>
+
                 <Row className="form-details">
                     <Col>
                         By signing up, you agree to
-                        <br />
+                        <br/>
                         <a href="/#">
                             Terms and Conditions &amp; Privacy Policy
                         </a>
                     </Col>
                 </Row>
+
                 <Row>
                     <Col>
                         <div className="amazon-login-wrap">
