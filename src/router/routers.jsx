@@ -8,6 +8,7 @@ import PPCAutomate from '../pages/PPCAutomate';
 import PPCReport from '../pages/PPCReport';
 import NotFound from '../pages/NotFound';
 import { next } from './render-routers';
+import AccountBindingPage from "../authentication/AccountBinding";
 
 const routers = [
     {
@@ -19,6 +20,11 @@ const routers = [
         path: '/register',
         exact: true,
         component: Register
+    },
+    {
+        path: '/account-binding/:parameter',
+        exact: true,
+        component: AccountBindingPage
     },
     {
         path: '/',
