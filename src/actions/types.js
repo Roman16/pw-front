@@ -1,2 +1,2 @@
 // user actions
-export const SET_INFO = 'SET_INFO';
+export const SAVE_INFO = 'SAVE_INFO';
