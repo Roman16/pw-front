@@ -12,6 +12,7 @@ import {
 import './LoginForm.less';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import initialInterceptors from '../../../../../authentication/interceptors';
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -59,6 +60,8 @@ class LoginForm extends React.Component {
                     // eslint-disable-next-line react/no-unused-state
                     loginSuccess: true,
                 });
+                initialInterceptors();
+
             })
             .catch(() => {
                 notification.error({
