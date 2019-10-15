@@ -17,6 +17,7 @@ class Optimization extends Component {
                 <ProductList
                     onSelectProduct={this.onSelectProduct}
                 />
+
             </div>
         )
     }
