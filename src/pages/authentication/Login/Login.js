@@ -1,7 +1,8 @@
 import React from 'react';
-import './Login.less';
 import { Row, Col } from 'antd';
 import LoginForm from './LoginForm/LoginForm';
+
+import './Login.less';
 
 class Login extends React.Component {
     state = {};
