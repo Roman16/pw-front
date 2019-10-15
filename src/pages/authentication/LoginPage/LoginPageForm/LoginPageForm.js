@@ -11,10 +11,10 @@ import {
 } from 'antd';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import './LoginForm.less';
+import './LoginPageForm.less';
 import initialInterceptors from '../../interceptors';
 
-class LoginForm extends React.Component {
+class LoginPageForm extends React.Component {
     state = {
         email: '',
         password: '',
@@ -177,4 +177,4 @@ class LoginForm extends React.Component {
     }
 }
 
-export default LoginForm;
+export default LoginPageForm;
