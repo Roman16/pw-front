@@ -54,10 +54,10 @@ class RegistrationPage extends React.Component {
                                 <li>Tens of hours saved per week</li>
                                 <li>Thousands of dollars saved per ASIN</li>
                             </ul>
-                            <div className="btn-container">
+                            <a href="/login" className="btn-container">
                                 Already have an account?
-                                <a href="/login">Login</a>
-                            </div>
+                                <p>Login</p>
+                            </a>
                         </Col>
                     </Row>
                 </div>
