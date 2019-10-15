@@ -1,13 +1,16 @@
-import React, {Fragment} from "react";
+import React from "react";
 
 import Sidebar from '../components/Sidebar/Sidebar';
+
 const AuthorizedUser = (props) => {
 
-    return(
+    return (
         <div className='main-pages'>
-            <Sidebar />
+            <Sidebar/>
 
-            {props.children}
+            <div className="content">
+                {props.children}
+            </div>
         </div>
     )
 };

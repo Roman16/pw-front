@@ -119,7 +119,7 @@ export const menuBottom = [
     },
     {
         title: 'Log Out',
-        link: '/',
+        link: '/login',
         icon: 'logOut',
         className: 'logOut',
     },

@@ -5,8 +5,9 @@ import {Redirect, Route, Router, Switch} from 'react-router-dom';
 import Login from '../pages/authentication/Login/Login';
 import AuthorizedUser from "../pages";
 
-export const history = createBrowserHistory();
+import Optimization from "../pages/PPCAutomate/Optimization/Optimization";
 
+export const history = createBrowserHistory();
 
 const routers = () => {
 
@@ -17,7 +18,7 @@ const routers = () => {
 
                 <Route path='/' render={() => (
                     <AuthorizedUser>
-                        <Route exact path='/login' component={Login}/>
+                        <Route path='/ppc/optimization' component={Optimization}/>
                     </AuthorizedUser>
                 )}/>
             </Switch>

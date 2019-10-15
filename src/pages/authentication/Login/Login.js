@@ -4,6 +4,8 @@ import LoginForm from './LoginForm/LoginForm';
 
 import './Login.less';
 
+import logo from '../../../assets/img/logo.svg';
+
 class Login extends React.Component {
     state = {};
 
@@ -12,7 +14,7 @@ class Login extends React.Component {
             <div className="LoginFormContainer">
                 <div className="sign-page">
                     <div className="logo-auth">
-                        <img src="/logo.svg" alt="logo" />
+                        <img src={logo} alt="logo" />
                     </div>
                     <Row className="container">
                         <Col
