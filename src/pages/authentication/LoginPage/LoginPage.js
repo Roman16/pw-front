@@ -1,12 +1,12 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import LoginForm from './LoginForm/LoginForm';
+import LoginPageForm from './LoginPageForm/LoginPageForm';
 
-import './Login.less';
+import './LoginPage.less';
 
 import logo from '../../../assets/img/logo.svg';
 
-class Login extends React.Component {
+class LoginPage extends React.Component {
     state = {};
 
     render() {
@@ -31,7 +31,7 @@ class Login extends React.Component {
                                 to access the dashboard.
                             </div>
 
-                            <LoginForm />
+                            <LoginPageForm />
                         </Col>
 
                         <Col
@@ -62,8 +62,8 @@ class Login extends React.Component {
     }
 }
 
-Login.propTypes = {};
+LoginPage.propTypes = {};
 
-Login.defaultProps = {};
+LoginPage.defaultProps = {};
 
-export default Login;
+export default LoginPage;

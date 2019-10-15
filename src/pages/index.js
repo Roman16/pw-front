@@ -12,7 +12,7 @@ const AuthorizedUser = (props) => {
                 {props.children}
             </div>
         </div>
-    )
+    );
 };
 
 export default AuthorizedUser;
