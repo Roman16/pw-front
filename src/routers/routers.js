@@ -14,7 +14,7 @@ const routers = () => {
     return (
         <Router history={history}>
             <Switch>
-                <Route exact path='/login' component={Login}/>
+                <Route exact path='/login' component={LoginPage}/>
                 <Route exact path="/register" component={RegistrationPage} />
                 <Route path='/' render={() => (
                     <AuthorizedUser>
