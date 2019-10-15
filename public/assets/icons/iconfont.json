@@ -1,0 +1,65 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "10996993",
+      "name": "managePlans",
+      "font_class": "managePlans",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "10996994",
+      "name": "wallet",
+      "font_class": "wallet",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "10996996",
+      "name": "ppcAutomate",
+      "font_class": "ppcAutomate",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "10996997",
+      "name": "account",
+      "font_class": "account",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "10996998",
+      "name": "logOut",
+      "font_class": "logOut",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "10996999",
+      "name": "helpCenter",
+      "font_class": "helpCenter",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "10997000",
+      "name": "analytics",
+      "font_class": "analytics",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "10997001",
+      "name": "zeroToHero",
+      "font_class": "zeroToHero",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    }
+  ]
+}
