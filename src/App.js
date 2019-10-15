@@ -1,15 +1,14 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import RenderRoutes from './router/render-routers';
-import store from './store';
-import routers from './router/routers';
+import { Provider } from 'react-redux';
+import store from './store/store';
+import Rousting from './routers/routers';
 
 function App() {
     return (
         <Provider store={store}>
             <BrowserRouter>
-                <RenderRoutes routers={routers} />
+                <Rousting />
             </BrowserRouter>
         </Provider>
     );
