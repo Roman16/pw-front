@@ -1,0 +1,116 @@
+.mws-page {
+  height: 100%;
+  max-width: 585px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    border-radius: 50%;
+    margin-bottom: 40px;
+  }
+
+  .h2 {
+    font-size: 42px;
+    line-height: 44px;
+    letter-spacing: 0.2px;
+    color: #363694;
+    margin-bottom: 40px;
+  }
+
+  .inner-text {
+    margin-bottom: 10vh;
+    font-size: 14px;
+    line-height: 28px;
+    color: #7C8A95;
+    text-align: center;
+  }
+
+  .link {
+    background: #6D6DF6;
+    box-shadow: 0px 16px 16px rgba(44, 48, 58, 0.08), 0px 6px 40px rgba(44, 48, 58, 0.03), 0px 0px 16px rgba(44, 48, 58, 0.03);
+    border-radius: 4px;
+    display: inline-block;
+    padding: 20px;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0.16px;
+    color: #FFFFFF;
+    position: relative;
+    text-decoration: none;
+    margin-bottom: 72px;
+    transition: all 0.4s ease;
+
+    &:hover {
+      background: #5f5fbe;
+    }
+
+    i {
+      margin: 0 0 0 20px;
+      color: #fff;
+    }
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .form-group {
+      border: 0;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+
+      label {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.2px;
+        color: #363694;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      input {
+        height: 40px;
+        border: 1px solid #BDC6CF;
+        box-sizing: border-box;
+        border-radius: 4px;
+        width: 100%;
+        font-size: 14px;
+        line-height: 20px;
+        color: #7C8A95;
+        padding: 0 20px;
+      }
+    }
+
+    .btn {
+      position: relative;
+      background: linear-gradient(0deg, #50E3C2, #50E3C2), #FFFFFF;
+      box-shadow: 0px 4px 12px rgba(44, 48, 58, 0.08), 0px 0px 20px rgba(44, 48, 58, 0.04);
+      border-radius: 4px;
+      font-size: 12px;
+      line-height: 16px;
+      letter-spacing: 0.2px;
+      color: #FFFFFF;
+      width: 120px;
+      height: 40px;
+      border: 0;
+      cursor: pointer;
+      transition: all 0.4s ease;
+
+      i {
+        position: absolute;
+        margin: 2px 0 0 20px;
+      }
+
+      &:hover {
+        background: linear-gradient(0deg, #3dbc9e, #369c87), #FFFFFF;
+      }
+    }
+  }
+
+}

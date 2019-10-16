@@ -1,17 +1,37 @@
+@import './style/variables.less';
+
 html {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: inherit;
-    margin: 0;
-    padding: 0;
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
 }
 
-​img {
-    display: block;
-    max-width: 100%;
-    height: auto;
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.ant-btn-primary {
+  background-color: @action-color !important;
+    &:hover {
+        background-color: @second-default-dark !important;
+    }
+}
+
+.main-pages {
+  height: 100vh;
+  display: flex;
+
+  .content {
+    flex: 1;
+    padding: 20px 10px;
+    height: 100%;
+    overflow: auto;
+  }
 }

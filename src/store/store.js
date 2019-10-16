@@ -1,9 +1,11 @@
 import { createStore, applyMiddleware } from 'redux';
-import rootReducer from '../reducers/rootReducer';
+import thunk from "redux-thunk";
+
+import rootReducer from '../reducers/root.reducer';
 
 const initialStore = () => {
     return {
-        ...createStore(rootReducer),
+        ...createStore(rootReducer, applyMiddleware(thunk)),
     };
 };
 
