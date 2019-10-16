@@ -1,7 +1,10 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { Col, notification, Row, Spin } from 'antd';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { userActions } from '../../../../actions/user.actions';
 
 class RegistrationPage extends React.Component {
     state = {
@@ -33,34 +36,45 @@ class RegistrationPage extends React.Component {
                 isLoading: false
             });
         }
-        axios
-            .post('/api/user/register', {
-                password: this.state.password,
-                email: this.state.email,
-                name: this.state.name,
-                last_name: this.state.last_name
-            })
-            .then(() => {
-                this.setState({
-                    registerSuccess: true,
-                    isLoading: false
-                });
-            })
-            .catch(err => {
-                notification.error({
-                    message: `${err.response.data.message}`,
-                    style: {
-                        width: 600,
-                        marginLeft: 335 - 600
-                    },
-                    placement: 'bottomRight',
-                    bottom: 20,
-                    duration: 5
-                });
-                this.setState({
-                    isLoading: false
-                });
-            });
+
+        this.props.regist({
+            password: this.state.password,
+            email: this.state.email,
+            name: this.state.name,
+            last_name: this.state.last_name
+        });
+        // axios
+        //     .post('/api/user/register', {
+        //         password: this.state.password,
+        //         email: this.state.email,
+        //         name: this.state.name,
+        //         last_name: this.state.last_name
+        //     })
+        //     .then(() => {
+        //         this.setState({
+        //             registerSuccess: true,
+        //             isLoading: false
+        //         });
+        //     })
+        //     .catch(err => {
+        //         notification.error({
+        //             message: `${err.response.data.message}`,
+        //             style: {
+        //                 width: 600,
+        //                 marginLeft: 335 - 600
+        //             },
+        //             placement: 'bottomRight',
+        //             bottom: 20,
+        //             duration: 5
+        //         });
+        //         this.setState({
+        //             isLoading: false
+        //         });
+        //     });
+
+        this.setState({
+            isLoading: false
+        });
     };
 
     onChange = e => {
@@ -188,4 +202,17 @@ class RegistrationPage extends React.Component {
     }
 }
 
-export default RegistrationPage;
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({
+    regist: user => {
+        dispatch(userActions.regist(user));
+    }
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RegistrationPage);
+
+// export default RegistrationPage;

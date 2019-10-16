@@ -1,17 +1,9 @@
 import React from 'react';
-import {
-    Form,
-    Row,
-    Input,
-    Button,
-    Checkbox,
-    Col,
-    Spin,
-} from 'antd';
-import {connect} from 'react-redux';
-import {Link, Redirect} from 'react-router-dom';
+import { Form, Row, Input, Button, Checkbox, Col, Spin } from 'antd';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
 
-import {userActions} from '../../../../actions/user.actions'
+import { userActions } from '../../../../actions/user.actions';
 import './LoginPageForm.less';
 
 class LoginPageForm extends React.Component {
@@ -23,18 +15,18 @@ class LoginPageForm extends React.Component {
     };
 
     componentDidMount() {
-        this.setState({isLoading: false});
+        this.setState({ isLoading: false });
     }
 
     onChange = e => {
-        this.setState({[e.target.name]: e.target.value});
+        this.setState({ [e.target.name]: e.target.value });
     };
 
-    onClick = e => {
+    onSubmit = e => {
         e.preventDefault();
-        this.setState({isLoading: true});
+        this.setState({ isLoading: true });
 
-         this.props.login({
+        this.props.login({
             email: this.state.email,
             password: this.state.password
         });
@@ -45,18 +37,18 @@ class LoginPageForm extends React.Component {
     };
 
     render() {
-        const {email, password, isLoading, loginSuccess} = this.state;
+        const { email, password, isLoading, loginSuccess } = this.state;
 
         if (isLoading) {
             return (
                 <div className="example">
-                    <Spin size="large"/>
+                    <Spin size="large" />
                 </div>
             );
         }
 
         if (loginSuccess) {
-            return <Redirect to="/ppc/optimization"/>;
+            return <Redirect to="/ppc/optimization" />;
         }
 
         return (
@@ -106,7 +98,7 @@ class LoginPageForm extends React.Component {
                         <Button
                             className="submit"
                             htmlType="submit"
-                            onClick={this.onClick}
+                            onClick={this.onSubmit}
                         >
                             Log in
                         </Button>
@@ -122,7 +114,7 @@ class LoginPageForm extends React.Component {
                 <Row className="form-details">
                     <Col>
                         By signing up, you agree to
-                        <br/>
+                        <br />
                         <a href="/#">
                             Terms and Conditions &amp; Privacy Policy
                         </a>
@@ -147,13 +139,15 @@ class LoginPageForm extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = state => ({});
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     login: user => {
         dispatch(userActions.login(user));
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPageForm);
-
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginPageForm);

@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {notification} from 'antd';
+// import {notification} from 'antd';
 
-const baseUrl = process.env.REACT_APP_ENV === 'developer'
-    ? process.env.REACT_APP_API_URL
-    : process.env.REACT_APP_API_PROD;
-
+const baseUrl =
+    process.env.REACT_APP_ENV === 'developer'
+        ? process.env.REACT_APP_API_URL
+        : process.env.REACT_APP_API_PROD;
 
 const api = (method, url, data, type) => {
     const token = localStorage.getItem('token');
@@ -15,10 +15,10 @@ const api = (method, url, data, type) => {
             data: data,
             headers: {
                 'Content-Type': type || 'application/json',
-                'authorization': `Bearer ${token ? token : true}`
+                authorization: `Bearer ${token ? token : true}`
             }
         })
-            .then((result) => {
+            .then(result => {
                 resolve(result.data);
             })
             .catch(error => {
@@ -29,7 +29,7 @@ const api = (method, url, data, type) => {
                 //     description: error.response.data.userMessage,
                 // });
             });
-    })
+    });
 };
 
 export default api;

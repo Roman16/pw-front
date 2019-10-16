@@ -1,24 +1,39 @@
-import {userConstants} from '../constans/request.types';
-import {history} from '../utils/history';
+import { userConstants } from '../constans/request.types';
+import { history } from '../utils/history';
 
-import {userService} from '../services/user.services';
+import { userService } from '../services/user.services';
 
 export const userActions = {
     login,
+    regist
 };
 
 function login(user) {
     return dispatch => {
-        userService.login(user)
-            .then(data => {
-                dispatch({
-                    type: userConstants.LOGIN_SUCCESS,
-                    payload: {
-                        token: data.access_token
-                    }
-                });
-
-                history.push('/');
+        userService.login(user).then(data => {
+            dispatch({
+                type: userConstants.LOGIN_SUCCESS,
+                payload: {
+                    token: data.access_token
+                }
             });
+
+            history.push('/');
+        });
+    };
+}
+
+function regist(user) {
+    return dispatch => {
+        userService.regist(user).then(data => {
+            dispatch({
+                type: userConstants.REGIST_SUCCESS,
+                payload: {
+                    token: data.access_token
+                }
+            });
+
+            history.push('/');
+        });
     };
 }
