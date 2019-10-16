@@ -1,6 +1,6 @@
 import React from 'react';
-import {createBrowserHistory} from 'history';
 import {Route, Router, Switch} from 'react-router-dom';
+import {history} from "../utils/history";
 
 import NotFound from "../pages/NotFound/NotFound";
 
@@ -10,7 +10,6 @@ import RegistrationPage from '../pages/authentication/RegistrationPage/Registrat
 import AuthorizedUser from '../pages';
 import Optimization from "../pages/PPCAutomate/Optimization/Optimization";
 
-export const history = createBrowserHistory();
 
 const routers = () => {
     return (
@@ -19,8 +18,6 @@ const routers = () => {
                 <Route exact path='/login' component={LoginPage}/>
                 <Route exact path="/register" component={RegistrationPage}/>
 
-
-
                 <Route path='/' render={() => (
                     <AuthorizedUser>
                         <Route exact path='/ppc/optimization' component={Optimization}/>
@@ -28,7 +25,6 @@ const routers = () => {
                         {/*<Route component={NotFound}/>*/}
                     </AuthorizedUser>
                 )}/>
-
             </Switch>
         </Router>
     );

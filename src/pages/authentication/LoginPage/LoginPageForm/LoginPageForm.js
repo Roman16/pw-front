@@ -9,10 +9,11 @@ import {
     Spin,
     notification
 } from 'antd';
-import { Link, Redirect } from 'react-router-dom';
-import axios from 'axios';
+import {connect} from 'react-redux';
+import {Link, Redirect} from 'react-router-dom';
+
+import {userActions} from '../../../../actions/user.actions'
 import './LoginPageForm.less';
-import initialInterceptors from '../../interceptors';
 
 class LoginPageForm extends React.Component {
     state = {
@@ -23,70 +24,40 @@ class LoginPageForm extends React.Component {
     };
 
     componentDidMount() {
-        this.setState({ isLoading: false });
+        this.setState({isLoading: false});
     }
 
     onChange = e => {
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({[e.target.name]: e.target.value});
     };
 
     onClick = e => {
         e.preventDefault();
-        this.setState({ isLoading: true });
+        this.setState({isLoading: true});
 
-        const headers = {
-            Authorization: true
-        };
-
-        let data = {
+         this.props.login({
             email: this.state.email,
             password: this.state.password
-        };
+        });
 
-        axios
-            .post('/api/user/login', data, {
-                headers: headers
-            })
-            .then(res => {
-                global.localStorage.setItem(
-                    'token',
-                    `Bearer ${res.data.access_token}`
-                );
-                this.setState({
-                    isLoading: false,
-                    // eslint-disable-next-line react/no-unused-state
-                    loginSuccess: true
-                });
-                initialInterceptors();
-            })
-            .catch(() => {
-                notification.error({
-                    message: 'These credentials do not match our records.',
-                    style: {
-                        width: 600,
-                        marginLeft: 335 - 600
-                    },
-                    placement: 'bottomRight',
-                    bottom: 20,
-                    duration: 5
-                });
-                this.setState({ isLoading: false });
-            });
+        this.setState({
+            isLoading: false
+        });
     };
 
     render() {
-        const { email, password, isLoading, loginSuccess } = this.state;
+        const {email, password, isLoading, loginSuccess} = this.state;
 
         if (isLoading) {
             return (
                 <div className="example">
-                    <Spin size="large" />
+                    <Spin size="large"/>
                 </div>
             );
         }
 
         if (loginSuccess) {
-            return <Redirect to="/ppc/optimization" />;
+            return <Redirect to="/ppc/optimization"/>;
         }
 
         return (
@@ -152,7 +123,7 @@ class LoginPageForm extends React.Component {
                 <Row className="form-details">
                     <Col>
                         By signing up, you agree to
-                        <br />
+                        <br/>
                         <a href="/#">
                             Terms and Conditions &amp; Privacy Policy
                         </a>
@@ -177,4 +148,13 @@ class LoginPageForm extends React.Component {
     }
 }
 
-export default LoginPageForm;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+    login: user => {
+        dispatch(userActions.login(user));
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPageForm);
+

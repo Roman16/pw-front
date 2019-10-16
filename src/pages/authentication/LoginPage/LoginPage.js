@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'antd';
+import {Row, Col} from 'antd';
 import LoginPageForm from './LoginPageForm/LoginPageForm';
 
 import './LoginPage.less';
@@ -14,7 +14,7 @@ class LoginPage extends React.Component {
             <div className="LoginFormContainer">
                 <div className="sign-page">
                     <div className="logo-auth">
-                        <img src={logo} alt="logo" />
+                        <img src={logo} alt="logo"/>
                     </div>
                     <Row className="container">
                         <Col
@@ -27,7 +27,7 @@ class LoginPage extends React.Component {
                             <div className="title">Log In</div>
                             <div className="sub-title">
                                 Welcome back! Please Log In to your account
-                                <br />
+                                <br/>
                                 to access the dashboard.
                             </div>
 
