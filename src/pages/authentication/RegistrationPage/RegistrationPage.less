@@ -137,10 +137,6 @@
     margin: auto 0;
 }
 
-.submit {
-    cursor: pointer;
-}
-
 .sign-page .btn-container {
     width: 100%;
     display: -webkit-box;
@@ -158,7 +154,7 @@
     -webkit-border-radius: 33px;
     border-radius: 33px;
     border: 1px solid #bdc6cf;
-    color: #6d6df6;
+    .btn-light();
     -webkit-box-align: center;
     -webkit-align-items: center;
     -ms-flex-align: center;
@@ -169,8 +165,7 @@
 }
 
 .sign-page .btn-container:hover {
-    background-color: #5e58bc;
-    color: #aaa;
+    .btn-action();
 }
 
 .sign-page .btn-container p {
@@ -201,4 +196,14 @@
     color: #000;
     font-family: im;
     font-weight: 900;
+}
+
+.form .submit[type='submit'] {
+    cursor: pointer;
+    .btn-dark();
+    transition: all 0.3s ease-in;
+}
+
+.form .submit[type='submit']:hover {
+    .btn-action();
 }
