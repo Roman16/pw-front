@@ -98,12 +98,6 @@
     font-size: 16px;
 }
 
-.input-container select ~ label {
-    top: -16px;
-    left: 0;
-    font-size: 12px;
-}
-
 .input-container label {
     position: absolute;
     left: 0;
@@ -122,6 +116,12 @@
     color: rgba(0, 0, 0, 0.38);
 }
 
+.input-container input:valid + .label {
+    top: -16px;
+    left: 0;
+    font-size: 12px;
+}
+
 .input-container .image {
     position: absolute;
     right: 0;
@@ -135,6 +135,11 @@
     bottom: 0;
     margin: auto 0;
 }
+
+.submit {
+    cursor: pointer;
+}
+
 .sign-page .btn-container {
     width: 100%;
     display: -webkit-box;
@@ -158,6 +163,13 @@
     -ms-flex-align: center;
     align-items: center;
     font-size: 16px;
+    font-family: im;
+    transition: all 0.3s ease-in;
+}
+
+.sign-page .btn-container:hover {
+    background-color: #5e58bc;
+    color: #aaa;
 }
 
 .sign-page .btn-container p {
@@ -165,7 +177,13 @@
     margin-left: 3px;
     margin-bottom: 0;
     font-size: 16px;
+    font-family: im;
     color: #3d70b2;
+    transition: all 0.3s ease-in;
+}
+
+.sign-page .btn-container:hover p {
+    color: #aaa;
 }
 
 .form .form-details {

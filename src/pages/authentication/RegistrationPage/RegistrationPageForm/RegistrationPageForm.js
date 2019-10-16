@@ -97,7 +97,7 @@ class RegistrationPage extends React.Component {
                             />
                             {/* eslint-disable-next-line max-len */}
                             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
-                            <label>First name</label>
+                            <label className="label">First name</label>
                         </div>
                     </Col>
                     <Col xs={24} sm={24} md={12}>
@@ -111,7 +111,7 @@ class RegistrationPage extends React.Component {
                             />
                             {/* eslint-disable-next-line max-len */}
                             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
-                            <label>Last Name</label>
+                            <label className="label">Last Name</label>
                         </div>
                     </Col>
                 </Row>
@@ -128,7 +128,7 @@ class RegistrationPage extends React.Component {
                             />
                             {/* eslint-disable-next-line max-len */}
                             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
-                            <label>Email Address</label>
+                            <label className="label">Email Address</label>
                         </div>
                     </Col>
                 </Row>
@@ -144,7 +144,7 @@ class RegistrationPage extends React.Component {
                             />
                             {/* eslint-disable-next-line max-len */}
                             {/* eslint-disable-next-line jsx-a11y/label-has-for,jsx-a11y/label-has-associated-control */}
-                            <label>Password</label>
+                            <label className="label">Password</label>
                         </div>
                     </Col>
                 </Row>
