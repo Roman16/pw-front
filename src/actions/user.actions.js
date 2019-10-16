@@ -31,12 +31,8 @@ function regist(user) {
 }
 
 function setInformation(user) {
-    return dispatch => {
-        userService.regist(user).then(data => {
-            dispatch({
-                type: userConstants.SET_INFORMATION,
-                payload: user
-            });
-        });
+    return {
+        type: userConstants.SET_INFORMATION,
+        payload: user
     };
 }
