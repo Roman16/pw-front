@@ -2,12 +2,16 @@ import {userConstants} from '../constans/request.types';
 
 export function users(state = {}, action) {
     switch (action.type) {
-        case userConstants.LOGIN_SUCCESS:
+        case userConstants.SET_INFORMATION:
             return {
-                loading: true
+                ...state,
+                ...action.payload
             };
+            break;
 
         default:
-            return state
+            return state;
+            break;
     }
+
 }

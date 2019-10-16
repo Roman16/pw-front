@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/iframe-has-title */
-import React, { Component } from 'react';
-import { Icon } from 'antd';
+import React, {Component} from 'react';
+import {Icon} from 'antd'
 import logo from '../../../../assets/img/zth.svg';
 import './PPC.less';
 
@@ -22,9 +21,9 @@ class PPC extends Component {
                         style={{ width: '750px', height: '422px' }}
                         src="https://www.youtube.com/embed/dBCnEJ4Rjo4"
                         frameBorder="0"
+                        title='video'
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen=""
-                    ></iframe>
+                        allowFullScreen="" />
 
                     <br />
                     <br />
