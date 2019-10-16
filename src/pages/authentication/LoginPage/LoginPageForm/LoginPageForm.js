@@ -7,7 +7,6 @@ import {
     Checkbox,
     Col,
     Spin,
-    notification
 } from 'antd';
 import {connect} from 'react-redux';
 import {Link, Redirect} from 'react-router-dom';

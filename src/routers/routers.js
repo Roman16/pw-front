@@ -2,13 +2,14 @@ import React from 'react';
 import {Route, Router, Switch} from 'react-router-dom';
 import {history} from "../utils/history";
 
-import NotFound from "../pages/NotFound/NotFound";
 
 import LoginPage from '../pages/authentication/LoginPage/LoginPage';
 import RegistrationPage from '../pages/authentication/RegistrationPage/RegistrationPage';
 
 import AuthorizedUser from '../pages';
 import Optimization from "../pages/PPCAutomate/Optimization/Optimization";
+import MWS from "../pages/authentication/AccountBinding/MWS/MWS";
+import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
 
 
 const routers = () => {
@@ -21,8 +22,8 @@ const routers = () => {
                 <Route path='/' render={() => (
                     <AuthorizedUser>
                         <Route exact path='/ppc/optimization' component={Optimization}/>
-
-                        {/*<Route component={NotFound}/>*/}
+                        <Route exact path='/mws' component={MWS}/>
+                        <Route exact path='/ppc' component={PPC}/>
                     </AuthorizedUser>
                 )}/>
             </Switch>
