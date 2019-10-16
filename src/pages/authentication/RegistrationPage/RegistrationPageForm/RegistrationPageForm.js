@@ -4,21 +4,16 @@ import { Col, notification, Row, Spin } from 'antd';
 import { Redirect } from 'react-router-dom';
 
 class RegistrationPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
-            last_name: '',
-            email: '',
-            password: '',
-            registerSuccess: false,
-            isLoading: false
-        };
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-    }
+    state = {
+        name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        registerSuccess: false,
+        isLoading: false
+    };
 
-    onSubmit(e) {
+    onSubmit = e => {
         e.preventDefault();
         this.setState({
             isLoading: true
@@ -66,11 +61,11 @@ class RegistrationPage extends React.Component {
                     isLoading: false
                 });
             });
-    }
+    };
 
-    onChange(e) {
+    onChange = e => {
         this.setState({ [e.target.name]: e.target.value });
-    }
+    };
 
     render() {
         const { registerSuccess, isLoading } = this.state;
