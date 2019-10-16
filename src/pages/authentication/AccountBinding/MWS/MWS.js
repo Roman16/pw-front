@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Icon} from 'antd'
 import logo from '../../../../assets/img/zth.svg';
 import './MWS.less';
+import { connect } from 'react-redux';
+import {userActions} from "../../../../actions/user.actions";
 
 class MWS extends Component {
     state = {
@@ -20,6 +22,7 @@ class MWS extends Component {
 
     saveParams = (e) => {
         e.preventDefault();
+
         console.log(this.state)
     };
 
@@ -62,6 +65,7 @@ class MWS extends Component {
                             onChange={this.handleChangeInput}
                         />
                     </div>
+
                     <div className="form-group">
                         <label htmlFor="mws_auth_token">MWS Auth Token</label>
                         <input
@@ -85,4 +89,15 @@ class MWS extends Component {
     }
 }
 
-export default MWS;
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({
+    login: data => {
+        dispatch(userActions.login(data));
+    }
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MWS);

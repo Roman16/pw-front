@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Router, Switch} from 'react-router-dom';
+import {Route, Router, Switch, Redirect} from 'react-router-dom';
 import {history} from "../utils/history";
 
 
@@ -13,6 +13,8 @@ import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
 
 
 const routers = () => {
+    const token = localStorage.getItem('token');
+
     return (
         <Router history={history}>
             <Switch>
@@ -20,11 +22,14 @@ const routers = () => {
                 <Route exact path="/register" component={RegistrationPage}/>
 
                 <Route path='/' render={() => (
-                    <AuthorizedUser>
-                        <Route exact path='/ppc/optimization' component={Optimization}/>
-                        <Route exact path='/mws' component={MWS}/>
-                        <Route exact path='/ppc' component={PPC}/>
-                    </AuthorizedUser>
+                    // token ?
+                        <AuthorizedUser>
+                            <Route exact path='/ppc/optimization' component={Optimization}/>
+                            <Route exact path='/mws' component={MWS}/>
+                            <Route exact path='/ppc' component={PPC}/>
+                        </AuthorizedUser>
+                        // :
+                        // <Redirect to='login'/>
                 )}/>
             </Switch>
         </Router>

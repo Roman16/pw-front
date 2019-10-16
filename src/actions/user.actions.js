@@ -1,24 +1,21 @@
-import { userConstants } from '../constans/request.types';
-import { history } from '../utils/history';
+import {userConstants} from '../constans/request.types';
+import {history} from '../utils/history';
 
-import { userService } from '../services/user.services';
+import {userService} from '../services/user.services';
 
 export const userActions = {
     login,
-    regist
+    regist,
+    setInformation
 };
 
 function login(user) {
     return dispatch => {
         userService.login(user).then(data => {
-            dispatch({
-                type: userConstants.LOGIN_SUCCESS,
-                payload: {
-                    token: data.access_token
-                }
-            });
+            dispatch(setInformation(user));
 
-            history.push('/');
+            localStorage.setItem('token', data.access_token);
+            history.push('/ppc/optimization');
         });
     };
 }
@@ -26,14 +23,20 @@ function login(user) {
 function regist(user) {
     return dispatch => {
         userService.regist(user).then(data => {
-            dispatch({
-                type: userConstants.REGIST_SUCCESS,
-                payload: {
-                    token: data.access_token
-                }
-            });
+            dispatch(setInformation(user));
 
-            history.push('/');
+            history.push('/mws');
+        });
+    };
+}
+
+function setInformation(user) {
+    return dispatch => {
+        userService.regist(user).then(data => {
+            dispatch({
+                type: userConstants.SET_INFORMATION,
+                payload: user
+            });
         });
     };
 }

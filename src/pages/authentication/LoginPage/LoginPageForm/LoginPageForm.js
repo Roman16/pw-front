@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
 import { userActions } from '../../../../actions/user.actions';
+import amazon from '../../../../assets/img/amazon.png';
 import './LoginPageForm.less';
 
 class LoginPageForm extends React.Component {
@@ -127,7 +128,7 @@ class LoginPageForm extends React.Component {
                             <p>or</p>
                             <a href="https://profitwhales.com/login/amazon">
                                 <img
-                                    src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_312x64.png"
+                                    src={amazon}
                                     alt="LWA-GOld"
                                 />
                             </a>
