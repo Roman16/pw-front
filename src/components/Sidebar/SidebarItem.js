@@ -25,7 +25,6 @@ ItemIcon.propTypes = {
 
 const logOut = () => {
     delete axios.defaults.headers.common["Authorization"];
-
     global.localStorage.removeItem(
         'token',
     );

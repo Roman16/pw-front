@@ -1,27 +1,31 @@
 import React from 'react';
-import { createBrowserHistory } from 'history';
-import { Route, Router, Switch } from 'react-router-dom';
+import {Route, Router, Switch} from 'react-router-dom';
+import {history} from "../utils/history";
+
 
 import LoginPage from '../pages/authentication/LoginPage/LoginPage';
 import RegistrationPage from '../pages/authentication/RegistrationPage/RegistrationPage';
-import AuthorizedUser from '../pages';
 
-export const history = createBrowserHistory();
+import AuthorizedUser from '../pages';
+import Optimization from "../pages/PPCAutomate/Optimization/Optimization";
+import MWS from "../pages/authentication/AccountBinding/MWS/MWS";
+import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
+
 
 const routers = () => {
     return (
         <Router history={history}>
             <Switch>
-                <Route exact path="/login" component={LoginPage} />
-                <Route exact path="/register" component={RegistrationPage} />
-                <Route
-                    path="/"
-                    render={() => (
-                        <AuthorizedUser>
-                            <Route exact path="/login" component={LoginPage} />
-                        </AuthorizedUser>
-                    )}
-                />
+                <Route exact path='/login' component={LoginPage}/>
+                <Route exact path="/register" component={RegistrationPage}/>
+
+                <Route path='/' render={() => (
+                    <AuthorizedUser>
+                        <Route exact path='/ppc/optimization' component={Optimization}/>
+                        <Route exact path='/mws' component={MWS}/>
+                        <Route exact path='/ppc' component={PPC}/>
+                    </AuthorizedUser>
+                )}/>
             </Switch>
         </Router>
     );
