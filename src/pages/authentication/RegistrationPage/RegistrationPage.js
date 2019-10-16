@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import './RegistrationPage.less';
 import RegistrationPageForm from './RegistrationPageForm/RegistrationPageForm';
@@ -54,10 +55,10 @@ class RegistrationPage extends React.Component {
                                 <li>Tens of hours saved per week</li>
                                 <li>Thousands of dollars saved per ASIN</li>
                             </ul>
-                            <a href="/login" className="btn-container">
+                            <Link to="/login" className="btn-container">
                                 Already have an account?
                                 <p>Login</p>
-                            </a>
+                            </Link>
                         </Col>
                     </Row>
                 </div>

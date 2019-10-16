@@ -1,4 +1,4 @@
-@import "./variables.less";
+@import './variables.less';
 
 .card {
     background: #fff;
@@ -7,4 +7,22 @@
 
 .main-margin {
     margin: @margin;
+}
+
+.btn-light {
+    background-color: @white;
+    color: @action-color-dark;
+}
+
+.btn-dark {
+    background-color: @action-color;
+    color: @white;
+}
+
+.btn-action {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+        @action-color;
+    box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
+        0px 0px 20px rgba(142, 147, 192, 0.08);
+    color: @white;
 }
