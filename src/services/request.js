@@ -15,7 +15,7 @@ const api = (method, url, data, type) => {
             data: data,
             headers: {
                 'Content-Type': type || 'application/json',
-                authorization: `Bearer ${token ? token : true}`
+                authorization:  token ? `Bearer ${token}` : true
             }
         })
             .then(result => {

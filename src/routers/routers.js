@@ -8,43 +8,54 @@ import RegistrationPage from '../pages/authentication/RegistrationPage/Registrat
 import AuthorizedUser from '../pages';
 import Optimization from '../pages/PPCAutomate/Optimization/Optimization';
 import Report from '../pages/PPCAutomate/Report/Report';
+import ProductSettings from '../pages/PPCAutomate/ProductSettings/ProductSettings';
 import MWS from '../pages/authentication/AccountBinding/MWS/MWS';
 import PPC from '../pages/authentication/AccountBinding/PPC/PPC';
+import NotFound from '../pages/NotFound/NotFound';
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route
+        {...rest}
+        render={props =>
+            localStorage.getItem('token') ? (
+                <Component {...props} />
+            ) : (
+                <Redirect to="/login" />
+            )
+        }
+    />
+);
 
 const routers = () => {
-    const token = localStorage.getItem('token');
-
     return (
         <Router history={history}>
             <Switch>
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/register" component={RegistrationPage} />
 
-                <Route
-                    path="/"
-                    render={
-                        (/*:*/
-                        /*:*/) => ((
-                            // token ?
-                            <AuthorizedUser>
-                                <Route
-                                    exact
-                                    path="/ppc/optimization"
-                                    component={Optimization}
-                                />
-                                <Route
-                                    exact
-                                    path="/ppc/report"
-                                    component={Report}
-                                />
-                                <Route exact path="/mws" component={MWS} />
-                                <Route exact path="/ppc" component={PPC} />
-                            </AuthorizedUser>
-                            // :
-                            // <Redirect to='login'/>
-                        ) /*:*/)
-                    }
-                />
+                <AuthorizedUser>
+                    <Switch>
+                        <PrivateRoute
+                            exact
+                            path="/ppc/optimization"
+                            component={Optimization}
+                        />
+                        <PrivateRoute
+                            exact
+                            path="/ppc/report"
+                            component={Report}
+                        />
+                        <PrivateRoute
+                            exact
+                            path="/ppc/product-settings"
+                            component={ProductSettings}
+                        />
+                        <PrivateRoute exact path="/mws" component={MWS} />
+                        <PrivateRoute exact path="/ppc" component={PPC} />
+
+                        <Route component={NotFound} />
+                    </Switch>
+                </AuthorizedUser>
             </Switch>
         </Router>
     );
