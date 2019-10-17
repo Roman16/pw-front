@@ -10,5 +10,6 @@ export const userConstants = {
 //------------ product constants--------------
 //--------------------------------------------
 export const productsConstants = {
-    SET_PRODUCT_LIST: 'SET_PRODUCT_LIST'
+    SET_PRODUCT_LIST: 'SET_PRODUCT_LIST',
+    UPDATE_PRODUCT_DATA: 'UPDATE_PRODUCT_DATA',
 };

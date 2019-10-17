@@ -23,18 +23,18 @@ class OptimizationStatus extends Component {
         isShowModal: false,
     };
 
+    cancelModal = () => {
+        this.setState({isShowModal: false});
+    };
+
     toStart = (status) => {
-        const {saveProductIdData, netMargin} = this.props;
+        const {onSwitchOptimization, netMargin} = this.props;
 
         if (status === RUNNING && !netMargin) {
             this.setState({isShowModal: true});
         } else {
-            saveProductIdData(status);
+            onSwitchOptimization(status);
         }
-    };
-
-    cancelModal = () => {
-        this.setState({isShowModal: false});
     };
 
     setNetMargin = (value) => {

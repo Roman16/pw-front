@@ -74,8 +74,6 @@ class ProductList extends Component {
             isSelectedAll
         } = this.state;
 
-        console.log(this.props.state);
-
         return (
             <div className='product-list'>
                 <div className='search-product'>

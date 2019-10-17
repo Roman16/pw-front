@@ -1,26 +1,17 @@
 import React from "react";
-import {Redirect} from 'react-router-dom';
 
 import Sidebar from '../components/Sidebar/Sidebar';
 
 const AuthorizedUser = (props) => {
-    const authorized = localStorage.getItem('token');
+    return (
+        <div className='main-pages'>
+            <Sidebar/>
 
-    if (authorized) {
-        return (
-            <div className='main-pages'>
-                <Sidebar/>
-
-                <div className="content">
-                    {props.children}
-                </div>
+            <div className="main-container">
+                {props.children}
             </div>
-        );
-    } else {
-        return (
-            <Redirect to='login'/>
-        )
-    }
+        </div>
+    );
 };
 
 export default AuthorizedUser;

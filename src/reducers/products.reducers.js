@@ -7,6 +7,12 @@ export function products(state = {}, action) {
                 ...action.payload
             };
 
+        case productsConstants.UPDATE_PRODUCT_DATA:
+            return {
+                ...state,
+                ...action.payload
+            };
+
         default:
             return state;
     }

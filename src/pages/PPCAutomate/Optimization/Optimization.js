@@ -10,6 +10,7 @@ import StrategyInfo from './InfoItem/StrategyInfo/StrategyInfo';
 import OptimizationStatus from "./OptimizationStatus/OptimizationStatus";
 import LastReports from "./LastReports/LastReports";
 
+import {updateProduct} from '../../../actions/products.actions';
 
 import './Optimization.less';
 
@@ -27,14 +28,10 @@ class Optimization extends Component {
         });
     };
 
-    onClose = () => {
+    onCloseDrawer = () => {
         this.setState({
             visible: false,
         });
-    };
-
-    onSelectProduct = (product) => {
-        console.log(product);
     };
 
     toLess = () => {
@@ -43,10 +40,20 @@ class Optimization extends Component {
         })
     };
 
+    onSelectProduct = (product) => {
+        console.log(product);
+    };
+
+    handleUpdateProduct = (product) => {
+        console.log(product);
+    };
+
+
     render() {
         const {
             isLess
         } = this.state;
+
         return (
             <Fragment>
                 <div className='optimization-page'>
@@ -83,18 +90,18 @@ class Optimization extends Component {
                             </div>
                         </div>
 
-
-                        <OptimizationStatus />
+                        <OptimizationStatus
+                        onSwitchOptimization={this.handleUpdateProduct}
+                        />
 
                         <LastReports />
                     </div>
-
                 </div>
 
                 <Drawer
                     title="Did you know that you can pause your ProfitWhales account?"
                     width={500}
-                    onClose={this.onClose}
+                    onClose={this.onCloseDrawer}
                     visible={this.state.visible}
                 >
                     {this.state.infoType === 'options' ? <OptionsInfo/> : <StrategyInfo />}
