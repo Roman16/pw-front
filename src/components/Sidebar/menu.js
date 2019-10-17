@@ -6,19 +6,19 @@ export const regionsMenu = [
                 name: 'US',
                 flag: 'us.svg',
                 description: 'NBI49DMDH34BG',
-                active: true,
+                active: true
             },
             {
                 name: 'Canada',
                 flag: 'canada.svg',
-                description: 'NBI49DMDH34BG',
+                description: 'NBI49DMDH34BG'
             },
             {
                 name: 'Mexico',
                 flag: 'us.svg',
-                description: 'NBI49DMDH34BG',
-            },
-        ],
+                description: 'NBI49DMDH34BG'
+            }
+        ]
     },
     {
         region: 'Europe',
@@ -26,42 +26,42 @@ export const regionsMenu = [
             {
                 name: 'UK',
                 flag: 'us.svg',
-                description: 'NBI49DMDH34BG',
+                description: 'NBI49DMDH34BG'
             },
             {
                 name: 'DE',
                 flag: 'us.svg',
-                description: 'NBI49DMDH34BG',
+                description: 'NBI49DMDH34BG'
             },
             {
                 name: 'FR',
                 flag: 'us.svg',
-                description: 'NBI49DMDH34BG',
+                description: 'NBI49DMDH34BG'
             },
             {
                 name: 'IT',
                 flag: 'us.svg',
-                description: 'NBI49DMDH34BG',
+                description: 'NBI49DMDH34BG'
             },
             {
                 name: 'ES',
                 flag: 'us.svg',
-                description: 'NBI49DMDH34BG',
-            },
-        ],
-    },
+                description: 'NBI49DMDH34BG'
+            }
+        ]
+    }
 ];
 
 export const menuMain = [
     {
         title: 'Zero to Hero',
         link: '/zero-to-hero',
-        icon: 'zeroToHero',
+        icon: 'zeroToHero'
     },
     {
         title: 'Analytics',
         link: '/analytics',
-        icon: 'analytics',
+        icon: 'analytics'
     },
     {
         title: 'PPC Automate',
@@ -70,57 +70,57 @@ export const menuMain = [
         subMenu: [
             {
                 title: 'Dashboard',
-                link: '/dashboard',
+                link: '/dashboard'
             },
             {
                 title: 'Expansion',
-                link: '/expansion',
+                link: '/expansion'
             },
             {
                 title: 'Scan',
-                link: '/scan',
+                link: '/scan'
             },
             {
                 title: 'Optimization',
-                link: '/optimization',
+                link: '/optimization'
             },
             {
-                title: 'Charge Report',
-                link: '/report',
+                title: 'Report',
+                link: '/report'
             },
             {
                 title: 'Product Settings',
-                link: '/product-settings',
-            },
-        ],
-    },
+                link: '/product-settings'
+            }
+        ]
+    }
 ];
 
 export const menuBottom = [
     {
         title: 'Manage Plans',
         link: '',
-        icon: 'managePlans',
+        icon: 'managePlans'
     },
     {
         title: 'Wallet',
         link: '',
-        icon: 'wallet',
+        icon: 'wallet'
     },
     {
         title: 'Account',
         link: 'ppc-automate',
-        icon: 'account',
+        icon: 'account'
     },
     {
         title: 'Help Center',
         link: '',
-        icon: 'helpCenter',
+        icon: 'helpCenter'
     },
     {
         title: 'Log Out',
         link: '/login',
         icon: 'logOut',
-        className: 'logOut',
-    },
+        className: 'logOut'
+    }
 ];

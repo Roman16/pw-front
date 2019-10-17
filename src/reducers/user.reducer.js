@@ -1,4 +1,4 @@
-import {userConstants} from '../constans/request.types';
+import { userConstants } from '../constans/request.types';
 
 export function users(state = {}, action) {
     switch (action.type) {
@@ -13,5 +13,4 @@ export function users(state = {}, action) {
             return state;
             break;
     }
-
 }
