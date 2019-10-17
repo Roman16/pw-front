@@ -13,6 +13,12 @@ export function products(state = {}, action) {
                 ...action.payload
             };
 
+            case productsConstants.SELECT_PRODUCT:
+            return {
+                ...state,
+                selectedProduct: action.payload
+            };
+
         default:
             return state;
     }

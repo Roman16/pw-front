@@ -71,7 +71,8 @@ class ProductList extends Component {
                 isSelectedAll
             } = this.state,
             {
-                products
+                products,
+                selectedProduct
             } = this.props;
 
         return (
@@ -98,6 +99,7 @@ class ProductList extends Component {
                 {products && products.map(product => (
                     <ProductItem
                         product={product}
+                        selectedProduct={selectedProduct}
                         onClick={(item) => this.toActive(item)}
                     />
                 ))}
@@ -113,7 +115,8 @@ ProductList.propTypes = {
 
 const mapStateToProps = state => ({
     products: state.products.productList,
-    totalSize: state.products.totalSize
+    totalSize: state.products.totalSize,
+    selectedProduct: state.products.selectedProduct && state.products.selectedProduct.id
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -11,19 +11,21 @@ const maxText = (text) => {
 
 const ProductItem = ({
                          product: {
+                             id,
                              isActive,
                              asin,
                              captions,
                              sku,
                              image_url,
-                             underOptimization,
                          },
                          onClick,
-                         product
+                         product,
+                         selectedProduct
                      }) => {
+    console.log(selectedProduct)
     return (
         <div
-            className={`product-item ${isActive ? 'active' : ''}`}
+            className={`product-item ${selectedProduct === id ? 'active' : ''}`}
             onClick={() => onClick(product)}
         >
             <div className="image">

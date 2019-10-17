@@ -3,7 +3,8 @@ import {productsServices} from '../services/products.services';
 
 export const productsActions = {
     fetchProducts,
-    updateProduct
+    updateProduct,
+    selectProduct
 };
 
 function fetchProducts(params) {
@@ -14,6 +15,8 @@ function fetchProducts(params) {
                     type: productsConstants.SET_PRODUCT_LIST,
                     payload: res
                 });
+
+                dispatch(selectProduct(res.productList[0]));
             });
     };
 }
@@ -28,6 +31,14 @@ function updateProduct(product) {
                 });
             });
     };
+}
 
+function selectProduct(product) {
+    return dispatch => {
+        dispatch({
+            type: productsConstants.SELECT_PRODUCT,
+            payload: product
+        });
+    };
 }
 
