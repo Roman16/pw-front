@@ -25,7 +25,7 @@ class TableSettings extends Component {
         this.columns = [
             {
                 title: () => (
-                    <div className="InputSearch">
+                    <div className="input-search">
                         <Input.Search
                             onChange={onSearchChange}
                             onBlur={onSearchBlur}
@@ -155,7 +155,7 @@ class TableSettings extends Component {
         const { dataSource } = this.props;
 
         return (
-            <div className="TableSettings">
+            <div className="table-settings">
                 <Table
                     rowKey="id"
                     dataSource={dataSource}

@@ -9,9 +9,9 @@ class ProductSettingsMain extends Component {
 
     render() {
         return (
-            <div className="ProductSettingsMain">
+            <div>
                 {/* todo create component */}
-                <div className="TrialInfo">
+                <div className="trial-info">
                     <div className="page-caption">
                         <h3> Analytics Product Settings</h3>
                     </div>

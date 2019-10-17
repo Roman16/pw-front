@@ -53,16 +53,23 @@ export const regionsMenu = [
 ];
 
 export const menuMain = [
-    {
-        title: 'Zero to Hero',
-        link: '/zero-to-hero',
-        icon: 'zeroToHero'
-    },
-    {
-        title: 'Analytics',
-        link: '/analytics',
-        icon: 'analytics'
-    },
+    /*
+     * Zero to Hero
+     */
+    // {
+    //     title: 'Zero to Hero',
+    //     link: '/zero-to-hero',
+    //     icon: 'zeroToHero'
+    // },
+
+    /*
+     * Analytics
+     */
+    // {
+    //     title: 'Analytics',
+    //     link: '/analytics',
+    //     icon: 'analytics'
+    // },
     {
         title: 'PPC Automate',
         link: '/ppc',
@@ -73,40 +80,47 @@ export const menuMain = [
                 link: '/dashboard'
             },
             {
-                title: 'Expansion',
-                link: '/expansion'
-            },
-            {
-                title: 'Scan',
-                link: '/scan'
-            },
-            {
                 title: 'Optimization',
                 link: '/optimization'
             },
             {
-                title: 'Report',
+                title: 'Optimization Report',
                 link: '/report'
             },
             {
                 title: 'Product Settings',
                 link: '/product-settings'
+            },
+            {
+                title: 'PPC Scanner',
+                link: '-scanner'
+            },
+            {
+                title: 'Expansion',
+                link: '/expansion'
             }
         ]
     }
 ];
 
 export const menuBottom = [
-    {
-        title: 'Manage Plans',
-        link: '',
-        icon: 'managePlans'
-    },
-    {
-        title: 'Wallet',
-        link: '',
-        icon: 'wallet'
-    },
+    /*
+     * Manage Plans
+     */
+    // {
+    //     title: 'Manage Plans',
+    //     link: '',
+    //     icon: 'managePlans'
+    // },
+
+    /*
+     * Wallet
+     */
+    // {
+    //     title: 'Wallet',
+    //     link: '',
+    //     icon: 'wallet'
+    // },
     {
         title: 'Account',
         link: 'ppc-automate',
@@ -114,8 +128,9 @@ export const menuBottom = [
     },
     {
         title: 'Help Center',
-        link: '',
-        icon: 'helpCenter'
+        link: 'https://profit-whales.kayako.com',
+        icon: 'helpCenter',
+        className: 'helpCenter'
     },
     {
         title: 'Log Out',
