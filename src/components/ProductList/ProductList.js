@@ -11,7 +11,6 @@ const {Search} = Input;
 
 class ProductList extends Component {
     state = {
-        products: [],
         params: {
             size: 8,
             page: 1,
@@ -37,12 +36,12 @@ class ProductList extends Component {
         } = this.props;
 
         this.setState(
-            ({ isSelectedAll }) => ({
+            ({isSelectedAll}) => ({
                 isSelectedAll: !isSelectedAll,
                 selectedSize: !isSelectedAll ? totalProduct : 1,
             }),
             () => {
-                const { isSelectedAll } = this.state;
+                const {isSelectedAll} = this.state;
 
                 if (activeProductId !== 'all') {
                     this.prevActive = activeProductId;
@@ -55,11 +54,10 @@ class ProductList extends Component {
         );
     };
 
-    toActive = (activeItemId) => {
-        const { setActiveProduct, onSelect } = this.props;
+    toActive = (product) => {
+        const {onSelectProduct} = this.props;
 
-        setActiveProduct(activeItemId);
-        onSelect(activeItemId);
+        onSelectProduct(product);
 
         this.setState({
             isSelectedAll: false,
@@ -69,10 +67,12 @@ class ProductList extends Component {
 
     render() {
         const {
-            products,
-            selectedSize,
-            isSelectedAll
-        } = this.state;
+                selectedSize,
+                isSelectedAll
+            } = this.state,
+            {
+                products
+            } = this.props;
 
         return (
             <div className='product-list'>
@@ -95,10 +95,10 @@ class ProductList extends Component {
                     </div>
                 </div>
 
-                {products.map(product => (
+                {products && products.map(product => (
                     <ProductItem
                         product={product}
-                        onClick={(id) => this.toActive(id)}
+                        onClick={(item) => this.toActive(item)}
                     />
                 ))}
             </div>
@@ -112,7 +112,8 @@ ProductList.propTypes = {
 
 
 const mapStateToProps = state => ({
-    products: state.products
+    products: state.products.productList,
+    totalSize: state.products.totalSize
 });
 
 const mapDispatchToProps = dispatch => ({

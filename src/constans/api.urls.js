@@ -5,6 +5,6 @@ export const userUrls = {
 };
 
 export const productsUrls = {
-    allProducts: 'ppc-automation/product',
+    allProducts: 'products/list',
     saveProductData: 'ppc-automation/save-parameters',
 };

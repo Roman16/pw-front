@@ -1,8 +1,9 @@
 import React, {Component, Fragment} from "react";
-import {Drawer, Button, Col, Row, Icon} from 'antd';
+import {Drawer, Icon} from 'antd';
+import {connect} from 'react-redux';
 
 import ProductList from '../../../components/ProductList/ProductList';
-import OptimizationOptions, {options} from './OptimizationOptions/OptimizationOptions';
+import OptimizationOptions from './OptimizationOptions/OptimizationOptions';
 import OptimizationStrategy from './OptimizationStrategy/OptimizationStrategy';
 
 import OptionsInfo from './InfoItem/OptionInfo/OptionInfo';
@@ -112,4 +113,13 @@ class Optimization extends Component {
     }
 }
 
-export default Optimization;
+const mapStateToProps = state => ({
+
+});
+
+const mapDispatchToProps = dispatch => ({
+    // selectProduct: dispatch()
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Optimization);
