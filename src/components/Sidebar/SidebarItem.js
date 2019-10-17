@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Icon } from 'antd';
+import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import {userActions} from "../../actions/user.actions";
 
 const IconFont = Icon.createFromIconfontCN({
     scriptUrl: '/assets/icons/iconfont.js',
@@ -23,14 +24,7 @@ ItemIcon.propTypes = {
     isSub: PropTypes.bool,
 };
 
-const logOut = () => {
-    delete axios.defaults.headers.common["Authorization"];
-    global.localStorage.removeItem(
-        'token',
-    );
-};
-
-const SidebarItem = ({ item, parentLink = '', ...props }) => (
+const SidebarItem = ({ logOut, item, parentLink = '', ...props }) => (
     item.subMenu
         ? (
             <Menu.SubMenu
@@ -87,4 +81,12 @@ SidebarItem.propTypes = {
     parentLink: PropTypes.string,
 };
 
-export default SidebarItem;
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = dispatch => ({
+    logOut: () => {
+        dispatch(userActions.logOut());
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SidebarItem);

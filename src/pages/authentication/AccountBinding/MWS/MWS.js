@@ -32,6 +32,8 @@ class MWS extends Component {
             MWSToken
         } = this.state;
 
+        console.log(this.props);
+
         return (
             <div className='mws-page'>
                 <img src={logo} alt=""/>
@@ -44,8 +46,7 @@ class MWS extends Component {
                     ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 </div>
 
-                <a href="https://sellercentral.amazon.com/gp/mws/registration/register.html?signInPageDisplayed=1&amp;developerName=Profit+Whales&amp;devMWSAccountId=055276142352"
-                   className="link">
+                <a href={this.props.mwsLink} target='_blank' className="link">
                     Link with Amazon MWS
                     <Icon type="arrow-right"/>
                 </a>
@@ -89,7 +90,9 @@ class MWS extends Component {
     }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    mwsLink: state.user.account_links.amazon_mws.connect_link
+});
 
 const mapDispatchToProps = dispatch => ({
     login: data => {

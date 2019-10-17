@@ -112,7 +112,6 @@ ProductList.propTypes = {
 
 
 const mapStateToProps = state => ({
-    state: state,
     products: state.products
 });
 

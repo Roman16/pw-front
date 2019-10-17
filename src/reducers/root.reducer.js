@@ -1,8 +1,16 @@
 import {combineReducers} from 'redux';
-import {users} from './user.reducer';
+import {user} from './user.reducer';
 import {products} from './products.reducers';
 
-export default combineReducers({
+const appReducer = combineReducers({
     products,
-    users,
+    user,
 });
+
+export const  rootReducer = (state, action) => {
+    if (action.type === 'USER_LOGOUT') {
+        state = undefined
+    }
+
+    return appReducer(state, action)
+};

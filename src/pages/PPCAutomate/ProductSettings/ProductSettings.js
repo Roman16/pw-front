@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import TableSettings from './TableSettings/TableSettings';
-import './ProductSettings.less';
 import { Button } from 'antd';
+
+import './ProductSettings.less';
 
 class ProductSettingsMain extends Component {
     state = {};
@@ -33,6 +34,7 @@ class ProductSettingsMain extends Component {
                         </div>
                     </div>
                 </div>
+
                 <div className="reminder">
                     <div className="reminder-title">Reminder</div>
                     <div>
@@ -44,6 +46,7 @@ class ProductSettingsMain extends Component {
                         Pellentesque blandit fringilla ultricies.
                     </div>
                 </div>
+
                 <TableSettings />
             </div>
         );

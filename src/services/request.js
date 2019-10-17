@@ -11,7 +11,7 @@ const api = (method, url, data, type) => {
     return new Promise((resolve, reject) => {
         axios({
             method: method,
-            url: `${baseUrl}/${url}`,
+            url: `${baseUrl}/api/${url}`,
             data: data,
             headers: {
                 'Content-Type': type || 'application/json',

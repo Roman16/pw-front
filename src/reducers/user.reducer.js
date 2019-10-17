@@ -1,6 +1,6 @@
 import { userConstants } from '../constans/request.types';
 
-export function users(state = {}, action) {
+export function user(state = {}, action) {
     switch (action.type) {
         case userConstants.SET_INFORMATION:
             return {

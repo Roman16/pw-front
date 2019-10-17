@@ -1,10 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from "redux-thunk";
 import { persistStore, persistReducer } from 'redux-persist'
-import rootReducer from '../reducers/root.reducer';
+import {rootReducer} from '../reducers/root.reducer';
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
-
-
 
 const persistConfig = {
     key: 'root',
@@ -25,9 +23,4 @@ const initialStore = () => {
 export const store = initialStore();
 export const persistor = persistStore(store);
 
-// export default () => {
-//     let store = ;
-//     let  = ;
-//     return { store, persistor }
-// }
 

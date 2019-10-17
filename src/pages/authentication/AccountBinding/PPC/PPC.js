@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Icon} from 'antd'
+import {connect} from 'react-redux';
+
 import logo from '../../../../assets/img/zth.svg';
 import './PPC.less';
 
@@ -29,7 +31,7 @@ class PPC extends Component {
                     <br />
 
                     <a
-                        href="https://www.amazon.com/ap/oa?client_id=amzn1.application-oa2-client.8868f12ea2514f79b0348dfcf7ee06ae&amp;scope=cpc_advertising:campaign_management&amp;response_type=code&amp;redirect_uri=https://profitwhales.com/amazon/lwa/callback"
+                        href={this.props.ppcLink}
                         className="link"
                     >
                         Link with Amazon PPC
@@ -41,4 +43,8 @@ class PPC extends Component {
     }
 }
 
-export default PPC;
+const mapStateToProps = state => ({
+    ppcLink: state.user.account_links.amazon_ppc.connect_link
+});
+
+export default connect(mapStateToProps)(PPC);

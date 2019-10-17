@@ -5,6 +5,7 @@ import {userService} from '../services/user.services';
 
 export const userActions = {
     login,
+    logOut,
     regist,
     getUserInfo,
     setInformation
@@ -16,11 +17,21 @@ function login(user) {
             .then(res => {
                 dispatch(setInformation(res));
 
-                dispatch(getUserInfo());
-
                 localStorage.setItem('token', res.access_token);
-                history.push('/ppc/optimization');
+
+                dispatch(getUserInfo());
             });
+    };
+}
+
+function logOut() {
+    return dispatch => {
+        dispatch({
+            type: userConstants.USER_LOGOUT,
+        });
+
+        localStorage.removeItem('token');
+        history.push('/login');
     };
 }
 
@@ -28,10 +39,10 @@ function regist(user) {
     return dispatch => {
         userService.regist(user)
             .then(res => {
-                dispatch(setInformation(res));
+                localStorage.setItem('token', res.data.auth_token);
 
-                localStorage.setItem('token', res.access_token);
-                history.push('/mws');
+                dispatch(setInformation(res.data));
+                dispatch(getUserInfo());
             });
     };
 }
@@ -41,6 +52,14 @@ function getUserInfo() {
         userService.getUserInfo()
             .then(res => {
                 dispatch(setInformation(res));
+
+                if (!res.account_links.amazon_mws.is_connected) {
+                    history.push('/mws');
+                } else if (!res.account_links.amazon_ppc.is_connected) {
+                    history.push('/ppc');
+                } else {
+                    history.push('/ppc/optimization');
+                }
             });
     };
 }

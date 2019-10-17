@@ -6,7 +6,7 @@ import './Report.less';
 // delete this comment
 function Report() {
     return (
-        <div className="ProductMain basic-container">
+        <div className="product-main basic-container">
             <ProductList />
             <ReportTable />
         </div>

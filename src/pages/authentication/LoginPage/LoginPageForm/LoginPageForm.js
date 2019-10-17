@@ -140,7 +140,7 @@ class LoginPageForm extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
     login: user => {

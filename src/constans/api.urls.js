@@ -1,6 +1,6 @@
 export const userUrls = {
-    login: 'api/user/login',
-    regist: 'api/user/register',
+    login: 'user/login',
+    regist: 'user/register',
     allInfo: 'user/status'
 };
 
