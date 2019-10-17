@@ -6,11 +6,9 @@ export function products(state = {}, action) {
             return {
                 ...action.payload
             };
-            break;
 
         default:
             return state;
-            break;
     }
 
 }

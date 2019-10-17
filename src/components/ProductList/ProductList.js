@@ -74,6 +74,8 @@ class ProductList extends Component {
             isSelectedAll
         } = this.state;
 
+        console.log(this.props.state);
+
         return (
             <div className='product-list'>
                 <div className='search-product'>
@@ -112,6 +114,7 @@ ProductList.propTypes = {
 
 
 const mapStateToProps = state => ({
+    state: state,
     products: state.products
 });
 

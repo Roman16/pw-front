@@ -7,10 +7,8 @@ export function users(state = {}, action) {
                 ...state,
                 ...action.payload
             };
-            break;
 
         default:
             return state;
-            break;
     }
 }
