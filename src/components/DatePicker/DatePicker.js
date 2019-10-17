@@ -11,8 +11,12 @@ class DatePicker extends Component {
     handleChange = ([start, end]) => {
         const { timeRange } = this.props;
 
-        timeRange(start.format('D-M-YY'), end.format('D-M-YY'));
-        console.log(start.format('D-M-YY'), end.format('D-M-YY'));
+        // timeRange(start.format('D-M-YY'), end.format('D-M-YY'));
+        // console.log(start.format('D-M-YY'), end.format('D-M-YY'));
+    };
+
+    disabledDate = current => {
+        return current && current > moment().endOf('day');
     };
 
     render() {
@@ -45,6 +49,7 @@ class DatePicker extends Component {
                     format="DD/MM/YY"
                     suffixIcon={<DateIcon />}
                     onChange={this.handleChange}
+                    disabledDate={this.disabledDate}
                 />
             </div>
         );

@@ -1,37 +1,114 @@
 @import './style/variables.less';
 
 html {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
-  margin: 0;
-  padding: 0;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
 }
 
 img {
-  max-width: 100%;
-  height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 .ant-btn-primary {
-  background-color: @action-color !important;
+    background-color: @action-color !important;
     &:hover {
         background-color: @second-default-dark !important;
     }
 }
 
 .main-pages {
-  height: 100vh;
-  display: flex;
+    height: 100vh;
+    display: flex;
 
-  .content {
-    flex: 1;
-    padding: 20px 10px;
-    height: 100%;
-    overflow: auto;
-  }
+    .content {
+        flex: 1;
+        padding: 20px 10px;
+        height: 100%;
+        overflow: auto;
+    }
 }
+
+// calendar
+.ant-calendar-picker-container .ant-calendar {
+    border-radius: 8px;
+}
+
+.ant-calendar-panel {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.ant-calendar-footer {
+    width: 100px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    background-color: @body-background;
+}
+
+.ant-calendar-footer-extra,
+.ant-calendar-footer-btn {
+    height: 100%;
+}
+
+.ant-calendar-footer-extra {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+}
+
+.ant-calendar-footer-extra > .ant-tag {
+    width: 7.5em;
+    height: 2.5em;
+    border: none;
+    border-radius: 0.6em;
+    line-height: 2.5em;
+    font-weight: 700;
+    background-color: transparent;
+    color: @action-color-dark;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+}
+
+.ant-calendar-footer-extra > .ant-tag:hover {
+    background-color: @action-color;
+    color: @white;
+}
+
+.ant-calendar-cell .ant-calendar-date {
+    background-color: transparent;
+}
+
+.ant-calendar-tbody
+    .ant-calendar-active-week
+    .ant-calendar-selected-day
+    .ant-calendar-date {
+    border-radius: 50%;
+    background-color: @success-color;
+}
+
+.ant-calendar-tbody
+    .ant-calendar-active-week
+    .ant-calendar-selected-day
+    .ant-calendar-date:hover {
+    border-radius: 50%;
+    background-color: @success-color;
+}
+
+.ant-calendar-today > .ant-calendar-date {
+    border-radius: 50%;
+    border: 1px solid @action-color;
+    color: @action-color;
+}
+
+// td.ant-calendar-cell.ant-calendar-in-range-cell::before {
+//     background-color: #f00;
+// }

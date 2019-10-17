@@ -3,7 +3,7 @@ import ProductList from '../../../components/ProductList/ProductList';
 import ReportTable from './ReportTable/ReportTable';
 import './Report.less';
 
-// delete this coment
+// delete this comment
 function Report() {
     return (
         <div className="ProductMain basic-container">
