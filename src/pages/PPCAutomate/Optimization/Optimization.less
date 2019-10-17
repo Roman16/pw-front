@@ -15,6 +15,7 @@
     cursor: pointer;
     margin: 0 0 20px 0;
 
+
     span {
       margin-right: 10px;
     }
@@ -27,12 +28,24 @@
 
 
   .product-options {
-    padding: 15px 15px 0 15px;
+    display: grid;
+    row-gap: 20px;
+    background: inherit !important;
+
+    & > div {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+
+      &:first-child {
+        padding-bottom: 0;
+      }
+    }
 
     .options {
       display: grid;
       grid-template-columns: minmax(300px, 400px) minmax(min-content, 1fr);
-      grid-template-areas: 'options strategy' '. descriptions';
+      grid-template-areas: 'options strategy' '. descriptions' 'control control';
       column-gap: 15px;
 
       .options-content {
@@ -94,6 +107,7 @@
       justify-content: center;
       margin-top: 10px;
       position: relative;
+      grid-area: control;
 
       .icon {
         width: 36px;
@@ -101,6 +115,7 @@
         border: 1px solid #bdc6cf;
         text-align: center;
         background: #fff;
+        cursor: pointer;
 
         i {
           color: @action-color;

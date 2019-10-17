@@ -7,6 +7,8 @@ import OptimizationStrategy from './OptimizationStrategy/OptimizationStrategy';
 
 import OptionsInfo from './InfoItem/OptionInfo/OptionInfo';
 import StrategyInfo from './InfoItem/StrategyInfo/StrategyInfo';
+import OptimizationStatus from "./OptimizationStatus/OptimizationStatus";
+import LastReports from "./LastReports/LastReports";
 
 
 import './Optimization.less';
@@ -67,21 +69,26 @@ class Optimization extends Component {
                             a powerful new way to target manual Amazon Sponsored Product campaigns.
                              It allows sellers to target ads by either
                              ASIN or Category (brands, prices, and ratings).`}
+
+                            </div>
+
+                            <div className="less-more-control">
+                                <div
+                                    role="button"
+                                    className={`icon ${isLess ? 'more' : 'less'}`}
+                                    onClick={this.toLess}
+                                >
+                                    <Icon type="up"/>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="less-more-control">
-                            {/* eslint-disable-next-line max-len */}
-                            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus */}
-                            <div
-                                role="button"
-                                className={`icon ${isLess ? 'more' : 'less'}`}
-                                onClick={this.toLess}
-                            >
-                                <Icon type="up"/>
-                            </div>
-                        </div>
+
+                        <OptimizationStatus />
+
+                        <LastReports />
                     </div>
+
                 </div>
 
                 <Drawer

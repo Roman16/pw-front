@@ -44,6 +44,7 @@ export const StrategyItem = ({
             </div>
             {caption}
         </div>
+
         <div className="params">
             <div className="params-item">
                 <div className="params-name">Spend</div>
@@ -51,18 +52,21 @@ export const StrategyItem = ({
                     {strategyValue[value].Spend}
                 </div>
             </div>
+
             <div className="params-item">
                 <div className="params-name">Profit</div>
                 <div className={`params-value ${strategyValue[value].Profit.toLowerCase()}`}>
                     {strategyValue[value].Profit}
                 </div>
             </div>
+
             <div className="params-item">
                 <div className="params-name">Acos</div>
                 <div className={`params-value ${strategyValue[value].ACOS.toLowerCase()}`}>
                     {strategyValue[value].ACOS}
                 </div>
             </div>
+
             <div className="params-item">
                 <div className="params-name">Trafic</div>
                 <div className={`params-value ${strategyValue[value].Trafic.toLowerCase()}`}>
@@ -71,6 +75,7 @@ export const StrategyItem = ({
                 </div>
             </div>
         </div>
+
         <div className="strategy-control">
             {selected
                 ? (<Icon type="check" className="check" />)
@@ -110,28 +115,27 @@ class OptimizationStrategy extends Component {
                     <StrategyItem
                         caption="Organic (Overall) Profit"
                         selected={optimizationStrategy === 'SlowPPCLaunch'}
-                        onSelect={() => onSelect('SlowPPCLaunch')}
+                        // onSelect={() => onSelect('SlowPPCLaunch')}
                         value="BoostOverallProfit"
                     />
                     <StrategyItem
                         caption="Organic Boost"
                         selected={optimizationStrategy === 'FastPPCLaunch'}
-                        onSelect={() => onSelect('FastPPCLaunch')}
+                        // onSelect={() => onSelect('FastPPCLaunch')}
                         value="BoostPPCProfit"
                     />
                     <StrategyItem
                         caption="Product Liquidation"
                         selected={optimizationStrategy === 'PPCGrowth'}
-                        onSelect={() => onSelect('PPCGrowth')}
+                        // onSelect={() => onSelect('PPCGrowth')}
                         value="GrowOverallSales"
 
                     />
                     <StrategyItem
                         caption="Product Lounce"
                         selected={optimizationStrategy === 'PPCProfit'}
-                        onSelect={() => onSelect('PPCProfit')}
+                        // onSelect={() => onSelect('PPCProfit')}
                         value="LaunchProduct"
-
                     />
                 </div>
             </div>

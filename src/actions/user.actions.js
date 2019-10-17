@@ -14,8 +14,9 @@ function login(user) {
         userService.login(user).then(data => {
             dispatch(setInformation(user));
 
-            localStorage.setItem('token', data.access_token);
-            history.push('/ppc/optimization');
+            localStorage.setItem('token', data.access_token)
+            history.push('/ppc/optimization')
+
         });
     };
 }
@@ -23,9 +24,10 @@ function login(user) {
 function regist(user) {
     return dispatch => {
         userService.regist(user).then(data => {
-            dispatch(setInformation(user));
+            dispatch(setInformation(data));
 
-            history.push('/mws');
+            localStorage.setItem('token', data.access_token);
+            history.push('/mws')
         });
     };
 }

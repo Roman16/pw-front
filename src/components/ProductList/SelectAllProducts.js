@@ -9,6 +9,7 @@ const SelectAllProduct = ({
     <div className={`SelectProduct ${isSelectedAll ? 'selected-all' : ''}`}>
         <Button
             // onClick={onSelectAll}
+            type="primary"
         >
             {isSelectedAll ? 'Deselect ' : 'Select '}
             All Products
