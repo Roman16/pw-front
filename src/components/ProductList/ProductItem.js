@@ -19,11 +19,11 @@ const ProductItem = ({
                          },
                          onClick,
                          product,
-                         selectedProduct
+                         isActive
                      }) => {
     return (
         <div
-            className={`product-item ${selectedProduct === id ? 'active' : ''}`}
+            className={`product-item ${isActive ? 'active' : ''}`}
             onClick={() => onClick(product)}
         >
             <div className="image">

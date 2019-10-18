@@ -15,24 +15,24 @@ class ProductSettingsMain extends Component {
                     <div className="page-caption">
                         <h3> Analytics Product Settings</h3>
                     </div>
-                    <div className="additional">
-                        <div>
-                            Free Trial
-                            <span className="free-trial">7</span>
-                            Days Left
-                        </div>
-                        <div>
-                            <Button
-                                onClick={() => {
-                                    window.open(
-                                        `${window.BASE_URL}/account/subscriptions`
-                                    );
-                                }}
-                            >
-                                Upgrade Now
-                            </Button>
-                        </div>
-                    </div>
+                    {/*<div className="additional">*/}
+                    {/*    <div>*/}
+                    {/*        Free Trial*/}
+                    {/*        <span className="free-trial">7</span>*/}
+                    {/*        Days Left*/}
+                    {/*    </div>*/}
+                    {/*    <div>*/}
+                    {/*        <Button*/}
+                    {/*            onClick={() => {*/}
+                    {/*                window.open(*/}
+                    {/*                    `${window.BASE_URL}/account/subscriptions`*/}
+                    {/*                );*/}
+                    {/*            }}*/}
+                    {/*        >*/}
+                    {/*            Upgrade Now*/}
+                    {/*        </Button>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </div>
 
                 <div className="reminder">

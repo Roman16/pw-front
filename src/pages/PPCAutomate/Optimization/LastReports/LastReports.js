@@ -153,7 +153,7 @@ class LastReports extends Component {
                           ))}
                 </div>
 
-                <Pagination />
+                <Pagination defaultCurrent={1} total={50} />
             </div>
         );
     }
