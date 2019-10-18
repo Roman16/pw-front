@@ -1,4 +1,4 @@
-import {userConstants} from '../constans/request.types';
+import {userConstants} from '../constans/actions.type';
 import {history} from '../utils/history';
 
 import {userService} from '../services/user.services';

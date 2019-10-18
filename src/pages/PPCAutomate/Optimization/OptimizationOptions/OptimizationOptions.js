@@ -3,9 +3,13 @@ import {Checkbox, Icon} from "antd";
 
 import './OptimizationOptions.less';
 
-export const CheckBoxItem = ({text, value = '', ...props}) => (
+export const CheckBoxItem = ({text, value = '', checked, ...props}) => (
+
     <div className="check-box-item">
-        <Checkbox value={value} {...props}>
+        <Checkbox
+            checked={checked}
+            {...props}
+        >
             {text}
         </Checkbox>
     </div>
@@ -88,7 +92,7 @@ class OptimizationOptions extends Component {
                             text={text}
                             value={value}
                             name={name}
-                            // checked={optionsValue[name]}
+                            checked={options[name]}
                             // onChange={onChange}
                         />
                     ))}

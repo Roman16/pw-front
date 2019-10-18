@@ -7,4 +7,5 @@ export const userUrls = {
 export const productsUrls = {
     allProducts: 'products/list',
     saveProductData: 'ppc-automation/save-parameters',
+    productDetails: (id) => `product/${id}/details`,
 };

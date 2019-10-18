@@ -55,9 +55,9 @@ class ProductList extends Component {
     };
 
     toActive = (product) => {
-        const {onSelectProduct} = this.props;
+        const {selectProduct} = this.props;
 
-        onSelectProduct(product);
+        selectProduct(product);
 
         this.setState({
             isSelectedAll: false,
@@ -98,6 +98,7 @@ class ProductList extends Component {
 
                 {products && products.map(product => (
                     <ProductItem
+                        key={product.id}
                         product={product}
                         selectedProduct={selectedProduct}
                         onClick={(item) => this.toActive(item)}
@@ -122,6 +123,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     getAllProducts: (params) => {
         dispatch(productsActions.fetchProducts(params));
+    },
+    selectProduct: (product) =>{
+        dispatch(productsActions.selectProduct(product))
     }
 });
 

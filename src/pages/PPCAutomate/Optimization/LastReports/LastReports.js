@@ -50,7 +50,7 @@ export const terminalMock = [
     },
     {
         id: 7,
-        message: `Mistake: Bad-performing keywords.'
+        message: `Mistake: <b>Bad-performing keywords.</b>'
         ' Keyword 'keyword text' in ad group '
          ''adGroupName' in campaign 'campaign name' '
         'should be paused because it has 15 clicks without single sale compared to target clicks 10 `,
@@ -93,7 +93,7 @@ const TerminalItem = ({index = 0, content = ''}) => (
     <div className="terminal-item">
         <div className="index">{index}</div>
         <div className="content">
-            <div className="html-render">{content}</div>
+            <div className="html-render" dangerouslySetInnerHTML={{ __html: content}}></div>
         </div>
     </div>
 );

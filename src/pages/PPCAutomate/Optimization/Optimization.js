@@ -11,7 +11,6 @@ import StrategyInfo from './InfoItem/StrategyInfo/StrategyInfo';
 import OptimizationStatus from "./OptimizationStatus/OptimizationStatus";
 import LastReports from "./LastReports/LastReports";
 
-import {productsActions} from '../../../actions/products.actions';
 
 import './Optimization.less';
 
@@ -42,7 +41,6 @@ class Optimization extends Component {
     };
 
     onSelectProduct = (product) => {
-        this.props.selectProduct(product)
     };
 
     handleUpdateProduct = (product) => {
@@ -117,11 +115,7 @@ const mapStateToProps = state => ({
 
 });
 
-const mapDispatchToProps = dispatch => ({
-    selectProduct: (product) =>{
-        dispatch(productsActions.selectProduct(product))
-    }
-});
+const mapDispatchToProps = dispatch => ({});
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Optimization);

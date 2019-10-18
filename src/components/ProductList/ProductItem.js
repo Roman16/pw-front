@@ -22,7 +22,6 @@ const ProductItem = ({
                          product,
                          selectedProduct
                      }) => {
-    console.log(selectedProduct)
     return (
         <div
             className={`product-item ${selectedProduct === id ? 'active' : ''}`}

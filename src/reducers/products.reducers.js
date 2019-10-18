@@ -1,4 +1,4 @@
-import {productsConstants} from '../constans/request.types';
+import {productsConstants} from '../constans/actions.type';
 
 export function products(state = {}, action) {
     switch (action.type) {
@@ -17,6 +17,15 @@ export function products(state = {}, action) {
             return {
                 ...state,
                 selectedProduct: action.payload
+            };
+
+        case productsConstants.UPDATE_SELECTED_PRODUCT:
+            return {
+                ...state,
+                selectedProduct: {
+                    ...state.selectedProduct,
+                    ...action.payload
+                }
             };
 
         default:

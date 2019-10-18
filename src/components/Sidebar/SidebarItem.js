@@ -25,7 +25,6 @@ ItemIcon.propTypes = {
 };
 
 const SidebarItem = ({ logOut, item, parentLink = '', ...props }) => {
-    console.log('logOut :', logOut);
     if (item.subMenu) {
         return (
             <Menu.SubMenu
