@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, Icon, Popover } from 'antd';
 import { getClassNames } from '../../utils';
 import SidebarItem from './SidebarItem';
@@ -7,7 +8,7 @@ import { regionsMenu, menuBottom, menuMain } from './menu';
 
 import './Sidebar.less';
 
-import logo from '../../assets/img/logo.svg'
+import logo from '../../assets/img/logo.svg';
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -16,49 +17,51 @@ const Sidebar = () => {
     const className = getClassNames('Sidebar', { SidebarOpen: !collapsed });
     const activeLink = global.location.pathname;
     const activeLinkArr = global.location.pathname.split('/');
-    const activeCountry = regions.map((region) => region.countries.find((country) => country.active))[0];
+    const activeCountry = regions.map(region =>
+        region.countries.find(country => country.active)
+    )[0];
 
-    const setActiveCountry = (country) => {
+    const setActiveCountry = country => {
         console.log(country);
     };
 
     return (
         <div className={className}>
-            <div className="SidebarHeader">
+            <div className="sidebar-header">
                 <Icon
-                    className="SidebarIcon"
+                    className="sidebar-icon"
                     type="menu"
                     onClick={toggleCollapsed}
                 />
                 {!collapsed && (
-                    <div className="SidebarLogo">
+                    <Link to="/" className="sidebar-logo">
                         <img src={logo} alt="logo" />
-                    </div>
+                    </Link>
                 )}
             </div>
 
-            <div className="SidebarMenu">
-                <div className="MenuTop">
+            <div className="sidebar-menu">
+                <div>
                     <Popover
                         placement="rightTop"
                         overlayClassName="RegionsList"
-                        content={(
+                        content={
                             <RegionsMenu
                                 regions={regions}
                                 setActiveCountry={setActiveCountry}
                             />
-                            )}
+                        }
                         trigger="click"
                     >
-                        <div className="CountryActive">
-                            <div className="CountryActive--title">
+                        <div className="country-active">
+                            <div className="country-active__title">
                                 <img
                                     src={`/assets/img/${activeCountry.flag}`}
                                     alt="active-country"
                                 />
                                 <h5>{activeCountry.name}</h5>
                             </div>
-                            <div className="CountryActive--description">
+                            <div className="country-active__description">
                                 {activeCountry.description}
                             </div>
                         </div>
@@ -71,20 +74,20 @@ const Sidebar = () => {
                         defaultSelectedKeys={[activeLink]}
                         defaultOpenKeys={[`/${activeLinkArr[1]}`]}
                     >
-                        {menuMain.map((item) => (
+                        {menuMain.map(item => (
                             <SidebarItem key={item.link} item={item} />
                         ))}
                     </Menu>
                 </div>
 
-                <div className="MenuBottom">
+                <div>
                     <Menu
                         mode="inline"
                         theme="dark"
                         inlineCollapsed={collapsed}
                         defaultSelectedKeys={[activeLink]}
                     >
-                        {menuBottom.map((item) => (
+                        {menuBottom.map(item => (
                             <SidebarItem key={item.icon} item={item} />
                         ))}
                     </Menu>
