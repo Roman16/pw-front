@@ -124,7 +124,7 @@ class LastReports extends Component {
 
     render() {
         const { isLess } = this.props;
-        const isTerminal = lastChanges.length !== 0;
+        const isTerminal = terminalMock.length !== 0;
 
         return (
             <div className="terminal">

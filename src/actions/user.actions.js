@@ -39,9 +39,10 @@ function regist(user) {
     return dispatch => {
         userService.regist(user)
             .then(res => {
+                dispatch(setInformation(res.data));
+
                 localStorage.setItem('token', res.data.auth_token);
 
-                dispatch(setInformation(res.data));
                 dispatch(getUserInfo());
             });
     };

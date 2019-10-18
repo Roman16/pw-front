@@ -90,9 +90,9 @@ export const StrategyItem = ({
 const OptimizationStrategy = ({
                                   onSelect,
                                   selectedStrategy,
+                                  openInformation,
                                   product: {
-                                      optimization_strategy,
-                                      openInformation
+                                      optimization_strategy='LaunchProduct',
                                   }
                               }) => {
     return (

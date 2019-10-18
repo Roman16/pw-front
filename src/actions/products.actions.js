@@ -16,7 +16,9 @@ function fetchProducts(params) {
                     payload: res
                 });
 
-                dispatch(selectProduct(res.productList[0]));
+                if(res.productList.length > 0) {
+                    dispatch(selectProduct(res.productList[0]));
+                }
             });
     };
 }
@@ -45,14 +47,16 @@ function fetchProductDetails(id) {
     };
 }
 
+
 function selectProduct(product) {
     return dispatch => {
         dispatch({
             type: productsConstants.SELECT_PRODUCT,
             payload: product
         });
-
-        dispatch(fetchProductDetails(product.id))
+        if (product) {
+            dispatch(fetchProductDetails(product.id))
+        }
     };
 }
 

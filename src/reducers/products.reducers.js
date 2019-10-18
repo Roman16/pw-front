@@ -26,7 +26,7 @@ export function products(state = initialState, action) {
         case productsConstants.SELECT_PRODUCT:
             return {
                 ...state,
-                selectedProduct: action.payload
+                selectedProduct: action.payload ? action.payload : state.selectedProduct
             };
 
         case productsConstants.UPDATE_SELECTED_PRODUCT:

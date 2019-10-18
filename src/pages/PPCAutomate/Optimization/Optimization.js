@@ -113,9 +113,7 @@ class Optimization extends Component {
                             <div className="less-more-control">
                                 <div
                                     role="button"
-                                    className={`icon ${
-                                        isLess ? 'more' : 'less'
-                                    }`}
+                                    className={`icon ${isLess ? 'more' : 'less'}`}
                                     onClick={this.toLess}
                                 >
                                     <Icon type="up" />
