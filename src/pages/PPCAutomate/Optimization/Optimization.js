@@ -51,13 +51,27 @@ class Optimization extends Component {
         });
     };
 
-    onSelectProduct = product => {
-        this.props.selectProduct(product);
+    onSelectStrategy = (strategy) => {
+        this.setState({
+            selectedStrategy: strategy
+        });
     };
 
-    handleUpdateProduct = product => {
-        console.log(product);
-    };
+    onChangeOptions = (e) => {
+        const {updateProduct} = this.props;
+        const localSaveData = {[e.target.name]: e.target.checked};
+
+        this.setState({
+            ...this.state,
+            product: {
+                ...this.state.product,
+                ...localSaveData
+            }
+        })
+    }
+
+        // updateProduct(localSaveData);
+
 
     render() {
         const {
@@ -149,4 +163,3 @@ export default connect(
     mapDispatchToProps
 )(Optimization);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Optimization);
