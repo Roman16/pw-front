@@ -93,7 +93,8 @@ export const menuMain = [
             },
             {
                 title: 'PPC Scanner',
-                link: '-scanner'
+                link: '-scaner',
+                className: 'ppcScaner'
             },
             {
                 title: 'Expansion',
