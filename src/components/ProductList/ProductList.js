@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ProductItem from "./ProductItem";
 import {connect} from 'react-redux';
 import {Input} from 'antd';
-import {productsActions} from '../../actions/products.actions';
+import {productsActions, getPosts} from '../../actions/products.actions';
 import './ProductList.less';
 import SelectAllProduct from "./SelectAllProducts";
 
@@ -11,6 +11,7 @@ const {Search} = Input;
 
 class ProductList extends Component {
     state = {
+        isSelectedAll: false,
         params: {
             size: 8,
             page: 1,
@@ -29,16 +30,14 @@ class ProductList extends Component {
 
     selectAll = () => {
         const {
-            totalProduct,
             activeProductId,
             setActiveProduct,
             onSelect,
         } = this.props;
 
-        this.setState(
-            ({isSelectedAll}) => ({
+        this.setState(({isSelectedAll}) => ({
                 isSelectedAll: !isSelectedAll,
-                selectedSize: !isSelectedAll ? totalProduct : 1,
+                // selectedSize: !isSelectedAll ? totalProduct : 1,
             }),
             () => {
                 const {isSelectedAll} = this.state;
@@ -48,16 +47,16 @@ class ProductList extends Component {
                 }
                 const toSelect = isSelectedAll ? 'all' : this.prevActive;
 
-                onSelect(toSelect);
-                setActiveProduct(toSelect);
+                // onSelect(toSelect);
+                // setActiveProduct(toSelect);
             },
         );
     };
 
     toActive = (product) => {
-        const {onSelectProduct} = this.props;
+        const {selectProduct, selectedProduct} = this.props;
 
-        onSelectProduct(product);
+        if(selectedProduct !== product.id) selectProduct(product);
 
         this.setState({
             isSelectedAll: false,
@@ -98,8 +97,9 @@ class ProductList extends Component {
 
                 {products && products.map(product => (
                     <ProductItem
+                        key={product.id}
                         product={product}
-                        selectedProduct={selectedProduct}
+                        isActive={isSelectedAll || selectedProduct === product.id}
                         onClick={(item) => this.toActive(item)}
                     />
                 ))}
@@ -122,6 +122,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     getAllProducts: (params) => {
         dispatch(productsActions.fetchProducts(params));
+    },
+    selectProduct: (product) =>{
+        dispatch(productsActions.selectProduct(product))
     }
 });
 

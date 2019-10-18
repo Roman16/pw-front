@@ -1,4 +1,4 @@
-import {productsConstants} from '../constans/request.types';
+import {productsConstants} from '../constans/actions.type';
 import {productsServices} from '../services/products.services';
 
 export const productsActions = {
@@ -16,22 +16,37 @@ function fetchProducts(params) {
                     payload: res
                 });
 
-                dispatch(selectProduct(res.productList[0]));
+                if(res.productList.length > 0) {
+                    dispatch(selectProduct(res.productList[0]));
+                }
             });
     };
 }
 
 function updateProduct(product) {
     return dispatch => {
-        productsServices.updateProduct(product)
+        productsServices.updateProductById(product)
             .then(res => {
                 dispatch({
-                    type: productsConstants.UPDATE_PRODUCT_DATA,
+                    type: productsConstants.UPDATE_SELECTED_PRODUCT,
                     payload: res
                 });
             });
     };
 }
+
+function fetchProductDetails(id) {
+    return dispatch => {
+        productsServices.getProductDetails(id)
+            .then(res => {
+                dispatch({
+                    type: productsConstants.UPDATE_SELECTED_PRODUCT,
+                    payload: res
+                });
+            });
+    };
+}
+
 
 function selectProduct(product) {
     return dispatch => {
@@ -39,6 +54,9 @@ function selectProduct(product) {
             type: productsConstants.SELECT_PRODUCT,
             payload: product
         });
+        if (product) {
+            dispatch(fetchProductDetails(product.id))
+        }
     };
 }
 

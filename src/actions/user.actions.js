@@ -1,4 +1,4 @@
-import {userConstants} from '../constans/request.types';
+import {userConstants} from '../constans/actions.type';
 import {history} from '../utils/history';
 
 import {userService} from '../services/user.services';
@@ -39,9 +39,10 @@ function regist(user) {
     return dispatch => {
         userService.regist(user)
             .then(res => {
+                dispatch(setInformation(res.data));
+
                 localStorage.setItem('token', res.data.auth_token);
 
-                dispatch(setInformation(res.data));
                 dispatch(getUserInfo());
             });
     };

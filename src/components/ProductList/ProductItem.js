@@ -12,7 +12,6 @@ const maxText = (text) => {
 const ProductItem = ({
                          product: {
                              id,
-                             isActive,
                              asin,
                              captions,
                              sku,
@@ -20,12 +19,11 @@ const ProductItem = ({
                          },
                          onClick,
                          product,
-                         selectedProduct
+                         isActive
                      }) => {
-    console.log(selectedProduct)
     return (
         <div
-            className={`product-item ${selectedProduct === id ? 'active' : ''}`}
+            className={`product-item ${isActive ? 'active' : ''}`}
             onClick={() => onClick(product)}
         >
             <div className="image">
@@ -47,7 +45,7 @@ const ProductItem = ({
 
         </div>
     );
-}
+};
 
 ProductItem.propTypes = {
     isActive: bool,

@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { Icon, Button, Checkbox } from 'antd';
+import React from 'react';
+import {Icon, Button, Checkbox} from 'antd';
 
 import './OptimizationStrategy.less';
-
 
 const strategyValue = {
     BoostOverallProfit: {
@@ -35,12 +34,15 @@ const strategyValue = {
 
 
 export const StrategyItem = ({
-                                 caption, selected, onSelect, value = 'BoostOverallProfit',
+                                 caption,
+                                 selected,
+                                 onSelect,
+                                 value = 'BoostOverallProfit',
                              }) => (
     <div className={`strategy-item ${selected ? 'selected' : ''}`}>
         <div className="caption-strategy">
             <div className="strategy-checkbox">
-                <Checkbox isRound checked={selected} onClick={onSelect} />
+                <Checkbox isRound checked={selected} onClick={onSelect}/>
             </div>
             {caption}
         </div>
@@ -78,73 +80,58 @@ export const StrategyItem = ({
 
         <div className="strategy-control">
             {selected
-                ? (<Icon type="check" className="check" />)
-                : (<Button className="strategy-btn" onClick={onSelect}>Select</Button>)
+                ? (<Icon type="check" className="check"/>)
+                : (<Button className="strategy-btn" onClick={() => onSelect(value)}>Select</Button>)
             }
         </div>
     </div>
 );
 
-class OptimizationStrategy extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            selectedStrategy: 2,
-        };
-    }
-
-    onSelectStrategy = (strategyItem) => {
-        // this.setState({
-        //     selectedStrategy: strategyItem,
-        // });
-    };
-
-    render() {
-        const { optimizationStrategy, onSelect, openInformation} = this.props;
-
-
-        return (
-            <div className="optimize-strategy">
-                <div className="product-info ">
-                    <span>Select which optimize Strategy</span>
-                    <Icon type="info-circle" theme="filled" onClick={openInformation} />
-                </div>
-
-                <div className="strategies options-content">
-                    <StrategyItem
-                        caption="Organic (Overall) Profit"
-                        selected={optimizationStrategy === 'SlowPPCLaunch'}
-                        // onSelect={() => onSelect('SlowPPCLaunch')}
-                        value="BoostOverallProfit"
-                    />
-                    <StrategyItem
-                        caption="Organic Boost"
-                        selected={optimizationStrategy === 'FastPPCLaunch'}
-                        // onSelect={() => onSelect('FastPPCLaunch')}
-                        value="BoostPPCProfit"
-                    />
-                    <StrategyItem
-                        caption="Product Liquidation"
-                        selected={optimizationStrategy === 'PPCGrowth'}
-                        // onSelect={() => onSelect('PPCGrowth')}
-                        value="GrowOverallSales"
-
-                    />
-                    <StrategyItem
-                        caption="Product Lounce"
-                        selected={optimizationStrategy === 'PPCProfit'}
-                        // onSelect={() => onSelect('PPCProfit')}
-                        value="LaunchProduct"
-                    />
-                </div>
+const OptimizationStrategy = ({
+                                  onSelect,
+                                  selectedStrategy,
+                                  openInformation,
+                                  product: {
+                                      optimization_strategy='LaunchProduct',
+                                  }
+                              }) => {
+    return (
+        <div className="optimize-strategy">
+            <div className="product-info ">
+                <span>Select which optimize Strategy</span>
+                <Icon type="info-circle" theme="filled" onClick={openInformation}/>
             </div>
-        );
-    }
-}
 
-OptimizationStrategy.propTypes = {};
+            <div className="strategies options-content">
+                <StrategyItem
+                    caption="Organic (Overall) Profit"
+                    selected={selectedStrategy ? selectedStrategy === 'BoostOverallProfit' : optimization_strategy === 'BoostOverallProfit'}
+                    onSelect={onSelect}
+                    value="BoostOverallProfit"
+                />
+                <StrategyItem
+                    caption="Organic Boost"
+                    selected={selectedStrategy ? selectedStrategy === 'BoostPPCProfit' : optimization_strategy === 'BoostPPCProfit'}
+                    onSelect={onSelect}
+                    value="BoostPPCProfit"
+                />
+                <StrategyItem
+                    caption="Product Liquidation"
+                    selected={selectedStrategy ? selectedStrategy === 'GrowOverallSales' : optimization_strategy === 'GrowOverallSales'}
+                    onSelect={onSelect}
+                    value="GrowOverallSales"
 
-OptimizationStrategy.defaultProps = {};
+                />
+                <StrategyItem
+                    caption="Product Lounce"
+                    selected={selectedStrategy ? selectedStrategy === 'LaunchProduct' : optimization_strategy === 'LaunchProduct'}
+                    onSelect={onSelect}
+                    value="LaunchProduct"
+                />
+            </div>
+        </div>
+    );
+};
+
 
 export default OptimizationStrategy;

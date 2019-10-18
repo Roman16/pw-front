@@ -19,7 +19,17 @@ class Optimization extends Component {
     state = {
         isLess: false,
         visible: false,
-        infoType: ''
+        infoType: '',
+        selectedStrategy: null,
+
+        // product: {
+        //     add_negative_keywords: this.props.product.add_negative_keywords,
+        //     optimize_keywords: this.props.product.optimize_keywords,
+        //     create_new_keywords: this.props.product.create_new_keywords,
+        //     optimize_pats: this.props.product.optimize_pats,
+        //     add_negative_pats: this.props.product.add_negative_pats,
+        //     create_new_pats: this.props.product.create_new_pats,
+        // }
     };
 
     showDrawer = type => {
@@ -41,16 +51,36 @@ class Optimization extends Component {
         });
     };
 
-    onSelectProduct = product => {
-        this.props.selectProduct(product);
+    onSelectStrategy = (strategy) => {
+        this.setState({
+            selectedStrategy: strategy
+        });
     };
 
-    handleUpdateProduct = product => {
-        console.log(product);
-    };
+    onChangeOptions = (e) => {
+        const {updateProduct} = this.props;
+        const localSaveData = {[e.target.name]: e.target.checked};
+
+        this.setState({
+            ...this.state,
+            product: {
+                ...this.state.product,
+                ...localSaveData
+            }
+        })
+    }
+
+        // updateProduct(localSaveData);
+
 
     render() {
-        const { isLess } = this.state;
+        const {
+            isLess,
+                selectedStrategy
+        } = this.state,
+            {
+                product
+            } = this.props;
 
         return (
             <Fragment>
@@ -60,15 +90,16 @@ class Optimization extends Component {
                     <div className="product-options">
                         <div className={`options ${!isLess ? 'more' : 'less'}`}>
                             <OptimizationOptions
-                                openInformation={() =>
-                                    this.showDrawer('options')
-                                }
+                                onChange={this.onChangeOptions}
+                                openInformation={() => this.showDrawer('options')}
+                                product={product}
                             />
 
                             <OptimizationStrategy
-                                openInformation={() =>
-                                    this.showDrawer('strategy')
-                                }
+                                onSelect={this.onSelectStrategy}
+                                openInformation={() => this.showDrawer('strategy')}
+                                selectedStrategy={selectedStrategy}
+                                product={product}
                             />
 
                             <div className="descriptions options-content">
@@ -76,14 +107,13 @@ class Optimization extends Component {
                             a powerful new way to target manual Amazon Sponsored Product campaigns.
                              It allows sellers to target ads by either
                              ASIN or Category (brands, prices, and ratings).`}
+
                             </div>
 
                             <div className="less-more-control">
                                 <div
                                     role="button"
-                                    className={`icon ${
-                                        isLess ? 'more' : 'less'
-                                    }`}
+                                    className={`icon ${isLess ? 'more' : 'less'}`}
                                     onClick={this.toLess}
                                 >
                                     <Icon type="up" />
@@ -116,11 +146,13 @@ class Optimization extends Component {
     }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    product: state.products.selectedProduct
+});
 
 const mapDispatchToProps = dispatch => ({
-    selectProduct: product => {
-        dispatch(productsActions.selectProduct(product));
+    updateProduct: (product) => {
+        dispatch(productsActions.updateProduct(product));
     }
 });
 
@@ -128,3 +160,4 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(Optimization);
+
