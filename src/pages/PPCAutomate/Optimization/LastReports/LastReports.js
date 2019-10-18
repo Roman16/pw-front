@@ -7,6 +7,7 @@ import './LastReports.less';
 export const terminalMock = [
     {
         id: 1,
+        number: 1,
         message: `Mistake: Bad-performing keywords.'
         ' Keyword 'keyword text' in ad group '
          ''adGroupName' in campaign 'campaign name' '
@@ -14,6 +15,7 @@ export const terminalMock = [
     },
     {
         id: 2,
+        number: 2,
         message: `Mistake: Bad-performing keywords.
          Manual PAT for ASIN 'B0ASINASIN' in ad group
          'adGroupName' in campaign 'campaign name' should be
@@ -23,6 +25,7 @@ export const terminalMock = [
     },
     {
         id: 3,
+        number: 3,
         message: `Mistake: Bad-performing keywords.'
         ' Keyword 'keyword text' in ad group '
          ''adGroupName' in campaign 'campaign name' '
@@ -30,6 +33,7 @@ export const terminalMock = [
     },
     {
         id: 4,
+        number: 4,
         message: `Mistake: Bad-performing keywords.'
         ' Keyword 'keyword text' in ad group '
          ''adGroupName' in campaign 'campaign name' '
@@ -37,6 +41,7 @@ export const terminalMock = [
     },
     {
         id: 5,
+        number: 5,
         message: `Mistake: Bad-performing keywords.'
         ' Keyword 'keyword text' in ad group '
          ''adGroupName' in campaign 'campaign name' '
@@ -44,6 +49,7 @@ export const terminalMock = [
     },
     {
         id: 6,
+        number: 6,
         message: `Mistake: Bad-performing keywords.'
         ' Keyword 'keyword text' in ad group '
          ''adGroupName' in campaign 'campaign name' '
@@ -51,6 +57,7 @@ export const terminalMock = [
     },
     {
         id: 7,
+        number: 7,
         message: `Mistake: Bad-performing keywords.'
         ' Keyword 'keyword text' in ad group '
          ''adGroupName' in campaign 'campaign name' '
@@ -58,6 +65,7 @@ export const terminalMock = [
     },
     {
         id: 8,
+        number: 8,
         message: `Mistake: Bad-performing keywords.'
         ' Keyword 'keyword text' in ad group '
          ''adGroupName' in campaign 'campaign name' '
@@ -65,6 +73,7 @@ export const terminalMock = [
     },
     {
         id: 9,
+        number: 9,
         message: `Mistake: Bad-performing keywords.'
         ' Keyword 'keyword text' in ad group '
          ''adGroupName' in campaign 'campaign name' '
@@ -76,7 +85,7 @@ const dummy = [
     { id: 1 },
     { id: 2 },
     { id: 3 },
-    { id: 4, text: 'You have not data to display' },
+    { id: 4 },
     { id: 5 },
     { id: 6 },
     { id: 7 },
@@ -110,11 +119,11 @@ const TerminalCaption = ({ isTerminal }) => (
     </div>
 );
 
-const TerminalItem = ({ index = 0, content = '', data }) => (
+const TerminalItem = ({ number = 0, content = '', data }) => (
     <div className="terminal-item">
-        <div className="index">{index}</div>
+        <div className="index">{number}</div>
         <div className="content">
-            <div className={`${data}-render`}>{content}</div>
+            <div className="html-render">{content}</div>
         </div>
     </div>
 );
@@ -134,23 +143,34 @@ class LastReports extends Component {
                         isTerminal ? 'auto' : 'hidden'
                     }`}
                 >
-                    {isTerminal
-                        ? terminalMock.map(({ id, message, number }) => (
-                              <TerminalItem
-                                  key={id}
-                                  content={message}
-                                  index={number}
-                                  data="html"
-                              />
-                          ))
-                        : dummy.map(({ id, text }) => (
-                              <TerminalItem
-                                  key={id}
-                                  index={id}
-                                  content={text}
-                                  data="dummy"
-                              />
-                          ))}
+                    {isTerminal ? (
+                        terminalMock.map(({ id, message, number }) => (
+                            <TerminalItem
+                                key={id}
+                                content={message}
+                                number={number}
+                            />
+                        ))
+                    ) : (
+                        <div className="terminal-item-dummy">
+                            <div
+                                className={`dummy-box ${
+                                    isLess ? 'auto' : 'hidden'
+                                }`}
+                            >
+                                <p className="dummy-render">
+                                    You have not data to display
+                                </p>
+                            </div>
+                            {dummy.map(({ id, text }) => (
+                                <TerminalItem
+                                    key={id}
+                                    number={id}
+                                    content={text}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 <Pagination />

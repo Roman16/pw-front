@@ -79,30 +79,16 @@
                     z-index: 10;
                 }
             }
-
-            .dummy-render {
-                width: 208px;
-                height: 64px;
-                margin: 0 auto;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                font-family: 'Infra', sans-serif;
-                color: #656a84;
-                font-size: 24px;
-                line-height: 32px;
-            }
         }
     }
 
     .terminal-content {
         &.less {
-            max-height: 380px;
+            max-height: 35.836vh;
         }
 
         &.more {
-            max-height: 710px;
+            max-height: 65.835vh;
         }
 
         &.auto {
@@ -111,6 +97,36 @@
 
         &.hidden {
             overflow: hidden;
+        }
+
+        .terminal-item-dummy {
+            position: relative;
+
+            .dummy-box {
+                width: 208px;
+                height: 64px;
+                position: absolute;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 11;
+                transition: all 0.5s ease-in;
+
+                &.auto {
+                    top: 50%;
+                }
+
+                &.hidden {
+                    top: 17.918vh;
+                }
+
+                .dummy-render {
+                    text-align: center;
+                    font-family: 'Infra', sans-serif;
+                    color: @action-color-dark;
+                    font-size: 24px;
+                    line-height: 32px;
+                }
+            }
         }
 
         & .TerminalItem:first-child .index {
