@@ -4,7 +4,7 @@ import {productsConstants} from '../constans/actions.type';
 
 export const productsServices = {
     getProducts,
-    updateProduct,
+    updateProductById,
     getProductDetails,
 };
 
@@ -16,6 +16,6 @@ function getProductDetails(id) {
     return api('get', `${productsUrls.productDetails(id)}`)
 }
 
-function updateProduct() {
-    return api('get', productsUrls.saveProductData)
+function updateProductById(product) {
+    return api('post', productsUrls.saveProductData, product)
 }

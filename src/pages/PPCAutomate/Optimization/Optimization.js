@@ -13,12 +13,23 @@ import LastReports from "./LastReports/LastReports";
 
 
 import './Optimization.less';
+import {productsActions} from "../../../actions/products.actions";
 
 class Optimization extends Component {
     state = {
         isLess: false,
         visible: false,
-        infoType: ''
+        infoType: '',
+        selectedStrategy: null,
+
+        // product: {
+        //     add_negative_keywords: this.props.product.add_negative_keywords,
+        //     optimize_keywords: this.props.product.optimize_keywords,
+        //     create_new_keywords: this.props.product.create_new_keywords,
+        //     optimize_pats: this.props.product.optimize_pats,
+        //     add_negative_pats: this.props.product.add_negative_pats,
+        //     create_new_pats: this.props.product.create_new_pats,
+        // }
     };
 
     showDrawer = (type) => {
@@ -40,7 +51,25 @@ class Optimization extends Component {
         })
     };
 
-    onSelectProduct = (product) => {
+    onSelectStrategy = (strategy) => {
+        this.setState({
+            selectedStrategy: strategy
+        });
+    };
+
+    onChangeOptions = (e) => {
+        const { updateProduct } = this.props;
+        const localSaveData = { [e.target.name]: e.target.checked };
+
+        this.setState({
+            ...this.state,
+            product: {
+                ...this.state.product,
+                ...localSaveData
+            }
+        })
+
+        // updateProduct(localSaveData);
     };
 
     handleUpdateProduct = (product) => {
@@ -50,8 +79,12 @@ class Optimization extends Component {
 
     render() {
         const {
-            isLess
-        } = this.state;
+            isLess,
+                selectedStrategy
+        } = this.state,
+            {
+                product
+            } = this.props;
 
         return (
             <Fragment>
@@ -63,11 +96,16 @@ class Optimization extends Component {
                     <div className="product-options">
                         <div className={`options ${!isLess ? 'more' : 'less'}`}>
                             <OptimizationOptions
+                                onChange={this.onChangeOptions}
                                 openInformation={() => this.showDrawer('options')}
+                                product={product}
                             />
 
                             <OptimizationStrategy
+                                onSelect={this.onSelectStrategy}
                                 openInformation={() => this.showDrawer('strategy')}
+                                selectedStrategy={selectedStrategy}
+                                product={product}
                             />
 
                             <div className="descriptions options-content">
@@ -112,10 +150,14 @@ class Optimization extends Component {
 }
 
 const mapStateToProps = state => ({
-
+    product: state.products.selectedProduct
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+    updateProduct: (product) => {
+        dispatch(productsActions.updateProduct(product));
+    }
+});
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Optimization);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ProductItem from "./ProductItem";
 import {connect} from 'react-redux';
 import {Input} from 'antd';
-import {productsActions} from '../../actions/products.actions';
+import {productsActions, getPosts} from '../../actions/products.actions';
 import './ProductList.less';
 import SelectAllProduct from "./SelectAllProducts";
 
@@ -55,9 +55,9 @@ class ProductList extends Component {
     };
 
     toActive = (product) => {
-        const {selectProduct} = this.props;
+        const {selectProduct, selectedProduct} = this.props;
 
-        selectProduct(product);
+        if(selectedProduct !== product.id) selectProduct(product);
 
         this.setState({
             isSelectedAll: false,

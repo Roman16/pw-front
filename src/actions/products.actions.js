@@ -22,7 +22,15 @@ function fetchProducts(params) {
 }
 
 function updateProduct(product) {
-
+    return dispatch => {
+        productsServices.updateProductById(product)
+            .then(res => {
+                dispatch({
+                    type: productsConstants.UPDATE_SELECTED_PRODUCT,
+                    payload: res
+                });
+            });
+    };
 }
 
 function fetchProductDetails(id) {

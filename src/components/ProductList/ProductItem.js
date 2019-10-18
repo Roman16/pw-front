@@ -12,7 +12,6 @@ const maxText = (text) => {
 const ProductItem = ({
                          product: {
                              id,
-                             isActive,
                              asin,
                              captions,
                              sku,
@@ -46,7 +45,7 @@ const ProductItem = ({
 
         </div>
     );
-}
+};
 
 ProductItem.propTypes = {
     isActive: bool,

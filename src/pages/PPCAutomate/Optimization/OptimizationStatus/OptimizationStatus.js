@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Icon} from 'antd';
 import moment from 'moment';
 import {Button} from 'antd';
+import {connect} from 'react-redux';
 
 import NetMarginWindow from './NetMarginWindow/NetMarginWindow';
 
@@ -46,8 +47,15 @@ class OptimizationStatus extends Component {
 
     render() {
         const {
-            status, createdAt, totalChanges, todayChanges,
+            product: {
+                status,
+                created_at,
+                total_changes,
+                today_change,
+
+            }
         } = this.props;
+
         const {isShowModal} = this.state;
         const isActive = status === RUNNING;
 
@@ -62,12 +70,12 @@ class OptimizationStatus extends Component {
                 <StatusInfo
                     caption="Start Date"
                     value={
-                        createdAt ? moment(createdAt).format('DD/MM/Y') : undefined
+                        created_at ? moment(created_at).format('DD/MM/Y') : undefined
                     }
                 />
 
-                <StatusInfo caption="Total Changes" value={totalChanges}/>
-                <StatusInfo caption="Today Changes" value={todayChanges}/>
+                <StatusInfo caption="Total Changes" value={total_changes}/>
+                <StatusInfo caption="Today Changes" value={today_change}/>
 
                 <div className="control">
                     {!isActive
@@ -109,4 +117,10 @@ OptimizationStatus.propTypes = {};
 
 OptimizationStatus.defaultProps = {};
 
-export default OptimizationStatus;
+const mapStateToProps = state =>({
+    product: state.products.selectedProduct ?  state.products.selectedProduct : {}
+});
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(OptimizationStatus);

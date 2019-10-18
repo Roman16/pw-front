@@ -1,3 +1,5 @@
+@import '../../../../style/variables.less';
+
 .optimize-options {
   min-width: 280px;
 
@@ -11,9 +13,16 @@
   border: 1px solid #f5f5ff;
   border-radius: 8px;
 
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: @action-color;
+    border-color: @action-color;
+  }
+
   .ant-checkbox .ant-checkbox-inner {
     width: 24px;
     height: 24px;
+
+
 
     &:after {
       width: 6.71428571px;

@@ -76,7 +76,11 @@ class OptimizationOptions extends Component {
     state = {};
 
     render() {
-        const {optionsValue, onChange, openInformation} = this.props;
+        const {
+            onChange,
+            openInformation,
+            product
+        } = this.props;
 
         return (
             <div className="optimize-options">
@@ -92,8 +96,8 @@ class OptimizationOptions extends Component {
                             text={text}
                             value={value}
                             name={name}
-                            checked={options[name]}
-                            // onChange={onChange}
+                            checked={product && product[name]}
+                            onChange={onChange}
                         />
                     ))}
                 </div>
@@ -105,5 +109,6 @@ class OptimizationOptions extends Component {
 OptimizationOptions.propTypes = {};
 
 OptimizationOptions.defaultProps = {};
+
 
 export default OptimizationOptions;
