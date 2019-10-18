@@ -38,14 +38,46 @@ const SidebarItem = ({ logOut, item, parentLink = '', ...props }) => {
                     </span>
                 }
             >
-                {item.subMenu.map(subItem => (
+                {/* {item.subMenu.map(subItem => (
                     <SidebarItem
                         key={item.link + subItem.link}
                         item={subItem}
                         parentLink={parentLink + item.link}
                     />
-                ))}
+                ))} */}
+                {item.subMenu.map(subItem => {
+                    return subItem.className === 'ppcScaner' ? (
+                        <Menu.Item
+                            {...props}
+                            className={item.className}
+                            key={item.link}
+                        >
+                            <a href="https://profitwhales.com/ppc-scaner">
+                                <span>{item.title}</span>
+                            </a>
+                        </Menu.Item>
+                    ) : (
+                        <SidebarItem
+                            key={item.link + subItem.link}
+                            item={subItem}
+                            parentLink={parentLink + item.link}
+                        />
+                    );
+                })}
             </Menu.SubMenu>
+        );
+    } else if (item.className === 'helpCenter') {
+        return (
+            <Menu.Item {...props} className={item.className} key={item.link}>
+                <a
+                    href="https://profit-whales.kayako.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <ItemIcon icon={item.icon} isSub={!!parentLink} />
+                    <span>{item.title}</span>
+                </a>
+            </Menu.Item>
         );
     } else if (item.className === 'logOut') {
         return (
@@ -61,15 +93,6 @@ const SidebarItem = ({ logOut, item, parentLink = '', ...props }) => {
                 </Link>
             </Menu.Item>
         );
-    } else if (item.className === 'helpCenter') {
-        return (
-            <Menu.Item {...props} className={item.className} key={item.link}>
-                <a href="https://profit-whales.kayako.com">
-                    <ItemIcon icon={item.icon} isSub={!!parentLink} />
-                    <span>{item.title}</span>
-                </a>
-            </Menu.Item>
-        );
     } else {
         return (
             <Menu.Item {...props} className={item.className} key={item.link}>
@@ -81,47 +104,6 @@ const SidebarItem = ({ logOut, item, parentLink = '', ...props }) => {
         );
     }
 };
-
-// item.subMenu
-//     ? (
-//         <Menu.SubMenu
-//             {...props}
-//             className={item.className}
-//             key={`${item.link}`}
-//             title={(
-//                 <span>
-//                     <ItemIcon icon={item.icon} isSub={!!parentLink}/>
-//                     <span>{item.title}</span>
-//                 </span>
-//             )}
-//         >
-//             {
-//                 item.subMenu.map((subItem) => (
-//                     <SidebarItem
-//                         key={item.link + subItem.link}
-//                         item={subItem}
-//                         parentLink={parentLink + item.link}
-//                     />
-//                 ))
-//             }
-//         </Menu.SubMenu>
-//     )
-//     : (
-//         item.className === 'logOut' ?
-//             <Menu.Item {...props} className={item.className} key={item.link} onClick={logOut}>
-//                 <Link to={parentLink + item.link}>
-//                     <ItemIcon icon={item.icon} isSub={!!parentLink}/>
-//                     <span>{item.title}</span>
-//                 </Link>
-//             </Menu.Item>
-//             :
-//             <Menu.Item {...props} className={item.className} key={item.link}>
-//                 <Link to={parentLink + item.link}>
-//                     <ItemIcon icon={item.icon} isSub={!!parentLink}/>
-//                     <span>{item.title}</span>
-//                 </Link>
-//             </Menu.Item>
-//     )
 
 SidebarItem.propTypes = {
     item: PropTypes.shape({

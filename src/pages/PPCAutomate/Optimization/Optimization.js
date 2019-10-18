@@ -1,6 +1,6 @@
-import React, {Component, Fragment} from "react";
-import {Drawer, Icon} from 'antd';
-import {connect} from 'react-redux';
+import React, { Component, Fragment } from 'react';
+import { Drawer, Icon } from 'antd';
+import { connect } from 'react-redux';
 
 import ProductList from '../../../components/ProductList/ProductList';
 import OptimizationOptions from './OptimizationOptions/OptimizationOptions';
@@ -8,12 +8,12 @@ import OptimizationStrategy from './OptimizationStrategy/OptimizationStrategy';
 
 import OptionsInfo from './InfoItem/OptionInfo/OptionInfo';
 import StrategyInfo from './InfoItem/StrategyInfo/StrategyInfo';
-import OptimizationStatus from "./OptimizationStatus/OptimizationStatus";
-import LastReports from "./LastReports/LastReports";
+import OptimizationStatus from './OptimizationStatus/OptimizationStatus';
+import LastReports from './LastReports/LastReports';
 
+import { productsActions } from '../../../actions/products.actions';
 
 import './Optimization.less';
-import {productsActions} from "../../../actions/products.actions";
 
 class Optimization extends Component {
     state = {
@@ -32,7 +32,7 @@ class Optimization extends Component {
         // }
     };
 
-    showDrawer = (type) => {
+    showDrawer = type => {
         this.setState({
             visible: true,
             infoType: type
@@ -41,41 +41,23 @@ class Optimization extends Component {
 
     onCloseDrawer = () => {
         this.setState({
-            visible: false,
+            visible: false
         });
     };
 
     toLess = () => {
         this.setState({
             isLess: !this.state.isLess
-        })
-    };
-
-    onSelectStrategy = (strategy) => {
-        this.setState({
-            selectedStrategy: strategy
         });
     };
 
-    onChangeOptions = (e) => {
-        const { updateProduct } = this.props;
-        const localSaveData = { [e.target.name]: e.target.checked };
-
-        this.setState({
-            ...this.state,
-            product: {
-                ...this.state.product,
-                ...localSaveData
-            }
-        })
-
-        // updateProduct(localSaveData);
+    onSelectProduct = product => {
+        this.props.selectProduct(product);
     };
 
-    handleUpdateProduct = (product) => {
+    handleUpdateProduct = product => {
         console.log(product);
     };
-
 
     render() {
         const {
@@ -88,10 +70,8 @@ class Optimization extends Component {
 
         return (
             <Fragment>
-                <div className='optimization-page'>
-                    <ProductList
-                        onSelectProduct={this.onSelectProduct}
-                    />
+                <div className="optimization-page">
+                    <ProductList onSelectProduct={this.onSelectProduct} />
 
                     <div className="product-options">
                         <div className={`options ${!isLess ? 'more' : 'less'}`}>
@@ -119,19 +99,21 @@ class Optimization extends Component {
                             <div className="less-more-control">
                                 <div
                                     role="button"
-                                    className={`icon ${isLess ? 'more' : 'less'}`}
+                                    className={`icon ${
+                                        isLess ? 'more' : 'less'
+                                    }`}
                                     onClick={this.toLess}
                                 >
-                                    <Icon type="up"/>
+                                    <Icon type="up" />
                                 </div>
                             </div>
                         </div>
 
                         <OptimizationStatus
-                        onSwitchOptimization={this.handleUpdateProduct}
+                            onSwitchOptimization={this.handleUpdateProduct}
                         />
 
-                        <LastReports />
+                        <LastReports isLess={isLess} />
                     </div>
                 </div>
 
@@ -141,11 +123,14 @@ class Optimization extends Component {
                     onClose={this.onCloseDrawer}
                     visible={this.state.visible}
                 >
-                    {this.state.infoType === 'options' ? <OptionsInfo/> : <StrategyInfo />}
-
+                    {this.state.infoType === 'options' ? (
+                        <OptionsInfo />
+                    ) : (
+                        <StrategyInfo />
+                    )}
                 </Drawer>
             </Fragment>
-        )
+        );
     }
 }
 
@@ -159,5 +144,9 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Optimization);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Optimization);
