@@ -4,8 +4,17 @@ const initialState = {
     productList: [],
     totalSize: 0,
     selectedAll: false,
+    defaultOptimizationOptions: {
+        optimization_strategy: 'BoostOverallProfit',
+        add_negative_keywords: true,
+        optimize_keywords: true,
+        create_new_keywords: true,
+        optimize_pats: true,
+        add_negative_pats: true,
+        create_new_pats: true,
+    },
     selectedProduct: {
-        optimization_strategy: ''
+        optimization_strategy: '',
     }
 };
 

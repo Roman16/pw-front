@@ -11,6 +11,7 @@ class LoginPageForm extends React.Component {
     state = {
         email: '',
         password: '',
+        rememberMe: false,
         isLoading: false,
         loginSuccess: false
     };
@@ -29,7 +30,8 @@ class LoginPageForm extends React.Component {
 
         this.props.login({
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
+            remember_me: this.state.rememberMe
         });
 
         this.setState({
@@ -85,7 +87,9 @@ class LoginPageForm extends React.Component {
                     justify="space-between"
                     className="form-bottom"
                 >
-                    <Checkbox>Remember me</Checkbox>
+                    <Checkbox onChange={(e) => this.setState({rememberMe: e.target.checked})}>
+                        Remember me
+                    </Checkbox>
                     <a
                         className="login-form-forgot forget"
                         href="https://profitwhales.com/password/reset"

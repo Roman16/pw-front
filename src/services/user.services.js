@@ -4,7 +4,8 @@ import { userUrls } from '../constans/api.urls';
 export const userService = {
     login,
     regist,
-    getUserInfo
+    getUserInfo,
+    setMWS
 };
 
 function login(user) {
@@ -17,4 +18,8 @@ function regist(user) {
 
 function getUserInfo() {
     return api('get', userUrls.allInfo);
+}
+
+function setMWS(data) {
+    return api('post', userUrls.mws, data);
 }

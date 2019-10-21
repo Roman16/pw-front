@@ -15,10 +15,12 @@ const Dollar = () => (
 const NetMarginWindow = ({ isShowModal = true, onStart, handleCancel }) => {
     const [value, setValue] = useState(0);
     const [isError, setError] = useState(false);
+
     const onChange = ({ target: { value } }) => {
         setValue(+value);
         setError(+value === 0);
     };
+
     const submit = () => {
         if (value > 0) {
             onStart(value);
@@ -48,6 +50,7 @@ const NetMarginWindow = ({ isShowModal = true, onStart, handleCancel }) => {
                             prefix={<Dollar />}
                             value={value}
                             type="number"
+                            onChange={onChange}
                         />
                     </div>
                     <Button className="start" onClick={submit}> Start </Button>
@@ -74,7 +77,7 @@ NetMarginWindow.defaultProps = {
     },
     handleCancel: () => {
     },
-    isShowModal: true,
+    isShowModal: false,
 
 
 };

@@ -79,7 +79,7 @@ class OptimizationOptions extends Component {
         const {
             onChange,
             openInformation,
-            product
+            product,
         } = this.props;
 
         return (
@@ -105,10 +105,5 @@ class OptimizationOptions extends Component {
         );
     }
 }
-
-OptimizationOptions.propTypes = {};
-
-OptimizationOptions.defaultProps = {};
-
 
 export default OptimizationOptions;

@@ -5,6 +5,8 @@ export const productsActions = {
     fetchProducts,
     updateProduct,
     fetchProductDetails,
+    onSwitchOptimization,
+    setNetMargin
 };
 
 function fetchProducts(params) {
@@ -54,6 +56,30 @@ function fetchProductDetails(product) {
                         payload: res
                     });
                 }
+            });
+    };
+}
+
+function onSwitchOptimization() {
+    return dispatch => {
+        productsServices.updateProductById()
+            .then(res => {
+                dispatch({
+                    type: productsConstants.UPDATE_SELECTED_PRODUCT,
+                    payload: res
+                });
+            });
+    };
+}
+
+function setNetMargin(product) {
+    return dispatch => {
+        productsServices.updateProductById(product)
+            .then(res => {
+                dispatch({
+                    type: productsConstants.UPDATE_SELECTED_PRODUCT,
+                    payload: res
+                });
             });
     };
 }

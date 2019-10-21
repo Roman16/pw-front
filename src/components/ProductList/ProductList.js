@@ -1,10 +1,11 @@
-import React, {Component, Fragment} from "react";
+import React, {Component} from "react";
 import ProductItem from "./ProductItem";
 import {connect} from 'react-redux';
 import {Input, Pagination} from 'antd';
 import {productsActions} from '../../actions/products.actions';
 import './ProductList.less';
 import SelectAllProduct from "./SelectAllProducts";
+import {debounce } from 'throttle-debounce';
 
 const {Search} = Input;
 
@@ -18,10 +19,6 @@ class ProductList extends Component {
         }
     };
 
-    componentDidMount() {
-        this.getProducts();
-    }
-
     getProducts = () => this.props.getAllProducts(this.state.paginationParams);
 
     handleChangePagination = page => {
@@ -34,18 +31,24 @@ class ProductList extends Component {
         }, this.getProducts)
     };
 
+    handleSearch = debounce(500, false,str => {
+        this.setState({
+            ...this.state,
+            paginationParams: {
+                ...this.state.paginationParams,
+                searchStr: str
+            }
+        }, this.getProducts)
+    });
+
     selectAll = () => {
         const {selectProduct, selectedProduct} = this.props;
 
         this.setState(({isSelectedAll}) => ({
                 isSelectedAll: !isSelectedAll,
-            }),
-            () => {
-                if (this.state.isSelectedAll) {
-                    selectProduct('all')
-                } else {
-                    selectProduct(selectedProduct)
-                }
+            }), () => {
+                if (this.state.isSelectedAll) selectProduct('all');
+                else selectProduct(selectedProduct);
             },
         );
     };
@@ -59,6 +62,10 @@ class ProductList extends Component {
             isSelectedAll: false,
         });
     };
+
+    componentDidMount() {
+        this.getProducts();
+    }
 
     render() {
         const {
@@ -79,7 +86,7 @@ class ProductList extends Component {
                 <div className='search-product'>
                     <Search
                         placeholder="Search by product name, ASIN, or SKU"
-                        onSearch={value => console.log(value)}
+                        onChange={e => this.handleSearch(e.target.value)}
                     />
 
                     <div className="select-all-products">

@@ -21,18 +21,9 @@ class Optimization extends Component {
         isLess: false,
         visible: false,
         infoType: '',
-        product: this.props.product,
-        selectedStrategy: this.props.product.optimization_strategy,
+        product: this.props.selectedProduct,
+        selectedStrategy: this.props.selectedProduct.optimization_strategy,
         isShowModal: false
-
-        // product: {
-        //     add_negative_keywords: this.props.product.add_negative_keywords,
-        //     optimize_keywords: this.props.product.optimize_keywords,
-        //     create_new_keywords: this.props.product.create_new_keywords,
-        //     optimize_pats: this.props.product.optimize_pats,
-        //     add_negative_pats: this.props.product.add_negative_pats,
-        //     create_new_pats: this.props.product.create_new_pats,
-        // }
     };
 
     showDrawer = type => this.setState({ visible: true, infoType: type });
@@ -45,7 +36,6 @@ class Optimization extends Component {
         this.setState({ selectedStrategy: strategy });
 
     onChangeOptions = e => {
-        const { updateProduct } = this.props;
         const localSaveData = { [e.target.name]: e.target.checked };
 
         this.setState({
@@ -71,19 +61,30 @@ class Optimization extends Component {
     };
 
     static getDerivedStateFromProps(props, state) {
-        if (props.product.id !== state.product.id) {
-            return {
-                product: props.product,
-                selectedStrategy: props.product.optimization_strategy
-            };
+        if (props.selectedProduct.id !== state.product.id) {
+            if (props.selectedProduct.status === 'RUNNING') {
+                return {
+                    product: props.selectedProduct,
+                    selectedStrategy:
+                        props.selectedProduct.optimization_strategy
+                };
+            } else {
+                return {
+                    product: {
+                        ...props.selectedProduct,
+                        ...props.defaultOptions
+                    },
+                    selectedStrategy: props.defaultOptions.optimization_strategy
+                };
+            }
         } else {
             return null;
         }
     }
 
     render() {
-        const { isLess, selectedStrategy, isShowModal } = this.state,
-            { product } = this.props;
+        const { isLess, selectedStrategy, product, isShowModal } = this.state,
+            { selectedProduct } = this.props;
 
         return (
             <Fragment>
@@ -107,7 +108,7 @@ class Optimization extends Component {
                                 }
                                 toStartOptimization={this.toStartOptimization}
                                 selectedStrategy={selectedStrategy}
-                                product={product}
+                                product={selectedProduct}
                             />
 
                             <div className="descriptions options-content">
@@ -130,9 +131,7 @@ class Optimization extends Component {
                             </div>
                         </div>
 
-                        <OptimizationStatus
-                            onSwitchOptimization={this.handleUpdateProduct}
-                        />
+                        <OptimizationStatus />
 
                         <LastReports isLess={isLess} />
                     </div>
@@ -164,7 +163,8 @@ class Optimization extends Component {
 }
 
 const mapStateToProps = state => ({
-    product: state.products.selectedProduct
+    selectedProduct: state.products.selectedProduct,
+    defaultOptions: state.products.defaultOptimizationOptions
 });
 
 const mapDispatchToProps = dispatch => ({

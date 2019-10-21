@@ -7,6 +7,7 @@ export const userActions = {
     login,
     logOut,
     regist,
+    setMWS,
     getUserInfo,
     setInformation
 };
@@ -47,6 +48,24 @@ function regist(user) {
             });
     };
 }
+
+
+function setMWS(data) {
+    return dispatch => {
+        userService.setMWS(data)
+            .then(res => {
+                dispatch(setInformation(res));
+
+                if(!res.account_links.amazon_ppc.is_connected) {
+                    history.push('/ppc');
+                } else {
+                    history.push('/ppc/optimization');
+                }
+            });
+    };
+}
+
+
 
 function getUserInfo() {
     return dispatch => {
