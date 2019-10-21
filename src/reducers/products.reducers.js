@@ -3,6 +3,7 @@ import {productsConstants} from '../constans/actions.type';
 const initialState = {
     productList: [],
     totalSize: 0,
+    selectedAll: false,
     selectedProduct: {
         optimization_strategy: ''
     }
@@ -26,17 +27,18 @@ export function products(state = initialState, action) {
         case productsConstants.SELECT_PRODUCT:
             return {
                 ...state,
+                selectedAll: false,
                 selectedProduct: action.payload ? action.payload : state.selectedProduct
             };
 
-        case productsConstants.UPDATE_SELECTED_PRODUCT:
+        case productsConstants.SELECT_ALL_PRODUCT:
             return {
                 ...state,
+                selectedAll: !state.selectedAll,
                 selectedProduct: {
-                    ...state.selectedProduct,
                     ...action.payload,
-                    id: action.payload.product_id ? action.payload.product_id : state.selectedProduct.id
-                }
+                    id: state.selectedProduct.id
+                },
             };
 
         default:
