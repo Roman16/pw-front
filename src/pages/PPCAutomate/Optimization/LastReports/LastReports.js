@@ -57,6 +57,7 @@ export const terminalMock = [
     },
     {
         id: 7,
+        number: 7,
         message: `Mistake: <b>Bad-performing keywords.</b>'
         ' Keyword 'keyword text' in ad group '
          ''adGroupName' in campaign 'campaign name' '
@@ -91,8 +92,8 @@ const dummy = [
     { id: 8 },
     { id: 9 },
     { id: 10 },
-    { id: 11 },
-    { id: 12 }
+    { id: 11 }
+    // { id: 12 }
 ];
 
 const lastChanges = [];
@@ -135,7 +136,7 @@ class LastReports extends Component {
 
     render() {
         const { isLess } = this.props;
-        const isTerminal = lastChanges.length !== 0;
+        const isTerminal = terminalMock.length !== 0;
 
         return (
             <div className="terminal">
