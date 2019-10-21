@@ -47,13 +47,9 @@ const SidebarItem = ({ logOut, item, parentLink = '', ...props }) => {
                 ))} */}
                 {item.subMenu.map(subItem => {
                     return subItem.className === 'ppcScaner' ? (
-                        <Menu.Item
-                            {...props}
-                            className={item.className}
-                            key={item.link}
-                        >
+                        <Menu.Item {...props} key={subItem.link}>
                             <a href="https://profitwhales.com/ppc-scaner">
-                                <span>{item.title}</span>
+                                <span>{subItem.title}</span>
                             </a>
                         </Menu.Item>
                     ) : (

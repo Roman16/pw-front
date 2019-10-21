@@ -80,11 +80,11 @@ export const menuMain = [
                 link: '/dashboard'
             },
             {
-                title: 'Optimization',
+                title: 'Optimization Setup',
                 link: '/optimization'
             },
             {
-                title: 'Optimization Report',
+                title: 'Optimization Reports',
                 link: '/report'
             },
             {
@@ -95,11 +95,11 @@ export const menuMain = [
                 title: 'PPC Scanner',
                 link: '-scaner',
                 className: 'ppcScaner'
-            },
-            {
-                title: 'Expansion',
-                link: '/expansion'
             }
+            // {
+            //     title: 'Expansion',
+            //     link: '/expansion'
+            // }
         ]
     }
 ];
