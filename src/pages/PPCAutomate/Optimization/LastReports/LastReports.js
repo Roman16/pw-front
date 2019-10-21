@@ -146,13 +146,16 @@ class LastReports extends Component {
                     }`}
                 >
                     {isTerminal ? (
-                        terminalMock.map(({ id, message, number }) => (
-                            <TerminalItem
-                                key={id}
-                                content={message}
-                                number={number}
-                            />
-                        ))
+                        <>
+                            {terminalMock.map(({ id, message, number }) => (
+                                <TerminalItem
+                                    key={id}
+                                    content={message}
+                                    number={number}
+                                />
+                            ))}
+                            <Pagination defaultCurrent={1} total={50} />
+                        </>
                     ) : (
                         <div className="terminal-item-dummy">
                             <div
@@ -174,8 +177,6 @@ class LastReports extends Component {
                         </div>
                     )}
                 </div>
-
-                <Pagination defaultCurrent={1} total={50} />
             </div>
         );
     }
