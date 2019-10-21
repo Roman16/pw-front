@@ -39,7 +39,7 @@ class Optimization extends Component {
 
     toLess = () => this.setState({isLess: !this.state.isLess});
 
-    onSelectStrategy = (strategy) => this.setState({selectedStrategy: strategy});
+    onSelectStrategy = strategy => this.setState({selectedStrategy: strategy});
 
 
     onChangeOptions = (e) => {
@@ -78,7 +78,7 @@ class Optimization extends Component {
         return (
             <Fragment>
                 <div className="optimization-page">
-                    <ProductList onSelectProduct={this.onSelectProduct}/>
+                    <ProductList />
 
                     <div className="product-options">
                         <div className={`options ${!isLess ? 'more' : 'less'}`}>

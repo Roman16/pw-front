@@ -1,9 +1,8 @@
-import React, {Component} from "react";
-import PropTypes from 'prop-types';
+import React, {Component, Fragment} from "react";
 import ProductItem from "./ProductItem";
 import {connect} from 'react-redux';
-import {Input} from 'antd';
-import {productsActions, getPosts} from '../../actions/products.actions';
+import {Input, Pagination} from 'antd';
+import {productsActions} from '../../actions/products.actions';
 import './ProductList.less';
 import SelectAllProduct from "./SelectAllProducts";
 
@@ -12,8 +11,8 @@ const {Search} = Input;
 class ProductList extends Component {
     state = {
         isSelectedAll: false,
-        params: {
-            size: 8,
+        paginationParams: {
+            size: 2,
             page: 1,
             searchStr: ''
         }
@@ -23,55 +22,56 @@ class ProductList extends Component {
         this.getProducts();
     }
 
-    getProducts = () => {
-        const {params} = this.state;
-        this.props.getAllProducts(params)
+    getProducts = () => this.props.getAllProducts(this.state.paginationParams);
+
+    handleChangePagination = page => {
+        this.setState({
+            ...this.state,
+            paginationParams: {
+                ...this.state.paginationParams,
+                page
+            }
+        }, this.getProducts)
     };
 
     selectAll = () => {
-        const {
-            activeProductId,
-            setActiveProduct,
-            onSelect,
-        } = this.props;
+        const {selectProduct, selectedProduct} = this.props;
 
         this.setState(({isSelectedAll}) => ({
                 isSelectedAll: !isSelectedAll,
-                // selectedSize: !isSelectedAll ? totalProduct : 1,
             }),
             () => {
-                const {isSelectedAll} = this.state;
-
-                if (activeProductId !== 'all') {
-                    this.prevActive = activeProductId;
+                if (this.state.isSelectedAll) {
+                    selectProduct('all')
+                } else {
+                    selectProduct(selectedProduct)
                 }
-                const toSelect = isSelectedAll ? 'all' : this.prevActive;
-
-                // onSelect(toSelect);
-                // setActiveProduct(toSelect);
             },
         );
     };
 
-    toActive = (product) => {
+    onSelect = (product) => {
         const {selectProduct, selectedProduct} = this.props;
 
-        if(selectedProduct !== product.id) selectProduct(product);
+        if (selectedProduct.id !== product.id) selectProduct(product);
 
         this.setState({
             isSelectedAll: false,
-            selectedSize: 1,
         });
     };
 
     render() {
         const {
                 selectedSize,
-                isSelectedAll
+                isSelectedAll,
+                paginationParams: {
+                    size
+                }
             } = this.state,
             {
                 products,
-                selectedProduct
+                selectedProduct,
+                totalSize
             } = this.props;
 
         return (
@@ -88,44 +88,43 @@ class ProductList extends Component {
                             selectedSize={selectedSize}
                             isSelectedAll={isSelectedAll}
                         />
-
-                        {/*<div className='selected-count'>*/}
-                        {/*    Selected All Products*/}
-                        {/*</div>*/}
                     </div>
                 </div>
 
                 {products && products.map(product => (
-                    <ProductItem
-                        key={product.id}
-                        product={product}
-                        isActive={isSelectedAll || selectedProduct === product.id}
-                        onClick={(item) => this.toActive(item)}
-                    />
+                        <ProductItem
+                            key={product.id}
+                            product={product}
+                            isActive={isSelectedAll || selectedProduct.id === product.id}
+                            onClick={(item) => this.onSelect(item)}
+                        />
                 ))}
+
+                {totalSize > size && <Pagination
+                    defaultCurrent={1}
+                    pageSize={size}
+                    total={totalSize}
+                    onChange={this.handleChangePagination}
+                />}
+
             </div>
         )
     }
 }
 
-ProductList.propTypes = {
-    onSelectProduct: PropTypes.func,
-};
-
-
 const mapStateToProps = state => ({
     products: state.products.productList,
     totalSize: state.products.totalSize,
-    selectedProduct: state.products.selectedProduct && state.products.selectedProduct.id
+    selectedProduct: state.products.selectedProduct
 });
 
 const mapDispatchToProps = dispatch => ({
     getAllProducts: (params) => {
         dispatch(productsActions.fetchProducts(params));
     },
-    selectProduct: (product) =>{
-        dispatch(productsActions.selectProduct(product))
-    }
+    selectProduct: (product) => {
+        dispatch(productsActions.fetchProductDetails(product))
+    },
 });
 
 export default connect(
