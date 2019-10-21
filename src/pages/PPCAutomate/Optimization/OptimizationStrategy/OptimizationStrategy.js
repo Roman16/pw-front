@@ -37,7 +37,7 @@ export const StrategyItem = ({
                                  caption,
                                  selected,
                                  onSelect,
-                                 value = 'BoostOverallProfit',
+                                 value,
                              }) => (
     <div className={`strategy-item ${selected ? 'selected' : ''}`}>
         <div className="caption-strategy">
@@ -92,7 +92,7 @@ const OptimizationStrategy = ({
                                   selectedStrategy,
                                   openInformation,
                                   product: {
-                                      optimization_strategy='LaunchProduct',
+                                      optimization_strategy,
                                   }
                               }) => {
     return (
