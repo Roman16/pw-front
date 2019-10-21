@@ -1,6 +1,6 @@
-import React, {Component, Fragment} from 'react';
-import {Drawer, Icon} from 'antd';
-import {connect} from 'react-redux';
+import React, { Component, Fragment } from 'react';
+import { Drawer, Icon } from 'antd';
+import { connect } from 'react-redux';
 
 import ProductList from '../../../components/ProductList/ProductList';
 import OptimizationOptions from './OptimizationOptions/OptimizationOptions';
@@ -10,8 +10,9 @@ import OptionsInfo from './InfoItem/OptionInfo/OptionInfo';
 import StrategyInfo from './InfoItem/StrategyInfo/StrategyInfo';
 import OptimizationStatus from './OptimizationStatus/OptimizationStatus';
 import LastReports from './LastReports/LastReports';
+import NetMarginWindow from './OptimizationStatus/NetMarginWindow/NetMarginWindow';
 
-import {productsActions} from '../../../actions/products.actions';
+import { productsActions } from '../../../actions/products.actions';
 
 import './Optimization.less';
 
@@ -22,6 +23,7 @@ class Optimization extends Component {
         infoType: '',
         product: this.props.product,
         selectedStrategy: this.props.product.optimization_strategy,
+        isShowModal: false
 
         // product: {
         //     add_negative_keywords: this.props.product.add_negative_keywords,
@@ -33,18 +35,18 @@ class Optimization extends Component {
         // }
     };
 
-    showDrawer = type => this.setState({visible: true, infoType: type});
+    showDrawer = type => this.setState({ visible: true, infoType: type });
 
-    onCloseDrawer = () => this.setState({visible: false});
+    onCloseDrawer = () => this.setState({ visible: false });
 
-    toLess = () => this.setState({isLess: !this.state.isLess});
+    toLess = () => this.setState({ isLess: !this.state.isLess });
 
-    onSelectStrategy = strategy => this.setState({selectedStrategy: strategy});
+    onSelectStrategy = strategy =>
+        this.setState({ selectedStrategy: strategy });
 
-
-    onChangeOptions = (e) => {
-        const {updateProduct} = this.props;
-        const localSaveData = {[e.target.name]: e.target.checked};
+    onChangeOptions = e => {
+        const { updateProduct } = this.props;
+        const localSaveData = { [e.target.name]: e.target.checked };
 
         this.setState({
             ...this.state,
@@ -52,28 +54,36 @@ class Optimization extends Component {
                 ...this.state.product,
                 ...localSaveData
             }
-        })
+        });
+    };
+
+    setNetMargin = (productId, value) => {
+        this.netMargin(productId, value);
+        this.cancelModal();
+    };
+
+    toStartOptimization = () => {
+        this.setState({ isShowModal: true });
+    };
+
+    cancelModal = () => {
+        this.setState({ isShowModal: false });
     };
 
     static getDerivedStateFromProps(props, state) {
         if (props.product.id !== state.product.id) {
-            return ({
+            return {
                 product: props.product,
                 selectedStrategy: props.product.optimization_strategy
-            })
+            };
         } else {
-            return null
+            return null;
         }
     }
 
     render() {
-        const {
-                isLess,
-                selectedStrategy
-            } = this.state,
-            {
-                product
-            } = this.props;
+        const { isLess, selectedStrategy, isShowModal } = this.state,
+            { product } = this.props;
 
         return (
             <Fragment>
@@ -84,13 +94,18 @@ class Optimization extends Component {
                         <div className={`options ${!isLess ? 'more' : 'less'}`}>
                             <OptimizationOptions
                                 onChange={this.onChangeOptions}
-                                openInformation={() => this.showDrawer('options')}
+                                openInformation={() =>
+                                    this.showDrawer('options')
+                                }
                                 product={product}
                             />
 
                             <OptimizationStrategy
                                 onSelect={this.onSelectStrategy}
-                                openInformation={() => this.showDrawer('strategy')}
+                                openInformation={() =>
+                                    this.showDrawer('strategy')
+                                }
+                                toStartOptimization={this.toStartOptimization}
                                 selectedStrategy={selectedStrategy}
                                 product={product}
                             />
@@ -100,16 +115,17 @@ class Optimization extends Component {
                             a powerful new way to target manual Amazon Sponsored Product campaigns.
                              It allows sellers to target ads by either
                              ASIN or Category (brands, prices, and ratings).`}
-
                             </div>
 
                             <div className="less-more-control">
                                 <div
                                     role="button"
-                                    className={`icon ${isLess ? 'more' : 'less'}`}
+                                    className={`icon ${
+                                        isLess ? 'more' : 'less'
+                                    }`}
                                     onClick={this.toLess}
                                 >
-                                    <Icon type="up"/>
+                                    <Icon type="up" />
                                 </div>
                             </div>
                         </div>
@@ -118,7 +134,7 @@ class Optimization extends Component {
                             onSwitchOptimization={this.handleUpdateProduct}
                         />
 
-                        <LastReports isLess={isLess}/>
+                        <LastReports isLess={isLess} />
                     </div>
                 </div>
 
@@ -129,11 +145,19 @@ class Optimization extends Component {
                     visible={this.state.visible}
                 >
                     {this.state.infoType === 'options' ? (
-                        <OptionsInfo/>
+                        <OptionsInfo />
                     ) : (
-                        <StrategyInfo/>
+                        <StrategyInfo />
                     )}
                 </Drawer>
+
+                {isShowModal && (
+                    <NetMarginWindow
+                        onStart={this.setNetMargin}
+                        isShowModal={isShowModal}
+                        handleCancel={this.cancelModal}
+                    />
+                )}
             </Fragment>
         );
     }
@@ -144,7 +168,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateProduct: (product) => {
+    updateProduct: product => {
         dispatch(productsActions.updateProduct(product));
     }
 });
@@ -153,4 +177,3 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(Optimization);
-
