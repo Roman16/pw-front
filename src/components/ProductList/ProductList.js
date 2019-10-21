@@ -5,7 +5,7 @@ import {Input, Pagination} from 'antd';
 import {productsActions} from '../../actions/products.actions';
 import './ProductList.less';
 import SelectAllProduct from "./SelectAllProducts";
-import { throttle, debounce } from 'throttle-debounce';
+import {debounce } from 'throttle-debounce';
 
 const {Search} = Input;
 
@@ -31,7 +31,7 @@ class ProductList extends Component {
         }, this.getProducts)
     };
 
-    handleSearch = debounce(1000, false,str => {
+    handleSearch = debounce(500, false,str => {
         this.setState({
             ...this.state,
             paginationParams: {

@@ -22,8 +22,12 @@ class MWS extends Component {
 
     saveParams = (e) => {
         e.preventDefault();
-
         console.log(this.state)
+
+        this.props.setMWS({
+            merchant_id: this.state.sellerId,
+            mws_auth_token: this.state.MWSToken
+        })
     };
 
     render() {
@@ -31,8 +35,6 @@ class MWS extends Component {
             sellerId,
             MWSToken
         } = this.state;
-
-        console.log(this.props);
 
         return (
             <div className='mws-page'>
@@ -95,8 +97,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    login: data => {
-        dispatch(userActions.login(data));
+    setMWS: data => {
+        dispatch(userActions.setMWS(data));
     }
 });
 

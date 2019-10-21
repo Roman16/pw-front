@@ -5,6 +5,7 @@ import {Button} from 'antd';
 import {connect} from 'react-redux';
 
 import NetMarginWindow from './NetMarginWindow/NetMarginWindow';
+import {productsActions} from '../../../../actions/products.actions';
 
 import './OptimizationStatus.less';
 
@@ -19,14 +20,11 @@ const RUNNING = 'RUNNING';
 const STOPPED = 'STOPPED';
 
 class OptimizationStatus extends Component {
-
     state = {
         isShowModal: false,
     };
 
-    cancelModal = () => {
-        this.setState({isShowModal: false});
-    };
+    cancelModal = () => this.setState({isShowModal: false});
 
     toStart = (status) => {
         const {onSwitchOptimization, netMargin} = this.props;
@@ -39,9 +37,9 @@ class OptimizationStatus extends Component {
     };
 
     setNetMargin = (value) => {
-        const {productId, setNetMargin} = this.props;
+        const {product, setNetMargin} = this.props;
 
-        setNetMargin(productId, value);
+        setNetMargin({...product, value});
         this.cancelModal();
     };
 
@@ -52,7 +50,6 @@ class OptimizationStatus extends Component {
                 created_at,
                 total_changes,
                 today_change,
-
             }
         } = this.props;
 
@@ -75,6 +72,7 @@ class OptimizationStatus extends Component {
                 />
 
                 <StatusInfo caption="Total Changes" value={total_changes}/>
+
                 <StatusInfo caption="Today Changes" value={today_change}/>
 
                 <div className="control">
@@ -113,14 +111,17 @@ class OptimizationStatus extends Component {
     }
 }
 
-OptimizationStatus.propTypes = {};
-
-OptimizationStatus.defaultProps = {};
-
 const mapStateToProps = state =>({
     product: state.products.selectedProduct ?  state.products.selectedProduct : {}
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+    onSwitchOptimization:  () => {
+        dispatch(productsActions.onSwitchOptimization)
+    },
+    setNetMargin: (netMargin) => {
+        dispatch(productsActions.setNetMargin(netMargin))
+    }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(OptimizationStatus);

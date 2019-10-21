@@ -56,6 +56,7 @@ const routers = () => {
                         <Route component={NotFound} />
                     </Switch>
                 </AuthorizedUser>
+
             </Switch>
         </Router>
     );
