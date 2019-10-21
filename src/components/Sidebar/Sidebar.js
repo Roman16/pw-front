@@ -57,7 +57,7 @@ const Sidebar = () => {
                             <div className="country-active__title">
                                 <img
                                     src={`/assets/img/${activeCountry.flag}`}
-                                    alt="active-country"
+                                    alt="active-country-flag"
                                 />
                                 <h5>{activeCountry.name}</h5>
                             </div>

@@ -58,14 +58,6 @@
             justify-content: center;
             align-items: center;
             background: #f9f9fa;
-            // background-color: #00f;
-            // color: white;
-            padding-top: 5px;
-        }
-
-        .terminal-item:last-child > .index {
-            // border-radius: 8px;
-            // background-color: #0f0;
         }
 
         .content {
@@ -148,5 +140,27 @@
                 border-bottom-right-radius: 8px;
             }
         }
+    }
+
+    .terminal-content
+        > .terminal-item-dummy
+        > .terminal-item:nth-child(2)
+        > .index {
+        border-radius: 8px 8px 0 0;
+    }
+
+    .terminal-content
+        > .terminal-item-dummy
+        > .terminal-item:last-child
+        > .index {
+        border-radius: 0 0 8px 8px;
+    }
+
+    .terminal-content > .terminal-item:first-child > .index {
+        border-radius: 8px 8px 0 0;
+    }
+
+    .terminal-content > .terminal-item:last-of-type > .index {
+        border-radius: 0 0 8px 8px;
     }
 }
