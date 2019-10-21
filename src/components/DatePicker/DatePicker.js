@@ -42,10 +42,12 @@ class DatePicker extends Component {
                             moment()
                         ],
                         'Year to date': [
-                            moment(new Date()).add(-365, 'days'),
+                            moment(new Date(new Date().getFullYear(), 0, 1)),
                             moment()
-                        ]
+                        ],
+                        Lifetime: []
                     }}
+                    separator="-"
                     format="DD/MM/YY"
                     suffixIcon={<DateIcon />}
                     onChange={this.handleChange}
