@@ -78,6 +78,62 @@ export const terminalMock = [
         ' Keyword 'keyword text' in ad group '
          ''adGroupName' in campaign 'campaign name' '
         'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
+    },
+    {
+        id: 10,
+        number: 10,
+        message: `Mistake: Bad-performing keywords.'
+        ' Keyword 'keyword text' in ad group '
+         ''adGroupName' in campaign 'campaign name' '
+        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
+    },
+    {
+        id: 11,
+        number: 11,
+        message: `Mistake: Bad-performing keywords.'
+        ' Keyword 'keyword text' in ad group '
+         ''adGroupName' in campaign 'campaign name' '
+        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
+    },
+    {
+        id: 12,
+        number: 12,
+        message: `Mistake: Bad-performing keywords.'
+        ' Keyword 'keyword text' in ad group '
+         ''adGroupName' in campaign 'campaign name' '
+        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
+    },
+    {
+        id: 13,
+        number: 13,
+        message: `Mistake: Bad-performing keywords.'
+        ' Keyword 'keyword text' in ad group '
+         ''adGroupName' in campaign 'campaign name' '
+        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
+    },
+    {
+        id: 14,
+        number: 14,
+        message: `Mistake: Bad-performing keywords.'
+        ' Keyword 'keyword text' in ad group '
+         ''adGroupName' in campaign 'campaign name' '
+        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
+    },
+    {
+        id: 15,
+        number: 15,
+        message: `Mistake: Bad-performing keywords.'
+        ' Keyword 'keyword text' in ad group '
+         ''adGroupName' in campaign 'campaign name' '
+        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
+    },
+    {
+        id: 16,
+        number: 16,
+        message: `Mistake: Bad-performing keywords.'
+        ' Keyword 'keyword text' in ad group '
+         ''adGroupName' in campaign 'campaign name' '
+        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
     }
 ];
 
@@ -95,8 +151,6 @@ const dummy = [
     { id: 11 }
     // { id: 12 }
 ];
-
-const lastChanges = [];
 
 const TerminalCaption = ({ isTerminal }) => (
     <div className="terminal-caption">
@@ -131,6 +185,8 @@ const TerminalItem = ({ number = 0, content = '', data }) => (
     </div>
 );
 
+const lastChanges = [];
+
 class LastReports extends Component {
     state = {};
 
@@ -139,7 +195,7 @@ class LastReports extends Component {
         const isTerminal = terminalMock.length !== 0;
 
         return (
-            <div className="terminal">
+            <div className={`terminal`}>
                 <TerminalCaption isTerminal={isTerminal} />
                 <div
                     className={`terminal-content ${!isLess ? 'less' : 'more'} ${

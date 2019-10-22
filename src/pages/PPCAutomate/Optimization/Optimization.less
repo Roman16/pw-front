@@ -41,6 +41,7 @@
 
         .options {
             // max-height: 39.26vh;
+            // max-height: 418px;
             display: grid;
             grid-template-columns: minmax(300px, 400px) minmax(min-content, 1fr);
             grid-template-areas: 'options strategy' '. descriptions' 'control control';
@@ -79,7 +80,7 @@
 
             @media (max-width: @desktop) {
                 & {
-                    grid-template-areas: 'options strategy' 'descriptions strategy';
+                    grid-template-areas: 'options strategy' 'descriptions strategy' 'control control';
                     grid-template-rows: minmax(1fr, max-content) minmax(
                             1fr,
                             max-content
