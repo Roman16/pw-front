@@ -1,24 +1,13 @@
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Menu, Icon } from 'antd';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { userActions } from '../../actions/user.actions';
-// import { async } from 'q';
 
 const IconFont = Icon.createFromIconfontCN({
     scriptUrl: '/assets/icons/iconfont.js'
 });
-
-const baseUrl = process.env.REACT_APP_API_URL;
-// console.log('baseUrl :', baseUrl);
-const avatar = token =>
-    axios.get(`${baseUrl}/api/user/status`, {
-        headers: {
-            authorization: `Bearer ${token}`
-        }
-    });
 
 const ItemIcon = ({ icon, isSub, ...props }) => {
     if (isSub) return null;
@@ -35,101 +24,81 @@ ItemIcon.propTypes = {
     isSub: PropTypes.bool
 };
 
-const SidebarItem = ({ logOut, item, parentLink = '', token, ...props }) => {
-    let userAvatar = null;
-    avatar(token)
-        .then(res => {
-            // console.log('res :', res);
-            return (userAvatar = res.data.user.avatar);
-        })
-        .catch(err => console.log(err))
-        .finally(() => {
-            if (item.subMenu) {
-                return (
-                    <Menu.SubMenu
-                        {...props}
-                        className={item.className}
-                        key={`${item.link}`}
-                        title={
-                            <span>
-                                <ItemIcon
-                                    icon={item.icon}
-                                    isSub={!!parentLink}
-                                />
-                                <span>{item.title}</span>
-                            </span>
-                        }
-                    >
-                        {/* {item.subMenu.map(subItem => (
-                            <SidebarItem
-                                key={item.link + subItem.link}
-                                item={subItem}
-                                parentLink={parentLink + item.link}
-                            />
-                        ))} */}
-                        {item.subMenu.map(subItem => {
-                            return subItem.className === 'ppcScaner' ? (
-                                <Menu.Item {...props} key={subItem.link}>
-                                    <a href="https://profitwhales.com/ppc-scaner">
-                                        <span>{subItem.title}</span>
-                                    </a>
-                                </Menu.Item>
-                            ) : (
-                                <SidebarItem
-                                    key={item.link + subItem.link}
-                                    item={subItem}
-                                    parentLink={parentLink + item.link}
-                                />
-                            );
-                        })}
-                    </Menu.SubMenu>
-                );
-            } else if (item.className === 'helpCenter') {
-                return (
-                    <Menu.Item
-                        {...props}
-                        className={item.className}
-                        key={item.link}
-                    >
-                        <a
-                            href="https://profit-whales.kayako.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <ItemIcon icon={item.icon} isSub={!!parentLink} />
-                            <span>{item.title}</span>
-                        </a>
-                    </Menu.Item>
-                );
-            } else if (item.className === 'logOut') {
-                return (
-                    <Menu.Item
-                        {...props}
-                        className={item.className}
-                        key={item.link}
-                        onClick={logOut}
-                    >
-                        <Link to={parentLink + item.link}>
-                            <ItemIcon icon={item.icon} isSub={!!parentLink} />
-                            <span>{item.title}</span>
-                        </Link>
-                    </Menu.Item>
-                );
-            } else {
-                return (
-                    <Menu.Item
-                        {...props}
-                        className={item.className}
-                        key={item.link}
-                    >
-                        <Link to={parentLink + item.link}>
-                            <ItemIcon icon={userAvatar} isSub={!!parentLink} />
-                            <span>{item.title}</span>
-                        </Link>
-                    </Menu.Item>
-                );
-            }
-        });
+const SidebarItem = ({ logOut, item, parentLink = '', ...props }) => {
+    if (item.subMenu) {
+        return (
+            <Menu.SubMenu
+                {...props}
+                className={item.className}
+                key={`${item.link}`}
+                title={
+                    <span>
+                        <ItemIcon icon={item.icon} isSub={!!parentLink} />
+                        <span>{item.title}</span>
+                    </span>
+                }
+            >
+                {/* {item.subMenu.map(subItem => (
+                    <SidebarItem
+                        key={item.link + subItem.link}
+                        item={subItem}
+                        parentLink={parentLink + item.link}
+                    />
+                ))} */}
+                {item.subMenu.map(subItem => {
+                    return subItem.className === 'ppcScaner' ? (
+                        <Menu.Item {...props} key={subItem.link}>
+                            <a href="https://profitwhales.com/ppc-scaner">
+                                <span>{subItem.title}</span>
+                            </a>
+                        </Menu.Item>
+                    ) : (
+                        <SidebarItem
+                            key={item.link + subItem.link}
+                            item={subItem}
+                            parentLink={parentLink + item.link}
+                        />
+                    );
+                })}
+            </Menu.SubMenu>
+        );
+    } else if (item.className === 'helpCenter') {
+        return (
+            <Menu.Item {...props} className={item.className} key={item.link}>
+                <a
+                    href="https://profit-whales.kayako.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <ItemIcon icon={item.icon} isSub={!!parentLink} />
+                    <span>{item.title}</span>
+                </a>
+            </Menu.Item>
+        );
+    } else if (item.className === 'logOut') {
+        return (
+            <Menu.Item
+                {...props}
+                className={item.className}
+                key={item.link}
+                onClick={logOut}
+            >
+                <Link to={parentLink + item.link}>
+                    <ItemIcon icon={item.icon} isSub={!!parentLink} />
+                    <span>{item.title}</span>
+                </Link>
+            </Menu.Item>
+        );
+    } else {
+        return (
+            <Menu.Item {...props} className={item.className} key={item.link}>
+                <Link to={parentLink + item.link}>
+                    <ItemIcon icon={item.icon} isSub={!!parentLink} />
+                    <span>{item.title}</span>
+                </Link>
+            </Menu.Item>
+        );
+    }
 };
 
 SidebarItem.propTypes = {
