@@ -93,7 +93,7 @@ class MWS extends Component {
 }
 
 const mapStateToProps = state => ({
-    mwsLink: state.user.account_links.amazon_mws.connect_link
+    mwsLink: state.user.account_links ? state.user.account_links.amazon_mws.connect_link : ''
 });
 
 const mapDispatchToProps = dispatch => ({

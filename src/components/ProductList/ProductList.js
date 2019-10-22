@@ -5,15 +5,16 @@ import {Input, Pagination} from 'antd';
 import {productsActions} from '../../actions/products.actions';
 import './ProductList.less';
 import SelectAllProduct from "./SelectAllProducts";
-import {debounce } from 'throttle-debounce';
+import {debounce} from 'throttle-debounce';
 
 const {Search} = Input;
 
 class ProductList extends Component {
     state = {
         isSelectedAll: false,
+        prevProductId: '',
         paginationParams: {
-            size: 2,
+            size: 10,
             page: 1,
             searchStr: ''
         }
@@ -31,7 +32,7 @@ class ProductList extends Component {
         }, this.getProducts)
     };
 
-    handleSearch = debounce(500, false,str => {
+    handleSearch = debounce(500, false, str => {
         this.setState({
             ...this.state,
             paginationParams: {
@@ -42,13 +43,16 @@ class ProductList extends Component {
     });
 
     selectAll = () => {
-        const {selectProduct, selectedProduct} = this.props;
+        const {selectProduct, selectedProduct, products} = this.props;
+        selectedProduct.id && this.setState({prevProductId: selectedProduct.id});
 
         this.setState(({isSelectedAll}) => ({
                 isSelectedAll: !isSelectedAll,
             }), () => {
                 if (this.state.isSelectedAll) selectProduct('all');
-                else selectProduct(selectedProduct);
+                else {
+                    selectProduct(products.find(item => item.id === this.state.prevProductId));
+                }
             },
         );
     };
@@ -99,12 +103,12 @@ class ProductList extends Component {
                 </div>
 
                 {products && products.map(product => (
-                        <ProductItem
-                            key={product.id}
-                            product={product}
-                            isActive={isSelectedAll || selectedProduct.id === product.id}
-                            onClick={(item) => this.onSelect(item)}
-                        />
+                    <ProductItem
+                        key={product.id}
+                        product={product}
+                        isActive={isSelectedAll || selectedProduct.id === product.id}
+                        onClick={(item) => this.onSelect(item)}
+                    />
                 ))}
 
                 {totalSize > size && <Pagination

@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {Drawer, Icon} from 'antd';
 import {connect} from 'react-redux';
+import {debounce} from 'throttle-debounce';
 
 import ProductList from '../../../components/ProductList/ProductList';
 import OptimizationOptions from './OptimizationOptions/OptimizationOptions';
@@ -30,24 +31,20 @@ class Optimization extends Component {
 
     toLess = () => this.setState({isLess: !this.state.isLess});
 
-    onSelectStrategy = strategy => this.setState({selectedStrategy: strategy});
+    onSelectStrategy = strategy => this.setState({selectedStrategy: strategy}, this.handleUpdateProduct);
 
+    handleUpdateProduct = debounce(500, false, () => {
+        const {product, selectedStrategy} = this.state;
 
-    onChangeOptions = (e) => {
-        const localSaveData = {[e.target.name]: e.target.checked};
-
-        this.setState({
-            ...this.state,
-            product: {
-                ...this.state.product,
-                ...localSaveData
-            }
+        product.status === 'RUNNING' && this.props.updateProduct({
+            ...product,
+            optimization_strategy: selectedStrategy
         })
-    };
+    });
 
     static getDerivedStateFromProps(props, state) {
         if (props.selectedProduct.id !== state.product.id) {
-            if(props.selectedProduct.status === 'RUNNING') {
+            if (props.selectedProduct.status === 'RUNNING') {
                 return ({
                     product: props.selectedProduct,
                     selectedStrategy: props.selectedProduct.optimization_strategy
@@ -81,9 +78,8 @@ class Optimization extends Component {
                     <div className="product-options">
                         <div className={`options ${!isLess ? 'more' : 'less'}`}>
                             <OptimizationOptions
-                                onChange={this.onChangeOptions}
                                 openInformation={() => this.showDrawer('options')}
-                                product={product}
+                                selectedProduct={product}
                             />
 
                             <OptimizationStrategy
@@ -98,7 +94,6 @@ class Optimization extends Component {
                             a powerful new way to target manual Amazon Sponsored Product campaigns.
                              It allows sellers to target ads by either
                              ASIN or Category (brands, prices, and ratings).`}
-
                             </div>
 
                             <div className="less-more-control">
@@ -112,7 +107,7 @@ class Optimization extends Component {
                             </div>
                         </div>
 
-                        <OptimizationStatus />
+                        <OptimizationStatus/>
 
                         <LastReports isLess={isLess}/>
                     </div>

@@ -6,7 +6,8 @@ export const productsActions = {
     updateProduct,
     fetchProductDetails,
     onSwitchOptimization,
-    setNetMargin
+    setNetMargin,
+    updateOptions
 };
 
 function fetchProducts(params) {
@@ -21,18 +22,6 @@ function fetchProducts(params) {
                 if (res.productList.length > 0) {
                     dispatch(fetchProductDetails(res.productList[0]));
                 }
-            });
-    };
-}
-
-function updateProduct(product) {
-    return dispatch => {
-        productsServices.updateProductById(product)
-            .then(res => {
-                dispatch({
-                    type: productsConstants.UPDATE_SELECTED_PRODUCT,
-                    payload: res
-                });
             });
     };
 }
@@ -60,13 +49,39 @@ function fetchProductDetails(product) {
     };
 }
 
-function onSwitchOptimization() {
+function updateProduct(product) {
     return dispatch => {
-        productsServices.updateProductById()
-            .then(res => {
+        productsServices.updateProductById(product)
+            .then(() => {
                 dispatch({
                     type: productsConstants.UPDATE_SELECTED_PRODUCT,
-                    payload: res
+                    payload: product
+                });
+            });
+    };
+}
+
+function updateOptions(options) {
+    return dispatch => {
+        dispatch({
+            type: productsConstants.UPDATE_PRODUCT_OPTIONS,
+            payload: options
+        });
+    };
+}
+
+function onSwitchOptimization(product) {
+    return dispatch => {
+        productsServices.updateProductById(product)
+            .then(() => {
+                dispatch({
+                    type: productsConstants.UPDATE_SELECTED_PRODUCT,
+                    payload: product
+                });
+
+                product.status === 'RUNNING' && dispatch({
+                    type: productsConstants.UPDATE_PRODUCT_OPTIONS,
+                    payload: product
                 });
             });
     };

@@ -83,10 +83,10 @@ const SidebarItem = ({ logOut, item, parentLink = '', ...props }) => {
                 key={item.link}
                 onClick={logOut}
             >
-                <Link to={parentLink + item.link}>
+                <a>
                     <ItemIcon icon={item.icon} isSub={!!parentLink} />
                     <span>{item.title}</span>
-                </Link>
+                </a>
             </Menu.Item>
         );
     } else {

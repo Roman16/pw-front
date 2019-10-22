@@ -27,12 +27,13 @@ function login(user) {
 
 function logOut() {
     return dispatch => {
+        history.push('/login');
+
         dispatch({
             type: userConstants.USER_LOGOUT,
         });
 
         localStorage.removeItem('token');
-        history.push('/login');
     };
 }
 
@@ -56,15 +57,16 @@ function setMWS(data) {
             .then(res => {
                 dispatch(setInformation(res));
 
-                if(!res.account_links.amazon_ppc.is_connected) {
-                    history.push('/ppc');
-                } else {
-                    history.push('/ppc/optimization');
+                if (res.account_links) {
+                    if (!res.account_links.amazon_ppc.is_connected) {
+                        history.push('/ppc');
+                    } else {
+                        history.push('/ppc/optimization');
+                    }
                 }
             });
     };
 }
-
 
 
 function getUserInfo() {
