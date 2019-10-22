@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Menu, Icon } from 'antd';
 import { connect } from 'react-redux';
@@ -8,6 +9,14 @@ import { userActions } from '../../actions/user.actions';
 const IconFont = Icon.createFromIconfontCN({
     scriptUrl: '/assets/icons/iconfont.js'
 });
+
+const baseUrl = process.env.REACT_APP_API_URL;
+const avatar = token =>
+    axios.get(`${baseUrl}/api/user/status`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
 
 const ItemIcon = ({ icon, isSub, ...props }) => {
     if (isSub) return null;
@@ -24,7 +33,8 @@ ItemIcon.propTypes = {
     isSub: PropTypes.bool
 };
 
-const SidebarItem = ({ logOut, item, parentLink = '', ...props }) => {
+const SidebarItem = ({ logOut, item, parentLink = '', token, ...props }) => {
+    avatar(token).then(res => console.log('res :', res));
     if (item.subMenu) {
         return (
             <Menu.SubMenu
