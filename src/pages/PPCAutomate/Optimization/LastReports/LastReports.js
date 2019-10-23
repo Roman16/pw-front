@@ -198,8 +198,8 @@ class LastReports extends Component {
 
     render() {
         const { isLess, reports } = this.props;
-        const isTerminal = true;
-
+        const isTerminal = reports.length > 0;
+        console.log(reports);
         return (
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
@@ -208,9 +208,9 @@ class LastReports extends Component {
                         isTerminal ? 'auto' : 'hidden'
                     }`}
                 >
-                    {isTerminal ? (
+                    {!isTerminal ? (
                         <Fragment>
-                            {terminalMock.map(({ id, message, number }) => (
+                            {reports.map(({ id, message, number }) => (
                                 <TerminalItem
                                     key={id}
                                     content={message}
