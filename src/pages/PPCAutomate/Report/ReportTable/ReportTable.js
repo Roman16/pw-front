@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Tabs } from 'antd';
+import { Link } from 'react-router-dom';
+import { Tabs, Button } from 'antd';
 import axios from 'axios';
-import { Button } from 'antd';
 import KeywordsOptimization from './Tables/KeywordsOptimization';
 import DatePicker from '../../../../components/DatePicker/DatePicker';
 import PATsOptimization from './Tables/PATsOptimization';
@@ -123,7 +123,9 @@ class ReportTable extends Component {
     };
 
     downloadFile = () => {
-        axios.get(`${window.BASE_URL}/ppc-report/download-report`);
+        axios.get(
+            `${process.env.REACT_APP_API_URL}/ppc-report/download-report`
+        );
     };
 
     timeRange = (startDate, endDate) => {
@@ -151,6 +153,10 @@ class ReportTable extends Component {
                             Download
                             <i className="download" />
                         </Button>
+                        {/* <Link to="/ppc-automation/reports/download-report">
+                            Download
+                            <i className="download" />
+                        </Link> */}
                     </div>
                 </div>
                 <Tabs defaultActiveKey={tabsItem[0].key} type="card">

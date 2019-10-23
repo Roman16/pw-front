@@ -1,77 +1,76 @@
 @import './style/variables.less';
 
 html {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
-  margin: 0;
-  padding: 0;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
 }
 
 img {
-  max-width: 100%;
-  height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 .ant-btn-primary {
-  background-color: @action-color !important;
-
-  &:hover {
-    background-color: @second-default-dark !important;
-  }
+    background-color: @action-color !important;
+    &:hover {
+        background-color: @second-default-dark !important;
+    }
 }
 
 .main-pages {
-  height: 100vh;
-  display: flex;
+    height: 100vh;
+    display: flex;
 
-  .main-container {
-    flex: 1;
-    height: 100%;
-    overflow: auto;
-    background: #f5f5ff;
+    .main-container {
+        flex: 1;
+        height: 100%;
+        overflow: auto;
+        background: #f5f5ff;
 
-    & > div {
-      padding: 20px 10px;
+        & > div {
+            padding: 20px 10px;
+        }
     }
-  }
 }
 
 .ant-pagination {
-  display: flex;
-  justify-content: flex-end;
-  padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
 
-  ul > li {
-    border: 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    ul > li {
+        border: 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
-    &[title] > a {
-      border: inherit !important;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+        &[title] > a {
+            border: inherit !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &.ant-pagination-jump-prev,
+        &.ant-pagination-jump-next {
+            box-shadow: none;
+        }
+
+        &.ant-pagination-item-active {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+                0 6px 6px rgba(0, 0, 0, 0.23);
+        }
     }
 
-    &.ant-pagination-jump-prev,
-    &.ant-pagination-jump-next {
-      box-shadow: none;
+    .ant-pagination-disabled {
+        display: none;
     }
-
-    &.ant-pagination-item-active {
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
-      0 6px 6px rgba(0, 0, 0, 0.23);
-    }
-  }
-
-  .ant-pagination-disabled {
-    display: none;
-  }
 }
 
 //progress bar
@@ -94,73 +93,80 @@ img {
 }
 
 .ant-calendar-panel {
-  display: flex;
-  flex-direction: row-reverse;
+    display: flex;
+    flex-direction: row-reverse;
+
+    .ant-calendar-range-middle {
+        left: 34%;
+    }
+
+    .ant-calendar-range-right .ant-calendar-date-input-wrap {
+        margin-left: -183px;
+    }
 }
 
 .ant-calendar-footer {
-  width: 100px;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  background-color: @body-background;
+    width: 100px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    background-color: @body-background;
 }
 
 .ant-calendar-footer-extra,
 .ant-calendar-footer-btn {
-  height: 100%;
+    height: 100%;
 }
 
 .ant-calendar-footer-extra {
-  display: flex;
-  flex-flow: column;
-  justify-content: space-evenly;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
 }
 
 .ant-calendar-footer-extra > .ant-tag {
-  width: 7.5em;
-  height: 2.5em;
-  border: none;
-  border-radius: 0.6em;
-  line-height: 2.5em;
-  font-weight: 700;
-  background-color: transparent;
-  color: @action-color-dark;
-  transition: all 0.2s ease-in;
-  cursor: pointer;
+    width: 7.5em;
+    height: 2.5em;
+    border: none;
+    border-radius: 0.6em;
+    line-height: 2.5em;
+    font-weight: 700;
+    background-color: transparent;
+    color: @action-color-dark;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
 }
 
 .ant-calendar-footer-extra > .ant-tag:hover {
-  background-color: @action-color;
-  color: @white;
+    background-color: @action-color;
+    color: @white;
 }
 
 .ant-calendar-cell .ant-calendar-date {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 .ant-calendar-tbody
-.ant-calendar-active-week
-.ant-calendar-selected-day
-.ant-calendar-date {
-  border-radius: 50%;
-  background-color: @success-color;
+    .ant-calendar-active-week
+    .ant-calendar-selected-day
+    .ant-calendar-date {
+    border-radius: 50%;
+    background-color: @success-color;
 }
 
 .ant-calendar-tbody
-.ant-calendar-active-week
-.ant-calendar-selected-day
-.ant-calendar-date:hover {
-  border-radius: 50%;
-  background-color: @success-color;
+    .ant-calendar-active-week
+    .ant-calendar-selected-day
+    .ant-calendar-date:hover {
+    border-radius: 50%;
+    background-color: @success-color;
 }
 
 .ant-calendar-today > .ant-calendar-date {
-  border-radius: 50%;
-  border: 1px solid @action-color;
-  color: @action-color;
+    border-radius: 50%;
+    border: 1px solid @action-color;
+    color: @action-color;
 }
-
 
 // td.ant-calendar-cell.ant-calendar-in-range-cell::before {
 //     background-color: #f00;

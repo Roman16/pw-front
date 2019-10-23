@@ -84,19 +84,31 @@
 
     .terminal-content {
         &.less {
-            max-height: 35.836vh;
+            max-height: calc(
+                100vh - 40px - 418px - 40px - 77px - 40px - 42px - 30px
+            );
         }
 
         &.more {
-            max-height: 65.835vh;
+            max-height: calc(
+                100vh - 40px - 69px - 40px - 77px - 40px - 42px - 30px
+            );
         }
 
         &.auto {
-            overflow-y: auto;
+            overflow: auto;
         }
 
         &.hidden {
             overflow: hidden;
+        }
+
+        @media (max-width: @desktop) {
+            &.less {
+                max-height: calc(
+                    100vh - 40px - 629px - 40px - 77px - 40px - 42px - 30px
+                );
+            }
         }
 
         .terminal-item-dummy {
