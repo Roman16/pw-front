@@ -10,3 +10,7 @@ export const productsUrls = {
     saveProductData: 'ppc-automation/start',
     productDetails: (id) => `product/${id}/details`,
 };
+
+export const reportsUrls = {
+    lastReports: 'ppc-automation/last-changes',
+};

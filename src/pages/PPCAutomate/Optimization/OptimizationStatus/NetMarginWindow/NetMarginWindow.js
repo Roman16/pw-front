@@ -6,6 +6,8 @@ import {Link} from 'react-router-dom';
 import Warning from '../../../../../assets/img/icons/warning.svg';
 
 import './NetMarginWindow.less';
+import {useDispatch, useSelector} from "react-redux";
+import {productsActions} from "../../../../../actions/products.actions";
 
 const errorText = 'net margin should be more than 0';
 
@@ -13,9 +15,15 @@ const Dollar = () => (
     <span className="dollar">$</span>
 );
 
-const NetMarginWindow = ({isShowModal = true, onStart, handleCancel, selectedAll}) => {
+const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll}) => {
     const [value, setValue] = useState(0);
     const [isError, setError] = useState(false);
+
+    const dispatch = useDispatch();
+    const {product, options} = useSelector(state => ({
+        product: state.products.selectedProduct,
+        options: state.products.defaultOptimizationOptions
+    }));
 
     const onChange = ({target: {value}}) => {
         setValue(+value);
@@ -24,7 +32,14 @@ const NetMarginWindow = ({isShowModal = true, onStart, handleCancel, selectedAll
 
     const submit = () => {
         if (value > 0) {
-            onStart(value);
+            dispatch(productsActions.updateProduct({
+                ...product,
+                ...options,
+                product_id: product.id,
+                product_margin: value,
+                status: 'RUNNING'
+            }));
+            handleCancel()
         } else {
             setError(true);
         }
@@ -77,19 +92,8 @@ const NetMarginWindow = ({isShowModal = true, onStart, handleCancel, selectedAll
 };
 
 NetMarginWindow.propTypes = {
-    onStart: func,
     handleCancel: func,
     isShowModal: bool,
-};
-
-NetMarginWindow.defaultProps = {
-    onStart: () => {
-    },
-    handleCancel: () => {
-    },
-    isShowModal: false,
-
-
 };
 
 export default NetMarginWindow;

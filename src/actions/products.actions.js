@@ -1,6 +1,6 @@
 import {productsConstants} from '../constans/actions.type';
 import {productsServices} from '../services/products.services';
-
+import {reportsActions} from './reports.actions';
 export const productsActions = {
     fetchProducts,
     updateProduct,
@@ -39,11 +39,14 @@ function fetchProductDetails(product) {
                             id: product.id
                         }
                     });
+
+                    dispatch(reportsActions.fetchReports({id: product.id}))
                 } else {
                     dispatch({
                         type: productsConstants.SELECT_ALL_PRODUCT,
                         payload: res
                     });
+                    dispatch(reportsActions.fetchReports({id: 'all'}))
                 }
             });
     };

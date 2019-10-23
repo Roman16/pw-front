@@ -33,12 +33,7 @@ const strategyValue = {
 };
 
 
-export const StrategyItem = ({
-                                 caption,
-                                 selected,
-                                 onSelect,
-                                 value,
-                             }) => (
+export const StrategyItem = ({caption, selected, onSelect, value}) => (
     <div className={`strategy-item ${selected ? 'selected' : ''}`}>
         <div className="caption-strategy">
             <div className="strategy-checkbox">
@@ -87,10 +82,7 @@ export const StrategyItem = ({
     </div>
 );
 
-const OptimizationStrategy = ({
-                                  onSelect,
-                                  selectedStrategy,
-                                  openInformation,
+const OptimizationStrategy = ({onSelect, selectedStrategy, openInformation,
                                   product: {
                                       optimization_strategy,
                                   }

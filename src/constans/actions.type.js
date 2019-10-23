@@ -17,3 +17,10 @@ export const productsConstants = {
     UPDATE_SELECTED_PRODUCT: 'UPDATE_SELECTED_PRODUCT',
     SELECT_ALL_PRODUCT: 'SELECT_ALL_PRODUCT',
 };
+
+//--------------------------------------------
+//------------ reports constants--------------
+//--------------------------------------------
+export const reportsConstants = {
+    SET_REPORTS_LIST: 'SET_REPORTS_LIST',
+};

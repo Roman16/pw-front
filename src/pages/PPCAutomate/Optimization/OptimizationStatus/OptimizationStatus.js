@@ -105,7 +105,6 @@ class OptimizationStatus extends Component {
 
                 {isShowModal && (
                     <NetMarginWindow
-                        onStart={this.setNetMargin}
                         isShowModal={isShowModal}
                         handleCancel={this.cancelModal}
                         selectedAll={selectedAll}

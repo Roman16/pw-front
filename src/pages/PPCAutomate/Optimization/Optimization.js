@@ -15,6 +15,7 @@ import LastReports from './LastReports/LastReports';
 import {productsActions} from '../../../actions/products.actions';
 
 import './Optimization.less';
+import {reportsActions} from "../../../actions/reports.actions";
 
 class Optimization extends Component {
     state = {
@@ -31,15 +32,23 @@ class Optimization extends Component {
 
     toLess = () => this.setState({isLess: !this.state.isLess});
 
-    onSelectStrategy = strategy => this.setState({selectedStrategy: strategy}, this.handleUpdateProduct);
+    onSelectStrategy = strategy => {
+        this.setState({
+            selectedStrategy: strategy
+        }, () => {
+            this.props.updateOptions({optimization_strategy: strategy});
+            if (this.state.product.status === 'RUNNING') this.handleUpdateProduct();
+        });
+    };
 
     handleUpdateProduct = debounce(500, false, () => {
-        const {product, selectedStrategy} = this.state;
+        const {product, selectedStrategy} = this.state,
+            {updateProduct} = this.props;
 
-        product.status === 'RUNNING' && this.props.updateProduct({
-            ...product,
-            optimization_strategy: selectedStrategy
-        })
+            updateProduct({
+                ...product,
+                optimization_strategy: selectedStrategy
+            });
     });
 
     static getDerivedStateFromProps(props, state) {
@@ -58,6 +67,10 @@ class Optimization extends Component {
         } else {
             return null
         }
+    }
+
+    componentDidMount() {
+        this.props.getLastReports({id: this.props.selectedProduct.id})
     }
 
     render() {
@@ -138,6 +151,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     updateProduct: (product) => {
         dispatch(productsActions.updateProduct(product));
+    },
+    updateOptions: (data) => {
+        dispatch(productsActions.updateOptions(data))
+    },
+    getLastReports: (id) => {
+        dispatch(reportsActions.fetchReports(id))
     }
 });
 

@@ -39,13 +39,8 @@ export function products(state = initialState, action) {
             return {
                 ...state,
                 defaultOptimizationOptions: {
-                    optimization_strategy: action.payload.optimization_strategy || state.defaultOptimizationOptions.optimization_strategy,
-                    add_negative_keywords: action.payload.add_negative_keywords || state.defaultOptimizationOptions.add_negative_keywords,
-                    optimize_keywords: action.payload.optimize_keywords || state.defaultOptimizationOptions.optimize_keywords,
-                    create_new_keywords: action.payload.create_new_keywords || state.defaultOptimizationOptions.create_new_keywords,
-                    optimize_pats: action.payload.optimize_pats || state.defaultOptimizationOptions.optimize_pats,
-                    add_negative_pats: action.payload.add_negative_pats || state.defaultOptimizationOptions.add_negative_pats,
-                    create_new_pats: action.payload.create_new_pats || state.defaultOptimizationOptions.create_new_pats
+                    ...state.defaultOptimizationOptions,
+                    ...action.payload
                 }
             };
 

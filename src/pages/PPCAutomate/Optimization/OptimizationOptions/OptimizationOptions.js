@@ -84,16 +84,14 @@ const OptimizationOptions = ({openInformation, selectedProduct}) => {
             ...product,
             [name]: checked
         });
+
+        if (product.status === 'RUNNING') updateProduct({...product, [name]: checked});
+        dispatch(productsActions.updateOptions({[name]: checked}));
     };
 
-    const updateProduct = debounce(1000, false, (data) => {
+    const updateProduct = debounce(500, false, (data) => {
         dispatch(productsActions.updateProduct(data))
     });
-
-    useEffect(() => {
-        dispatch(productsActions.updateOptions(product));
-        if (product.status === 'RUNNING') updateProduct(product)
-    }, [product]);
 
     useEffect(() => {
         if (!selectedProduct.status || selectedProduct.status === 'STOPPED') changeOptions(defaultOptions);
