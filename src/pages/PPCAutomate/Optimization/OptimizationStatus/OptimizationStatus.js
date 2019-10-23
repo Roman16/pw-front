@@ -27,15 +27,21 @@ class OptimizationStatus extends Component {
     cancelModal = () => this.setState({isShowModal: false});
 
     toStart = (status) => {
-        const {onSwitchOptimization, product} = this.props;
+        const {onSwitchOptimization, product, selectedAll} = this.props;
 
         if (status === RUNNING && !product.product_margin) {
             this.setState({isShowModal: true});
         } else {
-            onSwitchOptimization({
-                ...product,
-                status: status
-            });
+            selectedAll ? onSwitchOptimization({
+                    ...product,
+                    product_id: 'all',
+                    status: status
+                })
+                :
+                onSwitchOptimization({
+                    ...product,
+                    status: status
+                })
         }
     };
 
@@ -115,13 +121,13 @@ class OptimizationStatus extends Component {
     }
 }
 
-const mapStateToProps = state =>({
-    product: state.products.selectedProduct ?  state.products.selectedProduct : {},
+const mapStateToProps = state => ({
+    product: state.products.selectedProduct ? state.products.selectedProduct : {},
     selectedAll: state.products.selectedAll
 });
 
 const mapDispatchToProps = dispatch => ({
-    onSwitchOptimization:  (product) => {
+    onSwitchOptimization: (product) => {
         dispatch(productsActions.updateProduct(product))
     },
     setNetMargin: (netMargin) => {

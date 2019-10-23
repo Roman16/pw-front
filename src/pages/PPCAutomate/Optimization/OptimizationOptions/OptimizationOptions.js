@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Checkbox, Icon} from "antd";
 import {productsActions} from '../../../../actions/products.actions';
-import {debounce} from 'throttle-debounce';
 
 import './OptimizationOptions.less';
 
@@ -71,6 +70,9 @@ export const options = [
     },
 ];
 
+const delay = 500;
+let timerIdSearch = null;
+
 const OptimizationOptions = ({openInformation, selectedProduct}) => {
     const dispatch = useDispatch();
     const {defaultOptions} = useSelector(state => ({
@@ -85,13 +87,17 @@ const OptimizationOptions = ({openInformation, selectedProduct}) => {
             [name]: checked
         });
 
-        if (product.status === 'RUNNING') updateProduct({...product, [name]: checked});
         dispatch(productsActions.updateOptions({[name]: checked}));
+
+        clearTimeout(timerIdSearch);
+        timerIdSearch = setTimeout(() => {
+            if (product.status === 'RUNNING') updateProduct({...product, [name]: checked});
+        }, delay);
     };
 
-    const updateProduct = debounce(500, false, (data) => {
+    const updateProduct = (data) => {
         dispatch(productsActions.updateProduct(data))
-    });
+    };
 
     useEffect(() => {
         if (!selectedProduct.status || selectedProduct.status === 'STOPPED') changeOptions(defaultOptions);

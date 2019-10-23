@@ -28,8 +28,8 @@ const PrivateRoute = ({component: Component, ...rest}) => (
 );
 
 const ConnectedAmazonRoute = (props) => {
-    const mwsConnected = useSelector(state => state.user.account_links.amazon_mws.is_connected),
-        ppcConnected = useSelector(state => state.user.account_links.amazon_ppc.is_connected);
+    const mwsConnected = useSelector(state => state.user.account_links ? state.user.account_links.amazon_mws.is_connected : null),
+        ppcConnected = useSelector(state => state.user.account_links ? state.user.account_links.amazon_ppc.is_connected : null);
 
     if (!mwsConnected) {
         return <Redirect to='/mws'/>
@@ -47,19 +47,18 @@ const routers = () => {
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/register" component={RegistrationPage}/>
 
-                <AuthorizedUser>
-                    <Switch>
+                <Route path='/' render={() => (
+                    <AuthorizedUser>
                         <ConnectedAmazonRoute exact path="/ppc/optimization" component={Optimization}/>
                         <ConnectedAmazonRoute exact path="/ppc/report" component={Report}/>
                         <ConnectedAmazonRoute exact path="/ppc/product-settings" component={ProductSettings}/>
 
                         <PrivateRoute exact path="/mws" component={MWS}/>
                         <PrivateRoute exact path="/ppc" component={PPC}/>
+                    </AuthorizedUser>
+                )}/>
 
-                        <Route component={NotFound}/>
-                    </Switch>
-                </AuthorizedUser>
-
+                <Route path='*' component={NotFound}/>
             </Switch>
         </Router>
     );

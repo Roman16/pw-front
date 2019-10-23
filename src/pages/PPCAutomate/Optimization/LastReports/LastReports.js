@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Icon, Tooltip, Pagination } from 'antd';
 
@@ -192,15 +193,13 @@ const TerminalItem = ({ number = 0, content = '', data }) => (
     </div>
 );
 
-const lastChanges = [];
-
 class LastReports extends Component {
     state = {};
 
     render() {
-        const { isLess } = this.props;
-        const isTerminal = terminalMock.length !== 0;
-
+        const { isLess, reports } = this.props;
+        const isTerminal = reports.length > 0;
+        console.log(reports);
         return (
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
@@ -209,17 +208,22 @@ class LastReports extends Component {
                         isTerminal ? 'auto' : 'hidden'
                     }`}
                 >
-                    {isTerminal ? (
-                        <>
-                            {terminalMock.map(({ id, message, number }) => (
+                    {!isTerminal ? (
+                        <Fragment>
+                            {reports.map(({ id, message, number }) => (
                                 <TerminalItem
                                     key={id}
                                     content={message}
                                     number={number}
                                 />
                             ))}
-                            <Pagination defaultCurrent={1} total={50} />
-                        </>
+                            <Pagination
+                                defaultCurrent={1}
+                                defaultPageSize={15}
+                                // itemRender={}
+                                total={50}
+                            />
+                        </Fragment>
                     ) : (
                         <div className="terminal-item-dummy">
                             <div
@@ -231,11 +235,11 @@ class LastReports extends Component {
                                     You have not data to display
                                 </p>
                             </div>
-                            {dummy.map(({ id, text }) => (
+                            {terminalMock.map(({ id, message, number }) => (
                                 <TerminalItem
                                     key={id}
-                                    number={id}
-                                    content={text}
+                                    content={message}
+                                    number={number}
                                 />
                             ))}
                         </div>
@@ -246,8 +250,8 @@ class LastReports extends Component {
     }
 }
 
-LastReports.propTypes = {};
+const mapStateToProps = state => ({
+    reports: state.reports
+});
 
-LastReports.defaultProps = {};
-
-export default LastReports;
+export default connect(mapStateToProps)(LastReports);

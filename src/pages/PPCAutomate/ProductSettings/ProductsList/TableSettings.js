@@ -1,27 +1,23 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {productsServices} from '../../../../services/products.services';
+
 import axios from 'axios';
 
 
-const delay = 1000; // ms
-const ProductSettingsApi = (ProductSettings) => (
+const delay = 500; // ms
+
+const TableSettings = (ProductSettings) => (
     class extends Component {
-        constructor(props) {
-            super(props);
+        state = {
+            dataSource: [],
+        };
 
-            this.state = {
-                dataSource: [],
-            };
-            this.timerId = null;
-            this.timerIdSearch = null;
-        }
-
-        componentDidMount() {
-            this.fetchData();
-        }
+        timerId = null;
+        timerIdSearch = null;
 
         updateData = (data) => {
-            axios.post('/api/product-settings/product-margin', { ...data })
-                .then(({ data }) => {
+            axios.post('/api/product-settings/product-margin', {...data})
+                .then(({data}) => {
                     console.log(data);
                 })
                 .catch((e) => {
@@ -32,7 +28,7 @@ const ProductSettingsApi = (ProductSettings) => (
         };
 
         onSearchChange = (event) => {
-            const { target: { value } } = event;
+            const {target: {value}} = event;
 
             clearTimeout(this.timerIdSearch);
             this.timerIdSearch = setTimeout(() => {
@@ -41,7 +37,7 @@ const ProductSettingsApi = (ProductSettings) => (
         };
 
         onSearchBlur = (event) => {
-            const { target: { value } } = event;
+            const {target: {value}} = event;
 
             clearTimeout(this.timerIdSearch);
             this.fetchData(value);
@@ -49,21 +45,20 @@ const ProductSettingsApi = (ProductSettings) => (
 
         fetchData = (searchText = '') => {
             let dataSource = [];
+            console.log(searchText);
 
-            axios.get('/api/product-settings', {
-                params: {
-                    search_query: searchText,
-                },
-            })
-                .then(({ data }) => {
-                    dataSource = data;
-                })
-                .catch((e) => {
-                    console.log(e);
-                })
-                .finally(() => {
-                    this.setState({ dataSource });
-                });
+            // productsServices.getProducts({
+            //     search_query: searchText,
+            // })
+            //     .then(({data}) => {
+            //         dataSource = data;
+            //     })
+            //     .catch((e) => {
+            //         console.log(e);
+            //     })
+            //     .finally(() => {
+            //         this.setState({dataSource});
+            //     });
         };
 
         onChangeRow = (...args) => {
@@ -76,8 +71,8 @@ const ProductSettingsApi = (ProductSettings) => (
         };
 
         setRowData = (event, item, index) => {
-            const { dataSource } = this.state;
-            const { target: { value } } = event;
+            const {dataSource} = this.state;
+            const {target: {value}} = event;
 
             dataSource[index] = {
                 ...dataSource[index],
@@ -86,7 +81,6 @@ const ProductSettingsApi = (ProductSettings) => (
             this.setState({
                 dataSource: [...dataSource],
             });
-
 
             return dataSource[index];
         };
@@ -98,9 +92,12 @@ const ProductSettingsApi = (ProductSettings) => (
             this.updateData(dataSourceRow);
         };
 
-        render() {
-            const { dataSource } = this.state;
+        componentDidMount() {
+            this.fetchData();
+        }
 
+        render() {
+            const {dataSource} = this.state;
 
             return (
                 <ProductSettings
@@ -110,12 +107,10 @@ const ProductSettingsApi = (ProductSettings) => (
                     onBlurRow={this.onBlurRow}
                     onSearchChange={this.onSearchChange}
                     onSearchBlur={this.onSearchBlur}
-
                 />
             );
         }
     }
-
 );
 
-export default ProductSettingsApi;
+export default TableSettings;

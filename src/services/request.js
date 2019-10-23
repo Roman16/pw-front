@@ -26,11 +26,11 @@ const api = (method, url, data, type) => {
             })
             .catch(error => {
                 reject(error);
-                console.log(error.response);
-                notification.error({
-                    message: error.response.data.message,
-                    // description: error.response.data.message,
-                });
+                // console.log(error.response);
+                // notification.error({
+                //     message: error.response.data ? error.response.data.message : '',
+                //     // description: error.response.data.message,
+                // });
             });
     });
 };

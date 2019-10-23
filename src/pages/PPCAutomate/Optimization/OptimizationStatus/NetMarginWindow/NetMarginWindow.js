@@ -36,7 +36,8 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll}) => {
                 ...product,
                 ...options,
                 product_id: product.id,
-                product_margin: value,
+                product_margin: true,
+                product_margin_value: value,
                 status: 'RUNNING'
             }));
             handleCancel()
