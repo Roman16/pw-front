@@ -19,6 +19,7 @@ img {
 
 .ant-btn-primary {
     background-color: @action-color !important;
+
     &:hover {
         background-color: @second-default-dark !important;
     }
@@ -70,6 +71,20 @@ img {
 
     .ant-pagination-disabled {
         display: none;
+    }
+}
+
+//progress bar
+#nprogress {
+    z-index: 100000;
+
+    .bar {
+        background: @action-color !important;
+    }
+
+    .spinner-icon {
+        border-top-color: @action-color !important;
+        border-left-color: @action-color !important;
     }
 }
 

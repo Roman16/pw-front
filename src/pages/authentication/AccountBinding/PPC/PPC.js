@@ -44,7 +44,7 @@ class PPC extends Component {
 }
 
 const mapStateToProps = state => ({
-    ppcLink: state.user.account_links.amazon_ppc.connect_link
+    ppcLink: state.user.account_links ? state.user.account_links.amazon_ppc.connect_link : ''
 });
 
 export default connect(mapStateToProps)(PPC);

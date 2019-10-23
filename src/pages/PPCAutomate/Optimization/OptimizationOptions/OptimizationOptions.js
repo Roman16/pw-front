@@ -1,15 +1,14 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {Checkbox, Icon} from "antd";
+import {productsActions} from '../../../../actions/products.actions';
+import {debounce} from 'throttle-debounce';
 
 import './OptimizationOptions.less';
 
 export const CheckBoxItem = ({text, value = '', checked, ...props}) => (
-
     <div className="check-box-item">
-        <Checkbox
-            checked={checked}
-            {...props}
-        >
+        <Checkbox checked={checked}{...props}>
             {text}
         </Checkbox>
     </div>
@@ -72,38 +71,54 @@ export const options = [
     },
 ];
 
-class OptimizationOptions extends Component {
-    state = {};
+const OptimizationOptions = ({openInformation, selectedProduct}) => {
+    const dispatch = useDispatch();
+    const {defaultOptions} = useSelector(state => ({
+        defaultOptions: state.products.defaultOptimizationOptions
+    }));
 
-    render() {
-        const {
-            onChange,
-            openInformation,
-            product,
-        } = this.props;
+    const [product, changeOptions] = useState(selectedProduct);
 
-        return (
-            <div className="optimize-options">
-                <div className="product-info ">
-                    <span> What do you want to automate</span>
-                    <Icon type="info-circle" theme="filled" onClick={openInformation}/>
-                </div>
+    const onChangeOptions = ({target: {name, checked}}) => {
+        changeOptions({
+            ...product,
+            [name]: checked
+        });
 
-                <div className='options-content'>
-                    {options.map(({text, value, name}) => (
-                        <CheckBoxItem
-                            key={text}
-                            text={text}
-                            value={value}
-                            name={name}
-                            checked={product && product[name]}
-                            onChange={onChange}
-                        />
-                    ))}
-                </div>
+        if (product.status === 'RUNNING') updateProduct({...product, [name]: checked});
+        dispatch(productsActions.updateOptions({[name]: checked}));
+    };
+
+    const updateProduct = debounce(500, false, (data) => {
+        dispatch(productsActions.updateProduct(data))
+    });
+
+    useEffect(() => {
+        if (!selectedProduct.status || selectedProduct.status === 'STOPPED') changeOptions(defaultOptions);
+        else if (selectedProduct.status === 'RUNNING') changeOptions(selectedProduct)
+    }, [selectedProduct]);
+
+    return (
+        <div className="optimize-options">
+            <div className="product-info ">
+                <span> What do you want to automate</span>
+                <Icon type="info-circle" theme="filled" onClick={openInformation}/>
             </div>
-        );
-    }
-}
+
+            <div className='options-content'>
+                {options.map(({text, value, name}) => (
+                    <CheckBoxItem
+                        key={text}
+                        text={text}
+                        value={value}
+                        name={name}
+                        checked={product && product[name]}
+                        onChange={onChangeOptions}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 export default OptimizationOptions;

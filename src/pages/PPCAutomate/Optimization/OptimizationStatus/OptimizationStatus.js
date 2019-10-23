@@ -27,12 +27,15 @@ class OptimizationStatus extends Component {
     cancelModal = () => this.setState({isShowModal: false});
 
     toStart = (status) => {
-        const {onSwitchOptimization, netMargin} = this.props;
+        const {onSwitchOptimization, product} = this.props;
 
-        if (status === RUNNING && !netMargin) {
+        if (status === RUNNING && !product.product_margin) {
             this.setState({isShowModal: true});
         } else {
-            onSwitchOptimization(status);
+            onSwitchOptimization({
+                ...product,
+                status: status
+            });
         }
     };
 
@@ -50,7 +53,8 @@ class OptimizationStatus extends Component {
                 created_at,
                 total_changes,
                 today_change,
-            }
+            },
+            selectedAll
         } = this.props;
 
         const {isShowModal} = this.state;
@@ -101,9 +105,9 @@ class OptimizationStatus extends Component {
 
                 {isShowModal && (
                     <NetMarginWindow
-                        onStart={this.setNetMargin}
                         isShowModal={isShowModal}
                         handleCancel={this.cancelModal}
+                        selectedAll={selectedAll}
                     />
                 )}
             </div>
@@ -112,12 +116,13 @@ class OptimizationStatus extends Component {
 }
 
 const mapStateToProps = state =>({
-    product: state.products.selectedProduct ?  state.products.selectedProduct : {}
+    product: state.products.selectedProduct ?  state.products.selectedProduct : {},
+    selectedAll: state.products.selectedAll
 });
 
 const mapDispatchToProps = dispatch => ({
-    onSwitchOptimization:  () => {
-        dispatch(productsActions.onSwitchOptimization)
+    onSwitchOptimization:  (product) => {
+        dispatch(productsActions.updateProduct(product))
     },
     setNetMargin: (netMargin) => {
         dispatch(productsActions.setNetMargin(netMargin))

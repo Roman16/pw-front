@@ -202,7 +202,7 @@ class LastReports extends Component {
         const isTerminal = terminalMock.length !== 0;
 
         return (
-            <div className={`terminal`}>
+            <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
                 <div
                     className={`terminal-content ${!isLess ? 'less' : 'more'} ${

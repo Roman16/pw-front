@@ -3,6 +3,7 @@ import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {store, persistor} from './store/store';
 import Rousting from './routers/routers';
+import 'axios-progress-bar/dist/nprogress.css';
 
 import {PersistGate} from 'redux-persist/integration/react'
 

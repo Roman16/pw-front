@@ -1,12 +1,13 @@
 import {productsConstants} from '../constans/actions.type';
 import {productsServices} from '../services/products.services';
-
+import {reportsActions} from './reports.actions';
 export const productsActions = {
     fetchProducts,
     updateProduct,
     fetchProductDetails,
     onSwitchOptimization,
-    setNetMargin
+    setNetMargin,
+    updateOptions
 };
 
 function fetchProducts(params) {
@@ -25,18 +26,6 @@ function fetchProducts(params) {
     };
 }
 
-function updateProduct(product) {
-    return dispatch => {
-        productsServices.updateProductById(product)
-            .then(res => {
-                dispatch({
-                    type: productsConstants.UPDATE_SELECTED_PRODUCT,
-                    payload: res
-                });
-            });
-    };
-}
-
 function fetchProductDetails(product) {
     return dispatch => {
         productsServices.getProductDetails(product === 'all' ? 'all' : product.id)
@@ -50,23 +39,52 @@ function fetchProductDetails(product) {
                             id: product.id
                         }
                     });
+
+                    dispatch(reportsActions.fetchReports({id: product.id}))
                 } else {
                     dispatch({
                         type: productsConstants.SELECT_ALL_PRODUCT,
                         payload: res
                     });
+                    dispatch(reportsActions.fetchReports({id: 'all'}))
                 }
             });
     };
 }
 
-function onSwitchOptimization() {
+function updateProduct(product) {
     return dispatch => {
-        productsServices.updateProductById()
-            .then(res => {
+        productsServices.updateProductById(product)
+            .then(() => {
                 dispatch({
                     type: productsConstants.UPDATE_SELECTED_PRODUCT,
-                    payload: res
+                    payload: product
+                });
+            });
+    };
+}
+
+function updateOptions(options) {
+    return dispatch => {
+        dispatch({
+            type: productsConstants.UPDATE_PRODUCT_OPTIONS,
+            payload: options
+        });
+    };
+}
+
+function onSwitchOptimization(product) {
+    return dispatch => {
+        productsServices.updateProductById(product)
+            .then(() => {
+                dispatch({
+                    type: productsConstants.UPDATE_SELECTED_PRODUCT,
+                    payload: product
+                });
+
+                product.status === 'RUNNING' && dispatch({
+                    type: productsConstants.UPDATE_PRODUCT_OPTIONS,
+                    payload: product
                 });
             });
     };

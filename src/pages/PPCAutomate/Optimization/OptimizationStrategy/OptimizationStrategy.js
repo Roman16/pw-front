@@ -30,13 +30,7 @@ const strategyValue = {
     }
 };
 
-export const StrategyItem = ({
-    caption,
-    selected,
-    onSelect,
-    toStartOptimization,
-    value
-}) => (
+export const StrategyItem = ({ caption, selected, onSelect, value }) => (
     <div className={`strategy-item ${selected ? 'selected' : ''}`}>
         <div className="caption-strategy">
             <div className="strategy-checkbox">
@@ -99,7 +93,6 @@ export const StrategyItem = ({
                     className="strategy-btn"
                     onClick={() => {
                         onSelect(value);
-                        toStartOptimization();
                     }}
                 >
                     Select
@@ -113,7 +106,6 @@ const OptimizationStrategy = ({
     onSelect,
     selectedStrategy,
     openInformation,
-    toStartOptimization,
     product: { optimization_strategy }
 }) => {
     return (
@@ -136,7 +128,6 @@ const OptimizationStrategy = ({
                             : optimization_strategy === 'BoostOverallProfit'
                     }
                     onSelect={onSelect}
-                    toStartOptimization={toStartOptimization}
                     value="BoostOverallProfit"
                 />
                 <StrategyItem
@@ -147,7 +138,6 @@ const OptimizationStrategy = ({
                             : optimization_strategy === 'BoostPPCProfit'
                     }
                     onSelect={onSelect}
-                    toStartOptimization={toStartOptimization}
                     value="BoostPPCProfit"
                 />
                 <StrategyItem
@@ -158,7 +148,6 @@ const OptimizationStrategy = ({
                             : optimization_strategy === 'GrowOverallSales'
                     }
                     onSelect={onSelect}
-                    toStartOptimization={toStartOptimization}
                     value="GrowOverallSales"
                 />
                 <StrategyItem
@@ -169,7 +158,6 @@ const OptimizationStrategy = ({
                             : optimization_strategy === 'LaunchProduct'
                     }
                     onSelect={onSelect}
-                    toStartOptimization={toStartOptimization}
                     value="LaunchProduct"
                 />
             </div>

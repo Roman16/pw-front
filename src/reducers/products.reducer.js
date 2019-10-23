@@ -1,18 +1,20 @@
 import {productsConstants} from '../constans/actions.type';
 
+const defaultOptions = {
+    optimization_strategy: 'BoostOverallProfit',
+    add_negative_keywords: true,
+    optimize_keywords: true,
+    create_new_keywords: true,
+    optimize_pats: true,
+    add_negative_pats: true,
+    create_new_pats: true,
+};
+
 const initialState = {
     productList: [],
     totalSize: 0,
     selectedAll: false,
-    defaultOptimizationOptions: {
-        optimization_strategy: 'BoostOverallProfit',
-        add_negative_keywords: true,
-        optimize_keywords: true,
-        create_new_keywords: true,
-        optimize_pats: true,
-        add_negative_pats: true,
-        create_new_pats: true,
-    },
+    defaultOptimizationOptions: defaultOptions,
     selectedProduct: {
         optimization_strategy: '',
     }
@@ -27,10 +29,19 @@ export function products(state = initialState, action) {
                 totalSize: action.payload.totalSize
             };
 
-        case productsConstants.UPDATE_PRODUCT_DATA:
+        case productsConstants.UPDATE_SELECTED_PRODUCT:
             return {
                 ...state,
-                ...action.payload
+                selectedProduct: action.payload
+            };
+
+        case productsConstants.UPDATE_PRODUCT_OPTIONS:
+            return {
+                ...state,
+                defaultOptimizationOptions: {
+                    ...state.defaultOptimizationOptions,
+                    ...action.payload
+                }
             };
 
         case productsConstants.SELECT_PRODUCT:
@@ -46,7 +57,6 @@ export function products(state = initialState, action) {
                 selectedAll: !state.selectedAll,
                 selectedProduct: {
                     ...action.payload,
-                    id: state.selectedProduct.id
                 },
             };
 
