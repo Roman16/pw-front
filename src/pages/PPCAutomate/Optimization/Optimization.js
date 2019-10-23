@@ -15,7 +15,6 @@ import LastReports from './LastReports/LastReports';
 import {productsActions} from '../../../actions/products.actions';
 
 import './Optimization.less';
-import {reportsActions} from "../../../actions/reports.actions";
 
 class Optimization extends Component {
     state = {
@@ -67,10 +66,6 @@ class Optimization extends Component {
         } else {
             return null
         }
-    }
-
-    componentDidMount() {
-        this.props.getLastReports({id: this.props.selectedProduct.id})
     }
 
     render() {
@@ -154,9 +149,6 @@ const mapDispatchToProps = dispatch => ({
     },
     updateOptions: (data) => {
         dispatch(productsActions.updateOptions(data))
-    },
-    getLastReports: (id) => {
-        dispatch(reportsActions.fetchReports(id))
     }
 });
 
