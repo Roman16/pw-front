@@ -10,7 +10,7 @@ export function reports(state = initialState, action) {
         case reportsConstants.SET_REPORTS_LIST:
             return {
                 ...state,
-                reports: action.payloadg,
+                reports: action.payload,
             };
 
         default:

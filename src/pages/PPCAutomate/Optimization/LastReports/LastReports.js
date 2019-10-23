@@ -199,7 +199,7 @@ class LastReports extends Component {
     render() {
         const { isLess, reports } = this.props;
         const isTerminal = reports.length > 0;
-        console.log(reports);
+
         return (
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
@@ -251,7 +251,7 @@ class LastReports extends Component {
 }
 
 const mapStateToProps = state => ({
-    reports: state.reports
+    reports: state.reports.reports
 });
 
 export default connect(mapStateToProps)(LastReports);
