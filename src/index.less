@@ -97,6 +97,11 @@ img {
     display: flex;
     flex-direction: row-reverse;
 
+    // input hidde
+    .ant-calendar-input-wrap {
+        display: none;
+    }
+
     .ant-calendar-range-middle {
         left: 34%;
     }
@@ -169,9 +174,41 @@ img {
     color: @action-color;
 }
 
-// td.ant-calendar-cell.ant-calendar-in-range-cell::before {
-//     background-color: #f00;
-// }
+td {
+    position: relative;
+}
+
+td.ant-calendar-cell.ant-calendar-selected-start-date::before {
+    position: absolute !important;
+    top: 4px !important;
+    right: 0 !important;
+    bottom: 4px !important;
+    left: 50% !important;
+    display: block !important;
+    background: @success-color-opacity !important;
+    background: radial-gradient(circle at -30px);
+    border: 0 !important;
+    content: '' !important;
+}
+
+td.ant-calendar-cell.ant-calendar-selected-end-date::before {
+    position: absolute !important;
+    top: 4px !important;
+    right: 50% !important;
+    bottom: 4px !important;
+    left: 0 !important;
+    display: block !important;
+    background: @success-color-opacity !important;
+    background: radial-gradient(circle at 30px);
+    border: 0 !important;
+    content: '' !important;
+}
+
+td.ant-calendar-cell.ant-calendar-in-range-cell::before {
+    background-color: @success-color-opacity;
+}
+
+// tooltip
 
 .ant-tooltip-content {
     width: fit-content;

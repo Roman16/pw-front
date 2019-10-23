@@ -1,7 +1,7 @@
-import React, {Component, Fragment} from 'react';
-import {Drawer, Icon} from 'antd';
-import {connect} from 'react-redux';
-import {debounce} from 'throttle-debounce';
+import React, { Component, Fragment } from 'react';
+import { Drawer, Icon } from 'antd';
+import { connect } from 'react-redux';
+import { debounce } from 'throttle-debounce';
 
 import ProductList from '../../../components/ProductList/ProductList';
 import OptimizationOptions from './OptimizationOptions/OptimizationOptions';
@@ -16,7 +16,7 @@ import NetMarginWindow from './OptimizationStatus/NetMarginWindow/NetMarginWindo
 import { productsActions } from '../../../actions/products.actions';
 
 import './Optimization.less';
-import {reportsActions} from "../../../actions/reports.actions";
+import { reportsActions } from '../../../actions/reports.actions';
 
 class Optimization extends Component {
     state = {
@@ -35,28 +35,32 @@ class Optimization extends Component {
     toLess = () => this.setState({ isLess: !this.state.isLess });
 
     onSelectStrategy = strategy => {
-        this.setState({
-            selectedStrategy: strategy
-        }, () => {
-            this.props.updateOptions({optimization_strategy: strategy});
-            if (this.state.product.status === 'RUNNING') this.handleUpdateProduct();
-        });
+        this.setState(
+            {
+                selectedStrategy: strategy
+            },
+            () => {
+                this.props.updateOptions({ optimization_strategy: strategy });
+                if (this.state.product.status === 'RUNNING')
+                    this.handleUpdateProduct();
+            }
+        );
     };
 
     handleUpdateProduct = debounce(500, false, () => {
-        const {product, selectedStrategy} = this.state,
-            {updateProduct} = this.props;
+        const { product, selectedStrategy } = this.state,
+            { updateProduct } = this.props;
 
-            updateProduct({
-                ...product,
-                optimization_strategy: selectedStrategy
-            });
+        updateProduct({
+            ...product,
+            optimization_strategy: selectedStrategy
+        });
     });
 
     static getDerivedStateFromProps(props, state) {
         if (props.selectedProduct.id !== state.product.id) {
             if (props.selectedProduct.status === 'RUNNING') {
-                return ({
+                return {
                     product: props.selectedProduct,
                     selectedStrategy:
                         props.selectedProduct.optimization_strategy
@@ -76,7 +80,7 @@ class Optimization extends Component {
     }
 
     componentDidMount() {
-        this.props.getLastReports({id: this.props.selectedProduct.id})
+        this.props.getLastReports({ id: this.props.selectedProduct.id });
     }
 
     render() {
@@ -91,7 +95,9 @@ class Optimization extends Component {
                     <div className="product-options">
                         <div className={`options ${!isLess ? 'more' : 'less'}`}>
                             <OptimizationOptions
-                                openInformation={() => this.showDrawer('options')}
+                                openInformation={() =>
+                                    this.showDrawer('options')
+                                }
                                 selectedProduct={product}
                             />
 
@@ -125,7 +131,7 @@ class Optimization extends Component {
                             </div>
                         </div>
 
-                        <OptimizationStatus/>
+                        <OptimizationStatus />
 
                         <LastReports isLess={isLess} />
                     </div>
@@ -165,11 +171,11 @@ const mapDispatchToProps = dispatch => ({
     updateProduct: product => {
         dispatch(productsActions.updateProduct(product));
     },
-    updateOptions: (data) => {
-        dispatch(productsActions.updateOptions(data))
+    updateOptions: data => {
+        dispatch(productsActions.updateOptions(data));
     },
-    getLastReports: (id) => {
-        dispatch(reportsActions.fetchReports(id))
+    getLastReports: id => {
+        dispatch(reportsActions.fetchReports(id));
     }
 });
 
