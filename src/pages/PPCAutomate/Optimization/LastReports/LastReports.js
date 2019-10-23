@@ -5,139 +5,6 @@ import { Icon, Tooltip, Pagination } from 'antd';
 
 import './LastReports.less';
 
-export const terminalMock = [
-    {
-        id: 1,
-        number: 1,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 2,
-        number: 2,
-        message: `Mistake: Bad-performing keywords.
-         Manual PAT for ASIN 'B0ASINASIN' in ad group
-         'adGroupName' in campaign 'campaign name' should be
-          paused because it has 20 clicks without single sale
-           compared to target clicks 10 (calculated based on
-            your average conversion rate for the product: 10%).`
-    },
-    {
-        id: 3,
-        number: 3,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 4,
-        number: 4,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 5,
-        number: 5,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 6,
-        number: 6,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 7,
-        number: 7,
-        message: `Mistake: <b>Bad-performing keywords.</b>'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 8,
-        number: 8,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 9,
-        number: 9,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 10,
-        number: 10,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 11,
-        number: 11,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 12,
-        number: 12,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 13,
-        number: 13,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 14,
-        number: 14,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 15,
-        number: 15,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    },
-    {
-        id: 16,
-        number: 16,
-        message: `Mistake: Bad-performing keywords.'
-        ' Keyword 'keyword text' in ad group '
-         ''adGroupName' in campaign 'campaign name' '
-        'should be paused because it has 15 clicks without single sale compared to target clicks 10 `
-    }
-];
-
 const dummy = [
     { id: 1 },
     { id: 2 },
@@ -149,8 +16,8 @@ const dummy = [
     { id: 8 },
     { id: 9 },
     { id: 10 },
-    { id: 11 }
-    // { id: 12 }
+    { id: 11 },
+    { id: 12 }
 ];
 
 const TerminalCaption = ({ isTerminal }) => (
@@ -198,8 +65,8 @@ class LastReports extends Component {
 
     render() {
         const { isLess, reports } = this.props;
-        const isTerminal = reports.length > 0;
-        console.log(reports);
+        const isTerminal =
+            reports && reports.reports && reports.reports.length > 0;
         return (
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
@@ -208,9 +75,9 @@ class LastReports extends Component {
                         isTerminal ? 'auto' : 'hidden'
                     }`}
                 >
-                    {!isTerminal ? (
+                    {isTerminal ? (
                         <Fragment>
-                            {reports.map(({ id, message, number }) => (
+                            {reports.reports.map(({ id, message, number }) => (
                                 <TerminalItem
                                     key={id}
                                     content={message}
@@ -235,12 +102,8 @@ class LastReports extends Component {
                                     You have not data to display
                                 </p>
                             </div>
-                            {terminalMock.map(({ id, message, number }) => (
-                                <TerminalItem
-                                    key={id}
-                                    content={message}
-                                    number={number}
-                                />
+                            {dummy.map(({ id }) => (
+                                <TerminalItem key={id} number={id} />
                             ))}
                         </div>
                     )}
