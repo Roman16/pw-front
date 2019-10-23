@@ -33,7 +33,7 @@ function logOut() {
             type: userConstants.USER_LOGOUT,
         });
 
-        localStorage.removeItem('token');
+        localStorage.clear();
     };
 }
 
