@@ -28,7 +28,7 @@ const api = (method, url, data, type) => {
                 reject(error);
                 console.log(error.response);
                 notification.error({
-                    message: error.response.data.message,
+                    message: error.response.data ? error.response.data.message : '',
                     // description: error.response.data.message,
                 });
             });

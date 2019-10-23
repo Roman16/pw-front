@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {Icon, Tooltip, Pagination} from 'antd';
 
@@ -199,7 +199,7 @@ class LastReports extends Component {
 
     render() {
         const { isLess } = this.props;
-        const isTerminal = terminalMock.length !== 0;
+        const isTerminal = true;
 
         return (
             <div className="terminal">
@@ -210,7 +210,7 @@ class LastReports extends Component {
                     }`}
                 >
                     {isTerminal ? (
-                        <>
+                        <Fragment>
                             {terminalMock.map(({ id, message, number }) => (
                                 <TerminalItem
                                     key={id}
@@ -224,7 +224,7 @@ class LastReports extends Component {
                                 // itemRender={}
                                 total={50}
                             />
-                        </>
+                        </Fragment>
                     ) : (
                         <div className="terminal-item-dummy">
                             <div
@@ -236,13 +236,13 @@ class LastReports extends Component {
                                     You have not data to display
                                 </p>
                             </div>
-                            {dummy.map(({ id, text }) => (
+                            {terminalMock.map(({ id, message, number }) => (
                                 <TerminalItem
                                     key={id}
-                                    number={id}
-                                    content={text}
+                                    content={message}
+                                    number={number}
                                 />
-                            ))}
+                                ))}
                         </div>
                     )}
                 </div>
@@ -250,9 +250,5 @@ class LastReports extends Component {
         );
     }
 }
-
-LastReports.propTypes = {};
-
-LastReports.defaultProps = {};
 
 export default LastReports;

@@ -8,7 +8,7 @@ export const reportsActions = {
 function fetchReports(options) {
     console.log(options);
     return dispatch => {
-        options.size ? reportsServices.getAllReports() : reportsServices.getLastReports(options.id)
+        options.size ? reportsServices.getAllReports(...options) : reportsServices.getLastReports(options.id)
             .then(res => {
                 dispatch({
                     type: reportsConstants.SET_REPORTS_LIST,
