@@ -10,14 +10,6 @@ const IconFont = Icon.createFromIconfontCN({
     scriptUrl: '/assets/icons/iconfont.js'
 });
 
-const baseUrl = process.env.REACT_APP_API_URL;
-const avatar = token =>
-    axios.get(`${baseUrl}/api/user/status`, {
-        headers: {
-            authorization: `Bearer ${token}`
-        }
-    });
-
 const ItemIcon = ({ icon, isSub, ...props }) => {
     if (isSub) return null;
 
@@ -33,8 +25,7 @@ ItemIcon.propTypes = {
     isSub: PropTypes.bool
 };
 
-const SidebarItem = ({ logOut, item, parentLink = '', token, ...props }) => {
-    avatar(token).then(res => console.log('res :', res));
+const SidebarItem = ({ logOut, item, parentLink = '', ...props }) => {
     if (item.subMenu) {
         return (
             <Menu.SubMenu
