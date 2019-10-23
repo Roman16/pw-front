@@ -20,18 +20,20 @@ class LoginPageForm extends React.Component {
         this.setState({ isLoading: false });
     }
 
-    onChange = e => {
-        this.setState({ [e.target.name]: e.target.value });
+    onChange = ({ target }) => {
+        this.setState({ [target.name]: target.value });
     };
 
     onSubmit = e => {
         e.preventDefault();
+
+        const { email, password, rememberMe } = this.state;
         this.setState({ isLoading: true });
 
         this.props.login({
-            email: this.state.email,
-            password: this.state.password,
-            remember_me: this.state.rememberMe
+            email,
+            password,
+            rememberMe
         });
 
         this.setState({
@@ -87,7 +89,11 @@ class LoginPageForm extends React.Component {
                     justify="space-between"
                     className="form-bottom"
                 >
-                    <Checkbox onChange={(e) => this.setState({rememberMe: e.target.checked})}>
+                    <Checkbox
+                        onChange={e =>
+                            this.setState({ rememberMe: e.target.checked })
+                        }
+                    >
                         Remember me
                     </Checkbox>
                     <a
@@ -131,10 +137,7 @@ class LoginPageForm extends React.Component {
                         <div className="amazon-login-wrap">
                             <p>or</p>
                             <a href="https://profitwhales.com/login/amazon">
-                                <img
-                                    src={amazon}
-                                    alt="LWA-GOld"
-                                />
+                                <img src={amazon} alt="LWA-GOld" />
                             </a>
                         </div>
                     </Col>

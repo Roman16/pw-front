@@ -21,6 +21,17 @@
     position: relative;
     z-index: 1;
     margin-bottom: 30px;
+
+    input[type='number'] {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
 }
 
 .input-container input {
