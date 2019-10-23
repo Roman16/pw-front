@@ -218,12 +218,7 @@ class LastReports extends Component {
                                     number={number}
                                 />
                             ))}
-                            <Pagination
-                                defaultCurrent={1}
-                                defaultPageSize={15}
-                                // itemRender={}
-                                total={50}
-                            />
+                            <Pagination defaultCurrent={1} total={50} />
                         </>
                     ) : (
                         <div className="terminal-item-dummy">
