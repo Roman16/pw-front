@@ -1,18 +1,16 @@
 import {reportsConstants} from '../constans/actions.type';
 
 
-
 const initialState = {
-
+    reports: []
 };
 
-export function products(state = initialState, action) {
+export function reports(state = initialState, action) {
     switch (action.type) {
         case reportsConstants.SET_REPORTS_LIST:
             return {
                 ...state,
-                productList: action.payload.productList,
-                totalSize: action.payload.totalSize
+                reports: action.payload.productList,
             };
 
         default:

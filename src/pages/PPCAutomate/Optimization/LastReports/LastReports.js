@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Icon, Tooltip, Pagination} from 'antd';
 
@@ -198,7 +199,7 @@ class LastReports extends Component {
     state = {};
 
     render() {
-        const { isLess } = this.props;
+        const { isLess, reports } = this.props;
         const isTerminal = true;
 
         return (
@@ -251,4 +252,8 @@ class LastReports extends Component {
     }
 }
 
-export default LastReports;
+const mapStateToProps = state => ({
+    reports: state.reports
+});
+
+export default connect(mapStateToProps)(LastReports);
