@@ -193,8 +193,6 @@ const TerminalItem = ({ number = 0, content = '', data }) => (
     </div>
 );
 
-const lastChanges = [];
-
 class LastReports extends Component {
     state = {};
 

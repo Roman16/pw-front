@@ -34,8 +34,8 @@ class ProductsList extends Component {
     fetchProducts = async (searchText = '') => {
         const {page, size} = this.state;
 
-        const data = await productsServices.getProducts({search_query: searchText, page: page, size: size});
-        this.setState({products: data});
+        const {productList} = await productsServices.getProducts({search_query: searchText, page: page, size: size});
+        this.setState({products: productList});
     };
 
     updateProduct = async (data) => {
@@ -80,6 +80,7 @@ class ProductsList extends Component {
 
     render() {
         const {dataSource, onBlurRow, onSearchBlur} = this.props,
+            {products} = this.state,
 
             columns = [
                 {
@@ -94,15 +95,15 @@ class ProductsList extends Component {
                     dataIndex: PRODUCT,
                     key: PRODUCT,
                     width: 300,
-                    render: ({id, asin, product_name, sku, product_image}) => (
-                        <ProductItem
-                            asin={asin}
-                            captions={product_name}
-                            imageUrl={product_image}
-                            sku={sku}
-                            key={id}
-                        />
-                    )
+                    // render: ({id, asin, product_name, sku, product_image}) => (
+                    //     <ProductItem
+                    //         asin={asin}
+                    //         captions={product_name}
+                    //         imageUrl={product_image}
+                    //         sku={sku}
+                    //         key={id}
+                    //     />
+                    // )
                 },
 
                 {
@@ -218,7 +219,7 @@ class ProductsList extends Component {
             <div className="table-settings">
                 <Table
                     rowKey="id"
-                    dataSource={dataSource}
+                    dataSource={products}
                     columns={columns}
                     pagination={paginationOption}
                 />
