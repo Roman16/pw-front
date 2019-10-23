@@ -62,6 +62,9 @@
 
         .content {
             background: inherit;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid @body-background;
 
             .html-render {
                 position: relative;
@@ -79,6 +82,10 @@
                     z-index: 10;
                 }
             }
+        }
+
+        &:last-of-type > .content {
+            border-bottom: 1px solid @body-background;
         }
     }
 
@@ -109,6 +116,10 @@
                     100vh - 40px - 629px - 40px - 77px - 40px - 42px - 30px
                 );
             }
+        }
+
+        .ant-pagination {
+            margin-top: 5px;
         }
 
         .terminal-item-dummy {

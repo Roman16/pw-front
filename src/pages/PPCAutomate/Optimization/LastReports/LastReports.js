@@ -158,7 +158,14 @@ const TerminalCaption = ({ isTerminal }) => (
             Last Changes Terminal
             <Tooltip
                 placement="bottom"
-                title="In the changes terminal, you will see the last changes that the software performs."
+                title="In the changes terminal,
+                you will see the last changes that the software performs.
+                In the changes terminal,
+                you will see the last changes that the software performs.
+                In the changes terminal,
+                you will see the last changes that the software performs.
+                In the changes terminal,
+                you will see the last changes that the software performs."
             >
                 <Icon type="info-circle" theme="filled" />
             </Tooltip>
@@ -211,7 +218,12 @@ class LastReports extends Component {
                                     number={number}
                                 />
                             ))}
-                            <Pagination defaultCurrent={1} total={50} />
+                            <Pagination
+                                defaultCurrent={1}
+                                defaultPageSize={15}
+                                // itemRender={}
+                                total={50}
+                            />
                         </>
                     ) : (
                         <div className="terminal-item-dummy">
