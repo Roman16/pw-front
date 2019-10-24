@@ -19,8 +19,8 @@ function fetchProducts(params) {
                     payload: res
                 });
 
-                if (res.productList.length > 0) {
-                    dispatch(fetchProductDetails(res.productList[0]));
+                if (res.result.length > 0) {
+                    dispatch(fetchProductDetails(res.result[0]));
                 }
             });
     };

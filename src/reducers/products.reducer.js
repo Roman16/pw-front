@@ -25,7 +25,7 @@ export function products(state = initialState, action) {
         case productsConstants.SET_PRODUCT_LIST:
             return {
                 ...state,
-                productList: action.payload.productList,
+                productList: action.payload.result,
                 totalSize: action.payload.totalSize
             };
 
