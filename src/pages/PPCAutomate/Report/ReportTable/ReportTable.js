@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+// import { Link } from 'react-router-dom';
 import { Tabs, Button } from 'antd';
 import axios from 'axios';
 import KeywordsOptimization from './Tables/KeywordsOptimization';
@@ -122,9 +123,12 @@ class ReportTable extends Component {
         }));
     };
 
-    downloadFile = () => {
+    downloadFile = selectedProduct => {
+        const url = process.env.REACT_APP_API_URL;
+
         axios.get(
-            `${process.env.REACT_APP_API_URL}/ppc-report/download-report`
+            `${url}/api/ppc-automation/reports/download-report`,
+            selectedProduct.id
         );
     };
 
@@ -138,6 +142,7 @@ class ReportTable extends Component {
 
     render() {
         const { startDate, endDate, updateSize } = this.state;
+        const { selectedProduct } = this.props;
 
         return (
             <div className="ReportTable">
@@ -149,14 +154,12 @@ class ReportTable extends Component {
                             <span className="total-count">99+</span>
                         </span>
                         <DatePicker timeRange={this.timeRange} />
-                        <Button onClick={this.downloadFile}>
+                        {/* <Link to="/ppc-automation/reports/download-report"> */}
+                        <Button onClick={this.downloadFile(selectedProduct)}>
                             Download
                             <i className="download" />
                         </Button>
-                        {/* <Link to="/ppc-automation/reports/download-report">
-                            Download
-                            <i className="download" />
-                        </Link> */}
+                        {/* </Link> */}
                     </div>
                 </div>
                 <Tabs defaultActiveKey={tabsItem[0].key} type="card">
@@ -180,4 +183,8 @@ ReportTable.propTypes = {};
 
 ReportTable.defaultProps = {};
 
-export default ReportTable;
+const mapStateToProps = state => ({
+    selectedProduct: state.products.selectedProduct
+});
+
+export default connect(mapStateToProps)(ReportTable);
