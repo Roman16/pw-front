@@ -36,7 +36,7 @@ class ProductsList extends Component {
         const {page, size} = this.state;
 
         const {result, totalSize} = await productsServices.getProductsSettingsList({
-            search_query: searchText,
+            searchStr: searchText,
             page: page,
             size: size
         });
@@ -91,7 +91,7 @@ class ProductsList extends Component {
     onSearchChange = ({target: {value}}) => {
         clearTimeout(this.timerIdSearch);
         this.timerIdSearch = setTimeout(() => {
-            this.setState({page: 1}, this.fetchProducts(value))
+            this.setState({page: 1}, () => this.fetchProducts(value))
         }, delay);
     };
 
