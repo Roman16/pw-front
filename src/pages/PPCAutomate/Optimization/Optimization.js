@@ -36,7 +36,7 @@ class Optimization extends Component {
             selectedStrategy: strategy
         }, () => {
             this.props.updateOptions({optimization_strategy: strategy});
-            if (this.state.product.status === 'RUNNING') this.handleUpdateProduct();
+            if (this.props.selectedProduct.status === 'RUNNING') this.handleUpdateProduct();
         });
     };
 
@@ -52,7 +52,7 @@ class Optimization extends Component {
 
     static getDerivedStateFromProps(props, state) {
         if (props.selectedProduct.id !== state.product.id) {
-            if (props.selectedProduct.status === 'RUNNING') {
+            if (props.selectedProduct.status === 'RUNNING' && !props.selectedAll) {
                 return ({
                     product: props.selectedProduct,
                     selectedStrategy: props.selectedProduct.optimization_strategy
@@ -76,6 +76,7 @@ class Optimization extends Component {
             } = this.state,
             {
                 selectedProduct,
+                selectedAll
             } = this.props;
 
         return (
@@ -87,7 +88,7 @@ class Optimization extends Component {
                         <div className={`options ${!isLess ? 'more' : 'less'}`}>
                             <OptimizationOptions
                                 openInformation={() => this.showDrawer('options')}
-                                selectedProduct={product}
+                                selectedProduct={selectedProduct}
                             />
 
                             <OptimizationStrategy
@@ -95,6 +96,7 @@ class Optimization extends Component {
                                 openInformation={() => this.showDrawer('strategy')}
                                 selectedStrategy={selectedStrategy}
                                 product={selectedProduct}
+                                selectedAll={selectedAll}
                             />
 
                             <div className="descriptions options-content">
@@ -140,7 +142,9 @@ class Optimization extends Component {
 
 const mapStateToProps = state => ({
     selectedProduct: state.products.selectedProduct,
-    defaultOptions: state.products.defaultOptimizationOptions
+    defaultOptions: state.products.defaultOptimizationOptions,
+    selectedAll: state.products.selectedAll,
+
 });
 
 const mapDispatchToProps = dispatch => ({

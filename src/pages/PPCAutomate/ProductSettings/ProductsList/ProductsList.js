@@ -4,26 +4,27 @@ import {Input} from 'antd';
 import InputCurrency from '../../../../components/Inputs/InputCurrency';
 import Table from '../../../../components/Table/Table';
 import ProductItem from '../../../../components/ProductList/ProductItem';
-import TableSettings from './TableSettings';
 import {productsServices} from '../../../../services/products.services';
 
 import './TableSettings.less';
-import axios from "axios";
 
-const ACTIVE = 'active';
+const ACTIVE = 'RUNNING';
 const PRODUCT = 'product';
-const NET_MARGIN = 'net-margin';
-const MIN_BID_MANUAL_CAMPING = 'min-bid-manual-campaign';
-const MAX_BID_MANUAL_CAMPING = 'max-bid-manual-campaign';
-const MIN_BID_AUTO_CAMPING = 'min-bid-auto-campaign';
-const MAX_BID_AUTO_CAMPING = 'max-bid-auto-campaign';
-const TOTAL_CHANGES = 'total-changes';
-const OPTIMIZATION_STATUS = 'optimization-status';
+const NET_MARGIN = 'product_margin_value';
+const MIN_BID_MANUAL_CAMPING = 'min_bid_manual_campaign';
+const MAX_BID_MANUAL_CAMPING = 'max_bid_manual_campaign';
+const MIN_BID_AUTO_CAMPING = 'min_bid_auto_campaign';
+const MAX_BID_AUTO_CAMPING = 'max_bid_auto_campaign';
+const TOTAL_CHANGES = 'total_changes';
+const OPTIMIZATION_STATUS = 'optimization_status';
+
 const delay = 500; // ms
 
 class ProductsList extends Component {
     state = {
         products: [],
+
+        totalSize: 0,
         page: 1,
         size: 10
     };
@@ -34,12 +35,16 @@ class ProductsList extends Component {
     fetchProducts = async (searchText = '') => {
         const {page, size} = this.state;
 
-        const {productList} = await productsServices.getProducts({search_query: searchText, page: page, size: size});
-        this.setState({products: productList});
+        const {result, totalSize} = await productsServices.getProductsSettingsList({
+            search_query: searchText,
+            page: page,
+            size: size
+        });
+        this.setState({products: result, totalSize});
     };
 
-    updateProduct = async (data) => {
-         await productsServices.updateProductById(data);
+    updateSettings = async (data) => {
+        await productsServices.updateProductSettings(data);
     };
 
     onChangeRow = (...args) => {
@@ -47,8 +52,15 @@ class ProductsList extends Component {
 
         clearTimeout(this.timerId);
         this.timerId = setTimeout(() => {
-            this.updateData(dataSourceRow);
+            this.updateSettings(dataSourceRow);
         }, delay);
+    };
+
+    onBlurRow = (...args) => {
+        const dataSourceRow = this.setRowData(...args);
+
+        clearTimeout(this.timerId);
+        this.updateSettings(dataSourceRow);
     };
 
     setRowData = (event, item, index) => {
@@ -60,27 +72,39 @@ class ProductsList extends Component {
             [item]: +value,
         };
         this.setState({
-            dataSource: [...products],
+            products: [...products],
         });
 
-        return products[index];
+        return {
+            product_id: products[index].id,
+            [item]: +value
+        };
     };
+
+    // onSearchBlur = (event) => {
+    //     const {target: {value}} = event;
+    //
+    //     clearTimeout(this.timerIdSearch);
+    //     this.fetchProducts(value);
+    // };
 
     onSearchChange = ({target: {value}}) => {
         clearTimeout(this.timerIdSearch);
         this.timerIdSearch = setTimeout(() => {
-            this.fetchProducts(value);
+            this.setState({page: 1}, this.fetchProducts(value))
         }, delay);
     };
 
+    changePagination = (page) => {
+        this.setState({page}, this.fetchProducts)
+    };
 
     componentDidMount() {
         this.fetchProducts()
     }
 
     render() {
-        const {dataSource, onBlurRow, onSearchBlur} = this.props,
-            {products} = this.state,
+        const {products, page, totalSize, size} = this.state,
 
             columns = [
                 {
@@ -88,22 +112,18 @@ class ProductsList extends Component {
                         <div className="input-search">
                             <Input.Search
                                 onChange={this.onSearchChange}
-                                onBlur={onSearchBlur}
+                                // onBlur={onSearchBlur}
                             />
                         </div>
                     ),
                     dataIndex: PRODUCT,
                     key: PRODUCT,
                     width: 300,
-                    // render: ({id, asin, product_name, sku, product_image}) => (
-                    //     <ProductItem
-                    //         asin={asin}
-                    //         captions={product_name}
-                    //         imageUrl={product_image}
-                    //         sku={sku}
-                    //         key={id}
-                    //     />
-                    // )
+                    render: (product) => (
+                        <ProductItem
+                            product={product}
+                        />
+                    )
                 },
 
                 {
@@ -116,7 +136,7 @@ class ProductsList extends Component {
                             onChange={event =>
                                 this.onChangeRow(event, NET_MARGIN, indexRow)
                             }
-                            onBlur={event => onBlurRow(event, NET_MARGIN, indexRow)}
+                            onBlur={event => this.onBlurRow(event, NET_MARGIN, indexRow)}
                         />
                     )
                 },
@@ -130,9 +150,7 @@ class ProductsList extends Component {
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)
                             }
-                            onBlur={event =>
-                                onBlurRow(event, MIN_BID_MANUAL_CAMPING, indexRow)
-                            }
+                            onBlur={event => this.onBlurRow(event, MIN_BID_MANUAL_CAMPING, indexRow)}
                         />
                     )
                 },
@@ -146,9 +164,7 @@ class ProductsList extends Component {
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)
                             }
-                            onBlur={event =>
-                                onBlurRow(event, MAX_BID_MANUAL_CAMPING, indexRow)
-                            }
+                            onBlur={event => this.onBlurRow(event, MAX_BID_MANUAL_CAMPING, indexRow)}
                         />
                     )
                 },
@@ -162,9 +178,7 @@ class ProductsList extends Component {
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)
                             }
-                            onBlur={event =>
-                                onBlurRow(event, MIN_BID_AUTO_CAMPING, indexRow)
-                            }
+                            onBlur={event => this.onBlurRow(event, MIN_BID_AUTO_CAMPING, indexRow)}
                         />
                     )
                 },
@@ -178,9 +192,7 @@ class ProductsList extends Component {
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)
                             }
-                            onBlur={event =>
-                                onBlurRow(event, MAX_BID_AUTO_CAMPING, indexRow)
-                            }
+                            onBlur={event => this.onBlurRow(event, MAX_BID_AUTO_CAMPING, indexRow)}
                         />
                     )
                 },
@@ -211,8 +223,11 @@ class ProductsList extends Component {
             ],
 
             paginationOption = {
-                defaultPageSize: 10,
-                page: 0,
+                pageSize: size,
+                currentPage: page,
+                totalSize: totalSize,
+                onChangePagination: this.changePagination,
+                showPagination: true
             };
 
         return (
@@ -221,7 +236,7 @@ class ProductsList extends Component {
                     rowKey="id"
                     dataSource={products}
                     columns={columns}
-                    pagination={paginationOption}
+                    {...paginationOption}
                 />
             </div>
         );
@@ -238,4 +253,4 @@ ProductsList.defaultProps = {
     dataSource: []
 };
 
-export default TableSettings(ProductsList);
+export default ProductsList;

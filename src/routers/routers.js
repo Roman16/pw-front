@@ -1,7 +1,7 @@
 import React from 'react';
-import { Route, Router, Switch, Redirect } from 'react-router-dom';
-import { history } from '../utils/history';
-import { useSelector } from 'react-redux';
+import {Route, Router, Switch, Redirect} from 'react-router-dom';
+import {history} from '../utils/history';
+import {useSelector} from 'react-redux';
 
 import LoginPage from '../pages/authentication/LoginPage/LoginPage';
 import RegistrationPage from '../pages/authentication/RegistrationPage/RegistrationPage';
@@ -14,14 +14,16 @@ import MWS from '../pages/authentication/AccountBinding/MWS/MWS';
 import PPC from '../pages/authentication/AccountBinding/PPC/PPC';
 import NotFound from '../pages/NotFound/NotFound';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
         {...rest}
         render={props =>
             localStorage.getItem('token') ? (
-                <Component {...props} />
+                <AuthorizedUser>
+                    <Component {...props} />
+                </AuthorizedUser>
             ) : (
-                <Redirect to="/login" />
+                <Redirect to="/login"/>
             )
         }
     />
@@ -40,9 +42,9 @@ const ConnectedAmazonRoute = props => {
         );
 
     if (!mwsConnected) {
-        return <Redirect to="/mws" />;
+        return <Redirect to="/mws"/>;
     } else if (!ppcConnected) {
-        return <Redirect to="/ppc" />;
+        return <Redirect to="/ppc"/>;
     } else {
         return <PrivateRoute {...props} />;
     }
@@ -52,36 +54,29 @@ const routers = () => {
     return (
         <Router history={history}>
             <Switch>
-                <Route exact path="/login" component={LoginPage} />
-                <Route exact path="/register" component={RegistrationPage} />
+                <Route exact path="/login" component={LoginPage}/>
+                <Route exact path="/registration" component={RegistrationPage}/>
 
-                <Route
-                    path="/"
-                    render={() => (
-                        <AuthorizedUser>
-                            <ConnectedAmazonRoute
-                                exact
-                                path="/ppc/optimization"
-                                component={Optimization}
-                            />
-                            <ConnectedAmazonRoute
-                                exact
-                                path="/ppc/report"
-                                component={Report}
-                            />
-                            <ConnectedAmazonRoute
-                                exact
-                                path="/ppc/product-settings"
-                                component={ProductSettings}
-                            />
-
-                            <PrivateRoute exact path="/mws" component={MWS} />
-                            <PrivateRoute exact path="/ppc" component={PPC} />
-                        </AuthorizedUser>
-                    )}
+                <ConnectedAmazonRoute
+                    exact
+                    path="/ppc/optimization"
+                    component={Optimization}
+                />
+                <ConnectedAmazonRoute
+                    exact
+                    path="/ppc/report"
+                    component={Report}
+                />
+                <ConnectedAmazonRoute
+                    exact
+                    path="/ppc/product-settings"
+                    component={ProductSettings}
                 />
 
-                <Route path="*" component={NotFound} />
+                <PrivateRoute exact path="/mws" component={MWS}/>
+                <PrivateRoute exact path="/ppc" component={PPC}/>
+
+                <Route component={NotFound}/>
             </Switch>
         </Router>
     );

@@ -1,52 +1,81 @@
 @import '../../../../style/variables.less';
 
 .table-settings {
-    table thead.ant-table-thead tr th {
-        background: @body-background;
+  table thead.ant-table-thead tr th {
+    background: @body-background;
+    border: 0;
+  }
+
+  table {
+    background: @body-background;
+    border-spacing: 0 4px;
+
+    tr {
+      //background: #fff;
+      &:hover td {
+        background: #fff !important;
+      }
+
+      td {
+        background: #fff;
         border: 0;
-    }
-    table {
-        background: @body-background;
-        border-spacing: 0 4px;
 
-        tr {
-            //background: #fff;
-            &:hover td {
-                background: #fff !important;
-            }
-            td {
-                background: #fff;
-                border: 0;
-                &:first-child {
-                    border-top-left-radius: 10px;
-                    border-bottom-left-radius: 10px;
-                }
-                &:last-child {
-                    border-top-right-radius: 8px;
-                    border-bottom-right-radius: 8px;
-                }
-            }
+        &:first-child {
+          border-top-left-radius: 10px;
+          border-bottom-left-radius: 10px;
         }
-        .ant-table-thead > tr > th .ant-table-header-column {
-            width: 100%;
+
+        &:last-child {
+          border-top-right-radius: 8px;
+          border-bottom-right-radius: 8px;
         }
+      }
     }
 
-    .input-search {
-        input {
-            width: 100%;
-        }
-    }
-    .ProductItem {
-        min-width: 300px;
-        opacity: 1;
+    .ant-table-thead > tr > th .ant-table-header-column {
+      width: 100%;
     }
 
-    .settings-status {
-        text-transform: capitalize;
-        font-weight: 600;
+    .product-item {
+      display: flex;
+
+      .image {
+        margin: 0 5px 0 0;
+      }
+
+      .select {
+        display: none;
+      }
     }
-    .active {
-        color: @success-color;
+  }
+
+  .input-search {
+    input {
+      width: 100%;
     }
+  }
+
+  .ProductItem {
+    min-width: 300px;
+    opacity: 1;
+  }
+
+  .settings-status {
+    text-transform: capitalize;
+    font-weight: 600;
+  }
+
+  .active {
+    color: @success-color;
+  }
+
+  .detail {
+    span:first-child {
+      font-weight: 900;
+    }
+  }
+
+  .caption {
+    font-weight: 900;
+  }
 }

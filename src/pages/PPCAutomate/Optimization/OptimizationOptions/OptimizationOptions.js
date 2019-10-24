@@ -75,8 +75,9 @@ let timerIdSearch = null;
 
 const OptimizationOptions = ({openInformation, selectedProduct}) => {
     const dispatch = useDispatch();
-    const {defaultOptions} = useSelector(state => ({
-        defaultOptions: state.products.defaultOptimizationOptions
+    const {defaultOptions, selectedAll} = useSelector(state => ({
+        defaultOptions: state.products.defaultOptimizationOptions,
+        selectedAll: state.products.selectedAll,
     }));
 
     const [product, changeOptions] = useState(selectedProduct);
@@ -100,7 +101,7 @@ const OptimizationOptions = ({openInformation, selectedProduct}) => {
     };
 
     useEffect(() => {
-        if (!selectedProduct.status || selectedProduct.status === 'STOPPED') changeOptions(defaultOptions);
+        if (!selectedProduct.status || selectedProduct.status === 'STOPPED' || selectedAll) changeOptions(defaultOptions);
         else if (selectedProduct.status === 'RUNNING') changeOptions(selectedProduct)
     }, [selectedProduct]);
 

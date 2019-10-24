@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {func, bool, string} from 'prop-types';
+import {Checkbox} from 'antd';
 
 const maxText = (text) => {
     if (text && text.length > 40) {
@@ -13,9 +14,10 @@ const ProductItem = ({
                          product: {
                              id,
                              asin,
-                             captions,
+                             name,
                              sku,
                              image_url,
+                             under_optimization
                          },
                          onClick,
                          product,
@@ -29,8 +31,9 @@ const ProductItem = ({
             <div className="image">
                 <img src={image_url} alt=""/>
             </div>
+
             <div className="product-item-content">
-                <div className="caption">{maxText(captions)}</div>
+                <div className="caption">{maxText(name)}</div>
 
                 <div className="detail">
                     <span> ASIN: </span>
@@ -43,6 +46,9 @@ const ProductItem = ({
                 </div>
             </div>
 
+            <div className="select">
+                {under_optimization ? <Checkbox checked readOnly /> : null}
+            </div>
         </div>
     );
 };

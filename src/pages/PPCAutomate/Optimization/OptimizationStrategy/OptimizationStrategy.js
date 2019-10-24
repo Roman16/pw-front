@@ -82,7 +82,7 @@ export const StrategyItem = ({caption, selected, onSelect, value}) => (
     </div>
 );
 
-const OptimizationStrategy = ({onSelect, selectedStrategy, openInformation,
+const OptimizationStrategy = ({onSelect, selectedStrategy, openInformation,selectedAll,
                                   product: {
                                       optimization_strategy,
                                   }
@@ -92,6 +92,11 @@ const OptimizationStrategy = ({onSelect, selectedStrategy, openInformation,
             <div className="product-info ">
                 <span>Select which optimize Strategy</span>
                 <Icon type="info-circle" theme="filled" onClick={openInformation}/>
+
+                {selectedAll && <div className='description'>
+                    Changes to those settings will be applied to all selected products
+                </div>}
+
             </div>
 
             <div className="strategies options-content">
