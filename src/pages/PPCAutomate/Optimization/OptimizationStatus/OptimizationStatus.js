@@ -32,17 +32,12 @@ class OptimizationStatus extends Component {
         if (status === RUNNING && !product.product_margin) {
             this.setState({isShowModal: true});
         } else {
-            selectedAll ? onSwitchOptimization({
-                    ...product,
-                    ...optimizationOptions,
-                    product_id: 'all',
-                    status: status
-                })
-                :
-                onSwitchOptimization({
-                    ...product,
-                    status: status
-                })
+            onSwitchOptimization({
+                ...product,
+                ...optimizationOptions,
+                status: status,
+                product_id: selectedAll ? 'all' : product.product_id,
+            })
         }
     };
 
