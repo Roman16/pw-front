@@ -2,6 +2,8 @@
 @import '../../../../style/mixins.less';
 
 .terminal {
+    position: relative;
+
     .card();
 
     .terminal-caption {
@@ -90,15 +92,17 @@
     }
 
     .terminal-content {
+        margin-bottom: 40px;
+
         &.less {
             max-height: calc(
-                100vh - 40px - 418px - 40px - 77px - 40px - 42px - 30px
+                100vh - 40px - 418px - 40px - 40px - 77px - 42px - 30px
             );
         }
 
         &.more {
             max-height: calc(
-                100vh - 40px - 69px - 40px - 77px - 40px - 42px - 30px
+                100vh - 40px - 69px - 40px - 40px - 77px - 42px - 30px
             );
         }
 
@@ -113,13 +117,15 @@
         @media (max-width: @desktop) {
             &.less {
                 max-height: calc(
-                    100vh - 40px - 629px - 40px - 77px - 40px - 42px - 30px
+                    100vh - 40px - 629px - 40px - 40px - 77px - 42px - 30px
                 );
             }
         }
 
         .ant-pagination {
-            margin-top: 5px;
+            position: absolute;
+            right: 35px;
+            bottom: 10px;
         }
 
         .terminal-item-dummy {

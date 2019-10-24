@@ -65,6 +65,7 @@ class LastReports extends Component {
     state = { current: 1 };
 
     onChange = page => {
+        const { reports } = this.props;
         this.setState({
             current: page
         });
@@ -108,11 +109,11 @@ class LastReports extends Component {
                             ))}
                             <Pagination
                                 // defaultPageSize={1}
-                                pageSize={1}
+                                pageSize={10}
                                 total={150}
                                 current={this.state.current}
                                 onChange={this.onChange}
-                                itemRender={this.itemRender}
+                                itemRender={this.itemRender(reports.reports)}
                                 onShowSizeChange={this.onShowSizeChange}
                             />
                         </Fragment>
