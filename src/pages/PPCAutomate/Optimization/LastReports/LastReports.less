@@ -67,23 +67,6 @@
             display: flex;
             align-items: center;
             border-top: 1px solid @body-background;
-
-            .html-render {
-                position: relative;
-                padding: 5px 0;
-
-                &:after {
-                    content: '';
-                    position: absolute;
-                    height: 1px;
-                    width: calc(100% + 25px);
-                    background: #f5f5ff;
-                    bottom: 0;
-                    left: -25px;
-                    border-radius: 50px;
-                    z-index: 10;
-                }
-            }
         }
 
         &:last-of-type > .content {

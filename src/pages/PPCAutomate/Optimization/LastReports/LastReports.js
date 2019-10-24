@@ -49,25 +49,33 @@ const TerminalCaption = ({ isTerminal }) => (
     </div>
 );
 
-const TerminalItem = ({ number = 0, content = '', data }) => (
+const TerminalItem = ({ number = 0, content = '' }) => (
     <li className="terminal-item">
         <div className="index">{number}</div>
         <div className="content">
-            <div
-                className={`${data}-render`}
-                dangerouslySetInnerHTML={{ __html: content }}
-            ></div>
+            <div dangerouslySetInnerHTML={{ __html: content }}></div>
         </div>
     </li>
 );
 
 class LastReports extends Component {
-    state = { current: 1 };
+    state = {
+        current: 1,
+        records: this.props.reports.reports.filter(
+            (report, idx) => idx < 10 && report
+        ),
+        del: ''
+    };
 
     onChange = page => {
         const { reports } = this.props;
+        const curDate = +(String(page) + 0);
+        const records = reports.reports.filter(
+            (report, idx) => idx < curDate && idx >= curDate - 10 && report
+        );
         this.setState({
-            current: page
+            current: page,
+            records
         });
     };
 
@@ -81,13 +89,9 @@ class LastReports extends Component {
         return originalElement;
     };
 
-    onShowSizeChange = (current, pageSize) => {
-        console.log(current, pageSize);
-    };
-
     render() {
+        const { current, records } = this.state;
         const { isLess, reports } = this.props;
-        // console.log('reports :', reports);
         const isTerminal =
             reports && reports.reports && reports.reports.length > 0;
         return (
@@ -100,7 +104,7 @@ class LastReports extends Component {
                 >
                     {isTerminal ? (
                         <Fragment>
-                            {reports.reports.map(({ id, message, number }) => (
+                            {records.map(({ id, message, number }) => (
                                 <TerminalItem
                                     key={id}
                                     content={message}
@@ -108,13 +112,9 @@ class LastReports extends Component {
                                 />
                             ))}
                             <Pagination
-                                // defaultPageSize={1}
-                                pageSize={10}
                                 total={150}
-                                current={this.state.current}
+                                current={current}
                                 onChange={this.onChange}
-                                itemRender={this.itemRender(reports.reports)}
-                                onShowSizeChange={this.onShowSizeChange}
                             />
                         </Fragment>
                     ) : (
