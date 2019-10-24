@@ -228,14 +228,17 @@ class ProductsList extends Component {
                 totalSize: totalSize,
                 onChangePagination: this.changePagination,
                 showPagination: true
-            };
+            },
+            windowHeight = window.innerHeight;
 
+        console.log(windowHeight);
         return (
             <div className="table-settings">
                 <Table
                     rowKey="id"
                     dataSource={products}
                     columns={columns}
+                    scroll={{y: paginationOption.totalSize > paginationOption.pageSize ? windowHeight - 350 : windowHeight - 300}}
                     {...paginationOption}
                 />
             </div>
