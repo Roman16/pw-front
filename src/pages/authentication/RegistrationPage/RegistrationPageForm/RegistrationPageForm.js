@@ -1,5 +1,4 @@
 import React from 'react';
-// import axios from 'axios';
 import { Col, notification, Row, Spin } from 'antd';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -12,16 +11,29 @@ class RegistrationPage extends React.Component {
         last_name: '',
         email: '',
         password: '',
+        // card: null,
+        // expiry: null,
+        // cvc: null,
         registerSuccess: false,
         isLoading: false
     };
 
     onSubmit = e => {
         e.preventDefault();
+
+        const {
+            name,
+            last_name,
+            email,
+            password
+            // card,
+            // expiry,
+            // cvc
+        } = this.state;
         this.setState({
             isLoading: true
         });
-        if (this.state.password.length <= 6) {
+        if (password.length < 6) {
             notification.error({
                 message: 'The password must be at least 6 characters.',
                 style: {
@@ -38,51 +50,36 @@ class RegistrationPage extends React.Component {
         }
 
         this.props.regist({
-            password: this.state.password,
-            email: this.state.email,
-            name: this.state.name,
-            last_name: this.state.last_name
+            name,
+            last_name,
+            email,
+            password
+            // card,
+            // expiry,
+            // cvc
         });
-        // axios
-        //     .post('/api/user/register', {
-        //         password: this.state.password,
-        //         email: this.state.email,
-        //         name: this.state.name,
-        //         last_name: this.state.last_name
-        //     })
-        //     .then(() => {
-        //         this.setState({
-        //             registerSuccess: true,
-        //             isLoading: false
-        //         });
-        //     })
-        //     .catch(err => {
-        //         notification.error({
-        //             message: `${err.response.data.message}`,
-        //             style: {
-        //                 width: 600,
-        //                 marginLeft: 335 - 600
-        //             },
-        //             placement: 'bottomRight',
-        //             bottom: 20,
-        //             duration: 5
-        //         });
-        //         this.setState({
-        //             isLoading: false
-        //         });
-        //     });
 
         this.setState({
             isLoading: false
         });
     };
 
-    onChange = e => {
-        this.setState({ [e.target.name]: e.target.value });
+    onChange = ({ target }) => {
+        this.setState({ [target.name]: target.value });
     };
 
     render() {
-        const { registerSuccess, isLoading } = this.state;
+        const {
+            name,
+            last_name,
+            email,
+            password,
+            // card,
+            // expiry,
+            // cvc,
+            registerSuccess,
+            isLoading
+        } = this.state;
 
         if (isLoading) {
             return (
@@ -96,6 +93,8 @@ class RegistrationPage extends React.Component {
             return <Redirect to="/optimization" />;
         }
 
+        const isLess = email.length === 0;
+
         return (
             <form className="form " id="payment-form2" onSubmit={this.onSubmit}>
                 <Row>
@@ -105,7 +104,7 @@ class RegistrationPage extends React.Component {
                                 type="text"
                                 name="name"
                                 id="register-name"
-                                value={this.state.name}
+                                value={name}
                                 onChange={this.onChange}
                                 required
                             />
@@ -119,7 +118,7 @@ class RegistrationPage extends React.Component {
                             <input
                                 type="text"
                                 name="last_name"
-                                value={this.state.last_name}
+                                value={last_name}
                                 onChange={this.onChange}
                                 required
                             />
@@ -136,13 +135,20 @@ class RegistrationPage extends React.Component {
                                 type="email"
                                 name="email"
                                 id="register-email"
-                                value={this.state.email}
+                                value={email}
                                 onChange={this.onChange}
+                                pattern="([a-z0-9_.-]+)@([a-z0-9_.-]+).([a-z.]{2,6})"
                                 required
                             />
                             {/* eslint-disable-next-line max-len */}
                             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
-                            <label className="label">Email Address</label>
+                            <label
+                                className={`${
+                                    isLess ? 'label' : 'label-email'
+                                }`}
+                            >
+                                Email Address
+                            </label>
                         </div>
                     </Col>
                 </Row>
@@ -152,7 +158,7 @@ class RegistrationPage extends React.Component {
                             <input
                                 type="password"
                                 name="password"
-                                value={this.state.password}
+                                value={password}
                                 onChange={this.onChange}
                                 required
                             />
@@ -162,6 +168,58 @@ class RegistrationPage extends React.Component {
                         </div>
                     </Col>
                 </Row>
+
+                {/* credit card */}
+                {/* <div className="form-title">Billing Information</div>
+                <Row>
+                    <Col xs={24} sm={24} md={16}>
+                        <div className="input-container">
+                            <input
+                                type="number"
+                                name="card"
+                                id="register-card"
+                                value={card}
+                                onChange={this.onChange}
+                                required
+                            /> */}
+                {/* eslint-disable-next-line max-len */}
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
+                {/* <label className="label">Credit card</label>
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={4}>
+                        <div className="input-container">
+                            <input
+                                type="number"
+                                name="expiry"
+                                id="register-expiry"
+                                value={expiry}
+                                onChange={this.onChange}
+                                required
+                            /> */}
+                {/* eslint-disable-next-line max-len */}
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
+                {/* <label className="label">Expiry</label>
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={4}>
+                        <div className="input-container">
+                            <input
+                                type="number"
+                                name="cvc"
+                                id="register-cvc"
+                                value={cvc}
+                                onChange={this.onChange}
+                                required
+                            /> */}
+                {/* eslint-disable-next-line max-len */}
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
+                {/* <label className="label">CVC</label>
+                        </div>
+                    </Col>
+                </Row> */}
+
+                {/* button submit */}
                 <Row>
                     <Col xs={24} sm={24} md={24}>
                         <button

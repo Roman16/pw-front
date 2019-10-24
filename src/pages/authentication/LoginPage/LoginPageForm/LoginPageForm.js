@@ -1,5 +1,14 @@
 import React from 'react';
-import { Form, Row, Input, Button, Checkbox, Col, Spin } from 'antd';
+import {
+    Form,
+    Row,
+    Input,
+    Button,
+    Checkbox,
+    Col,
+    Spin,
+    notification
+} from 'antd';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
@@ -20,18 +29,50 @@ class LoginPageForm extends React.Component {
         this.setState({ isLoading: false });
     }
 
-    onChange = e => {
-        this.setState({ [e.target.name]: e.target.value });
+    onChange = ({ target }) => {
+        this.setState({ [target.name]: target.value });
     };
 
     onSubmit = e => {
         e.preventDefault();
+
+        const { email, password, rememberMe } = this.state;
         this.setState({ isLoading: true });
 
+        if (password.length < 6) {
+            notification.error({
+                message: 'The password must be at least 6 characters.',
+                style: {
+                    width: 600,
+                    marginLeft: 335 - 600
+                },
+                placement: 'bottomRight',
+                bottom: 20,
+                duration: 5
+            });
+            this.setState({
+                isLoading: false
+            });
+        } else if (email.length === 0) {
+            notification.error({
+                message: 'The letter must contain at least 1 character.',
+                style: {
+                    width: 600,
+                    marginLeft: 335 - 600
+                },
+                placement: 'bottomRight',
+                bottom: 20,
+                duration: 5
+            });
+            this.setState({
+                isLoading: false
+            });
+        }
+
         this.props.login({
-            email: this.state.email,
-            password: this.state.password,
-            remember_me: this.state.rememberMe
+            email,
+            password,
+            rememberMe
         });
 
         this.setState({
@@ -87,7 +128,11 @@ class LoginPageForm extends React.Component {
                     justify="space-between"
                     className="form-bottom"
                 >
-                    <Checkbox onChange={(e) => this.setState({rememberMe: e.target.checked})}>
+                    <Checkbox
+                        onChange={e =>
+                            this.setState({ rememberMe: e.target.checked })
+                        }
+                    >
                         Remember me
                     </Checkbox>
                     <a
@@ -131,10 +176,7 @@ class LoginPageForm extends React.Component {
                         <div className="amazon-login-wrap">
                             <p>or</p>
                             <a href="https://profitwhales.com/login/amazon">
-                                <img
-                                    src={amazon}
-                                    alt="LWA-GOld"
-                                />
+                                <img src={amazon} alt="LWA-GOld" />
                             </a>
                         </div>
                     </Col>

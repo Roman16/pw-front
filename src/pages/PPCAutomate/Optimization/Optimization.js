@@ -41,13 +41,13 @@ class Optimization extends Component {
     };
 
     handleUpdateProduct = debounce(500, false, () => {
-        const {product, selectedStrategy} = this.state,
-            {updateProduct} = this.props;
+        const { product, selectedStrategy } = this.state,
+            { updateProduct } = this.props;
 
-            updateProduct({
-                ...product,
-                optimization_strategy: selectedStrategy
-            });
+        updateProduct({
+            ...product,
+            optimization_strategy: selectedStrategy
+        });
     });
 
     static getDerivedStateFromProps(props, state) {
@@ -115,7 +115,7 @@ class Optimization extends Component {
                             </div>
                         </div>
 
-                        <OptimizationStatus/>
+                        <OptimizationStatus />
 
                         <LastReports isLess={isLess}/>
                     </div>

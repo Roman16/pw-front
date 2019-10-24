@@ -1,13 +1,13 @@
-import React, {Component} from "react";
-import ProductItem from "./ProductItem";
-import {connect} from 'react-redux';
-import {Input, Pagination} from 'antd';
-import {productsActions} from '../../actions/products.actions';
+import React, { Component } from 'react';
+import ProductItem from './ProductItem';
+import { connect } from 'react-redux';
+import { Input, Pagination } from 'antd';
+import { productsActions } from '../../actions/products.actions';
 import './ProductList.less';
-import SelectAllProduct from "./SelectAllProducts";
-import {debounce} from 'throttle-debounce';
+import SelectAllProduct from './SelectAllProducts';
+import { debounce } from 'throttle-debounce';
 
-const {Search} = Input;
+const { Search } = Input;
 
 class ProductList extends Component {
     state = {
@@ -23,47 +23,60 @@ class ProductList extends Component {
     getProducts = () => this.props.getAllProducts(this.state.paginationParams);
 
     handleChangePagination = page => {
-        this.setState({
-            ...this.state,
-            paginationParams: {
-                ...this.state.paginationParams,
-                page
-            }
-        }, this.getProducts)
-    };
-
-    handleSearch = debounce(500, false, str => {
-        this.setState({
-            ...this.state,
-            paginationParams: {
-                ...this.state.paginationParams,
-                searchStr: str
-            }
-        }, this.getProducts)
-    });
-
-    selectAll = () => {
-        const {selectProduct, selectedProduct, products} = this.props;
-        selectedProduct.id && this.setState({prevProductId: selectedProduct.id});
-
-        this.setState(({isSelectedAll}) => ({
-                isSelectedAll: !isSelectedAll,
-            }), () => {
-                if (this.state.isSelectedAll) selectProduct('all');
-                else {
-                    selectProduct(products.find(item => item.id === this.state.prevProductId));
+        this.setState(
+            {
+                ...this.state,
+                paginationParams: {
+                    ...this.state.paginationParams,
+                    page
                 }
             },
+            this.getProducts
         );
     };
 
-    onSelect = (product) => {
-        const {selectProduct, selectedProduct} = this.props;
+    handleSearch = debounce(500, false, str => {
+        this.setState(
+            {
+                ...this.state,
+                paginationParams: {
+                    ...this.state.paginationParams,
+                    searchStr: str
+                }
+            },
+            this.getProducts
+        );
+    });
+
+    selectAll = () => {
+        const { selectProduct, selectedProduct, products } = this.props;
+        selectedProduct.id &&
+            this.setState({ prevProductId: selectedProduct.id });
+
+        this.setState(
+            ({ isSelectedAll }) => ({
+                isSelectedAll: !isSelectedAll
+            }),
+            () => {
+                if (this.state.isSelectedAll) selectProduct('all');
+                else {
+                    selectProduct(
+                        products.find(
+                            item => item.id === this.state.prevProductId
+                        )
+                    );
+                }
+            }
+        );
+    };
+
+    onSelect = product => {
+        const { selectProduct, selectedProduct } = this.props;
 
         if (selectedProduct.id !== product.id) selectProduct(product);
 
         this.setState({
-            isSelectedAll: false,
+            isSelectedAll: false
         });
     };
 
@@ -75,19 +88,13 @@ class ProductList extends Component {
         const {
                 selectedSize,
                 isSelectedAll,
-                paginationParams: {
-                    size
-                }
+                paginationParams: { size }
             } = this.state,
-            {
-                products,
-                selectedProduct,
-                totalSize
-            } = this.props;
+            { products, selectedProduct, totalSize } = this.props;
 
         return (
-            <div className='product-list'>
-                <div className='search-product'>
+            <div className="product-list">
+                <div className="search-product">
                     <Search
                         placeholder="Search by product name, ASIN, or SKU"
                         onChange={e => this.handleSearch(e.target.value)}
@@ -102,24 +109,29 @@ class ProductList extends Component {
                     </div>
                 </div>
 
-                {products && products.map(product => (
-                    <ProductItem
-                        key={product.id}
-                        product={product}
-                        isActive={isSelectedAll || selectedProduct.id === product.id}
-                        onClick={(item) => this.onSelect(item)}
+                {products &&
+                    products.map(product => (
+                        <ProductItem
+                            key={product.id}
+                            product={product}
+                            isActive={
+                                isSelectedAll ||
+                                selectedProduct.id === product.id
+                            }
+                            onClick={item => this.onSelect(item)}
+                        />
+                    ))}
+
+                {totalSize > size && (
+                    <Pagination
+                        defaultCurrent={1}
+                        pageSize={size}
+                        total={totalSize}
+                        onChange={this.handleChangePagination}
                     />
-                ))}
-
-                {totalSize > size && <Pagination
-                    defaultCurrent={1}
-                    pageSize={size}
-                    total={totalSize}
-                    onChange={this.handleChangePagination}
-                />}
-
+                )}
             </div>
-        )
+        );
     }
 }
 
@@ -130,12 +142,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getAllProducts: (params) => {
+    getAllProducts: params => {
         dispatch(productsActions.fetchProducts(params));
     },
-    selectProduct: (product) => {
-        dispatch(productsActions.fetchProductDetails(product))
-    },
+    selectProduct: product => {
+        dispatch(productsActions.fetchProductDetails(product));
+    }
 });
 
 export default connect(
