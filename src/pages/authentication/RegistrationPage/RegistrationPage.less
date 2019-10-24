@@ -61,12 +61,14 @@
     color: transparent;
 }
 
-.input-container input.has-content ~ label,
-.input-container input:-webkit-autofill ~ label,
-.input-container input:focus ~ label {
+.input-container input:focus ~ .label {
     top: -16px;
-    left: 0;
     font-size: 12px;
+}
+
+.label-email {
+    top: -16px !important;
+    font-size: 12px !important;
 }
 
 .input-container input.has-content::-webkit-input-placeholder,

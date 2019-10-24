@@ -11,9 +11,9 @@ class RegistrationPage extends React.Component {
         last_name: '',
         email: '',
         password: '',
-        card: null,
-        expiry: null,
-        cvc: null,
+        // card: null,
+        // expiry: null,
+        // cvc: null,
         registerSuccess: false,
         isLoading: false
     };
@@ -25,15 +25,15 @@ class RegistrationPage extends React.Component {
             name,
             last_name,
             email,
-            password,
-            card,
-            expiry,
-            cvc
+            password
+            // card,
+            // expiry,
+            // cvc
         } = this.state;
         this.setState({
             isLoading: true
         });
-        if (password.length <= 6) {
+        if (password.length < 6) {
             notification.error({
                 message: 'The password must be at least 6 characters.',
                 style: {
@@ -53,10 +53,10 @@ class RegistrationPage extends React.Component {
             name,
             last_name,
             email,
-            password,
-            card,
-            expiry,
-            cvc
+            password
+            // card,
+            // expiry,
+            // cvc
         });
 
         this.setState({
@@ -74,9 +74,9 @@ class RegistrationPage extends React.Component {
             last_name,
             email,
             password,
-            card,
-            expiry,
-            cvc,
+            // card,
+            // expiry,
+            // cvc,
             registerSuccess,
             isLoading
         } = this.state;
@@ -92,6 +92,8 @@ class RegistrationPage extends React.Component {
         if (registerSuccess) {
             return <Redirect to="/optimization" />;
         }
+
+        const isLess = email.length === 0;
 
         return (
             <form className="form " id="payment-form2" onSubmit={this.onSubmit}>
@@ -135,11 +137,18 @@ class RegistrationPage extends React.Component {
                                 id="register-email"
                                 value={email}
                                 onChange={this.onChange}
+                                pattern="([a-z0-9_.-]+)@([a-z0-9_.-]+).([a-z.]{2,6})"
                                 required
                             />
                             {/* eslint-disable-next-line max-len */}
                             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
-                            <label className="label">Email Address</label>
+                            <label
+                                className={`${
+                                    isLess ? 'label' : 'label-email'
+                                }`}
+                            >
+                                Email Address
+                            </label>
                         </div>
                     </Col>
                 </Row>
@@ -161,7 +170,7 @@ class RegistrationPage extends React.Component {
                 </Row>
 
                 {/* credit card */}
-                <div className="form-title">Billing Information</div>
+                {/* <div className="form-title">Billing Information</div>
                 <Row>
                     <Col xs={24} sm={24} md={16}>
                         <div className="input-container">
@@ -172,10 +181,10 @@ class RegistrationPage extends React.Component {
                                 value={card}
                                 onChange={this.onChange}
                                 required
-                            />
-                            {/* eslint-disable-next-line max-len */}
-                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
-                            <label className="label">Credit card</label>
+                            /> */}
+                {/* eslint-disable-next-line max-len */}
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
+                {/* <label className="label">Credit card</label>
                         </div>
                     </Col>
                     <Col xs={24} sm={24} md={4}>
@@ -187,10 +196,10 @@ class RegistrationPage extends React.Component {
                                 value={expiry}
                                 onChange={this.onChange}
                                 required
-                            />
-                            {/* eslint-disable-next-line max-len */}
-                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
-                            <label className="label">Expiry</label>
+                            /> */}
+                {/* eslint-disable-next-line max-len */}
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
+                {/* <label className="label">Expiry</label>
                         </div>
                     </Col>
                     <Col xs={24} sm={24} md={4}>
@@ -202,13 +211,13 @@ class RegistrationPage extends React.Component {
                                 value={cvc}
                                 onChange={this.onChange}
                                 required
-                            />
-                            {/* eslint-disable-next-line max-len */}
-                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
-                            <label className="label">CVC</label>
+                            /> */}
+                {/* eslint-disable-next-line max-len */}
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
+                {/* <label className="label">CVC</label>
                         </div>
                     </Col>
-                </Row>
+                </Row> */}
 
                 {/* button submit */}
                 <Row>

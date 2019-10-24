@@ -59,17 +59,17 @@ const routers = () => {
                     path="/"
                     render={() => (
                         <AuthorizedUser>
-                            <Route
+                            <ConnectedAmazonRoute
                                 exact
                                 path="/ppc/optimization"
                                 component={Optimization}
                             />
-                            <Route
+                            <ConnectedAmazonRoute
                                 exact
                                 path="/ppc/report"
                                 component={Report}
                             />
-                            <Route
+                            <ConnectedAmazonRoute
                                 exact
                                 path="/ppc/product-settings"
                                 component={ProductSettings}
