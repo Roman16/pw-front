@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -49,7 +50,7 @@ const TerminalCaption = ({ isTerminal }) => (
 );
 
 const TerminalItem = ({ number = 0, content = '', data }) => (
-    <div className="terminal-item">
+    <li className="terminal-item">
         <div className="index">{number}</div>
         <div className="content">
             <div
@@ -57,20 +58,41 @@ const TerminalItem = ({ number = 0, content = '', data }) => (
                 dangerouslySetInnerHTML={{ __html: content }}
             ></div>
         </div>
-    </div>
+    </li>
 );
 
 class LastReports extends Component {
-    state = {};
+    state = { current: 1 };
+
+    onChange = page => {
+        this.setState({
+            current: page
+        });
+    };
+
+    itemRender = (current, type, originalElement) => {
+        if (type === 'prev') {
+            return <a>Previous</a>;
+        }
+        if (type === 'next') {
+            return <a>Next</a>;
+        }
+        return originalElement;
+    };
+
+    onShowSizeChange = (current, pageSize) => {
+        console.log(current, pageSize);
+    };
 
     render() {
         const { isLess, reports } = this.props;
+        // console.log('reports :', reports);
         const isTerminal =
             reports && reports.reports && reports.reports.length > 0;
         return (
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
-                <div
+                <ul
                     className={`terminal-content ${!isLess ? 'less' : 'more'} ${
                         isTerminal ? 'auto' : 'hidden'
                     }`}
@@ -81,14 +103,17 @@ class LastReports extends Component {
                                 <TerminalItem
                                     key={id}
                                     content={message}
-                                    number={number}
+                                    number={number + 1}
                                 />
                             ))}
                             <Pagination
-                                defaultCurrent={1}
-                                defaultPageSize={15}
-                                // itemRender={}
-                                total={50}
+                                // defaultPageSize={1}
+                                pageSize={1}
+                                total={150}
+                                current={this.state.current}
+                                onChange={this.onChange}
+                                itemRender={this.itemRender}
+                                onShowSizeChange={this.onShowSizeChange}
                             />
                         </Fragment>
                     ) : (
@@ -107,7 +132,7 @@ class LastReports extends Component {
                             ))}
                         </div>
                     )}
-                </div>
+                </ul>
             </div>
         );
     }
