@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, {useEffect, useState} from 'react';
 import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import { indexField, dateField, actionField, infoField } from './const';
+import {indexField, dateField, actionField, infoField} from './const';
 import TableButton from '../TableButton/TableButton';
-import TableApi from './TableApi';
+import {useSelector} from "react-redux";
 
 const HighACoS = 'created-negative-pat-from-cst-high-acos';
 const NoSales = 'created-negative-pat-from-cst-no-sales';
@@ -26,12 +26,12 @@ const defaultKeys = [
         key: 'adGroup'
     },
     {
-        title: () => <TitleInfo title="PAT Type" />,
+        title: () => <TitleInfo title="PAT Type"/>,
         dataIndex: 'PatType',
         key: 'PatType'
     },
     {
-        title: () => <TitleInfo title="Pat Intent Type" />,
+        title: () => <TitleInfo title="Pat Intent Type"/>,
         dataIndex: 'PatIntentType',
         key: 'PatIntentType'
     },
@@ -89,102 +89,52 @@ const columns = {
     ]
 };
 
-class NewNegativePats extends Component {
-    state = {
-        activeTable: HighACoS,
-        currentPage: 1,
-        productId: this.props.productId
+const NewNegativePats = ({data, totalSize, showPagination, onChangeSubTab}) => {
+    const [activeTable, changeTable] = useState(HighACoS);
+    const {count, loading, productId} = useSelector(state => ({
+        count: state.reports.counts['new-negative-pats'].subtypesCounts,
+        loading: state.reports.loading,
+        productId: state.products.selectedProduct.id
+    }));
+
+    const onChange = (tab) => {
+        onChangeSubTab(tab);
+        changeTable(tab);
     };
 
-    componentDidMount() {
-        const { activeTable } = this.state;
+    useEffect(() => changeTable(HighACoS), [productId]);
 
-        this.initialFetch(activeTable);
-    }
+    return (
+        <div className="ReportItemTable">
+            <TableButton
+                active={activeTable === HighACoS}
+                count={count[HighACoS]}
+                onClick={() => {
+                    onChange(HighACoS);
+                }}
+            >
+                Created Negative PAT From CST (High ACoS)
+            </TableButton>
+            <TableButton
+                active={activeTable === NoSales}
+                count={count[NoSales]}
+                onClick={() => {
+                    onChange(NoSales);
+                }}
+            >
+                Created Negative PAT From CST (No Sales)
+            </TableButton>
+            <Table
+                // onChangePagination={this.handlePaginationChange}
+                loading={loading}
+                dataSource={data}
+                columns={columns[activeTable]}
+                // currentPage={currentPage}
+                totalSize={totalSize}
+                showPagination={showPagination}
+            />
+        </div>
+    );
+};
 
-    componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props,
-            {activeTable} = this.state;
-
-        if (totalTypeSize !== nextProps.totalTypeSize) {
-            updateTotalTypeSize('new-negative-pats', totalTypeSize);
-        }
-
-        if (nextProps.productId !== this.state.productId) {
-            this.initialFetch(activeTable)
-        }
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.productId !== state.productId) {
-            return {...props, productId: props.productId}
-        } else {
-            return null
-        }
-    }
-
-    initialFetch = activeTable => {
-        const { fetchData } = this.props;
-
-        fetchData(activeTable, 1, this.state.productId);
-    };
-
-    handlePaginationChange = currentPage => {
-        const { activeTable } = this.state;
-        const { fetchData } = this.props;
-
-        this.setState({ currentPage });
-        fetchData(activeTable, currentPage);
-    };
-
-    changeTable = activeTable => {
-        this.setState({
-            activeTable,
-            currentPage: 1
-        });
-        this.initialFetch(activeTable);
-    };
-
-    render() {
-        const { activeTable, currentPage } = this.state;
-        const { data, loading, totalSize, showPagination, count } = this.props;
-
-        return (
-            <div className="ReportItemTable">
-                <TableButton
-                    active={activeTable === HighACoS}
-                    count={count[HighACoS]}
-                    onClick={() => {
-                        this.changeTable(HighACoS);
-                    }}
-                >
-                    Created Negative PAT From CST (High ACoS)
-                </TableButton>
-                <TableButton
-                    active={activeTable === NoSales}
-                    count={count[NoSales]}
-                    onClick={() => {
-                        this.changeTable(NoSales);
-                    }}
-                >
-                    Created Negative PAT From CST (No Sales)
-                </TableButton>
-                <Table
-                    onChangePagination={this.handlePaginationChange}
-                    loading={loading}
-                    dataSource={data}
-                    columns={columns[activeTable]}
-                    currentPage={currentPage}
-                    totalSize={totalSize}
-                    showPagination={showPagination}
-                />
-            </div>
-        );
-    }
-}
-
-NewNegativePats.propTypes = {};
-
-NewNegativePats.defaultProps = {};
-
-export default TableApi(NewNegativePats, 'new-negative-pats');
+export default NewNegativePats;

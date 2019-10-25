@@ -21,5 +21,6 @@ export const productsConstants = {
 //------------ reports constants--------------
 //--------------------------------------------
 export const reportsConstants = {
-    SET_REPORTS_LIST: 'SET_REPORTS_LIST'
+    SET_REPORTS_LIST: 'SET_REPORTS_LIST',
+    START_FETCH_REPORTS_LIST: 'START_FETCH_REPORTS_LIST',
 };

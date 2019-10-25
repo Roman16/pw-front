@@ -13,12 +13,21 @@ import './ReportTable.less';
 
 const {TabPane} = Tabs;
 
-const TabName = ({name = null, count = 0}) => (
+const TabName = ({name = null, count}) => (
     <div className="TabName">
         <span>{name}</span>
-        {count > 0 && <div className="tab-name-count">{count}</div>}
+        {count.totalCount > 0 && <div className="tab-name-count">{count.totalCount}</div>}
     </div>
 );
+
+const subTables = {
+    'keywords-optimization': 'changed-keyword-bid-acos',
+    'pats-optimization': 'changed-pat-bid-acos',
+    'new-keywords': 'created-campaign',
+    'new-negative-keywords': 'created-negative-keyword-from-cst-high-acos',
+    'new-pats': 'created-cross-negative-pat',
+    'new-negative-pats': 'created-negative-pat-from-cst-high-acos'
+};
 
 const tabsItem = [
     {
@@ -26,39 +35,42 @@ const tabsItem = [
             <TabName name="Keywords Optimization" count={count}/>
         ),
         key: 'keywords-optimization',
-        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab) => (
+        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab, data) => (
             <KeywordsOptimization
                 onChangeSubTab={onChangeSubTab}
                 ref={ref}
                 startTime={start}
                 endTime={end}
                 updateTotalTypeSize={updateTotalTypeSize}
+                data={data}
             />
         )
     },
     {
         tabName: count => <TabName name="PAT’s Optimization" count={count}/>,
         key: 'pats-optimization',
-        component: (ref, start, end, updateTotalTypeSize, selectedProductId) => (
+        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab, data) => (
             <PATsOptimization
-                productId={selectedProductId}
+                onChangeSubTab={onChangeSubTab}
                 ref={ref}
                 startTime={start}
                 endTime={end}
                 updateTotalTypeSize={updateTotalTypeSize}
+                data={data}
             />
         )
     },
     {
         tabName: count => <TabName name="New Keywords" count={count}/>,
         key: 'new-keywords',
-        component: (ref, start, end, updateTotalTypeSize, selectedProductId) => (
+        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab, data) => (
             <NewKeywords
-                productId={selectedProductId}
+                onChangeSubTab={onChangeSubTab}
                 ref={ref}
                 startTime={start}
                 endTime={end}
                 updateTotalTypeSize={updateTotalTypeSize}
+                data={data}
             />
         )
     },
@@ -67,39 +79,42 @@ const tabsItem = [
             <TabName name="New Negative Keywords" count={count}/>
         ),
         key: 'new-negative-keywords',
-        component: (ref, start, end, updateTotalTypeSize, selectedProductId) => (
+        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab, data) => (
             <NewNegativeKeywords
-                productId={selectedProductId}
+                onChangeSubTab={onChangeSubTab}
                 ref={ref}
                 startTime={start}
                 endTime={end}
                 updateTotalTypeSize={updateTotalTypeSize}
+                data={data}
             />
         )
     },
     {
         tabName: count => <TabName name={"New PAT 's"} count={count}/>,
         key: 'new-pats',
-        component: (ref, start, end, updateTotalTypeSize, selectedProductId) => (
+        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab, data) => (
             <NewPats
-                productId={selectedProductId}
+                onChangeSubTab={onChangeSubTab}
                 ref={ref}
                 startTime={start}
                 endTime={end}
                 updateTotalTypeSize={updateTotalTypeSize}
+                data={data}
             />
         )
     },
     {
         tabName: count => <TabName name={"New Negative PAT's"} count={count}/>,
         key: 'new-negative-pats',
-        component: (ref, start, end, updateTotalTypeSize, selectedProductId) => (
+        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab, data) => (
             <NewNegativePats
-                productId={selectedProductId}
+                onChangeSubTab={onChangeSubTab}
                 ref={ref}
                 startTime={start}
                 endTime={end}
                 updateTotalTypeSize={updateTotalTypeSize}
+                data={data}
             />
         )
     }
@@ -147,36 +162,45 @@ class ReportTable extends Component {
         });
     };
 
-    handleChangeTab = (tab) => {
-        this.setState({activeTab: tab});
+    fetchReports = () => {
+        const {activeTab, activeSubTab} = this.state;
+
         this.props.getReports({
             id: this.props.selectedProductId,
-            dataType: tab,
+            dataType: activeTab,
+            dataSubType: activeSubTab,
             size: 10,
         })
+    };
+
+    handleChangeTab = (tab) => {
+        this.setState({
+            activeTab: tab,
+            activeSubTab: subTables[tab]
+        }, this.fetchReports);
     };
 
     handleChangeSubTab = (tab) => {
-        this.props.getReports({
-            id: this.props.selectedProductId,
-            dataType: this.state.activeTab,
-            dataSubType: tab,
-            size: 10,
-        })
+        console.log(tab);
+        this.setState({activeSubTab: tab}, this.fetchReports)
     };
 
     componentDidMount() {
-        this.props.getReports({
-            id: this.props.selectedProductId,
-            dataType: this.state.activeTab,
-            dataSubType: this.state.activeSubTab,
-            size: 10,
-        })
+        this.fetchReports();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.selectedProductId !== this.props.selectedProductId) {
+            this.setState({
+                activeTab: 'keywords-optimization',
+                activeSubTab: 'changed-keyword-bid-acos',
+            }, this.fetchReports)
+        }
     }
 
     render() {
-        const {startDate, endDate, updateSize} = this.state,
-            {selectedProductId} = this.props;
+        const {startDate, endDate, activeTab, updateSize} = this.state,
+            {counts, data} = this.props;
 
         return (
             <div className="ReportTable">
@@ -197,16 +221,16 @@ class ReportTable extends Component {
                     </div>
                 </div>
 
-                <Tabs defaultActiveKey={tabsItem[0].key} type="card" onChange={this.handleChangeTab}>
+                <Tabs activeKey={activeTab} type="card" onChange={this.handleChangeTab}>
                     {tabsItem.map(({tabName, key, component}) => (
-                        <TabPane tab={tabName(updateSize[key])} key={key}>
+                        <TabPane tab={tabName(counts[key])} key={key}>
                             {component(
                                 this.myRef,
                                 startDate,
                                 endDate,
                                 this.updateTotalTypeSize,
                                 this.handleChangeSubTab,
-                                selectedProductId
+                                data
                             )}
                         </TabPane>
                     ))}
@@ -217,7 +241,9 @@ class ReportTable extends Component {
 }
 
 const mapStateToProps = state => ({
-    selectedProductId: state.products.selectedProduct.id
+    selectedProductId: state.products.selectedProduct.id,
+    counts: state.reports.counts,
+    data: state.reports.data,
 });
 
 const mapDispatchToProps = dispatch => ({

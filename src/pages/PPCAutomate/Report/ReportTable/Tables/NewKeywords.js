@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import Table from '../../../../../components/Table/Table';
 import TableButton from '../TableButton/TableButton';
-import { indexField, dateField, actionField, infoField } from './const';
-import TableApi from './TableApi';
-
+import {indexField, dateField, actionField, infoField} from './const';
+import {useSelector} from "react-redux";
 
 const createdCampaign = 'created-campaign';
 const createdAdGroup = 'created-ad-group';
@@ -170,129 +169,80 @@ const columns = {
     ]
 };
 
-class NewKeywords extends Component {
-    state = {
-        activeTable: createdCampaign,
-        currentPage: 1,
-        productId: this.props.productId
+const NewKeywords = ({data, totalSize, showPagination, onChangeSubTab}) => {
+    const [activeTable, changeTable] = useState(createdCampaign);
+    const {count, loading, productId} = useSelector(state => ({
+        count: state.reports.counts['new-keywords'].subtypesCounts,
+        loading: state.reports.loading,
+        productId: state.products.selectedProduct.id
+    }));
+
+    const onChange = (tab) => {
+        onChangeSubTab(tab);
+        changeTable(tab);
     };
 
-    componentDidMount() {
-        const { activeTable } = this.state;
+    useEffect(() => changeTable(createdCampaign), [productId]);
 
-        this.initialFetch(activeTable);
-    }
+    return (
+        <div className="ReportItemTable">
+            <TableButton
+                active={createdCampaign === activeTable}
+                count={count[createdCampaign]}
+                onClick={() => {
+                    onChange(createdCampaign);
+                }}
+            >
+                Created Campaign
+            </TableButton>
+            <TableButton
+                active={createdAdGroup === activeTable}
+                count={count[createdAdGroup]}
+                onClick={() => {
+                    onChange(createdAdGroup);
+                }}
+            >
+                Created Ad Group
+            </TableButton>
+            <TableButton
+                active={createdProductAd === activeTable}
+                count={count[createdProductAd]}
+                onClick={() => {
+                    onChange(createdProductAd);
+                }}
+            >
+                Created Product Ad
+            </TableButton>
+            <TableButton
+                active={createdCrossNegativeKeyword === activeTable}
+                count={count[createdCrossNegativeKeyword]}
+                onClick={() => {
+                    onChange(createdCrossNegativeKeyword);
+                }}
+            >
+                Created Cross-Negative Keyword
+            </TableButton>
+            <TableButton
+                active={createdKeywordCST === activeTable}
+                count={count[createdKeywordCST]}
+                onClick={() => {
+                    onChange(createdKeywordCST);
+                }}
+            >
+                Created Keyword (CST)
+            </TableButton>
+            <Table
+                // onChangePagination={this.handlePaginationChange}
+                loading={loading}
+                dataSource={data}
+                columns={columns[activeTable]}
+                // currentPage={currentPage}
+                totalSize={totalSize}
+                showPagination={showPagination}
+            />
+        </div>
+    );
+};
 
-    componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props,
-            {activeTable} = this.state;
 
-        if (totalTypeSize !== nextProps.totalTypeSize) {
-            updateTotalTypeSize('new-keywords', totalTypeSize);
-        }
-
-        if (nextProps.productId !== this.state.productId) {
-            this.initialFetch(activeTable)
-        }
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.productId !== state.productId) {
-            return {...props, productId: props.productId}
-        } else {
-            return null
-        }
-    }
-
-    changeTable = activeTable => {
-        this.setState({
-            activeTable,
-            currentPage: 1
-        });
-        this.initialFetch(activeTable);
-    };
-
-    initialFetch = activeTable => {
-        const { fetchData } = this.props;
-
-        fetchData(activeTable, 1, this.state.productId);
-    };
-
-    handlePaginationChange = currentPage => {
-        const { activeTable } = this.state;
-        const { fetchData } = this.props;
-
-        this.setState({ currentPage });
-        fetchData(activeTable, currentPage);
-    };
-
-    render() {
-        const { activeTable, currentPage } = this.state;
-        const { data, loading, totalSize, showPagination, count } = this.props;
-
-        return (
-            <div className="ReportItemTable">
-                <TableButton
-                    active={createdCampaign === activeTable}
-                    count={count[createdCampaign]}
-                    onClick={() => {
-                        this.changeTable(createdCampaign);
-                    }}
-                >
-                    Created Campaign
-                </TableButton>
-                <TableButton
-                    active={createdAdGroup === activeTable}
-                    count={count[createdAdGroup]}
-                    onClick={() => {
-                        this.changeTable(createdAdGroup);
-                    }}
-                >
-                    Created Ad Group
-                </TableButton>
-                <TableButton
-                    active={createdProductAd === activeTable}
-                    count={count[createdProductAd]}
-                    onClick={() => {
-                        this.changeTable(createdProductAd);
-                    }}
-                >
-                    Created Product Ad
-                </TableButton>
-                <TableButton
-                    active={createdCrossNegativeKeyword === activeTable}
-                    count={count[createdCrossNegativeKeyword]}
-                    onClick={() => {
-                        this.changeTable(createdCrossNegativeKeyword);
-                    }}
-                >
-                    Created Cross-Negative Keyword
-                </TableButton>
-                <TableButton
-                    active={createdKeywordCST === activeTable}
-                    count={count[createdKeywordCST]}
-                    onClick={() => {
-                        this.changeTable(createdKeywordCST);
-                    }}
-                >
-                    Created Keyword (CST)
-                </TableButton>
-                <Table
-                    onChangePagination={this.handlePaginationChange}
-                    loading={loading}
-                    dataSource={data}
-                    columns={columns[activeTable]}
-                    currentPage={currentPage}
-                    totalSize={totalSize}
-                    showPagination={showPagination}
-                />
-            </div>
-        );
-    }
-}
-
-NewKeywords.propTypes = {};
-
-NewKeywords.defaultProps = {};
-
-export default TableApi(NewKeywords, 'new-keywords');
+export default NewKeywords;

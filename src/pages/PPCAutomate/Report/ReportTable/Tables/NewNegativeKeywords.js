@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, {useEffect, useState} from 'react';
 import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
-
-import { indexField, dateField, actionField, infoField } from './const';
-import TableApi from './TableApi';
+import {indexField, dateField, actionField, infoField} from './const';
+import {useSelector} from "react-redux";
 
 const highACoS = 'created-negative-keyword-from-cst-high-acos';
 const noSales = 'created-negative-keyword-from-cst-no-sales';
@@ -47,7 +46,7 @@ const columns = {
             key: 'CSTACoS'
         },
         {
-            title: () => <TitleInfo title="Target" />,
+            title: () => <TitleInfo title="Target"/>,
             dataIndex: 'target',
             key: 'target'
         },
@@ -79,102 +78,53 @@ const columns = {
     ]
 };
 
-class NewNegativeKeywords extends Component {
-    state = {
-        activeTable: highACoS,
-        currentPage: 1,
-        productId: this.props.productId
+const NewNegativeKeywords = ({data, totalSize, showPagination, onChangeSubTab}) => {
+    const [activeTable, changeTable] = useState(highACoS);
+    const {count, loading, productId} = useSelector(state => ({
+        count: state.reports.counts['new-negative-keywords'].subtypesCounts,
+        loading: state.reports.loading,
+        productId: state.products.selectedProduct.id
+    }));
+
+    const onChange = (tab) => {
+        onChangeSubTab(tab);
+        changeTable(tab);
     };
 
-    componentDidMount() {
-        const { activeTable } = this.state;
+    useEffect(() => changeTable(highACoS), [productId]);
 
-        this.initialFetch(activeTable);
-    }
+    return (
+        <div className="ReportItemTable">
+            <TableButton
+                active={activeTable === highACoS}
+                count={count[highACoS]}
+                onClick={() => {
+                    onChange(highACoS);
+                }}
+            >
+                Created Negative Keyword From CST (High ACoS)
+            </TableButton>
+            <TableButton
+                active={activeTable === noSales}
+                count={count[noSales]}
+                onClick={() => {
+                    onChange(noSales);
+                }}
+            >
+                Created Negative Keyword From CST (No Sales)
+            </TableButton>
+            <Table
+                // onChangePagination={this.handlePaginationChange}
+                loading={loading}
+                dataSource={data}
+                columns={columns[activeTable]}
+                // currentPage={currentPage}
+                totalSize={totalSize}
+                showPagination={showPagination}
+            />
+        </div>
+    );
+};
 
-    componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props,
-            {activeTable} = this.state;
 
-        if (totalTypeSize !== nextProps.totalTypeSize) {
-            updateTotalTypeSize('new-negative-keywords', totalTypeSize);
-        }
-
-        if (nextProps.productId !== this.state.productId) {
-            this.initialFetch(activeTable)
-        }
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.productId !== state.productId) {
-            return {...props, productId: props.productId}
-        } else {
-            return null
-        }
-    }
-
-    initialFetch = activeTable => {
-        const { fetchData } = this.props;
-
-        fetchData(activeTable, 1, this.state.productId);
-    };
-
-    handlePaginationChange = currentPage => {
-        const { activeTable } = this.state;
-        const { fetchData } = this.props;
-
-        this.setState({ currentPage });
-        fetchData(activeTable, currentPage);
-    };
-
-    changeTable = activeTable => {
-        this.setState({
-            activeTable,
-            currentPage: 1
-        });
-        this.initialFetch(activeTable);
-    };
-
-    render() {
-        const { activeTable, currentPage } = this.state;
-        const { data, loading, totalSize, showPagination, count } = this.props;
-
-        return (
-            <div className="ReportItemTable">
-                <TableButton
-                    active={activeTable === highACoS}
-                    count={count[highACoS]}
-                    onClick={() => {
-                        this.changeTable(highACoS);
-                    }}
-                >
-                    Created Negative Keyword From CST (High ACoS)
-                </TableButton>
-                <TableButton
-                    active={activeTable === noSales}
-                    count={count[noSales]}
-                    onClick={() => {
-                        this.changeTable(noSales);
-                    }}
-                >
-                    Created Negative Keyword From CST (No Sales)
-                </TableButton>
-                <Table
-                    onChangePagination={this.handlePaginationChange}
-                    loading={loading}
-                    dataSource={data}
-                    columns={columns[activeTable]}
-                    currentPage={currentPage}
-                    totalSize={totalSize}
-                    showPagination={showPagination}
-                />
-            </div>
-        );
-    }
-}
-
-NewNegativeKeywords.propTypes = {};
-
-NewNegativeKeywords.defaultProps = {};
-
-export default TableApi(NewNegativeKeywords, 'new-negative-keywords');
+export default NewNegativeKeywords;
