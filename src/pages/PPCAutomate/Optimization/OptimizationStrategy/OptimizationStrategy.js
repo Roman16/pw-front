@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Icon, Button, Checkbox } from 'antd';
 import moment from 'moment';
 
@@ -106,6 +105,7 @@ const OptimizationStrategy = ({
     onSelect,
     selectedStrategy,
     openInformation,
+    selectedAll,
     product: { optimization_strategy },
     expireIn
 }) => {
@@ -115,15 +115,20 @@ const OptimizationStrategy = ({
 
     return (
         <div className="optimize-strategy">
-            <div className="product-info">
-                <div className="product-select">
-                    <span>Select which optimize Strategy</span>
-                    <Icon
-                        type="info-circle"
-                        theme="filled"
-                        onClick={openInformation}
-                    />
-                </div>
+            <div className="product-info ">
+                <span>Select which optimize Strategy</span>
+                <Icon
+                    type="info-circle"
+                    theme="filled"
+                    onClick={openInformation}
+                />
+
+                {selectedAll && (
+                    <div className="description">
+                        Changes to those settings will be applied to all
+                        selected products
+                    </div>
+                )}
 
                 <div className="additional">
                     <p className="free-trial">
@@ -195,8 +200,4 @@ const OptimizationStrategy = ({
     );
 };
 
-const mapStateToProps = state => ({
-    expireIn: state.user.plans.ppc_automation.expire_in
-});
-
-export default connect(mapStateToProps)(OptimizationStrategy);
+export default OptimizationStrategy;

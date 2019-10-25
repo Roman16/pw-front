@@ -174,7 +174,7 @@ class LoginPageForm extends React.Component {
                     </Col>
 
                     <Col xs={24} sm={24} md={9} className="form-btns-signup">
-                        <Link to="/register" className="sign-up-link">
+                        <Link to="/registration" className="sign-up-link">
                             Sign up
                         </Link>
                     </Col>

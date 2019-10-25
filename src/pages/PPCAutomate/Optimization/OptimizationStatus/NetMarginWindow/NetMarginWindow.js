@@ -2,12 +2,12 @@ import React, {useState, Fragment} from 'react';
 import {func, bool} from 'prop-types';
 import {Modal, Button, Input} from 'antd';
 import {Link} from 'react-router-dom';
-
 import Warning from '../../../../../assets/img/icons/warning.svg';
 
 import './NetMarginWindow.less';
 import {useDispatch, useSelector} from "react-redux";
 import {productsActions} from "../../../../../actions/products.actions";
+import {productsServices} from "../../../../../services/products.services";
 
 const errorText = 'net margin should be more than 0';
 
@@ -30,8 +30,13 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll}) => {
         setError(+value === 0);
     };
 
-    const submit = () => {
+    const submit = async () => {
         if (value > 0) {
+            await productsServices.updateProductSettings({
+                product_id: product.id,
+                product_margin_value: value
+            });
+
             dispatch(productsActions.updateProduct({
                 ...product,
                 ...options,
@@ -40,6 +45,7 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll}) => {
                 product_margin_value: value,
                 status: 'RUNNING'
             }));
+
             handleCancel()
         } else {
             setError(true);

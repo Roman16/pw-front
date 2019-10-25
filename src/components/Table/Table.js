@@ -1,38 +1,34 @@
-import React, { Component } from 'react';
-import { Table as AntTable } from 'antd';
+import React from 'react';
+import {Table as AntTable} from 'antd';
 import './Table.less';
-// import PropTypes from 'prop-types';
 
-class Table extends Component {
-    render() {
-        const {
-            totalSize = 0,
-            onChangePagination,
-            currentPage,
-            showPagination = false,
-        } = this.props;
+const Table = (props) => {
+    const {
+        pageSize = 10,
+        totalSize = 0,
+        onChangePagination,
+        currentPage,
+        showPagination = false,
+    } = props;
 
-        const paginationSettings = showPagination
-            ? {
-                total: totalSize,
-                current: currentPage,
-                onChange: onChangePagination,
-            }
-            : false;
+    const paginationSettings = showPagination && (totalSize > pageSize)
+        ? {
+            total: totalSize,
+            current: currentPage,
+            pageSize: pageSize,
+            onChange: onChangePagination,
+        }
+        : false;
 
-        return (
-            <div className="Table">
-                <AntTable
-                    {...this.props}
-                    width="150px"
-                    pagination={paginationSettings}
-                />
-            </div>
-        );
-    }
-}
-
-Table.propTypes = {};
-Table.defaultProps = {};
+    return (
+        <div className="Table">
+            <AntTable
+                {...props}
+                width="150px"
+                pagination={paginationSettings}
+            />
+        </div>
+    );
+};
 
 export default Table;

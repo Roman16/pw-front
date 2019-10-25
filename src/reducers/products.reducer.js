@@ -30,9 +30,40 @@ export function products(state = initialState, action) {
             };
 
         case productsConstants.UPDATE_SELECTED_PRODUCT:
+            const newProductsList = state.productList.map(item => {
+                if (item.id === action.payload.product_id) {
+                    if (action.payload.status === "RUNNING") {
+                        return {
+                            ...item,
+                            under_optimization: true
+                        }
+                    } else {
+                        return {
+                            ...item,
+                            under_optimization: false
+                        }
+                    }
+                } else if (action.payload.product_id === 'all') {
+                    if (action.payload.status === "RUNNING") {
+                        return {
+                            ...item,
+                            under_optimization: true
+                        }
+
+                    } else {
+                        return {
+                            ...item,
+                            under_optimization: false
+                        }
+                    }
+                } else {
+                    return item
+                }
+            });
             return {
                 ...state,
-                selectedProduct: action.payload
+                selectedProduct: action.payload,
+                productList: newProductsList
             };
 
         case productsConstants.UPDATE_PRODUCT_OPTIONS:
@@ -58,6 +89,7 @@ export function products(state = initialState, action) {
                 selectedProduct: {
                     ...action.payload,
                 },
+                defaultOptimizationOptions: {...defaultOptions}
             };
 
         default:

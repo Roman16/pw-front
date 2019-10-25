@@ -1,0 +1,111 @@
+.not-found-page__header {
+  height: 96px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: #fff;
+  -webkit-box-shadow: 0 4px 12px rgba(44, 48, 58, .08), 0 0 20px rgba(44, 48, 58, .04);
+  box-shadow: 0 4px 12px rgba(44, 48, 58, .08), 0 0 20px rgba(44, 48, 58, .04);
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    div:first-child {
+      display: flex;
+      align-items: center;
+    }
+
+    img {
+      margin: 0 25px 0 0;
+    }
+
+    nav {
+      ul {
+        li {
+          display: inline-block;
+          vertical-align: middle;
+          position: relative;
+
+          &.has-child .sub-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+            min-width: 150px;
+            padding: 10px 0;
+          }
+
+          &.has-child:hover .sub-menu {
+            display: block;
+            background-color: #fff;
+            -webkit-box-shadow: 0 7px 7px rgba(44,48,58,.08);
+            box-shadow: 0 7px 7px rgba(44,48,58,.08);
+
+            li {
+              width: 100%;
+              text-align: left;
+            }
+          }
+
+          a {
+            color: #38454f;
+            font-weight: 500;
+            display: block;
+            text-transform: capitalize;
+            -webkit-transition: .2s;
+            -o-transition: .2s;
+            transition: .2s;
+            opacity: .7;
+            padding: 10px 25px;
+          }
+        }
+      }
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+
+      .login-btn {
+        display: block;
+        color: #363694;
+        font-size: 12px;
+        font-weight: 700;
+        -webkit-transition: .2s;
+        -o-transition: .2s;
+        transition: .2s;
+
+        &:hover {
+          color: #60c375;
+        }
+      }
+
+      .register-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 160px;
+        height: 40px;
+        transition: .2s;
+        background: #8fd39d;
+        border-radius: 8px;
+        text-transform: uppercase;
+        color: #fff;
+        font-weight: 700;
+        margin: 0 0 0 30px;
+
+        &:hover {
+          background-color: #60c375;
+          -webkit-box-shadow: 0 4px 4px rgba(0,0,0,.25);
+          box-shadow: 0 4px 4px rgba(0,0,0,.25);
+        }
+      }
+    }
+  }
+
+
+}

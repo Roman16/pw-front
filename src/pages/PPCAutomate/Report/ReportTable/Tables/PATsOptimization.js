@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import { indexField, dateField, actionField, infoField } from './const';
+import {indexField, dateField, actionField, infoField} from './const';
 import TableButton from '../TableButton/TableButton';
-import TableApi from '../../Hoc/TableApi';
+import TableApi from './TableApi';
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
 const changedPATBidImpressions = 'changed-pat-bid-impressions';
@@ -28,7 +28,7 @@ const defaultKeys = [
         key: 'adGroup'
     },
     {
-        title: () => <TitleInfo title="PAT type" />,
+        title: () => <TitleInfo title="PAT type"/>,
         dataIndex: 'PatType',
         key: 'PatType '
     },
@@ -53,7 +53,7 @@ const columns = {
             key: 'acos'
         },
         {
-            title: () => <TitleInfo title="Target ACoS" />,
+            title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS'
         },
@@ -72,7 +72,7 @@ const columns = {
             key: 'impressions'
         },
         {
-            title: () => <TitleInfo title="Target Impressions" />,
+            title: () => <TitleInfo title="Target Impressions"/>,
             dataIndex: 'targetImpressions',
             key: 'targetImpressions'
         },
@@ -91,7 +91,7 @@ const columns = {
             key: 'acos'
         },
         {
-            title: () => <TitleInfo title="Target ACoS" />,
+            title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS'
         },
@@ -110,7 +110,7 @@ const columns = {
             key: 'averageConvRate'
         },
         {
-            title: () => <TitleInfo title="Clicks" />,
+            title: () => <TitleInfo title="Clicks"/>,
             dataIndex: 'clicks',
             key: 'clicks'
         },
@@ -126,34 +126,48 @@ const columns = {
 class PATsOptimization extends Component {
     state = {
         activeTable: changedPATBidACoS,
-        currentPage: 1
+        currentPage: 1,
+        productId: this.props.productId
     };
 
     componentDidMount() {
-        const { activeTable } = this.state;
+        const {activeTable} = this.state;
 
-        this.initialFetch(activeTable);
+        this.initialFetch(activeTable)
     }
 
     componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props;
+        const {totalTypeSize, updateTotalTypeSize} = this.props,
+            {activeTable} = this.state;
 
         if (totalTypeSize !== nextProps.totalTypeSize) {
             updateTotalTypeSize('pats-optimization', totalTypeSize);
         }
+
+        if (nextProps.productId !== this.state.productId) {
+           this.initialFetch(activeTable)
+        }
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.productId !== state.productId) {
+               return {...props, productId: props.productId}
+        } else {
+            return null
+        }
     }
 
     initialFetch = activeTable => {
-        const { fetchData } = this.props;
+        const {fetchData} = this.props;
 
-        fetchData(activeTable, 1);
+        fetchData(activeTable, 1, this.state.productId);
     };
 
     handlePaginationChange = currentPage => {
-        const { activeTable } = this.state;
-        const { fetchData } = this.props;
+        const {activeTable} = this.state;
+        const {fetchData} = this.props;
 
-        this.setState({ currentPage });
+        this.setState({currentPage});
         fetchData(activeTable, currentPage);
     };
 
@@ -166,8 +180,8 @@ class PATsOptimization extends Component {
     };
 
     render() {
-        const { activeTable, currentPage } = this.state;
-        const { data, loading, totalSize, showPagination, count } = this.props;
+        const {activeTable, currentPage} = this.state;
+        const {data, loading, totalSize, showPagination, count} = this.props;
 
         return (
             <div className="ReportItemTable">

@@ -3,7 +3,7 @@ import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import { indexField, dateField, actionField, infoField } from './const';
 import TableButton from '../TableButton/TableButton';
-import TableApi from '../../Hoc/TableApi';
+import TableApi from './TableApi';
 
 const HighACoS = 'created-negative-pat-from-cst-high-acos';
 const NoSales = 'created-negative-pat-from-cst-no-sales';
@@ -92,7 +92,8 @@ const columns = {
 class NewNegativePats extends Component {
     state = {
         activeTable: HighACoS,
-        currentPage: 1
+        currentPage: 1,
+        productId: this.props.productId
     };
 
     componentDidMount() {
@@ -102,17 +103,30 @@ class NewNegativePats extends Component {
     }
 
     componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props;
+        const { totalTypeSize, updateTotalTypeSize } = this.props,
+            {activeTable} = this.state;
 
         if (totalTypeSize !== nextProps.totalTypeSize) {
             updateTotalTypeSize('new-negative-pats', totalTypeSize);
+        }
+
+        if (nextProps.productId !== this.state.productId) {
+            this.initialFetch(activeTable)
+        }
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.productId !== state.productId) {
+            return {...props, productId: props.productId}
+        } else {
+            return null
         }
     }
 
     initialFetch = activeTable => {
         const { fetchData } = this.props;
 
-        fetchData(activeTable, 1);
+        fetchData(activeTable, 1, this.state.productId);
     };
 
     handlePaginationChange = currentPage => {

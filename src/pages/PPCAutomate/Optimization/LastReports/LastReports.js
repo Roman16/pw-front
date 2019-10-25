@@ -100,10 +100,16 @@ class LastReports extends Component {
         return originalElement;
     };
 
+    componentDidMount() {
+        console.log(this.props);
+    }
+
     render() {
         const { current, records } = this.state;
         const { isLess } = this.props;
         const isTerminal = records && records.length > 0;
+        console.log(records);
+
         return (
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />

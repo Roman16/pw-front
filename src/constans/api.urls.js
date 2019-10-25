@@ -7,6 +7,8 @@ export const userUrls = {
 
 export const productsUrls = {
     allProducts: 'products/list',
+    productsSettingsList: 'products/settings/list',
+    updateSettings: 'products/settings',
     saveProductData: 'ppc-automation/start',
     productDetails: (id) => `products/${id}/details`,
 };

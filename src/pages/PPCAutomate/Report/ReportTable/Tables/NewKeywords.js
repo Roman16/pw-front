@@ -3,7 +3,8 @@ import moment from 'moment';
 import Table from '../../../../../components/Table/Table';
 import TableButton from '../TableButton/TableButton';
 import { indexField, dateField, actionField, infoField } from './const';
-import TableApi from '../../Hoc/TableApi';
+import TableApi from './TableApi';
+
 
 const createdCampaign = 'created-campaign';
 const createdAdGroup = 'created-ad-group';
@@ -172,7 +173,8 @@ const columns = {
 class NewKeywords extends Component {
     state = {
         activeTable: createdCampaign,
-        currentPage: 1
+        currentPage: 1,
+        productId: this.props.productId
     };
 
     componentDidMount() {
@@ -182,10 +184,23 @@ class NewKeywords extends Component {
     }
 
     componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props;
+        const { totalTypeSize, updateTotalTypeSize } = this.props,
+            {activeTable} = this.state;
 
         if (totalTypeSize !== nextProps.totalTypeSize) {
             updateTotalTypeSize('new-keywords', totalTypeSize);
+        }
+
+        if (nextProps.productId !== this.state.productId) {
+            this.initialFetch(activeTable)
+        }
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.productId !== state.productId) {
+            return {...props, productId: props.productId}
+        } else {
+            return null
         }
     }
 
@@ -200,7 +215,7 @@ class NewKeywords extends Component {
     initialFetch = activeTable => {
         const { fetchData } = this.props;
 
-        fetchData(activeTable, 1);
+        fetchData(activeTable, 1, this.state.productId);
     };
 
     handlePaginationChange = currentPage => {
