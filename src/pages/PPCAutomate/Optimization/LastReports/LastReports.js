@@ -1,27 +1,26 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Icon, Tooltip, Pagination } from 'antd';
-
+import React, {Component, Fragment} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {Icon, Tooltip, Pagination} from 'antd';
+import {reportsServices} from '../../../../services/reports.services';
 import './LastReports.less';
 
 const dummy = [
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-    { id: 9 },
-    { id: 10 },
-    { id: 11 },
-    { id: 12 }
+    {id: 1},
+    {id: 2},
+    {id: 3},
+    {id: 4},
+    {id: 5},
+    {id: 6},
+    {id: 7},
+    {id: 8},
+    {id: 9},
+    {id: 10},
+    {id: 11},
+    {id: 12}
 ];
 
-const TerminalCaption = ({ isTerminal }) => (
+const TerminalCaption = ({isTerminal}) => (
     <div className="terminal-caption">
         <div className="caption">
             Last Changes Terminal
@@ -36,7 +35,7 @@ const TerminalCaption = ({ isTerminal }) => (
                 In the changes terminal,
                 you will see the last changes that the software performs."
             >
-                <Icon type="info-circle" theme="filled" />
+                <Icon type="info-circle" theme="filled"/>
             </Tooltip>
         </div>
 
@@ -49,11 +48,11 @@ const TerminalCaption = ({ isTerminal }) => (
     </div>
 );
 
-const TerminalItem = ({ number = 0, content = '' }) => (
+const TerminalItem = ({number = 0, content = ''}) => (
     <li className="terminal-item">
         <div className="index">{number}</div>
         <div className="content">
-            <div dangerouslySetInnerHTML={{ __html: content }}></div>
+            <div dangerouslySetInnerHTML={{__html: content}}></div>
         </div>
     </li>
 );
@@ -61,22 +60,12 @@ const TerminalItem = ({ number = 0, content = '' }) => (
 class LastReports extends Component {
     state = {
         current: 1,
-        reports: this.props.reports.reports,
-        records: this.props.reports.reports.slice(0, 10)
+        reports: [],
+        records: []
     };
 
-    static getDerivedStateFromProps(props, state) {
-        if (props.reports.reports !== state.reports) {
-            return {
-                current: 1,
-                reports: props.reports.reports,
-                records: props.reports.reports.slice(0, 10)
-            };
-        }
-    }
-
     onChange = page => {
-        const { reports } = this.state;
+        const {reports} = this.state;
         const pageSize = 10;
         const records = reports.filter(
             (report, idx) =>
@@ -100,19 +89,32 @@ class LastReports extends Component {
         return originalElement;
     };
 
+    getReports = () => {
+        reportsServices.getLastReports(this.props.productId)
+            .then(res => {
+                this.setState({
+                    reports: res,
+                    records: res.length > 0 ? res.slice(0, 10) : []
+                })
+            })
+    };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.productId !== prevProps.productId) this.getReports()
+    }
+
     componentDidMount() {
-        console.log(this.props);
+        this.getReports()
     }
 
     render() {
-        const { current, records } = this.state;
-        const { isLess } = this.props;
+        const {current, records} = this.state;
+        const {isLess} = this.props;
         const isTerminal = records && records.length > 0;
-        console.log(records);
 
         return (
             <div className="terminal">
-                <TerminalCaption isTerminal={isTerminal} />
+                <TerminalCaption isTerminal={isTerminal}/>
                 <ul
                     className={`terminal-content ${!isLess ? 'less' : 'more'} ${
                         isTerminal ? 'auto' : 'hidden'
@@ -120,7 +122,7 @@ class LastReports extends Component {
                 >
                     {isTerminal ? (
                         <Fragment>
-                            {records.map(({ id, message, number }) => (
+                            {records.map(({id, message, number}) => (
                                 <TerminalItem
                                     key={id}
                                     content={message}
@@ -144,8 +146,8 @@ class LastReports extends Component {
                                     You have not data to display
                                 </p>
                             </div>
-                            {dummy.map(({ id }) => (
-                                <TerminalItem key={id} number={id} />
+                            {dummy.map(({id}) => (
+                                <TerminalItem key={id} number={id}/>
                             ))}
                         </div>
                     )}
@@ -155,8 +157,4 @@ class LastReports extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    reports: state.reports
-});
-
-export default connect(mapStateToProps)(LastReports);
+export default LastReports;
