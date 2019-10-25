@@ -64,7 +64,6 @@ class LastReports extends Component {
         records: this.props.reports.reports.filter(
             (report, idx) => idx < 10 && report
         ),
-        del: ''
     };
 
     onChange = page => {
@@ -92,10 +91,16 @@ class LastReports extends Component {
         return originalElement;
     };
 
+    componentDidMount() {
+        console.log(this.props)
+    }
+
     render() {
         const { current, records } = this.state;
         const { isLess } = this.props;
         const isTerminal = records && records.length > 0;
+        console.log(records);
+
         return (
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />

@@ -20,8 +20,6 @@ const Table = (props) => {
         }
         : false;
 
-    console.log(props);
-
     return (
         <div className="Table">
             <AntTable

@@ -13,6 +13,7 @@ import ProductSettings from '../pages/PPCAutomate/ProductSettings/ProductSetting
 import MWS from '../pages/authentication/AccountBinding/MWS/MWS';
 import PPC from '../pages/authentication/AccountBinding/PPC/PPC';
 import NotFound from '../pages/NotFound/NotFound';
+import Dashboard from '../pages/Dashboard/Dashboard';
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -57,6 +58,11 @@ const routers = () => {
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/registration" component={RegistrationPage}/>
 
+                <ConnectedAmazonRoute
+                    exact
+                    path="/ppc/dashboard"
+                    component={Dashboard}
+                />
                 <ConnectedAmazonRoute
                     exact
                     path="/ppc/optimization"

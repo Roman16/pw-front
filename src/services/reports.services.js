@@ -9,7 +9,8 @@ export const reportsServices = {
 function getLastReports(id) {
     return api('get', `${reportsUrls.lastReports}?product_id=${id}`)
 }
-function getAllReports() {
-    console.log('get last reports')
-    // return api('get', `${reportsUrls.lastReports}`)
+function getAllReports(parameters) {
+    console.log(parameters)
+    return api('get', `${reportsUrls.lastReports}`)
+
 }

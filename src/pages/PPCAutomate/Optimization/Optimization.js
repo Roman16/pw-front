@@ -72,7 +72,6 @@ class Optimization extends Component {
         const {
                 isLess,
                 selectedStrategy,
-                product
             } = this.state,
             {
                 selectedProduct,

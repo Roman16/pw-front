@@ -3,7 +3,7 @@ import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
 import { indexField, dateField, actionField, infoField } from './const';
-import TableApi from '../../Hoc/TableApi';
+import TableApi from './TableApi';
 
 const changedKeywordBidAcos = 'changed-keyword-bid-acos';
 const changedKeywordBidImpression = 'changed-keyword-bid-impressions';
@@ -121,7 +121,8 @@ const columns = {
 class KeywordsOptimization extends Component {
     state = {
         activeTable: changedKeywordBidAcos,
-        currentPage: 1
+        currentPage: 1,
+        productId: this.props.productId
     };
 
     componentDidMount() {
@@ -131,17 +132,31 @@ class KeywordsOptimization extends Component {
     }
 
     componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props;
+        const { totalTypeSize, updateTotalTypeSize } = this.props,
+            {activeTable} = this.state;
 
         if (totalTypeSize !== nextProps.totalTypeSize) {
             updateTotalTypeSize('keywords-optimization', totalTypeSize);
+        }
+
+        if (nextProps.productId !== this.state.productId) {
+            this.initialFetch(activeTable)
+        }
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        console.log(props);
+        if (props.productId !== state.productId) {
+            return {...props, productId: props.productId}
+        } else {
+            return null
         }
     }
 
     initialFetch = activeTable => {
         const { fetchData } = this.props;
 
-        fetchData(activeTable, 1);
+        fetchData(activeTable, 1, this.state.productId);
     };
 
     handlePaginationChange = currentPage => {

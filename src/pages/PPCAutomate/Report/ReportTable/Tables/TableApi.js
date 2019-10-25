@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, {Component} from 'react';
+import {reportsServices} from '../../../../../services/reports.services';
 
 const DEFAULT_PAGE_SIZE = 8;
 
@@ -10,44 +10,34 @@ const fetchReportTable = (
     startDate = '',
     endDate = ''
 ) =>
-    axios
-        .get('/ppc-report/get-table-data', {
-            params: {
-                'data-type': dataType,
-                'data-sub-type': dataSubType,
-                page,
-                size: DEFAULT_PAGE_SIZE,
-                'start-date': startDate,
-                'end-date': endDate
-            },
-            headers: {
-                Authorization:
-                    'Bearer INaDvhEVGFUEzhXDSpZtQ8i0PKZlb6E1pkpK99PqqnJKfCK3pGSwXuF4Y8Bq'
-            }
-        })
+    reportsServices.getAllReports({
+        'data-type': dataType,
+        'data-sub-type': dataSubType,
+        page,
+        size: DEFAULT_PAGE_SIZE,
+        'start-date': startDate,
+        'end-date': endDate
+    })
         .then(response => response);
 
 const TableApi = (ReportTable, tableType) =>
     class extends Component {
-        constructor(props) {
-            super(props);
+        state = {
+            data: [],
+            loading: true,
+            totalSize: 1,
+            totalTypeSizeResp: 0,
+            count: {},
+            showPagination: false
+        };
 
-            this.state = {
-                data: [],
-                loading: true,
-                totalSize: 1,
-                totalTypeSizeResp: 0,
-                count: {},
-                showPagination: false
-            };
-            const { startTime = null, endTime = null } = props;
+        dateRange = {
+            start: this.props.startTime || null,
+            end: this.props.endTime || null
+        };
 
-            this.dateRange = {
-                start: startTime,
-                end: endTime
-            };
-            this.subType = null;
-        }
+        subType = null;
+
 
         changeDateRange = (start, end) => {
             this.dateRange = {
@@ -57,8 +47,10 @@ const TableApi = (ReportTable, tableType) =>
             this.fetchData(this.subType, 1);
         };
 
-        fetchData = (subType = '', page) => {
-            const { start, end } = this.dateRange;
+        fetchData = (subType = '', page, id) => {
+            const {start, end} = this.dateRange;
+
+            console.log(id, subType);
 
             this.setState({
                 loading: true
@@ -72,13 +64,13 @@ const TableApi = (ReportTable, tableType) =>
             fetchReportTable(tableType, subType, page, start, end)
                 .then(
                     ({
-                        data: {
-                            data,
-                            totalSize,
-                            totalTypeSize = 0,
-                            counts = {}
-                        }
-                    }) => {
+                         data: {
+                             data,
+                             totalSize,
+                             totalTypeSize = 0,
+                             counts = {}
+                         }
+                     }) => {
                         dataResp = data;
                         totalSizeResp = totalSize;
                         totalTypeSizeResp = totalTypeSize;
