@@ -1,6 +1,7 @@
 import React from 'react';
-import { Icon, Button, Checkbox } from 'antd';
 import { connect } from 'react-redux';
+import { Icon, Button, Checkbox } from 'antd';
+import moment from 'moment';
 
 import './OptimizationStrategy.less';
 
@@ -108,7 +109,10 @@ const OptimizationStrategy = ({
     product: { optimization_strategy },
     expireIn
 }) => {
-    // console.log('expireIn :', expireIn.toDateString());
+    const todaysDate = moment(new Date());
+    const oDate = moment(expireIn * 1000);
+    const freeTrial = oDate.diff(todaysDate, 'days');
+
     return (
         <div className="optimize-strategy">
             <div className="product-info">
@@ -122,12 +126,12 @@ const OptimizationStrategy = ({
                 </div>
 
                 <div className="additional">
-                    <div>
+                    <p className="free-trial">
                         Free Trial
-                        <span className="free-trial">7</span>
+                        <span>{freeTrial >= 0 ? freeTrial : 0}</span>
                         Days Left
-                    </div>
-                    <div>
+                    </p>
+                    <div className="btn-upgrade">
                         <Button
                             onClick={() => {
                                 window.open(
@@ -136,7 +140,10 @@ const OptimizationStrategy = ({
                             }}
                         >
                             Upgrade Now
-                            <Icon type="arrow-up" />
+                            <Icon
+                                type="arrow-up"
+                                style={{ color: '#8fd39d' }}
+                            />
                         </Button>
                     </div>
                 </div>
