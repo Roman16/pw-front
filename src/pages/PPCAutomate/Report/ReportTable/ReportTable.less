@@ -2,6 +2,25 @@
 @import '../../../../style/variables.less';
 
 .ReportTable {
+    .ant-badge {
+        margin: 0 0 0 5px;
+        .ant-badge-count {
+            background: inherit;
+            border: 1px solid #C9CBD4;
+            color: #000000;
+            min-width: 32px;
+            height: 16px !important;
+
+            .ant-scroll-number-only {
+                height: 16px;
+
+                & > p {
+                    height: 15.7px;
+                }
+            }
+        }
+    }
+
     .report-table {
         display: flex;
         justify-content: space-between;
@@ -30,6 +49,8 @@
             background: @success-color;
             color: #fff;
         }
+
+
 
         .ant-calendar-range-picker-input:first-of-type {
             text-align: right;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Tabs, Button} from 'antd';
+import {Tabs, Button, Badge} from 'antd';
 import KeywordsOptimization from './Tables/KeywordsOptimization';
 import DatePicker from '../../../../components/DatePicker/DatePicker';
 import PATsOptimization from './Tables/PATsOptimization';
@@ -16,7 +16,10 @@ const {TabPane} = Tabs;
 const TabName = ({name = null, count}) => (
     <div className="TabName">
         <span>{name}</span>
-        {count.totalCount > 0 && <div className="tab-name-count">{count.totalCount}</div>}
+
+        <Badge count={count.totalCount > 0 ? count.totalCount : 0}
+               overflowCount={999}/>
+        {/*{count.totalCount > 0 && <div className="tab-name-count">{count.totalCount}</div>}*/}
     </div>
 );
 
@@ -122,10 +125,10 @@ const tabsItem = [
 
 class ReportTable extends Component {
     state = {
-        startDate: null,
+        startDate: '',
         activeTab: 'keywords-optimization',
         activeSubTab: 'changed-keyword-bid-acos',
-        endDate: null,
+        endDate: '',
         updateSize: {
             'keywords-optimization': 0,
             'pats-optimization': 0,
@@ -154,23 +157,27 @@ class ReportTable extends Component {
         // );
     };
 
-    timeRange = (startDate, endDate) => {
-        this.myRef.current.changeDateRange(startDate, endDate);
-        this.setState({
-            startDate,
-            endDate
-        });
-    };
+
 
     fetchReports = () => {
-        const {activeTab, activeSubTab} = this.state;
+        const {activeTab, activeSubTab,  startDate, endDate} = this.state,
+            {selectedAll, selectedProductId} = this.props;
 
         this.props.getReports({
-            id: this.props.selectedProductId,
+            id: selectedAll ? 'all' : selectedProductId,
             dataType: activeTab,
             dataSubType: activeSubTab,
             size: 10,
+            startDate,
+            endDate
         })
+    };
+
+    timeRange = (startDate, endDate) => {
+        this.setState({
+            startDate,
+            endDate
+        }, this.fetchReports);
     };
 
     handleChangeTab = (tab) => {
@@ -242,6 +249,7 @@ class ReportTable extends Component {
 
 const mapStateToProps = state => ({
     selectedProductId: state.products.selectedProduct.id,
+    selectedAll: state.products.selectedAll,
     counts: state.reports.counts,
     data: state.reports.data,
 });

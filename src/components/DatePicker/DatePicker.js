@@ -11,8 +11,7 @@ class DatePicker extends Component {
     handleChange = ([start, end]) => {
         const { timeRange } = this.props;
 
-        // timeRange(start.format('D-M-YY'), end.format('D-M-YY'));
-        // console.log(start.format('D-M-YY'), end.format('D-M-YY'));
+        timeRange(start ? start.format('D-M-YY') : null, end ? end.format('D-M-YY') : null);
     };
 
     disabledDate = current => {
