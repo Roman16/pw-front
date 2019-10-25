@@ -116,12 +116,14 @@ const OptimizationStrategy = ({
     return (
         <div className="optimize-strategy">
             <div className="product-info ">
-                <span>Select which optimize Strategy</span>
-                <Icon
-                    type="info-circle"
-                    theme="filled"
-                    onClick={openInformation}
-                />
+                <div className="product-select">
+                    <span>Select which optimize Strategy</span>
+                    <Icon
+                        type="info-circle"
+                        theme="filled"
+                        onClick={openInformation}
+                    />
+                </div>
 
                 {selectedAll && (
                     <div className="description">
