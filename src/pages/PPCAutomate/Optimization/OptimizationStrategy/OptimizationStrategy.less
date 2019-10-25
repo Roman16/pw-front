@@ -2,21 +2,18 @@
 
 .optimize-strategy {
     .product-info {
-        // width: 100%;
-        // display: flex !important;
-        // justify-self: baseline;
         display: grid !important;
         grid-template-columns: 1fr 1fr;
 
         .additional {
-            // width: 100%;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.2fr 1fr;
             justify-self: stretch;
             align-self: center;
             line-height: 32px;
 
             .free-trial {
+                font-size: 16px;
                 height: 32px;
                 line-height: 32px;
                 align-self: center;
@@ -31,7 +28,7 @@
                     text-align: center;
                     line-height: 1.5em;
                     font-family: 'Infra';
-                    font-size: 16px;
+                    font-size: 1em;
                     font-weight: 700;
                     background-color: @dangerous-color;
                     color: @white;
@@ -47,6 +44,27 @@
                     box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
                         0px 0px 20px rgba(142, 147, 192, 0.08);
                     color: @success-color;
+                }
+            }
+        }
+
+        @media (max-width: @desktop) {
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas: 'strategy strategy' 'upgrade upgrade';
+
+            .product-select {
+                grid-area: strategy;
+            }
+
+            .additional {
+                grid-area: upgrade;
+            }
+
+            .additional {
+                justify-self: start;
+
+                .btn-upgrade {
+                    margin-left: 30px;
                 }
             }
         }

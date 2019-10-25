@@ -2,6 +2,7 @@
 @import '../../../style/variables.less';
 
 .optimization-page {
+    height: 100vh;
     display: grid;
     grid-template-columns: minmax(320px, 400px) 1fr;
     grid-gap: 20px;
@@ -44,6 +45,7 @@
             grid-template-columns: minmax(300px, 400px) minmax(min-content, 1fr);
             grid-template-areas: 'options strategy' '. descriptions' 'control control';
             column-gap: 15px;
+            flex: 1;
 
             .options-content {
                 transition-timing-function: ease-out;

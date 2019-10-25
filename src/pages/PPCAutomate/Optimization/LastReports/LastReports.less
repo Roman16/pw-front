@@ -3,6 +3,7 @@
 
 .terminal {
     position: relative;
+    // flex: 1;
 
     .card();
 
@@ -78,15 +79,11 @@
         margin-bottom: 40px;
 
         &.less {
-            max-height: calc(
-                100vh - 40px - 418px - 40px - 40px - 77px - 42px - 30px
-            );
+            max-height: calc(100vh - 418px - 77px - 42px - 150px - 95px);
         }
 
         &.more {
-            max-height: calc(
-                100vh - 40px - 69px - 40px - 40px - 77px - 42px - 30px
-            );
+            max-height: calc(100vh - 69px - 77px - 42px - 150px - 95px);
         }
 
         &.auto {
@@ -99,9 +96,7 @@
 
         @media (max-width: @desktop) {
             &.less {
-                max-height: calc(
-                    100vh - 40px - 629px - 40px - 40px - 77px - 42px - 30px
-                );
+                max-height: calc(100vh - 629px - 77px - 42px - 150px - 95px);
             }
         }
 
