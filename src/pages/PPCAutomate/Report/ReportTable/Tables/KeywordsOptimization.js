@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react';
 import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
-import { indexField, dateField, actionField, infoField } from './const';
-import TableApi from './TableApi';
+import {indexField, dateField, actionField, infoField} from './const';
 
 const changedKeywordBidAcos = 'changed-keyword-bid-acos';
 const changedKeywordBidImpression = 'changed-keyword-bid-impressions';
@@ -48,7 +47,7 @@ const columns = {
             key: 'acos'
         },
         {
-            title: () => <TitleInfo title="Target ACoS" />,
+            title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS'
         },
@@ -67,7 +66,7 @@ const columns = {
             key: 'impressions'
         },
         {
-            title: () => <TitleInfo title="Target Impressions" />,
+            title: () => <TitleInfo title="Target Impressions"/>,
             dataIndex: 'targetImpressions',
             key: 'targetImpressions'
         },
@@ -86,7 +85,7 @@ const columns = {
             key: 'acos'
         },
         {
-            title: () => <TitleInfo title="Target ACoS" />,
+            title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS'
         },
@@ -105,7 +104,7 @@ const columns = {
             key: 'averageConvRate'
         },
         {
-            title: () => <TitleInfo title="Clicks" />,
+            title: () => <TitleInfo title="Clicks"/>,
             dataIndex: 'clicks',
             key: 'clicks'
         },
@@ -118,124 +117,67 @@ const columns = {
     ]
 };
 
-class KeywordsOptimization extends Component {
-    state = {
-        activeTable: changedKeywordBidAcos,
-        currentPage: 1,
-        productId: this.props.productId
+const KeywordsOptimization = ({data, loading, totalSize, showPagination, count, onChangeSubTab}) => {
+    const [activeTable, changeTable] = useState(changedKeywordBidAcos);
+
+    const onChange = (tab) => {
+        onChangeSubTab(tab);
+        changeTable(tab);
     };
 
-    componentDidMount() {
-        const { activeTable } = this.state;
-
-        this.initialFetch(activeTable);
-    }
-
-    componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props,
-            {activeTable} = this.state;
-
-        if (totalTypeSize !== nextProps.totalTypeSize) {
-            updateTotalTypeSize('keywords-optimization', totalTypeSize);
-        }
-
-        if (nextProps.productId !== this.state.productId) {
-            this.initialFetch(activeTable)
-        }
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        console.log(props);
-        if (props.productId !== state.productId) {
-            return {...props, productId: props.productId}
-        } else {
-            return null
-        }
-    }
-
-    initialFetch = activeTable => {
-        const { fetchData } = this.props;
-
-        fetchData(activeTable, 1, this.state.productId);
-    };
-
-    handlePaginationChange = currentPage => {
-        const { activeTable } = this.state;
-        const { fetchData } = this.props;
-
-        this.setState({ currentPage });
-        fetchData(activeTable, currentPage);
-    };
-
-    changeTable = activeTable => {
-        this.setState({
-            activeTable,
-            currentPage: 1
-        });
-        this.initialFetch(activeTable);
-    };
-
-    render() {
-        const { activeTable, currentPage } = this.state;
-        const { data, loading, totalSize, showPagination, count } = this.props;
-
-        return (
-            <div className="ReportItemTable">
-                <div className="ReportItemTable__Buttons">
-                    <TableButton
-                        active={changedKeywordBidAcos === activeTable}
-                        count={count[changedKeywordBidAcos]}
-                        onClick={() => {
-                            this.changeTable(changedKeywordBidAcos);
-                        }}
-                    >
-                        Changed Keyword Bid (ACoS)
-                    </TableButton>
-                    <TableButton
-                        active={changedKeywordBidImpression === activeTable}
-                        count={count[changedKeywordBidImpression]}
-                        onClick={() => {
-                            this.changeTable(changedKeywordBidImpression);
-                        }}
-                    >
-                        Changed Keyword Bid (Impressions)
-                    </TableButton>
-                    <TableButton
-                        active={pausedKeywordHighAcos === activeTable}
-                        count={count[pausedKeywordHighAcos]}
-                        onClick={() => {
-                            this.changeTable(pausedKeywordHighAcos);
-                        }}
-                    >
-                        Paused Keyword (High ACoS)
-                    </TableButton>
-                    <TableButton
-                        active={pausedKeywordNoSales === activeTable}
-                        count={count[pausedKeywordNoSales]}
-                        onClick={() => {
-                            this.changeTable(pausedKeywordNoSales);
-                        }}
-                    >
-                        Paused Keyword (No Sales)
-                    </TableButton>
-                </div>
-
-                <Table
-                    onChangePagination={this.handlePaginationChange}
-                    loading={loading}
-                    dataSource={data}
-                    columns={columns[activeTable]}
-                    currentPage={currentPage}
-                    totalSize={totalSize}
-                    showPagination={showPagination}
-                />
+    return (
+        <div className="ReportItemTable">
+            <div className="ReportItemTable__Buttons">
+                <TableButton
+                    active={changedKeywordBidAcos === activeTable}
+                    // count={count[changedKeywordBidAcos]}
+                    onClick={() => {
+                        onChange(changedKeywordBidAcos);
+                    }}
+                >
+                    Changed Keyword Bid (ACoS)
+                </TableButton>
+                <TableButton
+                    active={changedKeywordBidImpression === activeTable}
+                    // count={count[changedKeywordBidImpression]}
+                    onClick={() => {
+                        onChange(changedKeywordBidImpression);
+                    }}
+                >
+                    Changed Keyword Bid (Impressions)
+                </TableButton>
+                <TableButton
+                    active={pausedKeywordHighAcos === activeTable}
+                    // count={count[pausedKeywordHighAcos]}
+                    onClick={() => {
+                        onChange(pausedKeywordHighAcos);
+                    }}
+                >
+                    Paused Keyword (High ACoS)
+                </TableButton>
+                <TableButton
+                    active={pausedKeywordNoSales === activeTable}
+                    // count={count[pausedKeywordNoSales]}
+                    onClick={() => {
+                        onChange(pausedKeywordNoSales);
+                    }}
+                >
+                    Paused Keyword (No Sales)
+                </TableButton>
             </div>
-        );
-    }
-}
 
-KeywordsOptimization.propTypes = {};
+            <Table
+                // onChangePagination={this.handlePaginationChange}
+                loading={loading}
+                dataSource={data}
+                columns={columns[activeTable]}
+                // currentPage={currentPage}
+                totalSize={totalSize}
+                showPagination={showPagination}
+            />
+        </div>
+    );
+};
 
-KeywordsOptimization.defaultProps = {};
 
-export default TableApi(KeywordsOptimization, 'keywords-optimization');
+export default KeywordsOptimization;

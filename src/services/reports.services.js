@@ -9,8 +9,12 @@ export const reportsServices = {
 function getLastReports(id) {
     return api('get', `${reportsUrls.lastReports}?product_id=${id}`)
 }
-function getAllReports(parameters) {
-    console.log(parameters)
-    return api('get', `${reportsUrls.lastReports}`)
+function getAllReports({
+                           id,
+                           page = 1,
+                           dataType = 'keywords-optimization',
+                           dataSubType = 'changed-keyword-bid-acos',
 
+                       }) {
+    return api('get', `${reportsUrls.allReports}?product_id=${id}&page=${page}&size=10&data-type=${dataType}&data-sub-type=${dataSubType}`)
 }

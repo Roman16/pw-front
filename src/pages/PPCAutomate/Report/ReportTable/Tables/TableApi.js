@@ -61,32 +61,32 @@ const TableApi = (ReportTable, tableType) =>
             let countResp = {};
 
             this.subType = subType;
-            fetchReportTable(tableType, subType, page, start, end)
-                .then(
-                    ({
-                         data: {
-                             data,
-                             totalSize,
-                             totalTypeSize = 0,
-                             counts = {}
-                         }
-                     }) => {
-                        dataResp = data;
-                        totalSizeResp = totalSize;
-                        totalTypeSizeResp = totalTypeSize;
-                        countResp = counts;
-                    }
-                )
-                .finally(() => {
-                    this.setState({
-                        loading: false,
-                        data: dataResp,
-                        totalSize: totalSizeResp,
-                        totalTypeSize: totalTypeSizeResp,
-                        count: countResp,
-                        showPagination: totalSizeResp > DEFAULT_PAGE_SIZE
-                    });
-                });
+            // fetchReportTable(tableType, subType, page, start, end)
+            //     .then(
+            //         ({
+            //              data: {
+            //                  data,
+            //                  totalSize,
+            //                  totalTypeSize = 0,
+            //                  counts = {}
+            //              }
+            //          }) => {
+            //             dataResp = data;
+            //             totalSizeResp = totalSize;
+            //             totalTypeSizeResp = totalTypeSize;
+            //             countResp = counts;
+            //         }
+            //     )
+            //     .finally(() => {
+            //         this.setState({
+            //             loading: false,
+            //             data: dataResp,
+            //             totalSize: totalSizeResp,
+            //             totalTypeSize: totalTypeSizeResp,
+            //             count: countResp,
+            //             showPagination: totalSizeResp > DEFAULT_PAGE_SIZE
+            //         });
+            //     });
         };
 
         render() {
