@@ -130,28 +130,28 @@ const OptimizationStrategy = ({
                     </div>
                 )}
 
-                <div className="additional">
-                    <p className="free-trial">
-                        Free Trial
-                        <span>{freeTrial >= 0 ? freeTrial : 0}</span>
-                        Days Left
-                    </p>
-                    <div className="btn-upgrade">
-                        <Button
-                            onClick={() => {
-                                window.open(
-                                    `${window.BASE_URL}/account/subscriptions`
-                                );
-                            }}
-                        >
-                            Upgrade Now
-                            <Icon
-                                type="arrow-up"
-                                style={{ color: '#8fd39d' }}
-                            />
-                        </Button>
-                    </div>
-                </div>
+                {/*<div className="additional">*/}
+                {/*    <p className="free-trial">*/}
+                {/*        Free Trial*/}
+                {/*        <span>{freeTrial >= 0 ? freeTrial : 0}</span>*/}
+                {/*        Days Left*/}
+                {/*    </p>*/}
+                {/*    <div className="btn-upgrade">*/}
+                {/*        <Button*/}
+                {/*            onClick={() => {*/}
+                {/*                window.open(*/}
+                {/*                    `${window.BASE_URL}/account/subscriptions`*/}
+                {/*                );*/}
+                {/*            }}*/}
+                {/*        >*/}
+                {/*            Upgrade Now*/}
+                {/*            <Icon*/}
+                {/*                type="arrow-up"*/}
+                {/*                style={{ color: '#8fd39d' }}*/}
+                {/*            />*/}
+                {/*        </Button>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
 
             <div className="strategies options-content">
