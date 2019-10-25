@@ -61,16 +61,24 @@ const TerminalItem = ({ number = 0, content = '' }) => (
 class LastReports extends Component {
     state = {
         current: 1,
-        records: this.props.reports.reports.filter(
-            (report, idx) => idx < 10 && report
-        ),
-        del: ''
+        reports: this.props.reports.reports,
+        records: this.props.reports.reports.slice(0, 10)
     };
 
+    static getDerivedStateFromProps(props, state) {
+        if (props.reports.reports !== state.reports) {
+            return {
+                current: 1,
+                reports: props.reports.reports,
+                records: props.reports.reports.slice(0, 10)
+            };
+        }
+    }
+
     onChange = page => {
-        const { reports } = this.props;
+        const { reports } = this.state;
         const pageSize = 10;
-        const records = reports.reports.filter(
+        const records = reports.filter(
             (report, idx) =>
                 idx < page * pageSize &&
                 idx >= page * pageSize - pageSize &&

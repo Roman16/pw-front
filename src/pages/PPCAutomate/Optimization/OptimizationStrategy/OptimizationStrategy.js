@@ -108,7 +108,7 @@ const OptimizationStrategy = ({
     product: { optimization_strategy },
     expireIn
 }) => {
-    // console.log('expireIn :', expireIn);
+    // console.log('expireIn :', expireIn.toDateString());
     return (
         <div className="optimize-strategy">
             <div className="product-info">
