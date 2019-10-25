@@ -17,7 +17,7 @@ const TabName = ({name = null, count}) => (
     <div className="TabName">
         <span>{name}</span>
 
-        <Badge count={count.totalCount > 0 ? count.totalCount : 0}
+        <Badge count={count && count.totalCount > 0 ? count.totalCount : 0}
                overflowCount={999}/>
         {/*{count.totalCount > 0 && <div className="tab-name-count">{count.totalCount}</div>}*/}
     </div>
