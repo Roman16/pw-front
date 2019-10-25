@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -48,47 +49,74 @@ const TerminalCaption = ({ isTerminal }) => (
     </div>
 );
 
-const TerminalItem = ({ number = 0, content = '', data }) => (
-    <div className="terminal-item">
+const TerminalItem = ({ number = 0, content = '' }) => (
+    <li className="terminal-item">
         <div className="index">{number}</div>
         <div className="content">
-            <div
-                className={`${data}-render`}
-                dangerouslySetInnerHTML={{ __html: content }}
-            ></div>
+            <div dangerouslySetInnerHTML={{ __html: content }}></div>
         </div>
-    </div>
+    </li>
 );
 
 class LastReports extends Component {
-    state = {};
+    state = {
+        current: 1,
+        records: this.props.reports.reports.filter(
+            (report, idx) => idx < 10 && report
+        ),
+        del: ''
+    };
+
+    onChange = page => {
+        const { reports } = this.props;
+        const pageSize = 10;
+        const records = reports.reports.filter(
+            (report, idx) =>
+                idx < page * pageSize &&
+                idx >= page * pageSize - pageSize &&
+                report
+        );
+        this.setState({
+            current: page,
+            records
+        });
+    };
+
+    itemRender = (current, type, originalElement) => {
+        if (type === 'prev') {
+            return <a>Previous</a>;
+        }
+        if (type === 'next') {
+            return <a>Next</a>;
+        }
+        return originalElement;
+    };
 
     render() {
-        const { isLess, reports } = this.props;
-        const isTerminal =
-            reports && reports.reports && reports.reports.length > 0;
+        const { current, records } = this.state;
+        const { isLess } = this.props;
+        const isTerminal = records && records.length > 0;
         return (
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
-                <div
+                <ul
                     className={`terminal-content ${!isLess ? 'less' : 'more'} ${
                         isTerminal ? 'auto' : 'hidden'
                     }`}
                 >
                     {isTerminal ? (
                         <Fragment>
-                            {reports.reports.map(({ id, message, number }) => (
+                            {records.map(({ id, message, number }) => (
                                 <TerminalItem
                                     key={id}
                                     content={message}
-                                    number={number}
+                                    number={number + 1}
                                 />
                             ))}
                             <Pagination
-                                defaultCurrent={1}
-                                defaultPageSize={15}
-                                // itemRender={}
-                                total={50}
+                                total={150}
+                                current={current}
+                                onChange={this.onChange}
                             />
                         </Fragment>
                     ) : (
@@ -107,7 +135,7 @@ class LastReports extends Component {
                             ))}
                         </div>
                     )}
-                </div>
+                </ul>
             </div>
         );
     }

@@ -1,0 +1,36 @@
+@import '../../../../../style/variables.less';
+@import '../../../../../style/mixins.less';
+
+.net-margin {
+    .net-margin-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .net-margin-header {
+            text-align: center;
+
+            h2 {
+                color: @second-default-dark;
+            }
+        }
+
+        .box-button {
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+
+            button {
+                margin-bottom: 20px;
+                min-width: 120px;
+                background: @primary-color;
+                color: #fff;
+            }
+        }
+    }
+
+    .net-margin-footer {
+        text-align: center;
+        font-size: 12px;
+    }
+}

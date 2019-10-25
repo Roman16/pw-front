@@ -30,6 +30,12 @@ class RegistrationPage extends React.Component {
             // expiry,
             // cvc
         } = this.state;
+
+        // eslint-disable-next-line no-useless-escape
+        const fieldEmailValid = /^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/.test(
+            email
+        );
+
         this.setState({
             isLoading: true
         });
@@ -47,6 +53,22 @@ class RegistrationPage extends React.Component {
             this.setState({
                 isLoading: false
             });
+            return;
+        } else if (!fieldEmailValid) {
+            notification.error({
+                message: 'Invalid email address',
+                style: {
+                    width: 600,
+                    marginLeft: 335 - 600
+                },
+                placement: 'bottomRight',
+                bottom: 20,
+                duration: 5
+            });
+            this.setState({
+                isLoading: false
+            });
+            return;
         }
 
         this.props.regist({
@@ -137,7 +159,7 @@ class RegistrationPage extends React.Component {
                                 id="register-email"
                                 value={email}
                                 onChange={this.onChange}
-                                pattern="([a-z0-9_.-]+)@([a-z0-9_.-]+).([a-z.]{2,6})"
+                                // pattern="([a-z0-9_.-]+)@([a-z0-9_.-]+).([a-z.]{2,6})"
                                 required
                             />
                             {/* eslint-disable-next-line max-len */}
