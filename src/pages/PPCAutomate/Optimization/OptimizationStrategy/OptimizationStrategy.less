@@ -2,88 +2,25 @@
 
 .optimize-strategy {
     .product-info {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas: 'strategy upgrade';
+        flex-direction: column;
+        align-items: flex-start !important;
 
         .product-select {
-            grid-area: strategy;
-            justify-self: start;
+            display: flex;
+            align-items: center;
         }
 
-        .additional {
-            grid-area: upgrade;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            justify-self: end;
-            align-self: center;
-            line-height: 32px;
-            margin-right: 10px;
-
-            .free-trial {
-                font-size: 16px;
-                height: 32px;
-                line-height: 32px;
-                align-self: center;
-                margin: 0;
-
-                span {
-                    width: 2.2em;
-                    height: 1.4em;
-                    display: inline-block;
-                    margin: 0 0.9em;
-                    border-radius: 0.7em;
-                    text-align: center;
-                    line-height: 1.5em;
-                    font-family: 'Infra';
-                    font-size: 1em;
-                    font-weight: 700;
-                    background-color: @dangerous-color;
-                    color: @white;
-                }
-            }
-
-            .btn-upgrade {
-                justify-self: end;
-                margin-left: 30px;
-
-                button {
-                    border-radius: 8px;
-                    color: @success-color;
-                }
-
-                button:hover {
-                    border: 0 !important;
-                    box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
-                        0px 0px 20px rgba(142, 147, 192, 0.08);
-                }
-            }
-        }
-
-        @media (max-width: @desktop) {
-            grid-template-areas: 'strategy strategy' 'upgrade upgrade';
-
-            .additional {
-                justify-self: start;
-                margin: 0;
-            }
+        .description {
+            font-size: 15px;
+            color: @dangerous-color;
         }
     }
 
     .strategies {
-        //display: grid;
-        //grid-template-columns: 180px 180px 180px 180px;
-        //grid-gap: 15px;
         display: flex;
     }
 
-    .description {
-        font-size: 15px;
-        margin: 0 0 0 auto;
-        color: @dangerous-color;
-    }
-
-    @media (max-width: @desktop) {
+    @media (max-width: 1669px) {
         .strategies {
             display: grid;
             grid-gap: 15px;
@@ -107,8 +44,8 @@
     border-radius: 8px;
     transition: 0.3s;
 
-    @media (max-width: @desktop) {
-        width: 180px;
+    @media (max-width: 1669px) {
+        width: 100%;
     }
 
     &:not(:last-child) {
