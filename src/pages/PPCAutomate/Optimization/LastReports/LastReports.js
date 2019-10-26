@@ -1,9 +1,7 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Icon, Tooltip, Pagination } from 'antd';
-
+import { reportsServices } from '../../../../services/reports.services';
 import './LastReports.less';
 
 const dummy = [
@@ -61,19 +59,9 @@ const TerminalItem = ({ number = 0, content = '' }) => (
 class LastReports extends Component {
     state = {
         current: 1,
-        reports: this.props.reports.reports,
-        records: this.props.reports.reports.slice(0, 10)
+        reports: [],
+        records: []
     };
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.reports.reports !== state.reports) {
-            return {
-                current: 1,
-                reports: props.reports.reports,
-                records: props.reports.reports.slice(0, 10)
-            };
-        }
-    }
 
     onChange = page => {
         const { reports } = this.state;
@@ -100,15 +88,27 @@ class LastReports extends Component {
         return originalElement;
     };
 
-    // componentDidMount() {
-    //     console.log(this.props);
-    // }
+    getReports = () => {
+        reportsServices.getLastReports(this.props.productId).then(res => {
+            this.setState({
+                reports: res,
+                records: res.length > 0 ? res.slice(0, 10) : []
+            });
+        });
+    };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.productId !== prevProps.productId) this.getReports();
+    }
+
+    componentDidMount() {
+        this.getReports();
+    }
 
     render() {
         const { current, records } = this.state;
         const { isLess } = this.props;
         const isTerminal = records && records.length > 0;
-        // console.log(records);
 
         return (
             <div className="terminal">
@@ -155,8 +155,4 @@ class LastReports extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    reports: state.reports
-});
-
-export default connect(mapStateToProps)(LastReports);
+export default LastReports;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'antd';
+import { Button, Badge } from 'antd';
 import './TableButton.less';
 
 class TableButton extends Component {
@@ -11,7 +11,10 @@ class TableButton extends Component {
             <div className={`TableButton ${active ? 'active' : ''}`}>
                 <Button onClick={onClick}>
                     {children}
-                    {count && <span className="count">{count}</span>}
+
+                    <Badge count={count.totalCount > 0 ? count.totalCount : 0}
+                           overflowCount={999} />
+                    {/*{count && <span className="count">{count}</span>}*/}
                 </Button>
             </div>
         );

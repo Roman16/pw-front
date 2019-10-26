@@ -118,7 +118,10 @@ class Optimization extends Component {
 
                         <OptimizationStatus />
 
-                        <LastReports isLess={isLess}/>
+                        <LastReports
+                            isLess={isLess}
+                            productId={selectedProduct.id}
+                        />
                     </div>
                 </div>
 

@@ -1,19 +1,22 @@
-import { reportsConstants } from '../constans/actions.type';
-import { reportsServices } from '../services/reports.services';
+import {reportsConstants} from '../constans/actions.type';
+import {reportsServices} from '../services/reports.services';
 
 export const reportsActions = {
-    fetchReports
+    fetchAllReports
 };
 
-function fetchReports(options) {
+function fetchAllReports(options) {
     return dispatch => {
-        options.size
-            ? reportsServices.getAllReports(...options)
-            : reportsServices.getLastReports(options.id).then(res => {
-                  dispatch({
-                      type: reportsConstants.SET_REPORTS_LIST,
-                      payload: res
-                  });
-              });
+        dispatch({
+            type: reportsConstants.START_FETCH_REPORTS_LIST,
+        });
+
+        reportsServices.getAllReports(options)
+            .then(res => {
+                dispatch({
+                    type: reportsConstants.SET_REPORTS_LIST,
+                    payload: res
+                });
+            });
     };
 }

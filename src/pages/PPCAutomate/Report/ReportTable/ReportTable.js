@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Tabs, Button} from 'antd';
-import axios from 'axios';
+import {Tabs, Button, Badge} from 'antd';
 import KeywordsOptimization from './Tables/KeywordsOptimization';
 import DatePicker from '../../../../components/DatePicker/DatePicker';
 import PATsOptimization from './Tables/PATsOptimization';
@@ -9,16 +8,29 @@ import NewKeywords from './Tables/NewKeywords';
 import NewNegativeKeywords from './Tables/NewNegativeKeywords';
 import NewPats from './Tables/NewPats';
 import NewNegativePats from './Tables/NewNegativePats';
+import {reportsActions} from '../../../../actions/reports.actions';
 import './ReportTable.less';
 
 const {TabPane} = Tabs;
 
-const TabName = ({name = null, count = 0}) => (
+const TabName = ({name = null, count}) => (
     <div className="TabName">
         <span>{name}</span>
-        {count > 0 && <div className="tab-name-count">{count}</div>}
+
+        <Badge count={count && count.totalCount > 0 ? count.totalCount : 0}
+               overflowCount={999}/>
+        {/*{count.totalCount > 0 && <div className="tab-name-count">{count.totalCount}</div>}*/}
     </div>
 );
+
+const subTables = {
+    'keywords-optimization': 'changed-keyword-bid-acos',
+    'pats-optimization': 'changed-pat-bid-acos',
+    'new-keywords': 'created-campaign',
+    'new-negative-keywords': 'created-negative-keyword-from-cst-high-acos',
+    'new-pats': 'created-cross-negative-pat',
+    'new-negative-pats': 'created-negative-pat-from-cst-high-acos'
+};
 
 const tabsItem = [
     {
@@ -26,39 +38,42 @@ const tabsItem = [
             <TabName name="Keywords Optimization" count={count}/>
         ),
         key: 'keywords-optimization',
-        component: (ref, start, end, updateTotalTypeSize, selectedProductId) => (
+        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab, data) => (
             <KeywordsOptimization
-                productId={selectedProductId}
+                onChangeSubTab={onChangeSubTab}
                 ref={ref}
                 startTime={start}
                 endTime={end}
                 updateTotalTypeSize={updateTotalTypeSize}
+                data={data}
             />
         )
     },
     {
         tabName: count => <TabName name="PAT’s Optimization" count={count}/>,
         key: 'pats-optimization',
-        component: (ref, start, end, updateTotalTypeSize, selectedProductId) => (
+        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab, data) => (
             <PATsOptimization
-                productId={selectedProductId}
+                onChangeSubTab={onChangeSubTab}
                 ref={ref}
                 startTime={start}
                 endTime={end}
                 updateTotalTypeSize={updateTotalTypeSize}
+                data={data}
             />
         )
     },
     {
         tabName: count => <TabName name="New Keywords" count={count}/>,
         key: 'new-keywords',
-        component: (ref, start, end, updateTotalTypeSize, selectedProductId) => (
+        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab, data) => (
             <NewKeywords
-                productId={selectedProductId}
+                onChangeSubTab={onChangeSubTab}
                 ref={ref}
                 startTime={start}
                 endTime={end}
                 updateTotalTypeSize={updateTotalTypeSize}
+                data={data}
             />
         )
     },
@@ -67,39 +82,42 @@ const tabsItem = [
             <TabName name="New Negative Keywords" count={count}/>
         ),
         key: 'new-negative-keywords',
-        component: (ref, start, end, updateTotalTypeSize, selectedProductId) => (
+        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab, data) => (
             <NewNegativeKeywords
-                productId={selectedProductId}
+                onChangeSubTab={onChangeSubTab}
                 ref={ref}
                 startTime={start}
                 endTime={end}
                 updateTotalTypeSize={updateTotalTypeSize}
+                data={data}
             />
         )
     },
     {
         tabName: count => <TabName name={"New PAT 's"} count={count}/>,
         key: 'new-pats',
-        component: (ref, start, end, updateTotalTypeSize, selectedProductId) => (
+        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab, data) => (
             <NewPats
-                productId={selectedProductId}
+                onChangeSubTab={onChangeSubTab}
                 ref={ref}
                 startTime={start}
                 endTime={end}
                 updateTotalTypeSize={updateTotalTypeSize}
+                data={data}
             />
         )
     },
     {
         tabName: count => <TabName name={"New Negative PAT's"} count={count}/>,
         key: 'new-negative-pats',
-        component: (ref, start, end, updateTotalTypeSize, selectedProductId) => (
+        component: (ref, start, end, updateTotalTypeSize, onChangeSubTab, data) => (
             <NewNegativePats
-                productId={selectedProductId}
+                onChangeSubTab={onChangeSubTab}
                 ref={ref}
                 startTime={start}
                 endTime={end}
                 updateTotalTypeSize={updateTotalTypeSize}
+                data={data}
             />
         )
     }
@@ -107,8 +125,10 @@ const tabsItem = [
 
 class ReportTable extends Component {
     state = {
-        startDate: null,
-        endDate: null,
+        startDate: '',
+        activeTab: 'keywords-optimization',
+        activeSubTab: 'changed-keyword-bid-acos',
+        endDate: '',
         updateSize: {
             'keywords-optimization': 0,
             'pats-optimization': 0,
@@ -131,23 +151,63 @@ class ReportTable extends Component {
     downloadFile = () => {
         const url = process.env.REACT_APP_API_URL;
 
-        axios.get(
-            `${url}/api/ppc-automation/reports/download-report`,
-            this.props.selectedProductId
-        );
+        // axios.get(
+        //     `${url}/api/ppc-automation/reports/download-report`,
+        //     this.props.selectedProductId
+        // );
+    };
+
+
+
+    fetchReports = () => {
+        const {activeTab, activeSubTab,  startDate, endDate} = this.state,
+            {selectedAll, selectedProductId} = this.props;
+
+        this.props.getReports({
+            id: selectedAll ? 'all' : selectedProductId,
+            dataType: activeTab,
+            dataSubType: activeSubTab,
+            size: 10,
+            startDate,
+            endDate
+        })
     };
 
     timeRange = (startDate, endDate) => {
-        this.myRef.current.changeDateRange(startDate, endDate);
         this.setState({
             startDate,
             endDate
-        });
+        }, this.fetchReports);
     };
 
+    handleChangeTab = (tab) => {
+        this.setState({
+            activeTab: tab,
+            activeSubTab: subTables[tab]
+        }, this.fetchReports);
+    };
+
+    handleChangeSubTab = (tab) => {
+        console.log(tab);
+        this.setState({activeSubTab: tab}, this.fetchReports)
+    };
+
+    componentDidMount() {
+        this.fetchReports();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.selectedProductId !== this.props.selectedProductId) {
+            this.setState({
+                activeTab: 'keywords-optimization',
+                activeSubTab: 'changed-keyword-bid-acos',
+            }, this.fetchReports)
+        }
+    }
+
     render() {
-        const {startDate, endDate, updateSize} = this.state,
-            {selectedProductId} = this.props;
+        const {startDate, endDate, activeTab, updateSize} = this.state,
+            {counts, data} = this.props;
 
         return (
             <div className="ReportTable">
@@ -168,15 +228,16 @@ class ReportTable extends Component {
                     </div>
                 </div>
 
-                <Tabs defaultActiveKey={tabsItem[0].key} type="card">
+                <Tabs activeKey={activeTab} type="card" onChange={this.handleChangeTab}>
                     {tabsItem.map(({tabName, key, component}) => (
-                        <TabPane tab={tabName(updateSize[key])} key={key}>
+                        <TabPane tab={tabName(counts[key])} key={key}>
                             {component(
                                 this.myRef,
                                 startDate,
                                 endDate,
                                 this.updateTotalTypeSize,
-                                selectedProductId
+                                this.handleChangeSubTab,
+                                data
                             )}
                         </TabPane>
                     ))}
@@ -187,7 +248,14 @@ class ReportTable extends Component {
 }
 
 const mapStateToProps = state => ({
-    selectedProductId: state.products.selectedProduct.id
+    selectedProductId: state.products.selectedProduct.id,
+    selectedAll: state.products.selectedAll,
+    counts: state.reports.counts,
+    data: state.reports.data,
 });
 
-export default connect(mapStateToProps)(ReportTable);
+const mapDispatchToProps = dispatch => ({
+    getReports: (options) => dispatch(reportsActions.fetchAllReports(options))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReportTable);

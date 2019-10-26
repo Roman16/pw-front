@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, {useEffect, useState} from 'react';
 import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import { indexField, dateField, actionField, infoField } from './const';
+import {indexField, dateField, actionField, infoField} from './const';
 import TableButton from '../TableButton/TableButton';
-import TableApi from './TableApi';
+import {useSelector} from "react-redux";
 
 const CreatedCrossNegativePAT = 'created-cross-negative-pat';
 const CreatedPATCST = 'created-pat-cst';
@@ -26,12 +26,12 @@ const defaultKeys = [
         key: 'adGroup'
     },
     {
-        title: () => <TitleInfo title="PAT Type" />,
+        title: () => <TitleInfo title="PAT Type"/>,
         dataIndex: 'PatType',
         key: 'PatType'
     },
     {
-        title: () => <TitleInfo title="Pat Intent Type" />,
+        title: () => <TitleInfo title="Pat Intent Type"/>,
         dataIndex: 'PatIntentType',
         key: 'PatIntentType'
     },
@@ -93,102 +93,52 @@ const columns = {
     ]
 };
 
-class NewPats extends Component {
-    state = {
-        activeTable: CreatedCrossNegativePAT,
-        currentPage: 1,
-        productId: this.props.productId
+const NewPats = ({data, totalSize, showPagination, onChangeSubTab}) => {
+    const [activeTable, changeTable] = useState(CreatedCrossNegativePAT);
+    const {count, loading, productId} = useSelector(state => ({
+        count: state.reports.counts['new-pats'].subtypesCounts,
+        loading: state.reports.loading,
+        productId: state.products.selectedProduct.id
+    }));
+
+    const onChange = (tab) => {
+        onChangeSubTab(tab);
+        changeTable(tab);
     };
 
-    componentDidMount() {
-        const { activeTable } = this.state;
+    useEffect(() => changeTable(CreatedCrossNegativePAT), [productId]);
 
-        this.initialFetch(activeTable);
-    }
-
-    componentDidUpdate(nextProps) {
-        const { totalTypeSize, updateTotalTypeSize } = this.props,
-            {activeTable} = this.state;
-
-        if (totalTypeSize !== nextProps.totalTypeSize) {
-            updateTotalTypeSize('new-pats', totalTypeSize);
-        }
-
-        if (nextProps.productId !== this.state.productId) {
-            this.initialFetch(activeTable)
-        }
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.productId !== state.productId) {
-            return {...props, productId: props.productId}
-        } else {
-            return null
-        }
-    }
-
-    initialFetch = activeTable => {
-        const { fetchData } = this.props;
-
-        fetchData(activeTable, 1, this.state.productId);
-    };
-
-    handlePaginationChange = currentPage => {
-        const { activeTable } = this.state;
-        const { fetchData } = this.props;
-
-        this.setState({ currentPage });
-        fetchData(activeTable, currentPage);
-    };
-
-    changeTable = activeTable => {
-        this.setState({
-            activeTable,
-            currentPage: 1
-        });
-        this.initialFetch(activeTable);
-    };
-
-    render() {
-        const { activeTable, currentPage } = this.state;
-        const { data, loading, totalSize, showPagination, count } = this.props;
-
-        return (
-            <div className="ReportItemTable">
-                <TableButton
-                    active={activeTable === CreatedCrossNegativePAT}
-                    count={count[CreatedCrossNegativePAT]}
-                    onClick={() => {
-                        this.changeTable(CreatedCrossNegativePAT);
-                    }}
-                >
-                    Created Cross-Negative PAT
-                </TableButton>
-                <TableButton
-                    active={activeTable === CreatedPATCST}
-                    count={count[CreatedPATCST]}
-                    onClick={() => {
-                        this.changeTable(CreatedPATCST);
-                    }}
-                >
-                    Created PAT (CST)
-                </TableButton>
-                <Table
-                    onChangePagination={this.handlePaginationChange}
-                    loading={loading}
-                    dataSource={data}
-                    columns={columns[activeTable]}
-                    currentPage={currentPage}
-                    totalSize={totalSize}
-                    showPagination={showPagination}
-                />
-            </div>
-        );
-    }
+    return (
+        <div className="ReportItemTable">
+            <TableButton
+                active={activeTable === CreatedCrossNegativePAT}
+                count={count[CreatedCrossNegativePAT]}
+                onClick={() => {
+                    onChange(CreatedCrossNegativePAT);
+                }}
+            >
+                Created Cross-Negative PAT
+            </TableButton>
+            <TableButton
+                active={activeTable === CreatedPATCST}
+                count={count[CreatedPATCST]}
+                onClick={() => {
+                    onChange(CreatedPATCST);
+                }}
+            >
+                Created PAT (CST)
+            </TableButton>
+            <Table
+                // onChangePagination={this.handlePaginationChange}
+                loading={loading}
+                dataSource={data}
+                columns={columns[activeTable]}
+                // currentPage={currentPage}
+                totalSize={totalSize}
+                showPagination={showPagination}
+            />
+        </div>
+    );
 }
 
-NewPats.propTypes = {};
-
-NewPats.defaultProps = {};
-
-export default TableApi(NewPats, 'new-pats');
+export default NewPats;
