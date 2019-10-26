@@ -7,13 +7,19 @@
     text-align: center;
     background: rgba(@success-color, 0.2);
     border-radius: 4px;
+    position: absolute;
+    left: 5px;
+    top: 4px;
+    z-index: 10;
 }
 
 .InputCurrency {
     max-width: 250px;
+    position: relative;
 
     input[type='number'] {
         -moz-appearance: textfield;
+        padding: 0 0 0 25px;
     }
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {

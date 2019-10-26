@@ -63,9 +63,9 @@ class ProductsList extends Component {
         this.updateSettings(dataSourceRow);
     };
 
-    setRowData = (event, item, index) => {
+    setRowData = (value, item, index) => {
         const {products} = this.state;
-        const {target: {value}} = event;
+        // const {target: {value}} = event;
 
         products[index] = {
             ...products[index],
@@ -212,7 +212,7 @@ class ProductsList extends Component {
                         <div
                             className={`settings-status ${
                                 item[OPTIMIZATION_STATUS] === ACTIVE ? 'active' : ''
-                            }`}
+                                }`}
                         >
                             {item[OPTIMIZATION_STATUS] === ACTIVE
                                 ? 'Active'
@@ -231,7 +231,6 @@ class ProductsList extends Component {
             },
             windowHeight = window.innerHeight;
 
-        console.log(windowHeight);
         return (
             <div className="table-settings">
                 <Table

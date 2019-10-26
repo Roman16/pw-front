@@ -1,5 +1,6 @@
 import React from 'react';
-import { Input } from 'antd';
+import { InputNumber } from 'antd';
+
 import './InputCurrency.less';
 
 const Dollar = () => (
@@ -10,11 +11,13 @@ const InputCurrency = ({
     isError = false, value, errorText = '', ...props
 }) => (
     <div className="InputCurrency">
-        <Input
+        <Dollar />
+        <InputNumber
             {...props}
-            prefix={<Dollar />}
             value={value}
             type="number"
+            min={0}
+            onBlur={e => props.onBlur(e.target.value)}
         />
         {isError && (
             <span className="error">
