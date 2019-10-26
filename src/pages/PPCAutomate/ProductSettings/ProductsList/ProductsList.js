@@ -130,6 +130,7 @@ class ProductsList extends Component {
                     title: 'Net Margin',
                     dataIndex: NET_MARGIN,
                     key: NET_MARGIN,
+                    width: 150,
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[NET_MARGIN]}
@@ -144,6 +145,7 @@ class ProductsList extends Component {
                     title: 'Min Bid (Manual Campaign)',
                     dataIndex: MIN_BID_MANUAL_CAMPING,
                     key: MIN_BID_MANUAL_CAMPING,
+                    width: 150,
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MIN_BID_MANUAL_CAMPING]}
@@ -158,6 +160,7 @@ class ProductsList extends Component {
                     title: 'Max Bid (Manual Campaign)',
                     dataIndex: MAX_BID_MANUAL_CAMPING,
                     key: MAX_BID_MANUAL_CAMPING,
+                    width: 150,
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MAX_BID_MANUAL_CAMPING]}
@@ -172,6 +175,7 @@ class ProductsList extends Component {
                     title: 'Min Bid (Auto Campaign)',
                     dataIndex: MIN_BID_AUTO_CAMPING,
                     key: MIN_BID_AUTO_CAMPING,
+                    width: 150,
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MIN_BID_AUTO_CAMPING]}
@@ -186,6 +190,7 @@ class ProductsList extends Component {
                     title: 'Max Bid (Auto Campaign)',
                     dataIndex: MAX_BID_AUTO_CAMPING,
                     key: MAX_BID_AUTO_CAMPING,
+                    width: 150,
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MAX_BID_AUTO_CAMPING]}
@@ -200,6 +205,7 @@ class ProductsList extends Component {
                     title: 'Total Changes',
                     dataIndex: TOTAL_CHANGES,
                     key: TOTAL_CHANGES,
+                    width: 100,
                     render: (index, item) => (
                         <div style={{fontWeight: 600}}>{item[TOTAL_CHANGES]}</div>
                     )
@@ -208,6 +214,7 @@ class ProductsList extends Component {
                     title: 'Optimization Status',
                     dataIndex: OPTIMIZATION_STATUS,
                     key: OPTIMIZATION_STATUS,
+                    width: 100,
                     render: (index, item) => (
                         <div
                             className={`settings-status ${
