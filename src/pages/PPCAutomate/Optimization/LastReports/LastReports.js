@@ -78,23 +78,14 @@ class LastReports extends Component {
         });
     };
 
-    itemRender = (current, type, originalElement) => {
-        if (type === 'prev') {
-            return <a>Previous</a>;
-        }
-        if (type === 'next') {
-            return <a>Next</a>;
-        }
-        return originalElement;
-    };
-
     getReports = () => {
-        reportsServices.getLastReports(this.props.productId).then(res => {
-            this.setState({
-                reports: res,
-                records: res.length > 0 ? res.slice(0, 10) : []
+        this.props.productId &&
+            reportsServices.getLastReports(this.props.productId).then(res => {
+                this.setState({
+                    reports: res,
+                    records: res.length > 0 ? res.slice(0, 10) : []
+                });
             });
-        });
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
