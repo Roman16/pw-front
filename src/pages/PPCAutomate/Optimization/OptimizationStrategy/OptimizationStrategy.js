@@ -110,13 +110,6 @@ const OptimizationStrategy = ({
     return (
         <div className="optimize-strategy">
             <div className="product-info ">
-                {selectedAll && (
-                    <div className="description">
-                        Changes to those settings will be applied to all
-                        selected products
-                    </div>
-                )}
-
                 <div className="product-select">
                     <span>Select which optimize Strategy</span>
                     <Icon
@@ -125,6 +118,13 @@ const OptimizationStrategy = ({
                         onClick={openInformation}
                     />
                 </div>
+
+                {selectedAll && (
+                    <div className="description">
+                        Changes to those settings will be applied to all
+                        selected products
+                    </div>
+                )}
             </div>
 
             <div className="strategies options-content">
