@@ -123,8 +123,8 @@ class LastReports extends Component {
     render() {
         const { current, records } = this.state;
         const { isLess } = this.props;
-        const qwe = false;
-        const isTerminal = qwe && records.length > 0;
+        // const qwe = false;
+        const isTerminal = records && records.length > 0;
 
         return (
             <div className="terminal">
