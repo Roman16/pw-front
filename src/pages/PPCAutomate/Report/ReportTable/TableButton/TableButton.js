@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Badge } from 'antd';
+import { Button } from 'antd';
 import './TableButton.less';
 
 class TableButton extends Component {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Tabs, Button, Badge} from 'antd';
+import {Tabs, Button} from 'antd';
 import KeywordsOptimization from './Tables/KeywordsOptimization';
 import DatePicker from '../../../../components/DatePicker/DatePicker';
 import PATsOptimization from './Tables/PATsOptimization';
@@ -17,7 +17,8 @@ const TabName = ({name = null, count}) => (
     <div className="TabName">
         <span>{name}</span>
 
-        {count.total_count > 0 && <div className="tab-name-count">{count.total_count > 999 ? '999+' : count.total_count}</div>}
+        {count.total_count > 0 &&
+        <div className="tab-name-count">{count.total_count > 999 ? '999+' : count.total_count}</div>}
     </div>
 );
 
@@ -210,15 +211,12 @@ class ReportTable extends Component {
                 <div className="report-table">
                     <h3>Changes Report</h3>
                     <div className='changes-calendar-download'>
-                        <span>
+                        <div className="total-count">
                             Today Changes
-                                    <Badge
-                                        showZero
-                                        className="total-count"
-                                        count={todayChanges}
-                                        overflowCount={999}
-                                    />
-                        </span>
+                            <span >
+                                {todayChanges}
+                            </span>
+                        </div>
                         <DatePicker timeRange={this.timeRange}/>
                         {/* <Link to="/ppc-automation/reports/download-report"> */}
                         <Button onClick={this.downloadFile}>

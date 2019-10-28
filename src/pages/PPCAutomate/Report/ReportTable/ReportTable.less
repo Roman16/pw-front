@@ -45,17 +45,21 @@
     }
 
     .total-count {
+      display: flex;
+      align-items: center;
       margin: 0 8px;
-      width: 32px;
       border-radius: 12px;
-      text-align: center;
       font-size: 12px;
-      background: @success-color;
 
-      .ant-badge-count {
+      span {
+        text-align: center;
+        background: @success-color;
         color: #fff;
         border: 0;
         line-height: 16px;
+        width: 32px;
+        border-radius: 12px;
+        margin: 0 8px;
       }
     }
 
