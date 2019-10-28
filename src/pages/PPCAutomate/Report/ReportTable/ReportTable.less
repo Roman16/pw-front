@@ -4,6 +4,7 @@
 .ReportTable {
     .ant-badge {
         margin: 0 0 0 5px;
+
         .ant-badge-count {
             background: inherit;
             border: 1px solid #c9cbd4;
@@ -13,6 +14,12 @@
 
             .ant-scroll-number-only {
                 height: 16px;
+
+                & > div {
+                    display: inherit;
+                    align-items: inherit;
+                    margin-right: 38%;
+                }
 
                 & > p {
                     height: 15.7px;
@@ -36,19 +43,20 @@
         & > div {
             display: inherit;
             align-items: inherit;
-            margin-right: 38%;
         }
 
         .total-count {
             margin: 0 8px;
-            padding: 2px 4px;
             width: 32px;
-            height: 20px;
             border-radius: 12px;
             text-align: center;
             font-size: 12px;
             background: @success-color;
-            color: #fff;
+
+            .ant-badge-count {
+                color: #fff;
+                border: 0;
+            }
         }
 
         .ant-calendar-range-picker-input:first-of-type {

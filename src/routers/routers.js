@@ -73,7 +73,6 @@ const routers = () => {
                     component={Optimization}
                 />
                 <ConnectedAmazonRoute
-                    exact
                     path="/ppc/report"
                     component={Report}
                 />

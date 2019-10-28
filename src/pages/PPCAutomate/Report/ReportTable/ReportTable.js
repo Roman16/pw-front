@@ -158,9 +158,8 @@ class ReportTable extends Component {
     };
 
 
-
     fetchReports = () => {
-        const {activeTab, activeSubTab,  startDate, endDate} = this.state,
+        const {activeTab, activeSubTab, startDate, endDate} = this.state,
             {selectedAll, selectedProductId} = this.props;
 
         this.props.getReports({
@@ -216,7 +215,11 @@ class ReportTable extends Component {
                     <div className='changes-calendar-download'>
                         <span>
                             Today Changes
-                            <span className="total-count">99+</span>
+                                    <Badge
+                                        className="total-count"
+                                        count={1}
+                                        overflowCount={999}
+                                    />
                         </span>
                         <DatePicker timeRange={this.timeRange}/>
                         {/* <Link to="/ppc-automation/reports/download-report"> */}
