@@ -1,23 +1,23 @@
 import React from 'react';
-import { InputNumber } from 'antd';
+import {InputNumber} from 'antd';
 
 import './InputCurrency.less';
 
-const Dollar = () => (
-    <span className="Dollar">$</span>
+const Dollar = ({typeIcon}) => (
+    <span className="Dollar">{typeIcon === 'margin' ? '%' : '$'}</span>
 );
 
 const InputCurrency = ({
-    isError = false, value, errorText = '', ...props
-}) => (
+                           isError = false, value, errorText = '', typeIcon, ...props
+                       }) => (
     <div className="InputCurrency">
-        <Dollar />
+        <Dollar
+            typeIcon={typeIcon}
+        />
         <InputNumber
             {...props}
             value={value}
             type="number"
-            min={0}
-            onBlur={e => props.onBlur(e.target.value)}
         />
         {isError && (
             <span className="error">

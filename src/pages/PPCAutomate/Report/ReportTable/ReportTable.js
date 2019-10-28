@@ -187,7 +187,6 @@ class ReportTable extends Component {
     };
 
     handleChangeSubTab = (tab) => {
-        console.log(tab);
         this.setState({activeSubTab: tab}, this.fetchReports)
     };
 
@@ -196,12 +195,14 @@ class ReportTable extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.selectedProductId !== this.props.selectedProductId) {
+        if ((prevProps.selectedProductId !== this.props.selectedProductId) || (prevProps.selectedAll !== this.props.selectedAll)) {
             this.setState({
                 activeTab: 'keywords-optimization',
                 activeSubTab: 'changed-keyword-bid-acos',
             }, this.fetchReports)
         }
+
+
     }
 
     render() {
