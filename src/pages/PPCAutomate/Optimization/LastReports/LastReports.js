@@ -63,6 +63,10 @@ class LastReports extends Component {
         records: []
     };
 
+    // getUlRef = node => {
+    //     this.ulList = node;
+    // };
+
     onChange = page => {
         const { reports } = this.state;
         const pageSize = 10;
@@ -77,6 +81,11 @@ class LastReports extends Component {
             current: page,
             records
         });
+        // console.log('this.getUlRef', this.getUlRef);
+        // this.getUlRef.scrollTo({
+        //     top: 0,
+        //     behavior: 'smooth'
+        // });
     };
 
     getReports = () => {
@@ -86,6 +95,7 @@ class LastReports extends Component {
                 const pageSize = 10;
                 let counter = 0;
                 this.setState({
+                    current: 1,
                     reports: data,
                     records: data.filter(
                         (report, idx) =>
@@ -108,6 +118,7 @@ class LastReports extends Component {
     render() {
         const { current, records } = this.state;
         const { isLess } = this.props;
+        // const qwe = false;
         const isTerminal = records && records.length > 0;
 
         return (
@@ -117,6 +128,7 @@ class LastReports extends Component {
                     className={`terminal-content ${!isLess ? 'less' : 'more'} ${
                         isTerminal ? 'auto' : 'hidden'
                     }`}
+                    // ref={this.getUlRef}
                 >
                     {isTerminal ? (
                         <Fragment>

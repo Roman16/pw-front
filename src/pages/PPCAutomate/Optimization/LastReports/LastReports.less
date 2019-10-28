@@ -3,7 +3,6 @@
 
 .terminal {
     position: relative;
-    // flex: 1;
 
     .card();
 
@@ -76,7 +75,7 @@
     }
 
     .terminal-content {
-        margin-bottom: 40px;
+        margin-bottom: 5px;
 
         &.less {
             max-height: calc(100vh - 418px - 96px - 42px - 150px - 95px);
@@ -116,14 +115,14 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 z-index: 11;
-                transition: all 0.5s ease-in;
+                transition: all 0.5s linear;
 
                 &.auto {
-                    top: 50%;
+                    top: 40%;
                 }
 
                 &.hidden {
-                    top: 17.918vh;
+                    top: 18%;
                 }
 
                 .dummy-render {

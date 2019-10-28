@@ -71,7 +71,7 @@ const Sidebar = () => {
                         mode="inline"
                         theme="dark"
                         inlineCollapsed={collapsed}
-                        defaultSelectedKeys={[activeLink]}
+                        selectedKeys={[activeLink]}
                         defaultOpenKeys={[`/${activeLinkArr[1]}`]}
                     >
                         {menuMain.map(item => (
