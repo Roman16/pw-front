@@ -66,11 +66,12 @@ class LastReports extends Component {
     onChange = page => {
         const { reports } = this.state;
         const pageSize = 10;
+        let counter = 0;
         const records = reports.filter(
             (report, idx) =>
                 idx < page * pageSize &&
                 idx >= page * pageSize - pageSize &&
-                report
+                (report.number = page * pageSize - (pageSize - (counter += 1)))
         );
         this.setState({
             current: page,
@@ -81,9 +82,17 @@ class LastReports extends Component {
     getReports = () => {
         this.props.productId &&
             reportsServices.getLastReports(this.props.productId).then(res => {
+                const data = res.length > 0 ? res.slice(0, 150) : [];
+                const pageSize = 10;
+                let counter = 0;
                 this.setState({
-                    reports: res,
-                    records: res.length > 0 ? res.slice(0, 10) : []
+                    reports: data,
+                    records: data.filter(
+                        (report, idx) =>
+                            idx < pageSize &&
+                            (report.number =
+                                pageSize - (pageSize - (counter += 1)))
+                    )
                 });
             });
     };
@@ -115,7 +124,7 @@ class LastReports extends Component {
                                 <TerminalItem
                                     key={id}
                                     content={message}
-                                    number={number + 1}
+                                    number={number}
                                 />
                             ))}
                             <Pagination
