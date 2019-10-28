@@ -17,9 +17,7 @@ const TabName = ({name = null, count}) => (
     <div className="TabName">
         <span>{name}</span>
 
-        <Badge count={count && count.total_count > 0 ? count.total_count : 0}
-               overflowCount={999}/>
-        {/*{count.totalCount > 0 && <div className="tab-name-count">{count.totalCount}</div>}*/}
+        {count.total_count > 0 && <div className="tab-name-count">{count.total_count > 999 ? '999+' : count.total_count}</div>}
     </div>
 );
 
@@ -204,7 +202,7 @@ class ReportTable extends Component {
     }
 
     render() {
-        const {startDate, endDate, activeTab, page} = this.state,
+        const {activeTab, page} = this.state,
             {counts, data, todayChanges, totalSize} = this.props;
 
         return (

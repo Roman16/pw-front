@@ -12,9 +12,7 @@ class TableButton extends Component {
                 <Button onClick={onClick}>
                     {children}
 
-                    <Badge count={count > 0 ? count : 0}
-                           overflowCount={999} />
-                    {/*{count && <span className="count">{count}</span>}*/}
+                    {count > 0 && <div className="tab-name-count">{count > 999 ? '999+' : count}</div>}
                 </Button>
             </div>
         );

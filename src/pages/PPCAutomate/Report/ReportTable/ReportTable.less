@@ -2,29 +2,20 @@
 @import '../../../../style/variables.less';
 
 .ReportTable {
-  .ant-badge {
-    margin: 0 0 0 5px;
+  margin: 0 0 0 5px;
 
-    .ant-badge-count {
-      background: inherit;
-      border: 1px solid #c9cbd4;
-      color: #000000;
-      min-width: 32px;
-      height: 16px !important;
-
-      .ant-scroll-number-only {
-        height: 16px;
-
-        & > p {
-          height: 16px;
-
-          &.current {
-            height: 16px;
-            margin: -3px 0 0 0;
-          }
-        }
-      }
-    }
+  .tab-name-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: inherit;
+    border: 1px solid #c9cbd4;
+    color: #000000;
+    min-width: 32px;
+    height: 16px !important;
+    border-radius: 12px;
+    margin: 0 0 0 10px;
+    font-weight: 500;
   }
 
   .action-field {
