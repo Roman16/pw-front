@@ -16,12 +16,12 @@ function getAllReports({
                            dataType = 'keywords-optimization',
                            dataSubType = 'changed-keyword-bid-acos',
                            startDate,
-                           endDate
+                           endDate,
                        }) {
     const parameters = [
-        startDate ? `&start-date=${startDate}` : '',
-        endDate ? `&end-date=${endDate}` : ''
+        startDate ? `&start_date=${startDate}` : '',
+        endDate ? `&end_date=${endDate}` : ''
     ];
 
-    return api('get', `${reportsUrls.allReports}?product_id=${id}&page=${page}&size=10&data-type=${dataType}&data-sub-type=${dataSubType}${parameters.join('')}`)
+    return api('get', `${reportsUrls.allReports}?product_id=${id}&page=${page}&size=10&data_type=${dataType}&data_sub_type=${dataSubType}${parameters.join('')}`)
 }

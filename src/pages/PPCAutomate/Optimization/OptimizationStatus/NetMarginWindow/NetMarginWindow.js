@@ -12,7 +12,7 @@ import {productsServices} from "../../../../../services/products.services";
 const errorText = 'net margin should be more than 0';
 
 const Dollar = () => (
-    <span className="dollar">$</span>
+    <span className="dollar">%</span>
 );
 
 const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll}) => {

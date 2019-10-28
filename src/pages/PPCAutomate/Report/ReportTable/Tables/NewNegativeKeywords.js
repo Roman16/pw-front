@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
-import {indexField, dateField, actionField, infoField} from './const';
+import {indexField, createdKeywordsActionField, infoField} from './const';
 import {useSelector} from "react-redux";
 
 const highACoS = 'created-negative-keyword-from-cst-high-acos';
@@ -11,9 +11,6 @@ const noSales = 'created-negative-keyword-from-cst-no-sales';
 const defaultKeys = [
     {
         ...indexField
-    },
-    {
-        ...dateField
     },
     {
         title: 'Campaign',
@@ -43,15 +40,17 @@ const columns = {
         {
             title: 'CST ACoS',
             dataIndex: 'CSTACoS',
-            key: 'CSTACoS'
+            key: 'CSTACoS',
+            render: text => <span>{text}%</span>
         },
         {
             title: () => <TitleInfo title="Target"/>,
             dataIndex: 'target',
-            key: 'target'
+            key: 'target',
+            render: text => <span>{text}%</span>
         },
         {
-            ...actionField
+            ...createdKeywordsActionField
         },
         {
             ...infoField
@@ -70,7 +69,7 @@ const columns = {
             key: 'CSTClicks'
         },
         {
-            ...actionField
+            ...createdKeywordsActionField
         },
         {
             ...infoField
@@ -78,10 +77,10 @@ const columns = {
     ]
 };
 
-const NewNegativeKeywords = ({data, totalSize, showPagination, onChangeSubTab}) => {
+const NewNegativeKeywords = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
     const [activeTable, changeTable] = useState(highACoS);
     const {count, loading, productId} = useSelector(state => ({
-        count: state.reports.counts['new-negative-keywords'].subtypesCounts,
+        count: state.reports.counts['new-negative-keywords'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
@@ -91,7 +90,7 @@ const NewNegativeKeywords = ({data, totalSize, showPagination, onChangeSubTab}) 
         changeTable(tab);
     };
 
-    useEffect(() => changeTable(highACoS), [productId]);
+    useEffect(() => changeTable(highACoS), [productId, activeTab]);
 
     return (
         <div className="ReportItemTable">
@@ -113,14 +112,15 @@ const NewNegativeKeywords = ({data, totalSize, showPagination, onChangeSubTab}) 
             >
                 Created Negative Keyword From CST (No Sales)
             </TableButton>
+
             <Table
-                // onChangePagination={this.handlePaginationChange}
+                onChangePagination={handlePaginationChange}
                 loading={loading}
                 dataSource={data}
                 columns={columns[activeTable]}
-                // currentPage={currentPage}
+                currentPage={currentPage}
                 totalSize={totalSize}
-                showPagination={showPagination}
+                showPagination={totalSize > 10}
             />
         </div>
     );

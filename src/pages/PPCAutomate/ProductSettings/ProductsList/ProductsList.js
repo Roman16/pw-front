@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {func, arrayOf, object} from 'prop-types';
-import {Input} from 'antd';
+import {Input, notification} from 'antd';
 import InputCurrency from '../../../../components/Inputs/InputCurrency';
 import Table from '../../../../components/Table/Table';
 import ProductItem from '../../../../components/ProductList/ProductItem';
@@ -31,6 +31,7 @@ class ProductsList extends Component {
 
     timerId = null;
     timerIdSearch = null;
+    prevItem = 0;
 
     fetchProducts = async (searchText = '') => {
         const {page, size} = this.state;
@@ -47,25 +48,31 @@ class ProductsList extends Component {
         await productsServices.updateProductSettings(data);
     };
 
-    onChangeRow = (...args) => {
-        const dataSourceRow = this.setRowData(...args);
-
-        clearTimeout(this.timerId);
-        this.timerId = setTimeout(() => {
-            this.updateSettings(dataSourceRow);
-        }, delay);
-    };
-
-    onBlurRow = (...args) => {
-        const dataSourceRow = this.setRowData(...args);
-
-        clearTimeout(this.timerId);
-        this.updateSettings(dataSourceRow);
+    onChangeRow = (value, item, index) => {
+        if (value >= 0) {
+            const dataSourceRow = this.setRowData(value, item, index);
+            if (item !== this.prevItem) {
+                this.prevItem = item;
+                this.updateSettings(dataSourceRow);
+            } else {
+                this.prevItem = item;
+                clearTimeout(this.timerId);
+                this.timerId = setTimeout(() => {
+                    this.updateSettings(dataSourceRow);
+                }, delay);
+            }
+        } else {
+            notification.warning({
+                message: item === NET_MARGIN ?
+                    'Product net margin should be greater than 0%'
+                    :
+                    'Bids should be greater than or equal to 0.02$'
+            });
+        }
     };
 
     setRowData = (value, item, index) => {
         const {products} = this.state;
-        // const {target: {value}} = event;
 
         products[index] = {
             ...products[index],
@@ -80,13 +87,6 @@ class ProductsList extends Component {
             [item]: +value
         };
     };
-
-    // onSearchBlur = (event) => {
-    //     const {target: {value}} = event;
-    //
-    //     clearTimeout(this.timerIdSearch);
-    //     this.fetchProducts(value);
-    // };
 
     onSearchChange = ({target: {value}}) => {
         clearTimeout(this.timerIdSearch);
@@ -134,10 +134,11 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[NET_MARGIN]}
+                            typeIcon='margin'
+                            min={0}
                             onChange={event =>
                                 this.onChangeRow(event, NET_MARGIN, indexRow)
                             }
-                            onBlur={event => this.onBlurRow(event, NET_MARGIN, indexRow)}
                         />
                     )
                 },
@@ -149,10 +150,10 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MIN_BID_MANUAL_CAMPING]}
+                            min={0.02}
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)
                             }
-                            onBlur={event => this.onBlurRow(event, MIN_BID_MANUAL_CAMPING, indexRow)}
                         />
                     )
                 },
@@ -164,10 +165,10 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MAX_BID_MANUAL_CAMPING]}
+                            min={0.02}
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)
                             }
-                            onBlur={event => this.onBlurRow(event, MAX_BID_MANUAL_CAMPING, indexRow)}
                         />
                     )
                 },
@@ -179,10 +180,10 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MIN_BID_AUTO_CAMPING]}
+                            min={0.02}
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)
                             }
-                            onBlur={event => this.onBlurRow(event, MIN_BID_AUTO_CAMPING, indexRow)}
                         />
                     )
                 },
@@ -194,10 +195,10 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MAX_BID_AUTO_CAMPING]}
+                            min={0.02}
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)
                             }
-                            onBlur={event => this.onBlurRow(event, MAX_BID_AUTO_CAMPING, indexRow)}
                         />
                     )
                 },
@@ -219,7 +220,7 @@ class ProductsList extends Component {
                         <div
                             className={`settings-status ${
                                 item[OPTIMIZATION_STATUS] === ACTIVE ? 'active' : ''
-                                }`}
+                            }`}
                         >
                             {item[OPTIMIZATION_STATUS] === ACTIVE
                                 ? 'Active'

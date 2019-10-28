@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import Table from '../../../../../components/Table/Table';
 import TableButton from '../TableButton/TableButton';
-import {indexField, dateField, actionField, infoField} from './const';
+import {indexField, dateField, createdKeywordsActionField, infoField} from './const';
 import {useSelector} from "react-redux";
 
 const createdCampaign = 'created-campaign';
@@ -14,9 +14,6 @@ const createdKeywordCST = 'created-keyword-cst';
 const defaultKeys = [
     {
         ...indexField
-    },
-    {
-        ...dateField
     },
     {
         title: 'Campaign',
@@ -41,7 +38,9 @@ const columns = {
         {
             title: 'Daily Budget',
             dataIndex: 'dailyBudget',
-            key: 'dailyBudget'
+            key: 'dailyBudget',
+            render: text => <span>${text}</span>
+
         },
         {
             title: 'Start Date.',
@@ -50,7 +49,7 @@ const columns = {
             render: text => moment(text).format('Y/M/D')
         },
         {
-            ...actionField
+            ...createdKeywordsActionField
         },
         {
             ...infoField
@@ -66,10 +65,11 @@ const columns = {
         {
             title: 'Default Bid',
             dataIndex: 'defaultBid',
-            key: 'defaultBid'
+            key: 'defaultBid',
+            render: text => <span>${text}</span>
         },
         {
-            ...actionField
+            ...createdKeywordsActionField
         },
         {
             ...infoField
@@ -93,7 +93,7 @@ const columns = {
             key: 'sku'
         },
         {
-            ...actionField
+            ...createdKeywordsActionField
         },
         {
             ...infoField
@@ -112,7 +112,7 @@ const columns = {
             key: 'keyword'
         },
         {
-            ...actionField
+            ...createdKeywordsActionField
         },
         {
             ...infoField
@@ -138,7 +138,8 @@ const columns = {
         {
             title: 'Bid',
             dataIndex: 'bid',
-            key: 'bid'
+            key: 'bid',
+            render: text => <span>${text}</span>
         },
         {
             title: 'CST Clicks',
@@ -148,20 +149,24 @@ const columns = {
         {
             title: 'CST ACOS',
             dataIndex: 'CSTACoS',
-            key: 'CSTACoS'
+            key: 'CSTACoS',
+            render: text => <span>{text}%</span>
+
         },
         {
             title: 'CST CPC',
             dataIndex: 'CSTCPC',
-            key: 'CSTCPC'
+            key: 'CSTCPC',
+            render: text => <span>${text}</span>
         },
         {
             title: 'Targe ACoS',
             dataIndex: 'targetACoS',
-            key: 'targetACoS'
+            key: 'targetACoS',
+            render: text => <span>{text}%</span>
         },
         {
-            ...actionField
+            ...createdKeywordsActionField
         },
         {
             ...infoField
@@ -169,10 +174,10 @@ const columns = {
     ]
 };
 
-const NewKeywords = ({data, totalSize, showPagination, onChangeSubTab}) => {
+const NewKeywords = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
     const [activeTable, changeTable] = useState(createdCampaign);
     const {count, loading, productId} = useSelector(state => ({
-        count: state.reports.counts['new-keywords'].subtypesCounts,
+        count: state.reports.counts['new-keywords'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
@@ -182,7 +187,7 @@ const NewKeywords = ({data, totalSize, showPagination, onChangeSubTab}) => {
         changeTable(tab);
     };
 
-    useEffect(() => changeTable(createdCampaign), [productId]);
+    useEffect(() => changeTable(createdCampaign), [productId, activeTab]);
 
     return (
         <div className="ReportItemTable">
@@ -231,14 +236,15 @@ const NewKeywords = ({data, totalSize, showPagination, onChangeSubTab}) => {
             >
                 Created Keyword (CST)
             </TableButton>
+
             <Table
-                // onChangePagination={this.handlePaginationChange}
+                onChangePagination={handlePaginationChange}
                 loading={loading}
                 dataSource={data}
                 columns={columns[activeTable]}
-                // currentPage={currentPage}
+                currentPage={currentPage}
                 totalSize={totalSize}
-                showPagination={showPagination}
+                showPagination={totalSize > 10}
             />
         </div>
     );

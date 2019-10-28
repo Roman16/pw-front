@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, dateField, actionField, infoField} from './const';
+import {indexField, dateField, createdKeywordsActionField, infoField} from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from "react-redux";
 
@@ -11,9 +11,6 @@ const CreatedPATCST = 'created-pat-cst';
 const defaultKeys = [
     {
         ...indexField
-    },
-    {
-        ...dateField
     },
     {
         title: 'Campaign',
@@ -31,12 +28,12 @@ const defaultKeys = [
         key: 'PatType'
     },
     {
-        title: () => <TitleInfo title="Pat Intent Type"/>,
+        title: () => <TitleInfo title="PAT Intent Type"/>,
         dataIndex: 'PatIntentType',
         key: 'PatIntentType'
     },
     {
-        title: 'Pat Value',
+        title: 'PAT Value',
         dataIndex: 'PatValue',
         key: 'PatValue'
     }
@@ -46,7 +43,7 @@ const columns = {
     [CreatedCrossNegativePAT]: [
         ...defaultKeys,
         {
-            ...actionField
+            ...createdKeywordsActionField
         },
         {
             ...infoField
@@ -57,7 +54,8 @@ const columns = {
         {
             title: 'Bid',
             dataIndex: 'bid',
-            key: 'bid'
+            key: 'bid',
+            render: text => <span>${text}</span>
         },
         {
             title: 'Customer Search Term',
@@ -72,20 +70,23 @@ const columns = {
         {
             title: 'CST ACOS',
             dataIndex: 'CSTACoS',
-            key: 'CSTACoS'
+            key: 'CSTACoS',
+            render: text => <span>{text}%</span>
         },
         {
             title: 'CST CPC',
             dataIndex: 'CSTCPC',
-            key: 'CSTCPC'
+            key: 'CSTCPC',
+            render: text => <span>${text}</span>
         },
         {
             title: 'Targe ACoS',
             dataIndex: 'TargetACoS',
-            key: 'TargetACoS'
+            key: 'TargetACoS',
+            render: text => <span>{text}%</span>
         },
         {
-            ...actionField
+            ...createdKeywordsActionField
         },
         {
             ...infoField
@@ -93,10 +94,10 @@ const columns = {
     ]
 };
 
-const NewPats = ({data, totalSize, showPagination, onChangeSubTab}) => {
+const NewPats = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
     const [activeTable, changeTable] = useState(CreatedCrossNegativePAT);
     const {count, loading, productId} = useSelector(state => ({
-        count: state.reports.counts['new-pats'].subtypesCounts,
+        count: state.reports.counts['new-pats'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
@@ -106,7 +107,7 @@ const NewPats = ({data, totalSize, showPagination, onChangeSubTab}) => {
         changeTable(tab);
     };
 
-    useEffect(() => changeTable(CreatedCrossNegativePAT), [productId]);
+    useEffect(() => changeTable(CreatedCrossNegativePAT), [productId, activeTab]);
 
     return (
         <div className="ReportItemTable">
@@ -128,14 +129,15 @@ const NewPats = ({data, totalSize, showPagination, onChangeSubTab}) => {
             >
                 Created PAT (CST)
             </TableButton>
+
             <Table
-                // onChangePagination={this.handlePaginationChange}
+                onChangePagination={handlePaginationChange}
                 loading={loading}
                 dataSource={data}
                 columns={columns[activeTable]}
-                // currentPage={currentPage}
+                currentPage={currentPage}
                 totalSize={totalSize}
-                showPagination={showPagination}
+                showPagination={totalSize > 10}
             />
         </div>
     );
