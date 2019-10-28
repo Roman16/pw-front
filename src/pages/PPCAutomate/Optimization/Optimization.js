@@ -42,11 +42,12 @@ class Optimization extends Component {
 
     handleUpdateProduct = debounce(500, false, () => {
         const { product, selectedStrategy } = this.state,
-            { updateProduct } = this.props;
+            { updateProduct, defaultOptions } = this.props;
 
         updateProduct({
             ...product,
-            optimization_strategy: selectedStrategy
+            optimization_strategy: selectedStrategy,
+            ...defaultOptions,
         });
     });
 
