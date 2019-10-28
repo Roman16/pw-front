@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Checkbox, Icon} from "antd";
 import {productsActions} from '../../../../actions/products.actions';
-import {productsServices} from '../../../../services/products.services';
 
 import './OptimizationOptions.less';
 
@@ -98,7 +97,7 @@ const OptimizationOptions = ({openInformation, selectedProduct}) => {
     };
 
     const updateProduct = (data) => {
-        productsServices.updateProductById(data);
+        dispatch(productsActions.updateProduct(data))
     };
 
     useEffect(() => {
