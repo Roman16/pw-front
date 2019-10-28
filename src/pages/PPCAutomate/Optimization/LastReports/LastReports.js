@@ -1,26 +1,25 @@
-import React, {Component, Fragment} from 'react';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import {Icon, Tooltip, Pagination} from 'antd';
-import {reportsServices} from '../../../../services/reports.services';
+import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { Icon, Tooltip, Pagination } from 'antd';
+import { reportsServices } from '../../../../services/reports.services';
 import './LastReports.less';
 
 const dummy = [
-    {id: 1},
-    {id: 2},
-    {id: 3},
-    {id: 4},
-    {id: 5},
-    {id: 6},
-    {id: 7},
-    {id: 8},
-    {id: 9},
-    {id: 10},
-    {id: 11},
-    {id: 12}
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+    { id: 9 },
+    { id: 10 },
+    { id: 11 },
+    { id: 12 }
 ];
 
-const TerminalCaption = ({isTerminal, productId}) => (
+const TerminalCaption = ({ isTerminal }) => (
     <div className="terminal-caption">
         <div className="caption">
             Last Changes Terminal
@@ -35,12 +34,12 @@ const TerminalCaption = ({isTerminal, productId}) => (
                 In the changes terminal,
                 you will see the last changes that the software performs."
             >
-                <Icon type="info-circle" theme="filled"/>
+                <Icon type="info-circle" theme="filled" />
             </Tooltip>
         </div>
 
         <Link
-            to={`/ppc/report?id=${productId}`}
+            to="/ppc/report"
             className={`link-redirect ${isTerminal ? 'active' : 'disabled'}`}
         >
             View All
@@ -48,11 +47,11 @@ const TerminalCaption = ({isTerminal, productId}) => (
     </div>
 );
 
-const TerminalItem = ({number = 0, content = ''}) => (
+const TerminalItem = ({ number = 0, content = '' }) => (
     <li className="terminal-item">
         <div className="index">{number}</div>
         <div className="content">
-            <div dangerouslySetInnerHTML={{__html: content}}></div>
+            <div dangerouslySetInnerHTML={{ __html: content }}></div>
         </div>
     </li>
 );
@@ -65,7 +64,7 @@ class LastReports extends Component {
     };
 
     onChange = page => {
-        const {reports} = this.state;
+        const { reports } = this.state;
         const pageSize = 10;
         const records = reports.filter(
             (report, idx) =>
@@ -80,31 +79,31 @@ class LastReports extends Component {
     };
 
     getReports = () => {
-        this.props.productId && reportsServices.getLastReports(this.props.productId)
-            .then(res => {
+        this.props.productId &&
+            reportsServices.getLastReports(this.props.productId).then(res => {
                 this.setState({
                     reports: res,
                     records: res.length > 0 ? res.slice(0, 10) : []
-                })
-            })
+                });
+            });
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.productId !== prevProps.productId) this.getReports()
+        if (this.props.productId !== prevProps.productId) this.getReports();
     }
 
     componentDidMount() {
-        this.getReports()
+        this.getReports();
     }
 
     render() {
-        const {current, records} = this.state;
-        const {isLess, productId} = this.props;
+        const { current, records } = this.state;
+        const { isLess } = this.props;
         const isTerminal = records && records.length > 0;
 
         return (
             <div className="terminal">
-                <TerminalCaption isTerminal={isTerminal} productId={productId}/>
+                <TerminalCaption isTerminal={isTerminal} />
                 <ul
                     className={`terminal-content ${!isLess ? 'less' : 'more'} ${
                         isTerminal ? 'auto' : 'hidden'
@@ -112,7 +111,7 @@ class LastReports extends Component {
                 >
                     {isTerminal ? (
                         <Fragment>
-                            {records.map(({id, message, number}) => (
+                            {records.map(({ id, message, number }) => (
                                 <TerminalItem
                                     key={id}
                                     content={message}
@@ -136,8 +135,8 @@ class LastReports extends Component {
                                     You have not data to display
                                 </p>
                             </div>
-                            {dummy.map(({id}) => (
-                                <TerminalItem key={id} number={id}/>
+                            {dummy.map(({ id }) => (
+                                <TerminalItem key={id} number={id} />
                             ))}
                         </div>
                     )}

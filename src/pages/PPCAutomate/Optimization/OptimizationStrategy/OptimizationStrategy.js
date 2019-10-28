@@ -1,6 +1,5 @@
 import React from 'react';
 import { Icon, Button, Checkbox } from 'antd';
-import moment from 'moment';
 
 import './OptimizationStrategy.less';
 
@@ -106,22 +105,19 @@ const OptimizationStrategy = ({
     selectedStrategy,
     openInformation,
     selectedAll,
-    product: { optimization_strategy },
-    expireIn
+    product: { optimization_strategy }
 }) => {
-    const todaysDate = moment(new Date());
-    const oDate = moment(expireIn * 1000);
-    const freeTrial = oDate.diff(todaysDate, 'days');
-
     return (
         <div className="optimize-strategy">
             <div className="product-info ">
-                <span>Select which optimize Strategy</span>
-                <Icon
-                    type="info-circle"
-                    theme="filled"
-                    onClick={openInformation}
-                />
+                <div className="product-select">
+                    <span>Select which optimize Strategy</span>
+                    <Icon
+                        type="info-circle"
+                        theme="filled"
+                        onClick={openInformation}
+                    />
+                </div>
 
                 {selectedAll && (
                     <div className="description">
@@ -129,29 +125,6 @@ const OptimizationStrategy = ({
                         selected products
                     </div>
                 )}
-
-                {/*<div className="additional">*/}
-                {/*    <p className="free-trial">*/}
-                {/*        Free Trial*/}
-                {/*        <span>{freeTrial >= 0 ? freeTrial : 0}</span>*/}
-                {/*        Days Left*/}
-                {/*    </p>*/}
-                {/*    <div className="btn-upgrade">*/}
-                {/*        <Button*/}
-                {/*            onClick={() => {*/}
-                {/*                window.open(*/}
-                {/*                    `${window.BASE_URL}/account/subscriptions`*/}
-                {/*                );*/}
-                {/*            }}*/}
-                {/*        >*/}
-                {/*            Upgrade Now*/}
-                {/*            <Icon*/}
-                {/*                type="arrow-up"*/}
-                {/*                style={{ color: '#8fd39d' }}*/}
-                {/*            />*/}
-                {/*        </Button>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </div>
 
             <div className="strategies options-content">
