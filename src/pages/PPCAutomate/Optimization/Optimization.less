@@ -31,6 +31,10 @@
         row-gap: 20px;
         background: inherit !important;
 
+        @media (max-width: 1669px) {
+            row-gap: 5px;
+        }
+
         & > div {
             background: #fff;
             padding: 15px;
@@ -46,7 +50,6 @@
             grid-template-columns: minmax(300px, 400px) minmax(min-content, 1fr);
             grid-template-areas: 'options strategy' '. descriptions' 'control control';
             column-gap: 15px;
-            flex: 1;
 
             .options-content {
                 transition-timing-function: ease-out;

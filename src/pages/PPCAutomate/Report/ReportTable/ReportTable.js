@@ -213,7 +213,7 @@ class ReportTable extends Component {
             <div className="ReportTable">
                 <div className="report-table">
                     <h3>Changes Report</h3>
-                    <div>
+                    <div className='changes-calendar-download'>
                         <span>
                             Today Changes
                             <span className="total-count">99+</span>

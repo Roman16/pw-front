@@ -86,9 +86,6 @@ export function products(state = initialState, action) {
             return {
                 ...state,
                 selectedAll: !state.selectedAll,
-                selectedProduct: {
-                    ...action.payload,
-                },
                 defaultOptimizationOptions: {...defaultOptions}
             };
 

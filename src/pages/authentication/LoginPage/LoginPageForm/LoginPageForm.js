@@ -98,7 +98,6 @@ class LoginPageForm extends React.Component {
             isLoading: false
         });
     };
-
     render() {
         const { email, password, isLoading, loginSuccess } = this.state;
 

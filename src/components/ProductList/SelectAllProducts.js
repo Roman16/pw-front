@@ -3,7 +3,6 @@ import {Button} from "antd";
 
 const SelectAllProduct = ({
                               onSelectAll,
-                              selectedSize,
                               isSelectedAll = false,
                           }) => (
     <div className={`SelectProduct ${isSelectedAll ? 'selected-all' : ''}`}>

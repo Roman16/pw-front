@@ -9,7 +9,6 @@ const FreeTrial = ({ expireIn }) => {
     const todaysDate = moment(new Date());
     const oDate = moment(expireIn * 1000);
     const freeTrial = oDate.diff(todaysDate, 'days');
-    console.log('expireIn :', expireIn);
 
     return (
         <div className="additional">

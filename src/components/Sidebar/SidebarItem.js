@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Menu, Icon } from 'antd';
 import { connect } from 'react-redux';
@@ -39,13 +38,6 @@ const SidebarItem = ({ logOut, item, parentLink = '', ...props }) => {
                     </span>
                 }
             >
-                {/* {item.subMenu.map(subItem => (
-                    <SidebarItem
-                        key={item.link + subItem.link}
-                        item={subItem}
-                        parentLink={parentLink + item.link}
-                    />
-                ))} */}
                 {item.subMenu.map(subItem => {
                     return subItem.className === 'ppcScaner' ? (
                         <Menu.Item {...props} key={subItem.link}>

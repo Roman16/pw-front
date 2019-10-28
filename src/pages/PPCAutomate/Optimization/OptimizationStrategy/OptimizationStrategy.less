@@ -1,6 +1,10 @@
 @import '../../../../style/variables';
 
 .optimize-strategy {
+    @media (max-width: 1669px) {
+        margin-top: 32px;
+    }
+
     .product-info {
         flex-direction: column;
         align-items: flex-start !important;
@@ -13,6 +17,12 @@
         .description {
             font-size: 15px;
             color: @dangerous-color;
+        }
+    }
+
+    .product-info-strategy {
+        @media (max-width: 1669px) {
+            margin-bottom: 5px !important;
         }
     }
 
@@ -58,6 +68,10 @@
         font-size: 17px;
         margin-bottom: 10px;
         text-overflow: ellipsis;
+
+        @media (max-width: 1669px) {
+            margin-bottom: 5px;
+        }
     }
 
     .strategy-checkbox {
@@ -69,6 +83,10 @@
         display: flex;
         width: 100%;
         justify-content: space-between;
+
+        @media (max-width: 1669px) {
+            padding: 2px 0;
+        }
 
         .params-value {
             min-width: 35px;

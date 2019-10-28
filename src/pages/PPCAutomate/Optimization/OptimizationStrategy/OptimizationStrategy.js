@@ -109,7 +109,7 @@ const OptimizationStrategy = ({
 }) => {
     return (
         <div className="optimize-strategy">
-            <div className="product-info ">
+            <div className="product-info product-info-strategy">
                 <div className="product-select">
                     <span>Select which optimize Strategy</span>
                     <Icon

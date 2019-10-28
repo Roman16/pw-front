@@ -1,6 +1,7 @@
 import axios from 'axios';
-import {loadProgressBar} from 'axios-progress-bar';
-import {notification} from 'antd';
+import { loadProgressBar } from 'axios-progress-bar';
+import { notification } from 'antd';
+import { history } from '../utils/history';
 
 const baseUrl =
     process.env.REACT_APP_ENV === 'developer'
@@ -26,17 +27,23 @@ const api = (method, url, data, type) => {
                 resolve(result.data);
             })
             .catch(error => {
+                if (error.response.status === 401) {
+                    history.push('/login');
+                    localStorage.clear();
+                }
+
                 if (error.response) {
                     if (typeof error.response.data === 'object') {
                         reject(error);
 
                         notification.error({
-                            message: error.response.data ? error.response.data.message : '',
+                            message: error.response.data
+                                ? error.response.data.message
+                                : ''
                             // description: error.response.data.message,
                         });
                     }
                 }
-
             });
     });
 };

@@ -111,7 +111,6 @@ class OptimizationStatus extends Component {
 }
 
 const mapStateToProps = state => ({
-    product: state.products.selectedProduct ? state.products.selectedProduct : {},
     selectedAll: state.products.selectedAll,
     optimizationOptions: state.products.defaultOptimizationOptions
 });

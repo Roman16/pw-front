@@ -1,156 +1,107 @@
-import React, { Component } from 'react';
+import React, {useState, useEffect} from 'react';
 import ProductItem from './ProductItem';
-import { connect } from 'react-redux';
-import { Input, Pagination } from 'antd';
-import { productsActions } from '../../actions/products.actions';
-import './ProductList.less';
+import {Input, Pagination} from 'antd';
+import {useDispatch, useSelector} from "react-redux";
+import {productsServices} from '../../services/products.services';
+import {productsActions} from '../../actions/products.actions';
+
 import SelectAllProduct from './SelectAllProducts';
-import { debounce } from 'throttle-debounce';
+import {debounce} from 'throttle-debounce';
 
-const { Search } = Input;
+import './ProductList.less';
 
-class ProductList extends Component {
-    state = {
-        isSelectedAll: false,
-        prevProductId: '',
-        paginationParams: {
-            size: 10,
-            page: 1,
-            searchStr: ''
-        }
-    };
+const {Search} = Input;
 
-    getProducts = () => this.props.getAllProducts(this.state.paginationParams);
+const defaultPaginationParams = {size: 10, page: 1, searchStr: ''};
 
-    handleChangePagination = page => {
-        this.setState(
-            {
-                ...this.state,
-                paginationParams: {
-                    ...this.state.paginationParams,
-                    page
-                }
-            },
-            this.getProducts
-        );
-    };
+const ProductList = ({onSelect}) => {
+    const [paginationParams, changePagination] = useState(defaultPaginationParams);
+    const [productsList, setProducts] = useState([]);
+    const [totalSize, changeTotalSize] = useState(0);
+    const [isSelectedAll, switchSelected] = useState(false);
 
-    handleSearch = debounce(500, false, str => {
-        this.setState(
-            {
-                ...this.state,
-                paginationParams: {
-                    ...this.state.paginationParams,
-                    searchStr: str
-                }
-            },
-            this.getProducts
-        );
-    });
+    const dispatch = useDispatch();
 
-    selectAll = () => {
-        const { selectProduct, selectedProduct, products } = this.props;
-        selectedProduct.id &&
-            this.setState({ prevProductId: selectedProduct.id });
+    const {selectedProduct} = useSelector(state => ({
+        selectedProduct: state.products.selectedProduct,
+    }));
 
-        this.setState(
-            ({ isSelectedAll }) => ({
-                isSelectedAll: !isSelectedAll
-            }),
-            () => {
-                if (this.state.isSelectedAll) selectProduct('all');
-                else {
-                    selectProduct(
-                        products.find(
-                            item => item.id === this.state.prevProductId
-                        )
-                    );
-                }
-            }
-        );
-    };
 
-    onSelect = product => {
-        const { selectProduct, selectedProduct } = this.props;
-
-        if (selectedProduct.id !== product.id) selectProduct(product);
-
-        this.setState({
-            isSelectedAll: false
+    const getProducts = () => {
+        productsServices.getProducts(paginationParams).then(res => {
+            setProducts(res.result);
+            changeTotalSize(res.totalSize);
+            onSelect(res.result[0])
         });
     };
 
-    componentDidMount() {
-        this.getProducts();
-    }
+    const handleChangePagination = page => {
+        changePagination({...paginationParams, page});
+    };
 
-    render() {
-        const {
-                selectedSize,
-                isSelectedAll,
-                paginationParams: { size }
-            } = this.state,
-            { products, selectedProduct, totalSize } = this.props;
+    const handleSearch = debounce(500, false, searchStr => {
+        changePagination({...paginationParams, searchStr});
+    });
 
-        return (
-            <div className="product-list">
-                <div className="search-product">
-                    <Search
-                        placeholder="Search by product name, ASIN, or SKU"
-                        onChange={e => this.handleSearch(e.target.value)}
+    const selectAll = () => {
+        switchSelected(!isSelectedAll);
+        dispatch(productsActions.selectAllProducts());
+    };
+
+    const handleSelectProduct = (item) => {
+        if (item.id !== selectedProduct.id) {
+            onSelect(item);
+            switchSelected(false)
+        }
+    };
+
+
+    useEffect(getProducts, [paginationParams]);
+    useEffect(() => {
+        onSelect(isSelectedAll ? 'all' : selectedProduct);
+    }, [isSelectedAll]);
+
+
+    return (
+        <div className="product-list">
+            <div className="search-product">
+                <Search
+                    placeholder="Search by product name, ASIN, or SKU"
+                    onChange={e => handleSearch(e.target.value)}
+                />
+
+                <div className="select-all-products">
+                    <SelectAllProduct
+                        onSelectAll={selectAll}
+                        isSelectedAll={isSelectedAll}
                     />
-
-                    <div className="select-all-products">
-                        <SelectAllProduct
-                            onSelectAll={this.selectAll}
-                            selectedSize={selectedSize}
-                            isSelectedAll={isSelectedAll}
-                        />
-                    </div>
                 </div>
-
-                {products &&
-                    products.map(product => (
-                        <ProductItem
-                            key={product.id}
-                            product={product}
-                            isActive={
-                                isSelectedAll ||
-                                selectedProduct.id === product.id
-                            }
-                            onClick={item => this.onSelect(item)}
-                        />
-                    ))}
-
-                {totalSize > size && (
-                    <Pagination
-                        defaultCurrent={1}
-                        pageSize={size}
-                        total={totalSize}
-                        onChange={this.handleChangePagination}
-                    />
-                )}
             </div>
-        );
-    }
-}
 
-const mapStateToProps = state => ({
-    products: state.products.productList,
-    totalSize: state.products.totalSize,
-    selectedProduct: state.products.selectedProduct
-});
+            {productsList &&
+            productsList.map(product => (
+                <ProductItem
+                    key={product.id}
+                    product={product}
+                    isActive={
+                        isSelectedAll ||
+                        selectedProduct.id === product.id
+                    }
+                    onClick={item => handleSelectProduct(item)}
+                />
+            ))}
 
-const mapDispatchToProps = dispatch => ({
-    getAllProducts: params => {
-        dispatch(productsActions.fetchProducts(params));
-    },
-    selectProduct: product => {
-        dispatch(productsActions.fetchProductDetails(product));
-    }
-});
+            {totalSize > paginationParams.size && (
+                <Pagination
+                    defaultCurrent={1}
+                    pageSize={paginationParams.size}
+                    total={totalSize}
+                    onChange={handleChangePagination}
+                />
+            )}
+        </div>
+    );
+};
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ProductList);
+
+export default ProductList;
