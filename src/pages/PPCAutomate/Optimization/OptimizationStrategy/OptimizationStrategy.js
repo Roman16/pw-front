@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon, Button, Checkbox } from 'antd';
 
+import FreeTrial from '../../../../components/FreeTrial/FreeTrial';
 import './OptimizationStrategy.less';
 
 const strategyValue = {
@@ -109,14 +110,17 @@ const OptimizationStrategy = ({
 }) => {
     return (
         <div className="optimize-strategy">
-            <div className="product-info product-info-strategy">
-                <div className="product-select">
-                    <span>Select which optimize Strategy</span>
-                    <Icon
-                        type="info-circle"
-                        theme="filled"
-                        onClick={openInformation}
-                    />
+            <div className="product-info">
+                <div className="product-info-strategy">
+                    <div className="product-select">
+                        <span>Select which optimize Strategy</span>
+                        <Icon
+                            type="info-circle"
+                            theme="filled"
+                            onClick={openInformation}
+                        />
+                    </div>
+                    <FreeTrial />
                 </div>
 
                 {selectedAll && (

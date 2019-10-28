@@ -1,13 +1,8 @@
 @import '../../../../style/variables';
 
 .optimize-strategy {
-    @media (max-width: 1669px) {
-        margin-top: 32px;
-    }
-
     .product-info {
         flex-direction: column;
-        align-items: flex-start !important;
 
         .product-select {
             display: flex;
@@ -17,12 +12,17 @@
         .description {
             font-size: 15px;
             color: @dangerous-color;
+            align-self: flex-start;
         }
     }
 
     .product-info-strategy {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
         @media (max-width: 1669px) {
-            margin-bottom: 5px !important;
+            flex-flow: column-reverse;
         }
     }
 
