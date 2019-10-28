@@ -57,15 +57,15 @@ const TerminalItem = ({ number = 0, content = '' }) => (
 );
 
 class LastReports extends Component {
-    state = {
-        current: 1,
-        reports: [],
-        records: []
-    };
-
-    // getUlRef = node => {
-    //     this.ulList = node;
-    // };
+    constructor(props) {
+        super(props);
+        this.state = {
+            current: 1,
+            reports: [],
+            records: []
+        };
+        this.getTerminalContentRef = React.createRef();
+    }
 
     onChange = page => {
         const { reports } = this.state;
@@ -81,11 +81,11 @@ class LastReports extends Component {
             current: page,
             records
         });
-        // console.log('this.getUlRef', this.getUlRef);
-        // this.getUlRef.scrollTo({
-        //     top: 0,
-        //     behavior: 'smooth'
-        // });
+
+        this.getTerminalContentRef.current.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     };
 
     getReports = () => {
@@ -104,6 +104,11 @@ class LastReports extends Component {
                                 pageSize - (pageSize - (counter += 1)))
                     )
                 });
+
+                this.getTerminalContentRef.current.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
     };
 
@@ -118,8 +123,8 @@ class LastReports extends Component {
     render() {
         const { current, records } = this.state;
         const { isLess } = this.props;
-        // const qwe = false;
-        const isTerminal = records && records.length > 0;
+        const qwe = false;
+        const isTerminal = qwe && records.length > 0;
 
         return (
             <div className="terminal">
@@ -128,7 +133,7 @@ class LastReports extends Component {
                     className={`terminal-content ${!isLess ? 'less' : 'more'} ${
                         isTerminal ? 'auto' : 'hidden'
                     }`}
-                    // ref={this.getUlRef}
+                    ref={this.getTerminalContentRef}
                 >
                     {isTerminal ? (
                         <Fragment>
