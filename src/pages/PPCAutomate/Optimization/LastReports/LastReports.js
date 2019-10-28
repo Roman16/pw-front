@@ -1,25 +1,25 @@
-import React, {useState, useEffect, Fragment} from 'react';
-import {Link} from 'react-router-dom';
-import {Icon, Tooltip, Pagination} from 'antd';
-import {reportsServices} from '../../../../services/reports.services';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { Icon, Tooltip, Pagination } from 'antd';
+import { reportsServices } from '../../../../services/reports.services';
 import './LastReports.less';
 
 const dummy = [
-    {id: 1},
-    {id: 2},
-    {id: 3},
-    {id: 4},
-    {id: 5},
-    {id: 6},
-    {id: 7},
-    {id: 8},
-    {id: 9},
-    {id: 10},
-    {id: 11},
-    {id: 12}
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+    { id: 9 },
+    { id: 10 },
+    { id: 11 },
+    { id: 12 }
 ];
 
-const TerminalCaption = ({isTerminal}) => (
+const TerminalCaption = ({ isTerminal }) => (
     <div className="terminal-caption">
         <div className="caption">
             Last Changes Terminal
@@ -34,7 +34,7 @@ const TerminalCaption = ({isTerminal}) => (
                 In the changes terminal,
                 you will see the last changes that the software performs."
             >
-                <Icon type="info-circle" theme="filled"/>
+                <Icon type="info-circle" theme="filled" />
             </Tooltip>
         </div>
 
@@ -47,16 +47,16 @@ const TerminalCaption = ({isTerminal}) => (
     </div>
 );
 
-const TerminalItem = ({number = 0, content = ''}) => (
+const TerminalItem = ({ number = 0, content = '' }) => (
     <li className="terminal-item">
         <div className="index">{number}</div>
         <div className="content">
-            <div dangerouslySetInnerHTML={{__html: content}}></div>
+            <div dangerouslySetInnerHTML={{ __html: content }}></div>
         </div>
     </li>
 );
 
-const LastReports = ({isLess, lastReports}) => {
+const LastReports = ({ isLess, lastReports }) => {
     const [reports, setReports] = useState(lastReports);
     const [records, setRecords] = useState([]);
     const [page, changePage] = useState(0);
@@ -78,22 +78,21 @@ const LastReports = ({isLess, lastReports}) => {
     useEffect(() => {
         onChange(1);
         setReports(lastReports);
-    }, [lastReports]);
+    }, [lastReports, onChange]);
 
     const isTerminal = reports && reports.length > 0;
 
-
     return (
         <div className="terminal">
-            <TerminalCaption isTerminal={isTerminal}/>
+            <TerminalCaption isTerminal={isTerminal} />
             <ul
                 className={`terminal-content ${!isLess ? 'less' : 'more'} ${
                     isTerminal ? 'auto' : 'hidden'
-                    }`}
+                }`}
             >
                 {isTerminal ? (
                     <Fragment>
-                        {records.map(({id, message, number}) => (
+                        {records.map(({ id, message, number }) => (
                             <TerminalItem
                                 key={id}
                                 content={message}
@@ -111,20 +110,20 @@ const LastReports = ({isLess, lastReports}) => {
                         <div
                             className={`dummy-box ${
                                 isLess ? 'auto' : 'hidden'
-                                }`}
+                            }`}
                         >
                             <p className="dummy-render">
                                 You have not data to display
                             </p>
                         </div>
-                        {dummy.map(({id}) => (
-                            <TerminalItem key={id} number={id}/>
+                        {dummy.map(({ id }) => (
+                            <TerminalItem key={id} number={id} />
                         ))}
                     </div>
                 )}
             </ul>
         </div>
     );
-}
+};
 
 export default LastReports;
