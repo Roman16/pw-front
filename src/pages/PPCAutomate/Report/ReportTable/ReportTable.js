@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import moment from 'moment';
 import {Tabs, Button} from 'antd';
 import KeywordsOptimization from './Tables/KeywordsOptimization';
 import DatePicker from '../../../../components/DatePicker/DatePicker';
@@ -147,8 +148,8 @@ class ReportTable extends Component {
 
         const parameters = [
             selectedAll ? `&product_id=all` : `&product_id=${selectedProductId}`,
-            startDate ? `&start_date=${startDate}` : '',
-            endDate ? `&end_date=${endDate}` : '',
+            startDate ? `&start_date=${moment(startDate, 'D-M-Y').format('Y-M-D')}` : '',
+            endDate ? `&end_date=${moment(endDate, 'D-M-Y').format('Y-M-D')}` : '',
         ];
 
         const url = `${process.env.REACT_APP_API_URL}/api/${reportsUrls.downloadReports}?token=${token}${parameters.join('')}`;
