@@ -9,6 +9,7 @@ import NewNegativeKeywords from './Tables/NewNegativeKeywords';
 import NewPats from './Tables/NewPats';
 import NewNegativePats from './Tables/NewNegativePats';
 import {reportsActions} from '../../../../actions/reports.actions';
+import {reportsUrls} from '../../../../constans/api.urls';
 import './ReportTable.less';
 
 const {TabPane} = Tabs;
@@ -140,12 +141,18 @@ class ReportTable extends Component {
     };
 
     downloadFile = () => {
-        const url = process.env.REACT_APP_API_URL;
+        const {startDate, endDate} = this.state,
+            {selectedProductId, selectedAll} = this.props,
+            token = localStorage.getItem('token');
 
-        // axios.get(
-        //     `${url}/api/ppc-automation/reports/download-report`,
-        //     this.props.selectedProductId
-        // );
+        const parameters = [
+            selectedAll ? `&product_id=all` : `&product_id=${selectedProductId}`,
+            startDate ? `&start_date=${startDate}` : '',
+            endDate ? `&end_date=${endDate}` : '',
+        ];
+
+        const url = `${process.env.REACT_APP_API_URL}/api/${reportsUrls.downloadReports}?token=${token}${parameters.join('')}`;
+        window.open(url);
     };
 
     handlePaginationChange = page => {
@@ -213,7 +220,7 @@ class ReportTable extends Component {
                     <div className='changes-calendar-download'>
                         <div className="total-count">
                             Today Changes
-                            <span >
+                            <span>
                                 {todayChanges}
                             </span>
                         </div>
