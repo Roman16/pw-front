@@ -4,11 +4,10 @@ import {productsServices} from '../services/products.services';
 export const productsActions = {
     fetchProducts,
     updateProduct,
+    fetchProductDetails,
     onSwitchOptimization,
     setNetMargin,
     updateOptions,
-    selectProduct,
-    selectAllProducts
 };
 
 function fetchProducts(params) {
@@ -19,28 +18,34 @@ function fetchProducts(params) {
                     type: productsConstants.SET_PRODUCT_LIST,
                     payload: res
                 });
-                dispatch({
-                    type: productsConstants.SELECT_PRODUCT,
-                    payload: res.result[0]
-                });
+
+                if (res.result.length > 0) {
+                    dispatch(fetchProductDetails(res.result[0]));
+                }
             });
     };
 }
 
-function selectProduct(product) {
+function fetchProductDetails(product) {
     return dispatch => {
-        dispatch({
-            type: productsConstants.SELECT_PRODUCT,
-            payload: product
-        });
-    };
-}
-
-function selectAllProducts() {
-    return dispatch => {
-        dispatch({
-            type: productsConstants.SELECT_ALL_PRODUCT,
-        });
+        productsServices.getProductDetails(product === 'all' ? 'all' : product.id)
+            .then(res => {
+                if (product !== 'all') {
+                    dispatch({
+                        type: productsConstants.SELECT_PRODUCT,
+                        payload: {
+                            ...product,
+                            ...res,
+                            id: product.id
+                        }
+                    });
+                } else {
+                    dispatch({
+                        type: productsConstants.SELECT_ALL_PRODUCT,
+                        payload: res
+                    });
+                }
+            });
     };
 }
 

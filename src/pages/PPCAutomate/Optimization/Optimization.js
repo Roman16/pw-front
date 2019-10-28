@@ -13,19 +13,16 @@ import OptimizationStatus from './OptimizationStatus/OptimizationStatus';
 import LastReports from './LastReports/LastReports';
 
 import {productsActions} from '../../../actions/products.actions';
-import {productsServices} from "../../../services/products.services";
 
 import './Optimization.less';
-import {reportsServices} from "../../../services/reports.services";
 
 class Optimization extends Component {
     state = {
         isLess: false,
         visible: false,
         infoType: '',
-        product: {},
-        selectedStrategy: '',
-        lastReports: []
+        product: this.props.selectedProduct,
+        selectedStrategy: this.props.selectedProduct.optimization_strategy,
     };
 
     showDrawer = type => this.setState({visible: true, infoType: type});
@@ -39,58 +36,42 @@ class Optimization extends Component {
             selectedStrategy: strategy
         }, () => {
             this.props.updateOptions({optimization_strategy: strategy});
-            if (this.state.product.status === 'RUNNING') this.handleUpdateProduct();
+            if (this.props.selectedProduct.status === 'RUNNING') this.handleUpdateProduct();
         });
     };
 
     handleUpdateProduct = debounce(500, false, () => {
-        const {product, selectedStrategy} = this.state;
+        const { product, selectedStrategy } = this.state,
+            { updateProduct } = this.props;
 
-        productsServices.updateProductById({
+        updateProduct({
             ...product,
-            id: product.product_id,
             optimization_strategy: selectedStrategy
         });
     });
 
-
-    onSelectProduct = async (product) => {
-        if (product === 'all') {
-            const [detail, reports] = await Promise.all([productsServices.getProductDetails(product), reportsServices.getLastReports(product)]);
-
-            this.setState({
-                product: {...detail, ...this.props.defaultOptions},
-                selectedStrategy: this.props.defaultOptions.optimization_strategy,
-                lastReports: reports
-            })
-        } else {
-            this.props.selectProduct(product);
-
-            const [detail, reports] = await Promise.all([productsServices.getProductDetails(product.id), reportsServices.getLastReports(product.id)]);
-            if (detail.status === 'RUNNING') {
-                this.setState({
-                    product: detail,
-                    selectedStrategy: detail.optimization_strategy,
-                    lastReports: reports
+    static getDerivedStateFromProps(props, state) {
+        if (props.selectedProduct.id !== state.product.id) {
+            if (props.selectedProduct.status === 'RUNNING' && !props.selectedAll) {
+                return ({
+                    product: props.selectedProduct,
+                    selectedStrategy: props.selectedProduct.optimization_strategy
                 })
             } else {
-                this.setState({
-                    product: {...detail, ...this.props.defaultOptions},
-                    selectedStrategy: this.props.defaultOptions.optimization_strategy,
-                    lastReports: reports
+                return ({
+                    product: {...props.selectedProduct, ...props.defaultOptions},
+                    selectedStrategy: props.defaultOptions.optimization_strategy
                 })
             }
+        } else {
+            return null
         }
-
-    };
-
+    }
 
     render() {
         const {
                 isLess,
                 selectedStrategy,
-                product,
-                lastReports
             } = this.state,
             {
                 selectedProduct,
@@ -100,22 +81,20 @@ class Optimization extends Component {
         return (
             <Fragment>
                 <div className="optimization-page">
-                    <ProductList
-                        onSelect={this.onSelectProduct}
-                    />
+                    <ProductList/>
 
                     <div className="product-options">
                         <div className={`options ${!isLess ? 'more' : 'less'}`}>
                             <OptimizationOptions
                                 openInformation={() => this.showDrawer('options')}
-                                selectedProduct={product}
+                                selectedProduct={selectedProduct}
                             />
 
                             <OptimizationStrategy
                                 onSelect={this.onSelectStrategy}
                                 openInformation={() => this.showDrawer('strategy')}
                                 selectedStrategy={selectedStrategy}
-                                product={product}
+                                product={selectedProduct}
                                 selectedAll={selectedAll}
                             />
 
@@ -138,12 +117,12 @@ class Optimization extends Component {
                         </div>
 
                         <OptimizationStatus
-                            product={product}
+                            product={selectedProduct}
                         />
 
                         <LastReports
                             isLess={isLess}
-                            lastReports={lastReports}
+                            productId={selectedProduct.id}
                         />
                     </div>
                 </div>
@@ -173,9 +152,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    selectProduct: (product) => {
-        dispatch(productsActions.selectProduct(product));
-    },
     updateProduct: (product) => {
         dispatch(productsActions.updateProduct(product));
     },

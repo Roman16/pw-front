@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Tooltip, Pagination } from 'antd';
 import { reportsServices } from '../../../../services/reports.services';
@@ -56,74 +56,94 @@ const TerminalItem = ({ number = 0, content = '' }) => (
     </li>
 );
 
-const LastReports = ({ isLess, lastReports }) => {
-    const [reports, setReports] = useState(lastReports);
-    const [records, setRecords] = useState([]);
-    const [page, changePage] = useState(0);
+class LastReports extends Component {
+    state = {
+        current: 1,
+        reports: [],
+        records: []
+    };
 
-    const onChange = page => {
+    onChange = page => {
+        const { reports } = this.state;
         const pageSize = 10;
-
         const records = reports.filter(
             (report, idx) =>
                 idx < page * pageSize &&
                 idx >= page * pageSize - pageSize &&
                 report
         );
-
-        changePage(page);
-        setRecords(records);
+        this.setState({
+            current: page,
+            records
+        });
     };
 
-    useEffect(() => {
-        onChange(1);
-        setReports(lastReports);
-    }, [lastReports, onChange]);
+    getReports = () => {
+        this.props.productId &&
+            reportsServices.getLastReports(this.props.productId).then(res => {
+                this.setState({
+                    reports: res,
+                    records: res.length > 0 ? res.slice(0, 10) : []
+                });
+            });
+    };
 
-    const isTerminal = reports && reports.length > 0;
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.productId !== prevProps.productId) this.getReports();
+    }
 
-    return (
-        <div className="terminal">
-            <TerminalCaption isTerminal={isTerminal} />
-            <ul
-                className={`terminal-content ${!isLess ? 'less' : 'more'} ${
-                    isTerminal ? 'auto' : 'hidden'
-                }`}
-            >
-                {isTerminal ? (
-                    <Fragment>
-                        {records.map(({ id, message, number }) => (
-                            <TerminalItem
-                                key={id}
-                                content={message}
-                                number={number + 1}
+    componentDidMount() {
+        this.getReports();
+    }
+
+    render() {
+        const { current, records } = this.state;
+        const { isLess } = this.props;
+        const isTerminal = records && records.length > 0;
+
+        return (
+            <div className="terminal">
+                <TerminalCaption isTerminal={isTerminal} />
+                <ul
+                    className={`terminal-content ${!isLess ? 'less' : 'more'} ${
+                        isTerminal ? 'auto' : 'hidden'
+                    }`}
+                >
+                    {isTerminal ? (
+                        <Fragment>
+                            {records.map(({ id, message, number }) => (
+                                <TerminalItem
+                                    key={id}
+                                    content={message}
+                                    number={number + 1}
+                                />
+                            ))}
+                            <Pagination
+                                total={150}
+                                current={current}
+                                onChange={this.onChange}
                             />
-                        ))}
-                        <Pagination
-                            total={150}
-                            current={page}
-                            onChange={onChange}
-                        />
-                    </Fragment>
-                ) : (
-                    <div className="terminal-item-dummy">
-                        <div
-                            className={`dummy-box ${
-                                isLess ? 'auto' : 'hidden'
-                            }`}
-                        >
-                            <p className="dummy-render">
-                                You have not data to display
-                            </p>
+                        </Fragment>
+                    ) : (
+                        <div className="terminal-item-dummy">
+                            <div
+                                className={`dummy-box ${
+                                    isLess ? 'auto' : 'hidden'
+                                }`}
+                            >
+                                <p className="dummy-render">
+                                    You have not data to display
+                                </p>
+                            </div>
+                            {dummy.map(({ id }) => (
+                                <TerminalItem key={id} number={id} />
+                            ))}
                         </div>
-                        {dummy.map(({ id }) => (
-                            <TerminalItem key={id} number={id} />
-                        ))}
-                    </div>
-                )}
-            </ul>
-        </div>
-    );
-};
+                    )}
+                </ul>
+            </div>
+        );
+    }
+}
 
 export default LastReports;
