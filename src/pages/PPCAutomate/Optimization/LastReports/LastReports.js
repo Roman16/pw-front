@@ -20,7 +20,7 @@ const dummy = [
     {id: 12}
 ];
 
-const TerminalCaption = ({isTerminal}) => (
+const TerminalCaption = ({isTerminal, productId}) => (
     <div className="terminal-caption">
         <div className="caption">
             Last Changes Terminal
@@ -40,7 +40,7 @@ const TerminalCaption = ({isTerminal}) => (
         </div>
 
         <Link
-            to="/ppc/report"
+            to={`/ppc/report?id=${productId}`}
             className={`link-redirect ${isTerminal ? 'active' : 'disabled'}`}
         >
             View All
@@ -99,12 +99,12 @@ class LastReports extends Component {
 
     render() {
         const {current, records} = this.state;
-        const {isLess} = this.props;
+        const {isLess, productId} = this.props;
         const isTerminal = records && records.length > 0;
 
         return (
             <div className="terminal">
-                <TerminalCaption isTerminal={isTerminal}/>
+                <TerminalCaption isTerminal={isTerminal} productId={productId}/>
                 <ul
                     className={`terminal-content ${!isLess ? 'less' : 'more'} ${
                         isTerminal ? 'auto' : 'hidden'
