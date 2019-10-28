@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
-import {indexField, dateField, actionField, infoField} from './const';
+import {indexField, infoField, bidActionField, pauseKeywordsActionField} from './const';
 import {useSelector} from "react-redux";
 
 const changedKeywordBidAcos = 'changed-keyword-bid-acos';
@@ -13,9 +13,6 @@ const pausedKeywordNoSales = 'paused-keyword-no-sales';
 const defaultKeys = [
     {
         ...indexField
-    },
-    {
-        ...dateField
     },
     {
         title: 'Campaign',
@@ -35,7 +32,8 @@ const defaultKeys = [
     {
         title: 'Match Type',
         dataIndex: 'matchType',
-        key: 'matchType'
+        key: 'matchType',
+        width: 130,
     }
 ];
 
@@ -45,15 +43,18 @@ const columns = {
         {
             title: 'ACos',
             dataIndex: 'acos',
-            key: 'acos'
+            key: 'acos',
+            render: text => <span>{text}%</span>
         },
         {
             title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
-            key: 'targetACoS'
+            key: 'targetACoS',
+            width: 130,
+            render: text => <span>{text}%</span>
         },
         {
-            ...actionField
+            ...bidActionField
         },
         {
             ...infoField
@@ -72,7 +73,7 @@ const columns = {
             key: 'targetImpressions'
         },
         {
-            ...actionField
+            ...bidActionField
         },
         {
             ...infoField
@@ -83,15 +84,17 @@ const columns = {
         {
             title: 'ACos',
             dataIndex: 'acos',
-            key: 'acos'
+            key: 'acos',
+            render: text => <span>{text}%</span>
         },
         {
             title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
-            key: 'targetACoS'
+            key: 'targetACoS',
+            render: text => <span>{text}%</span>
         },
         {
-            ...actionField
+            ...pauseKeywordsActionField
         },
         {
             ...infoField
@@ -102,7 +105,8 @@ const columns = {
         {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConvRate',
-            key: 'averageConvRate'
+            key: 'averageConvRate',
+            render: text => <span>{text}%</span>
         },
         {
             title: () => <TitleInfo title="Clicks"/>,
@@ -110,7 +114,7 @@ const columns = {
             key: 'clicks'
         },
         {
-            ...actionField
+            ...pauseKeywordsActionField
         },
         {
             ...infoField
@@ -118,10 +122,10 @@ const columns = {
     ]
 };
 
-const KeywordsOptimization = ({data, totalSize, showPagination, onChangeSubTab}) => {
+const KeywordsOptimization = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
     const [activeTable, changeTable] = useState(changedKeywordBidAcos);
     const {count, loading, productId} = useSelector(state => ({
-        count: state.reports.counts['keywords-optimization'].subtypesCounts,
+        count: state.reports.counts['keywords-optimization'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
@@ -131,7 +135,7 @@ const KeywordsOptimization = ({data, totalSize, showPagination, onChangeSubTab})
         changeTable(tab);
     };
 
-    useEffect(() => changeTable(changedKeywordBidAcos), [productId]);
+    useEffect(() => changeTable(changedKeywordBidAcos), [productId, activeTab]);
 
     return (
         <div className="ReportItemTable">
@@ -175,13 +179,13 @@ const KeywordsOptimization = ({data, totalSize, showPagination, onChangeSubTab})
             </div>
 
             <Table
-                // onChangePagination={this.handlePaginationChange}
+                onChangePagination={handlePaginationChange}
                 loading={loading}
                 dataSource={data}
                 columns={columns[activeTable]}
-                // currentPage={currentPage}
+                currentPage={currentPage}
                 totalSize={totalSize}
-                showPagination={showPagination}
+                showPagination={totalSize > 10}
             />
         </div>
     );

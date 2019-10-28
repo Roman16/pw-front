@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, dateField, actionField, infoField} from './const';
+import {indexField, createdKeywordsActionField, infoField} from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from "react-redux";
 
@@ -11,9 +11,6 @@ const NoSales = 'created-negative-pat-from-cst-no-sales';
 const defaultKeys = [
     {
         ...indexField
-    },
-    {
-        ...dateField
     },
     {
         title: 'Campaign',
@@ -31,12 +28,12 @@ const defaultKeys = [
         key: 'PatType'
     },
     {
-        title: () => <TitleInfo title="Pat Intent Type"/>,
+        title: () => <TitleInfo title="PAT Intent Type"/>,
         dataIndex: 'PatIntentType',
         key: 'PatIntentType'
     },
     {
-        title: 'Pat Value',
+        title: 'PAT Value',
         dataIndex: 'PatValue',
         key: 'PatValue'
     },
@@ -53,15 +50,17 @@ const columns = {
         {
             title: 'CST ACOS',
             dataIndex: 'CSTACoS',
-            key: 'CSTACoS'
+            key: 'CSTACoS',
+            render: text => <span>{text}%</span>
         },
         {
             title: 'Targe ACoS',
             dataIndex: 'target',
-            key: 'target'
+            key: 'target',
+            render: text => <span>{text}%</span>
         },
         {
-            ...actionField
+            ...createdKeywordsActionField
         },
         {
             ...infoField
@@ -72,7 +71,8 @@ const columns = {
         {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConversionRate',
-            key: 'averageConversionRate'
+            key: 'averageConversionRate',
+            render: text => <span>{text}%</span>
         },
         {
             title: 'CST Clicks',
@@ -81,7 +81,7 @@ const columns = {
         },
 
         {
-            ...actionField
+            ...createdKeywordsActionField
         },
         {
             ...infoField
@@ -89,10 +89,10 @@ const columns = {
     ]
 };
 
-const NewNegativePats = ({data, totalSize, showPagination, onChangeSubTab}) => {
+const NewNegativePats = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
     const [activeTable, changeTable] = useState(HighACoS);
     const {count, loading, productId} = useSelector(state => ({
-        count: state.reports.counts['new-negative-pats'].subtypesCounts,
+        count: state.reports.counts['new-negative-pats'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
@@ -102,7 +102,7 @@ const NewNegativePats = ({data, totalSize, showPagination, onChangeSubTab}) => {
         changeTable(tab);
     };
 
-    useEffect(() => changeTable(HighACoS), [productId]);
+    useEffect(() => changeTable(HighACoS), [productId, activeTab]);
 
     return (
         <div className="ReportItemTable">
@@ -124,14 +124,15 @@ const NewNegativePats = ({data, totalSize, showPagination, onChangeSubTab}) => {
             >
                 Created Negative PAT From CST (No Sales)
             </TableButton>
+
             <Table
-                // onChangePagination={this.handlePaginationChange}
+                onChangePagination={handlePaginationChange}
                 loading={loading}
                 dataSource={data}
                 columns={columns[activeTable]}
-                // currentPage={currentPage}
+                currentPage={currentPage}
                 totalSize={totalSize}
-                showPagination={showPagination}
+                showPagination={totalSize > 10}
             />
         </div>
     );
