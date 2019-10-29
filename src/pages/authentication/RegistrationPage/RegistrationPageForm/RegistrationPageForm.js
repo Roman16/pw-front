@@ -119,6 +119,8 @@ class RegistrationPage extends React.Component {
 
         const isLess = email.length === 0;
 
+        const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST;
+
         return (
             <form className="form " id="payment-form2" onSubmit={this.onSubmit}>
                 <Row>
@@ -193,7 +195,7 @@ class RegistrationPage extends React.Component {
                     </Col>
                 </Row>
 
-                {/*<StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">*/}
+                {/*<StripeProvider apiKey={stripeKey}">*/}
                 {/*    <Elements>*/}
                 {/*        <StripeForm/>*/}
                 {/*    </Elements>*/}
