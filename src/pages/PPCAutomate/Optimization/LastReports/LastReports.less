@@ -1,15 +1,9 @@
 @import '../../../../style/variables.less';
 @import '../../../../style/mixins.less';
 
-.terminal {
+.optimization-page > .product-options > div.terminal {
     position: relative;
-    // max-height: calc(100vh - 418px - 77px - 110px);
-    // overflow: auto;
-
-    // & > div {
-    //     width: 100%;
-    //     overflow: auto;
-    // }
+    padding-bottom: 50px;
 
     .card();
 
@@ -82,14 +76,10 @@
     }
 
     .terminal-content {
-        // margin-bottom: 5px;
+        margin: 0;
 
         &.less {
-            max-height: calc(100vh - 418px - 77px - 42px - 150px);
-        }
-
-        &.more {
-            max-height: calc(100vh - 69px - 96px - 42px - 150px - 95px);
+            max-height: calc(100vh - 422px - 77px - 42px - 185px);
         }
 
         &.auto {
@@ -100,9 +90,15 @@
             overflow: hidden;
         }
 
-        @media (max-width: 1669px) {
+        @media (max-width: @big-desktop) {
             &.less {
-                max-height: calc(100vh - 666px - 96px - 42px - 150px - 95px);
+                max-height: calc(100vh - 621px - 77px - 42px - 135px);
+            }
+        }
+
+        @media (max-width: @desktop) {
+            &.less {
+                max-height: calc(100vh - 643px - 77px - 42px - 135px);
             }
         }
 
@@ -125,11 +121,17 @@
                 transition: all 0.5s linear;
 
                 &.auto {
-                    top: 40%;
+                    top: 50%;
                 }
 
                 &.hidden {
-                    top: 18%;
+                    top: 25%;
+
+                    @media (max-width: @big-desktop) {
+                        &.hidden {
+                            top: 17%;
+                        }
+                    }
                 }
 
                 .dummy-render {
