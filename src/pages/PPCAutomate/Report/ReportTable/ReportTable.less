@@ -1,182 +1,203 @@
 @import '../../../../style/mixins.less';
 @import '../../../../style/variables.less';
 
+.reports-page {
+  height: 100vh;
+  .ant-pagination {
+    padding: 0 0 30px 0;
+  }
+}
+
 .ReportTable {
-    margin: 0 0 0 5px;
-    overflow-x: hidden;
+  height: 100%;
+  margin: 0 0 0 5px;
+  overflow: hidden;
 
-    .tab-name-count {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: inherit;
-        border: 1px solid #c9cbd4;
-        color: #000000;
-        min-width: 32px;
-        height: 16px !important;
+
+
+  .tab-name-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: inherit;
+    border: 1px solid #c9cbd4;
+    color: #000000;
+    min-width: 32px;
+    height: 16px !important;
+    border-radius: 12px;
+    margin: 0 0 0 10px;
+    font-weight: 500;
+  }
+
+  .ant-tabs {
+    flex: 1;
+    overflow: auto;
+  }
+
+  .action-field {
+    span {
+      width: max-content;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .report-table {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: @second-default-dark;
+    margin: 0 0 12px 0;
+
+    @media (max-width: 1669px) {
+      height: 76px;
+      flex-wrap: wrap;
+      align-content: space-between;
+    }
+
+    h3 {
+      color: inherit;
+      margin: 0;
+      font-size: 18px;
+    }
+
+    & > .changes-calendar-download {
+      display: inherit;
+      justify-content: space-between;
+      align-items: inherit;
+
+      @media (max-width: 1669px) {
+        width: 100%;
+        justify-content: space-evenly;
+        order: 1;
+        // margin-left: auto;
+      }
+    }
+
+    .total-count {
+      display: flex;
+      align-items: center;
+      margin: 0 8px;
+      border-radius: 12px;
+      font-size: 12px;
+
+      span {
+        text-align: center;
+        background: @success-color;
+        color: #fff;
+        border: 0;
+        line-height: 16px;
+        width: 32px;
         border-radius: 12px;
-        margin: 0 0 0 10px;
-        font-weight: 500;
+        margin: 0 8px;
+      }
     }
 
-    .action-field {
-        span {
-            width: max-content;
-            display: flex;
-            align-items: center;
-        }
+    .ant-calendar-range-picker-input:first-of-type {
+      text-align: right;
     }
 
-    .report-table {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: @second-default-dark;
-        margin: 0 0 12px 0;
-
-        @media (max-width: 1669px) {
-            height: 76px;
-            flex-wrap: wrap;
-            align-content: space-between;
-        }
-
-        h3 {
-            color: inherit;
-            margin: 0;
-            font-size: 18px;
-        }
-
-        & > .changes-calendar-download {
-            display: inherit;
-            justify-content: space-between;
-            align-items: inherit;
-
-            @media (max-width: 1669px) {
-                width: 100%;
-                justify-content: space-evenly;
-                order: 1;
-                // margin-left: auto;
-            }
-        }
-
-        .total-count {
-            display: flex;
-            align-items: center;
-            margin: 0 8px;
-            border-radius: 12px;
-            font-size: 12px;
-
-            span {
-                text-align: center;
-                background: @success-color;
-                color: #fff;
-                border: 0;
-                line-height: 16px;
-                width: 32px;
-                border-radius: 12px;
-                margin: 0 8px;
-            }
-        }
-
-        .ant-calendar-range-picker-input:first-of-type {
-            text-align: right;
-        }
-
-        .ant-calendar-range-picker-input:last-of-type {
-            text-align: left;
-        }
-
-        .download-btn {
-            display: flex;
-            align-items: center;
-            margin-left: 8px;
-            font-size: 12px;
-            line-height: 16px;
-            font-weight: bold;
-            background: @action-color;
-            color: #fff;
-            border-radius: 8px;
-
-            .download-icon {
-                background: url('../../../../assets/img/icons/download.svg');
-                width: 24px;
-                height: 24px;
-                margin-left: 15px;
-                margin-top: -3px;
-            }
-        }
+    .ant-calendar-range-picker-input:last-of-type {
+      text-align: left;
     }
 
-    .ReportItemTable {
-        background: #fff;
-        border-radius: 8px;
-        padding-top: 12px;
+    .download-btn {
+      display: flex;
+      align-items: center;
+      margin-left: 8px;
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: bold;
+      background: @action-color;
+      color: #fff;
+      border-radius: 8px;
 
-        .ReportItemTable__Buttons {
-            display: flex;
-        }
+      .download-icon {
+        background: url('../../../../assets/img/icons/download.svg');
+        width: 24px;
+        height: 24px;
+        margin-left: 15px;
+        margin-top: -3px;
+      }
+    }
+  }
 
-        .ProductsList {
-            margin-top: 12px;
-        }
+  .ReportItemTable {
+    background: #fff;
+    border-radius: 8px;
+    padding-top: 12px;
+
+    .ReportItemTable__Buttons {
+      display: flex;
     }
 
-    .ant-tabs-bar {
-        margin-bottom: 0;
+    .ProductsList {
+      margin-top: 12px;
     }
+  }
 
-    .ant-tabs-nav-wrap .ant-tabs-tab[role='tab'] {
-        color: @action-color-dark;
-        border: none;
-        background: transparent;
-    }
+  .ant-tabs-bar {
+    margin-bottom: 0;
+  }
 
-    .ant-tabs-nav .ant-tabs-tab:hover {
-        color: @action-color;
-    }
+  .ant-tabs-nav-wrap .ant-tabs-tab[role='tab'] {
+    color: @action-color-dark;
+    border: none;
+    background: transparent;
+  }
 
-    .ant-tabs-nav-wrap .ant-tabs-tab-active[role='tab'] {
-        color: @action-color;
-        border-bottom: 2px solid @action-color;
-    }
+  .ant-tabs-nav .ant-tabs-tab:hover {
+    color: @action-color;
+  }
 
-    .ant-tabs-ink-bar {
-        background: @action-color;
-    }
+  .ant-tabs-nav-wrap .ant-tabs-tab-active[role='tab'] {
+    color: @action-color;
+    border-bottom: 2px solid @action-color;
+  }
 
-    .ant-tabs-bar {
-        border: none;
-    }
+  .ant-tabs-ink-bar {
+    background: @action-color;
+  }
+
+  .ant-tabs-bar {
+    border: none;
+  }
+}
+
+.popover-info {
+  max-width: 300px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .TabName {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    .tab-name-count {
-        margin-left: 15px;
-        min-width: 28px;
-        padding: 0 4px;
-        height: 18px;
-        border-radius: 12px;
-        border: 1px solid #c9cbd4;
-        text-align: center;
-        font-size: 12px;
-    }
+  .tab-name-count {
+    margin-left: 15px;
+    min-width: 28px;
+    padding: 0 4px;
+    height: 18px;
+    border-radius: 12px;
+    border: 1px solid #c9cbd4;
+    text-align: center;
+    font-size: 12px;
+  }
 }
 
 .ant-calendar-range {
-    width: 100%;
-    overflow: hidden;
+  width: 100%;
+  overflow: hidden;
 
-    .ant-calendar-body {
-        border-left: 1px solid #e8e8e8;
-    }
+  .ant-calendar-body {
+    border-left: 1px solid #e8e8e8;
+  }
 }
 
 .info-icon {
-    &:hover {
-        color: @action-color;
-        cursor: pointer;
-    }
+  &:hover {
+    color: @action-color;
+    cursor: pointer;
+  }
 }

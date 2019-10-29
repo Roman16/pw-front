@@ -1,5 +1,5 @@
 import React from 'react';
-import {Tooltip, Icon} from 'antd';
+import {Tooltip, Popover, Icon} from 'antd';
 import moment from 'moment';
 import up from '../../../../../assets/img/icons/up-row.svg';
 import down from '../../../../../assets/img/icons/up-row.svg';
@@ -10,7 +10,7 @@ export const indexField = {
     title: '',
     dataIndex: 'id',
     key: 'id',
-    width: '40px'
+    width: '50px'
 };
 
 export const dateField = {
@@ -89,11 +89,11 @@ export const infoField = {
     dataIndex: 'info',
     key: 'info',
     render: text => (
-        <Tooltip
-            placement="bottom"
-            title={<span dangerouslySetInnerHTML={{__html: text}}/>}
+        <Popover
+            placement="left"
+            content={<span dangerouslySetInnerHTML={{__html: text}} className='popover-info'/>}
         >
             <Icon type="info-circle" className="info-icon" theme="filled"/>
-        </Tooltip>
+        </Popover>
     )
 };

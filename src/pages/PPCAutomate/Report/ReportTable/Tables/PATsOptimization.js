@@ -17,17 +17,23 @@ const defaultKeys = [
     {
         title: 'Campaign',
         dataIndex: 'campaign',
-        key: 'campaign'
+        key: 'campaign',
+        width: '150px',
+
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
-        key: 'adGroup'
+        key: 'adGroup',
+        width: '150px',
+
     },
     {
         title: () => <TitleInfo title="PAT type"/>,
         dataIndex: 'PatType',
-        key: 'PatType '
+        key: 'PatType ',
+        width: '150px',
+
     },
     {
         title: 'PAT Intent Type',
@@ -45,7 +51,7 @@ const columns = {
     [changedPATBidACoS]: [
         ...defaultKeys,
         {
-            title: 'ACos',
+            title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
             render: text => <span>{text}%</span>
@@ -85,7 +91,7 @@ const columns = {
     [pausedManualPATHighACoS]: [
         ...defaultKeys,
         {
-            title: 'ACos',
+            title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
             render: text => <span>{text}%</span>
@@ -125,7 +131,7 @@ const columns = {
     ]
 };
 
-const PATsOptimization = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
+const PATsOptimization = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange, scroll}) => {
     const [activeTable, changeTable] = useState(changedPATBidACoS);
     const {count, loading, productId} = useSelector(state => ({
         count: state.reports.counts['pats-optimization'].subtypes_counts,
@@ -187,9 +193,10 @@ const PATsOptimization = ({data, onChangeSubTab, activeTab, currentPage, totalSi
                 currentPage={currentPage}
                 totalSize={totalSize}
                 showPagination={totalSize > 10}
+                scroll={scroll}
             />
         </div>
     );
-}
+};
 
 export default PATsOptimization;

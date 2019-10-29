@@ -15,17 +15,20 @@ const defaultKeys = [
     {
         title: 'Campaign',
         dataIndex: 'campaign',
-        key: 'campaign'
+        key: 'campaign',
+        width: '150px',
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
-        key: 'adGroup'
+        key: 'adGroup',
+        width: '150px',
     },
     {
         title: () => <TitleInfo title="PAT Type"/>,
         dataIndex: 'PatType',
-        key: 'PatType'
+        key: 'PatType',
+        width: '150px',
     },
     {
         title: () => <TitleInfo title="PAT Intent Type"/>,
@@ -94,7 +97,7 @@ const columns = {
     ]
 };
 
-const NewPats = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
+const NewPats = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange, scroll}) => {
     const [activeTable, changeTable] = useState(CreatedCrossNegativePAT);
     const {count, loading, productId} = useSelector(state => ({
         count: state.reports.counts['new-pats'].subtypes_counts,

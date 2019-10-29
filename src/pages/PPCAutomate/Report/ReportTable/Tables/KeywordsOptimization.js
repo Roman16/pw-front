@@ -17,23 +17,25 @@ const defaultKeys = [
     {
         title: 'Campaign',
         dataIndex: 'campaign',
-        key: 'campaign'
+        key: 'campaign',
+        width: '150px',
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
-        key: 'adGroup'
+        key: 'adGroup',
+        width: '150px',
     },
     {
         title: 'Keyword',
         dataIndex: 'keyword',
-        key: 'keyword'
+        key: 'keyword',
+        width: '150px',
     },
     {
         title: 'Match Type',
         dataIndex: 'matchType',
         key: 'matchType',
-        width: 130,
     }
 ];
 
@@ -41,7 +43,7 @@ const columns = {
     [changedKeywordBidAcos]: [
         ...defaultKeys,
         {
-            title: 'ACos',
+            title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
             render: text => <span>{text}%</span>
@@ -50,7 +52,6 @@ const columns = {
             title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            width: 130,
             render: text => <span>{text}%</span>
         },
         {
@@ -82,7 +83,7 @@ const columns = {
     [pausedKeywordHighAcos]: [
         ...defaultKeys,
         {
-            title: 'ACos',
+            title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
             render: text => <span>{text}%</span>
@@ -122,7 +123,7 @@ const columns = {
     ]
 };
 
-const KeywordsOptimization = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
+const KeywordsOptimization = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange, scroll}) => {
     const [activeTable, changeTable] = useState(changedKeywordBidAcos);
     const {count, loading, productId} = useSelector(state => ({
         count: state.reports.counts['keywords-optimization'].subtypes_counts,
@@ -134,6 +135,7 @@ const KeywordsOptimization = ({data, onChangeSubTab, activeTab, currentPage, tot
         onChangeSubTab(tab);
         changeTable(tab);
     };
+
 
     useEffect(() => changeTable(changedKeywordBidAcos), [productId, activeTab]);
 
@@ -186,6 +188,7 @@ const KeywordsOptimization = ({data, onChangeSubTab, activeTab, currentPage, tot
                 currentPage={currentPage}
                 totalSize={totalSize}
                 showPagination={totalSize > 10}
+                scroll={scroll}
             />
         </div>
     );

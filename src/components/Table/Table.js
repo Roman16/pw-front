@@ -9,6 +9,7 @@ const Table = (props) => {
         onChangePagination,
         currentPage,
         showPagination = false,
+        scroll
     } = props;
 
     const paginationSettings = showPagination && (totalSize > pageSize)
@@ -25,6 +26,7 @@ const Table = (props) => {
             <AntTable
                 {...props}
                 width="150px"
+                scroll={{ y: showPagination ? (scroll - 80) : scroll }}
                 pagination={paginationSettings}
             />
         </div>

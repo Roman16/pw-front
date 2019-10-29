@@ -15,12 +15,14 @@ const defaultKeys = [
     {
         title: 'Campaign',
         dataIndex: 'campaign',
-        key: 'campaign'
+        key: 'campaign',
+        width: '150px',
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
-        key: 'adGroup'
+        key: 'adGroup',
+        width: '150px',
     },
     {
         title: 'Customer Search Term',
@@ -77,7 +79,7 @@ const columns = {
     ]
 };
 
-const NewNegativeKeywords = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
+const NewNegativeKeywords = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange, scroll}) => {
     const [activeTable, changeTable] = useState(highACoS);
     const {count, loading, productId} = useSelector(state => ({
         count: state.reports.counts['new-negative-keywords'].subtypes_counts,
@@ -121,6 +123,7 @@ const NewNegativeKeywords = ({data, onChangeSubTab, activeTab, currentPage, tota
                 currentPage={currentPage}
                 totalSize={totalSize}
                 showPagination={totalSize > 10}
+                scroll={scroll}
             />
         </div>
     );

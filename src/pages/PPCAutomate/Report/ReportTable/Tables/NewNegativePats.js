@@ -15,17 +15,20 @@ const defaultKeys = [
     {
         title: 'Campaign',
         dataIndex: 'campaign',
-        key: 'campaign'
+        key: 'campaign',
+        width: '150px',
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
-        key: 'adGroup'
+        key: 'adGroup',
+        width: '150px',
     },
     {
         title: () => <TitleInfo title="PAT Type"/>,
         dataIndex: 'PatType',
-        key: 'PatType'
+        key: 'PatType',
+        width: '150px',
     },
     {
         title: () => <TitleInfo title="PAT Intent Type"/>,
@@ -89,7 +92,7 @@ const columns = {
     ]
 };
 
-const NewNegativePats = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
+const NewNegativePats = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange, scroll}) => {
     const [activeTable, changeTable] = useState(HighACoS);
     const {count, loading, productId} = useSelector(state => ({
         count: state.reports.counts['new-negative-pats'].subtypes_counts,
@@ -133,6 +136,7 @@ const NewNegativePats = ({data, onChangeSubTab, activeTab, currentPage, totalSiz
                 currentPage={currentPage}
                 totalSize={totalSize}
                 showPagination={totalSize > 10}
+                scroll={scroll}
             />
         </div>
     );
