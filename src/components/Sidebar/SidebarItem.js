@@ -14,7 +14,7 @@ const IconFont = Icon.createFromIconfontCN({
 const ItemIcon = ({ icon, isSub, ...props }) => {
     if (isSub) return null;
 
-    if (icon.includes('app')) {
+    if (icon === null) {
         return <IconFont {...props} type="icon-account" />;
     } else if (icon) {
         return <IconFont {...props} type={`icon-${icon}`} />;
@@ -71,7 +71,7 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    {avatar.includes('appa') ? (
+                    {avatar ? (
                         <img
                             className="avatar"
                             src={ava}

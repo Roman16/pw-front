@@ -19,21 +19,19 @@ const dummy = [
     { id: 12 }
 ];
 
+const textTooltip = () => (
+    <h3>
+        asfafsasfasfasfasf
+        <br />
+        asdfadfafaf
+    </h3>
+);
+
 const TerminalCaption = ({ isTerminal }) => (
     <div className="terminal-caption">
         <div className="caption">
             Last Changes Terminal
-            <Tooltip
-                placement="bottom"
-                title="In the changes terminal,
-                you will see the last changes that the software performs.
-                In the changes terminal,
-                you will see the last changes that the software performs.
-                In the changes terminal,
-                you will see the last changes that the software performs.
-                In the changes terminal,
-                you will see the last changes that the software performs."
-            >
+            <Tooltip placement="bottom" title={textTooltip}>
                 <Icon type="info-circle" theme="filled" />
             </Tooltip>
         </div>
