@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, dateField, createdKeywordsActionField, infoField} from './const';
+import {indexField, patIntentField, createdKeywordsActionField, infoField} from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from "react-redux";
 
@@ -15,22 +15,24 @@ const defaultKeys = [
     {
         title: 'Campaign',
         dataIndex: 'campaign',
-        key: 'campaign'
+        key: 'campaign',
+        width: '150px',
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
-        key: 'adGroup'
+        key: 'adGroup',
+        width: '150px',
     },
     {
         title: () => <TitleInfo title="PAT Type"/>,
         dataIndex: 'PatType',
-        key: 'PatType'
+        key: 'PatType',
+        width: '150px',
+        render: text => <span className='capitalize-field'>{text}</span>
     },
     {
-        title: () => <TitleInfo title="PAT Intent Type"/>,
-        dataIndex: 'PatIntentType',
-        key: 'PatIntentType'
+        ...patIntentField
     },
     {
         title: 'PAT Value',
@@ -94,7 +96,7 @@ const columns = {
     ]
 };
 
-const NewPats = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
+const NewPats = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange, scroll}) => {
     const [activeTable, changeTable] = useState(CreatedCrossNegativePAT);
     const {count, loading, productId} = useSelector(state => ({
         count: state.reports.counts['new-pats'].subtypes_counts,

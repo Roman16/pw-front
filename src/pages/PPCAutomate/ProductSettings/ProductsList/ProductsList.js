@@ -49,7 +49,7 @@ class ProductsList extends Component {
     };
 
     onChangeRow = (value, item, index) => {
-        if (value >= 0) {
+        if (value > 0) {
             const dataSourceRow = this.setRowData(value, item, index);
             if (item !== this.prevItem) {
                 this.prevItem = item;
@@ -135,7 +135,6 @@ class ProductsList extends Component {
                         <InputCurrency
                             value={item[NET_MARGIN]}
                             typeIcon='margin'
-                            min={0}
                             onChange={event =>
                                 this.onChangeRow(event, NET_MARGIN, indexRow)
                             }

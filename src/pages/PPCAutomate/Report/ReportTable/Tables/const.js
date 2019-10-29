@@ -1,16 +1,34 @@
 import React from 'react';
-import {Tooltip, Icon} from 'antd';
+import {Popover, Icon} from 'antd';
 import moment from 'moment';
 import up from '../../../../../assets/img/icons/up-row.svg';
 import down from '../../../../../assets/img/icons/up-row.svg';
 import right from '../../../../../assets/img/icons/right-row.svg';
 import pause from '../../../../../assets/img/icons/pause.svg';
 
+const patIntentValues = {
+    queryHighRelMatches: 'close-match',
+    queryBroadRelMatches: 'loose-match',
+    asinAccessoryRelated: 'complements',
+    asinSubstituteRelated: 'substitutes',
+    asinSameAs: 'ASIN',
+    asinCategorySameAs: 'Category',
+    asinBrandSameAs: 'Brand',
+};
+
+export const patIntentField = {
+    title: 'PAT Intent Type',
+    dataIndex: 'PatIntentType',
+    key: 'PatIntentType',
+    width: '150px',
+    render: text => <span>{patIntentValues[text]}</span>
+};
+
 export const indexField = {
     title: '',
     dataIndex: 'id',
     key: 'id',
-    width: '40px'
+    width: '50px'
 };
 
 export const dateField = {
@@ -36,14 +54,15 @@ export const bidActionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    // width: 200,
+    width: '150px',
     className: 'left-border',
     render: ({data: {current_state, previous_state}}) => (
         <div className='action-field'>
             {current_state > previous_state ?
                 <span><img src={up} alt=""/> bid up (${previous_state} <img src={right} alt=""/> <b>${current_state}</b>)</span>
                 :
-                <span><img src={down} alt=""/> bid down (<b>${previous_state}</b> <img src={right} alt=""/> ${current_state})</span>
+                <span><img src={down} alt=""/> bid down (<b>${previous_state}</b> <img src={right}
+                                                                                       alt=""/> ${current_state})</span>
             }
         </div>
     )
@@ -89,11 +108,11 @@ export const infoField = {
     dataIndex: 'info',
     key: 'info',
     render: text => (
-        <Tooltip
-            placement="bottom"
-            title={<span dangerouslySetInnerHTML={{__html: text}}/>}
+        <Popover
+            placement="left"
+            content={<span dangerouslySetInnerHTML={{__html: text}} className='popover-info'/>}
         >
             <Icon type="info-circle" className="info-icon" theme="filled"/>
-        </Tooltip>
+        </Popover>
     )
 };

@@ -17,23 +17,27 @@ const defaultKeys = [
     {
         title: 'Campaign',
         dataIndex: 'campaign',
-        key: 'campaign'
+        key: 'campaign',
+        width: '150px',
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
-        key: 'adGroup'
+        key: 'adGroup',
+        width: '150px',
     },
     {
         title: 'Keyword',
         dataIndex: 'keyword',
-        key: 'keyword'
+        key: 'keyword',
+        width: '150px',
     },
     {
         title: 'Match Type',
         dataIndex: 'matchType',
         key: 'matchType',
-        width: 130,
+        width: 150,
+        render: text => <span className='capitalize-field'>{text}</span>
     }
 ];
 
@@ -41,17 +45,18 @@ const columns = {
     [changedKeywordBidAcos]: [
         ...defaultKeys,
         {
-            title: 'ACos',
+            title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 100,
         },
         {
             title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            width: 130,
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 150,
         },
         {
             ...bidActionField
@@ -65,12 +70,14 @@ const columns = {
         {
             title: 'Impressions',
             dataIndex: 'impressions',
-            key: 'impressions'
+            key: 'impressions',
+            width: 100,
         },
         {
             title: () => <TitleInfo title="Target Impressions"/>,
             dataIndex: 'targetImpressions',
-            key: 'targetImpressions'
+            key: 'targetImpressions',
+            width: 200,
         },
         {
             ...bidActionField
@@ -82,16 +89,18 @@ const columns = {
     [pausedKeywordHighAcos]: [
         ...defaultKeys,
         {
-            title: 'ACos',
+            title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 100,
         },
         {
             title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 150,
         },
         {
             ...pauseKeywordsActionField
@@ -106,12 +115,14 @@ const columns = {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConvRate',
             key: 'averageConvRate',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 200,
         },
         {
             title: () => <TitleInfo title="Clicks"/>,
             dataIndex: 'clicks',
-            key: 'clicks'
+            key: 'clicks',
+            width: 100,
         },
         {
             ...pauseKeywordsActionField
@@ -122,7 +133,7 @@ const columns = {
     ]
 };
 
-const KeywordsOptimization = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
+const KeywordsOptimization = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange, scroll}) => {
     const [activeTable, changeTable] = useState(changedKeywordBidAcos);
     const {count, loading, productId} = useSelector(state => ({
         count: state.reports.counts['keywords-optimization'].subtypes_counts,
@@ -134,6 +145,7 @@ const KeywordsOptimization = ({data, onChangeSubTab, activeTab, currentPage, tot
         onChangeSubTab(tab);
         changeTable(tab);
     };
+
 
     useEffect(() => changeTable(changedKeywordBidAcos), [productId, activeTab]);
 
@@ -186,6 +198,7 @@ const KeywordsOptimization = ({data, onChangeSubTab, activeTab, currentPage, tot
                 currentPage={currentPage}
                 totalSize={totalSize}
                 showPagination={totalSize > 10}
+                scroll={scroll}
             />
         </div>
     );

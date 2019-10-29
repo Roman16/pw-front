@@ -18,7 +18,8 @@ const defaultKeys = [
     {
         title: 'Campaign',
         dataIndex: 'campaign',
-        key: 'campaign'
+        key: 'campaign',
+        width: '150px',
     }
 ];
 
@@ -28,7 +29,8 @@ const columns = {
         {
             title: 'Ad Group',
             dataIndex: 'adGroup',
-            key: 'adGroup'
+            key: 'adGroup',
+            width: '150px',
         },
         {
             title: 'Campaign Targeting Type',
@@ -60,7 +62,8 @@ const columns = {
         {
             title: 'Ad Group',
             dataIndex: 'adGroup',
-            key: 'adGroup'
+            key: 'adGroup',
+            width: '150px',
         },
         {
             title: 'Default Bid',
@@ -80,7 +83,8 @@ const columns = {
         {
             title: 'Ad Group',
             dataIndex: 'adGroup',
-            key: 'adGroup'
+            key: 'adGroup',
+            width: '150px',
         },
         {
             title: 'ASIN',
@@ -104,7 +108,8 @@ const columns = {
         {
             title: 'Ad Group',
             dataIndex: 'adGroup',
-            key: 'adGroup'
+            key: 'adGroup',
+            width: '150px',
         },
         {
             title: 'Keyword',
@@ -174,7 +179,7 @@ const columns = {
     ]
 };
 
-const NewKeywords = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange}) => {
+const NewKeywords = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange, scroll}) => {
     const [activeTable, changeTable] = useState(createdCampaign);
     const {count, loading, productId} = useSelector(state => ({
         count: state.reports.counts['new-keywords'].subtypes_counts,
@@ -245,6 +250,7 @@ const NewKeywords = ({data, onChangeSubTab, activeTab, currentPage, totalSize, h
                 currentPage={currentPage}
                 totalSize={totalSize}
                 showPagination={totalSize > 10}
+                scroll={scroll}
             />
         </div>
     );
