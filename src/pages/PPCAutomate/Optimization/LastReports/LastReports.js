@@ -57,18 +57,25 @@ const TerminalItem = ({ number = 0, content = '' }) => (
 );
 
 class LastReports extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            current: 1,
-            reports: [],
-            records: []
-        };
-        this.getTerminalContentRef = React.createRef();
+    state = {
+        current: 1,
+        reports: [],
+        records: []
+    };
+
+    componentDidMount() {
+        this.getReports();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.productId !== prevProps.productId) this.getReports();
     }
 
     onChange = page => {
         const { reports } = this.state;
+        const getTerminalContentRef = document.querySelector(
+            '.terminal-content'
+        );
         const pageSize = 10;
         let counter = 0;
         const records = reports.filter(
@@ -82,13 +89,16 @@ class LastReports extends Component {
             records
         });
 
-        this.getTerminalContentRef.current.scrollTo({
+        getTerminalContentRef.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     };
 
     getReports = () => {
+        const getTerminalContentRef = document.querySelector(
+            '.terminal-content'
+        );
         this.props.productId &&
             reportsServices.getLastReports(this.props.productId).then(res => {
                 const data = res.length > 0 ? res.slice(0, 150) : [];
@@ -105,20 +115,12 @@ class LastReports extends Component {
                     )
                 });
 
-                this.getTerminalContentRef.current.scrollTo({
+                getTerminalContentRef.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
             });
     };
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.productId !== prevProps.productId) this.getReports();
-    }
-
-    componentDidMount() {
-        this.getReports();
-    }
 
     render() {
         const { current, records } = this.state;
@@ -133,7 +135,6 @@ class LastReports extends Component {
                     className={`terminal-content ${!isLess ? 'less' : 'more'} ${
                         isTerminal ? 'auto' : 'hidden'
                     }`}
-                    ref={this.getTerminalContentRef}
                 >
                     {isTerminal ? (
                         <Fragment>

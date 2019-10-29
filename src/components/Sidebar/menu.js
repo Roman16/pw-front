@@ -93,7 +93,7 @@ export const menuMain = [
             },
             {
                 title: 'PPC Scanner',
-                link: '-scaner',
+                link: '-scanner',
                 className: 'ppcScaner'
             }
             // {
@@ -124,8 +124,9 @@ export const menuBottom = [
     // },
     {
         title: 'Account',
-        link: 'ppc-automate',
-        icon: 'account'
+        link: 'https://profitwhales.com/account/settings',
+        icon: 'account',
+        className: 'account'
     },
     {
         title: 'Help Center',

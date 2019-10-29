@@ -3,6 +3,13 @@
 
 .terminal {
     position: relative;
+    // max-height: calc(100vh - 418px - 77px - 110px);
+    // overflow: auto;
+
+    // & > div {
+    //     width: 100%;
+    //     overflow: auto;
+    // }
 
     .card();
 
@@ -75,10 +82,10 @@
     }
 
     .terminal-content {
-        margin-bottom: 5px;
+        // margin-bottom: 5px;
 
         &.less {
-            max-height: calc(100vh - 418px - 96px - 42px - 150px - 95px);
+            max-height: calc(100vh - 418px - 77px - 42px - 150px);
         }
 
         &.more {
@@ -95,7 +102,7 @@
 
         @media (max-width: 1669px) {
             &.less {
-                max-height: calc(100vh - 632px - 96px - 42px - 150px - 95px);
+                max-height: calc(100vh - 666px - 96px - 42px - 150px - 95px);
             }
         }
 
