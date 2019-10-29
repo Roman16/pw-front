@@ -57,19 +57,11 @@ const TerminalItem = ({ number = 0, content = '' }) => (
 );
 
 class LastReports extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            current: 1,
-            reports: [],
-            records: []
-        };
-        this.getTerminalContentRef = React.createRef();
-    }
-
-    componentWillUnmount() {
-        this.getTerminalContentRef = null;
-    }
+    state = {
+        current: 1,
+        reports: [],
+        records: []
+    };
 
     componentDidMount() {
         this.getReports();
@@ -81,6 +73,9 @@ class LastReports extends Component {
 
     onChange = page => {
         const { reports } = this.state;
+        const getTerminalContentRef = document.querySelector(
+            '.terminal-content'
+        );
         const pageSize = 10;
         let counter = 0;
         const records = reports.filter(
@@ -94,13 +89,16 @@ class LastReports extends Component {
             records
         });
 
-        this.getTerminalContentRef.current.scrollTo({
+        getTerminalContentRef.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     };
 
     getReports = () => {
+        const getTerminalContentRef = document.querySelector(
+            '.terminal-content'
+        );
         this.props.productId &&
             reportsServices.getLastReports(this.props.productId).then(res => {
                 const data = res.length > 0 ? res.slice(0, 150) : [];
@@ -117,7 +115,7 @@ class LastReports extends Component {
                     )
                 });
 
-                this.getTerminalContentRef.current.scrollTo({
+                getTerminalContentRef.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
@@ -133,12 +131,10 @@ class LastReports extends Component {
         return (
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
-                {/* <div> */}
                 <ul
                     className={`terminal-content ${!isLess ? 'less' : 'more'} ${
                         isTerminal ? 'auto' : 'hidden'
                     }`}
-                    ref={this.getTerminalContentRef}
                 >
                     {isTerminal ? (
                         <Fragment>
@@ -172,7 +168,6 @@ class LastReports extends Component {
                         </div>
                     )}
                 </ul>
-                {/* </div> */}
             </div>
         );
     }

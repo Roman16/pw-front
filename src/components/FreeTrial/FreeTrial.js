@@ -20,7 +20,7 @@ const FreeTrial = ({ expireIn }) => {
             <div className="btn-upgrade">
                 <Button
                     onClick={() => {
-                        window.open(`${window.BASE_URL}/account/subscriptions`);
+                        window.open(`/account/subscriptions`);
                     }}
                 >
                     Upgrade Now

@@ -1,9 +1,6 @@
 @import '../../style/variables.less';
 
 .additional {
-    // position: absolute;
-    // top: 1.875em;
-    // right: 1.5em;
     display: flex;
     align-items: center;
     margin: 0 !important;
@@ -14,8 +11,6 @@
 
     @media (max-width: 1669px) {
         align-self: flex-end;
-        // top: 1.3em;
-        // right: 1em;
     }
 
     .free-trial {
@@ -46,8 +41,8 @@
     .btn-upgrade {
         margin-left: 1.8em;
 
-        @media (max-width: 1669px) {
-            // margin-left: 5px;
+        @media (max-width: @desktop) {
+            margin-left: 0.3em;
         }
 
         button {
