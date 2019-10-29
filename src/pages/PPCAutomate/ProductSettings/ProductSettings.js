@@ -1,15 +1,15 @@
 import React from 'react';
-import ProductsList from './ProductsList/ProductsList';
 
+import ProductsList from './ProductsList/ProductsList';
+import FreeTrial from '../../../components/FreeTrial/FreeTrial';
 import './ProductSettings.less';
 
 const ProductSettingsMain = () => {
     return (
         <div className="product-settings-page">
-            <div className="trial-info">
-                <div className="page-caption">
-                    <h3> Analytics Product Settings</h3>
-                </div>
+            <div className="page-caption">
+                <h3> Analytics Product Settings</h3>
+                <FreeTrial />
             </div>
 
             <div className="reminder">
