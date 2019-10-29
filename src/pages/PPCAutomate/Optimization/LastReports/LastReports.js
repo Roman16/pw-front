@@ -67,6 +67,18 @@ class LastReports extends Component {
         this.getTerminalContentRef = React.createRef();
     }
 
+    componentWillUnmount() {
+        this.getTerminalContentRef = null;
+    }
+
+    componentDidMount() {
+        this.getReports();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.productId !== prevProps.productId) this.getReports();
+    }
+
     onChange = page => {
         const { reports } = this.state;
         const pageSize = 10;
@@ -112,14 +124,6 @@ class LastReports extends Component {
             });
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.productId !== prevProps.productId) this.getReports();
-    }
-
-    componentDidMount() {
-        this.getReports();
-    }
-
     render() {
         const { current, records } = this.state;
         const { isLess } = this.props;
@@ -129,6 +133,7 @@ class LastReports extends Component {
         return (
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
+                {/* <div> */}
                 <ul
                     className={`terminal-content ${!isLess ? 'less' : 'more'} ${
                         isTerminal ? 'auto' : 'hidden'
@@ -167,6 +172,7 @@ class LastReports extends Component {
                         </div>
                     )}
                 </ul>
+                {/* </div> */}
             </div>
         );
     }
