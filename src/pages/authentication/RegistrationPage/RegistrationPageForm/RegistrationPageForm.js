@@ -1,9 +1,11 @@
 import React from 'react';
-import { Col, notification, Row, Spin } from 'antd';
+import {Col, Form, notification, Row, Spin} from 'antd';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../../../../actions/user.actions';
+import {Elements, StripeProvider} from "react-stripe-elements";
+import StripeForm from "./StripeForm";
 
 class RegistrationPage extends React.Component {
     state = {
@@ -190,6 +192,13 @@ class RegistrationPage extends React.Component {
                         </div>
                     </Col>
                 </Row>
+
+                {/*<StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">*/}
+                {/*    <Elements>*/}
+                {/*        <StripeForm/>*/}
+                {/*    </Elements>*/}
+                {/*</StripeProvider>*/}
+
 
                 {/* credit card */}
                 {/* <div className="form-title">Billing Information</div>
