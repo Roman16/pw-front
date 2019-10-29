@@ -36,6 +36,8 @@ const defaultKeys = [
         title: 'Match Type',
         dataIndex: 'matchType',
         key: 'matchType',
+        width: 150,
+        render: text => <span className='capitalize-field'>{text}</span>
     }
 ];
 
@@ -46,13 +48,15 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 100,
         },
         {
             title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 150,
         },
         {
             ...bidActionField
@@ -66,12 +70,14 @@ const columns = {
         {
             title: 'Impressions',
             dataIndex: 'impressions',
-            key: 'impressions'
+            key: 'impressions',
+            width: 100,
         },
         {
             title: () => <TitleInfo title="Target Impressions"/>,
             dataIndex: 'targetImpressions',
-            key: 'targetImpressions'
+            key: 'targetImpressions',
+            width: 200,
         },
         {
             ...bidActionField
@@ -86,13 +92,15 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 100,
         },
         {
             title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 150,
         },
         {
             ...pauseKeywordsActionField
@@ -107,12 +115,14 @@ const columns = {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConvRate',
             key: 'averageConvRate',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 200,
         },
         {
             title: () => <TitleInfo title="Clicks"/>,
             dataIndex: 'clicks',
-            key: 'clicks'
+            key: 'clicks',
+            width: 100,
         },
         {
             ...pauseKeywordsActionField

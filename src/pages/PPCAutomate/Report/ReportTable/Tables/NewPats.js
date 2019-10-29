@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, dateField, createdKeywordsActionField, infoField} from './const';
+import {indexField, patIntentField, createdKeywordsActionField, infoField} from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from "react-redux";
 
@@ -29,11 +29,10 @@ const defaultKeys = [
         dataIndex: 'PatType',
         key: 'PatType',
         width: '150px',
+        render: text => <span className='capitalize-field'>{text}</span>
     },
     {
-        title: () => <TitleInfo title="PAT Intent Type"/>,
-        dataIndex: 'PatIntentType',
-        key: 'PatIntentType'
+        ...patIntentField
     },
     {
         title: 'PAT Value',

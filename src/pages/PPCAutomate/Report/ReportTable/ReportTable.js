@@ -276,6 +276,7 @@ class ReportTable extends Component {
         );
     };
 
+
     handleChangeSubTab = tab => {
         this.setState({activeSubTab: tab, page: 1}, this.fetchReports);
     };

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, dateField, actionField, infoField, bidActionField, pausePatActionField} from './const';
+import {indexField, infoField, bidActionField, patIntentField, patTypeField, pausePatActionField} from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from "react-redux";
 
@@ -32,18 +32,17 @@ const defaultKeys = [
         title: () => <TitleInfo title="PAT type"/>,
         dataIndex: 'PatType',
         key: 'PatType ',
-        width: '150px',
-
+        width: '130px',
+        render: text => <span className='capitalize-field'>{text}</span>
     },
     {
-        title: 'PAT Intent Type',
-        dataIndex: 'PatIntentType',
-        key: 'PatIntentType'
+        ...patIntentField
     },
     {
         title: 'PAT Value',
         dataIndex: 'PatValue',
-        key: 'PatValue'
+        key: 'PatValue',
+        width: '100px',
     }
 ];
 
@@ -54,13 +53,15 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 100,
         },
         {
             title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 150,
         },
         {
             ...bidActionField
@@ -74,12 +75,14 @@ const columns = {
         {
             title: 'Impressions',
             dataIndex: 'impressions',
-            key: 'impressions'
+            key: 'impressions',
+            width: '120px',
         },
         {
             title: () => <TitleInfo title="Target Impressions"/>,
             dataIndex: 'targetImpressions',
-            key: 'targetImpressions'
+            key: 'targetImpressions',
+            width: '150px',
         },
         {
             ...bidActionField
@@ -94,13 +97,15 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 100,
         },
         {
             title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 150,
         },
         {
             ...pausePatActionField
@@ -115,12 +120,14 @@ const columns = {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConvRate',
             key: 'averageConvRate',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text}%</span>,
+            width: 200,
         },
         {
             title: () => <TitleInfo title="Clicks"/>,
             dataIndex: 'clicks',
-            key: 'clicks'
+            key: 'clicks',
+            width: 100,
         },
         {
             ...pausePatActionField
