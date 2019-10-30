@@ -7,6 +7,8 @@ import { userActions } from '../../../../actions/user.actions';
 import {Elements, StripeProvider} from "react-stripe-elements";
 import StripeForm from "./StripeForm";
 
+const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+
 class RegistrationPage extends React.Component {
     state = {
         name: '',
@@ -119,8 +121,7 @@ class RegistrationPage extends React.Component {
 
         const isLess = email.length === 0;
 
-        const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST;
-
+        console.log(stripeKey);
         return (
             <form className="form " id="payment-form2" onSubmit={this.onSubmit}>
                 <Row>
@@ -195,64 +196,12 @@ class RegistrationPage extends React.Component {
                     </Col>
                 </Row>
 
-                {/*<StripeProvider apiKey={stripeKey}">*/}
+                {/*<StripeProvider apiKey={stripeKey}>*/}
                 {/*    <Elements>*/}
                 {/*        <StripeForm/>*/}
                 {/*    </Elements>*/}
                 {/*</StripeProvider>*/}
 
-
-                {/* credit card */}
-                {/* <div className="form-title">Billing Information</div>
-                <Row>
-                    <Col xs={24} sm={24} md={16}>
-                        <div className="input-container">
-                            <input
-                                type="number"
-                                name="card"
-                                id="register-card"
-                                value={card}
-                                onChange={this.onChange}
-                                required
-                            /> */}
-                {/* eslint-disable-next-line max-len */}
-                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
-                {/* <label className="label">Credit card</label>
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={24} md={4}>
-                        <div className="input-container">
-                            <input
-                                type="number"
-                                name="expiry"
-                                id="register-expiry"
-                                value={expiry}
-                                onChange={this.onChange}
-                                required
-                            /> */}
-                {/* eslint-disable-next-line max-len */}
-                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
-                {/* <label className="label">Expiry</label>
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={24} md={4}>
-                        <div className="input-container">
-                            <input
-                                type="number"
-                                name="cvc"
-                                id="register-cvc"
-                                value={cvc}
-                                onChange={this.onChange}
-                                required
-                            /> */}
-                {/* eslint-disable-next-line max-len */}
-                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
-                {/* <label className="label">CVC</label>
-                        </div>
-                    </Col>
-                </Row> */}
-
-                {/* button submit */}
                 <Row>
                     <Col xs={24} sm={24} md={24}>
                         <button
