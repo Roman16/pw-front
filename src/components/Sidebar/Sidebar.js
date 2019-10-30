@@ -1,29 +1,35 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, Icon, Popover } from 'antd';
-import { getClassNames } from '../../utils';
+import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import {Menu, Icon, Popover} from 'antd';
+import {useDispatch} from 'react-redux';
+import {getClassNames} from '../../utils';
 import SidebarItem from './SidebarItem';
 import RegionsMenu from './RegionsMenu';
-import { regionsMenu, menuBottom, menuMain } from './menu';
-
+import {regionsMenu, menuBottom, menuMain} from './menu';
+import {userActions} from '../../actions/user.actions';
 import './Sidebar.less';
 
 import logo from '../../assets/img/logo.svg';
 
 const Sidebar = () => {
-    const [collapsed, setCollapsed] = useState(false);
-    const [regions] = useState(regionsMenu);
-    const toggleCollapsed = () => setCollapsed(!collapsed);
-    const className = getClassNames('Sidebar', { SidebarOpen: !collapsed });
-    const activeLink = global.location.pathname;
-    const activeLinkArr = global.location.pathname.split('/');
-    const activeCountry = regions.map(region =>
-        region.countries.find(country => country.active)
-    )[0];
+    const [collapsed, setCollapsed] = useState(false),
+        [regions] = useState(regionsMenu),
+        dispatch = useDispatch(),
+        toggleCollapsed = () => setCollapsed(!collapsed),
+        className = getClassNames('Sidebar', {SidebarOpen: !collapsed}),
+        activeLink = global.location.pathname,
+        activeLinkArr = global.location.pathname.split('/'),
+        activeCountry = regions.map(region =>
+            region.countries.find(country => country.active)
+        )[0];
 
     const setActiveCountry = country => {
         console.log(country);
     };
+
+    useEffect(() => {
+        dispatch(userActions.getUserInfo())
+    }, []);
 
     return (
         <div className={className}>
@@ -35,7 +41,7 @@ const Sidebar = () => {
                 />
                 {!collapsed && (
                     <Link to="/" className="sidebar-logo">
-                        <img src={logo} alt="logo" />
+                        <img src={logo} alt="logo"/>
                     </Link>
                 )}
             </div>
@@ -75,7 +81,7 @@ const Sidebar = () => {
                         defaultOpenKeys={[`/${activeLinkArr[1]}`]}
                     >
                         {menuMain.map(item => (
-                            <SidebarItem key={item.link} item={item} />
+                            <SidebarItem key={item.link} item={item}/>
                         ))}
                     </Menu>
                 </div>
@@ -88,7 +94,7 @@ const Sidebar = () => {
                         defaultSelectedKeys={[activeLink]}
                     >
                         {menuBottom.map(item => (
-                            <SidebarItem key={item.icon} item={item} />
+                            <SidebarItem key={item.icon} item={item}/>
                         ))}
                     </Menu>
                 </div>
