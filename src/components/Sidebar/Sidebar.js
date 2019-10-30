@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {Menu, Icon, Popover} from 'antd';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getClassNames} from '../../utils';
 import SidebarItem from './SidebarItem';
 import RegionsMenu from './RegionsMenu';
@@ -15,6 +15,9 @@ const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
         [regions] = useState(regionsMenu),
         dispatch = useDispatch(),
+        {user} = useSelector(state => ({
+            user: state.user
+        })),
         toggleCollapsed = () => setCollapsed(!collapsed),
         className = getClassNames('Sidebar', {SidebarOpen: !collapsed}),
         activeLink = global.location.pathname,
@@ -55,6 +58,7 @@ const Sidebar = () => {
                             <RegionsMenu
                                 regions={regions}
                                 setActiveCountry={setActiveCountry}
+                                user={user}
                             />
                         }
                         trigger="click"
@@ -68,7 +72,7 @@ const Sidebar = () => {
                                 <h5>{activeCountry.name}</h5>
                             </div>
                             <div className="country-active__description">
-                                {activeCountry.description}
+                                {user.default_accounts.amazon_mws.seller_id}
                             </div>
                         </div>
                     </Popover>
