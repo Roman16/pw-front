@@ -1,52 +1,58 @@
+@import '../../../../style/variables.less';
+
 .ppc-page {
-  min-height: 100%;
-  height: max-content;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+    min-height: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 
-  img {
-    margin: 0;
-    max-width: 120px;
-    -webkit-box-shadow: 0 31.205px 62.41px rgba(109,109,246,.05), 0 23.4037px 156.025px rgba(109,109,246,.03), 0 62.41px 124.82px rgba(109,109,246,.12);
-    box-shadow: 0 31.205px 62.41px rgba(109,109,246,.05), 0 23.4037px 156.025px rgba(109,109,246,.03), 0 62.41px 124.82px rgba(109,109,246,.12);
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-    margin-bottom: 40px;
-  }
-
-  h2 {
-    font-size: 42px;
-    line-height: 44px;
-    letter-spacing: .2px;
-    color: #363694;
-    margin-bottom: 40px;
-  }
-
-  .link {
-    background: #6D6DF6;
-    box-shadow: 0px 16px 16px rgba(44, 48, 58, 0.08), 0px 6px 40px rgba(44, 48, 58, 0.03), 0px 0px 16px rgba(44, 48, 58, 0.03);
-    border-radius: 4px;
-    display: inline-block;
-    padding: 20px;
-    font-size: 16px;
-    line-height: 16px;
-    letter-spacing: 0.16px;
-    color: #FFFFFF;
-    position: relative;
-    text-decoration: none;
-    margin-bottom: 72px;
-    transition: all 0.4s ease;
-
-    &:hover {
-      background: #5f5fbe;
+    img {
+        margin: 0;
+        max-width: 120px;
+        -webkit-box-shadow: 0 31.205px 62.41px rgba(109, 109, 246, 0.05),
+            0 23.4037px 156.025px rgba(109, 109, 246, 0.03),
+            0 62.41px 124.82px rgba(109, 109, 246, 0.12);
+        box-shadow: 0 31.205px 62.41px rgba(109, 109, 246, 0.05),
+            0 23.4037px 156.025px rgba(109, 109, 246, 0.03),
+            0 62.41px 124.82px rgba(109, 109, 246, 0.12);
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        margin-bottom: 40px;
     }
 
-    i {
-      margin: 0 0 0 20px;
-      color: #fff;
+    h2 {
+        font-size: 42px;
+        line-height: 44px;
+        letter-spacing: 0.2px;
+        color: #363694;
+        margin-bottom: 40px;
     }
-  }
+
+    .link {
+        background: #6d6df6;
+        box-shadow: @tooltip-shadow;
+        border-radius: 4px;
+        display: inline-block;
+        padding: 20px;
+        font-size: 16px;
+        line-height: 16px;
+        letter-spacing: 0.16px;
+        color: #ffffff;
+        position: relative;
+        text-decoration: none;
+        margin-bottom: 72px;
+        transition: all 0.4s ease;
+
+        &:hover {
+            background: #5f5fbe;
+        }
+
+        i {
+            margin: 0 0 0 20px;
+            color: #fff;
+        }
+    }
 }

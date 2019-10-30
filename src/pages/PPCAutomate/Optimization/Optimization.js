@@ -95,7 +95,7 @@ class Optimization extends Component {
                         <div className="options">
                             <div className={`product-info ${isLess && 'more'}`}>
                                 <div className="product-info-automate">
-                                    <span> What do you want to automate</span>
+                                    <span> What do you want to automate?</span>
                                     <Icon
                                         type="info-circle"
                                         theme="filled"
