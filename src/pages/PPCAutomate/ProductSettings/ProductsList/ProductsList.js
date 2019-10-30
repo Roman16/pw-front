@@ -118,7 +118,7 @@ class ProductsList extends Component {
                     ),
                     dataIndex: PRODUCT,
                     key: PRODUCT,
-                    width: 300,
+                    width: '350px',
                     render: (product) => (
                         <ProductItem
                             product={product}
@@ -142,7 +142,7 @@ class ProductsList extends Component {
                     )
                 },
                 {
-                    title: 'Min Bid (Manual Campaign)',
+                    title: () => (<span>Min Bid <br/> (Manual Campaign)</span>),
                     dataIndex: MIN_BID_MANUAL_CAMPING,
                     key: MIN_BID_MANUAL_CAMPING,
                     width: 150,
@@ -157,7 +157,7 @@ class ProductsList extends Component {
                     )
                 },
                 {
-                    title: 'Max Bid (Manual Campaign)',
+                    title: () => (<span>Max Bid <br/> (Manual Campaign)</span>),
                     dataIndex: MAX_BID_MANUAL_CAMPING,
                     key: MAX_BID_MANUAL_CAMPING,
                     width: 150,
@@ -172,7 +172,7 @@ class ProductsList extends Component {
                     )
                 },
                 {
-                    title: 'Min Bid (Auto Campaign)',
+                    title: () => (<span>Min Bid <br/> (Auto Campaign)</span>),
                     dataIndex: MIN_BID_AUTO_CAMPING,
                     key: MIN_BID_AUTO_CAMPING,
                     width: 150,
@@ -187,7 +187,7 @@ class ProductsList extends Component {
                     )
                 },
                 {
-                    title: 'Max Bid (Auto Campaign)',
+                    title: () => (<span>Max Bid <br/> (Auto Campaign)</span>),
                     dataIndex: MAX_BID_AUTO_CAMPING,
                     key: MAX_BID_AUTO_CAMPING,
                     width: 150,
@@ -205,7 +205,7 @@ class ProductsList extends Component {
                     title: 'Total Changes',
                     dataIndex: TOTAL_CHANGES,
                     key: TOTAL_CHANGES,
-                    width: 100,
+                    width: '130px',
                     render: (index, item) => (
                         <div style={{fontWeight: 600}}>{item[TOTAL_CHANGES]}</div>
                     )
@@ -214,7 +214,7 @@ class ProductsList extends Component {
                     title: 'Optimization Status',
                     dataIndex: OPTIMIZATION_STATUS,
                     key: OPTIMIZATION_STATUS,
-                    width: 100,
+                    width: '150px',
                     render: (index, item) => (
                         <div
                             className={`settings-status ${

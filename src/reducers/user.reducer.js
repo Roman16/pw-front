@@ -1,6 +1,12 @@
 import { userConstants } from '../constans/actions.type';
 
-export function user(state = {}, action) {
+const initialState = {
+    user: {
+
+    }
+};
+
+export function user(state = initialState, action) {
     switch (action.type) {
         case userConstants.SET_INFORMATION:
             return {

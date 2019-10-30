@@ -54,7 +54,7 @@ export const bidActionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    width: '150px',
+    width: '200px',
     className: 'left-border',
     render: ({data: {current_state, previous_state}}) => (
         <div className='action-field'>

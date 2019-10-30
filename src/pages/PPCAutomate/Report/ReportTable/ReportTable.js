@@ -283,12 +283,11 @@ class ReportTable extends Component {
     componentDidMount() {
         this.fetchReports();
 
-        const height = document.querySelector('.report-table').clientHeight,
-            height2 = document.querySelector('.ant-table-thead').clientHeight,
-            screenHeight = window.innerHeight;
+        // const height = document.querySelector('.report-table').clientHeight,
+        //     height2 = document.querySelector('.ant-table-thead').clientHeight,
+        //     screenHeight = window.innerHeight;
 
-        // console.log(screenHeight - height);
-        this.heightBlock = screenHeight - height - height2 - 150;
+        // this.heightBlock = screenHeight - height - height2 - 150;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

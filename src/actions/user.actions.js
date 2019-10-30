@@ -1,7 +1,7 @@
-import { userConstants } from '../constans/actions.type';
-import { history } from '../utils/history';
+import {userConstants} from '../constans/actions.type';
+import {history} from '../utils/history';
 
-import { userService } from '../services/user.services';
+import {userService} from '../services/user.services';
 
 export const userActions = {
     login,
@@ -9,7 +9,8 @@ export const userActions = {
     regist,
     setMWS,
     getUserInfo,
-    setInformation
+    setInformation,
+    getAuthorizedUserInfo
 };
 
 function login(user) {
@@ -75,6 +76,21 @@ function getUserInfo() {
                 history.push('/ppc');
             } else {
                 history.push('/ppc/optimization');
+            }
+        });
+    };
+}
+
+
+function getAuthorizedUserInfo() {
+    return dispatch => {
+        userService.getUserInfo().then(res => {
+            dispatch(setInformation(res));
+
+            if (!res.account_links.amazon_mws.is_connected) {
+                history.push('/mws');
+            } else if (!res.account_links.amazon_ppc.is_connected) {
+                history.push('/ppc');
             }
         });
     };

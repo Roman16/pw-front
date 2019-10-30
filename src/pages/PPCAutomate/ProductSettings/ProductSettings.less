@@ -1,24 +1,29 @@
 @import '../../../style/variables.less';
 
 .product-settings-page {
-    .page-caption {
-        display: flex;
-        justify-content: space-between;
+  .page-caption {
+    display: flex;
+    justify-content: space-between;
 
-        h3 {
-            font-size: 20px;
-        }
+    h3 {
+      font-size: 20px;
+      color: #363694;
+      display: flex;
+      align-items: center;
+      letter-spacing: -0.08px;
     }
+  }
 
-    .reminder {
-        max-width: 600px;
+  .reminder {
+    max-width: 600px;
+    margin: 0 0 40px 0;
 
-        .reminder-title {
-            color: @primary-color;
-            font-weight: 600;
-            padding: 12px 0;
-            border-bottom: 1px solid @primary-color;
-            margin-bottom: 12px;
-        }
+    .reminder-title {
+      color: @primary-color;
+      font-weight: 600;
+      padding: 0 0 8px 0;
+      border-bottom: 1px solid @primary-color;
+      margin: 20px 0 13px 0;
     }
+  }
 }
