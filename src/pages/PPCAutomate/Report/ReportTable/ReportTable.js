@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import moment from 'moment';
-import {Tabs, Button} from 'antd';
+import { Tabs, Button } from 'antd';
 
 import KeywordsOptimization from './Tables/KeywordsOptimization';
 import DatePicker from '../../../../components/DatePicker/DatePicker';
@@ -10,14 +10,14 @@ import NewKeywords from './Tables/NewKeywords';
 import NewNegativeKeywords from './Tables/NewNegativeKeywords';
 import NewPats from './Tables/NewPats';
 import NewNegativePats from './Tables/NewNegativePats';
-import {reportsActions} from '../../../../actions/reports.actions';
-import {reportsUrls} from '../../../../constans/api.urls';
+import { reportsActions } from '../../../../actions/reports.actions';
+import { reportsUrls } from '../../../../constans/api.urls';
 import FreeTrial from '../../../../components/FreeTrial/FreeTrial';
 import './ReportTable.less';
 
-const {TabPane} = Tabs;
+const { TabPane } = Tabs;
 
-const TabName = ({name = null, count}) => (
+const TabName = ({ name = null, count }) => (
     <div className="TabName">
         <span>{name}</span>
 
@@ -41,7 +41,7 @@ const subTables = {
 const tabsItem = [
     {
         tabName: count => (
-            <TabName name="Keywords Optimization" count={count}/>
+            <TabName name="Keywords Optimization" count={count} />
         ),
         key: 'keywords-optimization',
         component: (
@@ -65,7 +65,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name="PAT’s Optimization" count={count}/>,
+        tabName: count => <TabName name="PAT’s Optimization" count={count} />,
         key: 'pats-optimization',
         component: (
             onChangeSubTab,
@@ -88,7 +88,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name="New Keywords" count={count}/>,
+        tabName: count => <TabName name="New Keywords" count={count} />,
         key: 'new-keywords',
         component: (
             onChangeSubTab,
@@ -112,7 +112,7 @@ const tabsItem = [
     },
     {
         tabName: count => (
-            <TabName name="New Negative Keywords" count={count}/>
+            <TabName name="New Negative Keywords" count={count} />
         ),
         key: 'new-negative-keywords',
         component: (
@@ -136,7 +136,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name={"New PAT 's"} count={count}/>,
+        tabName: count => <TabName name={"New PAT 's"} count={count} />,
         key: 'new-pats',
         component: (
             onChangeSubTab,
@@ -159,7 +159,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name={"New Negative PAT's"} count={count}/>,
+        tabName: count => <TabName name={"New Negative PAT's"} count={count} />,
         key: 'new-negative-pats',
         component: (
             onChangeSubTab,
@@ -203,8 +203,8 @@ class ReportTable extends Component {
     heightBlock = 0;
 
     downloadFile = () => {
-        const {startDate, endDate} = this.state,
-            {selectedProductId, selectedAll} = this.props,
+        const { startDate, endDate } = this.state,
+            { selectedProductId, selectedAll } = this.props,
             token = localStorage.getItem('token');
 
         const parameters = [
@@ -242,7 +242,7 @@ class ReportTable extends Component {
                 endDate,
                 page
             } = this.state,
-            {selectedAll, selectedProductId} = this.props;
+            { selectedAll, selectedProductId } = this.props;
 
         this.props.getReports({
             id: selectedAll ? 'all' : selectedProductId,
@@ -276,9 +276,8 @@ class ReportTable extends Component {
         );
     };
 
-
     handleChangeSubTab = tab => {
-        this.setState({activeSubTab: tab, page: 1}, this.fetchReports);
+        this.setState({ activeSubTab: tab, page: 1 }, this.fetchReports);
     };
 
     componentDidMount() {
@@ -288,10 +287,9 @@ class ReportTable extends Component {
             height2 = document.querySelector('.ant-table-thead').clientHeight,
             screenHeight = window.innerHeight;
 
-        console.log(screenHeight - height);
+        // console.log(screenHeight - height);
         this.heightBlock = screenHeight - height - height2 - 150;
     }
-
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (
@@ -309,8 +307,8 @@ class ReportTable extends Component {
     }
 
     render() {
-        const {activeTab, page} = this.state,
-            {counts, data, todayChanges, totalSize} = this.props;
+        const { activeTab, page } = this.state,
+            { counts, data, todayChanges, totalSize } = this.props;
 
         return (
             <div className="ReportTable">
@@ -321,18 +319,18 @@ class ReportTable extends Component {
                             Today Changes
                             <span>{todayChanges}</span>
                         </div>
-                        <DatePicker timeRange={this.timeRange}/>
+                        <DatePicker timeRange={this.timeRange} />
                         {/* <Link to="/ppc-automation/reports/download-report"> */}
                         <Button
                             className="download-btn"
                             onClick={this.downloadFile}
                         >
                             Download
-                            <i className="download-icon"/>
+                            <i className="download-icon" />
                         </Button>
                         {/* </Link> */}
                     </div>
-                    <FreeTrial/>
+                    <FreeTrial />
                 </div>
 
                 <Tabs
@@ -340,7 +338,7 @@ class ReportTable extends Component {
                     type="card"
                     onChange={this.handleChangeTab}
                 >
-                    {tabsItem.map(({tabName, key, component}) => (
+                    {tabsItem.map(({ tabName, key, component }) => (
                         <TabPane tab={tabName(counts[key])} key={key}>
                             {component(
                                 this.handleChangeSubTab,
