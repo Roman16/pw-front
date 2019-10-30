@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {CardNumberElement, CardExpiryElement, CardCvcElement,  injectStripe} from 'react-stripe-elements';
+import {Col, Row} from 'antd';
+import {CardNumberElement, CardExpiryElement, CardCvcElement, injectStripe} from 'react-stripe-elements';
 
 class StripeForm extends Component {
 
@@ -24,21 +25,32 @@ class StripeForm extends Component {
         return (
             <div className="stripe-form">
                 <div className="form-title">Billing Information</div>
-                <div className='card-element'>
-                    <div>
-                        <label className="label">Credit card</label>
-                        <CardNumberElement/>
-                    </div>
-                    <div>
-                        <label className="label">Expiry</label>
-                        <CardExpiryElement/>
-                    </div>
-                    <div>
-                        <label className="label">CVC</label>
-                        <CardCvcElement/>
-                    </div>
-                </div>
+
+                <Row>
+                    <Col xs={24} sm={24} md={16}>
+                        <div className="input-container">
+                            <CardNumberElement/>
+                            <label className="label">Credit card</label>
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={4}>
+                        <div className="input-container">
+                            <CardExpiryElement/>
+
+                            <label className="label">Expiry</label>
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={4}>
+                        <div className="input-container">
+                            <CardCvcElement/>
+
+                            <label className="label">CVC</label>
+                        </div>
+                    </Col>
+                </Row>
+
                 <button onClick={this.submit}>Purchase</button>
+
             </div>
         );
     }
