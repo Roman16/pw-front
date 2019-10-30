@@ -28,7 +28,7 @@ const Sidebar = () => {
     };
 
     useEffect(() => {
-        dispatch(userActions.getUserInfo())
+        dispatch(userActions.getAuthorizedUserInfo())
     }, []);
 
     return (

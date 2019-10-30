@@ -11,7 +11,7 @@ const PPC = () => {
         token: state.user.access_token
     }));
 
-    const redirectLink = `${ppcLink}&token=${token}`;
+    const redirectLink = `${ppcLink}?token=${token}`;
 
     return (
         <div className="ppc-page">
