@@ -56,11 +56,11 @@ export const menuMain = [
     /*
      * Zero to Hero
      */
-    // {
-    //     title: 'Zero to Hero',
-    //     link: '/zero-to-hero',
-    //     icon: 'zeroToHero'
-    // },
+    {
+        title: 'Zero to Hero',
+        link: '/zero-to-hero',
+        icon: 'zeroToHero'
+    },
 
     /*
      * Analytics

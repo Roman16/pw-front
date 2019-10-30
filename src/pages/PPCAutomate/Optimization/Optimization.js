@@ -3,6 +3,8 @@ import { Drawer, Icon } from 'antd';
 import { connect } from 'react-redux';
 import { debounce } from 'throttle-debounce';
 
+import FreeTrial from '../../../components/FreeTrial/FreeTrial';
+
 import ProductList from '../../../components/ProductList/ProductList';
 import OptimizationOptions from './OptimizationOptions/OptimizationOptions';
 import OptimizationStrategy from './OptimizationStrategy/OptimizationStrategy';
@@ -90,29 +92,64 @@ class Optimization extends Component {
                     <ProductList />
 
                     <div className="product-options">
-                        <div className={`options ${!isLess ? 'more' : 'less'}`}>
-                            <OptimizationOptions
-                                openInformation={() =>
-                                    this.showDrawer('options')
-                                }
-                                selectedProduct={selectedProduct}
-                            />
+                        <div className="options">
+                            <div className={`product-info ${isLess && 'more'}`}>
+                                <div className="product-info-automate">
+                                    <span> What do you want to automate</span>
+                                    <Icon
+                                        type="info-circle"
+                                        theme="filled"
+                                        onClick={() =>
+                                            this.showDrawer('options')
+                                        }
+                                    />
+                                </div>
 
-                            <OptimizationStrategy
-                                onSelect={this.onSelectStrategy}
-                                openInformation={() =>
-                                    this.showDrawer('strategy')
-                                }
-                                selectedStrategy={selectedStrategy}
-                                product={selectedProduct}
-                                selectedAll={selectedAll}
-                            />
+                                <div className="product-info-strategy">
+                                    <div className="product-select">
+                                        <span>
+                                            Select which optimize Strategy
+                                        </span>
+                                        <Icon
+                                            type="info-circle"
+                                            theme="filled"
+                                            onClick={() =>
+                                                this.showDrawer('strategy')
+                                            }
+                                        />
+                                    </div>
+                                    <FreeTrial />
+                                    {selectedAll && (
+                                        <div className="description-all">
+                                            Changes to those settings will be
+                                            applied to all selected products
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
 
-                            <div className="descriptions options-content">
-                                {` What is PAT? Product Attribute Targeting is
+                            <div
+                                className={`options-strategy ${
+                                    isLess ? 'more' : 'less'
+                                }`}
+                            >
+                                <OptimizationOptions
+                                    selectedProduct={selectedProduct}
+                                />
+
+                                <OptimizationStrategy
+                                    onSelect={this.onSelectStrategy}
+                                    selectedStrategy={selectedStrategy}
+                                    product={selectedProduct}
+                                    selectedAll={selectedAll}
+                                />
+
+                                <div className="descriptions options-content">
+                                    {` What is PAT? Product Attribute Targeting is
                             a powerful new way to target manual Amazon Sponsored Product campaigns.
                              It allows sellers to target ads by either
                              ASIN or Category (brands, prices, and ratings).`}
+                                </div>
                             </div>
 
                             <div

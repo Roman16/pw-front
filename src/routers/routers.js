@@ -14,6 +14,7 @@ import MWS from '../pages/authentication/AccountBinding/MWS/MWS';
 import PPC from '../pages/authentication/AccountBinding/PPC/PPC';
 import NotFound from '../pages/NotFound/NotFound';
 import Dashboard from '../pages/Dashboard/Dashboard';
+import Account from '../pages/AccountInformation/Account/Account';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -64,6 +65,11 @@ const routers = () => {
 
                 <ConnectedAmazonRoute
                     exact
+                    path="/zero-to-hero"
+                    component={Account}
+                />
+                <ConnectedAmazonRoute
+                    exact
                     path="/ppc/dashboard"
                     component={Dashboard}
                 />
@@ -72,10 +78,7 @@ const routers = () => {
                     path="/ppc/optimization"
                     component={Optimization}
                 />
-                <ConnectedAmazonRoute
-                    path="/ppc/report"
-                    component={Report}
-                />
+                <ConnectedAmazonRoute path="/ppc/report" component={Report} />
                 <ConnectedAmazonRoute
                     exact
                     path="/ppc/product-settings"

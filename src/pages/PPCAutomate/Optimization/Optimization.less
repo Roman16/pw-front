@@ -2,38 +2,18 @@
 @import '../../../style/variables.less';
 
 .optimization-page {
-    width: 100%;
     height: 100vh;
     display: grid;
-    grid-template-columns: minmax(320px, 400px) 1fr;
-    grid-gap: 20px;
-
-    .product-info {
-        color: #363694;
-        font-size: 16px;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        margin: 0 0 20px 0;
-
-        span {
-            margin-right: 10px;
-        }
-
-        i {
-            cursor: pointer;
-            color: @action-color-dark;
-        }
-    }
+    grid-template-columns: 356px 1fr;
+    grid-gap: 24px;
 
     .product-options {
         display: grid;
         grid-template-rows: repeat(3, minmax(min-content, max-content));
-        row-gap: 20px;
-        background: inherit !important;
+        row-gap: 24px;
 
         @media (max-width: @big-desktop) {
-            row-gap: 5px;
+            // row-gap: 5px;
         }
 
         & > div {
@@ -42,44 +22,85 @@
             border-radius: 8px;
 
             &:first-child {
-                padding-bottom: 0;
+                padding: 24px 16px 0 24px;
             }
         }
 
         .options {
             display: grid;
-            grid-template-columns: minmax(300px, 400px) minmax(min-content, 1fr);
-            grid-template-areas: 'options strategy' '. descriptions' 'control control';
-            column-gap: 15px;
+            grid-template-columns: 360px minmax(min-content, max-content);
+            grid-template-rows: repeat(3, minmax(min-content, max-content));
+            grid-template-areas: 'info info' 'optionsStrategy optionsStrategy' 'control control';
+            column-gap: 76px;
 
-            .options-content {
-                transition-timing-function: ease-out;
-                overflow: hidden;
-                padding: 0 5px;
+            .product-info {
+                grid-area: info;
+                display: grid;
+                grid-template-columns: 360px minmax(min-content, 100%);
+                column-gap: 76px;
+                margin-bottom: 30px;
+                color: @second-default-dark;
+                font-size: 20px;
+                font-weight: 600;
                 transition: all 0.5s ease-in;
-            }
 
-            .optimize-options {
-                grid-area: options;
-            }
+                &.more {
+                    margin-bottom: 14px;
+                }
 
-            .optimize-strategy {
-                grid-area: strategy;
-            }
+                .product-info-strategy {
+                    display: flex;
+                    justify-content: space-between;
+                    position: relative;
+                }
 
-            .descriptions {
-                grid-area: descriptions;
-            }
+                i {
+                    cursor: pointer;
+                    margin-left: 10px;
+                    color: @action-color-dark;
+                }
 
-            &.less {
-                .options-content {
-                    max-height: 0 !important;
+                .description-all {
+                    position: absolute;
+                    font-size: 15px;
+                    color: @dangerous-color;
+                    top: 30px;
                 }
             }
 
-            &.more {
-                .options-content {
-                    max-height: 282px;
+            .product-info-strategy {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .options-strategy {
+                grid-area: optionsStrategy;
+                display: grid;
+                grid-template-columns: 360px minmax(min-content, max-content);
+                grid-template-rows: repeat(2, minmax(min-content, max-content));
+                grid-template-areas: 'options strategy' '. descriptions';
+                column-gap: 76px;
+                overflow: hidden;
+                transition: all 0.5s ease-in;
+
+                .optimize-options {
+                    grid-area: options;
+                }
+
+                .optimize-strategy {
+                    grid-area: strategy;
+                }
+
+                .descriptions {
+                    grid-area: descriptions;
+                }
+
+                &.less {
+                    max-height: 324px;
+                }
+
+                &.more {
+                    max-height: 0;
                 }
             }
 

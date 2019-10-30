@@ -1,7 +1,6 @@
 import React from 'react';
 import { Icon, Button, Checkbox } from 'antd';
 
-import FreeTrial from '../../../../components/FreeTrial/FreeTrial';
 import './OptimizationStrategy.less';
 
 const strategyValue = {
@@ -104,33 +103,10 @@ export const StrategyItem = ({ caption, selected, onSelect, value }) => (
 const OptimizationStrategy = ({
     onSelect,
     selectedStrategy,
-    openInformation,
-    selectedAll,
     product: { optimization_strategy }
 }) => {
     return (
         <div className="optimize-strategy">
-            <div className="product-info">
-                <div className="product-info-strategy">
-                    <div className="product-select">
-                        <span>Select which optimize Strategy</span>
-                        <Icon
-                            type="info-circle"
-                            theme="filled"
-                            onClick={openInformation}
-                        />
-                    </div>
-                    <FreeTrial />
-                </div>
-
-                {selectedAll && (
-                    <div className="description">
-                        Changes to those settings will be applied to all
-                        selected products
-                    </div>
-                )}
-            </div>
-
             <div className="strategies options-content">
                 <StrategyItem
                     caption="Organic (Overall) Profit"

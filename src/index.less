@@ -26,10 +26,7 @@ img {
 }
 
 .main-pages {
-  width: 100%;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 200px 1fr;
+    display: flex;
 
   .main-container {
     position: relative;
@@ -39,8 +36,8 @@ img {
     overflow: auto;
     background: #f5f5ff;
 
-    & > div {
-      padding: 20px 10px;
+        & > div {
+            padding: 24px;
 
       @media (max-width: 1669px) {
         padding: 10px 10px;
