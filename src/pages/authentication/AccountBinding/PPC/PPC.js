@@ -22,11 +22,11 @@ const PPC = () => {
 
                 <iframe
                     style={{width: '750px', height: '422px'}}
-                    src="https://www.youtube.com/embed/dBCnEJ4Rjo4"
+                    src="https://www.youtube.com/embed/cD5UeuTc_uU"
                     frameBorder="0"
                     title='video'
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen=""/>
+                    allowFullScreen/>
 
                 <br/>
                 <br/>

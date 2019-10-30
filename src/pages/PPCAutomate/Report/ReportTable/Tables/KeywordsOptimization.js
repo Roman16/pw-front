@@ -4,6 +4,7 @@ import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
 import {indexField, infoField, bidActionField, pauseKeywordsActionField} from './const';
 import {useSelector} from "react-redux";
+import CustomTable from './CustomTable';
 
 const changedKeywordBidAcos = 'changed-keyword-bid-acos';
 const changedKeywordBidImpression = 'changed-keyword-bid-impressions';
@@ -52,7 +53,7 @@ const columns = {
             width: '132px',
         },
         {
-            title: () => <TitleInfo title="Target ACoS"/>,
+            title: <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
             render: text => <span>{text}%</span>,
@@ -190,7 +191,30 @@ const KeywordsOptimization = ({data, onChangeSubTab, activeTab, currentPage, tot
                 </TableButton>
             </div>
 
-            <Table
+            {/*<table className="MyClassName">*/}
+            {/*    <thead>*/}
+            {/*    <tr>*/}
+            {/*        {columns[activeTable].map(item =>*/}
+            {/*            <th key={item.title}>{item.title}</th>*/}
+            {/*        )}*/}
+            {/*    </tr>*/}
+            {/*    </thead>*/}
+            {/*    <tbody>*/}
+            {/*    {data.map((row, i) =>*/}
+            {/*        <tr key={i}>*/}
+            {/*            1*/}
+            {/*            /!*{columns[activeTable].map(item => (*!/*/}
+            {/*            /!*    <span>{typeof row[item.key] === 'string' && row[item.key]}</span>*!/*/}
+            {/*            /!*))}*!/*/}
+            {/*            /!*{row.map((col, j) =>*!/*/}
+            {/*            /!*    <td key={j}>{col}</td>*!/*/}
+            {/*            /!*)}*!/*/}
+            {/*        </tr>*/}
+            {/*    )}*/}
+            {/*    </tbody>*/}
+            {/*</table>*/}
+
+            <CustomTable
                 onChangePagination={handlePaginationChange}
                 loading={loading}
                 dataSource={data}
@@ -198,8 +222,18 @@ const KeywordsOptimization = ({data, onChangeSubTab, activeTab, currentPage, tot
                 currentPage={currentPage}
                 totalSize={totalSize}
                 showPagination={totalSize > 10}
-                scroll={scroll}
             />
+
+            {/*<Table*/}
+            {/*    onChangePagination={handlePaginationChange}*/}
+            {/*    loading={loading}*/}
+            {/*    dataSource={data}*/}
+            {/*    columns={columns[activeTable]}*/}
+            {/*    currentPage={currentPage}*/}
+            {/*    totalSize={totalSize}*/}
+            {/*    showPagination={totalSize > 10}*/}
+            {/*    scroll={scroll}*/}
+            {/*/>*/}
         </div>
     );
 };
