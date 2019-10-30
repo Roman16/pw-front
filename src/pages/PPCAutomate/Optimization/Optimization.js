@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import { Drawer, Icon } from 'antd';
-import { connect } from 'react-redux';
-import { debounce } from 'throttle-debounce';
+import React, {Component, Fragment} from 'react';
+import {Drawer, Icon} from 'antd';
+import {connect} from 'react-redux';
+import {debounce} from 'throttle-debounce';
 
 import FreeTrial from '../../../components/FreeTrial/FreeTrial';
 
@@ -14,7 +14,7 @@ import StrategyInfo from './InfoItem/StrategyInfo/StrategyInfo';
 import OptimizationStatus from './OptimizationStatus/OptimizationStatus';
 import LastReports from './LastReports/LastReports';
 
-import { productsActions } from '../../../actions/products.actions';
+import {productsActions} from '../../../actions/products.actions';
 
 import './Optimization.less';
 
@@ -27,11 +27,11 @@ class Optimization extends Component {
         selectedStrategy: this.props.selectedProduct.optimization_strategy
     };
 
-    showDrawer = type => this.setState({ visible: true, infoType: type });
+    showDrawer = type => this.setState({visible: true, infoType: type});
 
-    onCloseDrawer = () => this.setState({ visible: false });
+    onCloseDrawer = () => this.setState({visible: false});
 
-    toLess = () => this.setState({ isLess: !this.state.isLess });
+    toLess = () => this.setState({isLess: !this.state.isLess});
 
     onSelectStrategy = strategy => {
         this.setState(
@@ -39,7 +39,7 @@ class Optimization extends Component {
                 selectedStrategy: strategy
             },
             () => {
-                this.props.updateOptions({ optimization_strategy: strategy });
+                this.props.updateOptions({optimization_strategy: strategy});
                 if (this.props.selectedProduct.status === 'RUNNING')
                     this.handleUpdateProduct();
             }
@@ -47,8 +47,8 @@ class Optimization extends Component {
     };
 
     handleUpdateProduct = debounce(500, false, () => {
-        const { product, selectedStrategy } = this.state,
-            { updateProduct, defaultOptions } = this.props;
+        const {product, selectedStrategy} = this.state,
+            {updateProduct, defaultOptions} = this.props;
 
         updateProduct({
             ...product,
@@ -66,7 +66,7 @@ class Optimization extends Component {
                 return {
                     product: props.selectedProduct,
                     selectedStrategy:
-                        props.selectedProduct.optimization_strategy
+                    props.selectedProduct.optimization_strategy
                 };
             } else {
                 return {
@@ -83,19 +83,19 @@ class Optimization extends Component {
     }
 
     render() {
-        const { isLess, selectedStrategy } = this.state,
-            { selectedProduct, selectedAll } = this.props;
+        const {isLess, selectedStrategy, infoType} = this.state,
+            {selectedProduct, selectedAll} = this.props;
 
         return (
             <Fragment>
                 <div className="optimization-page">
-                    <ProductList />
+                    <ProductList/>
 
                     <div className="product-options">
                         <div className="options">
                             <div className={`product-info ${isLess && 'more'}`}>
                                 <div className="product-info-automate">
-                                    <span> What do you want to automate</span>
+                                    <span>What Parts Do You Want To Automate?</span>
                                     <Icon
                                         type="info-circle"
                                         theme="filled"
@@ -108,7 +108,7 @@ class Optimization extends Component {
                                 <div className="product-info-strategy">
                                     <div className="product-select">
                                         <span>
-                                            Select which optimize Strategy
+                                            Select Optimization Strategy
                                         </span>
                                         <Icon
                                             type="info-circle"
@@ -118,7 +118,7 @@ class Optimization extends Component {
                                             }
                                         />
                                     </div>
-                                    <FreeTrial />
+                                    <FreeTrial/>
                                     {selectedAll && (
                                         <div className="description-all">
                                             Changes to those settings will be
@@ -145,16 +145,13 @@ class Optimization extends Component {
                                 />
 
                                 <div className="descriptions options-content">
-                                    {` What is PAT? Product Attribute Targeting is
-                            a powerful new way to target manual Amazon Sponsored Product campaigns.
-                             It allows sellers to target ads by either
-                             ASIN or Category (brands, prices, and ratings).`}
+                                    {`NOTE! You can only choose one Strategy per product. Also, you can have any number of Optimization Parts, and you can change them anytime you want even if the product is already under optimization.`}
                                 </div>
                             </div>
 
                             <div
                                 className={`less-more-control ${isLess &&
-                                    'more'}`}
+                                'more'}`}
                             >
                                 <div
                                     role="button"
@@ -163,12 +160,12 @@ class Optimization extends Component {
                                     }`}
                                     onClick={this.toLess}
                                 >
-                                    <Icon type="up" />
+                                    <Icon type="up"/>
                                 </div>
                             </div>
                         </div>
 
-                        <OptimizationStatus product={selectedProduct} />
+                        <OptimizationStatus product={selectedProduct}/>
 
                         <LastReports
                             isLess={isLess}
@@ -179,15 +176,15 @@ class Optimization extends Component {
                 </div>
 
                 <Drawer
-                    title="Did you know that you can pause your ProfitWhales account?"
+                    title={infoType === 'options' ? "Here is the quick review of the actions you can automate with the Software." : "Here is the quick review of the PPC Strategies you can reach with our Software."}
                     width={500}
                     onClose={this.onCloseDrawer}
                     visible={this.state.visible}
                 >
-                    {this.state.infoType === 'options' ? (
-                        <OptionsInfo />
+                    {infoType === 'options' ? (
+                        <OptionsInfo/>
                     ) : (
-                        <StrategyInfo />
+                        <StrategyInfo/>
                     )}
                 </Drawer>
             </Fragment>

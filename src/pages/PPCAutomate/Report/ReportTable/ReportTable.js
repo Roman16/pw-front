@@ -51,7 +51,6 @@ const tabsItem = [
             page,
             totalSize,
             handlePaginationChange,
-            scroll
         ) => (
             <KeywordsOptimization
                 onChangeSubTab={onChangeSubTab}
@@ -60,7 +59,6 @@ const tabsItem = [
                 currentPage={page}
                 totalSize={totalSize}
                 handlePaginationChange={handlePaginationChange}
-                scroll={scroll}
             />
         )
     },
@@ -74,7 +72,6 @@ const tabsItem = [
             page,
             totalSize,
             handlePaginationChange,
-            scroll
         ) => (
             <PATsOptimization
                 onChangeSubTab={onChangeSubTab}
@@ -83,7 +80,6 @@ const tabsItem = [
                 currentPage={page}
                 totalSize={totalSize}
                 handlePaginationChange={handlePaginationChange}
-                scroll={scroll}
             />
         )
     },
@@ -97,7 +93,6 @@ const tabsItem = [
             page,
             totalSize,
             handlePaginationChange,
-            scroll
         ) => (
             <NewKeywords
                 onChangeSubTab={onChangeSubTab}
@@ -106,7 +101,6 @@ const tabsItem = [
                 currentPage={page}
                 totalSize={totalSize}
                 handlePaginationChange={handlePaginationChange}
-                scroll={scroll}
             />
         )
     },
@@ -122,7 +116,6 @@ const tabsItem = [
             page,
             totalSize,
             handlePaginationChange,
-            scroll
         ) => (
             <NewNegativeKeywords
                 onChangeSubTab={onChangeSubTab}
@@ -131,7 +124,6 @@ const tabsItem = [
                 currentPage={page}
                 totalSize={totalSize}
                 handlePaginationChange={handlePaginationChange}
-                scroll={scroll}
             />
         )
     },
@@ -145,7 +137,6 @@ const tabsItem = [
             page,
             totalSize,
             handlePaginationChange,
-            scroll
         ) => (
             <NewPats
                 onChangeSubTab={onChangeSubTab}
@@ -154,7 +145,6 @@ const tabsItem = [
                 currentPage={page}
                 totalSize={totalSize}
                 handlePaginationChange={handlePaginationChange}
-                scroll={scroll}
             />
         )
     },
@@ -168,7 +158,6 @@ const tabsItem = [
             page,
             totalSize,
             handlePaginationChange,
-            scroll
         ) => (
             <NewNegativePats
                 onChangeSubTab={onChangeSubTab}
@@ -177,7 +166,6 @@ const tabsItem = [
                 currentPage={page}
                 totalSize={totalSize}
                 handlePaginationChange={handlePaginationChange}
-                scroll={scroll}
             />
         )
     }
@@ -199,8 +187,6 @@ class ReportTable extends Component {
             'new-negative-pats': 0
         }
     };
-
-    heightBlock = 0;
 
     downloadFile = () => {
         const {startDate, endDate} = this.state,
@@ -283,12 +269,6 @@ class ReportTable extends Component {
 
     componentDidMount() {
         this.fetchReports();
-
-        // const height = document.querySelector('.report-table').clientHeight,
-        //     height2 = document.querySelector('.ant-table-thead').clientHeight,
-        //     screenHeight = window.innerHeight;
-
-        // this.heightBlock = screenHeight - height - height2 - 150;
     }
 
 
@@ -348,7 +328,6 @@ class ReportTable extends Component {
                                 page,
                                 totalSize,
                                 this.handlePaginationChange,
-                                this.heightBlock
                             )}
                         </TabPane>
                     ))}

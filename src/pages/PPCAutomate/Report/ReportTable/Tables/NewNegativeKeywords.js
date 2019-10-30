@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
 import {indexField, createdKeywordsActionField, infoField} from './const';
 import {useSelector} from "react-redux";
+import CustomTable from "./CustomTable";
 
 const highACoS = 'created-negative-keyword-from-cst-high-acos';
 const noSales = 'created-negative-keyword-from-cst-no-sales';
@@ -46,7 +46,7 @@ const columns = {
             render: text => <span>{text}%</span>
         },
         {
-            title: () => <TitleInfo title="Target"/>,
+            title: <TitleInfo title="Target"/>,
             dataIndex: 'target',
             key: 'target',
             render: text => <span>{text}%</span>
@@ -115,15 +115,13 @@ const NewNegativeKeywords = ({data, onChangeSubTab, activeTab, currentPage, tota
                 Created Negative Keyword From CST (No Sales)
             </TableButton>
 
-            <Table
+            <CustomTable
                 onChangePagination={handlePaginationChange}
                 loading={loading}
                 dataSource={data}
                 columns={columns[activeTable]}
                 currentPage={currentPage}
                 totalSize={totalSize}
-                showPagination={totalSize > 10}
-                scroll={scroll}
             />
         </div>
     );
