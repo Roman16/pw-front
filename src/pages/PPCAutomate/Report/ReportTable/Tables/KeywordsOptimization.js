@@ -18,25 +18,25 @@ const defaultKeys = [
         title: 'Campaign',
         dataIndex: 'campaign',
         key: 'campaign',
-        width: '200px',
+        width: 200,
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
         key: 'adGroup',
-        width: '200px',
+        width: 200,
     },
     {
         title: 'Keyword',
         dataIndex: 'keyword',
         key: 'keyword',
-        width: '200px',
+        width: 200,
     },
     {
         title: 'Match Type',
         dataIndex: 'matchType',
         key: 'matchType',
-        width: '132px',
+        width: 132,
         render: text => <span className='capitalize-field'>{text}</span>
     }
 ];
