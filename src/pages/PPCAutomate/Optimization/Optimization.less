@@ -12,10 +12,6 @@
         grid-template-rows: repeat(3, minmax(min-content, max-content));
         row-gap: 24px;
 
-        @media (max-width: @big-desktop) {
-            // row-gap: 5px;
-        }
-
         & > div {
             background: #fff;
             padding: 15px;
@@ -28,10 +24,15 @@
 
         .options {
             display: grid;
-            grid-template-columns: 360px minmax(min-content, max-content);
+            grid-template-columns: 360px minmax(min-content, 100%);
             grid-template-rows: repeat(3, minmax(min-content, max-content));
             grid-template-areas: 'info info' 'optionsStrategy optionsStrategy' 'control control';
             column-gap: 76px;
+
+            @media (max-width: 1814px) {
+                grid-template-columns: 276px minmax(min-content, 100%);
+                column-gap: 20px;
+            }
 
             .product-info {
                 grid-area: info;
@@ -43,6 +44,20 @@
                 font-size: 20px;
                 font-weight: 600;
                 transition: all 0.5s ease-in;
+
+                @media (max-width: 1869px) {
+                    column-gap: 20px;
+                }
+
+                @media (max-width: 1814px) {
+                    grid-template-columns: 276px minmax(min-content, 100%);
+                }
+
+                @media (max-width: @big-desktop) {
+                    .product-info-strategy {
+                        flex-direction: column-reverse;
+                    }
+                }
 
                 &.more {
                     margin-bottom: 14px;
@@ -71,17 +86,23 @@
             .product-info-strategy {
                 display: flex;
                 justify-content: space-between;
+                align-items: flex-start;
             }
 
             .options-strategy {
                 grid-area: optionsStrategy;
                 display: grid;
-                grid-template-columns: 360px minmax(min-content, max-content);
+                grid-template-columns: 360px minmax(min-content, 100%);
                 grid-template-rows: repeat(2, minmax(min-content, max-content));
                 grid-template-areas: 'options strategy' '. descriptions';
                 column-gap: 76px;
                 overflow: hidden;
                 transition: all 0.5s ease-in;
+
+                @media (max-width: 1814px) {
+                    grid-template-columns: 276px 1fr;
+                    column-gap: 20px;
+                }
 
                 .optimize-options {
                     grid-area: options;
@@ -96,33 +117,15 @@
                 }
 
                 &.less {
-                    max-height: 324px;
+                    max-height: 350px;
                 }
 
                 &.more {
                     max-height: 0;
                 }
-            }
 
-            @media (max-width: @big-desktop) {
-                & {
-                    grid-template-areas: 'options strategy' 'descriptions strategy' 'control control';
-                    grid-template-rows:
-                        minmax(min-content, max-content) minmax(
-                            min-content,
-                            max-content
-                        )
-                        minmax(min-content, max-content);
-
-                    .options-content {
-                        transition: 0.6s;
-                    }
-
-                    &.more {
-                        .options-content {
-                            max-height: 550px;
-                        }
-                    }
+                @media (max-width: 1869px) {
+                    column-gap: 20px;
                 }
             }
         }
@@ -173,69 +176,6 @@
                     i {
                         transform: rotateZ(180deg);
                     }
-                }
-            }
-        }
-
-        @media (max-width: @laptop) {
-            .options {
-                display: flex;
-                flex-direction: column;
-
-                &.more {
-                    max-height: 500px;
-                }
-            }
-        }
-
-        .info {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            .additional {
-                width: 100%;
-
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                align-items: center;
-                justify-content: center;
-
-                div {
-                    justify-self: center;
-                }
-
-                @media (max-width: @big-desktop) {
-                    & {
-                        width: 100%;
-                        display: flex;
-                        justify-content: space-between;
-                    }
-                }
-            }
-
-            .free-trial {
-                width: 25px;
-                height: 20px;
-                border-radius: 8px;
-                background: #ec7f5c;
-                color: #fff;
-                display: inline-flex;
-                justify-content: center;
-                font-weight: 700;
-                margin: 0 5px;
-            }
-
-            button {
-                color: #8fd39d;
-                border: 0;
-                box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
-                    0px 0px 20px rgba(142, 147, 192, 0.08);
-                border-radius: 8px;
-
-                &:hover {
-                    box-shadow: 5px 12px 16px rgba(142, 147, 192, 0.2),
-                        0px 0px 20px rgba(142, 147, 192, 0.2);
                 }
             }
         }
