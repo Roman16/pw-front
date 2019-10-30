@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {func, bool, string} from 'prop-types';
-import {Checkbox} from 'antd';
+import React from 'react';
+import { func, bool, string } from 'prop-types';
+import { Checkbox } from 'antd';
 
-const maxText = (text) => {
+const maxText = text => {
     if (text && text.length > 40) {
         return `${text.slice(0, 40)}...`;
     }
@@ -11,25 +11,18 @@ const maxText = (text) => {
 };
 
 const ProductItem = ({
-                         product: {
-                             id,
-                             asin,
-                             name,
-                             sku,
-                             image_url,
-                             under_optimization
-                         },
-                         onClick,
-                         product,
-                         isActive
-                     }) => {
+    product: { id, asin, name, sku, image_url, under_optimization },
+    onClick,
+    product,
+    isActive
+}) => {
     return (
         <div
             className={`product-item ${isActive ? 'active' : ''}`}
             onClick={() => onClick(product)}
         >
             <div className="image">
-                <img src={image_url} alt=""/>
+                <img src={image_url} alt="" />
             </div>
 
             <div className="product-item-content">
@@ -60,18 +53,17 @@ ProductItem.propTypes = {
     captions: string,
     sku: string,
     imageUrl: string,
-    underOptimization: bool,
+    underOptimization: bool
 };
 
 ProductItem.defaultProps = {
     isActive: false,
-    onClick: () => {
-    },
+    onClick: () => {},
     asin: null,
     captions: null,
     sku: null,
     imageUrl: null,
-    underOptimization: false,
+    underOptimization: false
 };
 
 export default ProductItem;

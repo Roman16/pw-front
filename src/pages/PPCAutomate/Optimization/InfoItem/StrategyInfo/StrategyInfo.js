@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {StrategyItem} from '../../OptimizationStrategy/OptimizationStrategy';
+import React, { Component } from 'react';
+import { StrategyItem } from '../../OptimizationStrategy/OptimizationStrategy';
 import './StrategyInfo.less';
 
 const info = [
@@ -11,7 +11,7 @@ const info = [
          consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut
            labore et dolore magna aliqua.Lorem 
-           ipsum dolor sit amet, consectetur adipiscing `,
+           ipsum dolor sit amet, consectetur adipiscing `
     },
     {
         key: 'strategy1',
@@ -21,7 +21,7 @@ const info = [
          consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut
            labore et dolore magna aliqua.Lorem 
-           ipsum dolor sit amet, consectetur adipiscing `,
+           ipsum dolor sit amet, consectetur adipiscing `
     },
     {
         key: 'strategy2',
@@ -31,7 +31,7 @@ const info = [
          consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut
            labore et dolore magna aliqua.Lorem 
-           ipsum dolor sit amet, consectetur adipiscing `,
+           ipsum dolor sit amet, consectetur adipiscing `
     },
     {
         key: 'strategy3',
@@ -41,8 +41,8 @@ const info = [
          consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut
            labore et dolore magna aliqua.Lorem 
-           ipsum dolor sit amet, consectetur adipiscing `,
-    },
+           ipsum dolor sit amet, consectetur adipiscing `
+    }
 ];
 
 class StrategyInfo extends Component {
@@ -51,13 +51,11 @@ class StrategyInfo extends Component {
     render() {
         return (
             <div className="StrategyInfo">
-                {info.map(({
-                               caption, key, text, value
-                           }) => (
+                {info.map(({ caption, key, text, value }) => (
                     <div key={key} className="info-item">
                         <div className="info-caption small">{caption}</div>
 
-                        <StrategyItem caption={caption} value={value}/>
+                        <StrategyItem caption={caption} value={value} />
                         <div>
                             <div className="info-caption large">{caption}</div>
                             <div>{text}</div>

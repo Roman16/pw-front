@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Checkbox, Icon} from "antd";
-import {productsActions} from '../../../../actions/products.actions';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Checkbox } from 'antd';
+import { productsActions } from '../../../../actions/products.actions';
 
 import './OptimizationOptions.less';
 
-export const CheckBoxItem = ({text, value = '', checked, ...props}) => (
+export const CheckBoxItem = ({ text, value = '', checked, ...props }) => (
     <div className="check-box-item">
-        <Checkbox checked={checked}{...props}>
+        <Checkbox checked={checked} {...props}>
             {text}
         </Checkbox>
     </div>
@@ -21,7 +21,7 @@ export const options = [
         description: `Lorem ipsum dolor sit amet, 
                   consectetur adipiscing elit,
                   sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua.`,
+                  ut labore et dolore magna aliqua.`
     },
     {
         text: 'Add Negative',
@@ -30,7 +30,7 @@ export const options = [
         description: `Lorem ipsum dolor sit amet, 
                   consectetur adipiscing elit,
                   sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua.`,
+                  ut labore et dolore magna aliqua.`
     },
     {
         text: 'Optimize Bids',
@@ -39,7 +39,7 @@ export const options = [
         description: `Lorem ipsum dolor sit amet, 
                   consectetur adipiscing elit,
                   sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua.`,
+                  ut labore et dolore magna aliqua.`
     },
     {
         text: 'Pause Bad Keywords',
@@ -48,7 +48,7 @@ export const options = [
         description: `Lorem ipsum dolor sit amet, 
                   consectetur adipiscing elit,
                   sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua.`,
+                  ut labore et dolore magna aliqua.`
     },
     {
         text: 'Optimize PAT Compaign',
@@ -57,7 +57,7 @@ export const options = [
         description: `Lorem ipsum dolor sit amet, 
                   consectetur adipiscing elit,
                   sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua.`,
+                  ut labore et dolore magna aliqua.`
     },
     {
         text: 'Negative keywords creation',
@@ -66,54 +66,56 @@ export const options = [
         description: `Lorem ipsum dolor sit amet, 
                   consectetur adipiscing elit,
                   sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua.`,
-    },
+                  ut labore et dolore magna aliqua.`
+    }
 ];
 
 const delay = 500;
 let timerIdSearch = null;
 
-const OptimizationOptions = ({openInformation, selectedProduct}) => {
+const OptimizationOptions = ({ selectedProduct }) => {
     const dispatch = useDispatch();
-    const {defaultOptions, selectedAll} = useSelector(state => ({
+    const { defaultOptions, selectedAll } = useSelector(state => ({
         defaultOptions: state.products.defaultOptimizationOptions,
-        selectedAll: state.products.selectedAll,
+        selectedAll: state.products.selectedAll
     }));
 
     const [product, changeOptions] = useState(selectedProduct);
 
-    const onChangeOptions = ({target: {name, checked}}) => {
+    const onChangeOptions = ({ target: { name, checked } }) => {
         changeOptions({
             ...product,
             [name]: checked
         });
 
-        dispatch(productsActions.updateOptions({[name]: checked}));
+        dispatch(productsActions.updateOptions({ [name]: checked }));
 
         clearTimeout(timerIdSearch);
         timerIdSearch = setTimeout(() => {
-            if (product.status === 'RUNNING') updateProduct({...product, [name]: checked});
+            if (product.status === 'RUNNING')
+                updateProduct({ ...product, [name]: checked });
         }, delay);
     };
 
-    const updateProduct = (data) => {
-        dispatch(productsActions.updateProduct(data))
+    const updateProduct = data => {
+        dispatch(productsActions.updateProduct(data));
     };
 
     useEffect(() => {
-        if (!selectedProduct.status || selectedProduct.status === 'STOPPED' || selectedAll) changeOptions(defaultOptions);
-        else if (selectedProduct.status === 'RUNNING') changeOptions(selectedProduct)
-    }, [selectedProduct]);
+        if (
+            !selectedProduct.status ||
+            selectedProduct.status === 'STOPPED' ||
+            selectedAll
+        )
+            changeOptions(defaultOptions);
+        else if (selectedProduct.status === 'RUNNING')
+            changeOptions(selectedProduct);
+    }, [defaultOptions, selectedAll, selectedProduct]);
 
     return (
         <div className="optimize-options">
-            <div className="product-info ">
-                <span> What do you want to automate</span>
-                <Icon type="info-circle" theme="filled" onClick={openInformation}/>
-            </div>
-
-            <div className='options-content'>
-                {options.map(({text, value, name}) => (
+            <div className="options-content">
+                {options.map(({ text, value, name }) => (
                     <CheckBoxItem
                         key={text}
                         text={text}

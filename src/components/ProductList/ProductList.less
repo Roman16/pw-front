@@ -1,55 +1,74 @@
+@import '../../style/variables.less';
+
 .product-list {
-  .select-all-products {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-  }
-
-  .product-item {
-    background: #fff;
-    opacity: 0.5;
-    transition: 0.3s;
-
-    &:hover {
-      cursor: pointer;
-    }
-
-    &.active {
-      background: #fff;
-      opacity: 1;
-    }
-
-    border-radius: 4px;
-    display: flex;
-    padding: 4px;
-    margin: 4px;
-    justify-content: space-between;
-    align-items: flex-start;
-
-    .image {
-      padding: 4px;
-
-      img {
-        max-width: 72px;
-        max-height: 72px;
-      }
-
-    }
-
-    & > div.product-item-content {
-      flex: 1 1;
-
-      .caption {
-        font-weight: 900;
-        //white-space: nowrap; /* Запрещаем перенос строк */
-
-      }
-
-      .detail {
-        span:first-child {
-          font-weight: 900;
+    .ant-input-search {
+        .ant-input {
+            border: none;
+            border-radius: 8px;
         }
-      }
+
+        .ant-input::placeholder {
+            color: @action-color-dark;
+        }
     }
-  }
+
+    .select-all-products {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+
+        .ant-btn {
+            border: none;
+            border-radius: 8px;
+        }
+    }
+
+    .product-item {
+        background: #fff;
+        opacity: 0.5;
+        transition: 0.3s;
+        border-radius: 4px;
+        display: flex;
+        padding: 4px;
+        margin: 4px;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &.active {
+            background: #fff;
+            opacity: 1;
+        }
+
+        .image {
+            padding: 4px;
+
+            img {
+                max-width: 72px;
+                max-height: 72px;
+            }
+        }
+
+        & > div.product-item-content {
+            flex: 1 1;
+
+            .caption {
+                font-weight: 900;
+            }
+
+            .detail {
+                span:first-child {
+                    font-weight: 900;
+                }
+            }
+        }
+
+        .ant-checkbox-inner {
+            border: none;
+            background-color: #343c5a !important;
+        }
+    }
 }

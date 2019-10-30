@@ -15,15 +15,16 @@
 
         .caption {
             text-transform: capitalize;
-            color: #363694;
-            font-size: 18px;
+            color: @second-default-dark;
+            font-size: 20px;
             font-weight: 600;
             display: inherit;
             align-items: inherit;
 
             i {
-                margin-left: 8px;
                 cursor: pointer;
+                margin-left: 10px;
+                color: @action-color-dark;
             }
         }
 
@@ -78,8 +79,12 @@
     .terminal-content {
         margin: 0;
 
+        &.more {
+            max-height: calc(100vh - 76px - 77px - 42px - 160px);
+        }
+
         &.less {
-            max-height: calc(100vh - 422px - 77px - 42px - 185px);
+            max-height: calc(100vh - 422px - 77px - 42px - 180px);
         }
 
         &.auto {
@@ -90,27 +95,15 @@
             overflow: hidden;
         }
 
-        &.selected-all {
-            max-height: calc(100vh - 422px - 77px - 42px - 176px);
-        }
-
         @media (max-width: @big-desktop) {
             &.less {
                 max-height: calc(100vh - 621px - 77px - 42px - 135px);
-            }
-
-            &.selected-all {
-                max-height: calc(100vh - 621px - 77px - 42px - 112px);
             }
         }
 
         @media (max-width: @desktop) {
             &.less {
                 max-height: calc(100vh - 643px - 77px - 42px - 135px);
-            }
-
-            &.selected-all {
-                max-height: calc(100vh - 643px - 77px - 42px - 90px);
             }
         }
 
@@ -148,7 +141,6 @@
 
                 .dummy-render {
                     text-align: center;
-                    font-family: 'Infra', sans-serif;
                     color: @action-color-dark;
                     font-size: 24px;
                     line-height: 32px;

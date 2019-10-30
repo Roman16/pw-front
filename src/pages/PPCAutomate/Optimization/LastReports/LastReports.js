@@ -133,9 +133,9 @@ class LastReports extends Component {
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
                 <ul
-                    className={`terminal-content ${!isLess && 'less'} ${
+                    className={`terminal-content ${isLess ? 'more' : 'less'} ${
                         isTerminal ? 'auto' : 'hidden'
-                    } ${!selectedAll && 'selected-all'}`}
+                    }`}
                 >
                     {isTerminal ? (
                         <Fragment>
