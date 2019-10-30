@@ -196,11 +196,11 @@ class RegistrationPage extends React.Component {
                     </Col>
                 </Row>
 
-                <StripeProvider apiKey={stripeKey}>
-                    <Elements>
-                        <StripeForm/>
-                    </Elements>
-                </StripeProvider>
+                {/*<StripeProvider apiKey={stripeKey}>*/}
+                {/*    <Elements>*/}
+                {/*        <StripeForm/>*/}
+                {/*    </Elements>*/}
+                {/*</StripeProvider>*/}
 
                 <Row>
                     <Col xs={24} sm={24} md={24}>

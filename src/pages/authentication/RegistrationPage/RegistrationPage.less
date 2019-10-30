@@ -2,221 +2,308 @@
 @import '../../../style/mixins.less';
 
 .RegisterFormContainer {
-    background: url('../../../assets/img/sign-background.png') center top
-        no-repeat;
-    -webkit-background-size: cover;
-    background-size: cover;
-    letter-spacing: 0.4px;
+  background: url('../../../assets/img/sign-background.png') center top no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+  letter-spacing: 0.4px;
 }
+
 #payment-form2 {
-    .ant-row {
-        margin-left: -15px;
-        margin-right: -15px;
-    }
-    .ant-col {
-        padding: 0 15px 0 15px;
-    }
+  .ant-row {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+
+  .ant-col {
+    padding: 0 15px 0 15px;
+  }
 }
+
 .input-container {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 30px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 30px;
 
-    input[type='number'] {
-        -webkit-appearance: textfield;
-        -moz-appearance: textfield;
-        appearance: textfield;
-    }
+  input[type='number'] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
 
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
 }
 
 .input-container input {
-    border: 0;
-    outline: 0;
-    border-bottom: solid 2px #38454f;
-    height: 48px;
-    -webkit-border-radius: 0 !important;
-    border-radius: 0 !important;
-    color: #38454f;
-    font-family: ir;
-    font-size: 16px;
-    background: 0 0;
-    width: 100%;
-    outline: 0;
+  border: 0;
+  outline: 0;
+  border-bottom: solid 2px #38454f;
+  height: 48px;
+  -webkit-border-radius: 0 !important;
+  border-radius: 0 !important;
+  color: #38454f;
+  font-family: ir;
+  font-size: 16px;
+  background: 0 0;
+  width: 100%;
+  outline: 0;
 }
 
 .input-container input::-webkit-input-placeholder {
-    color: transparent;
+  color: transparent;
 }
 
 .input-container input::-moz-placeholder {
-    color: transparent;
+  color: transparent;
 }
 
 .input-container input:-ms-input-placeholder {
-    color: transparent;
+  color: transparent;
 }
 
 .input-container input:focus ~ .label {
-    top: -16px;
-    font-size: 12px;
+  top: -16px;
+  font-size: 12px;
 }
 
 .label-email {
-    top: -16px !important;
-    font-size: 12px !important;
+  top: -16px !important;
+  font-size: 12px !important;
 }
 
 .input-container input.has-content::-webkit-input-placeholder,
 .input-container input:-webkit-autofill::-webkit-input-placeholder,
 .input-container input:focus::-webkit-input-placeholder {
-    color: #aaa;
+  color: #aaa;
 }
 
 .input-container input.has-content::-moz-placeholder,
 .input-container input:-webkit-autofill::-moz-placeholder,
 .input-container input:focus::-moz-placeholder {
-    color: #aaa;
+  color: #aaa;
 }
 
 .input-container input.has-content:-ms-input-placeholder,
 .input-container input:-webkit-autofill:-ms-input-placeholder,
 .input-container input:focus:-ms-input-placeholder {
-    color: #7c8a95;
+  color: #7c8a95;
 }
 
 .input-container select {
-    border: 0;
-    padding: 0;
-    -webkit-box-shadow: 0 0 0 !important;
-    box-shadow: 0 0 0 !important;
-    background-color: transparent;
-    display: table;
-    letter-spacing: 0.16px;
-    color: #38454f;
-    width: 100%;
-    outline: 0;
-    font-family: ibm-plex-sans, Helvetica Neue, Arial, sans-serif;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    cursor: pointer;
-    height: 48px;
-    border-bottom: solid 2px #38454f;
-    color: #38454f;
-    font-family: ir;
-    font-size: 16px;
+  border: 0;
+  padding: 0;
+  -webkit-box-shadow: 0 0 0 !important;
+  box-shadow: 0 0 0 !important;
+  background-color: transparent;
+  display: table;
+  letter-spacing: 0.16px;
+  color: #38454f;
+  width: 100%;
+  outline: 0;
+  font-family: ibm-plex-sans, Helvetica Neue, Arial, sans-serif;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  height: 48px;
+  border-bottom: solid 2px #38454f;
+  color: #38454f;
+  font-family: ir;
+  font-size: 16px;
 }
 
 .input-container label {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    top: 15px;
-    -webkit-transition: 0.3s;
-    -o-transition: 0.3s;
-    transition: 0.3s;
-    z-index: -1;
-    color: #38454f;
-    color: #aaa;
-    font-family: im;
-    font-size: 16px;
-    letter-spacing: 0;
-    transition: 0.3s;
-    color: rgba(0, 0, 0, 0.38);
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 15px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  z-index: -1;
+  color: #38454f;
+  color: #aaa;
+  font-family: im;
+  font-size: 16px;
+  letter-spacing: 0;
+  transition: 0.3s;
+  color: rgba(0, 0, 0, 0.38);
 }
 
 // .input-container input:invalid + .label,
 .input-container input:valid + .label {
-    top: -16px;
-    left: 0;
-    font-size: 12px;
+  top: -16px;
+  left: 0;
+  font-size: 12px;
 }
 
 .input-container .image {
-    position: absolute;
-    right: 0;
-    bottom: 4px;
+  position: absolute;
+  right: 0;
+  bottom: 4px;
 }
 
 .input-container svg {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
 }
 
 .sign-page .btn-container {
-    width: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-align-content: center;
-    -ms-flex-line-pack: center;
-    align-content: center;
-    height: 40px;
-    -webkit-border-radius: 33px;
-    border-radius: 33px;
-    border: 1px solid #bdc6cf;
-    .btn-light();
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    font-size: 16px;
-    font-family: im;
-    transition: all 0.3s ease-in;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  height: 40px;
+  -webkit-border-radius: 33px;
+  border-radius: 33px;
+  border: 1px solid #bdc6cf;
+  .btn-light();
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 16px;
+  font-family: im;
+  transition: all 0.3s ease-in;
 }
 
 .sign-page .btn-container:hover {
-    .btn-action();
+  .btn-action();
 }
 
 .sign-page .btn-container p {
-    font-family: im;
-    margin-left: 3px;
-    margin-bottom: 0;
-    font-size: 16px;
-    font-family: im;
-    color: #3d70b2;
-    transition: all 0.3s ease-in;
+  font-family: im;
+  margin-left: 3px;
+  margin-bottom: 0;
+  font-size: 16px;
+  font-family: im;
+  color: #3d70b2;
+  transition: all 0.3s ease-in;
 }
 
 .sign-page .btn-container:hover p {
-    color: #aaa;
+  color: #aaa;
 }
 
 .form .form-details {
-    font-size: 12px;
-    line-height: 20px;
-    color: #000;
-    padding-top: 24px;
-    padding-bottom: 20px;
+  font-size: 12px;
+  line-height: 20px;
+  color: #000;
+  padding-top: 24px;
+  padding-bottom: 20px;
 }
 
 .form .form-details a {
-    margin: 0 3px;
-    font-size: 12px;
-    color: #000;
-    font-family: im;
-    font-weight: 900;
+  margin: 0 3px;
+  font-size: 12px;
+  color: #000;
+  font-family: im;
+  font-weight: 900;
 }
 
 .form .submit[type='submit'] {
-    cursor: pointer;
-    .btn-dark();
-    transition: all 0.3s ease-in;
+  cursor: pointer;
+  margin: 20px 0 0 0;
+  .btn-dark();
+  transition: all 0.3s ease-in;
 }
 
 .form .submit[type='submit']:hover {
-    .btn-action();
+  .btn-action();
+}
+
+.stripe-form {
+  .form-title {
+    margin: 0 0 45px 0;
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    color: #000;
+    margin: 0 0 8px 0;
+  }
+
+  input {
+    border: 0;
+    border-bottom: solid 2px #38454f;
+    height: 25px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+
+  .card-container {
+    display: flex;
+    justify-content: space-between;
+
+    .card-container__card {
+      width: 60%;
+    }
+
+    .card-container__expiry {
+      width: 15%;
+    }
+
+    .card-container__cvc {
+      width: 15%;
+    }
+
+    .StripeElement {
+      border-bottom: solid 2px #38454f !important;
+    }
+  }
+
+  .address-container {
+    width: 100%;
+    margin: 45px 0;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .country-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .ant-select-selection--single {
+      height: 25px;
+    }
+
+    .ant-select-selection {
+      border-radius: 0;
+      border: 0;
+      border-bottom: solid 2px #38454f;
+
+      i {
+        color: #38454f
+      }
+    }
+
+    & > div {
+      width: 45%;
+      margin: 0 0 45px 0;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
 }

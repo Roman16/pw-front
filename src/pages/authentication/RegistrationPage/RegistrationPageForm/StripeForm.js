@@ -1,6 +1,16 @@
 import React, {Component} from 'react';
-import {Col, Row} from 'antd';
+import {Select} from 'antd';
+
 import {CardNumberElement, CardExpiryElement, CardCvcElement, injectStripe} from 'react-stripe-elements';
+
+const {Option} = Select;
+
+const CardNumberElementStyles = {
+    base: {
+        fontSize: '16px',
+        letterSpacing: '5px'
+    }
+};
 
 class StripeForm extends Component {
 
@@ -22,35 +32,57 @@ class StripeForm extends Component {
     };
 
     render() {
+
         return (
             <div className="stripe-form">
                 <div className="form-title">Billing Information</div>
 
-                <Row>
-                    <Col xs={24} sm={24} md={16}>
-                        <div className="input-container">
-                            <CardNumberElement/>
-                            <label className="label">Credit card</label>
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={24} md={4}>
-                        <div className="input-container">
-                            <CardExpiryElement/>
+                <div className="card-container">
+                    <div className="card-container__card">
+                        <label className="label">Credit card</label>
+                        <CardNumberElement
+                            placeholder='**** **** **** ****'
+                            style={CardNumberElementStyles}
+                        />
+                    </div>
+                    <div className="card-container__expiry">
+                        <label className="label">Expiry</label>
+                        <CardExpiryElement/>
+                    </div>
+                    <div className="card-container__cvc">
+                        <label className="label">CVC</label>
+                        <CardCvcElement/>
+                    </div>
+                </div>
 
-                            <label className="label">Expiry</label>
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={24} md={4}>
-                        <div className="input-container">
-                            <CardCvcElement/>
+                <div className="address-container">
+                    <div>
+                        <label className="label">Street Address</label>
+                        <input type="text"/>
+                    </div>
+                </div>
 
-                            <label className="label">CVC</label>
-                        </div>
-                    </Col>
-                </Row>
+                <div className="country-container">
+                    <div className="card-container__city">
+                        <label className="label">City</label>
+                        <input type="text"/>
+                    </div>
+                    <div className="card-container__zip">
+                        <label className="label">Zip</label>
+                        <input type="text"/>
+                    </div>
+                    <div className="card-container__country">
+                        <label className="label">Country</label>
+                        <Select>
+                        </Select>
+                    </div>
+                    <div className="card-container__state">
+                        <label className="label">State</label>
+                        <input type="text"/>
+                    </div>
+                </div>
 
-                <button onClick={this.submit}>Purchase</button>
-
+                {/*<button onClick={this.submit}>Purchase</button>*/}
             </div>
         );
     }
