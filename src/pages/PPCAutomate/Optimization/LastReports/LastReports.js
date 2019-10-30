@@ -19,21 +19,22 @@ const dummy = [
     { id: 12 }
 ];
 
+const textTooltip = () => (
+    <div>
+        <h3 className="title-tooltip">Last Changes Terminal</h3>
+        <p>
+            Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis
+        </p>
+    </div>
+);
+
 const TerminalCaption = ({ isTerminal }) => (
     <div className="terminal-caption">
         <div className="caption">
             Last Changes Terminal
-            <Tooltip
-                placement="bottom"
-                title="In the changes terminal,
-                you will see the last changes that the software performs.
-                In the changes terminal,
-                you will see the last changes that the software performs.
-                In the changes terminal,
-                you will see the last changes that the software performs.
-                In the changes terminal,
-                you will see the last changes that the software performs."
-            >
+            <Tooltip placement="bottom" title={textTooltip}>
                 <Icon type="info-circle" theme="filled" />
             </Tooltip>
         </div>
@@ -124,7 +125,7 @@ class LastReports extends Component {
 
     render() {
         const { current, records } = this.state;
-        const { isLess } = this.props;
+        const { isLess, selectedAll } = this.props;
         // const qwe = false;
         const isTerminal = records && records.length > 0;
 
@@ -132,9 +133,9 @@ class LastReports extends Component {
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
                 <ul
-                    className={`terminal-content ${!isLess ? 'less' : 'more'} ${
+                    className={`terminal-content ${!isLess && 'less'} ${
                         isTerminal ? 'auto' : 'hidden'
-                    }`}
+                    } ${!selectedAll && 'selected-all'}`}
                 >
                     {isTerminal ? (
                         <Fragment>

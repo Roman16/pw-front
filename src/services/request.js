@@ -33,15 +33,24 @@ const api = (method, url, data, type) => {
                 }
 
                 if (error.response) {
+                    console.log('error.response :', error.response);
                     if (typeof error.response.data === 'object') {
                         reject(error);
 
-                        notification.error({
-                            message: error.response.data
-                                ? error.response.data.message
-                                : ''
-                            // description: error.response.data.message,
-                        });
+                        if (error.response.status === 401) {
+                            notification.error({
+                                message: error.response.data
+                                    ? error.response.data.error
+                                    : ''
+                            });
+                        } else {
+                            notification.error({
+                                message: error.response.data
+                                    ? error.response.data.message
+                                    : ''
+                                // description: error.response.data.message,
+                            });
+                        }
                     }
                 }
             });
