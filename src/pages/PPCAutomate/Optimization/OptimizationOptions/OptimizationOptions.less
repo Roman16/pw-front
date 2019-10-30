@@ -1,32 +1,34 @@
 @import '../../../../style/variables.less';
 
 .optimize-options {
-  min-width: 280px;
+    width: 360px;
 
-  .options-content > div {
-    margin: 0 0 5px 0;
-  }
+    @media (max-width: @desktop) {
+        width: 244px;
+    }
+
+    .options-content > div {
+        margin: 0 0 5px 0;
+    }
 }
 
 .check-box-item {
-  padding: 8px;
-  border: 1px solid #f5f5ff;
-  border-radius: 8px;
+    padding: 8px;
+    border: 1px solid #f5f5ff;
+    border-radius: 8px;
 
-  .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: @action-color;
-    border-color: @action-color;
-  }
-
-  .ant-checkbox .ant-checkbox-inner {
-    width: 24px;
-    height: 24px;
-
-
-
-    &:after {
-      width: 6.71428571px;
-      height: 10.14285714px;
+    .ant-checkbox-checked .ant-checkbox-inner {
+        background-color: @action-color;
+        border-color: @action-color;
     }
-  }
+
+    .ant-checkbox .ant-checkbox-inner {
+        width: 24px;
+        height: 24px;
+
+        &:after {
+            width: 6.71428571px;
+            height: 10.14285714px;
+        }
+    }
 }
