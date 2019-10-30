@@ -79,7 +79,7 @@
         margin: 0;
 
         &.less {
-            max-height: calc(100vh - 422px - 77px - 42px - 176px);
+            max-height: calc(100vh - 422px - 77px - 42px - 185px);
         }
 
         &.auto {
@@ -90,14 +90,26 @@
             overflow: hidden;
         }
 
+        &.selected-all {
+            max-height: calc(100vh - 422px - 77px - 42px - 176px);
+        }
+
         @media (max-width: @big-desktop) {
             &.less {
+                max-height: calc(100vh - 621px - 77px - 42px - 135px);
+            }
+
+            &.selected-all {
                 max-height: calc(100vh - 621px - 77px - 42px - 112px);
             }
         }
 
         @media (max-width: @desktop) {
             &.less {
+                max-height: calc(100vh - 643px - 77px - 42px - 135px);
+            }
+
+            &.selected-all {
                 max-height: calc(100vh - 643px - 77px - 42px - 90px);
             }
         }

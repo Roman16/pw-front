@@ -136,6 +136,7 @@ class Optimization extends Component {
                         <LastReports
                             isLess={isLess}
                             productId={selectedProduct.id}
+                            selectedAll={selectedAll}
                         />
                     </div>
                 </div>

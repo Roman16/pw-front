@@ -125,7 +125,7 @@ class LastReports extends Component {
 
     render() {
         const { current, records } = this.state;
-        const { isLess } = this.props;
+        const { isLess, selectedAll } = this.props;
         // const qwe = false;
         const isTerminal = records && records.length > 0;
 
@@ -133,9 +133,9 @@ class LastReports extends Component {
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
                 <ul
-                    className={`terminal-content ${!isLess ? 'less' : 'more'} ${
+                    className={`terminal-content ${!isLess && 'less'} ${
                         isTerminal ? 'auto' : 'hidden'
-                    }`}
+                    } ${!selectedAll && 'selected-all'}`}
                 >
                     {isTerminal ? (
                         <Fragment>
