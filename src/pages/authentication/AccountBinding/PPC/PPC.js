@@ -1,50 +1,47 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Icon} from 'antd'
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import logo from '../../../../assets/img/zth.svg';
 import './PPC.less';
 
-class PPC extends Component {
-    state = {
-        sellerId: '',
-        MWSToken: ''
-    };
+const PPC = () => {
+    const {ppcLink, token} = useSelector(state => ({
+        ppcLink: state.user.account_links ? state.user.account_links.amazon_ppc.connect_link : '',
+        token: state.user.access_token
+    }));
 
-    render() {
-        return (
-            <div className="ppc-page">
-                <div className="sign-inner">
-                    <img src={logo} alt="" />
+    const redirectLink = `${ppcLink}&token=${token}`;
 
-                    <h2 className="h2">Sign in and start selling</h2>
+    return (
+        <div className="ppc-page">
+            <div className="sign-inner">
+                <img src={logo} alt=""/>
 
-                    <iframe
-                        style={{ width: '750px', height: '422px' }}
-                        src="https://www.youtube.com/embed/dBCnEJ4Rjo4"
-                        frameBorder="0"
-                        title='video'
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen="" />
+                <h2 className="h2">Sign in and start selling</h2>
 
-                    <br />
-                    <br />
+                <iframe
+                    style={{width: '750px', height: '422px'}}
+                    src="https://www.youtube.com/embed/dBCnEJ4Rjo4"
+                    frameBorder="0"
+                    title='video'
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen=""/>
 
-                    <a
-                        href={this.props.ppcLink}
-                        className="link"
-                    >
-                        Link with Amazon PPC
-                        <Icon type="arrow-right" />
-                    </a>
-                </div>
+                <br/>
+                <br/>
+
+                <a
+                    href={redirectLink}
+                    className="link"
+                >
+                    Link with Amazon PPC
+                    <Icon type="arrow-right"/>
+                </a>
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
-const mapStateToProps = state => ({
-    ppcLink: state.user.account_links ? state.user.account_links.amazon_ppc.connect_link : ''
-});
 
-export default connect(mapStateToProps)(PPC);
+export default PPC;

@@ -18,25 +18,25 @@ const defaultKeys = [
         title: 'Campaign',
         dataIndex: 'campaign',
         key: 'campaign',
-        width: '150px',
+        width: '200px',
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
         key: 'adGroup',
-        width: '150px',
+        width: '200px',
     },
     {
         title: 'Keyword',
         dataIndex: 'keyword',
         key: 'keyword',
-        width: '150px',
+        width: '200px',
     },
     {
         title: 'Match Type',
         dataIndex: 'matchType',
         key: 'matchType',
-        width: 150,
+        width: '132px',
         render: text => <span className='capitalize-field'>{text}</span>
     }
 ];
@@ -49,14 +49,14 @@ const columns = {
             dataIndex: 'acos',
             key: 'acos',
             render: text => <span>{text}%</span>,
-            width: 100,
+            width: '132px',
         },
         {
             title: () => <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
             render: text => <span>{text}%</span>,
-            width: 150,
+            width: '130px',
         },
         {
             ...bidActionField
