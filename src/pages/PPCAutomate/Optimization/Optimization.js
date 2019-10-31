@@ -1,7 +1,7 @@
-import React, {Component, Fragment} from 'react';
-import {Drawer, Icon} from 'antd';
-import {connect} from 'react-redux';
-import {debounce} from 'throttle-debounce';
+import React, { Component, Fragment } from 'react';
+import { Drawer, Icon } from 'antd';
+import { connect } from 'react-redux';
+import { debounce } from 'throttle-debounce';
 
 import FreeTrial from '../../../components/FreeTrial/FreeTrial';
 
@@ -14,7 +14,7 @@ import StrategyInfo from './InfoItem/StrategyInfo/StrategyInfo';
 import OptimizationStatus from './OptimizationStatus/OptimizationStatus';
 import LastReports from './LastReports/LastReports';
 
-import {productsActions} from '../../../actions/products.actions';
+import { productsActions } from '../../../actions/products.actions';
 
 import './Optimization.less';
 
@@ -27,11 +27,11 @@ class Optimization extends Component {
         selectedStrategy: this.props.selectedProduct.optimization_strategy
     };
 
-    showDrawer = type => this.setState({visible: true, infoType: type});
+    showDrawer = type => this.setState({ visible: true, infoType: type });
 
-    onCloseDrawer = () => this.setState({visible: false});
+    onCloseDrawer = () => this.setState({ visible: false });
 
-    toLess = () => this.setState({isLess: !this.state.isLess});
+    toLess = () => this.setState({ isLess: !this.state.isLess });
 
     onSelectStrategy = strategy => {
         this.setState(
@@ -39,7 +39,7 @@ class Optimization extends Component {
                 selectedStrategy: strategy
             },
             () => {
-                this.props.updateOptions({optimization_strategy: strategy});
+                this.props.updateOptions({ optimization_strategy: strategy });
                 if (this.props.selectedProduct.status === 'RUNNING')
                     this.handleUpdateProduct();
             }
@@ -47,8 +47,8 @@ class Optimization extends Component {
     };
 
     handleUpdateProduct = debounce(500, false, () => {
-        const {product, selectedStrategy} = this.state,
-            {updateProduct, defaultOptions} = this.props;
+        const { product, selectedStrategy } = this.state,
+            { updateProduct, defaultOptions } = this.props;
 
         updateProduct({
             ...product,
@@ -66,7 +66,7 @@ class Optimization extends Component {
                 return {
                     product: props.selectedProduct,
                     selectedStrategy:
-                    props.selectedProduct.optimization_strategy
+                        props.selectedProduct.optimization_strategy
                 };
             } else {
                 return {
@@ -83,19 +83,21 @@ class Optimization extends Component {
     }
 
     render() {
-        const {isLess, selectedStrategy, infoType} = this.state,
-            {selectedProduct, selectedAll} = this.props;
+        const { isLess, selectedStrategy, infoType } = this.state,
+            { selectedProduct, selectedAll } = this.props;
 
         return (
             <Fragment>
                 <div className="optimization-page">
-                    <ProductList/>
+                    <ProductList />
 
                     <div className="product-options">
                         <div className="options">
                             <div className={`product-info ${isLess && 'more'}`}>
                                 <div className="product-info-automate">
-                                    <span>What Parts Do You Want To Automate?</span>
+                                    <span>
+                                        What Parts Do You Want To Automate?
+                                    </span>
                                     <Icon
                                         type="info-circle"
                                         theme="filled"
@@ -118,7 +120,7 @@ class Optimization extends Component {
                                             }
                                         />
                                     </div>
-                                    <FreeTrial/>
+                                    <FreeTrial />
                                     {selectedAll && (
                                         <div className="description-all">
                                             Changes to those settings will be
@@ -150,8 +152,9 @@ class Optimization extends Component {
                             </div>
 
                             <div
-                                className={`less-more-control ${isLess &&
-                                'more'}`}
+                                className={`less-more-control ${
+                                    isLess ? 'more' : 'less'
+                                }`}
                             >
                                 <div
                                     role="button"
@@ -160,12 +163,12 @@ class Optimization extends Component {
                                     }`}
                                     onClick={this.toLess}
                                 >
-                                    <Icon type="up"/>
+                                    <Icon type="up" />
                                 </div>
                             </div>
                         </div>
 
-                        <OptimizationStatus product={selectedProduct}/>
+                        <OptimizationStatus product={selectedProduct} />
 
                         <LastReports
                             isLess={isLess}
@@ -176,15 +179,19 @@ class Optimization extends Component {
                 </div>
 
                 <Drawer
-                    title={infoType === 'options' ? "Here is the quick review of the actions you can automate with the Software." : "Here is the quick review of the PPC Strategies you can reach with our Software."}
+                    title={
+                        infoType === 'options'
+                            ? 'Here is the quick review of the actions you can automate with the Software.'
+                            : 'Here is the quick review of the PPC Strategies you can reach with our Software.'
+                    }
                     width={500}
                     onClose={this.onCloseDrawer}
                     visible={this.state.visible}
                 >
                     {infoType === 'options' ? (
-                        <OptionsInfo/>
+                        <OptionsInfo />
                     ) : (
-                        <StrategyInfo/>
+                        <StrategyInfo />
                     )}
                 </Drawer>
             </Fragment>
