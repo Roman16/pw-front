@@ -27,7 +27,7 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll}) => {
 
     const onChange = ({target: {value}}) => {
         setValue(+value);
-        setError(+value === 0);
+        // setError(+value === 0);
     };
 
     const submit = async () => {
@@ -77,8 +77,9 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll}) => {
 
                                 <Input
                                     prefix={<Dollar/>}
-                                    value={value}
-                                    type="number"
+                                    // value={value}
+                                    // type="number"
+                                    defaultValue={0}
                                     onChange={onChange}
                                 />
                             </div>
