@@ -1,9 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, infoField, bidActionField, patIntentField, pausePatActionField} from './const';
+import {
+    indexField,
+    infoField,
+    bidActionField,
+    patIntentField,
+    pausePatActionField
+} from './const';
 import TableButton from '../TableButton/TableButton';
-import {useSelector} from "react-redux";
-import CustomTable from "./CustomTable";
+import { useSelector } from 'react-redux';
+import CustomTable from './CustomTable';
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
 const changedPATBidImpressions = 'changed-pat-bid-impressions';
@@ -18,22 +24,20 @@ const defaultKeys = [
         title: 'Campaign',
         dataIndex: 'campaign',
         key: 'campaign',
-        width: '150px',
-
+        width: '150px'
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
         key: 'adGroup',
-        width: '150px',
-
+        width: '150px'
     },
     {
-        title: <TitleInfo title="PAT type"/>,
+        title: <TitleInfo title="PAT type" />,
         dataIndex: 'PatType',
         key: 'PatType',
         width: '130px',
-        render: text => <span className='capitalize-field'>{text}</span>
+        render: text => <span className="capitalize-field">{text}</span>
     },
     {
         ...patIntentField
@@ -42,7 +46,7 @@ const defaultKeys = [
         title: 'PAT Value',
         dataIndex: 'PatValue',
         key: 'PatValue',
-        width: '132px',
+        width: '132px'
     }
 ];
 
@@ -53,14 +57,14 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            render: text => <span>{text && `${text}%`}</span>,
+            render: text => <span>{text && `${text}%`}</span>
             // width: '132px',
         },
         {
-            title: <TitleInfo title="Target ACoS"/>,
+            title: <TitleInfo title="Target ACoS" />,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text && `${text}%`}</span>,
+            render: text => <span>{text && `${text}%`}</span>
             // width: '130px',
         },
         {
@@ -75,13 +79,21 @@ const columns = {
         {
             title: 'Impressions',
             dataIndex: 'impressions',
-            key: 'impressions',
+            key: 'impressions'
             // width: '120px',
         },
         {
-            title: <TitleInfo title={<span>Target <br/> Impressions</span>}/>,
+            title: (
+                <TitleInfo
+                    title={
+                        <span>
+                            Target <br /> Impressions
+                        </span>
+                    }
+                />
+            ),
             dataIndex: 'targetImpressions',
-            key: 'targetImpressions',
+            key: 'targetImpressions'
             // width: '150px',
         },
         {
@@ -97,14 +109,14 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            render: text => <span>{text && `${text}%`}</span>,
+            render: text => <span>{text && `${text}%`}</span>
             // width: '132px',
         },
         {
-            title: <TitleInfo title="Target ACoS"/>,
+            title: <TitleInfo title="Target ACoS" />,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text && `${text}%`}</span>,
+            render: text => <span>{text && `${text}%`}</span>
             // width: '132px',
         },
         {
@@ -120,13 +132,13 @@ const columns = {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConvRate',
             key: 'averageConvRate',
-            render: text => <span>{text && `${text}%`}</span>,
+            render: text => <span>{text && `${text}%`}</span>
             // width: '132px',
         },
         {
-            title: <TitleInfo title="Clicks"/>,
+            title: <TitleInfo title="Clicks" />,
             dataIndex: 'clicks',
-            key: 'clicks',
+            key: 'clicks'
             // width: '132px',
         },
         {
@@ -138,15 +150,23 @@ const columns = {
     ]
 };
 
-const PATsOptimization = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange, scroll}) => {
+const PATsOptimization = ({
+    data,
+    onChangeSubTab,
+    activeTab,
+    currentPage,
+    totalSize,
+    handlePaginationChange,
+    scroll
+}) => {
     const [activeTable, changeTable] = useState(changedPATBidACoS);
-    const {count, loading, productId} = useSelector(state => ({
+    const { count, loading, productId } = useSelector(state => ({
         count: state.reports.counts['pats-optimization'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
 
-    const onChange = (tab) => {
+    const onChange = tab => {
         onChangeSubTab(tab);
         changeTable(tab);
     };
@@ -154,7 +174,7 @@ const PATsOptimization = ({data, onChangeSubTab, activeTab, currentPage, totalSi
     useEffect(() => changeTable(changedPATBidACoS), [productId, activeTab]);
 
     return (
-        <div className="ReportItemTable">
+        <div className="report-item-table">
             <TableButton
                 active={activeTable === changedPATBidACoS}
                 count={count[changedPATBidACoS]}

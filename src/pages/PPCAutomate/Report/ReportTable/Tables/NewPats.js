@@ -1,9 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, patIntentField, createdKeywordsActionField, infoField} from './const';
+import {
+    indexField,
+    patIntentField,
+    createdKeywordsActionField,
+    infoField
+} from './const';
 import TableButton from '../TableButton/TableButton';
-import {useSelector} from "react-redux";
-import CustomTable from "./CustomTable";
+import { useSelector } from 'react-redux';
+import CustomTable from './CustomTable';
 
 const CreatedCrossNegativePAT = 'created-cross-negative-pat';
 const CreatedPATCST = 'created-pat-cst';
@@ -11,8 +16,7 @@ const CreatedPATCST = 'created-pat-cst';
 const defaultKeys = [
     {
         ...indexField
-    },
-
+    }
 ];
 
 const columns = {
@@ -22,20 +26,20 @@ const columns = {
             title: 'Campaign',
             dataIndex: 'campaign',
             key: 'campaign',
-            width: '200px',
+            width: '200px'
         },
         {
             title: 'Ad Group',
             dataIndex: 'adGroup',
             key: 'adGroup',
-            width: '200px',
+            width: '200px'
         },
         {
-            title: <TitleInfo title="PAT Type"/>,
+            title: <TitleInfo title="PAT Type" />,
             dataIndex: 'PatType',
             key: 'PatType',
             width: '240px',
-            render: text => <span className='capitalize-field'>{text}</span>
+            render: text => <span className="capitalize-field">{text}</span>
         },
         {
             ...patIntentField
@@ -43,7 +47,7 @@ const columns = {
         {
             title: 'PAT Value',
             dataIndex: 'PatValue',
-            key: 'PatValue',
+            key: 'PatValue'
             // width: '200px',
         },
         {
@@ -59,20 +63,20 @@ const columns = {
             title: 'Campaign',
             dataIndex: 'campaign',
             key: 'campaign',
-            width: '100px',
+            width: '100px'
         },
         {
             title: 'Ad Group',
             dataIndex: 'adGroup',
             key: 'adGroup',
-            width: '100px',
+            width: '100px'
         },
         {
-            title: <TitleInfo title="PAT Type"/>,
+            title: <TitleInfo title="PAT Type" />,
             dataIndex: 'PatType',
             key: 'PatType',
             width: '120px',
-            render: text => <span className='capitalize-field'>{text}</span>
+            render: text => <span className="capitalize-field">{text}</span>
         },
         {
             ...patIntentField
@@ -80,41 +84,41 @@ const columns = {
         {
             title: 'PAT Value',
             dataIndex: 'PatValue',
-            key: 'PatValue',
+            key: 'PatValue'
             // width: '150px',
         },
         {
             title: 'Bid',
             dataIndex: 'bid',
             key: 'bid',
-            render: text => <span>${text}</span>,
+            render: text => <span>${text}</span>
             // width: '100px',
         },
         {
             title: 'CST Clicks',
             dataIndex: 'CSTClicks',
-            key: 'CSTClicks',
+            key: 'CSTClicks'
             // width: '130px',
         },
         {
             title: 'CST ACOS',
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
-            render: text => <span>{text && `${text}%`}</span>,
+            render: text => <span>{text && `${text}%`}</span>
             // width: '120px',
         },
         {
             title: 'CST CPC',
             dataIndex: 'CSTCPC',
             key: 'CSTCPC',
-            render: text => <span>${text}</span>,
+            render: text => <span>${text}</span>
             // width: '120px',
         },
         {
             title: 'Targe ACoS',
             dataIndex: 'TargetACoS',
             key: 'TargetACoS',
-            render: text => <span>{text && `${text}%`}</span>,
+            render: text => <span>{text && `${text}%`}</span>
             // width: '100px',
         },
         {
@@ -123,11 +127,7 @@ const columns = {
             key: 'action',
             // width: '60px',
             className: 'left-border',
-            render: () => (
-                <div className='action-field'>
-                    Created
-                </div>
-            )
+            render: () => <div className="action-field">Created</div>
         },
         {
             ...infoField
@@ -135,23 +135,34 @@ const columns = {
     ]
 };
 
-const NewPats = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange, scroll}) => {
+const NewPats = ({
+    data,
+    onChangeSubTab,
+    activeTab,
+    currentPage,
+    totalSize,
+    handlePaginationChange,
+    scroll
+}) => {
     const [activeTable, changeTable] = useState(CreatedCrossNegativePAT);
-    const {count, loading, productId} = useSelector(state => ({
+    const { count, loading, productId } = useSelector(state => ({
         count: state.reports.counts['new-pats'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
 
-    const onChange = (tab) => {
+    const onChange = tab => {
         onChangeSubTab(tab);
         changeTable(tab);
     };
 
-    useEffect(() => changeTable(CreatedCrossNegativePAT), [productId, activeTab]);
+    useEffect(() => changeTable(CreatedCrossNegativePAT), [
+        productId,
+        activeTab
+    ]);
 
     return (
-        <div className="ReportItemTable">
+        <div className="report-item-table">
             <TableButton
                 active={activeTable === CreatedCrossNegativePAT}
                 count={count[CreatedCrossNegativePAT]}

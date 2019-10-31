@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
-import {indexField, infoField, negativeMatchTypeField} from './const';
-import {useSelector} from "react-redux";
-import CustomTable from "./CustomTable";
+import { indexField, infoField, negativeMatchTypeField } from './const';
+import { useSelector } from 'react-redux';
+import CustomTable from './CustomTable';
 
 const highACoS = 'created-negative-keyword-from-cst-high-acos';
 const noSales = 'created-negative-keyword-from-cst-no-sales';
@@ -16,22 +16,22 @@ const defaultKeys = [
         title: 'Campaign',
         dataIndex: 'campaign',
         key: 'campaign',
-        width: '200px',
+        width: '200px'
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
         key: 'adGroup',
-        width: '200px',
+        width: '200px'
     },
     {
         title: 'Keyword',
         dataIndex: 'keyword',
         key: 'keyword',
-        width: '200px',
+        width: '200px'
     },
     {
-      ...negativeMatchTypeField
+        ...negativeMatchTypeField
     }
 ];
 
@@ -42,14 +42,14 @@ const columns = {
             title: 'CST ACoS',
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
-            render: text => <span>{text && `${text}%`}</span>,
+            render: text => <span>{text && `${text}%`}</span>
             // width: '160px',
         },
         {
-            title: <TitleInfo title="Target ACoS"/>,
+            title: <TitleInfo title="Target ACoS" />,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text && `${text}%`}</span>,
+            render: text => <span>{text && `${text}%`}</span>
             // width: '160px',
         },
         {
@@ -58,11 +58,7 @@ const columns = {
             key: 'action',
             // width: '100px',
             className: 'left-border',
-            render: () => (
-                <div className='action-field'>
-                    Created
-                </div>
-            )
+            render: () => <div className="action-field">Created</div>
         },
         {
             ...infoField
@@ -73,13 +69,13 @@ const columns = {
         {
             title: 'Average Conversion Rate',
             dataIndex: 'averageConversionRate',
-            key: 'averageConversionRate',
+            key: 'averageConversionRate'
             // width: '180px',
         },
         {
             title: 'CST Clicks',
             dataIndex: 'CSTClicks',
-            key: 'CSTClicks',
+            key: 'CSTClicks'
             // width: '160px',
         },
         {
@@ -88,11 +84,7 @@ const columns = {
             key: 'action',
             // width: '100px',
             className: 'left-border',
-            render: () => (
-                <div className='action-field'>
-                    Created
-                </div>
-            )
+            render: () => <div className="action-field">Created</div>
         },
         {
             ...infoField
@@ -100,15 +92,23 @@ const columns = {
     ]
 };
 
-const NewNegativeKeywords = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange, scroll}) => {
+const NewNegativeKeywords = ({
+    data,
+    onChangeSubTab,
+    activeTab,
+    currentPage,
+    totalSize,
+    handlePaginationChange,
+    scroll
+}) => {
     const [activeTable, changeTable] = useState(highACoS);
-    const {count, loading, productId} = useSelector(state => ({
+    const { count, loading, productId } = useSelector(state => ({
         count: state.reports.counts['new-negative-keywords'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
 
-    const onChange = (tab) => {
+    const onChange = tab => {
         onChangeSubTab(tab);
         changeTable(tab);
     };
@@ -116,7 +116,7 @@ const NewNegativeKeywords = ({data, onChangeSubTab, activeTab, currentPage, tota
     useEffect(() => changeTable(highACoS), [productId, activeTab]);
 
     return (
-        <div className="ReportItemTable">
+        <div className="report-item-table">
             <TableButton
                 active={activeTable === highACoS}
                 count={count[highACoS]}
@@ -147,6 +147,5 @@ const NewNegativeKeywords = ({data, onChangeSubTab, activeTab, currentPage, tota
         </div>
     );
 };
-
 
 export default NewNegativeKeywords;

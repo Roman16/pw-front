@@ -1,68 +1,72 @@
 .custom-reports-table {
-  height: 90%;
+    height: 90%;
 
-  .table-head {
-    height: 10%;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #C9CBD4;
-
-    & > div {
-      display: flex;
-      align-items: center;
-      padding: 0 8px;
-      font-weight: 500;
-      font-size: 14px;
-      color: #343C5A;
-
-      &:first-child {
-        min-width: 20px;
-        text-align: center;
-      }
-
-      &:last-child {
-        width: 45px !important;
-      }
-    }
-  }
-
-  .table-body {
-    overflow-y: auto;
-    height: 75%;
-
-    .table-body__row {
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid #C9CBD4;
-
-      &:last-child {
-        border: 0;
-      }
-
-      & > div {
-        padding: 15px 8px 15px 8px;
+    .table-head {
+        height: 10%;
         display: flex;
-        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #c9cbd4;
 
-        &:first-child {
-          min-width: 20px;
-          font-size: 14px;
-          color: #343C5A;
-          font-weight: 500;
-        }
+        & > div {
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #343c5a;
 
-        &:last-child {
-          display: flex;
-          justify-content: flex-end;
+            &:first-child {
+                min-width: 20px;
+                text-align: center;
+            }
+
+            &:last-child {
+                width: 45px !important;
+            }
         }
-      }
     }
 
-    .ant-spin-spinning {
-      width: 100%;
-      margin: 50px auto;
+    .table-body {
+        overflow-y: auto;
+        height: 75%;
+
+        .table-body__row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #c9cbd4;
+
+            &:last-child {
+                border: 0;
+            }
+
+            & > div {
+                padding: 15px 8px 15px 8px;
+                display: flex;
+                align-items: center;
+
+                &:first-child {
+                    min-width: 20px;
+                    font-size: 14px;
+                    color: #343c5a;
+                    font-weight: 500;
+                }
+
+                &:last-child {
+                    display: flex;
+                    justify-content: flex-end;
+                }
+            }
+        }
+
+        .ant-spin-spinning {
+            width: 100%;
+            margin: 50px auto;
+        }
     }
-  }
+
+    .ant-pagination {
+        margin: 50px 10px 0 0 !important;
+    }
 }
 
 //

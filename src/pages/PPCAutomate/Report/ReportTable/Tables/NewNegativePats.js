@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, patIntentField, infoField} from './const';
+import { indexField, patIntentField, infoField } from './const';
 import TableButton from '../TableButton/TableButton';
-import {useSelector} from "react-redux";
-import CustomTable from "./CustomTable";
+import { useSelector } from 'react-redux';
+import CustomTable from './CustomTable';
 
 const HighACoS = 'created-negative-pat-from-cst-high-acos';
 const NoSales = 'created-negative-pat-from-cst-no-sales';
@@ -16,20 +16,20 @@ const defaultKeys = [
         title: 'Campaign',
         dataIndex: 'campaign',
         key: 'campaign',
-        width: '140px',
+        width: '140px'
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
         key: 'adGroup',
-        width: '140px',
+        width: '140px'
     },
     {
-        title: <TitleInfo title="PAT Type"/>,
+        title: <TitleInfo title="PAT Type" />,
         dataIndex: 'PatType',
         key: 'PatType',
         width: '150px',
-        render: text => <span className='capitalize-field'>{text}</span>
+        render: text => <span className="capitalize-field">{text}</span>
     },
     {
         ...patIntentField
@@ -38,8 +38,8 @@ const defaultKeys = [
         title: 'PAT Value',
         dataIndex: 'PatValue',
         key: 'PatValue',
-        width: '130px',
-    },
+        width: '130px'
+    }
 ];
 
 const columns = {
@@ -49,14 +49,14 @@ const columns = {
             title: 'CST ACOS',
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
-            render: text => <span>{text && `${text}%` }</span>,
+            render: text => <span>{text && `${text}%`}</span>
             // width: '120px',
         },
         {
             title: 'Target ACoS',
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text && `${text}%` }</span>,
+            render: text => <span>{text && `${text}%`}</span>
             // width: '110px',
         },
         {
@@ -65,11 +65,7 @@ const columns = {
             key: 'action',
             // width: '70px',
             className: 'left-border',
-            render: () => (
-                <div className='action-field'>
-                    Created
-                </div>
-            )
+            render: () => <div className="action-field">Created</div>
         },
         {
             ...infoField
@@ -81,13 +77,13 @@ const columns = {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConversionRate',
             key: 'averageConversionRate',
-            render: text => <span>{text && `${text}%` }</span>,
+            render: text => <span>{text && `${text}%`}</span>
             // width: '120px',
         },
         {
             title: 'CST Clicks',
             dataIndex: 'CSTClicks',
-            key: 'CSTClicks',
+            key: 'CSTClicks'
             // width: '110px',
         },
 
@@ -97,11 +93,7 @@ const columns = {
             key: 'action',
             // width: '70px',
             className: 'left-border',
-            render: () => (
-                <div className='action-field'>
-                    Created
-                </div>
-            )
+            render: () => <div className="action-field">Created</div>
         },
         {
             ...infoField
@@ -109,15 +101,23 @@ const columns = {
     ]
 };
 
-const NewNegativePats = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handlePaginationChange, scroll}) => {
+const NewNegativePats = ({
+    data,
+    onChangeSubTab,
+    activeTab,
+    currentPage,
+    totalSize,
+    handlePaginationChange,
+    scroll
+}) => {
     const [activeTable, changeTable] = useState(HighACoS);
-    const {count, loading, productId} = useSelector(state => ({
+    const { count, loading, productId } = useSelector(state => ({
         count: state.reports.counts['new-negative-pats'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
 
-    const onChange = (tab) => {
+    const onChange = tab => {
         onChangeSubTab(tab);
         changeTable(tab);
     };
@@ -125,7 +125,7 @@ const NewNegativePats = ({data, onChangeSubTab, activeTab, currentPage, totalSiz
     useEffect(() => changeTable(HighACoS), [productId, activeTab]);
 
     return (
-        <div className="ReportItemTable">
+        <div className="report-item-table">
             <TableButton
                 active={activeTable === HighACoS}
                 count={count[HighACoS]}
