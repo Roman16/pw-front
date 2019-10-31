@@ -75,7 +75,8 @@
 
     .terminal-content {
         margin: 0;
-        transition: all 0.5s ease-in;
+        max-height: calc(100vh - 440px - 77px - 42px - 175px);
+        transition: all 0.5s;
 
         &.auto {
             overflow: auto;
@@ -88,10 +89,12 @@
         &.more {
             // max-height: calc(100vh - 71px - 77px - 42px - 175px);
             max-height: 600px;
+            transition: all 0.9s ease-in;
         }
 
         &.less {
             max-height: calc(100vh - 440px - 77px - 42px - 175px);
+            transition: all 0s ease-in;
         }
 
         &.less.hidden {
