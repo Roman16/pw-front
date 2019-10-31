@@ -2,32 +2,24 @@
 
 .optimize-strategy {
     .strategies {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-content: space-between;
-    }
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
 
-    @media (max-width: @laptop) {
-        padding: 14px 0;
+        @media (max-width: @big-desktop) {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 25px;
+        }
     }
 }
 
 .strategy-item {
-    width: 180px;
-    flex: 1;
+    width: 168px;
+    justify-self: center;
     padding: 10px;
     border: 2px solid #c9cbd4;
     border-radius: 8px;
     transition: 0.3s;
-
-    @media (max-width: 1669px) {
-        width: 100%;
-    }
-
-    &:not(:last-child) {
-        margin-right: 15px;
-    }
 
     .caption-strategy {
         height: 50px;
@@ -92,6 +84,7 @@
     }
 
     &.selected {
+        // margin: 0 auto;
         background: #6d6df6;
         border-color: #6d6df6;
         box-shadow: @tooltip-shadow;

@@ -108,6 +108,10 @@
                     column-gap: 20px;
                 }
 
+                @media (max-width: @big-desktop) {
+                    grid-template-areas: 'options strategy' 'descriptions strategy';
+                }
+
                 .optimize-options {
                     grid-area: options;
                 }
@@ -121,7 +125,11 @@
                 }
 
                 &.less {
-                    max-height: 400px;
+                    max-height: 420px;
+
+                    @media (max-width: @big-desktop) {
+                        max-height: 615px;
+                    }
                 }
 
                 &.more {
@@ -150,12 +158,12 @@
 
             &.more {
                 height: 0;
-                top: 25px;
+                top: 10px;
                 margin: 0;
             }
 
             .icon {
-                width: 36px;
+                width: 32px;
                 height: 25px;
                 border: 1px solid #bdc6cf;
                 text-align: center;
@@ -173,14 +181,13 @@
                 }
 
                 &.less {
-                    border-top-right-radius: 14px;
-                    border-top-left-radius: 14px;
+                    border-radius: 14px 14px 0 0;
                     border-bottom: 0;
                 }
 
                 &.more {
-                    border-bottom-right-radius: 14px;
-                    border-bottom-left-radius: 14px;
+                    border: none;
+                    border-radius: 0 0 14px 14px;
                     border-top: 0;
                     position: absolute;
 

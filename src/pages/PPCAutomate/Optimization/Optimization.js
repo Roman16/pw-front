@@ -121,7 +121,7 @@ class Optimization extends Component {
                                         />
                                     </div>
                                     <FreeTrial />
-                                    {selectedAll && (
+                                    {selectedAll && !isLess && (
                                         <div className="description-all">
                                             Changes to those settings will be
                                             applied to all selected products
