@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ProductItem from './ProductItem';
-import { connect } from 'react-redux';
-import { Input, Pagination, Switch } from 'antd';
-import { productsActions } from '../../actions/products.actions';
+import {connect} from 'react-redux';
+import {Input, Pagination, Switch} from 'antd';
+import {productsActions} from '../../actions/products.actions';
 import './ProductList.less';
 import SelectAllProduct from './SelectAllProducts';
-import { debounce } from 'throttle-debounce';
+import {debounce} from 'throttle-debounce';
 
-const { Search } = Input;
+const {Search} = Input;
 
 class ProductList extends Component {
     state = {
@@ -21,7 +21,10 @@ class ProductList extends Component {
         }
     };
 
-    getProducts = () => this.props.getAllProducts({...this.state.paginationParams, onlyOptimization: this.state.onlyOptimization});
+    getProducts = () => this.props.getAllProducts({
+        ...this.state.paginationParams,
+        onlyOptimization: this.state.onlyOptimization
+    });
 
     handleChangePagination = page => {
         this.setState(
@@ -37,9 +40,17 @@ class ProductList extends Component {
     };
 
     handleChangeSwitch = (event) => {
-        this.setState({
-            onlyOptimization: event
-        }, this.getProducts)
+        this.setState(
+            {
+                ...this.state,
+                onlyOptimization: event,
+                paginationParams: {
+                    ...this.state.paginationParams,
+                    page: 1
+                }
+            },
+            this.getProducts
+        );
     };
 
     handleSearch = debounce(500, false, str => {
@@ -56,12 +67,12 @@ class ProductList extends Component {
     });
 
     selectAll = () => {
-        const { selectProduct, selectedProduct, products } = this.props;
+        const {selectProduct, selectedProduct, products} = this.props;
         selectedProduct.id &&
-            this.setState({ prevProductId: selectedProduct.id });
+        this.setState({prevProductId: selectedProduct.id});
 
         this.setState(
-            ({ isSelectedAll }) => ({
+            ({isSelectedAll}) => ({
                 isSelectedAll: !isSelectedAll
             }),
             () => {
@@ -78,7 +89,7 @@ class ProductList extends Component {
     };
 
     onSelect = product => {
-        const { selectProduct, selectedProduct } = this.props;
+        const {selectProduct, selectedProduct} = this.props;
         if (selectedProduct.id !== product.id) selectProduct(product);
 
         this.setState({
@@ -88,7 +99,7 @@ class ProductList extends Component {
 
     componentDidMount() {
         const selectedProductId = window.location.search.split('id=')[1],
-            { products } = this.props;
+            {products} = this.props;
 
         if (selectedProductId && products.length > 0) {
             const product = products.find(
@@ -104,9 +115,9 @@ class ProductList extends Component {
         const {
                 selectedSize,
                 isSelectedAll,
-                paginationParams: { size }
+                paginationParams: {size, page}
             } = this.state,
-            { products, selectedProduct, totalSize } = this.props;
+            {products, selectedProduct, totalSize} = this.props;
 
         return (
             <div className="product-list">
@@ -126,30 +137,31 @@ class ProductList extends Component {
                         <div className="active-only">
                             <label htmlFor="">On optimization only</label>
                             <Switch
-                            onChange={this.handleChangeSwitch}
+                                onChange={this.handleChangeSwitch}
                             />
                         </div>
                     </div>
                 </div>
 
                 {products &&
-                    products.map(product => (
-                        <ProductItem
-                            key={product.id}
-                            product={product}
-                            isActive={
-                                isSelectedAll ||
-                                selectedProduct.id === product.id
-                            }
-                            onClick={item => this.onSelect(item)}
-                        />
-                    ))}
+                products.map(product => (
+                    <ProductItem
+                        key={product.id}
+                        product={product}
+                        isActive={
+                            isSelectedAll ||
+                            selectedProduct.id === product.id
+                        }
+                        onClick={item => this.onSelect(item)}
+                    />
+                ))}
 
                 {totalSize > size && (
                     <Pagination
                         defaultCurrent={1}
                         pageSize={size}
                         total={totalSize}
+                        current={page}
                         onChange={this.handleChangePagination}
                     />
                 )}
