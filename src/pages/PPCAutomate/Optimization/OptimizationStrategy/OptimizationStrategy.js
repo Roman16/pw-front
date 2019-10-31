@@ -109,17 +109,17 @@ const OptimizationStrategy = ({
         <div className="optimize-strategy">
             <div className="strategies options-content">
                 <StrategyItem
-                    caption="Organic (Overall) Profit"
+                    caption="Product Launch"
                     selected={
                         selectedStrategy
-                            ? selectedStrategy === 'BoostOverallProfit'
-                            : optimization_strategy === 'BoostOverallProfit'
+                            ? selectedStrategy === 'LaunchProduct'
+                            : optimization_strategy === 'LaunchProduct'
                     }
                     onSelect={onSelect}
-                    value="BoostOverallProfit"
+                    value="LaunchProduct"
                 />
                 <StrategyItem
-                    caption="Organic Boost"
+                    caption="PPC Profit Growth"
                     selected={
                         selectedStrategy
                             ? selectedStrategy === 'BoostPPCProfit'
@@ -129,7 +129,17 @@ const OptimizationStrategy = ({
                     value="BoostPPCProfit"
                 />
                 <StrategyItem
-                    caption="Product Liquidation"
+                    caption="Boost Overall Profit"
+                    selected={
+                        selectedStrategy
+                            ? selectedStrategy === 'BoostOverallProfit'
+                            : optimization_strategy === 'BoostOverallProfit'
+                    }
+                    onSelect={onSelect}
+                    value="BoostOverallProfit"
+                />
+                <StrategyItem
+                    caption="Revenue Growth"
                     selected={
                         selectedStrategy
                             ? selectedStrategy === 'GrowOverallSales'
@@ -137,16 +147,6 @@ const OptimizationStrategy = ({
                     }
                     onSelect={onSelect}
                     value="GrowOverallSales"
-                />
-                <StrategyItem
-                    caption="Product Lounce"
-                    selected={
-                        selectedStrategy
-                            ? selectedStrategy === 'LaunchProduct'
-                            : optimization_strategy === 'LaunchProduct'
-                    }
-                    onSelect={onSelect}
-                    value="LaunchProduct"
                 />
             </div>
         </div>

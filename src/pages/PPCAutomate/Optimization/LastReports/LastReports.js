@@ -23,9 +23,7 @@ const textTooltip = () => (
     <div>
         <h3 className="title-tooltip">Last Changes Terminal</h3>
         <p>
-            Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis
+            Here you will see the last changes that our software performed. You can see all the changes by clicking the «View All» button to the right.
         </p>
     </div>
 );
@@ -160,7 +158,7 @@ class LastReports extends Component {
                                 }`}
                             >
                                 <p className="dummy-render">
-                                    You have not data to display
+                                    You have no data to display
                                 </p>
                             </div>
                             {dummy.map(({ id }) => (

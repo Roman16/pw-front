@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, infoField, bidActionField, patIntentField, patTypeField, pausePatActionField} from './const';
+import {indexField, infoField, bidActionField, patIntentField, pausePatActionField} from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from "react-redux";
+import CustomTable from "./CustomTable";
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
 const changedPATBidImpressions = 'changed-pat-bid-impressions';
@@ -29,9 +29,9 @@ const defaultKeys = [
 
     },
     {
-        title: () => <TitleInfo title="PAT type"/>,
+        title: <TitleInfo title="PAT type"/>,
         dataIndex: 'PatType',
-        key: 'PatType ',
+        key: 'PatType',
         width: '130px',
         render: text => <span className='capitalize-field'>{text}</span>
     },
@@ -57,7 +57,7 @@ const columns = {
             width: 100,
         },
         {
-            title: () => <TitleInfo title="Target ACoS"/>,
+            title: <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
             render: text => <span>{text}%</span>,
@@ -79,7 +79,7 @@ const columns = {
             width: '120px',
         },
         {
-            title: () => <TitleInfo title="Target Impressions"/>,
+            title: <TitleInfo title="Target Impressions"/>,
             dataIndex: 'targetImpressions',
             key: 'targetImpressions',
             width: '150px',
@@ -101,7 +101,7 @@ const columns = {
             width: 100,
         },
         {
-            title: () => <TitleInfo title="Target ACoS"/>,
+            title: <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
             render: text => <span>{text}%</span>,
@@ -124,7 +124,7 @@ const columns = {
             width: 200,
         },
         {
-            title: () => <TitleInfo title="Clicks"/>,
+            title: <TitleInfo title="Clicks"/>,
             dataIndex: 'clicks',
             key: 'clicks',
             width: 100,
@@ -192,15 +192,13 @@ const PATsOptimization = ({data, onChangeSubTab, activeTab, currentPage, totalSi
                 Paused Manual Pat (No Sales)
             </TableButton>
 
-            <Table
+            <CustomTable
                 onChangePagination={handlePaginationChange}
                 loading={loading}
                 dataSource={data}
                 columns={columns[activeTable]}
                 currentPage={currentPage}
                 totalSize={totalSize}
-                showPagination={totalSize > 10}
-                scroll={scroll}
             />
         </div>
     );

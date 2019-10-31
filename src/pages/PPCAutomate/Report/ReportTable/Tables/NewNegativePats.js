@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {indexField, createdKeywordsActionField, patIntentField, infoField} from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from "react-redux";
+import CustomTable from "./CustomTable";
 
 const HighACoS = 'created-negative-pat-from-cst-high-acos';
 const NoSales = 'created-negative-pat-from-cst-no-sales';
@@ -25,7 +25,7 @@ const defaultKeys = [
         width: '150px',
     },
     {
-        title: () => <TitleInfo title="PAT Type"/>,
+        title: <TitleInfo title="PAT Type"/>,
         dataIndex: 'PatType',
         key: 'PatType',
         width: '150px',
@@ -127,15 +127,13 @@ const NewNegativePats = ({data, onChangeSubTab, activeTab, currentPage, totalSiz
                 Created Negative PAT From CST (No Sales)
             </TableButton>
 
-            <Table
+            <CustomTable
                 onChangePagination={handlePaginationChange}
                 loading={loading}
                 dataSource={data}
                 columns={columns[activeTable]}
                 currentPage={currentPage}
                 totalSize={totalSize}
-                showPagination={totalSize > 10}
-                scroll={scroll}
             />
         </div>
     );

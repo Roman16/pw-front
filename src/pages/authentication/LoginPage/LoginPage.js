@@ -42,13 +42,13 @@ class LoginPage extends React.Component {
                             className="info-col"
                         >
                             <div className="title">
-                                You’ll receive this features in all plans:
+                                You’ll receive these features in all plans:
                             </div>
                             <ul className="info-list">
                                 <li>AI powered PPC campaigns</li>
                                 <li>
-                                    Easy to setup and launch your campaigns in
-                                    few clicks
+                                    Easy to set up and launch your campaigns in
+                                    a few clicks
                                 </li>
                                 <li>Enjoyable interface</li>
                                 <li>Tens of hours saved per week</li>

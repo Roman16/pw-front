@@ -28,7 +28,7 @@ export const indexField = {
     title: '',
     dataIndex: 'id',
     key: 'id',
-    width: '50px'
+    width: '30px'
 };
 
 export const dateField = {
@@ -71,7 +71,7 @@ export const pauseKeywordsActionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    // width: 200,
+    width: '200px',
     className: 'left-border',
     render: () => (
         <div className='action-field'>
@@ -107,6 +107,7 @@ export const infoField = {
     title: '',
     dataIndex: 'info',
     key: 'info',
+    width: '50px',
     render: text => (
         <Popover
             placement="left"

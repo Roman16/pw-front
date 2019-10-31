@@ -75,10 +75,10 @@ export const menuMain = [
         link: '/ppc',
         icon: 'ppcAutomate',
         subMenu: [
-            {
-                title: 'Dashboard',
-                link: '/dashboard'
-            },
+            // {
+            //     title: 'Dashboard',
+            //     link: '/dashboard'
+            // },
             {
                 title: 'Optimization Setup',
                 link: '/optimization'

@@ -5,43 +5,30 @@ import './StrategyInfo.less';
 const info = [
     {
         key: 'strategy0',
-        caption: 'Organic Profit',
-        value: 'BoostOverallProfit',
-        text: `Lorem ipsum dolor sit amet,
-         consectetur adipiscing elit,
-          sed do eiusmod tempor incididunt ut
-           labore et dolore magna aliqua.Lorem 
-           ipsum dolor sit amet, consectetur adipiscing `
+        caption: 'Product Launch',
+        value: 'LaunchProduct',
+        text: `This strategy is for Sellers who want to launch the product.
+The algorithm will be more aggressive with the bids, so you will get your first sales, reviews, and increase your brand awareness. 
+The ACoS could be two times higher than your break-even ACoS.`
     },
     {
         key: 'strategy1',
-        caption: 'Organic Boost',
+        caption: 'PPC Profit Growth',
         value: 'BoostPPCProfit',
-        text: `Lorem ipsum dolor sit amet,
-         consectetur adipiscing elit,
-          sed do eiusmod tempor incididunt ut
-           labore et dolore magna aliqua.Lorem 
-           ipsum dolor sit amet, consectetur adipiscing `
+        text: `This strategy is for Sellers who want to increase their Profit From Advertising campaigns.
+The Software will kill all the bleeding and unprofitable keywords to make sure you will get the best ROAS possible from your keywords.`
     },
     {
         key: 'strategy2',
-        caption: 'Product Liquidation',
-        value: 'GrowOverallSales',
-        text: `Lorem ipsum dolor sit amet,
-         consectetur adipiscing elit,
-          sed do eiusmod tempor incididunt ut
-           labore et dolore magna aliqua.Lorem 
-           ipsum dolor sit amet, consectetur adipiscing `
+        caption: 'Boost Overall Profit',
+        value: 'BoostOverallProfit',
+        text: `This strategy is for Sellers who want to keep their organic ranking positions with PPC efforts so they can make more profit from Organic Sales. In this case, your ACoS will be the same as your break-even ACoS.`
     },
     {
         key: 'strategy3',
-        caption: 'Product Lounce',
-        value: 'LaunchProduct',
-        text: `Lorem ipsum dolor sit amet,
-         consectetur adipiscing elit,
-          sed do eiusmod tempor incididunt ut
-           labore et dolore magna aliqua.Lorem 
-           ipsum dolor sit amet, consectetur adipiscing `
+        caption: 'Revenue Growth',
+        value: 'GrowOverallSales',
+        text: `This strategy is for Sellers who want to boost their  Advertising and Organic Sales so to grow their ranking positions. It requires increasing your Ad budget and keeping the ACoS higher than your break-even ACoS.`
     }
 ];
 

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
-import Table from '../../../../../components/Table/Table';
 import TableButton from '../TableButton/TableButton';
-import {indexField, dateField, createdKeywordsActionField, infoField} from './const';
+import {indexField, createdKeywordsActionField, infoField} from './const';
 import {useSelector} from "react-redux";
+import CustomTable from "./CustomTable";
 
 const createdCampaign = 'created-campaign';
 const createdAdGroup = 'created-ad-group';
@@ -242,15 +242,13 @@ const NewKeywords = ({data, onChangeSubTab, activeTab, currentPage, totalSize, h
                 Created Keyword (CST)
             </TableButton>
 
-            <Table
+            <CustomTable
                 onChangePagination={handlePaginationChange}
                 loading={loading}
                 dataSource={data}
                 columns={columns[activeTable]}
                 currentPage={currentPage}
                 totalSize={totalSize}
-                showPagination={totalSize > 10}
-                scroll={scroll}
             />
         </div>
     );

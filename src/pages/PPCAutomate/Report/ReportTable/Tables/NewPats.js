@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import Table from '../../../../../components/Table/Table';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {indexField, patIntentField, createdKeywordsActionField, infoField} from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from "react-redux";
+import CustomTable from "./CustomTable";
 
 const CreatedCrossNegativePAT = 'created-cross-negative-pat';
 const CreatedPATCST = 'created-pat-cst';
@@ -25,7 +25,7 @@ const defaultKeys = [
         width: '150px',
     },
     {
-        title: () => <TitleInfo title="PAT Type"/>,
+        title: <TitleInfo title="PAT Type"/>,
         dataIndex: 'PatType',
         key: 'PatType',
         width: '150px',
@@ -132,17 +132,16 @@ const NewPats = ({data, onChangeSubTab, activeTab, currentPage, totalSize, handl
                 Created PAT (CST)
             </TableButton>
 
-            <Table
+            <CustomTable
                 onChangePagination={handlePaginationChange}
                 loading={loading}
                 dataSource={data}
                 columns={columns[activeTable]}
                 currentPage={currentPage}
                 totalSize={totalSize}
-                showPagination={totalSize > 10}
             />
         </div>
     );
-}
+};
 
 export default NewPats;

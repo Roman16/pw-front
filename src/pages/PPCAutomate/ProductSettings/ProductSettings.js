@@ -8,23 +8,20 @@ const ProductSettingsMain = () => {
     return (
         <div className="product-settings-page">
             <div className="page-caption">
-                <h3> Analytics Product Settings</h3>
-                <FreeTrial />
+                <h3>REMINDER</h3>
+                <FreeTrial/>
             </div>
 
             <div className="reminder">
-                <div className="reminder-title">Reminder</div>
+                <div className="reminder-title">For those using campaign strategies in Seller Central:</div>
                 <div>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Pellentesque augue eros, convallis a est id, sodales
-                    vulputate nisi. Cras dignissim porttitor tortor ut laoreet.
-                    Nam in metus id nunc eleifend lacinia ut nec mauris. Nunc
-                    posuere sit amet tortor ac laoreet. Pellentesque blandit
-                    fringilla ultricies.
+                    All campaigns better to be set to "Dynamic bids - down only." or "Fixed Bids." bidding strategy. Additionally, "Adjust
+                    bids by placement" should be set to 0% (default) as it will negatively affect your performance with
+                    our algorithm. Also, you should have only one Active SKU per Ad Group.
                 </div>
             </div>
 
-            <ProductsList />
+            <ProductsList/>
         </div>
     );
 };

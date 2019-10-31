@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { /* Avatar, */ List } from 'antd';
 
-const RegionsMenu = ({ regions }) => regions.map((region) => (
+const RegionsMenu = ({ regions, user }) => regions.map((region) => (
       <div className="CountryList">
         <h4>{region.region}</h4>
             <List

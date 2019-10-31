@@ -1,16 +1,44 @@
 import React from "react";
+import './CustomTable.less';
+import {Pagination} from "antd";
 
-const CustomTable = ({columns}) => {
-    return(
+const CustomTable = ({columns, dataSource, totalSize, onChangePagination}) => {
+
+    return (
         <div className='custom-reports-table'>
             <div className='table-head'>
-                <div className='head-index'></div>
                 {columns.map(item => (
-                    <div className='th'>{item.title}</div>
+                    <div className='th'
+                         key={item.key}
+                         style={{width: item.width || 'max-content'}}
+                    >
+                        {item.title}
+                    </div>
                 ))}
             </div>
 
-            <div className='table-body'></div>
+            <div className='table-body'>
+                {dataSource.length > 0 && dataSource.map(report => (
+                    <div className='table-body__row'>
+                        {columns.map(item => (
+                            <div className='table-body__field'
+                                 style={{width: item.width || 'max-content'}}
+                                 key={item.key}
+                            >
+                                {item.render ? item.render(report[item.key]) : report[item.key]}
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+
+            {totalSize > 10 && < Pagination
+                defaultCurrent={1}
+                pageSize={10}
+                total={totalSize}
+                onChange={onChangePagination}
+            />}
+
         </div>
     )
 };
