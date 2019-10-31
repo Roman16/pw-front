@@ -24,10 +24,10 @@
 
         .options {
             display: grid;
-            grid-template-columns: 360px minmax(min-content, 100%);
+            grid-template-columns: 400px minmax(min-content, 100%);
             grid-template-rows: repeat(3, minmax(min-content, max-content));
             grid-template-areas: 'info info' 'optionsStrategy optionsStrategy' 'control control';
-            column-gap: 76px;
+            column-gap: 60px;
 
             @media (max-width: 1814px) {
                 grid-template-columns: 276px minmax(min-content, 100%);
@@ -37,8 +37,8 @@
             .product-info {
                 grid-area: info;
                 display: grid;
-                grid-template-columns: 360px minmax(min-content, 100%);
-                column-gap: 76px;
+                grid-template-columns: 400px minmax(min-content, 100%);
+                column-gap: 60px;
                 margin-bottom: 30px;
                 color: @second-default-dark;
                 font-size: 20px;
@@ -80,6 +80,10 @@
                     font-size: 15px;
                     color: @dangerous-color;
                     top: 30px;
+
+                    @media (max-width: @big-desktop) {
+                        top: 60px;
+                    }
                 }
             }
 
@@ -92,16 +96,20 @@
             .options-strategy {
                 grid-area: optionsStrategy;
                 display: grid;
-                grid-template-columns: 360px minmax(min-content, 100%);
+                grid-template-columns: 400px minmax(min-content, 100%);
                 grid-template-rows: repeat(2, minmax(min-content, max-content));
                 grid-template-areas: 'options strategy' '. descriptions';
-                column-gap: 76px;
+                column-gap: 60px;
                 overflow: hidden;
                 transition: all 0.5s ease-in;
 
                 @media (max-width: 1814px) {
                     grid-template-columns: 276px 1fr;
                     column-gap: 20px;
+                }
+
+                @media (max-width: @big-desktop) {
+                    grid-template-areas: 'options strategy' 'descriptions strategy';
                 }
 
                 .optimize-options {
@@ -117,7 +125,11 @@
                 }
 
                 &.less {
-                    max-height: 350px;
+                    max-height: 420px;
+
+                    @media (max-width: @big-desktop) {
+                        max-height: 615px;
+                    }
                 }
 
                 &.more {
@@ -131,21 +143,27 @@
         }
 
         .less-more-control {
+            grid-area: control;
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            margin-top: 5px;
             position: relative;
-            grid-area: control;
-            top: 0;
-            transition: top 0.5s ease-in;
+            transition: all 0.5s ease-in;
+
+            &.less {
+                height: 25px;
+                top: 0;
+                margin-top: 5px;
+            }
 
             &.more {
-                top: 25px;
+                height: 0;
+                top: 10px;
+                margin: 0;
             }
 
             .icon {
-                width: 36px;
+                width: 32px;
                 height: 25px;
                 border: 1px solid #bdc6cf;
                 text-align: center;
@@ -154,6 +172,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                transition: all 0.5s ease-in;
 
                 i {
                     color: @action-color;
@@ -162,14 +181,13 @@
                 }
 
                 &.less {
-                    border-top-right-radius: 14px;
-                    border-top-left-radius: 14px;
+                    border-radius: 14px 14px 0 0;
                     border-bottom: 0;
                 }
 
                 &.more {
-                    border-bottom-right-radius: 14px;
-                    border-bottom-left-radius: 14px;
+                    border: none;
+                    border-radius: 0 0 14px 14px;
                     border-top: 0;
                     position: absolute;
 
