@@ -289,7 +289,7 @@ class ReportTable extends Component {
 
     render() {
         const {activeTab, page} = this.state,
-            {counts, data, todayChanges, totalSize, loading} = this.props;
+            {counts, data, todayChanges, totalSize} = this.props;
 
         return (
             <div className="ReportTable">
