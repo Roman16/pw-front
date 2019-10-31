@@ -65,20 +65,20 @@ export const menuMain = [
     /*
      * Analytics
      */
-    // {
-    //     title: 'Analytics',
-    //     link: '/analytics',
-    //     icon: 'analytics'
-    // },
+    {
+        title: 'Analytics',
+        link: '/analytics',
+        icon: 'analytics'
+    },
     {
         title: 'PPC Automate',
         link: '/ppc',
         icon: 'ppcAutomate',
         subMenu: [
-            // {
-            //     title: 'Dashboard',
-            //     link: '/dashboard'
-            // },
+            {
+                title: 'Dashboard',
+                link: '/dashboard'
+            },
             {
                 title: 'Optimization Setup',
                 link: '/optimization'

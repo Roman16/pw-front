@@ -23,7 +23,9 @@ const textTooltip = () => (
     <div>
         <h3 className="title-tooltip">Last Changes Terminal</h3>
         <p>
-            Here you will see the last changes that our software performed. You can see all the changes by clicking the «View All» button to the right.
+            Here you will see the last changes that our software performed. You
+            can see all the changes by clicking the «View All» button to the
+            right.
         </p>
     </div>
 );
@@ -123,9 +125,9 @@ class LastReports extends Component {
 
     render() {
         const { current, records } = this.state;
-        const { isLess, selectedAll } = this.props;
-        // const qwe = false;
-        const isTerminal = records && records.length > 0;
+        const { isLess } = this.props;
+        const qwe = false;
+        const isTerminal = qwe && records.length > 0;
 
         return (
             <div className="terminal">
@@ -144,17 +146,12 @@ class LastReports extends Component {
                                     number={number}
                                 />
                             ))}
-                            <Pagination
-                                total={150}
-                                current={current}
-                                onChange={this.onChange}
-                            />
                         </Fragment>
                     ) : (
                         <div className="terminal-item-dummy">
                             <div
                                 className={`dummy-box ${
-                                    isLess ? 'auto' : 'hidden'
+                                    isLess ? 'more' : 'less'
                                 }`}
                             >
                                 <p className="dummy-render">
@@ -167,6 +164,13 @@ class LastReports extends Component {
                         </div>
                     )}
                 </ul>
+                {isTerminal && (
+                    <Pagination
+                        total={150}
+                        current={current}
+                        onChange={this.onChange}
+                    />
+                )}
             </div>
         );
     }

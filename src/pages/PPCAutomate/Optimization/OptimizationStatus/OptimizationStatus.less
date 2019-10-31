@@ -2,12 +2,11 @@
 @import '../../../../style/mixins.less';
 
 .product-status {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 0.7fr repeat(3, 1fr) 0.7fr;
+    column-gap: 5px;
     padding: 10px;
     margin: 0;
-    flex-wrap: wrap;
 
     .status-info {
         .caption {
