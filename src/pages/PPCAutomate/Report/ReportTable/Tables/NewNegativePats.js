@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import { indexField, patIntentField, infoField } from './const';
+import {indexField, patIntentField, infoField} from './const';
 import TableButton from '../TableButton/TableButton';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import CustomTable from './CustomTable';
 
 const HighACoS = 'created-negative-pat-from-cst-high-acos';
@@ -25,7 +25,10 @@ const defaultKeys = [
         width: '140px'
     },
     {
-        title: <TitleInfo title="PAT Type" />,
+        title: <TitleInfo
+            title="PAT type"
+            info='The type of Product Targeting. It can be a Manual or Auto.'
+        />,
         dataIndex: 'PatType',
         key: 'PatType',
         width: '150px',
@@ -46,14 +49,20 @@ const columns = {
     [HighACoS]: [
         ...defaultKeys,
         {
-            title: 'CST ACOS',
+            title: <TitleInfo
+                title='CST ACoS'
+                info='It displays the ACoS of certain customer search-term from your ad reports. '
+            />,
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
             render: text => <span>{text && `${text}%`}</span>
             // width: '120px',
         },
         {
-            title: 'Target ACoS',
+            title: <TitleInfo
+                title="Target ACoS"
+                info='The ACoS that our algorithm is aiming to reach your business goal.'
+            />,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
             render: text => <span>{text && `${text}%`}</span>
@@ -81,7 +90,10 @@ const columns = {
             // width: '120px',
         },
         {
-            title: 'CST Clicks',
+            title: <TitleInfo
+                title='CST Clicks'
+                info='It displays the number of clicks of certain customer search-term.'
+            />,
             dataIndex: 'CSTClicks',
             key: 'CSTClicks'
             // width: '110px',
@@ -102,16 +114,16 @@ const columns = {
 };
 
 const NewNegativePats = ({
-    data,
-    onChangeSubTab,
-    activeTab,
-    currentPage,
-    totalSize,
-    handlePaginationChange,
-    scroll
-}) => {
+                             data,
+                             onChangeSubTab,
+                             activeTab,
+                             currentPage,
+                             totalSize,
+                             handlePaginationChange,
+                             scroll
+                         }) => {
     const [activeTable, changeTable] = useState(HighACoS);
-    const { count, loading, productId } = useSelector(state => ({
+    const {count, loading, productId} = useSelector(state => ({
         count: state.reports.counts['new-negative-pats'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id

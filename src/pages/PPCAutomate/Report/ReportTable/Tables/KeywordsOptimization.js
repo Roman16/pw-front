@@ -59,7 +59,7 @@ const columns = {
         {
             title: <TitleInfo
                 title="Target ACoS"
-                info='Target'
+                info='The ACoS that our algorithm is aiming to reach your business goal.'
             />,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
@@ -82,7 +82,10 @@ const columns = {
             // width: '132px',
         },
         {
-            title: <TitleInfo title="Target Impressions"/>,
+            title: <TitleInfo
+                title="Target Impressions"
+                info='The number of times your ads need to be displayed so you will get the click.'
+            />,
             dataIndex: 'targetImpressions',
             key: 'targetImpressions',
             width: '130px'
@@ -104,7 +107,10 @@ const columns = {
             // width: '132px',
         },
         {
-            title: <TitleInfo title="Target ACoS"/>,
+            title: <TitleInfo
+                title="Target ACoS"
+                info='The ACoS that our algorithm is aiming to reach your business goal.'
+            />,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
             render: text => <span>{text && `${text}%`}</span>
@@ -127,7 +133,7 @@ const columns = {
             // width: '132px',
         },
         {
-            title: <TitleInfo title="Clicks"/>,
+            title: 'Clicks',
             dataIndex: 'clicks',
             key: 'clicks'
             // width: '120px',

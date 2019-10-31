@@ -5,6 +5,7 @@ import up from '../../../../../assets/img/icons/up-row.svg';
 import down from '../../../../../assets/img/icons/up-row.svg';
 import right from '../../../../../assets/img/icons/right-row.svg';
 import pause from '../../../../../assets/img/icons/pause.svg';
+import TitleInfo from "../../../../../components/Table/renders/TitleInfo";
 
 const patIntentValues = {
     queryHighRelMatches: 'close-match',
@@ -21,7 +22,10 @@ const negativeMatchValues = {
 };
 
 export const patIntentField = {
-    title: 'PAT Intent Type',
+    title: <TitleInfo
+        title="PAT Intent Type"
+        info='Automatic or Manual Product Targetings use multiple strategies to match your ads to shoppers looking for your products. These strategies are: ASIN, Categories, Substitutes, etc.'
+    />,
     dataIndex: 'PatIntentType',
     key: 'PatIntentType',
     // width: '132px',

@@ -36,7 +36,8 @@ function fetchProductDetails(product) {
                         payload: {
                             ...product,
                             ...res,
-                            id: product.id
+                            id: product.id,
+                            product_id:  product.id
                         }
                     });
                 } else {

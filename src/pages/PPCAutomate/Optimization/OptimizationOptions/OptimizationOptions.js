@@ -48,7 +48,7 @@ export const options = [
         text: 'Adding Negative Product Targetings',
         value: 'add_negative_pats',
         name: 'add_negative_pats',
-        description: `The Software will add to Negatives your Product Targetings (ASIN's, Categories) that either have large ACoS or a significant number of clicks and lack of sales. This will ensure that your product is being showed only on competitors pages that convert into a purchase with a positive ROAS.`
+        description: `The Software will add to Negatives your Product Targetings (ASIN's, Categories) that either have large ACoS or a significant number of clicks and lack of sales. This will ensure that your product is being shown only on competitors pages that convert into a purchase with a positive ROAS.`
     }
 ];
 

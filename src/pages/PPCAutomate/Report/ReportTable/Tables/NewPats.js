@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {
     indexField,
@@ -7,7 +7,7 @@ import {
     infoField
 } from './const';
 import TableButton from '../TableButton/TableButton';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import CustomTable from './CustomTable';
 
 const CreatedCrossNegativePAT = 'created-cross-negative-pat';
@@ -35,7 +35,10 @@ const columns = {
             width: '200px'
         },
         {
-            title: <TitleInfo title="PAT Type" />,
+            title: <TitleInfo
+                title="PAT type"
+                info='The type of Product Targeting. It can be a Manual or Auto.'
+            />,
             dataIndex: 'PatType',
             key: 'PatType',
             width: '240px',
@@ -72,7 +75,10 @@ const columns = {
             width: '100px'
         },
         {
-            title: <TitleInfo title="PAT Type" />,
+            title: <TitleInfo
+                title="PAT type"
+                info='The type of Product Targeting. It can be a Manual or Auto.'
+            />,
             dataIndex: 'PatType',
             key: 'PatType',
             width: '120px',
@@ -95,20 +101,29 @@ const columns = {
             // width: '100px',
         },
         {
-            title: 'CST Clicks',
+            title: <TitleInfo
+                title='CST Clicks'
+                info='It displays the number of clicks of certain customer search-term.'
+            />,
             dataIndex: 'CSTClicks',
             key: 'CSTClicks'
             // width: '130px',
         },
         {
-            title: 'CST ACOS',
+            title: <TitleInfo
+                title='CST ACoS'
+                info='It displays the ACoS of certain customer search-term from your ad reports. '
+            />,
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
             render: text => <span>{text && `${text}%`}</span>
             // width: '120px',
         },
         {
-            title: 'CST CPC',
+            title: <TitleInfo
+                title='CST CPC'
+                info='It displays the cost per click of certain customer search-term.'
+            />,
             dataIndex: 'CSTCPC',
             key: 'CSTCPC',
             render: text => <span>${text}</span>
@@ -136,16 +151,16 @@ const columns = {
 };
 
 const NewPats = ({
-    data,
-    onChangeSubTab,
-    activeTab,
-    currentPage,
-    totalSize,
-    handlePaginationChange,
-    scroll
-}) => {
+                     data,
+                     onChangeSubTab,
+                     activeTab,
+                     currentPage,
+                     totalSize,
+                     handlePaginationChange,
+                     scroll
+                 }) => {
     const [activeTable, changeTable] = useState(CreatedCrossNegativePAT);
-    const { count, loading, productId } = useSelector(state => ({
+    const {count, loading, productId} = useSelector(state => ({
         count: state.reports.counts['new-pats'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
