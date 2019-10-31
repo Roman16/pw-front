@@ -55,17 +55,26 @@
 .custom-reports-table {
   height: calc(100% - 93px);
 
+  table {
+    width: 100%;
+    table-layout:fixed;
+    tr {
+      width: 100%;
+    }
+  }
   thead {
     display: block;
+    width: 100%;
 
     th {
+      text-align: left;
       padding: 15px 8px 15px 16px;
       font-weight: 500;
       font-size: 14px;
       color: #343C5A;
 
       &:first-child {
-        min-width: 20px;
+        min-width: 40px;
         text-align: center;
       }
     }
@@ -73,8 +82,8 @@
 
   tbody {
     display: block;
-    overflow-y: auto;    /* Trigger vertical scroll    */
-    overflow-x: hidden;  /* Hide the horizontal scroll */
+    overflow-y: auto;
+    overflow-x: hidden;
 
     tr {
       border-bottom: 1px solid #C9CBD4;
