@@ -42,7 +42,7 @@ const defaultKeys = [
         title: 'PAT Value',
         dataIndex: 'PatValue',
         key: 'PatValue',
-        width: '100px',
+        width: '132px',
     }
 ];
 
@@ -54,14 +54,14 @@ const columns = {
             dataIndex: 'acos',
             key: 'acos',
             render: text => <span>{text}%</span>,
-            width: 100,
+            width: '132px',
         },
         {
             title: <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text}%</span>,
-            width: 150,
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '130px',
         },
         {
             ...bidActionField
@@ -79,7 +79,7 @@ const columns = {
             width: '120px',
         },
         {
-            title: <TitleInfo title="Target Impressions"/>,
+            title: <TitleInfo title={<span>Target <br/> Impressions</span>}/>,
             dataIndex: 'targetImpressions',
             key: 'targetImpressions',
             width: '150px',
@@ -97,15 +97,15 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            render: text => <span>{text}%</span>,
-            width: 100,
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '132px',
         },
         {
             title: <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text}%</span>,
-            width: 150,
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '132px',
         },
         {
             ...pausePatActionField
@@ -120,14 +120,14 @@ const columns = {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConvRate',
             key: 'averageConvRate',
-            render: text => <span>{text}%</span>,
-            width: 200,
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '132px',
         },
         {
             title: <TitleInfo title="Clicks"/>,
             dataIndex: 'clicks',
             key: 'clicks',
-            width: 100,
+            width: '132px',
         },
         {
             ...pausePatActionField

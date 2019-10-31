@@ -1,13 +1,66 @@
-.custom-reports-table {
-  .table-head {
-    display: flex;
-    justify-content: flex-start;
+//.custom-reports-table {
+//  height: 90%;
+//  overflow: auto;
+//
+//  .table-head {
+//    height: 10%;
+//    display: flex;
+//    justify-content: flex-start;
+//    border-bottom: 1px solid #C9CBD4;
+//
+//    & > div {
+//      display: flex;
+//      align-items: center;
+//      padding: 15px 8px 15px 16px;
+//      font-weight: 500;
+//      font-size: 14px;
+//      color: #343C5A;
+//
+//      &:first-child {
+//        min-width: 20px;
+//        text-align: center;
+//      }
+//    }
+//  }
+//
+//  .table-body {
+//    overflow-y: auto;
+//    height: 75%;
+//
+//    .table-body__row {
+//      display: flex;
+//      justify-content: flex-start;
+//      border-bottom: 1px solid #C9CBD4;
+//
+//      &:last-child {
+//        border: 0;
+//      }
+//
+//      & > div {
+//        padding: 15px 8px 15px 16px;
+//        display: flex;
+//        align-items: center;
+//
+//        &:first-child {
+//          min-width: 20px;
+//          font-size: 14px;
+//          color: #343C5A;
+//          font-weight: 500;
+//        }
+//      }
+//    }
+//  }
+//}
 
-    & > div {
-      display: flex;
-      align-items: center;
+.custom-reports-table {
+  height: calc(100% - 93px);
+
+  thead {
+    display: block;
+
+    th {
       padding: 15px 8px 15px 16px;
-      font-weight: bold;
+      font-weight: 500;
       font-size: 14px;
       color: #343C5A;
 
@@ -18,14 +71,19 @@
     }
   }
 
-  .table-body {
-    overflow-y: auto;
-    .table-body__row {
-      display: flex;
-      justify-content: flex-start;
-      border-top: 1px solid #C9CBD4;
+  tbody {
+    display: block;
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden;  /* Hide the horizontal scroll */
 
-      & > div {
+    tr {
+      border-bottom: 1px solid #C9CBD4;
+
+      &:last-child {
+        border: 0;
+      }
+
+      & > td {
         padding: 15px 8px 15px 16px;
 
         &:first-child {
@@ -34,7 +92,13 @@
           color: #343C5A;
           font-weight: 500;
         }
+
+        &:last-child {
+          text-align: right;
+        }
       }
     }
   }
+
+
 }

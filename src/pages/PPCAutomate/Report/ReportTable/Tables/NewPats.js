@@ -12,38 +12,40 @@ const defaultKeys = [
     {
         ...indexField
     },
-    {
-        title: 'Campaign',
-        dataIndex: 'campaign',
-        key: 'campaign',
-        width: '150px',
-    },
-    {
-        title: 'Ad Group',
-        dataIndex: 'adGroup',
-        key: 'adGroup',
-        width: '150px',
-    },
-    {
-        title: <TitleInfo title="PAT Type"/>,
-        dataIndex: 'PatType',
-        key: 'PatType',
-        width: '150px',
-        render: text => <span className='capitalize-field'>{text}</span>
-    },
-    {
-        ...patIntentField
-    },
-    {
-        title: 'PAT Value',
-        dataIndex: 'PatValue',
-        key: 'PatValue'
-    }
+
 ];
 
 const columns = {
     [CreatedCrossNegativePAT]: [
         ...defaultKeys,
+        {
+            title: 'Campaign',
+            dataIndex: 'campaign',
+            key: 'campaign',
+            width: '200px',
+        },
+        {
+            title: 'Ad Group',
+            dataIndex: 'adGroup',
+            key: 'adGroup',
+            width: '200px',
+        },
+        {
+            title: <TitleInfo title="PAT Type"/>,
+            dataIndex: 'PatType',
+            key: 'PatType',
+            width: '240px',
+            render: text => <span className='capitalize-field'>{text}</span>
+        },
+        {
+            ...patIntentField
+        },
+        {
+            title: 'PAT Value',
+            dataIndex: 'PatValue',
+            key: 'PatValue',
+            width: '200px',
+        },
         {
             ...createdKeywordsActionField
         },
@@ -54,41 +56,84 @@ const columns = {
     [CreatedPATCST]: [
         ...defaultKeys,
         {
+            title: 'Campaign',
+            dataIndex: 'campaign',
+            key: 'campaign',
+            width: '120px',
+        },
+        {
+            title: 'Ad Group',
+            dataIndex: 'adGroup',
+            key: 'adGroup',
+            width: '120px',
+        },
+        {
+            title: <TitleInfo title="PAT Type"/>,
+            dataIndex: 'PatType',
+            key: 'PatType',
+            width: '120px',
+            render: text => <span className='capitalize-field'>{text}</span>
+        },
+        {
+            ...patIntentField
+        },
+        {
+            title: 'PAT Value',
+            dataIndex: 'PatValue',
+            key: 'PatValue',
+            width: '150px',
+        },
+        {
             title: 'Bid',
             dataIndex: 'bid',
             key: 'bid',
-            render: text => <span>${text}</span>
+            render: text => <span>${text}</span>,
+            width: '100px',
         },
         {
             title: 'Customer Search Term',
             dataIndex: 'customerSearchTerm',
-            key: 'customerSearchTerm'
+            key: 'customerSearchTerm',
+            width: '120px',
         },
         {
             title: 'CST Clicks',
             dataIndex: 'CSTClicks',
-            key: 'CSTClicks'
+            key: 'CSTClicks',
+            width: '150px',
         },
         {
             title: 'CST ACOS',
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '150px',
         },
         {
             title: 'CST CPC',
             dataIndex: 'CSTCPC',
             key: 'CSTCPC',
-            render: text => <span>${text}</span>
+            render: text => <span>${text}</span>,
+            width: '120px',
         },
         {
             title: 'Targe ACoS',
             dataIndex: 'TargetACoS',
             key: 'TargetACoS',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '150px',
         },
         {
-            ...createdKeywordsActionField
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            width: '60px',
+            className: 'left-border',
+            render: () => (
+                <div className='action-field'>
+                    Created
+                </div>
+            )
         },
         {
             ...infoField

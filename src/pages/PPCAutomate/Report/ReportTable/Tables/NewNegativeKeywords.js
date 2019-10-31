@@ -16,23 +16,25 @@ const defaultKeys = [
         title: 'Campaign',
         dataIndex: 'campaign',
         key: 'campaign',
-        width: '150px',
+        width: '200px',
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
         key: 'adGroup',
-        width: '150px',
+        width: '200px',
     },
     {
         title: 'Customer Search Term',
         dataIndex: 'customerSearchTerm',
-        key: 'customerSearchTerm'
+        key: 'customerSearchTerm',
+        width: '200px',
     },
     {
         title: 'Negative Match Type',
         dataIndex: 'negativeMatchType',
-        key: 'negativeMatchType'
+        key: 'negativeMatchType',
+        width: '160px',
     }
 ];
 
@@ -43,16 +45,27 @@ const columns = {
             title: 'CST ACoS',
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '160px',
         },
         {
             title: <TitleInfo title="Target"/>,
             dataIndex: 'target',
             key: 'target',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '160px',
         },
         {
-            ...createdKeywordsActionField
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            width: '100px',
+            className: 'left-border',
+            render: () => (
+                <div className='action-field'>
+                    Created
+                </div>
+            )
         },
         {
             ...infoField
@@ -63,15 +76,26 @@ const columns = {
         {
             title: 'Average Conversion Rate',
             dataIndex: 'averageConversionRate',
-            key: 'averageConversionRate'
+            key: 'averageConversionRate',
+            width: '180px',
         },
         {
             title: 'CST Clicks',
             dataIndex: 'CSTClicks',
-            key: 'CSTClicks'
+            key: 'CSTClicks',
+            width: '160px',
         },
         {
-            ...createdKeywordsActionField
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            width: '100px',
+            className: 'left-border',
+            render: () => (
+                <div className='action-field'>
+                    Created
+                </div>
+            )
         },
         {
             ...infoField

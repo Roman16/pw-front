@@ -42,7 +42,7 @@ class StrategyInfo extends Component {
                     <div key={key} className="info-item">
                         <div className="info-caption small">{caption}</div>
 
-                        <StrategyItem caption={caption} value={value} />
+                        <StrategyItem caption={caption} value={value} info/>
                         <div>
                             <div className="info-caption large">{caption}</div>
                             <div>{text}</div>

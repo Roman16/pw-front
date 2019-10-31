@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, createdKeywordsActionField, patIntentField, infoField} from './const';
+import {indexField, patIntentField, infoField} from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from "react-redux";
 import CustomTable from "./CustomTable";
@@ -16,13 +16,13 @@ const defaultKeys = [
         title: 'Campaign',
         dataIndex: 'campaign',
         key: 'campaign',
-        width: '150px',
+        width: '160px',
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
         key: 'adGroup',
-        width: '150px',
+        width: '160px',
     },
     {
         title: <TitleInfo title="PAT Type"/>,
@@ -37,12 +37,14 @@ const defaultKeys = [
     {
         title: 'PAT Value',
         dataIndex: 'PatValue',
-        key: 'PatValue'
+        key: 'PatValue',
+        width: '130px',
     },
     {
-        title: 'Customer Search Term',
+        title: <span>Customer <br/> Search Term</span>,
         dataIndex: 'customerSearchTerm',
-        key: 'customerSearchTerm'
+        key: 'customerSearchTerm',
+        width: '150px',
     }
 ];
 
@@ -53,16 +55,27 @@ const columns = {
             title: 'CST ACOS',
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text && `${text}%` }</span>,
+            width: '120px',
         },
         {
             title: 'Targe ACoS',
             dataIndex: 'target',
             key: 'target',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text && `${text}%` }</span>,
+            width: '110px',
         },
         {
-            ...createdKeywordsActionField
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            width: '60px',
+            className: 'left-border',
+            render: () => (
+                <div className='action-field'>
+                    Created
+                </div>
+            )
         },
         {
             ...infoField
@@ -74,16 +87,27 @@ const columns = {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConversionRate',
             key: 'averageConversionRate',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text && `${text}%` }</span>,
+            width: '120px',
         },
         {
             title: 'CST Clicks',
             dataIndex: 'CSTClicks',
-            key: 'CSTClicks'
+            key: 'CSTClicks',
+            width: '110px',
         },
 
         {
-            ...createdKeywordsActionField
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            width: '100px',
+            className: 'left-border',
+            render: () => (
+                <div className='action-field'>
+                    Created
+                </div>
+            )
         },
         {
             ...infoField

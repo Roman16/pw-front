@@ -14,12 +14,6 @@ const createdKeywordCST = 'created-keyword-cst';
 const defaultKeys = [
     {
         ...indexField
-    },
-    {
-        title: 'Campaign',
-        dataIndex: 'campaign',
-        key: 'campaign',
-        width: '150px',
     }
 ];
 
@@ -27,28 +21,36 @@ const columns = {
     [createdCampaign]: [
         ...defaultKeys,
         {
+            title: 'Campaign',
+            dataIndex: 'campaign',
+            key: 'campaign',
+            width: '200px',
+        },
+        {
             title: 'Ad Group',
             dataIndex: 'adGroup',
             key: 'adGroup',
-            width: '150px',
+            width: '200px',
         },
         {
             title: 'Campaign Targeting Type',
             dataIndex: 'campaignTargetingType',
-            key: 'campaignTargetingType'
+            key: 'campaignTargetingType',
+            width: '200px',
         },
         {
             title: 'Daily Budget',
             dataIndex: 'dailyBudget',
             key: 'dailyBudget',
-            render: text => <span>${text}</span>
-
+            render: text => <span>${text}</span>,
+            width: '160px',
         },
         {
             title: 'Start Date.',
             dataIndex: 'startDate',
             key: 'startDate',
-            render: text => moment(text).format('Y/M/D')
+            render: text => moment(text).format('Y/M/D'),
+            width: '160px',
         },
         {
             ...createdKeywordsActionField
@@ -60,16 +62,23 @@ const columns = {
     [createdAdGroup]: [
         ...defaultKeys,
         {
+            title: 'Campaign',
+            dataIndex: 'campaign',
+            key: 'campaign',
+            width: '360px',
+        },
+        {
             title: 'Ad Group',
             dataIndex: 'adGroup',
             key: 'adGroup',
-            width: '150px',
+            width: '360px',
         },
         {
             title: 'Default Bid',
             dataIndex: 'defaultBid',
             key: 'defaultBid',
-            render: text => <span>${text}</span>
+            render: text => <span>${text}</span>,
+            width: '300px',
         },
         {
             ...createdKeywordsActionField
@@ -81,20 +90,28 @@ const columns = {
     [createdProductAd]: [
         ...defaultKeys,
         {
+            title: 'Campaign',
+            dataIndex: 'campaign',
+            key: 'campaign',
+            width: '300px',
+        },
+        {
             title: 'Ad Group',
             dataIndex: 'adGroup',
             key: 'adGroup',
-            width: '150px',
+            width: '280px',
         },
         {
             title: 'ASIN',
             dataIndex: 'asin',
-            key: 'asin'
+            key: 'asin',
+            width: '240px',
         },
         {
             title: 'SKU',
             dataIndex: 'sku',
-            key: 'sku'
+            key: 'sku',
+            width: '240px',
         },
         {
             ...createdKeywordsActionField
@@ -106,15 +123,22 @@ const columns = {
     [createdCrossNegativeKeyword]: [
         ...defaultKeys,
         {
+            title: 'Campaign',
+            dataIndex: 'campaign',
+            key: 'campaign',
+            width: '360px',
+        },
+        {
             title: 'Ad Group',
             dataIndex: 'adGroup',
             key: 'adGroup',
-            width: '150px',
+            width: '360px',
         },
         {
             title: 'Keyword',
             dataIndex: 'keyword',
-            key: 'keyword'
+            key: 'keyword',
+            width: '280px',
         },
         {
             ...createdKeywordsActionField
@@ -126,52 +150,75 @@ const columns = {
     [createdKeywordCST]: [
         ...defaultKeys,
         {
+            title: 'Campaign',
+            dataIndex: 'campaign',
+            key: 'campaign',
+            width: '160px',
+        },
+        {
             title: 'Campaign Type',
             dataIndex: 'campaignTargetingType',
-            key: 'campaignTargetingType'
+            key: 'campaignTargetingType',
+            width: '160px',
         },
         {
             title: 'Customer Search Term',
             dataIndex: 'customerSearchTerm',
-            key: 'customerSearchTerm'
+            key: 'customerSearchTerm',
+            width: '200px',
         },
         {
             title: 'Match Type',
             dataIndex: 'matchType',
-            key: 'matchType'
+            key: 'matchType',
+            width: '110px',
         },
         {
             title: 'Bid',
             dataIndex: 'bid',
             key: 'bid',
-            render: text => <span>${text}</span>
+            render: text => <span>${text}</span>,
+            width: '100px',
         },
         {
             title: 'CST Clicks',
             dataIndex: 'CSTClicks',
-            key: 'CSTClicks'
+            key: 'CSTClicks',
+            width: '110px',
         },
         {
             title: 'CST ACOS',
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '120px',
 
         },
         {
             title: 'CST CPC',
             dataIndex: 'CSTCPC',
             key: 'CSTCPC',
-            render: text => <span>${text}</span>
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '100px',
         },
         {
             title: 'Targe ACoS',
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text}%</span>
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '120px',
         },
         {
-            ...createdKeywordsActionField
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            width: '100px',
+            className: 'left-border',
+            render: () => (
+                <div className='action-field'>
+                    Created
+                </div>
+            )
         },
         {
             ...infoField
