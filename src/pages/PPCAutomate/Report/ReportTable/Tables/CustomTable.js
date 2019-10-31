@@ -78,7 +78,7 @@ const CustomTable = ({
             {/*    </tbody>*/}
             {/*</table>*/}
 
-            {totalSize > 10 && !loading && (
+            {totalSize > 10 && (
                 <Pagination
                     defaultCurrent={1}
                     pageSize={10}

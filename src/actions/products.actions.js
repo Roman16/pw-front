@@ -10,9 +10,9 @@ export const productsActions = {
     updateOptions,
 };
 
-function fetchProducts(params) {
+function fetchProducts(paginationParams) {
     return dispatch => {
-        productsServices.getProducts(params)
+        productsServices.getProducts(paginationParams)
             .then(res => {
                 dispatch({
                     type: productsConstants.SET_PRODUCT_LIST,

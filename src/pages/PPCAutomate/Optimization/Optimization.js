@@ -172,7 +172,7 @@ class Optimization extends Component {
 
                         <LastReports
                             isLess={isLess}
-                            productId={selectedProduct.id}
+                            productId={selectedAll ? 'all' : selectedProduct.id}
                         />
                     </div>
                 </div>

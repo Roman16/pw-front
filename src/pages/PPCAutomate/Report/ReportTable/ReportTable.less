@@ -22,11 +22,6 @@
         }
     }
 
-    .anticon {
-        color: #656a84;
-        opacity: 0.5;
-    }
-
     .ant-table-thead > tr > th {
         background: #fff;
         padding: 15px 8px 15px 16px;
@@ -60,8 +55,48 @@
     .ant-tabs {
         height: 90%;
 
-        .ant-tabs-top-content {
-            height: 95%;
+        .tab-name-count {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: inherit;
+            border: 1px solid #c9cbd4;
+            color: #000000;
+            min-width: 36px;
+            height: 16px !important;
+            border-radius: 12px;
+            margin: 0 0 0 10px;
+            font-weight: 500;
+        }
+
+        .ant-tabs {
+            height: 90%;
+
+            .ant-tabs-top-content {
+                height: 95%;
+
+                .ant-tabs-tabpane-active,
+                .ReportItemTable {
+                    height: 100%;
+                }
+            }
+        }
+
+        .action-field {
+            span {
+                width: max-content;
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .report-table {
+            height: 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: @second-default-dark;
+            margin: 0 0 12px 0;
 
             .ant-tabs-tabpane-active,
             .report-item-table {
