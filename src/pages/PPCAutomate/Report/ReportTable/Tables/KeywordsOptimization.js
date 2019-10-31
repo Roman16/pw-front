@@ -18,13 +18,13 @@ const defaultKeys = [
         title: 'Campaign',
         dataIndex: 'campaign',
         key: 'campaign',
-        width: '200px',
+        width: '180px',
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
         key: 'adGroup',
-        width: '200px',
+        width: '180px',
     },
     {
         title: 'Keyword',
@@ -48,15 +48,15 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            render: text => <span>{text}%</span>,
-            width: '132px',
+            render: text => <span>{text && `${text}%`}</span>,
+            // width: '132px',
         },
         {
             title: <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text}%</span>,
-            width: '130px',
+            render: text => <span>{text && `${text}%`}</span>,
+            // width: '130px',
         },
         {
             ...bidActionField
@@ -71,7 +71,7 @@ const columns = {
             title: 'Impressions',
             dataIndex: 'impressions',
             key: 'impressions',
-            width: '132px',
+            // width: '132px',
         },
         {
             title: <TitleInfo title="Target Impressions"/>,
@@ -92,15 +92,15 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            render: text => <span>{text}%</span>,
-            width: '132px',
+            render: text => <span>{text && `${text}%`}</span>,
+            // width: '132px',
         },
         {
             title: <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
-            render: text => <span>{text}%</span>,
-            width: '130px',
+            render: text => <span>{text && `${text}%`}</span>,
+            // width: '130px',
         },
         {
             ...pauseKeywordsActionField
@@ -115,14 +115,14 @@ const columns = {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConvRate',
             key: 'averageConvRate',
-            render: text => <span>{text}%</span>,
-            width: '132px',
+            render: text => <span>{text && `${text}%`}</span>,
+            // width: '132px',
         },
         {
             title: <TitleInfo title="Clicks"/>,
             dataIndex: 'clicks',
             key: 'clicks',
-            width: '120px',
+            // width: '120px',
         },
         {
             ...pauseKeywordsActionField

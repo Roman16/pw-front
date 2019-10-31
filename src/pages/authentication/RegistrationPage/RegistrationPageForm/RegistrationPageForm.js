@@ -1,9 +1,9 @@
 import React from 'react';
 import {Col, Form, notification, Row, Spin} from 'antd';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import {Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 
-import { userActions } from '../../../../actions/user.actions';
+import {userActions} from '../../../../actions/user.actions';
 import {Elements, StripeProvider} from "react-stripe-elements";
 import StripeForm from "./StripeForm";
 
@@ -43,6 +43,7 @@ class RegistrationPage extends React.Component {
         this.setState({
             isLoading: true
         });
+
         if (password.length < 6) {
             notification.error({
                 message: 'The password must be at least 6 characters.',
@@ -58,22 +59,23 @@ class RegistrationPage extends React.Component {
                 isLoading: false
             });
             return;
-        } else if (!fieldEmailValid) {
-            notification.error({
-                message: 'Invalid email address',
-                style: {
-                    width: 600,
-                    marginLeft: 335 - 600
-                },
-                placement: 'bottomRight',
-                bottom: 20,
-                duration: 5
-            });
-            this.setState({
-                isLoading: false
-            });
-            return;
         }
+        // else if (!fieldEmailValid) {
+        //     notification.error({
+        //         message: 'Invalid email address',
+        //         style: {
+        //             width: 600,
+        //             marginLeft: 335 - 600
+        //         },
+        //         placement: 'bottomRight',
+        //         bottom: 20,
+        //         duration: 5
+        //     });
+        //     this.setState({
+        //         isLoading: false
+        //     });
+        //     return;
+        // }
 
         this.props.regist({
             name,
@@ -90,8 +92,8 @@ class RegistrationPage extends React.Component {
         });
     };
 
-    onChange = ({ target }) => {
-        this.setState({ [target.name]: target.value });
+    onChange = ({target}) => {
+        this.setState({[target.name]: target.value});
     };
 
     render() {
@@ -110,18 +112,17 @@ class RegistrationPage extends React.Component {
         if (isLoading) {
             return (
                 <div className="example">
-                    <Spin size="large" />
+                    <Spin size="large"/>
                 </div>
             );
         }
 
         if (registerSuccess) {
-            return <Redirect to="/optimization" />;
+            return <Redirect to="/optimization"/>;
         }
 
         const isLess = email.length === 0;
 
-        console.log(stripeKey);
         return (
             <form className="form " id="payment-form2" onSubmit={this.onSubmit}>
                 <Row>
@@ -226,10 +227,10 @@ class RegistrationPage extends React.Component {
                     <Col xs={24} sm={24} md={10}>
                         <Row type="flex">
                             <Col xs={12} sm={12} md={12}>
-                                <img src="/scrill.svg" alt="scrill" />
+                                <img src="/scrill.svg" alt="scrill"/>
                             </Col>
                             <Col xs={12} sm={12} md={12}>
-                                <img src="/visa.svg" alt="visa" />
+                                <img src="/visa.svg" alt="visa"/>
                             </Col>
                         </Row>
                     </Col>
