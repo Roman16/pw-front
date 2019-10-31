@@ -140,59 +140,59 @@
                     column-gap: 20px;
                 }
             }
-        }
 
-        .less-more-control {
-            grid-area: control;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            position: relative;
-            transition: all 0.5s ease-in;
-
-            &.less {
-                height: 25px;
-                top: 0;
-                margin-top: 5px;
-            }
-
-            &.more {
-                height: 0;
-                top: 10px;
-                margin: 0;
-            }
-
-            .icon {
-                width: 32px;
-                height: 25px;
-                border: 1px solid #bdc6cf;
-                text-align: center;
-                background: #fff;
-                cursor: pointer;
+            .less-more-control {
+                grid-area: control;
                 display: flex;
                 justify-content: center;
-                align-items: center;
+                align-items: flex-end;
+                position: relative;
                 transition: all 0.5s ease-in;
 
-                i {
-                    color: @action-color;
-                    font-size: 18px;
-                    transition: all 0.5s ease-in;
-                }
-
                 &.less {
-                    border-radius: 14px 14px 0 0;
-                    border-bottom: 0;
+                    height: 25px;
+                    top: 0;
+                    margin-top: 5px;
                 }
 
                 &.more {
-                    border: none;
-                    border-radius: 0 0 14px 14px;
-                    border-top: 0;
-                    position: absolute;
+                    height: 0;
+                    top: 10px;
+                    margin: 0;
+                }
+
+                .icon {
+                    width: 32px;
+                    height: 25px;
+                    border: 1px solid #bdc6cf;
+                    text-align: center;
+                    background: #fff;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transition: all 0.5s ease-in;
 
                     i {
-                        transform: rotateZ(180deg);
+                        color: @action-color;
+                        font-size: 18px;
+                        transition: all 0.5s ease-in;
+                    }
+
+                    &.less {
+                        border-radius: 14px 14px 0 0;
+                        border-bottom: 0;
+                    }
+
+                    &.more {
+                        border: none;
+                        border-radius: 0 0 14px 14px;
+                        border-top: 0;
+                        position: absolute;
+
+                        i {
+                            transform: rotateZ(180deg);
+                        }
                     }
                 }
             }

@@ -75,8 +75,6 @@
 
     .terminal-content {
         margin: 0;
-        max-height: calc(100vh - 440px - 77px - 42px - 175px);
-        transition: all 0.5s;
 
         &.auto {
             overflow: auto;
@@ -93,7 +91,7 @@
         }
 
         &.less {
-            max-height: calc(100vh - 440px - 77px - 42px - 175px);
+            max-height: calc(100vh - 440px - 77px - 42px - 200px);
             transition: all 0s ease-in;
         }
 
@@ -103,7 +101,7 @@
 
         @media (max-width: 1814px) {
             &.less {
-                max-height: calc(100vh - 531px - 77px - 42px - 175px);
+                max-height: calc(100vh - 531px - 77px - 42px - 200px);
             }
 
             &.less.hidden {
@@ -113,12 +111,12 @@
 
         @media (max-width: @big-desktop) {
             &.more {
-                // max-height: calc(100vh - 101px - 77px - 42px - 175px);
+                // max-height: calc(100vh - 101px - 77px - 42px - 200px);
                 max-height: 620px;
             }
 
             &.less {
-                max-height: calc(100vh - 634px - 77px - 42px - 175px);
+                max-height: calc(100vh - 634px - 77px - 42px - 200px);
             }
 
             &.less.hidden {
@@ -128,7 +126,7 @@
 
         @media (max-width: @desktop) {
             &.more {
-                max-height: calc(100vh - 101px - 77px - 42px - 175px);
+                max-height: calc(100vh - 101px - 77px - 42px - 200px);
             }
 
             &.more.hidden {
