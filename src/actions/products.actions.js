@@ -19,7 +19,7 @@ function fetchProducts(paginationParams) {
                     payload: res
                 });
 
-                if (res.result.length > 0) {
+                if (res.result && res.result.length > 0) {
                     dispatch(fetchProductDetails(res.result[0]));
                 }
             });

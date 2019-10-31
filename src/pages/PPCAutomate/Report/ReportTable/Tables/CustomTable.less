@@ -1,6 +1,7 @@
 .custom-reports-table {
+    display: flex;
+    flex-direction: column;
     height: 90%;
-    padding: 0 0 20px;
 
     .table-head {
         height: 10%;
@@ -29,7 +30,8 @@
 
     .table-body {
         overflow-y: auto;
-        height: 75%;
+        flex: 1;
+        margin: 0 0 20px 0;
 
         .table-body__row {
             display: flex;
@@ -66,7 +68,7 @@
     }
 
     .ant-pagination {
-        margin: 10px !important;
+        margin-bottom: 30px !important;
     }
 }
 
