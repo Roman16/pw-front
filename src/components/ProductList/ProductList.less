@@ -25,11 +25,38 @@
     .select-all-products {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         margin: 20px 0;
+
+        label {
+            margin: 0 10px 0 0;
+            font-weight: 500;
+        }
+
+        .ant-switch {
+            background: #fff;
+            border: 1px solid rgba(212, 218, 222, 0.32);
+        }
+
+        .ant-switch::after {
+            background: #C9CBD4;
+            width: 16px;
+            height: 16px;
+            top: 2px;
+        }
+
+        .ant-switch-checked::after {
+            background: #8FD39D;
+        }
+
+        .ant-switch-checked {
+            border: 1px solid #8FD39D;
+        }
 
         .ant-btn {
             border: none;
             border-radius: 8px;
+            padding: 0 10px;
         }
     }
 

@@ -61,7 +61,7 @@ const CustomTable = ({columns, dataSource, totalSize, onChangePagination, curren
             {/*</table>*/}
 
 
-            {(totalSize > 10) && !loading && < Pagination
+            {totalSize > 10 && < Pagination
                 defaultCurrent={1}
                 pageSize={10}
                 current={currentPage}

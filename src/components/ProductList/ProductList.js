@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ProductItem from './ProductItem';
 import { connect } from 'react-redux';
-import { Input, Pagination } from 'antd';
+import { Input, Pagination, Switch } from 'antd';
 import { productsActions } from '../../actions/products.actions';
 import './ProductList.less';
 import SelectAllProduct from './SelectAllProducts';
@@ -13,6 +13,7 @@ class ProductList extends Component {
     state = {
         isSelectedAll: false,
         prevProductId: '',
+        onlyOptimization: false,
         paginationParams: {
             size: 10,
             page: 1,
@@ -20,7 +21,7 @@ class ProductList extends Component {
         }
     };
 
-    getProducts = () => this.props.getAllProducts(this.state.paginationParams);
+    getProducts = () => this.props.getAllProducts({...this.state.paginationParams, onlyOptimization: this.state.onlyOptimization});
 
     handleChangePagination = page => {
         this.setState(
@@ -33,6 +34,12 @@ class ProductList extends Component {
             },
             this.getProducts
         );
+    };
+
+    handleChangeSwitch = (event) => {
+        this.setState({
+            onlyOptimization: event
+        }, this.getProducts)
     };
 
     handleSearch = debounce(500, false, str => {
@@ -115,6 +122,13 @@ class ProductList extends Component {
                             selectedSize={selectedSize}
                             isSelectedAll={isSelectedAll}
                         />
+
+                        <div className="active-only">
+                            <label htmlFor="">On optimization only</label>
+                            <Switch
+                            onChange={this.handleChangeSwitch}
+                            />
+                        </div>
                     </div>
                 </div>
 

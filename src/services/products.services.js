@@ -10,8 +10,8 @@ export const productsServices = {
     updateProductSettings
 };
 
-function getProducts({size, page, searchStr=''}) {
-    return api('get', `${productsUrls.allProducts}?search_query=${searchStr}&page=${page}&size=${size}`,null,null,true, productsConstants.SET_PRODUCT_LIST)
+function getProducts({size, page, searchStr='', onlyOptimization}) {
+    return api('get', `${productsUrls.allProducts}?search_query=${searchStr}&page=${page}&size=${size}&optimization=${onlyOptimization}`,null,null,true, productsConstants.SET_PRODUCT_LIST)
 }
 
 function getProductsSettingsList({size, page, searchStr=''}) {
