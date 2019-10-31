@@ -44,7 +44,7 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
                 {item.subMenu.map(subItem => {
                     return subItem.className === 'ppcScaner' ? (
                         <Menu.Item {...props} key={subItem.link}>
-                            <Link to="/ppc-scanner">
+                            <Link to={{ pathname: '/ppc-scanner', state: 'flushDeal' }}>
                                 <span>{subItem.title}</span>
                             </Link>
                         </Menu.Item>

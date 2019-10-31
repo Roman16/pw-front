@@ -93,19 +93,19 @@ const columns = {
             title: 'Ad Group',
             dataIndex: 'adGroup',
             key: 'adGroup',
-            width: '280px',
+            width: '300px',
         },
         {
             title: 'ASIN',
             dataIndex: 'asin',
             key: 'asin',
-            width: '200px',
+            // width: '200px',
         },
         {
             title: 'SKU',
             dataIndex: 'sku',
             key: 'sku',
-            width: '200px',
+            // width: '200px',
         },
         {
             title: 'Action',
@@ -141,7 +141,7 @@ const columns = {
             title: 'Keyword',
             dataIndex: 'keyword',
             key: 'keyword',
-            width: '360px',
+            // width: '360px',
         },
         {
             ...createdKeywordsActionField
@@ -159,9 +159,9 @@ const columns = {
             width: '160px',
         },
         {
-            title: 'Campaign Type',
-            dataIndex: 'campaignTargetingType',
-            key: 'campaignTargetingType',
+            title: 'Ad Group',
+            dataIndex: 'adGroup',
+            key: 'adGroup',
             width: '160px',
         },
         {
