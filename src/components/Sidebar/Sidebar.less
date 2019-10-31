@@ -110,6 +110,35 @@
             }
         }
 
+        .ant-menu-item > a[href='/analytics'],
+        .ant-menu-item > a[href='/zero-to-hero'],
+        .ant-menu-item > a[href='/ppc/dashboard'] {
+            pointer-events: none;
+        }
+
+        .ant-menu-item > a[href='/analytics'] > span,
+        .ant-menu-item > a[href='/zero-to-hero'] > span,
+        .ant-menu-item > a[href='/ppc/dashboard'] > span {
+            position: relative;
+        }
+
+        .ant-menu-item > a[href='/analytics'] > span::after,
+        .ant-menu-item > a[href='/zero-to-hero'] > span::after,
+        .ant-menu-item > a[href='/ppc/dashboard'] > span::after {
+            width: 40px;
+            height: 16px;
+            position: absolute;
+            top: 0;
+            right: -43px;
+            content: 'soon';
+            background-color: #b6b6fb;
+            border-radius: 4px;
+            font-size: 12px;
+            color: @third-default-dark;
+            text-align: center;
+            line-height: 16px;
+        }
+
         .ant-menu-submenu-open
             > ul
             > .ant-menu-item-selected[role='menuitem']

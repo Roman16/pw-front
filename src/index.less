@@ -1,289 +1,291 @@
 @import './style/variables.less';
 
 html {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
-  margin: 0;
-  padding: 0;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
 }
 
 img {
-  max-width: 100%;
-  height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 .ant-btn-primary {
-  background-color: @action-color !important;
+    background-color: @action-color !important;
 
-  &:hover {
-    background-color: @second-default-dark !important;
-  }
+    &:hover {
+        background-color: @second-default-dark !important;
+    }
 }
 
 .main-pages {
-  display: flex;
+    display: flex;
 
-  .main-container {
-    position: relative;
-    flex: 1;
-    width: 100%;
-    height: 100%;
-    min-height: 100vh;
-    overflow: auto;
-    background: #f5f5ff;
+    .main-container {
+        position: relative;
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        min-height: 100vh;
+        overflow: auto;
+        background: #f5f5ff;
 
-    & > div {
-      padding: 24px;
+        & > div {
+            padding: 24px;
 
-      @media (max-width: 1669px) {
-        padding: 10px 10px;
-      }
+            @media (max-width: @big-desktop) {
+                padding: 24px 16px;
+            }
+        }
     }
-  }
 }
 
 .ant-pagination {
-  display: flex;
-  justify-content: flex-end;
-  padding: 20px;
-  margin: 16px 0 0 0 !important;
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    margin: 16px 0 0 0 !important;
 
-  .ant-pagination-item {
-    min-width: 32px;
-    height: 32px;
-    border: 0;
-    border-radius: 8px;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    opacity: 0.8;
+    .ant-pagination-item {
+        min-width: 32px;
+        height: 32px;
+        border: 0;
+        border-radius: 8px;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        opacity: 0.8;
 
-    &:hover {
-      box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
-      0px 0px 20px rgba(142, 147, 192, 0.08);
+        &:hover {
+            box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
+                0px 0px 20px rgba(142, 147, 192, 0.08);
+        }
+
+        &[title] > a {
+            border: inherit !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #363694;
+            font-weight: bold;
+        }
+
+        &.ant-pagination-jump-prev,
+        &.ant-pagination-jump-next {
+            box-shadow: none;
+            border: 0;
+        }
+
+        &.ant-pagination-item-active {
+            box-shadow: @tooltip-shadow;
+        }
     }
 
-    &[title] > a {
-      border: inherit !important;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #363694;
-      font-weight: bold;
+    .ant-pagination-prev .ant-pagination-item-link,
+    .ant-pagination-next .ant-pagination-item-link {
+        border: 0;
+
+        i {
+            color: #6d6df6;
+            opacity: 1;
+        }
     }
 
-    &.ant-pagination-jump-prev,
-    &.ant-pagination-jump-next {
-      box-shadow: none;
-      border: 0;
+    .ant-pagination-jump-next
+        .ant-pagination-item-container
+        .ant-pagination-item-link-icon {
+        color: #6d6df6;
     }
 
-    &.ant-pagination-item-active {
-      box-shadow: @tooltip-shadow;
+    .ant-pagination-disabled {
+        display: none;
     }
-  }
-
-  .ant-pagination-prev .ant-pagination-item-link,
-  .ant-pagination-next .ant-pagination-item-link {
-    border: 0;
-
-    i {
-      color: #6D6DF6;
-      opacity: 1;
-    }
-  }
-
-  .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-link-icon {
-    color: #6D6DF6;
-  }
-
-  .ant-pagination-disabled {
-    display: none;
-  }
 }
 
 //progress bar
 #nprogress {
-  z-index: 100000;
+    z-index: 100000;
 
-  .bar {
-    background: @action-color !important;
-  }
+    .bar {
+        background: @action-color !important;
+    }
 
-  .spinner-icon {
-    border-top-color: @action-color !important;
-    border-left-color: @action-color !important;
-  }
+    .spinner-icon {
+        border-top-color: @action-color !important;
+        border-left-color: @action-color !important;
+    }
 }
 
 //check box
 .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: @action-color !important;
-  border-color: @action-color !important;
+    background-color: @action-color !important;
+    border-color: @action-color !important;
 }
 
 // calendar
 .ant-calendar-picker-container .ant-calendar {
-  border-radius: 8px;
+    border-radius: 8px;
 }
 
 .ant-calendar-panel {
-  display: flex;
-  flex-direction: row-reverse;
+    display: flex;
+    flex-direction: row-reverse;
 
-  // input hidde
-  .ant-calendar-input-wrap {
-    display: none;
-  }
+    // input hidde
+    .ant-calendar-input-wrap {
+        display: none;
+    }
 
-  .ant-calendar-range-middle {
-    left: 34%;
-  }
+    .ant-calendar-range-middle {
+        left: 34%;
+    }
 
-  .ant-calendar-range-right .ant-calendar-date-input-wrap {
-    margin-left: -183px;
-  }
+    .ant-calendar-range-right .ant-calendar-date-input-wrap {
+        margin-left: -183px;
+    }
 }
 
 .ant-calendar-footer {
-  width: 100px;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  background-color: @body-background;
+    width: 100px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    background-color: @body-background;
 }
 
 .ant-calendar-footer-extra,
 .ant-calendar-footer-btn {
-  height: 100%;
+    height: 100%;
 }
 
 .ant-calendar-footer-extra {
-  display: flex;
-  flex-flow: column;
-  justify-content: space-evenly;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
 }
 
 .ant-calendar-footer-extra > .ant-tag {
-  width: 7.5em;
-  height: 2.5em;
-  border: none;
-  border-radius: 0.6em;
-  line-height: 2.5em;
-  font-weight: 700;
-  background-color: transparent;
-  color: @action-color-dark;
-  transition: all 0.2s ease-in;
-  cursor: pointer;
+    width: 7.5em;
+    height: 2.5em;
+    border: none;
+    border-radius: 0.6em;
+    line-height: 2.5em;
+    font-weight: 700;
+    background-color: transparent;
+    color: @action-color-dark;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
 }
 
 .ant-calendar-footer-extra > .ant-tag:hover {
-  background-color: @action-color;
-  color: @white;
+    background-color: @action-color;
+    color: @white;
 }
 
 .ant-calendar-cell .ant-calendar-date {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 .ant-calendar-tbody
-.ant-calendar-active-week
-.ant-calendar-selected-day
-.ant-calendar-date {
-  border-radius: 50%;
-  background-color: @success-color;
+    .ant-calendar-active-week
+    .ant-calendar-selected-day
+    .ant-calendar-date {
+    border-radius: 50%;
+    background-color: @success-color;
 }
 
 .ant-calendar-tbody
-.ant-calendar-active-week
-.ant-calendar-selected-day
-.ant-calendar-date:hover {
-  border-radius: 50%;
-  background-color: @success-color;
+    .ant-calendar-active-week
+    .ant-calendar-selected-day
+    .ant-calendar-date:hover {
+    border-radius: 50%;
+    background-color: @success-color;
 }
 
 .ant-calendar-today > .ant-calendar-date {
-  border-radius: 50%;
-  border: 1px solid @action-color;
-  color: @action-color;
+    border-radius: 50%;
+    border: 1px solid @action-color;
+    color: @action-color;
 }
 
 td {
-  position: relative;
+    position: relative;
 }
 
 td.ant-calendar-cell.ant-calendar-selected-start-date::before {
-  position: absolute !important;
-  top: 4px !important;
-  right: 0 !important;
-  bottom: 4px !important;
-  left: 50% !important;
-  display: block !important;
-  background: @success-color-opacity !important;
-  background: radial-gradient(circle at -30px);
-  border: 0 !important;
-  content: '' !important;
+    position: absolute !important;
+    top: 4px !important;
+    right: 0 !important;
+    bottom: 4px !important;
+    left: 50% !important;
+    display: block !important;
+    background: @success-color-opacity !important;
+    background: radial-gradient(circle at -30px);
+    border: 0 !important;
+    content: '' !important;
 }
 
 td.ant-calendar-cell.ant-calendar-selected-end-date::before {
-  position: absolute !important;
-  top: 4px !important;
-  right: 50% !important;
-  bottom: 4px !important;
-  left: 0 !important;
-  display: block !important;
-  background: @success-color-opacity !important;
-  background: radial-gradient(circle at 30px);
-  border: 0 !important;
-  content: '' !important;
+    position: absolute !important;
+    top: 4px !important;
+    right: 50% !important;
+    bottom: 4px !important;
+    left: 0 !important;
+    display: block !important;
+    background: @success-color-opacity !important;
+    background: radial-gradient(circle at 30px);
+    border: 0 !important;
+    content: '' !important;
 }
 
 td.ant-calendar-cell.ant-calendar-in-range-cell::before {
-  background-color: @success-color-opacity;
+    background-color: @success-color-opacity;
 }
 
 // tooltip
 
 .ant-tooltip-content {
-  width: fit-content;
+    width: fit-content;
 
-  .ant-tooltip-arrow::before {
-    background-color: @white !important;
-  }
-
-  .ant-tooltip-inner {
-    border-radius: 8px;
-    background-color: @white !important;
-    color: @action-color-dark !important;
-    box-shadow: @tooltip-shadow;
-
-    .title-tooltip {
-      position: relative;
+    .ant-tooltip-arrow::before {
+        background-color: @white !important;
     }
 
-    .title-tooltip::after {
-      width: 100%;
-      height: 1px;
-      position: absolute;
-      bottom: -3px;
-      left: 0;
-      content: '';
-      background-color: @body-background;
+    .ant-tooltip-inner {
+        border-radius: 8px;
+        background-color: @white !important;
+        color: @action-color-dark !important;
+        box-shadow: @tooltip-shadow;
+
+        .title-tooltip {
+            position: relative;
+        }
+
+        .title-tooltip::after {
+            width: 100%;
+            height: 1px;
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            content: '';
+            background-color: @body-background;
+        }
     }
-  }
 }
 
 .ant-drawer-content {
-  .ant-drawer-header {
-    padding-top: 60px;
-    border: 0;
-    text-align: center;
-  }
+    .ant-drawer-header {
+        padding-top: 60px;
+        border: 0;
+        text-align: center;
+    }
 
-  .check-box-item {
-    margin: 0 0 20px 0;
-  }
+    .check-box-item {
+        margin: 0 0 20px 0;
+    }
 }
