@@ -16,13 +16,13 @@ const defaultKeys = [
         title: 'Campaign',
         dataIndex: 'campaign',
         key: 'campaign',
-        width: '160px',
+        width: '140px',
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
         key: 'adGroup',
-        width: '160px',
+        width: '140px',
     },
     {
         title: <TitleInfo title="PAT Type"/>,
@@ -40,12 +40,6 @@ const defaultKeys = [
         key: 'PatValue',
         width: '130px',
     },
-    {
-        title: <span>Customer <br/> Search Term</span>,
-        dataIndex: 'customerSearchTerm',
-        key: 'customerSearchTerm',
-        width: '150px',
-    }
 ];
 
 const columns = {
@@ -56,20 +50,20 @@ const columns = {
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
             render: text => <span>{text && `${text}%` }</span>,
-            width: '120px',
+            // width: '120px',
         },
         {
-            title: 'Targe ACoS',
-            dataIndex: 'target',
-            key: 'target',
+            title: 'Target ACoS',
+            dataIndex: 'targetACoS',
+            key: 'targetACoS',
             render: text => <span>{text && `${text}%` }</span>,
-            width: '110px',
+            // width: '110px',
         },
         {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
-            width: '60px',
+            // width: '70px',
             className: 'left-border',
             render: () => (
                 <div className='action-field'>
@@ -88,20 +82,20 @@ const columns = {
             dataIndex: 'averageConversionRate',
             key: 'averageConversionRate',
             render: text => <span>{text && `${text}%` }</span>,
-            width: '120px',
+            // width: '120px',
         },
         {
             title: 'CST Clicks',
             dataIndex: 'CSTClicks',
             key: 'CSTClicks',
-            width: '110px',
+            // width: '110px',
         },
 
         {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
-            width: '100px',
+            // width: '70px',
             className: 'left-border',
             render: () => (
                 <div className='action-field'>

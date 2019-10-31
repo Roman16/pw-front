@@ -24,25 +24,19 @@ const columns = {
             title: 'Campaign',
             dataIndex: 'campaign',
             key: 'campaign',
-            width: '200px',
-        },
-        {
-            title: 'Ad Group',
-            dataIndex: 'adGroup',
-            key: 'adGroup',
-            width: '200px',
+            width: '350px',
         },
         {
             title: 'Campaign Targeting Type',
             dataIndex: 'campaignTargetingType',
             key: 'campaignTargetingType',
-            width: '200px',
+            width: '300px',
         },
         {
             title: 'Daily Budget',
             dataIndex: 'dailyBudget',
             key: 'dailyBudget',
-            render: text => <span>${text}</span>,
+            render: text => <span>{text && `$${text}`}</span>,
             width: '160px',
         },
         {
@@ -65,19 +59,19 @@ const columns = {
             title: 'Campaign',
             dataIndex: 'campaign',
             key: 'campaign',
-            width: '360px',
+            width: '300px',
         },
         {
             title: 'Ad Group',
             dataIndex: 'adGroup',
             key: 'adGroup',
-            width: '360px',
+            width: '300px',
         },
         {
             title: 'Default Bid',
             dataIndex: 'defaultBid',
             key: 'defaultBid',
-            render: text => <span>${text}</span>,
+            render: text => <span>{text && `$${text}`}</span>,
             width: '300px',
         },
         {
@@ -105,16 +99,25 @@ const columns = {
             title: 'ASIN',
             dataIndex: 'asin',
             key: 'asin',
-            width: '240px',
+            width: '200px',
         },
         {
             title: 'SKU',
             dataIndex: 'sku',
             key: 'sku',
-            width: '240px',
+            width: '200px',
         },
         {
-            ...createdKeywordsActionField
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            width: '180px',
+            className: 'left-border',
+            render: () => (
+                <div className='action-field'>
+                    Created
+                </div>
+            )
         },
         {
             ...infoField
@@ -126,19 +129,19 @@ const columns = {
             title: 'Campaign',
             dataIndex: 'campaign',
             key: 'campaign',
-            width: '360px',
+            width: '300px',
         },
         {
             title: 'Ad Group',
             dataIndex: 'adGroup',
             key: 'adGroup',
-            width: '360px',
+            width: '300px',
         },
         {
             title: 'Keyword',
             dataIndex: 'keyword',
             key: 'keyword',
-            width: '280px',
+            width: '360px',
         },
         {
             ...createdKeywordsActionField
@@ -162,10 +165,10 @@ const columns = {
             width: '160px',
         },
         {
-            title: 'Customer Search Term',
-            dataIndex: 'customerSearchTerm',
-            key: 'customerSearchTerm',
-            width: '200px',
+            title: 'Keyword',
+            dataIndex: 'keyword',
+            key: 'keyword',
+            width: '170px',
         },
         {
             title: 'Match Type',
@@ -177,7 +180,7 @@ const columns = {
             title: 'Bid',
             dataIndex: 'bid',
             key: 'bid',
-            render: text => <span>${text}</span>,
+            render: text => <span>{text && `$${text}`}</span>,
             width: '100px',
         },
         {
@@ -191,7 +194,7 @@ const columns = {
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
             render: text => <span>{text && `${text}%`}</span>,
-            width: '120px',
+            width: '100px',
 
         },
         {
@@ -206,13 +209,13 @@ const columns = {
             dataIndex: 'targetACoS',
             key: 'targetACoS',
             render: text => <span>{text && `${text}%`}</span>,
-            width: '120px',
+            width: '100px',
         },
         {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
-            width: '100px',
+            width: '70px',
             className: 'left-border',
             render: () => (
                 <div className='action-field'>

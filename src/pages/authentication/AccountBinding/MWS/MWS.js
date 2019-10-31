@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import {Icon} from 'antd'
 import logo from '../../../../assets/img/zth.svg';
 import './MWS.less';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {userActions} from "../../../../actions/user.actions";
+import {userService} from "../../../../services/user.services";
 
 class MWS extends Component {
     state = {
         sellerId: '',
-        MWSToken: ''
+        MWSToken: '',
+        disabled: false
     };
 
     handleChangeInput = (e) => {
@@ -22,18 +24,27 @@ class MWS extends Component {
 
     saveParams = (e) => {
         e.preventDefault();
-        console.log(this.state)
+        this.setState({
+            disabled: true
+        });
 
-        this.props.setMWS({
+        userService.setMWS({
             merchant_id: this.state.sellerId,
             mws_auth_token: this.state.MWSToken
         })
+            .then(res => {
+                this.setState({
+                    disabled: false
+                });
+                this.props.setMWS(res);
+            });
     };
 
     render() {
         const {
             sellerId,
-            MWSToken
+            MWSToken,
+            disabled
         } = this.state;
 
         return (
@@ -41,12 +52,13 @@ class MWS extends Component {
                 <img src={logo} alt=""/>
 
                 <h2 className="h2">Sign in and start selling</h2>
-                <div className="inner-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </div>
+                <iframe
+                    style={{width: '750px', height: '422px'}}
+                    src="https://www.youtube.com/embed/lKbV7iOOtDw"
+                    frameBorder="0"
+                    title='video'
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen/>
 
                 <a href={this.props.mwsLink} target='_blank' className="link">
                     Link with Amazon MWS
@@ -82,7 +94,7 @@ class MWS extends Component {
                         />
                     </div>
 
-                    <button type="submit" className="btn">
+                    <button type="submit" className="btn" disabled={disabled}>
                         Save
                         <Icon type="check"/>
                     </button>

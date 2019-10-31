@@ -51,17 +51,15 @@ function regist(user) {
 
 function setMWS(data) {
     return dispatch => {
-        userService.setMWS(data).then(res => {
-            dispatch(setInformation(res));
+        dispatch(setInformation(data));
 
-            if (res.account_links) {
-                if (!res.account_links.amazon_ppc.is_connected) {
-                    history.push('/ppc');
-                } else {
-                    history.push('/ppc/optimization');
-                }
+        if (data.account_links) {
+            if (!data.account_links.amazon_ppc.is_connected) {
+                history.push('/ppc');
+            } else {
+                history.push('/ppc/optimization');
             }
-        });
+        }
     };
 }
 

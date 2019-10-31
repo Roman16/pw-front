@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
-import {indexField, createdKeywordsActionField, infoField} from './const';
+import {indexField, infoField, negativeMatchTypeField} from './const';
 import {useSelector} from "react-redux";
 import CustomTable from "./CustomTable";
 
@@ -25,16 +25,13 @@ const defaultKeys = [
         width: '200px',
     },
     {
-        title: 'Customer Search Term',
-        dataIndex: 'customerSearchTerm',
-        key: 'customerSearchTerm',
+        title: 'Keyword',
+        dataIndex: 'keyword',
+        key: 'keyword',
         width: '200px',
     },
     {
-        title: 'Negative Match Type',
-        dataIndex: 'negativeMatchType',
-        key: 'negativeMatchType',
-        width: '160px',
+      ...negativeMatchTypeField
     }
 ];
 
@@ -46,20 +43,20 @@ const columns = {
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
             render: text => <span>{text && `${text}%`}</span>,
-            width: '160px',
+            // width: '160px',
         },
         {
-            title: <TitleInfo title="Target"/>,
-            dataIndex: 'target',
-            key: 'target',
+            title: <TitleInfo title="Target ACoS"/>,
+            dataIndex: 'targetACoS',
+            key: 'targetACoS',
             render: text => <span>{text && `${text}%`}</span>,
-            width: '160px',
+            // width: '160px',
         },
         {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
-            width: '100px',
+            // width: '100px',
             className: 'left-border',
             render: () => (
                 <div className='action-field'>
@@ -77,19 +74,19 @@ const columns = {
             title: 'Average Conversion Rate',
             dataIndex: 'averageConversionRate',
             key: 'averageConversionRate',
-            width: '180px',
+            // width: '180px',
         },
         {
             title: 'CST Clicks',
             dataIndex: 'CSTClicks',
             key: 'CSTClicks',
-            width: '160px',
+            // width: '160px',
         },
         {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
-            width: '100px',
+            // width: '100px',
             className: 'left-border',
             render: () => (
                 <div className='action-field'>

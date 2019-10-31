@@ -15,13 +15,25 @@ const patIntentValues = {
     asinCategorySameAs: 'Category',
     asinBrandSameAs: 'Brand',
 };
+const negativeMatchValues = {
+    negativeExact: 'Negative Exact',
+    negativePhrase: 'Negative Phrase',
+};
 
 export const patIntentField = {
     title: 'PAT Intent Type',
     dataIndex: 'PatIntentType',
     key: 'PatIntentType',
-    width: '132px',
+    // width: '132px',
     render: text => <span>{patIntentValues[text]}</span>
+};
+
+export const negativeMatchTypeField = {
+    title: 'Negative Match Type',
+    dataIndex: 'negativeMatchType',
+    key: 'negativeMatchType',
+    width: '160px',
+    render: text => <span>{negativeMatchValues[text]}</span>
 };
 
 export const indexField = {
@@ -107,6 +119,7 @@ export const infoField = {
     title: '',
     dataIndex: 'info',
     key: 'info',
+    width: '30px',
     render: text => (
         <Popover
             placement="left"

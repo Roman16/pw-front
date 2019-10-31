@@ -53,15 +53,15 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            render: text => <span>{text}%</span>,
-            width: '132px',
+            render: text => <span>{text && `${text}%`}</span>,
+            // width: '132px',
         },
         {
             title: <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
             render: text => <span>{text && `${text}%`}</span>,
-            width: '130px',
+            // width: '130px',
         },
         {
             ...bidActionField
@@ -76,13 +76,13 @@ const columns = {
             title: 'Impressions',
             dataIndex: 'impressions',
             key: 'impressions',
-            width: '120px',
+            // width: '120px',
         },
         {
             title: <TitleInfo title={<span>Target <br/> Impressions</span>}/>,
             dataIndex: 'targetImpressions',
             key: 'targetImpressions',
-            width: '150px',
+            // width: '150px',
         },
         {
             ...bidActionField
@@ -98,14 +98,14 @@ const columns = {
             dataIndex: 'acos',
             key: 'acos',
             render: text => <span>{text && `${text}%`}</span>,
-            width: '132px',
+            // width: '132px',
         },
         {
             title: <TitleInfo title="Target ACoS"/>,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
             render: text => <span>{text && `${text}%`}</span>,
-            width: '132px',
+            // width: '132px',
         },
         {
             ...pausePatActionField
@@ -121,13 +121,13 @@ const columns = {
             dataIndex: 'averageConvRate',
             key: 'averageConvRate',
             render: text => <span>{text && `${text}%`}</span>,
-            width: '132px',
+            // width: '132px',
         },
         {
             title: <TitleInfo title="Clicks"/>,
             dataIndex: 'clicks',
             key: 'clicks',
-            width: '132px',
+            // width: '132px',
         },
         {
             ...pausePatActionField

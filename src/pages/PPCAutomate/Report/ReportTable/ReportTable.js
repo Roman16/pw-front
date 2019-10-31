@@ -196,12 +196,12 @@ class ReportTable extends Component {
         const parameters = [
             selectedAll
                 ? `&product_id=all`
-                : `&product_id=${selectedProductId}`,
+                : `&product_id=${selectedProductId || 'all'}`,
             startDate
-                ? `&start_date=${moment(startDate, 'D-M-Y').format('Y-M-D')}`
+                ? `&start_date=${startDate}`
                 : '',
             endDate
-                ? `&end_date=${moment(endDate, 'D-M-Y').format('Y-M-D')}`
+                ? `&end_date=${endDate}`
                 : ''
         ];
 
@@ -244,8 +244,8 @@ class ReportTable extends Component {
     timeRange = (startDate, endDate) => {
         this.setState(
             {
-                startDate,
-                endDate
+                startDate: moment(startDate, 'D-M-Y').format('Y-M-D'),
+                endDate: moment(endDate, 'D-M-Y').format('Y-M-D')
             },
             this.fetchReports
         );
@@ -289,7 +289,7 @@ class ReportTable extends Component {
 
     render() {
         const {activeTab, page} = this.state,
-            {counts, data, todayChanges, totalSize} = this.props;
+            {counts, data, todayChanges, totalSize, loading} = this.props;
 
         return (
             <div className="ReportTable">
@@ -343,7 +343,7 @@ const mapStateToProps = state => ({
     counts: state.reports.counts,
     data: state.reports.data,
     todayChanges: state.reports.today_changes,
-    totalSize: state.reports.total_subtype_size
+    totalSize: state.reports.total_subtype_size,
 });
 
 const mapDispatchToProps = dispatch => ({
