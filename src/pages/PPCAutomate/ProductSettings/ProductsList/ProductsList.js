@@ -175,7 +175,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MIN_BID_MANUAL_CAMPING]}
-                            min={0.02}
+                            min={0}
                             max={item[MAX_BID_MANUAL_CAMPING] || 999999999}
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)
@@ -191,7 +191,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MAX_BID_MANUAL_CAMPING]}
-                            min={item[MIN_BID_MANUAL_CAMPING] || 0.02}
+                            min={item[MIN_BID_MANUAL_CAMPING] || 0}
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)
                             }
@@ -206,7 +206,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MIN_BID_AUTO_CAMPING]}
-                            min={0.02}
+                            min={0}
                             max={item[MAX_BID_AUTO_CAMPING] || 999999999}
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)
@@ -222,7 +222,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MAX_BID_AUTO_CAMPING]}
-                            min={item[MAX_BID_AUTO_CAMPING] || 0.02}
+                            min={item[MAX_BID_AUTO_CAMPING] || 0}
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)
                             }
