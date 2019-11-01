@@ -2,38 +2,14 @@
 @import '../../style/variables';
 
 .Sidebar {
-    display: inline-block;
-    width: 72px;
-    height: 100vh;
-    background-color: @third-default-dark;
-    transition: all 0.3s ease-in;
-    overflow-x: hidden;
-    overflow-y: auto;
-    z-index: 1000;
-
-    &.SidebarOpen {
-        width: 200px;
-
-        & + .MainContent {
-            margin-left: 200px;
-        }
-    }
-
-    .sidebar-header {
-        display: grid;
-        grid-template-columns: minmax(min-content, max-content) 1fr;
-        column-gap: 28px;
-        padding: 16px 26px;
-        height: 74px;
-
-        .sidebar-icon {
-            color: #b6b6fb;
-            font-size: 18px;
-            align-self: center;
-        }
-
-        .sidebar-logo {
-            width: 100px;
+  display: inline-block;
+  width: 72px;
+  height: 100vh;
+  background-color: @third-default-dark;
+  transition: all 0.3s ease-in;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 1000;
 
   &.SidebarOpen {
     width: 200px;
@@ -192,6 +168,13 @@
         > .ant-menu-item[role='menuitem']
         > a {
         line-height: 34px;
+      }
+
+      &.logOut {
+        i.anticon {
+          font-size: 24px;
+        }
+      }
     }
 
     .ant-menu-item > a[href='/analytics'],
