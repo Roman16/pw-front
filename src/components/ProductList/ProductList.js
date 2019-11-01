@@ -132,6 +132,7 @@ class ProductList extends Component {
                             onSelectAll={this.selectAll}
                             selectedSize={selectedSize}
                             isSelectedAll={isSelectedAll}
+                            disabled={products.length === 0}
                         />
 
                         <div className="active-only">

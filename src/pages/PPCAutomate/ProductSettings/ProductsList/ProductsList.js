@@ -51,6 +51,8 @@ class ProductsList extends Component {
     onChangeRow = (value, item, index) => {
         if (value > 0) {
             const dataSourceRow = this.setRowData(value, item, index);
+
+
             if (item !== this.prevItem) {
                 this.prevItem = item;
                 this.updateSettings(dataSourceRow);
@@ -127,7 +129,7 @@ class ProductsList extends Component {
                 },
 
                 {
-                    title: 'Net Margin',
+                    title: 'Net Margin*',
                     dataIndex: NET_MARGIN,
                     key: NET_MARGIN,
                     width: 150,
@@ -150,6 +152,7 @@ class ProductsList extends Component {
                         <InputCurrency
                             value={item[MIN_BID_MANUAL_CAMPING]}
                             min={0.02}
+                            max={item[MAX_BID_MANUAL_CAMPING] || 999999999}
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)
                             }
@@ -164,7 +167,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MAX_BID_MANUAL_CAMPING]}
-                            min={0.02}
+                            min={item[MIN_BID_MANUAL_CAMPING] || 0.02}
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)
                             }
@@ -180,6 +183,7 @@ class ProductsList extends Component {
                         <InputCurrency
                             value={item[MIN_BID_AUTO_CAMPING]}
                             min={0.02}
+                            max={item[MAX_BID_AUTO_CAMPING] || 999999999}
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)
                             }
@@ -194,7 +198,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MAX_BID_AUTO_CAMPING]}
-                            min={0.02}
+                            min={item[MAX_BID_AUTO_CAMPING] || 0.02}
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)
                             }
