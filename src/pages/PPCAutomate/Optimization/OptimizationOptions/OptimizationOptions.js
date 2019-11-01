@@ -48,7 +48,7 @@ export const options = [
         text: 'Adding Negative Product Targetings',
         value: 'add_negative_pats',
         name: 'add_negative_pats',
-        description: `The Software will add to Negatives your Product Targetings (ASIN's, Categories) that either have large ACoS or a significant number of clicks and lack of sales. This will ensure that your product is being showed only on competitors pages that convert into a purchase with a positive ROAS.`
+        description: `The Software will add to Negatives your Product Targetings (ASIN's, Categories) that either have large ACoS or a significant number of clicks and lack of sales. This will ensure that your product is being shown only on competitors pages that convert into a purchase with a positive ROAS.`
     }
 ];
 
@@ -70,7 +70,20 @@ const OptimizationOptions = ({selectedProduct}) => {
             [name]: checked
         });
 
-        dispatch(productsActions.updateOptions({[name]: checked}));
+        if (product.status === 'RUNNING') {
+            dispatch(productsActions.updateOptions({
+                optimization_strategy: product.optimization_strategy,
+                add_negative_keywords: product.add_negative_keywords,
+                optimize_keywords: product.optimize_keywords,
+                create_new_keywords: product.create_new_keywords,
+                optimize_pats: product.optimize_pats,
+                add_negative_pats: product.add_negative_pats,
+                create_new_pats: product.create_new_pats,
+                [name]: checked
+            }))
+        } else {
+            dispatch(productsActions.updateOptions({[name]: checked}));
+        }
 
         clearTimeout(timerIdSearch);
         timerIdSearch = setTimeout(() => {
@@ -84,15 +97,11 @@ const OptimizationOptions = ({selectedProduct}) => {
     };
 
     useEffect(() => {
-        if (
-            !selectedProduct.status ||
-            selectedProduct.status === 'STOPPED' ||
-            selectedAll
-        )
+        if (!selectedProduct.status || selectedProduct.status === 'STOPPED' || selectedAll)
             changeOptions(defaultOptions);
         else if (selectedProduct.status === 'RUNNING')
             changeOptions(selectedProduct);
-    }, [defaultOptions, selectedAll, selectedProduct]);
+    }, [selectedAll, selectedProduct]);
 
     return (
         <div className="optimize-options">

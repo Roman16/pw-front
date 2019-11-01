@@ -1,7 +1,7 @@
 import {productsConstants} from '../constans/actions.type';
 
 const defaultOptions = {
-    optimization_strategy: 'BoostOverallProfit',
+    optimization_strategy: 'LaunchProduct',
     add_negative_keywords: true,
     optimize_keywords: true,
     create_new_keywords: true,
@@ -62,7 +62,11 @@ export function products(state = initialState, action) {
             });
             return {
                 ...state,
-                selectedProduct: action.payload,
+                selectedProduct: {
+                    ...state.selectedProduct,
+                    ...action.payload,
+                    product_id: state.selectedProduct.id
+                },
                 productList: newProductsList
             };
 

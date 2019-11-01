@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {
     indexField,
@@ -8,7 +8,7 @@ import {
     pausePatActionField
 } from './const';
 import TableButton from '../TableButton/TableButton';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import CustomTable from './CustomTable';
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
@@ -33,7 +33,10 @@ const defaultKeys = [
         width: '150px'
     },
     {
-        title: <TitleInfo title="PAT type" />,
+        title: <TitleInfo
+            title="PAT type"
+            info='The type of Product Targeting. It can be a Manual or Auto.'
+        />,
         dataIndex: 'PatType',
         key: 'PatType',
         width: '130px',
@@ -61,7 +64,10 @@ const columns = {
             // width: '132px',
         },
         {
-            title: <TitleInfo title="Target ACoS" />,
+            title: <TitleInfo
+                title="Target ACoS"
+                info='The ACoS that our algorithm is aiming to reach your business goal.'
+            />,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
             render: text => <span>{text && `${text}%`}</span>
@@ -87,9 +93,10 @@ const columns = {
                 <TitleInfo
                     title={
                         <span>
-                            Target <br /> Impressions
+                            Target <br/> Impressions
                         </span>
                     }
+                    info='The number of times your ads need to be displayed so you will get the click.'
                 />
             ),
             dataIndex: 'targetImpressions',
@@ -113,7 +120,10 @@ const columns = {
             // width: '132px',
         },
         {
-            title: <TitleInfo title="Target ACoS" />,
+            title: <TitleInfo
+                title="Target ACoS"
+                info='The ACoS that our algorithm is aiming to reach your business goal.'
+            />,
             dataIndex: 'targetACoS',
             key: 'targetACoS',
             render: text => <span>{text && `${text}%`}</span>
@@ -136,7 +146,7 @@ const columns = {
             // width: '132px',
         },
         {
-            title: <TitleInfo title="Clicks" />,
+            title: 'Clicks',
             dataIndex: 'clicks',
             key: 'clicks'
             // width: '132px',
@@ -151,16 +161,16 @@ const columns = {
 };
 
 const PATsOptimization = ({
-    data,
-    onChangeSubTab,
-    activeTab,
-    currentPage,
-    totalSize,
-    handlePaginationChange,
-    scroll
-}) => {
+                              data,
+                              onChangeSubTab,
+                              activeTab,
+                              currentPage,
+                              totalSize,
+                              handlePaginationChange,
+                              scroll
+                          }) => {
     const [activeTable, changeTable] = useState(changedPATBidACoS);
-    const { count, loading, productId } = useSelector(state => ({
+    const {count, loading, productId} = useSelector(state => ({
         count: state.reports.counts['pats-optimization'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id

@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import { Drawer, Icon } from 'antd';
-import { connect } from 'react-redux';
-import { debounce } from 'throttle-debounce';
+import React, {Component, Fragment} from 'react';
+import {Drawer, Icon} from 'antd';
+import {connect} from 'react-redux';
+import {debounce} from 'throttle-debounce';
 
 import FreeTrial from '../../../components/FreeTrial/FreeTrial';
 
@@ -14,7 +14,7 @@ import StrategyInfo from './InfoItem/StrategyInfo/StrategyInfo';
 import OptimizationStatus from './OptimizationStatus/OptimizationStatus';
 import LastReports from './LastReports/LastReports';
 
-import { productsActions } from '../../../actions/products.actions';
+import {productsActions} from '../../../actions/products.actions';
 
 import './Optimization.less';
 
@@ -27,33 +27,45 @@ class Optimization extends Component {
         selectedStrategy: this.props.selectedProduct.optimization_strategy
     };
 
-    showDrawer = type => this.setState({ visible: true, infoType: type });
+    showDrawer = type => this.setState({visible: true, infoType: type});
 
-    onCloseDrawer = () => this.setState({ visible: false });
+    onCloseDrawer = () => this.setState({visible: false});
 
-    toLess = () => this.setState({ isLess: !this.state.isLess });
+    toLess = () => this.setState({isLess: !this.state.isLess});
 
     onSelectStrategy = strategy => {
+        const product = this.props.selectedProduct;
         this.setState(
             {
                 selectedStrategy: strategy
             },
             () => {
-                this.props.updateOptions({ optimization_strategy: strategy });
-                if (this.props.selectedProduct.status === 'RUNNING')
+                if (product.status === 'RUNNING') {
+                    this.props.updateOptions({
+                        optimization_strategy: strategy,
+                        add_negative_keywords: product.add_negative_keywords,
+                        optimize_keywords: product.optimize_keywords,
+                        create_new_keywords: product.create_new_keywords,
+                        optimize_pats: product.optimize_pats,
+                        add_negative_pats: product.add_negative_pats,
+                        create_new_pats: product.create_new_pats,
+                    });
+
                     this.handleUpdateProduct();
+                } else {
+                    this.props.updateOptions({optimization_strategy: strategy});
+                }
             }
         );
     };
 
     handleUpdateProduct = debounce(500, false, () => {
-        const { product, selectedStrategy } = this.state,
-            { updateProduct, defaultOptions } = this.props;
+        const {selectedStrategy} = this.state,
+            {updateProduct, selectedProduct} = this.props;
 
         updateProduct({
-            ...product,
+            ...selectedProduct,
             optimization_strategy: selectedStrategy,
-            ...defaultOptions
         });
     });
 
@@ -66,7 +78,7 @@ class Optimization extends Component {
                 return {
                     product: props.selectedProduct,
                     selectedStrategy:
-                        props.selectedProduct.optimization_strategy
+                    props.selectedProduct.optimization_strategy
                 };
             } else {
                 return {
@@ -83,13 +95,13 @@ class Optimization extends Component {
     }
 
     render() {
-        const { isLess, selectedStrategy, infoType } = this.state,
-            { selectedProduct, selectedAll } = this.props;
+        const {isLess, selectedStrategy, infoType} = this.state,
+            {selectedProduct, selectedAll} = this.props;
 
         return (
             <Fragment>
                 <div className="optimization-page">
-                    <ProductList />
+                    <ProductList/>
 
                     <div className="product-options">
                         <div className="options">
@@ -120,7 +132,7 @@ class Optimization extends Component {
                                             }
                                         />
                                     </div>
-                                    <FreeTrial />
+                                    <FreeTrial/>
                                     {selectedAll && !isLess && (
                                         <div className="description-all">
                                             Changes to those settings will be
@@ -163,12 +175,12 @@ class Optimization extends Component {
                                     }`}
                                     onClick={this.toLess}
                                 >
-                                    <Icon type="up" />
+                                    <Icon type="up"/>
                                 </div>
                             </div>
                         </div>
 
-                        <OptimizationStatus product={selectedProduct} />
+                        <OptimizationStatus product={selectedProduct}/>
 
                         <LastReports
                             isLess={isLess}
@@ -188,9 +200,9 @@ class Optimization extends Component {
                     visible={this.state.visible}
                 >
                     {infoType === 'options' ? (
-                        <OptionsInfo />
+                        <OptionsInfo/>
                     ) : (
-                        <StrategyInfo />
+                        <StrategyInfo/>
                     )}
                 </Drawer>
             </Fragment>

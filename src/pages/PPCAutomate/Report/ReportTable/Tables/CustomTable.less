@@ -1,6 +1,7 @@
 .custom-reports-table {
-    height: 90%;
-    // padding: 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 93px);
 
     .table-head {
         height: 10%;
@@ -29,7 +30,7 @@
 
     .table-body {
         overflow-y: auto;
-        height: 75%;
+        flex: 1;
 
         .table-body__row {
             display: flex;
@@ -63,16 +64,16 @@
             width: 100%;
             margin: 50px auto;
         }
+
+        .anticon {
+            color: #656a84;
+            opacity: 0.5;
+        }
     }
 
     .ant-pagination {
-        // margin: 10px !important;
+        margin-bottom: 20px !important;
     }
-}
-
-.anticon {
-    color: #656a84;
-    opacity: 0.5;
 }
 
 //

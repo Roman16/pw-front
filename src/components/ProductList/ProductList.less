@@ -1,6 +1,12 @@
 @import '../../style/variables.less';
 
 .product-list {
+    display: flex;
+    flex-direction: column;
+
+    .products {
+        overflow: auto;
+    }
     .ant-input-search {
         .ant-input {
             border: none;
@@ -70,6 +76,10 @@
         margin: 4px;
         justify-content: space-between;
         align-items: flex-start;
+
+        .ant-checkbox-checked::after {
+            border: 0;
+        }
 
         &:hover {
             cursor: pointer;

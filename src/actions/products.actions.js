@@ -19,7 +19,7 @@ function fetchProducts(paginationParams) {
                     payload: res
                 });
 
-                if (res.result.length > 0) {
+                if (res.result && res.result.length > 0) {
                     dispatch(fetchProductDetails(res.result[0]));
                 }
             });
@@ -36,7 +36,8 @@ function fetchProductDetails(product) {
                         payload: {
                             ...product,
                             ...res,
-                            id: product.id
+                            id: product.id,
+                            product_id:  product.id
                         }
                     });
                 } else {

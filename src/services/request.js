@@ -8,6 +8,12 @@ const baseUrl =
         ? process.env.REACT_APP_API_URL
         : process.env.REACT_APP_API_PROD || '';
 
+notification.config({
+    placement: 'bottomRight',
+    bottom: 50,
+    duration: 3,
+});
+
 const api = (method, url, data, type) => {
     loadProgressBar();
 
