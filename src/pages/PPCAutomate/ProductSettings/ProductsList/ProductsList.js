@@ -49,10 +49,34 @@ class ProductsList extends Component {
     };
 
     onChangeRow = (value, item, index) => {
+        const {products} = this.state;
         if (value > 0) {
+            if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING])) {
+                notification.warning({
+                    message: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
+                });
+                return;
+            }
+            if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING])) {
+                notification.warning({
+                    message: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                });
+                return;
+            }
+            if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING])) {
+                notification.warning({
+                    message: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
+                });
+                return;
+            }
+            if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING])) {
+                notification.warning({
+                    message: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                });
+                return;
+            }
+
             const dataSourceRow = this.setRowData(value, item, index);
-
-
             if (item !== this.prevItem) {
                 this.prevItem = item;
                 this.updateSettings(dataSourceRow);
