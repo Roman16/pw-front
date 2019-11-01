@@ -244,8 +244,8 @@ class ReportTable extends Component {
     timeRange = (startDate, endDate) => {
         this.setState(
             {
-                startDate: moment(startDate, 'DD-MM-YYYY').format('YYYY-MM-DD'),
-                endDate: moment(endDate, 'DD-MM-YYYY').format('YYYY-MM-DD')
+                startDate: startDate ? moment(startDate, 'DD-MM-YYYY').format('YYYY-MM-DD') : moment(new Date()).format('YYYY-MM-DD'),
+                endDate: endDate ? moment(endDate, 'DD-MM-YYYY').format('YYYY-MM-DD') : moment(new Date()).format('YYYY-MM-DD')
             },
             this.fetchReports
         );
