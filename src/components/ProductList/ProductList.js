@@ -143,18 +143,20 @@ class ProductList extends Component {
                     </div>
                 </div>
 
-                {products &&
-                products.map(product => (
-                    <ProductItem
-                        key={product.id}
-                        product={product}
-                        isActive={
-                            isSelectedAll ||
-                            selectedProduct.id === product.id
-                        }
-                        onClick={item => this.onSelect(item)}
-                    />
-                ))}
+                <div className='products'>
+                    {products &&
+                    products.map(product => (
+                        <ProductItem
+                            key={product.id}
+                            product={product}
+                            isActive={
+                                isSelectedAll ||
+                                selectedProduct.id === product.id
+                            }
+                            onClick={item => this.onSelect(item)}
+                        />
+                    ))}
+                </div>
 
                 {totalSize > size && (
                     <Pagination

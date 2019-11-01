@@ -70,7 +70,20 @@ const OptimizationOptions = ({selectedProduct}) => {
             [name]: checked
         });
 
-        dispatch(productsActions.updateOptions({[name]: checked}));
+        if (product.status === 'RUNNING') {
+            dispatch(productsActions.updateOptions({
+                optimization_strategy: product.optimization_strategy,
+                add_negative_keywords: product.add_negative_keywords,
+                optimize_keywords: product.optimize_keywords,
+                create_new_keywords: product.create_new_keywords,
+                optimize_pats: product.optimize_pats,
+                add_negative_pats: product.add_negative_pats,
+                create_new_pats: product.create_new_pats,
+                [name]: checked
+            }))
+        } else {
+            dispatch(productsActions.updateOptions({[name]: checked}));
+        }
 
         clearTimeout(timerIdSearch);
         timerIdSearch = setTimeout(() => {

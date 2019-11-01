@@ -1,6 +1,13 @@
 @import '../../style/variables.less';
 
 .product-list {
+    display: flex;
+    flex-direction: column;
+
+    .products {
+        //height: calc(100% - 100px);
+        overflow: auto;
+    }
     .ant-input-search {
         .ant-input {
             border: none;

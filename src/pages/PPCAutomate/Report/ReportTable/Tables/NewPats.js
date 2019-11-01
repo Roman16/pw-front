@@ -26,13 +26,13 @@ const columns = {
             title: 'Campaign',
             dataIndex: 'campaign',
             key: 'campaign',
-            width: '200px'
+            width: '180px'
         },
         {
             title: 'Ad Group',
             dataIndex: 'adGroup',
             key: 'adGroup',
-            width: '200px'
+            width: '180px'
         },
         {
             title: <TitleInfo
@@ -41,7 +41,7 @@ const columns = {
             />,
             dataIndex: 'PatType',
             key: 'PatType',
-            width: '240px',
+            width: '180px',
             render: text => <span className="capitalize-field">{text}</span>
         },
         {

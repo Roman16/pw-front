@@ -16,19 +16,19 @@ const defaultKeys = [
         title: 'Campaign',
         dataIndex: 'campaign',
         key: 'campaign',
-        width: '200px'
+        width: '180px'
     },
     {
         title: 'Ad Group',
         dataIndex: 'adGroup',
         key: 'adGroup',
-        width: '200px'
+        width: '180px'
     },
     {
         title: 'Keyword',
         dataIndex: 'keyword',
         key: 'keyword',
-        width: '200px'
+        width: '180px'
     },
     {
         ...negativeMatchTypeField

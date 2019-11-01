@@ -70,7 +70,7 @@ export const bidActionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    width: '200px',
+    // width: '200px',
     className: 'left-border',
     render: ({data: {current_state, previous_state}}) => (
         <div className='action-field'>
@@ -111,7 +111,7 @@ export const pausePatActionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    width: '160px',
+    // width: '160px',
     className: 'left-border',
     render: () => (
         <div className='action-field'>
