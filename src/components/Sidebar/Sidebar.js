@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import {Menu, Icon, Popover} from 'antd';
-import {useDispatch, useSelector} from 'react-redux';
-import {getClassNames} from '../../utils';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Menu, Icon, Popover } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { getClassNames } from '../../utils';
 import SidebarItem from './SidebarItem';
 import RegionsMenu from './RegionsMenu';
-import {regionsMenu, menuBottom, menuMain} from './menu';
-import {userActions} from '../../actions/user.actions';
+import { regionsMenu, menuBottom, menuMain } from './menu';
+import { userActions } from '../../actions/user.actions';
 import './Sidebar.less';
 
 import logo from '../../assets/img/logo.svg';
@@ -15,11 +15,11 @@ const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
         [regions] = useState(regionsMenu),
         dispatch = useDispatch(),
-        {user} = useSelector(state => ({
+        { user } = useSelector(state => ({
             user: state.user
         })),
         toggleCollapsed = () => setCollapsed(!collapsed),
-        className = getClassNames('Sidebar', {SidebarOpen: !collapsed}),
+        className = getClassNames('Sidebar', { SidebarOpen: !collapsed }),
         activeLink = global.location.pathname,
         activeLinkArr = global.location.pathname.split('/'),
         activeCountry = regions.map(region =>
@@ -31,8 +31,8 @@ const Sidebar = () => {
     };
 
     useEffect(() => {
-        dispatch(userActions.getAuthorizedUserInfo())
-    }, []);
+        dispatch(userActions.getAuthorizedUserInfo());
+    }, [dispatch]);
 
     return (
         <div className={className}>
@@ -44,7 +44,7 @@ const Sidebar = () => {
                 />
                 {!collapsed && (
                     <Link to="/" className="sidebar-logo">
-                        <img src={logo} alt="logo"/>
+                        <img src={logo} alt="logo" />
                     </Link>
                 )}
             </div>
@@ -85,7 +85,7 @@ const Sidebar = () => {
                         defaultOpenKeys={[`/${activeLinkArr[1]}`]}
                     >
                         {menuMain.map(item => (
-                            <SidebarItem key={item.link} item={item}/>
+                            <SidebarItem key={item.link} item={item} />
                         ))}
                     </Menu>
                 </div>
@@ -98,7 +98,7 @@ const Sidebar = () => {
                         defaultSelectedKeys={[activeLink]}
                     >
                         {menuBottom.map(item => (
-                            <SidebarItem key={item.icon} item={item}/>
+                            <SidebarItem key={item.icon} item={item} />
                         ))}
                     </Menu>
                 </div>
