@@ -4,8 +4,6 @@ import { Menu, Icon } from 'antd';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { userActions } from '../../actions/user.actions';
-import {history} from '../../utils/history';
-//
 
 const IconFont = Icon.createFromIconfontCN({
     scriptUrl: '/assets/icons/iconfont.js'
