@@ -63,6 +63,7 @@ export function products(state = initialState, action) {
             return {
                 ...state,
                 selectedProduct: {
+                    ...state.selectedProduct,
                     ...action.payload,
                     product_id: state.selectedProduct.id
                 },

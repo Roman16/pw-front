@@ -4,7 +4,7 @@ import { Menu, Icon } from 'antd';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { userActions } from '../../actions/user.actions';
-
+import {history} from '../../utils/history';
 //
 
 const IconFont = Icon.createFromIconfontCN({
@@ -20,6 +20,7 @@ const ItemIcon = ({ icon, isSub, ...props }) => {
         <Icon {...props} type="right-circle" theme="filled" />
     );
 };
+
 
 ItemIcon.propTypes = {
     icon: PropTypes.string,
@@ -43,10 +44,10 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
             >
                 {item.subMenu.map(subItem => {
                     return subItem.className === 'ppcScaner' ? (
-                        <Menu.Item {...props} key={subItem.link}>
-                            <Link to={{ pathname: '/ppc-scanner', state: 'flushDeal' }}>
+                        <Menu.Item {...props} key={subItem.link} >
+                            <a onClick={() =>  window.open(subItem.link, "_self")}>
                                 <span>{subItem.title}</span>
-                            </Link>
+                            </a>
                         </Menu.Item>
                     ) : (
                         <SidebarItem
@@ -61,11 +62,7 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
     } else if (item.className === 'account') {
         return (
             <Menu.Item {...props} className={item.className} key={item.link}>
-                <a
-                    href="https://profitwhales.com/account/settings"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <a onClick={() =>  window.open(item.link, "_self")}>
                     {avatar ? (
                         <img
                             className="avatar"

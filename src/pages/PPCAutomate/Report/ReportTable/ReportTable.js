@@ -205,7 +205,7 @@ class ReportTable extends Component {
                 : ''
         ];
 
-        const url = `${process.env.REACT_APP_API_URL}/api/${
+        const url = `${process.env.REACT_APP_API_URL || ''}/api/${
             reportsUrls.downloadReports
         }?token=${token}${parameters.join('')}`;
         window.open(url);
@@ -244,8 +244,8 @@ class ReportTable extends Component {
     timeRange = (startDate, endDate) => {
         this.setState(
             {
-                startDate: moment(startDate, 'D-M-Y').format('Y-M-D'),
-                endDate: moment(endDate, 'D-M-Y').format('Y-M-D')
+                startDate: moment(startDate, 'DD-MM-YYYY').format('YYYY-MM-DD'),
+                endDate: moment(endDate, 'DD-MM-YYYY').format('YYYY-MM-DD')
             },
             this.fetchReports
         );

@@ -27,5 +27,15 @@ function getProductDetails(id) {
 }
 
 function updateProductById(product) {
-    return api('post', productsUrls.saveProductData, product)
+    return api('post', productsUrls.saveProductData, {
+        product_id: product.product_id ? product.product_id : product.id,
+        status: product.status,
+        optimization_strategy: product.optimization_strategy,
+        add_negative_keywords: product.add_negative_keywords,
+        optimize_keywords: product.optimize_keywords,
+        create_new_keywords: product.create_new_keywords,
+        optimize_pats: product.optimize_pats,
+        add_negative_pats: product.add_negative_pats,
+        create_new_pats: product.create_new_pats
+    })
 }

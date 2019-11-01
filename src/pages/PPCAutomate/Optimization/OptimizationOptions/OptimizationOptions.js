@@ -84,15 +84,11 @@ const OptimizationOptions = ({selectedProduct}) => {
     };
 
     useEffect(() => {
-        if (
-            !selectedProduct.status ||
-            selectedProduct.status === 'STOPPED' ||
-            selectedAll
-        )
+        if (!selectedProduct.status || selectedProduct.status === 'STOPPED' || selectedAll)
             changeOptions(defaultOptions);
         else if (selectedProduct.status === 'RUNNING')
             changeOptions(selectedProduct);
-    }, [defaultOptions, selectedAll, selectedProduct]);
+    }, [selectedAll, selectedProduct]);
 
     return (
         <div className="optimize-options">
