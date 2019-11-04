@@ -28,6 +28,10 @@ img {
 .main-pages {
   display: flex;
 
+  @media (max-width: 599px) {
+        position: relative;
+    }
+
   .main-container {
     position: relative;
     flex: 1;
@@ -160,10 +164,11 @@ img {
   display: flex;
   flex-direction: row-reverse;
 
-  // input hidde
-  .ant-calendar-input-wrap {
-    display: none;
-  }
+    // input hidde
+    .ant-calendar-input-wrap,
+    .ant-calendar-range-middle {
+        display: none;
+    }
 
   .ant-calendar-range-middle {
     left: 34%;
@@ -313,7 +318,6 @@ td.ant-calendar-cell.ant-calendar-in-range-cell::before {
     margin: 0 0 20px 0;
   }
 }
-
 
 button:disabled,
 button[disabled] {

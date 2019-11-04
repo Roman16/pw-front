@@ -8,6 +8,7 @@ import {userActions} from '../../../../actions/user.actions';
 import {injectStripe} from "react-stripe-elements";
 import StripeForm from "./StripeForm";
 
+const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 class RegistrationPage extends Component {
     state = {
@@ -48,7 +49,7 @@ class RegistrationPage extends Component {
         } = this.state;
 
         // eslint-disable-next-line no-useless-escape
-        const fieldEmailValid = /^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/.test(
+        const fieldEmailValid = /^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-zA-Z\.]{2,6})$/.test(
             email
         );
 
@@ -133,13 +134,13 @@ class RegistrationPage extends Component {
         if (isLoading) {
             return (
                 <div className="example">
-                    <Spin size="large"/>
+                    <Spin size="large" />
                 </div>
             );
         }
 
         if (registerSuccess) {
-            return <Redirect to="/optimization"/>;
+            return <Redirect to="/optimization" />;
         }
 
         const isLess = email.length === 0;
@@ -249,10 +250,10 @@ class RegistrationPage extends Component {
                     <Col xs={24} sm={24} md={10}>
                         <Row type="flex">
                             <Col xs={12} sm={12} md={12}>
-                                <img src="/scrill.svg" alt="scrill"/>
+                                <img src="/scrill.svg" alt="scrill" />
                             </Col>
                             <Col xs={12} sm={12} md={12}>
-                                <img src="/visa.svg" alt="visa"/>
+                                <img src="/visa.svg" alt="visa" />
                             </Col>
                         </Row>
                     </Col>
