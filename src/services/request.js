@@ -11,7 +11,7 @@ const baseUrl =
 notification.config({
     placement: 'bottomRight',
     bottom: 50,
-    duration: 3,
+    duration: 3
 });
 
 const api = (method, url, data, type) => {
@@ -44,12 +44,14 @@ const api = (method, url, data, type) => {
                         reject(error);
 
                         if (error.response.status === 401) {
+                            console.log('error 401 :', error.response);
                             notification.error({
                                 message: error.response.data
                                     ? error.response.data.error
                                     : ''
                             });
                         } else {
+                            console.log('error else :', error.response);
                             notification.error({
                                 message: error.response.data
                                     ? error.response.data.message

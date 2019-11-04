@@ -10,10 +10,10 @@ import {
     Spin,
     notification
 } from 'antd';
-import {connect} from 'react-redux';
-import {Link, Redirect} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
 
-import {userActions} from '../../../../actions/user.actions';
+import { userActions } from '../../../../actions/user.actions';
 import amazon from '../../../../assets/img/amazon.png';
 import './LoginPageForm.less';
 
@@ -27,18 +27,18 @@ class LoginPageForm extends React.Component {
     };
 
     componentDidMount() {
-        this.setState({isLoading: false});
+        this.setState({ isLoading: false });
     }
 
-    onChange = ({target}) => {
-        this.setState({[target.name]: target.value});
+    onChange = ({ target }) => {
+        this.setState({ [target.name]: target.value });
     };
 
     onSubmit = e => {
         e.preventDefault();
 
-        const {email, password, rememberMe} = this.state;
-        this.setState({isLoading: true});
+        const { email, password, rememberMe } = this.state;
+        this.setState({ isLoading: true });
 
         // eslint-disable-next-line no-useless-escape
         const fieldEmailValid = /^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/.test(
@@ -48,45 +48,36 @@ class LoginPageForm extends React.Component {
         if (password.length < 6) {
             notification.error({
                 message: 'The password must be at least 6 characters.',
-                style: {
-                    width: 600,
-                    marginLeft: 335 - 600
-                },
                 placement: 'bottomRight',
-                bottom: 20,
-                duration: 5
+                bottom: 50,
+                duration: 3
             });
             this.setState({
                 isLoading: false
             });
+            return;
         } else if (email.length === 0) {
             notification.error({
                 message: 'The letter must contain at least 1 character.',
-                style: {
-                    width: 600,
-                    marginLeft: 335 - 600
-                },
                 placement: 'bottomRight',
-                bottom: 20,
-                duration: 5
+                bottom: 50,
+                duration: 3
             });
             this.setState({
                 isLoading: false
             });
+            return;
         } else if (!fieldEmailValid) {
             notification.error({
                 message: 'Invalid email address',
-                style: {
-                    width: 600,
-                    marginLeft: 335 - 600
-                },
                 placement: 'bottomRight',
-                bottom: 20,
-                duration: 5
+                bottom: 50,
+                duration: 3
             });
             this.setState({
                 isLoading: false
             });
+            return;
         }
 
         this.props.login({
@@ -101,18 +92,18 @@ class LoginPageForm extends React.Component {
     };
 
     render() {
-        const {email, password, isLoading, loginSuccess} = this.state;
+        const { email, password, isLoading, loginSuccess } = this.state;
 
         if (isLoading) {
             return (
                 <div className="example">
-                    <Spin size="large"/>
+                    <Spin size="large" />
                 </div>
             );
         }
 
         if (loginSuccess) {
-            return <Redirect to="/ppc/optimization"/>;
+            return <Redirect to="/ppc/optimization" />;
         }
 
         return (
@@ -150,7 +141,7 @@ class LoginPageForm extends React.Component {
                 >
                     <Checkbox
                         onChange={e =>
-                            this.setState({rememberMe: e.target.checked})
+                            this.setState({ rememberMe: e.target.checked })
                         }
                     >
                         Remember me
@@ -184,7 +175,7 @@ class LoginPageForm extends React.Component {
                 <Row className="form-details">
                     <Col>
                         By signing up, you agree to
-                        <br/>
+                        <br />
                         <a href="/#">
                             Terms and Conditions &amp; Privacy Policy
                         </a>
@@ -196,13 +187,12 @@ class LoginPageForm extends React.Component {
                         <div className="amazon-login-wrap">
                             <p>or</p>
                             <a href="https://profitwhales.com/login/amazon">
-                                <img src={amazon} alt="LWA-GOld"/>
+                                <img src={amazon} alt="LWA-GOld" />
                             </a>
                         </div>
                     </Col>
                 </Row>
             </Form>
-
         );
     }
 }
@@ -215,4 +205,7 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPageForm);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginPageForm);
