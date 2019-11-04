@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {func, arrayOf, object} from 'prop-types';
-import {Input, notification, Switch} from 'antd';
+import {Input, Switch} from 'antd';
 import InputCurrency from '../../../../components/Inputs/InputCurrency';
 import Table from '../../../../components/Table/Table';
 import ProductItem from '../../../../components/ProductList/ProductItem';
 import {productsServices} from '../../../../services/products.services';
+import {notification} from '../../../../components/Notification';
 
 import './TableSettings.less';
 
@@ -55,25 +56,25 @@ class ProductsList extends Component {
         if (value > 0) {
             if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING])) {
                 notification.warning({
-                    message: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
+                    title: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
                 });
                 return;
             }
             if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING])) {
                 notification.warning({
-                    message: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                    title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
                 });
                 return;
             }
             if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING])) {
                 notification.warning({
-                    message: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
+                    title: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
                 });
                 return;
             }
             if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING])) {
                 notification.warning({
-                    message: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                    title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
                 });
                 return;
             }
@@ -91,7 +92,7 @@ class ProductsList extends Component {
             }
         } else {
             notification.warning({
-                message: item === NET_MARGIN ?
+                title: item === NET_MARGIN ?
                     'Product net margin should be greater than 0%'
                     :
                     'Bids should be greater than or equal to 0.02$'
