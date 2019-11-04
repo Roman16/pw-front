@@ -8,7 +8,6 @@ import {userActions} from '../../../../actions/user.actions';
 import {injectStripe} from "react-stripe-elements";
 import StripeForm from "./StripeForm";
 
-const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 class RegistrationPage extends Component {
     state = {
@@ -59,7 +58,7 @@ class RegistrationPage extends Component {
 
         if (password.length < 6) {
             notification.error({
-                message: 'The password must be at least 6 characters.',
+                title: 'The password must be at least 6 characters.',
             });
             this.setState({
                 isLoading: false
@@ -67,8 +66,7 @@ class RegistrationPage extends Component {
             return;
         } else if (!fieldEmailValid) {
             notification.error({
-                message: 'Invalid email address',
-                duration: 3
+                title: 'Invalid email address',
             });
             this.setState({
                 isLoading: false
@@ -76,15 +74,15 @@ class RegistrationPage extends Component {
             return;
         } else if (!card_number) {
             notification.error({
-                message: 'Card number is required field'
+                title: 'Card number is required field'
             });
         } else if (!expiry) {
             notification.error({
-                message: 'Expiry is required field'
+                title: 'Expiry is required field'
             });
         } else if (!cvc) {
             notification.error({
-                message: 'CVC number is required field'
+                title: 'CVC number is required field'
             });
         } else {
             try {
