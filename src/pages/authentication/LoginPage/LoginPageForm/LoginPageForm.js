@@ -8,11 +8,10 @@ import {
     Checkbox,
     Col,
     Spin,
-    notification
 } from 'antd';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-
+import {notification} from "../../../../components/Notification";
 import { userActions } from '../../../../actions/user.actions';
 import amazon from '../../../../assets/img/amazon.png';
 import './LoginPageForm.less';
@@ -47,10 +46,7 @@ class LoginPageForm extends React.Component {
 
         if (password.length < 6) {
             notification.error({
-                message: 'The password must be at least 6 characters.',
-                placement: 'bottomRight',
-                bottom: 50,
-                duration: 3
+                title: 'The password must be at least 6 characters.',
             });
             this.setState({
                 isLoading: false
@@ -58,10 +54,7 @@ class LoginPageForm extends React.Component {
             return;
         } else if (email.length === 0) {
             notification.error({
-                message: 'The letter must contain at least 1 character.',
-                placement: 'bottomRight',
-                bottom: 50,
-                duration: 3
+                title: 'The letter must contain at least 1 character.',
             });
             this.setState({
                 isLoading: false
@@ -69,10 +62,7 @@ class LoginPageForm extends React.Component {
             return;
         } else if (!fieldEmailValid) {
             notification.error({
-                message: 'Invalid email address',
-                placement: 'bottomRight',
-                bottom: 50,
-                duration: 3
+                title: 'Invalid email address',
             });
             this.setState({
                 isLoading: false
@@ -141,7 +131,7 @@ class LoginPageForm extends React.Component {
                 >
                     <Checkbox
                         onChange={e =>
-                            this.setState({ rememberMe: e.target.checked })
+                            this.setState({rememberMe: e.target.checked})
                         }
                     >
                         Remember me
@@ -175,7 +165,7 @@ class LoginPageForm extends React.Component {
                 <Row className="form-details">
                     <Col>
                         By signing up, you agree to
-                        <br />
+                        <br/>
                         <a href="/#">
                             Terms and Conditions &amp; Privacy Policy
                         </a>
@@ -187,12 +177,13 @@ class LoginPageForm extends React.Component {
                         <div className="amazon-login-wrap">
                             <p>or</p>
                             <a href="https://profitwhales.com/login/amazon">
-                                <img src={amazon} alt="LWA-GOld" />
+                                <img src={amazon} alt="LWA-GOld"/>
                             </a>
                         </div>
                     </Col>
                 </Row>
             </Form>
+
         );
     }
 }
@@ -205,7 +196,4 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(LoginPageForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPageForm);

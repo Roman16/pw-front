@@ -2,8 +2,10 @@ import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {store, persistor} from './store/store';
-import Rousting from './routers/routers';
+import Routing from './routers/routers';
 import 'axios-progress-bar/dist/nprogress.css';
+
+import Notification from './components/Notification/Notification';
 
 import {PersistGate} from 'redux-persist/integration/react'
 
@@ -12,9 +14,11 @@ function App() {
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <BrowserRouter>
-                    <Rousting/>
+                    <Routing/>
                 </BrowserRouter>
             </PersistGate>
+
+            <Notification/>
         </Provider>
     );
 }

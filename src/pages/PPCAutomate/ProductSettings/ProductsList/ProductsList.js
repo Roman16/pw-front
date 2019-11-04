@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {func, arrayOf, object} from 'prop-types';
-import {Input, notification} from 'antd';
+import {Input, Switch} from 'antd';
 import InputCurrency from '../../../../components/Inputs/InputCurrency';
 import Table from '../../../../components/Table/Table';
 import ProductItem from '../../../../components/ProductList/ProductItem';
 import {productsServices} from '../../../../services/products.services';
+import {notification} from '../../../../components/Notification';
 
 import './TableSettings.less';
 
@@ -26,7 +27,8 @@ class ProductsList extends Component {
 
         totalSize: 0,
         page: 1,
-        size: 10
+        size: 10,
+        onlyActive: false
     };
 
     timerId = null;
@@ -34,12 +36,13 @@ class ProductsList extends Component {
     prevItem = 0;
 
     fetchProducts = async (searchText = '') => {
-        const {page, size} = this.state;
+        const {page, size, onlyActive} = this.state;
 
         const {result, totalSize} = await productsServices.getProductsSettingsList({
             searchStr: searchText,
             page: page,
-            size: size
+            size: size,
+            onlyActive: onlyActive
         });
         this.setState({products: result, totalSize});
     };
@@ -53,25 +56,25 @@ class ProductsList extends Component {
         if (value > 0) {
             if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING])) {
                 notification.warning({
-                    message: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
+                    title: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
                 });
                 return;
             }
             if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING])) {
                 notification.warning({
-                    message: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                    title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
                 });
                 return;
             }
             if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING])) {
                 notification.warning({
-                    message: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
+                    title: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
                 });
                 return;
             }
             if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING])) {
                 notification.warning({
-                    message: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                    title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
                 });
                 return;
             }
@@ -89,7 +92,7 @@ class ProductsList extends Component {
             }
         } else {
             notification.warning({
-                message: item === NET_MARGIN ?
+                title: item === NET_MARGIN ?
                     'Product net margin should be greater than 0%'
                     :
                     'Bids should be greater than or equal to 0.02$'
@@ -112,6 +115,10 @@ class ProductsList extends Component {
             product_id: products[index].id,
             [item]: +value
         };
+    };
+
+    handleChangeSwitch = (e) => {
+        this.setState({onlyActive: e}, this.fetchProducts)
     };
 
     onSearchChange = ({target: {value}}) => {
@@ -140,6 +147,13 @@ class ProductsList extends Component {
                                 onChange={this.onSearchChange}
                                 // onBlur={onSearchBlur}
                             />
+
+                            <div className='switch-block'>
+                                Show only Active Listings on Amazon
+                                <Switch
+                                    onChange={this.handleChangeSwitch}
+                                />
+                            </div>
                         </div>
                     ),
                     dataIndex: PRODUCT,
