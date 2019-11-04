@@ -19,7 +19,6 @@ const ItemIcon = ({ icon, isSub, ...props }) => {
     );
 };
 
-
 ItemIcon.propTypes = {
     icon: PropTypes.string,
     isSub: PropTypes.bool
@@ -42,8 +41,12 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
             >
                 {item.subMenu.map(subItem => {
                     return subItem.className === 'ppcScaner' ? (
-                        <Menu.Item {...props} key={subItem.link} >
-                            <a onClick={() =>  window.open(subItem.link, "_self")}>
+                        <Menu.Item {...props} key={subItem.link}>
+                            <a
+                                onClick={() =>
+                                    window.open(subItem.link, '_self')
+                                }
+                            >
                                 <span>{subItem.title}</span>
                             </a>
                         </Menu.Item>
@@ -59,8 +62,12 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
         );
     } else if (item.className === 'account') {
         return (
-            <Menu.Item {...props} className={item.className} key={item.link}>
-                <a onClick={() =>  window.open(item.link, "_self")}>
+            <li
+                {...props}
+                className={`ant-menu-item ${item.className}`}
+                key={item.link}
+            >
+                <a onClick={() => window.open(item.link, '_self')}>
                     {avatar ? (
                         <img
                             className="avatar"
@@ -74,11 +81,15 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
 
                     <span>{item.title}</span>
                 </a>
-            </Menu.Item>
+            </li>
         );
     } else if (item.className === 'helpCenter') {
         return (
-            <Menu.Item {...props} className={item.className} key={item.link}>
+            <li
+                {...props}
+                className={`ant-menu-item ${item.className}`}
+                key={item.link}
+            >
                 <a
                     href="https://profit-whales.kayako.com"
                     target="_blank"
@@ -87,13 +98,13 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
                     <ItemIcon icon={item.icon} isSub={!!parentLink} />
                     <span>{item.title}</span>
                 </a>
-            </Menu.Item>
+            </li>
         );
     } else if (item.className === 'logOut') {
         return (
-            <Menu.Item
+            <li
                 {...props}
-                className={item.className}
+                className={`ant-menu-item ${item.className}`}
                 key={item.link}
                 onClick={logOut}
             >
@@ -101,16 +112,20 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
                     <ItemIcon icon={item.icon} isSub={!!parentLink} />
                     <span>{item.title}</span>
                 </a>
-            </Menu.Item>
+            </li>
         );
     } else {
         return (
-            <Menu.Item {...props} className={item.className} key={item.link}>
+            <li
+                {...props}
+                className={`ant-menu-item ${item.className}`}
+                key={item.link}
+            >
                 <Link to={parentLink + item.link}>
                     <ItemIcon icon={item.icon} isSub={!!parentLink} />
                     <span>{item.title}</span>
                 </Link>
-            </Menu.Item>
+            </li>
         );
     }
 };

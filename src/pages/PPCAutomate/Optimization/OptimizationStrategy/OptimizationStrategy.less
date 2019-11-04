@@ -8,7 +8,7 @@
         @media (max-width: @big-desktop) {
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
-            gap: 25px;
+            gap: 10px;
         }
     }
 }
@@ -20,6 +20,14 @@
     border: 2px solid #c9cbd4;
     border-radius: 8px;
     transition: 0.3s;
+
+    @media (max-width: 1719px) {
+        width: 155px;
+    }
+
+    @media (max-width: @big-desktop) {
+        padding: 5px 10px;
+    }
 
     .caption-strategy {
         height: 50px;
