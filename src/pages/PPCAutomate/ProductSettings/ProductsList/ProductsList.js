@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {func, arrayOf, object} from 'prop-types';
-import {Input, notification} from 'antd';
+import {Input, notification, Switch} from 'antd';
 import InputCurrency from '../../../../components/Inputs/InputCurrency';
 import Table from '../../../../components/Table/Table';
 import ProductItem from '../../../../components/ProductList/ProductItem';
@@ -26,7 +26,8 @@ class ProductsList extends Component {
 
         totalSize: 0,
         page: 1,
-        size: 10
+        size: 10,
+        onlyActive: false
     };
 
     timerId = null;
@@ -34,12 +35,13 @@ class ProductsList extends Component {
     prevItem = 0;
 
     fetchProducts = async (searchText = '') => {
-        const {page, size} = this.state;
+        const {page, size, onlyActive} = this.state;
 
         const {result, totalSize} = await productsServices.getProductsSettingsList({
             searchStr: searchText,
             page: page,
-            size: size
+            size: size,
+            onlyActive: onlyActive
         });
         this.setState({products: result, totalSize});
     };
@@ -114,6 +116,10 @@ class ProductsList extends Component {
         };
     };
 
+    handleChangeSwitch = (e) => {
+        this.setState({onlyActive: e}, this.fetchProducts)
+    };
+
     onSearchChange = ({target: {value}}) => {
         clearTimeout(this.timerIdSearch);
         this.timerIdSearch = setTimeout(() => {
@@ -140,6 +146,13 @@ class ProductsList extends Component {
                                 onChange={this.onSearchChange}
                                 // onBlur={onSearchBlur}
                             />
+
+                            <div className='switch-block'>
+                                Show only Active Listings on Amazon
+                                <Switch
+                                    onChange={this.handleChangeSwitch}
+                                />
+                            </div>
                         </div>
                     ),
                     dataIndex: PRODUCT,

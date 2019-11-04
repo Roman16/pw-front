@@ -1,11 +1,13 @@
 import api from './request';
+import axios from 'axios';
 import { userUrls } from '../constans/api.urls';
 
 export const userService = {
     login,
     regist,
     getUserInfo,
-    setMWS
+    setMWS,
+    getStripeAvailableCountries
 };
 
 function login(user) {
@@ -22,4 +24,10 @@ function getUserInfo() {
 
 function setMWS(data) {
     return api('post', userUrls.mws, data);
+}
+
+function getStripeAvailableCountries(token) {
+    return axios.get(`https://api.stripe.com/v1/country_specs?limit=100`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
 }

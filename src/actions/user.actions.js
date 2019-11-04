@@ -39,13 +39,14 @@ function logOut() {
 
 function regist(user) {
     return dispatch => {
-        userService.regist(user).then(res => {
-            dispatch(setInformation(res.data));
+        userService.regist(user)
+            .then(res => {
+                dispatch(setInformation(res.data));
 
-            localStorage.setItem('token', res.data.auth_token);
+                localStorage.setItem('token', res.data.auth_token);
 
-            dispatch(getUserInfo());
-        });
+                dispatch(getUserInfo());
+            });
     };
 }
 

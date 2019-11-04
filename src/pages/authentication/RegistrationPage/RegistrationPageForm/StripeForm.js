@@ -1,37 +1,48 @@
 import React, {Component} from 'react';
-import {Select} from 'antd';
+import {Select, notification} from 'antd';
 
-import {CardNumberElement, CardExpiryElement, CardCvcElement, injectStripe} from 'react-stripe-elements';
+import {CardNumberElement, CardExpiryElement, CardCvcElement} from 'react-stripe-elements';
+import {userService} from '../../../../services/user.services';
+
+import {states} from '../../../../utils/states';
+import {allCountries} from '../../../../utils/countries';
+
 
 const {Option} = Select;
 
 const CardNumberElementStyles = {
     base: {
         fontSize: '16px',
-        letterSpacing: '5px'
+        letterSpacing: '5px',
     }
 };
 
+const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+
+
 class StripeForm extends Component {
-
-    submit = async (ev) => {
-        // this.props.stripe
-        //     .createPaymentMethod('card', {billing_details: {name: 'Jenny Rosen'}})
-        //     .then(({paymentMethod}) => {
-        //         console.log('Received Stripe PaymentMethod:', paymentMethod);
-        //     });
-
-        // let {token} = await this.props.stripe.createToken({name: "Name"});
-        // let response = await fetch("/charge", {
-        //     method: "POST",
-        //     headers: {"Content-Type": "text/plain"},
-        //     body: token.id
-        // });
-        //
-        // if (response.ok) console.log("Purchase Complete!")
+    state = {
+        countriesList: [],
     };
 
+
+    submit = async (e) => {
+        e.preventDefault();
+
+
+    };
+
+
+    componentDidMount() {
+        userService.getStripeAvailableCountries(stripeKey)
+            .then(res => {
+                this.setState({countriesList: res.data.data})
+            });
+    }
+
     render() {
+        const {countriesList, address_country} = this.state,
+            {stripeElementChange, onChangeInput, onChangeCountry, onChangeState} = this.props;
 
         return (
             <div className="stripe-form">
@@ -43,49 +54,72 @@ class StripeForm extends Component {
                         <CardNumberElement
                             placeholder='**** **** **** ****'
                             style={CardNumberElementStyles}
+                            onChange={(element) => stripeElementChange(element, 'card_number')}
                         />
                     </div>
                     <div className="card-container__expiry">
                         <label className="label">Expiry</label>
-                        <CardExpiryElement/>
+                        <CardExpiryElement
+                            onChange={(element) => stripeElementChange(element, 'expiry')}
+                        />
                     </div>
                     <div className="card-container__cvc">
                         <label className="label">CVC</label>
-                        <CardCvcElement/>
+                        <CardCvcElement
+                            onChange={(element) => stripeElementChange(element, 'cvc')}
+                        />
                     </div>
                 </div>
 
                 <div className="address-container">
                     <div>
                         <label className="label">Street Address</label>
-                        <input type="text"/>
+                        <input
+                            type="text"
+                            name='address_line1'
+                            onChange={onChangeInput}
+                        />
                     </div>
                 </div>
 
                 <div className="country-container">
                     <div className="card-container__city">
                         <label className="label">City</label>
-                        <input type="text"/>
+                        <input
+                            type="text"
+                            name='address_city'
+                            onChange={onChangeInput}
+                        />
                     </div>
                     <div className="card-container__zip">
                         <label className="label">Zip</label>
-                        <input type="text"/>
+                        <input
+                            type="text"
+                            name='address_zip'
+                            onChange={onChangeInput}
+                        />
                     </div>
                     <div className="card-container__country">
                         <label className="label">Country</label>
-                        <Select>
+                        <Select onChange={onChangeCountry}>
+                            {countriesList.map(item => (
+                                <Option key={item.id}>{allCountries[item.id]}</Option>
+                            ))}
                         </Select>
                     </div>
-                    <div className="card-container__state">
+                    {address_country === 'US' && <div className="card-container__state">
                         <label className="label">State</label>
-                        <input type="text"/>
+                        <Select onChange={onChangeState}>
+                            {states.map(item => (
+                                <Option key={item.abbreviation}>{item.name}</Option>
+                            ))}
+                        </Select>
                     </div>
+                    }
                 </div>
-
-                {/*<button onClick={this.submit}>Purchase</button>*/}
             </div>
         );
     }
 }
 
-export default injectStripe(StripeForm);
+export default StripeForm;

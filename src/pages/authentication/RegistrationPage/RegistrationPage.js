@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import './RegistrationPage.less';
 import RegistrationPageForm from './RegistrationPageForm/RegistrationPageForm';
+import {Elements, StripeProvider} from "react-stripe-elements";
+
+const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 class RegistrationPage extends React.Component {
     state = {};
@@ -33,7 +36,12 @@ class RegistrationPage extends React.Component {
                             <div className="form-title">
                                 Personal Information
                             </div>
-                            <RegistrationPageForm />
+
+                            <StripeProvider apiKey={stripeKey}>
+                                <Elements>
+                                    <RegistrationPageForm />
+                                </Elements>
+                            </StripeProvider>
                         </Col>
                         <Col
                             xs={24}
