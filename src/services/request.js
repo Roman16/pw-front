@@ -39,24 +39,21 @@ const api = (method, url, data, type) => {
                 }
 
                 if (error.response) {
-                    console.log('error.response :', error.response);
+                    // console.log('error.response :', error.response);
                     if (typeof error.response.data === 'object') {
                         reject(error);
 
                         if (error.response.status === 401) {
-                            console.log('error 401 :', error.response);
                             notification.error({
                                 message: error.response.data
                                     ? error.response.data.error
                                     : ''
                             });
                         } else {
-                            console.log('error else :', error.response);
                             notification.error({
                                 message: error.response.data
                                     ? error.response.data.message
                                     : ''
-                                // description: error.response.data.message,
                             });
                         }
                     }

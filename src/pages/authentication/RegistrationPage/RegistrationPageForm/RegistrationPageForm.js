@@ -38,7 +38,7 @@ class RegistrationPage extends React.Component {
         } = this.state;
 
         // eslint-disable-next-line no-useless-escape
-        const fieldEmailValid = /^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/.test(
+        const fieldEmailValid = /^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-zA-Z\.]{2,6})$/.test(
             email
         );
 
@@ -58,7 +58,7 @@ class RegistrationPage extends React.Component {
             });
             return;
         }
-        // else if (!fieldEmailValid) {
+        //  else if (!fieldEmailValid) {
         //     notification.error({
         //         message: 'Invalid email address',
         //         placement: 'bottomRight',

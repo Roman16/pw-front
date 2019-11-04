@@ -28,6 +28,10 @@ img {
 .main-pages {
     display: flex;
 
+    @media (max-width: 599px) {
+        position: relative;
+    }
+
     .main-container {
         position: relative;
         flex: 1;
@@ -137,7 +141,8 @@ img {
     flex-direction: row-reverse;
 
     // input hidde
-    .ant-calendar-input-wrap {
+    .ant-calendar-input-wrap,
+    .ant-calendar-range-middle {
         display: none;
     }
 
@@ -290,14 +295,23 @@ td.ant-calendar-cell.ant-calendar-in-range-cell::before {
     }
 }
 
-
 button:disabled,
-button[disabled]{
-    background: linear-gradient(0deg, rgba(189, 198, 207, 0.4), rgba(189, 198, 207, 0.4)), #E8EDF1 !important;
-    color: #C9CBD4 !important;
+button[disabled] {
+    background: linear-gradient(
+            0deg,
+            rgba(189, 198, 207, 0.4),
+            rgba(189, 198, 207, 0.4)
+        ),
+        #e8edf1 !important;
+    color: #c9cbd4 !important;
     cursor: none;
 
     &:hover {
-        background: linear-gradient(0deg, rgba(189, 198, 207, 0.4), rgba(189, 198, 207, 0.4)), #E8EDF1 !important;
+        background: linear-gradient(
+                0deg,
+                rgba(189, 198, 207, 0.4),
+                rgba(189, 198, 207, 0.4)
+            ),
+            #e8edf1 !important;
     }
 }
