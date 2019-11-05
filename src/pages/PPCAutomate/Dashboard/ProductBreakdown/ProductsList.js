@@ -1,7 +1,7 @@
 import React from "react";
-import CustomTable from "../../../components/Table/CustomTable";
 import {Input} from "antd";
-import ProductItem from "../../../components/ProductList/ProductItem";
+import CustomTable from "../../../../components/Table/CustomTable";
+import ProductItem from "../../../../components/ProductList/ProductItem";
 
 const ProductsList = () => {
    const columns = [

@@ -1,11 +1,11 @@
 import React from "react";
 import {Icon, Tooltip} from 'antd';
-import closeIcon from '../../../assets/img/icons/close.svg';
+import closeIcon from '../../../../assets/img/icons/close.svg';
 
-import upWhiteIcon from '../../../assets/img/icons/metric-arrows/up-white-arrow.svg';
-import upGreenIcon from '../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
-import downBlackIcon from '../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
-import downWhiteIcon from '../../../assets/img/icons/metric-arrows/down-white-arrow.svg';
+import upWhiteIcon from '../../../../assets/img/icons/metric-arrows/up-white-arrow.svg';
+import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
+import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
+import downWhiteIcon from '../../../../assets/img/icons/metric-arrows/down-white-arrow.svg';
 
 const MetricItem = ({metric: {title, info, key}}) => (
     <div className='metric-item'>

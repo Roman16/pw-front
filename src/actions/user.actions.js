@@ -5,6 +5,7 @@ import {userService} from '../services/user.services';
 
 export const userActions = {
     login,
+    loginWithAmazon,
     logOut,
     regist,
     setMWS,
@@ -15,13 +16,27 @@ export const userActions = {
 
 function login(user) {
     return dispatch => {
-        userService.login(user).then(res => {
-            dispatch(setInformation(res));
+        userService.login(user)
+            .then(res => {
+                dispatch(setInformation(res));
 
-            localStorage.setItem('token', res.access_token);
+                localStorage.setItem('token', res.access_token);
 
-            dispatch(getUserInfo());
-        });
+                dispatch(getUserInfo());
+            });
+    };
+}
+
+function loginWithAmazon(user) {
+    return dispatch => {
+        userService.loginWithAmazon(user)
+            .then(res => {
+                dispatch(setInformation(res));
+
+                localStorage.setItem('token', res.access_token);
+
+                dispatch(getUserInfo());
+            });
     };
 }
 

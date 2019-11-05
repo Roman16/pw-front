@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { Form, Row, Input, Button, Checkbox, Col, Spin } from 'antd';
-import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
-import { notification } from '../../../../components/Notification';
-import { userActions } from '../../../../actions/user.actions';
+import {Form, Row, Input, Button, Checkbox, Col, Spin} from 'antd';
+import {connect} from 'react-redux';
+import {Link, Redirect} from 'react-router-dom';
+import {notification} from '../../../../components/Notification';
+import {userActions} from '../../../../actions/user.actions';
 import amazon from '../../../../assets/img/amazon.png';
 import './LoginPageForm.less';
 
@@ -18,18 +18,18 @@ class LoginPageForm extends React.Component {
     };
 
     componentDidMount() {
-        this.setState({ isLoading: false });
+        this.setState({isLoading: false});
     }
 
-    onChange = ({ target }) => {
-        this.setState({ [target.name]: target.value });
+    onChange = ({target}) => {
+        this.setState({[target.name]: target.value});
     };
 
     onSubmit = e => {
         e.preventDefault();
 
-        const { email, password, rememberMe } = this.state;
-        this.setState({ isLoading: true });
+        const {email, password, rememberMe} = this.state;
+        this.setState({isLoading: true});
 
         // eslint-disable-next-line no-useless-escape
         const fieldEmailValid = /^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-zA-Z\.]{2,6})$/.test(
@@ -74,18 +74,18 @@ class LoginPageForm extends React.Component {
     };
 
     render() {
-        const { email, password, isLoading, loginSuccess } = this.state;
+        const {email, password, isLoading, loginSuccess} = this.state;
 
         if (isLoading) {
             return (
                 <div className="example">
-                    <Spin size="large" />
+                    <Spin size="large"/>
                 </div>
             );
         }
 
         if (loginSuccess) {
-            return <Redirect to="/ppc/optimization" />;
+            return <Redirect to="/ppc/optimization"/>;
         }
 
         return (
@@ -123,7 +123,7 @@ class LoginPageForm extends React.Component {
                 >
                     <Checkbox
                         onChange={e =>
-                            this.setState({ rememberMe: e.target.checked })
+                            this.setState({rememberMe: e.target.checked})
                         }
                     >
                         Remember me
@@ -157,7 +157,7 @@ class LoginPageForm extends React.Component {
                 <Row className="form-details">
                     <Col>
                         By signing up, you agree to
-                        <br />
+                        <br/>
                         <a href="/#">
                             Terms and Conditions &amp; Privacy Policy
                         </a>
@@ -168,9 +168,11 @@ class LoginPageForm extends React.Component {
                     <Col>
                         <div className="amazon-login-wrap">
                             <p>or</p>
-                            <a href="https://profitwhales.com/login/amazon">
-                                <img src={amazon} alt="LWA-GOld" />
-                            </a>
+                            <Link to="/login/amazon">
+                                {/*<a href="https://front1.profitwhales.com/login/amazon">*/}
+                                <img src={amazon} alt="LWA-GOld"/>
+                                {/*</a>*/}
+                            </Link>
                         </div>
                     </Col>
                 </Row>

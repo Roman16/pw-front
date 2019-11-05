@@ -4,6 +4,7 @@ import { userUrls } from '../constans/api.urls';
 
 export const userService = {
     login,
+    loginWithAmazon,
     regist,
     getUserInfo,
     setMWS,
@@ -12,6 +13,10 @@ export const userService = {
 
 function login(user) {
     return api('post', userUrls.login, user);
+}
+
+function loginWithAmazon(user) {
+    return api('post', userUrls.loginAmazon, user);
 }
 
 function regist(user) {

@@ -1,7 +1,7 @@
 import React from "react";
 import {Icon, Tooltip} from "antd";
-import plusIcon from "../../../../assets/img/icons/plus-green.svg";
-import minusIcon from "../../../../assets/img/icons/minus.svg";
+import plusIcon from "../../../../../assets/img/icons/plus-green.svg";
+import minusIcon from "../../../../../assets/img/icons/minus.svg";
 
 const ModalMetricItem = ({item: {title, info}, item, type, removeMetric, addMetric}) => (
     <div className='metric-item'>

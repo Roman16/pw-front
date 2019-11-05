@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import plusIcon from '../../../../assets/img/icons/plus-blue.svg';
-import plusIconWhite from '../../../../assets/img/icons/plus-white.svg';
+import plusIcon from '../../../../../assets/img/icons/plus-blue.svg';
+import plusIconWhite from '../../../../../assets/img/icons/plus-white.svg';
 import AddMetricModal from "./AddMetricModal";
 
 const AddMetric = () => {
