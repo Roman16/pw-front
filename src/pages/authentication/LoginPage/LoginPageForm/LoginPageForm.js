@@ -168,11 +168,11 @@ class LoginPageForm extends React.Component {
                     <Col>
                         <div className="amazon-login-wrap">
                             <p>or</p>
-                            <Link to="/login/amazon">
-                                {/*<a href="https://front1.profitwhales.com/login/amazon">*/}
+                            {/*<Link to="/login/amazon">*/}
+                            <a onClick={() => window.open('/login/amazon', '_self')}>
                                 <img src={amazon} alt="LWA-GOld"/>
-                                {/*</a>*/}
-                            </Link>
+                            </a>
+                            {/*</Link>*/}
                         </div>
                     </Col>
                 </Row>
