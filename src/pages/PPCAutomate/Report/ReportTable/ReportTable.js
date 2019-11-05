@@ -15,13 +15,7 @@ import { reportsUrls } from '../../../../constans/api.urls';
 import FreeTrial from '../../../../components/FreeTrial/FreeTrial';
 import './ReportTable.less';
 
-import {
-    DateRangePicker,
-    SingleDatePicker,
-    DayPickerRangeController
-} from 'react-dates';
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
+
 
 const { TabPane } = Tabs;
 
@@ -306,9 +300,9 @@ class ReportTable extends Component {
                             Today Changes
                             <span>{todayChanges}</span>
                         </div>
-                        <DateRangePicker
-                        // timeRange={this.timeRange}
-                        />
+
+                        <DatePicker />
+
                         {/* <DayPickerRangeController /> */}
                         {/* <Link to="/ppc-automation/reports/download-report"> */}
                         <Button
