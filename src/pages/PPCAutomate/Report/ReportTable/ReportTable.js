@@ -4,7 +4,7 @@ import moment from 'moment';
 import { Tabs, Button } from 'antd';
 
 import KeywordsOptimization from './Tables/KeywordsOptimization';
-import DatePicker from '../../../../components/DatePicker/DatePicker';
+import DatePicker from '../../../../components/DatePicker/DatePickerOLD';
 import PATsOptimization from './Tables/PATsOptimization';
 import NewKeywords from './Tables/NewKeywords';
 import NewNegativeKeywords from './Tables/NewNegativeKeywords';
@@ -14,8 +14,6 @@ import { reportsActions } from '../../../../actions/reports.actions';
 import { reportsUrls } from '../../../../constans/api.urls';
 import FreeTrial from '../../../../components/FreeTrial/FreeTrial';
 import './ReportTable.less';
-
-
 
 const { TabPane } = Tabs;
 
@@ -303,8 +301,6 @@ class ReportTable extends Component {
 
                         <DatePicker />
 
-                        {/* <DayPickerRangeController /> */}
-                        {/* <Link to="/ppc-automation/reports/download-report"> */}
                         <Button
                             className="download-btn"
                             onClick={this.downloadFile}
@@ -312,7 +308,6 @@ class ReportTable extends Component {
                             Download
                             <i className="download-icon" />
                         </Button>
-                        {/* </Link> */}
                     </div>
                     <FreeTrial />
                 </div>

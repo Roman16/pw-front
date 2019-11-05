@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Menu, Icon} from 'antd';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import {userActions} from '../../actions/user.actions';
+import { Menu, Icon } from 'antd';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { userActions } from '../../actions/user.actions';
 
 const IconFont = Icon.createFromIconfontCN({
     scriptUrl: '/assets/icons/iconfont.js'
@@ -62,11 +62,7 @@ const SidebarItem = ({avatar, logOut, item, parentLink = '', ...props}) => {
         );
     } else if (item.className === 'account') {
         return (
-            <li
-                {...props}
-                className={`ant-menu-item ${item.className}`}
-                key={item.link}
-            >
+            <li className={`ant-menu-item ${item.className}`} key={item.link}>
                 <a onClick={() => window.open(item.link, '_self')}>
                     {avatar ? (
                         <img
@@ -85,11 +81,7 @@ const SidebarItem = ({avatar, logOut, item, parentLink = '', ...props}) => {
         );
     } else if (item.className === 'helpCenter') {
         return (
-            <li
-                {...props}
-                className={`ant-menu-item ${item.className}`}
-                key={item.link}
-            >
+            <li className={`ant-menu-item ${item.className}`} key={item.link}>
                 <a
                     href="https://profit-whales.kayako.com"
                     target="_blank"
@@ -103,7 +95,6 @@ const SidebarItem = ({avatar, logOut, item, parentLink = '', ...props}) => {
     } else if (item.className === 'logOut') {
         return (
             <li
-                {...props}
                 className={`ant-menu-item ${item.className}`}
                 key={item.link}
                 onClick={logOut}
@@ -116,15 +107,14 @@ const SidebarItem = ({avatar, logOut, item, parentLink = '', ...props}) => {
         );
     } else {
         return (
-            <li
-                {...props}
-                className={`ant-menu-item ${item.className}`}
-                key={item.link}
-            >
-                <Link to={parentLink + item.link}>
-                    <ItemIcon icon={item.icon} isSub={!!parentLink}/>
+            <li className="ant-menu-item" key={item.link}>
+                <NavLink
+                    to={parentLink + item.link}
+                    activeClassName="ant-menu-item-active-link"
+                >
+                    <ItemIcon icon={item.icon} isSub={!!parentLink} />
                     <span>{item.title}</span>
-                </Link>
+                </NavLink>
             </li>
         );
     }

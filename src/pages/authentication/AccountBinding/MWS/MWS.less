@@ -14,9 +14,18 @@
         border-radius: 50%;
         margin-bottom: 40px;
 
+        @media (max-width: 999px) {
+            width: 90px;
+            height: 90px;
+        }
+
         @media (max-width: 799px) {
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 379px) {
             margin-bottom: 30px;
         }
     }
@@ -27,14 +36,20 @@
         letter-spacing: 0.2px;
         color: #363694;
         margin-bottom: 40px;
+        text-align: center;
 
         @media (max-width: 799px) {
-            font-size: 36px;
-            margin-bottom: 30px;
+            font-size: 30px;
+            margin-bottom: 15px;
         }
 
         @media (max-width: 619px) {
-            font-size: 30px;
+            font-size: 26px;
+        }
+
+        @media (max-width: 379px) {
+            font-size: 22px;
+            margin-bottom: 30px;
         }
     }
 
@@ -57,15 +72,33 @@
         }
 
         @media (max-width: 799px) {
-            margin-bottom: 30px;
+            font-size: 9px;
+            margin-bottom: 15px;
         }
 
-        @media (max-width: 739px) {
+        @media (max-width: 769px) {
+            font-size: 8px;
+        }
+
+        @media (max-width: 699px) {
+            font-size: 7px;
+        }
+
+        @media (max-width: 619px) {
             font-size: 6px;
         }
 
-        @media (max-width: 679px) {
+        @media (max-width: 549px) {
             font-size: 5px;
+        }
+
+        @media (max-width: 469px) {
+            font-size: 4px;
+        }
+
+        @media (max-width: 379px) {
+            font-size: 3px;
+            margin-bottom: 30px;
         }
     }
 
@@ -93,7 +126,12 @@
         transition: all 0.4s ease;
 
         @media (max-width: 799px) {
-            margin-bottom: 54px;
+            font-size: 14px;
+            margin-bottom: 36px;
+        }
+
+        @media (max-width: 379px) {
+            font-size: 12px;
         }
 
         &:hover {
@@ -112,7 +150,7 @@
         justify-content: space-between;
         align-items: flex-end;
 
-        @media (max-width: 799px) {
+        @media (max-width: 599px) {
             height: 190px;
             flex-direction: column;
             align-items: center;
@@ -126,45 +164,57 @@
 
             label {
                 font-size: 12px;
-                line-height: 16px;
-                letter-spacing: 0.2px;
+                line-height: 1.3334em;
+                letter-spacing: 0.0167em;
                 color: #363694;
-                margin-bottom: 8px;
+                margin-bottom: 0.6667em;
                 font-weight: bold;
+
+                @media (max-width: 799px) {
+                    font-size: 11px;
+                }
             }
 
             input {
-                height: 40px;
+                height: 2.8571em;
                 border: 1px solid #bdc6cf;
                 box-sizing: border-box;
-                border-radius: 4px;
+                border-radius: 0.2857em;
                 width: 100%;
                 font-size: 14px;
-                line-height: 20px;
+                line-height: 1.4286em;
                 color: #7c8a95;
-                padding: 0 20px;
+                padding: 0 1.4286em;
+
+                @media (max-width: 799px) {
+                    font-size: 13px;
+                }
             }
         }
 
         .btn {
             position: relative;
             background: linear-gradient(0deg, #50e3c2, #50e3c2), #ffffff;
-            box-shadow: 0px 4px 12px rgba(44, 48, 58, 0.08),
-                0px 0px 20px rgba(44, 48, 58, 0.04);
-            border-radius: 4px;
+            box-shadow: 0px 0.3334em 1em rgba(44, 48, 58, 0.08),
+                0px 0px 1.6667em rgba(44, 48, 58, 0.04);
+            border-radius: 0.3334em;
             font-size: 12px;
-            line-height: 16px;
-            letter-spacing: 0.2px;
+            line-height: 1.3334em;
+            letter-spacing: 0.0167em;
             color: #ffffff;
-            width: 120px;
-            height: 40px;
+            width: 10em;
+            height: 3.3334em;
             border: 0;
             cursor: pointer;
             transition: all 0.4s ease;
 
+            @media (max-width: 799px) {
+                font-size: 11px;
+            }
+
             i {
                 position: absolute;
-                margin: 2px 0 0 20px;
+                margin: 0.1667em 0 0 1.6667em;
             }
 
             &:hover {
