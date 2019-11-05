@@ -2,25 +2,21 @@
 @import '../../style/variables';
 
 .Sidebar {
-  display: inline-block;
-  width: 72px;
-  height: 100vh;
-  background-color: @third-default-dark;
-  transition: all 0.3s ease-in;
-  overflow-x: hidden;
-  overflow-y: auto;
-  z-index: 1000;
+    display: inline-block;
+    width: 72px;
+    height: 100vh;
+    background-color: @third-default-dark;
+    transition: all 0.3s ease-in;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 1000;
+
+    @media (max-width: 799px) {
+        position: absolute;
+    }
 
     &.SidebarOpen {
         width: 200px;
-
-        @media (max-width: 599px) {
-            position: absolute;
-
-            &.SidebarOpen + .main-container {
-                margin-left: 72px;
-            }
-        }
     }
 
     .sidebar-header {

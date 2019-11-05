@@ -45,7 +45,7 @@ const Sidebar = () => {
     };
 
     useEffect(() => {
-        width < 600 ? setCollapsed(true) : setCollapsed(false);
+        width < 800 ? setCollapsed(true) : setCollapsed(false);
         dispatch(userActions.getAuthorizedUserInfo());
     }, [dispatch, width]);
 
