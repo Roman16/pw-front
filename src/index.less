@@ -29,8 +29,8 @@ img {
   display: flex;
 
   @media (max-width: 599px) {
-        position: relative;
-    }
+    position: relative;
+  }
 
   .main-container {
     position: relative;
@@ -164,11 +164,11 @@ img {
   display: flex;
   flex-direction: row-reverse;
 
-    // input hidde
-    .ant-calendar-input-wrap,
-    .ant-calendar-range-middle {
-        display: none;
-    }
+  // input hidde
+  .ant-calendar-input-wrap,
+  .ant-calendar-range-middle {
+    display: none;
+  }
 
   .ant-calendar-range-middle {
     left: 34%;
@@ -316,6 +316,25 @@ td.ant-calendar-cell.ant-calendar-in-range-cell::before {
 
   .check-box-item {
     margin: 0 0 20px 0;
+  }
+}
+
+button.btn {
+  width: max-content;
+  height: 32px;
+  border: 0;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+
+  &.default {
+    background: #6D6DF6;
+    color: #fff;
+
+    &:hover {
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #6D6DF6;
+      box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
+    }
   }
 }
 

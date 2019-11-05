@@ -9,7 +9,7 @@ import {
 } from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from 'react-redux';
-import CustomTable from './CustomTable';
+import CustomTable from '../../../../../components/Table/CustomTable';
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
 const changedPATBidImpressions = 'changed-pat-bid-impressions';

@@ -1,10 +1,20 @@
 import React from 'react';
-import './Dashboard.less';
 
+import Metrics from './Metrics/Metrics';
+import LineChart from "./LineChart/LineChart";
+import ProductBreakdown from "./ProductBreakdown/ProductBreakdown";
+
+import './Dashboard.less';
 
 const Dashboard = () => (
     <div className="dashboard-page">
-        <h1>Dashboard</h1>
+        <Metrics />
+
+        <LineChart />
+
+        <div className='products-statistic'>
+            <ProductBreakdown />
+        </div>
     </div>
 );
 

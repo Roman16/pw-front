@@ -8,7 +8,7 @@ import {
 } from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from 'react-redux';
-import CustomTable from './CustomTable';
+import CustomTable from '../../../../../components/Table/CustomTable';
 
 const CreatedCrossNegativePAT = 'created-cross-negative-pat';
 const CreatedPATCST = 'created-pat-cst';

@@ -3,7 +3,7 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './Notification.less';
 
-const Notification = () => (
+const NotificationContainer = () => (
     <ToastContainer
         position="bottom-right"
         autoClose={3000}
@@ -18,4 +18,4 @@ const Notification = () => (
 
 );
 
-export default Notification;
+export default NotificationContainer;

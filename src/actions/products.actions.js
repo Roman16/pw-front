@@ -1,5 +1,6 @@
 import {productsConstants} from '../constans/actions.type';
 import {productsServices} from '../services/products.services';
+import {notification} from '../components/Notification';
 
 export const productsActions = {
     fetchProducts,
@@ -79,6 +80,8 @@ function onSwitchOptimization(product) {
                     type: productsConstants.UPDATE_SELECTED_PRODUCT,
                     payload: product
                 });
+
+                product.status === 'RUNNING' && notification.start({title: 'Optimize is started'});
 
                 product.status === 'RUNNING' && dispatch({
                     type: productsConstants.UPDATE_PRODUCT_OPTIONS,

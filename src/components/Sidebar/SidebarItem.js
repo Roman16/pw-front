@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Menu, Icon } from 'antd';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { userActions } from '../../actions/user.actions';
+import {Menu, Icon} from 'antd';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {userActions} from '../../actions/user.actions';
 
 const IconFont = Icon.createFromIconfontCN({
     scriptUrl: '/assets/icons/iconfont.js'
 });
 
-const ItemIcon = ({ icon, isSub, ...props }) => {
+const ItemIcon = ({icon, isSub, ...props}) => {
     if (isSub) return null;
 
     return icon ? (
-        <IconFont {...props} type={`icon-${icon}`} />
+        <IconFont {...props} type={`icon-${icon}`}/>
     ) : (
-        <Icon {...props} type="right-circle" theme="filled" />
+        <Icon {...props} type="right-circle" theme="filled"/>
     );
 };
 
@@ -24,7 +24,7 @@ ItemIcon.propTypes = {
     isSub: PropTypes.bool
 };
 
-const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
+const SidebarItem = ({avatar, logOut, item, parentLink = '', ...props}) => {
     // avatar = null;
     if (item.subMenu) {
         return (
@@ -34,7 +34,7 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
                 key={`${item.link}`}
                 title={
                     <span>
-                        <ItemIcon icon={item.icon} isSub={!!parentLink} />
+                        <ItemIcon icon={item.icon} isSub={!!parentLink}/>
                         <span>{item.title}</span>
                     </span>
                 }
@@ -76,7 +76,7 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
                             width="40"
                         />
                     ) : (
-                        <ItemIcon icon="account" isSub={!!parentLink} />
+                        <ItemIcon icon="account" isSub={!!parentLink}/>
                     )}
 
                     <span>{item.title}</span>
@@ -95,7 +95,7 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <ItemIcon icon={item.icon} isSub={!!parentLink} />
+                    <ItemIcon icon={item.icon} isSub={!!parentLink}/>
                     <span>{item.title}</span>
                 </a>
             </li>
@@ -109,7 +109,7 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
                 onClick={logOut}
             >
                 <a>
-                    <ItemIcon icon={item.icon} isSub={!!parentLink} />
+                    <ItemIcon icon={item.icon} isSub={!!parentLink}/>
                     <span>{item.title}</span>
                 </a>
             </li>
@@ -122,7 +122,7 @@ const SidebarItem = ({ avatar, logOut, item, parentLink = '', ...props }) => {
                 key={item.link}
             >
                 <Link to={parentLink + item.link}>
-                    <ItemIcon icon={item.icon} isSub={!!parentLink} />
+                    <ItemIcon icon={item.icon} isSub={!!parentLink}/>
                     <span>{item.title}</span>
                 </Link>
             </li>
