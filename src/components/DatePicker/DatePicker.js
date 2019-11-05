@@ -54,42 +54,41 @@ class DatePicker extends Component {
     //     return current && current > moment().endOf('day');
     // };
 
-    renderDatePresets() {
-        const onDatesChange = () => {
-            console.log('onChange');
-            // console.log('qwe', qwe);
-        };
-
-        return (
-            <div className="Presets">
-                {presets.map(({ text, startDate, endDate }) => {
-                    return (
-                        <button
-                            className="PresetsBtn"
-                            key={text}
-                            type="button"
-                            onClick={() =>
-                                this.onDatesChange(startDate, endDate)
-                            }
-                        >
-                            {text}
-                        </button>
-                    );
-                })}
-            </div>
-        );
-    }
+    onDatesChange = (startDate, endDate) => {
+        this.setState({
+            startDate,
+            endDate
+        });
+    };
 
     render() {
         const { startDate, endDate, focusedInput } = this.state;
-        console.log('startDate :', startDate);
-        console.log('endDate :', endDate);
-        console.log('focusedInput :', focusedInput);
+
+        const renderDatePresets = () => {
+            return (
+                <div className="Presets">
+                    {presets.map(({ text, startDate, endDate }) => {
+                        return (
+                            <button
+                                className="PresetsBtn"
+                                key={text}
+                                type="button"
+                                onClick={() =>
+                                    this.onDatesChange(startDate, endDate)
+                                }
+                            >
+                                {text}
+                            </button>
+                        );
+                    })}
+                </div>
+            );
+        };
 
         return (
             <div className="date-picker">
                 <DateRangePicker
-                    renderCalendarInfo={this.renderDatePresets}
+                    renderCalendarInfo={renderDatePresets}
                     startDate={startDate} // momentPropTypes.momentObj or null,
                     startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
                     endDate={endDate} // momentPropTypes.momentObj or null,
