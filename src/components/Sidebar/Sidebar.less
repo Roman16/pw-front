@@ -7,7 +7,8 @@
     height: 100vh;
     background-color: @third-default-dark;
     transition: all 0.3s ease-in;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     z-index: 1000;
 
     &.SidebarOpen {
@@ -209,7 +210,7 @@
         > .ant-menu-sub[role='menu']
         > .ant-menu-item[role='menuitem'] {
         margin: 0;
-        height: 40px;
+        height: 34px;
     }
 
     .ant-menu-dark[role='menu']
@@ -217,7 +218,7 @@
         > .ant-menu-sub[role='menu']
         > .ant-menu-item[role='menuitem']
         > a {
-        line-height: 40px;
+        line-height: 34px;
     }
 
     .ant-menu-dark[role='menu']
