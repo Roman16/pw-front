@@ -1,13 +1,19 @@
 import React from 'react';
 import {Row, Col} from 'antd';
 import LoginPageForm from './LoginPageForm/LoginPageForm';
+import { loadReCaptcha,  } from 'react-recaptcha-v3'
 
 import './LoginPage.less';
 
 import logo from '../../../assets/img/logo.svg';
 
+const recaptchaKey =process.env.GOOGLE_RECAPTCHA_KEY || '6LdVacEUAAAAACxfVkvIWG3r9MXE8PYKXJ5aaqY1';
+
 class LoginPage extends React.Component {
-    state = {};
+
+    componentDidMount() {
+        loadReCaptcha(recaptchaKey);
+    }
 
     render() {
         return (
@@ -31,7 +37,9 @@ class LoginPage extends React.Component {
                                 to access the dashboard.
                             </div>
 
-                            <LoginPageForm />
+                            <LoginPageForm
+                                recaptchaKey={recaptchaKey}
+                            />
                         </Col>
 
                         <Col

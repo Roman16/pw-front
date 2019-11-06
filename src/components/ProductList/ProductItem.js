@@ -1,6 +1,7 @@
 import React from 'react';
-import { func, bool, string } from 'prop-types';
-import { Checkbox } from 'antd';
+import {func, bool, string} from 'prop-types';
+import {Checkbox} from 'antd';
+import optimizationLabel from '../../assets/img/optimization-label.svg';
 
 const maxText = text => {
     if (text && text.length > 40) {
@@ -11,37 +12,39 @@ const maxText = text => {
 };
 
 const ProductItem = ({
-    product: { id, asin, name, sku, image_url, under_optimization },
-    onClick,
-    product,
-    isActive
-}) => {
+                         product: {id, asin, name, sku, image_url, under_optimization},
+                         onClick,
+                         product,
+                         isActive
+                     }) => {
     return (
         <div
             className={`product-item ${isActive ? 'active' : ''}`}
             onClick={() => onClick(product)}
         >
             <div className="image">
-                <img src={image_url} alt="" />
+                <img src={image_url} alt=""/>
             </div>
 
             <div className="product-item-content">
                 <div className="caption">{maxText(name)}</div>
 
-                <div className="detail">
-                    <span> ASIN: </span>
-                    <span>{asin}</span>
-                </div>
+                <div>
+                    <div className="detail">
+                        <span> ASIN: </span>
+                        <span>{asin}</span>
+                    </div>
 
-                <div className="detail">
-                    <span> SKU: </span>
-                    <span>{sku}</span>
+                    <div className="detail">
+                        <span> SKU: </span>
+                        <span>{sku}</span>
+                    </div>
                 </div>
             </div>
 
-            <div className="select">
-                {under_optimization ? <Checkbox checked readOnly /> : null}
-            </div>
+            {under_optimization && <div className='on-optimization'>
+                <img src={optimizationLabel} alt=""/>
+            </div>}
         </div>
     );
 };
@@ -58,7 +61,8 @@ ProductItem.propTypes = {
 
 ProductItem.defaultProps = {
     isActive: false,
-    onClick: () => {},
+    onClick: () => {
+    },
     asin: null,
     captions: null,
     sku: null,

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ReCaptcha } from 'react-recaptcha-v3'
 
 import {Form, Row, Input, Button, Checkbox, Col, Spin} from 'antd';
 import {connect} from 'react-redux';
@@ -12,6 +13,8 @@ class LoginPageForm extends React.Component {
     state = {
         email: '',
         password: '',
+        captcha_token: '',
+        captcha_action: 'login',
         rememberMe: false,
         isLoading: false,
         loginSuccess: false
@@ -28,7 +31,7 @@ class LoginPageForm extends React.Component {
     onSubmit = e => {
         e.preventDefault();
 
-        const {email, password, rememberMe} = this.state;
+        const {email, password, rememberMe, captcha_token, captcha_action} = this.state;
         this.setState({isLoading: true});
 
         // eslint-disable-next-line no-useless-escape
@@ -65,12 +68,20 @@ class LoginPageForm extends React.Component {
         this.props.login({
             email,
             password,
-            rememberMe
+            captcha_token,
+            rememberMe,
+            captcha_action
         });
 
         this.setState({
             isLoading: false
         });
+    };
+
+    verifyCallback = (recaptchaToken) => {
+        this.setState({
+            captcha_token: recaptchaToken
+        })
     };
 
     render() {
@@ -128,6 +139,13 @@ class LoginPageForm extends React.Component {
                     >
                         Remember me
                     </Checkbox>
+
+                    <ReCaptcha
+                        sitekey={this.props.recaptchaKey}
+                        action='login'
+                        verifyCallback={this.verifyCallback}
+                    />
+
                     <a
                         className="login-form-forgot forget"
                         href="https://profitwhales.com/password/reset"
@@ -142,6 +160,7 @@ class LoginPageForm extends React.Component {
                             className="submit"
                             htmlType="submit"
                             onClick={this.onSubmit}
+                            data-badge="inline"
                         >
                             Log in
                         </Button>

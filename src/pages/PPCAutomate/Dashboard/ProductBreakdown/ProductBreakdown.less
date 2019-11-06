@@ -1,5 +1,16 @@
 .products-statistic {
+  height: 100%;
+  display: flex;
   margin: 20px 0 0 0;
+
+  .product-breakdown {
+    width: 70%;
+    margin: 0 25px 0 0;
+  }
+
+  .chart {
+    flex: 1;
+  }
 
   .title {
     width: 100%;
@@ -8,14 +19,113 @@
     align-items: center;
     justify-content: space-between;
     border-left: 2px solid #6D6DF6;
-    font-family: ir;
-    font-size: 20px;
-    line-height: 28px;
-    letter-spacing: -0.06px;
-    color: #363694;
 
-    button {
-      padding: 0 15px;
+
+    span:first-child {
+      font-family: ir;
+      font-size: 20px;
+      line-height: 28px;
+      letter-spacing: -0.06px;
+      color: #363694;
+    }
+
+    .switch-block {
+      display: flex;
+      align-items: center;
+      font-family: ir;
+      font-size: 14px;
+
+      button {
+        margin: 0 0 0 10px;
+      }
+    }
+  }
+
+  .table-head {
+    border: 0;
+    margin: 0 0 10px 0;
+  }
+
+  .table-body {
+    .table-body__row {
+      border: 0;
+      background: #fff;
+      border-radius: 8px;
+      margin: 0 0 5px 0;
+
+      & > div:last-child {
+        justify-content: flex-start;
+      }
+
+      .table-body__field {
+        padding: 8px;
+      }
+
+      .product-item {
+        width: 100%;
+        height: 84px;
+        background: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        position: relative;
+
+        .image {
+          padding: 4px;
+
+          img {
+            max-width: 72px;
+            max-height: 72px;
+          }
+        }
+
+        & > div.product-item-content {
+          flex: 1 1;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .caption {
+            font-weight: 900;
+          }
+
+          .detail {
+            span:first-child {
+              font-weight: 900;
+            }
+          }
+        }
+
+        .on-optimization {
+          position: absolute;
+          right: 0;
+          bottom: -8px;
+        }
+      }
+
+      .count-changes {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #F3F7FD;
+        border-radius: 8px;
+        font-family: ir;
+        font-size: 24px;
+        color: #6D6DF6;
+      }
+
+      .product-params {
+        font-family: ir;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        letter-spacing: -0.4375px;
+        color: #343C5A;
+      }
+
     }
   }
 }

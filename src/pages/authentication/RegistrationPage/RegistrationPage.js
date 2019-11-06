@@ -4,11 +4,15 @@ import { Col, Row } from 'antd';
 import './RegistrationPage.less';
 import RegistrationPageForm from './RegistrationPageForm/RegistrationPageForm';
 import {Elements, StripeProvider} from "react-stripe-elements";
+import { loadReCaptcha } from 'react-recaptcha-v3'
 
 const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+const recaptchaKey =process.env.GOOGLE_RECAPTCHA_KEY || '6LdVacEUAAAAACxfVkvIWG3r9MXE8PYKXJ5aaqY1';
 
 class RegistrationPage extends React.Component {
-    state = {};
+    componentDidMount() {
+        loadReCaptcha(recaptchaKey);
+    }
 
     render() {
         return (
@@ -39,7 +43,9 @@ class RegistrationPage extends React.Component {
 
                             <StripeProvider apiKey={stripeKey}>
                                 <Elements>
-                                    <RegistrationPageForm />
+                                    <RegistrationPageForm
+                                        recaptchaKey={recaptchaKey}
+                                    />
                                 </Elements>
                             </StripeProvider>
                         </Col>

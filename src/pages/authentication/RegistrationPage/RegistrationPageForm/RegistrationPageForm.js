@@ -3,6 +3,7 @@ import {Col, Row, Spin} from 'antd';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {notification} from '../../../../components/Notification';
+import { ReCaptcha } from 'react-recaptcha-v3'
 
 import {userActions} from '../../../../actions/user.actions';
 import {injectStripe} from "react-stripe-elements";
@@ -20,6 +21,8 @@ class RegistrationPage extends Component {
         address_state: '',
         address_country: '',
         address_zip: '',
+        captcha_token: '',
+        captcha_action: 'registration',
         stripe_token: null,
         registerSuccess: false,
         isLoading: false,
@@ -44,7 +47,9 @@ class RegistrationPage extends Component {
             address_state,
             address_country,
             address_zip,
-            stripe_token
+            stripe_token,
+            captcha_token,
+            captcha_action
         } = this.state;
 
         // eslint-disable-next-line no-useless-escape
@@ -105,13 +110,22 @@ class RegistrationPage extends Component {
                         last_name,
                         email,
                         password,
-                        stripe_token: res.token.id
+                        stripe_token: res.token.id,
+                        captcha_token,
+                        captcha_action
                     }));
             } catch (e) {
                 console.log(e);
             }
         }
     };
+
+    verifyCallback = (recaptchaToken) => {
+        this.setState({
+            captcha_token: recaptchaToken
+        })
+    };
+
 
     stripeElementChange = (element, name) => {
         if (!element.empty && element.complete) {
@@ -227,6 +241,13 @@ class RegistrationPage extends Component {
                     onChangeInput={this.onChange}
                     stripeElementChange={this.stripeElementChange}
                 />
+
+                <ReCaptcha
+                    sitekey={this.props.recaptchaKey}
+                    action='login'
+                    verifyCallback={this.verifyCallback}
+                />
+
 
                 <Row>
                     <Col xs={24} sm={24} md={24}>

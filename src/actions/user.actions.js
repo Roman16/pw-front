@@ -42,7 +42,7 @@ function loginWithAmazon(user) {
 
 function logOut() {
     return dispatch => {
-        history.push('/login');
+        window.open('/login', '_self');
 
         dispatch({
             type: userConstants.USER_LOGOUT
@@ -58,7 +58,7 @@ function regist(user) {
             .then(res => {
                 dispatch(setInformation(res.data));
 
-                localStorage.setItem('token', res.data.auth_token);
+                localStorage.setItem('token', res.access_token);
 
                 dispatch(getUserInfo());
             });
@@ -85,11 +85,11 @@ function getUserInfo() {
             dispatch(setInformation(res));
 
             if (!res.account_links.amazon_mws.is_connected) {
-                history.push('/mws');
+                window.open('/mws', '_self');
             } else if (!res.account_links.amazon_ppc.is_connected) {
-                history.push('/ppc');
+                window.open('/ppc', '_self');
             } else {
-                history.push('/ppc/optimization');
+                window.open('/ppc/optimization', '_self');
             }
         });
     };
@@ -102,9 +102,9 @@ function getAuthorizedUserInfo() {
             dispatch(setInformation(res));
 
             if (!res.account_links.amazon_mws.is_connected) {
-                history.push('/mws');
+                window.open('/mws', '_self');
             } else if (!res.account_links.amazon_ppc.is_connected) {
-                history.push('/ppc');
+                window.open('/ppc', '_self');
             }
         });
     };
