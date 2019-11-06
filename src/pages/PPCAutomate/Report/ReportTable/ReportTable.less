@@ -2,263 +2,275 @@
 @import '../../../../style/variables.less';
 
 .reports-page {
-  display: flex;
-  height: 100vh;
-  max-height: max-content;
+    display: flex;
+    height: 100vh;
+    max-height: max-content;
 
-  .product-list {
-    min-width: 356px;
-    margin: 0 20px 0 0;
-  }
-
-  .capitalize-field {
-    text-transform: capitalize;
-  }
-
-  .ant-tabs-tab {
-    margin-right: 0 !important;
-
-    span {
-      font-weight: normal;
+    .product-list {
+        min-width: 356px;
+        margin: 0 20px 0 0;
     }
-  }
 
-  .ant-table-thead > tr > th {
-    background: #fff;
-    padding: 15px 8px 15px 16px;
-  }
+    .capitalize-field {
+        text-transform: capitalize;
+    }
 
-  .ant-table-tbody td {
-    padding: 8px 8px 8px 12px;
-  }
+    .ant-tabs-tab {
+        margin-right: 0 !important;
+
+        span {
+            font-weight: normal;
+        }
+    }
+
+    .ant-table-thead > tr > th {
+        background: #fff;
+        padding: 15px 8px 15px 16px;
+    }
+
+    .ant-table-tbody td {
+        padding: 8px 8px 8px 12px;
+    }
 }
 
 .ReportTable {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  margin: 0 0 0 5px;
-
-  .tab-name-count {
+    height: 100%;
+    width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background: inherit;
-    border: 1px solid #c9cbd4;
-    color: #000000;
-    min-width: 32px;
-    height: 16px !important;
-    border-radius: 12px;
-    margin: 0 0 0 10px;
-    font-weight: 500;
-  }
-
-  .ant-tabs {
-    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0 0 0 5px;
 
     .tab-name-count {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: inherit;
-      border: 1px solid #c9cbd4;
-      color: #000000;
-      min-width: 36px;
-      height: 16px !important;
-      border-radius: 12px;
-      margin: 0 0 0 10px;
-      font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: inherit;
+        border: 1px solid #c9cbd4;
+        color: #000000;
+        min-width: 32px;
+        height: 16px !important;
+        border-radius: 12px;
+        margin: 0 0 0 10px;
+        font-weight: 500;
     }
 
     .ant-tabs {
-      height: 90%;
-    }
+        flex: 1;
 
-    .ant-tabs-top-content {
-      height: 95%;
+        .tab-name-count {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: inherit;
+            border: 1px solid #c9cbd4;
+            color: #000000;
+            min-width: 36px;
+            height: 16px !important;
+            border-radius: 12px;
+            margin: 0 0 0 10px;
+            font-weight: 500;
+        }
 
-      .ant-tabs-tabpane-active,
-      .ReportItemTable {
-        height: 100%;
-      }
+        .ant-tabs {
+            height: 90%;
+        }
+
+        .ant-tabs-top-content {
+            height: 95%;
+
+            .ant-tabs-tabpane-active,
+            .ReportItemTable {
+                height: 100%;
+            }
+        }
+
+        .action-field {
+            span {
+                width: max-content;
+                display: flex;
+                align-items: center;
+            }
+        }
     }
 
     .action-field {
-      span {
-        width: max-content;
+        span {
+            width: max-content;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .report-table {
+        min-height: 30px;
         display: flex;
+        justify-content: space-between;
         align-items: center;
-      }
-    }
-  }
+        color: @second-default-dark;
+        margin: 0 0 12px 0;
 
-  .action-field {
-    span {
-      width: max-content;
-      display: flex;
-      align-items: center;
-    }
-  }
+        @media (max-width: 1669px) {
+            height: 76px;
+            flex-wrap: wrap;
+            align-content: space-between;
+        }
 
-  .report-table {
-    min-height: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: @second-default-dark;
-    margin: 0 0 12px 0;
+        h3 {
+            color: #363694;
+            margin: 0;
+            font-size: 20px;
+            letter-spacing: -0.08px;
+        }
 
-    @media (max-width: 1669px) {
-      height: 76px;
-      flex-wrap: wrap;
-      align-content: space-between;
-    }
+        & > .changes-calendar-download {
+            display: inherit;
+            justify-content: space-between;
+            align-items: inherit;
 
-    h3 {
-      color: #363694;
-      margin: 0;
-      font-size: 20px;
-      letter-spacing: -0.08px;
-    }
+            @media (max-width: 1669px) {
+                width: 100%;
+                justify-content: space-evenly;
+                order: 1;
+                // margin-left: auto;
+            }
+        }
 
-    & > .changes-calendar-download {
-      display: inherit;
-      justify-content: space-between;
-      align-items: inherit;
+        .total-count {
+            display: flex;
+            align-items: center;
+            margin: 0 8px;
+            border-radius: 12px;
+            font-size: 12px;
 
-      @media (max-width: 1669px) {
-        width: 100%;
-        justify-content: space-evenly;
-        order: 1;
-        // margin-left: auto;
-      }
-    }
+            span {
+                text-align: center;
+                background: @success-color;
+                color: #fff;
+                border: 0;
+                line-height: 16px;
+                width: 32px;
+                border-radius: 12px;
+                margin: 0 8px;
+            }
+        }
 
-    .total-count {
-      display: flex;
-      align-items: center;
-      margin: 0 8px;
-      border-radius: 12px;
-      font-size: 12px;
+        .ant-calendar-range-picker-input:first-of-type {
+            text-align: right;
+        }
 
-      span {
-        text-align: center;
-        background: @success-color;
-        color: #fff;
-        border: 0;
-        line-height: 16px;
-        width: 32px;
-        border-radius: 12px;
-        margin: 0 8px;
-      }
-    }
+        .ant-calendar-range-picker-input:last-of-type {
+            text-align: left;
+        }
 
-    .ant-calendar-range-picker-input:first-of-type {
-      text-align: right;
-    }
+        .download-btn {
+            display: flex;
+            align-items: center;
+            margin-left: 8px;
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: bold;
+            background: @action-color;
+            color: #fff;
+            border-radius: 8px;
 
-    .ant-calendar-range-picker-input:last-of-type {
-      text-align: left;
-    }
-
-    .download-btn {
-      display: flex;
-      align-items: center;
-      margin-left: 8px;
-      font-size: 12px;
-      line-height: 16px;
-      font-weight: bold;
-      background: @action-color;
-      color: #fff;
-      border-radius: 8px;
-
-      .download-icon {
-        background: url('../../../../assets/img/icons/download.svg');
-        width: 24px;
-        height: 24px;
-        margin-left: 15px;
-        margin-top: -3px;
-      }
-    }
-  }
-
-  .report-item-table {
-      height: 100%;
-    background: #fff;
-    border-radius: 8px;
-
-    .report-item-table__Buttons {
-      display: flex;
+            .download-icon {
+                background: url('../../../../assets/img/icons/download.svg');
+                width: 24px;
+                height: 24px;
+                margin-left: 15px;
+                margin-top: -3px;
+            }
+        }
     }
 
-    .ProductsList {
-      margin-top: 12px;
+    .report-item-table {
+        height: 100%;
+        background: #fff;
+        border-radius: 8px;
+
+        .report-item-table-btn {
+            height: 110px;
+            padding: 0 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            // display: grid;
+            // grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
+            // grid-auto-flow: row;
+
+            .TableButton:not(:last-child) {
+                margin-right: 10px;
+            }
+        }
+
+        .ProductsList {
+            // margin-top: 12px;
+        }
     }
-  }
 
-  .ant-tabs-bar {
-    margin-bottom: 0;
-  }
+    .ant-tabs-bar {
+        margin-bottom: 0;
+    }
 
-  .ant-tabs-nav-wrap .ant-tabs-tab[role='tab'] {
-    color: @action-color-dark;
-    border: none;
-    background: transparent;
-  }
+    .ant-tabs-nav-wrap .ant-tabs-tab[role='tab'] {
+        color: @action-color-dark;
+        border: none;
+        background: transparent;
+    }
 
-  .ant-tabs-nav .ant-tabs-tab:hover {
-    color: @action-color;
-  }
+    .ant-tabs-nav .ant-tabs-tab:hover {
+        color: @action-color;
+    }
 
-  .ant-tabs-nav-wrap .ant-tabs-tab-active[role='tab'] {
-    color: @action-color;
-    border-bottom: 2px solid @action-color;
-  }
+    .ant-tabs-nav-wrap .ant-tabs-tab-active[role='tab'] {
+        color: @action-color;
+        border-bottom: 2px solid @action-color;
+    }
 
-  .ant-tabs-ink-bar {
-    background: @action-color;
-  }
+    .ant-tabs-ink-bar {
+        background: @action-color;
+    }
 
-  .ant-tabs-bar {
-    border: none;
-  }
+    .ant-tabs-bar {
+        border: none;
+    }
 }
 
 .popover-info {
-  max-width: 300px;
-  display: inline-block;
+    max-width: 300px;
+    display: inline-block;
 }
 
 .TabName {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  .tab-name-count {
-    margin-left: 15px;
-    min-width: 28px;
-    padding: 0 4px;
-    height: 18px;
-    border-radius: 12px;
-    border: 1px solid #c9cbd4;
-    text-align: center;
-    font-size: 12px;
-  }
+    .tab-name-count {
+        margin-left: 15px;
+        min-width: 28px;
+        padding: 0 4px;
+        height: 18px;
+        border-radius: 12px;
+        border: 1px solid #c9cbd4;
+        text-align: center;
+        font-size: 12px;
+    }
 }
 
 .ant-calendar-range {
-  width: 100%;
-  overflow: hidden;
+    width: 100%;
+    overflow: hidden;
 
-  .ant-calendar-body {
-    border-left: 1px solid #e8e8e8;
-  }
+    .ant-calendar-body {
+        border-left: 1px solid #e8e8e8;
+    }
 }
 
 .info-icon {
-  &:hover {
-    color: @action-color;
-    cursor: pointer;
-  }
+    &:hover {
+        color: @action-color;
+        cursor: pointer;
+    }
 }

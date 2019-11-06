@@ -1,49 +1,50 @@
-@import "../../../../../style/variables.less";
+@import '../../../../../style/variables.less';
 
 .TableButton {
-  display: inline-block;
-  margin: 30px 8px 25px 8px;
+    display: inline-block;
+    // margin: 30px 8px 25px 8px;
 
-  &:first-child {
-    margin-left: 24px;
-  }
+    &:first-child {
+        // margin-left: 24px;
+    }
 
-  &.active, &:hover {
+    &.active,
+    &:hover {
+        button.ant-btn {
+            border-color: @action-color;
+            color: @action-color;
+        }
+
+        .count {
+            border-color: #c9cbd4;
+        }
+    }
+
     button.ant-btn {
-      border-color: @action-color;
-      color: @action-color;
+        display: flex;
+        align-items: center;
+        min-height: 38px;
+        font-size: 11px;
+        text-transform: uppercase;
+        border-radius: 8px;
+        padding: 0 10px;
+
+        span {
+            font-weight: 500;
+            font-size: 11px;
+        }
     }
 
     .count {
-      border-color: #C9CBD4;
+        font-size: 12px;
+        border: 1px solid;
+        width: 30px;
+        height: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-radius: 15px;
+        margin-left: 12px;
     }
-  }
-
-  button.ant-btn {
-    display: flex;
-    align-items: center;
-    min-height: 38px;
-    font-size: 11px;
-    text-transform: uppercase;
-    border-radius: 8px;
-    padding: 0 10px;
-
-      span {
-          font-weight: 500;
-        font-size: 11px;
-      }
-  }
-
-  .count {
-    font-size: 12px;
-    border: 1px solid;
-    width: 30px;
-    height: 16px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border-radius: 15px;
-    margin-left: 12px;
-  }
 }

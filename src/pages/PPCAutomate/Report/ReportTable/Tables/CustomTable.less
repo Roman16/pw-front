@@ -1,18 +1,105 @@
+// .custom-reports-table {
+//     display: flex;
+//     flex-direction: column;
+//     height: calc(100% - 93px);
+
+//     .table-body {
+//         overflow: auto;
+//         flex: 1;
+
+//         .table-head {
+//             width: fit-content;
+//             display: grid;
+//             // grid-template-columns:
+//             //     30px 180px 180px 200px 135px 85px
+//             //     120px 180px 30px;
+//             grid-template-columns: repeat(10, minmax(min-content, max-content));
+//             // display: flex;
+//             // justify-content: space-between;
+//             // align-items: center;
+//             border-bottom: 1px solid #c9cbd4;
+
+//             & > div {
+//                 display: flex;
+//                 align-items: center;
+//                 padding: 0 8px;
+//                 font-weight: 500;
+//                 font-size: 14px;
+//                 color: #343c5a;
+
+//                 &:first-child {
+//                     min-width: 20px;
+//                     text-align: center;
+//                 }
+//             }
+//         }
+
+//         .table-body__row {
+//             width: fit-content;
+//             display: grid;
+//             // grid-template-columns:
+//             //     30px 180px 180px 200px 135px 85px
+//             //     120px 180px 30px;
+//             grid-template-columns: repeat(10, minmax(min-content, max-content));
+//             // display: flex;
+//             // justify-content: space-between;
+//             // align-items: center;
+//             border-bottom: 1px solid #c9cbd4;
+
+//             &:last-child {
+//                 border: 0;
+//             }
+
+//             div {
+//                 padding: 15px 8px;
+//                 display: flex;
+//                 align-items: center;
+
+//                 &:first-child {
+//                     min-width: 20px;
+//                     font-size: 14px;
+//                     color: #343c5a;
+//                     font-weight: 500;
+//                 }
+
+//                 .action-field {
+//                     padding: 0;
+//                 }
+//             }
+//         }
+
+//         .ant-spin-spinning {
+//             width: 100%;
+//             margin: 50px auto;
+//         }
+
+//         .anticon {
+//             color: #656a84;
+//             opacity: 0.5;
+//         }
+//     }
+
+//     .ant-pagination {
+//         margin-bottom: 20px !important;
+//     }
+// }
+
+// ====================================================================================
+
 .custom-reports-table {
     display: flex;
     flex-direction: column;
     height: calc(100% - 93px);
 
     .table-body {
-        overflow: auto;
+        overflow-y: auto;
         flex: 1;
 
         .table-head {
-            width: fit-content;
-            display: grid;
-            grid-template-columns:
-                30px 1fr 180px 200px 132px 57px
-                120px 180px 30px;
+            // height: 10%;
+            height: fit-content;
+            display: flex;
+            justify-content: space-between;
             border-bottom: 1px solid #c9cbd4;
 
             & > div {
@@ -27,23 +114,25 @@
                     min-width: 20px;
                     text-align: center;
                 }
+
+                &:last-child {
+                    width: 45px !important;
+                }
             }
         }
 
         .table-body__row {
-            width: fit-content;
-            display: grid;
-            grid-template-columns:
-                30px 1fr 180px 200px 132px 57px
-                120px 180px 30px;
+            height: fit-content;
+            display: flex;
+            justify-content: space-between;
             border-bottom: 1px solid #c9cbd4;
 
             &:last-child {
                 border: 0;
             }
 
-            div {
-                padding: 15px 8px;
+            & > div {
+                padding: 15px 8px 15px 8px;
                 display: flex;
                 align-items: center;
 
@@ -55,7 +144,18 @@
                 }
 
                 .action-field {
-                    padding: 0;
+                    span {
+                        width: 100%;
+                        display: inline-block;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                }
+
+                &:last-child {
+                    display: flex;
+                    justify-content: flex-end;
                 }
             }
         }
