@@ -68,7 +68,6 @@ const SidebarItem = ({avatar, logOut, item, parentLink = '', ...props}) => {
                         <img
                             className="avatar"
                             src={avatar}
-                            alt="avatar"
                             width="40"
                         />
                     ) : (

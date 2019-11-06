@@ -1,10 +1,15 @@
 import React from "react";
+import {useSelector} from 'react-redux';
 import {Input} from "antd";
+
 import CustomTable from "../../../../components/Table/CustomTable";
 import ProductItem from "../../../../components/ProductList/ProductItem";
 
 const ProductsList = () => {
-   const columns = [
+    const {products} = useSelector(state => ({
+        products: state.products.productList
+    }));
+    const columns = [
         {
             title: () => (
                 <div className="input-search">
@@ -14,65 +19,99 @@ const ProductsList = () => {
                     />
                 </div>
             ),
-            dataIndex: '',
-            key: 'title',
+            dataIndex: 'id',
             width: '350px',
-            render: (product) => (
+            render: (text, record) => (
                 <ProductItem
-                    product={product}
+                    product={record}
                 />
             )
         },
         {
-            title: 'Optimization Changes',
+            title: 'Number of Optimization',
             dataIndex: 'cpa',
             key: 'cpa',
-            width: '130px',
+            width: '100px',
+            render: (text) => (
+                <div className='count-changes'>
+                    {text || 123}
+                </div>
+            )
         },
         {
             title: 'Budget Allocation',
             dataIndex: 'cpa',
             key: 'cpa',
-            width: '130px',
+            width: '100px',
+            render: (text) => (
+                <div className='product-params'>
+                    {text || '123%'}
+                </div>
+            )
         },
         {
             title: 'Sales Share',
             dataIndex: 'cpa',
             key: 'cpa',
-            width: '130px',
+            // width: '10%',
+                        render: (text) => (
+                <div className='product-params'>
+                    {text || '123%'}
+                </div>
+            )
         },
         {
             title: 'CPA',
             dataIndex: 'cpa',
             key: 'cpa',
-            width: '130px',
+            // width: '10%',
+                        render: (text) => (
+                <div className='product-params'>
+                    {text || '$123'}
+                </div>
+            )
         },
         {
             title: 'CVR Rate',
             dataIndex: 'cpa',
             key: 'cpa',
-            width: '130px',
+            // width: '10%',
+                        render: (text) => (
+                <div className='product-params'>
+                    {text || '123%'}
+                </div>
+            )
         },
         {
             title: 'ACoS',
             dataIndex: 'cpa',
             key: 'cpa',
-            width: '130px',
+            // width: '10%',
+                        render: (text) => (
+                <div className='product-params'>
+                    {text || '123%'}
+                </div>
+            )
         },
         {
             title: 'Profit',
             dataIndex: 'cpa',
             key: 'cpa',
-            width: '130px',
+            // width: '10%',
+                        render: (text) => (
+                <div className='product-params'>
+                    {text || '$123'}
+                </div>
+            )
         },
     ];
-
-    return(
+    console.log(products);
+    return (
         <div>
             <CustomTable
                 // onChangePagination={handlePaginationChange}
                 // loading={loading}
-                // dataSource={data}
+                dataSource={products}
                 columns={columns}
                 // currentPage={currentPage}
                 // totalSize={totalSize}

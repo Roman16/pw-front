@@ -8,7 +8,7 @@ const CustomTable = ({
     totalSize,
     onChangePagination,
     currentPage,
-    loading
+    loading,
 }) => {
     const heightScreen = window.innerHeight;
 
@@ -42,7 +42,7 @@ const CustomTable = ({
                                     key={item.key}
                                 >
                                     {item.render
-                                        ? item.render(report[item.key])
+                                        ? item.render(report[item.key], report)
                                         : report[item.key]}
                                 </div>
                             ))}

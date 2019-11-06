@@ -7,8 +7,6 @@ import './LoginPage.less';
 import logo from '../../../assets/img/logo.svg';
 
 class LoginPage extends React.Component {
-    state = {};
-
     render() {
         return (
             <div className="LoginFormContainer">

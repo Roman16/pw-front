@@ -8,10 +8,15 @@ import {userActions} from '../../../../actions/user.actions';
 import amazon from '../../../../assets/img/amazon.png';
 import './LoginPageForm.less';
 
+const recaptchaKey = process.env.GOOGLE_RECAPTCHA_KEY || '6LdVacEUAAAAACxfVkvIWG3r9MXE8PYKXJ5aaqY1';
+
+
 class LoginPageForm extends React.Component {
     state = {
         email: '',
         password: '',
+        captcha_token: '',
+        captcha_action: 'login',
         rememberMe: false,
         isLoading: false,
         loginSuccess: false
@@ -19,6 +24,15 @@ class LoginPageForm extends React.Component {
 
     componentDidMount() {
         this.setState({isLoading: false});
+
+        window.grecaptcha.ready(() => {
+            window.grecaptcha.execute(recaptchaKey, {action: 'login'}).then((token) => {
+                this.setState({
+                    captcha_token: token
+                })
+            });
+        });
+
     }
 
     onChange = ({target}) => {
@@ -28,7 +42,7 @@ class LoginPageForm extends React.Component {
     onSubmit = e => {
         e.preventDefault();
 
-        const {email, password, rememberMe} = this.state;
+        const {email, password, rememberMe, captcha_token, captcha_action} = this.state;
         this.setState({isLoading: true});
 
         // eslint-disable-next-line no-useless-escape
@@ -65,13 +79,21 @@ class LoginPageForm extends React.Component {
         this.props.login({
             email,
             password,
-            rememberMe
+            captcha_token,
+            rememberMe,
+            captcha_action
         });
 
         this.setState({
             isLoading: false
         });
     };
+
+    // verifyCallback = (recaptchaToken) => {
+    //     this.setState({
+    //         captcha_token: recaptchaToken
+    //     })
+    // };
 
     render() {
         const {email, password, isLoading, loginSuccess} = this.state;
@@ -128,6 +150,13 @@ class LoginPageForm extends React.Component {
                     >
                         Remember me
                     </Checkbox>
+
+                    {/*<ReCaptcha*/}
+                    {/*    sitekey={this.props.recaptchaKey}*/}
+                    {/*    action='login'*/}
+                    {/*    verifyCallback={this.verifyCallback}*/}
+                    {/*/>*/}
+
                     <a
                         className="login-form-forgot forget"
                         href="https://profitwhales.com/password/reset"
@@ -142,6 +171,7 @@ class LoginPageForm extends React.Component {
                             className="submit"
                             htmlType="submit"
                             onClick={this.onSubmit}
+                            data-badge="inline"
                         >
                             Log in
                         </Button>

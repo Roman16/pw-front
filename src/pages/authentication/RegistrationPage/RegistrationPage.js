@@ -5,11 +5,9 @@ import './RegistrationPage.less';
 import RegistrationPageForm from './RegistrationPageForm/RegistrationPageForm';
 import {Elements, StripeProvider} from "react-stripe-elements";
 
-const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_MLrQNn1uBFIvdDgOZzECplkP';
 
 class RegistrationPage extends React.Component {
-    state = {};
-
     render() {
         return (
             <div className="RegisterFormContainer">

@@ -1,7 +1,7 @@
 import React from "react";
 import {Icon, Tooltip} from 'antd';
 import closeIcon from '../../../../assets/img/icons/close.svg';
-
+import warningIcon from '../../../../assets/img/icons/warningSmall.svg';
 import upWhiteIcon from '../../../../assets/img/icons/metric-arrows/up-white-arrow.svg';
 import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
 import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
@@ -11,9 +11,15 @@ const MetricItem = ({metric: {title, info, key}}) => (
     <div className='metric-item'>
         <div className="title-info">
             {title}
-            <Tooltip title={info || title}>
-                <Icon type="info-circle" theme="filled"/>
-            </Tooltip>
+            {key === 'profit' ? <Tooltip title={info || title}>
+                    <img src={warningIcon} alt="" className='warning-icon' />
+                </Tooltip>
+                :
+                <Tooltip title={info || title}>
+                    <Icon type="info-circle" theme="filled"/>
+                </Tooltip>
+            }
+
 
             <div className="close">
                 <img src={closeIcon} alt=""/>
@@ -25,7 +31,7 @@ const MetricItem = ({metric: {title, info, key}}) => (
                 +30.8%
                 <img src={upWhiteIcon} alt=""/>
             </div>}
-           {key === 'impressions' && <div className='up-changes'>
+            {key === 'impressions' && <div className='up-changes'>
                 +10.8%
                 <img src={upGreenIcon} alt=""/>
             </div>}
