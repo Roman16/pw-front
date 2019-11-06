@@ -14,46 +14,53 @@ const CustomTable = ({
 
     return (
         <div className="custom-reports-table">
-            <div className="table-body">
-                <div className="table-head">
-                    {columns.map(item => (
-                        <div
-                            className="th"
-                            key={item.key}
-                            style={
-                                item.width ? { width: item.width } : { flex: 1 }
-                            }
-                        >
-                            {item.title}
-                        </div>
-                    ))}
-                </div>
+            <table className="table">
+                <thead className="table-head">
+                    <tr className="table-head__row">
+                        {columns.map(item => (
+                            <th
+                                className="th"
+                                key={item.key}
+                                style={
+                                    item.width
+                                        ? { width: item.width }
+                                        : { flex: 1 }
+                                }
+                            >
+                                {item.title}
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
 
-                {!loading ? (
-                    dataSource && dataSource.length > 0 &&
-                    dataSource.map(report => (
-                        <div className="table-body__row">
-                            {columns.map(item => (
-                                <div
-                                    className="table-body__field"
-                                    style={
-                                        item.width
-                                            ? { width: item.width }
-                                            : { flex: 1 }
-                                    }
-                                    key={item.key}
-                                >
-                                    {item.render
-                                        ? item.render(report[item.key])
-                                        : report[item.key]}
-                                </div>
-                            ))}
-                        </div>
-                    ))
-                ) : (
-                    <Spin size="large" />
-                )}
-            </div>
+                <tbody className="table-body">
+                    {!loading ? (
+                        dataSource &&
+                        dataSource.length > 0 &&
+                        dataSource.map(report => (
+                            <tr className="table-body__row">
+                                {columns.map(item => (
+                                    <td
+                                        className="table-body__field"
+                                        style={
+                                            item.width
+                                                ? { width: item.width }
+                                                : { flex: 1 }
+                                        }
+                                        key={item.key}
+                                    >
+                                        {item.render
+                                            ? item.render(report[item.key])
+                                            : report[item.key]}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))
+                    ) : (
+                        <Spin size="large" />
+                    )}
+                </tbody>
+            </table>
 
             {/*<table>*/}
             {/*    <thead>*/}
@@ -79,8 +86,7 @@ const CustomTable = ({
             {/*    ))}*/}
             {/*    </tbody>*/}
             {/*</table>*/}
-
-            {totalSize > 10 && (
+            {totalSize > 8 && (
                 <Pagination
                     defaultCurrent={1}
                     pageSize={10}

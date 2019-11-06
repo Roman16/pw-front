@@ -125,23 +125,29 @@
 
                 .DayPicker_weekHeaders.DayPicker_weekHeaders_1.DayPicker_weekHeaders__horizontal.DayPicker_weekHeaders__horizontal_2 {
                     .DayPicker_weekHeader.DayPicker_weekHeader_1 {
-                        // all: unset;
-                        width: 200px;
-                        // left: 100px !important;
-                        // display: flex;
-                        // justify-content: flex-end;
+                        padding: 0 !important;
 
                         ul.DayPicker_weekHeader_ul.DayPicker_weekHeader_ul_1 {
+                            width: 180px !important;
+
                             li.DayPicker_weekHeader_li.DayPicker_weekHeader_li_1 {
-                                width: 24px !important;
+                                width: 25px !important;
 
                                 small {
-                                    font-size: 14px;
+                                    font-size: 12px;
                                     font-family: 'Infra', sans-serif;
-                                    color: red;
+                                    color: @action-color-dark;
                                 }
                             }
                         }
+                    }
+
+                    .DayPicker_weekHeader.DayPicker_weekHeader_1:first-child {
+                        left: 243px !important;
+                    }
+
+                    .DayPicker_weekHeader.DayPicker_weekHeader_1:last-child {
+                        left: 443px !important;
                     }
                 }
 
@@ -151,11 +157,28 @@
                     height: 302px;
                     border-radius: 8px;
 
+                    .DayPickerNavigation.DayPickerNavigation_1.DayPickerNavigation__horizontal.DayPickerNavigation__horizontal_2 {
+                        .DayPickerNavigation_button__default {
+                            border: none;
+                            padding: 0;
+                            top: 25px;
+
+                            .DayPickerNavigation_svg__horizontal.DayPickerNavigation_svg__horizontal_1 {
+                                fill: @action-color;
+                            }
+                        }
+
+                        .DayPickerNavigation_button__default:first-child {
+                            left: 260px;
+                        }
+
+                        .DayPickerNavigation_button__default:nth-child(2) {
+                            // left: 260px;
+                        }
+                    }
+
                     .DayPicker_transitionContainer.DayPicker_transitionContainer_1.DayPicker_transitionContainer__horizontal.DayPicker_transitionContainer__horizontal_2 {
                         all: unset;
-                        width: 640px !important;
-                        height: 302px !important;
-                        border-radius: 8px;
 
                         .CalendarMonthGrid.CalendarMonthGrid_1.CalendarMonthGrid__horizontal.CalendarMonthGrid__horizontal_2 {
                             all: unset;
@@ -164,6 +187,28 @@
                             border-radius: 8px;
                             display: flex;
                             justify-content: flex-end;
+
+                            .CalendarMonth_caption.CalendarMonth_caption_1 {
+                                flex-direction: unset;
+                                justify-content: center;
+                                padding: 25px 0 45px;
+                                font-size: 14px;
+                                font-family: 'Infra', sans-serif;
+                                color: @third-default-dark;
+                            }
+
+                            td.CalendarDay__default {
+                                border: none !important;
+                                font-size: 12px;
+                                font-family: 'Infra', sans-serif;
+                                color: @third-default-dark;
+                                // font-weight: 600;
+                            }
+
+                            td.CalendarDay__blocked_out_of_range {
+                                color: @action-color-dark;
+                                // font-weight: 400;
+                            }
 
                             .CalendarMonthGrid_month__horizontal.CalendarMonthGrid_month__horizontal_1 {
                                 // all: unset;
@@ -189,3 +234,4 @@
         }
     }
 }
+// .CalendarDay__default
