@@ -14,19 +14,21 @@ const CustomTable = ({
 
     return (
         <div className="custom-reports-table">
-            <div className="table-head">
-                {columns.map(item => (
-                    <div
-                        className="th"
-                        key={item.key}
-                        style={item.width ? { width: item.width } : { flex: 1 }}
-                    >
-                        {item.title}
-                    </div>
-                ))}
-            </div>
-
             <div className="table-body">
+                <div className="table-head">
+                    {columns.map(item => (
+                        <div
+                            className="th"
+                            key={item.key}
+                            style={
+                                item.width ? { width: item.width } : { flex: 1 }
+                            }
+                        >
+                            {item.title}
+                        </div>
+                    ))}
+                </div>
+
                 {!loading ? (
                     dataSource.length > 0 &&
                     dataSource.map(report => (
