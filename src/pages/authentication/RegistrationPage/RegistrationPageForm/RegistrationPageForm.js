@@ -56,7 +56,12 @@ class RegistrationPage extends Component {
         //     isLoading: true
         // });
 
-        if (password.length < 6) {
+        if (!name) {
+            notification.error({
+                title: 'Name must be filled out.',
+            });
+            return;
+        } else if (password.length < 6) {
             notification.error({
                 title: 'The password must be at least 6 characters.',
             });
@@ -132,13 +137,13 @@ class RegistrationPage extends Component {
         if (isLoading) {
             return (
                 <div className="example">
-                    <Spin size="large" />
+                    <Spin size="large"/>
                 </div>
             );
         }
 
         if (registerSuccess) {
-            return <Redirect to="/optimization" />;
+            return <Redirect to="/optimization"/>;
         }
 
         const isLess = email.length === 0;
@@ -154,7 +159,6 @@ class RegistrationPage extends Component {
                                 id="register-name"
                                 value={name}
                                 onChange={this.onChange}
-                                required
                             />
                             {/* eslint-disable-next-line max-len */}
                             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
@@ -168,7 +172,6 @@ class RegistrationPage extends Component {
                                 name="last_name"
                                 value={last_name}
                                 onChange={this.onChange}
-                                required
                             />
                             {/* eslint-disable-next-line max-len */}
                             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
@@ -248,10 +251,10 @@ class RegistrationPage extends Component {
                     <Col xs={24} sm={24} md={10}>
                         <Row type="flex">
                             <Col xs={12} sm={12} md={12}>
-                                <img src="/scrill.svg" alt="scrill" />
+                                <img src="/scrill.svg" alt="scrill"/>
                             </Col>
                             <Col xs={12} sm={12} md={12}>
-                                <img src="/visa.svg" alt="visa" />
+                                <img src="/visa.svg" alt="visa"/>
                             </Col>
                         </Row>
                     </Col>

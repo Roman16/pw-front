@@ -13,8 +13,9 @@ import ProductSettings from '../pages/PPCAutomate/ProductSettings/ProductSetting
 import MWS from '../pages/authentication/AccountBinding/MWS/MWS';
 import PPC from '../pages/authentication/AccountBinding/PPC/PPC';
 import NotFound from '../pages/NotFound/NotFound';
-import Dashboard from '../pages/Dashboard/Dashboard';
+import Dashboard from '../pages/PPCAutomate/Dashboard/Dashboard';
 import Account from '../pages/AccountInformation/Account/Account';
+import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -57,6 +58,7 @@ const routers = () => {
         <Router history={history}>
             <Switch>
                 <Route exact path="/login" component={LoginPage} />
+                <Route path="/login/amazon/rcallback" component={LoginWithAmazon} />
                 <Route
                     exact
                     path="/registration"

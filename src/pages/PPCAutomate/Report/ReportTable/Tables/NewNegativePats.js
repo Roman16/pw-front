@@ -3,7 +3,7 @@ import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {indexField, patIntentField, infoField} from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from 'react-redux';
-import CustomTable from './CustomTable';
+import CustomTable from '../../../../../components/Table/CustomTable';
 
 const HighACoS = 'created-negative-pat-from-cst-high-acos';
 const NoSales = 'created-negative-pat-from-cst-no-sales';

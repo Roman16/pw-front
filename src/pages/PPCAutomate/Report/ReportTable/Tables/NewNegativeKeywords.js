@@ -3,7 +3,7 @@ import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
 import {indexField, infoField, negativeMatchTypeField} from './const';
 import {useSelector} from 'react-redux';
-import CustomTable from './CustomTable';
+import CustomTable from '../../../../../components/Table/CustomTable';
 
 const highACoS = 'created-negative-keyword-from-cst-high-acos';
 const noSales = 'created-negative-keyword-from-cst-no-sales';

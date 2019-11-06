@@ -1,5 +1,6 @@
 export const userUrls = {
     login: 'user/login',
+    loginAmazon: 'user/login/amazon/callback',
     regist: 'user/register',
     allInfo: 'user/status',
     mws: 'user/account/auth/mws/tokens',

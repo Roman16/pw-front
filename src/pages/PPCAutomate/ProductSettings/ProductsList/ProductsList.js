@@ -37,7 +37,6 @@ class ProductsList extends Component {
 
     fetchProducts = async (searchText = '') => {
         const {page, size, onlyActive} = this.state;
-
         const {result, totalSize} = await productsServices.getProductsSettingsList({
             searchStr: searchText,
             page: page,

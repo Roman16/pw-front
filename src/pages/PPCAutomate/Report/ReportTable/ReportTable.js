@@ -4,7 +4,7 @@ import moment from 'moment';
 import { Tabs, Button } from 'antd';
 
 import KeywordsOptimization from './Tables/KeywordsOptimization';
-import DatePicker from '../../../../components/DatePicker/DatePicker';
+import DatePicker from '../../../../components/DatePicker/DatePickerOLD';
 import PATsOptimization from './Tables/PATsOptimization';
 import NewKeywords from './Tables/NewKeywords';
 import NewNegativeKeywords from './Tables/NewNegativeKeywords';
@@ -299,7 +299,9 @@ class ReportTable extends Component {
                             <span>{todayChanges}</span>
                         </div>
 
-                        <DatePicker />
+                        <DatePicker
+                            timeRange={this.timeRange}
+                        />
 
                         <Button
                             className="download-btn"
