@@ -1,23 +1,23 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import moment from 'moment';
-import {Tabs, Button} from 'antd';
+import { Tabs, Button } from 'antd';
 
 import KeywordsOptimization from './Tables/KeywordsOptimization';
-import DatePicker from '../../../../components/DatePicker/DatePicker';
+import DatePicker from '../../../../components/DatePicker/DatePickerOLD';
 import PATsOptimization from './Tables/PATsOptimization';
 import NewKeywords from './Tables/NewKeywords';
 import NewNegativeKeywords from './Tables/NewNegativeKeywords';
 import NewPats from './Tables/NewPats';
 import NewNegativePats from './Tables/NewNegativePats';
-import {reportsActions} from '../../../../actions/reports.actions';
-import {reportsUrls} from '../../../../constans/api.urls';
+import { reportsActions } from '../../../../actions/reports.actions';
+import { reportsUrls } from '../../../../constans/api.urls';
 import FreeTrial from '../../../../components/FreeTrial/FreeTrial';
 import './ReportTable.less';
 
-const {TabPane} = Tabs;
+const { TabPane } = Tabs;
 
-const TabName = ({name = null, count}) => (
+const TabName = ({ name = null, count }) => (
     <div className="TabName">
         <span>{name}</span>
 
@@ -41,7 +41,7 @@ const subTables = {
 const tabsItem = [
     {
         tabName: count => (
-            <TabName name="Keywords Optimization" count={count}/>
+            <TabName name="Keywords Optimization" count={count} />
         ),
         key: 'keywords-optimization',
         component: (
@@ -50,7 +50,7 @@ const tabsItem = [
             activeTab,
             page,
             totalSize,
-            handlePaginationChange,
+            handlePaginationChange
         ) => (
             <KeywordsOptimization
                 onChangeSubTab={onChangeSubTab}
@@ -63,7 +63,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name="PAT’s Optimization" count={count}/>,
+        tabName: count => <TabName name="PAT’s Optimization" count={count} />,
         key: 'pats-optimization',
         component: (
             onChangeSubTab,
@@ -71,7 +71,7 @@ const tabsItem = [
             activeTab,
             page,
             totalSize,
-            handlePaginationChange,
+            handlePaginationChange
         ) => (
             <PATsOptimization
                 onChangeSubTab={onChangeSubTab}
@@ -84,7 +84,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name="New Keywords" count={count}/>,
+        tabName: count => <TabName name="New Keywords" count={count} />,
         key: 'new-keywords',
         component: (
             onChangeSubTab,
@@ -92,7 +92,7 @@ const tabsItem = [
             activeTab,
             page,
             totalSize,
-            handlePaginationChange,
+            handlePaginationChange
         ) => (
             <NewKeywords
                 onChangeSubTab={onChangeSubTab}
@@ -106,7 +106,7 @@ const tabsItem = [
     },
     {
         tabName: count => (
-            <TabName name="New Negative Keywords" count={count}/>
+            <TabName name="New Negative Keywords" count={count} />
         ),
         key: 'new-negative-keywords',
         component: (
@@ -115,7 +115,7 @@ const tabsItem = [
             activeTab,
             page,
             totalSize,
-            handlePaginationChange,
+            handlePaginationChange
         ) => (
             <NewNegativeKeywords
                 onChangeSubTab={onChangeSubTab}
@@ -128,7 +128,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name={"New PAT 's"} count={count}/>,
+        tabName: count => <TabName name={"New PAT 's"} count={count} />,
         key: 'new-pats',
         component: (
             onChangeSubTab,
@@ -136,7 +136,7 @@ const tabsItem = [
             activeTab,
             page,
             totalSize,
-            handlePaginationChange,
+            handlePaginationChange
         ) => (
             <NewPats
                 onChangeSubTab={onChangeSubTab}
@@ -149,7 +149,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name={"New Negative PAT's"} count={count}/>,
+        tabName: count => <TabName name={"New Negative PAT's"} count={count} />,
         key: 'new-negative-pats',
         component: (
             onChangeSubTab,
@@ -157,7 +157,7 @@ const tabsItem = [
             activeTab,
             page,
             totalSize,
-            handlePaginationChange,
+            handlePaginationChange
         ) => (
             <NewNegativePats
                 onChangeSubTab={onChangeSubTab}
@@ -189,20 +189,16 @@ class ReportTable extends Component {
     };
 
     downloadFile = () => {
-        const {startDate, endDate} = this.state,
-            {selectedProductId, selectedAll} = this.props,
+        const { startDate, endDate } = this.state,
+            { selectedProductId, selectedAll } = this.props,
             token = localStorage.getItem('token');
 
         const parameters = [
             selectedAll
                 ? `&product_id=all`
                 : `&product_id=${selectedProductId || 'all'}`,
-            startDate
-                ? `&start_date=${startDate}`
-                : '',
-            endDate
-                ? `&end_date=${endDate}`
-                : ''
+            startDate ? `&start_date=${startDate}` : '',
+            endDate ? `&end_date=${endDate}` : ''
         ];
 
         const url = `${process.env.REACT_APP_API_URL || ''}/api/${
@@ -228,7 +224,7 @@ class ReportTable extends Component {
                 endDate,
                 page
             } = this.state,
-            {selectedAll, selectedProductId} = this.props;
+            { selectedAll, selectedProductId } = this.props;
 
         this.props.getReports({
             id: selectedAll ? 'all' : selectedProductId,
@@ -244,8 +240,12 @@ class ReportTable extends Component {
     timeRange = (startDate, endDate) => {
         this.setState(
             {
-                startDate: startDate ? moment(startDate, 'DD-MM-YYYY').format('YYYY-MM-DD') : moment(new Date()).format('YYYY-MM-DD'),
-                endDate: endDate ? moment(endDate, 'DD-MM-YYYY').format('YYYY-MM-DD') : moment(new Date()).format('YYYY-MM-DD')
+                startDate: startDate
+                    ? moment(startDate, 'DD-MM-YYYY').format('YYYY-MM-DD')
+                    : moment(new Date()).format('YYYY-MM-DD'),
+                endDate: endDate
+                    ? moment(endDate, 'DD-MM-YYYY').format('YYYY-MM-DD')
+                    : moment(new Date()).format('YYYY-MM-DD')
             },
             this.fetchReports
         );
@@ -262,15 +262,13 @@ class ReportTable extends Component {
         );
     };
 
-
     handleChangeSubTab = tab => {
-        this.setState({activeSubTab: tab, page: 1}, this.fetchReports);
+        this.setState({ activeSubTab: tab, page: 1 }, this.fetchReports);
     };
 
     componentDidMount() {
         this.fetchReports();
     }
-
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (
@@ -288,8 +286,8 @@ class ReportTable extends Component {
     }
 
     render() {
-        const {activeTab, page} = this.state,
-            {counts, data, todayChanges, totalSize} = this.props;
+        const { activeTab, page } = this.state,
+            { counts, data, todayChanges, totalSize } = this.props;
 
         return (
             <div className="ReportTable">
@@ -300,18 +298,20 @@ class ReportTable extends Component {
                             Today Changes
                             <span>{todayChanges}</span>
                         </div>
-                        <DatePicker timeRange={this.timeRange}/>
-                        {/* <Link to="/ppc-automation/reports/download-report"> */}
+
+                        <DatePicker
+                            timeRange={this.timeRange}
+                        />
+
                         <Button
                             className="download-btn"
                             onClick={this.downloadFile}
                         >
                             Download
-                            <i className="download-icon"/>
+                            <i className="download-icon" />
                         </Button>
-                        {/* </Link> */}
                     </div>
-                    <FreeTrial/>
+                    <FreeTrial />
                 </div>
 
                 <Tabs
@@ -319,7 +319,7 @@ class ReportTable extends Component {
                     type="card"
                     onChange={this.handleChangeTab}
                 >
-                    {tabsItem.map(({tabName, key, component}) => (
+                    {tabsItem.map(({ tabName, key, component }) => (
                         <TabPane tab={tabName(counts[key])} key={key}>
                             {component(
                                 this.handleChangeSubTab,
@@ -327,7 +327,7 @@ class ReportTable extends Component {
                                 activeTab,
                                 page,
                                 totalSize,
-                                this.handlePaginationChange,
+                                this.handlePaginationChange
                             )}
                         </TabPane>
                     ))}
@@ -343,7 +343,7 @@ const mapStateToProps = state => ({
     counts: state.reports.counts,
     data: state.reports.data,
     todayChanges: state.reports.today_changes,
-    totalSize: state.reports.total_subtype_size,
+    totalSize: state.reports.total_subtype_size
 });
 
 const mapDispatchToProps = dispatch => ({

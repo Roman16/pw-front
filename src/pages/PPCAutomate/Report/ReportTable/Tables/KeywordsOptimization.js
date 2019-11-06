@@ -8,7 +8,7 @@ import {
     pauseKeywordsActionField
 } from './const';
 import {useSelector} from 'react-redux';
-import CustomTable from './CustomTable';
+import CustomTable from '../../../../../components/Table/CustomTable';
 
 const changedKeywordBidAcos = 'changed-keyword-bid-acos';
 const changedKeywordBidImpression = 'changed-keyword-bid-impressions';

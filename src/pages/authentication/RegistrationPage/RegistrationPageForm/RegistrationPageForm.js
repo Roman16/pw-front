@@ -1,100 +1,128 @@
-import React from 'react';
-import {Col, Form, notification, Row, Spin} from 'antd';
+import React, {Component} from 'react';
+import {Col, Row, Spin} from 'antd';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {notification} from '../../../../components/Notification';
 
 import {userActions} from '../../../../actions/user.actions';
-import {Elements, StripeProvider} from "react-stripe-elements";
+import {injectStripe} from "react-stripe-elements";
 import StripeForm from "./StripeForm";
 
-const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
-class RegistrationPage extends React.Component {
+class RegistrationPage extends Component {
     state = {
         name: '',
         last_name: '',
         email: '',
         password: '',
-        // card: null,
-        // expiry: null,
-        // cvc: null,
+        address_line1: '',
+        address_city: '',
+        address_state: '',
+        address_country: '',
+        address_zip: '',
+        stripe_token: null,
         registerSuccess: false,
-        isLoading: false
+        isLoading: false,
+        card_number: false,
+        expiry: false,
+        cvc: false,
     };
 
-    onSubmit = e => {
+    onSubmit = async (e) => {
         e.preventDefault();
 
         const {
             name,
             last_name,
             email,
-            password
-            // card,
-            // expiry,
-            // cvc
+            password,
+            card_number,
+            expiry,
+            cvc,
+            address_line1,
+            address_city,
+            address_state,
+            address_country,
+            address_zip,
+            stripe_token
         } = this.state;
 
         // eslint-disable-next-line no-useless-escape
-        const fieldEmailValid = /^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/.test(
+        const fieldEmailValid = /^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-zA-Z\.]{2,6})$/.test(
             email
         );
 
-        this.setState({
-            isLoading: true
-        });
+        // this.setState({
+        //     isLoading: true
+        // });
 
-        if (password.length < 6) {
+        if (!name) {
             notification.error({
-                message: 'The password must be at least 6 characters.',
-                style: {
-                    width: 600,
-                    marginLeft: 335 - 600
-                },
-                placement: 'bottomRight',
-                bottom: 20,
-                duration: 5
+                title: 'Name must be filled out.',
+            });
+            return;
+        } else if (password.length < 6) {
+            notification.error({
+                title: 'The password must be at least 6 characters.',
             });
             this.setState({
                 isLoading: false
             });
             return;
+        } else if (!fieldEmailValid) {
+            notification.error({
+                title: 'Invalid email address',
+            });
+            this.setState({
+                isLoading: false
+            });
+            return;
+        } else if (!card_number) {
+            notification.error({
+                title: 'Card number is required field'
+            });
+        } else if (!expiry) {
+            notification.error({
+                title: 'Expiry is required field'
+            });
+        } else if (!cvc) {
+            notification.error({
+                title: 'CVC number is required field'
+            });
+        } else {
+            try {
+                let res = stripe_token ? stripe_token : await this.props.stripe.createToken({
+                    address_line1,
+                    address_city,
+                    address_state,
+                    address_country,
+                    address_zip
+                });
+
+                this.setState({stripe_token: res},
+                    this.props.regist({
+                        name,
+                        last_name,
+                        email,
+                        password,
+                        stripe_token: res.token.id
+                    }));
+            } catch (e) {
+                console.log(e);
+            }
         }
-        // else if (!fieldEmailValid) {
-        //     notification.error({
-        //         message: 'Invalid email address',
-        //         style: {
-        //             width: 600,
-        //             marginLeft: 335 - 600
-        //         },
-        //         placement: 'bottomRight',
-        //         bottom: 20,
-        //         duration: 5
-        //     });
-        //     this.setState({
-        //         isLoading: false
-        //     });
-        //     return;
-        // }
-
-        this.props.regist({
-            name,
-            last_name,
-            email,
-            password
-            // card,
-            // expiry,
-            // cvc
-        });
-
-        this.setState({
-            isLoading: false
-        });
     };
 
-    onChange = ({target}) => {
-        this.setState({[target.name]: target.value});
+    stripeElementChange = (element, name) => {
+        if (!element.empty && element.complete) {
+            this.setState({[name]: true});
+        }
     };
+
+
+    handleChangeCountry = (country) => this.setState({address_country: country});
+    handleChangeState = (state) => this.setState({address_state: state});
+    onChange = ({target: {name, value}}) => this.setState({[name]: value});
 
     render() {
         const {
@@ -102,9 +130,6 @@ class RegistrationPage extends React.Component {
             last_name,
             email,
             password,
-            // card,
-            // expiry,
-            // cvc,
             registerSuccess,
             isLoading
         } = this.state;
@@ -134,7 +159,6 @@ class RegistrationPage extends React.Component {
                                 id="register-name"
                                 value={name}
                                 onChange={this.onChange}
-                                required
                             />
                             {/* eslint-disable-next-line max-len */}
                             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
@@ -148,7 +172,6 @@ class RegistrationPage extends React.Component {
                                 name="last_name"
                                 value={last_name}
                                 onChange={this.onChange}
-                                required
                             />
                             {/* eslint-disable-next-line max-len */}
                             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
@@ -197,23 +220,24 @@ class RegistrationPage extends React.Component {
                     </Col>
                 </Row>
 
-                {/*<StripeProvider apiKey={stripeKey}>*/}
-                {/*    <Elements>*/}
-                {/*        <StripeForm/>*/}
-                {/*    </Elements>*/}
-                {/*</StripeProvider>*/}
+                <StripeForm
+                    onSubmit={this.onSubmit}
+                    onChangeCountry={this.handleChangeCountry}
+                    onChangeState={this.handleChangeState}
+                    onChangeInput={this.onChange}
+                    stripeElementChange={this.stripeElementChange}
+                />
 
                 <Row>
                     <Col xs={24} sm={24} md={24}>
-                        <button
-                            id="complete_registration"
-                            type="submit"
-                            className="submit"
+                        <button type='submit'
+                                className="submit"
                         >
                             Create your account
                         </button>
                     </Col>
                 </Row>
+
                 <Row className="form-details">
                     <Col>
                         By clicking “Create Your Account” you are agreeing to
@@ -254,6 +278,6 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(RegistrationPage);
+)(injectStripe(RegistrationPage));
 
 // export default RegistrationPage;

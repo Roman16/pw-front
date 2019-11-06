@@ -42,8 +42,8 @@ class ProductList extends Component {
     handleChangeSwitch = (event) => {
         this.setState(
             {
-                ...this.state,
                 onlyOptimization: event,
+                isSelectedAll: false,
                 paginationParams: {
                     ...this.state.paginationParams,
                     page: 1

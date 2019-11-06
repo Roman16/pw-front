@@ -8,8 +8,8 @@ const SelectAllProduct = ({ onSelectAll, isSelectedAll = false, disabled }) => (
             type="primary"
             disabled={disabled}
         >
-            {isSelectedAll ? 'Deselect ' : 'Select '}
-            All Products
+            {isSelectedAll ? 'Deselect ' : 'Select All Products'}
+
         </Button>
     </div>
 );

@@ -1,0 +1,48 @@
+.products-statistic {
+  margin: 20px 0 0 0;
+
+  .title {
+    width: 100%;
+    padding: 0 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 2px solid #6D6DF6;
+    font-family: ir;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -0.06px;
+    color: #363694;
+
+    button {
+      padding: 0 15px;
+    }
+  }
+
+
+  //-------------------------------------
+  /*Retina CSS */
+  //-------------------------------------
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    .title {
+      padding: 0 0 0 20px;
+      font-size: 15px;
+      margin: 0 0 15px 0;
+
+      button {
+        padding: 0 10px;
+        height: 25px;
+        font-size: 10px;
+      }
+    }
+
+    .custom-reports-table {
+      .table-head {
+       & > div {
+         font-size: 10px;
+       }
+      }
+    }
+  }
+}
+

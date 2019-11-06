@@ -2,373 +2,427 @@
 @import '../../style/variables';
 
 .Sidebar {
-    display: inline-block;
-    width: 72px;
-    height: 100vh;
-    background-color: @third-default-dark;
-    transition: all 0.3s ease-in;
-    overflow-x: hidden;
-    overflow-y: auto;
-    z-index: 1000;
+  display: inline-block;
+  width: 72px;
+  height: 100vh;
+  background-color: @third-default-dark;
+  transition: all 0.3s ease-in;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 1000;
 
-    &.SidebarOpen {
-        width: 200px;
+  @media (max-width: 799px) {
+    position: absolute;
+  }
 
-        & + .MainContent {
-            margin-left: 200px;
-        }
+  &.SidebarOpen {
+    width: 200px;
+  }
+
+  .sidebar-header {
+    display: grid;
+    grid-template-columns: minmax(min-content, max-content) 1fr;
+    column-gap: 28px;
+    padding: 16px 26px;
+    height: 74px;
+
+    .sidebar-icon {
+      color: #b6b6fb;
+      font-size: 18px;
+      align-self: center;
     }
 
-    .sidebar-header {
-        display: grid;
-        grid-template-columns: minmax(min-content, max-content) 1fr;
-        column-gap: 28px;
-        padding: 16px 26px;
-        height: 74px;
+    .sidebar-logo {
+      width: 100px;
 
-        .sidebar-icon {
-            color: #b6b6fb;
-            font-size: 18px;
-            align-self: center;
-        }
-
-        .sidebar-logo {
-            width: 100px;
-
-            img {
-                width: 100%;
-            }
-        }
+      img {
+        width: 100%;
+      }
     }
-
-    & + .MainContent {
-        margin-left: 72px;
-    }
+  }
 }
 
 .sidebar-menu {
-    min-height: calc(100vh - 75px);
-    background-color: transparent;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  min-height: calc(100vh - 75px);
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-    .ant-menu-item,
-    .ant-menu-submenu {
-        padding-left: 16px !important;
-    }
+  .ant-menu-item,
+  .ant-menu-submenu {
+    padding-left: 16px !important;
+  }
 
-    .ant-menu-inline {
-        transition: all 0.3s ease-in !important;
-    }
+  .ant-menu-inline {
+    transition: all 0.3s ease-in !important;
+  }
 
-    .ant-menu-inline-collapsed {
-        transition: all 0.3s ease-in !important;
-    }
+  .ant-menu-inline-collapsed {
+    transition: all 0.3s ease-in !important;
+  }
 
-    .ant-menu-inline-collapsed
-        > .ant-menu-item
-        > a[href='/zero-to-hero']
-        > span::after,
-    .ant-menu-inline-collapsed
-        > .ant-menu-item
-        > a[href='/analytics']
-        > span::after {
-        opacity: 0;
-    }
+  .ant-menu-inline-collapsed
+  > .ant-menu-item
+  > a[href='/zero-to-hero']
+  > span::after,
+  .ant-menu-inline-collapsed
+  > .ant-menu-item
+  > a[href='/analytics']
+  > span::after {
+    opacity: 0;
+  }
 
-    .anticon {
-        width: 40px;
-        height: 30px;
-        margin-right: 0;
-    }
+  .anticon {
+    width: 40px;
+    height: 30px;
+    margin-right: 0;
+  }
 
-    .anticon > svg {
-        width: 30px;
-        height: 30px;
-    }
+  .anticon > svg {
+    width: 30px;
+    height: 30px;
+  }
 
-    ul {
-        background-color: transparent !important;
-        box-shadow: none !important;
+  ul {
+    background-color: transparent !important;
+    box-shadow: none !important;
 
-        .ant-menu-submenu {
-            .ant-menu-submenu-title {
-                height: 60px;
-                line-height: 60px;
-            }
+    li {
+      margin: 0 !important;
+      transition: all 0.3s ease-in !important;
+
+      div {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        span {
+          display: grid;
+          grid-template-columns: repeat(2,
+          minmax(min-content, max-content));
+          column-gap: 10px;
+          align-items: center;
         }
+      }
 
-        li {
-            font-size: 14px;
-            transition: all 0.3s ease-in !important;
+      a {
+        display: grid;
+        grid-template-columns: repeat(2,
+        minmax(min-content, max-content));
+        column-gap: 10px;
+        align-items: center;
+      }
 
-            div {
-                margin: 0 !important;
-                padding: 0 !important;
-
-                span {
-                    display: grid;
-                    // grid-template-rows: 60px;
-                    grid-template-columns: repeat(
-                        2,
-                        minmax(min-content, max-content)
-                    );
-                    column-gap: 10px;
-                    align-items: center;
-                }
-            }
-
-            a {
-                display: grid;
-                // grid-template-rows: 60px;
-                grid-template-columns: repeat(
-                    2,
-                    minmax(min-content, max-content)
-                );
-                column-gap: 10px;
-                align-items: center;
-            }
-
-            a,
-            .ant-menu-submenu-title {
-                color: #b6b6fb !important;
-            }
-
-            i {
-                transition: all 0.3s ease-in !important;
-
-                &.anticon-right-circle {
-                    color: #b6b6fb;
-                }
-
-                &.ant-menu-submenu-arrow {
-                    display: none;
-                }
-            }
-
-            &.ant-menu-item-selected {
-                color: #fff !important;
-                background-color: transparent !important;
-            }
-
-            &.ant-menu-submenu-open {
-                .ant-menu-submenu-title {
-                    color: #fff !important;
-                }
-            }
-
-            &.logOut {
-                i.anticon {
-                    font-size: 24px;
-                }
-            }
-        }
-
-        .ant-menu-item > a[href='/analytics'],
-        .ant-menu-item > a[href='/zero-to-hero'],
-        .ant-menu-item > a[href='/ppc/dashboard'] {
-            pointer-events: none;
-        }
-
-        .ant-menu-item > a[href='/zero-to-hero'] > span,
-        .ant-menu-item > a[href='/analytics'] > span,
-        .ant-menu-item > a[href='/ppc/dashboard'] > span {
-            position: relative;
-        }
-
-        .ant-menu-item > a[href='/zero-to-hero'] > span::after,
-        .ant-menu-item > a[href='/analytics'] > span::after,
-        .ant-menu-item > a[href='/ppc/dashboard'] > span::after {
-            width: 40px;
-            height: 16px;
-            display: inline-block;
-            position: absolute;
-            top: 0;
-            right: -43px;
-            content: 'soon';
-            background-color: #b6b6fb;
-            border-radius: 4px;
-            font-size: 12px;
-            color: @third-default-dark;
-            text-align: center;
-            line-height: 16px;
-            opacity: 1;
-        }
-
-        .ant-menu-submenu-open
-            > ul
-            > .ant-menu-item-selected[role='menuitem']
-            > a {
-            background-color: transparent !important;
-            color: #fff !important;
-        }
-    }
-
-    .ant-menu-dark[role='menu']
-        > .ant-menu-submenu-open[role='menuitem']
-        > .ant-menu-sub[role='menu']
-        > .ant-menu-item[role='menuitem'] {
-        margin: 0;
-        height: 34px;
-    }
-
-    .ant-menu-dark[role='menu']
-        > .ant-menu-submenu-open[role='menuitem']
-        > .ant-menu-sub[role='menu']
-        > .ant-menu-item[role='menuitem']
-        > a {
-        line-height: 34px;
-    }
-
-    .ant-menu-dark[role='menu']
-        > .ant-menu-submenu-open[role='menuitem']
-        > .ant-menu-sub[role='menu']
-        > .ant-menu-item[role='menuitem']
-        > a:hover {
-        background-color: transparent !important;
+      a:hover,
+      .ant-menu-item-active-link {
         color: #fff !important;
+      }
+
+      a,
+      .ant-menu-submenu-title {
+        color: #b6b6fb !important;
+      }
+
+      i {
+        transition: all 0.3s ease-in !important;
+
+        &.anticon-right-circle {
+          color: #b6b6fb;
+        }
+
+        &.ant-menu-submenu-arrow {
+          display: none;
+        }
+      }
+
+      &.ant-menu-submenu-open {
+        .ant-menu-submenu-title {
+          color: #fff !important;
+        }
+      }
+
+      &.logOut {
+        i.anticon {
+          font-size: 24px;
+        }
+      }
     }
 
-    .avatar {
-        width: 40px;
-        margin-right: 10px;
+    .ant-menu-item > a[href='/zero-to-hero'] > span,
+    .ant-menu-item > a[href='/analytics'] > span,
+    .ant-menu-item > a[href='/ppc/dashboard'] > span {
+      position: relative;
     }
 
-    .ant-menu-dark[role='menu'] > .ant-menu-item[role='menuitem'] > a:hover {
-        color: #fff !important;
+    .ant-menu-item > a[href='/zero-to-hero'] > span::after,
+    .ant-menu-item > a[href='/analytics'] > span::after,
+    .ant-menu-item > a[href='/ppc/dashboard'] > span::after {
+      width: 40px;
+      height: 16px;
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      right: -43px;
+      content: 'soon';
+      background-color: #b6b6fb;
+      border-radius: 4px;
+      font-size: 12px;
+      color: @third-default-dark;
+      text-align: center;
+      line-height: 16px;
+      opacity: 1;
     }
 
-    .ant-menu-dark[role='menu'] > .ant-menu-item[role='menuitem'] {
-        margin: 0;
-        height: 60px;
-        line-height: 60px;
+    .ant-menu-submenu-open > ul > .ant-menu-item > a:hover {
+      background-color: transparent;
+      color: #fff;
     }
+  }
+
+  // .ant-menu[role='menu']
+  //     > .ant-menu-submenu-open[role='menuitem']
+  //     > .ant-menu-sub[role='menu']
+  //     > .ant-menu-item {
+  //     height: 42px !important;
+  // }
+
+  // .ant-menu[role='menu']
+  //     > .ant-menu-submenu-open[role='menuitem']
+  //     > .ant-menu-sub[role='menu']
+  //     > .ant-menu-item
+  //     > a {
+  //     outline: none;
+  //     line-height: 42px !important;
+  // }
+
+  .avatar {
+    width: 40px;
+    margin-right: 10px;
+  }
+
+  .ant-menu-dark[role='menu'] > .ant-menu-item[role='menuitem'] > a:hover {
+    color: #fff !important;
+  }
+
+  .ant-menu-dark[role='menu'] > .ant-menu-item[role='menuitem'] {
+    margin: 0;
+    height: 60px;
+    line-height: 60px;
+  }
 }
 
 .Sidebar:not(.SidebarOpen) {
-    .sidebar-menu {
-        .ant-menu-inline-collapsed {
-            width: 100%;
+  .sidebar-menu {
+    .ant-menu-inline-collapsed {
+      width: 100%;
 
-            li {
-                .ant-menu-submenu-title {
-                    padding: 0 !important;
-                }
-
-                i {
-                    font-size: 22px;
-                    text-align: center;
-                }
-
-                &.logOut i {
-                    font-size: 18px;
-                    padding-left: 0;
-                }
-            }
+      li {
+        .ant-menu-submenu-title {
+          padding: 0 !important;
         }
+
+        i {
+          font-size: 22px;
+          text-align: center;
+        }
+
+        &.logOut i {
+          font-size: 18px;
+          padding-left: 0;
+        }
+      }
     }
+  }
 }
 
 .country-active {
-    height: 60px;
-    margin: 4px;
-    margin-bottom: 15px;
-    padding: 12px 18px;
-    border-radius: 8px;
-    background: rgba(109, 109, 246, 0.1);
-    cursor: pointer;
+  height: 60px;
+  margin: 4px;
+  margin-bottom: 15px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  background: rgba(109, 109, 246, 0.1);
+  cursor: pointer;
 
-    &__title {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(min-content, max-content));
+  &__title {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(min-content, max-content));
 
-        img {
-            min-width: 27px;
-            min-height: 16px;
-        }
-
-        h5 {
-            color: #fff;
-            font-size: 14px;
-            line-height: 20px;
-            margin-left: 8px;
-            margin-bottom: 0;
-        }
+    img {
+      min-width: 27px;
+      min-height: 16px;
     }
 
-    &__description {
-        color: #b6b6fb;
-        font-size: 12px;
-        line-height: 16px;
+    h5 {
+      color: #fff;
+      font-size: 14px;
+      line-height: 20px;
+      margin-left: 8px;
+      margin-bottom: 0;
     }
+  }
+
+  &__description {
+    color: #b6b6fb;
+    font-size: 12px;
+    line-height: 16px;
+  }
 }
 
 .Sidebar:not(.SidebarOpen) .country-active {
-    .country-active__title {
-        grid-template-columns: unset;
+  .country-active__title {
+    grid-template-columns: unset;
 
-        img {
-            margin: 0;
-        }
-
-        h5 {
-            margin-left: 4px;
-        }
+    img {
+      margin: 0;
     }
 
-    .country-active__description {
-        display: none;
+    h5 {
+      margin-left: 4px;
     }
+  }
+
+  .country-active__description {
+    display: none;
+  }
 }
 
 .RegionsList {
-    .ant-popover-arrow {
-        border-bottom-color: #3a416a !important;
-        border-left-color: #3a416a !important;
+  .ant-popover-arrow {
+    border-bottom-color: #3a416a !important;
+    border-left-color: #3a416a !important;
+  }
+
+  .ant-popover-inner {
+    background: #3a416a;
+
+    .ant-popover-inner-content {
+      padding: 8px 20px;
+    }
+  }
+
+  .CountryList {
+    padding: 12px 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid rgba(109, 109, 246, 0.2);
     }
 
-    .ant-popover-inner {
-        background: #3a416a;
-
-        .ant-popover-inner-content {
-            padding: 8px 20px;
-        }
+    h4 {
+      color: #fff;
     }
 
-    .CountryList {
-        padding: 12px 0;
+    .CountryItem {
+      border-bottom: none;
+      padding: 6px 0;
 
-        &:not(:last-child) {
-            border-bottom: 1px solid rgba(109, 109, 246, 0.2);
+      .ant-list-item-meta {
+        .ant-list-item-meta-avatar {
+          margin-right: 8px;
         }
 
-        h4 {
-            color: #fff;
+        .ant-list-item-meta-title {
+          color: #fff;
+          font-size: 12px;
+          line-height: 1;
+          margin-bottom: 4px;
         }
 
-        .CountryItem {
-            border-bottom: none;
-            padding: 6px 0;
-
-            .ant-list-item-meta {
-                .ant-list-item-meta-avatar {
-                    margin-right: 8px;
-                }
-
-                .ant-list-item-meta-title {
-                    color: #fff;
-                    font-size: 12px;
-                    line-height: 1;
-                    margin-bottom: 4px;
-                }
-
-                .ant-list-item-meta-description {
-                    color: #b6b6fb;
-                    font-size: 10px;
-                    line-height: 16px;
-                }
-            }
+        .ant-list-item-meta-description {
+          color: #b6b6fb;
+          font-size: 10px;
+          line-height: 16px;
         }
+      }
     }
+  }
+}
+
+.ant-menu-item > a[href='/analytics'],
+.ant-menu-item > a[href='/zero-to-hero'],
+.ant-menu-item > a[href='/ppc/dashboard'] {
+  pointer-events: none;
+}
+
+/*Retina CSS */
+@media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+
+  .Sidebar {
+    width: 50px;
+
+    .sidebar-header {
+      padding: 10px 20px;
+
+      .sidebar-icon {
+        font-size: 13px;
+      }
+
+      .sidebar-logo {
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 75px;
+        }
+      }
+    }
+
+    .country-active {
+      padding: 15px 8px;
+
+      .country-active__title {
+        img {
+          width: 20px;
+          height: 10px;
+        }
+
+        h5 {
+          font-size: 10px;
+        }
+      }
+    }
+
+    .sidebar-menu .ant-menu-item, .sidebar-menu .ant-menu-submenu {
+      padding-left: 16px !important;
+    }
+
+    .sidebar-menu ul li {
+      a, span {
+        font-size: 10px;
+        display: flex;
+        align-items: center;
+        grid-column-gap: 5px;
+        column-gap: 5px;
+      }
+
+      .anticon {
+        height: auto;
+
+        & > svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    &.SidebarOpen {
+      width: 150px;
+
+      .country-active {
+        .country-active__description {
+          font-size: 10px;
+        }
+      }
+
+      .sidebar-menu .ant-menu-item, .sidebar-menu .ant-menu-submenu {
+        padding-left: 10px !important;
+      }
+
+      .sidebar-menu ul .ant-menu-item > a[href='/zero-to-hero'] > span::after, .sidebar-menu ul .ant-menu-item > a[href='/analytics'] > span::after, .sidebar-menu ul .ant-menu-item > a[href='/ppc/dashboard'] > span::after {
+        font-size: 9px;
+        width: 30px;
+        right: -33px;
+      }
+    }
+  }
 }

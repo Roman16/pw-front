@@ -28,6 +28,10 @@ img {
 .main-pages {
     display: flex;
 
+    @media (max-width: 799px) {
+        position: relative;
+    }
+
     .main-container {
         position: relative;
         flex: 1;
@@ -35,6 +39,10 @@ img {
         height: 100vh;
         overflow: auto;
         background: #f5f5ff;
+
+        @media (max-width: 799px) {
+            margin-left: 72px;
+        }
 
         & > div {
             padding: 24px;
@@ -127,7 +135,32 @@ img {
     border-color: @action-color !important;
 }
 
-// calendar
+//switch
+.main-pages {
+    .ant-switch {
+        background: #fff;
+        border: 1px solid rgba(212, 218, 222, 0.32);
+    }
+
+    .ant-switch::after {
+        background: #c9cbd4;
+        width: 16px;
+        height: 16px;
+        top: 2px;
+    }
+
+    .ant-switch-checked::after {
+        background: #8fd39d;
+    }
+
+    .ant-switch-checked {
+        border: 1px solid #8fd39d;
+    }
+}
+
+/*
+* ant datapicker start (can be delete)
+*/
 .ant-calendar-picker-container .ant-calendar {
     border-radius: 8px;
 }
@@ -136,10 +169,11 @@ img {
     display: flex;
     flex-direction: row-reverse;
 
-    // input hidde
-    .ant-calendar-input-wrap {
-        display: none;
-    }
+  // input hidde
+  .ant-calendar-input-wrap,
+  .ant-calendar-range-middle {
+    display: none;
+  }
 
     .ant-calendar-range-middle {
         left: 34%;
@@ -246,6 +280,9 @@ td.ant-calendar-cell.ant-calendar-selected-end-date::before {
 td.ant-calendar-cell.ant-calendar-in-range-cell::before {
     background-color: @success-color-opacity;
 }
+/*
+* ant datapicker end (can be delete)
+*/
 
 // tooltip
 
@@ -290,14 +327,42 @@ td.ant-calendar-cell.ant-calendar-in-range-cell::before {
     }
 }
 
+button.btn {
+  width: max-content;
+  height: 32px;
+  border: 0;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+
+  &.default {
+    background: #6D6DF6;
+    color: #fff;
+
+    &:hover {
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #6D6DF6;
+      box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
+    }
+  }
+}
 
 button:disabled,
-button[disabled]{
-    background: linear-gradient(0deg, rgba(189, 198, 207, 0.4), rgba(189, 198, 207, 0.4)), #E8EDF1 !important;
-    color: #C9CBD4 !important;
+button[disabled] {
+    background: linear-gradient(
+            0deg,
+            rgba(189, 198, 207, 0.4),
+            rgba(189, 198, 207, 0.4)
+        ),
+        #e8edf1 !important;
+    color: #c9cbd4 !important;
     cursor: none;
 
     &:hover {
-        background: linear-gradient(0deg, rgba(189, 198, 207, 0.4), rgba(189, 198, 207, 0.4)), #E8EDF1 !important;
+        background: linear-gradient(
+                0deg,
+                rgba(189, 198, 207, 0.4),
+                rgba(189, 198, 207, 0.4)
+            ),
+            #e8edf1 !important;
     }
 }

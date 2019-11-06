@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {func, arrayOf, object} from 'prop-types';
-import {Input, notification} from 'antd';
+import {Input, Switch} from 'antd';
 import InputCurrency from '../../../../components/Inputs/InputCurrency';
 import Table from '../../../../components/Table/Table';
 import ProductItem from '../../../../components/ProductList/ProductItem';
 import {productsServices} from '../../../../services/products.services';
+import {notification} from '../../../../components/Notification';
 
 import './TableSettings.less';
 
@@ -26,7 +27,8 @@ class ProductsList extends Component {
 
         totalSize: 0,
         page: 1,
-        size: 10
+        size: 10,
+        onlyActive: false
     };
 
     timerId = null;
@@ -34,12 +36,12 @@ class ProductsList extends Component {
     prevItem = 0;
 
     fetchProducts = async (searchText = '') => {
-        const {page, size} = this.state;
-
+        const {page, size, onlyActive} = this.state;
         const {result, totalSize} = await productsServices.getProductsSettingsList({
             searchStr: searchText,
             page: page,
-            size: size
+            size: size,
+            onlyActive: onlyActive
         });
         this.setState({products: result, totalSize});
     };
@@ -49,10 +51,34 @@ class ProductsList extends Component {
     };
 
     onChangeRow = (value, item, index) => {
+        const {products} = this.state;
         if (value > 0) {
+            if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING])) {
+                notification.warning({
+                    title: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
+                });
+                return;
+            }
+            if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING])) {
+                notification.warning({
+                    title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                });
+                return;
+            }
+            if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING])) {
+                notification.warning({
+                    title: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
+                });
+                return;
+            }
+            if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING])) {
+                notification.warning({
+                    title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                });
+                return;
+            }
+
             const dataSourceRow = this.setRowData(value, item, index);
-
-
             if (item !== this.prevItem) {
                 this.prevItem = item;
                 this.updateSettings(dataSourceRow);
@@ -65,7 +91,7 @@ class ProductsList extends Component {
             }
         } else {
             notification.warning({
-                message: item === NET_MARGIN ?
+                title: item === NET_MARGIN ?
                     'Product net margin should be greater than 0%'
                     :
                     'Bids should be greater than or equal to 0.02$'
@@ -88,6 +114,10 @@ class ProductsList extends Component {
             product_id: products[index].id,
             [item]: +value
         };
+    };
+
+    handleChangeSwitch = (e) => {
+        this.setState({onlyActive: e}, this.fetchProducts)
     };
 
     onSearchChange = ({target: {value}}) => {
@@ -116,6 +146,13 @@ class ProductsList extends Component {
                                 onChange={this.onSearchChange}
                                 // onBlur={onSearchBlur}
                             />
+
+                            <div className='switch-block'>
+                                Show only Active Listings on Amazon
+                                <Switch
+                                    onChange={this.handleChangeSwitch}
+                                />
+                            </div>
                         </div>
                     ),
                     dataIndex: PRODUCT,
@@ -151,7 +188,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MIN_BID_MANUAL_CAMPING]}
-                            min={0.02}
+                            min={0}
                             max={item[MAX_BID_MANUAL_CAMPING] || 999999999}
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)
@@ -167,7 +204,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MAX_BID_MANUAL_CAMPING]}
-                            min={item[MIN_BID_MANUAL_CAMPING] || 0.02}
+                            min={item[MIN_BID_MANUAL_CAMPING] || 0}
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)
                             }
@@ -182,7 +219,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MIN_BID_AUTO_CAMPING]}
-                            min={0.02}
+                            min={0}
                             max={item[MAX_BID_AUTO_CAMPING] || 999999999}
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)
@@ -198,7 +235,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MAX_BID_AUTO_CAMPING]}
-                            min={item[MAX_BID_AUTO_CAMPING] || 0.02}
+                            min={item[MAX_BID_AUTO_CAMPING] || 0}
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)
                             }

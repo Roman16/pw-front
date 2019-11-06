@@ -1,64 +1,117 @@
 import React, { Component } from 'react';
-import { DatePicker as AntDatePicker } from 'antd';
 import moment from 'moment';
+import { DateRangePicker } from 'react-dates';
 
 import DateIcon from './DateIcon/DateIcon';
+
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+
 import './DatePicker.less';
 
-const { RangePicker } = AntDatePicker;
+const today = moment();
+const tomorrow = moment().add(1, 'day');
+const presets = [
+    {
+        text: 'Today',
+        startDate: today,
+        endDate: today
+    },
+    {
+        text: 'Tomorrow',
+        startDate: tomorrow,
+        endDate: tomorrow
+    },
+    {
+        text: 'Next Week',
+        startDate: today,
+        endDate: moment().add(1, 'week')
+    },
+    {
+        text: 'Next Month',
+        startDate: today,
+        endDate: moment().add(1, 'month')
+    }
+];
 
 class DatePicker extends Component {
-    handleChange = ([start, end]) => {
-        const { timeRange } = this.props;
-
-        timeRange(start ? start.format('D-M-YY') : null, end ? end.format('D-M-YY') : null);
+    state = {
+        startDate: '',
+        endDate: '',
+        focusedInput: null
     };
 
-    disabledDate = current => {
-        return current && current > moment().endOf('day');
+    // handleChange = ([start, end]) => {
+    //     const { timeRange } = this.props;
+
+    //     timeRange(
+    //         start ? start.format('DD-MM-YY') : null,
+    //         end ? end.format('DD-MM-YY') : null
+    //     );
+    // };
+
+    // disabledDate = current => {
+    //     return current && current > moment().endOf('day');
+    // };
+
+    onDatesChange = (startDate, endDate) => {
+        this.setState({
+            startDate,
+            endDate
+        });
     };
 
     render() {
+        const { startDate, endDate, focusedInput } = this.state;
+
+        const renderDatePresets = () => {
+            return (
+                <div className="Presets">
+                    {presets.map(({ text, startDate, endDate }) => {
+                        return (
+                            <button
+                                className="PresetsBtn"
+                                key={text}
+                                type="button"
+                                onClick={() =>
+                                    this.onDatesChange(startDate, endDate)
+                                }
+                            >
+                                {text}
+                            </button>
+                        );
+                    })}
+                </div>
+            );
+        };
+
         return (
-            <div className="DatePicker">
-                <RangePicker
-                    ranges={{
-                        Today: [moment(), moment()],
-                        Yesterday: [
-                            moment(new Date()).add(-1, 'days'),
-                            moment()
-                        ],
-                        'Last 7 Days': [
-                            moment(new Date()).add(-7, 'days'),
-                            moment()
-                        ],
-                        'Last 14 Days': [
-                            moment(new Date()).add(-14, 'days'),
-                            moment()
-                        ],
-                        'Last 30 Days': [
-                            moment(new Date()).add(-30, 'days'),
-                            moment()
-                        ],
-                        'Year to date': [
-                            moment(new Date(new Date().getFullYear(), 0, 1)),
-                            moment()
-                        ],
-                        Lifetime: []
-                    }}
-                    separator="-"
-                    format="DD/MM/YY"
-                    suffixIcon={<DateIcon />}
-                    onChange={this.handleChange}
-                    disabledDate={this.disabledDate}
+            <div className="date-picker">
+                <DateRangePicker
+                    renderCalendarInfo={renderDatePresets}
+                    startDate={startDate} // momentPropTypes.momentObj or null,
+                    startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                    endDate={endDate} // momentPropTypes.momentObj or null,
+                    endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                    onDatesChange={({ startDate, endDate }) =>
+                        this.setState({
+                            startDate,
+                            endDate
+                        })
+                    } // PropTypes.func.isRequired,
+                    focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                    onFocusChange={focusedInput =>
+                        this.setState({ focusedInput })
+                    } // PropTypes.func.isRequired,
+                    small
+                    customInputIcon={<DateIcon />}
+                    showClearDates
+                    reopenPickerOnClearDates
+                    regular
                 />
             </div>
         );
     }
 }
-
-DatePicker.propTypes = {};
-
-DatePicker.defaultProps = {};
 
 export default DatePicker;

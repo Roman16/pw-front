@@ -1,18 +1,9 @@
 import React from 'react';
 
-import {
-    Form,
-    Row,
-    Input,
-    Button,
-    Checkbox,
-    Col,
-    Spin,
-    notification
-} from 'antd';
+import {Form, Row, Input, Button, Checkbox, Col, Spin} from 'antd';
 import {connect} from 'react-redux';
 import {Link, Redirect} from 'react-router-dom';
-
+import {notification} from '../../../../components/Notification';
 import {userActions} from '../../../../actions/user.actions';
 import amazon from '../../../../assets/img/amazon.png';
 import './LoginPageForm.less';
@@ -41,52 +32,34 @@ class LoginPageForm extends React.Component {
         this.setState({isLoading: true});
 
         // eslint-disable-next-line no-useless-escape
-        const fieldEmailValid = /^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/.test(
+        const fieldEmailValid = /^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-zA-Z\.]{2,6})$/.test(
             email
         );
 
         if (password.length < 6) {
             notification.error({
-                message: 'The password must be at least 6 characters.',
-                style: {
-                    width: 600,
-                    marginLeft: 335 - 600
-                },
-                placement: 'bottomRight',
-                bottom: 20,
-                duration: 5
+                title: 'The password must be at least 6 characters.'
             });
             this.setState({
                 isLoading: false
             });
+            return;
         } else if (email.length === 0) {
             notification.error({
-                message: 'The letter must contain at least 1 character.',
-                style: {
-                    width: 600,
-                    marginLeft: 335 - 600
-                },
-                placement: 'bottomRight',
-                bottom: 20,
-                duration: 5
+                title: 'The letter must contain at least 1 character.'
             });
             this.setState({
                 isLoading: false
             });
+            return;
         } else if (!fieldEmailValid) {
             notification.error({
-                message: 'Invalid email address',
-                style: {
-                    width: 600,
-                    marginLeft: 335 - 600
-                },
-                placement: 'bottomRight',
-                bottom: 20,
-                duration: 5
+                title: 'Invalid email address'
             });
             this.setState({
                 isLoading: false
             });
+            return;
         }
 
         this.props.login({
@@ -195,14 +168,15 @@ class LoginPageForm extends React.Component {
                     <Col>
                         <div className="amazon-login-wrap">
                             <p>or</p>
-                            <a href="https://profitwhales.com/login/amazon">
+                            {/*<Link to="/login/amazon">*/}
+                            <a onClick={() => window.open('/login/amazon', '_self')}>
                                 <img src={amazon} alt="LWA-GOld"/>
                             </a>
+                            {/*</Link>*/}
                         </div>
                     </Col>
                 </Row>
             </Form>
-
         );
     }
 }
@@ -215,4 +189,7 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPageForm);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginPageForm);

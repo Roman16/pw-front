@@ -1,5 +1,5 @@
 import React from 'react';
-import './CustomTable.less';
+import '../../pages/PPCAutomate/Report/ReportTable/Tables/CustomTable.less';
 import { Pagination, Spin } from 'antd';
 
 const CustomTable = ({
@@ -28,7 +28,7 @@ const CustomTable = ({
 
             <div className="table-body">
                 {!loading ? (
-                    dataSource.length > 0 &&
+                    dataSource && dataSource.length > 0 &&
                     dataSource.map(report => (
                         <div className="table-body__row">
                             {columns.map(item => (

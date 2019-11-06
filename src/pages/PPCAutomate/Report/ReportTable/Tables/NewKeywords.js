@@ -3,7 +3,7 @@ import moment from 'moment';
 import TableButton from '../TableButton/TableButton';
 import {indexField, createdKeywordsActionField, infoField} from './const';
 import {useSelector} from 'react-redux';
-import CustomTable from './CustomTable';
+import CustomTable from '../../../../../components/Table/CustomTable';
 import TitleInfo from "../../../../../components/Table/renders/TitleInfo";
 
 const createdCampaign = 'created-campaign';

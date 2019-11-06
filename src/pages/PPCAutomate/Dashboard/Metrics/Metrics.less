@@ -1,0 +1,368 @@
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 12%;
+  height: 100px;
+  padding: 8px 12px 8px;
+  margin-bottom: 25px;
+  background: #FFFFFF;
+  border-radius: 8px;
+
+  .title-info {
+    display: flex;
+    align-items: center;
+    font-family: ir;
+    font-size: 16px;
+    letter-spacing: -0.05px;
+    color: #656A84;
+
+    .anticon {
+      color: #656A84;
+      opacity: 1;
+      margin: 0 0 0 8px;
+    }
+  }
+
+  .metric-item__description {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .value {
+      font-family: ir;
+      font-size: 26px;
+      line-height: 32px;
+      letter-spacing: 0.2px;
+      color: #38454F;
+    }
+
+    .label {
+      font-family: ir;
+      font-size: 12px;
+      letter-spacing: 0.2px;
+      color: #656A84;
+    }
+  }
+}
+
+.action-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+}
+
+.metrics-block {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .metric-item {
+    .metric-item();
+
+    &:nth-child(10n - 2) {
+      margin-right: 0 !important;
+    }
+
+    .close {
+      margin: 0 0 0 auto;
+      cursor: pointer;
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .metric-item__changes {
+      & > div {
+        width: max-content;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        border-radius: 4px;
+        font-family: ir;
+        font-size: 11px;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+
+        img {
+          margin: 0 0 0 5px;
+        }
+      }
+
+      .upward-changes {
+        background: #8FD39D;
+        color: #fff;
+      }
+
+      .up-changes {
+        background: rgba(143, 211, 157, 0.2);
+        color: #8FD39D;
+      }
+
+      .down-changes {
+        background: rgba(201, 203, 212, 0.2);
+        color: #656A84;
+      }
+
+      .downward-changes {
+        background: #656A84;
+        color: #fff;
+      }
+    }
+  }
+
+  .add-metric {
+    width: 12%;
+
+    .add-metric__button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100px;
+      border: 2px solid #6D6DF6;
+      margin: 0 0 25px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: ir;
+      font-size: 20px;
+      letter-spacing: 0.2px;
+      color: #6D6DF6;
+
+      &:hover {
+        background: #6D6DF6;
+        color: #fff;
+
+        img {
+          &.blue {
+            display: none;
+          }
+
+          &.white {
+            display: block;
+          }
+        }
+      }
+
+      img {
+        margin: 0 19px 0 0;
+
+        &.white {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.metrics-modal {
+  width: 70vw !important;
+  max-width: 1170px;
+
+  .ant-modal-close {
+    display: none;
+  }
+
+  .ant-modal-header {
+    border: 0;
+    text-align: center;
+    padding: 65px 0 40px 0;
+
+    .ant-modal-title {
+      font-family: ir;
+      font-size: 20px;
+      letter-spacing: -0.06px;
+      color: #363694;
+    }
+  }
+
+  .ant-modal-footer {
+    border: 0;
+    padding-bottom: 45px;
+
+    button {
+      width: 120px;
+      height: 40px;
+      border-radius: 8px;
+      margin: 0 0 0 24px;
+      border: 0;
+
+      &:first-child {
+        background: #F5F5FF;
+      }
+
+      &:last-child {
+        background: #6D6DF6;
+      }
+    }
+  }
+
+  .ant-modal-body {
+    padding: 25px 63px;
+
+    .visible-list {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+
+      .default-visible-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 18%;
+        height: 100px;
+        background: #FFFFFF;
+        border: 1px dashed #77777e;
+        border-radius: 8px;
+        padding: 8px 12px 14px;
+        margin: 0 0 25px 0;
+      }
+
+      .metric-item {
+        width: 18%;
+        margin-right: 15px;
+        position: relative;
+        box-shadow: 0px 0px 20px rgba(142, 147, 192, 0.08);
+
+        .remove-item {
+          .action-button();
+
+          background: rgba(235, 87, 87, 0.2);
+        }
+      }
+
+    }
+
+    .hidden-list__title {
+      font-family: ir;
+      font-size: 12px;
+      color: #656A84;
+      margin: 40px 0 32px 0;
+    }
+
+    .hidden-list {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+
+      .metric-item {
+        width: 18%;
+        margin-right: 15px;
+        position: relative;
+        box-shadow: 0px 0px 20px rgba(142, 147, 192, 0.08);
+
+        .add-item {
+          .action-button();
+
+          background: rgba(143, 211, 157, 0.2);
+        }
+      }
+    }
+  }
+}
+
+//-------------------------------------
+/*Retina CSS */
+//-------------------------------------
+@media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+
+  .metric-item {
+    height: 75px;
+    padding: 6px 9px;
+
+    .title-info {
+      font-size: 10px;
+      letter-spacing: -0.05px;
+
+      .close img {
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    .metric-item__changes {
+      & > div {
+        height: 12px;
+        font-size: 10px;
+
+        img {
+          height: 8px;
+        }
+      }
+    }
+
+    .metric-item__description {
+      .value {
+        font-size: 15px;
+        line-height: 15px;
+      }
+
+      .label {
+        font-size: 7px;
+      }
+    }
+  }
+
+  .metrics-block {
+    .metric-item {
+      .metric-item();
+    }
+
+    .add-metric {
+      .add-metric__button {
+        height: 75px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .metrics-modal {
+    .ant-modal-header {
+      padding: 40px 0 25px 0;
+
+      .ant-modal-title {
+        font-size: 15px;
+      }
+    }
+
+    .ant-modal-body {
+      padding: 15px 40px;
+
+      .visible-list {
+        .default-visible-item {
+          width: 12%;
+          height: 75px;
+          font-size: 10px;
+        }
+
+        .metric-item {
+          .metric-item();
+
+          width: 12%;
+          height: 75px;
+        }
+      }
+    }
+
+    .ant-modal-footer {
+      button {
+        height: 30px;
+        font-size: 10px;
+      }
+    }
+  }
+
+}
+

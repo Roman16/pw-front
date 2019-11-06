@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Icon, Popover } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,21 @@ import './Sidebar.less';
 
 import logo from '../../assets/img/logo.svg';
 
+function useWindowSize() {
+    const [size, setSize] = useState([0, 0]);
+    useLayoutEffect(() => {
+        function updateSize() {
+            setSize([window.innerWidth, window.innerHeight]);
+        }
+        window.addEventListener('resize', updateSize);
+        updateSize();
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+}
+
 const Sidebar = () => {
+    const [width, height] = useWindowSize();
     const [collapsed, setCollapsed] = useState(false),
         [regions] = useState(regionsMenu),
         dispatch = useDispatch(),
@@ -31,8 +45,9 @@ const Sidebar = () => {
     };
 
     useEffect(() => {
+        width < 800 ? setCollapsed(true) : setCollapsed(false);
         dispatch(userActions.getAuthorizedUserInfo());
-    }, [dispatch]);
+    }, [dispatch, width]);
 
     return (
         <div className={className}>
