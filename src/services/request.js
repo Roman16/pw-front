@@ -40,16 +40,18 @@ const api = (method, url, data, type) => {
                         reject(error);
 
                         if (error.response.status === 401) {
-                            notification.error({title: error.response.data
-                                ? error.response.data.error
-                                : ''});
+                            if(error.response.data) {
+                                notification.error({
+                                    title: error.response.data.message ? error.response.data.message : error.response.data.error,
+                                });
+                            }
                         } else {
-                            notification.error({
-                                title: error.response.data
-                                    ? (error.response.data.message ? error.response.data.message : error.response.data.error)
-                                    : ''
-                                // description: error.response.data.message,
-                            });
+                            if(error.response.data) {
+                                notification.error({
+                                    title: error.response.data.message ? error.response.data.message : error.response.data.error
+                                });
+                            }
+
                         }
                     }
                 }

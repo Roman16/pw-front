@@ -4,18 +4,18 @@ import plusIcon from "../../../../../assets/img/icons/plus-green.svg";
 import minusIcon from "../../../../../assets/img/icons/minus.svg";
 
 const ModalMetricItem = ({item: {title, info}, item, type, removeMetric, addMetric}) => (
-    <div className='metric-item'>
+    <div className='metric-item' onClick={() => type === 'visible' ? removeMetric(item) : addMetric(item)}>
         <div className="title-info">
             {title}
             <Tooltip title={info || title}>
                 <Icon type="info-circle" theme="filled"/>
             </Tooltip>
 
-            {type === 'hidden' && <div className="add-item" onClick={() => addMetric(item)}>
+            {type === 'hidden' && <div className="add-item">
                 <img src={plusIcon} alt=""/>
             </div>}
 
-            {type === 'visible' && <div className="remove-item" onClick={() => removeMetric(item)}>
+            {type === 'visible' && <div className="remove-item">
                 <img src={minusIcon} alt=""/>
             </div>}
         </div>

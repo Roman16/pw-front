@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../pages/PPCAutomate/Report/ReportTable/Tables/CustomTable.less';
+import './CustomTable.less';
 import { Pagination, Spin } from 'antd';
 
 const CustomTable = ({

@@ -10,30 +10,15 @@ import './LoginPageForm.less';
 
 const recaptchaKey = process.env.GOOGLE_RECAPTCHA_KEY || '6LdVacEUAAAAACxfVkvIWG3r9MXE8PYKXJ5aaqY1';
 
-
 class LoginPageForm extends React.Component {
     state = {
         email: '',
         password: '',
-        captcha_token: '',
         captcha_action: 'login',
         rememberMe: false,
         isLoading: false,
         loginSuccess: false
     };
-
-    componentDidMount() {
-        this.setState({isLoading: false});
-
-        window.grecaptcha.ready(() => {
-            window.grecaptcha.execute(recaptchaKey, {action: 'login'}).then((token) => {
-                this.setState({
-                    captcha_token: token
-                })
-            });
-        });
-
-    }
 
     onChange = ({target}) => {
         this.setState({[target.name]: target.value});
@@ -42,7 +27,7 @@ class LoginPageForm extends React.Component {
     onSubmit = e => {
         e.preventDefault();
 
-        const {email, password, rememberMe, captcha_token, captcha_action} = this.state;
+        const {email, password, rememberMe, captcha_action} = this.state;
         this.setState({isLoading: true});
 
         // eslint-disable-next-line no-useless-escape
@@ -76,24 +61,30 @@ class LoginPageForm extends React.Component {
             return;
         }
 
-        this.props.login({
-            email,
-            password,
-            captcha_token,
-            rememberMe,
-            captcha_action
+        window.grecaptcha.ready(() => {
+            window.grecaptcha.execute(recaptchaKey, {action: 'login'}).then((token) => {
+                this.props.login({
+                    email,
+                    password,
+                    rememberMe,
+                    captcha_action,
+                    captcha_token: token
+                });
+            });
         });
+
+
 
         this.setState({
             isLoading: false
         });
     };
 
-    // verifyCallback = (recaptchaToken) => {
-    //     this.setState({
-    //         captcha_token: recaptchaToken
-    //     })
-    // };
+    componentDidMount() {
+        this.setState({isLoading: false});
+
+        window.captchaStyle.innerHTML = `.grecaptcha-badge { display: block !important}`;
+    }
 
     render() {
         const {email, password, isLoading, loginSuccess} = this.state;

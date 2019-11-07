@@ -9,9 +9,12 @@ import NotificationContainer from './components/Notification/NotificationContain
 
 import {PersistGate} from 'redux-persist/integration/react'
 
+window.captchaStyle = document.createElement("style");
 
 
 function App() {
+    document.head.appendChild(window.captchaStyle);
+
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
