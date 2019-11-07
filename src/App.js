@@ -13,7 +13,7 @@ window.captchaStyle = document.createElement("style");
 
 
 function App() {
-    document.head.appendChild(window.captchaStyle);
+    document.body.appendChild(window.captchaStyle);
 
     return (
         <Provider store={store}>

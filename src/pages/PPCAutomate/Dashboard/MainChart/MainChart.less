@@ -5,13 +5,74 @@
   border-radius: 8px;
 
   .chart-header {
-    margin: 0 0 10px 0;
+    display: flex;
+    align-items: center;
+    margin: 0 0 50px 0;
+    font-family: ir;
+
     .pair-name {
-      font-family: ir;
       font-size: 20px;
       line-height: 28px;
       letter-spacing: -0.06px;
       color: #363694;
+    }
+
+    .switch-block {
+      margin: 0 0 0 35px;
+      font-size: 12px;
+      letter-spacing: 0.2px;
+      color: #38454F;
+
+      button {
+        margin: 0 13px 0 0;
+      }
+    }
+
+    .weak-switch {
+      margin-right: 10px;
+    }
+
+    .daily-icon {
+      margin: 0 0 0 10px;
+    }
+
+    .line-fill {
+      display: flex;
+
+      & > div {
+        margin: 0 3px;
+      }
+    }
+
+    .green-line,
+    .violet-line {
+      width: 16px;
+      border-radius: 2px;
+      border: 2px solid;
+    }
+
+    .green-line {
+      border-color: #8FD39D;
+    }
+
+    .violet-line {
+      border-color: #6D6DF6;
+    }
+
+    .chart-legend {
+      display: flex;
+      align-items: center;
+      margin: 0 0 0 auto;
+
+      & > div {
+        display: flex;
+        align-items: center;
+        margin: 0 30px 0 0;
+
+        & > div {
+          margin: 0 10px 0 0;
+        }
+      }
     }
 
   }

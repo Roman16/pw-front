@@ -83,7 +83,7 @@ class LoginPageForm extends React.Component {
     componentDidMount() {
         this.setState({isLoading: false});
 
-        window.captchaStyle.innerHTML = `.grecaptcha-badge { display: block !important}`;
+        window.captchaStyle.innerHTML = `.grecaptcha-badge { display: block !important; visibility: visible !important}`;
     }
 
     render() {

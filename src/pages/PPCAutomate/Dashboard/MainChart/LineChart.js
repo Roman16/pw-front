@@ -55,11 +55,9 @@ const data2 = [
 class Chart extends PureComponent {
     render() {
         return (
-            <ResponsiveContainer height={500} width='100%'>
+            <ResponsiveContainer height={400} width='100%'>
 
                 <LineChart
-                    width={500}
-                    height={300}
                     data={data}
                 >
                     <CartesianGrid
@@ -85,7 +83,7 @@ class Chart extends PureComponent {
 
                     <Tooltip/>
 
-                    <Legend verticalAlign="top" align='right' height={36}/>
+                    {/*<Legend verticalAlign="top" align='right' height={36}/>*/}
 
                     <Line
                         yAxisId="left"

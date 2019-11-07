@@ -17,7 +17,7 @@ const Chart = () => {
             <div className='bloc-title'>
                 <span className='title'>Organic / PPC</span>
 
-                {defaultChart === 'bar' && <Tooltip />}
+                {defaultChart === 'pie' && <Tooltip />}
 
                 <div className='chart-selector'>
                     <img src={defaultChart === 'pie' ? pieActiveIcon : pieDefaultIcon} alt=""

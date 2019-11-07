@@ -8,7 +8,15 @@ import warningIcon from "../../assets/img/icons/warningSmall.svg";
 
 const InformationTooltip = ({title, description, position, type}) => (
     <div className='custom-tooltip information-tooltip'>
-        <Popover content={description} title={title || false} placement={position}>
+        <Popover
+            content={
+                <span
+                    dangerouslySetInnerHTML={{ __html: description }}
+                />
+            }
+            title={title || false}
+            placement={position}
+        >
             {type === 'info' && <img src={informationIcon} alt="" className='info-icon'/>}
             {type === 'warning' && <img src={warningIcon} alt="" className='warning-icon'/>}
         </Popover>

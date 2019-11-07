@@ -131,7 +131,7 @@ const ProductsList = () => {
             )
         },
     ];
-    console.log(products);
+
     return (
         <div>
             <CustomTable
