@@ -1,11 +1,11 @@
 import React from 'react';
-import {Popover, Icon} from 'antd';
+import { Popover, Icon } from 'antd';
 import moment from 'moment';
 import up from '../../../../../assets/img/icons/up-row.svg';
 import down from '../../../../../assets/img/icons/up-row.svg';
 import right from '../../../../../assets/img/icons/right-row.svg';
 import pause from '../../../../../assets/img/icons/pause.svg';
-import TitleInfo from "../../../../../components/Table/renders/TitleInfo";
+import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 
 const patIntentValues = {
     queryHighRelMatches: 'close-match',
@@ -14,21 +14,23 @@ const patIntentValues = {
     asinSubstituteRelated: 'substitutes',
     asinSameAs: 'ASIN',
     asinCategorySameAs: 'Category',
-    asinBrandSameAs: 'Brand',
+    asinBrandSameAs: 'Brand'
 };
 const negativeMatchValues = {
     negativeExact: 'Negative Exact',
-    negativePhrase: 'Negative Phrase',
+    negativePhrase: 'Negative Phrase'
 };
 
 export const patIntentField = {
-    title: <TitleInfo
-        title="PAT Intent Type"
-        info='Automatic or Manual Product Targetings use multiple strategies to match your ads to shoppers looking for your products. These strategies are: ASIN, Categories, Substitutes, etc.'
-    />,
+    title: (
+        <TitleInfo
+            title="PAT Intent Type"
+            info="Automatic or Manual Product Targetings use multiple strategies to match your ads to shoppers looking for your products. These strategies are: ASIN, Categories, Substitutes, etc."
+        />
+    ),
     dataIndex: 'PatIntentType',
     key: 'PatIntentType',
-    // width: '132px',
+    width: '132px',
     render: text => <span>{patIntentValues[text]}</span>
 };
 
@@ -61,7 +63,7 @@ export const actionField = {
     className: 'left-border',
     render: text => (
         <div>
-            <span dangerouslySetInnerHTML={{__html: text}}/>
+            <span dangerouslySetInnerHTML={{ __html: text }} />
         </div>
     )
 };
@@ -70,16 +72,21 @@ export const bidActionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    // width: '200px',
+    width: '200px',
     className: 'left-border',
-    render: ({data: {current_state, previous_state}}) => (
-        <div className='action-field'>
-            {current_state > previous_state ?
-                <span><img src={up} alt=""/> bid up (${previous_state} <img src={right} alt=""/> <b>${current_state}</b>)</span>
-                :
-                <span><img src={down} alt=""/> bid down (<b>${previous_state}</b> <img src={right}
-                                                                                       alt=""/> ${current_state})</span>
-            }
+    render: ({ data: { current_state, previous_state } }) => (
+        <div className="action-field">
+            {current_state > previous_state ? (
+                <span>
+                    <img src={up} alt="" /> bid up (${previous_state}{' '}
+                    <img src={right} alt="" /> <b>${current_state}</b>)
+                </span>
+            ) : (
+                <span>
+                    <img src={down} alt="" /> bid down (<b>${previous_state}</b>{' '}
+                    <img src={right} alt="" /> ${current_state})
+                </span>
+            )}
         </div>
     )
 };
@@ -90,8 +97,8 @@ export const pauseKeywordsActionField = {
     width: '200px',
     className: 'left-border',
     render: () => (
-        <div className='action-field'>
-            <img src={pause} alt=""/> Paused Keyword
+        <div className="action-field">
+            <img src={pause} alt="" /> Paused Keyword
         </div>
     )
 };
@@ -101,21 +108,17 @@ export const createdKeywordsActionField = {
     key: 'action',
     width: '200px',
     className: 'left-border',
-    render: () => (
-        <div className='action-field'>
-            Created
-        </div>
-    )
+    render: () => <div className="action-field">Created</div>
 };
 export const pausePatActionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    // width: '160px',
+    width: '160px',
     className: 'left-border',
     render: () => (
-        <div className='action-field'>
-            <img src={pause} alt=""/> Paused Keyword
+        <div className="action-field">
+            <img src={pause} alt="" /> Paused Keyword
         </div>
     )
 };
@@ -127,9 +130,14 @@ export const infoField = {
     render: text => (
         <Popover
             placement="left"
-            content={<span dangerouslySetInnerHTML={{__html: text}} className='popover-info'/>}
+            content={
+                <span
+                    dangerouslySetInnerHTML={{ __html: text }}
+                    className="popover-info"
+                />
+            }
         >
-            <Icon type="info-circle" className="info-icon" theme="filled"/>
+            <Icon type="info-circle" className="info-icon" theme="filled" />
         </Popover>
     )
 };

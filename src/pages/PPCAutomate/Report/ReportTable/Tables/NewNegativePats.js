@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, patIntentField, infoField} from './const';
+import { indexField, patIntentField, infoField } from './const';
 import TableButton from '../TableButton/TableButton';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 
 const HighACoS = 'created-negative-pat-from-cst-high-acos';
@@ -25,10 +25,12 @@ const defaultKeys = [
         width: '140px'
     },
     {
-        title: <TitleInfo
-            title="PAT type"
-            info='The type of Product Targeting. It can be a Manual or Auto.'
-        />,
+        title: (
+            <TitleInfo
+                title="PAT type"
+                info="The type of Product Targeting. It can be a Manual or Auto."
+            />
+        ),
         dataIndex: 'PatType',
         key: 'PatType',
         width: '150px',
@@ -49,30 +51,34 @@ const columns = {
     [HighACoS]: [
         ...defaultKeys,
         {
-            title: <TitleInfo
-                title='CST ACoS'
-                info='It displays the ACoS of certain customer search-term from your ad reports. '
-            />,
+            title: (
+                <TitleInfo
+                    title="CST ACoS"
+                    info="It displays the ACoS of certain customer search-term from your ad reports. "
+                />
+            ),
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
+            width: '120px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '120px',
         },
         {
-            title: <TitleInfo
-                title="Target ACoS"
-                info='The ACoS that our algorithm is aiming to reach your business goal.'
-            />,
+            title: (
+                <TitleInfo
+                    title="Target ACoS"
+                    info="The ACoS that our algorithm is aiming to reach your business goal."
+                />
+            ),
             dataIndex: 'targetACoS',
             key: 'targetACoS',
+            width: '110px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '110px',
         },
         {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
-            // width: '70px',
+            width: '70px',
             className: 'left-border',
             render: () => <div className="action-field">Created</div>
         },
@@ -86,24 +92,26 @@ const columns = {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConversionRate',
             key: 'averageConversionRate',
-            render: text => <span>{text && `${text}%`}</span>
-            // width: '120px',
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '120px'
         },
         {
-            title: <TitleInfo
-                title='CST Clicks'
-                info='It displays the number of clicks of certain customer search-term.'
-            />,
+            title: (
+                <TitleInfo
+                    title="CST Clicks"
+                    info="It displays the number of clicks of certain customer search-term."
+                />
+            ),
             dataIndex: 'CSTClicks',
-            key: 'CSTClicks'
-            // width: '110px',
+            key: 'CSTClicks',
+            width: '110px'
         },
 
         {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
-            // width: '70px',
+            width: '70px',
             className: 'left-border',
             render: () => <div className="action-field">Created</div>
         },
@@ -114,16 +122,16 @@ const columns = {
 };
 
 const NewNegativePats = ({
-                             data,
-                             onChangeSubTab,
-                             activeTab,
-                             currentPage,
-                             totalSize,
-                             handlePaginationChange,
-                             scroll
-                         }) => {
+    data,
+    onChangeSubTab,
+    activeTab,
+    currentPage,
+    totalSize,
+    handlePaginationChange,
+    scroll
+}) => {
     const [activeTable, changeTable] = useState(HighACoS);
-    const {count, loading, productId} = useSelector(state => ({
+    const { count, loading, productId } = useSelector(state => ({
         count: state.reports.counts['new-negative-pats'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
@@ -134,28 +142,36 @@ const NewNegativePats = ({
         changeTable(tab);
     };
 
+    // height report-item-table-btn
+    const refTableBtn = useRef(null);
+    const heightTabBtn = refTableBtn.current
+        ? refTableBtn.current.offsetHeight
+        : 0;
+
     useEffect(() => changeTable(HighACoS), [productId, activeTab]);
 
     return (
         <div className="report-item-table">
-            <TableButton
-                active={activeTable === HighACoS}
-                count={count[HighACoS]}
-                onClick={() => {
-                    onChange(HighACoS);
-                }}
-            >
-                Created Negative PAT From CST (High ACoS)
-            </TableButton>
-            <TableButton
-                active={activeTable === NoSales}
-                count={count[NoSales]}
-                onClick={() => {
-                    onChange(NoSales);
-                }}
-            >
-                Created Negative PAT From CST (No Sales)
-            </TableButton>
+            <div className="report-item-table-btn" ref={refTableBtn}>
+                <TableButton
+                    active={activeTable === HighACoS}
+                    count={count[HighACoS]}
+                    onClick={() => {
+                        onChange(HighACoS);
+                    }}
+                >
+                    Created Negative PAT From CST (High ACoS)
+                </TableButton>
+                <TableButton
+                    active={activeTable === NoSales}
+                    count={count[NoSales]}
+                    onClick={() => {
+                        onChange(NoSales);
+                    }}
+                >
+                    Created Negative PAT From CST (No Sales)
+                </TableButton>
+            </div>
 
             <CustomTable
                 onChangePagination={handlePaginationChange}
@@ -164,6 +180,7 @@ const NewNegativePats = ({
                 columns={columns[activeTable]}
                 currentPage={currentPage}
                 totalSize={totalSize}
+                heightTabBtn={heightTabBtn}
             />
         </div>
     );

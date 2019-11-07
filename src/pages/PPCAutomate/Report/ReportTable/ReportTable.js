@@ -299,9 +299,7 @@ class ReportTable extends Component {
                             <span>{todayChanges}</span>
                         </div>
 
-                        <DatePicker
-                            timeRange={this.timeRange}
-                        />
+                        <DatePicker timeRange={this.timeRange} />
 
                         <Button
                             className="download-btn"

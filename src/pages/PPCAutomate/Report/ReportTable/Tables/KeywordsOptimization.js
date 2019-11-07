@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
 import {
@@ -7,7 +7,7 @@ import {
     bidActionField,
     pauseKeywordsActionField
 } from './const';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 
 const changedKeywordBidAcos = 'changed-keyword-bid-acos';
@@ -53,18 +53,20 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
+            width: '132px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '132px',
         },
         {
-            title: <TitleInfo
-                title="Target ACoS"
-                info='The ACoS that our algorithm is aiming to reach your business goal.'
-            />,
+            title: (
+                <TitleInfo
+                    title="Target ACoS"
+                    info="The ACoS that our algorithm is aiming to reach your business goal."
+                />
+            ),
             dataIndex: 'targetACoS',
             key: 'targetACoS',
+            width: '130px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '130px',
         },
         {
             ...bidActionField
@@ -78,14 +80,16 @@ const columns = {
         {
             title: 'Impressions',
             dataIndex: 'impressions',
-            key: 'impressions'
-            // width: '132px',
+            key: 'impressions',
+            width: '132px'
         },
         {
-            title: <TitleInfo
-                title="Target Impressions"
-                info='The number of times your ads need to be displayed so you will get the click.'
-            />,
+            title: (
+                <TitleInfo
+                    title="Target Impressions"
+                    info="The number of times your ads need to be displayed so you will get the click."
+                />
+            ),
             dataIndex: 'targetImpressions',
             key: 'targetImpressions',
             width: '130px'
@@ -103,18 +107,20 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
+            width: '132px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '132px',
         },
         {
-            title: <TitleInfo
-                title="Target ACoS"
-                info='The ACoS that our algorithm is aiming to reach your business goal.'
-            />,
+            title: (
+                <TitleInfo
+                    title="Target ACoS"
+                    info="The ACoS that our algorithm is aiming to reach your business goal."
+                />
+            ),
             dataIndex: 'targetACoS',
             key: 'targetACoS',
+            width: '130px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '130px',
         },
         {
             ...pauseKeywordsActionField
@@ -129,14 +135,14 @@ const columns = {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConvRate',
             key: 'averageConvRate',
+            width: '132px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '132px',
         },
         {
             title: 'Clicks',
             dataIndex: 'clicks',
-            key: 'clicks'
-            // width: '120px',
+            key: 'clicks',
+            width: '120px'
         },
         {
             ...pauseKeywordsActionField
@@ -148,16 +154,16 @@ const columns = {
 };
 
 const KeywordsOptimization = ({
-                                  data,
-                                  onChangeSubTab,
-                                  activeTab,
-                                  currentPage,
-                                  totalSize,
-                                  handlePaginationChange,
-                                  scroll
-                              }) => {
+    data,
+    onChangeSubTab,
+    activeTab,
+    currentPage,
+    totalSize,
+    handlePaginationChange,
+    scroll
+}) => {
     const [activeTable, changeTable] = useState(changedKeywordBidAcos);
-    const {count, loading, productId} = useSelector(state => ({
+    const { count, loading, productId } = useSelector(state => ({
         count: state.reports.counts['keywords-optimization'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
@@ -168,11 +174,17 @@ const KeywordsOptimization = ({
         changeTable(tab);
     };
 
+    // height report-item-table-btn
+    const refTableBtn = useRef(null);
+    const heightTabBtn = refTableBtn.current
+        ? refTableBtn.current.offsetHeight
+        : 0;
+
     useEffect(() => changeTable(changedKeywordBidAcos), [productId, activeTab]);
 
     return (
         <div className="report-item-table">
-            <div>
+            <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
                     active={changedKeywordBidAcos === activeTable}
                     count={count[changedKeywordBidAcos]}
@@ -218,6 +230,7 @@ const KeywordsOptimization = ({
                 columns={columns[activeTable]}
                 currentPage={currentPage}
                 totalSize={totalSize}
+                heightTabBtn={heightTabBtn}
             />
         </div>
     );

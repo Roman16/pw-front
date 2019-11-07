@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {
     indexField,
@@ -8,7 +8,7 @@ import {
     pausePatActionField
 } from './const';
 import TableButton from '../TableButton/TableButton';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
@@ -33,10 +33,12 @@ const defaultKeys = [
         width: '150px'
     },
     {
-        title: <TitleInfo
-            title="PAT type"
-            info='The type of Product Targeting. It can be a Manual or Auto.'
-        />,
+        title: (
+            <TitleInfo
+                title="PAT type"
+                info="The type of Product Targeting. It can be a Manual or Auto."
+            />
+        ),
         dataIndex: 'PatType',
         key: 'PatType',
         width: '130px',
@@ -60,18 +62,20 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
+            width: '132px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '132px',
         },
         {
-            title: <TitleInfo
-                title="Target ACoS"
-                info='The ACoS that our algorithm is aiming to reach your business goal.'
-            />,
+            title: (
+                <TitleInfo
+                    title="Target ACoS"
+                    info="The ACoS that our algorithm is aiming to reach your business goal."
+                />
+            ),
             dataIndex: 'targetACoS',
             key: 'targetACoS',
+            width: '130px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '130px',
         },
         {
             ...bidActionField
@@ -85,23 +89,23 @@ const columns = {
         {
             title: 'Impressions',
             dataIndex: 'impressions',
-            key: 'impressions'
-            // width: '120px',
+            key: 'impressions',
+            width: '120px'
         },
         {
             title: (
                 <TitleInfo
                     title={
                         <span>
-                            Target <br/> Impressions
+                            Target <br /> Impressions
                         </span>
                     }
-                    info='The number of times your ads need to be displayed so you will get the click.'
+                    info="The number of times your ads need to be displayed so you will get the click."
                 />
             ),
             dataIndex: 'targetImpressions',
-            key: 'targetImpressions'
-            // width: '150px',
+            key: 'targetImpressions',
+            width: '150px'
         },
         {
             ...bidActionField
@@ -116,18 +120,20 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
+            width: '132px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '132px',
         },
         {
-            title: <TitleInfo
-                title="Target ACoS"
-                info='The ACoS that our algorithm is aiming to reach your business goal.'
-            />,
+            title: (
+                <TitleInfo
+                    title="Target ACoS"
+                    info="The ACoS that our algorithm is aiming to reach your business goal."
+                />
+            ),
             dataIndex: 'targetACoS',
             key: 'targetACoS',
+            width: '132px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '132px',
         },
         {
             ...pausePatActionField
@@ -142,14 +148,14 @@ const columns = {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConvRate',
             key: 'averageConvRate',
+            width: '132px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '132px',
         },
         {
             title: 'Clicks',
             dataIndex: 'clicks',
-            key: 'clicks'
-            // width: '132px',
+            key: 'clicks',
+            width: '132px'
         },
         {
             ...pausePatActionField
@@ -161,16 +167,16 @@ const columns = {
 };
 
 const PATsOptimization = ({
-                              data,
-                              onChangeSubTab,
-                              activeTab,
-                              currentPage,
-                              totalSize,
-                              handlePaginationChange,
-                              scroll
-                          }) => {
+    data,
+    onChangeSubTab,
+    activeTab,
+    currentPage,
+    totalSize,
+    handlePaginationChange,
+    scroll
+}) => {
     const [activeTable, changeTable] = useState(changedPATBidACoS);
-    const {count, loading, productId} = useSelector(state => ({
+    const { count, loading, productId } = useSelector(state => ({
         count: state.reports.counts['pats-optimization'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
@@ -181,46 +187,54 @@ const PATsOptimization = ({
         changeTable(tab);
     };
 
+    // height report-item-table-btn
+    const refTableBtn = useRef(null);
+    const heightTabBtn = refTableBtn.current
+        ? refTableBtn.current.offsetHeight
+        : 0;
+
     useEffect(() => changeTable(changedPATBidACoS), [productId, activeTab]);
 
     return (
         <div className="report-item-table">
-            <TableButton
-                active={activeTable === changedPATBidACoS}
-                count={count[changedPATBidACoS]}
-                onClick={() => {
-                    onChange(changedPATBidACoS);
-                }}
-            >
-                Changed PAT Bid (ACoS)
-            </TableButton>
-            <TableButton
-                active={activeTable === changedPATBidImpressions}
-                count={count[changedPATBidImpressions]}
-                onClick={() => {
-                    onChange(changedPATBidImpressions);
-                }}
-            >
-                Changed PAT Bid (Impressions)
-            </TableButton>
-            <TableButton
-                active={activeTable === pausedManualPATHighACoS}
-                count={count[pausedManualPATHighACoS]}
-                onClick={() => {
-                    onChange(pausedManualPATHighACoS);
-                }}
-            >
-                Paused Manual PAT (High ACoS)
-            </TableButton>
-            <TableButton
-                active={activeTable === pausedManualPatNoSales}
-                count={count[pausedManualPatNoSales]}
-                onClick={() => {
-                    onChange(pausedManualPatNoSales);
-                }}
-            >
-                Paused Manual Pat (No Sales)
-            </TableButton>
+            <div className="report-item-table-btn" ref={refTableBtn}>
+                <TableButton
+                    active={activeTable === changedPATBidACoS}
+                    count={count[changedPATBidACoS]}
+                    onClick={() => {
+                        onChange(changedPATBidACoS);
+                    }}
+                >
+                    Changed PAT Bid (ACoS)
+                </TableButton>
+                <TableButton
+                    active={activeTable === changedPATBidImpressions}
+                    count={count[changedPATBidImpressions]}
+                    onClick={() => {
+                        onChange(changedPATBidImpressions);
+                    }}
+                >
+                    Changed PAT Bid (Impressions)
+                </TableButton>
+                <TableButton
+                    active={activeTable === pausedManualPATHighACoS}
+                    count={count[pausedManualPATHighACoS]}
+                    onClick={() => {
+                        onChange(pausedManualPATHighACoS);
+                    }}
+                >
+                    Paused Manual PAT (High ACoS)
+                </TableButton>
+                <TableButton
+                    active={activeTable === pausedManualPatNoSales}
+                    count={count[pausedManualPatNoSales]}
+                    onClick={() => {
+                        onChange(pausedManualPatNoSales);
+                    }}
+                >
+                    Paused Manual Pat (No Sales)
+                </TableButton>
+            </div>
 
             <CustomTable
                 onChangePagination={handlePaginationChange}
@@ -229,6 +243,7 @@ const PATsOptimization = ({
                 columns={columns[activeTable]}
                 currentPage={currentPage}
                 totalSize={totalSize}
+                heightTabBtn={heightTabBtn}
             />
         </div>
     );
