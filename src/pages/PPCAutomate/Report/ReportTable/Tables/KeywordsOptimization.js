@@ -53,8 +53,8 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
+            width: '132px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '132px',
         },
         {
             title: (
@@ -65,8 +65,8 @@ const columns = {
             ),
             dataIndex: 'targetACoS',
             key: 'targetACoS',
+            width: '130px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '130px',
         },
         {
             ...bidActionField
@@ -80,8 +80,8 @@ const columns = {
         {
             title: 'Impressions',
             dataIndex: 'impressions',
-            key: 'impressions'
-            // width: '132px',
+            key: 'impressions',
+            width: '132px'
         },
         {
             title: (
@@ -107,8 +107,8 @@ const columns = {
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
+            width: '132px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '132px',
         },
         {
             title: (
@@ -119,8 +119,8 @@ const columns = {
             ),
             dataIndex: 'targetACoS',
             key: 'targetACoS',
+            width: '130px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '130px',
         },
         {
             ...pauseKeywordsActionField
@@ -135,14 +135,14 @@ const columns = {
             title: 'Average Conv. Rate',
             dataIndex: 'averageConvRate',
             key: 'averageConvRate',
+            width: '132px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '132px',
         },
         {
             title: 'Clicks',
             dataIndex: 'clicks',
-            key: 'clicks'
-            // width: '120px',
+            key: 'clicks',
+            width: '120px'
         },
         {
             ...pauseKeywordsActionField

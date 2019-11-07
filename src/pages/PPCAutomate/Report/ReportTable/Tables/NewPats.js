@@ -52,8 +52,8 @@ const columns = {
         {
             title: 'PAT Value',
             dataIndex: 'PatValue',
-            key: 'PatValue'
-            // width: '200px',
+            key: 'PatValue',
+            width: '200px'
         },
         {
             ...createdKeywordsActionField
@@ -94,15 +94,15 @@ const columns = {
         {
             title: 'PAT Value',
             dataIndex: 'PatValue',
-            key: 'PatValue'
-            // width: '150px',
+            key: 'PatValue',
+            width: '150px'
         },
         {
             title: 'Bid',
             dataIndex: 'bid',
             key: 'bid',
-            render: text => <span>${text}</span>
-            // width: '100px',
+            render: text => <span>${text}</span>,
+            width: '100px'
         },
         {
             title: (
@@ -112,8 +112,8 @@ const columns = {
                 />
             ),
             dataIndex: 'CSTClicks',
-            key: 'CSTClicks'
-            // width: '130px',
+            key: 'CSTClicks',
+            width: '130px'
         },
         {
             title: (
@@ -124,8 +124,8 @@ const columns = {
             ),
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
-            render: text => <span>{text && `${text}%`}</span>
-            // width: '120px',
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '120px'
         },
         {
             title: (
@@ -136,21 +136,21 @@ const columns = {
             ),
             dataIndex: 'CSTCPC',
             key: 'CSTCPC',
-            render: text => <span>${text}</span>
-            // width: '120px',
+            render: text => <span>${text}</span>,
+            width: '120px'
         },
         {
             title: 'Targe ACoS',
             dataIndex: 'TargetACoS',
             key: 'TargetACoS',
-            render: text => <span>{text && `${text}%`}</span>
-            // width: '100px',
+            render: text => <span>{text && `${text}%`}</span>,
+            width: '100px'
         },
         {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
-            // width: '60px',
+            width: '60px',
             className: 'left-border',
             render: () => <div className="action-field">Created</div>
         },

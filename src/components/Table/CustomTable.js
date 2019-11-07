@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import '../../pages/PPCAutomate/Report/ReportTable/Tables/CustomTable.less';
 import { Pagination, Spin } from 'antd';
 
@@ -12,35 +12,92 @@ const CustomTable = ({
 }) => {
     const heightScreen = window.innerHeight;
 
-    return (
-        <div className="custom-reports-table">
-            <table className="table">
-                <thead className="table-head">
-                    <tr className="table-head__row">
-                        {columns.map(item => (
-                            <th
-                                className="th"
-                                key={item.key}
-                                style={
-                                    item.width
-                                        ? { width: item.width }
-                                        : { flex: 1 }
-                                }
-                            >
-                                {item.title}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
+    const refTable = useRef(null);
+    const widthTab = refTable.current ? refTable.current.offsetWidth : 0;
+    useEffect(() => {
+        const width = refTable.current ? refTable.current.offsetWidth : 0;
+        console.log('width', width);
+    }, []);
+    console.log('widthTab', widthTab);
 
-                <tbody className="table-body">
+    return (
+        <div className="custom-reports-table" ref={refTable}>
+            {/* <div className="table-overflow">
+                <table className="table" ref={refTable}>
+                    <thead
+                        className="table-head"
+                        style={{ width: `${widthTab}px` }}
+                    >
+                        <tr className="table-head__row">
+                            {columns.map(item => (
+                                <th
+                                    className="th"
+                                    key={item.key}
+                                    style={
+                                        item.width
+                                            ? { width: item.width }
+                                            : { flex: 1 }
+                                    }
+                                >
+                                    {item.title}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+
+                    <tbody className="table-body">
+                        {!loading ? (
+                            dataSource &&
+                            dataSource.length > 0 &&
+                            dataSource.map(report => (
+                                <tr className="table-body__row">
+                                    {columns.map(item => (
+                                        <td
+                                            className="table-body__field"
+                                            style={
+                                                item.width
+                                                    ? { width: item.width }
+                                                    : { flex: 1 }
+                                            }
+                                            key={item.key}
+                                        >
+                                            {item.render
+                                                ? item.render(report[item.key])
+                                                : report[item.key]}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))
+                        ) : (
+                            <Spin size="large" />
+                        )}
+                    </tbody>
+                </table>
+            </div> */}
+
+            <div className="table-overflow">
+                <div className="table-head">
+                    {columns.map(item => (
+                        <div
+                            className="th"
+                            key={item.key}
+                            style={
+                                item.width ? { width: item.width } : { flex: 1 }
+                            }
+                        >
+                            {item.title}
+                        </div>
+                    ))}
+                </div>
+
+                <div className="table-body">
                     {!loading ? (
                         dataSource &&
                         dataSource.length > 0 &&
                         dataSource.map(report => (
-                            <tr className="table-body__row">
+                            <div className="table-body__row">
                                 {columns.map(item => (
-                                    <td
+                                    <div
                                         className="table-body__field"
                                         style={
                                             item.width
@@ -50,43 +107,22 @@ const CustomTable = ({
                                         key={item.key}
                                     >
                                         {item.render
-                                            ? item.render(report[item.key])
+                                            ? item.render(
+                                                  report[item.key],
+                                                  report
+                                              )
                                             : report[item.key]}
-                                    </td>
+                                    </div>
                                 ))}
-                            </tr>
+                            </div>
                         ))
                     ) : (
                         <Spin size="large" />
                     )}
-                </tbody>
-            </table>
+                </div>
+            </div>
 
-            {/*<table>*/}
-            {/*    <thead>*/}
-            {/*    {columns.map(item => (*/}
-            {/*        <th*/}
-            {/*            key={item.key}*/}
-            {/*            style={{width: item.width}}>{item.title}</th>*/}
-            {/*    ))}*/}
-            {/*    </thead>*/}
-
-            {/*    <tbody style={{height: `${heightScreen - 400}px`}}>*/}
-            {/*    {dataSource.length > 0 && dataSource.map(report => (*/}
-            {/*        <tr className='table-body__row' key={report.id}>*/}
-            {/*            {columns.map(item => (*/}
-            {/*                <td className='table-body__field'*/}
-            {/*                    style={{width: item.width}}*/}
-            {/*                    key={item.key}*/}
-            {/*                >*/}
-            {/*                    {item.render ? item.render(report[item.key]) : report[item.key]}*/}
-            {/*                </td>*/}
-            {/*            ))}*/}
-            {/*        </tr>*/}
-            {/*    ))}*/}
-            {/*    </tbody>*/}
-            {/*</table>*/}
-            {totalSize > 8 && (
+            {totalSize > 100000 && (
                 <Pagination
                     defaultCurrent={1}
                     pageSize={10}

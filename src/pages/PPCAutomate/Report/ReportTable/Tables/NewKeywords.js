@@ -99,14 +99,14 @@ const columns = {
         {
             title: 'ASIN',
             dataIndex: 'asin',
-            key: 'asin'
-            // width: '200px',
+            key: 'asin',
+            width: '200px'
         },
         {
             title: 'SKU',
             dataIndex: 'sku',
-            key: 'sku'
-            // width: '200px',
+            key: 'sku',
+            width: '200px'
         },
         {
             title: 'Action',
@@ -137,8 +137,8 @@ const columns = {
         {
             title: 'Keyword',
             dataIndex: 'keyword',
-            key: 'keyword'
-            // width: '360px',
+            key: 'keyword',
+            width: '360px'
         },
         {
             ...createdKeywordsActionField
@@ -216,7 +216,7 @@ const columns = {
             width: '100px'
         },
         {
-            title: 'Targe ACoS',
+            title: 'Target ACoS',
             dataIndex: 'targetACoS',
             key: 'targetACoS',
             render: text => <span>{text && `${text}%`}</span>,

@@ -47,8 +47,8 @@ const columns = {
             ),
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
+            width: '160px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '160px',
         },
         {
             title: (
@@ -59,14 +59,14 @@ const columns = {
             ),
             dataIndex: 'targetACoS',
             key: 'targetACoS',
+            width: '160px',
             render: text => <span>{text && `${text}%`}</span>
-            // width: '160px',
         },
         {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
-            // width: '100px',
+            width: '100px',
             className: 'left-border',
             render: () => <div className="action-field">Created</div>
         },
@@ -79,8 +79,8 @@ const columns = {
         {
             title: 'Average Conversion Rate',
             dataIndex: 'averageConversionRate',
-            key: 'averageConversionRate'
-            // width: '180px',
+            key: 'averageConversionRate',
+            width: '180px'
         },
         {
             title: (
@@ -90,14 +90,14 @@ const columns = {
                 />
             ),
             dataIndex: 'CSTClicks',
-            key: 'CSTClicks'
-            // width: '160px',
+            key: 'CSTClicks',
+            width: '160px'
         },
         {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
-            // width: '100px',
+            width: '100px',
             className: 'left-border',
             render: () => <div className="action-field">Created</div>
         },

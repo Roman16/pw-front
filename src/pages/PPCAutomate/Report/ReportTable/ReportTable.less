@@ -79,8 +79,7 @@
         .ant-tabs-top-content {
             height: 95%;
 
-            .ant-tabs-tabpane-active,
-            .ReportItemTable {
+            .ant-tabs-tabpane-active {
                 height: 100%;
             }
         }
@@ -190,18 +189,22 @@
         border-radius: 8px;
 
         .report-item-table-btn {
-            height: 110px;
-            padding: 0 10px;
+            // height: 110px;
+            padding: 20px 20px 0;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
+            justify-content: flex-start;
             align-items: center;
             // display: grid;
             // grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
             // grid-auto-flow: row;
 
+            .TableButton {
+                margin-bottom: 20px;
+            }
+
             .TableButton:not(:last-child) {
-                margin-right: 10px;
+                margin-right: 20px;
             }
         }
 
