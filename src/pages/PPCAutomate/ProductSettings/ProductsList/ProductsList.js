@@ -27,7 +27,7 @@ class ProductsList extends Component {
 
         totalSize: 0,
         page: 1,
-        size: 5,
+        size: 10,
         onlyActive: false
     };
 
