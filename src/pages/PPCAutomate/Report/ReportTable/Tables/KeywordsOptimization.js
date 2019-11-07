@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
 import {
@@ -169,6 +169,13 @@ const KeywordsOptimization = ({
         productId: state.products.selectedProduct.id
     }));
 
+    // height
+    const refTableBtn = useRef(null);
+    const heightTabBtn = refTableBtn.current
+        ? refTableBtn.current.offsetHeight
+        : 0;
+    console.log('heightTabBtn', heightTabBtn);
+
     const onChange = tab => {
         onChangeSubTab(tab);
         changeTable(tab);
@@ -178,7 +185,7 @@ const KeywordsOptimization = ({
 
     return (
         <div className="report-item-table">
-            <div className="report-item-table-btn">
+            <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
                     active={changedKeywordBidAcos === activeTable}
                     count={count[changedKeywordBidAcos]}
@@ -224,6 +231,7 @@ const KeywordsOptimization = ({
                 columns={columns[activeTable]}
                 currentPage={currentPage}
                 totalSize={totalSize}
+                heightTabBtn={heightTabBtn}
             />
         </div>
     );
