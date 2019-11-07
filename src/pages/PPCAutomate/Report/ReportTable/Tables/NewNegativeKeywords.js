@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
 import { indexField, infoField, negativeMatchTypeField } from './const';
@@ -128,11 +128,17 @@ const NewNegativeKeywords = ({
         changeTable(tab);
     };
 
+    // height report-item-table-btn
+    const refTableBtn = useRef(null);
+    const heightTabBtn = refTableBtn.current
+        ? refTableBtn.current.offsetHeight
+        : 0;
+
     useEffect(() => changeTable(highACoS), [productId, activeTab]);
 
     return (
         <div className="report-item-table">
-            <div className="report-item-table-btn">
+            <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
                     active={activeTable === highACoS}
                     count={count[highACoS]}
@@ -160,6 +166,7 @@ const NewNegativeKeywords = ({
                 columns={columns[activeTable]}
                 currentPage={currentPage}
                 totalSize={totalSize}
+                heightTabBtn={heightTabBtn}
             />
         </div>
     );

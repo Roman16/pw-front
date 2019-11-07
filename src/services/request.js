@@ -46,7 +46,7 @@ const api = (method, url, data, type) => {
                         } else {
                             notification.error({
                                 title: error.response.data
-                                    ? error.response.data.message
+                                    ? (error.response.data.message ? error.response.data.message : error.response.data.error)
                                     : ''
                                 // description: error.response.data.message,
                             });

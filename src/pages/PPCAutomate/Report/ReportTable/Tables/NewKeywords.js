@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import moment from 'moment';
 import TableButton from '../TableButton/TableButton';
 import { indexField, createdKeywordsActionField, infoField } from './const';
@@ -257,11 +257,17 @@ const NewKeywords = ({
         changeTable(tab);
     };
 
+    // height report-item-table-btn
+    const refTableBtn = useRef(null);
+    const heightTabBtn = refTableBtn.current
+        ? refTableBtn.current.offsetHeight
+        : 0;
+
     useEffect(() => changeTable(createdCampaign), [productId, activeTab]);
 
     return (
         <div className="report-item-table">
-            <div className="report-item-table-btn">
+            <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
                     active={createdCampaign === activeTable}
                     count={count[createdCampaign]}
@@ -316,6 +322,7 @@ const NewKeywords = ({
                 columns={columns[activeTable]}
                 currentPage={currentPage}
                 totalSize={totalSize}
+                heightTabBtn={heightTabBtn}
             />
         </div>
     );

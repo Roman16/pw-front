@@ -1,20 +1,27 @@
 import React from "react";
 import './ProductBreakdown.less';
 import ProductsList from "./ProductsList";
+import {Switch} from "antd";
 
 const ProductBreakdown = () => {
 
-    return(
+    return (
         <div className='product-breakdown'>
             <div className="title">
-                Product Breakdown
+               <span> Product Breakdown</span>
 
-                <button className='btn default'>
-                    Show All Products Under Optimization
-                </button>
+                <div className='switch-block'>
+                    Show only Active Listings on Amazon
+
+                    <Switch
+                        // onChange={this.handleChangeSwitch}
+                    />
+                </div>
             </div>
 
-            <ProductsList />
+            <div>
+                <ProductsList/>
+            </div>
         </div>
     )
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import { indexField, patIntentField, infoField } from './const';
 import TableButton from '../TableButton/TableButton';
@@ -142,11 +142,17 @@ const NewNegativePats = ({
         changeTable(tab);
     };
 
+    // height report-item-table-btn
+    const refTableBtn = useRef(null);
+    const heightTabBtn = refTableBtn.current
+        ? refTableBtn.current.offsetHeight
+        : 0;
+
     useEffect(() => changeTable(HighACoS), [productId, activeTab]);
 
     return (
         <div className="report-item-table">
-            <div className="report-item-table-btn">
+            <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
                     active={activeTable === HighACoS}
                     count={count[HighACoS]}
@@ -174,6 +180,7 @@ const NewNegativePats = ({
                 columns={columns[activeTable]}
                 currentPage={currentPage}
                 totalSize={totalSize}
+                heightTabBtn={heightTabBtn}
             />
         </div>
     );

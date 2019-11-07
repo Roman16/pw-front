@@ -9,6 +9,8 @@ import NotificationContainer from './components/Notification/NotificationContain
 
 import {PersistGate} from 'redux-persist/integration/react'
 
+
+
 function App() {
     return (
         <Provider store={store}>

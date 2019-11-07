@@ -1,6 +1,8 @@
-import React, { useRef, useEffect } from 'react';
-import '../../pages/PPCAutomate/Report/ReportTable/Tables/CustomTable.less';
+import React from 'react';
 import { Pagination, Spin } from 'antd';
+import shortid from 'shortid';
+
+import '../../pages/PPCAutomate/Report/ReportTable/Tables/CustomTable.less';
 
 const CustomTable = ({
     columns,
@@ -11,20 +13,9 @@ const CustomTable = ({
     loading,
     heightTabBtn
 }) => {
-    const heightScreen = window.innerHeight;
-
-    // const refTable = useRef(null);
-    // const widthTab = refTable.current ? refTable.current.offsetWidth : 0;
-    // useEffect(() => {
-    //     const width = refTable.current ? refTable.current.offsetWidth : 0;
-    //     console.log('width', width);
-    // }, []);
-    // console.log('widthTab', widthTab);
-
     return (
         <div
             className="custom-reports-table"
-            //  ref={refTable}
             style={{ height: `calc(100% - ${heightTabBtn}px` }}
         >
             <div className="table-overflow">
@@ -32,7 +23,7 @@ const CustomTable = ({
                     {columns.map(item => (
                         <div
                             className="th"
-                            key={item.key}
+                            key={shortid.generate()}
                             style={
                                 item.width ? { width: item.width } : { flex: 1 }
                             }
@@ -47,7 +38,10 @@ const CustomTable = ({
                         dataSource &&
                         dataSource.length > 0 &&
                         dataSource.map(report => (
-                            <div className="table-body__row">
+                            <div
+                                className="table-body__row"
+                                key={shortid.generate()}
+                            >
                                 {columns.map(item => (
                                     <div
                                         className="table-body__field"
@@ -56,7 +50,7 @@ const CustomTable = ({
                                                 ? { width: item.width }
                                                 : { flex: 1 }
                                         }
-                                        key={item.key}
+                                        key={shortid.generate()}
                                     >
                                         {item.render
                                             ? item.render(

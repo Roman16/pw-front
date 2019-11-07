@@ -49,6 +49,7 @@ const Sidebar = () => {
         dispatch(userActions.getAuthorizedUserInfo());
     }, [dispatch, width]);
 
+
     return (
         <div className={className}>
             <div className="sidebar-header">

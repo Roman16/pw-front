@@ -1,3 +1,4 @@
+
 .metric-item {
   display: flex;
   flex-direction: column;
@@ -20,6 +21,10 @@
     .anticon {
       color: #656A84;
       opacity: 1;
+      margin: 0 0 0 8px;
+    }
+
+    img.warning-icon {
       margin: 0 0 0 8px;
     }
   }
@@ -99,18 +104,22 @@
           margin: 0 0 0 5px;
         }
       }
+
       .upward-changes {
         background: #8FD39D;
         color: #fff;
       }
+
       .up-changes {
         background: rgba(143, 211, 157, 0.2);
         color: #8FD39D;
       }
+
       .down-changes {
         background: rgba(201, 203, 212, 0.2);
         color: #656A84;
       }
+
       .downward-changes {
         background: #656A84;
         color: #fff;
@@ -267,3 +276,97 @@
     }
   }
 }
+
+//-------------------------------------
+/*Retina CSS */
+//-------------------------------------
+@media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+
+  .metric-item {
+    height: 75px;
+    padding: 6px 9px;
+
+    .title-info {
+      font-size: 10px;
+      letter-spacing: -0.05px;
+
+      .close img {
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    .metric-item__changes {
+      & > div {
+        height: 12px;
+        font-size: 10px;
+
+        img {
+          height: 8px;
+        }
+      }
+    }
+
+    .metric-item__description {
+      .value {
+        font-size: 15px;
+        line-height: 15px;
+      }
+
+      .label {
+        font-size: 7px;
+      }
+    }
+  }
+
+  .metrics-block {
+    .metric-item {
+      .metric-item();
+    }
+
+    .add-metric {
+      .add-metric__button {
+        height: 75px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .metrics-modal {
+    .ant-modal-header {
+      padding: 40px 0 25px 0;
+
+      .ant-modal-title {
+        font-size: 15px;
+      }
+    }
+
+    .ant-modal-body {
+      padding: 15px 40px;
+
+      .visible-list {
+        .default-visible-item {
+          width: 12%;
+          height: 75px;
+          font-size: 10px;
+        }
+
+        .metric-item {
+          .metric-item();
+
+          width: 12%;
+          height: 75px;
+        }
+      }
+    }
+
+    .ant-modal-footer {
+      button {
+        height: 30px;
+        font-size: 10px;
+      }
+    }
+  }
+
+}
+

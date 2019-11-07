@@ -1,15 +1,26 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import Sidebar from '../components/Sidebar/Sidebar';
 
-const AuthorizedUser = props => {
-    return (
-        <div className="main-pages">
-            <Sidebar />
+class AuthorizedUser extends Component {
+    componentDidMount() {
+        let badge = document.querySelector('.grecaptcha-badge');
+        badge && badge.classList.add('hide-badge');
+    }
+    componentWillUnmount() {
+        let badge = document.querySelector('.grecaptcha-badge');
+        badge && badge.classList.remove('hide-badge');
+    }
 
-            <div className="main-container">{props.children}</div>
-        </div>
-    );
+    render() {
+        return (
+            <div className="main-pages">
+                <Sidebar />
+
+                <div className="main-container">{this.props.children}</div>
+            </div>
+        );
+    }
 };
 
 export default AuthorizedUser;

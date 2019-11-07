@@ -3,7 +3,7 @@ import React from "react";
 const ChartHeader = () => {
     return (
         <div className="chart-header">
-            header chart
+           <div className='pair-name'> Clicks / CTR</div>
         </div>
     )
 };

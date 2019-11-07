@@ -169,17 +169,16 @@ const KeywordsOptimization = ({
         productId: state.products.selectedProduct.id
     }));
 
-    // height
-    const refTableBtn = useRef(null);
-    const heightTabBtn = refTableBtn.current
-        ? refTableBtn.current.offsetHeight
-        : 0;
-    console.log('heightTabBtn', heightTabBtn);
-
     const onChange = tab => {
         onChangeSubTab(tab);
         changeTable(tab);
     };
+
+    // height report-item-table-btn
+    const refTableBtn = useRef(null);
+    const heightTabBtn = refTableBtn.current
+        ? refTableBtn.current.offsetHeight
+        : 0;
 
     useEffect(() => changeTable(changedKeywordBidAcos), [productId, activeTab]);
 
