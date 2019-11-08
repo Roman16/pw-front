@@ -1,31 +1,21 @@
-import React, {useState} from "react";
-import {Modal} from "antd";
-import metricsList from "../metricsList";
+import React from "react";
+
 import ModalMetricItem from './ModalMetricItem';
+import ModalWindow from "../../../../../components/ModalWindow/ModalWindow";
 
-const AddMetricModal = ({visibleModal, handleOk, handleCancel}) => {
-    const [visibleItems, updateVisibleList] = useState([]);
-    const [hiddenItems, updateHiddenList] = useState(metricsList);
-
-    const addMetric = (item) => {
-        updateVisibleList([...visibleItems, item]);
-        updateHiddenList([...hiddenItems.filter((hiddenMetric) => hiddenMetric.key !== item.key)]);
-    };
-
-    const removeMetric = (item) => {
-        updateVisibleList([...visibleItems.filter((visibleMetric) => visibleMetric.key !== item.key)]);
-        updateHiddenList([...hiddenItems, item]);
-    };
-
+const AddMetricModal = ({visibleModal, handleOk, handleCancel, addMetric, removeMetric, visibleItems, hiddenItems}) => {
     return (
-        <Modal
+        <ModalWindow
             className='metrics-modal'
-            title='Add Metric'
             visible={visibleModal}
-            onOk={handleOk}
-            onCancel={handleCancel}
+            handleOk={handleOk}
+            handleCancel={handleCancel}
             okText='Confirm'
         >
+            <div className='modal-title'>
+                Add Metric
+            </div>
+
             <div className='visible-list'>
                 {visibleItems.length > 0 ? visibleItems.map((item) => (
                         <ModalMetricItem
@@ -51,7 +41,7 @@ const AddMetricModal = ({visibleModal, handleOk, handleCancel}) => {
                     />
                 ))}
             </div>
-        </Modal>
+        </ModalWindow>
     )
 };
 

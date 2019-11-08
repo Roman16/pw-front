@@ -1,22 +1,38 @@
-import React, {useState} from 'react';
-
-import metricsList from './metricsList';
+import React, {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {dashboardActions} from '../../../../actions/dashboard.actions';
+import {metricsListObject} from './metricsList';
 import MetricItem from './MetricItem';
 import AddMetric from './AddMetric/AddMetric';
 
 import './Metrics.less';
 
 const Metrics = () => {
-    const [metrics, changeMetricsList] = useState(metricsList);
+    const dispatch = useDispatch();
+    const {selectedMetrics} = useSelector(state => ({
+        selectedMetrics: state.dashboard.selectedMetrics
+    }));
+
+    const [metrics, changeMetricsList] = useState(selectedMetrics);
+
+    const removeSelectedMetric = (metric) => {
+        dispatch(dashboardActions.removeSelectedMetric(metric))
+    };
+
+    useEffect(() => {
+        changeMetricsList(selectedMetrics)
+    }, [selectedMetrics]);
 
     return (
         <div className="metrics-block">
-            {metrics.map(metric => (
+            {metrics.length > 0 && metrics.map(selected => (
                 <MetricItem
-                    key={metric.key}
-                    metric={metric}
+                    key={selected.key}
+                    removeSelectedMetric={removeSelectedMetric}
+                    metric={metricsListObject[selected.key]}
                 />
             ))}
+
 
             {metrics.length < 16 && <AddMetric/>}
         </div>

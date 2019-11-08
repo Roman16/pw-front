@@ -1,7 +1,8 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
+import {useSelector} from "react-redux";
 
 const data = [
     {
@@ -47,106 +48,113 @@ const data2 = [
         name: 'Jun 6', uv: 1550, cnt: 1510
     },
     {
-        name: 'Jun 7', uv: 1350,  cnt: 1310
+        name: 'Jun 7', uv: 1350, cnt: 1310
     },
 ];
 
 
-class Chart extends PureComponent {
-    render() {
-        return (
-            <ResponsiveContainer height={400} width='100%'>
+const Chart = () => {
+    const {showWeekChart, showDailyChart} = useSelector(state => ({
+        showWeekChart: state.dashboard.showWeekChart,
+        showDailyChart: state.dashboard.showDailyChart,
+    }));
 
-                <LineChart
-                    data={data}
-                >
-                    <CartesianGrid
-                        vertical={false}
-                        stroke="#DBDCE2"
-                    />
+    return (
+        <ResponsiveContainer height={400} width='100%'>
 
-                    <XAxis
-                        dataKey="name"
-                        axisLine={false}
-                    />
+            <LineChart
+                data={data}
+            >
+                <CartesianGrid
+                    vertical={false}
+                    stroke="#DBDCE2"
+                />
 
-                    <YAxis
-                        yAxisId="left"
-                        axisLine={false}
-                    />
+                <XAxis
+                    dataKey="name"
+                    axisLine={false}
+                />
 
-                    <YAxis
-                        yAxisId="right"
-                        orientation="right"
-                        axisLine={false}
-                    />
+                <YAxis
+                    yAxisId="left"
+                    axisLine={false}
+                />
 
-                    <Tooltip/>
+                <YAxis
+                    yAxisId="right"
+                    orientation="right"
+                    axisLine={false}
+                />
 
-                    {/*<Legend verticalAlign="top" align='right' height={36}/>*/}
+                <Tooltip/>
 
-                    <Line
-                        yAxisId="left"
-                        type="monotone"
-                        dataKey="Clicks"
-                        stroke="#8884d8"
-                        strokeWidth={3}
-                        dot={false}
-                    />
-
-                    <Line
-                        yAxisId='left'
-                        type="linear"
-                        strokeOpacity={0.5}
-                        dataKey="uv"
-                        strokeWidth={2}
-                        stroke="#8FD39D"
-                        activeDot={{r: 8}}
-                    />
-
-                    <Line
-                        yAxisId="right"
-                        type="monotone"
-                        dataKey="CTR"
-                        stroke="#82ca9d"
-                        strokeWidth={3}
-                        dot={false}
-                    />
-
-                    <Line
-                        yAxisId='left'
-                        type="linear"
-                        strokeOpacity={0.5}
-                        dataKey="cnt"
-                        strokeWidth={2}
-                        stroke="#6D6DF6"
-                        activeDot={{r: 8}}
-                    />
-
-                    {/*<Line*/}
-                    {/*    yAxisId="right"*/}
-                    {/*    type="monotone"*/}
-                    {/*    dataKey="uv"*/}
-                    {/*    stroke="#82ca9d"*/}
-                    {/*    strokeWidth={3}*/}
-                    {/*    dot={false}*/}
-                    {/*/>*/}
-
-                    {/*<Line*/}
-                    {/*    yAxisId='left'*/}
-                    {/*    type="monotone"*/}
-                    {/*    strokeOpacity={0.1}*/}
-                    {/*    dataKey="cnt"*/}
-                    {/*    strokeWidth={5}*/}
-                    {/*    stroke="#82ca9d"*/}
-                    {/*    dot={false}*/}
-                    {/*/>*/}
+                {/*<Legend verticalAlign="top" align='right' height={36}/>*/}
 
 
-                </LineChart>
-            </ResponsiveContainer>
-        );
-    }
-}
+                {showWeekChart && <Line
+                    yAxisId="left"
+                    type="monotone"
+                    dataKey="Clicks"
+                    stroke="#8884d8"
+                    strokeWidth={3}
+                    dot={false}
+                />}
+
+                {showWeekChart && <Line
+                    yAxisId="left"
+                    type="monotone"
+                    dataKey="CTR"
+                    stroke="#82ca9d"
+                    strokeWidth={3}
+                    dot={false}
+                />}
+
+                {showDailyChart && <Line
+                    yAxisId='left'
+                    type="linear"
+                    strokeOpacity={0.5}
+                    dataKey="uv"
+                    strokeWidth={2}
+                    stroke="#8FD39D"
+                    activeDot={{r: 8}}
+                    dot={{r: 5}}
+                />}
+
+
+                {showDailyChart && <Line
+                    yAxisId='left'
+                    type="linear"
+                    strokeOpacity={0.5}
+                    dataKey="cnt"
+                    strokeWidth={2}
+                    stroke="#6D6DF6"
+                    activeDot={{r: 8}}
+                    dot={{r: 5}}
+                />}
+
+                {/*<Line*/}
+                {/*    yAxisId="right"*/}
+                {/*    type="monotone"*/}
+                {/*    dataKey="uv"*/}
+                {/*    stroke="#82ca9d"*/}
+                {/*    strokeWidth={3}*/}
+                {/*    dot={false}*/}
+                {/*/>*/}
+
+                {/*<Line*/}
+                {/*    yAxisId='left'*/}
+                {/*    type="monotone"*/}
+                {/*    strokeOpacity={0.1}*/}
+                {/*    dataKey="cnt"*/}
+                {/*    strokeWidth={5}*/}
+                {/*    stroke="#82ca9d"*/}
+                {/*    dot={false}*/}
+                {/*/>*/}
+
+
+            </LineChart>
+        </ResponsiveContainer>
+    );
+};
 
 export default Chart;

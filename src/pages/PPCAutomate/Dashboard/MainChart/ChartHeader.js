@@ -1,17 +1,33 @@
 import React from "react";
+import {useDispatch, useSelector} from 'react-redux';
+import {dashboardActions} from '../../../../actions/dashboard.actions';
 import {Switch} from "antd";
 import dailyLineIcon from '../../../../assets/img/icons/daily-line.svg';
 
 import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
 
 const ChartHeader = () => {
+    const dispatch = useDispatch();
+    const {showWeekChart, showDailyChart} = useSelector(state => ({
+        showWeekChart: state.dashboard.showWeekChart,
+        showDailyChart: state.dashboard.showDailyChart,
+    }));
+
+    const handleChangeSwitch = (type) => (value) => {
+        console.log(type);
+        console.log(value);
+
+        dispatch(dashboardActions.switchChart(type))
+    };
+
     return (
         <div className="chart-header">
             <div className='pair-name'> Clicks / CTR</div>
 
-            <div className='switch-block weak-switch'>
+            <div className='switch-block week-switch'>
                 <Switch
-                    // onChange={this.handleChangeSwitch}
+                    checked={showWeekChart}
+                    onChange={handleChangeSwitch('week')}
                 />
 
                 7-day average
@@ -24,7 +40,8 @@ const ChartHeader = () => {
 
             <div className='switch-block daily-switch'>
                 <Switch
-                    // onChange={this.handleChangeSwitch}
+                    checked={showDailyChart}
+                    onChange={handleChangeSwitch('daily')}
                 />
 
                 Daily

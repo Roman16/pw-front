@@ -1,5 +1,4 @@
 import React from "react";
-
 import Tooltip from '../../../../components/Tooltip/Tooltip'
 
 import closeIcon from '../../../../assets/img/icons/close.svg';
@@ -8,48 +7,51 @@ import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arr
 import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
 import downWhiteIcon from '../../../../assets/img/icons/metric-arrows/down-white-arrow.svg';
 
-const MetricItem = ({metric: {title, info, key}}) => (
-    <div className='metric-item'>
-        <div className="title-info">
-            {title}
-            {key === 'profit' ?
-                <Tooltip type='warning'/>
-                :
-                <Tooltip description={title}/>
-            }
+const MetricItem = ({metric: {title, info, key, label, type, active}, metric, removeSelectedMetric}) => {
+    return (
+        <div className={active ? 'metric-item active-metric' : 'metric-item'}>
+            {/*<div className='active-metric'></div>*/}
 
+            <div className="title-info">
+                {title}
+                {key === 'profit' ?
+                    <Tooltip type='warning'/>
+                    :
+                    <Tooltip description={title}/>
+                }
 
-            <div className="close">
-                <img src={closeIcon} alt=""/>
+                <div className="close" onClick={() => removeSelectedMetric(metric)}>
+                    <img src={closeIcon} alt=""/>
+                </div>
+            </div>
+
+            <div className='metric-item__changes'>
+                {key === 'ctr' && <div className='upward-changes'>
+                    +30.8%
+                    <img src={upWhiteIcon} alt=""/>
+                </div>}
+                {key === 'impressions' && <div className='up-changes'>
+                    +10.8%
+                    <img src={upGreenIcon} alt=""/>
+                </div>}
+                {key === 'clicks' && <div className='down-changes'>
+                    -12.8%
+                    <img src={downBlackIcon} alt=""/>
+                </div>}
+                {key === 'spend' && <div className='downward-changes'>
+                    -25.8%
+                    <img src={downWhiteIcon} alt=""/>
+                </div>}
+            </div>
+
+            <div className='metric-item__description'>
+                <div className="value">
+                    {type === 'currency' ? `$7,507` : (type === 'percent' ? `18%` : '7,564')}
+                </div>
+                <div className='label'>{label}</div>
             </div>
         </div>
-
-        <div className='metric-item__changes'>
-            {key === 'ctr' && <div className='upward-changes'>
-                +30.8%
-                <img src={upWhiteIcon} alt=""/>
-            </div>}
-            {key === 'impressions' && <div className='up-changes'>
-                +10.8%
-                <img src={upGreenIcon} alt=""/>
-            </div>}
-            {key === 'clicks' && <div className='down-changes'>
-                -12.8%
-                <img src={downBlackIcon} alt=""/>
-            </div>}
-            {key === 'spend' && <div className='downward-changes'>
-                -25.8%
-                <img src={downWhiteIcon} alt=""/>
-            </div>}
-        </div>
-
-        <div className='metric-item__description'>
-            <div className="value">
-                7,503,768
-            </div>
-            <div className='label'>Total</div>
-        </div>
-    </div>
-);
+    )
+};
 
 export default MetricItem;

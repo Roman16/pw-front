@@ -33,6 +33,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    flex-wrap: wrap;
 
     .value {
       font-family: ir;
@@ -67,13 +68,23 @@
 .metrics-block {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
+  align-content: flex-start;
+
+  .metric-item:nth-child(3) {
+    border-top: 3px solid #8FD39D;
+  }
+
+  .metric-item:nth-child(5) {
+    border-top: 3px solid #6D6DF6;
+  }
 
   .metric-item {
     .metric-item();
+    margin-right: .5%;
 
-    &:nth-child(10n - 2) {
+    &:nth-child(8n + 8) {
       margin-right: 0 !important;
     }
 
@@ -171,51 +182,19 @@
   }
 }
 
+
 .metrics-modal {
-  width: 70vw !important;
-  max-width: 1170px;
-
-  .ant-modal-close {
-    display: none;
-  }
-
-  .ant-modal-header {
+  .modal-title {
     border: 0;
     text-align: center;
-    padding: 65px 0 40px 0;
+    padding: 65px 0;
 
-    .ant-modal-title {
-      font-family: ir;
-      font-size: 20px;
-      letter-spacing: -0.06px;
-      color: #363694;
-    }
-  }
-
-  .ant-modal-footer {
-    border: 0;
-    padding-bottom: 45px;
-
-    button {
-      width: 120px;
-      height: 40px;
-      border-radius: 8px;
-      margin: 0 0 0 24px;
-      border: 0;
-
-      &:first-child {
-        background: #F5F5FF;
-      }
-
-      &:last-child {
-        background: #6D6DF6;
-      }
-    }
+    font-size: 20px;
+    letter-spacing: -0.06px;
+    color: #363694;
   }
 
   .ant-modal-body {
-    padding: 25px 63px;
-
     .visible-list {
       display: flex;
       justify-content: flex-start;
@@ -236,14 +215,18 @@
 
       .metric-item {
         width: 18%;
-        margin-right: 15px;
+        margin-right: 2%;
         position: relative;
         box-shadow: 0px 0px 20px rgba(142, 147, 192, 0.08);
         cursor: pointer;
 
+        &:last-child,
+        &:nth-child(5n + 5){
+          margin-right: 0;
+        }
+
         .remove-item {
           .action-button();
-
           background: rgba(235, 87, 87, 0.2);
         }
       }
@@ -251,7 +234,6 @@
     }
 
     .hidden-list__title {
-      font-family: ir;
       font-size: 12px;
       color: #656A84;
       margin: 40px 0 32px 0;
@@ -264,14 +246,18 @@
 
       .metric-item {
         width: 18%;
-        margin-right: 15px;
+        margin-right: 2%;
         position: relative;
         box-shadow: 0px 0px 20px rgba(142, 147, 192, 0.08);
         cursor: pointer;
 
+        &:last-child,
+        &:nth-child(5n + 5){
+          margin-right: 0;
+        }
+
         .add-item {
           .action-button();
-
           background: rgba(143, 211, 157, 0.2);
         }
       }

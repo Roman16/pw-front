@@ -24,3 +24,13 @@ export const reportsConstants = {
     SET_REPORTS_LIST: 'SET_REPORTS_LIST',
     START_FETCH_REPORTS_LIST: 'START_FETCH_REPORTS_LIST',
 };
+
+//--------------------------------------------
+//------------ dashboard constants--------------
+//--------------------------------------------
+export const dashboardConstants = {
+    SWITCH_DAILY_CHART: 'SWITCH_DAILY_CHART',
+    SWITCH_WEEK_CHART: 'SWITCH_WEEK_CHART',
+    REMOVE_SELECTED_METRIC: 'REMOVE_SELECTED_METRIC',
+    UPDATE_METRICS_LIST: 'UPDATE_METRICS_LIST',
+};
