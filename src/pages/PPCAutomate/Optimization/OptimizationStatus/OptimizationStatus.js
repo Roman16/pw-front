@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import NetMarginWindow from './NetMarginWindow/NetMarginWindow';
 import {productsActions} from '../../../../actions/products.actions';
-
+import ConfirmActionPopup from '../../../../components/ModalWindow/ConfirmActionPopup';
 import './OptimizationStatus.less';
 
 const StatusInfo = ({caption, value = '-----', statusColor = ''}) => (
@@ -22,6 +22,7 @@ const STOPPED = 'STOPPED';
 class OptimizationStatus extends Component {
     state = {
         isShowModal: false,
+        isShowConfirmModal: false
     };
 
     cancelModal = () => this.setState({isShowModal: false});
@@ -52,7 +53,7 @@ class OptimizationStatus extends Component {
             selectedAll
         } = this.props;
 
-        const {isShowModal} = this.state;
+        const {isShowModal, isShowConfirmModal} = this.state;
         const isActive = status === RUNNING;
 
         return (
@@ -105,6 +106,14 @@ class OptimizationStatus extends Component {
                         selectedAll={selectedAll}
                     />
                 )}
+
+                <ConfirmActionPopup
+                    visible={isShowConfirmModal}
+                    handleOk={() => this.toStart(RUNNING)}
+                    handleCancel={() => this.setState({isShowConfirmModal: false})}
+                    title={'Are you ready to start?'}
+                    description={'This action will result in the starting management of your Amazon PPC campaigns.'}
+                />
             </div>
         );
     }

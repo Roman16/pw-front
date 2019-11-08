@@ -34,6 +34,68 @@
   }
 }
 
-.ant-modal-wrap {
-  overflow-y: scroll;
+.confirm-action-modal {
+  max-width: 250px;
+  font-family: ir;
+  border-radius: 9px;
+
+  .ant-modal-close {
+    display: none;
+  }
+
+  .ant-modal-title {
+    font-size: 16px;
+    letter-spacing: -0.08px;
+    color: #FFFFFF;
+  }
+
+  .ant-modal-body {
+    padding: 10px 0;
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: -0.08px;
+    color: #FFFFFF;
+    opacity: 0.5;
+  }
+
+  .ant-modal-content {
+    padding: 16px 10px;
+  }
+  .ant-modal-content,
+  .ant-modal-header {
+    background-color: #6D6DF6;
+    text-align: center;
+    border-radius: 9px;
+  }
+
+  .ant-modal-header,
+  .ant-modal-footer {
+    border: 0;
+    padding: 0;
+  }
+
+  .ant-modal-footer {
+    & > div {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+
+      button.ant-btn {
+        width: 88px;
+        height: 32px;
+        background-color: #FFFFFF !important;
+        border-radius: 8px;
+        font-size: 14px;
+        text-align: center;
+        letter-spacing: -0.08px;
+        color: #343C5A;
+        border: 0;
+
+        &:hover {
+          background-color: rgba(62, 62, 125, 0.4) !important;
+          color: #fff;
+        }
+      }
+    }
+  }
 }

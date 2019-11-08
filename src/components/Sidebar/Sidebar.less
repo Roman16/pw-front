@@ -63,13 +63,13 @@
   }
 
   .ant-menu-inline-collapsed
-    > .ant-menu-item
-    > a[href='/zero-to-hero']
-    > span::after,
+  > .ant-menu-item
+  > a[href='/zero-to-hero']
+  > span::after,
   .ant-menu-inline-collapsed
-    > .ant-menu-item
-    > a[href='/analytics']
-    > span::after {
+  > .ant-menu-item
+  > a[href='/analytics']
+  > span::after {
     opacity: 0;
   }
 
@@ -98,27 +98,26 @@
 
         span {
           display: grid;
-          grid-template-columns: repeat(2, minmax(min-content, max-content));
+          grid-template-columns: repeat(2,
+          minmax(min-content, max-content));
           column-gap: 10px;
           align-items: center;
         }
       }
 
-      div,
       a {
         display: grid;
-        grid-template-columns: repeat(2, minmax(min-content, max-content));
+        grid-template-columns: repeat(2,
+        minmax(min-content, max-content));
         column-gap: 10px;
         align-items: center;
       }
 
-      div:hover,
       a:hover,
       .ant-menu-item-active-link {
         color: #fff !important;
       }
 
-      div,
       a,
       .ant-menu-submenu-title {
         color: #b6b6fb !important;

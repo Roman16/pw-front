@@ -14,6 +14,7 @@ const initialState = {
     productList: [],
     totalSize: 0,
     selectedAll: false,
+    isFirstOptimization: true,
     defaultOptimizationOptions: defaultOptions,
     selectedProduct: {
         optimization_strategy: '',

@@ -20,6 +20,7 @@ function fetchProducts(paginationParams) {
                     payload: res
                 });
 
+
                 if (res.result && res.result.length > 0) {
                     dispatch(fetchProductDetails(res.result[0]));
                 }
@@ -59,6 +60,8 @@ function updateProduct(product) {
                     type: productsConstants.UPDATE_SELECTED_PRODUCT,
                     payload: product
                 });
+
+                // notification.start({title: 'Optimization successfully started'});
             });
     };
 }

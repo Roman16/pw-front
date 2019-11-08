@@ -77,3 +77,42 @@
 
   }
 }
+
+.custom-line-chart-tooltip {
+  display: flex;
+  width: 330px;
+  padding: 25px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  font-family: ir;
+  font-size: 0.85rem;
+  box-shadow: 0px 16px 16px rgba(40, 62, 112, 0.16);
+
+  & > div {
+    flex: 1;
+
+    img {
+      margin: 0 10px 0 0;
+    }
+  }
+
+  .title {
+    border-bottom: 1px solid #F5F5FF;
+    padding: 10px 0;
+    margin: 0 0 20px 0;
+  }
+
+  .name,
+  .week-value ,
+  .daily-value {
+    margin: 0 0 10px 0;
+  }
+
+  .week-value {
+    text-align: left;
+  }
+
+  .daily-value {
+    text-align: right;
+  }
+}

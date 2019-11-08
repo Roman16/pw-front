@@ -13,10 +13,7 @@ const ChartHeader = () => {
         showDailyChart: state.dashboard.showDailyChart,
     }));
 
-    const handleChangeSwitch = (type) => (value) => {
-        console.log(type);
-        console.log(value);
-
+    const handleChangeSwitch = (type) => () => {
         dispatch(dashboardActions.switchChart(type))
     };
 
