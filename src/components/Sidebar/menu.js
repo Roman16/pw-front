@@ -52,6 +52,30 @@ export const regionsMenu = [
     }
 ];
 
+export const ppcAutomateMenu = [
+    {
+        title: 'Dashboard',
+        link: '/dashboard'
+    },
+    {
+        title: 'Optimization Setup',
+        link: '/optimization'
+    },
+    {
+        title: 'Optimization Reports',
+        link: '/report'
+    },
+    {
+        title: 'Product Settings',
+        link: '/product-settings'
+    },
+    {
+        title: 'PPC Scanner',
+        link: '/ppc-scanner',
+        className: 'ppcScaner'
+    }
+];
+
 export const menuMain = [
     /*
      * Zero to Hero
