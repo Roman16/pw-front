@@ -1,11 +1,13 @@
 import React from 'react';
 import { Popover, Icon } from 'antd';
 import moment from 'moment';
+
 import up from '../../../../../assets/img/icons/up-row.svg';
 import down from '../../../../../assets/img/icons/up-row.svg';
 import right from '../../../../../assets/img/icons/right-row.svg';
 import pause from '../../../../../assets/img/icons/pause.svg';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
+import Tooltip from '../../../../../components/Tooltip/Tooltip';
 
 const patIntentValues = {
     queryHighRelMatches: 'close-match',
@@ -26,6 +28,7 @@ export const patIntentField = {
         <TitleInfo
             title="PAT Intent Type"
             info="Automatic or Manual Product Targetings use multiple strategies to match your ads to shoppers looking for your products. These strategies are: ASIN, Categories, Substitutes, etc."
+            position="bottom"
         />
     ),
     dataIndex: 'PatIntentType',
@@ -90,6 +93,7 @@ export const bidActionField = {
         </div>
     )
 };
+
 export const pauseKeywordsActionField = {
     title: 'Action',
     dataIndex: 'action',
@@ -102,6 +106,7 @@ export const pauseKeywordsActionField = {
         </div>
     )
 };
+
 export const createdKeywordsActionField = {
     title: 'Action',
     dataIndex: 'action',
@@ -110,6 +115,7 @@ export const createdKeywordsActionField = {
     className: 'left-border',
     render: () => <div className="action-field">Created</div>
 };
+
 export const pausePatActionField = {
     title: 'Action',
     dataIndex: 'action',
@@ -122,22 +128,24 @@ export const pausePatActionField = {
         </div>
     )
 };
+
 export const infoField = {
     title: '',
     dataIndex: 'info',
     key: 'info',
     width: '30px',
     render: text => (
-        <Popover
-            placement="left"
-            content={
-                <span
-                    dangerouslySetInnerHTML={{ __html: text }}
-                    className="popover-info"
-                />
-            }
-        >
-            <Icon type="info-circle" className="info-icon" theme="filled" />
-        </Popover>
+        // <Popover
+        //     placement="left"
+        //     content={
+        //         <span
+        //             dangerouslySetInnerHTML={{ __html: text }}
+        //             className="popover-info"
+        //         />
+        //     }
+        // >
+        //     <Icon type="info-circle" className="info-icon" theme="filled" />
+        // </Popover>
+        <TitleInfo info={text} position="left" type="info" />
     )
 };
