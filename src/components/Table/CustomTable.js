@@ -2,7 +2,7 @@ import React from 'react';
 import { Pagination, Spin } from 'antd';
 import shortid from 'shortid';
 
-import '../../pages/PPCAutomate/Report/ReportTable/Tables/CustomTable.less';
+import './CustomTable.less';
 
 const CustomTable = ({
     columns,

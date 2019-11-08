@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Tooltip, Pagination } from 'antd';
+import shortid from 'shortid';
+
 import { reportsServices } from '../../../../services/reports.services';
 import './LastReports.less';
 
@@ -133,6 +135,7 @@ class LastReports extends Component {
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
                 <ul
+                    key={shortid.generate()}
                     className={`terminal-content ${isLess ? 'more' : 'less'} ${
                         isTerminal ? 'auto' : 'hidden'
                     }`}
