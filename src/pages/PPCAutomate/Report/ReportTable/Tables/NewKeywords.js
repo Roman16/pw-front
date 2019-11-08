@@ -31,21 +31,21 @@ const columns = {
             title: 'Campaign Targeting Type',
             dataIndex: 'campaignTargetingType',
             key: 'campaignTargetingType',
-            width: '300px'
+            width: '180px'
         },
         {
             title: 'Daily Budget',
             dataIndex: 'dailyBudget',
             key: 'dailyBudget',
             render: text => <span>{text && `$${text}`}</span>,
-            width: '160px'
+            width: '100px'
         },
         {
             title: 'Start Date.',
             dataIndex: 'startDate',
             key: 'startDate',
             render: text => moment(text).format('Y/M/D'),
-            width: '160px'
+            width: '90px'
         },
         {
             ...createdKeywordsActionField
@@ -73,7 +73,7 @@ const columns = {
             dataIndex: 'defaultBid',
             key: 'defaultBid',
             render: text => <span>{text && `$${text}`}</span>,
-            width: '300px'
+            width: '90px'
         },
         {
             ...createdKeywordsActionField
@@ -100,13 +100,13 @@ const columns = {
             title: 'ASIN',
             dataIndex: 'asin',
             key: 'asin',
-            width: '200px'
+            width: '120px'
         },
         {
             title: 'SKU',
             dataIndex: 'sku',
             key: 'sku',
-            width: '200px'
+            width: '120px'
         },
         {
             title: 'Action',
@@ -171,14 +171,14 @@ const columns = {
             title: 'Match Type',
             dataIndex: 'matchType',
             key: 'matchType',
-            width: '110px'
+            width: '90px'
         },
         {
             title: 'Bid',
             dataIndex: 'bid',
             key: 'bid',
             render: text => <span>{text && `$${text}`}</span>,
-            width: '100px'
+            width: '70px'
         },
         {
             title: (
@@ -201,7 +201,7 @@ const columns = {
             dataIndex: 'CSTACoS',
             key: 'CSTACoS',
             render: text => <span>{text && `${text}%`}</span>,
-            width: '100px'
+            width: '110px'
         },
         {
             title: (
