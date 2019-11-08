@@ -1,29 +1,80 @@
 .chart {
-  height: 100%;
+  flex: 1;
+  height: max-content;
   background: #fff;
   border-radius: 8px;
   padding: 32px 24px 0;
 
   .bloc-title {
     display: flex;
-    justify-content: space-between;
-    font-family: ir;
-    font-size: 20px;
-    line-height: 28px;
-    letter-spacing: -0.06px;
-    color: #363694;
+    align-items: center;
+
+    .title {
+      width: max-content;
+      font-family: ir;
+      font-size: 20px;
+      line-height: 28px;
+      letter-spacing: -0.06px;
+      color: #363694;
+      border: 0;
+      padding: 0;
+    }
+
 
     .chart-selector {
       display: flex;
+      margin: 0 0 0 auto;
 
       img {
+        //width: 32px;
+        //height: 32px;
         cursor: pointer;
         margin: 0 20px 0 0;
       }
     }
   }
 
-  .recharts-wrapper {
-    margin: 40px auto;
+  .bar-chart-description {
+    text-align: right;
+    padding: 5px 25px 0 0;
+    font-family: ir;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: #343C5A;
+  }
+
+  .pie-chart-container {
+    .chart-legend {
+      & > div {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 20px 0;
+
+        &:first-child {
+          border-bottom: 1px solid rgba(201, 203, 212, 0.5);
+        }
+
+        font-family: ir;
+        font-size: 16px;
+        letter-spacing: -0.05px;
+        color: #656A84;
+
+        .example-fill {
+          width: 16px;
+          height: 16px;
+          border-radius: 4px;
+          margin: 0 12px 0 0 ;
+        }
+
+        .value {
+          font-size: 16px;
+          letter-spacing: -0.05px;
+          color: #343C5A;
+          margin: 0 0 0 auto;
+        }
+      }
+    }
   }
 }

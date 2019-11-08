@@ -1,7 +1,8 @@
 import React from "react";
-import {Icon, Tooltip} from 'antd';
+
+import Tooltip from '../../../../components/Tooltip/Tooltip'
+
 import closeIcon from '../../../../assets/img/icons/close.svg';
-import warningIcon from '../../../../assets/img/icons/warningSmall.svg';
 import upWhiteIcon from '../../../../assets/img/icons/metric-arrows/up-white-arrow.svg';
 import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
 import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
@@ -11,13 +12,10 @@ const MetricItem = ({metric: {title, info, key}}) => (
     <div className='metric-item'>
         <div className="title-info">
             {title}
-            {key === 'profit' ? <Tooltip title={info || title}>
-                    <img src={warningIcon} alt="" className='warning-icon' />
-                </Tooltip>
+            {key === 'profit' ?
+                <Tooltip type='warning'/>
                 :
-                <Tooltip title={info || title}>
-                    <Icon type="info-circle" theme="filled"/>
-                </Tooltip>
+                <Tooltip description={title}/>
             }
 
 

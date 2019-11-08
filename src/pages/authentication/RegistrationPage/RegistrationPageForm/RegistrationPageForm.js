@@ -8,8 +8,9 @@ import {userActions} from '../../../../actions/user.actions';
 import {injectStripe} from "react-stripe-elements";
 import StripeForm from "./StripeForm";
 
-const recaptchaKey =process.env.GOOGLE_RECAPTCHA_KEY || '6LdVacEUAAAAACxfVkvIWG3r9MXE8PYKXJ5aaqY1';
+const recaptchaKey = process.env.GOOGLE_RECAPTCHA_KEY || '6LdVacEUAAAAACxfVkvIWG3r9MXE8PYKXJ5aaqY1';
 
+const $style = document.createElement("style");
 
 class RegistrationPage extends Component {
     state = {
@@ -22,7 +23,6 @@ class RegistrationPage extends Component {
         address_state: '',
         address_country: '',
         address_zip: '',
-        captcha_token: '',
         captcha_action: 'registration',
         stripe_token: null,
         registerSuccess: false,
@@ -31,18 +31,6 @@ class RegistrationPage extends Component {
         expiry: false,
         cvc: false,
     };
-
-
-    componentDidMount() {
-        window.grecaptcha.ready(() => {
-            window.grecaptcha.execute(recaptchaKey, {action: 'registration'})
-                .then((token) => {
-                    this.setState({
-                        captcha_token: token
-                    })
-            });
-        });
-    }
 
     onSubmit = async (e) => {
         e.preventDefault();
@@ -61,7 +49,6 @@ class RegistrationPage extends Component {
             address_country,
             address_zip,
             stripe_token,
-            captcha_token,
             captcha_action
         } = this.state;
 
@@ -110,36 +97,43 @@ class RegistrationPage extends Component {
             // }
         } else {
             // try {
-                let res = stripe_token ? stripe_token : await this.props.stripe.createToken({
-                    address_line1,
-                    address_city,
-                    address_state,
-                    address_country,
-                    address_zip
-                });
+            let res = stripe_token ? stripe_token : await this.props.stripe.createToken({
+                address_line1,
+                address_city,
+                address_state,
+                address_country,
+                address_zip
+            });
 
-                this.setState({stripe_token: res},
-                    this.props.regist({
-                        name,
-                        last_name,
-                        email,
-                        password,
-                        stripe_token: res.token ? res.token.id : null,
-                        captcha_token,
-                        captcha_action
-                    }));
-            // } catch (e) {
-            //     console.log(e);
-            // }
+            this.setState({stripe_token: res}, () => {
+                    window.grecaptcha.ready(() => {
+                        window.grecaptcha.execute(recaptchaKey, {action: 'registration'})
+                            .then((token) => {
+                                this.props.regist({
+                                    name,
+                                    last_name,
+                                    email,
+                                    password,
+                                    stripe_token: res.token ? res.token.id : null,
+                                    captcha_token: token,
+                                    captcha_action
+                                })
+                            });
+                    })
+                }
+            );
         }
+
+        // } catch (e) {
+        //     console.log(e);
+        // }
     };
 
-    // verifyCallback = (recaptchaToken) => {
-    //     this.setState({
-    //         captcha_token: recaptchaToken
-    //     })
-    // };
+    componentDidMount() {
+        this.setState({isLoading: false});
 
+        window.captchaStyle.innerHTML = `.grecaptcha-badge { display: block !important; visibility: visible !important}`;
+    }
 
     stripeElementChange = (element, name) => {
         if (!element.empty && element.complete) {

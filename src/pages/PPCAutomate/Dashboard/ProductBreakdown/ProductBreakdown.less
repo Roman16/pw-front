@@ -1,20 +1,11 @@
-.products-statistic {
-  height: 100%;
-  display: flex;
-  margin: 20px 0 0 0;
-
-  .product-breakdown {
-    width: 70%;
-    margin: 0 25px 0 0;
-  }
-
-  .chart {
-    flex: 1;
-  }
+.product-breakdown {
+  width: 70%;
+  margin: 0 25px 0 0;
 
   .title {
     width: 100%;
     padding: 0 0 0 30px;
+    margin: 0 0 10px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -41,10 +32,22 @@
     }
   }
 
-  .table-head {
-    border: 0;
-    margin: 0 0 10px 0;
+  .table-overflow {
+    .table-head {
+      border: 0;
+      margin: 0 0 10px 0;
+      background: none;
+
+     & > div:first-child {
+        padding: 0 8px 0 0;
+      }
+
+      .input-search {
+        width: 100%;
+      }
+    }
   }
+
 
   .table-body {
     .table-body__row {
@@ -124,6 +127,26 @@
         font-size: 24px;
         letter-spacing: -0.4375px;
         color: #343C5A;
+
+        .product-metric-changes {
+          font-family: ir;
+          font-size: 11px;
+          line-height: 16px;
+          letter-spacing: 0.3px;
+          text-transform: uppercase;
+
+          img {
+            margin: 0 0 0 10px;
+          }
+
+          &.up {
+            color: #8FD39D;
+          }
+
+          &.down {
+            color: #656A84;
+          }
+        }
       }
 
     }
@@ -148,9 +171,9 @@
 
     .custom-reports-table {
       .table-head {
-       & > div {
-         font-size: 10px;
-       }
+        & > div {
+          font-size: 10px;
+        }
       }
     }
   }

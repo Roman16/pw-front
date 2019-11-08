@@ -1,7 +1,9 @@
 import React from "react";
 import {useSelector} from 'react-redux';
 import {Input} from "antd";
-
+import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
+import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
+import Tooltip from '../../../../components/Tooltip/Tooltip';
 import CustomTable from "../../../../components/Table/CustomTable";
 import ProductItem from "../../../../components/ProductList/ProductItem";
 
@@ -11,10 +13,10 @@ const ProductsList = () => {
     }));
     const columns = [
         {
-            title: () => (
+            title: (
                 <div className="input-search">
                     <Input.Search
-                        onChange={this.onSearchChange}
+                        // onChange={this.onSearchChange}
                         // onBlur={onSearchBlur}
                     />
                 </div>
@@ -46,6 +48,10 @@ const ProductsList = () => {
             render: (text) => (
                 <div className='product-params'>
                     {text || '123%'}
+                    <div className='product-metric-changes up'>
+                        +10%
+                        <img src={upGreenIcon} alt=""/>
+                    </div>
                 </div>
             )
         },
@@ -54,9 +60,13 @@ const ProductsList = () => {
             dataIndex: 'cpa',
             key: 'cpa',
             // width: '10%',
-                        render: (text) => (
+            render: (text) => (
                 <div className='product-params'>
                     {text || '123%'}
+                    <div className='product-metric-changes up'>
+                        +10%
+                        <img src={upGreenIcon} alt=""/>
+                    </div>
                 </div>
             )
         },
@@ -65,9 +75,13 @@ const ProductsList = () => {
             dataIndex: 'cpa',
             key: 'cpa',
             // width: '10%',
-                        render: (text) => (
+            render: (text) => (
                 <div className='product-params'>
                     {text || '$123'}
+                    <div className='product-metric-changes up'>
+                        +10%
+                        <img src={upGreenIcon} alt=""/>
+                    </div>
                 </div>
             )
         },
@@ -76,9 +90,13 @@ const ProductsList = () => {
             dataIndex: 'cpa',
             key: 'cpa',
             // width: '10%',
-                        render: (text) => (
+            render: (text) => (
                 <div className='product-params'>
                     {text || '123%'}
+                    <div className='product-metric-changes up'>
+                        +10%
+                        <img src={upGreenIcon} alt=""/>
+                    </div>
                 </div>
             )
         },
@@ -87,25 +105,33 @@ const ProductsList = () => {
             dataIndex: 'cpa',
             key: 'cpa',
             // width: '10%',
-                        render: (text) => (
+            render: (text) => (
                 <div className='product-params'>
                     {text || '123%'}
+                    <div className='product-metric-changes down'>
+                        +10%
+                        <img src={downBlackIcon} alt=""/>
+                    </div>
                 </div>
             )
         },
         {
-            title: 'Profit',
+            title: (<span>Profit <Tooltip type='warning'/></span>),
             dataIndex: 'cpa',
             key: 'cpa',
-            // width: '10%',
-                        render: (text) => (
+            // width: '100px',
+            render: (text) => (
                 <div className='product-params'>
                     {text || '$123'}
+                    <div className='product-metric-changes up'>
+                        +10%
+                        <img src={upGreenIcon} alt=""/>
+                    </div>
                 </div>
             )
         },
     ];
-    console.log(products);
+
     return (
         <div>
             <CustomTable

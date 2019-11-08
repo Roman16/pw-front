@@ -4,14 +4,13 @@ import ProductsList from "./ProductsList";
 import {Switch} from "antd";
 
 const ProductBreakdown = () => {
-
     return (
         <div className='product-breakdown'>
             <div className="title">
                <span> Product Breakdown</span>
 
                 <div className='switch-block'>
-                    Show only Active Listings on Amazon
+                    On optimization only
 
                     <Switch
                         // onChange={this.handleChangeSwitch}
