@@ -5,6 +5,7 @@ import plusIconWhite from '../../../../../assets/img/icons/plus-white.svg';
 import AddMetricModal from "./AddMetricModal";
 import {metricsListArray, metricsListObject} from "../metricsList";
 import {dashboardActions} from '../../../../../actions/dashboard.actions';
+import './AddMetric.less';
 
 const AddMetric = () => {
     const [visibleModal, switchModal] = useState(false);

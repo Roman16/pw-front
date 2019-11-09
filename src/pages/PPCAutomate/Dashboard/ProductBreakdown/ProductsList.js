@@ -44,7 +44,7 @@ const ProductsList = () => {
             title: 'Budget Allocation',
             dataIndex: 'cpa',
             key: 'cpa',
-            width: '100px',
+            // width: '100px',
             render: (text) => (
                 <div className='product-params'>
                     {text || '123%'}
@@ -119,7 +119,7 @@ const ProductsList = () => {
             title: (<span>Profit <Tooltip type='warning'/></span>),
             dataIndex: 'cpa',
             key: 'cpa',
-            // width: '100px',
+            width: '75px',
             render: (text) => (
                 <div className='product-params'>
                     {text || '$123'}

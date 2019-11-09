@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {dashboardActions} from '../../../../actions/dashboard.actions';
-import {metricsListObject} from './metricsList';
 import MetricItem from './MetricItem';
 import AddMetric from './AddMetric/AddMetric';
 
@@ -29,7 +28,7 @@ const Metrics = () => {
                 <MetricItem
                     key={selected.key}
                     removeSelectedMetric={removeSelectedMetric}
-                    metric={metricsListObject[selected.key]}
+                    metric={selected}
                 />
             ))}
 
