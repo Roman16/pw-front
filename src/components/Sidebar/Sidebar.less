@@ -304,6 +304,8 @@
   }
 }
 
+//   ================================================================
+
 /*
 * for delete
 */
@@ -353,3 +355,24 @@
 /*
 * for delete
 */
+
+//   ================================================================
+
+/*
+* Retina
+*/
+@media only screen and (min--moz-device-pixel-ratio: 2),
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min-device-pixel-ratio: 2) {
+  .sidebar {
+    font-size: 6.6667px;
+  }
+
+  .top-nav-item:nth-child(-n + 2),
+  .automate-item:first-child {
+    .top-nav-link::before,
+    .automate-link::before {
+      font-size: 8px;
+    }
+  }
+}
