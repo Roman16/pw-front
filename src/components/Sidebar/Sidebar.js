@@ -29,14 +29,15 @@ function useWindowSize() {
 
 const Sidebar = () => {
   const [width, height] = useWindowSize();
-  const [collapsed, setCollapsed] = useState(false),
+  const [collapsed, setCollapsed] = useState(true),
     [regions] = useState(regionsMenu),
     dispatch = useDispatch(),
     { user } = useSelector(state => ({
       user: state.user
     })),
     toggleCollapsed = () => setCollapsed(!collapsed),
-    className = getClassNames('sidebar', { open: !collapsed }),
+    className = getClassNames('sidebar', { open: collapsed }),
+    // className = getClassNames(collapsed ? 'open' : 'closed'),
     activeCountry = regions.map(region =>
       region.countries.find(country => country.active)
     )[0];
@@ -46,9 +47,16 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
-    width < 800 ? setCollapsed(true) : setCollapsed(false);
     dispatch(userActions.getAuthorizedUserInfo());
+    width < 800 ? setCollapsed(false) : setCollapsed(true);
   }, [dispatch, width]);
+
+  const [automate, setAutomate] = useState(true),
+    togleAutomate = () => setAutomate(!automate);
+
+  useEffect(() => {
+    collapsed ? setAutomate(true) : setAutomate(false);
+  }, [collapsed]);
 
   window.captchaStyle.innerHTML = `.grecaptcha-badge { display: none !important}`;
 
@@ -56,7 +64,7 @@ const Sidebar = () => {
     <div className={className}>
       <div className="sidebar-header">
         <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed} />
-        {!collapsed && (
+        {collapsed && (
           <Link to="/" className="sidebar-logo">
             <img src={logo} alt="logo" />
           </Link>
@@ -84,11 +92,12 @@ const Sidebar = () => {
                 <NavLink
                   className="top-nav-link"
                   activeClassName="top-nav-link-active"
+                  exact
                   to="/"
                   disabled
                 >
                   <ItemIcon icon="zeroToHero" />
-                  Zero to Hero
+                  <span>Zero to Hero</span>
                 </NavLink>
               </li>
 
@@ -96,11 +105,12 @@ const Sidebar = () => {
                 <NavLink
                   className="top-nav-link"
                   activeClassName="top-nav-link-active"
+                  exact
                   to="/"
                   disabled
                 >
                   <ItemIcon icon="analytics" />
-                  Analytics
+                  <span>Analytics</span>
                 </NavLink>
               </li>
 
@@ -109,32 +119,55 @@ const Sidebar = () => {
                   className="top-nav-link"
                   activeClassName="top-nav-link-active"
                   to="/ppc"
+                  onClick={togleAutomate}
                 >
                   <ItemIcon icon="ppcAutomate" />
-                  PPC Automate
+                  <span>PPC Automate</span>
                 </NavLink>
 
-                <ul className="automate-list">
-                  {ppcAutomateMenu.map(item => (
-                    <li className="automate-item" key={shortid.generate()}>
-                      <NavLink
-                        className="automate-link"
-                        activeClassName="automate-link-active"
-                        to={`/ppc${item.link}`}
-                      >
-                        {item.title}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
+                {collapsed && !automate && (
+                  <ul className="automate-list">
+                    {ppcAutomateMenu.map(item => (
+                      <li className="automate-item" key={shortid.generate()}>
+                        <NavLink
+                          className="automate-link"
+                          activeClassName="automate-link-active"
+                          exact
+                          to={`/ppc${item.link}`}
+                        >
+                          {item.title}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {!collapsed && automate && (
+                  <div className="collapsed-automate">
+                    <ul className="collapsed-automate-list">
+                      {ppcAutomateMenu.map(item => (
+                        <li className="automate-item" key={shortid.generate()}>
+                          <NavLink
+                            className="automate-link"
+                            activeClassName="automate-link-active"
+                            exact
+                            to={`/ppc${item.link}`}
+                          >
+                            {item.title}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </li>
             </ul>
           </nav>
         </div>
 
-        <nav className="bottom-navigation">
-          <ul>
-            <li>
+        <nav className="bottom-nav">
+          <ul className="bottom-nav-list">
+            <li className="bottom-nav-item">
               <button
                 type="button"
                 onClick={() => window.open('/account/settings', '_self')}
@@ -149,11 +182,11 @@ const Sidebar = () => {
                 ) : (
                   <ItemIcon icon="account" />
                 )}
-                Account
+                <span>Account</span>
               </button>
             </li>
 
-            <li>
+            <li className="bottom-nav-item">
               <a
                 href="https://profit-whales.kayako.com"
                 target="_blank"
@@ -164,7 +197,7 @@ const Sidebar = () => {
               </a>
             </li>
 
-            <li onClick={handleLogout}>
+            <li className="bottom-nav-item" onClick={handleLogout}>
               <button type="button">
                 <ItemIcon icon={'logOut'} />
                 <span>Log Out</span>
