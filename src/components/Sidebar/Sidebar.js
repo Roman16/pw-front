@@ -2,16 +2,17 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { Icon } from 'antd';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import shortid from 'shortid';
 
-// import RegionsMenu from './RegionsMenu';
 import { regionsMenu, ppcAutomateMenu } from './menu';
 import { getClassNames } from '../../utils';
 import { userActions } from '../../actions/user.actions';
-import './Sidebar.less';
-
-import logo from '../../assets/img/logo.svg';
 import ItemIcon from './ItemIcon';
+import logo from '../../assets/img/logo.svg';
+import showMenu from '../../assets/img/icons/show-menu-arrow.svg';
+import './Sidebar.less';
+import './transition.less';
 
 function useWindowSize() {
   const [size, setSize] = useState([0, 0]);
@@ -119,32 +120,26 @@ const Sidebar = () => {
                   className="top-nav-link"
                   activeClassName="top-nav-link-active"
                   to="/ppc"
-                  onClick={togleAutomate}
                 >
                   <ItemIcon icon="ppcAutomate" />
                   <span>PPC Automate</span>
                 </NavLink>
+                <button type="button" onClick={togleAutomate}>
+                  <img
+                    className={`show-menu ${automate && 'rotate'}`}
+                    src={showMenu}
+                    alt="show-menu"
+                  />
+                </button>
 
-                {collapsed && !automate && (
-                  <ul className="automate-list">
-                    {ppcAutomateMenu.map(item => (
-                      <li className="automate-item" key={shortid.generate()}>
-                        <NavLink
-                          className="automate-link"
-                          activeClassName="automate-link-active"
-                          exact
-                          to={`/ppc${item.link}`}
-                        >
-                          {item.title}
-                        </NavLink>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {!collapsed && automate && (
-                  <div className="collapsed-automate">
-                    <ul className="collapsed-automate-list">
+                {collapsed && (
+                  <CSSTransition
+                    classNames="fade"
+                    in={automate}
+                    timeout={300}
+                    unmountOnExit
+                  >
+                    <ul className="automate-list">
                       {ppcAutomateMenu.map(item => (
                         <li className="automate-item" key={shortid.generate()}>
                           <NavLink
@@ -158,7 +153,36 @@ const Sidebar = () => {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  </CSSTransition>
+                )}
+
+                {!collapsed && (
+                  <CSSTransition
+                    timeout={300}
+                    classNames="fade"
+                    in={automate}
+                    unmountOnExit
+                  >
+                    <div className="collapsed-automate">
+                      <ul className="automate-list">
+                        {ppcAutomateMenu.map(item => (
+                          <li
+                            className="automate-item"
+                            key={shortid.generate()}
+                          >
+                            <NavLink
+                              className="automate-link"
+                              activeClassName="automate-link-active"
+                              exact
+                              to={`/ppc${item.link}`}
+                            >
+                              {item.title}
+                            </NavLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </CSSTransition>
                 )}
               </li>
             </ul>

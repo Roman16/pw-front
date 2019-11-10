@@ -3,10 +3,11 @@ import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
 import {useSelector} from "react-redux";
+import ChartTooltip from "./ChartTooltip";
 
 const data = [
     {
-        name: 'Jun 1', Clicks: 4000, CTR: 3000, uv: 1590, cnt: 4450
+        name: 'Jun 1', Clicks: 0, CTR: 1000, uv: 2000, cnt: 3000
     },
     {
         name: 'Jun 2', Clicks: 3000, CTR: 2098, uv: 1690, cnt: 2450
@@ -60,7 +61,7 @@ const Chart = () => {
     }));
 
     return (
-        <ResponsiveContainer height={400} width='100%'>
+        <ResponsiveContainer height='80%' width='100%'>
 
             <LineChart
                 data={data}
@@ -86,10 +87,12 @@ const Chart = () => {
                     axisLine={false}
                 />
 
-                <Tooltip/>
-
-                {/*<Legend verticalAlign="top" align='right' height={36}/>*/}
-
+                <Tooltip content={
+                    <ChartTooltip
+                        showWeekChart={showWeekChart}
+                        showDailyChart={showDailyChart}
+                    />
+                }/>
 
                 {showWeekChart && <Line
                     yAxisId="left"

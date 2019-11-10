@@ -20,7 +20,7 @@
     }
 
     .anticon {
-      font-size: 20px;
+      font-size: 1.4285714285714286rem;
       color: @third-default-dark;
     }
   }
@@ -47,6 +47,10 @@
       justify-content: center;
       border: none;
       border-radius: 8px;
+
+      span {
+        font-size: 1rem;
+      }
     }
   }
 
@@ -106,6 +110,34 @@
       position: absolute;
       right: 0;
       bottom: 0;
+      width: 25%;
     }
+  }
+
+  //-------------------------------------
+  /*Retina CSS */
+  //-------------------------------------
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+  & {
+    width: 267px;
+
+    .ant-input-search {
+      .ant-input {
+       height: 24px;
+        font-size: 1rem;
+      }
+    }
+
+    .select-all-products {
+      .ant-btn {
+        width: 105px;
+        height: 24px;
+      }
+    }
+
+    .product-item {
+      height: 69px;
+    }
+  }
   }
 }

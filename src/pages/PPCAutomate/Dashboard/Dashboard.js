@@ -7,18 +7,20 @@ import ProductBreakdown from "./ProductBreakdown/ProductBreakdown";
 import './Dashboard.less';
 import Chart from "./Chart/Chart";
 
-const Dashboard = () => (
-    <div className="dashboard-page">
-        <Metrics />
+const Dashboard = () => {
+    return (
+        <div className="dashboard-page">
+            <Metrics/>
 
-        <LineChart />
+            <LineChart/>
 
-        <div className='products-statistic'>
-            <ProductBreakdown />
+            <div className='products-statistic'>
+                <ProductBreakdown/>
 
-            <Chart/>
+                <Chart/>
+            </div>
         </div>
-    </div>
-);
+    )
+};
 
 export default Dashboard;

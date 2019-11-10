@@ -148,6 +148,26 @@
             }
           }
 
+          .top-nav-item:last-child {
+            width: 17em;
+            display: flex;
+            flex-wrap: wrap;
+
+            button {
+              margin-left: 0.9em;
+
+              .show-menu {
+                width: 1em;
+                transform: rotate(0deg);
+                transition: @transition;
+
+                &.rotate {
+                  transform: rotate(-180deg);
+                }
+              }
+            }
+          }
+
           .top-nav-item:hover > .top-nav-link {
             color: @white;
           }
@@ -156,7 +176,7 @@
             position: relative;
 
             .collapsed-automate {
-              width: 20em;
+              width: 200px;
               // position: fixed;
               // top: 39vh;
               // left: 7.8em;
@@ -214,14 +234,6 @@
           padding: 1.5em 0;
           cursor: pointer;
 
-          button {
-            margin: 0;
-            padding: 0;
-            border: none;
-            background-color: transparent;
-            cursor: pointer;
-          }
-
           button,
           a {
             font-size: 1.4em;
@@ -256,7 +268,7 @@
   //   ================================================================
 
   &.open {
-    width: 20em;
+    width: 200px;
 
     .sidebar-menu {
       .country-nav {
@@ -302,6 +314,19 @@
       }
     }
   }
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+button:focus,
+a:focus {
+  outline: none;
 }
 
 //   ================================================================
@@ -366,6 +391,14 @@
   only screen and (min-device-pixel-ratio: 2) {
   .sidebar {
     font-size: 6.6667px;
+
+    &.open {
+      width: 150px;
+    }
+
+    .collapsed-automate {
+      width: 150px;
+    }
   }
 
   .top-nav-item:nth-child(-n + 2),

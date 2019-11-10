@@ -1,46 +1,12 @@
 import {dashboardConstants} from '../constans/actions.type';
+import {metricsListArray} from '../pages/PPCAutomate/Dashboard/Metrics/metricsList';
+
 
 const initialState = {
     showWeekChart: true,
     showDailyChart: false,
-    selectedMetrics: [
-        {
-            key: 'impressions',
-        },
-        {
-            key: 'clicks',
-        },
-        {
-            key: 'ctr',
-        },
-        {
-            key: 'spend',
-        },
-        {
-            key: 'cpc',
-        },
-        {
-            key: 'orders',
-        },
-        {
-            key: 'ad_orders',
-        },
-        {
-            key: 'organic_orders',
-        },
-        {
-            key: 'total_sales',
-        },
-        {
-            key: 'ad_sales',
-        },
-        {
-            key: 'organic_sales',
-        },
-        {
-            key: 'acos',
-        },
-    ]
+    allMetrics: metricsListArray,
+    selectedMetrics: metricsListArray.slice(0,5)
 };
 
 export function dashboard(state = initialState, action) {

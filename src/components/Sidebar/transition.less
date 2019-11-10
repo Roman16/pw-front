@@ -1,0 +1,21 @@
+.fade-enter {
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+.fade-enter-active {
+  transform: scaleY(1);
+  transform-origin: top;
+  transition: all 300ms ease-in;
+}
+
+.fade-exit {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+
+.fade-exit-active {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: all 300ms ease-in;
+}
