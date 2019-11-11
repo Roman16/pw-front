@@ -22,6 +22,8 @@ class DatePicker extends Component {
     };
 
     render() {
+        const {defaultValue} = this.props;
+
         return (
             <div className="DatePicker">
                 <RangePicker
@@ -54,6 +56,7 @@ class DatePicker extends Component {
                     suffixIcon={<DateIcon />}
                     onChange={this.handleChange}
                     disabledDate={this.disabledDate}
+                    defaultValue={defaultValue}
                 />
             </div>
         );

@@ -5,16 +5,23 @@ import {Switch} from "antd";
 import dailyLineIcon from '../../../../assets/img/icons/daily-line.svg';
 
 import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
+import moment from "moment";
 
 const ChartHeader = () => {
     const dispatch = useDispatch();
-    const {showWeekChart, showDailyChart} = useSelector(state => ({
+    const {showWeekChart, showDailyChart, selectedRangeDate} = useSelector(state => ({
         showWeekChart: state.dashboard.showWeekChart,
         showDailyChart: state.dashboard.showDailyChart,
+        selectedRangeDate: state.dashboard.selectedRangeDate,
     }));
 
     const handleChangeSwitch = (type) => () => {
         dispatch(dashboardActions.switchChart(type))
+    };
+
+    const timeRange = (start, end) => {
+        console.log(start);
+        console.log(end);
     };
 
     return (
@@ -59,7 +66,8 @@ const ChartHeader = () => {
             </div>
 
             <DatePicker
-                timeRange={(e) => console.log(e)}
+                timeRange={timeRange}
+                defaultValue={[moment(selectedRangeDate.startDate), moment(selectedRangeDate.endDate)]}
             />
         </div>
     )

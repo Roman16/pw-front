@@ -1,11 +1,16 @@
 import {dashboardConstants} from '../constans/actions.type';
 import {metricsListArray} from '../pages/PPCAutomate/Dashboard/Metrics/metricsList';
+import moment from 'moment';
 
 let metricClickCount = 0;
 
 const initialState = {
     showWeekChart: true,
     showDailyChart: false,
+    selectedRangeDate: {
+        startDate: moment(new Date()).subtract(1, 'months'),
+        endDate: moment(new Date())
+    },
     activeMetrics: metricsListArray.slice(0, 2).map(item => item.key),
     allMetrics: metricsListArray,
     selectedMetrics: metricsListArray.slice(0, 5)

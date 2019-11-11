@@ -62,7 +62,7 @@ const Sidebar = () => {
 
     useEffect(() => {
         dispatch(userActions.getAuthorizedUserInfo());
-        window.screen.width < 800 ? setCollapsed(false) : setCollapsed(true);
+        window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
     }, []);
 
     window.captchaStyle.innerHTML = `.grecaptcha-badge { display: none !important}`;

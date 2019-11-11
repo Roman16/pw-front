@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import Tooltip from '../../../../components/Tooltip/Tooltip'
 
 import closeIcon from '../../../../assets/img/icons/close.svg';
@@ -10,8 +10,12 @@ import downWhiteIcon from '../../../../assets/img/icons/metric-arrows/down-white
 const MetricItem = ({metric: {title, info, key, label, type}, metric, removeSelectedMetric, activeMetrics, activateMetric}) => {
     return (
         <div className='metric-item' onClick={() => activateMetric(key)}>
-            {activeMetrics[0] === key && <div className='active-metric green'></div>}
-            {activeMetrics[1] === key && <div className='active-metric violet'></div>}
+            {activeMetrics.length > 0 && <Fragment>
+               { activeMetrics[0] === key && <div className='active-metric green'></div>}
+               { activeMetrics[1] === key && <div className='active-metric violet'></div>}
+            </Fragment>
+            }
+
 
             <div className="title-info">
                 {title}
