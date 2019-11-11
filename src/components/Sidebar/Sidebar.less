@@ -43,8 +43,9 @@
       .country-active {
         height: 5.6em;
         display: grid;
-        align-content: center;
-        padding-left: 1.8em;
+        // align-content: center;
+        // padding-left: 1.8em;
+        padding: 1.2em 1.8em;
         margin: 0 auto 2.7em;
         border-radius: 0.8em;
         background: rgba(109, 109, 246, 0.1);
@@ -55,15 +56,18 @@
           display: grid;
 
           img {
-            min-width: 2.7em;
-            min-height: 1.6em;
+            width: 2.7em;
+            height: 1.6em;
+            // align-self: center;
           }
 
           h5 {
             font-size: 1.4em;
             justify-self: center;
             color: #fff;
+            align-self: flex-start;
             // line-height: 1.5em;
+            line-height: 1.1429em;
             margin: 0;
           }
         }
@@ -297,7 +301,7 @@
     .sidebar-menu {
       .country-nav {
         .country-active {
-          width: 19.2em;
+          width: 192px;
           grid-template-rows: repeat(2, minmax(min-content, max-content));
           grid-template-columns: minmax(min-content, max-content);
 
@@ -306,12 +310,12 @@
             grid-template-columns: repeat(2, minmax(min-content, max-content));
 
             img {
-              align-self: center;
+              // align-self: center;
             }
 
             h5 {
               margin-left: 0.5714em;
-              align-self: center;
+              // align-self: flex-start;
             }
           }
 
@@ -358,7 +362,7 @@
         .country-active {
           width: 6.4em;
           grid-template-rows: minmax(min-content, max-content);
-          grid-template-columns: repeat(2, minmax(min-content, max-content));
+          grid-template-columns: minmax(min-content, max-content) 0;
 
           &__title {
             grid-template-rows: repeat(2, minmax(min-content, max-content));
