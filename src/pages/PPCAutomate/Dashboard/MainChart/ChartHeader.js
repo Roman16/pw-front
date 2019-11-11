@@ -1,18 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {dashboardActions} from '../../../../actions/dashboard.actions';
 import {Switch} from "antd";
 import dailyLineIcon from '../../../../assets/img/icons/daily-line.svg';
-
 import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
 import moment from "moment";
 
 const ChartHeader = () => {
     const dispatch = useDispatch();
-    const {showWeekChart, showDailyChart, selectedRangeDate} = useSelector(state => ({
+    const {showWeekChart, showDailyChart, selectedRangeDate, activeMetrics} = useSelector(state => ({
         showWeekChart: state.dashboard.showWeekChart,
         showDailyChart: state.dashboard.showDailyChart,
         selectedRangeDate: state.dashboard.selectedRangeDate,
+        activeMetrics: state.dashboard.activeMetrics,
     }));
 
     const handleChangeSwitch = (type) => () => {
@@ -26,7 +26,11 @@ const ChartHeader = () => {
 
     return (
         <div className="chart-header">
-            <div className='pair-name'> Clicks / CTR</div>
+            <div className='pair-name'>
+                {activeMetrics[0].title}
+                /
+                {activeMetrics[1].title}
+            </div>
 
             <div className='switch-block week-switch'>
                 <Switch
@@ -56,12 +60,12 @@ const ChartHeader = () => {
             <div className='chart-legend'>
                 <div className="first-line">
                     <div className="green-line"></div>
-                    Clicks
+                    {activeMetrics[0].title}
                 </div>
 
                 <div className="second-line">
                     <div className="violet-line"></div>
-                    CTR
+                    {activeMetrics[1].title}
                 </div>
             </div>
 

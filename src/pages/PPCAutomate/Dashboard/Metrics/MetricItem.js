@@ -9,10 +9,10 @@ import downWhiteIcon from '../../../../assets/img/icons/metric-arrows/down-white
 
 const MetricItem = ({metric: {title, info, key, label, type}, metric, removeSelectedMetric, activeMetrics, activateMetric}) => {
     return (
-        <div className='metric-item' onClick={() => activateMetric(key)}>
+        <div className='metric-item' onClick={() => activateMetric(metric)}>
             {activeMetrics.length > 0 && <Fragment>
-               { activeMetrics[0] === key && <div className='active-metric green'></div>}
-               { activeMetrics[1] === key && <div className='active-metric violet'></div>}
+               { activeMetrics[0].key === key && <div className='active-metric green'></div>}
+               { activeMetrics[1].key === key && <div className='active-metric violet'></div>}
             </Fragment>
             }
 

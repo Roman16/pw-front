@@ -11,7 +11,7 @@ const initialState = {
         startDate: moment(new Date()).subtract(1, 'months'),
         endDate: moment(new Date())
     },
-    activeMetrics: metricsListArray.slice(0, 2).map(item => item.key),
+    activeMetrics: metricsListArray.slice(0, 2),
     allMetrics: metricsListArray,
     selectedMetrics: metricsListArray.slice(0, 5)
 };
