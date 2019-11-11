@@ -1,7 +1,8 @@
 @import '../../style/variables.less';
 
 .product-list {
-  width: 356px;
+  font-size: 10px;
+  width: 35.6em;
   display: flex;
   flex-direction: column;
 
@@ -10,9 +11,11 @@
   }
 
   .ant-input-search {
+    font-size: 1.4em;
+
     .ant-input {
       border: none;
-      border-radius: 8px;
+      border-radius: 0.5714em;
     }
 
     .ant-input::placeholder {
@@ -20,7 +23,7 @@
     }
 
     .anticon {
-      font-size: 1.4285714285714286rem;
+      font-size: 1.4286em;
       color: @third-default-dark;
     }
   }
@@ -34,26 +37,28 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 20px 0;
+    margin: 2em 0;
 
     label {
-      margin: 0 10px 0 0;
+      margin: 0 1em 0 0;
       font-weight: 500;
     }
 
     .ant-btn {
-      width: 135px;
+      font-size: 1.4em;
+      width: 9.6428em;
       display: flex;
       justify-content: center;
       border: none;
-      border-radius: 8px;
+      border-radius: 0.5714em;
 
       span {
-        font-size: 1rem;
+        font-size: 1em;
       }
     }
   }
 
+  // ====
   .product-item {
     height: 92px;
     background: #fff;
@@ -117,27 +122,29 @@
   //-------------------------------------
   /*Retina CSS */
   //-------------------------------------
-  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-  & {
-    width: 267px;
+  @media only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min-device-pixel-ratio: 2) {
+    & {
+      width: 267px;
 
-    .ant-input-search {
-      .ant-input {
-       height: 24px;
-        font-size: 1rem;
+      .ant-input-search {
+        .ant-input {
+          height: 24px;
+          font-size: 1rem;
+        }
+      }
+
+      .select-all-products {
+        .ant-btn {
+          width: 105px;
+          height: 24px;
+        }
+      }
+
+      .product-item {
+        height: 69px;
       }
     }
-
-    .select-all-products {
-      .ant-btn {
-        width: 105px;
-        height: 24px;
-      }
-    }
-
-    .product-item {
-      height: 69px;
-    }
-  }
   }
 }
