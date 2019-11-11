@@ -115,22 +115,22 @@ const Sidebar = () => {
                 </NavLink>
               </li>
 
-              <li className="top-nav-item">
+              <li className="top-nav-item" onClick={togleAutomate}>
                 <NavLink
                   className="top-nav-link"
                   activeClassName="top-nav-link-active"
-                  to="/ppc"
+                  to="#"
                 >
                   <ItemIcon icon="ppcAutomate" />
                   <span>PPC Automate</span>
                 </NavLink>
-                <button type="button" onClick={togleAutomate}>
+                {/* <button type="button" onClick={togleAutomate}>
                   <img
                     className={`show-menu ${automate && 'rotate'}`}
                     src={showMenu}
                     alt="show-menu"
                   />
-                </button>
+                </button> */}
 
                 {collapsed && (
                   <CSSTransition
