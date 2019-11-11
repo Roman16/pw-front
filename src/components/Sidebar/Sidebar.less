@@ -1,7 +1,7 @@
 @import '../../style/variables.less';
 
 .sidebar {
-  font-size: 10px;
+  font-size: 0.714286rem;
   display: inline-block;
   width: 200px;
   height: 100vh;
@@ -37,16 +37,14 @@
     flex-direction: column;
     justify-content: space-between;
     overflow-y: auto;
-    //overflow-x: hidden;
+    overflow-x: hidden;
 
     .country-nav {
       .country-active {
         height: 5.6em;
         display: grid;
-        // align-content: center;
-        // padding-left: 1.8em;
-        padding: 1.2em 1.8em;
-        margin: 0 auto 2.7em;
+        padding: 1.2em 0 0 1.8em;
+        margin: 0 0 2.7em 3.5px;
         border-radius: 0.8em;
         background: rgba(109, 109, 246, 0.1);
         cursor: pointer;
@@ -58,7 +56,6 @@
           img {
             width: 2.7em;
             height: 1.6em;
-            // align-self: center;
           }
 
           h5 {
@@ -66,14 +63,12 @@
             justify-self: center;
             color: #fff;
             align-self: flex-start;
-            // line-height: 1.5em;
             line-height: 1.1429em;
             margin: 0;
           }
         }
 
         &__description {
-          // display: none;
           font-size: 1.2em;
           color: @sidebar-text-color;
           line-height: 1.3333em;
@@ -91,7 +86,6 @@
 
           .top-nav-item {
             padding: 2.4em 0;
-            // cursor: pointer;
 
             .top-nav-link {
               font-size: 1.4em;
@@ -164,44 +158,21 @@
             }
           }
 
-          // .top-nav-item:last-child {
-          //   width: 17em;
-          //   display: flex;
-          //   flex-wrap: wrap;
-
-          //   button {
-          //     margin-left: 0.9em;
-
-          //     .show-menu {
-          //       width: 1em;
-          //       transform: rotate(0deg);
-          //       transition: @transition;
-
-          //       &.rotate {
-          //         transform: rotate(-180deg);
-          //       }
-          //     }
-          //   }
-          // }
-
           .top-nav-item:hover > .top-nav-link {
             color: @white;
           }
 
           .top-nav-item:last-child {
-            // position: relative;
             cursor: pointer;
 
             &:hover {
               .collapsed-automate {
-                // display: block;
                 transform: scaleX(1);
               }
             }
 
             .collapsed-automate {
               width: 200px;
-              // display: none;
               position: absolute;
               top: 30.9em;
               left: 4.5em;
@@ -309,13 +280,8 @@
             grid-template-rows: minmax(min-content, max-content);
             grid-template-columns: repeat(2, minmax(min-content, max-content));
 
-            img {
-              // align-self: center;
-            }
-
             h5 {
               margin-left: 0.5714em;
-              // align-self: flex-start;
             }
           }
 
@@ -477,7 +443,7 @@ a:focus {
   only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (min-device-pixel-ratio: 2) {
   .sidebar {
-    font-size: 6.6667px;
+    font-size: 0.47619rem;
 
     &.open {
       width: 150px;
