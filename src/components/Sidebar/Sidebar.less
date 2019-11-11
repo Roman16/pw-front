@@ -5,6 +5,7 @@
   display: inline-block;
   width: 200px;
   height: 100vh;
+  position: relative;
   background-color: @third-default-dark;
   z-index: 1000;
 
@@ -35,27 +36,23 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    //overflow-y: auto;
+    overflow-y: auto;
     //overflow-x: hidden;
 
     .country-nav {
       .country-active {
-        width: 6.4em;
         height: 5.6em;
         display: grid;
-        grid-template-rows: repeat(2, minmax(min-content, max-content));
         align-content: center;
         padding-left: 1.8em;
         margin: 0 auto 2.7em;
-        border-radius: 8px;
+        border-radius: 0.8em;
         background: rgba(109, 109, 246, 0.1);
         cursor: pointer;
-        transition: all 0.4s ease-in;
+        transition: @transition;
 
         &__title {
           display: grid;
-          grid-template-rows: repeat(2, minmax(min-content, max-content));
-          grid-template-columns: minmax(min-content, max-content);
 
           img {
             min-width: 2.7em;
@@ -66,17 +63,18 @@
             font-size: 1.4em;
             justify-self: center;
             color: #fff;
-            line-height: 1.5em;
+            // line-height: 1.5em;
             margin: 0;
           }
         }
 
         &__description {
-          display: none;
+          // display: none;
           font-size: 1.2em;
           color: @sidebar-text-color;
           line-height: 1.3333em;
           margin-top: 3px;
+          transform-origin: left;
         }
       }
 
@@ -102,7 +100,7 @@
 
               .anticon {
                 font-size: 1.7143em;
-                margin-right: 1em;
+                margin-right: 0.5833em;
               }
 
               span {
@@ -187,23 +185,26 @@
           }
 
           .top-nav-item:last-child {
-            position: relative;
+            // position: relative;
+            cursor: pointer;
 
             &:hover {
               .collapsed-automate {
-                display: block;
+                // display: block;
+                transform: scaleX(1);
               }
             }
 
             .collapsed-automate {
               width: 200px;
+              // display: none;
               position: absolute;
-              top: 1em;
-              left: 24px;
+              top: 30.9em;
+              left: 4.5em;
               padding: 0 0 0 30px;
-              transform: scaleX(1);
+              transform: scaleX(0);
               transform-origin: left;
-              display: none;
+              transition: @transition;
 
               .collapsed-automate-list {
                 width: 200px;
@@ -268,7 +269,7 @@
 
             .anticon {
               font-size: 1.7143em;
-              margin-right: 1em;
+              margin-right: 0.5833em;
             }
 
             span {
@@ -297,19 +298,26 @@
       .country-nav {
         .country-active {
           width: 19.2em;
-          transition: all 0.3s ease-in;
+          grid-template-rows: repeat(2, minmax(min-content, max-content));
+          grid-template-columns: minmax(min-content, max-content);
 
           &__title {
             grid-template-rows: minmax(min-content, max-content);
             grid-template-columns: repeat(2, minmax(min-content, max-content));
 
+            img {
+              align-self: center;
+            }
+
             h5 {
               margin-left: 0.5714em;
+              align-self: center;
             }
           }
 
           &__description {
-            display: block;
+            transform: scaleX(1);
+            transition: @transition 0.3s;
           }
         }
 
@@ -347,6 +355,21 @@
 
     .sidebar-menu {
       .country-nav {
+        .country-active {
+          width: 6.4em;
+          grid-template-rows: minmax(min-content, max-content);
+          grid-template-columns: repeat(2, minmax(min-content, max-content));
+
+          &__title {
+            grid-template-rows: repeat(2, minmax(min-content, max-content));
+            grid-template-columns: minmax(min-content, max-content);
+          }
+
+          &__description {
+            transform: scaleX(0);
+          }
+        }
+
         .top-nav {
           .top-nav-list {
             .top-nav-item {
@@ -446,7 +469,9 @@ a:focus {
 /*
 * Retina
 */
-@media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+@media only screen and (min--moz-device-pixel-ratio: 2),
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min-device-pixel-ratio: 2) {
   .sidebar {
     font-size: 6.6667px;
 
