@@ -167,7 +167,8 @@
 
             &:hover {
               .collapsed-automate {
-                transform: scaleX(1);
+                // transform: scaleX(1);
+                opacity: 1;
               }
             }
 
@@ -177,9 +178,10 @@
               top: 30.9em;
               left: 4.5em;
               padding: 0 0 0 30px;
-              transform: scaleX(0);
-              transform-origin: left;
-              transition: @transition;
+              opacity: 0;
+              // transform: scaleX(0);
+              // transform-origin: left;
+              transition: all 0.1s ease-in;
 
               .collapsed-automate-list {
                 width: 200px;
@@ -282,6 +284,7 @@
 
             h5 {
               margin-left: 0.5714em;
+              // margin-left: 2px;
             }
           }
 
@@ -415,21 +418,68 @@ a:focus {
     color: @third-default-dark;
     text-align: center;
     line-height: 1.3334em;
-    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
     transition: all 0.2s ease-in;
   }
 }
 
 .open .sidebar-menu .top-nav-link::before,
 .open .sidebar-menu .automate-link::before {
-  opacity: 1;
-  transition: all 0.3s ease-in 1s;
+  // opacity: 1;
+  transform: scaleX(1);
+  transition: all 0.3s ease-in 0.3s;
 }
 
 .sidebar .sidebar-menu .collapsed-automate .automate-link::before {
   opacity: 1;
 }
 
+// .top-nav-item:nth-child(-n + 2),
+// .automate-item:first-child {
+//   .top-nav-link,
+//   .automate-link {
+//     position: relative;
+//     width: fit-content;
+//   }
+
+//   .soon,
+//   .automate-soon {
+//     font-size: 12px;
+//     width: 3.3334em;
+//     height: 1.3334em;
+//     display: inline-block;
+//     position: absolute;
+//     top: -0.8334em;
+//     right: -3.5834em;
+//     // content: 'soon';
+//     background-color: @sidebar-text-color;
+//     border-radius: 4px;
+//     color: @third-default-dark;
+//     text-align: center;
+//     line-height: 1.3334em;
+//     font-weight: 600;
+//     // opacity: 0;
+//     transition: all 0.2s ease-in;
+//   }
+
+//   .automate-soon {
+//     top: 0;
+//     right: 3em;
+//   }
+// }
+
+// .collapsed-automate {
+//   .automate-soon {
+//     top: 0;
+//     right: 3em;
+//   }
+// }
+
+// .sidebar-menu .soon,
+// .sidebar-menu .automate-soon {
+//   display: none;
+// }
 /*
 * for delete
 */
