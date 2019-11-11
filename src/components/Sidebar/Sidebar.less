@@ -3,7 +3,7 @@
 .sidebar {
   font-size: 10px;
   display: inline-block;
-  width: 7.2em;
+  width: 200px;
   height: 100vh;
   background-color: @third-default-dark;
   // overflow-x: hidden;
@@ -108,9 +108,9 @@
 
               span {
                 margin: 0;
-                transform: scaleX(0);
+                transform: scaleX(1);
                 transform-origin: left;
-                transition: @transition;
+                transition: @transition 0.3s;
               }
             }
 
@@ -121,6 +121,21 @@
             .automate-list {
               list-style: none;
               margin-top: 2.3em;
+              transform: scaleY(1);
+              transform-origin: top;
+              transition: @transition 0.3s;
+
+              &.open {
+                transform: scaleY(1);
+                transform-origin: top;
+                transition: @transition 0.3s;
+              }
+
+              &.closed {
+                transform: scaleY(0);
+                transform-origin: top;
+                transition: @transition;
+              }
 
               .automate-item {
                 padding: 1.1em 0;
@@ -181,10 +196,25 @@
               // top: 39vh;
               // left: 7.8em;
               position: absolute;
-              top: 1.5em;
+              top: 1em;
               left: 5.4em;
               border-radius: 8px;
               background-color: @third-default-dark;
+              transform: scaleX(1);
+              transform-origin: left;
+              // transition: @transition;
+
+              &.open {
+                transform: scaleX(1);
+                transform-origin: left;
+                // transition: @transition;
+              }
+
+              &.closed {
+                transform: scaleX(0);
+                transform-origin: left;
+                // transition: all 0.2s ease-in;
+              }
 
               .collapsed-automate-list {
                 list-style: none;
@@ -250,9 +280,9 @@
             }
 
             span {
-              transform: scaleX(0);
+              transform: scaleX(1);
               transform-origin: left;
-              transition: @transition;
+              transition: @transition 0.3s;
             }
           }
         }
@@ -295,6 +325,7 @@
               .top-nav-link {
                 span {
                   transform: scaleX(1);
+                  transition: @transition 0.3s;
                 }
               }
             }
@@ -308,7 +339,41 @@
             button > span,
             a > span {
               transform: scaleX(1);
+              transition: @transition 0.3s;
             }
+          }
+        }
+      }
+    }
+  }
+
+  &.closed {
+    width: 7.2em;
+
+    .sidebar-menu {
+      .country-nav {
+        .top-nav {
+          .top-nav-list {
+            .top-nav-item {
+              .top-nav-link {
+                span {
+                  transform: scaleX(0);
+                  transition: @transition;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .bottom-nav {
+      .bottom-nav-list {
+        .bottom-nav-item {
+          button > span,
+          a > span {
+            transform: scaleX(0);
+            transition: @transition;
           }
         }
       }

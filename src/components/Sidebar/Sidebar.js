@@ -37,8 +37,8 @@ const Sidebar = () => {
       user: state.user
     })),
     toggleCollapsed = () => setCollapsed(!collapsed),
-    className = getClassNames('sidebar', { open: collapsed }),
-    // className = getClassNames(collapsed ? 'open' : 'closed'),
+    // className = getClassNames('sidebar', { open: collapsed }),
+    className = getClassNames(collapsed ? 'open' : 'closed'),
     activeCountry = regions.map(region =>
       region.countries.find(country => country.active)
     )[0];
@@ -62,7 +62,7 @@ const Sidebar = () => {
   window.captchaStyle.innerHTML = `.grecaptcha-badge { display: none !important}`;
 
   return (
-    <div className={className}>
+    <div className={`sidebar ${className}`}>
       <div className="sidebar-header">
         <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed} />
         {collapsed && (
@@ -115,11 +115,12 @@ const Sidebar = () => {
                 </NavLink>
               </li>
 
-              <li className="top-nav-item" onClick={togleAutomate}>
+              <li className="top-nav-item">
                 <NavLink
                   className="top-nav-link"
                   activeClassName="top-nav-link-active"
                   to="#"
+                  onClick={togleAutomate}
                 >
                   <ItemIcon icon="ppcAutomate" />
                   <span>PPC Automate</span>
@@ -133,6 +134,48 @@ const Sidebar = () => {
                 </button> */}
 
                 {collapsed && (
+                  <ul
+                    className={`automate-list ${automate ? 'open' : 'closed'}`}
+                  >
+                    {ppcAutomateMenu.map(item => (
+                      <li className="automate-item" key={shortid.generate()}>
+                        <NavLink
+                          className="automate-link"
+                          activeClassName="automate-link-active"
+                          exact
+                          to={`/ppc${item.link}`}
+                        >
+                          {item.title}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {!collapsed && (
+                  <div
+                    className={`collapsed-automate ${
+                      automate ? 'open' : 'closed'
+                    }`}
+                  >
+                    <ul className="collapsed-automate-list">
+                      {ppcAutomateMenu.map(item => (
+                        <li className="automate-item" key={shortid.generate()}>
+                          <NavLink
+                            className="automate-link"
+                            activeClassName="automate-link-active"
+                            exact
+                            to={`/ppc${item.link}`}
+                          >
+                            {item.title}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* {collapsed && (
                   <CSSTransition
                     classNames="fade"
                     in={automate}
@@ -158,9 +201,9 @@ const Sidebar = () => {
 
                 {!collapsed && (
                   <CSSTransition
-                    timeout={300}
                     classNames="fade"
                     in={automate}
+                    timeout={300}
                     unmountOnExit
                   >
                     <div className="collapsed-automate">
@@ -183,7 +226,7 @@ const Sidebar = () => {
                       </ul>
                     </div>
                   </CSSTransition>
-                )}
+                )} */}
               </li>
             </ul>
           </nav>
