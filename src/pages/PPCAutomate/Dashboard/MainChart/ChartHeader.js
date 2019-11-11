@@ -8,11 +8,12 @@ import moment from "moment";
 
 const ChartHeader = () => {
     const dispatch = useDispatch();
-    const {showWeekChart, showDailyChart, selectedRangeDate, activeMetrics} = useSelector(state => ({
+    const {showWeekChart, showDailyChart, selectedRangeDate, firstActiveMetricTitle, secondActiveMetricTitle} = useSelector(state => ({
         showWeekChart: state.dashboard.showWeekChart,
         showDailyChart: state.dashboard.showDailyChart,
         selectedRangeDate: state.dashboard.selectedRangeDate,
-        activeMetrics: state.dashboard.activeMetrics,
+        firstActiveMetricTitle: state.dashboard.activeMetrics[0] ? state.dashboard.activeMetrics[0].title : '',
+        secondActiveMetricTitle: state.dashboard.activeMetrics[1] ? state.dashboard.activeMetrics[1].title : '',
     }));
 
     const handleChangeSwitch = (type) => () => {
@@ -20,8 +21,6 @@ const ChartHeader = () => {
     };
 
     const timeRange = (start, end) => {
-        console.log(start);
-        console.log(end);
         dispatch(dashboardActions.selectDateRange([
             moment(start, 'DD-MM-YYYY'). format('YYYY-MM-DD'),
             moment(end, 'DD-MM-YYYY'). format('YYYY-MM-DD'),
@@ -31,9 +30,9 @@ const ChartHeader = () => {
     return (
         <div className="chart-header">
             <div className='pair-name'>
-                {activeMetrics[0].title}
+                {firstActiveMetricTitle}
                 /
-                {activeMetrics[1].title}
+                {secondActiveMetricTitle}
             </div>
 
             <div className='switch-block week-switch'>
@@ -64,12 +63,12 @@ const ChartHeader = () => {
             <div className='chart-legend'>
                 <div className="first-line">
                     <div className="green-line"></div>
-                    {activeMetrics[0].title}
+                    {firstActiveMetricTitle}
                 </div>
 
                 <div className="second-line">
                     <div className="violet-line"></div>
-                    {activeMetrics[1].title}
+                    {secondActiveMetricTitle}
                 </div>
             </div>
 

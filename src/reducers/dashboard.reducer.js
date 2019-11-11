@@ -22,15 +22,14 @@ export function dashboard(state = initialState, action) {
             return {
                 ...state,
                 showWeekChart: !state.showWeekChart,
-                showDailyChart: (state.showWeekChart && !state.showDailyChart) ? true : state.showDailyChart
+                // showDailyChart: (state.showWeekChart && !state.showDailyChart) ? true : state.showDailyChart
             };
 
         case dashboardConstants.SWITCH_DAILY_CHART:
             return {
                 ...state,
                 showDailyChart: !state.showDailyChart,
-                showWeekChart: (state.showDailyChart && !state.showWeekChart) ? true : state.showWeekChart
-
+                // showWeekChart: (state.showDailyChart && !state.showWeekChart) ? true : state.showWeekChart
             };
 
         case dashboardConstants.REMOVE_SELECTED_METRIC:
@@ -67,6 +66,7 @@ export function dashboard(state = initialState, action) {
                 ...state,
                 activeMetrics: newActiveMetrics
             };
+
 
         default:
             return state;
