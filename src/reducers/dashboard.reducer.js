@@ -1,12 +1,14 @@
 import {dashboardConstants} from '../constans/actions.type';
 import {metricsListArray} from '../pages/PPCAutomate/Dashboard/Metrics/metricsList';
 
+let metricClickCount = 0;
 
 const initialState = {
     showWeekChart: true,
     showDailyChart: false,
+    activeMetrics: metricsListArray.slice(0, 2).map(item => item.key),
     allMetrics: metricsListArray,
-    selectedMetrics: metricsListArray.slice(0,5)
+    selectedMetrics: metricsListArray.slice(0, 5)
 };
 
 export function dashboard(state = initialState, action) {
@@ -34,10 +36,21 @@ export function dashboard(state = initialState, action) {
                 selectedMetrics: newMetricList
             };
 
-            case dashboardConstants.UPDATE_METRICS_LIST:
+        case dashboardConstants.UPDATE_METRICS_LIST:
             return {
                 ...state,
                 selectedMetrics: action.payload
+            };
+
+        case dashboardConstants.ACTIVATE_METRIC:
+            metricClickCount++;
+
+            let newActiveMetrics = [...state.activeMetrics];
+            newActiveMetrics[(metricClickCount & 1) ? 0 : 1] = action.payload;
+
+            return {
+                ...state,
+                activeMetrics: newActiveMetrics
             };
 
         default:

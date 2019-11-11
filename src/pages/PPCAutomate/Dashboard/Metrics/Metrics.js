@@ -8,14 +8,19 @@ import './Metrics.less';
 
 const Metrics = () => {
     const dispatch = useDispatch();
-    const {selectedMetrics} = useSelector(state => ({
-        selectedMetrics: state.dashboard.selectedMetrics
+    const {selectedMetrics, activeMetrics} = useSelector(state => ({
+        selectedMetrics: state.dashboard.selectedMetrics,
+        activeMetrics: state.dashboard.activeMetrics,
     }));
 
     const [metrics, changeMetricsList] = useState(selectedMetrics);
 
     const removeSelectedMetric = (metric) => {
         dispatch(dashboardActions.removeSelectedMetric(metric))
+    };
+
+    const activateMetric = (key) => {
+        dispatch(dashboardActions.activateMetric(key));
     };
 
     useEffect(() => {
@@ -29,6 +34,8 @@ const Metrics = () => {
                     key={selected.key}
                     removeSelectedMetric={removeSelectedMetric}
                     metric={selected}
+                    activeMetrics={activeMetrics}
+                    activateMetric={activateMetric}
                 />
             ))}
 

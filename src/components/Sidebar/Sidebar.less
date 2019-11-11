@@ -6,10 +6,7 @@
   width: 200px;
   height: 100vh;
   background-color: @third-default-dark;
-  // overflow-x: hidden;
-  // overflow-y: auto;
   z-index: 1000;
-  transition: @transition;
 
   @media (max-width: 799px) {
     position: absolute;
@@ -34,10 +31,12 @@
   }
 
   .sidebar-menu {
-    min-height: calc(100vh - 7.4em);
+    height: calc(100vh - 7.4em);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    //overflow-y: auto;
+    //overflow-x: hidden;
 
     .country-nav {
       .country-active {
@@ -51,7 +50,7 @@
         border-radius: 8px;
         background: rgba(109, 109, 246, 0.1);
         cursor: pointer;
-        transition: @transition;
+        transition: all 0.4s ease-in;
 
         &__title {
           display: grid;
@@ -123,18 +122,18 @@
               margin-top: 2.3em;
               transform: scaleY(1);
               transform-origin: top;
-              transition: @transition 0.3s;
+              transition: all 0.2s ease-in;
 
               &.open {
                 transform: scaleY(1);
                 transform-origin: top;
-                transition: @transition 0.3s;
+                transition: all 0.2s ease-in;
               }
 
               &.closed {
                 transform: scaleY(0);
                 transform-origin: top;
-                transition: @transition;
+                transition: all 0.2s ease-in;
               }
 
               .automate-item {
@@ -190,39 +189,32 @@
           .top-nav-item:last-child {
             position: relative;
 
+            &:hover {
+              .collapsed-automate {
+                display: block;
+              }
+            }
+
             .collapsed-automate {
               width: 200px;
-              // position: fixed;
-              // top: 39vh;
-              // left: 7.8em;
               position: absolute;
               top: 1em;
-              left: 5.4em;
-              border-radius: 8px;
-              background-color: @third-default-dark;
+              left: 24px;
+              padding: 0 0 0 30px;
               transform: scaleX(1);
               transform-origin: left;
-              // transition: @transition;
-
-              &.open {
-                transform: scaleX(1);
-                transform-origin: left;
-                // transition: @transition;
-              }
-
-              &.closed {
-                transform: scaleX(0);
-                transform-origin: left;
-                // transition: all 0.2s ease-in;
-              }
+              display: none;
 
               .collapsed-automate-list {
+                width: 200px;
                 list-style: none;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
                 margin: 0;
                 padding: 1.1em 0 1.1em 2.4em;
+                background-color: @third-default-dark;
+                border-radius: 8px;
 
                 .automate-item {
                   padding: 1.1em 0;
@@ -299,11 +291,13 @@
 
   &.open {
     width: 200px;
+    transition: @transition;
 
     .sidebar-menu {
       .country-nav {
         .country-active {
           width: 19.2em;
+          transition: all 0.3s ease-in;
 
           &__title {
             grid-template-rows: minmax(min-content, max-content);
@@ -349,6 +343,7 @@
 
   &.closed {
     width: 7.2em;
+    transition: @transition;
 
     .sidebar-menu {
       .country-nav {
@@ -451,9 +446,7 @@ a:focus {
 /*
 * Retina
 */
-@media only screen and (min--moz-device-pixel-ratio: 2),
-  only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (min-device-pixel-ratio: 2) {
+@media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
   .sidebar {
     font-size: 6.6667px;
 

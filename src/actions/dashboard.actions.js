@@ -3,7 +3,8 @@ import {dashboardConstants} from '../constans/actions.type';
 export const dashboardActions = {
     switchChart,
     removeSelectedMetric,
-    updateMetricList
+    updateMetricList,
+    activateMetric
 };
 
 function switchChart(type) {
@@ -30,6 +31,15 @@ function updateMetricList(metrics) {
         dispatch({
             type: dashboardConstants.UPDATE_METRICS_LIST,
             payload: metrics
+        });
+    };
+}
+
+function activateMetric(metricKey) {
+    return dispatch => {
+        dispatch({
+            type: dashboardConstants.ACTIVATE_METRIC,
+            payload: metricKey
         });
     };
 }
