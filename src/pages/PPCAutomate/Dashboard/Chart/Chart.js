@@ -8,9 +8,13 @@ import barDefaultIcon from '../../../../assets/img/icons/bar-chart-default.svg';
 import Tooltip from "../../../../components/Tooltip/Tooltip";
 
 import './Chart.less';
+import {useSelector} from "react-redux";
 
 const Chart = () => {
     const [defaultChart, changeChart] = useState('pie');
+    const {activeMetrics} = useSelector(state => ({
+        activeMetrics: state.dashboard.activeMetrics,
+    }));
 
     return (
         <div className='chart'>
@@ -29,7 +33,12 @@ const Chart = () => {
             </div>
 
             {defaultChart === 'bar' && <Fragment>
-                <div className='bar-chart-description'>Last 7 Days</div>
+                <div className='bar-chart-legend'>
+                    <div className='first-bar'><div className='example-fill'></div>{activeMetrics[0].title}</div>
+                    <div className='second-bar'><div className='example-fill'></div>{activeMetrics[1].title}</div>
+
+                    <div className='bar-chart-description'>Last 7 Days</div>
+                </div>
 
                 <SecondBarChart/>
             </Fragment>}

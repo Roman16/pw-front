@@ -1,26 +1,29 @@
 import React, {Fragment} from 'react';
 import {
-    BarChart, Bar, Cell, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
 } from 'recharts';
 
 const data = [
     {
-        name: 'Page A', PPC: 4000, Organic: 1398
+        name: 'Jun 01', PPC: 4000, Organic: 1398
     },
     {
-        name: 'Page B', PPC: 3000, Organic: 1398,
+        name: 'Jun 02', PPC: 3000, Organic: 1398,
     },
     {
-        name: 'Page C', PPC: 2000, Organic: 6800,
+        name: 'Jun 03', PPC: 2000, Organic: 6800,
     },
     {
-        name: 'Page D', PPC: 2780, Organic: 3908,
+        name: 'Jun 04', PPC: 2780, Organic: 3908,
     },
     {
-        name: 'Page E', PPC: 1890, Organic: 4800,
+        name: 'Jun 05', PPC: 1890, Organic: 4800,
     },
     {
-        name: 'Page F', PPC: 2390, Organic: 3800,
+        name: 'Jun 06', PPC: 2390, Organic: 3800,
+    },
+    {
+        name: 'Jun 07', PPC: 2890, Organic: 3300,
     },
 ];
 
@@ -48,7 +51,7 @@ const CustomBar = (props) => {
 
 const SecondBarChart = () => {
        return (
-        <ResponsiveContainer height={400} width='100%'>
+        <ResponsiveContainer height={400} width='105%' className='responsive-bar-container'>
 
             <BarChart
                 data={data}
@@ -62,13 +65,11 @@ const SecondBarChart = () => {
 
                 <YAxis domain={[0, 8000]} axisLine={false}/>
 
-                {/*<Tooltip/>*/}
-                <Legend/>
                 <Bar dataKey="PPC" fill="#6D6DF6" shape={<CustomBar/>}/>
                 <Bar dataKey="Organic" fill="#95D6FF" shape={<CustomBar/>}/>
             </BarChart>
         </ResponsiveContainer>
     );
-}
+};
 
 export default SecondBarChart;

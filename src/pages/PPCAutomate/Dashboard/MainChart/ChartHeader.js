@@ -22,6 +22,10 @@ const ChartHeader = () => {
     const timeRange = (start, end) => {
         console.log(start);
         console.log(end);
+        dispatch(dashboardActions.selectDateRange([
+            moment(start, 'DD-MM-YYYY'). format('YYYY-MM-DD'),
+            moment(end, 'DD-MM-YYYY'). format('YYYY-MM-DD'),
+        ]))
     };
 
     return (

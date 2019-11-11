@@ -47,6 +47,16 @@ export function dashboard(state = initialState, action) {
                 selectedMetrics: action.payload
             };
 
+        case dashboardConstants.SELECTED_RANGE_DATE:
+            return {
+                ...state,
+                selectedRangeDate: {
+                    startDate: action.payload[0],
+                    endDate: action.payload[1]
+                }
+
+            };
+
         case dashboardConstants.ACTIVATE_METRIC:
             metricClickCount++;
 

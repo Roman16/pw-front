@@ -29,19 +29,53 @@
         width: 2rem;
         height: 2rem;
         cursor: pointer;
-        margin: 0 20px 0 0;
+        margin: 0 0 0 20px;
       }
     }
   }
 
-  .bar-chart-description {
-    text-align: right;
-    padding: 5px 25px 0 0;
-    font-size: 1rem;
-    line-height: 16px;
+  .bar-chart-legend {
+    display: flex;
+    align-items: center;
+    margin: 20px 0 30px 0;
 
-    color: #343C5A;
+    .first-bar,
+    .second-bar {
+      display: flex;
+      align-items: center;
+      margin: 0 15px 0 0;
+      font-size: 1rem;
+      letter-spacing: -0.05px;
+      color: #343C5A;
+
+      .example-fill {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        margin: 0 12px 0 0;
+      }
+    }
+
+    .first-bar .example-fill {
+      background: #6D6DF6;
+    }
+    .second-bar .example-fill {
+      background: #95D6FF;
+    }
+
+    .bar-chart-description {
+      text-align: right;
+      font-size: 1rem;
+      line-height: 16px;
+      color: #343C5A;
+      margin: 0 0 0 auto;
+    }
   }
+
+  .recharts-responsive-container.responsive-bar-container {
+    margin: 0 0 30px -20px;
+  }
+
 
   .pie-chart-container {
     .chart-legend {
@@ -63,7 +97,7 @@
           width: 16px;
           height: 16px;
           border-radius: 4px;
-          margin: 0 12px 0 0 ;
+          margin: 0 12px 0 0;
         }
 
         .value {
