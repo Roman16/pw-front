@@ -24,9 +24,9 @@ const FirstPieChart = () => {
                         outerRadius={100}
                         paddingAngle={0}
                         dataKey="value"
-                        blendStroke='#5052AD'
-                        animationBegin={'100'}
-                        animationDuration={'500'}
+                        blendStroke={true}
+                        animationBegin={100}
+                        animationDuration={500}
                     >
                         {
                             data.map((entry, index) => <Cell key={`cell-${index}`}
