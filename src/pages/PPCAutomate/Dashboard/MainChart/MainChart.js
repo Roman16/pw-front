@@ -102,7 +102,7 @@ const MainChart = () => {
                 onChangeSwitch={handleChangeSwitch}
                 selectedRangeDate={selectedRangeDate}
                 firstActiveMetricTitle={activeMetrics && activeMetrics[0].title}
-                secondActiveMetricTitle={activeMetrics[1] && activeMetrics[1].title}
+                secondActiveMetricTitle={activeMetrics && activeMetrics[1].title}
                 showWeekChart={showWeekChart}
                 showDailyChart={showDailyChart}
             />

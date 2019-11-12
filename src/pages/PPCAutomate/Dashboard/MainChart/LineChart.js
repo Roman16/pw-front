@@ -46,7 +46,7 @@ const Chart = ({
                     />
                 }/>
 
-                {(activeMetrics[0] && activeMetrics[0].key && showWeekChart) && <Line
+                {(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line
                     yAxisId="left"
                     type="monotone"
                     dataKey="week_first_metric"
@@ -55,7 +55,7 @@ const Chart = ({
                     dot={false}
                 />}
 
-                {(activeMetrics[0] && activeMetrics[0].key && showDailyChart) && <Line
+                {(activeMetrics && activeMetrics[0].key && showDailyChart) && <Line
                     yAxisId='left'
                     type="linear"
                     strokeOpacity={0.5}
@@ -67,7 +67,7 @@ const Chart = ({
                 />}
 
 
-                {(activeMetrics[1] && activeMetrics[1].key && showWeekChart) && <Line
+                {(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line
                     yAxisId="right"
                     type="monotone"
                     dataKey="week_second_metric"
@@ -76,7 +76,7 @@ const Chart = ({
                     dot={false}
                 />}
 
-                {(activeMetrics[1] && activeMetrics[1].key && showDailyChart) && <Line
+                {(activeMetrics && activeMetrics[1].key && showDailyChart) && <Line
                     yAxisId='right'
                     type="linear"
                     strokeOpacity={0.5}
