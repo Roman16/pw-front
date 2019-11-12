@@ -2,15 +2,14 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { Icon } from 'antd';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import shortid from 'shortid';
 
 import { regionsMenu, ppcAutomateMenu } from './menu';
 import { getClassNames } from '../../utils';
 import { userActions } from '../../actions/user.actions';
-import ItemIcon from './ItemIcon';
+import ItemIcon from '../ItemIcon/ItemIcon';
 import logo from '../../assets/img/logo.svg';
-import showMenu from '../../assets/img/icons/show-menu-arrow.svg';
+// import showMenu from '../../assets/img/icons/show-menu-arrow.svg';  // стрелка из фигмы в разделе сайдбар > страна
 import './Sidebar.less';
 import './transition.less';
 
@@ -69,11 +68,6 @@ const Sidebar = () => {
     <div className={`sidebar ${className}`}>
       <div className="sidebar-header">
         <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed} />
-        {/* {collapsed && (
-          <Link to="/" className="sidebar-logo">
-            <img src={logo} alt="logo" />
-          </Link>
-        )} */}
         <Link to="/" className="sidebar-logo">
           <img src={logo} alt="logo" />
         </Link>
@@ -181,59 +175,6 @@ const Sidebar = () => {
                     </ul>
                   </div>
                 )}
-
-                {/* {collapsed && (
-                  <CSSTransition
-                    classNames="fade"
-                    in={automate}
-                    timeout={300}
-                    unmountOnExit
-                  >
-                    <ul className="automate-list">
-                      {ppcAutomateMenu.map(item => (
-                        <li className="automate-item" key={shortid.generate()}>
-                          <NavLink
-                            className="automate-link"
-                            activeClassName="automate-link-active"
-                            exact
-                            to={`/ppc${item.link}`}
-                          >
-                            {item.title}
-                          </NavLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </CSSTransition>
-                )}
-
-                {!collapsed && (
-                  <CSSTransition
-                    classNames="fade"
-                    in={automate}
-                    timeout={300}
-                    unmountOnExit
-                  >
-                    <div className="collapsed-automate">
-                      <ul className="automate-list">
-                        {ppcAutomateMenu.map(item => (
-                          <li
-                            className="automate-item"
-                            key={shortid.generate()}
-                          >
-                            <NavLink
-                              className="automate-link"
-                              activeClassName="automate-link-active"
-                              exact
-                              to={`/ppc${item.link}`}
-                            >
-                              {item.title}
-                            </NavLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </CSSTransition>
-                )} */}
               </li>
             </ul>
           </nav>

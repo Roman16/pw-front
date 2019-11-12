@@ -80,7 +80,7 @@ const routers = () => {
 
         <PrivateRoute exact path="/mws" component={MWS} />
         <PrivateRoute exact path="/ppc" component={PPC} />
-        <PrivateRoute exact path="/zero-to-hero" component={Account} />
+        {/* <PrivateRoute exact path="/account/settings" component={Account} /> */}
 
         <Route component={NotFound} />
       </Switch>
