@@ -5,17 +5,28 @@
   flex-wrap: wrap;
   align-content: flex-start;
 
-  .metric-item:nth-child(3) {
-    border-top: 3px solid #8FD39D;
-  }
-
-  .metric-item:nth-child(5) {
-    border-top: 3px solid #6D6DF6;
-  }
-
   .metric-item {
     .metric-item-default-style();
     margin-right: .5%;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    .active-metric {
+      width: 100%;
+      height: 3px;
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      &.green {
+        background: #8FD39D;
+      }
+
+      &.violet {
+        background: #6D6DF6;
+      }
+    }
 
     &:nth-child(8n + 8) {
       margin-right: 0 !important;
@@ -40,6 +51,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 12%;
+  min-width: 150px;
   height: 100px;
   padding: 8px 12px 8px;
   margin-bottom: 25px;

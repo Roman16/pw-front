@@ -1,5 +1,4 @@
 @import '../../style/variables.less';
-
 .product-list {
   width: 356px;
   display: flex;
@@ -89,6 +88,7 @@
     }
 
     & > div.product-item-content {
+      font-size: 1rem;
       flex: 1 1;
       display: flex;
       flex-direction: column;
@@ -112,32 +112,55 @@
       bottom: 0;
       width: 25%;
     }
+
+    .optimization-waiting {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 23%;
+
+      .ant-spin {
+        position: absolute;
+        right: 15%;
+        bottom: 15%;
+
+        .ant-spin-dot-item {
+          background-color: #ec7f5c;
+        }
+      }
+    }
+  }
+
+  .ant-pagination {
+    margin: auto 0 0 0;
   }
 
   //-------------------------------------
   /*Retina CSS */
   //-------------------------------------
-  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-  & {
-    width: 267px;
+  @media only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min-device-pixel-ratio: 2) {
+    & {
+      width: 267px;
 
-    .ant-input-search {
-      .ant-input {
-       height: 24px;
-        font-size: 1rem;
+      .ant-input-search {
+        .ant-input {
+          height: 24px;
+          font-size: 1rem;
+        }
+      }
+
+      .select-all-products {
+        .ant-btn {
+          width: 105px;
+          height: 24px;
+        }
+      }
+
+      .product-item {
+        height: 69px;
       }
     }
-
-    .select-all-products {
-      .ant-btn {
-        width: 105px;
-        height: 24px;
-      }
-    }
-
-    .product-item {
-      height: 69px;
-    }
-  }
   }
 }

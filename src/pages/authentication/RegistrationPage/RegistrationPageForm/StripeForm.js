@@ -46,7 +46,7 @@ class StripeForm extends Component {
 
         return (
             <div className="stripe-form">
-                <div className="form-title">Billing Information</div>
+                <div className="form-title">Billing Information (optional)</div>
 
                 <div className="card-container">
                     <div className="card-container__card">

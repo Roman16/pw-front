@@ -1,30 +1,16 @@
 import React from "react";
-import {useDispatch, useSelector} from 'react-redux';
-import {dashboardActions} from '../../../../actions/dashboard.actions';
 import {Switch} from "antd";
 import dailyLineIcon from '../../../../assets/img/icons/daily-line.svg';
-
 import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
+import moment from "moment";
 
-const ChartHeader = () => {
-    const dispatch = useDispatch();
-    const {showWeekChart, showDailyChart} = useSelector(state => ({
-        showWeekChart: state.dashboard.showWeekChart,
-        showDailyChart: state.dashboard.showDailyChart,
-    }));
-
-    const handleChangeSwitch = (type) => () => {
-        dispatch(dashboardActions.switchChart(type))
-    };
-
+const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveMetricTitle, secondActiveMetricTitle, showWeekChart, showDailyChart}) => {
     return (
         <div className="chart-header">
-            <div className='pair-name'> Clicks / CTR</div>
-
             <div className='switch-block week-switch'>
                 <Switch
                     checked={showWeekChart}
-                    onChange={handleChangeSwitch('week')}
+                    onChange={onChangeSwitch('week')}
                 />
 
                 7-day average
@@ -38,7 +24,7 @@ const ChartHeader = () => {
             <div className='switch-block daily-switch'>
                 <Switch
                     checked={showDailyChart}
-                    onChange={handleChangeSwitch('daily')}
+                    onChange={onChangeSwitch('daily')}
                 />
 
                 Daily
@@ -46,20 +32,27 @@ const ChartHeader = () => {
 
             <img src={dailyLineIcon} alt="" className='daily-icon'/>
 
-            <div className='chart-legend'>
-                <div className="first-line">
-                    <div className="green-line"></div>
-                    Clicks
-                </div>
+            <div className='pair-name'>
+                {firstActiveMetricTitle}
+                {(firstActiveMetricTitle && secondActiveMetricTitle) && '/'}
+                {secondActiveMetricTitle}
+            </div>
 
-                <div className="second-line">
+            <div className='chart-legend'>
+                {firstActiveMetricTitle && <div className="first-line">
+                    <div className="green-line"></div>
+                    {firstActiveMetricTitle}
+                </div>}
+
+                {secondActiveMetricTitle && <div className="second-line">
                     <div className="violet-line"></div>
-                    CTR
-                </div>
+                    {secondActiveMetricTitle}
+                </div>}
             </div>
 
             <DatePicker
-                timeRange={(e) => console.log(e)}
+                timeRange={timeRange}
+                defaultValue={[moment(selectedRangeDate.startDate), moment(selectedRangeDate.endDate)]}
             />
         </div>
     )

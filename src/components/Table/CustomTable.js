@@ -29,7 +29,7 @@ const CustomTable = ({
                                 item.width ? {width: item.width} : {flex: 1}
                             }
                         >
-                            {item.title}
+                            {typeof item.title === "function" ? item.title() : item.title}
                         </div>
                     ))}
                 </div>

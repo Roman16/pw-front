@@ -7,10 +7,46 @@ import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arr
 import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
 import downWhiteIcon from '../../../../assets/img/icons/metric-arrows/down-white-arrow.svg';
 
-const MetricItem = ({metric: {title, info, key, label, type, active}, metric, removeSelectedMetric}) => {
+const RenderMetricChanges = ({value}) => (
+    <div className='metric-item__changes'>
+        {value >= 25 && <div className='upward-changes'>
+            {value}
+            <img src={upWhiteIcon} alt=""/>
+        </div>}
+        {(value > 0 && value < 25) && <div className='up-changes'>
+            {value}
+            <img src={upGreenIcon} alt=""/>
+        </div>}
+        {(value <= 0 && value > -25) && <div className='down-changes'>
+            {value}
+            <img src={downBlackIcon} alt=""/>
+        </div>}
+        {(value <= -25) && <div className='downward-changes'>
+            {value}
+            <img src={downWhiteIcon} alt=""/>
+        </div>}
+    </div>
+);
+
+
+const MetricItem = ({metric: {title, info = '', key, label, type, metric_changes, metric_main_value = 0}, metric, removeSelectedMetric, activeMetrics, onActivateMetric, onDeactivateMetric}) => {
+    const handleClick = () => {
+        if (activeMetrics.find(item => item.key === key)) {
+            onDeactivateMetric(metric)
+        } else {
+            onActivateMetric(metric)
+        }
+    };
+
+    const handleRemoveItem = (e) => {
+        e.stopPropagation();
+        removeSelectedMetric(metric)
+    };
+
     return (
-        <div className={active ? 'metric-item active-metric' : 'metric-item'}>
-            {/*<div className='active-metric'></div>*/}
+        <div className='metric-item' onClick={handleClick}>
+            {(activeMetrics[0] && activeMetrics[0].key === key) && <div className='active-metric green'></div>}
+            {(activeMetrics[1] && activeMetrics[1].key === key) && <div className='active-metric violet'></div>}
 
             <div className="title-info">
                 {title}
@@ -20,33 +56,19 @@ const MetricItem = ({metric: {title, info, key, label, type, active}, metric, re
                     <Tooltip description={title}/>
                 }
 
-                <div className="close" onClick={() => removeSelectedMetric(metric)}>
+                <div className="close" onClick={handleRemoveItem}>
                     <img src={closeIcon} alt=""/>
                 </div>
             </div>
 
-            <div className='metric-item__changes'>
-                {key === 'ctr' && <div className='upward-changes'>
-                    +30.8%
-                    <img src={upWhiteIcon} alt=""/>
-                </div>}
-                {key === 'impressions' && <div className='up-changes'>
-                    +10.8%
-                    <img src={upGreenIcon} alt=""/>
-                </div>}
-                {key === 'clicks' && <div className='down-changes'>
-                    -12.8%
-                    <img src={downBlackIcon} alt=""/>
-                </div>}
-                {key === 'spend' && <div className='downward-changes'>
-                    -25.8%
-                    <img src={downWhiteIcon} alt=""/>
-                </div>}
-            </div>
+            <RenderMetricChanges
+                value={metric_changes}
+            />
+
 
             <div className='metric-item__description'>
                 <div className="value">
-                    {type === 'currency' ? `$7,507` : (type === 'percent' ? `18%` : '7,564')}
+                    {type === 'currency' ? `$${metric_main_value}` : (type === 'percent' ? `${metric_main_value}%` : metric_main_value)}
                 </div>
                 <div className='label'>{label}</div>
             </div>

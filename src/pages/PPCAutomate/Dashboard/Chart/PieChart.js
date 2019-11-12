@@ -11,7 +11,6 @@ const COLORS = ['#5052AD', '#6D6DF6'];
 
 
 const FirstPieChart = () => {
-
     return (
         <div className="pie-chart-container">
             <ResponsiveContainer height={300} width='100%'>
@@ -24,9 +23,9 @@ const FirstPieChart = () => {
                         outerRadius={100}
                         paddingAngle={0}
                         dataKey="value"
-                        blendStroke='#5052AD'
-                        animationBegin={'100'}
-                        animationDuration={'500'}
+                        blendStroke={true}
+                        animationBegin={100}
+                        animationDuration={500}
                     >
                         {
                             data.map((entry, index) => <Cell key={`cell-${index}`}

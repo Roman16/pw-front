@@ -1,6 +1,5 @@
 .chart {
-  flex: 1;
-  height: max-content;
+  width: calc(30% - 25px);
   background: #fff;
   border-radius: 8px;
   padding: 32px 24px 0;
@@ -9,6 +8,7 @@
   .bloc-title {
     display: flex;
     align-items: center;
+    height: 5%;
 
     .title {
       width: max-content;
@@ -29,22 +29,62 @@
         width: 2rem;
         height: 2rem;
         cursor: pointer;
-        margin: 0 20px 0 0;
+        margin: 0 0 0 20px;
       }
     }
   }
 
-  .bar-chart-description {
-    text-align: right;
-    padding: 5px 25px 0 0;
-    font-size: 1rem;
-    line-height: 16px;
+  .bar-chart-legend {
+    display: flex;
+    align-items: center;
+    margin: 40px 0 30px 0;
 
-    color: #343C5A;
+    .first-bar,
+    .second-bar {
+      display: flex;
+      align-items: center;
+      margin: 0 15px 0 0;
+      font-size: 1rem;
+      letter-spacing: -0.05px;
+      color: #343C5A;
+
+      .example-fill {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        margin: 0 12px 0 0;
+      }
+    }
+
+    .first-bar .example-fill {
+      background: #6D6DF6;
+    }
+    .second-bar .example-fill {
+      background: #95D6FF;
+    }
+
+    .bar-chart-description {
+      text-align: right;
+      font-size: 1rem;
+      line-height: 16px;
+      color: #343C5A;
+      margin: 0 0 0 auto;
+    }
   }
 
+  .recharts-responsive-container.responsive-bar-container {
+    margin: 0 0 48px -20px;
+  }
+
+
   .pie-chart-container {
+
+    .recharts-responsive-container {
+      margin-top: 70px;
+    }
+
     .chart-legend {
+      margin: 40px 0 0 0;
       & > div {
         width: 100%;
         display: flex;
@@ -63,7 +103,7 @@
           width: 16px;
           height: 16px;
           border-radius: 4px;
-          margin: 0 12px 0 0 ;
+          margin: 0 12px 0 0;
         }
 
         .value {

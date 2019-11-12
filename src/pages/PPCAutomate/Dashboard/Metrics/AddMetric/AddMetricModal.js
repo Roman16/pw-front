@@ -17,11 +17,12 @@ const AddMetricModal = ({visibleModal, handleOk, handleCancel, addMetric, remove
             </div>
 
             <div className='visible-list'>
-                {visibleItems.length > 0 ? visibleItems.map((item) => (
+                {visibleItems.length > 0 ? visibleItems.map((item, index) => (
                         <ModalMetricItem
+                            key={`visible-${item.key}`}
                             item={item}
                             removeMetric={removeMetric}
-                            type='visible'
+                            listType='visible'
                         />
                     )) :
                     <div className='default-visible-item'>
@@ -33,11 +34,12 @@ const AddMetricModal = ({visibleModal, handleOk, handleCancel, addMetric, remove
             <div className='hidden-list__title'>Hidden</div>
 
             <div className='hidden-list'>
-                {hiddenItems.map((item) => (
+                {hiddenItems.map((item, index) => (
                     <ModalMetricItem
+                        key={`hidden-${item.key}`}
                         item={item}
                         addMetric={addMetric}
-                        type='hidden'
+                        listType='hidden'
                     />
                 ))}
             </div>

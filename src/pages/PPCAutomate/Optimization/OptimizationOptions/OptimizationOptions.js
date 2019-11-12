@@ -70,25 +70,26 @@ const OptimizationOptions = ({selectedProduct}) => {
             [name]: checked
         });
 
-        if (product.status === 'RUNNING') {
-            dispatch(productsActions.updateOptions({
-                optimization_strategy: product.optimization_strategy,
-                add_negative_keywords: product.add_negative_keywords,
-                optimize_keywords: product.optimize_keywords,
-                create_new_keywords: product.create_new_keywords,
-                optimize_pats: product.optimize_pats,
-                add_negative_pats: product.add_negative_pats,
-                create_new_pats: product.create_new_pats,
-                [name]: checked
-            }))
-        } else {
-            dispatch(productsActions.updateOptions({[name]: checked}));
-        }
+        dispatch(productsActions.updateOptions({[name]: checked}));
 
         clearTimeout(timerIdSearch);
         timerIdSearch = setTimeout(() => {
-            if (product.status === 'RUNNING')
+            if (product.status === 'RUNNING') {
                 updateProduct({...product, [name]: checked});
+
+                dispatch(
+                    productsActions.updateOptions({
+                        optimization_strategy: product.optimization_strategy,
+                        add_negative_keywords: product.add_negative_keywords,
+                        optimize_keywords: product.optimize_keywords,
+                        create_new_keywords: product.create_new_keywords,
+                        optimize_pats: product.optimize_pats,
+                        add_negative_pats: product.add_negative_pats,
+                        create_new_pats: product.create_new_pats,
+                        [name]: checked
+                    })
+                );
+            }
         }, delay);
     };
 
@@ -97,18 +98,22 @@ const OptimizationOptions = ({selectedProduct}) => {
     };
 
     useEffect(() => {
-        if (!selectedProduct.status || selectedProduct.status === 'STOPPED' || selectedAll)
+        if (
+            !selectedProduct.status ||
+            selectedProduct.status === 'STOPPED' ||
+            selectedAll
+        )
             changeOptions(defaultOptions);
         else if (selectedProduct.status === 'RUNNING')
             changeOptions(selectedProduct);
-    }, [selectedAll, selectedProduct]);
+    }, [selectedAll, selectedProduct.id]);
 
     return (
         <div className="optimize-options">
             <div className="options-content">
-                {options.map(({text, value, name}) => (
+                {options.map(({text, value, name}, index) => (
                     <CheckBoxItem
-                        key={text}
+                        key={`${value}_${index}`}
                         text={text}
                         value={value}
                         name={name}
