@@ -8,22 +8,26 @@ import './Metrics.less';
 
 const Metrics = () => {
     const dispatch = useDispatch();
-    const {selectedMetrics, activeMetrics} = useSelector(state => ({
+    const {selectedMetrics, activeMetrics, selectedRangeDate} = useSelector(state => ({
         selectedMetrics: state.dashboard.selectedMetrics,
         activeMetrics: state.dashboard.activeMetrics,
+        selectedRangeDate: state.dashboard.selectedRangeDate,
     }));
 
-    const removeSelectedMetric = (metric) => {
-        dispatch(dashboardActions.removeSelectedMetric(metric))
-    };
+    const removeSelectedMetric  = (metric) => dispatch(dashboardActions.removeSelectedMetric(metric));
 
     const activateMetric = (metric) => dispatch(dashboardActions.activateMetric(metric));
 
-    const deactivateMetric = (metric) =>  dispatch(dashboardActions.deactivateMetric(metric));
+    const deactivateMetric = (metric) => dispatch(dashboardActions.deactivateMetric(metric));
 
-    useEffect(() => {
-        // dispatch(dashboardActions.getMetricsStatistics())
-    }, []);
+    const getMetricsStatistics = () => {
+        dispatch(dashboardActions.getMetricsStatistics({
+            startDate: selectedRangeDate.startDate,
+            endDate: selectedRangeDate.endDate,
+        }));
+    };
+
+    useEffect(() => {getMetricsStatistics();}, [selectedRangeDate]);
 
     return (
         <div className="metrics-block">

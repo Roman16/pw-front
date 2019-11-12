@@ -55,6 +55,7 @@ const SecondBarChart = () => {
 
             <BarChart
                 data={data}
+                margin={{ top: 20}}
             >
                 <CartesianGrid
                     vertical={false}

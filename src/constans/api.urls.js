@@ -22,4 +22,7 @@ export const reportsUrls = {
 
 export const dashboardUrls = {
     allMetricsStatistic: 'ppc-automation/metrics-statistic',
+    chartData: 'ppc-automation/main-chart-data',
+    products: 'products/settings/list',
+    // products: 'products/dashboard/list',
 };

@@ -34,8 +34,8 @@ const Chart = () => {
 
             {defaultChart === 'bar' && <Fragment>
                 <div className='bar-chart-legend'>
-                    <div className='first-bar'><div className='example-fill'></div>{activeMetrics[0].title}</div>
-                    <div className='second-bar'><div className='example-fill'></div>{activeMetrics[1].title}</div>
+                    <div className='first-bar'><div className='example-fill'></div>Organic</div>
+                    <div className='second-bar'><div className='example-fill'></div>PPC</div>
 
                     <div className='bar-chart-description'>Last 7 Days</div>
                 </div>

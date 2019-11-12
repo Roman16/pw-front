@@ -2,207 +2,211 @@
 @import '../../../style/variables.less';
 
 .optimization-page {
-    height: 100vh;
-    //display: grid;
-    //grid-template-columns: 356px 1fr;
-    //grid-gap: 24px;
-    display: flex;
+  height: 100vh;
+  //display: grid;
+  //grid-template-columns: 356px 1fr;
+  //grid-gap: 24px;
+  display: flex;
 
-    .product-list {
-        margin: 0 20px 0 0;
-    }
+  .product-list {
+    margin: 0 20px 0 0;
+  }
 
   .product-options {
     flex: 1;
     display: grid;
-    grid-template-rows: repeat(3, minmax(min-content, max-content));
+    //grid-template-rows: repeat(3, minmax(min-content, max-content));
+
+    grid-template-rows: max-content min-content 1fr;
+
+
     row-gap: 23px;
     overflow: auto;
 
-        & > div {
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
+    & > div {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
 
-            &:first-child {
-                padding: 24px 16px 0 24px;
-            }
-        }
-
-        .options {
-            display: grid;
-            grid-template-columns: 400px minmax(min-content, 100%);
-            grid-template-rows: repeat(3, minmax(min-content, max-content));
-            grid-template-areas: 'info info' 'optionsStrategy optionsStrategy' 'control control';
-            column-gap: 60px;
-
-            @media (max-width: 1814px) {
-                grid-template-columns: 330px minmax(min-content, 100%);
-                column-gap: 20px;
-            }
-
-            .product-info {
-                grid-area: info;
-                display: grid;
-                grid-template-columns: 400px minmax(min-content, 100%);
-                column-gap: 60px;
-                margin-bottom: 30px;
-                color: @second-default-dark;
-                font-size: 20px;
-                font-weight: 600;
-                transition: all 0.5s ease-in;
-
-                @media (max-width: 1869px) {
-                    column-gap: 20px;
-                }
-
-                @media (max-width: 1814px) {
-                    grid-template-columns: 330px minmax(min-content, 100%);
-                }
-
-                @media (max-width: @big-desktop) {
-                    .product-info-strategy {
-                        flex-direction: column-reverse;
-                    }
-                }
-
-                &.more {
-                    margin-bottom: 14px;
-                }
-
-                .product-info-strategy {
-                    display: flex;
-                    justify-content: space-between;
-                    position: relative;
-                }
-
-                i {
-                    cursor: pointer;
-                    margin-left: 10px;
-                    color: @action-color-dark;
-                }
-
-                .description-all {
-                    position: absolute;
-                    font-size: 15px;
-                    color: @dangerous-color;
-                    top: 30px;
-
-                    @media (max-width: @big-desktop) {
-                        top: 60px;
-                    }
-                }
-            }
-
-            .product-info-strategy {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-            }
-
-            .options-strategy {
-                grid-area: optionsStrategy;
-                display: grid;
-                grid-template-columns: 400px minmax(min-content, 100%);
-                grid-template-rows: repeat(2, minmax(min-content, max-content));
-                grid-template-areas: 'options strategy' '. descriptions';
-                column-gap: 60px;
-                overflow: hidden;
-                transition: all 0.5s ease-in;
-
-                @media (max-width: 1814px) {
-                    grid-template-columns: 330px 1fr;
-                    column-gap: 20px;
-                }
-
-                @media (max-width: @big-desktop) {
-                    grid-template-areas: 'options strategy' 'descriptions strategy';
-                }
-
-                .optimize-options {
-                    grid-area: options;
-                }
-
-                .optimize-strategy {
-                    grid-area: strategy;
-                }
-
-                .descriptions {
-                    grid-area: descriptions;
-                }
-
-                &.less {
-                    max-height: 420px;
-
-                    @media (max-width: @big-desktop) {
-                        max-height: 615px;
-                    }
-                }
-
-                &.more {
-                    max-height: 0;
-                }
-
-                @media (max-width: 1869px) {
-                    column-gap: 20px;
-                }
-            }
-
-            .less-more-control {
-                grid-area: control;
-                display: flex;
-                justify-content: center;
-                align-items: flex-end;
-                position: relative;
-                transition: all 0.5s ease-in;
-
-                &.less {
-                    height: 25px;
-                    top: 0;
-                    margin-top: 5px;
-                }
-
-                &.more {
-                    height: 0;
-                    top: 10px;
-                    margin: 0;
-                }
-
-                .icon {
-                    width: 32px;
-                    height: 25px;
-                    border: 1px solid #bdc6cf;
-                    text-align: center;
-                    background: #fff;
-                    cursor: pointer;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    transition: all 0.5s ease-in;
-
-                    i {
-                        color: @action-color;
-                        font-size: 18px;
-                        transition: all 0.5s ease-in;
-                    }
-
-                    &.less {
-                        border-radius: 16px 16px 0 0;
-                        border-bottom: 0;
-                    }
-
-                    &.more {
-                        border: none;
-                        border-radius: 0 0 16px 16px;
-                        border-top: 0;
-                        position: absolute;
-
-                        i {
-                            transform: rotateZ(180deg);
-                        }
-                    }
-                }
-            }
-        }
+      &:first-child {
+        padding: 24px 16px 0 24px;
+      }
     }
+
+    .options {
+      display: grid;
+      grid-template-columns: 400px minmax(min-content, 100%);
+      grid-template-rows: repeat(3, minmax(min-content, max-content));
+      grid-template-areas: 'info info' 'optionsStrategy optionsStrategy' 'control control';
+      column-gap: 60px;
+
+      @media (max-width: 1814px) {
+        grid-template-columns: 330px minmax(min-content, 100%);
+        column-gap: 20px;
+      }
+
+      .product-info {
+        grid-area: info;
+        display: grid;
+        grid-template-columns: 400px minmax(min-content, 100%);
+        column-gap: 60px;
+        margin-bottom: 30px;
+        color: @second-default-dark;
+        font-size: 20px;
+        font-weight: 600;
+        transition: all 0.5s ease-in;
+
+        @media (max-width: 1869px) {
+          column-gap: 20px;
+        }
+
+        @media (max-width: 1814px) {
+          grid-template-columns: 330px minmax(min-content, 100%);
+        }
+
+        @media (max-width: @big-desktop) {
+          .product-info-strategy {
+            flex-direction: column-reverse;
+          }
+        }
+
+        &.more {
+          margin-bottom: 14px;
+        }
+
+        .product-info-strategy {
+          display: flex;
+          justify-content: space-between;
+          position: relative;
+        }
+
+        i {
+          cursor: pointer;
+          margin-left: 10px;
+          color: @action-color-dark;
+        }
+
+        .description-all {
+          position: absolute;
+          font-size: 15px;
+          color: @dangerous-color;
+          top: 30px;
+
+          @media (max-width: @big-desktop) {
+            top: 60px;
+          }
+        }
+      }
+
+      .product-info-strategy {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .options-strategy {
+        grid-area: optionsStrategy;
+        display: grid;
+        grid-template-columns: 400px minmax(min-content, 100%);
+        grid-template-rows: repeat(2, minmax(min-content, max-content));
+        grid-template-areas: 'options strategy' '. descriptions';
+        column-gap: 60px;
+        overflow: hidden;
+        transition: all 0.5s ease-in;
+
+        @media (max-width: 1814px) {
+          grid-template-columns: 330px 1fr;
+          column-gap: 20px;
+        }
+
+        @media (max-width: @big-desktop) {
+          grid-template-areas: 'options strategy' 'descriptions strategy';
+        }
+
+        .optimize-options {
+          grid-area: options;
+        }
+
+        .optimize-strategy {
+          grid-area: strategy;
+        }
+
+        .descriptions {
+          grid-area: descriptions;
+        }
+
+        &.less {
+          max-height: 420px;
+
+          @media (max-width: @big-desktop) {
+            max-height: 615px;
+          }
+        }
+
+        &.more {
+          max-height: 0;
+        }
+
+        @media (max-width: 1869px) {
+          column-gap: 20px;
+        }
+      }
+
+      .less-more-control {
+        grid-area: control;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        position: relative;
+        transition: all 0.5s ease-in;
+
+        &.less {
+          height: 25px;
+          top: 0;
+          margin-top: 5px;
+        }
+
+        &.more {
+          height: 0;
+          top: 10px;
+          margin: 0;
+        }
+
+        .icon {
+          width: 32px;
+          height: 25px;
+          border: 1px solid #bdc6cf;
+          text-align: center;
+          background: #fff;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: all 0.5s ease-in;
+
+          i {
+            color: @action-color;
+            font-size: 18px;
+            transition: all 0.5s ease-in;
+          }
+
+          &.less {
+            border-radius: 16px 16px 0 0;
+            border-bottom: 0;
+          }
+
+          &.more {
+            border: none;
+            border-radius: 0 0 16px 16px;
+            border-top: 0;
+            position: absolute;
+
+            i {
+              transform: rotateZ(180deg);
+            }
+          }
+        }
+      }
+    }
+  }
 }
