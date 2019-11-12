@@ -158,6 +158,16 @@ const Sidebar = () => {
                         </NavLink>
                       </li>
                     ))}
+
+                    <li className="automate-item">
+                      <a
+                          className="automate-link"
+                          onClick={() => window.open('/ppc-scanner', '_self')}
+                      >
+                        PPC Scanner
+                      </a>
+                    </li>
+
                   </ul>
                 )}
 
