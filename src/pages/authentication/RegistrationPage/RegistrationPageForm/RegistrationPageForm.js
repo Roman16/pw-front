@@ -109,7 +109,7 @@ class RegistrationPage extends Component {
                     window.grecaptcha.ready(() => {
                         window.grecaptcha.execute(recaptchaKey, {action: 'registration'})
                             .then((token) => {
-                                res ?
+                                res.token ?
                                     this.props.regist({
                                         name,
                                         last_name,
