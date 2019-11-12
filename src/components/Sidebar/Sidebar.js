@@ -69,11 +69,14 @@ const Sidebar = () => {
     <div className={`sidebar ${className}`}>
       <div className="sidebar-header">
         <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed} />
-        {collapsed && (
+        {/* {collapsed && (
           <Link to="/" className="sidebar-logo">
             <img src={logo} alt="logo" />
           </Link>
-        )}
+        )} */}
+        <Link to="/" className="sidebar-logo">
+          <img src={logo} alt="logo" />
+        </Link>
       </div>
 
       <div className="sidebar-menu">
