@@ -11,8 +11,8 @@ const initialState = {
         startDate: moment(new Date()).subtract(1, 'months'),
         endDate: moment(new Date())
     },
-    activeMetrics: metricsListArray.slice(0, 2),
     allMetrics: metricsListArray,
+    activeMetrics: metricsListArray.slice(0, 2),
     selectedMetrics: metricsListArray.slice(0, 5)
 };
 
@@ -65,6 +65,14 @@ export function dashboard(state = initialState, action) {
             return {
                 ...state,
                 activeMetrics: newActiveMetrics
+            };
+
+        case dashboardConstants.DEACTIVATE_METRIC:
+            metricClickCount--;
+
+            return {
+                ...state,
+                activeMetrics: state.activeMetrics.map(item => item.key === action.payload.key ? {} : item)
             };
 
 

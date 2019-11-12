@@ -13,34 +13,33 @@ const Metrics = () => {
         activeMetrics: state.dashboard.activeMetrics,
     }));
 
-    const [metrics, changeMetricsList] = useState(selectedMetrics);
-
     const removeSelectedMetric = (metric) => {
         dispatch(dashboardActions.removeSelectedMetric(metric))
     };
 
-    const activateMetric = (metric) => {
-        dispatch(dashboardActions.activateMetric(metric));
-    };
+    const activateMetric = (metric) => dispatch(dashboardActions.activateMetric(metric));
+
+    const deactivateMetric = (metric) =>  dispatch(dashboardActions.deactivateMetric(metric));
 
     useEffect(() => {
-        changeMetricsList(selectedMetrics)
-    }, [selectedMetrics]);
+        // dispatch(dashboardActions.getMetricsStatistics())
+    }, []);
 
     return (
         <div className="metrics-block">
-            {metrics.length > 0 && metrics.map(selected => (
+            {selectedMetrics.length > 0 && selectedMetrics.map(selected => (
                 <MetricItem
                     key={selected.key}
                     removeSelectedMetric={removeSelectedMetric}
                     metric={selected}
                     activeMetrics={activeMetrics}
-                    activateMetric={activateMetric}
+                    onActivateMetric={activateMetric}
+                    onDeactivateMetric={deactivateMetric}
                 />
             ))}
 
 
-            {metrics.length < 16 && <AddMetric/>}
+            {selectedMetrics.length < 16 && <AddMetric/>}
         </div>
     )
 };

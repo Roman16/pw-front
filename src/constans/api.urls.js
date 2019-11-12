@@ -19,3 +19,7 @@ export const reportsUrls = {
     allReports: 'ppc-automation/reports',
     downloadReports: 'ppc-automation/reports/download',
 };
+
+export const dashboardUrls = {
+    allMetricsStatistic: 'ppc-automation/metrics-statistic',
+};

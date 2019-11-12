@@ -7,9 +7,17 @@ import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arr
 import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
 import downWhiteIcon from '../../../../assets/img/icons/metric-arrows/down-white-arrow.svg';
 
-const MetricItem = ({metric: {title, info, key, label, type}, metric, removeSelectedMetric, activeMetrics, activateMetric}) => {
+const MetricItem = ({metric: {title, info, key, label, type}, metric, removeSelectedMetric, activeMetrics, onActivateMetric, onDeactivateMetric}) => {
+    const handleClick = () => {
+        if (activeMetrics.find(item => item.key === key)) {
+            onDeactivateMetric(metric)
+        } else {
+            onActivateMetric(metric)
+        }
+    };
+
     return (
-        <div className='metric-item' onClick={() => activateMetric(metric)}>
+        <div className='metric-item' onClick={handleClick}>
             {(activeMetrics[0] && activeMetrics[0].key === key) && <div className='active-metric green'></div>}
             {(activeMetrics[1] && activeMetrics[1].key === key) && <div className='active-metric violet'></div>}
 

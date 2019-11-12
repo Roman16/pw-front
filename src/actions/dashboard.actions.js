@@ -1,12 +1,28 @@
-import {dashboardConstants} from '../constans/actions.type';
+import {dashboardConstants, productsConstants} from '../constans/actions.type';
+import {dashboardServices} from '../services/dashboard.services'
 
 export const dashboardActions = {
     switchChart,
     removeSelectedMetric,
     updateMetricList,
     activateMetric,
-    selectDateRange
+    deactivateMetric,
+    selectDateRange,
+    getMetricsStatistics
 };
+
+function getMetricsStatistics(parameters) {
+    return dispatch => {
+        dashboardServices.fetchMetricsStatistics(parameters)
+            .then((res) => {
+                dispatch({
+                    type: productsConstants.SET_METRICS_STATISTIC,
+                    payload: res
+                });
+            });
+    };
+
+}
 
 function switchChart(type) {
     const switchType = `SWITCH_${type.toUpperCase()}_CHART`;
@@ -36,11 +52,20 @@ function updateMetricList(metrics) {
     };
 }
 
-function activateMetric(metricKey) {
+function activateMetric(metric) {
     return dispatch => {
         dispatch({
             type: dashboardConstants.ACTIVATE_METRIC,
-            payload: metricKey
+            payload: metric
+        });
+    };
+}
+
+function deactivateMetric(metric) {
+    return dispatch => {
+        dispatch({
+            type: dashboardConstants.DEACTIVATE_METRIC,
+            payload: metric
         });
     };
 }
