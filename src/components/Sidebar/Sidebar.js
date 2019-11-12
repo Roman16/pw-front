@@ -69,11 +69,14 @@ const Sidebar = () => {
     <div className={`sidebar ${className}`}>
       <div className="sidebar-header">
         <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed} />
-        {collapsed && (
+        {/* {collapsed && (
           <Link to="/" className="sidebar-logo">
             <img src={logo} alt="logo" />
           </Link>
-        )}
+        )} */}
+        <Link to="/" className="sidebar-logo">
+          <img src={logo} alt="logo" />
+        </Link>
       </div>
 
       <div className="sidebar-menu">
@@ -103,6 +106,7 @@ const Sidebar = () => {
                 >
                   <ItemIcon icon="zeroToHero" />
                   <span>Zero to Hero</span>
+                  {/* <div className="soon">soon</div> */}
                 </NavLink>
               </li>
 
@@ -116,6 +120,7 @@ const Sidebar = () => {
                 >
                   <ItemIcon icon="analytics" />
                   <span>Analytics</span>
+                  {/* <div className="soon">soon</div> */}
                 </NavLink>
               </li>
 
@@ -151,6 +156,7 @@ const Sidebar = () => {
                         >
                           {item.title}
                         </NavLink>
+                        {/* <div className="automate-soon">soon</div> */}
                       </li>
                     ))}
                   </ul>
@@ -169,6 +175,7 @@ const Sidebar = () => {
                           >
                             {item.title}
                           </NavLink>
+                          {/* <div className="automate-soon">soon</div> */}
                         </li>
                       ))}
                     </ul>
