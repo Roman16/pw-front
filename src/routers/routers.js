@@ -56,6 +56,8 @@ const ConnectedAmazonRoute = props => {
 const developer = process.env.REACT_APP_ENV === 'developer';
 
 const routers = () => {
+    console.log('ENV: -----', process.env.REACT_APP_ENV);
+
   return (
     <Router history={history}>
       <Switch>
