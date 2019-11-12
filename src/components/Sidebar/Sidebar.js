@@ -161,8 +161,8 @@ const Sidebar = () => {
 
                     <li className="automate-item">
                       <a
+                          href='/ppc-scanner'
                           className="automate-link"
-                          onClick={() => window.open('/ppc-scanner', '_self')}
                       >
                         PPC Scanner
                       </a>
