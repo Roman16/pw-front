@@ -119,7 +119,7 @@ const ProductsList = () => {
             title: (<span>Profit <Tooltip type='warning'/></span>),
             dataIndex: 'cpa',
             key: 'cpa',
-            width: '75px',
+            width: '90px',
             render: (text) => (
                 <div className='product-params'>
                     {text || '$123'}

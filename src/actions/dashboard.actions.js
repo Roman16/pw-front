@@ -4,7 +4,8 @@ export const dashboardActions = {
     switchChart,
     removeSelectedMetric,
     updateMetricList,
-    activateMetric
+    activateMetric,
+    selectDateRange
 };
 
 function switchChart(type) {
@@ -40,6 +41,15 @@ function activateMetric(metricKey) {
         dispatch({
             type: dashboardConstants.ACTIVATE_METRIC,
             payload: metricKey
+        });
+    };
+}
+
+function selectDateRange(dateRange) {
+    return dispatch => {
+        dispatch({
+            type: dashboardConstants.SELECTED_RANGE_DATE,
+            payload: dateRange
         });
     };
 }

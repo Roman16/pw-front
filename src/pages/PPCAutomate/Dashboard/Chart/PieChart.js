@@ -11,7 +11,6 @@ const COLORS = ['#5052AD', '#6D6DF6'];
 
 
 const FirstPieChart = () => {
-
     return (
         <div className="pie-chart-container">
             <ResponsiveContainer height={300} width='100%'>

@@ -19,8 +19,8 @@ const Metrics = () => {
         dispatch(dashboardActions.removeSelectedMetric(metric))
     };
 
-    const activateMetric = (key) => {
-        dispatch(dashboardActions.activateMetric(key));
+    const activateMetric = (metric) => {
+        dispatch(dashboardActions.activateMetric(metric));
     };
 
     useEffect(() => {

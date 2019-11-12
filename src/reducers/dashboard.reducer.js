@@ -1,12 +1,17 @@
 import {dashboardConstants} from '../constans/actions.type';
 import {metricsListArray} from '../pages/PPCAutomate/Dashboard/Metrics/metricsList';
+import moment from 'moment';
 
 let metricClickCount = 0;
 
 const initialState = {
     showWeekChart: true,
     showDailyChart: false,
-    activeMetrics: metricsListArray.slice(0, 2).map(item => item.key),
+    selectedRangeDate: {
+        startDate: moment(new Date()).subtract(1, 'months'),
+        endDate: moment(new Date())
+    },
+    activeMetrics: metricsListArray.slice(0, 2),
     allMetrics: metricsListArray,
     selectedMetrics: metricsListArray.slice(0, 5)
 };
@@ -17,15 +22,14 @@ export function dashboard(state = initialState, action) {
             return {
                 ...state,
                 showWeekChart: !state.showWeekChart,
-                showDailyChart: (state.showWeekChart && !state.showDailyChart) ? true : state.showDailyChart
+                // showDailyChart: (state.showWeekChart && !state.showDailyChart) ? true : state.showDailyChart
             };
 
         case dashboardConstants.SWITCH_DAILY_CHART:
             return {
                 ...state,
                 showDailyChart: !state.showDailyChart,
-                showWeekChart: (state.showDailyChart && !state.showWeekChart) ? true : state.showWeekChart
-
+                // showWeekChart: (state.showDailyChart && !state.showWeekChart) ? true : state.showWeekChart
             };
 
         case dashboardConstants.REMOVE_SELECTED_METRIC:
@@ -42,6 +46,16 @@ export function dashboard(state = initialState, action) {
                 selectedMetrics: action.payload
             };
 
+        case dashboardConstants.SELECTED_RANGE_DATE:
+            return {
+                ...state,
+                selectedRangeDate: {
+                    startDate: action.payload[0],
+                    endDate: action.payload[1]
+                }
+
+            };
+
         case dashboardConstants.ACTIVATE_METRIC:
             metricClickCount++;
 
@@ -52,6 +66,7 @@ export function dashboard(state = initialState, action) {
                 ...state,
                 activeMetrics: newActiveMetrics
             };
+
 
         default:
             return state;
