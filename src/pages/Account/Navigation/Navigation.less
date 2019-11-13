@@ -1,0 +1,45 @@
+@import "../../../style/variables.less";
+
+.cabinet-nav {
+  width: 100%;
+  height: 6.5vh;
+  display: flex;
+  list-style: none;
+  border-radius: 0.8em 0.8em 0 0;
+  background-color: @white;
+  margin-bottom: 0.2em;
+
+  .current-page {
+    width: 20em;
+    height: 100%;
+
+    .current-page-link {
+      font-size: 1rem;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: @account-color;
+    }
+
+    .current-page-link-active {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: @account-color-action;
+    }
+
+    .current-page-link-active::after {
+      width: 100%;
+      height: 0.2em;
+      display: inline-block;
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      content: "";
+      background-color: @account-color-action;
+    }
+  }
+}

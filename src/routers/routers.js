@@ -1,21 +1,23 @@
 import React from 'react';
-import {Route, Router, Switch, Redirect} from 'react-router-dom';
-import {history} from '../utils/history';
-import {useSelector} from 'react-redux';
+import { Route, Router, Switch, Redirect } from 'react-router-dom';
+import { history } from '../utils/history';
+import { useSelector } from 'react-redux';
 
-import LoginPage from '../pages/authentication/LoginPage/LoginPage';
-import RegistrationPage from '../pages/authentication/RegistrationPage/RegistrationPage';
+import LoginPage from "../pages/authentication/LoginPage/LoginPage";
+import RegistrationPage from "../pages/authentication/RegistrationPage/RegistrationPage";
 
-import AuthorizedUser from '../pages';
-import Optimization from '../pages/PPCAutomate/Optimization/Optimization';
-import Report from '../pages/PPCAutomate/Report/Report';
-import ProductSettings from '../pages/PPCAutomate/ProductSettings/ProductSettings';
-import MWS from '../pages/authentication/AccountBinding/MWS/MWS';
-import PPC from '../pages/authentication/AccountBinding/PPC/PPC';
-import NotFound from '../pages/NotFound/NotFound';
-import Dashboard from '../pages/PPCAutomate/Dashboard/Dashboard';
-import Account from '../pages/AccountInformation/Account/Account';
-import LoginWithAmazon from '../pages/authentication/LoginWitdhAmazon/LoginWithAmazon';
+import AuthorizedUser from "../pages";
+import Optimization from "../pages/PPCAutomate/Optimization/Optimization";
+import Report from "../pages/PPCAutomate/Report/Report";
+import ProductSettings from "../pages/PPCAutomate/ProductSettings/ProductSettings";
+import MWS from "../pages/authentication/AccountBinding/MWS/MWS";
+import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
+import NotFound from "../pages/NotFound/NotFound";
+import Dashboard from "../pages/PPCAutomate/Dashboard/Dashboard";
+import Information from "../pages/Account/Information/Information";
+import Billing from "../pages/Account/Billing/Billing";
+import Subscription from "../pages/Account/Subscription/Subscription";
+import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -53,7 +55,7 @@ const ConnectedAmazonRoute = props => {
     }
 };
 
-const developer = process.env.REACT_APP_ENV === 'developer';
+const developer = process.env.REACT_APP_ENV === "developer";
 
 const routers = () => {
     return (
@@ -86,9 +88,17 @@ const routers = () => {
                     component={ProductSettings}
                 />
 
-                <PrivateRoute exact path="/mws" component={MWS}/>
-                <PrivateRoute exact path="/ppc" component={PPC}/>
-                <PrivateRoute exact path="/zero-to-hero" component={Account}/>
+        <PrivateRoute exact path="/mws" component={MWS} />
+        <PrivateRoute exact path="/ppc" component={PPC} />
+
+        {/* ACCOUNT */}
+        <PrivateRoute exact path="/account/settings" component={Information} />
+        <PrivateRoute exact path="/account/billing" component={Billing} />
+        <PrivateRoute
+          exact
+          path="/account/subscription"
+          component={Subscription}
+        />
 
                 <Route component={NotFound}/>
             </Switch>
