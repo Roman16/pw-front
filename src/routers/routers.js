@@ -14,7 +14,9 @@ import MWS from "../pages/authentication/AccountBinding/MWS/MWS";
 import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
 import NotFound from "../pages/NotFound/NotFound";
 import Dashboard from "../pages/PPCAutomate/Dashboard/Dashboard";
-import Account from "../pages/AccountInformation/Account/Account";
+import Information from "../pages/Account/Information";
+// import Billing from "../pages/Account/Billing";
+import Subscription from "../pages/Account/Subscription";
 import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -89,7 +91,15 @@ const routers = () => {
 
         <PrivateRoute exact path="/mws" component={MWS} />
         <PrivateRoute exact path="/ppc" component={PPC} />
-        <PrivateRoute exact path="/account/settings" component={Account} />
+
+        {/* ACCOUNT */}
+        <PrivateRoute exact path="/account/settings" component={Information} />
+        {/* <PrivateRoute exact path="/account/billing" component={Billing} /> */}
+        <PrivateRoute
+          exact
+          path="/account/subscription"
+          component={Subscription}
+        />
 
         <Route component={NotFound} />
       </Switch>
