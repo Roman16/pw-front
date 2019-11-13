@@ -1,27 +1,27 @@
-import React from 'react';
-import { Route, Router, Switch, Redirect } from 'react-router-dom';
-import { history } from '../utils/history';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { Route, Router, Switch, Redirect } from "react-router-dom";
+import { history } from "../utils/history";
+import { useSelector } from "react-redux";
 
-import LoginPage from '../pages/authentication/LoginPage/LoginPage';
-import RegistrationPage from '../pages/authentication/RegistrationPage/RegistrationPage';
+import LoginPage from "../pages/authentication/LoginPage/LoginPage";
+import RegistrationPage from "../pages/authentication/RegistrationPage/RegistrationPage";
 
-import AuthorizedUser from '../pages';
-import Optimization from '../pages/PPCAutomate/Optimization/Optimization';
-import Report from '../pages/PPCAutomate/Report/Report';
-import ProductSettings from '../pages/PPCAutomate/ProductSettings/ProductSettings';
-import MWS from '../pages/authentication/AccountBinding/MWS/MWS';
-import PPC from '../pages/authentication/AccountBinding/PPC/PPC';
-import NotFound from '../pages/NotFound/NotFound';
-import Dashboard from '../pages/PPCAutomate/Dashboard/Dashboard';
-import Account from '../pages/AccountInformation/Account/Account';
-import LoginWithAmazon from '../pages/authentication/LoginWitdhAmazon/LoginWithAmazon';
+import AuthorizedUser from "../pages";
+import Optimization from "../pages/PPCAutomate/Optimization/Optimization";
+import Report from "../pages/PPCAutomate/Report/Report";
+import ProductSettings from "../pages/PPCAutomate/ProductSettings/ProductSettings";
+import MWS from "../pages/authentication/AccountBinding/MWS/MWS";
+import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
+import NotFound from "../pages/NotFound/NotFound";
+import Dashboard from "../pages/PPCAutomate/Dashboard/Dashboard";
+import Account from "../pages/AccountInformation/Account/Account";
+import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      localStorage.getItem('token') ? (
+      localStorage.getItem("token") ? (
         <AuthorizedUser>
           <Component {...props} />
         </AuthorizedUser>
