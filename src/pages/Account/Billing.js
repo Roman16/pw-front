@@ -2,13 +2,13 @@ import React from "react";
 
 import Navigation from "./Navigation";
 
-const Subscription = () => {
+const Billing = () => {
   return (
     <div className="user-cabinet">
       <Navigation />
-      Subscription
+      Billing
     </div>
   );
 };
 
-export default Subscription;
+export default Billing;

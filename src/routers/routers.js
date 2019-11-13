@@ -15,7 +15,7 @@ import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
 import NotFound from "../pages/NotFound/NotFound";
 import Dashboard from "../pages/PPCAutomate/Dashboard/Dashboard";
 import Information from "../pages/Account/Information";
-// import Billing from "../pages/Account/Billing";
+import Billing from "../pages/Account/Billing";
 import Subscription from "../pages/Account/Subscription";
 import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
 
@@ -94,7 +94,7 @@ const routers = () => {
 
         {/* ACCOUNT */}
         <PrivateRoute exact path="/account/settings" component={Information} />
-        {/* <PrivateRoute exact path="/account/billing" component={Billing} /> */}
+        <PrivateRoute exact path="/account/billing" component={Billing} />
         <PrivateRoute
           exact
           path="/account/subscription"
