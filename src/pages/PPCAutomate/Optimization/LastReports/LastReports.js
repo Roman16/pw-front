@@ -126,7 +126,7 @@ class LastReports extends Component {
     };
 
     render() {
-        const { current, records } = this.state;
+        const { current, records, reports } = this.state;
         const { isLess } = this.props;
         // const qwe = false;
         const isTerminal = records && records.length > 0;
@@ -173,7 +173,8 @@ class LastReports extends Component {
                 </ul>
                 {isTerminal && (
                     <Pagination
-                        total={150}
+                        pageSize={10}
+                        total={reports.length}
                         current={current}
                         onChange={this.onChange}
                     />

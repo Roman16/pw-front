@@ -7,9 +7,10 @@ let metricClickCount = 0;
 const initialState = {
     showWeekChart: true,
     showDailyChart: false,
+    selectedProduct: '',
     selectedRangeDate: {
-        startDate: moment(new Date()).subtract(1, 'months'),
-        endDate: moment(new Date())
+        startDate: moment(new Date()).subtract(1, 'months').format('YYYY-MM-DD'),
+        endDate: moment(new Date()).format('YYYY-MM-DD')
     },
     allMetrics: metricsListArray,
     activeMetrics: metricsListArray.slice(0, 2),
@@ -60,13 +61,16 @@ export function dashboard(state = initialState, action) {
                 selectedMetrics: action.payload
             };
 
+        case dashboardConstants.SELECT_PRODUCT:
+            return {
+                ...state,
+                selectedProduct: action.payload === state.selectedProduct ? null : action.payload
+            };
+
         case dashboardConstants.SELECTED_RANGE_DATE:
             return {
                 ...state,
-                selectedRangeDate: {
-                    startDate: action.payload[0],
-                    endDate: action.payload[1]
-                }
+                selectedRangeDate: action.payload
 
             };
 

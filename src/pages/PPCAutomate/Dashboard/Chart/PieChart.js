@@ -3,14 +3,10 @@ import {
     PieChart, Pie, Label, Cell, Text, ResponsiveContainer
 } from 'recharts';
 
-const data = [
-    {name: 'Organic', value: 400},
-    {name: 'PPC', value: 300},
-];
+
 const COLORS = ['#5052AD', '#6D6DF6'];
 
-
-const FirstPieChart = () => {
+const FirstPieChart = ({data}) => {
     return (
         <div className="pie-chart-container">
             <ResponsiveContainer height={300} width='100%'>
@@ -64,12 +60,12 @@ const FirstPieChart = () => {
 
                 <div className='ppc-block'>
                     <div className='example-fill' style={{background: COLORS[1]}}></div>
-                    Organic Sales
+                    PPC Sales
                     <div className='value'>$ 256,321</div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default FirstPieChart;

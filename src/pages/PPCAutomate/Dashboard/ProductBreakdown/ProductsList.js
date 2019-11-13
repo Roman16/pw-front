@@ -34,8 +34,7 @@ const RenderPramsChanges = (key, product) => {
     )
 };
 
-const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationChange}) => {
-
+const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationChange, onSelect, selectedProduct}) => {
     const columns = [
         {
             title: () => (
@@ -166,14 +165,18 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
         <div>
             <Table
                 onChangePagination={handlePaginationChange}
-                // loading={loading}
                 dataSource={products}
                 columns={columns}
-                // rowClassName={ (record, index) => { }
+                rowClassName={ (record) => selectedProduct && (selectedProduct ===  record.product.id ? 'activated-product' : 'default-product')}
                 currentPage={fetchParams.page}
                 showPagination={true}
                 pageSize={fetchParams.size}
                 totalSize={fetchParams.totalSize}
+                onRow={(record, rowIndex) => {
+                    return {
+                        onClick: () => onSelect(record.product.id)
+                    };
+                }}
             />
 
         </div>

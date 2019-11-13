@@ -3,20 +3,23 @@ import {dashboardUrls} from '../constans/api.urls';
 
 export const dashboardServices = {
     fetchMetricsStatistics,
-    fetchChartData,
-    fetchProducts
+    fetchLineChartData,
+    fetchProducts,
+    fetchBarChartData,
+    fetchPieChartData
 };
 
-function fetchMetricsStatistics({startDate, endDate}) {
+function fetchMetricsStatistics({startDate, endDate, selectedProduct}) {
     const parameters = [
         startDate ? `?start_date=${startDate}` : '',
-        endDate ? `&end_date=${endDate}` : ''
+        endDate ? `&end_date=${endDate}` : '',
+        selectedProduct ? `&product_id=${selectedProduct}` : ''
     ];
 
     return api('get', `${dashboardUrls.allMetricsStatistic}${parameters.join('')}`)
 }
 
-function fetchChartData({startDate, endDate, firstMetric, secondMetric, productId}) {
+function fetchLineChartData({startDate, endDate, firstMetric, secondMetric, productId}) {
     const parameters = [
         startDate ? `?start_date=${startDate}` : '',
         endDate ? `&end_date=${endDate}` : '',
@@ -28,7 +31,29 @@ function fetchChartData({startDate, endDate, firstMetric, secondMetric, productI
     return api('get', `${dashboardUrls.chartData}${parameters.join('')}`)
 }
 
-function fetchProducts({page, size = 10, searchText, onlyOptimization}) {
-    return api('get', `${dashboardUrls.products}?size=${size}&page=${page}&only_under_optimization=${onlyOptimization ? 1 : 0}&search_query=${searchText}`)
+function fetchProducts({page, size = 10, searchText, onlyOptimization, startDate, endDate}) {
+    const parameters = [
+        startDate ? `&start_date=${startDate}` : '',
+        endDate ? `&end_date=${endDate}` : '',
+    ];
+    return api('get', `${dashboardUrls.products}?size=${size}&page=${page}&only_under_optimization=${onlyOptimization ? 1 : 0}&search_query=${searchText}${parameters.join('')}`)
+}
+
+function fetchBarChartData({startDate, endDate, selectedProduct}) {
+    const parameters = [
+        startDate ? `?start_date=${startDate}` : '',
+        endDate ? `&end_date=${endDate}` : '',
+        selectedProduct ? `&product_id=${selectedProduct}` : ''
+    ];
+    return api('get', `${dashboardUrls.barChartData}${parameters.join('')}`)
+}
+
+function fetchPieChartData({startDate, endDate, selectedProduct}) {
+    const parameters = [
+        startDate ? `?start_date=${startDate}` : '',
+        endDate ? `&end_date=${endDate}` : '',
+        selectedProduct ? `&product_id=${selectedProduct}` : ''
+    ];
+    return api('get', `${dashboardUrls.pieChartData}${parameters.join('')}`)
 }
 
