@@ -1,4 +1,4 @@
-@import '../../style/variables.less';
+@import "../../style/variables.less";
 
 .sidebar {
   font-size: 0.714286rem;
@@ -69,7 +69,7 @@
         }
 
         &__description {
-          font-size: .8rem;
+          font-size: 0.8rem;
           color: @sidebar-text-color;
           line-height: 1.3333em;
           margin-top: 3px;
@@ -159,18 +159,19 @@
 
             &:hover {
               .collapsed-automate {
-                opacity: 1;
+                left: 4.5em;
+                // opacity: 1;
               }
             }
 
             .collapsed-automate {
               width: 200px;
               position: absolute;
-              top: 30.9em;
-              left: 4.5em;
+              top: 27em;
+              left: -30em;
               padding: 0 0 0 30px;
-              opacity: 0;
-              transition: all 0.1s ease-in;
+              // opacity: 0;
+              // transition: opacity 1s ease-in, left 0s ease-in 1s;
 
               .collapsed-automate-list {
                 width: 200px;
@@ -411,7 +412,7 @@ a:focus {
     position: absolute;
     top: -0.8334em;
     right: -3.5834em;
-    content: 'soon';
+    content: "soon";
     background-color: @sidebar-text-color;
     border-radius: 4px;
     color: @third-default-dark;
