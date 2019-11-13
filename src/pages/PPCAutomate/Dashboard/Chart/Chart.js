@@ -11,9 +11,15 @@ import './Chart.less';
 import {useSelector} from "react-redux";
 
 const pieDefaultData = [
-    {name: 'Organic', value: 400},
-    {name: 'PPC', value: 300},
+    {name: 'organic', value: 400},
+    {name: 'ppc', value: 300},
 ];
+
+const pieDefaultData2 = [
+    {name: 'organic', value: 587},
+    {name: 'ppc', value: 400},
+];
+
 const barDefaultData = [
     {
         date: '2019-03-04T17:24:58.828Z', organic: 1398, ppc: 4000,
@@ -37,36 +43,44 @@ const barDefaultData = [
         date: '2019-03-10T17:24:58.828Z', organic: 3300, ppc: 2890,
     },
 ];
+let count = 0;
 
 const Chart = () => {
+
     const [defaultChart, changeChart] = useState('pie'),
         [pieChartData, updatePieChart] = useState([]),
         [barChartData, updateBarChart] = useState([]);
 
-    const {activeMetrics, selectedRangeDate, selectedProduct} = useSelector(state => ({
+    const {selectedRangeDate, selectedProduct} = useSelector(state => ({
         activeMetrics: state.dashboard.activeMetrics,
         selectedRangeDate: state.dashboard.selectedRangeDate,
         selectedProduct: state.dashboard.selectedProduct,
     }));
 
-    const getChartsData = async () => {
-        const startDate = selectedRangeDate.startDate,
-            endDate = selectedRangeDate.endDate;
+    const startDate = selectedRangeDate.startDate,
+        endDate = selectedRangeDate.endDate;
 
 
-        const [pie, bar] = await Promise.all([
-            dashboardServices.fetchPieChartData({startDate, endDate, selectedProduct}),
-            dashboardServices.fetchBarChartData({startDate, endDate, selectedProduct})
-        ]);
+    const getPieChartData = () => {
 
-        updatePieChart(pieDefaultData);
-        updateBarChart(barDefaultData);
-
-        // updatePieChart(pie);
-        // updateBarChart(bar);
+        dashboardServices.fetchPieChartData({startDate, endDate, selectedProduct})
+            .then(res => {
+                // updatePieChart(res);
+                count++;
+                updatePieChart((count & 1) ? pieDefaultData : pieDefaultData2);
+            })
     };
 
-    useEffect(() => {getChartsData()}, [selectedRangeDate, selectedProduct]);
+    const getBarChartData = () => {
+        dashboardServices.fetchBarChartData({selectedProduct})
+            .then(res => {
+                // updateBarChart(res);
+                updateBarChart(barDefaultData);
+            })
+    };
+
+    useEffect(() => {getPieChartData(); getBarChartData();}, [selectedProduct]);
+    useEffect(() => {getPieChartData();}, [selectedRangeDate]);
 
     return (
         <div className='chart'>

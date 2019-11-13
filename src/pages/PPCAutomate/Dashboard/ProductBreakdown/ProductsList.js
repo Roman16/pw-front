@@ -8,6 +8,7 @@ import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black
 
 import upWhiteIcon from "../../../../assets/img/icons/metric-arrows/up-white-arrow.svg";
 import downWhiteIcon from "../../../../assets/img/icons/metric-arrows/down-white-arrow.svg";
+import {history} from "../../../../utils/history";
 
 const RenderPramsChanges = (key, product) => {
     const value = product[key];
@@ -33,6 +34,21 @@ const RenderPramsChanges = (key, product) => {
         </div>
     )
 };
+
+const ProfitTooltipDescription = () => (
+    <div className='profit-tooltip-description'>
+        <div className='title'>Warning</div>
+        <p>We need to know your product costs before algorithm start optimization</p>
+
+        <button className='btn default' onClick={() => history.push('/ppc/product-settings')}>Add Net Margin</button>
+
+        <div className='title'>Tip</div>
+        <p>
+            Amazon Fees + Cost of Goods + Inbound Shipping + Reshipping + PPC Spend
+        </p>
+    </div>
+);
+
 
 const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationChange, onSelect, selectedProduct}) => {
     const columns = [
@@ -144,7 +160,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => (<span>Profit <Tooltip type='warning'/></span>),
+            title: () => (<span>Profit <Tooltip type='warning' description={<ProfitTooltipDescription />}/></span>),
             dataIndex: 'profit',
             key: 'profit',
             width: '90px',

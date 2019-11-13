@@ -59,17 +59,7 @@
 
     .green-line,
     .violet-line {
-      width: 16px;
-      border-radius: 2px;
-      border: 2px solid;
-    }
-
-    .green-line {
-      border-color: #8FD39D;
-    }
-
-    .violet-line {
-      border-color: #6D6DF6;
+      margin: 0 5px 0 0;
     }
 
     .chart-legend {
@@ -83,7 +73,7 @@
         align-items: center;
         margin: 0 30px 0 0;
 
-        & > div {
+        & > img {
           margin: 0 10px 0 0;
         }
       }
@@ -100,17 +90,14 @@
       .chart-header {
         display: grid;
         grid-gap: 10px;
-        grid-template-rows:20px;
-        grid-template-areas:
-                "pairName pairName pairName pairName"
-                "weekSwitchBlock lineFill dailySwitchBlock dailyIcon"
-                "chartLegend chartLegend datePiker datePiker";
+        grid-template-rows: 20px;
+        grid-template-areas: "pairName pairName pairName pairName" "weekSwitchBlock lineFill dailySwitchBlock dailyIcon" "chartLegend chartLegend datePiker datePiker";
         background-color: #fff;
         color: #444;
 
-         .pair-name {
-           text-align: center;
-         }
+        .pair-name {
+          text-align: center;
+        }
 
         .chart-legend {
           margin: 0;
@@ -122,7 +109,6 @@
       }
     }
   }
-
 
 
   //-------------------------------------
@@ -158,10 +144,15 @@
     border-bottom: 1px solid #F5F5FF;
     padding: 10px 0;
     margin: 0 0 20px 0;
+
+    &.date {
+      font-weight: bold;
+
+    }
   }
 
   .name,
-  .week-value ,
+  .week-value,
   .daily-value {
     margin: 0 0 10px 0;
   }

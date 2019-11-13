@@ -9,7 +9,7 @@ import './Tooltips.less';
 const InformationTooltip = ({ title, description, position, type }) => (
   <div className="custom-tooltip information-tooltip">
     <Popover
-      content={<span dangerouslySetInnerHTML={{ __html: description }} />}
+      content={typeof description === 'object' ? description : <span dangerouslySetInnerHTML={{ __html: description }} />}
       title={title || false}
       placement={position}
     >

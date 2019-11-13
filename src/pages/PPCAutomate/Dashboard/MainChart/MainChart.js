@@ -11,49 +11,91 @@ let flag = 0;
 
 const data = [
     {
-        date: 'Jun 1',
+        date: '2019-03-04T17:24:58.828Z',
         week_first_metric: 0,
         week_second_metric: 1000,
         daily_first_metric: 2000,
         daily_second_metric: 3000
     },
     {
-        date: 'Jun 2',
+        date: '2019-03-05T17:24:58.828Z',
         week_first_metric: 3000,
         week_second_metric: 2098,
         daily_first_metric: 1690,
         daily_second_metric: 2450
     },
     {
-        date: 'Jun 3',
+        date: '2019-03-06T17:24:58.828Z',
         week_first_metric: 2000,
         week_second_metric: 2300,
         daily_first_metric: 1390,
         daily_second_metric: 3450
     },
     {
-        date: 'Jun 4',
+        date: '2019-03-07T17:24:58.828Z',
         week_first_metric: 2780,
         week_second_metric: 3908,
         daily_first_metric: 1890,
         daily_second_metric: 2450
     },
     {
-        date: 'Jun 5',
+        date: '2019-03-08T17:24:58.828Z',
         week_first_metric: 2890,
         week_second_metric: 4800,
         daily_first_metric: 1550,
         daily_second_metric: 6450
     },
     {
-        date: 'Jun 6',
+        date: '2019-03-09T17:24:58.828Z',
         week_first_metric: 2000,
         week_second_metric: 3800,
         daily_first_metric: 1344,
         daily_second_metric: 6554
     },
     {
-        date: 'Jun 7',
+        date: '2019-03-10T17:24:58.828Z',
+        week_first_metric: 2000,
+        week_second_metric: 4300,
+        daily_first_metric: 1344,
+        daily_second_metric: 4567
+    },
+    {
+        date: '2019-03-11T17:24:58.828Z',
+        week_first_metric: 2000,
+        week_second_metric: 4300,
+        daily_first_metric: 1344,
+        daily_second_metric: 4567
+    },
+    {
+        date: '2019-03-12T17:24:58.828Z',
+        week_first_metric: 2000,
+        week_second_metric: 4300,
+        daily_first_metric: 1344,
+        daily_second_metric: 4567
+    },
+    {
+        date: '2019-03-13T17:24:58.828Z',
+        week_first_metric: 2000,
+        week_second_metric: 4300,
+        daily_first_metric: 1344,
+        daily_second_metric: 4567
+    },
+    {
+        date: '2019-03-14T17:24:58.828Z',
+        week_first_metric: 2000,
+        week_second_metric: 4300,
+        daily_first_metric: 1344,
+        daily_second_metric: 4567
+    },
+    {
+        date: '2019-03-15T17:24:58.828Z',
+        week_first_metric: 2000,
+        week_second_metric: 4300,
+        daily_first_metric: 1344,
+        daily_second_metric: 4567
+    },
+    {
+        date: '2019-03-16T17:24:58.828Z',
         week_first_metric: 2000,
         week_second_metric: 4300,
         daily_first_metric: 1344,
@@ -63,49 +105,49 @@ const data = [
 
 const data2 = [
     {
-        date: 'Jun 1',
+        date: '2019-03-04T17:24:58.828Z',
         week_first_metric: 1000,
         week_second_metric: 3000,
         daily_first_metric: 2000,
         daily_second_metric: 3000
     },
     {
-        date: 'Jun 2',
+        date: '2019-03-05T17:24:58.828Z',
         week_first_metric: 6000,
         week_second_metric: 5098,
         daily_first_metric: 1690,
         daily_second_metric: 2450
     },
     {
-        date: 'Jun 3',
+        date: '2019-03-06T17:24:58.828Z',
         week_first_metric: 3000,
         week_second_metric: 3300,
         daily_first_metric: 1390,
         daily_second_metric: 3450
     },
     {
-        date: 'Jun 4',
+        date: '2019-03-07T17:24:58.828Z',
         week_first_metric: 1780,
         week_second_metric: 1908,
         daily_first_metric: 1890,
         daily_second_metric: 2450
     },
     {
-        date: 'Jun 5',
+        date: '2019-03-08T17:24:58.828Z',
         week_first_metric: 5890,
         week_second_metric: 2800,
         daily_first_metric: 1550,
         daily_second_metric: 6450
     },
     {
-        date: 'Jun 6',
+        date: '2019-03-09T17:24:58.828Z',
         week_first_metric: 5000,
         week_second_metric: 1800,
         daily_first_metric: 1344,
         daily_second_metric: 6554
     },
     {
-        date: 'Jun 7',
+        date: '2019-03-10T17:24:58.828Z',
         week_first_metric: 3000,
         week_second_metric: 2300,
         daily_first_metric: 1344,

@@ -5,7 +5,6 @@ import {dashboardServices} from '../../../../services/dashboard.services';
 import './ProductBreakdown.less';
 import ProductsList from "./ProductsList";
 import {dashboardActions} from "../../../../actions/dashboard.actions";
-import moment from "moment";
 
 const initialFetchParams = {
     page: 1,

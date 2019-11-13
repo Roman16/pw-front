@@ -30,7 +30,7 @@ const SecondBarChart = ({data}) => {
                     stroke="#DBDCE2"
                 />
 
-                <XAxis dataKey="date" padding={{left: 10, right: 10}} axisLine={false} tickFormatter={(date) => moment(new Date(date)).format('MMM DD')}/>
+                <XAxis dataKey="date" padding={{left: 10, right: 10}} axisLine={false} tickFormatter={(date) => moment(date).format('MMM DD')}/>
 
                 <YAxis domain={[0, 8000]} axisLine={false}/>
 
