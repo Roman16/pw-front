@@ -1,5 +1,5 @@
 .product-breakdown {
-  width: 70%;
+  width: max-content;
   margin: 0 25px 0 0;
   font-family: ir;
   flex: 1;
@@ -53,12 +53,12 @@
       position: absolute;
       right: 0;
       bottom: 0;
-      width: 23%;
+      width: 80px;
 
       .ant-spin {
         position: absolute;
-        right: 15%;
-        bottom: 15%;
+        right: 15px;
+        bottom: 10px;
 
         .ant-spin-dot-item {
           background-color: #ec7f5c;
@@ -114,6 +114,10 @@
 
     .ant-table-tbody {
 
+      tr {
+        cursor: pointer;
+      }
+
       .activated-product {
         opacity: 1;
       }
@@ -123,6 +127,7 @@
       }
 
       .product-item {
+        min-width: 250px;
         width: 100%;
         height: 84px;
         background: #fff;
@@ -160,7 +165,7 @@
         }
 
         .on-optimization {
-          width: 25%;
+          width: 80px;
           position: absolute;
           right: 0;
           bottom: -8px;
@@ -266,6 +271,14 @@
   }
 
 
+  @media (max-width: 1200px) {
+    & {
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+
   //-------------------------------------
   /*Retina CSS */
   //-------------------------------------
@@ -282,4 +295,7 @@
 
   }
 }
+
+
+
 

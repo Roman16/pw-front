@@ -30,8 +30,8 @@ const ProductBreakdown = () => {
     const getProducts = () => {
         dashboardServices.fetchProducts({
             ...fetchParams,
-            startDate: moment(selectedRangeDate.startDate),
-            endDate: moment(selectedRangeDate.endDate),
+            startDate: selectedRangeDate.startDate,
+            endDate: selectedRangeDate.endDate,
         })
             .then(res => {
                 updateProductsList(res.result);

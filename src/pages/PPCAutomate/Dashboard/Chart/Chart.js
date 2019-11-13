@@ -7,7 +7,6 @@ import barActiveIcon from '../../../../assets/img/icons/bar-chart-active.svg';
 import barDefaultIcon from '../../../../assets/img/icons/bar-chart-default.svg';
 import Tooltip from "../../../../components/Tooltip/Tooltip";
 import {dashboardServices} from '../../../../services/dashboard.services'
-import moment from "moment";
 import './Chart.less';
 import {useSelector} from "react-redux";
 

@@ -12,7 +12,6 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
                     checked={showWeekChart}
                     onChange={onChangeSwitch('week')}
                 />
-
                 7-day average
             </div>
 
@@ -26,7 +25,6 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
                     checked={showDailyChart}
                     onChange={onChangeSwitch('daily')}
                 />
-
                 Daily
             </div>
 

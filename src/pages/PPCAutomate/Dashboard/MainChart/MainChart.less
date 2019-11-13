@@ -18,6 +18,8 @@
       letter-spacing: -0.06px;
       color: #363694;
       margin: 0 auto;
+      grid-area: pairName;
+
     }
 
     .switch-block {
@@ -34,14 +36,21 @@
     .week-switch {
       margin-right: 10px;
       margin-left: 0;
+      grid-area: weekSwitchBlock;
+    }
+
+    .daily-switch {
+      grid-area: dailySwitchBlock;
     }
 
     .daily-icon {
       margin: 0 0 0 10px;
+      grid-area: dailyIcon;
     }
 
     .line-fill {
       display: flex;
+      grid-area: lineFill;
 
       & > div {
         margin: 0 3px;
@@ -67,6 +76,7 @@
       display: flex;
       align-items: center;
       margin: 0 0 0 auto;
+      grid-area: chartLegend;
 
       & > div {
         display: flex;
@@ -79,7 +89,40 @@
       }
     }
 
+    .DatePicker {
+      grid-area: datePiker;
+    }
+
   }
+
+  @media (max-width: 1200px) {
+    & {
+      .chart-header {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-rows:20px;
+        grid-template-areas:
+                "pairName pairName pairName pairName"
+                "weekSwitchBlock lineFill dailySwitchBlock dailyIcon"
+                "chartLegend chartLegend datePiker datePiker";
+        background-color: #fff;
+        color: #444;
+
+         .pair-name {
+           text-align: center;
+         }
+
+        .chart-legend {
+          margin: 0;
+        }
+
+        .DatePicker {
+          margin: 0 0 0 auto;
+        }
+      }
+    }
+  }
+
 
 
   //-------------------------------------
