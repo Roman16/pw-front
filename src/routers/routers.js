@@ -53,10 +53,10 @@ const ConnectedAmazonRoute = props => {
   }
 };
 
-const developer = process.env.REACT_APP_ENV === 'developer';
+const developer = process.env.REACT_APP_ENV === "developer";
 
 const routers = () => {
-    console.log('ENV: -----', process.env.REACT_APP_ENV);
+  console.log("ENV: -----", process.env.REACT_APP_ENV);
 
   return (
     <Router history={history}>
@@ -65,11 +65,13 @@ const routers = () => {
         <Route path="/login/amazon/rcallback" component={LoginWithAmazon} />
         <Route exact path="/registration" component={RegistrationPage} />
 
-       {developer && <ConnectedAmazonRoute
-          exact
-          path="/ppc/dashboard"
-          component={Dashboard}
-        />}
+        {developer && (
+          <ConnectedAmazonRoute
+            exact
+            path="/ppc/dashboard"
+            component={Dashboard}
+          />
+        )}
 
         <ConnectedAmazonRoute
           exact
@@ -77,10 +79,7 @@ const routers = () => {
           component={Optimization}
         />
 
-        <ConnectedAmazonRoute
-            path="/ppc/report"
-            component={Report}
-        />
+        <ConnectedAmazonRoute path="/ppc/report" component={Report} />
 
         <ConnectedAmazonRoute
           exact
@@ -90,7 +89,7 @@ const routers = () => {
 
         <PrivateRoute exact path="/mws" component={MWS} />
         <PrivateRoute exact path="/ppc" component={PPC} />
-        {/* <PrivateRoute exact path="/account/settings" component={Account} /> */}
+        <PrivateRoute exact path="/account/settings" component={Account} />
 
         <Route component={NotFound} />
       </Switch>

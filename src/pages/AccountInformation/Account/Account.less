@@ -1,413 +1,307 @@
-@import '../../../style/variables.less';
+@import "../../../style/variables.less";
 
 .main-pages > .main-container > .user-cabinet {
   font-size: 0.714286rem;
   padding: 1.2em 1.6em;
 
-  .cabiner-card {
+  .cabinet-nav {
     width: 100%;
+    height: 6.5vh;
+    display: flex;
+    list-style: none;
+    border-radius: 0.8em 0.8em 0 0;
+    background-color: @white;
+    margin-bottom: 0.2em;
 
-    .cabinet-nav {
-      width: 100%;
-      height: 6.8em;
-      display: flex;
-      list-style: none;
-      border-radius: 0.8em 0.8em 0 0;
-      background-color: @white;
-      margin-bottom: 0.2em;
+    .current-page {
+      width: 20em;
+      height: 100%;
 
-      .current-page {
-        width: 20em;
+      .current-page-link {
+        font-size: 1rem;
+        width: 100%;
         height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: @account-color;
+      }
 
-        .current-page-link {
-          font-size: 1.4em;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: @account-color;
-        }
+      .current-page-link-active {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: @account-color-action;
+      }
 
-        .current-page-link-active {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: @account-color-action;
-          border-bottom: 0.2em solid @account-color-action;
-        }
+      .current-page-link-active::after {
+        width: 100%;
+        height: 0.2em;
+        display: inline-block;
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        content: "";
+        background-color: @account-color-action;
       }
     }
+  }
 
-    .personal-box {
-      width: 100%;
-      height: 24em;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      background-color: @white;
-      border-radius: 0 0 0.8em 0.8em;
-      margin-bottom: 0.4em;
+  .personal-box {
+    height: 23.4vh;
+    padding-left: 6.4em;
+    border-radius: 0 0 0.8em 0.8em;
 
-      .avatar-box {
-        width: 9.6em;
-        height: 9.6em;
+    .avatar-box {
+      width: 9.6em;
+      height: 9.6em;
+      border-radius: 50%;
+      background-color: #f3f7fd;
+
+      .avatar {
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
-        background-color: #f3f7fd;
-
-        .avatar {
-          width: 100%;
-          height: 100%;
-          border-radius: 50%;
-        }
-
-        .anticon {
-          width: 100%;
-          height: 100%;
-          border-radius: 50%;
-
-          svg {
-            width: 90%;
-            height: 90%;
-          }
-        }
       }
 
-      .personal-information {
-        width: 92.4em;
-        height: 13.4em;
+      .anticon {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
         display: flex;
-        flex-flow: wrap;
-        justify-content: space-between;
-        align-content: space-between;
-
-        .description {
-          h3 {
-            font-size: 2em;
-            color: @second-account-color;
-            margin: 0;
-          }
-
-          p {
-            font-size: 1.4em;
-            color: @third-account-color;
-            margin: 0;
-          }
-        }
-
-        .active-only {
-          height: fit-content;
-          display: flex;
-          align-items: center;
-
-          label {
-            font-size: 1.3em;
-            color: @second-account-color;
-            margin-right: 0.8462em;
-          }
-
-          .ant-switch {
-            font-size: inherit;
-            width: 5.6em;
-            height: 2.2em;
-
-            .ant-switch-inner {
-              color: @second-account-color;
-              font-weight: 600;
-            }
-          }
-        }
-
-        .form-person-info {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
-
-          .form-group {
-            font-size: 1.3em;
-            width: 18.4615em;
-            height: 5.0769em;
-            display: flex;
-            flex-flow: column;
-            justify-content: space-between;
-            margin: 0;
-            border: none;
-            color: @second-account-color;
-
-            .form-control {
-              width: 100%;
-              height: 3.0769em;
-              border-radius: 0.615em;
-              border: 0.0769em solid @border-solid;
-            }
-
-            .form-control::placeholder {
-              color: @third-account-color;
-            }
-          }
-
-          .btn-save {
-            font-size: 1.2em;
-            width: 11.3334em;
-            height: 3.3334em;
-            margin: 0;
-            padding: 0;
-            border: none;
-            border-radius: 0.6666em;
-            color: @white !important;
-            background-color: @btn-color;
-            text-transform: uppercase;
-            font-weight: 600;
-          }
-        }
-      }
-    }
-
-    .passwords-box {
-      width: 100%;
-      height: 24em;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      background-color: @white;
-      border-radius: 0.8em;
-      margin-bottom: 0.4em;
-
-      .lock {
-        width: 11.9em;
-        height: 11.9em;
-      }
-
-      .change-password {
-        width: 92.4em;
-        height: 10.5em;
-        display: flex;
-        flex-flow: column;
-        justify-content: space-between;
-
-        h3 {
-          font-size: 2em;
-          color: @second-account-color;
-          margin: 0;
-        }
-
-        .input-password {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
-
-          .form-group {
-            font-size: 1.3em;
-            width: 18.4615em;
-            height: 5.0769em;
-            display: flex;
-            flex-flow: column;
-            justify-content: space-between;
-            margin: 0;
-            border: none;
-            color: @second-account-color;
-
-            .input-wrap {
-              width: 18.4615em;
-              height: 3.0769em;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: 0.077em solid @border-solid;
-              border-radius: 0.6154em;
-              padding-right: 0.8462em;
-
-              .form-control {
-                font-size: inherit;
-                border: none;
-              }
-
-              .form-control::placeholder {
-                color: @third-account-color;
-              }
-            }
-          }
-
-          .btn-change {
-            font-size: 1.2em;
-            width: 11.3334em;
-            height: 3.3334em;
-            margin: 0;
-            padding: 0;
-            border: none;
-            border-radius: 0.6666em;
-            color: @white !important;
-            background-color: @btn-color;
-            text-transform: uppercase;
-            font-weight: 600;
-          }
-        }
-      }
-    }
-
-    .connectors-box {
-      width: 100%;
-      height: 21.6em;
-      display: flex;
-      flex-flow: column;
-      justify-content: space-evenly;
-      align-items: center;
-      background-color: @white;
-      border-radius: 0.8em;
-      margin-bottom: 0.4em;
-
-      .connectors-title {
-        width: 110.6em;
-        display: flex;
-        justify-content: space-between;
-
-        h2 {
-          width: 11.65em;
-          font-size: 2em;
-          color: @second-default-dark;
-          margin: 0;
-        }
-
-        .sub {
-          width: 47.5em;
-          font-size: 1.6em;
-          color: @action-color-dark;
-        }
-      }
-
-      .connectors-main {
-        width: 111.2em;
-        display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
 
-        .product-title {
-          .title {
-            font-size: 2em;
-            color: @second-default-dark;
-            font-weight: 600;
-          }
-
-          .show-link {
-            font-size: 1.4em;
-            color: @action-color;
-            font-weight: 600;
-            text-decoration: underline;
-          }
-        }
-
-        .btn-token {
-          font-size: 1.2em;
-          width: 11.3334em;
-          height: 3.3334em;
-          margin: 0;
-          padding: 0;
-          border: none;
-          border-radius: 0.6666em;
-          color: @white !important;
-          background-color: @btn-color;
-          font-weight: 600;
-        }
-      }
-    }
-
-    .soon-box {
-      width: 100%;
-      height: 10.8em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: @white;
-      border-radius: 0.8em;
-      margin-bottom: 0.4em;
-
-      .soon-main {
-        width: 111.2em;
-        display: flex;
-        justify-content: space-between;
-
-        .product-title {
-          .title {
-            font-size: 2em;
-            color: @second-default-dark;
-            font-weight: 600;
-          }
-
-          .show-link {
-            font-size: 1.4em;
-            color: @action-color;
-            font-weight: 600;
-            text-decoration: underline;
-          }
-        }
-
-        .btn-soon {
-          font-size: 1.2em;
-          width: 11.3334em;
-          height: 3.3334em;
-          margin: 0;
-          padding: 0;
-          border: none;
-          border-radius: 0.6666em;
-          color: @white !important;
-          background-color: @btn-color;
-          font-weight: 600;
-        }
-      }
-    }
-
-    .info-box {
-      width: 100%;
-      height: 10.8em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: @white;
-      border-radius: 0.8em;
-      margin-bottom: 0.4em;
-
-      .info-main {
-        width: 111.2em;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .product-title {
-          .title {
-            font-size: 2em;
-            color: @second-default-dark;
-            font-weight: 600;
-          }
-
-          .show-link {
-            font-size: 1.4em;
-            color: @action-color;
-            font-weight: 600;
-            text-decoration: underline;
-          }
-        }
-
-        .actions {
-          width: 13.6em;
-          height: 2.4em;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-
-          .actions-btn {
-            width: 2.4em;
-            height: 2.4em;
-            margin: 0;
-            padding: 0;
-            border: none;
-            background-color: transparent;
-          }
+        svg {
+          width: 90%;
+          height: 90%;
         }
       }
     }
   }
+}
+
+.personal-box,
+.passwords-box,
+.connectors-box,
+.soon-box,
+.info-box {
+  width: 100%;
+  height: 10.5vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: @white;
+  border-radius: 0.8em;
+  padding: 0 4em;
+  margin-bottom: 0.4em;
+}
+
+.passwords-box {
+  height: 23.4vh;
+  padding-left: 5.1em;
+}
+
+.connectors-box {
+  height: 21vh;
+  flex-flow: column;
+  justify-content: space-evenly;
+}
+
+.description > h3,
+.change-password > h3 {
+  font-size: 1.4286rem;
+  color: @second-account-color;
+  margin: 0;
+}
+
+.description > p {
+  font-size: 1rem;
+  color: @third-account-color;
+  margin: 0;
+}
+
+.personal-information {
+  width: 77%;
+  height: 13.4em;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+}
+
+.active-only {
+  height: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+.active-only > label {
+  font-size: 0.9286rem;
+  color: @second-account-color;
+  margin-right: 0.8462em;
+}
+
+.main-pages
+  > .main-container
+  > .user-cabinet
+  > .personal-box
+  > .personal-information
+  > .active-only
+  > .ant-switch {
+  font-size: inherit;
+  width: 5.6em;
+  height: 2.2em;
+}
+
+.ant-switch-inner {
+  color: @second-account-color;
+  font-weight: 600;
+}
+
+.form-person-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.connectors-main,
+.soon-main,
+.info-main {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lock {
+  width: 11.9em;
+  height: 11.9em;
+}
+
+.change-password {
+  width: 77%;
+  height: 10.5em;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+}
+
+.input-password {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.form-group {
+  font-size: 0.9286rem;
+  width: 18.4615em;
+  height: 5.0769em;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  margin: 0;
+  border: none;
+  color: @second-account-color;
+}
+
+.input-wrap {
+  width: 18.4615em;
+  height: 3.0769em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 0.077em solid @border-solid;
+  border-radius: 0.6154em;
+  padding-right: 0.8462em;
+}
+
+.input-wrap > .form-control {
+  font-size: inherit;
+  border: none;
+}
+
+.form-person-info .form-control {
+  width: 100%;
+  height: 3.0769em;
+  border-radius: 0.615em;
+  border: 0.0769em solid @border-solid;
+}
+
+.form-control::placeholder {
+  color: @third-account-color;
+}
+
+.connectors-title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.connectors-title > h2 {
+  width: 11.65em;
+  font-size: 1.4286rem;
+  color: @second-default-dark;
+  margin: 0;
+}
+
+.sub {
+  width: 63%;
+  font-size: 1.1429rem;
+  color: @action-color-dark;
+}
+
+.title {
+  font-size: 1.4286rem;
+  color: @second-default-dark;
+  font-weight: 600;
+}
+
+.show-link {
+  font-size: 1rem;
+  color: @action-color;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.actions {
+  width: 13.6em;
+  height: 2.4em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-save,
+.btn-change,
+.btn-token,
+.btn-soon {
+  font-size: 0.8571rem;
+  width: 11.3334em;
+  height: 3.3334em;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0.6666em;
+  color: @white !important;
+  background-color: @btn-color;
+  font-weight: 600;
+}
+
+.btn-save,
+.btn-change {
+  text-transform: uppercase;
+}
+
+.actions-btn {
+  width: 2.4em;
+  height: 2.4em;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
 }
