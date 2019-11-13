@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import ProductItem from './ProductItem';
 import {connect} from 'react-redux';
 import {Input, Pagination, Switch} from 'antd';
@@ -14,6 +14,7 @@ class ProductList extends Component {
         isSelectedAll: false,
         prevProductId: '',
         onlyOptimization: false,
+        openedProduct: '',
         paginationParams: {
             size: 10,
             page: 1,
@@ -25,6 +26,12 @@ class ProductList extends Component {
         ...this.state.paginationParams,
         onlyOptimization: this.state.onlyOptimization
     });
+
+    changeOpenedProduct = (id) => {
+        this.setState({
+            openedProduct: id === this.state.openedProduct ? null : id
+        })
+    };
 
     handleChangePagination = page => {
         this.setState(
@@ -115,6 +122,7 @@ class ProductList extends Component {
         const {
                 selectedSize,
                 isSelectedAll,
+                openedProduct,
                 paginationParams: {size, page}
             } = this.state,
             {products, selectedProduct, totalSize} = this.props;
@@ -155,6 +163,9 @@ class ProductList extends Component {
                                 selectedProduct.id === product.id
                             }
                             onClick={item => this.onSelect(item)}
+                            onOpenChild={this.changeOpenedProduct}
+                            openedProduct={openedProduct}
+                            products={products}
                         />
                     ))}
                 </div>
