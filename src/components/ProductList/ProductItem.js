@@ -24,6 +24,7 @@ const ProductItem = ({
 
 
     const switchList = (e) => {
+        e.stopPropagation();
         onOpenChild(id)
     };
 
@@ -33,14 +34,19 @@ const ProductItem = ({
             onClick={() => onClick(product)}
         >
             <div className='product-information'>
-                <div className={`open-children-list-button ${openedProduct === id && 'opened'}`} onClick={switchList}>
-                    {products && products.length}
-                    <Icon type="caret-up"/>
+                <div className="image-block">
+                    <div className="image">
+                        <img src={image_url} alt=""/>
+
+                    </div>
+
+                    <div className={`open-children-list-button ${openedProduct === id && 'opened'}`}
+                         onClick={switchList}>
+                        {products && products.length}
+                        <Icon type="caret-down"/>
+                    </div>
                 </div>
 
-                <div className="image">
-                    <img src={image_url} alt=""/>
-                </div>
 
                 <div className="product-item-content">
                     <div className="caption">{maxText(name)}</div>
