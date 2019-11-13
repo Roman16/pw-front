@@ -14,9 +14,9 @@ import MWS from "../pages/authentication/AccountBinding/MWS/MWS";
 import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
 import NotFound from "../pages/NotFound/NotFound";
 import Dashboard from "../pages/PPCAutomate/Dashboard/Dashboard";
-import Information from "../pages/Account/Information";
-import Billing from "../pages/Account/Billing";
-import Subscription from "../pages/Account/Subscription";
+import Information from "../pages/Account/Information/Information";
+import Billing from "../pages/Account/Billing/Billing";
+import Subscription from "../pages/Account/Subscription/Subscription";
 import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (

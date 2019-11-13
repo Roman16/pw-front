@@ -2,15 +2,15 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Input, Switch } from "antd";
 
-import Navigation from "./Navigation";
-import ItemIcon from "../../components/ItemIcon/ItemIcon";
-import lock from "../../assets/img/lock.svg";
-import { ReactComponent as OpenedEye } from "../../assets/img/opened-eye.svg";
-import { ReactComponent as ClosedEye } from "../../assets/img/closed-eye.svg";
-import check from "../../assets/img/icons/check.svg";
-import remove from "../../assets/img/icons/remove.svg";
-import refresh from "../../assets/img/icons/refresh.svg";
-import "./Account.less";
+import Navigation from "../Navigation/Navigation";
+import ItemIcon from "../../../components/ItemIcon/ItemIcon";
+import lock from "../../../assets/img/lock.svg";
+import { ReactComponent as OpenedEye } from "../../../assets/img/opened-eye.svg";
+import { ReactComponent as ClosedEye } from "../../../assets/img/closed-eye.svg";
+import check from "../../../assets/img/icons/check.svg";
+import remove from "../../../assets/img/icons/remove.svg";
+import refresh from "../../../assets/img/icons/refresh.svg";
+import "./Information.less";
 
 const Information = () => {
   const { user } = useSelector(state => ({
