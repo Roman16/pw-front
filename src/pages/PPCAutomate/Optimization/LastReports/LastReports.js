@@ -134,17 +134,18 @@ class LastReports extends Component {
         return (
             <div className="terminal">
                 <TerminalCaption isTerminal={isTerminal} />
+
                 <ul
-                    key={shortid.generate()}
+                    key={'terminal-list'}
                     className={`terminal-content ${isLess ? 'more' : 'less'} ${
                         isTerminal ? 'auto' : 'hidden'
                     }`}
                 >
                     {isTerminal ? (
                         <Fragment>
-                            {records.map(({ id, message, number }) => (
+                            {records.map(({ id, message, number }, index) => (
                                 <TerminalItem
-                                    key={id}
+                                    key={`${id}_report_${index}`}
                                     content={message}
                                     number={number}
                                 />
@@ -161,8 +162,11 @@ class LastReports extends Component {
                                     You have no data to display
                                 </p>
                             </div>
-                            {dummy.map(({ id }) => (
-                                <TerminalItem key={id} number={id} />
+                            {dummy.map(({ id }, index) => (
+                                <TerminalItem
+                                    key={`${id}_report_${index}`}
+                                    number={id}
+                                />
                             ))}
                         </div>
                     )}

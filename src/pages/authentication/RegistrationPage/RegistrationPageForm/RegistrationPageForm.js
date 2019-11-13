@@ -109,15 +109,25 @@ class RegistrationPage extends Component {
                     window.grecaptcha.ready(() => {
                         window.grecaptcha.execute(recaptchaKey, {action: 'registration'})
                             .then((token) => {
-                                this.props.regist({
-                                    name,
-                                    last_name,
-                                    email,
-                                    password,
-                                    stripe_token: res.token ? res.token.id : null,
-                                    captcha_token: token,
-                                    captcha_action
-                                })
+                                res.token ?
+                                    this.props.regist({
+                                        name,
+                                        last_name,
+                                        email,
+                                        password,
+                                        stripe_token: res.token ? res.token.id : null,
+                                        captcha_token: token,
+                                        captcha_action
+                                    })
+                                    :
+                                    this.props.regist({
+                                        name,
+                                        last_name,
+                                        email,
+                                        password,
+                                        captcha_token: token,
+                                        captcha_action
+                                    })
                             });
                     })
                 }

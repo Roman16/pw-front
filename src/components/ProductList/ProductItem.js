@@ -1,7 +1,8 @@
 import React from 'react';
 import {func, bool, string} from 'prop-types';
-import {Checkbox} from 'antd';
+import {Spin } from 'antd';
 import optimizationLabel from '../../assets/img/optimization-label.svg';
+import loaderBg from '../../assets/img/icons/loader-background.svg';
 
 const maxText = text => {
     if (text && text.length > 40) {
@@ -12,7 +13,7 @@ const maxText = text => {
 };
 
 const ProductItem = ({
-                         product: {id, asin, name, sku, image_url, under_optimization},
+                         product: {id, asin, name, sku, image_url, under_optimization, has_optimization_results},
                          onClick,
                          product,
                          isActive
@@ -42,8 +43,14 @@ const ProductItem = ({
                 </div>
             </div>
 
-            {under_optimization && <div className='on-optimization'>
+            {under_optimization && has_optimization_results && <div className='on-optimization'>
                 <img src={optimizationLabel} alt=""/>
+            </div>}
+
+            {under_optimization && !has_optimization_results && <div className='optimization-waiting'>
+                <img src={loaderBg} alt=""/>
+
+                <Spin />
             </div>}
         </div>
     );

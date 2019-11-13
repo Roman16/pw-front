@@ -150,9 +150,18 @@ const Sidebar = () => {
                         >
                           {item.title}
                         </NavLink>
-                        {/* <div className="automate-soon">soon</div> */}
                       </li>
                     ))}
+
+                    <li className="automate-item">
+                      <a
+                          href='/ppc-scanner'
+                          className="automate-link"
+                      >
+                        PPC Scanner
+                      </a>
+                    </li>
+
                   </ul>
                 )}
 

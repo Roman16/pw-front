@@ -22,7 +22,7 @@ const AddMetricModal = ({visibleModal, handleOk, handleCancel, addMetric, remove
                             key={`visible-${item.key}`}
                             item={item}
                             removeMetric={removeMetric}
-                            type='visible'
+                            listType='visible'
                         />
                     )) :
                     <div className='default-visible-item'>
@@ -39,7 +39,7 @@ const AddMetricModal = ({visibleModal, handleOk, handleCancel, addMetric, remove
                         key={`hidden-${item.key}`}
                         item={item}
                         addMetric={addMetric}
-                        type='hidden'
+                        listType='hidden'
                     />
                 ))}
             </div>

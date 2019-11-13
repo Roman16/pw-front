@@ -3,17 +3,19 @@ import {useSelector, useDispatch} from "react-redux";
 import plusIcon from '../../../../../assets/img/icons/plus-blue.svg';
 import plusIconWhite from '../../../../../assets/img/icons/plus-white.svg';
 import AddMetricModal from "./AddMetricModal";
-import {metricsListArray, metricsListObject} from "../metricsList";
 import {dashboardActions} from '../../../../../actions/dashboard.actions';
 import './AddMetric.less';
 
 const AddMetric = () => {
     const [visibleModal, switchModal] = useState(false);
     const dispatch = useDispatch();
-    const {selectedMetrics} = useSelector(state => ({
-        selectedMetrics: state.dashboard.selectedMetrics
+    const {selectedMetrics, allMetrics} = useSelector(state => ({
+        selectedMetrics: state.dashboard.selectedMetrics,
+        allMetrics: state.dashboard.allMetrics,
     }));
 
+    const openModal = () => switchModal(true);
+    const handleCancel = () => switchModal(false);
 
     const metricListFilter = (metric) => {
         return selectedMetrics.every((item) => {
@@ -21,9 +23,9 @@ const AddMetric = () => {
         });
     };
 
-    const [visibleItems, updateVisibleList] = useState([]);
+    const [visibleItems, updateVisibleList] = useState(selectedMetrics);
 
-    const [hiddenItems, updateHiddenList] = useState([metricsListArray]);
+    const [hiddenItems, updateHiddenList] = useState(allMetrics);
 
     const addMetric = (item) => {
         updateVisibleList([...visibleItems, item]);
@@ -38,19 +40,12 @@ const AddMetric = () => {
     const handleOk = () => {
         switchModal(false);
         dispatch(dashboardActions.updateMetricList(visibleItems));
-
     };
 
-
     useEffect(() => {
-        updateVisibleList(selectedMetrics.map(item => metricsListObject[item.key]));
-        updateHiddenList(metricsListArray.filter(metricListFilter));
-
-    }, [selectedMetrics]);
-
-
-    const openModal = () => switchModal(true);
-    const handleCancel = () => switchModal(false);
+        updateVisibleList(selectedMetrics);
+        updateHiddenList(allMetrics.filter(metricListFilter));
+    }, [selectedMetrics, allMetrics]);
 
     return (
         <div className='add-metric'>

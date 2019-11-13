@@ -11,8 +11,8 @@ const initialState = {
         startDate: moment(new Date()).subtract(1, 'months'),
         endDate: moment(new Date())
     },
-    activeMetrics: metricsListArray.slice(0, 2),
     allMetrics: metricsListArray,
+    activeMetrics: metricsListArray.slice(0, 2),
     selectedMetrics: metricsListArray.slice(0, 5)
 };
 
@@ -37,7 +37,21 @@ export function dashboard(state = initialState, action) {
 
             return {
                 ...state,
-                selectedMetrics: newMetricList
+                selectedMetrics: newMetricList,
+                activeMetrics: state.activeMetrics.map(item => item.key === action.payload.key ? {} : item)
+            };
+
+        case dashboardConstants.SET_METRICS_STATISTIC:
+            return {
+                ...state,
+                allMetrics: state.allMetrics.map(item => ({
+                    ...item,
+                    ...action.payload.find(metric => metric.key === item.key)
+                })),
+                selectedMetrics: state.selectedMetrics.map(item => ({
+                    ...item,
+                    ...action.payload.find(metric => metric.key === item.key)
+                }))
             };
 
         case dashboardConstants.UPDATE_METRICS_LIST:
@@ -58,13 +72,21 @@ export function dashboard(state = initialState, action) {
 
         case dashboardConstants.ACTIVATE_METRIC:
             metricClickCount++;
-
             let newActiveMetrics = [...state.activeMetrics];
             newActiveMetrics[(metricClickCount & 1) ? 0 : 1] = action.payload;
 
             return {
                 ...state,
                 activeMetrics: newActiveMetrics
+            };
+
+        case dashboardConstants.DEACTIVATE_METRIC:
+            let countActiveMetrics = state.activeMetrics.map(item => item.key).filter(str => str);
+            if (countActiveMetrics.length === 1) metricClickCount = 0;
+
+            return {
+                ...state,
+                activeMetrics: state.activeMetrics.map(item => item.key === action.payload.key ? {} : item)
             };
 
 
