@@ -5,9 +5,15 @@
   padding: 1.2em 1.6em;
 
   .personal-box {
+    width: 100%;
     height: 23.4vh;
-    padding-left: 6.4em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-radius: 0 0 0.8em 0.8em;
+    background-color: @white;
+    padding: 0 4em 0 6.4em;
+    margin-bottom: 0.4em;
 
     .avatar-box {
       width: 9.6em;
@@ -35,222 +41,329 @@
         }
       }
     }
+
+    .personal-information {
+      width: 77%;
+      height: 13.4em;
+      display: flex;
+      flex-flow: wrap;
+      justify-content: space-between;
+      align-content: space-between;
+
+      .description {
+        h3 {
+          font-size: 1.4286rem;
+          color: @second-account-color;
+          margin: 0;
+        }
+
+        p {
+          font-size: 1rem;
+          color: @third-account-color;
+          margin: 0;
+        }
+      }
+
+      .active-only {
+        height: fit-content;
+        display: flex;
+        align-items: center;
+
+        span {
+          font-size: 0.9286rem;
+          color: @second-account-color;
+          margin-right: 0.8462em;
+        }
+
+        .ant-switch {
+          font-size: inherit;
+          width: 5.6em;
+          height: 2.2em;
+
+          .ant-switch-inner {
+            color: @second-account-color;
+            font-weight: 600;
+          }
+        }
+      }
+
+      .form-person-info {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        .form-group {
+          font-size: 0.9286rem;
+          width: 18.4615em;
+          height: 5.0769em;
+          display: flex;
+          flex-flow: column;
+          justify-content: space-between;
+          margin: 0;
+          border: none;
+          color: @second-account-color;
+
+          .form-control {
+            width: 100%;
+            height: 3.0769em;
+            border-radius: 0.615em;
+            border: 0.0769em solid @border-solid;
+          }
+
+          .form-control::placeholder {
+            color: @third-account-color;
+          }
+        }
+
+        .btn-save {
+          font-size: 0.8571rem;
+          width: 11.3334em;
+          height: 3.3334em;
+          border-radius: 0.6666em;
+          color: @white !important;
+          background-color: @btn-color;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+      }
+    }
   }
-}
 
-.personal-box,
-.passwords-box,
-.connectors-box,
-.soon-box,
-.info-box {
-  width: 100%;
-  height: 10.5vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: @white;
-  border-radius: 0.8em;
-  padding: 0 4em;
-  margin-bottom: 0.4em;
-}
+  .passwords-box {
+    width: 100%;
+    height: 23.4vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: @white;
+    border-radius: 0.8em;
+    padding: 0 4em 0 5.1em;
+    margin-bottom: 0.4em;
 
-.passwords-box {
-  height: 23.4vh;
-  padding-left: 5.1em;
-}
+    .lock {
+      width: 11.9em;
+      height: 11.9em;
+    }
 
-.connectors-box {
-  height: 21vh;
-  flex-flow: column;
-  justify-content: space-evenly;
-}
+    .change-password {
+      width: 77%;
+      height: 10.5em;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-between;
 
-.description > h3,
-.change-password > h3 {
-  font-size: 1.4286rem;
-  color: @second-account-color;
-  margin: 0;
-}
+      h3 {
+        font-size: 1.4286rem;
+        color: @second-account-color;
+        margin: 0;
+      }
 
-.description > p {
-  font-size: 1rem;
-  color: @third-account-color;
-  margin: 0;
-}
+      .input-password {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
 
-.personal-information {
-  width: 77%;
-  height: 13.4em;
-  display: flex;
-  flex-flow: wrap;
-  justify-content: space-between;
-  align-content: space-between;
-}
+        .form-group {
+          font-size: 0.9286rem;
+          width: 18.4615em;
+          height: 5.0769em;
+          display: flex;
+          flex-flow: column;
+          justify-content: space-between;
+          margin: 0;
+          border: none;
+          color: @second-account-color;
 
-.active-only {
-  height: fit-content;
-  display: flex;
-  align-items: center;
-}
+          .input-wrap {
+            width: 18.4615em;
+            height: 3.0769em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 0.077em solid @border-solid;
+            border-radius: 0.6154em;
+            padding-right: 0.8462em;
 
-.active-only > label {
-  font-size: 0.9286rem;
-  color: @second-account-color;
-  margin-right: 0.8462em;
-}
+            .form-control {
+              font-size: inherit;
+              border: none;
+            }
 
-.main-pages
-  > .main-container
-  > .user-cabinet
-  > .personal-box
-  > .personal-information
-  > .active-only
-  > .ant-switch {
-  font-size: inherit;
-  width: 5.6em;
-  height: 2.2em;
-}
+            .form-control::placeholder {
+              color: @third-account-color;
+            }
+          }
+        }
 
-.ant-switch-inner {
-  color: @second-account-color;
-  font-weight: 600;
-}
+        .btn-change {
+          font-size: 0.8571rem;
+          width: 11.3334em;
+          height: 3.3334em;
+          border-radius: 0.6666em;
+          color: @white !important;
+          background-color: @btn-color;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
 
-.form-person-info {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
+  .connectors-box {
+    width: 100%;
+    height: 21vh;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: @white;
+    border-radius: 0.8em;
+    padding: 0 4em;
+    margin-bottom: 0.4em;
 
-.connectors-main,
-.soon-main,
-.info-main {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    .connectors-title {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
 
-.lock {
-  width: 11.9em;
-  height: 11.9em;
-}
+      h2 {
+        width: 11.65em;
+        font-size: 1.4286rem;
+        color: @second-default-dark;
+        margin: 0;
+      }
 
-.change-password {
-  width: 77%;
-  height: 10.5em;
-  display: flex;
-  flex-flow: column;
-  justify-content: space-between;
-}
+      .sub {
+        width: 63%;
+        font-size: 1.1429rem;
+        color: @action-color-dark;
+      }
+    }
 
-.input-password {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
+    .connectors-main {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-.form-group {
-  font-size: 0.9286rem;
-  width: 18.4615em;
-  height: 5.0769em;
-  display: flex;
-  flex-flow: column;
-  justify-content: space-between;
-  margin: 0;
-  border: none;
-  color: @second-account-color;
-}
+      .product-title {
+        .title {
+          font-size: 1.4286rem;
+          color: @second-default-dark;
+          font-weight: 600;
+        }
 
-.input-wrap {
-  width: 18.4615em;
-  height: 3.0769em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 0.077em solid @border-solid;
-  border-radius: 0.6154em;
-  padding-right: 0.8462em;
-}
+        .show-link {
+          font-size: 1rem;
+          color: @action-color;
+          font-weight: 600;
+          text-decoration: underline;
+        }
+      }
 
-.input-wrap > .form-control {
-  font-size: inherit;
-  border: none;
-}
+      .btn-token {
+        font-size: 0.8571rem;
+        width: 11.3334em;
+        height: 3.3334em;
+        border-radius: 0.6666em;
+        color: @white !important;
+        background-color: @btn-color;
+        font-weight: 600;
+      }
+    }
+  }
 
-.form-person-info .form-control {
-  width: 100%;
-  height: 3.0769em;
-  border-radius: 0.615em;
-  border: 0.0769em solid @border-solid;
-}
+  .soon-box {
+    width: 100%;
+    height: 10.5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: @white;
+    border-radius: 0.8em;
+    padding: 0 4em;
+    margin-bottom: 0.4em;
 
-.form-control::placeholder {
-  color: @third-account-color;
-}
+    .soon-main {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-.connectors-title {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
+      .product-title {
+        .title {
+          font-size: 1.4286rem;
+          color: @second-default-dark;
+          font-weight: 600;
+        }
 
-.connectors-title > h2 {
-  width: 11.65em;
-  font-size: 1.4286rem;
-  color: @second-default-dark;
-  margin: 0;
-}
+        .show-link {
+          font-size: 1rem;
+          color: @action-color;
+          font-weight: 600;
+          text-decoration: underline;
+        }
+      }
 
-.sub {
-  width: 63%;
-  font-size: 1.1429rem;
-  color: @action-color-dark;
-}
+      .btn-soon {
+        font-size: 0.8571rem;
+        width: 11.3334em;
+        height: 3.3334em;
+        border-radius: 0.6666em;
+        color: @white !important;
+        background-color: @btn-color;
+        font-weight: 600;
+      }
+    }
+  }
 
-.title {
-  font-size: 1.4286rem;
-  color: @second-default-dark;
-  font-weight: 600;
-}
+  .info-box {
+    width: 100%;
+    height: 10.5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: @white;
+    border-radius: 0.8em;
+    padding: 0 4em;
+    margin-bottom: 0.4em;
 
-.show-link {
-  font-size: 1rem;
-  color: @action-color;
-  font-weight: 600;
-  text-decoration: underline;
-}
+    .info-main {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-.actions {
-  width: 13.6em;
-  height: 2.4em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+      .product-title {
+        .title {
+          font-size: 1.4286rem;
+          color: @second-default-dark;
+          font-weight: 600;
+        }
 
-.btn-save,
-.btn-change,
-.btn-token,
-.btn-soon {
-  font-size: 0.8571rem;
-  width: 11.3334em;
-  height: 3.3334em;
-  border-radius: 0.6666em;
-  color: @white !important;
-  background-color: @btn-color;
-  font-weight: 600;
-}
+        .show-link {
+          font-size: 1rem;
+          color: @action-color;
+          font-weight: 600;
+          text-decoration: underline;
+        }
+      }
 
-.btn-save,
-.btn-change {
-  text-transform: uppercase;
-}
+      .actions {
+        width: 13.6em;
+        height: 2.4em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-.actions-btn {
-  width: 2.4em;
-  height: 2.4em;
+        .actions-btn {
+          width: 2.4em;
+          height: 2.4em;
+        }
+      }
+    }
+  }
 }

@@ -35,7 +35,7 @@ const Information = () => {
           </div>
 
           <div className="active-only">
-            <label htmlFor="">Are you privat lable seller?</label>
+            <span htmlFor="">Are you privat lable seller?</span>
             <Switch checkedChildren="YES" unCheckedChildren="NO" />
           </div>
           <div className="form-person-info">
