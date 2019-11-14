@@ -17,7 +17,7 @@ const Personal = () => {
     };
 
     const handleChangeSwitch = (e) => {
-             dispatch(userActions.updateUserInformation({
+        dispatch(userActions.updateUserInformation({
             ...userInformation,
             private_label_seller: e
         }));
@@ -58,7 +58,7 @@ const Personal = () => {
                         placeholder=''
                     />
 
-                    <label htmlFor="file-input"><Icon type="camera" /></label>
+                    <label htmlFor="file-input"><Icon type="camera"/></label>
 
                 </div>
             </div>
