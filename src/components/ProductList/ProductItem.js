@@ -19,9 +19,8 @@ const ProductItem = ({
                          isActive,
                          onOpenChild,
                          openedProduct,
-                         products
+                         products,
                      }) => {
-
 
     const switchList = (e) => {
         e.stopPropagation();
