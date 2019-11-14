@@ -18,6 +18,8 @@
       letter-spacing: -0.06px;
       color: #363694;
       margin: 0 auto;
+      grid-area: pairName;
+
     }
 
     .switch-block {
@@ -34,14 +36,21 @@
     .week-switch {
       margin-right: 10px;
       margin-left: 0;
+      grid-area: weekSwitchBlock;
+    }
+
+    .daily-switch {
+      grid-area: dailySwitchBlock;
     }
 
     .daily-icon {
       margin: 0 0 0 10px;
+      grid-area: dailyIcon;
     }
 
     .line-fill {
       display: flex;
+      grid-area: lineFill;
 
       & > div {
         margin: 0 3px;
@@ -50,35 +59,55 @@
 
     .green-line,
     .violet-line {
-      width: 16px;
-      border-radius: 2px;
-      border: 2px solid;
-    }
-
-    .green-line {
-      border-color: #8FD39D;
-    }
-
-    .violet-line {
-      border-color: #6D6DF6;
+      margin: 0 5px 0 0;
     }
 
     .chart-legend {
       display: flex;
       align-items: center;
       margin: 0 0 0 auto;
+      grid-area: chartLegend;
 
       & > div {
         display: flex;
         align-items: center;
         margin: 0 30px 0 0;
 
-        & > div {
+        & > img {
           margin: 0 10px 0 0;
         }
       }
     }
 
+    .DatePicker {
+      grid-area: datePiker;
+    }
+
+  }
+
+  @media (max-width: 1200px) {
+    & {
+      .chart-header {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-rows: 20px;
+        grid-template-areas: "pairName pairName pairName pairName" "weekSwitchBlock lineFill dailySwitchBlock dailyIcon" "chartLegend chartLegend datePiker datePiker";
+        background-color: #fff;
+        color: #444;
+
+        .pair-name {
+          text-align: center;
+        }
+
+        .chart-legend {
+          margin: 0;
+        }
+
+        .DatePicker {
+          margin: 0 0 0 auto;
+        }
+      }
+    }
   }
 
 
@@ -115,10 +144,15 @@
     border-bottom: 1px solid #F5F5FF;
     padding: 10px 0;
     margin: 0 0 20px 0;
+
+    &.date {
+      font-weight: bold;
+
+    }
   }
 
   .name,
-  .week-value ,
+  .week-value,
   .daily-value {
     margin: 0 0 10px 0;
   }

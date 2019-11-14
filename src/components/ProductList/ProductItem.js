@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {func, bool, string} from 'prop-types';
-import {Spin } from 'antd';
+import {Spin, Icon} from 'antd';
 import optimizationLabel from '../../assets/img/optimization-label.svg';
 import loaderBg from '../../assets/img/icons/loader-background.svg';
 
@@ -13,44 +13,90 @@ const maxText = text => {
 };
 
 const ProductItem = ({
-                         product: {id, asin, name, sku, image_url, under_optimization, has_optimization_results},
+                         product: {id, asin, name, sku, image_url, under_optimization, has_optimization_results, children = [1]},
                          onClick,
                          product,
-                         isActive
+                         isActive,
+                         onOpenChild,
+                         openedProduct,
+                         products
                      }) => {
+
+
+    const switchList = (e) => {
+        e.stopPropagation();
+        onOpenChild(id)
+    };
+
     return (
         <div
             className={`product-item ${isActive ? 'active' : ''}`}
             onClick={() => onClick(product)}
         >
-            <div className="image">
-                <img src={image_url} alt=""/>
-            </div>
+            <div className='product-information'>
+                <div className="image-block">
+                    <div className="image">
+                        <img src={image_url} alt=""/>
 
-            <div className="product-item-content">
-                <div className="caption">{maxText(name)}</div>
-
-                <div>
-                    <div className="detail">
-                        <span> ASIN: </span>
-                        <span>{asin}</span>
                     </div>
 
-                    <div className="detail">
-                        <span> SKU: </span>
-                        <span>{sku}</span>
+                    <div className={`open-children-list-button ${openedProduct === id && 'opened'}`}
+                         onClick={switchList}>
+                        {products && products.length}
+                        <Icon type="caret-down"/>
                     </div>
                 </div>
+
+
+                <div className="product-item-content">
+                    <div className="caption">{maxText(name)}</div>
+
+                    <div>
+                        <div className="detail">
+                            <span> ASIN: </span>
+                            <span>{asin}</span>
+                        </div>
+
+                        <div className="detail">
+                            <span> SKU: </span>
+                            <span>{sku}</span>
+                        </div>
+                    </div>
+                </div>
+
+                {under_optimization && has_optimization_results && <div className='on-optimization'>
+                    <img src={optimizationLabel} alt=""/>
+                </div>}
+
+                {under_optimization && !has_optimization_results && <div className='optimization-waiting'>
+                    <img src={loaderBg} alt=""/>
+
+                    <Spin/>
+                </div>}
             </div>
 
-            {under_optimization && has_optimization_results && <div className='on-optimization'>
-                <img src={optimizationLabel} alt=""/>
-            </div>}
+            {(children.length > 0) && (openedProduct === id) && <div className='product-children-list'>
+                {products.map(childrenProduct => (
+                    <div key={childrenProduct.id} className='children-information'>
+                        <img src={childrenProduct.image_url} alt=""/>
 
-            {under_optimization && !has_optimization_results && <div className='optimization-waiting'>
-                <img src={loaderBg} alt=""/>
+                        <div className="product-item-content">
+                            <div className="caption">{maxText(childrenProduct.name)}</div>
 
-                <Spin />
+                            <div>
+                                <div className="detail">
+                                    <span> ASIN: </span>
+                                    <span>{childrenProduct.asin}</span>
+                                </div>
+
+                                <div className="detail">
+                                    <span> SKU: </span>
+                                    <span>{childrenProduct.sku}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>}
         </div>
     );

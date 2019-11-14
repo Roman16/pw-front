@@ -1,7 +1,7 @@
-import React from "react";
-import { Route, Router, Switch, Redirect } from "react-router-dom";
-import { history } from "../utils/history";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { Route, Router, Switch, Redirect } from 'react-router-dom';
+import { history } from '../utils/history';
+import { useSelector } from 'react-redux';
 
 import LoginPage from "../pages/authentication/LoginPage/LoginPage";
 import RegistrationPage from "../pages/authentication/RegistrationPage/RegistrationPage";
@@ -19,75 +19,74 @@ import Billing from "../pages/Account/Billing/Billing";
 import Subscription from "../pages/Account/Subscription/Subscription";
 import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      localStorage.getItem("token") ? (
-        <AuthorizedUser>
-          <Component {...props} />
-        </AuthorizedUser>
-      ) : (
-        <Redirect to="/login" />
-      )
-    }
-  />
+const PrivateRoute = ({component: Component, ...rest}) => (
+    <Route
+        {...rest}
+        render={props =>
+            localStorage.getItem('token') ? (
+                <AuthorizedUser>
+                    <Component {...props} />
+                </AuthorizedUser>
+            ) : (
+                <Redirect to="/login"/>
+            )
+        }
+    />
 );
 
 const ConnectedAmazonRoute = props => {
-  const mwsConnected = useSelector(state =>
-      state.user.account_links
-        ? state.user.account_links.amazon_mws.is_connected
-        : null
-    ),
-    ppcConnected = useSelector(state =>
-      state.user.account_links
-        ? state.user.account_links.amazon_ppc.is_connected
-        : null
-    );
+    const mwsConnected = useSelector(state =>
+            state.user.account_links
+                ? state.user.account_links.amazon_mws.is_connected
+                : null
+        ),
+        ppcConnected = useSelector(state =>
+            state.user.account_links
+                ? state.user.account_links.amazon_ppc.is_connected
+                : null
+        );
 
-  if (!mwsConnected) {
-    return <Redirect to="/mws" />;
-  } else if (!ppcConnected) {
-    return <Redirect to="/ppc" />;
-  } else {
-    return <PrivateRoute {...props} />;
-  }
+    if (!mwsConnected) {
+        return <Redirect to="/mws"/>;
+    } else if (!ppcConnected) {
+        return <Redirect to="/ppc"/>;
+    } else {
+        return <PrivateRoute {...props} />;
+    }
 };
 
 const developer = process.env.REACT_APP_ENV === "developer";
 
 const routers = () => {
-  console.log("ENV: -----", process.env.REACT_APP_ENV);
+    return (
+        <Router history={history}>
+            <Switch>
+                <Route exact path="/login" component={LoginPage}/>
+                <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
+                <Route exact path="/registration" component={RegistrationPage}/>
 
-  return (
-    <Router history={history}>
-      <Switch>
-        <Route exact path="/login" component={LoginPage} />
-        <Route path="/login/amazon/rcallback" component={LoginWithAmazon} />
-        <Route exact path="/registration" component={RegistrationPage} />
+                {developer && <ConnectedAmazonRoute
+                    exact
+                    path="/ppc/dashboard"
+                    component={Dashboard}
+                />}
 
-        {developer && (
-          <ConnectedAmazonRoute
-            exact
-            path="/ppc/dashboard"
-            component={Dashboard}
-          />
-        )}
+                <ConnectedAmazonRoute
+                    exact
+                    path="/ppc/optimization"
+                    component={Optimization}
+                />
 
-        <ConnectedAmazonRoute
-          exact
-          path="/ppc/optimization"
-          component={Optimization}
-        />
+                <ConnectedAmazonRoute
+                    path="/ppc/report"
+                    component={Report}
+                />
 
-        <ConnectedAmazonRoute path="/ppc/report" component={Report} />
-
-        <ConnectedAmazonRoute
-          exact
-          path="/ppc/product-settings"
-          component={ProductSettings}
-        />
+                <ConnectedAmazonRoute
+                    exact
+                    path="/ppc/product-settings"
+                    component={ProductSettings}
+                />
 
         <PrivateRoute exact path="/mws" component={MWS} />
         <PrivateRoute exact path="/ppc" component={PPC} />
@@ -101,10 +100,10 @@ const routers = () => {
           component={Subscription}
         />
 
-        <Route component={NotFound} />
-      </Switch>
-    </Router>
-  );
+                <Route component={NotFound}/>
+            </Switch>
+        </Router>
+    );
 };
 
 export default routers;

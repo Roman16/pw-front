@@ -3,6 +3,7 @@ import greenLineIcon from "../../../../assets/img/icons/green-line.svg";
 import violetLineIcon from "../../../../assets/img/icons/violet-line.svg";
 import greenDailyIcon from "../../../../assets/img/icons/green-daily.svg";
 import violetDailyIcon from "../../../../assets/img/icons/violet-daily.svg";
+import moment from "moment";
 
 
 
@@ -19,7 +20,8 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
         return (
             <div className='custom-line-chart-tooltip'>
                 <div className='label'>
-                    <div className='date title'>{label}</div>
+                    <div className='date title'>{moment(label).format('DD.MM.YY')}</div>
+
                     {activeMetrics[0].key && <div className='name'>
                         {activeMetrics[0].title}
                     </div>}

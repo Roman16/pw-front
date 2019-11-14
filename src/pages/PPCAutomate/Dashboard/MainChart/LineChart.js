@@ -3,6 +3,7 @@ import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
 import ChartTooltip from "./ChartTooltip";
+import moment from "moment";
 
 const Chart = ({
                    data,
@@ -25,6 +26,7 @@ const Chart = ({
                 <XAxis
                     dataKey="date"
                     axisLine={false}
+                    tickFormatter={(date) => moment(date).format('MMM DD')}
                 />
 
                 <YAxis

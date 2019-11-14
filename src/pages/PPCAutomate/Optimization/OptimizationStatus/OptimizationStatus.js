@@ -48,7 +48,7 @@ class OptimizationStatus extends Component {
                 status,
                 created_at,
                 total_changes,
-                today_change,
+                today_changes,
             },
             selectedAll
         } = this.props;
@@ -73,7 +73,7 @@ class OptimizationStatus extends Component {
 
                 <StatusInfo caption="Total Changes" value={total_changes}/>
 
-                <StatusInfo caption="Today Changes" value={today_change}/>
+                <StatusInfo caption="Today Changes" value={today_changes}/>
 
                 <div className="control">
                     {!isActive

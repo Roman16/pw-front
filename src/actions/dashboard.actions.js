@@ -8,7 +8,8 @@ export const dashboardActions = {
     activateMetric,
     deactivateMetric,
     selectDateRange,
-    getMetricsStatistics
+    getMetricsStatistics,
+    selectProduct
 };
 
 function getMetricsStatistics(parameters) {
@@ -86,6 +87,14 @@ function selectDateRange(dateRange) {
         dispatch({
             type: dashboardConstants.SELECTED_RANGE_DATE,
             payload: dateRange
+        });
+    };
+}
+function selectProduct(id) {
+    return dispatch => {
+        dispatch({
+            type: dashboardConstants.SELECT_PRODUCT,
+            payload: id
         });
     };
 }

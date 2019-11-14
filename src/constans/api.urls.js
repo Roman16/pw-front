@@ -25,4 +25,6 @@ export const dashboardUrls = {
     chartData: 'ppc-automation/main-chart-data',
     products: 'products/settings/list',
     // products: 'products/dashboard/list',
+    barChartData: 'ppc-automation/bar-chart-data',
+    pieChartData: 'ppc-automation/pie-chart-data',
 };

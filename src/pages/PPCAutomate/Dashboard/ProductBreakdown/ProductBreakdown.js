@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from "react";
 import {Switch} from "antd";
+import {useDispatch, useSelector} from 'react-redux';
 import {dashboardServices} from '../../../../services/dashboard.services';
 import './ProductBreakdown.less';
 import ProductsList from "./ProductsList";
+import {dashboardActions} from "../../../../actions/dashboard.actions";
 
 const initialFetchParams = {
     page: 1,
@@ -14,13 +16,22 @@ const initialFetchParams = {
 
 
 const ProductBreakdown = () => {
+    const dispatch = useDispatch();
+    const {selectedProduct, selectedRangeDate} = useSelector(state => ({
+        selectedProduct: state.dashboard.selectedProduct,
+        selectedRangeDate: state.dashboard.selectedRangeDate,
+    }));
     const [fetchParams, changeFetchParams] = useState(initialFetchParams),
         [products, updateProductsList] = useState([]);
 
     let timerIdSearch = null;
 
     const getProducts = () => {
-        dashboardServices.fetchProducts(fetchParams)
+        dashboardServices.fetchProducts({
+            ...fetchParams,
+            startDate: selectedRangeDate.startDate,
+            endDate: selectedRangeDate.endDate,
+        })
             .then(res => {
                 updateProductsList(res.result);
                 changeFetchParams({
@@ -52,8 +63,11 @@ const ProductBreakdown = () => {
 
     const handlePaginationChange = page => changeFetchParams({...fetchParams, page: page});
 
+    const handleSelectProduct = (id) => {
+        dispatch(dashboardActions.selectProduct(id))
+    };
 
-    useEffect(getProducts, [fetchParams.page, fetchParams.searchText, fetchParams.onlyOptimization]);
+    useEffect(getProducts, [fetchParams.page, fetchParams.searchText, fetchParams.onlyOptimization, selectedRangeDate]);
 
     return (
         <div className='product-breakdown'>
@@ -75,6 +89,8 @@ const ProductBreakdown = () => {
                     products={products}
                     onSearchChange={onSearchChange}
                     handlePaginationChange={handlePaginationChange}
+                    onSelect={handleSelectProduct}
+                    selectedProduct={selectedProduct}
                 />
             </div>
         </div>
