@@ -11,7 +11,8 @@ export const userActions = {
     setMWS,
     getUserInfo,
     setInformation,
-    getAuthorizedUserInfo
+    getAuthorizedUserInfo,
+    updateUserInformation
 };
 
 function login(user) {
@@ -114,5 +115,14 @@ function setInformation(user) {
     return {
         type: userConstants.SET_INFORMATION,
         payload: user
+    };
+}
+
+function updateUserInformation(user) {
+    return dispatch => {
+        userService.updateInformation(user)
+            .then(res => {
+                dispatch(setInformation(res));
+            });
     };
 }

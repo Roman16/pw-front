@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {func, arrayOf, object} from 'prop-types';
-import {Input, Switch} from 'antd';
+import {Input, Switch, Icon} from 'antd';
 import InputCurrency from '../../../../components/Inputs/InputCurrency';
 import Table from '../../../../components/Table/Table';
 import ProductItem from '../../../../components/ProductList/ProductItem';
@@ -24,7 +24,7 @@ const delay = 500; // ms
 class ProductsList extends Component {
     state = {
         products: [],
-
+        openedProduct: '',
         totalSize: 0,
         page: 1,
         size: 10,
@@ -131,6 +131,64 @@ class ProductsList extends Component {
         this.setState({page}, this.fetchProducts)
     };
 
+    handleOpenChild = (id) => {
+        this.setState({
+            openedProduct: id
+        })
+    };
+
+    expandedRowRender = (props) => {
+        const columns = [
+            {
+                title: '',
+                width: '289px',
+                render: () => (<ProductItem
+                        product={props.product}
+                    />
+                )
+            },
+            {title: '', width: 150, render: () => (<span className='value'><span className="icon">%</span> {props[NET_MARGIN]}</span>)},
+            {title: '', width: 150, render: () => (<span className='value'><span className="icon">$</span> {props[MIN_BID_MANUAL_CAMPING]}</span>)},
+            {title: '', width: 150, render: () => (<span className='value'><span className="icon">$</span> {props[MAX_BID_MANUAL_CAMPING]}</span>)},
+            {title: '', width: 150, render: () => (<span className='value'><span className="icon">$</span> {props[MIN_BID_AUTO_CAMPING]}</span>)},
+            {title: '', width: 150, render: () => (<span className='value'><span className="icon">$</span> {props[MAX_BID_AUTO_CAMPING]}</span>)},
+            {title: '', width: 150, render: () => (<span>{props[TOTAL_CHANGES]}</span>)},
+            {title: '', width: 150, render: () => (<span> {props[OPTIMIZATION_STATUS] === ACTIVE ? <span style={{color: '#8fd39d'}}>Active</span> : 'Paused'}</span>)},
+        ];
+
+        const data = [];
+        for (let i = 0; i < 6; ++i) {
+            data.push({
+                key: i,
+                date: '2014-12-24 23:12:00',
+                name: 'This is production name',
+                upgradeNum: 'Upgraded: 56',
+            });
+        }
+        return <Table className='child-list' columns={columns} dataSource={data} pagination={false}/>;
+    };
+
+    customExpandIcon(props) {
+        console.log(props);
+        if (props.expanded) {
+            return <div className='open-children-list-button' onClick={e => {
+                props.onExpand(props.record, e);
+            }}>
+                6
+                {/*{props.record.children && props.record.children.length}*/}
+                <Icon type="caret-up"/>
+            </div>
+        } else {
+            return <div className='open-children-list-button' style={{color: 'black'}} onClick={e => {
+                props.onExpand(props.record, e);
+            }}>
+                6
+                {/*{props.record.children && props.record.children.length}*/}
+                <Icon type="caret-down"/>
+            </div>
+        }
+    }
+
     componentDidMount() {
         this.fetchProducts()
     }
@@ -161,6 +219,8 @@ class ProductsList extends Component {
                     render: (product) => (
                         <ProductItem
                             product={product}
+                            products={products}
+                            onOpenChild={this.handleOpenChild}
                         />
                     )
                 },
@@ -246,7 +306,7 @@ class ProductsList extends Component {
                     title: 'Total Changes',
                     dataIndex: TOTAL_CHANGES,
                     key: TOTAL_CHANGES,
-                    width: '130px',
+                    width: 150,
                     render: (index, item) => (
                         <div style={{fontWeight: 600}}>{item[TOTAL_CHANGES]}</div>
                     )
@@ -255,7 +315,7 @@ class ProductsList extends Component {
                     title: 'Optimization Status',
                     dataIndex: OPTIMIZATION_STATUS,
                     key: OPTIMIZATION_STATUS,
-                    width: '150px',
+                    width: 150,
                     render: (index, item) => (
                         <div
                             className={`settings-status ${
@@ -285,6 +345,9 @@ class ProductsList extends Component {
                     rowKey="id"
                     dataSource={products}
                     columns={columns}
+                    expandIcon={(props) => this.customExpandIcon(props)}
+
+                    expandedRowRender={this.expandedRowRender}
                     scroll={{y: paginationOption.totalSize > paginationOption.pageSize ? windowHeight - 350 : windowHeight - 300}}
                     {...paginationOption}
                 />

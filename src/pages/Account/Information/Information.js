@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import { Input, Switch, Checkbox, Cascader } from 'antd';
 
@@ -28,9 +28,27 @@ const options = [
 ];
 
 const Information = () => {
-  const { user } = useSelector(state => ({
-    user: state.user
+  const [userInformation, changeUserInformation] = useState({});
+  const {user} = useSelector(state => ({
+    user: state.user.user
   }));
+
+  const handleSaveUserInformation = (e) => {
+    e.preventDefault();
+
+    console.log('save')
+  };
+
+  const handleChangeInput = ({target: {name, value}}) => {
+    changeUserInformation({
+      ...userInformation,
+      [name]: value
+    })
+  };
+
+  useEffect(() => {
+    changeUserInformation(user)
+  }, [user]);
 
   return (
     <div className="user-cabinet">
@@ -38,8 +56,8 @@ const Information = () => {
       {/* ====================================== */}
       <div className="personal-box">
         <div className="avatar-box">
-          {user.user.avatar ? (
-            <img className="avatar" src={user.user.avatar} alt="avatar" />
+          {userInformation.avatar ? (
+            <img className="avatar" src={userInformation.avatar} alt="avatar" />
           ) : (
             <ItemIcon icon="account" />
           )}
@@ -49,45 +67,59 @@ const Information = () => {
             <h3>Your Personal Information</h3>
             <p>Upload your photo and paste the relevant information</p>
           </div>
+
           <div className="active-only">
-            <span htmlFor="">Are you privat lable seller?</span>
+            <span htmlFor="">Are you private lable seller?</span>
             <Switch checkedChildren="YES" unCheckedChildren="NO" />
           </div>
-          <div className="form-person-info">
+
+          <form onSubmit={handleSaveUserInformation} className="form-person-info">
             <div className="form-group">
               <label>First Name</label>
               <Input
-                className="form-control"
-                type="text"
-                name="name"
-                value="Ihor"
-                placeholder="Type first name"
+                  className="form-control"
+                  type="text"
+                  name="name"
+                  value={userInformation.name}
+                  placeholder="Type first name"
+                  onChange={handleChangeInput}
+                  required
               />
             </div>
+
             <div className="form-group">
               <label>Last Name</label>
               <Input
-                className="form-control"
-                type="text"
-                name="surname"
-                value="Ihor"
-                placeholder="Type last name"
+                  className="form-control"
+                  type="text"
+                  name="last_name"
+                  value={userInformation.last_name}
+                  placeholder="Type last name"
+                  onChange={handleChangeInput}
+                  required
               />
             </div>
+
             <div className="form-group">
-              <label>Email Adress</label>
+              <label>Email Address</label>
               <Input
-                className="form-control"
-                type="email"
-                name="email"
-                value="profitwhales.soft@gmail.com"
-                placeholder="Type email adress"
+                  className="form-control"
+                  type="email"
+                  name="email"
+                  value={userInformation.email}
+                  placeholder="Type email address"
+                  onChange={handleChangeInput}
+                  required
               />
             </div>
-            <button className="btn-save" type="button" disabled>
+
+            <button
+                className="btn-save"
+                disabled={JSON.stringify(userInformation) === JSON.stringify(user)}
+            >
               save changes
             </button>
-          </div>
+          </form>
         </div>
       </div>
       {/* ====================================== */}
@@ -98,6 +130,7 @@ const Information = () => {
           <div className="input-password">
             <div className="form-group">
               <label>Old Password</label>
+
               <div className="input-wrap">
                 <Input
                   className="form-control"
@@ -108,8 +141,10 @@ const Information = () => {
                 <ClosedEye className="eye" />
               </div>
             </div>
+
             <div className="form-group">
               <label>New Password</label>
+
               <div className="input-wrap">
                 <Input
                   className="form-control"
@@ -120,6 +155,7 @@ const Information = () => {
                 <OpenedEye className="eye" />
               </div>
             </div>
+
             <div className="form-group">
               <label>Repeat New Password</label>
               <div className="input-wrap">
@@ -132,6 +168,7 @@ const Information = () => {
                 <OpenedEye className="eye" />
               </div>
             </div>
+
             <button className="btn-change" type="button" disabled="">
               Change
             </button>
