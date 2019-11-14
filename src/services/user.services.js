@@ -9,7 +9,8 @@ export const userService = {
     getUserInfo,
     setMWS,
     getStripeAvailableCountries,
-    updateInformation
+    updateInformation,
+    updatePhoto
 };
 
 function login(user) {
@@ -39,6 +40,10 @@ function updateInformation({name, last_name, email, private_label_seller}) {
         email,
         private_label_seller: private_label_seller ? 1 : 0
     });
+}
+
+function updatePhoto(data) {
+    return api('post', userUrls.updatePhoto, data);
 }
 
 function getStripeAvailableCountries(token) {

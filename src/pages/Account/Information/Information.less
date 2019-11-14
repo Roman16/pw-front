@@ -17,9 +17,9 @@
     margin-bottom: 0.4em;
 
     .avatar-box {
-      width: 20%;
       display: flex;
       align-items: flex-start;
+      position: relative;
 
       .avatar {
         width: 11.9em;
@@ -38,6 +38,44 @@
         svg {
           width: 90%;
           height: 90%;
+        }
+      }
+
+      &:hover .change-photo-block{
+        opacity: 1;
+      }
+
+      .change-photo-block {
+        position: absolute;
+        width: 11.9em;
+        height: 11.9em;
+        border-radius: 50%;
+        opacity: 0;
+        transition: .3s;
+
+        background: linear-gradient(0deg, rgba(44, 48, 58, 0.4), rgba(44, 48, 58, 0.4));
+
+        label {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+
+          i {
+            font-size: .2rem;
+          }
+        }
+
+
+        input {
+          width: 0.1px;
+          height: 0.1px;
+          opacity: 0;
+          overflow: hidden;
+          position: absolute;
+          z-index: -1;
         }
       }
     }
@@ -204,6 +242,10 @@
 
             .form-control::placeholder {
               color: @third-account-color;
+            }
+
+            .ant-input-suffix {
+              cursor: pointer;
             }
           }
         }

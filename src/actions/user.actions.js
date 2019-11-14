@@ -12,7 +12,8 @@ export const userActions = {
     getUserInfo,
     setInformation,
     getAuthorizedUserInfo,
-    updateUserInformation
+    updateUserInformation,
+    changeUserAvatar
 };
 
 function login(user) {
@@ -119,8 +120,17 @@ function setInformation(user) {
 }
 
 function updateUserInformation(user) {
-    return dispatch => {
+      return dispatch => {
         userService.updateInformation(user)
+            .then(res => {
+                dispatch(setInformation(res));
+            });
+    };
+}
+
+function changeUserAvatar(formData) {
+      return dispatch => {
+        userService.updatePhoto(formData)
             .then(res => {
                 dispatch(setInformation(res));
             });

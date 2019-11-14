@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Input, Switch} from 'antd';
+import {Input, Switch, Icon} from 'antd';
 import {userActions} from "../../../actions/user.actions";
 import ItemIcon from '../../../components/ItemIcon/ItemIcon';
 
@@ -17,12 +17,7 @@ const Personal = () => {
     };
 
     const handleChangeSwitch = (e) => {
-        changeUserInformation({
-            ...userInformation,
-            private_label_seller: e
-        });
-
-        dispatch(userActions.updateUserInformation({
+             dispatch(userActions.updateUserInformation({
             ...userInformation,
             private_label_seller: e
         }));
@@ -33,6 +28,12 @@ const Personal = () => {
             ...userInformation,
             [name]: value
         });
+    };
+
+    const handleChangeImage = (e) => {
+        let formData = new FormData();
+        formData.append('avatar', e.target.files[0]);
+        dispatch(userActions.changeUserAvatar(formData));
     };
 
     useEffect(() => {
@@ -47,7 +48,21 @@ const Personal = () => {
                 ) : (
                     <ItemIcon icon="account"/>
                 )}
+
+                <div className='change-photo-block'>
+                    <input
+                        id='file-input'
+                        type="file"
+                        onChange={handleChangeImage}
+                        accept="image/*"
+                        placeholder=''
+                    />
+
+                    <label htmlFor="file-input"><Icon type="camera" /></label>
+
+                </div>
             </div>
+
             <div className="personal-information">
                 <div className="description">
                     <h3>Your Personal Information</h3>
@@ -60,7 +75,7 @@ const Personal = () => {
                     <Switch
                         checkedChildren="YES"
                         unCheckedChildren="NO"
-                        value={userInformation.private_label_seller === '1'}
+                        value={user.private_label_seller === '1'}
                         onChange={handleChangeSwitch}
                     />
                 </div>

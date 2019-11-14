@@ -3,6 +3,7 @@ export const userUrls = {
     loginAmazon: 'user/login/amazon/callback',
     regist: 'user/register',
     allInfo: 'user/status',
+    updatePhoto: 'user/change-avatar',
     mws: 'user/account/auth/mws/tokens',
 };
 
