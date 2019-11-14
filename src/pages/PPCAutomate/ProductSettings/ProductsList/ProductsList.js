@@ -138,7 +138,6 @@ class ProductsList extends Component {
     };
 
     expandedRowRender = (props) => {
-        console.log(props);
         const columns = [
             {
                 title: '',

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Customized
 } from 'recharts';
 import ChartTooltip from "./ChartTooltip";
 import moment from "moment";
@@ -11,17 +11,27 @@ const Chart = ({
                    showWeekChart,
                    showDailyChart
                }) => {
+
+    // const dataWithShadow = data.map(item => ({
+    //     ...item,
+    //     week_first_metric_shadow: item.week_first_metric - 200,
+    //     week_second_metric_shadow: item.week_second_metric - 200,
+    // }));
+
     return (
         <ResponsiveContainer height='80%' width='100%'>
 
             <LineChart
                 data={data}
                 margin={{ top: 10}}
+
             >
                 <CartesianGrid
                     vertical={false}
                     stroke="#DBDCE2"
                 />
+
+                {/*<Customized component={(props) => console.log(props)} />*/}
 
                 <XAxis
                     dataKey="date"
@@ -68,6 +78,17 @@ const Chart = ({
                     dot={{r: 3}}
                 />}
 
+                {/*{(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line*/}
+                {/*    yAxisId="left"*/}
+                {/*    type="monotone"*/}
+                {/*    dataKey="week_first_metric_shadow"*/}
+                {/*    strokeOpacity={0.4}*/}
+                {/*    stroke="#8FD39D"*/}
+                {/*    strokeWidth={5}*/}
+                {/*    dot={false}*/}
+                {/*    activeDot={{r: 0}}*/}
+                {/*/>}*/}
+
 
                 {(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line
                     yAxisId="right"
@@ -89,25 +110,16 @@ const Chart = ({
                     dot={{r: 3}}
                 />}
 
-                {/*<Line*/}
-                {/*    yAxisId="right"*/}
+                {/*{(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line*/}
+                {/*    yAxisId='right'*/}
                 {/*    type="monotone"*/}
-                {/*    dataKey="uv"*/}
-                {/*    stroke="#82ca9d"*/}
-                {/*    strokeWidth={3}*/}
-                {/*    dot={false}*/}
-                {/*/>*/}
-
-                {/*<Line*/}
-                {/*    yAxisId='left'*/}
-                {/*    type="monotone"*/}
-                {/*    strokeOpacity={0.1}*/}
-                {/*    dataKey="cnt"*/}
+                {/*    strokeOpacity={0.4}*/}
+                {/*    dataKey="week_second_metric_shadow"*/}
                 {/*    strokeWidth={5}*/}
-                {/*    stroke="#82ca9d"*/}
+                {/*    stroke="#6D6DF6"*/}
                 {/*    dot={false}*/}
-                {/*/>*/}
-
+                {/*    activeDot={{r: 0}}*/}
+                {/*/>}*/}
 
             </LineChart>
         </ResponsiveContainer>
