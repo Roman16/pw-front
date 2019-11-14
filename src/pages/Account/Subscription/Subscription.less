@@ -1,4 +1,4 @@
-@import "../../../style/variables.less";
+@import '../../../style/variables.less';
 
 .main-pages > .main-container > .user-cabinet {
   font-size: 0.714286rem; // 10px
@@ -46,18 +46,16 @@
         font-size: 0.8571rem; // 12px
         width: 16.6667em;
         height: 2.6667em;
-        // display: grid;
-        // grid-template-columns: 1fr 1fr;
-        // grid-template-rows: 1fr;
-        // place-content: center center;
+        position: relative;
         border-radius: 0.6667em;
         color: @white;
         background-color: #e57d31;
 
         .reactivate-img {
-          // place-items: center start;
-          // margin: 0 1em auto 0;
-          // margin-left: auto;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 1em;
         }
       }
     }
@@ -143,7 +141,7 @@
               top: 50%;
               transform: translateY(-50%);
               right: 0;
-              content: "";
+              content: '';
               background-color: @border-solid;
             }
 

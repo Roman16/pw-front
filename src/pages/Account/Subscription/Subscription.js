@@ -1,10 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import Navigation from "../Navigation/Navigation";
-import reload from "../../../assets/img/icons/reload.svg";
-import ppcIcon from "../../../assets/img/icons/ppc-automate-icon.svg";
-import "./Subscription.less";
+import Navigation from '../Navigation/Navigation';
+import reload from '../../../assets/img/icons/reload.svg';
+import ppcIcon from '../../../assets/img/icons/ppc-automate-icon.svg';
+import './Subscription.less';
 
 const Subscription = () => {
   return (
@@ -20,7 +20,7 @@ const Subscription = () => {
             cycle (<span className="reactivate-data">August 14, 2019</span>)
           </p>
           <button className="reactivate-btn" type="button">
-            <span>Reactivate</span>
+            Reactivate
             <img className="reactivate-img" src={reload} alt="reload" />
           </button>
         </div>
