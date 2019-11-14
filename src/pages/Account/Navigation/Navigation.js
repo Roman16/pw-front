@@ -18,7 +18,7 @@ const Navigation = () => {
                         className="current-page-link"
                         activeClassName="current-page-link-active"
                         exact
-                        to="/account/settings"
+                        to="/account-settings"
                     >
                         Account information
                     </NavLink>
@@ -28,7 +28,7 @@ const Navigation = () => {
                         className="current-page-link"
                         activeClassName="current-page-link-active"
                         exact
-                        to="/account/billing"
+                        to="/account-billing"
                     >
                         Billing information
                     </NavLink>
@@ -38,7 +38,7 @@ const Navigation = () => {
                         className="current-page-link"
                         activeClassName="current-page-link-active"
                         exact
-                        to="/account/subscription"
+                        to="/account-subscription"
                     >
                         Subscriptions
                     </NavLink>

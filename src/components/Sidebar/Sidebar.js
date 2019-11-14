@@ -196,7 +196,7 @@ const Sidebar = () => {
                                 className="automate-link"
                                 activeClassName="automate-link-active"
                                 exact
-                                to={`/account/settings`}
+                                to={`/account-settings`}
                             >
                                 {user.user.avatar ? (
                                     <img
