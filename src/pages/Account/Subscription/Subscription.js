@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import Navigation from "../Navigation/Navigation";
 import reload from "../../../assets/img/icons/reload.svg";
+import ppcIcon from "../../../assets/img/icons/ppc-automate-icon.svg";
 import "./Subscription.less";
 
 const Subscription = () => {
@@ -25,7 +26,10 @@ const Subscription = () => {
         </div>
         <div className="automate">
           <div className="ppc">
-            <h2 className="ppc-title">PPC Automate</h2>
+            <div className="ppc-title-wrap">
+              <img className="ppc-icon" src={ppcIcon} alt="icon" />
+              <h2 className="ppc-title">PPC Automate</h2>
+            </div>
             <p className="ppc-text">
               Acces and edit your accounts Profit Whales subscription
             </p>
@@ -35,10 +39,15 @@ const Subscription = () => {
           </div>
           <div className="plan">
             <div className="charged">
-              <h3 className="charged-title">Subscription Plan</h3>
-              <p className="charged-text">
-                You’ll be charged <span className="charged-data">$ 347</span>
-              </p>
+              <div className="charged-wrap">
+                <h3 className="charged-title">
+                  Subscription <br /> Plan
+                </h3>
+                <div className="charged-description">
+                  <p className="charged-text">You’ll be charged</p>
+                  <p className="charged-data">$ 347</p>
+                </div>
+              </div>
               <div className="indicators">
                 <p className="indicators-text">
                   based on <span className="indicators-data">$ 145 + 4%</span>

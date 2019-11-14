@@ -68,14 +68,32 @@
       justify-content: space-between;
 
       .ppc {
-        .ppc-title {
-          font-size: 1.7143rem; // 24px
-          color: @second-account-color;
+        height: 100%;
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+
+        .ppc-title-wrap {
+          display: flex;
+          align-items: center;
+
+          .ppc-icon {
+            width: 3.2em;
+            height: 3.2em;
+            margin-right: 1.2em;
+          }
+
+          .ppc-title {
+            font-size: 1.7143rem; // 24px
+            color: @second-account-color;
+            margin: 0;
+          }
         }
 
         .ppc-text {
           font-size: 1rem; // 14px
           color: @third-account-color;
+          margin: 0;
         }
 
         .ppc-link {
@@ -85,49 +103,90 @@
       }
 
       .plan {
+        width: 52%;
+        margin: 0 2em;
+
         .charged {
-          width: 63.2em;
+          width: 100%;
           height: 9.6em;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 0 3.2em;
+          padding: 1em 3.2em 1.4em;
           border-radius: 0.8em;
           background-color: #f3f7fd;
           margin-bottom: 2em;
 
-          .charged-title {
-            font-size: 1.1429rem; // 16px
-            color: @second-account-color;
-            font-weight: 600;
-          }
+          .charged-wrap {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            align-items: center;
 
-          .charged-text {
-            font-size: 0.8571rem; // 12px
-            color: @third-account-color;
-
-            .charged-data {
-              font-size: 1.7143rem; // 24px
-              color: @account-color-action;
+            .charged-title {
+              font-size: 1.1429rem; // 16px
+              position: relative;
+              width: 50%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              color: @second-account-color;
               font-weight: 600;
+              margin: 0;
+            }
+
+            .charged-title::after {
+              width: 0.0625em;
+              height: 3em;
+              display: inline-block;
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              right: 0;
+              content: "";
+              background-color: @border-solid;
+            }
+
+            .charged-description {
+              width: 50%;
+              height: 100%;
+              display: flex;
+              flex-flow: column;
+              align-items: center;
+
+              .charged-text {
+                font-size: 0.8571rem; // 12px
+                color: @third-account-color;
+                margin: 0 auto;
+              }
+
+              .charged-data {
+                font-size: 1.7143rem; // 24px
+                color: @account-color-action;
+                font-weight: 600;
+              }
             }
           }
 
           .indicators {
             width: 50%;
-            display: grid;
-            // flex-flow: column;
+            height: 100%;
+            display: flex;
+            flex-flow: column;
+            justify-content: flex-end;
 
             .indicators-text {
               font-size: 1rem; // 14px
-              align-items: center;
               color: @third-account-color;
+              display: flex;
+              align-items: center;
               margin: 0;
 
               .indicators-data {
                 font-size: 1.7143rem; // 24px
                 color: @third-default-dark;
-                // font-weight: 600;
+                align-self: flex-end;
+                margin-left: 1.25em;
               }
             }
 
@@ -157,9 +216,16 @@
       }
 
       .cancel {
+        height: 9.6em;
+        display: flex;
+        flex-flow: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+
         .cancel-text {
           font-size: 0.8571rem; // 12px
           color: @success-color;
+          margin-bottom: 2.8333em;
 
           .cancel-data {
             color: @second-account-color;
