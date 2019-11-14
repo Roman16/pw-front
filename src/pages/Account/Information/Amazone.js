@@ -23,24 +23,28 @@ const Amazone = () => {
       <div className="central-wrapper">
         <div className="central-title">
           <Checkbox />
-          <h2>Amazon Seller Central Connection - SELLER ID: A344WPJGDI66R5</h2>
-          <a
-            className="central-link"
-            href="https://www.youtube.com/watch?time_continue=2&v=SRhhgDVB0jk&feature=emb_logo"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Show me what to do
-          </a>
+          <div className="title-wrap">
+            <h2>
+              Amazon Seller Central Connection - SELLER ID: A344WPJGDI66R5
+            </h2>
+            <a
+              className="central-link"
+              href="https://www.youtube.com/watch?time_continue=2&v=SRhhgDVB0jk&feature=emb_logo"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Show me what to do
+            </a>
+          </div>
         </div>
         <div className="btn-wrap">
-          <button className="central-btn" type="button">
+          <button className="refresh-btn" type="button">
             <img src={refresh} alt="refresh" />
           </button>
-          <button className="central-btn" type="button">
+          <button className="token-btn" type="button">
             Add token
           </button>
-          <button className="central-btn" type="button">
+          <button className="check-btn" type="button">
             <img src={check} alt="check" />
           </button>
         </div>
@@ -57,7 +61,7 @@ const Amazone = () => {
             <img src={checked} alt="checked" />
           </h3>
           <button className="mws-btn" type="button">
-            &#215; Remove
+            &#215; <span>Remove</span>
           </button>
         </div>
         <div className="login-wrap">
@@ -66,7 +70,7 @@ const Amazone = () => {
             <img src={checked} alt="checked" />
           </h3>
           <button className="mws-btn" type="button">
-            &#215; Remove
+            &#215; <span>Remove</span>
           </button>
         </div>
         <p className="approved-text">Approved</p>
@@ -77,33 +81,42 @@ const Amazone = () => {
           <h2 className="add-amazone-title">NEW STOREFRONT - ADD MWS ACCESS</h2>
 
           <div className="choice-wrap">
-            <Cascader defaultValue={['USACAMX']} options={options} />
-            <button className="connect-btn" type="button">
-              Connect Acoount
-            </button>
-            <div className="form-group">
-              <label>Amazon Seller ID</label>
-              <Input
-                className="form-control"
-                type="text"
-                name="name"
-                value=""
-                placeholder="This will look like A1BCDE23F4GHIJ"
+            <div className="connect-group">
+              <Cascader
+                allowClear={false}
+                defaultValue={['USACAMX']}
+                options={options}
               />
+              <button className="connect-btn" type="button">
+                Connect Account
+              </button>
             </div>
-            <div className="form-group">
-              <label>MWS Auth Token</label>
-              <Input
-                className="form-control"
-                type="text"
-                name="name"
-                value=""
-                placeholder="This will look like amzn.mws. 01234567"
-              />
+            <div className="line"></div>
+            <div className="confirm-group">
+              <div className="form-group">
+                <span>Amazon Seller ID</span>
+                <Input
+                  className="form-control"
+                  type="text"
+                  name="name"
+                  value=""
+                  placeholder="This will look like A1BCDE23F4GHIJ"
+                />
+              </div>
+              <div className="form-group">
+                <span>MWS Auth Token</span>
+                <Input
+                  className="form-control"
+                  type="text"
+                  name="name"
+                  value="asfafsa"
+                  placeholder="This will look like amzn.mws. 01234567"
+                />
+              </div>
+              <button className="confirm-btn" type="button" disabled>
+                Confirm MWS
+              </button>
             </div>
-            <button className="confirm-btn" type="button">
-              Confirm MWS
-            </button>
           </div>
 
           <a
@@ -127,11 +140,11 @@ const Amazone = () => {
             >
               Click to autorize Amazon MWS Access and paste the results below:
             </a>
-            <button
+            <button className='login-amazone-btn'
               type="button"
               onClick={() => window.open('/login/amazon', '_self')}
             >
-              <img src={amazon} alt="LWA-GOld" />
+              <img className='login-amazone-img' src={amazon} alt="LWA-GOld" />
             </button>
             <a
               className="connect-another-link"

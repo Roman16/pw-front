@@ -273,25 +273,38 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding-bottom: 3em;
 
       .central-title {
         width: 59%;
         display: flex;
-        justify-content: space-between;
         align-items: center;
 
-        h2 {
-          font-size: 1.4286rem; // 20px
-          color: @second-default-dark;
-          font-weight: 600;
-          margin: 0;
+        .ant-checkbox-wrapper {
+          font-size: inherit; // 10px
+          margin-right: 3.2em;
+
+          .ant-checkbox-checked {
+            .ant-checkbox-inner {
+              background-color: @action-color-dark !important;
+            }
+          }
         }
 
-        .central-link {
-          font-size: 1rem; // 14px
-          color: @action-color;
-          font-weight: 600;
-          text-decoration: underline;
+        .title-wrap {
+          h2 {
+            font-size: 1.4286rem; // 20px
+            color: @second-default-dark;
+            font-weight: 600;
+            margin: 0;
+          }
+
+          .central-link {
+            font-size: 1rem; // 14px
+            color: @action-color;
+            font-weight: 600;
+            text-decoration: underline;
+          }
         }
       }
 
@@ -300,6 +313,241 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        .refresh-btn {
+          width: 4em;
+          height: 4em;
+          border-radius: 0.8em;
+          background-color: @body-background;
+        }
+
+        .token-btn {
+          font-size: 0.8571rem; // 12px
+          width: 11.3334em;
+          height: 3.3334em;
+          border-radius: 0.6666em;
+          color: @white !important;
+          background-color: @btn-color;
+          font-weight: 600;
+        }
+
+        .check-btn {
+          width: 2.4em;
+          height: 2.4em;
+        }
+      }
+    }
+
+    .approved-wrapper {
+      padding: 1.7em 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .title-wrap {
+        h3 {
+          font-size: 1.1429rem; // 16px
+          color: @action-color;
+          font-weight: 600;
+          margin: 0 0 0.25em;
+        }
+
+        p {
+          font-size: 1rem; // 14px
+          color: @third-account-color;
+          margin: 0;
+        }
+      }
+
+      .mws-wrap,
+      .login-wrap {
+        h3 {
+          font-size: 1.1429rem; // 16px
+          width: 11.625em;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: @third-default-dark;
+          margin: 0 0 0.25em;
+
+          img {
+            width: 1em;
+            height: 1em;
+          }
+        }
+
+        button {
+          font-size: 1rem; //14px
+          color: @third-account-color;
+          padding-left: 0.2143em;
+
+          span {
+            text-decoration: underline;
+            margin-left: 0.7143em;
+          }
+        }
+      }
+
+      .approved-text {
+        font-size: 1.1429rem; // 16px
+        color: @success-color;
+        font-weight: 600;
+        margin: 0 4.0625em 0 0;
+      }
+    }
+
+    .add-wrapper {
+      padding: 2.4em 0 0;
+
+      .add-amazone-wrap {
+        margin-bottom: 1.7em;
+
+        .add-amazone-title {
+          font-size: 1.4286rem; // 20px
+          color: @second-default-dark;
+          font-weight: 600;
+          margin: 0;
+        }
+
+        .choice-wrap {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          margin-bottom: 1.6em;
+
+          .connect-group {
+            width: 39%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .ant-cascader-picker {
+              font-size: 1rem; // 14px
+
+              .ant-cascader-picker-label {
+                font-size: 1rem; // 14px
+                color: @third-default-dark;
+                font-weight: 600;
+              }
+
+              .ant-input {
+                width: 17.1429em;
+                height: 2.8571em;
+                outline: none;
+                border-radius: 0.5714em;
+              }
+
+              .anticon {
+                color: @third-default-dark;
+              }
+            }
+
+            .connect-btn {
+              font-size: 1.1429rem; // 16px
+              width: 12.1875em;
+              height: 2.5em;
+              border-radius: 0.5em;
+              color: @white !important;
+              background-color: @btn-color;
+              font-weight: 600;
+            }
+          }
+
+          .line {
+            width: 0.1em;
+            height: 4em;
+            display: inline-block;
+            background-color: #c4c4c4;
+          }
+
+          .confirm-group {
+            width: 55%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            .form-group {
+              border: none;
+              margin: 0;
+
+              span {
+                font-size: 0.9286rem; // 13px
+                display: block;
+                color: @second-account-color;
+                margin-bottom: 0.4615em;
+              }
+
+              .form-control {
+                font-size: 0.8571rem; // 12px
+                width: 20em;
+                height: 3.3333em;
+                border-radius: 0.6667em;
+                border: 1px solid @border-solid;
+                background: rgba(201, 203, 212, 0.3);
+                color: @third-account-color;
+
+                &::placeholder {
+                  font-size: 0.8571rem; // 12px
+                  color: @third-account-color;
+                }
+              }
+            }
+
+            .confirm-btn {
+              font-size: 0.8571rem; // 12px
+              width: 11.3334em;
+              height: 3.3334em;
+              border-radius: 0.6666em;
+              color: @white !important;
+              background-color: @btn-color;
+              font-weight: 600;
+              text-transform: uppercase;
+            }
+          }
+        }
+
+        .add-amazone-link {
+          font-size: 1rem; // 14px
+          color: @third-account-color;
+        }
+      }
+
+      .login-amazone-wrap {
+        .login-amazone-title {
+          font-size: 1.4286rem; // 20px
+          color: @second-default-dark;
+          font-weight: 600;
+          margin: 0 0 0.35em;
+        }
+
+        .connect-amazone {
+          display: flex;
+          align-items: center;
+
+          .connect-amazone-link {
+            font-size: 1rem; // 14px
+            width: 16.4286em;
+            display: inline-block;
+            color: @third-account-color;
+            letter-spacing: -0.05px;
+            line-height: 20px;
+            margin-right: 1.2143em;
+          }
+
+          .login-amazone-btn {
+            .login-amazone-img {
+              width: 19.5em;
+              height: 4em;
+            }
+          }
+
+          .connect-another-link {
+            font-size: 1rem; // 14px
+            color: @third-default-dark;
+            text-decoration: underline;
+            margin-left: auto;
+          }
+        }
       }
     }
   }
