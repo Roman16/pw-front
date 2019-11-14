@@ -8,7 +8,8 @@ export const userService = {
     regist,
     getUserInfo,
     setMWS,
-    getStripeAvailableCountries
+    getStripeAvailableCountries,
+    updateInformation
 };
 
 function login(user) {
@@ -29,6 +30,10 @@ function getUserInfo() {
 
 function setMWS(data) {
     return api('post', userUrls.mws, data);
+}
+
+function updateInformation(data) {
+    return api('put', userUrls.allInfo, data);
 }
 
 function getStripeAvailableCountries(token) {
