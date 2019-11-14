@@ -32,8 +32,13 @@ function setMWS(data) {
     return api('post', userUrls.mws, data);
 }
 
-function updateInformation(data) {
-    return api('put', userUrls.allInfo, data);
+function updateInformation({name, last_name, email, private_label_seller}) {
+    return api('put', userUrls.allInfo, {
+        name,
+        last_name,
+        email,
+        private_label_seller: private_label_seller ? 1 : 0
+    });
 }
 
 function getStripeAvailableCountries(token) {

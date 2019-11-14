@@ -169,7 +169,6 @@ class ProductsList extends Component {
     };
 
     customExpandIcon(props) {
-        console.log(props);
         if (props.expanded) {
             return <div className='open-children-list-button' onClick={e => {
                 props.onExpand(props.record, e);

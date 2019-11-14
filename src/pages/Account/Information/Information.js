@@ -14,8 +14,11 @@ const Information = () => {
   return (
     <div className="user-cabinet">
       <Navigation />
+
       <Personal />
+
       <Password />
+
       <Seller />
       <Amazone />
       <Connectors />
