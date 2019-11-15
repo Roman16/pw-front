@@ -5,9 +5,9 @@ import {notification} from '../components/Notification';
 import {history} from '../utils/history';
 
 const baseUrl =
-    process.env.REACT_APP_ENV === 'developer'
-        ? process.env.REACT_APP_API_URL
-        : process.env.REACT_APP_API_PROD || '';
+    process.env.REACT_APP_ENV === 'production'
+        ? process.env.REACT_APP_API_PROD
+        : process.env.REACT_APP_API_URL || '';
 
 
 const api = (method, url, data, type) => {

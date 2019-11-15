@@ -14,7 +14,7 @@ const AccountBilling = ({onOpenWindow}) => {
                 </span>
             </div>
 
-            <button className='btn green-btn' onClick={() => onOpenWindow('newCard')}>
+            <button className='btn green-btn' onClick={() => onOpenWindow('updateCard')}>
                 {/*Update payment method*/}
                 Add card
             </button>

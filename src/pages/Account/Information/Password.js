@@ -22,8 +22,8 @@ const defaultInputsValue = {
 const Password = () => {
     const [inputsType, changeInputsType] = useState({
             current_password: 'password',
-            new_password: 'text',
-            confirm_password: 'text',
+            new_password: 'password',
+            confirm_password: 'password',
         }),
         [inputsValue, changeInputsValue] = useState(defaultInputsValue);
 

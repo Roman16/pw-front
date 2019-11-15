@@ -119,15 +119,19 @@ const Sidebar = () => {
                             </li>
 
                             <li className="top-nav-item ppc-automate-link">
+                                <span
+                                    onClick={toggleAutomate}
+                                >
                                 <NavLink
                                     className="top-nav-link"
                                     activeClassName="top-nav-link-active"
                                     to="/ppc"
-                                    onClick={toggleAutomate}
+                                    replace
                                 >
                                     <ItemIcon icon="ppcAutomate"/>
                                     <span>PPC Automate</span>
                                 </NavLink>
+                                    </span>
                                 {/* <button type="button" onClick={toggleAutomate}>
                   <img
                     className={`show-menu ${automate && 'rotate'}`}

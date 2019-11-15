@@ -1,11 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Col, Row } from 'antd';
+import {Link} from 'react-router-dom';
+import {Col, Row} from 'antd';
 import './RegistrationPage.less';
 import RegistrationPageForm from './RegistrationPageForm/RegistrationPageForm';
 import {Elements, StripeProvider} from "react-stripe-elements";
 
-const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_MLrQNn1uBFIvdDgOZzECplkP';
+const stripeKey = process.env.REACT_APP_ENV === 'production'
+    ? process.env.STRIPE_PUBLISHABLE_KEY_LIVE
+    : process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 class RegistrationPage extends React.Component {
     render() {
@@ -13,7 +15,7 @@ class RegistrationPage extends React.Component {
             <div className="RegisterFormContainer">
                 <div className="sign-page">
                     <div className="logo-auth">
-                        <img src="/logo.svg" alt="logo" />
+                        <img src="/logo.svg" alt="logo"/>
                     </div>
                     <Row className="container">
                         <Col
@@ -28,7 +30,7 @@ class RegistrationPage extends React.Component {
                                 {/* eslint-disable-next-line max-len */}
                                 Getting started with Profit Whales takes only a
                                 few minutes but saves hundreds of hours,
-                                <br />
+                                <br/>
                                 don’t believe me? Try it now.
                             </div>
                             <div className="form-title">
@@ -37,7 +39,7 @@ class RegistrationPage extends React.Component {
 
                             <StripeProvider apiKey={stripeKey}>
                                 <Elements>
-                                    <RegistrationPageForm />
+                                    <RegistrationPageForm/>
                                 </Elements>
                             </StripeProvider>
                         </Col>

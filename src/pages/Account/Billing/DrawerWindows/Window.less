@@ -21,6 +21,19 @@
 
     .form-group {
       border: 0;
+
+      label {
+        display: block;
+        margin: 0 0 6px 0;
+        font-family: ir;
+        font-size: 0.9285714285714286rem;
+        letter-spacing: -0.4375px;
+        color: #38454F;
+      }
+
+      input {
+        height: 40px;
+      }
     }
 
     .row {
@@ -39,18 +52,25 @@
       }
     }
 
+    form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .ant-input {
+        border-radius: 8px;
+      }
+    }
+
     .update-company-information {
       height: 100%;
       display: flex;
       flex-direction: column;
 
       form {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-
         .row {
           margin: 0 0 10px 0;
+
           .form-group {
             width: 48%;
           }
@@ -61,7 +81,93 @@
         }
 
       }
+    }
 
+    .add-card-window {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      h4 {
+        font-family: isb;
+        font-size: 1.1428571428571428rem;
+        letter-spacing: 0.4px;
+        color: #8FD39D;
+      }
+
+      .card-container {
+        .card-container__card,
+        .card-container__expiry,
+        .card-container__cvc {
+          label {
+            display: block;
+            margin: 0 0 6px 0;
+            font-family: ir;
+            font-size: 0.9285714285714286rem;
+            letter-spacing: -0.4375px;
+            color: #38454F;
+          }
+
+          & > div {
+            border: 1px solid rgba(148, 163, 173, 0.4);
+            border-radius: 8px;
+            height: 40px;
+            line-height: 40px;
+            padding: 10px 0 10px 1em;
+            box-sizing: border-box;
+          }
+        }
+
+        .row {
+          align-items: flex-end;
+          margin: 24px 0 30px 0;
+
+          .card-container__expiry,
+          .card-container__cvc {
+            width: 80px;
+          }
+
+          img {
+            margin: 0 0 13px 0;
+          }
+
+          p {
+            margin: 0 0 5px 0;
+          }
+        }
+      }
+
+      .logo-block {
+        display: flex;
+
+        img {
+          margin: 0 25px 0 0;
+
+          &:last-child {
+            margin: 0 0 0 auto;
+          }
+        }
+      }
+    }
+
+    .update-card-info {
+      .billing-address-block {
+        border-top: 1px solid rgba(201, 203, 212, 0.5);
+        padding: 50px 0 0 0;
+        margin: 45px 0 0 0;
+
+        .row {
+          .form-group {
+            width: 48%;
+          }
+
+          &:nth-child(3) {
+            .form-group {
+              width: 100%;
+            }
+          }
+        }
+      }
     }
   }
 }

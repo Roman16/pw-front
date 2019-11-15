@@ -1,15 +1,20 @@
-import React, {useState, Component} from "react";
-import {CardNumberElement, CardExpiryElement, CardCvcElement, StripeProvider, Elements} from 'react-stripe-elements';
+import React, {useState} from "react";
+import {CardNumberElement, CardExpiryElement, CardCvcElement} from 'react-stripe-elements';
 import {injectStripe} from "react-stripe-elements";
+import lockIcon from '../../../../assets/img/icons/lock.svg';
+import visaLogo from '../../../../assets/img/visa-logo.svg';
+import mastercardLogo from '../../../../assets/img/mastercard.svg';
+import discoverLogo from '../../../../assets/img/discover.svg';
+import americanExpressLogo from '../../../../assets/img/american-express.svg';
+import stripeLogo from '../../../../assets/img/stripe-logo.svg';
 
 const CardNumberElementStyles = {
     base: {
-        fontSize: '16px',
-        letterSpacing: '5px',
+        fontSize: '13px',
+        letterSpacing: '-0.4375px',
+        lineHeight: '20px'
     }
 };
-
-const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 
 const StripeForm = (props) => {
@@ -25,32 +30,50 @@ const StripeForm = (props) => {
                         onChange={(element) => stripeElementChange(element, 'card_number')}
                     />
                 </div>
-                <div className="card-container__expiry">
-                    <label className="label">Expiry</label>
-                    <CardExpiryElement
-                        onChange={(element) => stripeElementChange(element, 'expiry')}
-                    />
+
+                <div className='row'>
+                    <div className="card-container__expiry">
+                        <label className="label">Expiry</label>
+                        <CardExpiryElement
+                            style={CardNumberElementStyles}
+                            onChange={(element) => stripeElementChange(element, 'expiry')}
+                        />
+                    </div>
+                    <div className="card-container__cvc">
+                        <label className="label">CVC</label>
+                        <CardCvcElement
+                            style={CardNumberElementStyles}
+                            onChange={(element) => stripeElementChange(element, 'cvc')}
+                        />
+                    </div>
+
+                    <img src={lockIcon} alt=""/>
+
+                    <p>
+                        this is a secure 128-bit ssl encrypted <br/> payment
+                    </p>
                 </div>
-                <div className="card-container__cvc">
-                    <label className="label">CVC</label>
-                    <CardCvcElement
-                        onChange={(element) => stripeElementChange(element, 'cvc')}
-                    />
-                </div>
+            </div>
+
+            <div className='logo-block'>
+                <img src={visaLogo} alt=""/>
+                <img src={mastercardLogo} alt=""/>
+                <img src={discoverLogo} alt=""/>
+                <img src={americanExpressLogo} alt=""/>
+                <img src={stripeLogo} alt=""/>
             </div>
 
 
             <div className='button-block'>
                 <button className='btn cancel' type='button' onClick={onClose}>Cancel</button>
-                <button className='btn green-btn'>Save</button>
+                <button className='btn green-btn'>Add</button>
             </div>
         </form>
     )
 };
 
 
-const AddCard = ({onSubmit}) => {
-
+const AddCard = ({onSubmit, onClose}) => {
     const [cardValues, changeCard] = useState({});
 
     function stripeElementChange(element, name) {
@@ -77,7 +100,7 @@ const AddCard = ({onSubmit}) => {
             <StripeForm
                 stripeElementChange={stripeElementChange}
                 handleSubmit={handleSubmit}
-                // onClose={onClose}
+                onClose={onClose}
             />
         </div>
     )

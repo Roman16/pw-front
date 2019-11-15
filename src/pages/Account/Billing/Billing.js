@@ -10,11 +10,22 @@ import BillingHistory from "./BillingHistory";
 
 import UpdateCompanyInformationWindow from "./DrawerWindows/UpdateCompanyInformationWindow";
 import AddCard from "./DrawerWindows/AddCard";
-import {CardNumberElement, Elements, StripeProvider} from "react-stripe-elements";
+import UpdateCard from "./DrawerWindows/UpdateCard";
+import {Elements, StripeProvider} from "react-stripe-elements";
 
 const company = {
-    name: 'Test company'
+    name: 'Fidget Spinners International',
+    city: 'Miami',
+    zip: '90210',
+    address1: '8800 Rumble Street',
+    address2: 'Apt 1#',
+    country: 'US'
 };
+
+const stripeKey = process.env.REACT_APP_ENV === 'production'
+    ? process.env.STRIPE_PUBLISHABLE_KEY_LIVE
+    : process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+
 
 const Billing = () => {
     const [openedWindow, openWindow] = useState(null);
@@ -48,9 +59,20 @@ const Billing = () => {
             )
         } else if (openedWindow === 'newCard') {
             return (
-                <StripeProvider apiKey="pk_test_12345">
-                                <Elements>
+                <StripeProvider apiKey={stripeKey}>
+                    <Elements>
                         <AddCard
+                            onClose={handleCloseWindow}
+                            onSubmit={handleAddNewCard}
+                        />
+                    </Elements>
+                </StripeProvider>
+            )
+        } else if (openedWindow === 'updateCard') {
+            return (
+                <StripeProvider apiKey={stripeKey}>
+                    <Elements>
+                        <UpdateCard
                             onClose={handleCloseWindow}
                             onSubmit={handleAddNewCard}
                         />
