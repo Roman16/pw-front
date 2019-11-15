@@ -2,9 +2,10 @@ export const userUrls = {
     login: 'user/login',
     loginAmazon: 'user/login/amazon/callback',
     regist: 'user/register',
+    mws: 'user/account/auth/mws/tokens',
     allInfo: 'user/status',
     updatePhoto: 'user/change-avatar',
-    mws: 'user/account/auth/mws/tokens',
+    changePassword: 'user/change-password',
 };
 
 export const productsUrls = {

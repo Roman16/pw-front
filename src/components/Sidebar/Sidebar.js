@@ -178,7 +178,6 @@ const Sidebar = () => {
                                                     >
                                                         {item.title}
                                                     </NavLink>
-                                                    {/* <div className="automate-soon">soon</div> */}
                                                 </li>
                                             ))}
                                         </ul>

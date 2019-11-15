@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Input} from 'antd';
-
+import {userService} from "../../../services/user.services";
 import lock from '../../../assets/img/lock.svg';
 import OpenedEye from '../../../assets/img/opened-eye.svg';
 import ClosedEye from '../../../assets/img/closed-eye.svg';
@@ -13,31 +13,40 @@ const CustomInputSuffix = ({type, name, onChangeType}) => {
     )
 };
 
+const defaultInputsValue = {
+    current_password: '',
+    new_password: '',
+    confirm_password: '',
+};
+
 const Password = () => {
     const [inputsType, changeInputsType] = useState({
             current_password: 'password',
             new_password: 'text',
             confirm_password: 'text',
         }),
-        [inputsValue, changeInputsValue] = useState({
-            current_password: '',
-            new_password: '',
-            confirm_password: '',
-        });
+        [inputsValue, changeInputsValue] = useState(defaultInputsValue);
 
-    const changePasswordInputType = (name, type) => {
+    function changePasswordInputType(name, type) {
         changeInputsType({
             ...inputsType,
             [name]: type === 'text' ? 'password' : 'text'
         })
-    };
+    }
 
-    const handleChangeInput = ({target: {name, value}}) => {
+    function handleChangeInput({target: {name, value}}) {
         changeInputsValue({
             ...inputsValue,
             [name]: value
         })
-    };
+    }
+
+    function handleSave() {
+        userService.changePassword(inputsValue)
+            .then(() => {
+                changeInputsValue(defaultInputsValue)
+            })
+    }
 
     return (
         <div className="passwords-box">
@@ -57,6 +66,7 @@ const Password = () => {
                                 type={inputsType.current_password}
                                 name="current_password"
                                 placeholder="Type old password"
+                                value={inputsValue.current_password}
                                 onChange={handleChangeInput}
                                 suffix={
                                     <CustomInputSuffix
@@ -77,6 +87,7 @@ const Password = () => {
                                 type={inputsType.new_password}
                                 name="new_password"
                                 placeholder="Type new password"
+                                value={inputsValue.new_password}
                                 onChange={handleChangeInput}
                                 suffix={
                                     <CustomInputSuffix
@@ -96,6 +107,7 @@ const Password = () => {
                                 type={inputsType.confirm_password}
                                 name="confirm_password"
                                 placeholder="Type new password"
+                                value={inputsValue.confirm_password}
                                 onChange={handleChangeInput}
                                 suffix={
                                     <CustomInputSuffix
@@ -111,7 +123,9 @@ const Password = () => {
                     <button
                         className="btn-change"
                         type="button"
-                        disabled={inputsValue.current_password ? (inputsValue.new_password ? inputsValue.new_password !== inputsValue.confirm_password : true) : true}>
+                        disabled={inputsValue.current_password ? (inputsValue.new_password ? inputsValue.new_password !== inputsValue.confirm_password : true) : true}
+                        onClick={handleSave}
+                    >
                         Change
                     </button>
                 </div>
