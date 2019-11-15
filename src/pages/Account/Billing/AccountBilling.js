@@ -1,6 +1,6 @@
 import React from "react";
 
-const AccountBilling = () => {
+const AccountBilling = ({onOpenWindow}) => {
 
     return (
         <section className='account-billing-block'>
@@ -14,8 +14,9 @@ const AccountBilling = () => {
                 </span>
             </div>
 
-            <button className='btn green-btn'>
-                Update payment method
+            <button className='btn green-btn' onClick={() => onOpenWindow('newCard')}>
+                {/*Update payment method*/}
+                Add card
             </button>
         </section>
     )

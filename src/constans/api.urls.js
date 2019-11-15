@@ -6,6 +6,7 @@ export const userUrls = {
     allInfo: 'user/status',
     updatePhoto: 'user/change-avatar',
     changePassword: 'user/change-password',
+    companyInformation: 'user/company'
 };
 
 export const productsUrls = {

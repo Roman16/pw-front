@@ -11,7 +11,8 @@ export const userService = {
     getStripeAvailableCountries,
     updateInformation,
     updatePhoto,
-    changePassword
+    changePassword,
+    updateCompanyInformation
 };
 
 function login(user) {
@@ -49,6 +50,10 @@ function updatePhoto(data) {
 
 function changePassword(data) {
     return api('post', userUrls.changePassword, data);
+}
+
+function updateCompanyInformation(company) {
+    return api('post', userUrls.companyInformation, company);
 }
 
 function getStripeAvailableCountries(token) {
