@@ -19,6 +19,10 @@ const UpdateCompanyInformationWindow = ({onClose, company, onSubmit}) => {
 
     return (
         <div className='drawer-window update-company-information'>
+            <button className="close-btn" type="button" onClick={onClose}>
+                &#215;
+            </button>
+
             <h3>Update Company Details</h3>
 
             <form onSubmit={handleSubmit}>

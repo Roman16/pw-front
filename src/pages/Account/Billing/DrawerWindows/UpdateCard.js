@@ -189,6 +189,10 @@ const UpdateCard = ({onSubmit, onClose}) => {
 
     return (
         <div className='drawer-window add-card-window update-card-info'>
+            <button className="close-btn" type="button" onClick={onClose}>
+                &#215;
+            </button>
+
             <h3>Update Payment Method</h3>
 
             <h4>Credit Card Information</h4>

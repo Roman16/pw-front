@@ -93,6 +93,10 @@ const AddCard = ({onSubmit, onClose}) => {
 
     return (
         <div className='drawer-window add-card-window'>
+            <button className="close-btn" type="button" onClick={onClose}>
+                &#215;
+            </button>
+
             <h3>Add card</h3>
 
             <h4>Credit Card Information</h4>
