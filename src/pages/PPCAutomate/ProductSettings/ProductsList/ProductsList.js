@@ -142,47 +142,69 @@ class ProductsList extends Component {
             {
                 title: '',
                 width: '289px',
-                render: () => (<ProductItem
-                        product={props.product}
-                    />
-                )
+                render: (title, item) => {
+                    return (<ProductItem
+                            product={item}
+                        />
+                    )
+                }
             },
-            {title: '', width: 150, render: () => (<span className='value'><span className="icon">%</span> {props[NET_MARGIN]}</span>)},
-            {title: '', width: 150, render: () => (<span className='value'><span className="icon">$</span> {props[MIN_BID_MANUAL_CAMPING]}</span>)},
-            {title: '', width: 150, render: () => (<span className='value'><span className="icon">$</span> {props[MAX_BID_MANUAL_CAMPING]}</span>)},
-            {title: '', width: 150, render: () => (<span className='value'><span className="icon">$</span> {props[MIN_BID_AUTO_CAMPING]}</span>)},
-            {title: '', width: 150, render: () => (<span className='value'><span className="icon">$</span> {props[MAX_BID_AUTO_CAMPING]}</span>)},
+            {
+                title: '',
+                width: 150,
+                render: () => (<span className='value'><span className="icon">%</span> {props[NET_MARGIN]}</span>)
+            },
+            {
+                title: '',
+                width: 150,
+                render: () => (
+                    <span className='value'><span className="icon">$</span> {props[MIN_BID_MANUAL_CAMPING]}</span>)
+            },
+            {
+                title: '',
+                width: 150,
+                render: () => (
+                    <span className='value'><span className="icon">$</span> {props[MAX_BID_MANUAL_CAMPING]}</span>)
+            },
+            {
+                title: '',
+                width: 150,
+                render: () => (
+                    <span className='value'><span className="icon">$</span> {props[MIN_BID_AUTO_CAMPING]}</span>)
+            },
+            {
+                title: '',
+                width: 150,
+                render: () => (
+                    <span className='value'><span className="icon">$</span> {props[MAX_BID_AUTO_CAMPING]}</span>)
+            },
             {title: '', width: 150, render: () => (<span>{props[TOTAL_CHANGES]}</span>)},
-            {title: '', width: 150, render: () => (<span> {props[OPTIMIZATION_STATUS] === ACTIVE ? <span style={{color: '#8fd39d'}}>Active</span> : 'Paused'}</span>)},
+            {
+                title: '',
+                width: 150,
+                render: () => (<span> {props[OPTIMIZATION_STATUS] === ACTIVE ?
+                    <span style={{color: '#8fd39d'}}>Active</span> : 'Paused'}</span>)
+            },
         ];
 
-        const data = [];
-        for (let i = 0; i < 6; ++i) {
-            data.push({
-                key: i,
-                date: '2014-12-24 23:12:00',
-                name: 'This is production name',
-                upgradeNum: 'Upgraded: 56',
-            });
-        }
-        return <Table className='child-list' columns={columns} dataSource={data} pagination={false}/>;
+
+        return <Table className='child-list' columns={columns} dataSource={props.product.variations}
+                      pagination={false}/>;
     };
 
     customExpandIcon(props) {
-        if (props.expanded) {
+        if (props.expanded && props.record.product.variations) {
             return <div className='open-children-list-button' onClick={e => {
                 props.onExpand(props.record, e);
             }}>
-                6
-                {/*{props.record.children && props.record.children.length}*/}
+                {props.record.product.variations && props.record.product.variations.length}
                 <Icon type="caret-up"/>
             </div>
-        } else {
+        } else if (!props.expanded && props.record.product.variations) {
             return <div className='open-children-list-button' style={{color: 'black'}} onClick={e => {
                 props.onExpand(props.record, e);
             }}>
-                6
-                {/*{props.record.children && props.record.children.length}*/}
+                {props.record.product.variations && props.record.product.variations.length}
                 <Icon type="caret-down"/>
             </div>
         }
@@ -319,7 +341,7 @@ class ProductsList extends Component {
                         <div
                             className={`settings-status ${
                                 item[OPTIMIZATION_STATUS] === ACTIVE ? 'active' : ''
-                            }`}
+                                }`}
                         >
                             {item[OPTIMIZATION_STATUS] === ACTIVE
                                 ? 'Active'

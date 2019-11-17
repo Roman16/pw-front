@@ -32,7 +32,7 @@ const SecondBarChart = ({data}) => {
 
                 <XAxis dataKey="date" padding={{left: 10, right: 10}} axisLine={false} tickFormatter={(date) => moment(date).format('MMM DD')}/>
 
-                <YAxis domain={[0, 8000]} axisLine={false}/>
+                <YAxis axisLine={false}/>
 
                 <Bar dataKey="ppc" fill="#6D6DF6" shape={<CustomBar/>}/>
                 <Bar dataKey="organic" fill="#95D6FF" shape={<CustomBar/>}/>

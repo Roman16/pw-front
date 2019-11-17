@@ -14,24 +14,13 @@ export const dashboardActions = {
 
 function getMetricsStatistics(parameters) {
     return dispatch => {
-        // dashboardServices.fetchMetricsStatistics(parameters)
-        //     .then((res) => {
-        //         dispatch({
-        //             type: dashboardConstants.SET_METRICS_STATISTIC,
-        //             payload: res
-        //         });
-        //     });
-
-        dispatch({
-            type: dashboardConstants.SET_METRICS_STATISTIC,
-            payload: [
-                {
-                    key: 'clicks',
-                    metric_changes: 30.8,
-                    metric_main_value: 35466
-                }
-            ]
-        });
+        dashboardServices.fetchMetricsStatistics(parameters)
+            .then((res) => {
+                dispatch({
+                    type: dashboardConstants.SET_METRICS_STATISTIC,
+                    payload: res
+                });
+            });
     };
 
 }
@@ -90,6 +79,7 @@ function selectDateRange(dateRange) {
         });
     };
 }
+
 function selectProduct(id) {
     return dispatch => {
         dispatch({

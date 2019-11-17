@@ -13,7 +13,7 @@ const maxText = text => {
 };
 
 const ProductItem = ({
-                         product: {id, asin, name, sku, image_url, under_optimization, has_optimization_results, children = [1]},
+                         product: {id, asin, name, sku, image_url, under_optimization, has_optimization_results, variations},
                          onClick,
                          product,
                          isActive,
@@ -39,11 +39,11 @@ const ProductItem = ({
 
                     </div>
 
-                    <div className={`open-children-list-button ${openedProduct === id && 'opened'}`}
+                    {variations && <div className={`open-children-list-button ${openedProduct === id && 'opened'}`}
                          onClick={switchList}>
-                        {products && products.length}
+                        {variations && variations.length}
                         <Icon type="caret-down"/>
-                    </div>
+                    </div>}
                 </div>
 
 
@@ -74,8 +74,8 @@ const ProductItem = ({
                 </div>}
             </div>
 
-            {(children.length > 0) && (openedProduct === id) && <div className='product-children-list'>
-                {products.map(childrenProduct => (
+            {(variations) && (openedProduct === id) && <div className='product-children-list'>
+                {variations.map(childrenProduct => (
                     <div key={childrenProduct.id} className='children-information'>
                         <img src={childrenProduct.image_url} alt=""/>
 

@@ -7,29 +7,41 @@ import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arr
 import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
 import downWhiteIcon from '../../../../assets/img/icons/metric-arrows/down-white-arrow.svg';
 
-const RenderMetricChanges = ({value}) => (
-    <div className='metric-item__changes'>
-        {value >= 25 && <div className='upward-changes'>
-            {value}
-            <img src={upWhiteIcon} alt=""/>
-        </div>}
-        {(value > 0 && value < 25) && <div className='up-changes'>
-            {value}
-            <img src={upGreenIcon} alt=""/>
-        </div>}
-        {(value <= 0 && value > -25) && <div className='down-changes'>
-            {value}
-            <img src={downBlackIcon} alt=""/>
-        </div>}
-        {(value <= -25) && <div className='downward-changes'>
-            {value}
-            <img src={downWhiteIcon} alt=""/>
-        </div>}
-    </div>
-);
+const RenderMetricChanges = ({value}) => {
+    if (value != null) {
+        return (
+            <div className='metric-item__changes'>
+                {value >= 25 && <div className='upward-changes'>
+                    {value}
+                    <img src={upWhiteIcon} alt=""/>
+                </div>}
+                {(value > 0 && value < 25) && <div className='up-changes'>
+                    {value}
+                    <img src={upGreenIcon} alt=""/>
+                </div>}
+                {(value <= 0 && value > -25) && <div className='down-changes'>
+                    {value}
+                    <img src={downBlackIcon} alt=""/>
+                </div>}
+                {(value <= -25) && <div className='downward-changes'>
+                    {value}
+                    <img src={downWhiteIcon} alt=""/>
+                </div>}
+            </div>
+        )
+    } else {
+        return (
+            <div className='metric-item__changes'>
+                <div className='down-changes'>
+                    N/A
+                </div>
+            </div>
+        )
+    }
+};
 
 
-const MetricItem = ({metric: {title, info = '', key, label, type, metric_changes, metric_main_value = 0}, metric, removeSelectedMetric, activeMetrics, onActivateMetric, onDeactivateMetric}) => {
+const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, metric_value}, metric, removeSelectedMetric, activeMetrics, onActivateMetric, onDeactivateMetric}) => {
     const handleClick = () => {
         if (activeMetrics.find(item => item.key === key)) {
             onDeactivateMetric(metric)
@@ -65,13 +77,13 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_changes
             </div>
 
             <RenderMetricChanges
-                value={metric_changes}
+                value={metric_diff}
             />
 
 
             <div className='metric-item__description'>
                 <div className="value">
-                    {type === 'currency' ? `$${metric_main_value}` : (type === 'percent' ? `${metric_main_value}%` : metric_main_value)}
+                    {metric_value != null ? type === 'currency' ? `$${metric_value}` : (type === 'percent' ? `${metric_value}%` : metric_value) : 'N/A'}
                 </div>
                 <div className='label'>{label}</div>
             </div>

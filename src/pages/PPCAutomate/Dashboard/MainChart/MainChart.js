@@ -171,8 +171,8 @@ const MainChart = () => {
 
     const timeRange = (start, end) => {
         dispatch(dashboardActions.selectDateRange({
-                startDate: moment(start, 'DD-MM-YYYY').format('YYYY-MM-DD'),
-                endDate: moment(end, 'DD-MM-YYYY').format('YYYY-MM-DD')
+                startDate: moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
+                endDate: moment(end, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
             }
         ))
     };
@@ -188,9 +188,9 @@ const MainChart = () => {
             productId: selectedProduct
         })
             .then(res => {
-                // updateChartData(res);
-                updateChartData((flag & 1) ? data : data2);
-                flag++;
+                updateChartData(res);
+                // updateChartData((flag & 1) ? data : data2);
+                // flag++;
             })
     };
 

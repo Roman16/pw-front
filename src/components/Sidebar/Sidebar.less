@@ -495,22 +495,30 @@ a.top-nav-link {
   .sidebar {
     font-size: 0.47619rem;
 
+    .sidebar-menu .country-nav .country-active {
+      height: auto;
+    }
+
+
     &.open {
       width: 150px;
+
+      .sidebar-header {
+        .sidebar-logo {
+          width: 15em;
+          margin: 0 auto;
+        }
+      }
+
+      .sidebar-menu .country-nav .country-active {
+        height: 35px;
+        margin-top: 10px;
+      }
+
     }
 
     .collapsed-automate {
       width: 150px;
-    }
-
-    .sidebar-logo {
-      width: 15em;
-      margin: 0 auto;
-    }
-
-    .country-active {
-      height: 35px;
-      margin-top: 20px;
     }
   }
 

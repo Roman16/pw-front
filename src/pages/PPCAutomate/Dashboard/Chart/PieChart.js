@@ -7,8 +7,8 @@ import {
 const COLORS = ['#5052AD', '#6D6DF6'];
 
 const FirstPieChart = ({data}) => {
-    const organicValue = data.length > 0 && data.find(item => item.name === 'organic').value,
-        ppcValue = data.length > 0 && data.find(item => item.name === 'ppc').value;
+    const organicValue = data.length > 0 && data.find(item => item.metric_key === 'organic').metric_value,
+        ppcValue = data.length > 0 && data.find(item => item.metric_key === 'ppc').metric_value;
 
     return (
         <div className="pie-chart-container">
@@ -46,7 +46,8 @@ const FirstPieChart = ({data}) => {
                                     };
 
                                 return (
-                                    <Text {...positioningProps} style={stylingProps}>{(organicValue/ppcValue).toFixed(2)}</Text>
+                                    <Text {...positioningProps}
+                                          style={stylingProps}>{(organicValue / ppcValue).toFixed(2)}</Text>
                                 )
                             }}
                         />
@@ -58,13 +59,17 @@ const FirstPieChart = ({data}) => {
                 <div className='organic-block'>
                     <div className='example-fill' style={{background: COLORS[0]}}></div>
                     Organic Sales
-                    <div className='value'>$ {organicValue}</div>
+                    <div className='value'>
+                        {organicValue != null ? `$ ${organicValue}` : 'N/A'}
+                    </div>
                 </div>
 
                 <div className='ppc-block'>
                     <div className='example-fill' style={{background: COLORS[1]}}></div>
                     PPC Sales
-                    <div className='value'>$ {ppcValue}</div>
+                    <div className='value'>
+                        {ppcValue != null ? `$ ${ppcValue}` : 'N/A'}
+                    </div>
                 </div>
             </div>
         </div>

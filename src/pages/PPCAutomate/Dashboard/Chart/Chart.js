@@ -43,7 +43,6 @@ const barDefaultData = [
         date: '2019-03-10T17:24:58.828Z', organic: 3300, ppc: 2890,
     },
 ];
-let count = 0;
 
 const Chart = () => {
 
@@ -62,25 +61,26 @@ const Chart = () => {
 
 
     const getPieChartData = () => {
-
         dashboardServices.fetchPieChartData({startDate, endDate, selectedProduct})
             .then(res => {
-                // updatePieChart(res);
-                count++;
-                updatePieChart((count & 1) ? pieDefaultData : pieDefaultData2);
+                updatePieChart(res);
             })
     };
 
     const getBarChartData = () => {
-        dashboardServices.fetchBarChartData({selectedProduct})
+        dashboardServices.fetchBarChartData({startDate, endDate, selectedProduct})
             .then(res => {
-                // updateBarChart(res);
-                updateBarChart(barDefaultData);
+                updateBarChart(res);
             })
     };
 
-    useEffect(() => {getPieChartData(); getBarChartData();}, [selectedProduct]);
-    useEffect(() => {getPieChartData();}, [selectedRangeDate]);
+    useEffect(() => {
+        getPieChartData();
+        getBarChartData();
+    }, [selectedProduct]);
+    useEffect(() => {
+        getPieChartData();
+    }, [selectedRangeDate]);
 
     return (
         <div className='chart'>

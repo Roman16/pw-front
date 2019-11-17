@@ -10,29 +10,39 @@ import upWhiteIcon from "../../../../assets/img/icons/metric-arrows/up-white-arr
 import downWhiteIcon from "../../../../assets/img/icons/metric-arrows/down-white-arrow.svg";
 import {history} from "../../../../utils/history";
 
-const RenderPramsChanges = (key, product) => {
-    const value = product[key];
+const RenderPramsChanges = ({type, product}) => {
+    const value = product[type];
 
-    return (
-        <div className='product-metric-changes up'>
-            {value >= 25 && <div className='upward-changes'>
-                {value}
-                <img src={upWhiteIcon} alt=""/>
-            </div>}
-            {(value > 0 && value < 25) && <div className='up-changes'>
-                {value}
-                <img src={upGreenIcon} alt=""/>
-            </div>}
-            {(value <= 0 && value > -25) && <div className='down-changes'>
-                {value}
-                <img src={downBlackIcon} alt=""/>
-            </div>}
-            {(value <= -25) && <div className='downward-changes'>
-                {value}
-                <img src={downWhiteIcon} alt=""/>
-            </div>}
-        </div>
-    )
+    if (value != null) {
+        return (
+            <div className='product-metric-changes up'>
+                {value >= 25 && <div className='upward-changes'>
+                    {value}
+                    <img src={upWhiteIcon} alt=""/>
+                </div>}
+                {(value > 0 && value < 25) && <div className='up-changes'>
+                    {value}
+                    <img src={upGreenIcon} alt=""/>
+                </div>}
+                {(value <= 0 && value > -25) && <div className='down-changes'>
+                    {value}
+                    <img src={downBlackIcon} alt=""/>
+                </div>}
+                {(value <= -25) && <div className='downward-changes'>
+                    {value}
+                    <img src={downWhiteIcon} alt=""/>
+                </div>}
+            </div>
+        )
+    } else {
+        return (
+            <div className='product-metric-changes up'>
+                <div className='down-changes'>
+                    N/A
+                </div>
+            </div>
+        )
+    }
 };
 
 const ProfitTooltipDescription = () => (
@@ -70,8 +80,8 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
         },
         {
             title: 'Number of Optimization',
-            dataIndex: 'optimization_count',
-            key: 'optimization_count',
+            dataIndex: 'total_changes',
+            key: 'total_changes',
             width: '50px',
             render: (text) => (
                 <div className='count-changes'>
@@ -89,7 +99,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
                     {text || '0%'}
 
                     <RenderPramsChanges
-                        key='changes_budget_allocation'
+                        type='budget_allocation_diff'
                         product={record}
                     />
                 </div>
@@ -105,7 +115,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
                     {text || '0%'}
 
                     <RenderPramsChanges
-                        key='changes_sales_share'
+                        type='sales_share_diff'
                         product={record}
                     />
                 </div>
@@ -121,7 +131,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
                     {text || '$0'}
 
                     <RenderPramsChanges
-                        key='changes_cpa'
+                        type='cpa_diff'
                         product={record}
                     />
                 </div>
@@ -129,15 +139,15 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
         },
         {
             title: 'CVR Rate',
-            dataIndex: 'cvr_rate',
-            key: 'cvr_rate',
+            dataIndex: 'conversion_rate',
+            key: 'conversion_rate',
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
                     {text || '0%'}
 
                     <RenderPramsChanges
-                        key='changes_cvr_rate'
+                        type='conversion_rate_diff'
                         product={record}
                     />
                 </div>
@@ -153,14 +163,14 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
                     {text || '0%'}
 
                     <RenderPramsChanges
-                        key='changes_acos'
+                        type='acos_diff'
                         product={record}
                     />
                 </div>
             )
         },
         {
-            title: () => (<span>Profit <Tooltip type='warning' description={<ProfitTooltipDescription />}/></span>),
+            title: () => (<span>Profit <Tooltip type='warning' description={<ProfitTooltipDescription/>}/></span>),
             dataIndex: 'profit',
             key: 'profit',
             width: '90px',
@@ -169,7 +179,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
                     {text || '$0'}
 
                     <RenderPramsChanges
-                        key='changes_profit'
+                        type='profit_diff'
                         product={record}
                     />
                 </div>
@@ -183,7 +193,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
                 onChangePagination={handlePaginationChange}
                 dataSource={products}
                 columns={columns}
-                rowClassName={ (record) => selectedProduct && (selectedProduct ===  record.product.id ? 'activated-product' : 'default-product')}
+                rowClassName={(record) => selectedProduct && (selectedProduct === record.product.id ? 'activated-product' : 'default-product')}
                 currentPage={fetchParams.page}
                 showPagination={true}
                 pageSize={fetchParams.size}

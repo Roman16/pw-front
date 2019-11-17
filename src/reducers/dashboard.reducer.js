@@ -9,8 +9,8 @@ const initialState = {
     showDailyChart: false,
     selectedProduct: '',
     selectedRangeDate: {
-        startDate: moment(new Date()).subtract(1, 'months').format('YYYY-MM-DD'),
-        endDate: moment(new Date()).format('YYYY-MM-DD')
+        startDate: moment(new Date()).subtract(1, 'months').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
+        endDate: moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
     },
     allMetrics: metricsListArray,
     activeMetrics: metricsListArray.slice(0, 2),
@@ -47,11 +47,11 @@ export function dashboard(state = initialState, action) {
                 ...state,
                 allMetrics: state.allMetrics.map(item => ({
                     ...item,
-                    ...action.payload.find(metric => metric.key === item.key)
+                    ...(action.payload.length > 0 && action.payload.find(metric => metric.metric_key === item.key))
                 })),
                 selectedMetrics: state.selectedMetrics.map(item => ({
                     ...item,
-                    ...action.payload.find(metric => metric.key === item.key)
+                    ...action.payload.find(metric => metric.metric_key === item.key)
                 }))
             };
 

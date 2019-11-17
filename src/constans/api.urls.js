@@ -24,10 +24,9 @@ export const reportsUrls = {
 };
 
 export const dashboardUrls = {
-    allMetricsStatistic: 'ppc-automation/metrics-statistic',
-    chartData: 'ppc-automation/main-chart-data',
-    products: 'products/settings/list',
-    // products: 'products/dashboard/list',
-    barChartData: 'ppc-automation/bar-chart-data',
-    pieChartData: 'ppc-automation/pie-chart-data',
+    allMetricsStatistic: 'ppc-automation/dashboard/metrics/list',
+    chartData: 'ppc-automation/dashboard/charts/main-data',
+    products: 'ppc-automation/dashboard/products/list',
+    barChartData: 'ppc-automation/dashboard/charts/bar-data',
+    pieChartData: 'ppc-automation/dashboard/charts/pie-data',
 };
