@@ -1,6 +1,6 @@
 import api from './request';
 import axios from 'axios';
-import { userUrls } from '../constans/api.urls';
+import {userUrls} from '../constans/api.urls';
 
 export const userService = {
     login,
@@ -36,7 +36,7 @@ function setMWS(data) {
 }
 
 function updateInformation({name, last_name, email, private_label_seller}) {
-    return api('put', userUrls.allInfo, {
+    return api('post', userUrls.updateUserInfo, {
         name,
         last_name,
         email,
@@ -48,8 +48,11 @@ function updatePhoto(data) {
     return api('post', userUrls.updatePhoto, data);
 }
 
-function changePassword(data) {
-    return api('post', userUrls.changePassword, data);
+function changePassword({current_password, new_password}) {
+    return api('post', userUrls.changePassword, {
+        current_password,
+        password: new_password
+    });
 }
 
 function updateCompanyInformation(company) {
@@ -58,6 +61,6 @@ function updateCompanyInformation(company) {
 
 function getStripeAvailableCountries(token) {
     return axios.get(`https://api.stripe.com/v1/country_specs?limit=100`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: {'Authorization': `Bearer ${token}`}
     });
 }

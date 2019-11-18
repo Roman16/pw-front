@@ -7,8 +7,6 @@ import {dashboardServices} from "../../../../services/dashboard.services";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 
-let flag = 0;
-
 const data = [
     {
         date: '2019-03-04T17:24:58.828Z',
@@ -155,7 +153,6 @@ const data2 = [
     },
 ];
 
-
 const MainChart = () => {
     const [chartData, updateChartData] = useState([]);
 
@@ -180,18 +177,21 @@ const MainChart = () => {
     const handleChangeSwitch = (type) => () => dispatch(dashboardActions.switchChart(type));
 
     const getChartData = () => {
-        dashboardServices.fetchLineChartData({
-            startDate: selectedRangeDate.startDate,
-            endDate: selectedRangeDate.endDate,
-            firstMetric: activeMetrics[0] ? activeMetrics[0].key : null,
-            secondMetric: activeMetrics[1] ? activeMetrics[1].key : null,
-            productId: selectedProduct
-        })
-            .then(res => {
-                updateChartData(res);
-                // updateChartData((flag & 1) ? data : data2);
-                // flag++;
+        console.log(activeMetrics.length);
+        if (activeMetrics[0].key || activeMetrics[1].key) {
+            dashboardServices.fetchLineChartData({
+                startDate: selectedRangeDate.startDate,
+                endDate: selectedRangeDate.endDate,
+                firstMetric: activeMetrics[0] ? activeMetrics[0].key : null,
+                secondMetric: activeMetrics[1] ? activeMetrics[1].key : null,
+                productId: selectedProduct
             })
+                .then(res => {
+                    updateChartData(res);
+                })
+        } else {
+            updateChartData([])
+        }
     };
 
     useEffect(getChartData, [activeMetrics, selectedRangeDate, selectedProduct]);

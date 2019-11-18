@@ -13,6 +13,9 @@ import logo from '../../assets/img/logo.svg';
 import './Sidebar.less';
 import './transition.less';
 
+const domainName = window.location.hostname === 'localhost' ? 'https://front1.profitwhales.com' : window.location.hostname;
+
+
 function useWindowSize() {
     const [size, setSize] = useState([0, 0]);
     useLayoutEffect(() => {
@@ -204,8 +207,7 @@ const Sidebar = () => {
                                 {user.user.avatar ? (
                                     <img
                                         className="avatar"
-                                        src={user.user.avatar}
-                                        alt="avatar"
+                                        src={domainName + user.user.avatar}
                                         width="40"
                                     />
                                 ) : (

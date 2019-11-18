@@ -1,10 +1,10 @@
 import React from 'react';
 import { Input, Checkbox, Cascader } from 'antd';
 
-import checked from '../../../assets/img/icons/checked.svg';
-import amazon from '../../../assets/img/amazon.png';
-import refresh from '../../../assets/img/icons/refresh.svg';
-import check from '../../../assets/img/icons/check.svg';
+import checked from '../../../../assets/img/icons/checked.svg';
+import amazon from '../../../../assets/img/amazon.png';
+import refresh from '../../../../assets/img/icons/refresh.svg';
+import check from '../../../../assets/img/icons/check.svg';
 
 const options = [
   {
@@ -17,7 +17,7 @@ const options = [
   }
 ];
 
-const Amazone = () => {
+const Amazon = () => {
   return (
     <div className="amazone-box">
       <div className="central-wrapper">
@@ -161,4 +161,4 @@ const Amazone = () => {
   );
 };
 
-export default Amazone;
+export default Amazon;
