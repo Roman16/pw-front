@@ -119,41 +119,27 @@ const Amazone = () => {
             </div>
           </div>
 
-          <a
-            className="add-amazone-link"
-            href="https://www.youtube.com/watch?time_continue=2&v=SRhhgDVB0jk&feature=emb_logo"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <p className="add-amazone-text">
             Click to autorize Amazon MWS Access and paste the results below
-          </a>
+          </p>
         </div>
 
         <div className="login-amazone-wrap">
           <h2 className="login-amazone-title">ADD ADVERTISING ACCESS</h2>
           <div className="connect-amazone">
-            <a
-              className="connect-amazone-link"
-              href="https://www.youtube.com/watch?time_continue=2&v=SRhhgDVB0jk&feature=emb_logo"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <p className="connect-amazone-text">
               Click to autorize Amazon MWS Access and paste the results below:
-            </a>
-            <button className='login-amazone-btn'
+            </p>
+            <button
+              className="login-amazone-btn"
               type="button"
               onClick={() => window.open('/login/amazon', '_self')}
             >
-              <img className='login-amazone-img' src={amazon} alt="LWA-GOld" />
+              <img className="login-amazone-img" src={amazon} alt="LWA-GOld" />
             </button>
-            <a
-              className="connect-another-link"
-              href="https://www.youtube.com/watch?time_continue=2&v=SRhhgDVB0jk&feature=emb_logo"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <button className="connect-another-btn" type="button">
               Need another Storefront?
-            </a>
+            </button>
           </div>
         </div>
       </div>
