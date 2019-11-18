@@ -25,9 +25,28 @@ class Optimization extends Component {
     infoType: '',
     product: this.props.selectedProduct,
     selectedStrategy: this.props.selectedProduct.optimization_strategy
-    // refOptionsHeight: document.querySelector('.options'),
+    // refOptionsHeight: 0
     // refProductStatusHeight: document.querySelector('.product-status')
   };
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   let { clientHeight, clientWidth } = this.refs.refOptions;
+  //   console.log(clientHeight, clientWidth);
+
+  //   // =================================
+
+  //   // const { refOptionsHeight, refProductStatusHeight } = this.state;
+  //   // const optionsHeight = document.querySelector('.options').clientHeight;
+
+  //   // if (optionsHeight !== prevState.refOptionsHeight) {
+  //   //   this.setState({ refOptionsHeight: optionsHeight });
+  //   // }
+  //   // // this.setState({ refOptionsHeight: height });
+  //   // // prevState.refOptionsHeight
+  //   // // const optionsHeight = refOptionsHeight.clientHeight;
+  //   // console.log('optionsHeight', optionsHeight);
+  //   // console.log('refOptionsHeight', refOptionsHeight);
+  // }
 
   showDrawer = type => this.setState({ visible: true, infoType: type });
 
@@ -97,7 +116,7 @@ class Optimization extends Component {
         isLess,
         selectedStrategy,
         infoType
-        // refOptionsHeight,
+        // refOptionsHeight
         // refProductStatusHeight
       } = this.state,
       { selectedProduct, selectedAll } = this.props;
@@ -111,7 +130,7 @@ class Optimization extends Component {
     // //   ? refProductStatusHeight.current.offsetHeight
     // //   : 0;
 
-    // console.log('optionsHeight', optionsHeight);
+    // console.log('optionsHeight', refOptionsHeight);
 
     return (
       <Fragment>
@@ -119,7 +138,10 @@ class Optimization extends Component {
           <ProductList />
 
           <div className="product-options">
-            <div className="options">
+            <div
+              className="options"
+              //  ref="refOptions"
+            >
               <div className={`product-info ${isLess && 'more'}`}>
                 <div className="product-info-automate">
                   <span>What Parts Do You Want To Automate?</span>
@@ -218,7 +240,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Optimization);
+export default connect(mapStateToProps, mapDispatchToProps)(Optimization);

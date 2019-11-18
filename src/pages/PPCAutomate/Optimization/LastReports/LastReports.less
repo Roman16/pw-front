@@ -9,31 +9,23 @@
 
   .card();
 
-  .ant-pagination {
-    right: 135px;
-    bottom: 10px;
-    margin-right: 80px;
-    margin-top: auto;
-    padding: 0;
-  }
-
   .terminal-caption {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 0 10px;
+    margin: 0 0 0.71429em;
 
     .caption {
+      font-size: 1.42857rem; // 20px
       text-transform: capitalize;
       color: @second-default-dark;
-      font-size: 20px;
       font-weight: 600;
       display: inherit;
       align-items: inherit;
 
       i {
         cursor: pointer;
-        margin-left: 10px;
+        margin-left: 0.5em;
         color: @action-color-dark;
       }
     }
@@ -44,7 +36,7 @@
       height: 2.2858em;
       line-height: 2.2858em;
       text-align: center;
-      border-radius: 8px;
+      border-radius: 0.57143em;
       border: 0;
       color: @white;
 
@@ -57,32 +49,6 @@
         background-color: #b5b2f9;
         pointer-events: none;
       }
-    }
-  }
-
-  .terminal-item {
-    display: grid;
-    grid-template-columns: 40px 1fr;
-    grid-gap: 10px;
-    min-height: 60px;
-
-    .index {
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #f9f9fa;
-    }
-
-    .content {
-      background: inherit;
-      display: flex;
-      align-items: center;
-      border-top: 1px solid @body-background;
-    }
-
-    &:last-of-type > .content {
-      border-bottom: 1px solid @body-background;
     }
   }
 
@@ -99,51 +65,85 @@
 
     &.more {
       // max-height: calc(100vh - 71px - 77px - 42px - 175px);
-      max-height: 600px;
+      max-height: 42.85714em;
       transition: all 0.9s ease-in;
     }
 
     &.less {
-      height: calc(100vh - 440px - 77px - 42px - 200px);
+      // height: calc(100vh - 440px - 77px - 42px - 200px);
+      height: calc(100vh - 54.21429em);
       transition: all 0s ease-in;
     }
 
     &.less.hidden {
-      max-height: calc(100vh - 440px - 77px - 42px - 128px);
+      // max-height: calc(100vh - 440px - 77px - 42px - 128px);
+      max-height: calc(100vh - 49.07143em);
     }
 
     @media (max-width: 1814px) {
       &.less {
-        max-height: calc(100vh - 468px - 77px - 42px - 200px);
+        // max-height: calc(100vh - 468px - 77px - 42px - 200px);
+        max-height: calc(100vh - 56.21429em);
       }
 
       &.less.hidden {
-        max-height: calc(100vh - 468px - 77px - 42px - 128px);
+        // max-height: calc(100vh - 468px - 77px - 42px - 128px);
+        max-height: calc(100vh - 51.07143em);
       }
     }
 
     @media (max-width: @big-desktop) {
       &.more {
         // max-height: calc(100vh - 101px - 77px - 42px - 200px);
-        max-height: 620px;
+        max-height: 44.28571em;
       }
 
       &.less {
-        max-height: calc(100vh - 599px - 77px - 42px - 200px);
+        // max-height: calc(100vh - 599px - 77px - 42px - 200px);
+        max-height: calc(100vh - 65.57143em);
       }
 
       &.less.hidden {
-        max-height: calc(100vh - 599px - 77px - 42px - 128px);
+        // max-height: calc(100vh - 599px - 77px - 42px - 128px);
+        max-height: calc(100vh - 60.42857em);
       }
     }
 
     @media (max-width: @desktop) {
       &.more {
-        max-height: calc(100vh - 101px - 77px - 42px - 200px);
+        // max-height: calc(100vh - 101px - 77px - 42px - 200px);
+        max-height: calc(100vh - 30em);
       }
 
       &.more.hidden {
-        max-height: calc(100vh - 101px - 77px - 42px - 128px);
+        // max-height: calc(100vh - 101px - 77px - 42px - 128px);
+        max-height: calc(100vh - 24.85714em);
+      }
+    }
+
+    .terminal-item {
+      display: grid;
+      grid-template-columns: 2.85714em 1fr;
+      grid-gap: 0.71429em;
+      min-height: 4.28571em;
+
+      .index {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f9f9fa;
+      }
+
+      .content {
+        background: inherit;
+        display: flex;
+        align-items: center;
+        border-top: 1px solid @body-background;
+      }
+
+      &:last-of-type > .content {
+        border-bottom: 1px solid @body-background;
       }
     }
 
@@ -151,8 +151,8 @@
       position: relative;
 
       .dummy-box {
-        width: 208px;
-        height: 64px;
+        width: 14.85714em;
+        height: 4.57143em;
         position: absolute;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -180,46 +180,54 @@
         }
 
         .dummy-render {
+          font-size: 1.71429rem; // 24px
           text-align: center;
           color: @action-color-dark;
-          font-size: 24px;
-          line-height: 32px;
+          line-height: 1.33333em;
         }
       }
     }
 
-    & .TerminalItem:first-child .index {
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
+    & .terminal-item:first-child .index {
+      border-top-left-radius: 0.57143em;
+      border-top-right-radius: 0.57143em;
     }
 
-    & .TerminalItem:last-child {
+    & .terminal-item:last-child {
       .index {
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
+        border-bottom-left-radius: 0.57143em;
+        border-bottom-right-radius: 0.57143em;
       }
     }
   }
 
   .terminal-content
-  > .terminal-item-dummy
-  > .terminal-item:nth-child(2)
-  > .index {
-    border-radius: 8px 8px 0 0;
+    > .terminal-item-dummy
+    > .terminal-item:nth-child(2)
+    > .index {
+    border-radius: 0.57143em 0.57143em 0 0;
   }
 
   .terminal-content
-  > .terminal-item-dummy
-  > .terminal-item:last-child
-  > .index {
-    border-radius: 0 0 8px 8px;
+    > .terminal-item-dummy
+    > .terminal-item:last-child
+    > .index {
+    border-radius: 0 0 0.57143em 0.57143em;
   }
 
   .terminal-content > .terminal-item:first-child > .index {
-    border-radius: 8px 8px 0 0;
+    border-radius: 0.57143em 0.57143em 0 0;
   }
 
   .terminal-content > .terminal-item:last-of-type > .index {
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 0.57143em 0.57143em;
+  }
+
+  .ant-pagination {
+    right: 9.64286em;
+    bottom: 0.71429em;
+    margin-right: 5.71429em;
+    margin-top: auto;
+    padding: 0;
   }
 }
