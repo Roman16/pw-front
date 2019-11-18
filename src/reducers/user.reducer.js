@@ -1,9 +1,7 @@
-import { userConstants } from '../constans/actions.type';
+import {userConstants} from '../constans/actions.type';
 
 const initialState = {
-    user: {
-
-    }
+    user: {}
 };
 
 export function user(state = initialState, action) {
@@ -12,6 +10,12 @@ export function user(state = initialState, action) {
             return {
                 ...state,
                 ...action.payload
+            };
+
+        case userConstants.UPDATE_USER:
+            return {
+                ...state,
+                user: action.payload
             };
 
         default:

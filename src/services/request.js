@@ -22,6 +22,7 @@ const api = (method, url, data, type) => {
             data: data,
             headers: {
                 'Content-Type': type || 'application/json',
+                // authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZnJvbnQxLnByb2ZpdHdoYWxlcy5jb21cL2FwaVwvdXNlclwvbG9naW4iLCJpYXQiOjE1NzQwODk4MjMsImV4cCI6MTU3NDE3NjIyMywibmJmIjoxNTc0MDg5ODIzLCJqdGkiOiI4b0ZOdERlOU1iYWhLaUQwIiwic3ViIjo4OSwicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.ZdkLDxKxxKTz72qVcMmwE4L4xfUF7o1rb1pYVG4mt5g`
                 authorization: token ? `Bearer ${token}` : true
             }
         })

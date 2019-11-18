@@ -114,6 +114,7 @@ const Chart = () => {
 
                 <SecondBarChart
                     data={barChartData}
+                    selectedRangeDate={selectedRangeDate}
                 />
             </Fragment>}
 

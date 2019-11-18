@@ -17,19 +17,19 @@ const RenderPramsChanges = ({type, product}) => {
         return (
             <div className='product-metric-changes up'>
                 {value >= 25 && <div className='upward-changes'>
-                    {value}
+                    {(+value).toFixed(2)}
                     <img src={upWhiteIcon} alt=""/>
                 </div>}
                 {(value > 0 && value < 25) && <div className='up-changes'>
-                    {value}
+                    {(+value).toFixed(2)}
                     <img src={upGreenIcon} alt=""/>
                 </div>}
                 {(value <= 0 && value > -25) && <div className='down-changes'>
-                    {value}
+                    {(+value).toFixed(2)}
                     <img src={downBlackIcon} alt=""/>
                 </div>}
                 {(value <= -25) && <div className='downward-changes'>
-                    {value}
+                    {(+value).toFixed(2)}
                     <img src={downWhiteIcon} alt=""/>
                 </div>}
             </div>
@@ -71,7 +71,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
                 </div>
             ),
             dataIndex: 'id',
-            width: '350px',
+            width: '300px',
             render: (text, record) => (
                 <ProductItem
                     product={record.product}
@@ -96,7 +96,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {text || '0%'}
+                    {(+text).toFixed(2) || '0%'}
 
                     <RenderPramsChanges
                         type='budget_allocation_diff'
@@ -112,7 +112,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {text || '0%'}
+                    {(+text).toFixed(2) || '0%'}
 
                     <RenderPramsChanges
                         type='sales_share_diff'
@@ -128,7 +128,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {text || '$0'}
+                    {(+text).toFixed(2) || '$0'}
 
                     <RenderPramsChanges
                         type='cpa_diff'
@@ -144,7 +144,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {text || '0%'}
+                    {(+text).toFixed(2) || '0%'}
 
                     <RenderPramsChanges
                         type='conversion_rate_diff'
@@ -160,7 +160,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {text || '0%'}
+                    {(+text).toFixed(2) || '0%'}
 
                     <RenderPramsChanges
                         type='acos_diff'
@@ -173,10 +173,10 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             title: () => (<span>Profit <Tooltip type='warning' description={<ProfitTooltipDescription/>}/></span>),
             dataIndex: 'profit',
             key: 'profit',
-            width: '90px',
+            width: '110px',
             render: (text, record) => (
                 <div className='product-params'>
-                    {text || '$0'}
+                    {(+text).toFixed(2) || '$0'}
 
                     <RenderPramsChanges
                         type='profit_diff'

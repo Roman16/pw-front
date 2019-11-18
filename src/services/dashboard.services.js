@@ -10,7 +10,6 @@ export const dashboardServices = {
 };
 
 function fetchMetricsStatistics({startDate, endDate, selectedProduct}) {
-    console.log(startDate);
     const parameters = [
         startDate ? `?start_date=${startDate}` : '',
         endDate ? `&end_date=${endDate}` : '',

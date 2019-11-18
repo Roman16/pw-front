@@ -31,7 +31,7 @@ const Seller = () => {
 
             {openedConnectBlock && <Amazon/>}
 
-            {/*<Connectors />*/}
+            <Connectors />
 
             {/*<Soon />*/}
         </Fragment>

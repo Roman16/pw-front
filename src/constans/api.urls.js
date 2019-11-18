@@ -7,7 +7,8 @@ export const userUrls = {
     updateUserInfo: 'user/account/personal/information',
     updatePhoto: 'user/account/personal/change-avatar',
     changePassword: 'user/account/personal/change-password',
-    companyInformation: 'user/company'
+    companyInformation: 'user/company',
+    paymentMethod: 'user/payment',
 };
 
 export const productsUrls = {

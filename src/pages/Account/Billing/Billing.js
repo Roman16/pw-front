@@ -12,6 +12,7 @@ import UpdateCompanyInformationWindow from "./DrawerWindows/UpdateCompanyInforma
 import AddCard from "./DrawerWindows/AddCard";
 import UpdateCard from "./DrawerWindows/UpdateCard";
 import {Elements, StripeProvider} from "react-stripe-elements";
+import {userService} from "../../../services/user.services";
 
 const company = {
     name: 'Fidget Spinners International',
@@ -22,9 +23,11 @@ const company = {
     country: 'US'
 };
 
-const stripeKey = process.env.REACT_APP_ENV === 'production'
-    ? process.env.STRIPE_PUBLISHABLE_KEY_LIVE
-    : process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+// const stripeKey = process.env.REACT_APP_ENV === 'production'
+//     ? process.env.STRIPE_PUBLISHABLE_KEY_LIVE
+//     : process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+
+const stripeKey = 'pk_test_uOU0aN4gAMHWjw9SJY7XZxv7';
 
 
 const Billing = () => {
@@ -43,8 +46,9 @@ const Billing = () => {
         openWindow(null);
     }
 
-    function handleAddNewCard(data) {
-        console.log(data);
+    function handleUpdatePaymentMethod(token) {
+        console.log(token);
+        userService.updatePaymentMethod({token});
         openWindow(null);
     }
 
@@ -63,7 +67,7 @@ const Billing = () => {
                     <Elements>
                         <AddCard
                             onClose={handleCloseWindow}
-                            onSubmit={handleAddNewCard}
+                            onSubmit={handleUpdatePaymentMethod}
                         />
                     </Elements>
                 </StripeProvider>
@@ -74,7 +78,7 @@ const Billing = () => {
                     <Elements>
                         <UpdateCard
                             onClose={handleCloseWindow}
-                            onSubmit={handleAddNewCard}
+                            onSubmit={handleUpdatePaymentMethod}
                         />
                     </Elements>
                 </StripeProvider>

@@ -22,7 +22,7 @@ const ModalMetricItem = ({item: {title, info, metric_value, type}, item, listTyp
 
         <div className='metric-item__description'>
             <div className="value">
-                {metric_value != null ? type === 'currency' ? `$${metric_value}` : (type === 'percent' ? `${metric_value}%` : metric_value) : 'N/A'}
+                {metric_value != null ? type === 'currency' ? `$${(+metric_value).toFixed(2)}` : (type === 'percent' ? `${(+metric_value).toFixed(2)}%` : (+metric_value).toFixed(2)) : 'N/A'}
             </div>
             <div className='label'>Total</div>
         </div>

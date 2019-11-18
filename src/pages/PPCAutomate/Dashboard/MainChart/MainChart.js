@@ -177,7 +177,6 @@ const MainChart = () => {
     const handleChangeSwitch = (type) => () => dispatch(dashboardActions.switchChart(type));
 
     const getChartData = () => {
-        console.log(activeMetrics.length);
         if (activeMetrics[0].key || activeMetrics[1].key) {
             dashboardServices.fetchLineChartData({
                 startDate: selectedRangeDate.startDate,
@@ -213,6 +212,7 @@ const MainChart = () => {
                 showDailyChart={showDailyChart}
                 activeMetrics={activeMetrics}
                 data={chartData}
+                selectedRangeDate={selectedRangeDate}
             />
         </div>
     )

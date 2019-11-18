@@ -3,7 +3,8 @@
 //--------------------------------------------
 export const userConstants = {
     SET_INFORMATION: 'SET_INFORMATION',
-    USER_LOGOUT: 'USER_LOGOUT'
+    USER_LOGOUT: 'USER_LOGOUT',
+    UPDATE_USER:'UPDATE_USER',
 };
 
 //--------------------------------------------

@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, Component} from "react";
 import {CardNumberElement, CardExpiryElement, CardCvcElement} from 'react-stripe-elements';
+
 import {injectStripe} from "react-stripe-elements";
 import lockIcon from '../../../../assets/img/icons/lock.svg';
 import visaLogo from '../../../../assets/img/visa-logo.svg';
@@ -7,6 +8,8 @@ import mastercardLogo from '../../../../assets/img/mastercard.svg';
 import discoverLogo from '../../../../assets/img/discover.svg';
 import americanExpressLogo from '../../../../assets/img/american-express.svg';
 import stripeLogo from '../../../../assets/img/stripe-logo.svg';
+
+import {userService} from "../../../../services/user.services";
 
 const CardNumberElementStyles = {
     base: {
@@ -73,41 +76,56 @@ const StripeForm = (props) => {
 };
 
 
-const AddCard = ({onSubmit, onClose}) => {
-    const [cardValues, changeCard] = useState({});
+class AddCard extends Component {
+    state = {};
 
-    function stripeElementChange(element, name) {
+    stripeElementChange = (element, name) => {
         if (!element.empty && element.complete) {
-            changeCard({
-                ...cardValues,
+            this.setState({
                 [name]: true
             });
         }
-    }
+    };
 
-    function handleSubmit(e) {
+    handleSubmit = async (e) => {
         e.preventDefault();
 
-        onSubmit()
+        try {
+            const res = await this.props.stripe.createToken();
+
+            let cardParams = new URLSearchParams();
+            cardParams.append('email', 'test233@gmail.com');
+            cardParams.append('source', res.token.id);
+
+            await userService.createStripeCustomer(cardParams);
+
+            this.props.onSubmit(res.token.id)
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    render() {
+        const {onClose} = this.props;
+
+        return (
+            <div className='drawer-window add-card-window'>
+                <button className="close-btn" type="button" onClick={onClose}>
+                    &#215;
+                </button>
+
+                <h3>Add card</h3>
+
+                <h4>Credit Card Information</h4>
+
+                <StripeForm
+                    stripeElementChange={this.stripeElementChange}
+                    handleSubmit={this.handleSubmit}
+                    onClose={onClose}
+                />
+            </div>
+        )
     }
-
-    return (
-        <div className='drawer-window add-card-window'>
-            <button className="close-btn" type="button" onClick={onClose}>
-                &#215;
-            </button>
-
-            <h3>Add card</h3>
-
-            <h4>Credit Card Information</h4>
-
-            <StripeForm
-                stripeElementChange={stripeElementChange}
-                handleSubmit={handleSubmit}
-                onClose={onClose}
-            />
-        </div>
-    )
-};
+}
 
 export default injectStripe(AddCard);

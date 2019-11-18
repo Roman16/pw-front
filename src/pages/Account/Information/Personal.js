@@ -118,7 +118,7 @@ const Personal = () => {
                             value={userInformation.email}
                             placeholder="Type email address"
                             onChange={handleChangeInput}
-                            required
+                            disabled
                         />
                     </div>
 

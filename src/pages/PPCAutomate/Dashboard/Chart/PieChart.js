@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    PieChart, Pie, Label, Cell, Text, ResponsiveContainer
+    PieChart, Pie, Label, Cell, Text, ResponsiveContainer, Line
 } from 'recharts';
 
 
@@ -21,10 +21,9 @@ const FirstPieChart = ({data}) => {
                         innerRadius={75}
                         outerRadius={100}
                         paddingAngle={0}
-                        dataKey="value"
+                        dataKey="metric_value"
                         blendStroke={true}
-                        animationBegin={100}
-                        animationDuration={500}
+                        isAnimationActive={false}
                     >
                         {
                             data.map((entry, index) => <Cell key={`cell-${index}`}
@@ -60,7 +59,7 @@ const FirstPieChart = ({data}) => {
                     <div className='example-fill' style={{background: COLORS[0]}}></div>
                     Organic Sales
                     <div className='value'>
-                        {organicValue != null ? `$ ${organicValue}` : 'N/A'}
+                        {organicValue != null ? `$ ${(+organicValue).toFixed(2)}` : 'N/A'}
                     </div>
                 </div>
 
@@ -68,7 +67,7 @@ const FirstPieChart = ({data}) => {
                     <div className='example-fill' style={{background: COLORS[1]}}></div>
                     PPC Sales
                     <div className='value'>
-                        {ppcValue != null ? `$ ${ppcValue}` : 'N/A'}
+                        {ppcValue != null ? `$ ${(+ppcValue).toFixed(2)}` : 'N/A'}
                     </div>
                 </div>
             </div>

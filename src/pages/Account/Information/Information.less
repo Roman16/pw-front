@@ -18,10 +18,11 @@
 
     .avatar-box {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       position: relative;
 
       .avatar {
+        vertical-align: middle;
         width: 11.9em;
         height: 11.9em;
         border-radius: 50%;
@@ -53,11 +54,9 @@
         opacity: 0;
         transition: all 0.3s ease-in;
 
-        background: linear-gradient(
-          0deg,
-          rgba(44, 48, 58, 0.4),
-          rgba(44, 48, 58, 0.4)
-        );
+        background: linear-gradient(0deg,
+        rgba(44, 48, 58, 0.4),
+        rgba(44, 48, 58, 0.4));
 
         label {
           width: 100%;
@@ -502,6 +501,9 @@
               color: @white !important;
               background-color: @btn-color;
               font-weight: 600;
+              display: flex;
+              align-items: center;
+              justify-content: center;
             }
           }
 
@@ -607,53 +609,32 @@
   .connectors-box {
     width: 100%;
     display: flex;
-    flex-flow: column;
-    justify-content: space-evenly;
     align-items: center;
     background-color: @white;
     border-radius: 0.8em;
     padding: 3em 4em;
     margin-bottom: 0.4em;
 
-    .connectors-title {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-
-      h2 {
-        width: 11.65em;
-        font-size: 1.4286rem; // 20px
-        color: @second-default-dark;
-        margin: 0;
+    .column {
+      margin: 0 0 0 30px;
+      .title {
+        font-family: ir;
+        font-size: 1.4285714285714286rem;
+        letter-spacing: 0.4px;
+        color: #363694;
       }
 
-      .sub {
-        width: 63%;
-        font-size: 1.1429rem; // 16px
-        color: @action-color-dark;
+      a {
+        font-family: ir;
+        font-size: 1rem;
+        letter-spacing: -0.05px;
+        text-decoration-line: underline;
+        color: #6D6DF6;
       }
     }
 
-    .connectors-main {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .product-title {
-        .title {
-          font-size: 1.4286rem; // 20px
-          color: @second-default-dark;
-          font-weight: 600;
-        }
-
-        .show-link {
-          font-size: 1rem; // 14px
-          color: @action-color;
-          font-weight: 600;
-          text-decoration: underline;
-        }
-      }
+    .connectors-buttons {
+      margin: 0 0 0 auto;
 
       .btn-token {
         font-size: 0.8571rem; // 12px
@@ -665,6 +646,7 @@
         font-weight: 600;
       }
     }
+
   }
 
   .soon-box {
@@ -755,4 +737,5 @@
       }
     }
   }
+
 }
