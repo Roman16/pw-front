@@ -4,7 +4,7 @@ import {Input, Switch, Icon} from 'antd';
 import {userActions} from "../../../actions/user.actions";
 import ItemIcon from '../../../components/ItemIcon/ItemIcon';
 
-const domainName = window.location.hostname === 'localhost' ? 'https://front1.profitwhales.com' : window.location.hostname;
+const domainName = window.location.hostname === 'localhost' ? 'https://front1.profitwhales.com' : 'https://' + window.location.hostname;
 
 const Personal = () => {
     const dispatch = useDispatch();

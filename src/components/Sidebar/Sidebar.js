@@ -13,7 +13,7 @@ import logo from '../../assets/img/logo.svg';
 import './Sidebar.less';
 import './transition.less';
 
-const domainName = window.location.hostname === 'localhost' ? 'https://front1.profitwhales.com' : window.location.hostname;
+const domainName = window.location.hostname === 'localhost' ? 'https://front1.profitwhales.com' : 'https://' + window.location.hostname;
 
 
 function useWindowSize() {
