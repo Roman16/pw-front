@@ -1,29 +1,15 @@
 @import '../../../../style/variables';
 
-// retina
-
 .optimize-strategy {
   .strategies {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 
-    @media (max-width: @big-desktop) {
+    @media (min-device-pixel-ratio: 1) and (max-width: @big-desktop) {
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(2, 1fr);
       gap: 0.71429em;
     }
-
-    // @media not screen and (min--moz-device-pixel-ratio: 2) and (min-width: @big-desktop),
-    //   not screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: @big-desktop),
-    //   not screen and (min-device-pixel-ratio: 2) and (min-width: @big-desktop) {
-    //   grid-template-columns: repeat(4, 1fr);
-    // }
-
-    // @media (max-width: @big-desktop) and not only screen (min-device-pixel-ratio: 2) {
-    //   grid-template-columns: repeat(2, 1fr);
-    //   grid-template-rows: repeat(2, 1fr);
-    //   gap: 0.71429em;
-    // }
 
     @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
       only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
