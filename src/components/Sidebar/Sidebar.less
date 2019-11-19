@@ -28,6 +28,10 @@
 
     .sidebar-logo {
       width: fit-content;
+
+      img {
+        max-width: 10.2em;
+      }
     }
   }
 
@@ -41,10 +45,10 @@
 
     .country-nav {
       .country-active {
-        height: 56px;
+        height: 5.6em;
         display: grid;
         padding: 1.2em 0 1.2em 1.8em;
-        margin: 0 0 2em 3.5px;
+        margin: 0 0 2em 4px;
         border-radius: 0.8em;
         background: rgba(109, 109, 246, 0.1);
         cursor: pointer;
@@ -258,13 +262,11 @@
     transition: @transition;
 
     .sidebar-logo {
-      transform: scaleX(1);
-      transform-origin: left;
-      transition: @transition 0.3s;
-
-      // img {
-      //   width: 10em;
-      // }
+      img {
+        transform: scaleX(1);
+        transform-origin: left;
+        transition: @transition 0.3s;
+      }
     }
 
     .sidebar-menu {
@@ -280,7 +282,6 @@
 
             h5 {
               margin-left: 0.5714em;
-              // margin-left: 2px;
             }
           }
 
@@ -327,9 +328,11 @@
     transition: @transition;
 
     .sidebar-logo {
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: @transition;
+      img {
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: @transition;
+      }
     }
 
     .sidebar-menu {
@@ -435,18 +438,12 @@ a.top-nav-link {
   only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (min-device-pixel-ratio: 2) {
   .sidebar {
-    // font-size: 0.47619rem;
-
-    .sidebar-menu .country-nav .country-active {
-      height: auto;
-    }
 
     &.open {
       width: 150px;
 
       .sidebar-menu .country-nav .country-active {
-        height: 35px;
-        margin-top: 10px;
+        width: 142px;
       }
     }
 

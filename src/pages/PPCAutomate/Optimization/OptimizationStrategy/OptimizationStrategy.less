@@ -5,7 +5,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 
-    @media (max-width: @big-desktop) {
+    @media (max-width: @retinaDesktop) {
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
       gap: 0.71429em;
@@ -25,7 +25,7 @@
     width: 11.07143em;
   }
 
-  @media (max-width: @big-desktop) {
+  @media (max-width: @retinaDesktop) {
     padding: 0.35714em 0.71429em;
   }
 
@@ -94,7 +94,6 @@
   }
 
   &.selected {
-    // margin: 0 auto;
     background: #6d6df6;
     border-color: #6d6df6;
     box-shadow: @tooltip-shadow;

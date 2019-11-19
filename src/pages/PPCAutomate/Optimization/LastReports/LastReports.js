@@ -16,9 +16,9 @@ const dummy = [
   { id: 7 },
   { id: 8 },
   { id: 9 },
-  { id: 10 },
-  { id: 11 },
-  { id: 12 }
+  { id: 10 }
+  // { id: 11 },
+  // { id: 12 }
 ];
 
 const textTooltip = () => (
@@ -31,7 +31,7 @@ const textTooltip = () => (
   </div>
 );
 
-const TerminalCaption = ({ isTerminal }) => (
+const TerminalCaption = ({ isTerminal, refCaption }) => (
   <div className="terminal-caption">
     <div className="caption">
       Last Changes Terminal
@@ -57,20 +57,26 @@ const TerminalItem = ({ number = 0, content = '' }) => (
     </div>
   </li>
 );
-
+// 1.07143em clientHeight
 class LastReports extends Component {
   state = {
     current: 1,
     reports: [],
     records: []
+    // heightTerminal: 0
   };
 
   componentDidMount() {
     this.getReports();
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.productId !== prevProps.productId) this.getReports();
+
+    // const heightTerminal = this.refs.refTerminal.clientHeight;
+    // if (prevState.heightTerminal !== heightTerminal) {
+    //   this.setState({ heightTerminal });
+    // }
   }
 
   onChange = page => {
@@ -125,15 +131,19 @@ class LastReports extends Component {
     // const qwe = false;
     const isTerminal = records && records.length > 0;
 
+    // let heightList = heightTerminal / 14 - 32 / 14 - 1.07143;
+    // console.log('heightTerminal', heightTerminal);
+
     return (
-      <div className="terminal">
-        <TerminalCaption isTerminal={isTerminal} />
+      <div className="terminal" ref="refTerminal">
+        <TerminalCaption isTerminal={isTerminal} refCaption="refCaption" />
 
         <ul
           key={'terminal-list'}
           className={`terminal-content ${isLess ? 'more' : 'less'} ${
             isTerminal ? 'auto' : 'hidden'
           }`}
+          // style={{ height: `${heightList}em` }}
         >
           {isTerminal ? (
             <Fragment>
