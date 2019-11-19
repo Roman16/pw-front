@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Drawer} from 'antd';
 
 import './Billing.less';
@@ -23,12 +23,9 @@ const company = {
     country: 'US'
 };
 
-// const stripeKey = process.env.REACT_APP_ENV === 'production'
-//     ? process.env.STRIPE_PUBLISHABLE_KEY_LIVE
-//     : process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
-
-const stripeKey = 'pk_test_uOU0aN4gAMHWjw9SJY7XZxv7';
-
+const stripeKey = process.env.REACT_APP_ENV === 'production'
+    ? process.env.STRIPE_PUBLISHABLE_KEY_LIVE
+    : process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 const Billing = () => {
     const [openedWindow, openWindow] = useState(null);
@@ -51,6 +48,18 @@ const Billing = () => {
         userService.updatePaymentMethod({token});
         openWindow(null);
     }
+
+    // useEffect(() => {
+    //     const script = document.createElement('script');
+    //
+    //     script.src = "https://js.stripe.com/v3/";
+    //
+    //     document.head.appendChild(script);
+    //
+    //     return () => {
+    //         document.head.removeChild(script);
+    //     }
+    // }, []);
 
     function renderDrawer() {
         if (openedWindow === 'company') {
