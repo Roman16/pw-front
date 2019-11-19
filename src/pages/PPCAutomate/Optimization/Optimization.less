@@ -1,4 +1,3 @@
-@import '../../../style/mixins.less';
 @import '../../../style/variables.less';
 
 .optimization-page {
@@ -57,7 +56,7 @@
           grid-template-columns: 16.5em minmax(min-content, 100%);
         }
 
-        @media (max-width: @retinaDesktop) {
+        @media (max-width: @retina-desktop) {
           .product-info-strategy {
             flex-direction: column-reverse;
           }
@@ -85,7 +84,7 @@
           color: @dangerous-color;
           top: 2em;
 
-          @media (max-width: @retinaDesktop) {
+          @media (max-width: @retina-desktop) {
             top: 4em;
           }
         }
@@ -112,7 +111,7 @@
           column-gap: 1.42857em;
         }
 
-        @media (max-width: @retinaDesktop) {
+        @media (max-width: @retina-desktop) {
           grid-template-areas: 'options strategy' 'descriptions strategy';
         }
 
@@ -131,7 +130,7 @@
         &.less {
           max-height: 30em;
 
-          @media (max-width: @retinaDesktop) {
+          @media (max-width: @retina-desktop) {
             max-height: 43.92857em;
           }
         }
