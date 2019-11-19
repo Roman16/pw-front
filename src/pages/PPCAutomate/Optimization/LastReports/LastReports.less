@@ -2,6 +2,7 @@
 @import '../../../../style/mixins.less';
 
 .optimization-page > .product-options > div.terminal {
+  position: relative;
   // margin-bottom: 24px;
   height: 100%;
   display: flex;
@@ -148,36 +149,15 @@
     }
 
     .terminal-item-dummy {
-      position: relative;
-
       .dummy-box {
         width: 14.85714em;
         height: 4.57143em;
         position: absolute;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 11;
         transition: all 0.5s linear;
-
-        &.more {
-          top: 38%;
-
-          @media (max-width: @desktop) {
-            top: 44%;
-          }
-        }
-
-        &.less {
-          top: 22%;
-
-          @media (max-width: 1814px) {
-            top: 16%;
-          }
-
-          @media (max-width: @big-desktop) {
-            top: 10%;
-          }
-        }
 
         .dummy-render {
           font-size: 1.71429rem; // 24px
