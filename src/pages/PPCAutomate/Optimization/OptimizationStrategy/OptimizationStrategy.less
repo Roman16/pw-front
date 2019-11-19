@@ -1,14 +1,16 @@
 @import '../../../../style/variables';
-@import '../../../../style/mixins.less';
 
 .optimize-strategy {
   .strategies {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
 
     @media not screen and (min--moz-device-pixel-ratio: 2) and (max-width: @big-desktop),
       not screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @big-desktop),
       not screen and (min-device-pixel-ratio: 2) and (max-width: @big-desktop) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media only screen and (max-width: @big-desktop) {
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(2, 1fr);
       gap: 0.71429em;
