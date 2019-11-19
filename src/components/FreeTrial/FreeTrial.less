@@ -1,15 +1,15 @@
 @import '../../style/variables.less';
 
 .additional {
+    font-size: 1.14286em; // 16px
     display: flex;
     align-items: center;
-    margin: 0 !important;
-    padding: 0 !important;
-    font-size: 16px;
+    margin: 0;
+    padding: 0;
     line-height: 2em;
     z-index: 999;
 
-    @media (max-width: @big-desktop) {
+    @media (max-width: @retinaDesktop) {
         align-self: flex-end;
     }
 
@@ -20,6 +20,7 @@
         font-weight: 400;
 
         span {
+            font-size: inherit; // 16px
             width: 2.2em;
             height: 1.4em;
             display: inline-block;
@@ -27,7 +28,6 @@
             border-radius: 0.7em;
             text-align: center;
             line-height: 1.5em;
-            font-size: 1em;
             font-weight: 700;
             background-color: #ec7f5c;
             color: @white;
@@ -49,10 +49,26 @@
             border: 0;
             border-radius: 0.5em;
             color: @success-color;
+            padding: 0 0.94em;
+
+            span {
+                font-size: 1rem; // 14px
+            }
         }
 
         button:hover {
             box-shadow: @tooltip-shadow !important;
         }
+    }
+}
+
+/*
+* Retina
+*/
+@media only screen and (min--moz-device-pixel-ratio: 2),
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (min-device-pixel-ratio: 2) {
+    .additional {
+        font-size: 1rem; // 14px
     }
 }
