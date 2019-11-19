@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Tooltip, Pagination } from 'antd';
-import shortid from 'shortid';
 
 import { reportsServices } from '../../../../services/reports.services';
 import './LastReports.less';
@@ -57,13 +56,12 @@ const TerminalItem = ({ number = 0, content = '' }) => (
     </div>
   </li>
 );
-// 1.07143em clientHeight
+
 class LastReports extends Component {
   state = {
     current: 1,
     reports: [],
     records: []
-    // heightTerminal: 0
   };
 
   componentDidMount() {
@@ -72,11 +70,6 @@ class LastReports extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.productId !== prevProps.productId) this.getReports();
-
-    // const heightTerminal = this.refs.refTerminal.clientHeight;
-    // if (prevState.heightTerminal !== heightTerminal) {
-    //   this.setState({ heightTerminal });
-    // }
   }
 
   onChange = page => {
@@ -131,9 +124,6 @@ class LastReports extends Component {
     // const qwe = false;
     const isTerminal = records && records.length > 0;
 
-    // let heightList = heightTerminal / 14 - 32 / 14 - 1.07143;
-    // console.log('heightTerminal', heightTerminal);
-
     return (
       <div className="terminal" ref="refTerminal">
         <TerminalCaption isTerminal={isTerminal} refCaption="refCaption" />
@@ -143,7 +133,6 @@ class LastReports extends Component {
           className={`terminal-content ${isLess ? 'more' : 'less'} ${
             isTerminal ? 'auto' : 'hidden'
           }`}
-          // style={{ height: `${heightList}em` }}
         >
           {isTerminal ? (
             <Fragment>

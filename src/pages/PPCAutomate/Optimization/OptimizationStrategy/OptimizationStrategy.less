@@ -1,13 +1,14 @@
 @import '../../../../style/variables';
+@import '../../../../style/mixins.less';
 
 .optimize-strategy {
   .strategies {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 
-    @media (max-width: @retinaDesktop) {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
+    @media only screen and (max-width: @retinaDesktop) {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
       gap: 0.71429em;
     }
   }
