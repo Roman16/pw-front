@@ -1,7 +1,7 @@
 import React from 'react';
-import { Route, Router, Switch, Redirect } from 'react-router-dom';
-import { history } from '../utils/history';
-import { useSelector } from 'react-redux';
+import {Route, Router, Switch, Redirect} from 'react-router-dom';
+import {history} from '../utils/history';
+import {useSelector} from 'react-redux';
 
 import LoginPage from "../pages/authentication/LoginPage/LoginPage";
 import RegistrationPage from "../pages/authentication/RegistrationPage/RegistrationPage";
@@ -65,11 +65,11 @@ const routers = () => {
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                 <Route exact path="/registration" component={RegistrationPage}/>
 
-                {developer && <ConnectedAmazonRoute
+                <ConnectedAmazonRoute
                     exact
                     path="/ppc/dashboard"
                     component={Dashboard}
-                />}
+                />
 
                 <ConnectedAmazonRoute
                     exact
@@ -88,17 +88,17 @@ const routers = () => {
                     component={ProductSettings}
                 />
 
-        <PrivateRoute exact path="/mws" component={MWS} />
-        <PrivateRoute exact path="/ppc" component={PPC} />
+                <PrivateRoute exact path="/mws" component={MWS}/>
+                <PrivateRoute exact path="/ppc" component={PPC}/>
 
-        {/* ACCOUNT */}
-        <PrivateRoute exact path="/account-settings" component={Information} />
-        <PrivateRoute exact path="/account-billing" component={Billing} />
-        <PrivateRoute
-          exact
-          path="/account-subscription"
-          component={Subscription}
-        />
+                {/* ACCOUNT */}
+                {developer && <PrivateRoute exact path="/account-settings" component={Information}/>}
+                {developer && <PrivateRoute exact path="/account-billing" component={Billing}/>}
+                {developer && <PrivateRoute
+                    exact
+                    path="/account-subscription"
+                    component={Subscription}
+                />}
 
                 <Route component={NotFound}/>
             </Switch>

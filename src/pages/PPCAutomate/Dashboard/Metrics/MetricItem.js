@@ -1,5 +1,6 @@
 import React, {Fragment} from "react";
 import Tooltip from '../../../../components/Tooltip/Tooltip'
+import {ProfitTooltipDescription} from "../ProductBreakdown/ProductsList";
 
 import closeIcon from '../../../../assets/img/icons/close.svg';
 import upWhiteIcon from '../../../../assets/img/icons/metric-arrows/up-white-arrow.svg';
@@ -67,7 +68,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
             <div className="title-info">
                 {title}
                 {key === 'profit' ?
-                    <Tooltip type='warning'/>
+                    <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>
                     :
                     <Tooltip description={title}/>
                 }

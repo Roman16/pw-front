@@ -46,7 +46,7 @@ const RenderPramsChanges = ({type, product}) => {
     }
 };
 
-const ProfitTooltipDescription = () => (
+export const ProfitTooltipDescription = () => (
     <div className='profit-tooltip-description'>
         <div className='title'>Warning</div>
         <p>We need to know your product costs before algorithm start optimization</p>
