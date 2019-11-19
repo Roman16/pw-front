@@ -201,7 +201,7 @@ const MainChart = () => {
         }
     };
 
-    useEffect(getChartData, [activeMetrics, selectedRangeDate]);
+    useEffect(getChartData, [activeMetrics, selectedRangeDate, selectedProduct]);
 
 
     return (

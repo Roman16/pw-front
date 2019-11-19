@@ -41,8 +41,8 @@ function fetchProducts({page, size = 10, searchText, onlyOptimization, startDate
 
 function fetchBarChartData({startDate, endDate, selectedProduct}) {
     const parameters = [
-        startDate ? `?start_date=${startDate}` : '',
-        endDate ? `&end_date=${endDate}` : '',
+        endDate ? `?end_date=${endDate}` : '',
+        startDate ? `&start_date=${startDate}` : '',
         selectedProduct ? `&product_id=${selectedProduct}` : '&product_id=all'
     ];
     return api('get', `${dashboardUrls.barChartData}${parameters.join('')}`)

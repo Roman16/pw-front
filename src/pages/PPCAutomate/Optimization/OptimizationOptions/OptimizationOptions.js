@@ -107,7 +107,7 @@ const OptimizationOptions = ({ selectedProduct }) => {
     else if (selectedProduct.status === 'RUNNING')
       changeOptions(selectedProduct);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedAll, selectedProduct.id]);
+  }, [selectedAll, selectedProduct.id, selectedProduct.status]);
 
   return (
     <div className="optimize-options">

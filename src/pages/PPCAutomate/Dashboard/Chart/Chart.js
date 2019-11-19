@@ -69,7 +69,7 @@ const Chart = () => {
     };
 
     const getBarChartData = () => {
-        dashboardServices.fetchBarChartData({startDate, endDate, selectedProduct})
+        dashboardServices.fetchBarChartData({endDate, selectedProduct})
             .then(res => {
                 updateBarChart(res);
             })
@@ -78,10 +78,7 @@ const Chart = () => {
     useEffect(() => {
         getPieChartData();
         getBarChartData();
-    }, [selectedProduct]);
-    useEffect(() => {
-        getPieChartData();
-    }, [selectedRangeDate]);
+    }, [selectedProduct, selectedRangeDate]);
 
     return (
         <div className='chart'>
