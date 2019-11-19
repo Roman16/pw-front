@@ -52,7 +52,7 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
 
             <DatePicker
                 timeRange={timeRange}
-                defaultValue={[moment(selectedRangeDate.startDate), moment(selectedRangeDate.endDate)]}
+                defaultValue={selectedRangeDate.startDate === 'lifetime' ? null : [moment(selectedRangeDate.startDate), moment(selectedRangeDate.endDate)]}
             />
         </div>
     )
