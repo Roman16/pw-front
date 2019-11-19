@@ -25,28 +25,7 @@ class Optimization extends Component {
     infoType: '',
     product: this.props.selectedProduct,
     selectedStrategy: this.props.selectedProduct.optimization_strategy
-    // refOptionsHeight: 0
-    // refProductStatusHeight: document.querySelector('.product-status')
   };
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   let { clientHeight, clientWidth } = this.refs.refOptions;
-  //   console.log(clientHeight, clientWidth);
-
-  //   // =================================
-
-  //   // const { refOptionsHeight, refProductStatusHeight } = this.state;
-  //   // const optionsHeight = document.querySelector('.options').clientHeight;
-
-  //   // if (optionsHeight !== prevState.refOptionsHeight) {
-  //   //   this.setState({ refOptionsHeight: optionsHeight });
-  //   // }
-  //   // // this.setState({ refOptionsHeight: height });
-  //   // // prevState.refOptionsHeight
-  //   // // const optionsHeight = refOptionsHeight.clientHeight;
-  //   // console.log('optionsHeight', optionsHeight);
-  //   // console.log('refOptionsHeight', refOptionsHeight);
-  // }
 
   showDrawer = type => this.setState({ visible: true, infoType: type });
 
@@ -112,25 +91,8 @@ class Optimization extends Component {
   }
 
   render() {
-    const {
-        isLess,
-        selectedStrategy,
-        infoType
-        // refOptionsHeight
-        // refProductStatusHeight
-      } = this.state,
+    const { isLess, selectedStrategy, infoType } = this.state,
       { selectedProduct, selectedAll } = this.props;
-
-    // const refOptionsHeight = document.querySelector('.options');
-    // const optionsHeight =
-    //   refOptionsHeight && refOptionsHeight.current
-    //     ? refOptionsHeight.current.offsetHeight
-    //     : 0;
-    // // const productStatusHeight = refProductStatusHeight.current
-    // //   ? refProductStatusHeight.current.offsetHeight
-    // //   : 0;
-
-    // console.log('optionsHeight', refOptionsHeight);
 
     return (
       <Fragment>
@@ -138,10 +100,7 @@ class Optimization extends Component {
           <ProductList />
 
           <div className="product-options">
-            <div
-              className="options"
-              //  ref="refOptions"
-            >
+            <div className="options">
               <div className={`product-info ${isLess && 'more'}`}>
                 <div className="product-info-automate">
                   <span>What Parts Do You Want To Automate?</span>
@@ -202,8 +161,6 @@ class Optimization extends Component {
             <LastReports
               isLess={isLess}
               productId={selectedAll ? 'all' : selectedProduct.id}
-              // optionsHeight={optionsHeight}
-              // productStatusHeight={productStatusHeight}
             />
           </div>
         </div>
