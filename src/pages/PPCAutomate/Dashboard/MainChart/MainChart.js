@@ -177,6 +177,7 @@ const MainChart = () => {
     const handleChangeSwitch = (type) => () => dispatch(dashboardActions.switchChart(type));
 
     const getChartData = () => {
+        console.log('wefwferger')
         if (activeMetrics[0].key || activeMetrics[1].key) {
             dashboardServices.fetchLineChartData({
                 startDate: selectedRangeDate.startDate,
@@ -193,7 +194,8 @@ const MainChart = () => {
         }
     };
 
-    useEffect(getChartData, [activeMetrics, selectedRangeDate, selectedProduct]);
+    useEffect(getChartData, [activeMetrics, selectedRangeDate]);
+
 
     return (
         <div className='main-chart'>

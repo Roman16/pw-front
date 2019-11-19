@@ -45,7 +45,7 @@ const AddMetric = () => {
     useEffect(() => {
         updateVisibleList(selectedMetrics);
         updateHiddenList(allMetrics.filter(metricListFilter));
-    }, [selectedMetrics, allMetrics]);
+    }, [selectedMetrics, allMetrics, visibleModal]);
 
     return (
         <div className='add-metric'>

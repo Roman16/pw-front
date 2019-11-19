@@ -59,14 +59,14 @@ const SecondBarChart = ({data, selectedRangeDate}) => {
 
                 <Bar
                     // isAnimationActive={false}
+                    fill="#95D6FF"
                     dataKey="ppc_value"
-                    fill="#6D6DF6"
                     shape={<CustomBar/>}
                 />
                 <Bar
                     // isAnimationActive={false}
                     dataKey="organic_value"
-                    fill="#95D6FF"
+                    fill="#6D6DF6"
                     shape={<CustomBar/>}
                 />
             </BarChart>

@@ -52,7 +52,7 @@ function fetchPieChartData({startDate, endDate, selectedProduct}) {
     const parameters = [
         startDate ? `?start_date=${startDate}` : '',
         endDate ? `&end_date=${endDate}` : '',
-        selectedProduct ? `&product_id=${selectedProduct}` : ''
+        selectedProduct ? `&product_id=${selectedProduct}` : '&product_id=all'
     ];
     return api('get', `${dashboardUrls.pieChartData}${parameters.join('')}`)
 }

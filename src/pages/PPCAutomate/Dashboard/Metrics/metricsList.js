@@ -83,14 +83,14 @@ export const metricsListArray = [
         key: 'acos',
         info: '',
         label: 'Average',
-        type: ''
+        type: 'percent'
     },
     {
         title: 'Conversion Rate',
         key: 'conversion_rate',
         info: '',
         label: 'Average',
-        type: ''
+        type: 'percent'
     },
     {
         title: 'CPA',

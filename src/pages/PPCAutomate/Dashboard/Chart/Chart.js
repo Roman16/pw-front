@@ -9,6 +9,7 @@ import Tooltip from "../../../../components/Tooltip/Tooltip";
 import {dashboardServices} from '../../../../services/dashboard.services'
 import './Chart.less';
 import {useSelector} from "react-redux";
+import moment from "moment";
 
 const pieDefaultData = [
     {name: 'organic', value: 400},
@@ -56,8 +57,8 @@ const Chart = () => {
         selectedProduct: state.dashboard.selectedProduct,
     }));
 
-    const startDate = selectedRangeDate.startDate,
-        endDate = selectedRangeDate.endDate;
+    const startDate = selectedRangeDate ? selectedRangeDate.startDate : moment(new Date).format(),
+        endDate = selectedRangeDate ? selectedRangeDate.endDate : moment(new Date).format();
 
 
     const getPieChartData = () => {

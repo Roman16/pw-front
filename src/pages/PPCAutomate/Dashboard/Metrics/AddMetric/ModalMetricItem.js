@@ -27,7 +27,7 @@ const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, i
 
         <div className='metric-item__description'>
             <div className="value">
-                {metric_value != null ? type === 'currency' ? `$${round(+metric_value, 4)}` : (type === 'percent' ? `${round(+metric_value, 4)}%` : round(+metric_value, 4)) : 'N/A'}
+                {metric_value != null ? type === 'currency' ? `$${round(+metric_value, 2)}` : (type === 'percent' ? `${round(+metric_value, 2)}%` : round(+metric_value, 2)) : 'N/A'}
             </div>
             <div className='label'>{label}</div>
         </div>

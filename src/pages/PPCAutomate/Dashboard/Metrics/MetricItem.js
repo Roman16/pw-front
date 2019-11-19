@@ -11,26 +11,37 @@ import {round} from "../../../../utils/round";
 
 const RenderMetricChanges = ({value}) => {
     if (value != null) {
-        return (
-            <div className='metric-item__changes'>
-                {value >= 25 && <div className='upward-changes'>
-                    {round(+value, 4)}
-                    <img src={upWhiteIcon} alt=""/>
-                </div>}
-                {(value > 0 && value < 25) && <div className='up-changes'>
-                    {round(+value, 4)}
-                    <img src={upGreenIcon} alt=""/>
-                </div>}
-                {(value <= 0 && value > -25) && <div className='down-changes'>
-                    {round(+value, 4)}
-                    <img src={downBlackIcon} alt=""/>
-                </div>}
-                {(value <= -25) && <div className='downward-changes'>
-                    {round(+value, 4)}
-                    <img src={downWhiteIcon} alt=""/>
-                </div>}
-            </div>
-        )
+        if (value === 0) {
+            return (
+                <div className='metric-item__changes'>
+                    <div className='down-changes'>
+                        0%
+                        <div className='horizontal-line-icon'></div>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className='metric-item__changes'>
+                    {value >= 25 && <div className='upward-changes'>
+                        {round(+value, 2)}%
+                        <img src={upWhiteIcon} alt=""/>
+                    </div>}
+                    {(value > 0 && value < 25) && <div className='up-changes'>
+                        {round(+value, 2)}%
+                        <img src={upGreenIcon} alt=""/>
+                    </div>}
+                    {(value <= 0 && value > -25) && <div className='down-changes'>
+                        {round(+value, 2)}%
+                        <img src={downBlackIcon} alt=""/>
+                    </div>}
+                    {(value <= -25) && <div className='downward-changes'>
+                        {round(+value, 2)}%
+                        <img src={downWhiteIcon} alt=""/>
+                    </div>}
+                </div>
+            )
+        }
     } else {
         return (
             <div className='metric-item__changes'>
@@ -85,7 +96,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
 
             <div className='metric-item__description'>
                 <div className="value">
-                    {metric_value != null ? type === 'currency' ? `$${round(+metric_value, 4)}` : (type === 'percent' ? `${round(+metric_value, 4)}%` : round(+metric_value, 4)) : 'N/A'}
+                    {metric_value != null ? type === 'currency' ? `$${round(+metric_value, 2)}` : (type === 'percent' ? `${round(+metric_value, 2)}%` : round(+metric_value, 2)) : 'N/A'}
                 </div>
                 <div className='label'>{label}</div>
             </div>

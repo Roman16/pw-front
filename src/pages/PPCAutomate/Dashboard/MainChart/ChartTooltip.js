@@ -10,7 +10,7 @@ import {round} from "../../../../utils/round";
 const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payload}) => {
     const getChartValue = (key) => {
         if(payload.find(item => item.dataKey === key)) {
-            return round(payload.find(item => item.dataKey === key).value, 4)
+            return round(payload.find(item => item.dataKey === key).value, 2)
         } else {
             return '0'
         }

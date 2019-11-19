@@ -49,7 +49,7 @@ const FirstPieChart = ({data}) => {
 
                                 return (
                                     <Text {...positioningProps}
-                                          style={stylingProps}>{round((organicValue / ppcValue), 4)}</Text>
+                                          style={stylingProps}>{round((organicValue / ppcValue), 2)}</Text>
                                 )
                             }}
                         />
@@ -62,7 +62,7 @@ const FirstPieChart = ({data}) => {
                     <div className='example-fill' style={{background: COLORS[0]}}></div>
                     Organic Sales
                     <div className='value'>
-                        {organicValue != null ? `$ ${round(+organicValue, 4)}` : 'N/A'}
+                        {organicValue != null ? `$ ${round(+organicValue, 2)}` : 'N/A'}
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@ const FirstPieChart = ({data}) => {
                     <div className='example-fill' style={{background: COLORS[1]}}></div>
                     PPC Sales
                     <div className='value'>
-                        {ppcValue != null ? `$ ${round(+ppcValue, 4)}` : 'N/A'}
+                        {ppcValue != null ? `$ ${round(+ppcValue, 2)}` : 'N/A'}
                     </div>
                 </div>
             </div>

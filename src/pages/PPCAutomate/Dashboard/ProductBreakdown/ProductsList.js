@@ -15,26 +15,37 @@ const RenderPramsChanges = ({type, product}) => {
     const value = product[type];
 
     if (value != null) {
-        return (
-            <div className='product-metric-changes up'>
-                {value >= 25 && <div className='upward-changes'>
-                    {round(+value, 4)}
-                    <img src={upWhiteIcon} alt=""/>
-                </div>}
-                {(value > 0 && value < 25) && <div className='up-changes'>
-                    {round(+value, 4)}
-                    <img src={upGreenIcon} alt=""/>
-                </div>}
-                {(value <= 0 && value > -25) && <div className='down-changes'>
-                    {round(+value, 4)}
-                    <img src={downBlackIcon} alt=""/>
-                </div>}
-                {(value <= -25) && <div className='downward-changes'>
-                    {round(+value, 4)}
-                    <img src={downWhiteIcon} alt=""/>
-                </div>}
-            </div>
-        )
+        if (value === 0) {
+            return (
+                <div className='product-metric-changes up'>
+                    <div className='down-changes'>
+                        0%
+                        <div className='horizontal-line-icon'></div>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className='product-metric-changes up'>
+                    {value >= 25 && <div className='upward-changes'>
+                        {round(+value, 2)}%
+                        <img src={upWhiteIcon} alt=""/>
+                    </div>}
+                    {(value > 0 && value < 25) && <div className='up-changes'>
+                        {round(+value, 2)}%
+                        <img src={upGreenIcon} alt=""/>
+                    </div>}
+                    {(value <= 0 && value > -25) && <div className='down-changes'>
+                        {round(+value, 2)}%
+                        <img src={downBlackIcon} alt=""/>
+                    </div>}
+                    {(value <= -25) && <div className='downward-changes'>
+                        {round(+value, 2)}%
+                        <img src={downWhiteIcon} alt=""/>
+                    </div>}
+                </div>
+            )
+        }
     } else {
         return (
             <div className='product-metric-changes up'>
@@ -97,7 +108,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {text != null ? round(text, 4) : 'N/A'}
+                    {text != null ? `${round(text, 2)}%` : 'N/A'}
 
                     <RenderPramsChanges
                         type='budget_allocation_diff'
@@ -113,7 +124,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {text != null ? round(text, 4) : 'N/A'}
+                    {text != null ? `${round(text, 2)}%` : 'N/A'}
 
                     <RenderPramsChanges
                         type='sales_share_diff'
@@ -129,7 +140,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {text != null ? round(text, 4) : 'N/A'}
+                    {text != null ? `$${round(text, 2)}` : 'N/A'}
 
                     <RenderPramsChanges
                         type='cpa_diff'
@@ -145,7 +156,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {text != null ? round(text, 4) : 'N/A'}
+                    {text != null ? `${round(text, 2)}%` : 'N/A'}
 
                     <RenderPramsChanges
                         type='conversion_rate_diff'
@@ -161,7 +172,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {text != null ? round(text, 4) : 'N/A'}
+                    {text != null ? `${round(text, 2)}%` : 'N/A'}
 
                     <RenderPramsChanges
                         type='acos_diff'
@@ -177,7 +188,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: '110px',
             render: (text, record) => (
                 <div className='product-params'>
-                    {text != null ? round(text, 4) : 'N/A'}
+                    {text != null ? `$${round(text, 2)}` : 'N/A'}
 
                     <RenderPramsChanges
                         type='profit_diff'
