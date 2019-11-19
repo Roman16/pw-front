@@ -141,7 +141,7 @@ class ProductsList extends Component {
         const columns = [
             {
                 title: '',
-                width: '289px',
+                width: '290px',
                 render: (title, item) => {
                     return (<ProductItem
                             product={item}

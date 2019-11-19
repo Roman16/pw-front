@@ -92,7 +92,7 @@ const Chart = ({
                     stroke="#82ca9d"
                     strokeWidth={3}
                     dot={false}
-                    isAnimationActive={false}
+                    // isAnimationActive={false}
                 />}
 
                 {(activeMetrics && activeMetrics[0].key && showDailyChart) && <Line
@@ -104,7 +104,7 @@ const Chart = ({
                     strokeWidth={2}
                     activeDot={{r: 5}}
                     dot={{r: 3}}
-                    isAnimationActive={false}
+                    // isAnimationActive={false}
                 />}
 
                 {/*{(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line*/}
@@ -126,7 +126,7 @@ const Chart = ({
                     stroke="#8884d8"
                     strokeWidth={3}
                     dot={false}
-                    isAnimationActive={false}
+                    // isAnimationActive={false}
                 />}
 
                 {(activeMetrics && activeMetrics[1].key && showDailyChart) && <Line
@@ -138,7 +138,7 @@ const Chart = ({
                     strokeWidth={2}
                     activeDot={{r: 5}}
                     dot={{r: 3}}
-                    isAnimationActive={false}
+                    // isAnimationActive={false}
                 />}
 
                 {/*{(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line*/}

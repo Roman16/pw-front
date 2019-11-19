@@ -57,10 +57,18 @@ const SecondBarChart = ({data, selectedRangeDate}) => {
 
                 <YAxis axisLine={false}/>
 
-                <Bar isAnimationActive={false}
-                     dataKey="ppc_value" fill="#6D6DF6" shape={<CustomBar/>}/>
-                <Bar isAnimationActive={false}
-                     dataKey="organic_value" fill="#95D6FF" shape={<CustomBar/>}/>
+                <Bar
+                    // isAnimationActive={false}
+                    dataKey="ppc_value"
+                    fill="#6D6DF6"
+                    shape={<CustomBar/>}
+                />
+                <Bar
+                    // isAnimationActive={false}
+                    dataKey="organic_value"
+                    fill="#95D6FF"
+                    shape={<CustomBar/>}
+                />
             </BarChart>
         </ResponsiveContainer>
     );

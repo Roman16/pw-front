@@ -9,7 +9,7 @@ const initialState = {
     showDailyChart: false,
     selectedProduct: '',
     selectedRangeDate: {
-        startDate: moment(new Date()).subtract(1, 'months').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
+        startDate: moment(new Date()).subtract(30, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
         endDate: moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
     },
     allMetrics: metricsListArray,
