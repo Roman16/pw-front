@@ -167,8 +167,6 @@ const MainChart = () => {
     }));
 
     const timeRange = (start, end) => {
-        console.log(start);
-        console.log(end);
         dispatch(dashboardActions.selectDateRange({
                 startDate: moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
                 endDate: end ? moment(end, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]') : moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
