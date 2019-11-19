@@ -14,7 +14,8 @@ export const userActions = {
     setInformation,
     getAuthorizedUserInfo,
     updateUserInformation,
-    changeUserAvatar
+    changeUserAvatar,
+    reSetState
 };
 
 function login(user) {
@@ -52,6 +53,14 @@ function logOut() {
         });
 
         localStorage.clear();
+    };
+}
+
+function reSetState() {
+    return dispatch => {
+        dispatch({
+            type: userConstants.USER_LOGOUT
+        });
     };
 }
 

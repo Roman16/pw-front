@@ -167,9 +167,11 @@ const MainChart = () => {
     }));
 
     const timeRange = (start, end) => {
+        console.log(start);
+        console.log(end);
         dispatch(dashboardActions.selectDateRange({
                 startDate: moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
-                endDate: moment(end, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+                endDate: end ? moment(end, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]') : moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
             }
         ))
     };
@@ -177,7 +179,6 @@ const MainChart = () => {
     const handleChangeSwitch = (type) => () => dispatch(dashboardActions.switchChart(type));
 
     const getChartData = () => {
-        console.log('wefwferger')
         if (activeMetrics[0].key || activeMetrics[1].key) {
             dashboardServices.fetchLineChartData({
                 startDate: selectedRangeDate.startDate,
