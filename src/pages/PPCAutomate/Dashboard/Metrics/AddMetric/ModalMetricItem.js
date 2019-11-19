@@ -2,6 +2,7 @@ import React from "react";
 import {Icon, Tooltip} from "antd";
 import plusIcon from "../../../../../assets/img/icons/plus-green.svg";
 import minusIcon from "../../../../../assets/img/icons/minus.svg";
+import {round} from "../../../../../utils/round";
 
 const ModalMetricItem = ({item: {title, info, metric_value, type}, item, listType, removeMetric, addMetric}) => (
     <div className='metric-item' onClick={() => listType === 'visible' ? removeMetric(item) : addMetric(item)}>
@@ -22,7 +23,7 @@ const ModalMetricItem = ({item: {title, info, metric_value, type}, item, listTyp
 
         <div className='metric-item__description'>
             <div className="value">
-                {metric_value != null ? type === 'currency' ? `$${(+metric_value).toFixed(2)}` : (type === 'percent' ? `${(+metric_value).toFixed(2)}%` : (+metric_value).toFixed(2)) : 'N/A'}
+                {metric_value != null ? type === 'currency' ? `$${round(+metric_value, 4)}` : (type === 'percent' ? `${round(+metric_value, 4)}%` : round(+metric_value, 4)) : 'N/A'}
             </div>
             <div className='label'>Total</div>
         </div>

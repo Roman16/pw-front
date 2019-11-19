@@ -2,6 +2,7 @@ import React from 'react';
 import {
     PieChart, Pie, Label, Cell, Text, ResponsiveContainer, Line
 } from 'recharts';
+import {round} from "../../../../utils/round";
 
 
 const COLORS = ['#5052AD', '#6D6DF6'];
@@ -48,7 +49,7 @@ const FirstPieChart = ({data}) => {
 
                                 return (
                                     <Text {...positioningProps}
-                                          style={stylingProps}>{(organicValue / ppcValue).toFixed(2)}</Text>
+                                          style={stylingProps}>{round((organicValue / ppcValue), 4)}</Text>
                                 )
                             }}
                         />
@@ -61,7 +62,7 @@ const FirstPieChart = ({data}) => {
                     <div className='example-fill' style={{background: COLORS[0]}}></div>
                     Organic Sales
                     <div className='value'>
-                        {organicValue != null ? `$ ${(+organicValue).toFixed(2)}` : 'N/A'}
+                        {organicValue != null ? `$ ${round(+organicValue, 4)}` : 'N/A'}
                     </div>
                 </div>
 
@@ -69,7 +70,7 @@ const FirstPieChart = ({data}) => {
                     <div className='example-fill' style={{background: COLORS[1]}}></div>
                     PPC Sales
                     <div className='value'>
-                        {ppcValue != null ? `$ ${(+ppcValue).toFixed(2)}` : 'N/A'}
+                        {ppcValue != null ? `$ ${round(+ppcValue, 4)}` : 'N/A'}
                     </div>
                 </div>
             </div>

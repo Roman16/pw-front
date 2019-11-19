@@ -5,6 +5,7 @@ import Table from "../../../../components/Table/Table";
 import ProductItem from "../../../../components/ProductList/ProductItem";
 import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
 import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
+import {round} from "../../../../utils/round";
 
 import upWhiteIcon from "../../../../assets/img/icons/metric-arrows/up-white-arrow.svg";
 import downWhiteIcon from "../../../../assets/img/icons/metric-arrows/down-white-arrow.svg";
@@ -17,19 +18,19 @@ const RenderPramsChanges = ({type, product}) => {
         return (
             <div className='product-metric-changes up'>
                 {value >= 25 && <div className='upward-changes'>
-                    {(+value).toFixed(2)}
+                    {round(+value, 4)}
                     <img src={upWhiteIcon} alt=""/>
                 </div>}
                 {(value > 0 && value < 25) && <div className='up-changes'>
-                    {(+value).toFixed(2)}
+                    {round(+value, 4)}
                     <img src={upGreenIcon} alt=""/>
                 </div>}
                 {(value <= 0 && value > -25) && <div className='down-changes'>
-                    {(+value).toFixed(2)}
+                    {round(+value, 4)}
                     <img src={downBlackIcon} alt=""/>
                 </div>}
                 {(value <= -25) && <div className='downward-changes'>
-                    {(+value).toFixed(2)}
+                    {round(+value, 4)}
                     <img src={downWhiteIcon} alt=""/>
                 </div>}
             </div>
@@ -96,7 +97,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {(+text).toFixed(2) || '0%'}
+                    {text != null ? round(text, 4) : 'N/A'}
 
                     <RenderPramsChanges
                         type='budget_allocation_diff'
@@ -112,7 +113,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {(+text).toFixed(2) || '0%'}
+                    {text != null ? round(text, 4) : 'N/A'}
 
                     <RenderPramsChanges
                         type='sales_share_diff'
@@ -128,7 +129,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {(+text).toFixed(2) || '$0'}
+                    {text != null ? round(text, 4) : 'N/A'}
 
                     <RenderPramsChanges
                         type='cpa_diff'
@@ -144,7 +145,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {(+text).toFixed(2) || '0%'}
+                    {text != null ? round(text, 4) : 'N/A'}
 
                     <RenderPramsChanges
                         type='conversion_rate_diff'
@@ -160,7 +161,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: 100,
             render: (text, record) => (
                 <div className='product-params'>
-                    {(+text).toFixed(2) || '0%'}
+                    {text != null ? round(text, 4) : 'N/A'}
 
                     <RenderPramsChanges
                         type='acos_diff'
@@ -176,7 +177,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             width: '110px',
             render: (text, record) => (
                 <div className='product-params'>
-                    {(+text).toFixed(2) || '$0'}
+                    {text != null ? round(text, 4) : 'N/A'}
 
                     <RenderPramsChanges
                         type='profit_diff'
