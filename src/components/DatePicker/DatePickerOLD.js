@@ -49,7 +49,10 @@ class DatePicker extends Component {
                             moment(new Date(new Date().getFullYear(), 0, 1)),
                             moment()
                         ],
-                        Lifetime: []
+                        Lifetime: [
+                            null,
+                            null
+                        ]
                     }}
                     separator="-"
                     format="DD/MM/YY"

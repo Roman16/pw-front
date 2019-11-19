@@ -167,11 +167,19 @@ const MainChart = () => {
     }));
 
     const timeRange = (start, end) => {
-        dispatch(dashboardActions.selectDateRange({
-                startDate: moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
-                endDate: end ? moment(end, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]') : moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
-            }
-        ))
+        if(start) {
+            dispatch(dashboardActions.selectDateRange({
+                    startDate: moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
+                    endDate: end ? moment(end, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]') : moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+                }
+            ))
+        } else {
+            dispatch(dashboardActions.selectDateRange({
+                    startDate: 'lifetime',
+                    endDate: 'lifetime'
+                }
+            ))
+        }
     };
 
     const handleChangeSwitch = (type) => () => dispatch(dashboardActions.switchChart(type));
