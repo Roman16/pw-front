@@ -15,6 +15,7 @@ import './transition.less';
 
 const domainName = window.location.hostname === 'localhost' ? 'https://front1.profitwhales.com' : 'https://' + window.location.hostname;
 
+const production = process.env.REACT_APP_ENV === 'production';
 
 function useWindowSize() {
     const [size, setSize] = useState([0, 0]);
@@ -202,7 +203,7 @@ const Sidebar = () => {
                                 className="automate-link"
                                 activeClassName="automate-link-active"
                                 exact
-                                to={`/account-settings`}
+                                to={production ? false : `/account-settings`}
                             >
                                 {user.user.avatar ? (
                                     <img
