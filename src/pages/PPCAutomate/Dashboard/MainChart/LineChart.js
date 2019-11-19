@@ -49,7 +49,7 @@ const Chart = ({
 
             <LineChart
                 data={data}
-                margin={{top: 10}}
+                margin={{top: 10, bottom: 10}}
             >
                 <CartesianGrid
                     vertical={false}
@@ -61,6 +61,11 @@ const Chart = ({
                 <XAxis
                     dataKey="date"
                     axisLine={false}
+                    // interval={0}
+                    // angle={50}
+                    // dx={15}
+                    // dy={2}
+
                     tickFormatter={(date) => moment(date).format('MMM DD')}
                 />
 
