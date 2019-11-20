@@ -61,7 +61,8 @@ class LastReports extends Component {
   state = {
     current: 1,
     reports: [],
-    records: []
+    records: [],
+    heightTerminal: 0
   };
 
   componentDidMount() {
@@ -70,7 +71,22 @@ class LastReports extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.productId !== prevProps.productId) this.getReports();
+
+    const fu = () => {
+      const heightTerminal = this.refs.refTerminal.clientHeight;
+      if (prevState.heightTerminal !== heightTerminal) {
+        this.setState({ heightTerminal });
+      }
+    };
+    setTimeout(fu(), 3000);
   }
+
+  // fu = () => {
+  //   const heightTerminal = this.refs.refTerminal.clientHeight;
+  //   this.setState({ heightTerminal });
+  //   if (prevState.heightTerminal !== heightTerminal) {
+  //   }
+  // };
 
   onChange = page => {
     const { reports } = this.state;
@@ -119,10 +135,14 @@ class LastReports extends Component {
   };
 
   render() {
-    const { current, records, reports } = this.state;
+    const { current, records, reports, heightTerminal } = this.state;
     const { isLess } = this.props;
     // const qwe = false;
     const isTerminal = records && records.length > 0;
+
+    // let heightList = heightTerminal / 14 - 32 / 14 - 1.07143;
+    let heightList = heightTerminal - 30 - 42 - 32 - 15;
+    console.log('heightTerminal', heightList);
 
     return (
       <div className="terminal" ref="refTerminal">
@@ -133,6 +153,7 @@ class LastReports extends Component {
           className={`terminal-content ${isLess ? 'more' : 'less'} ${
             isTerminal ? 'auto' : 'hidden'
           }`}
+          style={{ height: `${heightList}px` }}
         >
           {isTerminal ? (
             <Fragment>
