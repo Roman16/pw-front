@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { throttle } from 'throttle-debounce';
 import { Icon, Tooltip, Pagination } from 'antd';
 
 import { reportsServices } from '../../../../services/reports.services';
@@ -78,15 +79,15 @@ class LastReports extends Component {
         this.setState({ heightTerminal });
       }
     };
-    setTimeout(fu(), 3000);
+    // setTimeout(fu, 4);
+    throttle(500, () => {
+      const heightTerminal = this.refs.refTerminal.clientHeight;
+      if (prevState.heightTerminal !== heightTerminal) {
+        this.setState({ heightTerminal });
+      }
+    });
+    // console.log('this.state.heightTerminal', this.state.heightTerminal);
   }
-
-  // fu = () => {
-  //   const heightTerminal = this.refs.refTerminal.clientHeight;
-  //   this.setState({ heightTerminal });
-  //   if (prevState.heightTerminal !== heightTerminal) {
-  //   }
-  // };
 
   onChange = page => {
     const { reports } = this.state;
