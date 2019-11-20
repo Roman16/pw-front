@@ -56,7 +56,25 @@
           grid-template-columns: 16.5em minmax(min-content, 100%);
         }
 
-        @media (max-width: @big-desktop) {
+        // @media (max-width: @big-desktop) {
+        //   .product-info-strategy {
+        //     flex-direction: column-reverse;
+        //   }
+        // }
+
+        @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
+          only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+          only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+          only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+          .product-info-strategy {
+            flex-direction: column-reverse;
+          }
+        }
+
+        @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+          only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+          only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+          only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
           .product-info-strategy {
             flex-direction: column-reverse;
           }
@@ -84,7 +102,21 @@
           color: @dangerous-color;
           top: 2em;
 
-          @media (max-width: @big-desktop) {
+          // @media (max-width: @big-desktop) {
+          //   top: 4em;
+          // }
+
+          @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
+            only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+            only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+            only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+            top: 4em;
+          }
+
+          @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+            only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+            only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+            only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
             top: 4em;
           }
         }
@@ -111,7 +143,21 @@
           column-gap: 1.42857em;
         }
 
-        @media (max-width: @big-desktop) {
+        // @media (max-width: @big-desktop) {
+        //   grid-template-areas: 'options strategy' 'descriptions strategy';
+        // }
+
+        @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
+          only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+          only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+          only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+          grid-template-areas: 'options strategy' 'descriptions strategy';
+        }
+
+        @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+          only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+          only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+          only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
           grid-template-areas: 'options strategy' 'descriptions strategy';
         }
 
@@ -130,7 +176,21 @@
         &.less {
           max-height: 30em;
 
-          @media (max-width: @big-desktop) {
+          // @media (max-width: @big-desktop) {
+          //   max-height: 43.92857em;
+          // }
+
+          @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
+            only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+            only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+            only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+            max-height: 43.92857em;
+          }
+
+          @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+            only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+            only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+            only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
             max-height: 43.92857em;
           }
         }

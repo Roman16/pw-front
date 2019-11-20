@@ -5,7 +5,16 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 
-    @media (min-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+    // @media (max-width: @big-desktop) {
+    //   grid-template-columns: repeat(2, 1fr);
+    //   grid-template-rows: repeat(2, 1fr);
+    //   gap: 0.71429em;
+    // }
+
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(2, 1fr);
       gap: 0.71429em;
@@ -13,6 +22,7 @@
 
     @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
       only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+      only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
       only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(2, 1fr);
@@ -37,14 +47,16 @@
   //   padding: 0.35714em 0.71429em;
   // }
 
-  @media not screen and (min--moz-device-pixel-ratio: 2) and (max-width: @big-desktop),
-    not screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @big-desktop),
-    not screen and (min-device-pixel-ratio: 2) and (max-width: @big-desktop) {
+  @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
+    only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+    only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+    only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
     padding: 0.35714em 0.71429em;
   }
 
   @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
     only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+    only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
     only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
     padding: 0.35714em 0.71429em;
   }
