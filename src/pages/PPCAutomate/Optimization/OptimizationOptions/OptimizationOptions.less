@@ -17,20 +17,26 @@
   border: 1px solid #f5f5ff;
   border-radius: 0.57143em;
 
-  .ant-checkbox-wrapper.ant-checkbox-wrapper-checked {
+  .ant-checkbox-wrapper,
+  .ant-checkbox-wrapper-checked {
     font-size: 1rem; // 14px
 
     .ant-checkbox-checked .ant-checkbox-inner {
       background-color: @action-color;
       border-color: @action-color;
     }
-  }
-}
 
-.ant-checkbox,
-.ant-checkbox-inner,
-.ant-checkbox-input {
-  font-size: inherit; // 14px
-  width: 1.14286em;
-  height: 1.14286em;
+    .ant-checkbox,
+    .ant-checkbox-checked,
+    .ant-checkbox-inner,
+    .ant-checkbox-input {
+      font-size: inherit; // 14px
+      width: 1.14286em;
+      height: 1.14286em;
+    }
+
+    span {
+      font-size: inherit; // 14px
+    }
+  }
 }
