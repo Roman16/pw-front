@@ -15,7 +15,7 @@ import './Sidebar.less';
 
 const domainName = window.location.hostname === 'localhost' ? 'https://front1.profitwhales.com' : 'https://' + window.location.hostname;
 
-const production = process.env.REACT_APP_ENV !== 'production';
+const production = process.env.REACT_APP_ENV === 'production';
 
 function useWindowSize() {
     const [size, setSize] = useState([0, 0]);
