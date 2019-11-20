@@ -9,7 +9,6 @@ import CompanyDetails from "./CompanyDetails";
 import BillingHistory from "./BillingHistory";
 
 import UpdateCompanyInformationWindow from "./DrawerWindows/UpdateCompanyInformationWindow";
-import AddCard from "./DrawerWindows/AddCard";
 import UpdateCard from "./DrawerWindows/UpdateCard";
 import {Elements, StripeProvider} from "react-stripe-elements";
 import {userService} from "../../../services/user.services";
@@ -20,7 +19,19 @@ const company = {
     zip: '90210',
     address1: '8800 Rumble Street',
     address2: 'Apt 1#',
-    country: 'US'
+    country: 'US',
+    state: 'LA'
+};
+
+const billing = {
+    cards: [
+        {
+            number: '4444',
+        },
+        {
+            number: '1111',
+        },
+    ]
 };
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
@@ -28,7 +39,9 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
     : process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 const Billing = () => {
-    const [openedWindow, openWindow] = useState(null);
+    const [openedWindow, openWindow] = useState(null),
+        [companyInformation, updateCompany] = useState({}),
+        [billingInformation, updateBulling] = useState({});
 
     function handleOpenWindow(window) {
         openWindow(window)
@@ -38,48 +51,34 @@ const Billing = () => {
         openWindow(null)
     }
 
-    function handleSaveCompanyInformation(company) {
+    async function getInformation() {
+        const [companyData, billingData] = await Promise.all([
+            userService.fetchCompanyInformation(),
+            userService.fetchBillingInformation()
+        ]);
+        updateCompany(company);
+        updateBulling(billing);
+    }
+
+    function handleUpdateCompanyInformation(company) {
         console.log(company);
         openWindow(null);
     }
 
-    function handleUpdatePaymentMethod(token) {
-        console.log(token);
-        userService.updatePaymentMethod({token});
+    function handleUpdatePaymentMethod(card) {
+        console.log(card);
+        userService.updatePaymentMethod(card);
         openWindow(null);
     }
-
-    // useEffect(() => {
-    //     const script = document.createElement('script');
-    //
-    //     script.src = "https://js.stripe.com/v3/";
-    //
-    //     document.head.appendChild(script);
-    //
-    //     return () => {
-    //         document.head.removeChild(script);
-    //     }
-    // }, []);
 
     function renderDrawer() {
         if (openedWindow === 'company') {
             return (
                 <UpdateCompanyInformationWindow
                     onClose={handleCloseWindow}
-                    company={company}
-                    onSubmit={handleSaveCompanyInformation}
+                    company={companyInformation}
+                    onSubmit={handleUpdateCompanyInformation}
                 />
-            )
-        } else if (openedWindow === 'newCard') {
-            return (
-                <StripeProvider apiKey={stripeKey}>
-                    <Elements>
-                        <AddCard
-                            onClose={handleCloseWindow}
-                            onSubmit={handleUpdatePaymentMethod}
-                        />
-                    </Elements>
-                </StripeProvider>
             )
         } else if (openedWindow === 'updateCard') {
             return (
@@ -95,12 +94,27 @@ const Billing = () => {
         }
     }
 
+    useEffect(() => {
+        getInformation();
+
+        const script = document.createElement('script');
+
+        script.src = "https://js.stripe.com/v3/";
+
+        document.head.appendChild(script);
+
+        return () => {
+            document.head.removeChild(script);
+        }
+    }, []);
+
     return (
         <div className="user-cabinet billing-page">
             <Navigation/>
 
             <AccountBilling
                 onOpenWindow={handleOpenWindow}
+                billingInformation={billingInformation}
             />
 
             <CompanyDetails
@@ -115,7 +129,7 @@ const Billing = () => {
                 className='account-drawer'
                 closable={false}
                 onClose={handleCloseWindow}
-                visible={openedWindow}
+                visible={openedWindow ? true : false}
             >
                 {renderDrawer()}
             </Drawer>
