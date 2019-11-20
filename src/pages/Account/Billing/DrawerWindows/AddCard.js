@@ -116,7 +116,7 @@ class AddCard extends Component {
 
                 <h3>Add card</h3>
 
-                <h4>Credit Card Information</h4>
+                <h4>Credit Card Information!</h4>
 
                 <StripeForm
                     stripeElementChange={this.stripeElementChange}
