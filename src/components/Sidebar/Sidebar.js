@@ -9,9 +9,9 @@ import {getClassNames} from '../../utils';
 import {userActions} from '../../actions/user.actions';
 import ItemIcon from '../ItemIcon/ItemIcon';
 import logo from '../../assets/img/logo.svg';
+import soon from '../../assets/img/icons/soon.svg';
 // import showMenu from '../../assets/img/icons/show-menu-arrow.svg';  // стрелка из фигмы в разделе сайдбар > страна
 import './Sidebar.less';
-import './transition.less';
 
 const domainName = window.location.hostname === 'localhost' ? 'https://front1.profitwhales.com' : 'https://' + window.location.hostname;
 
@@ -88,7 +88,9 @@ const Sidebar = () => {
                             <h5>{activeCountry.name}</h5>
                         </div>
                         <div className="country-active__description">
-                            {user.default_accounts ? user.default_accounts.amazon_mws.seller_id : ''}
+                            {user.default_accounts
+                                ? user.default_accounts.amazon_mws.seller_id
+                                : ''}
                         </div>
                     </div>
 
@@ -103,8 +105,10 @@ const Sidebar = () => {
                                     disabled
                                 >
                                     <ItemIcon icon="zeroToHero"/>
-                                    <span>Zero to Hero</span>
-                                    {/* <div className="soon">soon</div> */}
+                                    <span>
+                                        Zero to Hero
+                                        <img className="soon" src={soon} alt="soon"/>
+                                    </span>
                                 </NavLink>
                             </li>
 
@@ -117,32 +121,25 @@ const Sidebar = () => {
                                     disabled
                                 >
                                     <ItemIcon icon="analytics"/>
-                                    <span>Analytics</span>
-                                    {/* <div className="soon">soon</div> */}
+                                    <span>
+                    Analytics
+                    <img className="soon" src={soon} alt="soon"/>
+                  </span>
                                 </NavLink>
                             </li>
 
                             <li className="top-nav-item ppc-automate-link">
-                                <span
-                                    onClick={toggleAutomate}
-                                >
-                                <NavLink
-                                    className="top-nav-link"
-                                    activeClassName="top-nav-link-active"
-                                    to="/ppc"
-                                    replace
-                                >
-                                    <ItemIcon icon="ppcAutomate"/>
-                                    <span>PPC Automate</span>
-                                </NavLink>
-                                    </span>
-                                {/* <button type="button" onClick={toggleAutomate}>
-                  <img
-                    className={`show-menu ${automate && 'rotate'}`}
-                    src={showMenu}
-                    alt="show-menu"
-                  />
-                </button> */}
+                <span onClick={toggleAutomate}>
+                  <NavLink
+                      className="top-nav-link"
+                      activeClassName="top-nav-link-active"
+                      to="/ppc"
+                      replace
+                  >
+                    <ItemIcon icon="ppcAutomate"/>
+                    <span>PPC Automate</span>
+                  </NavLink>
+                </span>
 
                                 {collapsed && (
                                     <ul
@@ -162,14 +159,10 @@ const Sidebar = () => {
                                         ))}
 
                                         <li className="automate-item">
-                                            <a
-                                                href='/ppc-scanner'
-                                                className="automate-link"
-                                            >
+                                            <a href="/ppc-scanner" className="automate-link">
                                                 PPC Scanner
                                             </a>
                                         </li>
-
                                     </ul>
                                 )}
 

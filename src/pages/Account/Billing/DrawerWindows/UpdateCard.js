@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {Component, useState} from "react";
 import {CardNumberElement, CardExpiryElement, CardCvcElement} from 'react-stripe-elements';
 import {injectStripe} from "react-stripe-elements";
 import lockIcon from '../../../../assets/img/icons/lock.svg';
@@ -8,18 +8,17 @@ import discoverLogo from '../../../../assets/img/discover.svg';
 import americanExpressLogo from '../../../../assets/img/american-express.svg';
 import stripeLogo from '../../../../assets/img/stripe-logo.svg';
 import {Input} from "antd";
+import {userService} from "../../../../services/user.services";
 
 const CardNumberElementStyles = {
     base: {
         fontSize: '13px',
         letterSpacing: '-0.4375px',
-        lineHeight: '20px'
     }
 };
 
-
 const StripeForm = (props) => {
-    const {stripeElementChange, handleSubmit, onClose} = props;
+    const {stripeElementChange, handleSubmit, onClose, handleChangeInput} = props;
     return (
         <form onSubmit={handleSubmit}>
             <div className="card-container">
@@ -73,10 +72,10 @@ const StripeForm = (props) => {
                         <Input
                             className="form-control"
                             type="text"
-                            name="name"
+                            name="first_name"
                             placeholder="First Name"
                             // value={userInformation.name}
-                            // onChange={handleChangeInput}
+                            onChange={handleChangeInput}
                         />
                     </div>
 
@@ -88,7 +87,7 @@ const StripeForm = (props) => {
                             name="last_name"
                             placeholder="Last Name"
                             // value={userInformation.name}
-                            // onChange={handleChangeInput}
+                            onChange={handleChangeInput}
                         />
                     </div>
                 </div>
@@ -99,10 +98,10 @@ const StripeForm = (props) => {
                         <Input
                             className="form-control"
                             type="text"
-                            name="address"
+                            name="address_line1"
                             placeholder="Address"
                             // value={userInformation.name}
-                            // onChange={handleChangeInput}
+                            onChange={handleChangeInput}
                         />
                     </div>
                 </div>
@@ -113,10 +112,10 @@ const StripeForm = (props) => {
                         <Input
                             className="form-control"
                             type="text"
-                            name="city"
+                            name="address_city"
                             placeholder="City"
                             // value={userInformation.name}
-                            // onChange={handleChangeInput}
+                            onChange={handleChangeInput}
                         />
                     </div>
 
@@ -125,10 +124,10 @@ const StripeForm = (props) => {
                         <Input
                             className="form-control"
                             type="text"
-                            name="zip"
+                            name="address_zip"
                             placeholder="Zip"
                             // value={userInformation.name}
-                            // onChange={handleChangeInput}
+                            onChange={handleChangeInput}
                         />
                     </div>
                 </div>
@@ -139,10 +138,10 @@ const StripeForm = (props) => {
                         <Input
                             className="form-control"
                             type="text"
-                            name="city"
-                            placeholder="City"
+                            name="address_country"
+                            placeholder="Country"
                             // value={userInformation.name}
-                            // onChange={handleChangeInput}
+                            onChange={handleChangeInput}
                         />
                     </div>
 
@@ -151,10 +150,10 @@ const StripeForm = (props) => {
                         <Input
                             className="form-control"
                             type="text"
-                            name="zip"
-                            placeholder="Zip"
+                            name="address_state"
+                            placeholder="State"
                             // value={userInformation.name}
-                            // onChange={handleChangeInput}
+                            onChange={handleChangeInput}
                         />
                     </div>
                 </div>
@@ -162,49 +161,109 @@ const StripeForm = (props) => {
 
             <div className='button-block'>
                 <button className='btn cancel' type='button' onClick={onClose}>Cancel</button>
-                <button className='btn green-btn'>Add</button>
+                <button className='btn green-btn'>Save</button>
             </div>
         </form>
     )
 };
 
 
-const UpdateCard = ({onSubmit, onClose}) => {
-    const [cardValues, changeCard] = useState({});
+class UpdateCard extends Component {
+    state = {
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        address_line1: '',
+        address_city: '',
+        address_state: '',
+        address_country: '',
+        address_zip: '',
 
-    function stripeElementChange(element, name) {
+        card_number: false,
+        expiry: false,
+        cvc: false,
+    };
+
+    stripeElementChange = (element, name) => {
         if (!element.empty && element.complete) {
-            changeCard({
-                ...cardValues,
+            this.setState({
                 [name]: true
             });
         }
-    }
+    };
 
-    function handleSubmit(e) {
+    handleChangeInput = ({target: {name, value}}) => {
+        this.setState({
+            [name]: value
+        })
+    };
+
+    handleSubmit = async (e) => {
         e.preventDefault();
+        const {
+            first_name,
+            last_name,
+            email,
+            password,
+            address_line1,
+            address_city,
+            address_state,
+            address_country,
+            address_zip,
+        } = this.state;
 
-        onSubmit()
+        try {
+            const res = await this.props.stripe.createToken({
+                name: `${first_name} ${last_name}`,
+                address_line1,
+                address_city,
+                address_state,
+                address_country,
+                address_zip
+            });
+
+            this.props.onSubmit({
+                first_name,
+                last_name,
+                email,
+                password,
+                address_line1,
+                address_city,
+                address_state,
+                address_country,
+                address_zip,
+                stripe_token: res.token.id
+            })
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+
+    render() {
+        const {onClose} = this.props,
+            {card_number,expiry} = this.state;
+
+        return (
+            <div className='drawer-window add-card-window update-card-info'>
+                <button className="close-btn" type="button" onClick={onClose}>
+                    &#215;
+                </button>
+
+                <h3>Update Payment Method</h3>
+
+                <h4>Credit Card Information</h4>
+
+                <StripeForm
+                    stripeElementChange={this.stripeElementChange}
+                    handleSubmit={this.handleSubmit}
+                    handleChangeInput={this.handleChangeInput}
+                    onClose={onClose}
+                />
+            </div>
+        )
     }
-
-    return (
-        <div className='drawer-window add-card-window update-card-info'>
-            <button className="close-btn" type="button" onClick={onClose}>
-                &#215;
-            </button>
-
-            <h3>Update Payment Method</h3>
-
-            <h4>Credit Card Information</h4>
-
-            <StripeForm
-                stripeElementChange={stripeElementChange}
-                handleSubmit={handleSubmit}
-                onClose={onClose}
-            />
-
-        </div>
-    )
-};
+}
 
 export default injectStripe(UpdateCard);

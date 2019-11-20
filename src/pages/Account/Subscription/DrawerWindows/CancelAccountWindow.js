@@ -6,12 +6,9 @@ import bag from '../../../../assets/img/bag.svg';
 import restart from '../../../../assets/img/restart.svg';
 import square from '../../../../assets/img/icons/green-square.svg';
 
-const CancelAccountWindow = ({ onCloseWindow }) => {
+const CancelAccountWindow = () => {
   return (
     <div className="cancel">
-      <button className="close-btn" type="button" onClick={onCloseWindow}>
-        &#215;
-      </button>
       <div className="cancel-wrap">
         <h3 className="title">Cancel Your Account</h3>
         <img className="cancel-logo" src={cancel} alt="cancel" />

@@ -1,58 +1,90 @@
 @import '../../style/variables.less';
 
 .additional {
-    display: flex;
-    align-items: center;
-    margin: 0 !important;
-    padding: 0 !important;
-    font-size: 16px;
+  font-size: 1.14286rem; // 16px
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  line-height: 2em;
+  z-index: 999;
+
+  // @media (max-width: @big-desktop) {
+  //   align-self: flex-end;
+  // }
+
+  @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
+    only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+    only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+    only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+    align-self: flex-end;
+  }
+
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+    only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+    only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
+    align-self: flex-end;
+  }
+
+  .free-trial {
+    height: 2em;
     line-height: 2em;
-    z-index: 999;
+    margin: 0;
+    font-weight: 400;
 
-    @media (max-width: @big-desktop) {
-        align-self: flex-end;
+    span {
+      font-size: inherit; // 16px
+      width: 2.2em;
+      height: 1.4em;
+      display: inline-block;
+      margin: 0 0.9em;
+      border-radius: 0.7em;
+      text-align: center;
+      line-height: 1.5em;
+      font-weight: 700;
+      background-color: #ec7f5c;
+      color: @white;
+
+      @media (max-width: 1689px) {
+        margin: 0 0.3em;
+      }
+    }
+  }
+
+  .btn-upgrade {
+    margin-left: 1.8em;
+
+    @media (max-width: @desktop) {
+      margin-left: 0.3em;
     }
 
-    .free-trial {
-        height: 2em;
-        line-height: 2em;
-        margin: 0;
-        font-weight: 400;
+    button {
+      display: flex;
+      align-items: center;
+      border: 0;
+      border-radius: 0.5em;
+      color: @success-color;
+      padding: 0 0.94em;
 
-        span {
-            width: 2.2em;
-            height: 1.4em;
-            display: inline-block;
-            margin: 0 0.9em;
-            border-radius: 0.7em;
-            text-align: center;
-            line-height: 1.5em;
-            font-size: 1em;
-            font-weight: 700;
-            background-color: #ec7f5c;
-            color: @white;
-
-            @media (max-width: 1689px) {
-                margin: 0 0.3em;
-            }
-        }
+      span {
+        font-size: 1rem; // 14px
+      }
     }
 
-    .btn-upgrade {
-        margin-left: 1.8em;
-
-        @media (max-width: @desktop) {
-            margin-left: 0.3em;
-        }
-
-        button {
-            border: 0;
-            border-radius: 0.5em;
-            color: @success-color;
-        }
-
-        button:hover {
-            box-shadow: @tooltip-shadow !important;
-        }
+    button:hover {
+      box-shadow: @tooltip-shadow !important;
     }
+  }
+}
+
+/*
+* Retina
+*/
+@media only screen and (min--moz-device-pixel-ratio: 2),
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min-device-pixel-ratio: 2) {
+  .additional {
+    font-size: 1rem; // 14px
+  }
 }

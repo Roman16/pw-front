@@ -11,40 +11,6 @@ import './Chart.less';
 import {useSelector} from "react-redux";
 import moment from "moment";
 
-const pieDefaultData = [
-    {name: 'organic', value: 400},
-    {name: 'ppc', value: 300},
-];
-
-const pieDefaultData2 = [
-    {name: 'organic', value: 587},
-    {name: 'ppc', value: 400},
-];
-
-const barDefaultData = [
-    {
-        date: '2019-03-04T17:24:58.828Z', organic: 1398, ppc: 4000,
-    },
-    {
-        date: '2019-03-05T17:24:58.828Z', organic: 1398, ppc: 3000,
-    },
-    {
-        date: '2019-03-06T17:24:58.828Z', organic: 6800, ppc: 2000,
-    },
-    {
-        date: '2019-03-07T17:24:58.828Z', organic: 3908, ppc: 2780,
-    },
-    {
-        date: '2019-03-08T17:24:58.828Z', organic: 4800, ppc: 1890,
-    },
-    {
-        date: '2019-03-09T17:24:58.828Z', organic: 3800, ppc: 2390,
-    },
-    {
-        date: '2019-03-10T17:24:58.828Z', organic: 3300, ppc: 2890,
-    },
-];
-
 const Chart = () => {
 
     const [defaultChart, changeChart] = useState('pie'),
@@ -78,7 +44,11 @@ const Chart = () => {
     useEffect(() => {
         getPieChartData();
         getBarChartData();
-    }, [selectedProduct, selectedRangeDate]);
+    }, [selectedProduct]);
+
+    useEffect(() => {
+        getPieChartData();
+    }, [selectedRangeDate]);
 
     return (
         <div className='chart'>
