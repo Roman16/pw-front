@@ -6,8 +6,9 @@ import RegistrationPageForm from './RegistrationPageForm/RegistrationPageForm';
 import {Elements, StripeProvider} from "react-stripe-elements";
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
-    ? process.env.STRIPE_PUBLISHABLE_KEY_LIVE || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
-    : process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+    ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
+    : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+
 
 const RegistrationPage = () => {
     useEffect(() => {

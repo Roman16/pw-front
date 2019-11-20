@@ -3,8 +3,8 @@ import axios from 'axios';
 import {userUrls} from '../constans/api.urls';
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
-    ? process.env.STRIPE_PUBLISHABLE_KEY_LIVE || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
-    : process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+    ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
+    : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 export const userService = {
     login,
