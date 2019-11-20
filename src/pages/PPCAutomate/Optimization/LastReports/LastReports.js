@@ -79,14 +79,14 @@ class LastReports extends Component {
     //     this.setState({ heightTerminal });
     //   }
     // };
-    // // setTimeout(fu, 4);
+    // setTimeout(fu, 4);
     // throttle(500, () => {
     //   const heightTerminal = this.refs.refTerminal.clientHeight;
     //   if (prevState.heightTerminal !== heightTerminal) {
     //     this.setState({ heightTerminal });
     //   }
     // });
-    // // console.log('this.state.heightTerminal', this.state.heightTerminal);
+    // console.log('this.state.heightTerminal', this.state.heightTerminal);
   }
 
   onChange = page => {

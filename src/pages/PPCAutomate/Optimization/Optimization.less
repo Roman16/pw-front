@@ -10,11 +10,11 @@
 
   .product-options {
     flex: 1;
-    // display: grid;
-    // grid-template-rows: max-content min-content 1fr;
-    // row-gap: 1.64286em;
     display: flex;
     flex-flow: column;
+    //display: grid;
+    //grid-template-rows: max-content min-content 1fr;
+    //row-gap: 1.64286em;
     overflow: auto;
 
     & > div {
@@ -28,12 +28,13 @@
     }
 
     .options {
-      // min-height: 50px;
+      //min-height: 50px;
       display: grid;
       grid-template-columns: 28.57143em minmax(min-content, 100%);
       grid-template-rows: repeat(3, minmax(min-content, max-content));
       grid-template-areas: 'info info' 'optionsStrategy optionsStrategy' 'control control';
       column-gap: 4.28571em;
+      margin-bottom: 1.64286em;
 
       @media (max-width: 1814px) {
         grid-template-columns: 23.57143em minmax(min-content, 100%);
