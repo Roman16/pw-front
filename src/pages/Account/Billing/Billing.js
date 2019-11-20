@@ -27,9 +27,23 @@ const billing = {
     cards: [
         {
             number: '4444',
+            type: 'visa'
         },
         {
             number: '1111',
+            type: 'master'
+        },
+        {
+            number: '5555',
+            type: 'visa'
+        },
+        {
+            number: '3333',
+            type: 'visa'
+        },
+        {
+            number: '2222',
+            type: 'visa'
         },
     ]
 };
@@ -41,10 +55,12 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
 const Billing = () => {
     const [openedWindow, openWindow] = useState(null),
         [companyInformation, updateCompany] = useState({}),
+        [selectedCard, selectCard] = useState({}),
         [billingInformation, updateBulling] = useState({});
 
-    function handleOpenWindow(window) {
-        openWindow(window)
+    function handleOpenWindow(window, card) {
+        openWindow(window);
+        card ? selectCard(card) : selectCard(null)
     }
 
     function handleCloseWindow() {
@@ -87,6 +103,7 @@ const Billing = () => {
                         <UpdateCard
                             onClose={handleCloseWindow}
                             onSubmit={handleUpdatePaymentMethod}
+                            card={selectedCard}
                         />
                     </Elements>
                 </StripeProvider>

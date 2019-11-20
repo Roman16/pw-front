@@ -240,6 +240,9 @@ class UpdateCard extends Component {
         }
     };
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log(this.props);
+    }
 
     render() {
         const {onClose} = this.props,
