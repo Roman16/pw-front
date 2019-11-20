@@ -4,6 +4,8 @@ import {Input, Switch, Icon} from 'antd';
 import {userActions} from "../../../actions/user.actions";
 import ItemIcon from '../../../components/ItemIcon/ItemIcon';
 
+const domainName = window.location.hostname === 'localhost' ? 'https://front1.profitwhales.com' : 'https://' + window.location.hostname;
+
 const Personal = () => {
     const dispatch = useDispatch();
     const [userInformation, changeUserInformation] = useState({});
@@ -32,7 +34,7 @@ const Personal = () => {
 
     const handleChangeImage = (e) => {
         let formData = new FormData();
-        formData.append('avatar', e.target.files[0]);
+        formData.append('avatar_file', e.target.files[0]);
         dispatch(userActions.changeUserAvatar(formData));
     };
 
@@ -44,7 +46,7 @@ const Personal = () => {
         <div className="personal-box">
             <div className="avatar-box">
                 {userInformation.avatar ? (
-                    <img className="avatar" src={userInformation.avatar} alt="avatar"/>
+                    <img className="avatar" src={domainName + userInformation.avatar} alt="avatar"/>
                 ) : (
                     <ItemIcon icon="account"/>
                 )}
@@ -116,7 +118,7 @@ const Personal = () => {
                             value={userInformation.email}
                             placeholder="Type email address"
                             onChange={handleChangeInput}
-                            required
+                            disabled
                         />
                     </div>
 

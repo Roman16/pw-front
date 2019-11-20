@@ -1,25 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link
+<head>
+    <meta charset="utf-8"/>
+    <link
             rel="icon"
             href="./assets/icons/favicon.ico?"
             type="image/x-icon"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#000000"/>
+    <meta
             name="description"
             content="Be the Whale among sharks"
-        />
-        <script src="https://www.google.com/recaptcha/api.js?render=6LdVacEUAAAAACxfVkvIWG3r9MXE8PYKXJ5aaqY1"></script>
-        <script src="https://js.stripe.com/v3/"></script>
+    />
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdVacEUAAAAACxfVkvIWG3r9MXE8PYKXJ5aaqY1"></script>
+    <script src="https://js.stripe.com/v3/"></script>
 
-        <title>Profit Whales</title>
-    </head>
-    <body>
-        <div id="root"></div>
+    <title>Profit Whales</title>
+</head>
+<body>
+<div id="root"></div>
 
-    </body>
+<script>
+    (function (d, a) {
+        function c() {
+            var b = d.createElement("script");
+            b.async = !0;
+            b.type = "text/javascript";
+            b.src = a._settings.messengerUrl;
+            b.crossOrigin = "anonymous";
+            var c = d.getElementsByTagName("script")[0];
+            c.parentNode.insertBefore(b, c)
+        }
+
+        window.kayako = a;
+        a.readyQueue = [];
+        a.newEmbedCode = !0;
+        a.ready = function (b) {
+            a.readyQueue.push(b)
+        };
+        a._settings = {
+            apiUrl: "https://profit-whales.kayako.com/api/v1",
+            messengerUrl: "https://profit-whales.kayakocdn.com/messenger",
+            realtimeUrl: "wss://kre.kayako.net/socket"
+        };
+        window.attachEvent ? window.attachEvent("onload", c) : window.addEventListener("load", c, !1)
+    })(document, window.kayako || {});
+</script>
+</body>
 </html>

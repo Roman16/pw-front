@@ -4,9 +4,11 @@ export const userUrls = {
     regist: 'user/register',
     mws: 'user/account/auth/mws/tokens',
     allInfo: 'user/status',
-    updatePhoto: 'user/change-avatar',
-    changePassword: 'user/change-password',
-    companyInformation: 'user/company'
+    updateUserInfo: 'user/account/personal/information',
+    updatePhoto: 'user/account/personal/change-avatar',
+    changePassword: 'user/account/personal/change-password',
+    companyInformation: 'user/company',
+    paymentMethod: 'user/payment',
 };
 
 export const productsUrls = {

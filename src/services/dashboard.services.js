@@ -10,7 +10,6 @@ export const dashboardServices = {
 };
 
 function fetchMetricsStatistics({startDate, endDate, selectedProduct}) {
-    console.log(startDate);
     const parameters = [
         startDate ? `?start_date=${startDate}` : '',
         endDate ? `&end_date=${endDate}` : '',
@@ -37,13 +36,13 @@ function fetchProducts({page, size = 10, searchText, onlyOptimization, startDate
         startDate ? `&start_date=${startDate}` : '',
         endDate ? `&end_date=${endDate}` : '',
     ];
-    return api('get', `${dashboardUrls.products}?product_id=all&size=${size}&page=${page}&only_under_optimization=${onlyOptimization ? 1 : 0}&search_query=${searchText}${parameters.join('')}`)
+    return api('get', `${dashboardUrls.products}?size=${size}&page=${page}&only_under_optimization=${onlyOptimization ? 1 : 0}&search_query=${searchText}${parameters.join('')}`)
 }
 
 function fetchBarChartData({startDate, endDate, selectedProduct}) {
     const parameters = [
-        startDate ? `?start_date=${startDate}` : '',
-        endDate ? `&end_date=${endDate}` : '',
+        endDate ? `?end_date=${endDate}` : '',
+        startDate ? `&start_date=${startDate}` : '',
         selectedProduct ? `&product_id=${selectedProduct}` : '&product_id=all'
     ];
     return api('get', `${dashboardUrls.barChartData}${parameters.join('')}`)
@@ -53,7 +52,7 @@ function fetchPieChartData({startDate, endDate, selectedProduct}) {
     const parameters = [
         startDate ? `?start_date=${startDate}` : '',
         endDate ? `&end_date=${endDate}` : '',
-        selectedProduct ? `&product_id=${selectedProduct}` : ''
+        selectedProduct ? `&product_id=${selectedProduct}` : '&product_id=all'
     ];
     return api('get', `${dashboardUrls.pieChartData}${parameters.join('')}`)
 }

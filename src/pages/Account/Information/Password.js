@@ -4,6 +4,7 @@ import {userService} from "../../../services/user.services";
 import lock from '../../../assets/img/lock.svg';
 import OpenedEye from '../../../assets/img/opened-eye.svg';
 import ClosedEye from '../../../assets/img/closed-eye.svg';
+import {notification} from "../../../components/Notification";
 
 const CustomInputSuffix = ({type, name, onChangeType}) => {
     return (
@@ -16,14 +17,14 @@ const CustomInputSuffix = ({type, name, onChangeType}) => {
 const defaultInputsValue = {
     current_password: '',
     new_password: '',
-    confirm_password: '',
+    password_confirmation: '',
 };
 
 const Password = () => {
     const [inputsType, changeInputsType] = useState({
             current_password: 'password',
             new_password: 'password',
-            confirm_password: 'password',
+            password_confirmation: 'password',
         }),
         [inputsValue, changeInputsValue] = useState(defaultInputsValue);
 
@@ -44,7 +45,8 @@ const Password = () => {
     function handleSave() {
         userService.changePassword(inputsValue)
             .then(() => {
-                changeInputsValue(defaultInputsValue)
+                changeInputsValue(defaultInputsValue);
+                notification.success({title: 'Completed'})
             })
     }
 
@@ -104,16 +106,16 @@ const Password = () => {
                         <div className="input-wrap">
                             <Input
                                 className="form-control"
-                                type={inputsType.confirm_password}
-                                name="confirm_password"
+                                type={inputsType.password_confirmation}
+                                name="password_confirmation"
                                 placeholder="Type new password"
-                                value={inputsValue.confirm_password}
+                                value={inputsValue.password_confirmation}
                                 onChange={handleChangeInput}
                                 suffix={
                                     <CustomInputSuffix
-                                        name={'confirm_password'}
+                                        name={'password_confirmation'}
                                         onChangeType={changePasswordInputType}
-                                        type={inputsType.confirm_password}
+                                        type={inputsType.password_confirmation}
                                     />}
                             />
 
@@ -123,7 +125,7 @@ const Password = () => {
                     <button
                         className="btn-change"
                         type="button"
-                        disabled={inputsValue.current_password ? (inputsValue.new_password ? inputsValue.new_password !== inputsValue.confirm_password : true) : true}
+                        disabled={inputsValue.current_password ? (inputsValue.new_password.length >= 6 ? (inputsValue.new_password !== inputsValue.password_confirmation) : true) : true}
                         onClick={handleSave}
                     >
                         Change

@@ -242,10 +242,10 @@ class ReportTable extends Component {
             {
                 startDate: startDate
                     ? moment(startDate, 'DD-MM-YYYY').format('YYYY-MM-DD')
-                    : moment(new Date()).format('YYYY-MM-DD'),
+                    : null,
                 endDate: endDate
                     ? moment(endDate, 'DD-MM-YYYY').format('YYYY-MM-DD')
-                    : moment(new Date()).format('YYYY-MM-DD')
+                    : null
             },
             this.fetchReports
         );

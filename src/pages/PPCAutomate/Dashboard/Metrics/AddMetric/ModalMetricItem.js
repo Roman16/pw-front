@@ -1,15 +1,20 @@
 import React from "react";
-import {Icon, Tooltip} from "antd";
+import Tooltip from '../../../../../components/Tooltip/Tooltip';
+import {ProfitTooltipDescription} from "../../ProductBreakdown/ProductsList";
 import plusIcon from "../../../../../assets/img/icons/plus-green.svg";
 import minusIcon from "../../../../../assets/img/icons/minus.svg";
+import {round} from "../../../../../utils/round";
 
-const ModalMetricItem = ({item: {title, info, metric_value, type}, item, listType, removeMetric, addMetric}) => (
+const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, item, listType, removeMetric, addMetric}) => (
     <div className='metric-item' onClick={() => listType === 'visible' ? removeMetric(item) : addMetric(item)}>
         <div className="title-info">
             {title}
-            <Tooltip title={info || title}>
-                <Icon type="info-circle" theme="filled"/>
-            </Tooltip>
+
+            {key === 'profit' ?
+                <Tooltip type='warning' description={<ProfitTooltipDescription />}/>
+                :
+                <Tooltip description={title}/>
+            }
 
             {listType === 'hidden' && <div className="add-item">
                 <img src={plusIcon} alt=""/>
@@ -22,9 +27,9 @@ const ModalMetricItem = ({item: {title, info, metric_value, type}, item, listTyp
 
         <div className='metric-item__description'>
             <div className="value">
-                {metric_value != null ? type === 'currency' ? `$${metric_value}` : (type === 'percent' ? `${metric_value}%` : metric_value) : 'N/A'}
+                {metric_value != null ? type === 'currency' ? `$${round(+metric_value, 2)}` : (type === 'percent' ? `${round(+metric_value, 2)}%` : round(+metric_value, 2)) : 'N/A'}
             </div>
-            <div className='label'>Total</div>
+            <div className='label'>{label}</div>
         </div>
     </div>
 );

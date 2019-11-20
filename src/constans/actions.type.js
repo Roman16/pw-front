@@ -3,7 +3,8 @@
 //--------------------------------------------
 export const userConstants = {
     SET_INFORMATION: 'SET_INFORMATION',
-    USER_LOGOUT: 'USER_LOGOUT'
+    USER_LOGOUT: 'USER_LOGOUT',
+    UPDATE_USER:'UPDATE_USER',
 };
 
 //--------------------------------------------
@@ -38,4 +39,5 @@ export const dashboardConstants = {
     SELECTED_RANGE_DATE: 'SELECTED_RANGE_DATE',
     SET_METRICS_STATISTIC: 'SET_METRICS_STATISTIC',
     SELECT_PRODUCT: 'SELECT_PRODUCT_ON_DASHBOARD',
+    RE_SET: 'RE_SET',
 };

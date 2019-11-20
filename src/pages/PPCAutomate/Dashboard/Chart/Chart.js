@@ -9,6 +9,7 @@ import Tooltip from "../../../../components/Tooltip/Tooltip";
 import {dashboardServices} from '../../../../services/dashboard.services'
 import './Chart.less';
 import {useSelector} from "react-redux";
+import moment from "moment";
 
 const pieDefaultData = [
     {name: 'organic', value: 400},
@@ -56,8 +57,8 @@ const Chart = () => {
         selectedProduct: state.dashboard.selectedProduct,
     }));
 
-    const startDate = selectedRangeDate.startDate,
-        endDate = selectedRangeDate.endDate;
+    const startDate = selectedRangeDate ? selectedRangeDate.startDate : moment(new Date).format(),
+        endDate = selectedRangeDate ? selectedRangeDate.endDate : moment(new Date).format();
 
 
     const getPieChartData = () => {
@@ -68,7 +69,7 @@ const Chart = () => {
     };
 
     const getBarChartData = () => {
-        dashboardServices.fetchBarChartData({startDate, endDate, selectedProduct})
+        dashboardServices.fetchBarChartData({endDate, selectedProduct})
             .then(res => {
                 updateBarChart(res);
             })
@@ -77,10 +78,7 @@ const Chart = () => {
     useEffect(() => {
         getPieChartData();
         getBarChartData();
-    }, [selectedProduct]);
-    useEffect(() => {
-        getPieChartData();
-    }, [selectedRangeDate]);
+    }, [selectedProduct, selectedRangeDate]);
 
     return (
         <div className='chart'>
@@ -114,6 +112,7 @@ const Chart = () => {
 
                 <SecondBarChart
                     data={barChartData}
+                    selectedRangeDate={selectedRangeDate}
                 />
             </Fragment>}
 

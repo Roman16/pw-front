@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-    PieChart, Pie, Label, Cell, Text, ResponsiveContainer
+    PieChart, Pie, Label, Cell, Text, ResponsiveContainer, Line
 } from 'recharts';
+import {round} from "../../../../utils/round";
 
 
 const COLORS = ['#5052AD', '#6D6DF6'];
@@ -21,10 +22,11 @@ const FirstPieChart = ({data}) => {
                         innerRadius={75}
                         outerRadius={100}
                         paddingAngle={0}
-                        dataKey="value"
+                        dataKey="metric_value"
                         blendStroke={true}
                         animationBegin={100}
                         animationDuration={500}
+                        // isAnimationActive={false}
                     >
                         {
                             data.map((entry, index) => <Cell key={`cell-${index}`}
@@ -47,7 +49,7 @@ const FirstPieChart = ({data}) => {
 
                                 return (
                                     <Text {...positioningProps}
-                                          style={stylingProps}>{(organicValue / ppcValue).toFixed(2)}</Text>
+                                          style={stylingProps}>{round((organicValue / ppcValue), 2)}</Text>
                                 )
                             }}
                         />
@@ -60,7 +62,7 @@ const FirstPieChart = ({data}) => {
                     <div className='example-fill' style={{background: COLORS[0]}}></div>
                     Organic Sales
                     <div className='value'>
-                        {organicValue != null ? `$ ${organicValue}` : 'N/A'}
+                        {organicValue != null ? `$ ${round(+organicValue, 2)}` : 'N/A'}
                     </div>
                 </div>
 
@@ -68,7 +70,7 @@ const FirstPieChart = ({data}) => {
                     <div className='example-fill' style={{background: COLORS[1]}}></div>
                     PPC Sales
                     <div className='value'>
-                        {ppcValue != null ? `$ ${ppcValue}` : 'N/A'}
+                        {ppcValue != null ? `$ ${round(+ppcValue, 2)}` : 'N/A'}
                     </div>
                 </div>
             </div>

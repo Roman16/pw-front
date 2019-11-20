@@ -9,7 +9,8 @@ export const dashboardActions = {
     deactivateMetric,
     selectDateRange,
     getMetricsStatistics,
-    selectProduct
+    selectProduct,
+    reSetDashboard
 };
 
 function getMetricsStatistics(parameters) {
@@ -85,6 +86,14 @@ function selectProduct(id) {
         dispatch({
             type: dashboardConstants.SELECT_PRODUCT,
             payload: id
+        });
+    };
+}
+
+function reSetDashboard() {
+    return dispatch => {
+        dispatch({
+            type: dashboardConstants.RE_SET,
         });
     };
 }

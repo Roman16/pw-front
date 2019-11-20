@@ -7,8 +7,6 @@ import {dashboardServices} from "../../../../services/dashboard.services";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 
-let flag = 0;
-
 const data = [
     {
         date: '2019-03-04T17:24:58.828Z',
@@ -155,7 +153,6 @@ const data2 = [
     },
 ];
 
-
 const MainChart = () => {
     const [chartData, updateChartData] = useState([]);
 
@@ -170,31 +167,42 @@ const MainChart = () => {
     }));
 
     const timeRange = (start, end) => {
-        dispatch(dashboardActions.selectDateRange({
-                startDate: moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
-                endDate: moment(end, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
-            }
-        ))
+        if(start) {
+            dispatch(dashboardActions.selectDateRange({
+                    startDate: moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
+                    endDate: end ? moment(end, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]') : moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+                }
+            ))
+        } else {
+            dispatch(dashboardActions.selectDateRange({
+                    startDate: 'lifetime',
+                    endDate: 'lifetime'
+                }
+            ))
+        }
     };
 
     const handleChangeSwitch = (type) => () => dispatch(dashboardActions.switchChart(type));
 
     const getChartData = () => {
-        dashboardServices.fetchLineChartData({
-            startDate: selectedRangeDate.startDate,
-            endDate: selectedRangeDate.endDate,
-            firstMetric: activeMetrics[0] ? activeMetrics[0].key : null,
-            secondMetric: activeMetrics[1] ? activeMetrics[1].key : null,
-            productId: selectedProduct
-        })
-            .then(res => {
-                updateChartData(res);
-                // updateChartData((flag & 1) ? data : data2);
-                // flag++;
+        if (activeMetrics[0].key || activeMetrics[1].key) {
+            dashboardServices.fetchLineChartData({
+                startDate: selectedRangeDate.startDate,
+                endDate: selectedRangeDate.endDate,
+                firstMetric: activeMetrics[0] ? activeMetrics[0].key : null,
+                secondMetric: activeMetrics[1] ? activeMetrics[1].key : null,
+                productId: selectedProduct
             })
+                .then(res => {
+                    updateChartData(res);
+                })
+        } else {
+            updateChartData([])
+        }
     };
 
     useEffect(getChartData, [activeMetrics, selectedRangeDate, selectedProduct]);
+
 
     return (
         <div className='main-chart'>
@@ -213,6 +221,7 @@ const MainChart = () => {
                 showDailyChart={showDailyChart}
                 activeMetrics={activeMetrics}
                 data={chartData}
+                selectedRangeDate={selectedRangeDate}
             />
         </div>
     )

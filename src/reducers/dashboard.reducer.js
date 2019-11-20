@@ -6,10 +6,10 @@ let metricClickCount = 0;
 
 const initialState = {
     showWeekChart: true,
-    showDailyChart: false,
+    showDailyChart: true,
     selectedProduct: '',
     selectedRangeDate: {
-        startDate: moment(new Date()).subtract(1, 'months').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
+        startDate: moment(new Date()).subtract(30, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
         endDate: moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
     },
     allMetrics: metricsListArray,
@@ -75,14 +75,33 @@ export function dashboard(state = initialState, action) {
             };
 
         case dashboardConstants.ACTIVATE_METRIC:
-            metricClickCount++;
             let newActiveMetrics = [...state.activeMetrics];
-            newActiveMetrics[(metricClickCount & 1) ? 0 : 1] = action.payload;
+            if (!newActiveMetrics[0].key) {
+                metricClickCount = 1;
 
-            return {
-                ...state,
-                activeMetrics: newActiveMetrics
-            };
+                newActiveMetrics[0] = action.payload;
+                return {
+                    ...state,
+                    activeMetrics: newActiveMetrics
+                };
+            } else if (!newActiveMetrics[1].key) {
+                metricClickCount = 0;
+
+                newActiveMetrics[1] = action.payload;
+                return {
+                    ...state,
+                    activeMetrics: newActiveMetrics
+                };
+            } else {
+                metricClickCount++;
+
+                newActiveMetrics[(metricClickCount & 1) ? 0 : 1] = action.payload;
+                return {
+                    ...state,
+                    activeMetrics: newActiveMetrics
+                };
+            }
+
 
         case dashboardConstants.DEACTIVATE_METRIC:
             let countActiveMetrics = state.activeMetrics.map(item => item.key).filter(str => str);
@@ -91,6 +110,11 @@ export function dashboard(state = initialState, action) {
             return {
                 ...state,
                 activeMetrics: state.activeMetrics.map(item => item.key === action.payload.key ? {} : item)
+            };
+
+        case dashboardConstants.RE_SET:
+            return {
+                ...initialState
             };
 
 

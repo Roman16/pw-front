@@ -4,13 +4,13 @@ import violetLineIcon from "../../../../assets/img/icons/violet-line.svg";
 import greenDailyIcon from "../../../../assets/img/icons/green-daily.svg";
 import violetDailyIcon from "../../../../assets/img/icons/violet-daily.svg";
 import moment from "moment";
-
+import {round} from "../../../../utils/round";
 
 
 const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payload}) => {
     const getChartValue = (key) => {
         if(payload.find(item => item.dataKey === key)) {
-            return payload.find(item => item.dataKey === key).value
+            return round(payload.find(item => item.dataKey === key).value, 2)
         } else {
             return '0'
         }
@@ -36,12 +36,12 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
 
                     {activeMetrics[0].key && <div className="week-value">
                         <img src={greenLineIcon} alt=""/>
-                        {getChartValue('week_first_metric')}
+                        {getChartValue('seven_days_first_metric_value')}
                     </div>}
 
                     {activeMetrics[1].key && <div className="week-value">
                         <img src={violetLineIcon} alt=""/>
-                        {getChartValue('week_second_metric')}
+                        {getChartValue('seven_days_second_metric_value')}
                     </div>}
                 </div>}
 
@@ -50,12 +50,12 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
 
                     {activeMetrics[0].key && <div className="daily-value">
                         <img src={greenDailyIcon} alt=""/>
-                        {getChartValue('daily_first_metric')}
+                        {getChartValue('daily_first_metric_value')}
                     </div>}
 
                     {activeMetrics[1].key && <div className="daily-value">
                         <img src={violetDailyIcon} alt=""/>
-                        {getChartValue('daily_second_metric')}
+                        {getChartValue('daily_second_metric_value')}
                     </div>}
                 </div>}
             </div>

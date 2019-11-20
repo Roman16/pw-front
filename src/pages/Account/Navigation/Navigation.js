@@ -1,15 +1,8 @@
-import React, {useEffect} from "react";
-import {useDispatch} from 'react-redux';
+import React from "react";
 import {NavLink} from "react-router-dom";
-import {userActions} from "../../../actions/user.actions";
 import "./Navigation.less";
 
 const Navigation = () => {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(userActions.getAuthorizedUserInfo());
-    }, []);
     return (
         <>
             <ul className="cabinet-nav">

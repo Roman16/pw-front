@@ -2,6 +2,7 @@ import {userConstants} from '../constans/actions.type';
 import {history} from '../utils/history';
 
 import {userService} from '../services/user.services';
+import {notification} from "../components/Notification";
 
 export const userActions = {
     login,
@@ -13,7 +14,8 @@ export const userActions = {
     setInformation,
     getAuthorizedUserInfo,
     updateUserInformation,
-    changeUserAvatar
+    changeUserAvatar,
+    reSetState
 };
 
 function login(user) {
@@ -51,6 +53,14 @@ function logOut() {
         });
 
         localStorage.clear();
+    };
+}
+
+function reSetState() {
+    return dispatch => {
+        dispatch({
+            type: userConstants.USER_LOGOUT
+        });
     };
 }
 
@@ -120,16 +130,21 @@ function setInformation(user) {
 }
 
 function updateUserInformation(user) {
-      return dispatch => {
+    return dispatch => {
         userService.updateInformation(user)
             .then(res => {
-                dispatch(setInformation(res));
+                dispatch({
+                    type: userConstants.UPDATE_USER,
+                    payload: user
+                });
+
+                notification.success({title: 'Completed'})
             });
     };
 }
 
 function changeUserAvatar(formData) {
-      return dispatch => {
+    return dispatch => {
         userService.updatePhoto(formData)
             .then(res => {
                 dispatch(setInformation(res));

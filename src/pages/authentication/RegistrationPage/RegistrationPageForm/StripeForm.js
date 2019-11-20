@@ -28,8 +28,6 @@ class StripeForm extends Component {
 
     submit = async (e) => {
         e.preventDefault();
-
-
     };
 
 
