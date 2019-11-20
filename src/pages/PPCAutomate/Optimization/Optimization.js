@@ -158,10 +158,7 @@ class Optimization extends Component {
 
             <OptimizationStatus product={selectedProduct} />
 
-            <LastReports
-              isLess={isLess}
-              productId={selectedAll ? 'all' : selectedProduct.id}
-            />
+            <LastReports productId={selectedAll ? 'all' : selectedProduct.id} />
           </div>
         </div>
 
