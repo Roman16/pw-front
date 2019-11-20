@@ -9,7 +9,7 @@ const CustomBar = (props) => {
         fill, x, y, width, height,
     } = props;
 
-    if (height !== 0 && height !== NaN) {
+    if (height && height !== 0) {
         return (
             <path
                 d={`M${x},${y + 5} q0,-5 5,-5 h${width - 10} q5,0 5,5 v${height - 5} h-${width} z`}
