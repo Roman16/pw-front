@@ -31,7 +31,7 @@ const UserCard = ({card}) => {
             </div>
 
             <div className="card-number">
-                **** **** **** {card.number}
+                **** **** **** {card ? card.number : ''}
             </div>
 
             <div className="card-footer">
@@ -80,7 +80,7 @@ const AccountBilling = ({onOpenWindow, billingInformation}) => {
                 </span>
             </div>
 
-            {selectedCard && <div className='user-cards'>
+            <div className='user-cards'>
                 <div className='cards-carousel'>
                     <div className='carousel-body'>
                         <UserCard
@@ -107,7 +107,7 @@ const AccountBilling = ({onOpenWindow, billingInformation}) => {
                     <span className='country'>UA</span>
                 </div>
             </div>
-            }
+
             <button className='btn green-btn' onClick={() => onOpenWindow('updateCard')}>
                 {/*Update payment method*/}
                 Add card
