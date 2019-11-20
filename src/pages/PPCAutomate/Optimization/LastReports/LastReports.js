@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { throttle } from 'throttle-debounce';
+// import { throttle } from 'throttle-debounce';
 import { Icon, Tooltip, Pagination } from 'antd';
 
 import { reportsServices } from '../../../../services/reports.services';
@@ -62,8 +62,8 @@ class LastReports extends Component {
   state = {
     current: 1,
     reports: [],
-    records: [],
-    heightTerminal: 0
+    records: []
+    // heightTerminal: 0
   };
 
   componentDidMount() {
@@ -73,20 +73,20 @@ class LastReports extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.props.productId !== prevProps.productId) this.getReports();
 
-    const fu = () => {
-      const heightTerminal = this.refs.refTerminal.clientHeight;
-      if (prevState.heightTerminal !== heightTerminal) {
-        this.setState({ heightTerminal });
-      }
-    };
-    // setTimeout(fu, 4);
-    throttle(500, () => {
-      const heightTerminal = this.refs.refTerminal.clientHeight;
-      if (prevState.heightTerminal !== heightTerminal) {
-        this.setState({ heightTerminal });
-      }
-    });
-    // console.log('this.state.heightTerminal', this.state.heightTerminal);
+    // const fu = () => {
+    //   const heightTerminal = this.refs.refTerminal.clientHeight;
+    //   if (prevState.heightTerminal !== heightTerminal) {
+    //     this.setState({ heightTerminal });
+    //   }
+    // };
+    // // setTimeout(fu, 4);
+    // throttle(500, () => {
+    //   const heightTerminal = this.refs.refTerminal.clientHeight;
+    //   if (prevState.heightTerminal !== heightTerminal) {
+    //     this.setState({ heightTerminal });
+    //   }
+    // });
+    // // console.log('this.state.heightTerminal', this.state.heightTerminal);
   }
 
   onChange = page => {
@@ -142,11 +142,14 @@ class LastReports extends Component {
     const isTerminal = records && records.length > 0;
 
     // let heightList = heightTerminal / 14 - 32 / 14 - 1.07143;
-    let heightList = heightTerminal - 30 - 42 - 32 - 15;
-    console.log('heightTerminal', heightList);
+    // let heightList = heightTerminal - 30 - 42 - 32 - 15;
+    // console.log('heightTerminal', heightList);
 
     return (
-      <div className="terminal" ref="refTerminal">
+      <div
+        className="terminal"
+        //  ref="refTerminal"
+      >
         <TerminalCaption isTerminal={isTerminal} refCaption="refCaption" />
 
         <ul
@@ -154,7 +157,7 @@ class LastReports extends Component {
           className={`terminal-content ${isLess ? 'more' : 'less'} ${
             isTerminal ? 'auto' : 'hidden'
           }`}
-          style={{ height: `${heightList}px` }}
+          // style={{ height: `${heightList}px` }}
         >
           {isTerminal ? (
             <Fragment>

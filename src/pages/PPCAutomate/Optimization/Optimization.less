@@ -10,9 +10,11 @@
 
   .product-options {
     flex: 1;
-    display: grid;
-    grid-template-rows: max-content min-content 1fr;
-    row-gap: 1.64286em;
+    // display: grid;
+    // grid-template-rows: max-content min-content 1fr;
+    // row-gap: 1.64286em;
+    display: flex;
+    flex-flow: column;
     overflow: auto;
 
     & > div {
@@ -26,6 +28,7 @@
     }
 
     .options {
+      // min-height: 50px;
       display: grid;
       grid-template-columns: 28.57143em minmax(min-content, 100%);
       grid-template-rows: repeat(3, minmax(min-content, max-content));
@@ -73,7 +76,7 @@
 
         @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
           only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-          only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+          only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
           only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
           .product-info-strategy {
             flex-direction: column-reverse;
@@ -115,7 +118,7 @@
 
           @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
             only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-            only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+            only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
             only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
             top: 4em;
           }
@@ -156,7 +159,7 @@
 
         @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
           only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-          only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+          only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
           only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
           grid-template-areas: 'options strategy' 'descriptions strategy';
         }
@@ -189,7 +192,7 @@
 
           @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
             only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-            only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+            only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
             only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
             max-height: 43.92857em;
           }
