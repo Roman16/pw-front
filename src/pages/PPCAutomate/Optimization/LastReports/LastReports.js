@@ -142,7 +142,6 @@ class LastReports extends Component {
 
     // let heightList = heightTerminal / 14 - 32 / 14 - 1.07143;
     let heightList = heightTerminal - 30 - 42 - 32 - 15;
-    console.log('heightTerminal', heightList);
 
     return (
       <div className="terminal" ref="refTerminal">
