@@ -13,7 +13,10 @@ import soon from '../../assets/img/icons/soon.svg';
 // import showMenu from '../../assets/img/icons/show-menu-arrow.svg';  // стрелка из фигмы в разделе сайдбар > страна
 import './Sidebar.less';
 
-const domainName = window.location.hostname === 'localhost' ? 'https://front1.profitwhales.com' : 'https://' + window.location.hostname;
+const domainName =
+  window.location.hostname === 'localhost'
+    ? 'https://front1.profitwhales.com'
+    : 'https://' + window.location.hostname;
 
 const production = process.env.REACT_APP_ENV === 'production';
 
@@ -87,9 +90,10 @@ const Sidebar = () => {
               />
               <h5>{activeCountry.name}</h5>
             </div>
-<<<<<<< HEAD
             <div className="country-active__description">
-              {user.default_accounts.amazon_mws.seller_id}
+              {user.default_accounts
+                ? user.default_accounts.amazon_mws.seller_id
+                : ''}
             </div>
           </div>
 
@@ -178,167 +182,6 @@ const Sidebar = () => {
                           >
                             {item.title}
                           </NavLink>
-=======
-
-            <div className="sidebar-menu">
-                <div className="country-nav">
-                    <div className="country-active">
-                        <div className="country-active__title">
-                            <img
-                                src={`/assets/img/${activeCountry.flag}`}
-                                alt="active-country-flag"
-                            />
-                            <h5>{activeCountry.name}</h5>
-                        </div>
-                        <div className="country-active__description">
-                            {user.default_accounts ? user.default_accounts.amazon_mws.seller_id : ''}
-                        </div>
-                    </div>
-
-                    <nav className="top-nav">
-                        <ul className="top-nav-list">
-                            <li className="top-nav-item">
-                                <NavLink
-                                    className="top-nav-link"
-                                    activeClassName="top-nav-link-active"
-                                    exact
-                                    to="/"
-                                    disabled
-                                >
-                                    <ItemIcon icon="zeroToHero"/>
-                                    <span>Zero to Hero</span>
-                                    {/* <div className="soon">soon</div> */}
-                                </NavLink>
-                            </li>
-
-                            <li className="top-nav-item">
-                                <NavLink
-                                    className="top-nav-link"
-                                    activeClassName="top-nav-link-active"
-                                    exact
-                                    to="/"
-                                    disabled
-                                >
-                                    <ItemIcon icon="analytics"/>
-                                    <span>Analytics</span>
-                                    {/* <div className="soon">soon</div> */}
-                                </NavLink>
-                            </li>
-
-                            <li className="top-nav-item ppc-automate-link">
-                                <span
-                                    onClick={toggleAutomate}
-                                >
-                                <NavLink
-                                    className="top-nav-link"
-                                    activeClassName="top-nav-link-active"
-                                    to="/ppc"
-                                    replace
-                                >
-                                    <ItemIcon icon="ppcAutomate"/>
-                                    <span>PPC Automate</span>
-                                </NavLink>
-                                    </span>
-                                {/* <button type="button" onClick={toggleAutomate}>
-                  <img
-                    className={`show-menu ${automate && 'rotate'}`}
-                    src={showMenu}
-                    alt="show-menu"
-                  />
-                </button> */}
-
-                                {collapsed && (
-                                    <ul
-                                        className={`automate-list ${automate ? 'open' : 'closed'}`}
-                                    >
-                                        {ppcAutomateMenu.map(item => (
-                                            <li className="automate-item" key={shortid.generate()}>
-                                                <NavLink
-                                                    className="automate-link"
-                                                    activeClassName="automate-link-active"
-                                                    exact
-                                                    to={`/ppc${item.link}`}
-                                                >
-                                                    {item.title}
-                                                </NavLink>
-                                            </li>
-                                        ))}
-
-                                        <li className="automate-item">
-                                            <a
-                                                href='/ppc-scanner'
-                                                className="automate-link"
-                                            >
-                                                PPC Scanner
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                )}
-
-                                {!collapsed && (
-                                    <div className={`collapsed-automate`}>
-                                        <ul className="collapsed-automate-list">
-                                            {ppcAutomateMenu.map(item => (
-                                                <li className="automate-item" key={shortid.generate()}>
-                                                    <NavLink
-                                                        className="automate-link"
-                                                        activeClassName="automate-link-active"
-                                                        exact
-                                                        to={`/ppc${item.link}`}
-                                                    >
-                                                        {item.title}
-                                                    </NavLink>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <nav className="bottom-nav">
-                    <ul className="bottom-nav-list">
-                        <li className="bottom-nav-item">
-                            <NavLink
-                                className="automate-link"
-                                activeClassName="automate-link-active"
-                                exact
-                                to={production ? false : `/account-settings`}
-                            >
-                                {user.user.avatar ? (
-                                    <img
-                                        className="avatar"
-                                        src={domainName + user.user.avatar}
-                                        width="40"
-                                    />
-                                ) : (
-                                    <ItemIcon icon="account"/>
-                                )}
-
-                                <span>Account</span>
-                            </NavLink>
-                        </li>
-
-                        <li className="bottom-nav-item">
-                            <a
-                                href="https://profit-whales.kayako.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <ItemIcon icon="helpCenter"/>
-                                <span>Help Center</span>
-                            </a>
-                        </li>
-
-                        <li className="bottom-nav-item" onClick={handleLogout}>
-                            <button type="button">
-                                <ItemIcon icon={'logOut'}/>
-                                <span>Log Out</span>
-                            </button>
->>>>>>> origin/kostyanko
                         </li>
                       ))}
                     </ul>
