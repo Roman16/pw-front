@@ -15,7 +15,7 @@ import './Sidebar.less';
 
 const domainName = window.location.hostname === 'localhost' ? 'https://front1.profitwhales.com' : 'https://' + window.location.hostname;
 
-const production = process.env.REACT_APP_ENV === 'production';
+const production = process.env.REACT_APP_ENV !== 'production';
 
 function useWindowSize() {
     const [size, setSize] = useState([0, 0]);
@@ -192,24 +192,40 @@ const Sidebar = () => {
                 <nav className="bottom-nav">
                     <ul className="bottom-nav-list">
                         <li className="bottom-nav-item">
-                            <NavLink
-                                className="automate-link"
-                                activeClassName="automate-link-active"
-                                exact
-                                to={production ? false : `/account-settings`}
-                            >
-                                {user.user.avatar ? (
-                                    <img
-                                        className="avatar"
-                                        src={domainName + user.user.avatar}
-                                        width="40"
-                                    />
-                                ) : (
-                                    <ItemIcon icon="account"/>
-                                )}
+                            {production ? <a href="/account/settings">
+                                    {user.user.avatar ? (
+                                        <img
+                                            className="avatar"
+                                            src={domainName + user.user.avatar}
+                                            width="40"
+                                        />
+                                    ) : (
+                                        <ItemIcon icon="account"/>
+                                    )}
 
-                                <span>Account</span>
-                            </NavLink>
+                                    <span>Account</span>
+                                </a>
+                                :
+                                <NavLink
+                                    className="automate-link"
+                                    activeClassName="automate-link-active"
+                                    exact
+                                    to={`/account-settings`}
+                                >
+                                    {user.user.avatar ? (
+                                        <img
+                                            className="avatar"
+                                            src={domainName + user.user.avatar}
+                                            width="40"
+                                        />
+                                    ) : (
+                                        <ItemIcon icon="account"/>
+                                    )}
+
+                                    <span>Account</span>
+                                </NavLink>
+
+                            }
                         </li>
 
                         <li className="bottom-nav-item">
