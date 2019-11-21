@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import ProductItem from './ProductItem';
 import {connect} from 'react-redux';
 import {Input, Pagination, Switch} from 'antd';
@@ -66,7 +66,8 @@ class ProductList extends Component {
                 ...this.state,
                 paginationParams: {
                     ...this.state.paginationParams,
-                    searchStr: str
+                    searchStr: str,
+                    page: 1
                 }
             },
             this.getProducts
