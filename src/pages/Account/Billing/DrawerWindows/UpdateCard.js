@@ -7,8 +7,12 @@ import mastercardLogo from '../../../../assets/img/mastercard.svg';
 import discoverLogo from '../../../../assets/img/discover.svg';
 import americanExpressLogo from '../../../../assets/img/american-express.svg';
 import stripeLogo from '../../../../assets/img/stripe-logo.svg';
-import {Input} from "antd";
+import {Input, Select} from "antd";
 import {userService} from "../../../../services/user.services";
+import {allCountries} from "../../../../utils/countries";
+import {states} from "../../../../utils/states";
+
+const {Option} = Select;
 
 const CardNumberElementStyles = {
     base: {
@@ -18,7 +22,7 @@ const CardNumberElementStyles = {
 };
 
 const StripeForm = (props) => {
-    const {stripeElementChange, handleSubmit, onClose, handleChangeInput} = props;
+    const {stripeElementChange, handleSubmit, onClose, handleChangeInput, countriesList, onChangeSelect, paymentDetails} = props;
     return (
         <form onSubmit={handleSubmit}>
             <div className="card-container">
@@ -98,7 +102,7 @@ const StripeForm = (props) => {
                         <Input
                             className="form-control"
                             type="text"
-                            name="address_line1"
+                            name="line1"
                             placeholder="Address"
                             // value={userInformation.name}
                             onChange={handleChangeInput}
@@ -112,7 +116,7 @@ const StripeForm = (props) => {
                         <Input
                             className="form-control"
                             type="text"
-                            name="address_city"
+                            name="city"
                             placeholder="City"
                             // value={userInformation.name}
                             onChange={handleChangeInput}
@@ -124,7 +128,7 @@ const StripeForm = (props) => {
                         <Input
                             className="form-control"
                             type="text"
-                            name="address_zip"
+                            name="postal_code"
                             placeholder="Zip"
                             // value={userInformation.name}
                             onChange={handleChangeInput}
@@ -135,27 +139,22 @@ const StripeForm = (props) => {
                 <div className="row">
                     <div className="form-group">
                         <label>Country</label>
-                        <Input
-                            className="form-control"
-                            type="text"
-                            name="address_country"
-                            placeholder="Country"
-                            // value={userInformation.name}
-                            onChange={handleChangeInput}
-                        />
+                        <Select onChange={onChangeSelect('country')} placeholder='Country'>
+                            {countriesList.map(item => (
+                                <Option key={item.id}>{allCountries[item.id]}</Option>
+                            ))}
+                        </Select>
+
                     </div>
 
-                    <div className="form-group">
+                    {paymentDetails.country === 'US' && <div className="form-group">
                         <label>State</label>
-                        <Input
-                            className="form-control"
-                            type="text"
-                            name="address_state"
-                            placeholder="State"
-                            // value={userInformation.name}
-                            onChange={handleChangeInput}
-                        />
-                    </div>
+                        <Select onChange={onChangeSelect('state')} placeholder='State'>
+                            {states.map(item => (
+                                <Option key={item.abbreviation}>{item.name}</Option>
+                            ))}
+                        </Select>
+                    </div>}
                 </div>
             </div>
 
@@ -170,16 +169,17 @@ const StripeForm = (props) => {
 
 class UpdateCard extends Component {
     state = {
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        address_line1: '',
-        address_city: '',
-        address_state: '',
-        address_country: '',
-        address_zip: '',
+        countriesList: [],
 
+        paymentDetails: {
+            first_name: '',
+            last_name: '',
+            line1: '',
+            city: '',
+            state: '',
+            country: '',
+            postal_code: '',
+        },
         card_number: false,
         expiry: false,
         cvc: false,
@@ -195,58 +195,90 @@ class UpdateCard extends Component {
 
     handleChangeInput = ({target: {name, value}}) => {
         this.setState({
-            [name]: value
+            ...this.state,
+            paymentDetails: {
+                ...this.state.paymentDetails,
+                [name]: value
+            }
+        })
+    };
+
+    handleChangeSelect = (name) => (value) => {
+        this.setState({
+            ...this.state,
+            paymentDetails: {
+                ...this.state.paymentDetails,
+                [name]: value
+            }
         })
     };
 
     handleSubmit = async (e) => {
         e.preventDefault();
         const {
-            first_name,
-            last_name,
-            email,
-            password,
-            address_line1,
-            address_city,
-            address_state,
-            address_country,
-            address_zip,
-        } = this.state;
+                paymentDetails: {
+                    first_name,
+                    last_name,
+                    line1,
+                    city,
+                    state,
+                    country,
+                    postal_code,
+                },
+                paymentDetails
+            } = this.state,
+            {card, onSubmit} = this.props;
 
         try {
-            const res = await this.props.stripe.createToken({
-                name: `${first_name} ${last_name}`,
-                address_line1,
-                address_city,
-                address_state,
-                address_country,
-                address_zip
-            });
+            if (card) {
+                onSubmit({
+                    ...paymentDetails,
+                    stripe_token: card.token
+                })
+            } else {
+                const billing_details = {};
+                if (first_name || last_name) {
+                    billing_details.name = `${first_name && `${first_name} `}${last_name}`;
+                }
+                if (line1 || city || state || country || postal_code) {
+                    billing_details.address = {
+                        line1,
+                        city,
+                        state,
+                        country,
+                        postal_code
+                    }
+                }
 
-            this.props.onSubmit({
-                first_name,
-                last_name,
-                email,
-                password,
-                address_line1,
-                address_city,
-                address_state,
-                address_country,
-                address_zip,
-                stripe_token: res.token.id
-            })
+                billing_details.address && Object.keys( billing_details.address).forEach((key) => !billing_details.address[key] && delete billing_details.address[key]);
+
+                const res = await this.props.stripe.createPaymentMethod('card', {billing_details});
+                console.log(res);
+                onSubmit({
+                    ...paymentDetails,
+                    stripe_token: res.paymentMethod.id
+                })
+            }
         } catch (e) {
             console.log(e);
         }
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.props);
+        // console.log(this.props);
+    }
+
+
+    componentDidMount() {
+        userService.getStripeAvailableCountries(this.props.stripe.key)
+            .then(res => {
+                this.setState({countriesList: res.data.data})
+            });
     }
 
     render() {
         const {onClose} = this.props,
-            {card_number,expiry} = this.state;
+            {countriesList, paymentDetails} = this.state;
 
         return (
             <div className='drawer-window add-card-window update-card-info'>
@@ -263,6 +295,9 @@ class UpdateCard extends Component {
                     handleSubmit={this.handleSubmit}
                     handleChangeInput={this.handleChangeInput}
                     onClose={onClose}
+                    countriesList={countriesList}
+                    onChangeSelect={this.handleChangeSelect}
+                    paymentDetails={paymentDetails}
                 />
             </div>
         )

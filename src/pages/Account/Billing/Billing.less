@@ -10,12 +10,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     border-radius: 0.8em;
     background-color: @white;
     padding: 3em 8em 3em 6.4em;
     margin-bottom: 0.4em;
 
     .block-description {
+      width: 20%;
       font-family: er;
 
       h3 {
@@ -47,14 +49,19 @@
     border-radius: 0 0 0.8em 0.8em;
 
     .user-cards {
-      margin: 0 auto;
+      width: 55%;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
 
       .cards-carousel {
-        margin: 0 50px 0 0;
+        width: 45%;
+        min-width: 150px;
+        margin: 0 20px 0 0;
 
         .carousel-body {
+          max-width: 295px;
+          width: 100%;
+          min-width: 150px;
           display: flex;
           align-items: center;
           position: relative;
@@ -66,6 +73,7 @@
             right: 0;
             margin: 0 auto;
             width: 295px;
+            max-width: 100%;
             height: 180px;
             border-radius: 8px;
           }
@@ -73,19 +81,21 @@
           i {
             font-size: 1.3rem;
             cursor: pointer;
+            position: absolute;
 
             &:first-child {
-              margin: 0 20px 0 0;
+              left: -20px;
             }
 
             &:last-child {
-              margin: 0 0 0 20px;
+              right: -20px;
             }
           }
         }
 
         .card-block {
-          width: 295px;
+          max-width: 295px;
+          width: 100%;
           height: 180px;
           border-radius: 8px;
           background-image: url(../../../assets/img/card-background.svg);
@@ -176,13 +186,17 @@
               align-items: center;
               font-size: 0.7857142857142857rem;
               color: #FFFFFF;
+
+              div {
+                width: 40px;
+              }
             }
           }
         }
 
         .carousel-pagination {
           display: flex;
-          margin: 10px auto 0 40px;
+          margin: 10px auto;
 
           & > div {
             width: 8px;
@@ -196,6 +210,7 @@
       }
 
       .billing-address {
+        width: 45%;
         display: flex;
         flex-direction: column;
 
@@ -219,11 +234,12 @@
 
   .company-details-block {
     .company-information {
-      width: 50%;
+      width: 55%;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
 
       .column {
+        width: 45%;
         display: flex;
         flex-direction: column;
 
@@ -246,6 +262,8 @@
             letter-spacing: 0.4px;
             color: #656A84;
             font-family: er;
+            display: flex;
+            flex-wrap: wrap;
           }
         }
       }
@@ -258,13 +276,46 @@
     justify-content: center;
 
     .history-list {
+      width: 100%;
 
       h3 {
         font-family: er;
         font-size: 1.4285714285714286rem;
         letter-spacing: 0.4px;
         color: #38454F;
-        margin: 38px 0 0 0;
+        margin: 38px 0;
+      }
+
+      .custom-table {
+        .table-head {
+          border: 0;
+          padding: 0 0 10px 0;
+        }
+
+        .table-body {
+          .table-body__row {
+            border: 0;
+
+            .table-body__field {
+              font-size: 1rem;
+              padding: 5px 8px;
+
+              &:last-child {
+                justify-content: flex-start;
+              }
+
+              .card-number {
+                display: flex;
+                align-items: center;
+
+                img {
+                  width: 30px;
+                  margin: 0 5px 0 0;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

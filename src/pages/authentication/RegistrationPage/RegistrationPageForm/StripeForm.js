@@ -38,6 +38,7 @@ class StripeForm extends Component {
             });
     }
 
+
     render() {
         const {countriesList, address_country} = this.state,
             {stripeElementChange, onChangeInput, onChangeCountry, onChangeState} = this.props;

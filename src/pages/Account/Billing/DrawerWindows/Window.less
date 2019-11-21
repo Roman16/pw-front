@@ -46,9 +46,21 @@
         color: #38454F;
       }
 
-      input {
+      input,
+      .ant-select-selection--single {
         height: 40px;
+        border-radius: 8px;
       }
+
+      .ant-select-selection--single {
+        .ant-select-selection__rendered,
+        .ant-select-selection-selected-value {
+          height: 100%;
+          line-height: 40px;
+        }
+      }
+
+
     }
 
     .row {

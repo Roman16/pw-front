@@ -1,48 +1,47 @@
 import React from "react";
 import CustomTable from "../../../components/Table/CustomTable";
+import visaLogo from '../../../assets/img/visa-logo.svg';
+import masterLogo from '../../../assets/img/mastercard.svg';
+import moment from "moment";
 
-const BillingHistory = ({history}) => {
+const BillingHistory = ({historyList, handlePaginationChange, paginationParams}) => {
     const columns = [
         {
             title: 'Invoice Number',
-            dataIndex: 'id',
-            width: '300px',
+            dataIndex: 'invoice_number',
+            key: 'invoice_number',
+            render: (text) => (<a>{text}</a>)
         },
         {
             title: 'Card',
-            dataIndex: 'total_changes',
-            key: 'total_changes',
-            width: '50px',
+            dataIndex: 'card',
+            key: 'card',
+            render: (text, item) => (<span className='card-number'>
+                <img src={item.card_type === 'visa' ? visaLogo : masterLogo} alt=""/>
+                **** **** **** {item.card_number}
+            </span>)
         },
         {
             title: 'Date Issued',
-            dataIndex: 'budget_allocation',
-            key: 'budget_allocation',
-            width: 100,
+            dataIndex: 'date_issued',
+            key: 'date_issued',
+            render: (date) => (<span>{moment(date).format('MMM DD, YYYY')}</span>)
         },
         {
             title: 'Description',
-            dataIndex: 'sales_share',
-            key: 'sales_share',
-            width: 100,
-        },
-        {
-            title: 'CPA',
-            dataIndex: 'cpa',
-            key: 'cpa',
-            width: 100,
+            dataIndex: 'description',
+            key: 'description',
         },
         {
             title: 'Amount Due',
-            dataIndex: 'conversion_rate',
-            key: 'conversion_rate',
-            width: 100,
+            dataIndex: 'amount_due',
+            key: 'amount_due',
+            render: (text) => (<span>${text}</span>)
         },
         {
             title: 'Status',
-            dataIndex: 'acos',
-            key: 'acos',
-            width: 100,
+            dataIndex: 'status',
+            key: 'status',
         },
     ];
 
@@ -58,18 +57,17 @@ const BillingHistory = ({history}) => {
                 </span>
             </div>
 
-            {/*<div className='history-list'>*/}
-            {/*    <h3>Campaign Statistics</h3>*/}
+            {historyList && <div className='history-list'>
+                <h3>Campaign Statistics</h3>
 
-            {/*    <CustomTable*/}
-            {/*        // onChangePagination={handlePaginationChange}*/}
-            {/*        // loading={loading}*/}
-            {/*        // dataSource={data}*/}
-            {/*        columns={columns}*/}
-            {/*        // currentPage={currentPage}*/}
-            {/*        // totalSize={totalSize}*/}
-            {/*    />*/}
-            {/*</div>*/}
+                <CustomTable
+                    onChangePagination={handlePaginationChange}
+                    dataSource={historyList}
+                    columns={columns}
+                    currentPage={paginationParams.page}
+                    totalSize={paginationParams.totalSize}
+                />
+            </div>}
         </section>
     )
 };

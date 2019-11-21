@@ -15,7 +15,8 @@ export const userActions = {
     getAuthorizedUserInfo,
     updateUserInformation,
     changeUserAvatar,
-    reSetState
+    reSetState,
+    getPersonalUserInfo
 };
 
 function login(user) {
@@ -103,6 +104,15 @@ function getUserInfo() {
             } else {
                 history.push('/ppc/optimization');
             }
+        });
+    };
+}
+
+function getPersonalUserInfo() {
+    return dispatch => {
+        userService.getUserInfo()
+            .then(res => {
+            dispatch(setInformation(res));
         });
     };
 }

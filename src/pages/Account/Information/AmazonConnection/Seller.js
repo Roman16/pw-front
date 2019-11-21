@@ -1,14 +1,19 @@
 import React, {Fragment, useState} from 'react';
+import {useSelector} from "react-redux";
 
 import whales from '../../../../assets/img/whales.svg';
 import plus from '../../../../assets/img/icons/plus-white.svg';
 import Amazon from './Amazon';
 import Connectors from './Connectors';
-import Soon from './Soon';
-
 
 const Seller = () => {
-    const [openedConnectBlock, handleOpenBlock] = useState(false);
+    const [openedNewConnectorBlock, handleOpenBlock] = useState(false);
+
+    const {amazonAccounts, ppcConnected, mwsConnected} = useSelector(state => ({
+        amazonAccounts: [state.user.default_accounts],
+        ppcConnected: state.user.account_links && state.user.account_links.amazon_ppc.is_connected,
+        mwsConnected: state.user.account_links && state.user.account_links.amazon_mws.is_connected
+    }));
 
     return (
         <Fragment>
@@ -23,17 +28,23 @@ const Seller = () => {
                         aliquip ex ea commodo consequat.
                     </p>
                 </div>
+
+                {(!ppcConnected || !mwsConnected) &&
                 <button className="btn green-btn seller-btn" type="button" onClick={() => handleOpenBlock(true)}>
                     <img src={plus} alt="plus"/>
                     Add New Account
-                </button>
+                </button>}
             </div>
 
-            {openedConnectBlock && <Amazon/>}
+            {openedNewConnectorBlock && <Connectors/>}
 
-            <Connectors />
+            {(ppcConnected || mwsConnected) && amazonAccounts.map((item, index) => (
+                <Connectors
+                    key={`amazon_${index}`}
+                    amazonTokens={item}
+                />
+            ))}
 
-            {/*<Soon />*/}
         </Fragment>
     );
 };
