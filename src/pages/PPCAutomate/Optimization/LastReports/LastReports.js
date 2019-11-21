@@ -121,12 +121,6 @@ class LastReports extends Component {
     // const qwe = false;
     const isTerminal = records && records.length > 0;
 
-<<<<<<< .merge_file_4mCJUm
-=======
-    // let heightList = heightTerminal / 14 - 32 / 14 - 1.07143;
-    let heightList = heightTerminal - 30 - 42 - 32 - 15;
-
->>>>>>> .merge_file_14cVIn
     return (
       <div className="terminal">
         <TerminalCaption isTerminal={isTerminal} refCaption="refCaption" />
