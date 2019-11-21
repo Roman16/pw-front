@@ -269,7 +269,6 @@
   .seller-box {
     width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background-color: @white;
     border-radius: 0.8em;
@@ -302,6 +301,7 @@
       border-radius: 0.5em;
       background-color: @success-color;
       color: @white;
+      margin: 0 0 0 auto;
 
       img {
         position: absolute;
@@ -362,7 +362,7 @@
       }
 
       .btn-wrap {
-        width: 21%;
+        width: 15%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -374,19 +374,11 @@
           background-color: @body-background;
         }
 
-        .token-btn {
-          font-size: 0.8571rem; // 12px
-          width: 11.3334em;
-          height: 3.3334em;
-          border-radius: 0.6666em;
-          color: @white !important;
-          background-color: @btn-color;
-          font-weight: 600;
-        }
-
         .check-btn {
-          width: 2.4em;
-          height: 2.4em;
+          img {
+            width: 2.4em;
+            height: 2.4em;
+          }
         }
       }
     }
@@ -612,11 +604,32 @@
   .connectors-box {
     width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     background-color: @white;
     border-radius: 0.8em;
     padding: 3em 4em;
     margin-bottom: 0.4em;
+
+    .short-connect-information {
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      .opened-block {
+        transform: rotate(180deg);
+      }
+
+      .token-btn {
+        font-size: 0.8571rem; // 12px
+        width: 11.3334em;
+        height: 3.3334em;
+        border-radius: 0.6666em;
+        color: @white !important;
+        background-color: @btn-color;
+        font-weight: 600;
+      }
+    }
 
     .column {
       margin: 0 0 0 30px;
@@ -640,14 +653,8 @@
     .connectors-buttons {
       margin: 0 0 0 auto;
 
-      .btn-token {
-        font-size: 0.8571rem; // 12px
-        width: 11.3334em;
-        height: 3.3334em;
-        border-radius: 0.6666em;
-        color: @white !important;
-        background-color: @btn-color;
-        font-weight: 600;
+      button {
+       margin: 0 50px 0 0;
       }
     }
   }

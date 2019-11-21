@@ -3,7 +3,7 @@ import axios from 'axios';
 import {userUrls} from '../constans/api.urls';
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
-    ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
+    ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
     : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 export const userService = {
@@ -18,9 +18,12 @@ export const userService = {
     changePassword,
     updateCompanyInformation,
     updatePaymentMethod,
-    getPersonalInformation,
     fetchCompanyInformation,
-    fetchBillingInformation
+    fetchBillingInformation,
+    fetchBillingHistory,
+    addPaymentMethod,
+    setDefaultPaymentMethod,
+    deletePaymentMethod
 };
 
 function login(user) {
@@ -41,11 +44,6 @@ function getUserInfo() {
 
 function setMWS(data) {
     return api('post', userUrls.mws, data);
-}
-
-
-function getPersonalInformation() {
-    return api('get', userUrls.personalInformation);
 }
 
 function updateInformation({name, last_name, email, private_label_seller}) {
@@ -81,11 +79,24 @@ function updateCompanyInformation(company) {
 
 //-------------------------------------
 //-------------billing-----------------
-function updatePaymentMethod(data) {
-    return api('post', userUrls.paymentMethod, data);
-}
 function fetchBillingInformation() {
-    return api('get', userUrls.paymentMethod);
+    return api('get', userUrls.paymentMethodList);
+}
+function addPaymentMethod(data) {
+    return api('post', userUrls.addPaymentMethod, data);
+}
+function updatePaymentMethod(data) {
+    return api('post', userUrls.updatePaymentMethod(data.id), data);
+}
+function setDefaultPaymentMethod(id) {
+    return api('post', userUrls.setDefaultPaymentMethod(id));
+}
+function deletePaymentMethod(id) {
+    return api('post', userUrls.setDefaultPaymentMethod(id));
+}
+
+function fetchBillingHistory() {
+    return api('get', userUrls.billingHistory);
 }
 function getStripeAvailableCountries() {
     return axios.get(`https://api.stripe.com/v1/country_specs?limit=100`, {

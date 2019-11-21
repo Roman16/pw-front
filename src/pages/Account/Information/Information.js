@@ -13,7 +13,7 @@ const Information = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(userActions.getAuthorizedUserInfo());
+        dispatch(userActions.getPersonalUserInfo());
     }, []);
 
   return (
