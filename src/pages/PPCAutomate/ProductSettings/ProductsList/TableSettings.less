@@ -131,6 +131,7 @@
 
         .image {
           max-width: 5.1428571em;
+          max-height: 5.1428571em;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -224,10 +225,6 @@
         border-bottom: 1px solid #f5f6f7;
         padding-top: 0;
         padding-bottom: 0;
-
-        div {
-          font-size: 1rem; // 14px
-        }
       }
 
       &:last-child {
@@ -260,4 +257,8 @@
       }
     }
   }
+}
+
+tbody.ant-table-tbody > tr.ant-table-row > td > div {
+  font-size: 1rem; // 14px
 }
