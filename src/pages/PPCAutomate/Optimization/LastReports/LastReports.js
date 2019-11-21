@@ -16,8 +16,6 @@ const dummy = [
   { id: 8 },
   { id: 9 },
   { id: 10 }
-  // { id: 11 },
-  // { id: 12 }
 ];
 
 const textTooltip = () => (
@@ -30,7 +28,7 @@ const textTooltip = () => (
   </div>
 );
 
-const TerminalCaption = ({ isTerminal, refCaption }) => (
+const TerminalCaption = ({ isTerminal }) => (
   <div className="terminal-caption">
     <div className="caption">
       Last Changes Terminal
@@ -61,8 +59,7 @@ class LastReports extends Component {
   state = {
     current: 1,
     reports: [],
-    records: [],
-    heightTerminal: 0
+    records: []
   };
 
   componentDidMount() {
@@ -71,22 +68,7 @@ class LastReports extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.productId !== prevProps.productId) this.getReports();
-
-    const fu = () => {
-      const heightTerminal = this.refs.refTerminal.clientHeight;
-      if (prevState.heightTerminal !== heightTerminal) {
-        this.setState({ heightTerminal });
-      }
-    };
-    setTimeout(fu(), 3000);
   }
-
-  // fu = () => {
-  //   const heightTerminal = this.refs.refTerminal.clientHeight;
-  //   this.setState({ heightTerminal });
-  //   if (prevState.heightTerminal !== heightTerminal) {
-  //   }
-  // };
 
   onChange = page => {
     const { reports } = this.state;
@@ -135,24 +117,17 @@ class LastReports extends Component {
   };
 
   render() {
-    const { current, records, reports, heightTerminal } = this.state;
-    const { isLess } = this.props;
+    const { current, records, reports } = this.state;
     // const qwe = false;
     const isTerminal = records && records.length > 0;
 
-    // let heightList = heightTerminal / 14 - 32 / 14 - 1.07143;
-    let heightList = heightTerminal - 30 - 42 - 32 - 15;
-
     return (
-      <div className="terminal" ref="refTerminal">
+      <div className="terminal">
         <TerminalCaption isTerminal={isTerminal} refCaption="refCaption" />
 
         <ul
           key={'terminal-list'}
-          className={`terminal-content ${isLess ? 'more' : 'less'} ${
-            isTerminal ? 'auto' : 'hidden'
-          }`}
-          style={{ height: `${heightList}px` }}
+          className={`terminal-content ${isTerminal ? 'auto' : 'hidden'}`}
         >
           {isTerminal ? (
             <Fragment>

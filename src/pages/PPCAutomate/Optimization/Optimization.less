@@ -10,9 +10,8 @@
 
   .product-options {
     flex: 1;
-    display: grid;
-    grid-template-rows: max-content min-content 1fr;
-    row-gap: 1.64286em;
+    display: flex;
+    flex-flow: column;
     overflow: auto;
 
     & > div {
@@ -21,7 +20,7 @@
       border-radius: 0.57143em;
 
       &:first-child {
-        padding: 1.71429em 1.14286em 0 1.71429em;
+        padding: 1.71429em 1.14286em 0 1.14286em;
       }
     }
 
@@ -31,6 +30,7 @@
       grid-template-rows: repeat(3, minmax(min-content, max-content));
       grid-template-areas: 'info info' 'optionsStrategy optionsStrategy' 'control control';
       column-gap: 4.28571em;
+      margin-bottom: 1.64286em;
 
       @media (max-width: 1814px) {
         grid-template-columns: 23.57143em minmax(min-content, 100%);
@@ -73,7 +73,7 @@
 
         @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
           only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-          only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+          only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
           only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
           .product-info-strategy {
             flex-direction: column-reverse;
@@ -100,6 +100,7 @@
           font-size: 1.07143rem; // 15px
           position: absolute;
           color: @dangerous-color;
+          line-height: 1em;
           top: 2em;
 
           // @media (max-width: @big-desktop) {
@@ -115,9 +116,9 @@
 
           @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
             only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-            only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+            only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
             only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
-            top: 4em;
+            top: 4.5em;
           }
         }
       }
@@ -156,7 +157,7 @@
 
         @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
           only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-          only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+          only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
           only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
           grid-template-areas: 'options strategy' 'descriptions strategy';
         }
@@ -189,7 +190,7 @@
 
           @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
             only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-            only screen and (-o-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+            only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
             only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
             max-height: 43.92857em;
           }
