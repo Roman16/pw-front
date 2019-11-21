@@ -249,49 +249,6 @@ const Sidebar = () => {
           </ul>
         </nav>
       </div>
-
-      <nav className="bottom-nav">
-        <ul className="bottom-nav-list">
-          <li className="bottom-nav-item">
-            <NavLink
-              className="automate-link"
-              activeClassName="automate-link-active"
-              exact
-              to={production ? false : `/account-settings`}
-            >
-              {user.user.avatar ? (
-                <Avatar
-                  className="avatar"
-                  src={domainName + user.user.avatar}
-                  size={24}
-                />
-              ) : (
-                <ItemIcon icon="account" />
-              )}
-
-              <span>Account</span>
-            </NavLink>
-          </li>
-
-          <li className="bottom-nav-item">
-            <a
-              href="https://profit-whales.kayako.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ItemIcon icon="helpCenter" />
-              <span>Help Center</span>
-            </a>
-          </li>
-
-          <li className="bottom-nav-item" onClick={handleLogout}>
-            <button type="button">
-              <ItemIcon icon={'logOut'} />
-              <span>Log Out</span>
-            </button>
-          </li>
-        </ul>
-      </nav>
     </div>
   );
 };
