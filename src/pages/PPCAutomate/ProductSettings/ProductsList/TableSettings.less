@@ -91,18 +91,17 @@
       }
     }
 
-    .ant-table-row-expand-icon-cell {
-      .open-children-list-button {
-        //position: absolute;
-      }
-    }
-
     .ant-table-thead > tr > th .ant-table-header-column {
       width: 100%;
+
+      span {
+        font-size: 1rem; // 14px
+      }
     }
 
     .open-children-list-button {
       font-size: 1rem; // 14px
+      width: 3.5714286em;
       height: 1.4285714em;
       display: flex;
       align-items: center;
@@ -169,12 +168,17 @@
   }
 
   .detail {
+    span {
+      font-size: 1rem; // 14px
+    }
+
     span:first-child {
       font-weight: 900;
     }
   }
 
   .caption {
+    font-size: 1rem; // 14px
     font-weight: 900;
   }
 
@@ -220,6 +224,10 @@
         border-bottom: 1px solid #f5f6f7;
         padding-top: 0;
         padding-bottom: 0;
+
+        div {
+          font-size: 1rem; // 14px
+        }
       }
 
       &:last-child {
