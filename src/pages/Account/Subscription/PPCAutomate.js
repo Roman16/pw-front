@@ -48,11 +48,14 @@ const PPCAutomate = ({ onOpenAccountWindow, onOpenReactivateWindow }) => {
             </div>
             <div className="indicators">
               <p className="indicators-text">
-                based on <span className="indicators-data">$ 145 + 4%</span>
+                based on{' '}
+                <span className="indicators-data">
+                  $ 145 + 4%<sub>monthly ad spend</sub>
+                </span>
               </p>
-              <Link className="indicators-link" to="#">
+              {/* <Link className="indicators-link" to="#">
                 monthly ad spend
-              </Link>
+              </Link> */}
             </div>
           </div>
           <p className="plan-text">
