@@ -61,7 +61,6 @@ const Personal = () => {
                     />
 
                     <label htmlFor="file-input"><Icon type="camera"/></label>
-
                 </div>
             </div>
 
@@ -77,7 +76,7 @@ const Personal = () => {
                     <Switch
                         checkedChildren="YES"
                         unCheckedChildren="NO"
-                        value={user.private_label_seller === '1'}
+                        checked={user.private_label_seller === '1'}
                         onChange={handleChangeSwitch}
                     />
                 </div>

@@ -4,7 +4,7 @@ export const userUrls = {
     regist: 'user/register',
     mws: 'user/account/auth/mws/tokens',
     allInfo: 'user/status',
-    updateUserInfo: 'user/account/personal/information',
+    personalInformation: 'user/account/personal/information',
     updatePhoto: 'user/account/personal/change-avatar',
     changePassword: 'user/account/personal/change-password',
     companyInformation: 'user/company',
