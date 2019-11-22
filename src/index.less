@@ -439,3 +439,26 @@ button[disabled] {
 .grecaptcha-badge {
   bottom: 100px !important;
 }
+
+/*
+*  SCROLLBAR
+*/
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: @border-solid;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar:horizontal {
+  width: unset;
+  height: 4px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background: @border-solid;
+  border-radius: 2px;
+}
