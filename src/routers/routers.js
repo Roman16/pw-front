@@ -87,9 +87,9 @@ const routers = () => {
                 <PrivateRoute exact path="/ppc" component={PPC}/>
 
                 {/* ACCOUNT */}
-                {!developer && <PrivateRoute exact path="/account-settings" component={Information}/>}
-                {!developer && <PrivateRoute exact path="/account-billing" component={Billing}/>}
-                {!developer && <PrivateRoute
+                {developer && <PrivateRoute exact path="/account-settings" component={Information}/>}
+                {developer && <PrivateRoute exact path="/account-billing" component={Billing}/>}
+                {developer && <PrivateRoute
                     exact
                     path="/account-subscription"
                     component={Subscription}
