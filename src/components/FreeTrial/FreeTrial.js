@@ -32,7 +32,7 @@ const FreeTrial = ({ expireIn }) => {
 };
 
 const mapStateToProps = state => ({
-    expireIn: state.user.plans && state.user.plans.ppc_automation.expire_in
+    expireIn: state.user.plans && state.user.plans.ppc_automation && state.user.plans.ppc_automation.expire_in
 });
 
 export default connect(mapStateToProps)(FreeTrial);

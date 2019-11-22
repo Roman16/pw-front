@@ -14,7 +14,8 @@ const initialState = {
     productList: [],
     totalSize: 0,
     selectedAll: false,
-    isFirstOptimization: true,
+    onlyOptimization: false,
+    onlyActiveOnAmazon: false,
     defaultOptimizationOptions: defaultOptions,
     selectedProduct: {
         optimization_strategy: '',
@@ -95,6 +96,18 @@ export function products(state = initialState, action) {
                     ...action.payload,
                 },
                 defaultOptimizationOptions: {...defaultOptions}
+            };
+
+        case productsConstants.SHOW_ONLY_OPTIMIZED:
+            return {
+                ...state,
+                onlyOptimization: action.payload
+            };
+
+        case productsConstants.SHOW_ONLY_ACTIVE:
+            return {
+                ...state,
+                onlyActiveOnAmazon: action.payload
             };
 
         default:

@@ -13,7 +13,7 @@ class ProductList extends Component {
     state = {
         isSelectedAll: false,
         prevProductId: '',
-        onlyOptimization: false,
+        onlyOptimization: this.props.onlyOptimization || false,
         openedProduct: '',
         paginationParams: {
             size: 10,
@@ -47,6 +47,8 @@ class ProductList extends Component {
     };
 
     handleChangeSwitch = (event) => {
+        this.props.showOnlyOptimized(event);
+
         this.setState(
             {
                 onlyOptimization: event,
@@ -126,7 +128,7 @@ class ProductList extends Component {
                 openedProduct,
                 paginationParams: {size, page}
             } = this.state,
-            {products, selectedProduct, totalSize} = this.props;
+            {products, selectedProduct, totalSize, onlyOptimization} = this.props;
 
         return (
             <div className="product-list">
@@ -147,6 +149,7 @@ class ProductList extends Component {
                         <div className="active-only">
                             <label htmlFor="">On optimization only</label>
                             <Switch
+                                checked={onlyOptimization}
                                 onChange={this.handleChangeSwitch}
                             />
                         </div>
@@ -188,7 +191,8 @@ class ProductList extends Component {
 const mapStateToProps = state => ({
     products: state.products.productList,
     totalSize: state.products.totalSize,
-    selectedProduct: state.products.selectedProduct
+    selectedProduct: state.products.selectedProduct,
+    onlyOptimization: state.products.onlyOptimization,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -197,6 +201,9 @@ const mapDispatchToProps = dispatch => ({
     },
     selectProduct: product => {
         dispatch(productsActions.fetchProductDetails(product));
+    },
+    showOnlyOptimized: (data) => {
+        dispatch(productsActions.showOnlyOptimized(data));
     }
 });
 

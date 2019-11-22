@@ -9,6 +9,8 @@ export const productsActions = {
     onSwitchOptimization,
     setNetMargin,
     updateOptions,
+    showOnlyOptimized,
+    showOnlyActive
 };
 
 function fetchProducts(paginationParams) {
@@ -39,7 +41,7 @@ function fetchProductDetails(product) {
                             ...product,
                             ...res,
                             id: product.id,
-                            product_id:  product.id
+                            product_id: product.id
                         }
                     });
                 } else {
@@ -103,6 +105,24 @@ function setNetMargin(product) {
                     payload: res
                 });
             });
+    };
+}
+
+function showOnlyOptimized(data) {
+    return dispatch => {
+        dispatch({
+            type: productsConstants.SHOW_ONLY_OPTIMIZED,
+            payload: data
+        });
+    };
+}
+
+function showOnlyActive(data) {
+    return dispatch => {
+        dispatch({
+            type: productsConstants.SHOW_ONLY_ACTIVE,
+            payload: data
+        });
     };
 }
 

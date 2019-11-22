@@ -8,6 +8,8 @@ import {productsServices} from '../../../../services/products.services';
 import {notification} from '../../../../components/Notification';
 
 import './TableSettings.less';
+import {productsActions} from "../../../../actions/products.actions";
+import {connect} from "react-redux";
 
 const ACTIVE = 'RUNNING';
 const PRODUCT = 'product';
@@ -28,7 +30,7 @@ class ProductsList extends Component {
         totalSize: 0,
         page: 1,
         size: 10,
-        onlyActive: false
+        onlyActive: this.props.onlyActiveOnAmazon || false
     };
 
     timerId = null;
@@ -117,6 +119,7 @@ class ProductsList extends Component {
     };
 
     handleChangeSwitch = (e) => {
+        this.props.showOnlyOptimized(e);
         this.setState({onlyActive: e}, this.fetchProducts)
     };
 
@@ -229,6 +232,7 @@ class ProductsList extends Component {
                             <div className='switch-block'>
                                 Show only Active Listings on Amazon
                                 <Switch
+                                    checked={this.props.onlyActiveOnAmazon}
                                     onChange={this.handleChangeSwitch}
                                 />
                             </div>
@@ -341,7 +345,7 @@ class ProductsList extends Component {
                         <div
                             className={`settings-status ${
                                 item[OPTIMIZATION_STATUS] === ACTIVE ? 'active' : ''
-                                }`}
+                            }`}
                         >
                             {item[OPTIMIZATION_STATUS] === ACTIVE
                                 ? 'Active'
@@ -387,4 +391,18 @@ ProductsList.defaultProps = {
     dataSource: []
 };
 
-export default ProductsList;
+const mapStateToProps = state => ({
+    onlyActiveOnAmazon: state.products.onlyActiveOnAmazon,
+});
+
+const mapDispatchToProps = dispatch => ({
+    showOnlyOptimized: (data) => {
+        dispatch(productsActions.showOnlyActive(data));
+    }
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ProductsList);
+

@@ -5,23 +5,27 @@ import {dashboardServices} from '../../../../services/dashboard.services';
 import './ProductBreakdown.less';
 import ProductsList from "./ProductsList";
 import {dashboardActions} from "../../../../actions/dashboard.actions";
+import {productsActions} from "../../../../actions/products.actions";
 
 const initialFetchParams = {
     page: 1,
     size: 4,
     totalSize: 0,
-    onlyOptimization: false,
     searchText: ''
 };
 
 
 const ProductBreakdown = () => {
     const dispatch = useDispatch();
-    const {selectedProduct, selectedRangeDate} = useSelector(state => ({
+    const {selectedProduct, selectedRangeDate, onlyOptimization} = useSelector(state => ({
         selectedProduct: state.dashboard.selectedProduct,
         selectedRangeDate: state.dashboard.selectedRangeDate,
+        onlyOptimization: state.products.onlyOptimization,
     }));
-    const [fetchParams, changeFetchParams] = useState(initialFetchParams),
+    const [fetchParams, changeFetchParams] = useState({
+            ...initialFetchParams,
+            onlyOptimization: onlyOptimization || false
+        }),
         [products, updateProductsList] = useState([]);
 
     let timerIdSearch = null;
@@ -42,10 +46,12 @@ const ProductBreakdown = () => {
     };
 
     const handleChangeSwitch = e => {
+        dispatch(productsActions.showOnlyOptimized(e));
+
         changeFetchParams({
             ...fetchParams,
+            onlyOptimization: e,
             page: 1,
-            onlyOptimization: e
         });
 
     };
@@ -78,6 +84,7 @@ const ProductBreakdown = () => {
                     On optimization only
 
                     <Switch
+                        checked={onlyOptimization}
                         onChange={handleChangeSwitch}
                     />
                 </div>
