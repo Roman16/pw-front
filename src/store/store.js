@@ -15,7 +15,7 @@ const initialStore = () => {
     return {
         ...createStore(persistedReducer,  compose(
             applyMiddleware(thunk),
-            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+            window.devToolsExtension ? window.devToolsExtension() : f => f
         ))
     };
 };
