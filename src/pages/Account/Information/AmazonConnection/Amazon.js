@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {Input, Cascader} from 'antd';
 
 import checked from '../../../../assets/img/icons/checked.svg';
@@ -46,49 +46,60 @@ const Amazon = ({amazonTokens}) => {
         })
     }
 
-    function onUntieAccount(type) {
-        dispatch(userActions)
+    function onUnsetAccount(type) {
+        dispatch(userActions.unsetAccount(type))
     }
 
-    async function handleSaveMws() {
-        await userService.setMWS(amazonTokensValue)
+    async function handleSetMws() {
+        try {
+            await userService.setMWS(amazonTokensValue);
+            dispatch(userActions.getPersonalUserInfo());
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     return (
         <div className="amazon-box">
             {amazonTokens && <div className="approved-wrapper">
                 <div className="title-wrap">
-                    <h3>DbvtskGoods</h3>
-                    <p>A344WPJGDI66R5 - North America (US, CA, MX)</p>
+                    {mwsConnected && <Fragment>
+                        <h3>DbvtskGoods</h3>
+                        <p>A344WPJGDI66R5 - North America (US, CA, MX)</p>
+                    </Fragment>}
                 </div>
 
-                {mwsConnected && <div className="mws-wrap">
-                    <h3>
-                        MWS Authorization
-                        <img src={checked} alt="checked"/>
-                    </h3>
+                <div className="mws-wrap">
+                    {mwsConnected && <Fragment>
+                        <h3>
+                            MWS Authorization
+                            <img src={checked} alt="checked"/>
+                        </h3>
 
-                    <button className="mws-btn" type="button" onClick={() => onUntieAccount('mws')}>
-                        <img src={closeIcon} alt=""/>
-                        <span>Remove</span>
-                    </button>
-                </div>}
+                        <button className="mws-btn" type="button" onClick={() => onUnsetAccount('MWS')}>
+                            <img src={closeIcon} alt=""/>
+                            <span>Remove</span>
+                        </button>
+                    </Fragment>}
+                </div>
 
-                {ppcConnected && <div className="login-wrap">
-                    <h3>
-                        Seller Central Log In
-                        <img src={checked} alt="checked"/>
-                    </h3>
+                <div className="login-wrap">
+                    {ppcConnected && <Fragment>
+                        <h3>
+                            Seller Central Log In
+                            <img src={checked} alt="checked"/>
+                        </h3>
 
-                    <button className="mws-btn" type="button" onClick={() => onUntieAccount('ppc')}>
-                        <img src={closeIcon} alt=""/>
-                        <span>Remove</span>
-                    </button>
-                </div>}
+                        <button className="mws-btn" type="button" onClick={() => onUnsetAccount('PPC')}>
+                            <img src={closeIcon} alt=""/>
+                            <span>Remove</span>
+                        </button>
+                    </Fragment>}
+                </div>
 
-                {mwsConnected && ppcConnected && <p className="approved-text">Approved</p>}
-            </div>
-            }
+                <div className="approved-text">{mwsConnected && ppcConnected && 'Approved'}</div>
+            </div>}
+
             <div className="add-wrapper">
                 {!mwsConnected && <div className="add-amazon-wrap">
                     <h2 className="add-amazon-title">NEW STOREFRONT - ADD MWS ACCESS</h2>
@@ -134,7 +145,7 @@ const Amazon = ({amazonTokens}) => {
                             <button
                                 className="btn green-btn confirm-btn"
                                 type="button"
-                                onClick={handleSaveMws}
+                                onClick={handleSetMws}
                                 disabled={amazonTokensValue.mws_auth_token.length < 5 || amazonTokensValue.merchant_id.length < 5}
                             >
                                 Confirm MWS

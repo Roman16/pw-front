@@ -16,7 +16,8 @@ export const userActions = {
     updateUserInformation,
     changeUserAvatar,
     reSetState,
-    getPersonalUserInfo
+    getPersonalUserInfo,
+    unsetAccount
 };
 
 function login(user) {
@@ -92,6 +93,15 @@ function setMWS(data) {
     };
 }
 
+function unsetAccount(type) {
+
+    return dispatch => {
+        dispatch({
+            type: userConstants[`UNSET_AMAZON_${type}`],
+        });
+    };
+}
+
 function getUserInfo() {
     return dispatch => {
         userService.getUserInfo().then(res => {
@@ -112,8 +122,8 @@ function getPersonalUserInfo() {
     return dispatch => {
         userService.getUserInfo()
             .then(res => {
-            dispatch(setInformation(res));
-        });
+                dispatch(setInformation(res));
+            });
     };
 }
 
