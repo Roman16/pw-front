@@ -2,35 +2,29 @@
 @import '../../../../../style/mixins.less';
 
 .net-margin {
-    .net-margin-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+  .net-margin-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-        .net-margin-header {
-            text-align: center;
+    .net-margin-header {
+      text-align: center;
 
-            h2 {
-                color: @second-default-dark;
-            }
-        }
-
-        .box-button {
-            width: 300px;
-            display: flex;
-            justify-content: space-between;
-
-            button {
-                margin-bottom: 20px;
-                min-width: 120px;
-                background: @primary-color;
-                color: #fff;
-            }
-        }
+      h2 {
+        color: @second-default-dark;
+      }
     }
 
-    .net-margin-footer {
-        text-align: center;
-        font-size: 12px;
+    .ant-btn {
+      margin-bottom: 1.42857em;
+      min-width: 8.57143em;
+      background: @primary-color;
+      color: #fff;
     }
+  }
+
+  .net-margin-footer {
+    font-size: 0.85714rem; // 12px
+    text-align: center;
+  }
 }

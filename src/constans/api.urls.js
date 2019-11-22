@@ -4,11 +4,18 @@ export const userUrls = {
     regist: 'user/register',
     mws: 'user/account/auth/mws/tokens',
     allInfo: 'user/status',
-    updateUserInfo: 'user/account/personal/information',
+    personalInformation: 'user/account/personal/information',
     updatePhoto: 'user/account/personal/change-avatar',
     changePassword: 'user/account/personal/change-password',
+    //billing
+    paymentMethodList: 'user/account/payment-method/list',
+    addPaymentMethod: 'user/account/payment-method/add',
+    updatePaymentMethod: (id) => `user/account/payment-method/${id}/update`,
+    deletePaymentMethod: (id) => `user/account/payment-method/${id}/delete`,
+    setDefaultPaymentMethod: (id) => `user/account/payment-method/${id}/set-as-default`,
+    //
+    billingHistory: 'user/billing/history',
     companyInformation: 'user/company',
-    paymentMethod: 'user/payment',
 };
 
 export const productsUrls = {

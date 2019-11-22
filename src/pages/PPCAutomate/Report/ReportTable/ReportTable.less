@@ -2,278 +2,277 @@
 @import '../../../../style/variables.less';
 
 .reports-page {
-    display: flex;
-    height: 100vh;
-    max-height: max-content;
+  display: flex;
+  height: 100vh;
+  max-height: max-content;
 
-    .product-list {
-        min-width: 356px;
-        margin: 0 20px 0 0;
+  .product-list {
+    min-width: 25.428571429em;
+    margin: 0 1.4285714em 0 0;
+  }
+
+  .capitalize-field {
+    text-transform: capitalize;
+  }
+
+  .ant-tabs-tab {
+    margin-right: 0 !important;
+
+    span {
+      font-weight: normal;
     }
+  }
 
-    .capitalize-field {
-        text-transform: capitalize;
+  .ant-table-thead > tr > th {
+    background: #fff;
+    padding: 15px 8px 15px 16px;
+  }
+
+  .ant-table-tbody td {
+    padding: 8px 8px 8px 12px;
+  }
+
+  .custom-table {
+    .ant-pagination {
+      margin-right: 80px;
     }
-
-    .ant-tabs-tab {
-        margin-right: 0 !important;
-
-        span {
-            font-weight: normal;
-        }
-    }
-
-    .ant-table-thead > tr > th {
-        background: #fff;
-        padding: 15px 8px 15px 16px;
-    }
-
-    .ant-table-tbody td {
-        padding: 8px 8px 8px 12px;
-    }
-
-
-
-    .custom-table {
-        .ant-pagination {
-            margin-right: 80px;
-        }
-    }
+  }
 }
 
 .ReportTable {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    margin: 0 0 0 5px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 0 0 0 0.3571429em;
+
+  .ant-tabs {
+    flex: 1;
 
     .tab-name-count {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: inherit;
-        border: 1px solid #c9cbd4;
-        color: #000000;
-        min-width: 32px;
-        height: 16px !important;
-        border-radius: 12px;
-        margin: 0 0 0 10px;
-        font-weight: 500;
+      font-size: 0.8571429rem; // 12px
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: inherit;
+      border: 1px solid #c9cbd4;
+      color: #000000;
+      min-width: 3em;
+      height: 1.3333333em !important;
+      border-radius: 1em;
+      margin: 0 0 0 0.8333333em;
+      font-weight: 500;
     }
 
     .ant-tabs {
-        flex: 1;
+      height: 90%;
+    }
 
-        .tab-name-count {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: inherit;
-            border: 1px solid #c9cbd4;
-            color: #000000;
-            min-width: 36px;
-            height: 16px !important;
-            border-radius: 12px;
-            margin: 0 0 0 10px;
-            font-weight: 500;
-        }
+    .ant-tabs-top-content {
+      height: 95%;
 
-        .ant-tabs {
-            height: 90%;
-        }
-
-        .ant-tabs-top-content {
-            height: 95%;
-
-            .ant-tabs-tabpane-active {
-                height: 100%;
-            }
-        }
-
-        .action-field {
-            span {
-                width: max-content;
-                display: flex;
-                align-items: center;
-            }
-        }
+      .ant-tabs-tabpane-active {
+        height: 100%;
+      }
     }
 
     .action-field {
-        span {
-            width: max-content;
-            display: flex;
-            align-items: center;
-        }
-    }
-
-    .report-table {
-        min-height: 30px;
+      span {
+        width: max-content;
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        color: @second-default-dark;
-        margin: 0 0 12px 0;
+      }
+    }
+  }
 
-        @media (max-width: 1669px) {
-            height: 76px;
-            flex-wrap: wrap;
-            align-content: space-between;
-        }
+  .action-field {
+    span {
+      width: max-content;
+      display: flex;
+      align-items: center;
+    }
+  }
 
-        h3 {
-            color: #363694;
-            margin: 0;
-            font-size: 20px;
-            letter-spacing: -0.08px;
-        }
+  .report-table {
+    // font-size: 14px;
+    min-height: 2.1428571em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: @second-default-dark;
+    margin: 0 0 0.8571429em 0;
 
-        & > .changes-calendar-download {
-            display: inherit;
-            justify-content: space-between;
-            align-items: inherit;
-
-            @media (max-width: 1669px) {
-                width: 100%;
-                justify-content: space-evenly;
-                order: 1;
-            }
-        }
-
-        .total-count {
-            display: flex;
-            align-items: center;
-            margin: 0 8px;
-            border-radius: 12px;
-            font-size: 12px;
-
-            span {
-                text-align: center;
-                background: @success-color;
-                color: #fff;
-                border: 0;
-                padding: 0 5px;
-                line-height: 16px;
-                min-width: 32px;
-                border-radius: 12px;
-                margin: 0 8px;
-            }
-        }
-
-        .ant-calendar-range-picker-input:first-of-type {
-            text-align: right;
-        }
-
-        .ant-calendar-range-picker-input:last-of-type {
-            text-align: left;
-        }
-
-        .download-btn {
-            display: flex;
-            align-items: center;
-            margin-left: 8px;
-            font-size: 12px;
-            line-height: 16px;
-            font-weight: bold;
-            background: @action-color;
-            color: #fff;
-            border-radius: 8px;
-
-            .download-icon {
-                background: url('../../../../assets/img/icons/download.svg');
-                width: 24px;
-                height: 24px;
-                margin-left: 15px;
-                margin-top: -3px;
-            }
-        }
+    @media (max-width: 1669px) {
+      height: 5.4285714em;
+      flex-wrap: wrap;
+      align-content: space-between;
     }
 
-    .report-item-table {
-        height: 100%;
-        background: #fff;
-        border-radius: 8px;
-
-        .report-item-table-btn {
-            padding: 20px 20px 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-items: center;
-
-            .TableButton {
-                margin-bottom: 20px;
-            }
-
-            .TableButton:not(:last-child) {
-                margin-right: 20px;
-            }
-        }
+    h3 {
+      font-size: 1.4285714rem; // 20px
+      color: #363694;
+      margin: 0;
+      letter-spacing: -0.08px;
     }
 
-    .ant-tabs-bar {
-        margin-bottom: 0;
+    & > .changes-calendar-download {
+      display: inherit;
+      justify-content: space-between;
+      align-items: inherit;
+
+      @media (max-width: 1669px) {
+        width: 100%;
+        justify-content: space-evenly;
+        order: 1;
+      }
     }
 
-    .ant-tabs-nav-wrap .ant-tabs-tab[role='tab'] {
-        color: @action-color-dark;
-        border: none;
-        background: transparent;
+    .total-count {
+      font-size: 0.8571429rem; // 12px
+      display: flex;
+      align-items: center;
+      margin: 0 8px;
+      border-radius: 1em;
+
+      span {
+        text-align: center;
+        background: @success-color;
+        color: #fff;
+        border: 0;
+        padding: 0 0.4166667em;
+        line-height: 1.3333333em;
+        min-width: 2.6666667em;
+        border-radius: 1em;
+        margin: 0 0.6666667em;
+      }
     }
 
-    .ant-tabs-nav .ant-tabs-tab:hover {
-        color: @action-color;
+    .ant-calendar-range-picker-input:first-of-type {
+      font-size: 1rem; // 14px
+      text-align: right;
     }
 
-    .ant-tabs-nav-wrap .ant-tabs-tab-active[role='tab'] {
-        color: @action-color;
-        border-bottom: 2px solid @action-color;
+    .ant-calendar-range-picker-input:last-of-type {
+      font-size: 1rem; // 14px
+      text-align: left;
     }
 
-    .ant-tabs-ink-bar {
-        background: @action-color;
-    }
+    .download-btn {
+      font-size: 0.8571429rem; // 12px
+      width: 10.75em;
+      height: 2.6666667em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 0.6666667em;
+      line-height: 1.3333333em;
+      font-weight: bold;
+      background: @action-color;
+      color: #fff;
+      border-radius: 0.6666667em;
 
-    .ant-tabs-bar {
-        border: none;
+      @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+        only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+        only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
+        only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
+        padding: 0 0.8333333em;
+      }
+
+      .download-icon {
+        font-size: inherit; // 12px
+        background: url('../../../../assets/img/icons/download.svg');
+        background-size: cover;
+        width: 2em;
+        height: 2em;
+        margin-top: -0.25em;
+      }
     }
+  }
+
+  .report-item-table {
+    height: 100%;
+    background: #fff;
+    border-radius: 0.5714286em;
+
+    .report-item-table-btn {
+      padding: 1.4285714em 1.4285714em 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
+
+      .TableButton {
+        margin-bottom: 1.4285714em;
+      }
+
+      .TableButton:not(:last-child) {
+        margin-right: 1.4285714em;
+      }
+    }
+  }
+
+  .ant-tabs-bar {
+    margin-bottom: 0;
+  }
+
+  .ant-tabs-nav-wrap .ant-tabs-tab[role='tab'] {
+    color: @action-color-dark;
+    border: none;
+    background: transparent;
+  }
+
+  .ant-tabs-nav .ant-tabs-tab:hover {
+    color: @action-color;
+  }
+
+  .ant-tabs-nav-wrap .ant-tabs-tab-active[role='tab'] {
+    color: @action-color;
+    border-bottom: 2px solid @action-color;
+  }
+
+  .ant-tabs-ink-bar {
+    background: @action-color;
+  }
+
+  .ant-tabs-bar {
+    border: none;
+  }
 }
 
-.popover-info {
-    max-width: 300px;
-    display: inline-block;
-}
+// .popover-info {
+//   max-width: 300px;
+//   display: inline-block;
+// }
 
 .TabName {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    .tab-name-count {
-        margin-left: 15px;
-        min-width: 28px;
-        padding: 0 4px;
-        height: 18px;
-        border-radius: 12px;
-        border: 1px solid #c9cbd4;
-        text-align: center;
-        font-size: 12px;
-    }
+  .tab-name-count {
+    font-size: 0.8571429rem; // 12px
+    margin-left: 1.25em;
+    min-width: 2.3333333em;
+    padding: 0 0.3333333em;
+    height: 1.5em;
+    border-radius: 1em;
+    border: 1px solid #c9cbd4;
+    text-align: center;
+  }
 }
 
 .ant-calendar-range {
-    width: 100%;
-    overflow: hidden;
+  width: 100%;
+  overflow: hidden;
 
-    .ant-calendar-body {
-        border-left: 1px solid #e8e8e8;
-    }
+  .ant-calendar-body {
+    border-left: 1px solid #e8e8e8;
+  }
 }
 
 .info-icon {
-    &:hover {
-        color: @action-color;
-        cursor: pointer;
-    }
+  &:hover {
+    color: @action-color;
+    cursor: pointer;
+  }
 }

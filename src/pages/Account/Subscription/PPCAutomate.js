@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import reload from '../../../assets/img/icons/reload.svg';
 import ppcIcon from '../../../assets/img/icons/ppc-automate-icon.svg';
 
-const PPCAutomate = ({ onOpenWindow }) => {
+const PPCAutomate = ({ onOpenAccountWindow, onOpenReactivateWindow }) => {
   return (
     <div className="automate-box">
       <div className="reactivate">
@@ -15,7 +15,11 @@ const PPCAutomate = ({ onOpenWindow }) => {
           You will have access to the software untill the end of this billin
           cycle (<span className="reactivate-data">August 14, 2019</span>)
         </p>
-        <button className="reactivate-btn" type="button">
+        <button
+          className="reactivate-btn"
+          type="button"
+          onClick={onOpenReactivateWindow}
+        >
           Reactivate
           <img className="reactivate-img" src={reload} alt="reload" />
         </button>
@@ -36,9 +40,7 @@ const PPCAutomate = ({ onOpenWindow }) => {
         <div className="plan">
           <div className="charged">
             <div className="charged-wrap">
-              <h3 className="charged-title">
-                Subscription <br /> Plan
-              </h3>
+              <h3 className="charged-title">Subscription Plan</h3>
               <div className="charged-description">
                 <p className="charged-text">You’ll be charged</p>
                 <p className="charged-data">$ 347</p>
@@ -46,11 +48,14 @@ const PPCAutomate = ({ onOpenWindow }) => {
             </div>
             <div className="indicators">
               <p className="indicators-text">
-                based on <span className="indicators-data">$ 145 + 4%</span>
+                based on{' '}
+                <span className="indicators-data">
+                  $ 145 + 4%<sub>monthly ad spend</sub>
+                </span>
               </p>
-              <Link className="indicators-link" to="#">
+              {/* <Link className="indicators-link" to="#">
                 monthly ad spend
-              </Link>
+              </Link> */}
             </div>
           </div>
           <p className="plan-text">
@@ -59,10 +64,13 @@ const PPCAutomate = ({ onOpenWindow }) => {
         </div>
         <div className="cancel">
           <p className="cancel-text">
-            Next Invoice Date:
-            <span className="cancel-data">May 14, 2019</span>
+            Next Invoice Date: <span className="cancel-data">May 14, 2019</span>
           </p>
-          <button className="cancel-btn" type="button" onClick={onOpenWindow}>
+          <button
+            className="cancel-btn"
+            type="button"
+            onClick={onOpenAccountWindow}
+          >
             Cancel
           </button>
         </div>

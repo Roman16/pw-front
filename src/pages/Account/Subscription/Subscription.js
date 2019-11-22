@@ -1,38 +1,56 @@
 import React, { useState } from 'react';
-import { Drawer } from 'antd';
+import { Drawer, Modal } from 'antd';
 
 import Navigation from '../Navigation/Navigation';
 import PPCAutomate from './PPCAutomate';
 import CancelAccountWindow from './DrawerWindows/CancelAccountWindow';
+import Reactivate from './DrawerWindows/Reactivate';
 import './Subscription.less';
 import './DrawerWindows/CancelAccountWindow.less';
+import './DrawerWindows/Reactivate.less';
 
 const Subscription = () => {
-  const [openedWindow, openWindow] = useState(null);
-
-  function handleOpenWindow(window) {
-    openWindow(window);
+  const [openedAccountWindow, openAccountWindow] = useState(false);
+  function handleOpenAccountWindow() {
+    openAccountWindow(true);
   }
 
-  function handleCloseWindow() {
-    openWindow(null);
+  const [openedReactivateWindow, openReactivateWindow] = useState(false);
+  function handleOpenReactivateWindow() {
+    openReactivateWindow(true);
   }
 
   return (
     <div className="user-cabinet">
       <Navigation />
 
-      <PPCAutomate onOpenWindow={handleOpenWindow} />
+      <PPCAutomate
+        onOpenAccountWindow={handleOpenAccountWindow}
+        onOpenReactivateWindow={handleOpenReactivateWindow}
+      />
 
       <Drawer
-        placement="right"
         className="cancel-account"
-        closable={false}
-        onClose={() => openWindow(null)}
-        visible={openedWindow}
+        placement="right"
+        closable
+        onClose={() => openAccountWindow(false)}
+        visible={openedAccountWindow}
       >
-        <CancelAccountWindow onCloseWindow={handleCloseWindow} />
+        <CancelAccountWindow />
       </Drawer>
+
+      <Modal
+        className="reactivate-account"
+        closable
+        centered
+        okText="Reactivate my account"
+        onOk={() => openReactivateWindow(false)}
+        cancelText="Cancel"
+        onCancel={() => openReactivateWindow(false)}
+        visible={openedReactivateWindow}
+      >
+        <Reactivate />
+      </Modal>
     </div>
   );
 };

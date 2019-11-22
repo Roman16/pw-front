@@ -5,6 +5,8 @@ export const userConstants = {
     SET_INFORMATION: 'SET_INFORMATION',
     USER_LOGOUT: 'USER_LOGOUT',
     UPDATE_USER:'UPDATE_USER',
+    UNSET_AMAZON_MWS:'UNSET_AMAZON_MWS',
+    UNSET_AMAZON_PPC:'UNSET_AMAZON_PPC',
 };
 
 //--------------------------------------------

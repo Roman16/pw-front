@@ -25,8 +25,6 @@ class Optimization extends Component {
     infoType: '',
     product: this.props.selectedProduct,
     selectedStrategy: this.props.selectedProduct.optimization_strategy
-    // refOptionsHeight: document.querySelector('.options'),
-    // refProductStatusHeight: document.querySelector('.product-status')
   };
 
   showDrawer = type => this.setState({ visible: true, infoType: type });
@@ -93,25 +91,8 @@ class Optimization extends Component {
   }
 
   render() {
-    const {
-        isLess,
-        selectedStrategy,
-        infoType
-        // refOptionsHeight,
-        // refProductStatusHeight
-      } = this.state,
+    const { isLess, selectedStrategy, infoType } = this.state,
       { selectedProduct, selectedAll } = this.props;
-
-    // const refOptionsHeight = document.querySelector('.options');
-    // const optionsHeight =
-    //   refOptionsHeight && refOptionsHeight.current
-    //     ? refOptionsHeight.current.offsetHeight
-    //     : 0;
-    // // const productStatusHeight = refProductStatusHeight.current
-    // //   ? refProductStatusHeight.current.offsetHeight
-    // //   : 0;
-
-    // console.log('optionsHeight', optionsHeight);
 
     return (
       <Fragment>
@@ -177,12 +158,7 @@ class Optimization extends Component {
 
             <OptimizationStatus product={selectedProduct} />
 
-            <LastReports
-              isLess={isLess}
-              productId={selectedAll ? 'all' : selectedProduct.id}
-              // optionsHeight={optionsHeight}
-              // productStatusHeight={productStatusHeight}
-            />
+            <LastReports productId={selectedAll ? 'all' : selectedProduct.id} />
           </div>
         </div>
 
@@ -218,7 +194,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Optimization);
+export default connect(mapStateToProps, mapDispatchToProps)(Optimization);

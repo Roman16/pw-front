@@ -94,6 +94,16 @@ const ProductItem = ({
                                 </div>
                             </div>
                         </div>
+
+                        {under_optimization && has_optimization_results && <div className='on-optimization'>
+                            <img src={optimizationLabel} alt=""/>
+                        </div>}
+
+                        {under_optimization && !has_optimization_results && <div className='optimization-waiting'>
+                            <img src={loaderBg} alt=""/>
+
+                            <Spin/>
+                        </div>}
                     </div>
                 ))}
             </div>}

@@ -110,16 +110,26 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 1em 3.2em 1.4em;
+          padding: 1em 2em 1.4em;
           border-radius: 0.8em;
           background-color: #f3f7fd;
           margin-bottom: 2em;
+
+          @media (max-width: 1149px) {
+            height: 19.2em;
+            height: 12em;
+            flex-flow: column;
+          }
 
           .charged-wrap {
             width: 50%;
             height: 100%;
             display: flex;
             align-items: center;
+
+            @media (max-width: 1149px) {
+              width: 100%;
+            }
 
             .charged-title {
               font-size: 1.1429rem; // 16px
@@ -131,18 +141,19 @@
               color: @second-account-color;
               font-weight: 600;
               margin: 0;
-            }
+              padding-right: 1em;
 
-            .charged-title::after {
-              width: 0.0625em;
-              height: 3em;
-              display: inline-block;
-              position: absolute;
-              top: 50%;
-              transform: translateY(-50%);
-              right: 0;
-              content: '';
-              background-color: @border-solid;
+              &::after {
+                width: 0.0625em;
+                height: 3em;
+                display: inline-block;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 0;
+                content: '';
+                background-color: @border-solid;
+              }
             }
 
             .charged-description {
@@ -171,28 +182,36 @@
             height: 100%;
             display: flex;
             flex-flow: column;
-            justify-content: flex-end;
+            align-items: center;
+            justify-content: center;
+
+            @media (max-width: 1149px) {
+              width: 100%;
+            }
 
             .indicators-text {
               font-size: 1rem; // 14px
               color: @third-account-color;
               display: flex;
               align-items: center;
+              white-space: nowrap;
               margin: 0;
 
               .indicators-data {
                 font-size: 1.7143rem; // 24px
-                color: @third-default-dark;
                 align-self: flex-end;
+                color: @third-default-dark;
+                white-space: nowrap;
                 margin-left: 1.25em;
-              }
-            }
 
-            .indicators-link {
-              width: fit-content;
-              font-size: 0.8571rem; // 12px
-              color: @account-color-action;
-              margin-left: auto;
+                sub {
+                  font-size: 0.8571rem; // 12px
+                  width: fit-content;
+                  left: 0.25em;
+                  color: @account-color-action;
+                  white-space: nowrap;
+                }
+              }
             }
           }
         }
@@ -227,6 +246,7 @@
 
           .cancel-data {
             color: @second-account-color;
+            white-space: nowrap;
           }
         }
 

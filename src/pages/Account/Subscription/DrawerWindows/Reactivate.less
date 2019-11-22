@@ -1,0 +1,68 @@
+@import '../../../../style/variables.less';
+
+.reactivate-account {
+  font-size: 0.714286rem; // 10px
+  width: fit-content !important;
+  height: fit-content;
+  border-radius: 0.9em;
+  padding: 0;
+
+  .ant-modal-content {
+    width: 43.2em;
+    height: 16.7em;
+    border-radius: 0.9em;
+
+    .ant-modal-body {
+      font-size: inherit; // 10px
+      padding-bottom: 1.6em;
+
+      .reactivate-title {
+        font-size: 1.1429rem; // 16px
+        color: #17175a;
+        font-weight: 600;
+      }
+
+      .reactivate-text {
+        font-size: 0.8571rem; // 12px
+        color: @third-account-color;
+        margin: 0;
+
+        .reactivate-data {
+          color: #17175a;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .ant-modal-footer {
+      border: none;
+      padding: 0 2.4em;
+      // margin-bottom: 2.4em;
+
+      div {
+        display: flex;
+        flex-flow: row-reverse;
+        justify-content: space-between;
+
+        button {
+          font-size: 1rem; // 14px
+          width: 13.4286em;
+          height: 2.2857em;
+          border: none;
+          border-radius: 0.5714em;
+          margin: 0;
+        }
+
+        .ant-btn {
+          background-color: #f3f7fd;
+          color: @third-account-color;
+        }
+
+        .ant-btn.ant-btn-primary {
+          background-color: #ec7f5c !important;
+          color: @white;
+        }
+      }
+    }
+  }
+}

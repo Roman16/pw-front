@@ -2,79 +2,82 @@
 @import '../../../../style/mixins.less';
 
 .product-status {
-    display: grid;
-    grid-template-columns: 0.7fr repeat(3, 1fr) 0.7fr;
-    column-gap: 5px;
-    padding: 10px;
-    margin: 0;
-    // margin-bottom: 24px;
+  min-height: 50px;
+  display: grid;
+  grid-template-columns: 0.7fr repeat(3, 1fr) 0.7fr;
+  column-gap: 0.35714em;
+  padding: 0.71429em;
+  margin: 0 0 1.64286em;
 
-    .status-info {
-        .caption {
-            text-transform: capitalize;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        .active {
-            color: @success-color;
-        }
-        .inactive {
-            color: @dangerous-color;
-        }
+  .status-info {
+    .caption {
+      text-transform: capitalize;
+      font-weight: 600;
+      margin-bottom: 0.35714em;
+    }
+    .active {
+      color: @success-color;
+    }
+    .inactive {
+      color: @dangerous-color;
+    }
+  }
+
+  .control {
+    align-self: center;
+
+    button {
+      font-size: inherit; // 14px
+      width: 100%;
+      min-width: 14.28571em;
+      min-height: 2.85714em;
+      border: 0;
+      border-radius: 0.57143em;
+      color: #fff;
     }
 
-    .control {
-        button {
-            width: 100%;
-            min-width: 200px;
-            min-height: 40px;
-            border: 0;
-            border-radius: 8px;
-            color: #fff;
-        }
-
-        .start {
-            background: @action-color;
-        }
-
-        .stop {
-            background: @third-default-dark;
-
-            .icon-stop {
-                width: 15px;
-                height: 15px;
-                background: #fff;
-                border-radius: 2px;
-            }
-        }
-
-        .play {
-            transform: rotateZ(90deg);
-        }
-
-        .control-btn-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            .btn-icon {
-                font-size: 18px;
-            }
-
-            .btn-text {
-                flex: 1;
-            }
-        }
+    .start {
+      background: @action-color;
     }
 
-    @media (max-width: @laptop) {
-        & {
-            .control {
-                margin-top: 20px;
-                display: flex;
-                justify-content: center;
-                width: 100%;
-            }
-        }
+    .stop {
+      background: @third-default-dark;
+
+      .icon-stop {
+        width: 15px;
+        height: 15px;
+        background: #fff;
+        border-radius: 2px;
+      }
     }
+
+    .play {
+      transform: rotateZ(90deg);
+    }
+
+    .control-btn-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .btn-icon {
+        font-size: 1.28571rem; // 18px
+      }
+
+      .btn-text {
+        flex: 1;
+      }
+    }
+  }
+
+  @media (max-width: @laptop) {
+    & {
+      .control {
+        margin-top: 1.42857em;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  }
 }

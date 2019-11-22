@@ -59,7 +59,7 @@ img {
     background: #f5f5ff;
 
     @media (max-width: 799px) {
-      margin-left: 72px;
+      margin-left: 5.1428571em;
     }
 
     & > div {
@@ -393,24 +393,24 @@ button.btn {
   }
 
   &.green-btn {
-    background: #8FD39D;
+    background: #8fd39d;
     color: #fff;
 
     &:hover {
       background: #5e9168;
       box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
-      0px 0px 20px rgba(142, 147, 192, 0.08);
+        0px 0px 20px rgba(142, 147, 192, 0.08);
     }
   }
 
   &.cancel {
-    background: #C9CBD4;
+    background: #c9cbd4;
     color: #fff;
 
     &:hover {
       background: #a8a9b1;
       box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
-      0px 0px 20px rgba(142, 147, 192, 0.08);
+        0px 0px 20px rgba(142, 147, 192, 0.08);
     }
   }
 }
@@ -434,4 +434,31 @@ button[disabled] {
       ),
       #e8edf1 !important;
   }
+}
+
+.grecaptcha-badge {
+  bottom: 100px !important;
+}
+
+/*
+*  SCROLLBAR
+*/
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: @border-solid;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar:horizontal {
+  width: unset;
+  height: 4px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background: @border-solid;
+  border-radius: 2px;
 }

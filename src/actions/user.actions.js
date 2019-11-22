@@ -15,7 +15,9 @@ export const userActions = {
     getAuthorizedUserInfo,
     updateUserInformation,
     changeUserAvatar,
-    reSetState
+    reSetState,
+    getPersonalUserInfo,
+    unsetAccount
 };
 
 function login(user) {
@@ -91,6 +93,15 @@ function setMWS(data) {
     };
 }
 
+function unsetAccount(type) {
+
+    return dispatch => {
+        dispatch({
+            type: userConstants[`UNSET_AMAZON_${type}`],
+        });
+    };
+}
+
 function getUserInfo() {
     return dispatch => {
         userService.getUserInfo().then(res => {
@@ -104,6 +115,15 @@ function getUserInfo() {
                 history.push('/ppc/optimization');
             }
         });
+    };
+}
+
+function getPersonalUserInfo() {
+    return dispatch => {
+        userService.getUserInfo()
+            .then(res => {
+                dispatch(setInformation(res));
+            });
     };
 }
 

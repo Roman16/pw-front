@@ -1,11 +1,12 @@
-import React from 'react';
-import {Input, Checkbox, Cascader} from 'antd';
+import React, {Fragment, useState} from 'react';
+import {Input, Cascader} from 'antd';
 
 import checked from '../../../../assets/img/icons/checked.svg';
 import amazon from '../../../../assets/img/amazon.png';
-import refresh from '../../../../assets/img/icons/refresh.svg';
-import check from '../../../../assets/img/icons/check.svg';
-import {useSelector} from "react-redux";
+import closeIcon from '../../../../assets/img/icons/close-icon.svg';
+import {useSelector, useDispatch} from 'react-redux';
+import {userService} from "../../../../services/user.services";
+import {userActions} from "../../../../actions/user.actions";
 
 const options = [
     {
@@ -18,81 +19,90 @@ const options = [
     }
 ];
 
-const Amazon = () => {
-    const {ppcLink, mwsLink} = useSelector(state => ({
-            ppcLink: state.user.account_links ? state.user.account_links.amazon_ppc.connect_link : '',
-            mwsLink: state.user.account_links ? state.user.account_links.amazon_mws.connect_link : ''
+const Amazon = ({amazonTokens}) => {
+    const dispatch = useDispatch();
+    const [amazonTokensValue, onChange] = useState({
+        mws_auth_token: '',
+        merchant_id: ''
+    });
+    const {ppcLink, mwsLink, ppcConnected, mwsConnected} = useSelector(state => ({
+            ppcLink: state.user.account_links
+                ? state.user.account_links.amazon_ppc.connect_link
+                : '',
+            mwsLink: state.user.account_links
+                ? state.user.account_links.amazon_mws.connect_link
+                : '',
+            ppcConnected: state.user.account_links && state.user.account_links.amazon_ppc.is_connected,
+            mwsConnected: state.user.account_links && state.user.account_links.amazon_mws.is_connected
         })),
         token = localStorage.getItem('token');
 
     const redirectLink = `${ppcLink}&state=${token}`;
 
+    function handleChangeInput({target: {name, value}}) {
+        onChange({
+            ...amazonTokensValue,
+            [name]: value
+        })
+    }
+
+    function onUnsetAccount(type) {
+        dispatch(userActions.unsetAccount(type))
+    }
+
+    async function handleSetMws() {
+        try {
+            await userService.setMWS(amazonTokensValue);
+            dispatch(userActions.getPersonalUserInfo());
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return (
-        <div className="amazone-box">
-            <div className="central-wrapper">
-                <div className="central-title">
-                    <Checkbox
-                        disabled={true}
-                    />
-
-                    <div className="title-wrap">
-                        <h2>
-                            Amazon Seller Central Connection - SELLER ID: A344WPJGDI66R5
-                        </h2>
-                        <a
-                            className="central-link"
-                            href="https://www.youtube.com/watch?time_continue=2&v=SRhhgDVB0jk&feature=emb_logo"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Show me what to do
-                        </a>
-                    </div>
-                </div>
-
-                <div className="btn-wrap">
-                    <button className="refresh-btn" type="button">
-                        <img src={refresh} alt="refresh"/>
-                    </button>
-                    <button className="token-btn" type="button">
-                        Add token
-                    </button>
-                    <button className="check-btn" type="button">
-                        <img src={check} alt="check"/>
-                    </button>
-                </div>
-            </div>
-
-            <div className="approved-wrapper">
+        <div className="amazon-box">
+            {amazonTokens && <div className="approved-wrapper">
                 <div className="title-wrap">
-                    <h3>DbvtskGoods</h3>
-                    <p>A344WPJGDI66R5 - North America (US, CA, MX)</p>
+                    {mwsConnected && <Fragment>
+                        <h3>DbvtskGoods</h3>
+                        <p>A344WPJGDI66R5 - North America (US, CA, MX)</p>
+                    </Fragment>}
                 </div>
 
                 <div className="mws-wrap">
-                    <h3>
-                        MWS Authorization
-                        <img src={checked} alt="checked"/>
-                    </h3>
-                    <button className="mws-btn" type="button">
-                        &#215; <span>Remove</span>
-                    </button>
+                    {mwsConnected && <Fragment>
+                        <h3>
+                            MWS Authorization
+                            <img src={checked} alt="checked"/>
+                        </h3>
+
+                        <button className="mws-btn" type="button" onClick={() => onUnsetAccount('MWS')}>
+                            <img src={closeIcon} alt=""/>
+                            <span>Remove</span>
+                        </button>
+                    </Fragment>}
                 </div>
+
                 <div className="login-wrap">
-                    <h3>
-                        Seller Central Log In
-                        <img src={checked} alt="checked"/>
-                    </h3>
-                    <button className="mws-btn" type="button">
-                        &#215; <span>Remove</span>
-                    </button>
+                    {ppcConnected && <Fragment>
+                        <h3>
+                            Seller Central Log In
+                            <img src={checked} alt="checked"/>
+                        </h3>
+
+                        <button className="mws-btn" type="button" onClick={() => onUnsetAccount('PPC')}>
+                            <img src={closeIcon} alt=""/>
+                            <span>Remove</span>
+                        </button>
+                    </Fragment>}
                 </div>
-                <p className="approved-text">Approved</p>
-            </div>
+
+                <div className="approved-text">{mwsConnected && ppcConnected && 'Approved'}</div>
+            </div>}
 
             <div className="add-wrapper">
-                <div className="add-amazone-wrap">
-                    <h2 className="add-amazone-title">NEW STOREFRONT - ADD MWS ACCESS</h2>
+                {!mwsConnected && <div className="add-amazon-wrap">
+                    <h2 className="add-amazon-title">NEW STOREFRONT - ADD MWS ACCESS</h2>
 
                     <div className="choice-wrap">
                         <div className="connect-group">
@@ -102,7 +112,7 @@ const Amazon = () => {
                                 options={options}
                             />
 
-                            <a href={mwsLink} target='_blank' className="connect-btn">
+                            <a href={mwsLink} target="_blank" className="connect-btn">
                                 Connect Account
                             </a>
                         </div>
@@ -115,9 +125,9 @@ const Amazon = () => {
                                 <Input
                                     className="form-control"
                                     type="text"
-                                    name="name"
-                                    value=""
+                                    name="merchant_id"
                                     placeholder="This will look like A1BCDE23F4GHIJ"
+                                    onChange={handleChangeInput}
                                 />
                             </div>
 
@@ -126,53 +136,44 @@ const Amazon = () => {
                                 <Input
                                     className="form-control"
                                     type="text"
-                                    name="name"
-                                    value="asfafsa"
+                                    name="mws_auth_token"
                                     placeholder="This will look like amzn.mws. 01234567"
+                                    onChange={handleChangeInput}
                                 />
                             </div>
 
-                            <button className="btn green-btn confirm-btn" type="button" disabled>
+                            <button
+                                className="btn green-btn confirm-btn"
+                                type="button"
+                                onClick={handleSetMws}
+                                disabled={amazonTokensValue.mws_auth_token.length < 5 || amazonTokensValue.merchant_id.length < 5}
+                            >
                                 Confirm MWS
                             </button>
                         </div>
                     </div>
 
-                    <span
-                        className="add-amazone-link"
-                    >
+                    <span className="add-amazon-text">
                         Click to authorize Amazon MWS Access and paste the results below
                     </span>
                 </div>
+                }
+                {!ppcConnected && <div className="login-amazon-wrap">
+                    <h2 className="login-amazon-title">ADD ADVERTISING ACCESS</h2>
+                    <div className="connect-amazon">
+                        <span className="connect-amazon-text">
+                            Click to authorize Amazon MWS Access and paste the results below:
+                        </span>
 
-                <div className="login-amazone-wrap">
-                    <h2 className="login-amazone-title">ADD ADVERTISING ACCESS</h2>
-                    <div className="connect-amazone">
-                        <a
-                            className="connect-amazone-link"
-                            href="https://www.youtube.com/watch?time_continue=2&v=SRhhgDVB0jk&feature=emb_logo"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Click to autorize Amazon MWS Access and paste the results below:
+                        <a className="login-amazon-btn" href={redirectLink}>
+                            <img className="login-amazon-img" src={amazon} alt="LWA-GOld"/>
                         </a>
-
-                        <a className='login-amazone-btn'
-                           href={redirectLink}
-                        >
-                            <img className='login-amazone-img' src={amazon} alt="LWA-GOld"/>
-                        </a>
-                        <a
-                            className="connect-another-link"
-                            href="https://www.youtube.com/watch?time_continue=2&v=SRhhgDVB0jk&feature=emb_logo"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                        <button className="connect-another-btn" type="button">
                             Need another Storefront?
-                        </a>
+                        </button>
                     </div>
                 </div>
-            </div>
+                }            </div>
         </div>
     );
 };

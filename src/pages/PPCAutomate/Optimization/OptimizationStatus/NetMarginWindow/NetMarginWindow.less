@@ -1,5 +1,5 @@
-@import "../../../../../style/variables.less";
-@import "../../../../../style/mixins.less";
+@import '../../../../../style/variables.less';
+@import '../../../../../style/mixins.less';
 
 .net-margin {
   .net-margin-content {
@@ -17,28 +17,28 @@
     .product-net-margin {
       background: @body-background;
       display: flex;
-      padding: 8px 15px;
+      padding: 0.57143em 1.07143em;
       align-items: center;
       justify-content: space-between;
-      border-radius: 8px;
-      margin: 20px 0;
+      border-radius: 0.57143em;
+      margin: 1.42857em 0;
       width: 80%;
 
       & > span {
-        margin-right: 12px;
+        margin-right: 0.85714em;
       }
 
       .ant-input-affix-wrapper {
-        max-width: 200px;
+        max-width: 14.28571em;
         margin: 0;
 
         .ant-input-prefix {
+          font-size: 1.14286rem; // 16px
           color: #8fd39d;
-          font-size: 16px;
-          width: 16px;
+          width: 1em;
           display: flex;
           justify-content: center;
-          border-radius: 4px;
+          border-radius: 0.25em;
           background-color: rgba(143, 211, 157, 0.2);
         }
 
@@ -47,20 +47,18 @@
           margin-right: 0;
         }
       }
-
-
     }
+
     button.start {
-      margin-bottom: 20px ;
-      min-width: 120px;
+      margin-bottom: 1.42857em;
+      min-width: 8.57143em;
       background: @primary-color;
       color: #fff;
     }
   }
-  .net-margin-footer {
-    text-align: center;
-    font-size: 12px;
 
+  .net-margin-footer {
+    font-size: 0.85714rem; // 12px
+    text-align: center;
   }
 }
-

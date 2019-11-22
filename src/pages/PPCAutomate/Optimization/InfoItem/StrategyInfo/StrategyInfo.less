@@ -1,56 +1,54 @@
 @import '../../../../../style/variables.less';
 
 .StrategyInfo {
-    position: relative;
+  position: relative;
 
+  .info-item {
+    display: grid;
+    grid-template-columns: 14.28571em 1fr;
+    grid-gap: 1.07143em;
+    margin: 1.07143em 0.71429em;
+
+    & > div {
+      align-self: center;
+    }
+
+    .info-caption {
+      font-size: 1.28571rem; // 18px
+      color: @action-color;
+      font-weight: 600;
+    }
+
+    .small {
+      display: none;
+    }
+
+    .large {
+      display: block;
+    }
+  }
+
+  .strategy-control {
+    button:hover {
+      cursor: auto;
+    }
+  }
+
+  @media (max-width: @laptop) {
     .info-item {
-        display: grid;
-        grid-template-columns: 200px 1fr;
-        grid-gap: 15px;
+      grid-template-columns: 1fr;
 
-        & > div {
-            align-self: center;
-        }
+      .info-caption {
+        margin-bottom: 0;
+      }
 
-        margin: 15px 10px;
+      .small {
+        display: block;
+      }
 
-        .info-caption {
-            color: @action-color;
-            font-size: 18px;
-            font-weight: 600;
-            // margin-bottom: 25px;
-        }
-
-        .small {
-            display: none;
-        }
-
-        .large {
-            display: block;
-        }
+      .large {
+        display: none;
+      }
     }
-
-    .strategy-control {
-        button:hover {
-            cursor: auto;
-        }
-    }
-
-    @media (max-width: @laptop) {
-        .info-item {
-            grid-template-columns: 1fr;
-
-            .info-caption {
-                margin-bottom: 0;
-            }
-
-            .small {
-                display: block;
-            }
-
-            .large {
-                display: none;
-            }
-        }
-    }
+  }
 }

@@ -2,10 +2,9 @@ import api from './request';
 import axios from 'axios';
 import {userUrls} from '../constans/api.urls';
 
-// const stripeKey = process.env.REACT_APP_ENV === 'production'
-//     ? process.env.STRIPE_PUBLISHABLE_KEY_LIVE
-//     : process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
-const stripeKey = 'pk_test_uOU0aN4gAMHWjw9SJY7XZxv7';
+const stripeKey = process.env.REACT_APP_ENV === 'production'
+    ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
+    : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 export const userService = {
     login,
@@ -19,7 +18,12 @@ export const userService = {
     changePassword,
     updateCompanyInformation,
     updatePaymentMethod,
-    createStripeCustomer
+    fetchCompanyInformation,
+    fetchBillingInformation,
+    fetchBillingHistory,
+    addPaymentMethod,
+    setDefaultPaymentMethod,
+    deletePaymentMethod
 };
 
 function login(user) {
@@ -43,7 +47,7 @@ function setMWS(data) {
 }
 
 function updateInformation({name, last_name, email, private_label_seller}) {
-    return api('post', userUrls.updateUserInfo, {
+    return api('post', userUrls.personalInformation, {
         name,
         last_name,
         private_label_seller: private_label_seller ? 1 : 0
@@ -62,26 +66,41 @@ function changePassword({current_password, new_password, password_confirmation})
     });
 }
 
+//-------------------------------------
+//-------------company-----------------
+function fetchCompanyInformation() {
+    return api('get', userUrls.companyInformation);
+}
+
 function updateCompanyInformation(company) {
     return api('post', userUrls.companyInformation, company);
 }
+//-------------------------------------
 
-function updatePaymentMethod(token) {
-    return api('post', userUrls.paymentMethod, token);
+//-------------------------------------
+//-------------billing-----------------
+function fetchBillingInformation() {
+    return api('get', userUrls.paymentMethodList);
+}
+function addPaymentMethod(data) {
+    return api('post', userUrls.addPaymentMethod, data);
+}
+function updatePaymentMethod(data) {
+    return api('post', userUrls.updatePaymentMethod(data.id), data);
+}
+function setDefaultPaymentMethod(id) {
+    return api('post', userUrls.setDefaultPaymentMethod(id));
+}
+function deletePaymentMethod(id) {
+    return api('post', userUrls.setDefaultPaymentMethod(id));
 }
 
-function getStripeAvailableCountries(token) {
+function fetchBillingHistory() {
+    return api('get', userUrls.billingHistory);
+}
+function getStripeAvailableCountries() {
     return axios.get(`https://api.stripe.com/v1/country_specs?limit=100`, {
         headers: {'Authorization': `Bearer ${stripeKey}`}
     });
 }
-
-function createStripeCustomer(user) {
-    return axios.post('https://api.stripe.com/v1/customers', user,
-        {
-            headers: {
-                'Authorization': `Bearer ${stripeKey}`,
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        });
-}
+//-------------------------------------

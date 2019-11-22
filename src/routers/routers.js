@@ -35,16 +35,10 @@ const PrivateRoute = ({component: Component, ...rest}) => (
 );
 
 const ConnectedAmazonRoute = props => {
-    const mwsConnected = useSelector(state =>
-            state.user.account_links
-                ? state.user.account_links.amazon_mws.is_connected
-                : null
-        ),
-        ppcConnected = useSelector(state =>
-            state.user.account_links
-                ? state.user.account_links.amazon_ppc.is_connected
-                : null
-        );
+    const {mwsConnected, ppcConnected} = useSelector(state => ({
+        mwsConnected: state.user.account_links ? state.user.account_links.amazon_mws.is_connected : null,
+        ppcConnected: state.user.account_links ? state.user.account_links.amazon_ppc.is_connected : null
+    }));
 
     if (!mwsConnected) {
         return <Redirect to="/mws"/>;

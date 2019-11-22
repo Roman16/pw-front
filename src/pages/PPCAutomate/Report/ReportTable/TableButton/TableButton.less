@@ -1,45 +1,45 @@
 @import '../../../../../style/variables.less';
 
 .TableButton {
-    display: inline-block;
+  display: inline-block;
 
-    &.active,
-    &:hover {
-        button.ant-btn {
-            border-color: @action-color;
-            color: @action-color;
-        }
-
-        .count {
-            border-color: #c9cbd4;
-        }
-    }
-
+  &.active,
+  &:hover {
     button.ant-btn {
-        display: flex;
-        align-items: center;
-        min-height: 38px;
-        font-size: 11px;
-        text-transform: uppercase;
-        border-radius: 8px;
-        padding: 0 10px;
-
-        span {
-            font-weight: 500;
-            font-size: 11px;
-        }
+      border-color: @action-color;
+      color: @action-color;
     }
 
     .count {
-        font-size: 12px;
-        border: 1px solid;
-        width: 30px;
-        height: 16px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        border-radius: 15px;
-        margin-left: 12px;
+      border-color: #c9cbd4;
     }
+  }
+
+  button.ant-btn {
+    font-size: 0.7857143rem; // 11px
+    display: flex;
+    align-items: center;
+    min-height: 3.4545455em;
+    text-transform: uppercase;
+    border-radius: 0.7272727em;
+    padding: 0 0.9090909em;
+
+    span {
+      font-size: inherit; //11px
+      font-weight: 500;
+    }
+  }
+
+  .count {
+    font-size: 0.8571429rem; // 12px
+    border: 1px solid;
+    width: 2.5em;
+    height: 1.3333333em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 1.25em;
+    margin-left: 1em;
+  }
 }
