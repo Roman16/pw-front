@@ -18,6 +18,7 @@ import Information from "../pages/Account/Information/Information";
 import Billing from "../pages/Account/Billing/Billing";
 import Subscription from "../pages/Account/Subscription/Subscription";
 import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
+import ProductList from "../components/ProductList/ProductList";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route

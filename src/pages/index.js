@@ -1,15 +1,21 @@
 import React from 'react';
 
 import Sidebar from '../components/Sidebar/Sidebar';
+import ProductList from "../components/ProductList/ProductList";
 
 const AuthorizedUser = (props) => {
-        return (
-            <div className="main-pages">
-                <Sidebar />
+    console.log(props.children.props.location.pathname === '/ppc/optimization');
+    return (
+        <div className="main-pages">
+            <Sidebar/>
 
-                <div className="main-container">{props.children}</div>
-            </div>
-        );
+            {(props.children.props.location.pathname === '/ppc/optimization' ||
+                props.children.props.location.pathname === '/ppc/report') &&
+            <ProductList/>}
+
+            <div className="main-container">{props.children}</div>
+        </div>
+    );
 };
 
 export default AuthorizedUser;

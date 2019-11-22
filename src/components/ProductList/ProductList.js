@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import ProductItem from './ProductItem';
 import {connect} from 'react-redux';
 import {Input, Pagination, Switch} from 'antd';
@@ -131,59 +131,65 @@ class ProductList extends Component {
             {products, selectedProduct, totalSize, onlyOptimization} = this.props;
 
         return (
-            <div className="product-list">
-                <div className="search-product">
-                    <Search
-                        placeholder="Search by product name, ASIN, or SKU"
-                        onChange={e => this.handleSearch(e.target.value)}
-                    />
-
-                    <div className="select-all-products">
-                        <SelectAllProduct
-                            onSelectAll={this.selectAll}
-                            selectedSize={selectedSize}
-                            isSelectedAll={isSelectedAll}
-                            disabled={products.length === 0}
+            <Fragment>
+                <div className="product-list">
+                    <div className="search-product">
+                        <Search
+                            placeholder="Search by product name, ASIN, or SKU"
+                            onChange={e => this.handleSearch(e.target.value)}
                         />
 
-                        <div className="active-only">
-                            <label htmlFor="">On optimization only</label>
-                            <Switch
-                                checked={onlyOptimization}
-                                onChange={this.handleChangeSwitch}
+                        <div className="select-all-products">
+                            <SelectAllProduct
+                                onSelectAll={this.selectAll}
+                                selectedSize={selectedSize}
+                                isSelectedAll={isSelectedAll}
+                                disabled={products.length === 0}
                             />
+
+                            <div className="active-only">
+                                <label htmlFor="">On optimization only</label>
+                                <Switch
+                                    checked={onlyOptimization}
+                                    onChange={this.handleChangeSwitch}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className='products'>
-                    {products &&
-                    products.map(product => (
-                        <ProductItem
-                            key={product.id}
-                            product={product}
-                            isActive={
-                                isSelectedAll ||
-                                selectedProduct.id === product.id
-                            }
-                            onClick={item => this.onSelect(item)}
-                            onOpenChild={this.changeOpenedProduct}
-                            openedProduct={openedProduct}
-                            products={products}
+                    <div className='products'>
+                        {products &&
+                        products.map(product => (
+                            <ProductItem
+                                key={product.id}
+                                product={product}
+                                isActive={
+                                    isSelectedAll ||
+                                    selectedProduct.id === product.id
+                                }
+                                onClick={item => this.onSelect(item)}
+                                onOpenChild={this.changeOpenedProduct}
+                                openedProduct={openedProduct}
+                                products={products}
+                            />
+                        ))}
+                    </div>
+
+                    {totalSize > size && (
+                        <Pagination
+                            defaultCurrent={1}
+                            pageSize={size}
+                            total={totalSize}
+                            current={page}
+                            onChange={this.handleChangePagination}
                         />
-                    ))}
+                    )}
                 </div>
 
-                {totalSize > size && (
-                    <Pagination
-                        defaultCurrent={1}
-                        pageSize={size}
-                        total={totalSize}
-                        current={page}
-                        onChange={this.handleChangePagination}
-                    />
-                )}
-            </div>
+                <div>
+                    {this.props.children}
+                </div>
+            </Fragment>
         );
     }
 }

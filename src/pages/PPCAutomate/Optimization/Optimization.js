@@ -97,7 +97,7 @@ class Optimization extends Component {
     return (
       <Fragment>
         <div className="optimization-page">
-          <ProductList />
+          {/*<ProductList />*/}
 
           <div className="product-options">
             <div className="options">
