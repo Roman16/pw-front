@@ -227,7 +227,6 @@ const Sidebar = () => {
 
                                     <span>Account</span>
                                 </NavLink>
-
                             }
                         </li>
 
