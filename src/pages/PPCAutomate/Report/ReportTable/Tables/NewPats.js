@@ -140,7 +140,7 @@ const columns = {
       width: '110px'
     },
     {
-      title: 'Targe ACoS',
+      title: 'Target ACoS',
       dataIndex: 'TargetACoS',
       key: 'TargetACoS',
       render: text => <span>{text && `${text}%`}</span>,
