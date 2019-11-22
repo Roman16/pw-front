@@ -51,7 +51,11 @@ const Personal = () => {
     <div className="personal-box">
       <div className="avatar-box">
         {userInformation.avatar ? (
-          <Avatar src={domainName + userInformation.avatar} size={119} />
+          <Avatar
+            className="avatar"
+            src={domainName + userInformation.avatar}
+            size={119}
+          />
         ) : (
           <ItemIcon icon="account" />
         )}
@@ -80,13 +84,13 @@ const Personal = () => {
         <div className="active-only">
           <span>Are you private label seller?</span>
 
-                    <Switch
-                        checkedChildren="YES"
-                        unCheckedChildren="NO"
-                        checked={user.private_label_seller}
-                        onChange={handleChangeSwitch}
-                    />
-                </div>
+          <Switch
+            checkedChildren="YES"
+            unCheckedChildren="NO"
+            checked={user.private_label_seller}
+            onChange={handleChangeSwitch}
+          />
+        </div>
 
         <form onSubmit={handleSaveUserInformation} className="form-person-info">
           <div className="form-group">

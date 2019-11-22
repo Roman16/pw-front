@@ -5,6 +5,10 @@
   display: flex;
   flex-direction: column;
 
+  // @media (max-width: 899px) {
+  //   width: 19.071428571em;
+  // }
+
   .products {
     overflow: auto;
   }
@@ -43,9 +47,13 @@
     justify-content: space-between;
     margin: 1.428571429em 0;
 
-    label {
-      margin: 0 0.714285714em 0 0;
-      font-weight: 500;
+    .active-only {
+      margin-left: 0.714285714em;
+
+      label {
+        margin: 0 0.714285714em 0 0;
+        font-weight: 500;
+      }
     }
 
     .ant-btn {
@@ -132,11 +140,7 @@
       font-family: ir;
       letter-spacing: -0.4375px;
       color: #6d6df6;
-<<<<<<< HEAD
-      padding: 0 5px;
-=======
       padding: 0 0.357142857em;
->>>>>>> origin/develop
       border: 1px solid #6d6df6;
 
       &:hover {
@@ -195,17 +199,10 @@
         font-size: 0.8rem; // 11.2px
         display: flex;
         align-items: center;
-<<<<<<< HEAD
-        font-size: 0.8rem;
-        border-top: 1px solid #d3d3d3;
-        padding: 5px 0 0 0;
-        margin: 0 0 10px 0;
-=======
         border-top: 1px solid #d3d3d3;
         padding: 0.446428571em 0 0 0;
         margin: 0 0 0.892857143em 0;
         position: relative;
->>>>>>> origin/develop
 
         img {
           max-width: 4.464285714em;
@@ -259,34 +256,6 @@
   //-------------------------------------
   /*Retina CSS */
   //-------------------------------------
-<<<<<<< HEAD
-  @media only screen and (min--moz-device-pixel-ratio: 2),
-    only screen and (-webkit-min-device-pixel-ratio: 2),
-    only screen and (-o-min-device-pixel-ratio: 2/1),
-    only screen and (min-device-pixel-ratio: 2) {
-    & {
-      width: 267px;
-
-      .ant-input-search {
-        .ant-input {
-          height: 24px;
-          font-size: 1rem;
-        }
-      }
-
-      .select-all-products {
-        .ant-btn {
-          width: 105px;
-          height: 24px;
-        }
-      }
-
-      .product-item {
-        min-height: 69px;
-      }
-    }
-  }
-=======
   // @media only screen and (min--moz-device-pixel-ratio: 2),
   //   only screen and (-webkit-min-device-pixel-ratio: 2),
   //   only screen and (min-device-pixel-ratio: 2) {
@@ -305,5 +274,4 @@
   //     }
   //   }
   // }
->>>>>>> origin/develop
 }

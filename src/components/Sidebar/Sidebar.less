@@ -1,7 +1,7 @@
 @import '../../style/variables.less';
 
 .sidebar {
-  font-size: 0.714286rem;
+  font-size: 0.714286rem; // 10px
   display: inline-block;
   width: 200px;
   height: 100vh;
@@ -21,15 +21,15 @@
     padding: 1.6em 2.6em;
 
     .sidebar-icon {
+      font-size: 1.8em; // 25.2px
       color: #b6b6fb;
-      font-size: 1.8em;
       align-self: center;
     }
 
     .sidebar-logo {
       width: fit-content;
 
-      img {
+      .logo {
         max-width: 10.2em;
       }
     }
@@ -63,7 +63,7 @@
           }
 
           h5 {
-            font-size: 1rem;
+            font-size: 1rem; // 14px
             justify-self: center;
             color: #fff;
             align-self: flex-start;
@@ -73,7 +73,7 @@
         }
 
         &__description {
-          font-size: 0.8rem;
+          font-size: 0.8rem; // 11.2px
           color: @sidebar-text-color;
           line-height: 1.3333em;
           margin-top: 3px;
@@ -194,7 +194,7 @@
                   cursor: pointer;
 
                   .automate-link {
-                    font-size: 1rem;
+                    font-size: 1rem; // 14px
                     height: 100%;
                     display: flex;
                     align-items: center;
@@ -230,7 +230,7 @@
 
           button,
           a {
-            font-size: 1rem;
+            font-size: 1rem; // 14px
             height: 100%;
             display: flex;
             align-items: center;
@@ -238,7 +238,7 @@
             white-space: nowrap;
 
             .anticon {
-              font-size: 1.7143em;
+              font-size: 1.7143em; // 24px
               margin-right: 0.5833em;
             }
           }
@@ -254,12 +254,18 @@
         }
       }
 
-      .avatar {
-        border-radius: 50%;
-        width: 24px;
-        height: 24px;
-        margin-right: 0.5833em;
-        font-size: 1.7143em;
+      .anticon {
+        font-size: 1.7143rem; // 24px
+        width: 1em;
+        height: 1em;
+
+        .avatar {
+          font-size: 1.7143rem; // 24px
+          border-radius: 50%;
+          width: 1em;
+          height: 1em;
+          margin-right: 0.5833em;
+        }
       }
     }
   }
@@ -271,7 +277,7 @@
     transition: @transition;
 
     .sidebar-logo {
-      img {
+      .logo {
         transform: scaleX(1);
         transform-origin: left;
         transition: @transition 0.3s;
@@ -304,7 +310,7 @@
           .top-nav-list {
             .top-nav-item {
               .top-nav-link {
-                span {
+                .top-span {
                   transform: scaleX(1);
                   transform-origin: left;
                   transition: @transition 0.3s;
@@ -318,8 +324,8 @@
       .bottom-nav {
         .bottom-nav-list {
           .bottom-nav-item {
-            button > span,
-            a > span {
+            button > .bottom-span,
+            a > .bottom-span {
               transform: scaleX(1);
               transform-origin: left;
               transition: @transition 0.3s;
@@ -337,7 +343,7 @@
     transition: @transition;
 
     .sidebar-logo {
-      img {
+      .logo {
         transform: scaleX(0);
         transform-origin: left;
         transition: @transition;
@@ -365,7 +371,7 @@
           .top-nav-list {
             .top-nav-item {
               .top-nav-link {
-                span {
+                .top-span {
                   transform: scaleX(0);
                   transform-origin: left;
                   transition: @transition;
@@ -380,8 +386,8 @@
     .bottom-nav {
       .bottom-nav-list {
         .bottom-nav-item {
-          button > span,
-          a > span {
+          button > .bottom-span,
+          a > .bottom-span {
             transform: scaleX(0);
             transform-origin: left;
             transition: @transition;

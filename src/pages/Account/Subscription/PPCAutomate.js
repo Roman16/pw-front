@@ -53,9 +53,6 @@ const PPCAutomate = ({ onOpenAccountWindow, onOpenReactivateWindow }) => {
                   $ 145 + 4%<sub>monthly ad spend</sub>
                 </span>
               </p>
-              {/* <Link className="indicators-link" to="#">
-                monthly ad spend
-              </Link> */}
             </div>
           </div>
           <p className="plan-text">
