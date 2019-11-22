@@ -155,7 +155,7 @@ function updateUserInformation(user) {
             .then(res => {
                 dispatch({
                     type: userConstants.UPDATE_USER,
-                    payload: user
+                    payload: res.user
                 });
 
                 notification.success({title: 'Completed'})
@@ -167,7 +167,7 @@ function changeUserAvatar(formData) {
     return dispatch => {
         userService.updatePhoto(formData)
             .then(res => {
-                dispatch(setInformation(res));
+                // dispatch(setInformation(res));
             });
     };
 }

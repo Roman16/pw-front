@@ -51,12 +51,12 @@ const Amazon = ({amazonTokens}) => {
     }
 
     async function handleSetMws() {
-        try {
-            await userService.setMWS(amazonTokensValue);
-            dispatch(userActions.getPersonalUserInfo());
-        } catch (e) {
-            console.log(e);
-        }
+        // try {
+        //     await userService.setMWS(amazonTokensValue);
+        //     dispatch(userActions.getPersonalUserInfo());
+        // } catch (e) {
+        //     console.log(e);
+        // }
     }
 
     return (
