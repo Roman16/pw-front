@@ -5,7 +5,7 @@ import {userActions} from '../../../actions/user.actions';
 import ItemIcon from '../../../components/ItemIcon/ItemIcon';
 
 const domainName =
-    (window.location.hostname === 'localhost') && 'https://front1.profitwhales.com';
+    (window.location.hostname === 'localhost') ? 'https://front1.profitwhales.com' : '';
 
 const Personal = () => {
     const dispatch = useDispatch();
