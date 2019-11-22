@@ -163,7 +163,8 @@ class RegistrationPage extends Component {
             email,
             password,
             registerSuccess,
-            isLoading
+            isLoading,
+            address_country
         } = this.state;
 
         if (isLoading) {

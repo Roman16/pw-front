@@ -14,9 +14,7 @@ import soon from '../../assets/img/icons/soon.svg';
 import './Sidebar.less';
 
 const domainName =
-    window.location.hostname === 'localhost'
-        ? 'https://front1.profitwhales.com'
-        : 'https://' + window.location.hostname;
+    (window.location.hostname === 'localhost') && 'https://front1.profitwhales.com';
 
 const production = process.env.REACT_APP_ENV === 'production';
 
@@ -109,9 +107,9 @@ const Sidebar = () => {
                                 >
                                     <ItemIcon icon="zeroToHero"/>
                                     <span>
-                    Zero to Hero
-                    <img className="soon" src={soon} alt="soon"/>
-                  </span>
+                                        Zero to Hero
+                                        <img className="soon" src={soon} alt="soon"/>
+                                    </span>
                                 </NavLink>
                             </li>
 
@@ -125,24 +123,24 @@ const Sidebar = () => {
                                 >
                                     <ItemIcon icon="analytics"/>
                                     <span>
-                    Analytics
-                    <img className="soon" src={soon} alt="soon"/>
-                  </span>
+                                        Analytics
+                                        <img className="soon" src={soon} alt="soon"/>
+                                    </span>
                                 </NavLink>
                             </li>
 
                             <li className="top-nav-item ppc-automate-link">
-                <span onClick={toggleAutomate}>
-                  <NavLink
-                      className="top-nav-link"
-                      activeClassName="top-nav-link-active"
-                      to="/ppc"
-                      replace
-                  >
-                    <ItemIcon icon="ppcAutomate"/>
-                    <span>PPC Automate</span>
-                  </NavLink>
-                </span>
+                                <span onClick={toggleAutomate}>
+                                    <NavLink
+                                        className="top-nav-link"
+                                        activeClassName="top-nav-link-active"
+                                        to="/ppc"
+                                        replace
+                                    >
+                                        <ItemIcon icon="ppcAutomate"/>
+                                        <span>PPC Automate</span>
+                                    </NavLink>
+                                </span>
 
                                 {collapsed && (
                                     <ul

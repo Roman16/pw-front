@@ -3,14 +3,14 @@ import {userConstants} from '../constans/actions.type';
 const initialState = {
     user: {},
     plans: {},
-    account_links: {
+    account_links: [{
         amazon_mws: {
             is_connected: false
         },
         amazon_ppc: {
             is_connected: false
         },
-    },
+    }],
     default_accounts: {}
 };
 
