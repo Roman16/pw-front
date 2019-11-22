@@ -120,7 +120,7 @@ class ProductsList extends Component {
 
     handleChangeSwitch = (e) => {
         this.props.showOnlyOptimized(e);
-        this.setState({onlyActive: e}, this.fetchProducts)
+        this.setState({onlyActive: e, page: 1}, this.fetchProducts)
     };
 
     onSearchChange = ({target: {value}}) => {
