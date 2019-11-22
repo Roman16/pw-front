@@ -14,7 +14,7 @@ import soon from '../../assets/img/icons/soon.svg';
 import './Sidebar.less';
 
 const domainName =
-    (window.location.hostname === 'localhost') && 'https://front1.profitwhales.com';
+    (window.location.hostname === 'localhost') ? 'https://front1.profitwhales.com' : '';
 
 const production = process.env.REACT_APP_ENV === 'production';
 
