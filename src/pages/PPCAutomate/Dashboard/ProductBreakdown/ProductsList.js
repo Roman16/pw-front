@@ -82,6 +82,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
                     />
                 </div>
             ),
+            key: 'id',
             dataIndex: 'id',
             width: '300px',
             render: (text, record) => (
