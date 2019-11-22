@@ -167,7 +167,10 @@ function changeUserAvatar(formData) {
     return dispatch => {
         userService.updatePhoto(formData)
             .then(res => {
-                // dispatch(setInformation(res));
+                dispatch({
+                    type: userConstants.UPDATE_USER,
+                    payload: res.user
+                });
             });
     };
 }

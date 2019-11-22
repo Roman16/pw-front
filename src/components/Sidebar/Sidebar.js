@@ -195,10 +195,10 @@ const Sidebar = () => {
                         <li className="bottom-nav-item">
                             {production ? <a href="/account/settings">
                                     {user.user.avatar ? (
-                                        <img
+                                        <Avatar
                                             className="avatar"
                                             src={domainName + user.user.avatar}
-                                            width="40"
+                                            size={30}
                                         />
                                     ) : (
                                         <ItemIcon icon="account"/>
@@ -214,10 +214,10 @@ const Sidebar = () => {
                                     to={`/account-settings`}
                                 >
                                     {user.user.avatar ? (
-                                        <img
+                                        <Avatar
                                             className="avatar"
                                             src={domainName + user.user.avatar}
-                                            width="40"
+                                            size={30}
                                         />
                                     ) : (
                                         <ItemIcon icon="account"/>
