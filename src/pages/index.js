@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import ProductList from "../components/ProductList/ProductList";
 
 const AuthorizedUser = (props) => {
-    console.log(props.children.props.location.pathname === '/ppc/optimization');
+    // console.log(props.children.props.location.pathname === '/ppc/optimization');
     return (
         <div className="main-pages">
             <Sidebar/>
