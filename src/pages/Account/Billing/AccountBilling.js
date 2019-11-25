@@ -4,14 +4,14 @@ import masterLogo from '../../../assets/img/master-logo-white.svg';
 import selectedIcon from '../../../assets/img/icons/selected.svg';
 import ConfirmActionPopup from '../../../components/ModalWindow/ConfirmActionPopup';
 import {Menu, Dropdown, Icon} from 'antd';
-import {func} from "prop-types";
+import moment from "moment";
 
 let cardIndex = 0;
 
-const UserCard = ({card: {defaultCard, number, type}, card, onUpdateCardInformation, deleteCard}) => {
+const UserCard = ({card: {last4, brand, exp_month, exp_year}, card, onUpdateCardInformation, deleteCard, onSet}) => {
     const menu = (
         <Menu>
-            <Menu.Item key="0">Default</Menu.Item>
+            <Menu.Item key="0" onClick={() => onSet(card)}>Default</Menu.Item>
             <Menu.Divider/>
             <Menu.Item key="1" onClick={() => onUpdateCardInformation(card)}>Update</Menu.Item>
             <Menu.Divider/>
@@ -23,7 +23,7 @@ const UserCard = ({card: {defaultCard, number, type}, card, onUpdateCardInformat
         <div className='card-block'>
             <div className="card-header">
                 <div className="card-logo">
-                    <img src={type === 'visa' ? visaLogo : masterLogo} alt=""/>
+                    <img src={brand === 'visa' ? visaLogo : masterLogo} alt=""/>
                 </div>
 
                 <div className="card-actions">
@@ -38,19 +38,19 @@ const UserCard = ({card: {defaultCard, number, type}, card, onUpdateCardInformat
             </div>
 
             <div className="card-number">
-                **** **** **** {number}
+                **** **** **** {last4}
             </div>
 
             <div className="card-footer">
                 <div className='expires-block'>
                     <label htmlFor="">expires</label>
-                    <span>3/22</span>
+                    <span>{exp_month}/{moment(exp_year, 'YYYY').format('YY')}</span>
                 </div>
 
                 <div className='default-card-block'>
                     Default Card
                     <div>
-                        {defaultCard && <img src={selectedIcon} alt=""/>}
+                        {card.default && <img src={selectedIcon} alt=""/>}
                     </div>
                 </div>
             </div>
@@ -58,11 +58,12 @@ const UserCard = ({card: {defaultCard, number, type}, card, onUpdateCardInformat
     )
 };
 
-const AccountBilling = ({onOpenWindow, billingInformation, handleConfirmDeleteCard}) => {
-    const [selectedCard, selectCard] = useState({}),
+const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, onSelectCard, onSetDefaultCard}) => {
+    const [selectedCard, selectCard] = useState(paymentCards[0]),
+        [userCards, updateCards] = useState(paymentCards),
         [openedConfirmWindow, targetWindow] = useState(false);
 
-    const haveCard = selectedCard && billingInformation.cards && billingInformation.cards.length > 0;
+    const haveCard = selectedCard && userCards.length > 0;
 
     function onUpdateCardInformation(card) {
         onOpenWindow('updateCard', card)
@@ -70,7 +71,7 @@ const AccountBilling = ({onOpenWindow, billingInformation, handleConfirmDeleteCa
 
     function onChangePagination(cardNumber) {
         cardIndex = cardNumber;
-        selectCard(billingInformation.cards[cardNumber])
+        selectCard(userCards[cardNumber])
     }
 
     function handleOk() {
@@ -83,33 +84,62 @@ const AccountBilling = ({onOpenWindow, billingInformation, handleConfirmDeleteCa
     }
 
     function goNextCard() {
-        if (billingInformation.cards.length === (cardIndex + 1)) {
-            selectCard(billingInformation.cards[0]);
+        if (userCards.length === (cardIndex + 1)) {
+            selectCard(userCards[0]);
             cardIndex = 0;
         } else {
-            selectCard(billingInformation.cards[cardIndex + 1]);
+            selectCard(userCards[cardIndex + 1]);
             cardIndex++;
         }
     }
 
     function goPrevCard() {
         if (cardIndex === 0) {
-            selectCard(billingInformation.cards[billingInformation.cards.length - 1]);
-            cardIndex = billingInformation.cards.length - 1;
+            selectCard(userCards[userCards.length - 1]);
+            cardIndex = userCards.length - 1;
         } else {
-            selectCard(billingInformation.cards[cardIndex - 1]);
+            selectCard(userCards[cardIndex - 1]);
             cardIndex--;
         }
     }
 
+    function handleSetDefaultCard(card) {
+        onSetDefaultCard(card)
+            .then(() => {
+                updateCards(userCards.map(item => item.id === card.id ? {
+                        ...item,
+                        default: true
+                    }
+                    :
+                    {
+                        ...item,
+                        default: false
+                    }));
+                if (selectedCard.id === card.id) {
+                    selectCard({
+                        ...card,
+                        default: true
+                    })
+                }
+            })
+    }
 
     useEffect(() => {
-        selectCard(billingInformation.cards && billingInformation.cards[0])
-    }, [billingInformation]);
+        updateCards(paymentCards)
+    }, [paymentCards]);
+
+    useEffect(() => {
+        if (!selectedCard) {
+            selectCard(userCards[0])
+        }
+    }, [userCards]);
+
+    useEffect(() => {
+        selectedCard && onSelectCard(selectedCard)
+    }, [selectedCard]);
 
     return (
         <Fragment>
-
             <section className='account-billing-block'>
                 <div className='block-description'>
                     <h3>
@@ -124,12 +154,12 @@ const AccountBilling = ({onOpenWindow, billingInformation, handleConfirmDeleteCa
                 {haveCard && <div className='user-cards'>
                     <div className='cards-carousel'>
                         <div className='carousel-body'>
-                            {billingInformation.cards.length > 1 &&
+                            {userCards.length > 1 &&
                             <Icon type="left" onClick={goPrevCard}/>}
 
-                            {(billingInformation.cards.length > 5 ? [0, 1, 2, 3, 4] : billingInformation.cards).map((item, index) => (
+                            {(userCards.length > 5 ? [0, 1, 2, 3, 4] : userCards).map((item, index) => (
                                 <div
-                                    key={item.number}
+                                    key={item.id}
                                     className='card-shadow'
                                     style={{
                                         top: `${0 - 5 * index}px`,
@@ -143,18 +173,19 @@ const AccountBilling = ({onOpenWindow, billingInformation, handleConfirmDeleteCa
                             {selectedCard && <UserCard
                                 card={selectedCard}
                                 deleteCard={() => targetWindow(true)}
+                                onSet={handleSetDefaultCard}
                                 onUpdateCardInformation={onUpdateCardInformation}
                             />}
 
-                            {billingInformation.cards.length > 1 &&
+                            {userCards.length > 1 &&
                             <Icon type="right" onClick={goNextCard}/>}
                         </div>
 
-                        {billingInformation.cards.length > 1 &&
+                        {userCards.length > 1 &&
                         <div className='carousel-pagination'>
-                            {billingInformation.cards.map((item, index) => (
+                            {userCards.map((item, index) => (
                                 <div
-                                    style={{opacity: selectedCard.number != item.number && 0.5}}
+                                    style={{opacity: selectedCard.id != item.id && 0.5}}
                                     key={`pagination_${index}`}
                                     onClick={() => onChangePagination(index)}
                                 ></div>
@@ -164,10 +195,10 @@ const AccountBilling = ({onOpenWindow, billingInformation, handleConfirmDeleteCa
 
                     <div className='billing-address'>
                         <h3>Billing address</h3>
-                        <span className='street'>Komarova</span>
-                        <span className='city'>Chernivtsy</span>
-                        <span className='zip'>58 000</span>
-                        <span className='country'>UA</span>
+                        <span className='street'>{selectedCard.address.line1}</span>
+                        <span className='city'>{selectedCard.address.city}</span>
+                        <span className='zip'>{selectedCard.address.postal_code}</span>
+                        <span className='country'>{selectedCard.address.country}</span>
                     </div>
                 </div>}
 

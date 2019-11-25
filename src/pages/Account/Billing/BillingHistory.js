@@ -57,7 +57,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
                 </span>
             </div>
 
-            {historyList && <div className='history-list'>
+            {historyList.length > 0 && <div className='history-list'>
                 <h3>Campaign Statistics</h3>
 
                 <CustomTable
