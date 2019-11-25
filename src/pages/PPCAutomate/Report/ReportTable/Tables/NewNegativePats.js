@@ -160,7 +160,7 @@ const NewNegativePats = ({
             onChange(HighACoS);
           }}
         >
-          Created Negative PAT From CST (High ACoS)
+          Created Negative PAT From CST (<span className='underline'>High ACoS</span>)
         </TableButton>
         <TableButton
           active={activeTable === NoSales}
@@ -169,7 +169,7 @@ const NewNegativePats = ({
             onChange(NoSales);
           }}
         >
-          Created Negative PAT From CST (No Sales)
+          Created Negative PAT From CST (<span className='underline'>No Sales</span>)
         </TableButton>
       </div>
 
