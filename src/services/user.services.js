@@ -73,7 +73,9 @@ function fetchCompanyInformation(cardId) {
 }
 
 function updateCompanyInformation(cardId, company) {
-    return api('post', userUrls.companyInformation(cardId), company);
+    const data = company;
+    Object.keys(data).forEach((key) => (data[key] == null || data[key] === "") && delete data[key]);
+    return api('post', userUrls.companyInformation(cardId), data);
 }
 
 //-------------------------------------
@@ -88,7 +90,9 @@ function addPaymentMethod(data) {
     return api('post', userUrls.addPaymentMethod, data);
 }
 
-function updatePaymentMethod(data) {
+function updatePaymentMethod(card) {
+    const data = card;
+    Object.keys(data).forEach((key) => (data[key] == null || data[key] === "") && delete data[key]);
     return api('post', userUrls.updatePaymentMethod(data.id), data);
 }
 
@@ -103,7 +107,7 @@ function deletePaymentMethod(id) {
 //-------------------------------------
 //-------------payment history---------
 
-function fetchBillingHistory(id, pagination) {
+function fetchBillingHistory(pagination) {
     return api('get', userUrls.paymentHistoryList);
 }
 

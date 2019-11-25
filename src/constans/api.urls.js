@@ -16,7 +16,7 @@ export const userUrls = {
     //company
     companyInformation: (id) => `user/account/payment/method/${id}/metadata`,
     //payment history
-    paymentHistoryList: (id) => 'user/account/payment/method/list',
+    paymentHistoryList: 'user/account/payment/history/list',
 
 };
 

@@ -11,8 +11,8 @@ const Seller = () => {
 
     const {amazonAccounts, ppcConnected, mwsConnected} = useSelector(state => ({
         amazonAccounts: [state.user.default_accounts],
-        ppcConnected: state.user.account_links && state.user.account_links.amazon_ppc.is_connected,
-        mwsConnected: state.user.account_links && state.user.account_links.amazon_mws.is_connected
+        ppcConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.is_connected,
+        mwsConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.is_connected
     }));
 
     return (
