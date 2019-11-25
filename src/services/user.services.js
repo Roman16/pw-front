@@ -68,39 +68,48 @@ function changePassword({current_password, new_password, password_confirmation})
 
 //-------------------------------------
 //-------------company-----------------
-function fetchCompanyInformation() {
-    return api('get', userUrls.companyInformation);
+function fetchCompanyInformation(cardId) {
+    return api('get', userUrls.companyInformation(cardId));
 }
 
-function updateCompanyInformation(company) {
-    return api('post', userUrls.companyInformation, company);
+function updateCompanyInformation(cardId, company) {
+    return api('post', userUrls.companyInformation(cardId), company);
 }
+
 //-------------------------------------
 
 //-------------------------------------
-//-------------billing-----------------
+//-------------payment-----------------
 function fetchBillingInformation() {
     return api('get', userUrls.paymentMethodList);
 }
+
 function addPaymentMethod(data) {
     return api('post', userUrls.addPaymentMethod, data);
 }
+
 function updatePaymentMethod(data) {
     return api('post', userUrls.updatePaymentMethod(data.id), data);
 }
+
 function setDefaultPaymentMethod(id) {
     return api('post', userUrls.setDefaultPaymentMethod(id));
 }
+
 function deletePaymentMethod(id) {
-    return api('post', userUrls.setDefaultPaymentMethod(id));
+    return api('post', userUrls.deletePaymentMethod(id));
 }
 
-function fetchBillingHistory() {
-    return api('get', userUrls.billingHistory);
+//-------------------------------------
+//-------------payment history---------
+
+function fetchBillingHistory(id, pagination) {
+    return api('get', userUrls.paymentHistoryList);
 }
+
+//-------------------------------------
 function getStripeAvailableCountries() {
     return axios.get(`https://api.stripe.com/v1/country_specs?limit=100`, {
         headers: {'Authorization': `Bearer ${stripeKey}`}
     });
 }
-//-------------------------------------

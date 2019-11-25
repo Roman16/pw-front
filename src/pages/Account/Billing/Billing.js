@@ -13,72 +13,6 @@ import UpdateCard from "./DrawerWindows/UpdateCard";
 import {Elements, StripeProvider} from "react-stripe-elements";
 import {userService} from "../../../services/user.services";
 
-const company = {
-    name: 'Fidget Spinners International',
-    city: 'Miami',
-    zip: '90210',
-    address1: '8800 Rumble Street',
-    address2: 'Apt 1#',
-    country: 'US',
-    state: 'LA'
-};
-
-
-const history = [
-    {
-        'invoice_number': '134334',
-        'card_number': '4334',
-        'card_type': 'master',
-        'date_issued': '2019-03-04T17:24:58.828Z',
-        'description': 'lorem',
-        'amount_due': '39',
-        'status': 'Paid',
-    },
-    {
-        'invoice_number': '134334',
-        'card_number': '4334',
-        'card_type': 'visa',
-        'date_issued': '2019-03-04T17:24:58.828Z',
-        'description': 'lorem',
-        'amount_due': '39',
-        'status': 'Paid',
-    },
-];
-
-const billing = {
-    cards: [
-        {
-            number: '4444',
-            type: 'visa',
-            defaultCard: true
-        },
-        {
-            number: '1111',
-            type: 'master',
-            defaultCard: false
-
-        },
-        {
-            number: '5555',
-            type: 'visa',
-            defaultCard: false
-
-        },
-        {
-            number: '3333',
-            type: 'visa',
-            defaultCard: false
-
-        },
-        {
-            number: '2222',
-            type: 'visa',
-            defaultCard: false
-
-        },
-    ]
-};
-
 const defaultPaginationParams = {
     page: 1,
     totalSize: 10
@@ -91,30 +25,51 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
 const Billing = () => {
     const [openedWindow, openWindow] = useState(null),
         [selectedCard, selectCard] = useState({}),
+        [newCard, changeCardType] = useState(true),
         [paginationParams, changePagination] = useState({defaultPaginationParams}),
         [companyInformation, updateCompany] = useState({}),
-        [billingHistory, updateHistoryList] = useState({}),
-        [billingInformation, updateBulling] = useState({});
+        [paymentHistory, updateHistoryList] = useState([]),
+        [paymentCards, updatePayment] = useState({});
 
     function handleOpenWindow(window, card) {
         openWindow(window);
-        card ? selectCard(card) : selectCard(null)
+        card ? changeCardType(false) : changeCardType(true)
     }
 
     function handleCloseWindow() {
         openWindow(null)
     }
 
-    async function getAllInformation() {
-        const [companyData, billingData, historyData] = await Promise.all([
-            userService.fetchCompanyInformation(),
-            userService.fetchBillingInformation(),
-            userService.fetchBillingHistory(paginationParams),
-        ]);
-        updateCompany(company);
-        updateBulling(billing);
-        updateHistoryList(history);
-        // changePagination({totalSize: 0})
+    async function getPaymentMethodList() {
+        try {
+            const res = await userService.fetchBillingInformation();
+            updatePayment(res);
+            selectCard(res[0])
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function getCompanyInformation() {
+        if (selectedCard.id) {
+            try {
+                const companyData = await userService.fetchCompanyInformation(selectedCard.id);
+                updateCompany(companyData);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    }
+
+    async function getPaymentHistory() {
+        if (selectedCard.id) {
+            try {
+                const historyData = await userService.fetchBillingHistory(selectedCard.id, paginationParams);
+                // updateHistoryList(historyData);
+            } catch (e) {
+                console.log(e);
+            }
+        }
     }
 
     async function handleUpdatePaymentMethod(card) {
@@ -130,8 +85,12 @@ const Billing = () => {
         await userService.deletePaymentMethod(card.id);
     }
 
+    async function handleSetDefaultCard(card) {
+        await userService.setDefaultPaymentMethod(card.id);
+    }
+
     function handleUpdateCompanyInformation(company) {
-        userService.updateCompanyInformation(company)
+        userService.updateCompanyInformation(selectedCard.id, company)
             .then(res => {
                 updateCompany(company)
             });
@@ -144,7 +103,6 @@ const Billing = () => {
         changePagination({...paginationParams, page});
         updateHistoryList(res);
     }
-
 
     function renderDrawer() {
         if (openedWindow === 'company') {
@@ -162,7 +120,7 @@ const Billing = () => {
                         <UpdateCard
                             onClose={handleCloseWindow}
                             onSubmit={handleUpdatePaymentMethod}
-                            card={selectedCard}
+                            card={!newCard && selectedCard}
                         />
                     </Elements>
                 </StripeProvider>
@@ -171,8 +129,17 @@ const Billing = () => {
     }
 
     useEffect(() => {
-        getAllInformation();
+        getPaymentMethodList();
     }, []);
+
+    useEffect(() => {
+        getCompanyInformation();
+        getPaymentHistory();
+    }, [selectedCard]);
+
+    useEffect(() => {
+        getPaymentHistory();
+    }, [paginationParams]);
 
     return (
         <div className="user-cabinet billing-page">
@@ -181,7 +148,10 @@ const Billing = () => {
             <AccountBilling
                 onOpenWindow={handleOpenWindow}
                 handleConfirmDeleteCard={handleRemoveCard}
-                billingInformation={billingInformation}
+                onSetDefaultCard={handleSetDefaultCard}
+                paymentCards={paymentCards}
+                onSelectCard={selectCard}
+                defaultSelectedCard={selectedCard}
             />
 
             <CompanyDetails
@@ -190,7 +160,7 @@ const Billing = () => {
             />
 
             <BillingHistory
-                historyList={billingHistory}
+                historyList={paymentHistory}
                 paginationParams={paginationParams}
                 handlePaginationChange={handlePaginationChange}
             />

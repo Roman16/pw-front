@@ -23,6 +23,7 @@ const CardNumberElementStyles = {
 
 const StripeForm = (props) => {
     const {stripeElementChange, handleSubmit, onClose, handleChangeInput, countriesList, onChangeSelect, paymentDetails} = props;
+    console.log(paymentDetails);
     return (
         <form onSubmit={handleSubmit}>
             <div className="card-container">
@@ -250,7 +251,7 @@ class UpdateCard extends Component {
                     }
                 }
 
-                billing_details.address && Object.keys( billing_details.address).forEach((key) => !billing_details.address[key] && delete billing_details.address[key]);
+                billing_details.address && Object.keys(billing_details.address).forEach((key) => !billing_details.address[key] && delete billing_details.address[key]);
 
                 const res = await this.props.stripe.createPaymentMethod('card', {billing_details});
                 console.log(res);
@@ -265,7 +266,13 @@ class UpdateCard extends Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        // console.log(this.props);
+        if(this.props.card.id) {
+            console.log(this.props);
+            //
+            // this.setState({
+            //     paymentDetails: this.props.card.address
+            // })
+        }
     }
 
 
