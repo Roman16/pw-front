@@ -8,7 +8,6 @@
     min-height: 27em;
     height: max-content;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     border-radius: 0.8em;
@@ -17,6 +16,10 @@
     margin-bottom: 0.4em;
 
     .block-description {
+      height: 210px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       width: 20%;
       font-family: er;
 
@@ -35,14 +38,21 @@
       }
     }
 
-    .btn {
-      height: 40px;
-      min-width: 190px;
-      padding: 0 1em;
-      font-family: ir;
+    .buttons-block {
+      height: 210px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
-      box-shadow: 0px 1px 0px #5151D5;
+      .btn {
+        height: 40px;
+        min-width: 190px;
+        padding: 0 1em;
+        font-family: ir;
+      }
     }
+
+
   }
 
   .account-billing-block {

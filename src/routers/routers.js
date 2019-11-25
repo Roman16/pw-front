@@ -36,8 +36,8 @@ const PrivateRoute = ({component: Component, ...rest}) => (
 
 const ConnectedAmazonRoute = props => {
     const {mwsConnected, ppcConnected} = useSelector(state => ({
-        mwsConnected: state.user.account_links ? state.user.account_links.amazon_mws.is_connected : null,
-        ppcConnected: state.user.account_links ? state.user.account_links.amazon_ppc.is_connected : null
+        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : null,
+        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : null
     }));
 
     if (!mwsConnected) {

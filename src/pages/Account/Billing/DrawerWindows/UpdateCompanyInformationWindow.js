@@ -1,19 +1,28 @@
 import React, {useState} from "react";
-import {Input} from "antd";
+import {Input, Select, InputNumber } from "antd";
+import {countries} from "../../../../utils/countries";
+
+const Option = Select.Option;
 
 const UpdateCompanyInformationWindow = ({onClose, company, onSubmit}) => {
     const [companyInformation, changeInformation] = useState(company);
 
-    function handleChangeInput({target: {name, value}}) {
+    function handleChangeInput({target: {name, value}, target}) {
         changeInformation({
             ...companyInformation,
             [name]: value
         })
     }
 
+    function handleChangeSelect(value) {
+        changeInformation({
+            ...companyInformation,
+            country: value
+        })
+    }
+
     function handleSubmit(e) {
         e.preventDefault();
-
         onSubmit(companyInformation)
     }
 
@@ -98,7 +107,7 @@ const UpdateCompanyInformationWindow = ({onClose, company, onSubmit}) => {
                         <label>Zip</label>
                         <Input
                             className="form-control"
-                            type="text"
+                            type="number"
                             name="zip"
                             value={companyInformation.zip}
                             // placeholder="Type first name"
@@ -108,14 +117,19 @@ const UpdateCompanyInformationWindow = ({onClose, company, onSubmit}) => {
 
                     <div className="form-group">
                         <label>Country</label>
-                        <Input
-                            className="form-control"
-                            type="text"
-                            name="country"
-                            value={companyInformation.country}
-                            // placeholder="Type first name"
-                            onChange={handleChangeInput}
-                        />
+
+                        <Select onChange={handleChangeSelect} placeholder='Country'
+                                showSearch
+                                optionFilterProp="children"
+                                filterOption={(input, option) =>
+                                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
+                                value={companyInformation.country}>
+                            {countries.map(item => (
+                                <Option key={item.code} value={item.code}>{item.name}</Option>
+                            ))}
+                        </Select>
+
                     </div>
                 </div>
 

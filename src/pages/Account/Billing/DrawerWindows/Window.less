@@ -47,8 +47,10 @@
       }
 
       input,
-      .ant-select-selection--single {
+      .ant-select-selection--single,
+      .ant-input-number {
         height: 40px;
+        width: 100%;
         border-radius: 8px;
       }
 
@@ -59,7 +61,6 @@
           line-height: 40px;
         }
       }
-
 
     }
 
@@ -145,6 +146,12 @@
           }
         }
 
+        .fake-card-field {
+          display: flex;
+          align-items: center;
+          background: rgba(232, 237, 241, 0.58);
+        }
+
         .row {
           align-items: flex-end;
           margin: 24px 0 30px 0;
@@ -186,6 +193,11 @@
         .row {
           .form-group {
             width: 48%;
+
+
+            &.w-100 {
+              width: 100%;
+            }
           }
 
           &:nth-child(3) {

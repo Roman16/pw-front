@@ -36,7 +36,6 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             title: 'Amount Due',
             dataIndex: 'amount_due',
             key: 'amount_due',
-            render: (text) => (<span>${text}</span>)
         },
         {
             title: 'Status',
