@@ -1,11 +1,24 @@
+.ant-modal-wrap {
+  display: flex;
+}
+
 .custom-modal-window {
   width: 100% !important;
   max-width: 1170px;
+  max-height: 90vh;
+  height: max-content;
+
   font-family: ir;
   display: flex;
   flex-direction: column;
-  top: 10vh;
-  max-height: 90vh;
+
+  margin: auto;
+  padding: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
 
   .ant-modal-close {
     display: none;
@@ -50,18 +63,18 @@
   }
 
   @media (max-width: 1000px) {
-   & {
-     .ant-modal-body {
-       padding: 20px 50px;
-     }
-   }
+    & {
+      .ant-modal-body {
+        padding: 20px 50px;
+      }
+    }
   }
   @media (max-width: 500px) {
-   & {
-     .ant-modal-body {
-       padding: 10px 30px;
-     }
-   }
+    & {
+      .ant-modal-body {
+        padding: 10px 30px;
+      }
+    }
   }
 }
 
@@ -94,6 +107,7 @@
     overflow: auto;
     padding: 16px 10px;
   }
+
   .ant-modal-content,
   .ant-modal-header {
     text-align: center;
