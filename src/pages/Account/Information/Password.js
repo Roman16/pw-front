@@ -26,7 +26,10 @@ const Password = () => {
             new_password: 'password',
             password_confirmation: 'password',
         }),
-        [inputsValue, changeInputsValue] = useState(defaultInputsValue);
+        [inputsValue, changeInputsValue] = useState(defaultInputsValue),
+        [newPasswordError, addNewPasswordError] = useState(),
+        [oldPasswordError, addOldPasswordError] = useState(),
+        [confirmPasswordError, addConfirmPasswordError] = useState();
 
     function changePasswordInputType(name, type) {
         changeInputsType({
@@ -39,7 +42,45 @@ const Password = () => {
         changeInputsValue({
             ...inputsValue,
             [name]: value
-        })
+        });
+
+        if (name === 'current_password' && value) {
+            addOldPasswordError()
+        }
+
+        if (name === 'new_password' && value.length >= 6) {
+            addNewPasswordError()
+        }
+
+        if (name === 'password_confirmation' && (value.length > 6 && value !== inputsValue.new_password)) {
+            addConfirmPasswordError('Please enter the same value again.')
+        }
+
+        if (name === 'password_confirmation' && value === inputsValue.new_password) {
+            addConfirmPasswordError()
+        }
+    }
+
+    function handleBlurOldPasswordInput() {
+        if (!inputsValue.current_password) {
+            addOldPasswordError('This is a required field.')
+        }
+    }
+
+    function handleBlurConfirmPasswordInput() {
+        if (inputsValue.password_confirmation !== inputsValue.new_password) {
+            addConfirmPasswordError('Please enter the same value again.')
+        }
+    }
+
+    function handleBlurNewPasswordInput() {
+        if (inputsValue.new_password.length < 6) {
+            addNewPasswordError('Minimum 6 characters.')
+        }
+
+        if(!inputsValue.current_password) {
+            addOldPasswordError('This is a required field.')
+        }
     }
 
     function handleSave() {
@@ -64,12 +105,13 @@ const Password = () => {
 
                         <div className="input-wrap">
                             <Input
-                                className="form-control"
+                                className={`form-control ${oldPasswordError && 'error'}`}
                                 type={inputsType.current_password}
                                 name="current_password"
                                 placeholder="Type old password"
                                 value={inputsValue.current_password}
                                 onChange={handleChangeInput}
+                                onBlur={handleBlurOldPasswordInput}
                                 suffix={
                                     <CustomInputSuffix
                                         name={'current_password'}
@@ -78,6 +120,10 @@ const Password = () => {
                                 }
                             />
                         </div>
+
+                        <div className='input-error'>
+                            {oldPasswordError}
+                        </div>
                     </div>
 
                     <div className="form-group">
@@ -85,12 +131,13 @@ const Password = () => {
 
                         <div className="input-wrap">
                             <Input
-                                className="form-control"
+                                className={`form-control ${newPasswordError && 'error'}`}
                                 type={inputsType.new_password}
                                 name="new_password"
                                 placeholder="Type new password"
                                 value={inputsValue.new_password}
                                 onChange={handleChangeInput}
+                                onBlur={handleBlurNewPasswordInput}
                                 suffix={
                                     <CustomInputSuffix
                                         name={'new_password'}
@@ -99,18 +146,24 @@ const Password = () => {
                                     />}
                             />
                         </div>
+
+                        <div className='input-error'>
+                            {newPasswordError}
+                        </div>
                     </div>
 
                     <div className="form-group">
                         <label>Repeat New Password</label>
+
                         <div className="input-wrap">
                             <Input
-                                className="form-control"
+                                className={`form-control ${confirmPasswordError && 'error'}`}
                                 type={inputsType.password_confirmation}
                                 name="password_confirmation"
                                 placeholder="Type new password"
                                 value={inputsValue.password_confirmation}
                                 onChange={handleChangeInput}
+                                onBlur={handleBlurConfirmPasswordInput}
                                 suffix={
                                     <CustomInputSuffix
                                         name={'password_confirmation'}
@@ -118,14 +171,17 @@ const Password = () => {
                                         type={inputsType.password_confirmation}
                                     />}
                             />
+                        </div>
 
+                        <div className='input-error'>
+                            {confirmPasswordError}
                         </div>
                     </div>
 
                     <button
                         className="btn-change"
                         type="button"
-                        // disabled={inputsValue.current_password ? (inputsValue.new_password !== inputsValue.password_confirmation)  : true}
+                        disabled={inputsValue.current_password ? (inputsValue.new_password.length >= 6 ? (inputsValue.new_password !== inputsValue.password_confirmation) : true) : true}
                         onClick={handleSave}
                     >
                         Change

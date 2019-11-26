@@ -6,12 +6,10 @@ import logo from '../../../../assets/img/zth.svg';
 import './PPC.less';
 
 const PPC = () => {
-  const { ppcLink } = useSelector(state => ({
-      ppcLink: state.user.account_links
-        ? state.user.account_links.amazon_ppc.connect_link
-        : ''
-    })),
-    token = localStorage.getItem('token');
+    const {ppcLink} = useSelector(state => ({
+            ppcLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.connect_link : '',
+        })),
+        token = localStorage.getItem('token');
 
   const redirectLink = `${ppcLink}&state=${token}`;
 

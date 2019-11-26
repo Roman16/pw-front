@@ -225,6 +225,7 @@
           margin: 0;
           border: none;
           color: @second-account-color;
+          position: relative;
 
           .input-wrap {
             input {
@@ -240,6 +241,12 @@
             .form-control {
               font-size: inherit; // 13px
               border: none;
+
+              &.error {
+                input {
+                  border: 1px solid red;
+                }
+              }
             }
 
             .form-control::placeholder {
@@ -249,6 +256,13 @@
             .ant-input-suffix {
               cursor: pointer;
             }
+
+          }
+
+          .input-error {
+            color: red;
+            position: absolute;
+            bottom: -20px;
           }
         }
 

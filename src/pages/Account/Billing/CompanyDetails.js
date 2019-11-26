@@ -51,9 +51,9 @@ const CompanyDetails = ({onOpenWindow, company}) => {
             </div>}
 
             <div className='buttons-block'>
-                <button className='btn green-btn' onClick={() => onOpenWindow('company')}>
+                {company && <button className='btn green-btn' onClick={() => onOpenWindow('company')}>
                     Add company details
-                </button>
+                </button>}
             </div>
         </section>
     )

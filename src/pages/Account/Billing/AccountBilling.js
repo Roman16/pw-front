@@ -125,7 +125,7 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
 
                             {(paymentCards.length > 5 ? [0, 1, 2, 3, 4] : paymentCards).map((item, index) => (
                                 <div
-                                    key={item.id}
+                                    key={`shadow_${paymentCards[index].id}`}
                                     className='card-shadow'
                                     style={{
                                         top: `${0 - 5 * index}px`,
@@ -169,9 +169,9 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                 </div>}
 
                 <div className="buttons-block">
-                    <button className='btn green-btn' onClick={() => onOpenWindow('updateCard')}>
+                   {paymentCards.length < 10 && <button className='btn green-btn' onClick={() => onOpenWindow('updateCard')}>
                         Add card
-                    </button>
+                    </button>}
                 </div>
             </section>
 

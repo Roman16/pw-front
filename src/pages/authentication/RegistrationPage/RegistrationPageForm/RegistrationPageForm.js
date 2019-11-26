@@ -10,19 +10,19 @@ import StripeForm from "./StripeForm";
 
 const recaptchaKey = process.env.GOOGLE_RECAPTCHA_KEY || '6LdVacEUAAAAACxfVkvIWG3r9MXE8PYKXJ5aaqY1';
 
-const $style = document.createElement("style");
-
 class RegistrationPage extends Component {
     state = {
         name: '',
         last_name: '',
         email: '',
         password: '',
-        address_line1: '',
-        address_city: '',
-        address_state: '',
-        address_country: '',
-        address_zip: '',
+
+        line1: '',
+        city: '',
+        state: '',
+        country: '',
+        postal_code: '',
+
         captcha_action: 'registration',
         stripe_token: null,
         registerSuccess: false,
@@ -43,11 +43,13 @@ class RegistrationPage extends Component {
             card_number,
             expiry,
             cvc,
-            address_line1,
-            address_city,
-            address_state,
-            address_country,
-            address_zip,
+
+            line1,
+            city,
+            state,
+            country,
+            postal_code,
+
             stripe_token,
             captcha_action
         } = this.state;
@@ -97,25 +99,36 @@ class RegistrationPage extends Component {
             // }
         } else {
             // try {
-            let res = stripe_token ? stripe_token : await this.props.stripe.createToken({
-                address_line1,
-                address_city,
-                address_state,
-                address_country,
-                address_zip
-            });
 
+            const billing_details = {};
+
+            if (name) {
+                billing_details.name = name + ' ' + last_name;
+            }
+            if (line1 || city || state || country || postal_code) {
+                billing_details.address = {
+                    line1,
+                    city,
+                    state,
+                    country,
+                    postal_code
+                }
+            }
+
+            billing_details.address && Object.keys(billing_details.address).forEach((key) => !billing_details.address[key] && delete billing_details.address[key]);
+
+            let res = stripe_token ? stripe_token : await this.props.stripe.createPaymentMethod('card', {billing_details});
             this.setState({stripe_token: res}, () => {
                     window.grecaptcha.ready(() => {
                         window.grecaptcha.execute(recaptchaKey, {action: 'registration'})
                             .then((token) => {
-                                res.token ?
+                                res.paymentMethod ?
                                     this.props.regist({
                                         name,
                                         last_name,
                                         email,
                                         password,
-                                        stripe_token: res.token ? res.token.id : null,
+                                        stripe_token: res.paymentMethod ? res.paymentMethod.id : null,
                                         captcha_token: token,
                                         captcha_action
                                     })
@@ -127,7 +140,7 @@ class RegistrationPage extends Component {
                                         password,
                                         captcha_token: token,
                                         captcha_action
-                                    })
+                                    });
                             });
                     })
                 }
@@ -152,7 +165,7 @@ class RegistrationPage extends Component {
     };
 
 
-    handleChangeCountry = (country) => this.setState({address_country: country});
+    handleChangeCountry = (country) => this.setState({country: country});
     handleChangeState = (state) => this.setState({address_state: state});
     onChange = ({target: {name, value}}) => this.setState({[name]: value});
 
@@ -164,7 +177,7 @@ class RegistrationPage extends Component {
             password,
             registerSuccess,
             isLoading,
-            address_country
+            country
         } = this.state;
 
         if (isLoading) {

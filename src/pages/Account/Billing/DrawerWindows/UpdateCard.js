@@ -23,7 +23,7 @@ const CardNumberElementStyles = {
 };
 
 const StripeForm = (props) => {
-    const {stripeElementChange, handleSubmit, onClose, handleChangeInput, countriesList, onChangeSelect, paymentDetails, selectedCard} = props;
+    const {stripeElementChange, handleSubmit, onClose, handleChangeInput, countriesList, onChangeSelect, paymentDetails, selectedCard, cardNumber, expiry} = props;
     return (
         <form onSubmit={handleSubmit}>
             <div className="card-container">
@@ -45,6 +45,7 @@ const StripeForm = (props) => {
                         <label className="label">Expiry</label>
                         {!selectedCard.id && <CardExpiryElement
                             style={CardNumberElementStyles}
+                            ref={(instance) => {(cardNumber && instance) && instance._element.focus()}}
                             onChange={(element) => stripeElementChange(element, 'expiry')}
                         />}
 
@@ -52,10 +53,12 @@ const StripeForm = (props) => {
                             {selectedCard.exp_month}/{moment(selectedCard.exp_year, 'YYYY').format('YY')}
                         </div>}
                     </div>
+
                     <div className="card-container__cvc">
                         <label className="label">CVC</label>
                         {!selectedCard.id && <CardCvcElement
                             style={CardNumberElementStyles}
+                            ref={(instance) => {(expiry && instance) && instance._element.focus(); }}
                             onChange={(element) => stripeElementChange(element, 'cvc')}
                         />}
 
@@ -203,6 +206,7 @@ class UpdateCard extends Component {
     };
 
     stripeElementChange = (element, name) => {
+        console.log();
         if (!element.empty && element.complete) {
             this.setState({
                 [name]: true
@@ -247,7 +251,6 @@ class UpdateCard extends Component {
 
         try {
             if (card) {
-                console.log(card);
                 onSubmit({
                     ...paymentDetails,
                     id: card.id,
@@ -271,6 +274,7 @@ class UpdateCard extends Component {
                 billing_details.address && Object.keys(billing_details.address).forEach((key) => !billing_details.address[key] && delete billing_details.address[key]);
 
                 const res = await this.props.stripe.createPaymentMethod('card', {billing_details});
+
                 onSubmit({
                     ...paymentDetails,
                     stripe_token: res.paymentMethod.id
@@ -298,7 +302,9 @@ class UpdateCard extends Component {
 
     render() {
         const {onClose} = this.props,
-            {countriesList, paymentDetails, selectedCard} = this.state;
+            {
+                countriesList, paymentDetails, selectedCard, card_number,expiry
+            } = this.state;
 
         return (
             <div className='drawer-window add-card-window update-card-info'>
@@ -320,6 +326,9 @@ class UpdateCard extends Component {
                     countriesList={countriesList}
                     paymentDetails={paymentDetails}
                     selectedCard={selectedCard}
+
+                    cardNumber={card_number}
+                    expiry={expiry}
                 />
             </div>
         )
