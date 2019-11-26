@@ -8,14 +8,16 @@ export const userUrls = {
     updatePhoto: 'user/account/personal/change-avatar',
     changePassword: 'user/account/personal/change-password',
     //billing
-    paymentMethodList: 'user/account/payment-method/list',
-    addPaymentMethod: 'user/account/payment-method/add',
-    updatePaymentMethod: (id) => `user/account/payment-method/${id}/update`,
-    deletePaymentMethod: (id) => `user/account/payment-method/${id}/delete`,
-    setDefaultPaymentMethod: (id) => `user/account/payment-method/${id}/set-as-default`,
-    //
-    billingHistory: 'user/billing/history',
-    companyInformation: 'user/company',
+    paymentMethodList: 'user/account/payment/method/list',
+    addPaymentMethod: 'user/account/payment/method/add',
+    updatePaymentMethod: (id) => `user/account/payment/method/${id}/update`,
+    deletePaymentMethod: (id) => `user/account/payment/method/${id}/delete`,
+    setDefaultPaymentMethod: (id) => `user/account/payment/method/${id}/set-as-default`,
+    //company
+    companyInformation: (id) => `user/account/payment/method/${id}/metadata`,
+    //payment history
+    paymentHistoryList: 'user/account/payment/history/list',
+
 };
 
 export const productsUrls = {

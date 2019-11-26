@@ -107,9 +107,9 @@ function getUserInfo() {
         userService.getUserInfo().then(res => {
             dispatch(setInformation(res));
 
-            if (!res.account_links.amazon_mws.is_connected) {
+            if (!res.account_links[0].amazon_mws.is_connected) {
                 history.push('/mws');
-            } else if (!res.account_links.amazon_ppc.is_connected) {
+            } else if (!res.account_links[0].amazon_ppc.is_connected) {
                 history.push('/ppc');
             } else {
                 history.push('/ppc/optimization');
@@ -133,9 +133,9 @@ function getAuthorizedUserInfo() {
         userService.getUserInfo().then(res => {
             dispatch(setInformation(res));
 
-            if (!res.account_links.amazon_mws.is_connected) {
+            if (!res.account_links[0].amazon_mws.is_connected) {
                 history.push('/mws');
-            } else if (!res.account_links.amazon_ppc.is_connected) {
+            } else if (!res.account_links[0].amazon_ppc.is_connected) {
                 history.push('/ppc');
             }
         });

@@ -1,7 +1,7 @@
 import React from "react";
+import {allCountries} from '../../../utils/countries';
 
-const CompanyDetails = ({onOpenWindow, company: {name, address1, address2, zip, city, country}}) => {
-
+const CompanyDetails = ({onOpenWindow, company}) => {
     return (
         <section className='company-details-block page-box'>
             <div className='block-description'>
@@ -14,41 +14,47 @@ const CompanyDetails = ({onOpenWindow, company: {name, address1, address2, zip, 
                 </span>
             </div>
 
-            <div className='company-information'>
+            {company && <div className='company-information'>
                 <div className='column'>
-                    {name && <div>
+                    {company.name && <div>
                         <label htmlFor="">Company</label>
-                        <span>{name  || 'Fidget Spinners International'}</span>
+                        <span>{company.name || 'Fidget Spinners International'}</span>
                     </div>}
-                    {city && <div>
+                    {company.city && <div>
                         <label htmlFor="">City</label>
-                        <span>{city  || ''}</span>
+                        <span>{company.city || ''}</span>
                     </div>}
-                    {zip && <div>
+                    {company.zip && <div>
                         <label htmlFor="">Zip</label>
-                        <span>{zip  || ''}</span>
+                        <span>{company.zip || ''}</span>
+                    </div>}
+                    {company.state && <div>
+                        <label htmlFor="">State</label>
+                        <span>{company.state || ''}</span>
                     </div>}
                 </div>
 
                 <div className='column'>
-                    {address1 && <div>
+                    {company.address1 && <div>
                         <label htmlFor="">Address Line 1</label>
-                        <span>{address1  || ''}</span>
+                        <span>{company.address1 || ''}</span>
                     </div>}
-                    {address2 && <div>
+                    {company.address2 && <div>
                         <label htmlFor="">Address Line 2</label>
-                        <span>{address2  || ''}</span>
+                        <span>{company.address2 || ''}</span>
                     </div>}
-                    {country && <div>
+                    {company.country && <div>
                         <label htmlFor="">Country</label>
-                        <span>{country  || ''}</span>
+                        <span>{allCountries[company.country] || ''}</span>
                     </div>}
                 </div>
-            </div>
+            </div>}
 
-            <button className='btn green-btn' onClick={() => onOpenWindow('company')}>
-                Add company details
-            </button>
+            <div className='buttons-block'>
+                <button className='btn green-btn' onClick={() => onOpenWindow('company')}>
+                    Add company details
+                </button>
+            </div>
         </section>
     )
 };

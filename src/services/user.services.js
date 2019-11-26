@@ -68,39 +68,52 @@ function changePassword({current_password, new_password, password_confirmation})
 
 //-------------------------------------
 //-------------company-----------------
-function fetchCompanyInformation() {
-    return api('get', userUrls.companyInformation);
+function fetchCompanyInformation(cardId) {
+    return api('get', userUrls.companyInformation(cardId));
 }
 
-function updateCompanyInformation(company) {
-    return api('post', userUrls.companyInformation, company);
+function updateCompanyInformation(cardId, company) {
+    const data = company;
+    Object.keys(data).forEach((key) => (data[key] == null || data[key] === "") && delete data[key]);
+    return api('post', userUrls.companyInformation(cardId), data);
 }
+
 //-------------------------------------
 
 //-------------------------------------
-//-------------billing-----------------
+//-------------payment-----------------
 function fetchBillingInformation() {
     return api('get', userUrls.paymentMethodList);
 }
+
 function addPaymentMethod(data) {
     return api('post', userUrls.addPaymentMethod, data);
 }
-function updatePaymentMethod(data) {
+
+function updatePaymentMethod(card) {
+    const data = card;
+    Object.keys(data).forEach((key) => (data[key] == null || data[key] === "") && delete data[key]);
     return api('post', userUrls.updatePaymentMethod(data.id), data);
 }
+
 function setDefaultPaymentMethod(id) {
     return api('post', userUrls.setDefaultPaymentMethod(id));
 }
+
 function deletePaymentMethod(id) {
-    return api('post', userUrls.setDefaultPaymentMethod(id));
+    return api('post', userUrls.deletePaymentMethod(id));
 }
 
-function fetchBillingHistory() {
-    return api('get', userUrls.billingHistory);
+//-------------------------------------
+//-------------payment history---------
+
+function fetchBillingHistory(pagination) {
+    return api('get', userUrls.paymentHistoryList);
 }
+
+//-------------------------------------
 function getStripeAvailableCountries() {
     return axios.get(`https://api.stripe.com/v1/country_specs?limit=100`, {
         headers: {'Authorization': `Bearer ${stripeKey}`}
     });
 }
-//-------------------------------------

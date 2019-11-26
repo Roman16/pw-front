@@ -36,7 +36,6 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             title: 'Amount Due',
             dataIndex: 'amount_due',
             key: 'amount_due',
-            render: (text) => (<span>${text}</span>)
         },
         {
             title: 'Status',
@@ -57,7 +56,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
                 </span>
             </div>
 
-            {historyList && <div className='history-list'>
+            {historyList.length > 0 && <div className='history-list'>
                 <h3>Campaign Statistics</h3>
 
                 <CustomTable

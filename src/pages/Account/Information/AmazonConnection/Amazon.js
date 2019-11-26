@@ -26,14 +26,14 @@ const Amazon = ({amazonTokens}) => {
         merchant_id: ''
     });
     const {ppcLink, mwsLink, ppcConnected, mwsConnected} = useSelector(state => ({
-            ppcLink: state.user.account_links
-                ? state.user.account_links.amazon_ppc.connect_link
+            ppcLink: state.user.account_links.length > 0
+                ? state.user.account_links[0].amazon_ppc.connect_link
                 : '',
-            mwsLink: state.user.account_links
-                ? state.user.account_links.amazon_mws.connect_link
+            mwsLink: state.user.account_links.length > 0
+                ? state.user.account_links[0].amazon_mws.connect_link
                 : '',
-            ppcConnected: state.user.account_links && state.user.account_links.amazon_ppc.is_connected,
-            mwsConnected: state.user.account_links && state.user.account_links.amazon_mws.is_connected
+            ppcConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.is_connected,
+            mwsConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.is_connected
         })),
         token = localStorage.getItem('token');
 
