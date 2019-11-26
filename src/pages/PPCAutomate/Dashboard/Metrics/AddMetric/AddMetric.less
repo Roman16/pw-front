@@ -42,7 +42,6 @@
     }
 
 
-
     @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
       & {
         height: 75px;
@@ -73,15 +72,15 @@
 
   .ant-modal-body {
     .visible-list {
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-column-gap: 20px;
+      grid-row-gap: 30px;
 
       .default-visible-item {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 18%;
         height: 100px;
         background: #FFFFFF;
         border: 1px dashed #77777e;
@@ -92,17 +91,11 @@
 
       .metric-item {
         .metric-item-default-style();
-
-        width: 18%;
-        margin-right: 2%;
+        width: 100%;
         position: relative;
         box-shadow: 0px 0px 20px rgba(142, 147, 192, 0.08);
         cursor: pointer;
-
-        &:last-child,
-        &:nth-child(5n + 5) {
-          margin-right: 0;
-        }
+        margin: 0;
 
         .remove-item {
           .action-button();
@@ -116,18 +109,18 @@
       font-size: 0.8571428571428571rem;
       color: #656A84;
       margin: 40px 0 32px 0;
+
     }
 
     .hidden-list {
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-column-gap: 20px;
+      grid-row-gap: 30px;
 
       .metric-item {
         .metric-item-default-style();
-
-        width: 18%;
-        margin-right: 2%;
+        width: 100%;
         position: relative;
         box-shadow: 0px 0px 20px rgba(142, 147, 192, 0.08);
         cursor: pointer;

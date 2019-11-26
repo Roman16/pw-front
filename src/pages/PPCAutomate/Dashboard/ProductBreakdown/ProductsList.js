@@ -125,7 +125,9 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: 'Budget Allocation',
+            title: () => <div>Budget Allocation <Tooltip
+            description={'A budget allocation is the amount of funding designated to each of your product.'}
+            /></div>,
             dataIndex: 'budget_allocation',
             key: 'budget_allocation',
             width: 100,
@@ -141,10 +143,12 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: 'Sales Share',
+            title: () => <div>Sales Share <Tooltip
+                description={'The percentage of sales allocated to the given product.'}
+            /></div>,
             dataIndex: 'sales_share',
             key: 'sales_share',
-            width: 100,
+            width: 110,
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${round(text, 2)}%` : 'N/A'}
@@ -157,7 +161,9 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: 'CPA',
+            title: () => <div>CPA <Tooltip
+                description={'Cost to acquire one paying customer on a campaign.'}
+            /></div>,
             dataIndex: 'cpa',
             key: 'cpa',
             width: 100,
@@ -173,7 +179,9 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: 'CVR Rate',
+            title: () => <div>Ad CVR <Tooltip
+                description={'The Conversion Rate of a campaign is the percentage of people who clicked on an ad and then completed an action/purchase/conversion.'}
+            /></div>,
             dataIndex: 'conversion_rate',
             key: 'conversion_rate',
             width: 100,

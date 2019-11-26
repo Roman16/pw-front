@@ -90,7 +90,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
         removeSelectedMetric(metric)
     };
 
-    const metricInformation = metricsListArray.find(item => item.key === key).info;
+    const metricInformation = metricsListArray.find(item => item.key === key);
 
     return (
         <div className='metric-item' onClick={handleClick}>
@@ -101,11 +101,11 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
 
 
             <div className="title-info">
-                {title}
+                {metricInformation.title}
                 {key === 'profit' ?
                     <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>
                     :
-                    metricInformation && <Tooltip description={metricInformation}/>
+                    metricInformation.info && <Tooltip description={metricInformation.info}/>
                 }
 
                 <div className="close" onClick={handleRemoveItem}>

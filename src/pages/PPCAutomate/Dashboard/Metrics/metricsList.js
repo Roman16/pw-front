@@ -88,14 +88,16 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'percent'
     },
     {
-        title: 'Conversion Rate',
+        title: 'Ad CVR',
         key: 'conversion_rate',
+        info: 'The Conversion Rate of a campaign is the percentage of people who clicked on an ad and then completed an action/purchase/conversion.',
         label: 'Average',
         type: 'percent'
     },
     {
         title: 'CPA',
         key: 'cpa',
+        info: 'Cost to acquire one paying customer on a campaign.',
         label: 'Average',
         type: 'currency'
     },
