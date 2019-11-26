@@ -5,12 +5,6 @@ import {
 import ChartTooltip from "./ChartTooltip";
 import moment from "moment";
 
-const CustomLeftTicks = (text) => {
-    return (
-        <span style={{color: '#82ca9d'}}>{text}</span>
-    )
-};
-
 const Chart = ({
                    data,
                    activeMetrics,
@@ -52,7 +46,6 @@ const Chart = ({
 
     return (
         <ResponsiveContainer height='80%' width='100%'>
-
             <LineChart
                 data={data}
                 margin={{top: 10, bottom: 10}}
@@ -79,7 +72,6 @@ const Chart = ({
                     yAxisId="left"
                     axisLine={false}
                     stroke="#82ca9d"
-                    tickFormatter={<CustomLeftTicks />}
                 />
 
                 <YAxis
