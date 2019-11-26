@@ -68,7 +68,7 @@ const StripeForm = ({stripeElementChange, onChangeInput, onChangeCountry, onChan
                     <label className="label">Street Address</label>
                     <input
                         type="text"
-                        name='address_line1'
+                        name='line1'
                         onChange={onChangeInput}
                     />
                 </div>
@@ -79,7 +79,7 @@ const StripeForm = ({stripeElementChange, onChangeInput, onChangeCountry, onChan
                     <label className="label">City</label>
                     <input
                         type="text"
-                        name='address_city'
+                        name='city'
                         onChange={onChangeInput}
                     />
                 </div>
@@ -87,7 +87,7 @@ const StripeForm = ({stripeElementChange, onChangeInput, onChangeCountry, onChan
                     <label className="label">Zip</label>
                     <input
                         type="text"
-                        name='address_zip'
+                        name='postal_code'
                         onChange={onChangeInput}
                     />
                 </div>
@@ -99,15 +99,24 @@ const StripeForm = ({stripeElementChange, onChangeInput, onChangeCountry, onChan
                         ))}
                     </Select>
                 </div>
-                {selectedCountry === 'US' && <div className="card-container__state">
+                {/*{selectedCountry === 'US' && <div className="card-container__state">*/}
+                {/*    <label className="label">State</label>*/}
+                {/*    <Select onChange={onChangeState}>*/}
+                {/*        {states.map(item => (*/}
+                {/*            <Option key={item.abbreviation}>{item.name}</Option>*/}
+                {/*        ))}*/}
+                {/*    </Select>*/}
+                {/*</div>}*/}
+
+                <div className="card-container__zip">
                     <label className="label">State</label>
-                    <Select onChange={onChangeState}>
-                        {states.map(item => (
-                            <Option key={item.abbreviation}>{item.name}</Option>
-                        ))}
-                    </Select>
+                    <input
+                        type="text"
+                        name='state'
+                        onChange={onChangeInput}
+                    />
                 </div>
-                }
+
             </div>
         </div>
     );
