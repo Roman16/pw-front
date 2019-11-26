@@ -6,6 +6,10 @@
   flex-direction: column;
   margin: 24px 0 0 24px;
 
+  // @media (max-width: 899px) {
+  //   width: 19.071428571em;
+  // }
+
   .products {
     overflow: auto;
   }
@@ -44,9 +48,13 @@
     justify-content: space-between;
     margin: 1.428571429em 0;
 
-    label {
-      margin: 0 0.714285714em 0 0;
-      font-weight: 500;
+    .active-only {
+      margin-left: 0.714285714em;
+
+      label {
+        margin: 0 0.714285714em 0 0;
+        font-weight: 500;
+      }
     }
 
     .ant-btn {
