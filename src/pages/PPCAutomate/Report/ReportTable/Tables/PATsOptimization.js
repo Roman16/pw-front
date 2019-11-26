@@ -201,7 +201,7 @@ const PATsOptimization = ({
             onChange(changedPATBidACoS);
           }}
         >
-          Changed PAT Bid (ACoS)
+          Changed PAT Bid (<span className='underline'>ACoS</span>)
         </TableButton>
         <TableButton
           active={activeTable === changedPATBidImpressions}
@@ -210,7 +210,7 @@ const PATsOptimization = ({
             onChange(changedPATBidImpressions);
           }}
         >
-          Changed PAT Bid (Impressions)
+          Changed PAT Bid (<span className='underline'>Impressions</span>)
         </TableButton>
         <TableButton
           active={activeTable === pausedManualPATHighACoS}
@@ -219,7 +219,7 @@ const PATsOptimization = ({
             onChange(pausedManualPATHighACoS);
           }}
         >
-          Paused Manual PAT (High ACoS)
+          Paused Manual PAT (<span className='underline'>High ACoS</span>)
         </TableButton>
         <TableButton
           active={activeTable === pausedManualPatNoSales}
@@ -228,7 +228,7 @@ const PATsOptimization = ({
             onChange(pausedManualPatNoSales);
           }}
         >
-          Paused Manual Pat (No Sales)
+          Paused Manual Pat (<span className='underline'>No Sales</span>)
         </TableButton>
       </div>
 

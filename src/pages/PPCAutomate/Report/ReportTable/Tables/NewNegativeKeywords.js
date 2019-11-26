@@ -146,7 +146,7 @@ const NewNegativeKeywords = ({
             onChange(highACoS);
           }}
         >
-          Created Negative Keyword From CST (High ACoS)
+          Created Negative Keyword From CST (<span className='underline'>High ACoS</span>)
         </TableButton>
         <TableButton
           active={activeTable === noSales}
@@ -155,7 +155,7 @@ const NewNegativeKeywords = ({
             onChange(noSales);
           }}
         >
-          Created Negative Keyword From CST (No Sales)
+          Created Negative Keyword From CST (<span className='underline'>No Sales</span>)
         </TableButton>
       </div>
 

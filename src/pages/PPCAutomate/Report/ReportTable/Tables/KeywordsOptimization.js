@@ -192,7 +192,7 @@ const KeywordsOptimization = ({
             onChange(changedKeywordBidAcos);
           }}
         >
-          Changed Keyword Bid (ACoS)
+          Changed Keyword Bid (<span className='underline'>ACoS</span>)
         </TableButton>
         <TableButton
           active={changedKeywordBidImpression === activeTable}
@@ -201,7 +201,7 @@ const KeywordsOptimization = ({
             onChange(changedKeywordBidImpression);
           }}
         >
-          Changed Keyword Bid (Impressions)
+          Changed Keyword Bid (<span className='underline'>Impressions</span>)
         </TableButton>
         <TableButton
           active={pausedKeywordHighAcos === activeTable}
@@ -210,7 +210,7 @@ const KeywordsOptimization = ({
             onChange(pausedKeywordHighAcos);
           }}
         >
-          Paused Keyword (High ACoS)
+          Paused Keyword (<span className='underline'>High ACoS</span>)
         </TableButton>
         <TableButton
           active={pausedKeywordNoSales === activeTable}
@@ -219,7 +219,7 @@ const KeywordsOptimization = ({
             onChange(pausedKeywordNoSales);
           }}
         >
-          Paused Keyword (No Sales)
+          Paused Keyword (<span className='underline'>No Sales</span>)
         </TableButton>
       </div>
 
