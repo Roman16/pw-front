@@ -1,8 +1,7 @@
 .product-breakdown {
-  width: max-content;
+  width: 70%;
   margin: 0 25px 0 0;
   font-family: ir;
-  flex: 1;
 
   .title {
     width: 100%;
@@ -31,6 +30,7 @@
       }
     }
   }
+
 
   .products-table {
     height: calc(100% - 38px);
@@ -133,7 +133,7 @@
 
       .product-item {
         .product-information {
-          min-width: 250px;
+          min-width: 260px;
           width: 100%;
           height: 84px;
           background: #fff;
@@ -202,6 +202,7 @@
       }
 
       .product-params {
+        max-width: 50px;
         font-style: normal;
         font-weight: 500;
         font-size: 1.7142857142857142rem;
@@ -289,6 +290,10 @@
     margin-bottom: 0;
   }
 
+  .custom-tooltip {
+    margin-left: 5px;
+  }
+
 
   @media (max-width: 1200px) {
     & {
@@ -302,16 +307,25 @@
   /*Retina CSS */
   //-------------------------------------
   @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-    .table-overflow {
-      .table-body {
-        .table-body__row {
-          .product-item {
-            height: 63px;
+    & {
+      table {
+        .ant-table-tbody {
+          td {
+            max-width: 40px;
+
+            &:first-child {
+              min-width: 240px;
+            }
+
+            .product-item {
+              .product-information {
+                min-width: 220px;
+              }
+            }
           }
         }
       }
     }
-
   }
 }
 
