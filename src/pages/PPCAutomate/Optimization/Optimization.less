@@ -106,6 +106,10 @@
             column-gap: 1.42857em;
           }
 
+          @media (max-width: 619px) {
+            grid-template-columns: 20em minmax(min-content, 100%);
+          }
+
           .product-info {
             font-size: 1.42857rem; // 20px
             grid-area: info;
@@ -141,6 +145,10 @@
               .product-info-strategy {
                 flex-direction: column-reverse;
               }
+            }
+
+            @media (max-width: 619px) {
+              grid-template-columns: 14em minmax(min-content, 100%);
             }
 
             &.more {
@@ -217,10 +225,6 @@
               column-gap: 1.42857em;
             }
 
-            // @media (max-width: @big-desktop) {
-            //   grid-template-areas: 'options strategy' 'descriptions strategy';
-            // }
-
             @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
               only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
               only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
@@ -235,6 +239,10 @@
               grid-template-areas: "options strategy" "descriptions strategy";
             }
 
+            @media (max-width: 619px) {
+              grid-template-columns: 20em minmax(min-content, 100%);
+            }
+
             .optimize-options {
               grid-area: options;
             }
@@ -245,14 +253,14 @@
 
             .descriptions {
               grid-area: descriptions;
+
+              @media (max-width: 619px) {
+                width: 20em;
+              }
             }
 
             &.less {
               max-height: 30em;
-
-              // @media (max-width: @big-desktop) {
-              //   max-height: 43.92857em;
-              // }
 
               @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
                 only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),

@@ -1,15 +1,9 @@
-@import '../../../../style/variables';
+@import "../../../../style/variables";
 
 .optimize-strategy {
   .strategies {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-
-    // @media (max-width: @big-desktop) {
-    //   grid-template-columns: repeat(2, 1fr);
-    //   grid-template-rows: repeat(2, 1fr);
-    //   gap: 0.71429em;
-    // }
 
     @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
       only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
@@ -42,10 +36,6 @@
   @media (max-width: 1719px) {
     width: 11.07143em;
   }
-
-  // @media (max-width: @big-desktop) {
-  //   padding: 0.35714em 0.71429em;
-  // }
 
   @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
     only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
@@ -129,64 +119,72 @@
     background: #6d6df6;
     border-color: #6d6df6;
     box-shadow: @tooltip-shadow;
+    color: #fff;
+
+    .params-item {
+      .params-value {
+        font-weight: 600;
+        color: #fff;
+      }
+    }
 
     .strategy-control {
       margin-bottom: 0;
     }
 
-    @media (min-width: @laptop) {
-      color: #fff;
+    // @media (min-width: @laptop) {
+    //   color: #fff;
 
-      .params-item {
-        .params-value {
-          font-weight: 600;
-          color: #fff;
-        }
-      }
-    }
+    //   .params-item {
+    //     .params-value {
+    //       font-weight: 600;
+    //       color: #fff;
+    //     }
+    //   }
+    // }
   }
 
-  @media (max-width: @laptop) {
-    & {
-      border: 1px solid #c9cbd4;
+  // @media (max-width: @laptop) {
+  //   & {
+  //     border: 1px solid #c9cbd4;
 
-      .strategy-checkbox {
-        display: block;
-        margin-right: 0.47059em;
-      }
+  //     .strategy-checkbox {
+  //       display: block;
+  //       margin-right: 0.47059em;
+  //     }
 
-      .params {
-        display: flex;
-        justify-content: space-between;
+  //     .params {
+  //       display: flex;
+  //       justify-content: space-between;
 
-        .params-item {
-          justify-content: center;
-          width: unset;
+  //       .params-item {
+  //         justify-content: center;
+  //         width: unset;
 
-          .params-name {
-            margin-right: 0.28571em;
+  //         .params-name {
+  //           margin-right: 0.28571em;
 
-            &:after {
-              content: ':';
-            }
-          }
-        }
-      }
+  //           &:after {
+  //             content: ':';
+  //           }
+  //         }
+  //       }
+  //     }
 
-      .strategy-control {
-        display: none;
-      }
+  //     .strategy-control {
+  //       display: none;
+  //     }
 
-      &.selected {
-        background: white;
-        border-color: transparent;
+  //     &.selected {
+  //       background: white;
+  //       border-color: transparent;
 
-        .params-item {
-          .params-value {
-            font-weight: 600;
-          }
-        }
-      }
-    }
-  }
+  //       .params-item {
+  //         .params-value {
+  //           font-weight: 600;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 }
