@@ -1,4 +1,4 @@
-@import '../../../style/variables.less';
+@import "../../../style/variables.less";
 
 .optimization-page {
   height: 100vh;
@@ -28,7 +28,7 @@
       display: grid;
       grid-template-columns: 28.57143em minmax(min-content, 100%);
       grid-template-rows: repeat(3, minmax(min-content, max-content));
-      grid-template-areas: 'info info' 'optionsStrategy optionsStrategy' 'control control';
+      grid-template-areas: "info info" "optionsStrategy optionsStrategy" "control control";
       column-gap: 4.28571em;
       margin-bottom: 1.64286em;
 
@@ -134,7 +134,7 @@
         display: grid;
         grid-template-columns: 28.57143em minmax(min-content, 100%);
         grid-template-rows: repeat(2, minmax(min-content, max-content));
-        grid-template-areas: 'options strategy' '. descriptions';
+        grid-template-areas: "options strategy" ". descriptions";
         column-gap: 4.28571em;
         overflow: hidden;
         transition: all 0.5s ease-in;
@@ -152,14 +152,14 @@
           only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
           only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
           only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
-          grid-template-areas: 'options strategy' 'descriptions strategy';
+          grid-template-areas: "options strategy" "descriptions strategy";
         }
 
         @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
           only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
           only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
           only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
-          grid-template-areas: 'options strategy' 'descriptions strategy';
+          grid-template-areas: "options strategy" "descriptions strategy";
         }
 
         .optimize-options {
