@@ -79,6 +79,7 @@
     display: flex;
     flex-direction: column;
     padding: 0.285714286em;
+    padding-bottom: 0;
     margin: 0.285714286em;
     position: relative;
 
@@ -224,7 +225,7 @@
         .on-optimization,
         .optimization-waiting {
           top: auto;
-          bottom: 0;
+          bottom: -.95em;
           right: -0.38em;
           text-align: right;
 
@@ -238,7 +239,7 @@
           }
 
           .ant-spin-dot {
-            font-size: 12px;
+            font-size: 0.8571428571428571rem;
 
             i {
               width: 5px;
@@ -257,22 +258,14 @@
   //-------------------------------------
   /*Retina CSS */
   //-------------------------------------
-  // @media only screen and (min--moz-device-pixel-ratio: 2),
-  //   only screen and (-webkit-min-device-pixel-ratio: 2),
-  //   only screen and (min-device-pixel-ratio: 2) {
-  //   & {
-  //     // width: 19.071428571em;
-
-  //     .ant-input-search {
-  //       .ant-input {
-  //         font-size: 1rem; // 14px
-  //         height: 1.714285714em;
-  //       }
-  //     }
-
-  //     .product-item {
-  //       min-height: 4.928571429em;
-  //     }
-  //   }
-  // }
+   @media only screen and (min--moz-device-pixel-ratio: 2),
+     only screen and (-webkit-min-device-pixel-ratio: 2),
+     only screen and (min-device-pixel-ratio: 2) {
+     & {
+       .product-item .product-children-list .children-information .optimization-waiting .ant-spin {
+         right: 11%;
+         bottom: 11%;
+       }
+     }
+   }
 }
