@@ -220,7 +220,7 @@ const Sidebar = () => {
                                       <Avatar
                                           className="avatar"
                                           src={domainName + user.user.avatar}
-                                          size={30}
+                                          size={24}
                                       />
                                   </i>
                               ) : (

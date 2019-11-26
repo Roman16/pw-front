@@ -5,6 +5,12 @@ import {
 import ChartTooltip from "./ChartTooltip";
 import moment from "moment";
 
+const CustomLeftTicks = (text) => {
+    return (
+        <span style={{color: '#82ca9d'}}>{text}</span>
+    )
+};
+
 const Chart = ({
                    data,
                    activeMetrics,
@@ -72,11 +78,14 @@ const Chart = ({
                 <YAxis
                     yAxisId="left"
                     axisLine={false}
+                    stroke="#82ca9d"
+                    tickFormatter={<CustomLeftTicks />}
                 />
 
                 <YAxis
                     yAxisId="right"
                     orientation="right"
+                    stroke="#8884d8"
                     axisLine={false}
                 />
 
@@ -103,7 +112,7 @@ const Chart = ({
                 {(activeMetrics && activeMetrics[0].key && showDailyChart) && <Line
                     yAxisId='left'
                     type="linear"
-                    strokeOpacity={0.5}
+                    strokeOpacity={0.8}
                     dataKey="daily_first_metric_value"
                     stroke="#8FD39D"
                     strokeWidth={2}

@@ -32,12 +32,6 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
 
             <img src={dailyLineIcon} alt="" className='daily-icon'/>
 
-            <div className='pair-name'>
-                {firstActiveMetricTitle}
-                {(firstActiveMetricTitle && secondActiveMetricTitle) && '/'}
-                {secondActiveMetricTitle}
-            </div>
-
             <div className='chart-legend'>
                 {firstActiveMetricTitle && <div className="first-line">
                     <img src={greenLineIcon} alt="" className="green-line"/>

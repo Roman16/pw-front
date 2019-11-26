@@ -4,6 +4,7 @@
   font-family: ir;
   display: flex;
   flex-direction: column;
+  top: 10vh;
   max-height: 90vh;
 
   .ant-modal-close {
@@ -36,11 +37,11 @@
     }
   }
 
-  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-    & {
-      max-width: 900px;
-    }
-  }
+  //@media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+  //  & {
+  //    max-width: 900px;
+  //  }
+  //}
 
   @media (max-width: 1000px) {
    & {
@@ -83,6 +84,8 @@
   }
 
   .ant-modal-content {
+    height: 100%;
+    overflow: auto;
     padding: 16px 10px;
   }
   .ant-modal-content,

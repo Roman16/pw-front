@@ -24,6 +24,28 @@ const RenderPramsChanges = ({type, product}) => {
                     </div>
                 </div>
             )
+        } else if(type === 'acos_diff') {
+            return (
+                <div className='product-metric-changes up'>
+                    {value >= 25 && <div className='downward-changes'>
+                        {round(+value, 2)}%
+                        <img style={{transform: 'rotate(180deg)'}} src={downWhiteIcon} alt=""/>
+
+                    </div>}
+                    {(value > 0 && value < 25) && <div className='down-changes'>
+                        {round(+value, 2)}%
+                        <img style={{transform: 'rotate(180deg)'}} src={downBlackIcon} alt=""/>
+                    </div>}
+                    {(value <= 0 && value > -25) && <div className='up-changes'>
+                        {round(+value, 2)}%
+                        <img style={{transform: 'rotate(180deg)'}} src={upGreenIcon} alt=""/>
+                    </div>}
+                    {(value <= -25) && <div className='upward-changes'>
+                        {round(+value, 2)}%
+                        <img style={{transform: 'rotate(180deg)'}} src={upWhiteIcon} alt=""/>
+                    </div>}
+                </div>
+            )
         } else {
             return (
                 <div className='product-metric-changes up'>
@@ -92,7 +114,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: 'Number of Optimization',
+            title: 'Total Changes',
             dataIndex: 'total_changes',
             key: 'total_changes',
             width: '50px',
