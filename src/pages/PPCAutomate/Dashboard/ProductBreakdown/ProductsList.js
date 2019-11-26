@@ -106,7 +106,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             ),
             key: 'id',
             dataIndex: 'id',
-            width: '300px',
+            width: 130,
             render: (text, record) => (
                 <ProductItem
                     product={record.product}
@@ -117,7 +117,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             title: 'Total Changes',
             dataIndex: 'total_changes',
             key: 'total_changes',
-            width: '50px',
+            width: 30,
             render: (text) => (
                 <div className='count-changes'>
                     {text || 0}
@@ -200,7 +200,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            width: 100,
+            width: 70,
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${round(text, 2)}%` : 'N/A'}
