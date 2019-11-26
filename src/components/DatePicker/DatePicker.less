@@ -13,10 +13,7 @@
     top: 50%;
     transform: translateY(-50%);
 
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
-      only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop), only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop), only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
       left: 0.5714286em;
     }
   }
@@ -24,6 +21,12 @@
   .ant-input {
     text-align: right;
     padding-right: 0;
+  }
+}
+
+td.ant-calendar-cell.ant-calendar-selected-start-date.ant-calendar-selected-end-date {
+  &:before {
+    display: none !important;
   }
 }
 
@@ -245,4 +248,5 @@
     }
   }
 }
+
 // .CalendarDay__default
