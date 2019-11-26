@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import reload from '../../../assets/img/icons/reload.svg';
-import ppcIcon from '../../../assets/img/icons/ppc-automate-icon.svg';
+import reload from "../../../assets/img/icons/reload.svg";
+import ppcIcon from "../../../assets/img/icons/ppc-automate-icon.svg";
 
 const PPCAutomate = ({ onOpenAccountWindow, onOpenReactivateWindow }) => {
   return (
@@ -33,9 +33,12 @@ const PPCAutomate = ({ onOpenAccountWindow, onOpenReactivateWindow }) => {
           <p className="ppc-text">
             Acces and edit your accounts Profit Whales subscription
           </p>
-          <Link className="ppc-link" to="/account/billing">
-            To view your invoices, see billing info
-          </Link>
+          <p className="ppc-link-wrap">
+            To view your invoices, see&nbsp;
+            <Link className="ppc-link" to="/account-billing">
+              billing info
+            </Link>
+          </p>
         </div>
         <div className="plan">
           <div className="charged">
@@ -48,7 +51,7 @@ const PPCAutomate = ({ onOpenAccountWindow, onOpenReactivateWindow }) => {
             </div>
             <div className="indicators">
               <p className="indicators-text">
-                based on{' '}
+                based on{" "}
                 <span className="indicators-data">
                   $ 145 + 4%<sub>monthly ad spend</sub>
                 </span>
