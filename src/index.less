@@ -1,4 +1,4 @@
-@import './style/variables.less';
+@import "./style/variables.less";
 
 html {
   box-sizing: border-box;
@@ -323,7 +323,7 @@ td.ant-calendar-cell.ant-calendar-selected-start-date::before {
   background: @success-color-opacity !important;
   background: radial-gradient(circle at -30px);
   border: 0 !important;
-  content: '' !important;
+  content: "" !important;
 }
 
 td.ant-calendar-cell.ant-calendar-selected-end-date::before {
@@ -336,7 +336,7 @@ td.ant-calendar-cell.ant-calendar-selected-end-date::before {
   background: @success-color-opacity !important;
   background: radial-gradient(circle at 30px);
   border: 0 !important;
-  content: '' !important;
+  content: "" !important;
 }
 
 td.ant-calendar-cell.ant-calendar-in-range-cell::before {
@@ -372,7 +372,7 @@ td.ant-calendar-cell.ant-calendar-in-range-cell::before {
       position: absolute;
       bottom: -3px;
       left: 0;
-      content: '';
+      content: "";
       background-color: @body-background;
     }
   }
@@ -466,9 +466,41 @@ button[disabled] {
 }
 
 /*
-*  SCROLLBAR
+*  CHECKBOX
+*/
+.ant-checkbox-wrapper,
+.ant-checkbox-wrapper-checked {
+  font-size: 1rem; // 14px
+
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: @action-color;
+    border-color: @action-color;
+  }
+
+  .ant-checkbox,
+  .ant-checkbox-checked,
+  .ant-checkbox-inner,
+  .ant-checkbox-input {
+    font-size: inherit; // 14px
+    width: 1.7142857em;
+    height: 1.7142857em;
+  }
+
+  .ant-checkbox-inner::after {
+    left: 30%;
+  }
+
+  span {
+    font-size: inherit; // 14px
+  }
+}
+/*
+*  CHECKBOX
 */
 
+/*
+*  SCROLLBAR
+*/
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -487,3 +519,6 @@ button[disabled] {
   background: @border-solid;
   border-radius: 2px;
 }
+/*
+*  SCROLLBAR
+*/
