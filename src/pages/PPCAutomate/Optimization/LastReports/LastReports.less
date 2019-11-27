@@ -1,12 +1,20 @@
-@import '../../../../style/variables.less';
-@import '../../../../style/mixins.less';
+@import "../../../../style/variables.less";
+@import "../../../../style/mixins.less";
 
 .optimization-page > .product-options > div.terminal {
   height: 100%;
+  min-height: 14em;
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
+    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 999px),
+    only screen and (min-device-pixel-ratio: 2) and (max-width: 999px) {
+    margin-bottom: 1.71428571em;
+  }
 
   .card();
 
@@ -162,6 +170,13 @@
       only screen and (-o-min-device-pixel-ratio: 2/1),
       only screen and (min-device-pixel-ratio: 2) {
       margin-right: 8em;
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 479px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 479px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 479px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 479px) {
+      margin-right: unset;
     }
   }
 }

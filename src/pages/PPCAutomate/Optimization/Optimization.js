@@ -102,7 +102,11 @@ class Optimization extends Component {
           <div className="product-options">
             <FreeTrial />
             <div className="options">
-              <div className={`product-info ${isLess && "more"}`}>
+              {/* <div className={`product-info ${isLess && "more"}`}>
+
+              </div> */}
+
+              <div className={`options-strategy ${isLess ? "more" : "less"}`}>
                 <div className="product-info-automate">
                   <span>What Parts Do You Want To Automate?</span>
                   <Icon
@@ -111,6 +115,7 @@ class Optimization extends Component {
                     onClick={() => this.showDrawer("options")}
                   />
                 </div>
+                <OptimizationOptions selectedProduct={selectedProduct} />
 
                 <div className="product-info-strategy">
                   <div className="product-select">
@@ -128,11 +133,6 @@ class Optimization extends Component {
                     </div>
                   )}
                 </div>
-              </div>
-
-              <div className={`options-strategy ${isLess ? "more" : "less"}`}>
-                <OptimizationOptions selectedProduct={selectedProduct} />
-
                 <OptimizationStrategy
                   onSelect={this.onSelectStrategy}
                   selectedStrategy={selectedStrategy}
