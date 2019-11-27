@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
@@ -43,6 +43,23 @@ const Chart = ({
     //     }
     // }
 
+    // const svg = document.querySelector('svg.recharts-surface');
+    // const line = document.querySelectorAll('.recharts-line-curve');
+    //
+    // const defs = document.createElementNS('http://www.w3.org/2000/svg', "defs");
+    //
+    // defs.innerHTML = '<filter id="f2" x="0" y="0" width="200%" height="200%">\n' +
+    //     '      <feOffset result="offOut" in="SourceGraphic" dx="20" dy="20" />\n' +
+    //     '      <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />\n' +
+    //     '      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />\n' +
+    //     '    </filter>';
+    //
+    //
+    // svg && svg.appendChild(defs);
+    //
+    // line.forEach(item => {
+    //     item.setAttribute('filter', 'url(#f2)');
+    // });
 
     return (
         <ResponsiveContainer height='80%' width='100%'>
@@ -84,12 +101,12 @@ const Chart = ({
                 <Tooltip
                     isAnimationActive={false}
                     content={
-                    <ChartTooltip
-                        activeMetrics={activeMetrics}
-                        showWeekChart={showWeekChart}
-                        showDailyChart={showDailyChart}
-                    />
-                }/>
+                        <ChartTooltip
+                            activeMetrics={activeMetrics}
+                            showWeekChart={showWeekChart}
+                            showDailyChart={showDailyChart}
+                        />
+                    }/>
 
                 {(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line
                     yAxisId="left"
