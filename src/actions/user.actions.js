@@ -49,12 +49,7 @@ function loginWithAmazon(user) {
 function logOut() {
     return dispatch => {
         history.push('/login');
-
-        dispatch({
-            type: userConstants.USER_LOGOUT
-        });
-
-        localStorage.clear();
+        localStorage.removeItem('token');
     };
 }
 
@@ -94,7 +89,6 @@ function setMWS(data) {
 }
 
 function unsetAccount(type) {
-
     return dispatch => {
         dispatch({
             type: userConstants[`UNSET_AMAZON_${type}`],

@@ -35,6 +35,10 @@ class RegistrationPage extends Component {
     onSubmit = async (e) => {
         e.preventDefault();
 
+        if (!this.props.notFirstEntry) {
+            this.props.resetState()
+        }
+
         const {
             name,
             last_name,
@@ -320,11 +324,16 @@ class RegistrationPage extends Component {
     }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    notFirstEntry: state.user.notFirstEntry
+});
 
 const mapDispatchToProps = dispatch => ({
     regist: user => {
         dispatch(userActions.regist(user));
+    },
+    resetState: () => {
+        dispatch(userActions.reSetState())
     }
 });
 
