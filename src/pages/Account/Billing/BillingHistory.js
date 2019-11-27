@@ -10,15 +10,17 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             title: 'Invoice Number',
             dataIndex: 'invoice_number',
             key: 'invoice_number',
+            width: '20%',
             render: (text) => (<a>{text}</a>)
         },
         {
             title: 'Card',
             dataIndex: 'card',
             key: 'card',
+            width: '15%',
             render: (text, item) => (<span className='card-number'>
-                <img src={item.card_type === 'visa' && visaLogo} alt=""/>
-                <img src={item.card_type === 'master' && masterLogo} alt=""/>
+                {item.card_type === 'visa' && <img src={visaLogo} alt=""/>}
+                {item.card_type === 'master' && <img src={masterLogo} alt=""/>}
                 {item.card_number && `**** **** **** ${item.card_number}`}
             </span>)
         },
