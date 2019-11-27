@@ -102,10 +102,6 @@ class Optimization extends Component {
           <div className="product-options">
             <FreeTrial />
             <div className="options">
-              {/* <div className={`product-info ${isLess && "more"}`}>
-
-              </div> */}
-
               <div className={`options-strategy ${isLess ? "more" : "less"}`}>
                 <div className="product-info-automate">
                   <span>What Parts Do You Want To Automate?</span>

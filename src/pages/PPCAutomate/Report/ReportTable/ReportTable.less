@@ -7,7 +7,17 @@
   height: 100vh;
   max-height: max-content;
 
-  @media (max-width: 679px) {
+  @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+    only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+    only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+    only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+    flex-flow: column;
+  }
+
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+    only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
     flex-flow: column;
 
     .main-pages {
@@ -22,15 +32,24 @@
   .product-list {
     width: 25.428571429em;
 
-    @media (max-width: 899px) {
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 899px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 899px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 899px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 899px) {
       width: 19.071428571em;
     }
 
-    @media (max-width: 799px) {
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 799px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 799px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 799px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 799px) {
       margin-left: 7.2em;
     }
 
-    @media (max-width: 679px) {
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
       width: calc(100% - 7.2em - 1.714285714285714em);
       margin-bottom: 1em;
     }
@@ -79,15 +98,24 @@
   overflow: hidden;
   margin: 0 0 0 0.3571429em;
 
-  @media (max-width: 679px) {
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+    only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
     min-height: 500px;
   }
 
-  @media (max-width: 489px) {
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 489px),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 489px),
+    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 489px),
+    only screen and (min-device-pixel-ratio: 2) and (max-width: 489px) {
     min-height: 600px;
   }
 
-  @media (max-width: 469px) {
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 469px),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 469px),
+    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 469px),
+    only screen and (min-device-pixel-ratio: 2) and (max-width: 469px) {
     min-height: 700px;
   }
 
@@ -114,8 +142,6 @@
     }
 
     .ant-tabs.ant-tabs-top.ant-tabs-card.ant-tabs-no-animation {
-      // height: 95%;
-
       .ant-tabs-tabpane-active {
         height: 100%;
       }
@@ -147,30 +173,38 @@
     color: @second-default-dark;
     margin: 0 0 0.8571429em 0;
 
-    @media (max-width: 1669px) {
-      height: 5.4285714em;
-      flex-flow: wrap;
-      align-content: space-between;
-    }
+    // @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1669px),
+    //   only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1669px),
+    //   only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1669px),
+    //   only screen and (min-device-pixel-ratio: 2) and (max-width: 1669px) {
+    //   height: 5.4285714em;
+    //   // flex-flow: wrap;
+    //   align-content: space-between;
+    // }
 
-    @media (max-width: 699px) {
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 699px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 699px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 699px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 699px) {
       height: 8.2em;
     }
 
-    @media (max-width: 649px) {
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 649px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 649px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 649px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 649px) {
       height: 12.6em;
       flex-flow: column;
       justify-content: space-between;
       align-items: center;
 
-      .additional {
-        align-self: unset;
-        order: 0;
-      }
+      // .additional {
+      //   // order: 0;
+      // }
 
-      h3 {
-        order: 1;
-      }
+      // h3 {
+      //   // order: 1;
+      // }
     }
 
     h3 {
@@ -185,25 +219,28 @@
       justify-content: inherit;
       align-items: inherit;
 
-      @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
-        only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-        only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-        only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
-        width: 100%;
-        justify-content: flex-end;
-        order: 1;
-      }
+      // @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
+      //   only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+      //   only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+      //   only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+      //   // width: 100%;
+      //   // justify-content: flex-end;
+      //   // order: 1;
+      // }
 
-      @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-        only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-        only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
-        only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
-        width: 100%;
-        justify-content: flex-end;
-        order: 1;
-      }
+      // @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+      //   only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+      //   only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
+      //   only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
+      //   // width: 100%;
+      //   // justify-content: flex-end;
+      //   // order: 1;
+      // }
 
-      @media (max-width: 699px) {
+      @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 699px),
+        only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 699px),
+        only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 699px),
+        only screen and (min-device-pixel-ratio: 2) and (max-width: 699px) {
         height: 7em;
         justify-content: space-between;
         flex-flow: column;
@@ -328,7 +365,10 @@
             .ant-pagination {
               min-height: 2.2857143em;
 
-              @media (max-width: 469px) {
+              @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 469px),
+                only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 469px),
+                only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 469px),
+                only screen and (min-device-pixel-ratio: 2) and (max-width: 469px) {
                 margin: 1.4285714em 0.7142857em;
                 margin-bottom: 6em;
               }
