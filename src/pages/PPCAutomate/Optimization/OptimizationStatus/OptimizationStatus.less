@@ -1,13 +1,35 @@
-@import '../../../../style/variables.less';
-@import '../../../../style/mixins.less';
+@import "../../../../style/variables.less";
+@import "../../../../style/mixins.less";
 
 .product-status {
-  min-height: 50px;
+  min-height: fit-content;
   display: grid;
+  grid-template-rows: minmax(min-content, max-content);
   grid-template-columns: 0.7fr repeat(3, 1fr) 0.7fr;
+  grid-template-areas: "none none none none control";
   column-gap: 0.35714em;
   padding: 0.71429em;
   margin: 0 0 1.64286em;
+
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 879px),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 879px),
+    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 879px),
+    only screen and (min-device-pixel-ratio: 2) and (max-width: 879px) {
+    grid-template-rows: repeat(2, minmax(min-content, max-content));
+    grid-template-columns: 0.7fr repeat(3, 1fr);
+    row-gap: 0.8em;
+    grid-template-areas: "none none none none" "control control control control";
+  }
+
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 449px),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 449px),
+    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 449px),
+    only screen and (min-device-pixel-ratio: 2) and (max-width: 449px) {
+    grid-template-rows: repeat(3, minmax(min-content, max-content));
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 0.8em;
+    grid-template-areas: "none none" "none none" "control control";
+  }
 
   .status-info {
     .caption {
@@ -24,12 +46,14 @@
   }
 
   .control {
+    grid-area: control;
     align-self: center;
 
     button {
       font-size: inherit; // 14px
       width: 100%;
       min-width: 14.28571em;
+      // min-width: 1em;
       min-height: 2.85714em;
       border: 0;
       border-radius: 0.57143em;
@@ -70,14 +94,14 @@
     }
   }
 
-  @media (max-width: @laptop) {
-    & {
-      .control {
-        margin-top: 1.42857em;
-        display: flex;
-        justify-content: center;
-        width: 100%;
-      }
-    }
-  }
+  // @media (max-width: @laptop) {
+  //   & {
+  //     .control {
+  //       margin-top: 1.42857em;
+  //       display: flex;
+  //       justify-content: center;
+  //       width: 100%;
+  //     }
+  //   }
+  // }
 }
