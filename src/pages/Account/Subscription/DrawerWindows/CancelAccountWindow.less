@@ -1,9 +1,18 @@
-@import '../../../../style/variables.less';
+@import "../../../../style/variables.less";
 
 .cancel-account {
   .ant-drawer-content-wrapper {
-    width: 36vw !important;
+    width: 29vw !important;
     font-size: 0.714286rem; // 10px
+
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1299px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1299px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1299px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 1299px) {
+      // grid-template-columns: repeat(2, 1fr);
+      // grid-template-rows: repeat(2, 1fr);
+      // gap: 0.71429em;
+    }
 
     .ant-drawer-content {
       border-radius: 0.8em 0 0 0.8em;
@@ -76,7 +85,7 @@
                 margin: 0 0 3em;
 
                 .advantages {
-                  width: 14.4em;
+                  width: 100%;
                   height: 22.4em;
                   display: flex;
                   flex-flow: column;
@@ -86,16 +95,30 @@
                     0px 0px 20px rgba(44, 48, 58, 0.08);
                   padding: 0.4em;
 
+                  &:not(:last-child) {
+                    margin-right: 2em;
+                  }
+
                   .advantages-img {
-                    margin: 5.4em 0 2.6em;
+                    flex: 1;
+                    // margin: 5.4em 0 2.6em;
                   }
 
                   .restart-img {
-                    margin-top: 3.7em;
+                    flex: 1;
+                    // margin-top: 3.7em;
+
+                    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1299px),
+                      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1299px),
+                      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1299px),
+                      only screen and (min-device-pixel-ratio: 2) and (max-width: 1299px) {
+                      // margin: 3.7em 0 0.5em;
+                    }
                   }
 
                   .advantages-text {
                     font-size: 0.8571rem; // 12px
+                    flex: 1;
                     color: @black;
                     text-align: center;
                     margin: 0;
@@ -110,7 +133,7 @@
 
                 .keep {
                   font-size: 0.8571rem; // 12px
-                  width: 17.3334em;
+                  width: 16em;
                   height: 3.3334em;
                   border-radius: 0.6666em;
                   color: @white !important;
@@ -121,7 +144,7 @@
 
                 .pause-btn {
                   font-size: 0.8571rem; // 12px
-                  width: 17.3334em;
+                  width: 16em;
                   height: 3.3334em;
                   border: 1px solid @border-solid;
                   border-radius: 0.6666em;
