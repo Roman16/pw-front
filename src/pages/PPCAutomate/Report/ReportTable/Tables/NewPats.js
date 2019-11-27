@@ -208,7 +208,7 @@ const NewPats = ({
             onChange(CreatedPATCST);
           }}
         >
-          Created PAT (CST)
+          Created PAT (<span className='underline'>CST</span>)
         </TableButton>
       </div>
 

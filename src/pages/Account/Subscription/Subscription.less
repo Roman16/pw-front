@@ -1,4 +1,4 @@
-@import '../../../style/variables.less';
+@import "../../../style/variables.less";
 
 .main-pages > .main-container > .user-cabinet {
   font-size: 0.714286rem; // 10px
@@ -94,9 +94,14 @@
           margin: 0;
         }
 
-        .ppc-link {
+        .ppc-link-wrap {
           font-size: 0.8571rem; // 12px
           color: @second-account-color;
+        }
+        
+        .ppc-link {
+          font-size: 0.8571rem; // 12px
+          color: @account-color-action;
         }
       }
 
@@ -151,7 +156,7 @@
                 top: 50%;
                 transform: translateY(-50%);
                 right: 0;
-                content: '';
+                content: "";
                 background-color: @border-solid;
               }
             }

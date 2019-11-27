@@ -90,7 +90,7 @@ const Sidebar = () => {
             </div>
             <div className="country-active__description">
               {user.default_accounts
-                ? user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
+                ? user.default_accounts.amazon_mws.seller_id
                 : ''}
             </div>
           </div>
@@ -220,7 +220,6 @@ const Sidebar = () => {
                                       <Avatar
                                           className="avatar"
                                           src={domainName + user.user.avatar}
-                                          size={24}
                                       />
                                   </i>
                               ) : (

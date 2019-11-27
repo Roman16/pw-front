@@ -1,261 +1,344 @@
-@import '../../../style/variables.less';
+@import "../../../style/variables.less";
 
-.optimization-page {
-  height: 100vh;
-  display: flex;
-
-  .product-list {
-    margin: 0 1.42857em 0 0;
+#root > .main-pages {
+  @media (max-width: 939px) {
+    position: relative;
+    overflow-y: auto;
   }
 
-  .product-options {
-    flex: 1;
-    display: flex;
-    flex-flow: column;
-    overflow: auto;
+  .sidebar {
+    grid-area: sidebar;
 
-    & > div {
-      background: #fff;
-      padding: 1.07143em;
-      border-radius: 0.57143em;
+    @media (max-width: 939px) {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+  }
 
-      &:first-child {
-        padding: 1.71429em 1.14286em 0 1.14286em;
-      }
+  div.product-list {
+    grid-area: list;
+
+    @media (max-width: 939px) {
+      padding-left: 6.857142852857143em;
+    }
+  }
+
+  .main-container {
+    grid-area: main;
+
+    @media (max-width: 939px) {
+      padding-left: 5.142857142857143em;
+    }
+  }
+
+  @media (max-width: 939px) {
+    display: grid;
+    grid-template-rows: minmax(min-content, max-content) 1fr;
+    grid-template-columns: minmax(min-content, max-content) 1fr;
+    grid-template-areas:
+      "sidebar list"
+      "sidebar main";
+  }
+
+  .product-list {
+    width: 25.428571429em;
+    margin-right: 1.42857em;
+
+    @media (max-width: 999px) {
+      width: 19.071428571em;
     }
 
-    .options {
-      display: grid;
-      grid-template-columns: 28.57143em minmax(min-content, 100%);
-      grid-template-rows: repeat(3, minmax(min-content, max-content));
-      grid-template-areas: 'info info' 'optionsStrategy optionsStrategy' 'control control';
-      column-gap: 4.28571em;
-      margin-bottom: 1.64286em;
+    @media (max-width: 939px) {
+      width: 100%;
+      height: fit-content;
+      padding: 1.71428571em 1.71428571em 0 1.71428571em;
+      margin: 0;
+    }
+  }
 
-      @media (max-width: 1814px) {
-        grid-template-columns: 23.57143em minmax(min-content, 100%);
-        column-gap: 1.42857em;
-      }
+  .main-container {
+    @media (max-width: 939px) {
+      width: 100%;
+      height: fit-content;
+      // overflow-y: auto;
+    }
 
-      .product-info {
-        font-size: 1.42857rem; // 20px
-        grid-area: info;
-        display: grid;
-        grid-template-columns: 20em minmax(min-content, 100%);
-        column-gap: 3em;
-        margin-bottom: 1.5em;
-        color: @second-default-dark;
-        font-weight: 600;
-        transition: all 0.5s ease-in;
+    .optimization-page {
+      height: 100vh;
+      display: flex;
 
-        @media (max-width: 1869px) {
-          column-gap: 1em;
-        }
-
-        @media (max-width: 1814px) {
-          grid-template-columns: 16.5em minmax(min-content, 100%);
-        }
-
-        // @media (max-width: @big-desktop) {
-        //   .product-info-strategy {
-        //     flex-direction: column-reverse;
-        //   }
-        // }
-
-        @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
-          only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-          only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-          only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
-          .product-info-strategy {
-            flex-direction: column-reverse;
-          }
-        }
-
-        @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-          only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-          only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
-          only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
-          .product-info-strategy {
-            flex-direction: column-reverse;
-          }
-        }
-
-        &.more {
-          margin-bottom: 0.7em;
-        }
-
-        .product-info-strategy {
-          display: flex;
-          justify-content: space-between;
-          position: relative;
-        }
-
-        i {
-          cursor: pointer;
-          margin-left: 0.5em;
-          color: @action-color-dark;
-        }
-
-        .description-all {
-          font-size: 1.07143rem; // 15px
-          position: absolute;
-          color: @dangerous-color;
-          line-height: 1em;
-          top: 2em;
-
-          // @media (max-width: @big-desktop) {
-          //   top: 4em;
-          // }
-
-          @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
-            only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-            only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-            only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
-            top: 4em;
-          }
-
-          @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-            only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-            only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
-            only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
-            top: 4.5em;
-          }
-        }
-      }
-
-      .product-info-strategy {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-      }
-
-      .options-strategy {
-        grid-area: optionsStrategy;
-        display: grid;
-        grid-template-columns: 28.57143em minmax(min-content, 100%);
-        grid-template-rows: repeat(2, minmax(min-content, max-content));
-        grid-template-areas: 'options strategy' '. descriptions';
-        column-gap: 4.28571em;
-        overflow: hidden;
-        transition: all 0.5s ease-in;
-
-        @media (max-width: 1814px) {
-          grid-template-columns: 23.57143em 1fr;
-          column-gap: 1.42857em;
-        }
-
-        // @media (max-width: @big-desktop) {
-        //   grid-template-areas: 'options strategy' 'descriptions strategy';
-        // }
-
-        @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
-          only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-          only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-          only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
-          grid-template-areas: 'options strategy' 'descriptions strategy';
-        }
-
-        @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-          only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-          only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
-          only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
-          grid-template-areas: 'options strategy' 'descriptions strategy';
-        }
-
-        .optimize-options {
-          grid-area: options;
-        }
-
-        .optimize-strategy {
-          grid-area: strategy;
-        }
-
-        .descriptions {
-          grid-area: descriptions;
-        }
-
-        &.less {
-          max-height: 30em;
-
-          // @media (max-width: @big-desktop) {
-          //   max-height: 43.92857em;
-          // }
-
-          @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
-            only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-            only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-            only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
-            max-height: 43.92857em;
-          }
-
-          @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-            only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-            only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
-            only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
-            max-height: 43.92857em;
-          }
-        }
-
-        &.more {
-          max-height: 0;
-        }
-
-        @media (max-width: 1869px) {
-          column-gap: 1.42857em;
-        }
-      }
-
-      .less-more-control {
-        grid-area: control;
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
+      .product-options {
+        flex: 1;
         position: relative;
-        transition: all 0.5s ease-in;
+        display: flex;
+        flex-flow: column;
+        overflow: auto;
 
-        &.less {
-          height: 1.78571em;
+        .additional {
+          position: absolute;
           top: 0;
-          margin-top: 0.35714em;
+          right: 0;
+          padding: 1.8em 1.07143em;
+          padding-bottom: 0;
         }
 
-        &.more {
-          height: 0;
-          top: 0.71429em;
-          margin: 0;
-        }
-
-        .icon {
-          width: 2.28571em;
-          height: 1.78571em;
-          border: 1px solid #bdc6cf;
-          text-align: center;
+        & > div {
           background: #fff;
-          cursor: pointer;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          transition: all 0.5s ease-in;
+          padding: 1.07143em;
+          border-radius: 0.57143em;
 
-          i {
-            font-size: 1.28571rem; // 18px
-            color: @action-color;
+          &:nth-child(2) {
+            padding: 1.71429em 1.14286em 0 1.14286em;
+          }
+        }
+
+        .options {
+          display: grid;
+          grid-template-columns: 28.57143em minmax(min-content, 100%);
+          grid-template-rows: repeat(3, minmax(min-content, max-content));
+          grid-template-areas: "info info" "optionsStrategy optionsStrategy" "control control";
+          column-gap: 4.28571em;
+          margin-bottom: 1.64286em;
+
+          @media (max-width: 1814px) {
+            grid-template-columns: 23.57143em minmax(min-content, 100%);
+            column-gap: 1.42857em;
+          }
+
+          @media (max-width: 619px) {
+            grid-template-columns: 20em minmax(min-content, 100%);
+          }
+
+          .product-info {
+            font-size: 1.42857rem; // 20px
+            grid-area: info;
+            display: grid;
+            grid-template-columns: 20em minmax(min-content, 100%);
+            column-gap: 3em;
+            margin-bottom: 1.5em;
+            color: @second-default-dark;
+            font-weight: 600;
             transition: all 0.5s ease-in;
-          }
 
-          &.less {
-            border-radius: 1.14286em 1.14286em 0 0;
-            border-bottom: 0;
-          }
+            @media (max-width: 1869px) {
+              column-gap: 1em;
+            }
 
-          &.more {
-            border: none;
-            border-radius: 0 0 1.14286em 1.14286em;
-            border-top: 0;
-            position: absolute;
+            @media (max-width: 1814px) {
+              grid-template-columns: 16.5em minmax(min-content, 100%);
+            }
+
+            @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
+              only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+              only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+              only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+              .product-info-strategy {
+                flex-direction: column-reverse;
+              }
+            }
+
+            @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+              only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+              only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
+              only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
+              .product-info-strategy {
+                flex-direction: column-reverse;
+              }
+            }
+
+            @media (max-width: 619px) {
+              grid-template-columns: 14em minmax(min-content, 100%);
+            }
+
+            &.more {
+              margin-bottom: 0.7em;
+            }
+
+            .product-info-strategy {
+              display: flex;
+              justify-content: space-between;
+              position: relative;
+            }
 
             i {
-              transform: rotateZ(180deg);
+              cursor: pointer;
+              margin-left: 0.5em;
+              color: @action-color-dark;
+            }
+
+            .description-all {
+              font-size: 1.07143rem; // 15px
+              position: absolute;
+              color: @dangerous-color;
+              line-height: 1em;
+              top: 2em;
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+                top: 4em;
+              }
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1469px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1469px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1469px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 1469px) {
+                top: 3.8em;
+              }
+
+              @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+                only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+                only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
+                only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
+                top: 4em;
+              }
+
+              @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1099px),
+                only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1099px),
+                only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1099px),
+                only screen and (min-device-pixel-ratio: 2) and (max-width: 1099px) {
+                top: 3.6em;
+              }
+            }
+
+            .product-info-strategy {
+              display: flex;
+              justify-content: space-between;
+              align-items: flex-start;
+            }
+          }
+
+          .options-strategy {
+            grid-area: optionsStrategy;
+            display: grid;
+            grid-template-columns: 28.57143em minmax(min-content, 100%);
+            grid-template-rows: repeat(2, minmax(min-content, max-content));
+            grid-template-areas: "options strategy" ". descriptions";
+            column-gap: 4.28571em;
+            overflow: hidden;
+            transition: all 0.5s ease-in;
+
+            @media (max-width: 1814px) {
+              grid-template-columns: 23.57143em 1fr;
+              column-gap: 1.42857em;
+            }
+
+            @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
+              only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+              only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+              only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+              grid-template-areas: "options strategy" "descriptions strategy";
+            }
+
+            @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+              only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+              only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
+              only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
+              grid-template-areas: "options strategy" "descriptions strategy";
+            }
+
+            @media (max-width: 619px) {
+              grid-template-columns: 20em minmax(min-content, 100%);
+            }
+
+            .optimize-options {
+              grid-area: options;
+            }
+
+            .optimize-strategy {
+              grid-area: strategy;
+            }
+
+            .descriptions {
+              grid-area: descriptions;
+
+              @media (max-width: 619px) {
+                width: 20em;
+              }
+            }
+
+            &.less {
+              max-height: 30em;
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+                max-height: 43.92857em;
+              }
+
+              @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+                only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
+                only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
+                only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
+                max-height: 43.92857em;
+              }
+            }
+
+            &.more {
+              max-height: 0;
+            }
+
+            @media (max-width: 1869px) {
+              column-gap: 1.42857em;
+            }
+          }
+
+          .less-more-control {
+            grid-area: control;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            position: relative;
+            transition: all 0.5s ease-in;
+
+            &.less {
+              height: 1.78571em;
+              top: 0;
+              margin-top: 0.35714em;
+            }
+
+            &.more {
+              height: 0;
+              top: 0.71429em;
+              margin: 0;
+            }
+
+            .icon {
+              width: 2.28571em;
+              height: 1.78571em;
+              border: 1px solid #bdc6cf;
+              text-align: center;
+              background: #fff;
+              cursor: pointer;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              transition: all 0.5s ease-in;
+
+              i {
+                font-size: 1.28571rem; // 18px
+                color: @action-color;
+                transition: all 0.5s ease-in;
+              }
+
+              &.less {
+                border-radius: 1.14286em 1.14286em 0 0;
+                border-bottom: 0;
+              }
+
+              &.more {
+                border: none;
+                border-radius: 0 0 1.14286em 1.14286em;
+                border-top: 0;
+                position: absolute;
+
+                i {
+                  transform: rotateZ(180deg);
+                }
+              }
             }
           }
         }

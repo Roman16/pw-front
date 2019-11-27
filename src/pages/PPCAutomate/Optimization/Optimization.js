@@ -1,28 +1,28 @@
-import React, { Component, Fragment } from 'react';
-import { Drawer, Icon } from 'antd';
-import { connect } from 'react-redux';
-import { debounce } from 'throttle-debounce';
+import React, { Component, Fragment } from "react";
+import { Drawer, Icon } from "antd";
+import { connect } from "react-redux";
+import { debounce } from "throttle-debounce";
 
-import FreeTrial from '../../../components/FreeTrial/FreeTrial';
+import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 
-import ProductList from '../../../components/ProductList/ProductList';
-import OptimizationOptions from './OptimizationOptions/OptimizationOptions';
-import OptimizationStrategy from './OptimizationStrategy/OptimizationStrategy';
+import ProductList from "../../../components/ProductList/ProductList";
+import OptimizationOptions from "./OptimizationOptions/OptimizationOptions";
+import OptimizationStrategy from "./OptimizationStrategy/OptimizationStrategy";
 
-import OptionsInfo from './InfoItem/OptionInfo/OptionInfo';
-import StrategyInfo from './InfoItem/StrategyInfo/StrategyInfo';
-import OptimizationStatus from './OptimizationStatus/OptimizationStatus';
-import LastReports from './LastReports/LastReports';
+import OptionsInfo from "./InfoItem/OptionInfo/OptionInfo";
+import StrategyInfo from "./InfoItem/StrategyInfo/StrategyInfo";
+import OptimizationStatus from "./OptimizationStatus/OptimizationStatus";
+import LastReports from "./LastReports/LastReports";
 
-import { productsActions } from '../../../actions/products.actions';
+import { productsActions } from "../../../actions/products.actions";
 
-import './Optimization.less';
+import "./Optimization.less";
 
 class Optimization extends Component {
   state = {
     isLess: false,
     visible: false,
-    infoType: '',
+    infoType: "",
     product: this.props.selectedProduct,
     selectedStrategy: this.props.selectedProduct.optimization_strategy
   };
@@ -40,7 +40,7 @@ class Optimization extends Component {
         selectedStrategy: strategy
       },
       () => {
-        if (product.status === 'RUNNING') {
+        if (product.status === "RUNNING") {
           this.props.updateOptions({
             optimization_strategy: strategy,
             add_negative_keywords: product.add_negative_keywords,
@@ -71,7 +71,7 @@ class Optimization extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.selectedProduct.id !== state.product.id) {
-      if (props.selectedProduct.status === 'RUNNING' && !props.selectedAll) {
+      if (props.selectedProduct.status === "RUNNING" && !props.selectedAll) {
         return {
           product: props.selectedProduct,
           selectedStrategy: props.selectedProduct.optimization_strategy
@@ -100,14 +100,15 @@ class Optimization extends Component {
           {/*<ProductList />*/}
 
           <div className="product-options">
+            <FreeTrial />
             <div className="options">
-              <div className={`product-info ${isLess && 'more'}`}>
+              <div className={`product-info ${isLess && "more"}`}>
                 <div className="product-info-automate">
                   <span>What Parts Do You Want To Automate?</span>
                   <Icon
                     type="info-circle"
                     theme="filled"
-                    onClick={() => this.showDrawer('options')}
+                    onClick={() => this.showDrawer("options")}
                   />
                 </div>
 
@@ -117,10 +118,9 @@ class Optimization extends Component {
                     <Icon
                       type="info-circle"
                       theme="filled"
-                      onClick={() => this.showDrawer('strategy')}
+                      onClick={() => this.showDrawer("strategy")}
                     />
                   </div>
-                  <FreeTrial />
                   {selectedAll && !isLess && (
                     <div className="description-all">
                       Changes to those settings will be applied to all selected
@@ -130,7 +130,7 @@ class Optimization extends Component {
                 </div>
               </div>
 
-              <div className={`options-strategy ${isLess ? 'more' : 'less'}`}>
+              <div className={`options-strategy ${isLess ? "more" : "less"}`}>
                 <OptimizationOptions selectedProduct={selectedProduct} />
 
                 <OptimizationStrategy
@@ -145,10 +145,10 @@ class Optimization extends Component {
                 </div>
               </div>
 
-              <div className={`less-more-control ${isLess ? 'more' : 'less'}`}>
+              <div className={`less-more-control ${isLess ? "more" : "less"}`}>
                 <div
                   role="button"
-                  className={`icon ${isLess ? 'more' : 'less'}`}
+                  className={`icon ${isLess ? "more" : "less"}`}
                   onClick={this.toLess}
                 >
                   <Icon type="up" />
@@ -158,21 +158,21 @@ class Optimization extends Component {
 
             <OptimizationStatus product={selectedProduct} />
 
-            <LastReports productId={selectedAll ? 'all' : selectedProduct.id} />
+            <LastReports productId={selectedAll ? "all" : selectedProduct.id} />
           </div>
         </div>
 
         <Drawer
           title={
-            infoType === 'options'
-              ? 'Here is the quick review of the actions you can automate with the Software.'
-              : 'Here is the quick review of the PPC Strategies you can reach with our Software.'
+            infoType === "options"
+              ? "Here is the quick review of the actions you can automate with the Software."
+              : "Here is the quick review of the PPC Strategies you can reach with our Software."
           }
           width={500}
           onClose={this.onCloseDrawer}
           visible={this.state.visible}
         >
-          {infoType === 'options' ? <OptionsInfo /> : <StrategyInfo />}
+          {infoType === "options" ? <OptionsInfo /> : <StrategyInfo />}
         </Drawer>
       </Fragment>
     );

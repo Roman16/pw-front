@@ -311,7 +311,7 @@ const NewKeywords = ({
                         onChange(createdKeywordCST);
                     }}
                 >
-                    Created Keyword (CST)
+                    Created Keyword (<span className='underline'>CST</span>)
                 </TableButton>
             </div>
 
