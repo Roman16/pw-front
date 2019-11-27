@@ -10,92 +10,92 @@ import {useDispatch, useSelector} from "react-redux";
 const data = [
     {
         date: '2019-03-04T17:24:58.828Z',
-        week_first_metric: 0,
-        week_second_metric: 1000,
+        seven_days_second_metric_value: 0,
+        seven_days_first_metric_value: 1000,
         daily_first_metric: 2000,
         daily_second_metric: 3000
     },
     {
         date: '2019-03-05T17:24:58.828Z',
-        week_first_metric: 3000,
-        week_second_metric: 2098,
+        seven_days_second_metric_value: 2600,
+        seven_days_first_metric_value: 2098,
         daily_first_metric: 1690,
         daily_second_metric: 2450
     },
     {
         date: '2019-03-06T17:24:58.828Z',
-        week_first_metric: 2000,
-        week_second_metric: 2300,
+        seven_days_second_metric_value: 2000,
+        seven_days_first_metric_value: 2300,
         daily_first_metric: 1390,
         daily_second_metric: 3450
     },
     {
         date: '2019-03-07T17:24:58.828Z',
-        week_first_metric: 2780,
-        week_second_metric: 3908,
+        seven_days_second_metric_value: 2780,
+        seven_days_first_metric_value: 3908,
         daily_first_metric: 1890,
         daily_second_metric: 2450
     },
     {
         date: '2019-03-08T17:24:58.828Z',
-        week_first_metric: 2890,
-        week_second_metric: 4800,
+        seven_days_second_metric_value: 2890,
+        seven_days_first_metric_value: 4800,
         daily_first_metric: 1550,
         daily_second_metric: 6450
     },
     {
         date: '2019-03-09T17:24:58.828Z',
-        week_first_metric: 2000,
-        week_second_metric: 3800,
+        seven_days_second_metric_value: 2000,
+        seven_days_first_metric_value: 3800,
         daily_first_metric: 1344,
         daily_second_metric: 6554
     },
     {
         date: '2019-03-10T17:24:58.828Z',
-        week_first_metric: 2000,
-        week_second_metric: 4300,
+        seven_days_second_metric_value: 2000,
+        seven_days_first_metric_value: 4300,
         daily_first_metric: 1344,
         daily_second_metric: 4567
     },
     {
         date: '2019-03-11T17:24:58.828Z',
-        week_first_metric: 2000,
-        week_second_metric: 4300,
+        seven_days_second_metric_value: 2000,
+        seven_days_first_metric_value: 4300,
         daily_first_metric: 1344,
         daily_second_metric: 4567
     },
     {
         date: '2019-03-12T17:24:58.828Z',
-        week_first_metric: 2000,
-        week_second_metric: 4300,
+        seven_days_second_metric_value: 2000,
+        seven_days_first_metric_value: 4300,
         daily_first_metric: 1344,
         daily_second_metric: 4567
     },
     {
         date: '2019-03-13T17:24:58.828Z',
-        week_first_metric: 2000,
-        week_second_metric: 4300,
+        seven_days_second_metric_value: 2000,
+        seven_days_first_metric_value: 4300,
         daily_first_metric: 1344,
         daily_second_metric: 4567
     },
     {
         date: '2019-03-14T17:24:58.828Z',
-        week_first_metric: 2000,
-        week_second_metric: 4300,
+        seven_days_second_metric_value: 2000,
+        seven_days_first_metric_value: 4300,
         daily_first_metric: 1344,
         daily_second_metric: 4567
     },
     {
         date: '2019-03-15T17:24:58.828Z',
-        week_first_metric: 2000,
-        week_second_metric: 4300,
+        seven_days_second_metric_value: 2000,
+        seven_days_first_metric_value: 4300,
         daily_first_metric: 1344,
         daily_second_metric: 4567
     },
     {
         date: '2019-03-16T17:24:58.828Z',
-        week_first_metric: 2000,
-        week_second_metric: 4300,
+        seven_days_second_metric_value: 2000,
+        seven_days_first_metric_value: 4300,
         daily_first_metric: 1344,
         daily_second_metric: 4567
     },
