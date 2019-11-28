@@ -92,7 +92,10 @@ const Sidebar = () => {
   window.captchaStyle.innerHTML = `.grecaptcha-badge { display: none !important}`;
 
   return (
-    <div className={`sidebar ${className}`} style={{ height: `${height}px` }}>
+    <div
+      className={`sidebar ${className}`}
+      //  style={{ height: `${height}px` }}
+    >
       <div className="sidebar-header">
         <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed} />
         <Link to="/" className="sidebar-logo">
