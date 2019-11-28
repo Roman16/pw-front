@@ -91,10 +91,14 @@ const Sidebar = () => {
 
   window.captchaStyle.innerHTML = `.grecaptcha-badge { display: none !important}`;
 
+  // console.log("documentElement", document.documentElement.style.setProperty);
+  let vh = window.innerHeight * 0.01;
+  // Then we set the value in the --vh custom property to the root of the document
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
   return (
     <div
       className={`sidebar ${className}`}
-      //  style={{ height: `${height}px` }}
+      // style={{ height: `${height}px` }}
     >
       <div className="sidebar-header">
         <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed} />
