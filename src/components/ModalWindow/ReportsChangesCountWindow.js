@@ -1,25 +1,29 @@
 import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import ModalWindow from "./ModalWindow";
 import {history} from "../../utils/history";
 import whales from '../../assets/img/whales.svg';
+import {userActions} from "../../actions/user.actions";
 
 const ReportsChangesCountWindow = () => {
     const [visibleWindow, switchWindow] = useState(false);
     const [changesCount, setCount] = useState(0);
+    const dispatch = useDispatch();
     const {ppcNotification} = useSelector(state => ({
         ppcNotification: state.user.notifications ? state.user.notifications.ppc_optimization : {}
     }));
 
     function handleOk() {
-        history.push('/ppc/report');
         switchWindow(false);
-        setCount(0)
+        setCount(0);
+        dispatch(userActions.resetChangesCount('ppc_optimization'));
+        history.push('/ppc/report');
     }
 
     function handleCancel() {
         switchWindow(false);
-        setCount(0)
+        setCount(0);
+        dispatch(userActions.resetChangesCount('ppc_optimization'))
     }
 
     useEffect(() => {

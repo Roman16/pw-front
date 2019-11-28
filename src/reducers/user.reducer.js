@@ -29,7 +29,20 @@ export function user(state = initialState, action) {
                 ...state,
                 user: action.payload
             };
-            
+
+        case userConstants.RESET_CHANGES_COUNT:
+            return {
+                ...state,
+                notifications: {
+                    ...state.notifications,
+
+                    [action.payload]: {
+                        ...state.notifications[action.payload],
+                        count_from_last_login: 0
+                    }
+                }
+            };
+
         case userConstants.UNSET_AMAZON_MWS:
             return {
                 ...state,
