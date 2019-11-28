@@ -233,7 +233,7 @@
         .on-optimization,
         .optimization-waiting {
           top: auto;
-          bottom: -.95em;
+          bottom: -0.95em;
           right: -0.38em;
           text-align: right;
 
@@ -266,14 +266,18 @@
   //-------------------------------------
   /*Retina CSS */
   //-------------------------------------
-   @media only screen and (min--moz-device-pixel-ratio: 2),
-     only screen and (-webkit-min-device-pixel-ratio: 2),
-     only screen and (min-device-pixel-ratio: 2) {
-     & {
-       .product-item .product-children-list .children-information .optimization-waiting .ant-spin {
-         right: 11%;
-         bottom: 11%;
-       }
-     }
-   }
+  @media only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min-device-pixel-ratio: 2) {
+    & {
+      .product-item
+        .product-children-list
+        .children-information
+        .optimization-waiting
+        .ant-spin {
+        right: 11%;
+        bottom: 11%;
+      }
+    }
+  }
 }

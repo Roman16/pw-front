@@ -41,13 +41,121 @@ img {
   }
 }
 
-.main-pages {
-  display: flex;
-  background: #f5f5ff;
+/*
+*  MEDIA
+*/
+#root > .main-pages {
+  @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+    only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+    only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+    only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+    flex-flow: column;
+    position: relative;
+    overflow-y: auto;
+  }
 
   @media (max-width: 799px) {
     position: relative;
+    // flex-flow: column;
+    // overflow-y: auto;
   }
+
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+    only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+    flex-flow: column;
+    overflow-y: auto;
+  }
+
+  .sidebar {
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    @media (max-width: 799px) {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .product-list {
+    width: 25.428571429em;
+    margin-right: 1.42857em;
+
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1349px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1349px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1349px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 1349px) {
+      width: 19.071428571em;
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1059px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1059px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1059px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 1059px) {
+      width: 19.071428571em;
+    }
+
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+      width: 100%;
+      height: fit-content;
+      padding: 1.71428571em 1.71428571em 0 6.2em;
+      margin: 0;
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 799px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 799px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 799px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 799px) {
+      margin-left: 7.2em;
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+      width: 100%;
+      height: fit-content;
+      padding: 1.71428571em 1.71428571em 0 6.2em;
+      margin: 0;
+    }
+  }
+
+  .main-container {
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+      overflow: unset;
+      padding-left: 5.142857142857143em;
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+      overflow: unset;
+      padding-left: 5.142857142857143em;
+    }
+  }
+}
+/*
+*  MEDIA
+*/
+
+.main-pages {
+  display: flex;
+  background: #f5f5ff;
 
   .main-container {
     position: relative;

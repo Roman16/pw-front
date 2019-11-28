@@ -7,54 +7,6 @@
   height: 100vh;
   max-height: max-content;
 
-  @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
-    only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
-    only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
-    only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
-    flex-flow: column;
-  }
-
-  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
-    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
-    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
-    only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-    flex-flow: column;
-
-    .main-pages {
-      overflow-y: auto;
-    }
-
-    .reports-page {
-      margin-left: 5.142857142857143em;
-    }
-  }
-
-  .product-list {
-    width: 25.428571429em;
-
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 899px),
-      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 899px),
-      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 899px),
-      only screen and (min-device-pixel-ratio: 2) and (max-width: 899px) {
-      width: 19.071428571em;
-    }
-
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 799px),
-      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 799px),
-      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 799px),
-      only screen and (min-device-pixel-ratio: 2) and (max-width: 799px) {
-      margin-left: 7.2em;
-    }
-
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
-      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
-      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
-      only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-      width: calc(100% - 7.2em - 1.714285714285714em);
-      margin-bottom: 1em;
-    }
-  }
-
   .capitalize-field {
     text-transform: capitalize;
   }
@@ -90,7 +42,7 @@
   }
 }
 
-.ReportTable {
+div.ReportTable {
   width: 100%;
   height: 100%;
   display: flex;
@@ -102,21 +54,7 @@
     only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
     only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
     only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-    min-height: 500px;
-  }
-
-  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 489px),
-    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 489px),
-    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 489px),
-    only screen and (min-device-pixel-ratio: 2) and (max-width: 489px) {
-    min-height: 600px;
-  }
-
-  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 469px),
-    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 469px),
-    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 469px),
-    only screen and (min-device-pixel-ratio: 2) and (max-width: 469px) {
-    min-height: 700px;
+    height: fit-content;
   }
 
   .ant-tabs {
@@ -173,77 +111,143 @@
     color: @second-default-dark;
     margin: 0 0 0.8571429em 0;
 
-    // @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1669px),
-    //   only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1669px),
-    //   only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1669px),
-    //   only screen and (min-device-pixel-ratio: 2) and (max-width: 1669px) {
-    //   height: 5.4285714em;
-    //   // flex-flow: wrap;
-    //   align-content: space-between;
-    // }
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1629px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1629px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1629px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 1629px) {
+      flex-flow: wrap;
 
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 699px),
-      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 699px),
-      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 699px),
-      only screen and (min-device-pixel-ratio: 2) and (max-width: 699px) {
-      height: 8.2em;
+      & > div.changes-calendar-download {
+        order: 2;
+        margin: 1em 0 0 auto;
+      }
     }
 
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 649px),
-      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 649px),
-      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 649px),
-      only screen and (min-device-pixel-ratio: 2) and (max-width: 649px) {
-      height: 12.6em;
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1206px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1206px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1206px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 1206px) {
+      flex-flow: wrap;
+
+      & > div.changes-calendar-download {
+        order: 2;
+        margin: 1em 0 0 auto;
+      }
+    }
+
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1059px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1059px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1059px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 1059px) {
       flex-flow: column;
-      justify-content: space-between;
-      align-items: center;
 
-      // .additional {
-      //   // order: 0;
-      // }
+      & > h3.main-title {
+        order: 1;
+        margin: 0.7em 0 0;
+      }
 
-      // h3 {
-      //   // order: 1;
-      // }
+      & > div.changes-calendar-download {
+        flex-flow: column;
+        justify-content: center;
+        margin: 1em 0 0;
+
+        .total-count {
+          margin: 0 0 1em;
+        }
+
+        .DatePicker {
+          margin: 0 0 1em;
+        }
+
+        .download-btn {
+          margin: 0;
+        }
+      }
+
+      & > div.additional {
+        margin: 0;
+      }
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+      flex-flow: column;
+
+      & > h3.main-title {
+        order: 1;
+        margin: 0.7em 0 0;
+      }
+
+      & > div.changes-calendar-download {
+        flex-flow: column;
+        justify-content: center;
+        margin: 1em 0 0;
+
+        .total-count {
+          margin: 0 0 1em;
+        }
+
+        .DatePicker {
+          margin: 0 0 1em;
+        }
+
+        .download-btn {
+          margin: 0;
+        }
+      }
+
+      & > div.additional {
+        margin: 0;
+      }
     }
 
     h3 {
       font-size: 1.4285714rem; // 20px
       color: #363694;
-      margin: 0;
+      margin: 0 0.5em 0 0;
       letter-spacing: -0.08px;
     }
 
-    & > .changes-calendar-download {
+    & > div.changes-calendar-download {
       display: inherit;
       justify-content: inherit;
       align-items: inherit;
-
-      // @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
-      //   only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-      //   only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-      //   only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
-      //   // width: 100%;
-      //   // justify-content: flex-end;
-      //   // order: 1;
-      // }
-
-      // @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-      //   only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop),
-      //   only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop),
-      //   only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
-      //   // width: 100%;
-      //   // justify-content: flex-end;
-      //   // order: 1;
-      // }
 
       @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 699px),
         only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 699px),
         only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 699px),
         only screen and (min-device-pixel-ratio: 2) and (max-width: 699px) {
-        height: 7em;
-        justify-content: space-between;
         flex-flow: column;
+        margin: 1em auto 0 auto;
+
+        .total-count {
+          margin: 0 0 1em;
+        }
+
+        .DatePicker {
+          margin: 0 0 1em;
+        }
+
+        .download-btn {
+          margin: 0;
+        }
+      }
+    }
+
+    .additional {
+      margin: 0 0 0 0.5em;
+
+      @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 439px),
+        only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 439px),
+        only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 439px),
+        only screen and (max-device-pixel-ratio: 1) and (max-width: 439px) {
+        flex-flow: column;
+
+        .btn-upgrade {
+          margin: 1em 0 0;
+        }
       }
     }
 
@@ -309,8 +313,7 @@
     }
   }
 
-  .ant-tabs.ant-tabs-top.ant-tabs-card.ant-tabs-no-animation {
-    height: 100%;
+  & > div.ant-tabs.ant-tabs-top.ant-tabs-card.ant-tabs-no-animation {
     border-radius: 0 0 0.5714286em 0.5714286em;
     padding-bottom: 1.0714286em;
 
@@ -318,9 +321,37 @@
       height: 100%;
       padding-bottom: 1.0714286em;
 
+      @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+        only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+        only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+        only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+        height: fit-content;
+      }
+
+      @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+        only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+        only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+        only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+        height: fit-content;
+      }
+
       .ant-tabs-tabpane.ant-tabs-tabpane-active {
         height: 100%;
         padding-bottom: 1.0714286em;
+
+        @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+          only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+          only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+          only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+          height: fit-content;
+        }
+
+        @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+          only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+          only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+          only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+          height: fit-content;
+        }
 
         .report-item-table {
           height: 100%;
@@ -328,6 +359,20 @@
           flex-flow: column;
           background: #fff;
           border-radius: 0.5714286em;
+
+          @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+            only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+            only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+            only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+            height: fit-content;
+          }
+
+          @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+            only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+            only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+            only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+            height: fit-content;
+          }
 
           .report-item-table-btn {
             font-size: 1rem; // 14px
@@ -355,11 +400,39 @@
             border-radius: 0 0 0.5714286em 0.5714286em;
             background-color: #fff;
 
+            @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+              only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+              only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+              only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+              height: fit-content;
+            }
+
+            @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+              only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+              only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+              only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+              height: fit-content;
+            }
+
             .table-overflow {
               font-size: 1rem; // 14px
-              height: unset;
+              height: 100%;
               min-height: 8em;
               flex: 1;
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+                height: fit-content;
+              }
+
+              @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+                only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+                only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+                only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+                height: fit-content;
+              }
             }
 
             .ant-pagination {
