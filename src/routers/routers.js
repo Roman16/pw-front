@@ -19,6 +19,7 @@ import Billing from "../pages/Account/Billing/Billing";
 import Subscription from "../pages/Account/Subscription/Subscription";
 import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
 import ProductList from "../components/ProductList/ProductList";
+import Home from "../pages/Home/Home";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -85,6 +86,8 @@ const routers = () => {
 
                 <PrivateRoute exact path="/mws" component={MWS}/>
                 <PrivateRoute exact path="/ppc" component={PPC}/>
+
+                <PrivateRoute exact path="/home" component={Home}/>
 
                 {/* ACCOUNT */}
                 {developer && <PrivateRoute exact path="/account-settings" component={Information}/>}
