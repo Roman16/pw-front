@@ -1,39 +1,55 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
-import { Icon, Avatar } from 'antd';
-import shortid from 'shortid';
+import React, { useState, useEffect, useLayoutEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
+import { Icon, Avatar } from "antd";
+import shortid from "shortid";
 
-import { regionsMenu, ppcAutomateMenu } from './menu';
-import { getClassNames } from '../../utils';
-import { userActions } from '../../actions/user.actions';
-import ItemIcon from '../ItemIcon/ItemIcon';
-import logo from '../../assets/img/logo.svg';
-import soon from '../../assets/img/icons/soon.svg';
+import { regionsMenu, ppcAutomateMenu } from "./menu";
+import { getClassNames } from "../../utils";
+import { userActions } from "../../actions/user.actions";
+import ItemIcon from "../ItemIcon/ItemIcon";
+import logo from "../../assets/img/logo.svg";
+import soon from "../../assets/img/icons/soon.svg";
 // import showMenu from '../../assets/img/icons/show-menu-arrow.svg';  // стрелка из фигмы в разделе сайдбар > страна
-import './Sidebar.less';
+import "./Sidebar.less";
 
 const domainName =
-    (window.location.hostname === 'localhost') ? 'https://front1.profitwhales.com' : '';
+  window.location.hostname === "localhost"
+    ? "https://front1.profitwhales.com"
+    : "";
 
-const production = process.env.REACT_APP_ENV === 'production';
+const production = process.env.REACT_APP_ENV === "production";
 
 function useWindowSize() {
-  const [size, setSize] = useState([0, 0]);
-  useLayoutEffect(() => {
-    function updateSize() {
-      setSize([window.innerWidth, window.innerWidth]);
+  const isClient = typeof window === "object";
+
+  function getSize() {
+    return {
+      width: isClient ? window.innerWidth : undefined,
+      height: isClient ? window.innerHeight : undefined
+    };
+  }
+
+  const [windowSize, setWindowSize] = useState(getSize);
+
+  useEffect(() => {
+    if (!isClient) {
+      return false;
     }
 
-    window.addEventListener('resize', updateSize);
-    updateSize();
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
-  return size;
+    function handleResize() {
+      setWindowSize(getSize());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); // Empty array ensures that effect is only run on mount and unmount
+
+  return windowSize;
 }
 
 const Sidebar = () => {
-  const [width, height] = useWindowSize(),
+  const { width, height } = useWindowSize(),
     [collapsed, setCollapsed] = useState(true),
     [automate, setAutomate] = useState(true),
     [regions] = useState(regionsMenu),
@@ -41,6 +57,9 @@ const Sidebar = () => {
     { user } = useSelector(state => ({
       user: state.user
     }));
+
+  // console.log("width", width);
+  // console.log("height", height);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -50,7 +69,7 @@ const Sidebar = () => {
       : setTimeout(() => setAutomate(!collapsed), 500);
   };
 
-  const className = getClassNames(collapsed ? 'open' : 'closed');
+  const className = getClassNames(collapsed ? "open" : "closed");
 
   const activeCountry = regions.map(region =>
     region.countries.find(country => country.active)
@@ -64,13 +83,16 @@ const Sidebar = () => {
 
   useEffect(() => {
     dispatch(userActions.getAuthorizedUserInfo());
-    window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
-  }, [dispatch]);
+    // width < 800 ? setCollapsed(false) : setCollapsed(true);
+    if (width === 0) return;
+    else if (width < 800) setCollapsed(false);
+    else setCollapsed(true);
+  }, [dispatch, width]);
 
   window.captchaStyle.innerHTML = `.grecaptcha-badge { display: none !important}`;
 
   return (
-    <div className={`sidebar ${className}`}>
+    <div className={`sidebar ${className}`} style={{ height: `${height}px` }}>
       <div className="sidebar-header">
         <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed} />
         <Link to="/" className="sidebar-logo">
@@ -91,7 +113,7 @@ const Sidebar = () => {
             <div className="country-active__description">
               {user.default_accounts
                 ? user.default_accounts.amazon_mws.seller_id
-                : ''}
+                : ""}
             </div>
           </div>
 
@@ -144,7 +166,7 @@ const Sidebar = () => {
 
                 {collapsed && (
                   <ul
-                    className={`automate-list ${automate ? 'open' : 'closed'}`}
+                    className={`automate-list ${automate ? "open" : "closed"}`}
                   >
                     {ppcAutomateMenu.map(item => (
                       <li className="automate-item" key={shortid.generate()}>
@@ -190,66 +212,66 @@ const Sidebar = () => {
           </nav>
         </div>
 
-          <nav className="bottom-nav">
-              <ul className="bottom-nav-list">
-                  <li className="bottom-nav-item">
-                      {production ? (
-                          <a href="/account/settings">
-                              {user.user.avatar ? (
-                                  <i className="anticon">
-                                      <Avatar
-                                          className="avatar"
-                                          src={domainName + user.user.avatar}
-                                      />
-                                  </i>
-                              ) : (
-                                  <ItemIcon icon="account" />
-                              )}
+        <nav className="bottom-nav">
+          <ul className="bottom-nav-list">
+            <li className="bottom-nav-item">
+              {production ? (
+                <a href="/account/settings">
+                  {user.user.avatar ? (
+                    <i className="anticon">
+                      <Avatar
+                        className="avatar"
+                        src={domainName + user.user.avatar}
+                      />
+                    </i>
+                  ) : (
+                    <ItemIcon icon="account" />
+                  )}
 
-                              <span className="bottom-span">Account</span>
-                          </a>
-                      ) : (
-                          <NavLink
-                              className="automate-link"
-                              activeClassName="automate-link-active"
-                              exact
-                              to={`/account-settings`}
-                          >
-                              {user.user.avatar ? (
-                                  <i className="anticon">
-                                      <Avatar
-                                          className="avatar"
-                                          src={domainName + user.user.avatar}
-                                      />
-                                  </i>
-                              ) : (
-                                  <ItemIcon icon="account" />
-                              )}
+                  <span className="bottom-span">Account</span>
+                </a>
+              ) : (
+                <NavLink
+                  className="automate-link"
+                  activeClassName="automate-link-active"
+                  exact
+                  to={`/account-settings`}
+                >
+                  {user.user.avatar ? (
+                    <i className="anticon">
+                      <Avatar
+                        className="avatar"
+                        src={domainName + user.user.avatar}
+                      />
+                    </i>
+                  ) : (
+                    <ItemIcon icon="account" />
+                  )}
 
-                              <span className="bottom-span">Account</span>
-                          </NavLink>
-                      )}
-                  </li>
+                  <span className="bottom-span">Account</span>
+                </NavLink>
+              )}
+            </li>
 
-                  <li className="bottom-nav-item">
-                      <a
-                          href="https://profit-whales.kayako.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                      >
-                          <ItemIcon icon="helpCenter" />
-                          <span className="bottom-span">Help Center</span>
-                      </a>
-                  </li>
+            <li className="bottom-nav-item">
+              <a
+                href="https://profit-whales.kayako.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ItemIcon icon="helpCenter" />
+                <span className="bottom-span">Help Center</span>
+              </a>
+            </li>
 
-                  <li className="bottom-nav-item" onClick={handleLogout}>
-                      <button type="button">
-                          <ItemIcon icon={'logOut'} />
-                          <span className="bottom-span">Log Out</span>
-                      </button>
-                  </li>
-              </ul>
-          </nav>
+            <li className="bottom-nav-item" onClick={handleLogout}>
+              <button type="button">
+                <ItemIcon icon={"logOut"} />
+                <span className="bottom-span">Log Out</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   );
