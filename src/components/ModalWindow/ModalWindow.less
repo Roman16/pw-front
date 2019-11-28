@@ -147,6 +147,12 @@
 
   .ant-modal-body {
     padding: 30px 30px;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      margin: 0 0 20px 0;
+    }
   }
 
   .ant-modal-footer {
@@ -166,4 +172,11 @@
       }
     }
   }
+
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    & {
+      max-width: 30vw;
+    }
+  }
+
 }

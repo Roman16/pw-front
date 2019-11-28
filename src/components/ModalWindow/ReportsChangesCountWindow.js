@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import ModalWindow from "./ModalWindow";
 import {history} from "../../utils/history";
+import whales from '../../assets/img/whales.svg';
 
 const ReportsChangesCountWindow = () => {
-    const [visibleWindow, switchWindow] = useState(false);
+    const [visibleWindow, switchWindow] = useState(true);
     const {ppcNotification} = useSelector(state => ({
         ppcNotification: state.user.notifications ? state.user.notifications.ppc_optimization : {}
     }));
@@ -20,8 +21,6 @@ const ReportsChangesCountWindow = () => {
         }
     }, [ppcNotification]);
 
-    console.log(ppcNotification);
-
     return (
         <ModalWindow
             className={'reports-changes-window'}
@@ -30,7 +29,9 @@ const ReportsChangesCountWindow = () => {
             handleOk={handleOk}
             handleCancel={() => switchWindow(false)}
         >
-            Yay! While you where away the software performed <b>{ppcNotification && ppcNotification.count_from_last_login}</b> changes on your ad campaigns.
+            <img src={whales} alt=""/>
+            <h3>Yay 👋  </h3>
+            While you where away the software performed <b>{ppcNotification && ppcNotification.count_from_last_login}</b> changes on your ad campaigns.
         </ModalWindow>
     )
 };
