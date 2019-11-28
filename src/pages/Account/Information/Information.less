@@ -15,6 +15,7 @@
     background-color: @white;
     padding: 3em 4em 3em 6.4em;
     margin-bottom: 0.4em;
+    flex-wrap: wrap;
 
     .avatar-box {
       display: flex;
@@ -54,11 +55,9 @@
         opacity: 0;
         transition: all 0.3s ease-in;
 
-        background: linear-gradient(
-          0deg,
-          rgba(44, 48, 58, 0.4),
-          rgba(44, 48, 58, 0.4)
-        );
+        background: linear-gradient(0deg,
+        rgba(44, 48, 58, 0.4),
+        rgba(44, 48, 58, 0.4));
 
         label {
           width: 100%;
@@ -86,7 +85,8 @@
 
     .personal-information {
       width: 77%;
-      height: 13.4em;
+      min-height: 13.4em;
+      height: max-content;
       display: flex;
       flex-flow: wrap;
       justify-content: space-between;
@@ -136,6 +136,7 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
+        flex-wrap: wrap;
 
         .form-group {
           font-size: 0.9286rem; // 13px
@@ -174,6 +175,31 @@
         }
       }
     }
+
+    @media (max-width: 600px) {
+      & {
+        justify-content: center;
+        text-align: center;
+
+        .personal-information {
+          width: 100%;
+
+          .active-only {
+            width: 100%;
+            justify-content: center;
+            margin: 10px 0;
+          }
+
+          .form-person-info {
+            justify-content: center;
+
+            .btn-save {
+              margin: 20px 0 0 0;
+            }
+          }
+        }
+      }
+    }
   }
 
   .passwords-box {
@@ -190,6 +216,7 @@
 
     .icon-block {
       width: 20%;
+      min-width: 100px;
 
       .lock {
         width: 11.9em;
@@ -199,7 +226,8 @@
 
     .change-password {
       width: 77%;
-      height: 10.5em;
+      min-height: 10.5em;
+      height: max-content;
       display: flex;
       flex-flow: column;
       justify-content: space-between;
@@ -216,6 +244,7 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
+        flex-wrap: wrap;
 
         .form-group {
           font-size: 0.9286rem; // 13px
@@ -282,12 +311,37 @@
         }
       }
     }
+
+    @media (max-width: 600px) {
+      & {
+        justify-content: center;
+        flex-wrap: wrap;
+
+
+        .change-password {
+          width: 100%;
+
+          h3 {
+            text-align: center;
+          }
+
+          .input-password {
+            justify-content: center;
+          }
+
+          .btn-change {
+            margin: 20px 0 0 0;
+          }
+        }
+      }
+    }
   }
 
   .seller-box {
     width: 100%;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     background-color: @white;
     border-radius: 0.8em;
     padding: 3em 4em 3em 3em;
@@ -325,6 +379,16 @@
         top: 50%;
         transform: translateY(-50%);
         left: 0.9375em;
+      }
+    }
+
+    @media (max-width: 600px) {
+      & {
+        justify-content: center;
+
+        .seller-wrap {
+          width: 100%;
+        }
       }
     }
   }
@@ -407,6 +471,7 @@
 
       .title-wrap {
         width: 30%;
+
         h3 {
           font-size: 1.1429rem; // 16px
           color: @action-color;
@@ -672,7 +737,7 @@
       margin: 0 0 0 auto;
 
       button {
-       margin: 0 50px 0 0;
+        margin: 0 50px 0 0;
       }
     }
   }
