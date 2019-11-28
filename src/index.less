@@ -1,4 +1,4 @@
-@import './style/variables.less';
+@import "./style/variables.less";
 
 html {
   box-sizing: border-box;
@@ -41,13 +41,121 @@ img {
   }
 }
 
-.main-pages {
-  display: flex;
-  background: #f5f5ff;
+/*
+*  MEDIA
+*/
+#root > .main-pages {
+  @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+    only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+    only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+    only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+    flex-flow: column;
+    position: relative;
+    overflow-y: auto;
+  }
 
   @media (max-width: 799px) {
     position: relative;
+    // flex-flow: column;
+    // overflow-y: auto;
   }
+
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+    only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+    flex-flow: column;
+    overflow-y: auto;
+  }
+
+  .sidebar {
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    @media (max-width: 799px) {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .product-list {
+    width: 25.428571429em;
+    margin-right: 1.42857em;
+
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1349px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1349px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1349px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 1349px) {
+      width: 19.071428571em;
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1059px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1059px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1059px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 1059px) {
+      width: 19.071428571em;
+    }
+
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+      width: 100%;
+      height: fit-content;
+      padding: 1.71428571em 1.71428571em 0 6.2em;
+      margin: 0;
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 799px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 799px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 799px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 799px) {
+      margin-left: 7.2em;
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+      width: 100%;
+      height: fit-content;
+      padding: 1.71428571em 1.71428571em 0 6.2em;
+      margin: 0;
+    }
+  }
+
+  .main-container {
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
+      overflow: unset;
+      padding-left: 5.142857142857143em;
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+      only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+      overflow: unset;
+      padding-left: 5.142857142857143em;
+    }
+  }
+}
+/*
+*  MEDIA
+*/
+
+.main-pages {
+  display: flex;
+  background: #f5f5ff;
 
   .main-container {
     position: relative;
@@ -323,7 +431,7 @@ td.ant-calendar-cell.ant-calendar-selected-start-date::before {
   background: @success-color-opacity !important;
   background: radial-gradient(circle at -30px);
   border: 0 !important;
-  content: '' !important;
+  content: "" !important;
 }
 
 td.ant-calendar-cell.ant-calendar-selected-end-date::before {
@@ -336,7 +444,7 @@ td.ant-calendar-cell.ant-calendar-selected-end-date::before {
   background: @success-color-opacity !important;
   background: radial-gradient(circle at 30px);
   border: 0 !important;
-  content: '' !important;
+  content: "" !important;
 }
 
 td.ant-calendar-cell.ant-calendar-in-range-cell::before {
@@ -372,7 +480,7 @@ td.ant-calendar-cell.ant-calendar-in-range-cell::before {
       position: absolute;
       bottom: -3px;
       left: 0;
-      content: '';
+      content: "";
       background-color: @body-background;
     }
   }
@@ -466,9 +574,41 @@ button[disabled] {
 }
 
 /*
-*  SCROLLBAR
+*  CHECKBOX
+*/
+.ant-checkbox-wrapper,
+.ant-checkbox-wrapper-checked {
+  font-size: 1rem; // 14px
+
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: @action-color;
+    border-color: @action-color;
+  }
+
+  .ant-checkbox,
+  .ant-checkbox-checked,
+  .ant-checkbox-inner,
+  .ant-checkbox-input {
+    font-size: inherit; // 14px
+    width: 1.7142857em;
+    height: 1.7142857em;
+  }
+
+  .ant-checkbox-inner::after {
+    left: 30%;
+  }
+
+  span {
+    font-size: inherit; // 14px
+  }
+}
+/*
+*  CHECKBOX
 */
 
+/*
+*  SCROLLBAR
+*/
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -487,3 +627,6 @@ button[disabled] {
   background: @border-solid;
   border-radius: 2px;
 }
+/*
+*  SCROLLBAR
+*/

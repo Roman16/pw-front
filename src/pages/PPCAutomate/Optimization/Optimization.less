@@ -1,67 +1,17 @@
 @import "../../../style/variables.less";
 
 #root > .main-pages {
-  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
-    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
-    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
-    only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-    position: relative;
-    overflow-y: auto;
-  }
-
-  .sidebar {
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
-      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
-      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
-      only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-  }
-
   .main-container {
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
-      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
-      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
-      only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-      padding-left: 5.142857142857143em;
-    }
-  }
-
-  .product-list {
-    width: 25.428571429em;
-    margin-right: 1.42857em;
-
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1059px),
-      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1059px),
-      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1059px),
-      only screen and (min-device-pixel-ratio: 2) and (max-width: 1059px) {
-      width: 19.071428571em;
-    }
-
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
-      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
-      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
-      only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-      width: 100%;
-      height: fit-content;
-      padding: 1.71428571em 1.71428571em 0 6.2em;
-      margin: 0;
-    }
-  }
-
-  .main-container {
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
-      only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
-      only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
-      only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-      overflow: unset;
-    }
-
     .optimization-page {
       height: 100vh;
       display: flex;
+
+      @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1249px),
+        only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1249px),
+        only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1249px),
+        only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
+        padding-bottom: 0;
+      }
 
       @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
         only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
@@ -82,6 +32,14 @@
           right: 0;
           padding: 1.6em 1.07143em;
           padding-bottom: 0;
+
+          @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 469px),
+            only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 469px),
+            only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 469px),
+            only screen and (max-device-pixel-ratio: 1) and (max-width: 469px) {
+            width: 100%;
+            flex-flow: column;
+          }
         }
 
         & > div {
@@ -91,6 +49,20 @@
 
           &:nth-child(2) {
             padding: 1.71429em 1.14286em 0 1.14286em;
+
+            @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1249px),
+              only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1249px),
+              only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1249px),
+              only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
+              padding-top: 4em;
+            }
+
+            @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 469px),
+              only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 469px),
+              only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 469px),
+              only screen and (max-device-pixel-ratio: 1) and (max-width: 469px) {
+              padding-top: 7em;
+            }
 
             @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
               only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
@@ -116,14 +88,20 @@
             grid-template-columns: 23.57143em 1fr;
           }
 
-          @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
-            only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
-            only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 999px),
-            only screen and (min-device-pixel-ratio: 2) and (max-width: 999px) {
-            all: unset;
-            background-color: #fff;
-            margin-bottom: 1.64286em;
-            border-radius: 0.57143em;
+          @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1249px),
+            only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1249px),
+            only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1249px),
+            only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
+            grid-template-columns: 1fr;
+            grid-template-areas: "optionsStrategy" "control";
+          }
+
+          @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1299px),
+            only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1299px),
+            only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1299px),
+            only screen and (min-device-pixel-ratio: 2) and (max-width: 1299px) {
+            grid-template-columns: 1fr;
+            grid-template-areas: "optionsStrategy" "control";
           }
 
           .product-info {
@@ -156,11 +134,11 @@
               column-gap: 1.42857em;
             }
 
-            @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
-              only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-              only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-              only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
-              grid-template-areas: "options strategy" "descriptions strategy";
+            @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1669px),
+              only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1669px),
+              only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1669px),
+              only screen and (max-device-pixel-ratio: 1) and (max-width: 1669px) {
+              grid-template-areas: "automate infoStrategy" "options strategy" "descriptions strategy";
             }
 
             @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1299px),
@@ -170,11 +148,19 @@
               grid-template-areas: "automate infoStrategy" "options strategy" "descriptions strategy";
             }
 
+            @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1249px),
+              only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1249px),
+              only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1249px),
+              only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
+              grid-template-columns: 1fr;
+              grid-template-rows: repeat(5, minmax(min-content, max-content));
+              grid-template-areas: "automate" "options" "infoStrategy" "strategy" "descriptions";
+            }
+
             @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
               only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
               only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 999px),
               only screen and (min-device-pixel-ratio: 2) and (max-width: 999px) {
-              // all: unset;
               grid-template-columns: 1fr;
               grid-template-rows: repeat(5, minmax(min-content, max-content));
               grid-template-areas: "automate" "options" "infoStrategy" "strategy" "descriptions";
@@ -186,15 +172,30 @@
               margin-bottom: 2em;
               color: @second-default-dark;
               font-weight: 600;
+              text-align: center;
               transition: all 0.5s ease-in;
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
+                width: fit-content;
+                margin: 0 auto;
+              }
 
               @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
                 only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
                 only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 999px),
                 only screen and (min-device-pixel-ratio: 2) and (max-width: 999px) {
                 width: fit-content;
-                margin-left: auto;
-                margin-right: auto;
+                margin: 0 auto;
+              }
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 529px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 529px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 529px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 529px) {
+                width: 12em;
               }
 
               @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 399px),
@@ -213,6 +214,15 @@
 
             .optimize-options {
               grid-area: options;
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+              }
 
               @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
                 only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
@@ -234,7 +244,15 @@
               margin-bottom: 2em;
               color: @second-default-dark;
               font-weight: 600;
+              text-align: center;
               transition: all 0.5s ease-in;
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1669px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1669px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1669px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 1669px) {
+                margin-top: 1.6em;
+              }
 
               @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1299px),
                 only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1299px),
@@ -243,13 +261,28 @@
                 margin-top: 1.6em;
               }
 
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
+                width: fit-content;
+                margin: 0 auto 2em auto;
+              }
+
               @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
                 only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
                 only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 999px),
                 only screen and (min-device-pixel-ratio: 2) and (max-width: 999px) {
                 width: fit-content;
-                margin-left: auto;
-                margin-right: auto;
+                margin: 0 auto 2em auto;
+              }
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 439px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 439px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 439px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 439px) {
+                width: 9em;
+                margin: 0 auto 2.8em auto;
               }
 
               i {
@@ -265,31 +298,24 @@
                 line-height: 1em;
                 top: 2em;
 
-                @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
-                  only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-                  only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-                  only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+                @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 439px),
+                  only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 439px),
+                  only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 439px),
+                  only screen and (max-device-pixel-ratio: 1) and (max-width: 439px) {
                   top: 4em;
-                }
-
-                @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1469px),
-                  only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1469px),
-                  only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1469px),
-                  only screen and (max-device-pixel-ratio: 1) and (max-width: 1469px) {
-                  top: 3.8em;
-                }
-
-                @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1299px),
-                  only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1299px),
-                  only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1299px),
-                  only screen and (min-device-pixel-ratio: 2) and (max-width: 1299px) {
-                  top: 2em;
                 }
               }
             }
 
             .optimize-strategy {
               grid-area: strategy;
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
+                margin-bottom: 2em;
+              }
 
               @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
                 only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
@@ -301,24 +327,15 @@
 
             .descriptions {
               grid-area: descriptions;
-
-              @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
-                only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
-                only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 999px),
-                only screen and (min-device-pixel-ratio: 2) and (max-width: 999px) {
-                width: fit-content;
-                margin-left: auto;
-                margin-right: auto;
-              }
             }
 
             &.less {
               max-height: 35em;
 
-              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: @big-desktop),
-                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: @big-desktop),
-                only screen and (max-device-pixel-ratio: 1) and (max-width: @big-desktop) {
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1669px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1669px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1669px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 1669px) {
                 max-height: 45em;
               }
 
@@ -329,11 +346,25 @@
                 max-height: 45em;
               }
 
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
+                max-height: 80em;
+              }
+
               @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
                 only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
                 only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 999px),
                 only screen and (min-device-pixel-ratio: 2) and (max-width: 999px) {
                 max-height: 80em;
+              }
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 479px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 479px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 479px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 479px) {
+                max-height: 115em;
               }
             }
 
@@ -352,6 +383,13 @@
                 only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 999px),
                 only screen and (min-device-pixel-ratio: 2) and (max-width: 999px) {
                 max-height: 4em;
+              }
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 529px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 529px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 529px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 529px) {
+                max-height: 5.6em;
               }
             }
           }

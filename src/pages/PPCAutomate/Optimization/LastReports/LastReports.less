@@ -3,11 +3,19 @@
 
 .optimization-page > .product-options > div.terminal {
   height: 100%;
-  min-height: 14em;
+  min-height: 13em;
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1249px),
+    only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1249px),
+    only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1249px),
+    only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
+    min-height: 17em;
+    margin-bottom: 1.71428571em;
+  }
 
   @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
     only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
@@ -16,22 +24,48 @@
     margin-bottom: 1.71428571em;
   }
 
+  @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 379px),
+    only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 379px),
+    only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 379px),
+    only screen and (max-device-pixel-ratio: 1) and (max-width: 379px) {
+    min-height: 25em;
+  }
+
   .card();
 
   .terminal-caption {
-    height: 2.2857143em;
+    min-height: 2.2857143em;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0 0 1.0714286em;
+
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 379px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 379px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 379px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 379px) {
+      flex-flow: column;
+    }
 
     .caption {
       font-size: 1.42857rem; // 20px
       text-transform: capitalize;
       color: @second-default-dark;
       font-weight: 600;
-      display: inherit;
-      align-items: inherit;
+
+      @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 529px),
+        only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 529px),
+        only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 529px),
+        only screen and (max-device-pixel-ratio: 1) and (max-width: 529px) {
+        width: 6.4em;
+      }
+
+      @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 379px),
+        only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 379px),
+        only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 379px),
+        only screen and (max-device-pixel-ratio: 1) and (max-width: 379px) {
+        margin-bottom: 0.4em;
+      }
 
       i {
         cursor: pointer;
@@ -172,11 +206,32 @@
       margin-right: 8em;
     }
 
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 529px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 529px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 529px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 529px) {
+      margin-right: unset;
+    }
+
     @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 479px),
       only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 479px),
       only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 479px),
       only screen and (min-device-pixel-ratio: 2) and (max-width: 479px) {
       margin-right: unset;
+    }
+
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 449px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 449px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 449px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 449px) {
+      font-size: 0.7142857142857143rem; // 10px
+    }
+
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 379px),
+      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 379px),
+      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 379px),
+      only screen and (max-device-pixel-ratio: 1) and (max-width: 379px) {
+      font-size: 0.6428571428571429rem; // 9px
     }
   }
 }
