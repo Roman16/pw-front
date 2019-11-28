@@ -5,7 +5,7 @@ import {history} from "../../utils/history";
 import whales from '../../assets/img/whales.svg';
 
 const ReportsChangesCountWindow = () => {
-    const [visibleWindow, switchWindow] = useState(true);
+    const [visibleWindow, switchWindow] = useState(false);
     const [changesCount, setCount] = useState(0);
     const {ppcNotification} = useSelector(state => ({
         ppcNotification: state.user.notifications ? state.user.notifications.ppc_optimization : {}
