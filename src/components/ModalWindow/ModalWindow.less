@@ -1,3 +1,5 @@
+@import '../../style/variables.less';
+
 .ant-modal-wrap {
   display: flex;
 }
@@ -139,4 +141,48 @@
       }
     }
   }
+}
+
+.reports-changes-window {
+  max-width: 20vw;
+  text-align: center;
+
+  .ant-modal-body {
+    padding: 30px 30px;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      margin: 0 0 20px 0;
+    }
+
+    b {
+      color: @success-color;
+    }
+  }
+
+  .ant-modal-footer {
+    padding: 0;
+
+    div {
+      display: flex;
+      justify-content: center;
+      margin: 0 0 20px 0;
+
+      button {
+        margin: 0;
+
+        &:first-child {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    & {
+      max-width: 30vw;
+    }
+  }
+
 }
