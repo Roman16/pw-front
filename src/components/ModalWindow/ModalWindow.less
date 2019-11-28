@@ -2,10 +2,10 @@
 
 .ant-modal-wrap {
   display: flex;
+  margin: auto;
 }
 
 .custom-modal-window {
-  width: 100% !important;
   max-width: 1170px;
   max-height: 90vh;
   height: max-content;
@@ -80,6 +80,7 @@
   max-width: 250px;
   font-family: ir;
   border-radius: 9px;
+  height: max-content;
 
   .ant-modal-close {
     display: none;
@@ -143,6 +144,11 @@
   }
 }
 
+.payment-notification-window {
+
+}
+
+
 .reports-changes-window {
   max-width: 20vw;
   text-align: center;
@@ -185,4 +191,47 @@
     }
   }
 
+}
+
+
+//----------------------------------------------
+.payment-modal-wrap {
+  width: max-content;
+  //padding: 0 0 0 200px;
+}
+
+.payment-notification-window {
+  padding-left: 200px;
+  max-width: 40vw;
+  width: 100% !important;
+
+  .ant-result-title {
+    text-align: center;
+    padding: 0 0 20px 0;
+    font-size: 1.7rem;
+  }
+
+  .ant-result-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .buttons-block {
+    width: 100%;
+    padding: 0 0 50px 0;
+    display: flex;
+    justify-content: space-between;
+
+    .btn {
+      font-size: 1rem;
+      width: 40%;
+      height: 2.858em;
+    }
+  }
+
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    & {
+      padding-left: 150px;
+      max-width: 50vw;
+    }
+  }
 }

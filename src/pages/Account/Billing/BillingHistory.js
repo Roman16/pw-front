@@ -11,7 +11,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             dataIndex: 'invoice_number',
             key: 'invoice_number',
             width: '20%',
-            render: (text) => (<a>{text}</a>)
+            render: (invoiceNumber, item) => (<a href={item.hosted_invoice_url} target='_blank'>{invoiceNumber}</a>)
         },
         {
             title: 'Card',
