@@ -292,6 +292,13 @@ class UpdateCard extends Component {
                     ...paymentDetails,
                     stripe_token: res.paymentMethod.id
                 })
+                    .then(() => {
+                        this.props.stripe.handleCardAction(
+                            'pm_1FjjDNJzUVfwvcYwVtrb2Q1w_sekret_sefwgreg'
+                        ).then(res => {
+                            console.log(res);
+                        });
+                    })
             }
         } catch (e) {
             console.log(e);

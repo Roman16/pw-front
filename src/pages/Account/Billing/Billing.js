@@ -56,7 +56,7 @@ const Billing = () => {
         } else {
             const res = await userService.addPaymentMethod(card);
             updatePayment(res);
-            selectCard(res[0])
+            selectCard(res[0]);
         }
         openWindow(null);
     }
