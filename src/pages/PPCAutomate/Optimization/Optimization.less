@@ -172,7 +172,6 @@
               margin-bottom: 2em;
               color: @second-default-dark;
               font-weight: 600;
-              text-align: center;
               transition: all 0.5s ease-in;
 
               @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1249px),
@@ -180,7 +179,8 @@
                 only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1249px),
                 only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
                 width: fit-content;
-                margin: 0 auto;
+                margin: 0 auto 1em auto;
+                text-align: center;
               }
 
               @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
@@ -188,7 +188,8 @@
                 only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 999px),
                 only screen and (min-device-pixel-ratio: 2) and (max-width: 999px) {
                 width: fit-content;
-                margin: 0 auto;
+                margin: 0 auto 1em auto;
+                text-align: center;
               }
 
               @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 529px),
@@ -244,7 +245,6 @@
               margin-bottom: 2em;
               color: @second-default-dark;
               font-weight: 600;
-              text-align: center;
               transition: all 0.5s ease-in;
 
               @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1669px),
@@ -267,6 +267,7 @@
                 only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
                 width: fit-content;
                 margin: 0 auto 2em auto;
+                text-align: center;
               }
 
               @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
@@ -275,6 +276,7 @@
                 only screen and (min-device-pixel-ratio: 2) and (max-width: 999px) {
                 width: fit-content;
                 margin: 0 auto 2em auto;
+                text-align: center;
               }
 
               @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 439px),
@@ -371,24 +373,45 @@
             &.more {
               max-height: 4em;
 
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1669px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1669px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1669px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 1669px) {
+                max-height: 6em;
+              }
+
               @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1299px),
                 only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1299px),
                 only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1299px),
                 only screen and (min-device-pixel-ratio: 2) and (max-width: 1299px) {
-                max-height: 5.4em;
+                max-height: 6em;
+              }
+
+              @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1249px),
+                only screen and (max-device-pixel-ratio: 1) and (max-width: 1249px) {
+                max-height: 3.6em;
               }
 
               @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 999px),
                 only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 999px),
                 only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 999px),
                 only screen and (min-device-pixel-ratio: 2) and (max-width: 999px) {
-                max-height: 4em;
+                max-height: 3.6em;
               }
 
               @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 529px),
                 only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 529px),
                 only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 529px),
                 only screen and (max-device-pixel-ratio: 1) and (max-width: 529px) {
+                max-height: 5.6em;
+              }
+
+              @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 399px),
+                only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 399px),
+                only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 399px),
+                only screen and (min-device-pixel-ratio: 2) and (max-width: 399px) {
                 max-height: 5.6em;
               }
             }
