@@ -20,14 +20,14 @@ const SubscriptionNotificationWindow = ({product}) => {
         dashboardSubscribed: state.user.subscriptions[productsName[product]]
     }));
 
-    useEffect(() => {
-        console.log(dashboardSubscribed);
-
-        if (dashboardSubscribed.has_access && (currentPage !== null)) {
-            openWindow(true);
-            currentPage.classList.add("disable-page");
-        }
-    }, [currentPage, dashboardSubscribed]);
+    // useEffect(() => {
+    //     console.log(dashboardSubscribed);
+    //
+    //     if (!dashboardSubscribed.has_access && (currentPage !== null)) {
+    //         openWindow(true);
+    //         currentPage.classList.add("disable-page");
+    //     }
+    // }, [currentPage, dashboardSubscribed]);
 
     function RenderModalWindow() {
         return (
