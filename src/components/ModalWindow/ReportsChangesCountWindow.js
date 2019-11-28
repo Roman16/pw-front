@@ -5,7 +5,7 @@ import {history} from "../../utils/history";
 import whales from '../../assets/img/whales.svg';
 
 const ReportsChangesCountWindow = () => {
-    const [visibleWindow, switchWindow] = useState(true);
+    const [visibleWindow, switchWindow] = useState(false);
     const {ppcNotification} = useSelector(state => ({
         ppcNotification: state.user.notifications ? state.user.notifications.ppc_optimization : {}
     }));
@@ -29,7 +29,7 @@ const ReportsChangesCountWindow = () => {
             handleOk={handleOk}
             handleCancel={() => switchWindow(false)}
         >
-            <img src={whales} alt=""/>
+            {/*<img src={whales} alt=""/>*/}
             <h3>Yay 👋  </h3>
             While you where away the software performed <b>{ppcNotification && ppcNotification.count_from_last_login}</b> changes on your ad campaigns.
         </ModalWindow>
