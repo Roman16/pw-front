@@ -15,7 +15,7 @@ import {userService} from "../../../services/user.services";
 
 const defaultPaginationParams = {
     page: 1,
-    totalSize: 10
+    totalSize: 50
 };
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
@@ -108,7 +108,7 @@ const Billing = () => {
         openWindow(null);
     }
 
-    async function handlePaginationChange(page) {
+    async function handlePaginationChange({page}) {
         const res = await userService.fetchBillingHistory({...paginationParams, page});
         changePagination({...paginationParams, page});
         updateHistoryList(res);
