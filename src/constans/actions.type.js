@@ -7,6 +7,7 @@ export const userConstants = {
     UPDATE_USER:'UPDATE_USER',
     UNSET_AMAZON_MWS:'UNSET_AMAZON_MWS',
     UNSET_AMAZON_PPC:'UNSET_AMAZON_PPC',
+    RESET_CHANGES_COUNT:'RESET_CHANGES_COUNT',
 };
 
 //--------------------------------------------

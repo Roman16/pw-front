@@ -1,6 +1,5 @@
 import {userConstants} from '../constans/actions.type';
 import {history} from '../utils/history';
-
 import {userService} from '../services/user.services';
 import {notification} from "../components/Notification";
 
@@ -17,7 +16,8 @@ export const userActions = {
     changeUserAvatar,
     reSetState,
     getPersonalUserInfo,
-    unsetAccount
+    unsetAccount,
+    resetChangesCount
 };
 
 function login(user) {
@@ -140,6 +140,13 @@ function setInformation(user) {
     return {
         type: userConstants.SET_INFORMATION,
         payload: user
+    };
+}
+
+function resetChangesCount(product) {
+    return {
+        type: userConstants.RESET_CHANGES_COUNT,
+        payload: product
     };
 }
 
