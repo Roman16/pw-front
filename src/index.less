@@ -12,7 +12,10 @@ html {
 //-------------------------------------
 /*Retina CSS */
 //-------------------------------------
-@media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+@media only screen and (min--moz-device-pixel-ratio: 2),
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-device-pixel-ratio: 2) {
   html {
     font-size: 10.5px;
   }
@@ -109,6 +112,7 @@ img {
       only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
       width: 100%;
       // height: fit-content;
+      overflow: hidden;
       padding: 1.71428571em 1.71428571em 0 6.2em;
       margin: 0;
     }
@@ -126,6 +130,7 @@ img {
       only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
       width: 100%;
       // height: fit-content;
+      overflow: hidden;
       padding: 1.71428571em 1.71428571em 0 6.2em;
       margin: 0;
     }
@@ -136,7 +141,7 @@ img {
       only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
       only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
       only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
-      overflow: unset;
+      overflow: hidden;
       padding-left: 5.142857142857143em;
     }
 
@@ -144,7 +149,7 @@ img {
       only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
       only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
       only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-      overflow: unset;
+      overflow: hidden;
       padding-left: 5.142857142857143em;
     }
   }
@@ -233,7 +238,7 @@ img {
 
     &:hover {
       box-shadow: 0px 0.8571429em 1.1428571em rgba(142, 147, 192, 0.08),
-      0px 0px 1.4285714em rgba(142, 147, 192, 0.08);
+        0px 0px 1.4285714em rgba(142, 147, 192, 0.08);
     }
 
     &[title] > a {
@@ -268,8 +273,8 @@ img {
   }
 
   .ant-pagination-jump-next
-  .ant-pagination-item-container
-  .ant-pagination-item-link-icon {
+    .ant-pagination-item-container
+    .ant-pagination-item-link-icon {
     color: #6d6df6;
   }
 
@@ -320,7 +325,9 @@ img {
     border: 1px solid #8fd39d;
   }
 
-  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+  @media only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min-device-pixel-ratio: 2) {
     & {
       .ant-switch {
         min-width: 33px;
@@ -411,17 +418,17 @@ img {
 }
 
 .ant-calendar-tbody
-.ant-calendar-active-week
-.ant-calendar-selected-day
-.ant-calendar-date {
+  .ant-calendar-active-week
+  .ant-calendar-selected-day
+  .ant-calendar-date {
   border-radius: 50%;
   background-color: @success-color;
 }
 
 .ant-calendar-tbody
-.ant-calendar-active-week
-.ant-calendar-selected-day
-.ant-calendar-date:hover {
+  .ant-calendar-active-week
+  .ant-calendar-selected-day
+  .ant-calendar-date:hover {
   border-radius: 50%;
   background-color: @success-color;
 }
@@ -538,9 +545,9 @@ button.btn {
 
     &:hover {
       background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
-      #6d6df6;
+        #6d6df6;
       box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
-      0px 0px 20px rgba(142, 147, 192, 0.08);
+        0px 0px 20px rgba(142, 147, 192, 0.08);
     }
   }
 
@@ -551,7 +558,7 @@ button.btn {
     &:hover {
       background: #5e9168;
       box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
-      0px 0px 20px rgba(142, 147, 192, 0.08);
+        0px 0px 20px rgba(142, 147, 192, 0.08);
     }
   }
 
@@ -562,25 +569,29 @@ button.btn {
     &:hover {
       background: #a8a9b1;
       box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
-      0px 0px 20px rgba(142, 147, 192, 0.08);
+        0px 0px 20px rgba(142, 147, 192, 0.08);
     }
   }
 }
 
 button:disabled,
 button[disabled] {
-  background: linear-gradient(0deg,
-  rgba(189, 198, 207, 0.4),
-  rgba(189, 198, 207, 0.4)),
-  #e8edf1 !important;
+  background: linear-gradient(
+      0deg,
+      rgba(189, 198, 207, 0.4),
+      rgba(189, 198, 207, 0.4)
+    ),
+    #e8edf1 !important;
   color: #c9cbd4 !important;
   cursor: initial;
 
   &:hover {
-    background: linear-gradient(0deg,
-    rgba(189, 198, 207, 0.4),
-    rgba(189, 198, 207, 0.4)),
-    #e8edf1 !important;
+    background: linear-gradient(
+        0deg,
+        rgba(189, 198, 207, 0.4),
+        rgba(189, 198, 207, 0.4)
+      ),
+      #e8edf1 !important;
   }
 }
 
