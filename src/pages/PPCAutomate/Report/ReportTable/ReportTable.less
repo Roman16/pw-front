@@ -1,7 +1,7 @@
 @import "../../../../style/mixins.less";
 @import "../../../../style/variables.less";
 
-.main-pages,
+// .main-pages,
 .reports-page {
   display: flex;
   height: 100vh;
@@ -435,15 +435,19 @@ div.ReportTable {
               }
             }
 
-            .ant-pagination {
-              min-height: 2.2857143em;
+            .table-pagination {
+              margin: 0 7em;
 
-              @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 469px),
-                only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 469px),
-                only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 469px),
-                only screen and (min-device-pixel-ratio: 2) and (max-width: 469px) {
-                margin: 1.4285714em 0.7142857em;
-                margin-bottom: 6em;
+              .ant-pagination {
+                min-height: 2.2857143em;
+
+                @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 469px),
+                  only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 469px),
+                  only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 469px),
+                  only screen and (min-device-pixel-ratio: 2) and (max-width: 469px) {
+                  margin: 1.4285714em 0.7142857em;
+                  margin-bottom: 6em;
+                }
               }
             }
           }
