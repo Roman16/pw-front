@@ -82,7 +82,7 @@ const RenderPramsChanges = ({type, product}) => {
 export const ProfitTooltipDescription = () => (
     <div className='profit-tooltip-description'>
         <div className='title'>Warning</div>
-        <p>We need to know your product costs before algorithm start optimization</p>
+        <p>We need to know your product net margin before algorithm start optimization</p>
 
         <button className='btn default' onClick={() => history.push('/ppc/product-settings')}>Add Net Margin</button>
 
