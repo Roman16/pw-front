@@ -172,13 +172,17 @@
 
             .collapsed-automate {
               width: 200px;
+              display: none;
               position: absolute;
               top: 27em;
               padding: 0 0 0 30px;
-              display: none;
               left: 4.5em;
               // opacity: 0;
               // transition: opacity 1s ease-in, left 0s ease-in 1s;
+
+              // &:active {
+              //   display: none;
+              // }
 
               .collapsed-automate-list {
                 width: 200px;
@@ -208,6 +212,11 @@
                     color: @white;
                   }
                 }
+
+                // .automate-item::parent:active {
+                //   // display: none;
+                //   background-color: #f00;
+                // }
 
                 .automate-item:hover > .automate-link {
                   color: @white;
