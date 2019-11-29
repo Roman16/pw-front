@@ -217,7 +217,7 @@ const Sidebar = () => {
             </ul>
           </nav>
         </div>
-        <p style={{ color: "#FFF" }}>sdfghjkl</p>
+        <p style={{ color: "#FFF" }}>test</p>
         <nav className="bottom-nav">
           <ul className="bottom-nav-list">
             <li className="bottom-nav-item">
