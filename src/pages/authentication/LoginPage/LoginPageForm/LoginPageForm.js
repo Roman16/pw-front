@@ -1,22 +1,22 @@
-import React from 'react';
+import React from "react";
 
-import { Form, Row, Input, Button, Checkbox, Col, Spin } from 'antd';
-import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
-import { notification } from '../../../../components/Notification';
-import { userActions } from '../../../../actions/user.actions';
-import amazon from '../../../../assets/img/amazon.png';
-import './LoginPageForm.less';
+import { Form, Row, Input, Button, Checkbox, Col, Spin } from "antd";
+import { connect } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
+import { notification } from "../../../../components/Notification";
+import { userActions } from "../../../../actions/user.actions";
+import amazon from "../../../../assets/img/amazon.png";
+import "./LoginPageForm.less";
 
 const recaptchaKey =
   process.env.GOOGLE_RECAPTCHA_KEY ||
-  '6LdVacEUAAAAACxfVkvIWG3r9MXE8PYKXJ5aaqY1';
+  "6LdVacEUAAAAACxfVkvIWG3r9MXE8PYKXJ5aaqY1";
 
 class LoginPageForm extends React.Component {
   state = {
-    email: '',
-    password: '',
-    captcha_action: 'login',
+    email: "",
+    password: "",
+    captcha_action: "login",
     remember_me: false,
     isLoading: false,
     loginSuccess: false
@@ -39,7 +39,7 @@ class LoginPageForm extends React.Component {
 
     if (password.length < 6) {
       notification.error({
-        title: 'The password must be at least 6 characters.'
+        title: "The password must be at least 6 characters."
       });
       this.setState({
         isLoading: false
@@ -47,7 +47,7 @@ class LoginPageForm extends React.Component {
       return;
     } else if (email.length === 0) {
       notification.error({
-        title: 'The letter must contain at least 1 character.'
+        title: "The letter must contain at least 1 character."
       });
       this.setState({
         isLoading: false
@@ -55,7 +55,7 @@ class LoginPageForm extends React.Component {
       return;
     } else if (!fieldEmailValid) {
       notification.error({
-        title: 'Invalid email address'
+        title: "Invalid email address"
       });
       this.setState({
         isLoading: false
@@ -65,7 +65,7 @@ class LoginPageForm extends React.Component {
 
     window.grecaptcha.ready(() => {
       window.grecaptcha
-        .execute(recaptchaKey, { action: 'login' })
+        .execute(recaptchaKey, { action: "login" })
         .then(token => {
           this.props.login({
             email,
@@ -183,11 +183,9 @@ class LoginPageForm extends React.Component {
           <Col>
             <div className="amazon-login-wrap">
               <p>or</p>
-              {/*<Link to="/login/amazon">*/}
-              <a onClick={() => window.open('/login/amazon', '_self')}>
+              <a onClick={() => window.open("/login/amazon", "_self")}>
                 <img src={amazon} alt="LWA-GOld" />
               </a>
-              {/*</Link>*/}
             </div>
           </Col>
         </Row>

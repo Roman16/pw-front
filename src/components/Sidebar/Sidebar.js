@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { Icon, Avatar } from "antd";
@@ -58,9 +58,6 @@ const Sidebar = () => {
       user: state.user
     }));
 
-  // console.log("width", width);
-  // console.log("height", height);
-
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
 
@@ -91,10 +88,6 @@ const Sidebar = () => {
 
   window.captchaStyle.innerHTML = `.grecaptcha-badge { display: none !important}`;
 
-  // console.log("documentElement", document.documentElement.style.setProperty);
-  let vh = window.innerHeight * 0.01;
-  // Then we set the value in the --vh custom property to the root of the document
-  document.documentElement.style.setProperty("--vh", `${vh}px`);
   return (
     <div
       className={`sidebar ${className}`}
