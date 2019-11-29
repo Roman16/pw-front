@@ -21,6 +21,7 @@
       flex-direction: column;
       justify-content: center;
       width: 20%;
+      min-width: 200px;
       font-family: ir;
 
       h3 {
@@ -64,6 +65,7 @@
       width: 55%;
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
 
       .cards-carousel {
         width: 45%;
@@ -335,4 +337,13 @@
       }
     }
   }
+
+  @media (max-width: 600px) {
+    & {
+      .account-billing-block .user-cards {
+        width: 100%;
+      }
+    }
+  }
+
 }
