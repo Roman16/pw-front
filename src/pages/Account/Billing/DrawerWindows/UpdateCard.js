@@ -23,7 +23,7 @@ const CardNumberElementStyles = {
 };
 
 const StripeForm = (props) => {
-    const {stripeElementChange, handleSubmit, onClose, handleChangeInput, countriesList, onChangeSelect, paymentDetails, selectedCard, cardNumber, expiry} = props;
+    const {onBlurCardElement, stripeElementChange, handleSubmit, onClose, handleChangeInput, countriesList, onChangeSelect, paymentDetails, selectedCard, cardNumber, expiry, cvc, autofocus} = props;
     return (
         <form onSubmit={handleSubmit}>
             <div className="card-container">
@@ -45,8 +45,11 @@ const StripeForm = (props) => {
                         <label className="label">Expiry</label>
                         {!selectedCard.id && <CardExpiryElement
                             style={CardNumberElementStyles}
-                            ref={(instance) => {(cardNumber && instance) && instance._element.focus()}}
+                            ref={(instance) => {
+                                (autofocus && cardNumber && instance && !expiry) && instance._element.focus()
+                            }}
                             onChange={(element) => stripeElementChange(element, 'expiry')}
+                            onBlur={onBlurCardElement}
                         />}
 
                         {selectedCard.id && <div className='disabled-card-number fake-card-field'>
@@ -58,8 +61,11 @@ const StripeForm = (props) => {
                         <label className="label">CVC</label>
                         {!selectedCard.id && <CardCvcElement
                             style={CardNumberElementStyles}
-                            ref={(instance) => {(expiry && instance) && instance._element.focus(); }}
+                            ref={(instance) => {
+                                (autofocus && expiry && instance && !cvc) && instance._element.focus();
+                            }}
                             onChange={(element) => stripeElementChange(element, 'cvc')}
+                            onBlur={onBlurCardElement}
                         />}
 
                         {selectedCard.id && <div className='disabled-card-number fake-card-field'>
@@ -199,17 +205,24 @@ class UpdateCard extends Component {
             country: '',
             postal_code: '',
         },
+        autofocus: true,
         selectedCard: {},
         card_number: false,
         expiry: false,
         cvc: false,
     };
 
+    handleBlurCardElement = () => {
+        this.setState({
+            autofocus: false
+        })
+    };
+
     stripeElementChange = (element, name) => {
-        console.log();
         if (!element.empty && element.complete) {
             this.setState({
-                [name]: true
+                [name]: true,
+                autofocus: true
             });
         }
     };
@@ -279,6 +292,13 @@ class UpdateCard extends Component {
                     ...paymentDetails,
                     stripe_token: res.paymentMethod.id
                 })
+                    .then(() => {
+                        this.props.stripe.handleCardAction(
+                            'pm_1FjjDNJzUVfwvcYwVtrb2Q1w_sekret_sefwgreg'
+                        ).then(res => {
+                            console.log(res);
+                        });
+                    })
             }
         } catch (e) {
             console.log(e);
@@ -303,7 +323,7 @@ class UpdateCard extends Component {
     render() {
         const {onClose} = this.props,
             {
-                countriesList, paymentDetails, selectedCard, card_number,expiry
+                countriesList, paymentDetails, selectedCard, card_number, expiry, cvc, autofocus
             } = this.state;
 
         return (
@@ -321,6 +341,7 @@ class UpdateCard extends Component {
                     handleSubmit={this.handleSubmit}
                     handleChangeInput={this.handleChangeInput}
                     onChangeSelect={this.handleChangeSelect}
+                    onBlurCardElement={this.handleBlurCardElement}
 
                     onClose={onClose}
                     countriesList={countriesList}
@@ -329,6 +350,9 @@ class UpdateCard extends Component {
 
                     cardNumber={card_number}
                     expiry={expiry}
+                    cvc={cvc}
+
+                    autofocus={autofocus}
                 />
             </div>
         )

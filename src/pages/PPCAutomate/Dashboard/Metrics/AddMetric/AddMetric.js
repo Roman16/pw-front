@@ -57,6 +57,7 @@ const AddMetric = () => {
             </div>
 
             <AddMetricModal
+                className={'added-metrics-window'}
                 visibleModal={visibleModal}
                 handleOk={handleOk}
                 handleCancel={handleCancel}

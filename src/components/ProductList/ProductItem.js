@@ -101,7 +101,6 @@ const ProductItem = ({
 
                         {under_optimization && !has_optimization_results && <div className='optimization-waiting'>
                             <img src={loaderBg} alt=""/>
-
                             <Spin/>
                         </div>}
                     </div>

@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Form, Row, Input, Button, Checkbox, Col, Spin } from "antd";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
@@ -28,6 +27,9 @@ class LoginPageForm extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
+    if (!this.props.notFirstEntry) {
+      this.props.resetState();
+    }
 
     const { email, password, remember_me, captcha_action } = this.state;
     this.setState({ isLoading: true });
@@ -194,11 +196,16 @@ class LoginPageForm extends React.Component {
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+  notFirstEntry: state.user.notFirstEntry
+});
 
 const mapDispatchToProps = dispatch => ({
   login: user => {
     dispatch(userActions.login(user));
+  },
+  resetState: () => {
+    dispatch(userActions.reSetState());
   }
 });
 

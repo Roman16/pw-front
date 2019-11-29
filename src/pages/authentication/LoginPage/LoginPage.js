@@ -1,18 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Row, Col} from 'antd';
-import {useDispatch} from "react-redux";
 import LoginPageForm from './LoginPageForm/LoginPageForm';
-import {userActions} from "../../../actions/user.actions";
 import './LoginPage.less';
 
 import logo from '../../../assets/img/logo.svg';
 
 const LoginPage = () => {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(userActions.reSetState())
-    }, []);
-
     return (
         <div className="LoginFormContainer">
             <div className="sign-page">

@@ -13,6 +13,7 @@ function getLastReports(id) {
 function getAllReports({
                            id,
                            page = 1,
+                           pageSize=10,
                            dataType = 'keywords-optimization',
                            dataSubType = 'changed-keyword-bid-acos',
                            startDate,
@@ -23,5 +24,5 @@ function getAllReports({
         endDate ? `&end_date=${endDate}` : ''
     ];
 
-    return api('get', `${reportsUrls.allReports}?product_id=${id}&page=${page}&size=10&data_type=${dataType}&data_sub_type=${dataSubType}${parameters.join('')}`)
+    return api('get', `${reportsUrls.allReports}?product_id=${id}&page=${page}&size=${pageSize}&data_type=${dataType}&data_sub_type=${dataSubType}${parameters.join('')}`)
 }

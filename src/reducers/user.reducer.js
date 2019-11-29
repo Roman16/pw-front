@@ -1,6 +1,7 @@
 import {userConstants} from '../constans/actions.type';
 
 const initialState = {
+    notFirstEntry: false,
     user: {},
     plans: {},
     account_links: [{
@@ -19,13 +20,27 @@ export function user(state = initialState, action) {
         case userConstants.SET_INFORMATION:
             return {
                 ...state,
-                ...action.payload
+                ...action.payload,
+                notFirstEntry: true
             };
 
         case userConstants.UPDATE_USER:
             return {
                 ...state,
                 user: action.payload
+            };
+
+        case userConstants.RESET_CHANGES_COUNT:
+            return {
+                ...state,
+                notifications: {
+                    ...state.notifications,
+
+                    [action.payload]: {
+                        ...state.notifications[action.payload],
+                        count_from_last_login: 0
+                    }
+                }
             };
 
         case userConstants.UNSET_AMAZON_MWS:

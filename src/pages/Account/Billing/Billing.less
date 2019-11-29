@@ -21,10 +21,12 @@
       flex-direction: column;
       justify-content: center;
       width: 20%;
-      font-family: er;
+      min-width: 200px;
+      font-family: ir;
 
       h3 {
         font-size: 1.4285714285714286rem;
+        //font-size: 20px;
         line-height: 2.142857142857143rem;
         letter-spacing: 0.4px;
         color: #38454F;
@@ -49,6 +51,7 @@
         min-width: 190px;
         padding: 0 1em;
         font-family: ir;
+        font-size: 1rem;
       }
     }
 
@@ -62,6 +65,7 @@
       width: 55%;
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
 
       .cards-carousel {
         width: 45%;
@@ -232,7 +236,7 @@
         }
 
         span {
-          font-family: er;
+          font-family: ir;
           font-size: 1rem;
           letter-spacing: 0.4px;
           color: #656A84;
@@ -275,7 +279,7 @@
             line-height: 24px;
             letter-spacing: 0.4px;
             color: #656A84;
-            font-family: er;
+            font-family: ir;
             display: flex;
             flex-wrap: wrap;
           }
@@ -293,7 +297,7 @@
       width: 100%;
 
       h3 {
-        font-family: er;
+        font-family: ir;
         font-size: 1.4285714285714286rem;
         letter-spacing: 0.4px;
         color: #38454F;
@@ -333,4 +337,13 @@
       }
     }
   }
+
+  @media (max-width: 600px) {
+    & {
+      .account-billing-block .user-cards {
+        width: 100%;
+      }
+    }
+  }
+
 }

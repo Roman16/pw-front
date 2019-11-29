@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import moment from 'moment';
 import TableButton from '../TableButton/TableButton';
-import { indexField, createdKeywordsActionField, infoField } from './const';
-import { useSelector } from 'react-redux';
+import {indexField, createdKeywordsActionField, infoField} from './const';
+import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 
@@ -237,16 +237,17 @@ const columns = {
 };
 
 const NewKeywords = ({
-    data,
-    onChangeSubTab,
-    activeTab,
-    currentPage,
-    totalSize,
-    handlePaginationChange,
-    scroll
-}) => {
+                         data,
+                         onChangeSubTab,
+                         activeTab,
+                         currentPage,
+                         totalSize,
+                         handlePaginationChange,
+                         scroll,
+                         pageSize
+                     }) => {
     const [activeTable, changeTable] = useState(createdCampaign);
-    const { count, loading, productId } = useSelector(state => ({
+    const {count, loading, productId} = useSelector(state => ({
         count: state.reports.counts['new-keywords'].subtypes_counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
@@ -323,6 +324,8 @@ const NewKeywords = ({
                 currentPage={currentPage}
                 totalSize={totalSize}
                 heightTabBtn={heightTabBtn}
+                showSizeChanger={true}
+                pageSize={pageSize}
             />
         </div>
     );

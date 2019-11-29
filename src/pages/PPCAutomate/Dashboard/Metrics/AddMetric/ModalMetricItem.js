@@ -4,16 +4,19 @@ import {ProfitTooltipDescription} from "../../ProductBreakdown/ProductsList";
 import plusIcon from "../../../../../assets/img/icons/plus-green.svg";
 import minusIcon from "../../../../../assets/img/icons/minus.svg";
 import {round} from "../../../../../utils/round";
+import {metricsListArray} from "../metricsList";
 
-const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, item, listType, removeMetric, addMetric}) => (
-    <div className='metric-item' onClick={() => listType === 'visible' ? removeMetric(item) : addMetric(item)}>
+const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, item, listType, removeMetric, addMetric}) => {
+    const metricInformation = metricsListArray.find(item => item.key === key);
+
+    return (<div className='metric-item' onClick={() => listType === 'visible' ? removeMetric(item) : addMetric(item)}>
         <div className="title-info">
-            {title}
+            {metricInformation.title}
 
             {key === 'profit' ?
                 <Tooltip type='warning' description={<ProfitTooltipDescription />}/>
                 :
-                <Tooltip description={title}/>
+                metricInformation.info && <Tooltip description={metricInformation.info}/>
             }
 
             {listType === 'hidden' && <div className="add-item">
@@ -32,6 +35,6 @@ const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, i
             <div className='label'>{label}</div>
         </div>
     </div>
-);
+)};
 
 export default ModalMetricItem;

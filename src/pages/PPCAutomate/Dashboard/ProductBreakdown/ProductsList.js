@@ -24,6 +24,28 @@ const RenderPramsChanges = ({type, product}) => {
                     </div>
                 </div>
             )
+        } else if (type === 'acos_diff') {
+            return (
+                <div className='product-metric-changes up'>
+                    {value >= 25 && <div className='downward-changes'>
+                        {round(+value, 2)}%
+                        <img style={{transform: 'rotate(180deg)'}} src={downWhiteIcon} alt=""/>
+
+                    </div>}
+                    {(value > 0 && value < 25) && <div className='down-changes'>
+                        {round(+value, 2)}%
+                        <img style={{transform: 'rotate(180deg)'}} src={downBlackIcon} alt=""/>
+                    </div>}
+                    {(value <= 0 && value > -25) && <div className='up-changes'>
+                        {round(+value, 2)}%
+                        <img style={{transform: 'rotate(180deg)'}} src={upGreenIcon} alt=""/>
+                    </div>}
+                    {(value <= -25) && <div className='upward-changes'>
+                        {round(+value, 2)}%
+                        <img style={{transform: 'rotate(180deg)'}} src={upWhiteIcon} alt=""/>
+                    </div>}
+                </div>
+            )
         } else {
             return (
                 <div className='product-metric-changes up'>
@@ -84,7 +106,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             ),
             key: 'id',
             dataIndex: 'id',
-            width: '300px',
+            width: '200px',
             render: (text, record) => (
                 <ProductItem
                     product={record.product}
@@ -92,10 +114,9 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: 'Number of Optimization',
+            title: 'Total Changes',
             dataIndex: 'total_changes',
             key: 'total_changes',
-            width: '50px',
             render: (text) => (
                 <div className='count-changes'>
                     {text || 0}
@@ -103,10 +124,11 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: 'Budget Allocation',
+            title: () => <div>Budget <br/> Allocation<Tooltip
+                description={'A budget allocation is the amount of funding designated to each of your product.'}
+            /></div>,
             dataIndex: 'budget_allocation',
             key: 'budget_allocation',
-            width: 100,
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${round(text, 2)}%` : 'N/A'}
@@ -119,10 +141,11 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: 'Sales Share',
+            title: () => <div>Sales Share<Tooltip
+                description={'The percentage of sales allocated to the given product.'}
+            /></div>,
             dataIndex: 'sales_share',
             key: 'sales_share',
-            width: 100,
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${round(text, 2)}%` : 'N/A'}
@@ -135,10 +158,11 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: 'CPA',
+            title: () => <div>CPA<Tooltip
+                description={'Cost to acquire one paying customer on a campaign.'}
+            /></div>,
             dataIndex: 'cpa',
             key: 'cpa',
-            width: 100,
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `$${round(text, 2)}` : 'N/A'}
@@ -151,10 +175,11 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: 'CVR Rate',
+            title: () => <div>Ad CVR<Tooltip
+                description={'The Conversion Rate of a campaign is the percentage of people who clicked on an ad and then completed an action/purchase/conversion.'}
+            /></div>,
             dataIndex: 'conversion_rate',
             key: 'conversion_rate',
-            width: 100,
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${round(text, 2)}%` : 'N/A'}
@@ -170,7 +195,6 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            width: 100,
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${round(text, 2)}%` : 'N/A'}
@@ -186,7 +210,6 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             title: () => (<span>Profit <Tooltip type='warning' description={<ProfitTooltipDescription/>}/></span>),
             dataIndex: 'profit',
             key: 'profit',
-            width: '110px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `$${round(text, 2)}` : 'N/A'}

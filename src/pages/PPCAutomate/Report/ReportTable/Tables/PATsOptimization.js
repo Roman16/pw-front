@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {
-  indexField,
-  infoField,
-  bidActionField,
-  patIntentField,
-  pausePatActionField
+    indexField,
+    infoField,
+    bidActionField,
+    patIntentField,
+    pausePatActionField
 } from './const';
 import TableButton from '../TableButton/TableButton';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
@@ -17,232 +17,235 @@ const pausedManualPATHighACoS = 'paused-manual-pat-high-acos';
 const pausedManualPatNoSales = 'paused-manual-pat-no-sales';
 
 const defaultKeys = [
-  {
-    ...indexField
-  },
-  {
-    title: 'Campaign',
-    dataIndex: 'campaign',
-    key: 'campaign',
-    width: '150px'
-  },
-  {
-    title: 'Ad Group',
-    dataIndex: 'adGroup',
-    key: 'adGroup',
-    width: '150px'
-  },
-  {
-    title: (
-      <TitleInfo
-        title="PAT type"
-        info="The type of Product Targeting. It can be a Manual or Auto."
-      />
-    ),
-    dataIndex: 'PatType',
-    key: 'PatType',
-    width: '100px',
-    render: text => <span className="capitalize-field">{text}</span>
-  },
-  {
-    ...patIntentField
-  },
-  {
-    title: 'PAT Value',
-    dataIndex: 'PatValue',
-    key: 'PatValue',
-    width: '132px'
-  }
+    {
+        ...indexField
+    },
+    {
+        title: 'Campaign',
+        dataIndex: 'campaign',
+        key: 'campaign',
+        width: '150px'
+    },
+    {
+        title: 'Ad Group',
+        dataIndex: 'adGroup',
+        key: 'adGroup',
+        width: '150px'
+    },
+    {
+        title: (
+            <TitleInfo
+                title="PAT type"
+                info="The type of Product Targeting. It can be a Manual or Auto."
+            />
+        ),
+        dataIndex: 'PatType',
+        key: 'PatType',
+        width: '100px',
+        render: text => <span className="capitalize-field">{text}</span>
+    },
+    {
+        ...patIntentField
+    },
+    {
+        title: 'PAT Value',
+        dataIndex: 'PatValue',
+        key: 'PatValue',
+        width: '132px'
+    }
 ];
 
 const columns = {
-  [changedPATBidACoS]: [
-    ...defaultKeys,
-    {
-      title: 'ACoS',
-      dataIndex: 'acos',
-      key: 'acos',
-      width: '70px',
-      render: text => <span>{text && `${text}%`}</span>
-    },
-    {
-      title: (
-        <TitleInfo
-          title="Target ACoS"
-          info="The ACoS that our algorithm is aiming to reach your business goal."
-        />
-      ),
-      dataIndex: 'targetACoS',
-      key: 'targetACoS',
-      width: '80px',
-      render: text => <span>{text && `${text}%`}</span>
-    },
-    {
-      ...bidActionField
-    },
-    {
-      ...infoField
-    }
-  ],
-  [changedPATBidImpressions]: [
-    ...defaultKeys,
-    {
-      title: 'Impressions',
-      dataIndex: 'impressions',
-      key: 'impressions',
-      width: '100px'
-    },
-    {
-      title: (
-        <TitleInfo
-          title={<span>Target Impressions</span>}
-          info="The number of times your ads need to be displayed so you will get the click."
-        />
-      ),
-      dataIndex: 'targetImpressions',
-      key: 'targetImpressions',
-      width: '120px'
-    },
-    {
-      ...bidActionField
-    },
-    {
-      ...infoField
-    }
-  ],
-  [pausedManualPATHighACoS]: [
-    ...defaultKeys,
-    {
-      title: 'ACoS',
-      dataIndex: 'acos',
-      key: 'acos',
-      width: '60px',
-      render: text => <span>{text && `${text}%`}</span>
-    },
-    {
-      title: (
-        <TitleInfo
-          title="Target ACoS"
-          info="The ACoS that our algorithm is aiming to reach your business goal."
-        />
-      ),
-      dataIndex: 'targetACoS',
-      key: 'targetACoS',
-      width: '90px',
-      render: text => <span>{text && `${text}%`}</span>
-    },
-    {
-      ...pausePatActionField
-    },
-    {
-      ...infoField
-    }
-  ],
-  [pausedManualPatNoSales]: [
-    ...defaultKeys,
-    {
-      title: 'Average Conv. Rate',
-      dataIndex: 'averageConvRate',
-      key: 'averageConvRate',
-      width: '90px',
-      render: text => <span>{text && `${text}%`}</span>
-    },
-    {
-      title: 'Clicks',
-      dataIndex: 'clicks',
-      key: 'clicks',
-      width: '70px'
-    },
-    {
-      ...pausePatActionField
-    },
-    {
-      ...infoField
-    }
-  ]
+    [changedPATBidACoS]: [
+        ...defaultKeys,
+        {
+            title: 'ACoS',
+            dataIndex: 'acos',
+            key: 'acos',
+            width: '70px',
+            render: text => <span>{text && `${text}%`}</span>
+        },
+        {
+            title: (
+                <TitleInfo
+                    title="Target ACoS"
+                    info="The ACoS that our algorithm is aiming to reach your business goal."
+                />
+            ),
+            dataIndex: 'targetACoS',
+            key: 'targetACoS',
+            width: '80px',
+            render: text => <span>{text && `${text}%`}</span>
+        },
+        {
+            ...bidActionField
+        },
+        {
+            ...infoField
+        }
+    ],
+    [changedPATBidImpressions]: [
+        ...defaultKeys,
+        {
+            title: 'Impressions',
+            dataIndex: 'impressions',
+            key: 'impressions',
+            width: '100px'
+        },
+        {
+            title: (
+                <TitleInfo
+                    title={<span>Target Impressions</span>}
+                    info="The number of times your ads need to be displayed so you will get the click."
+                />
+            ),
+            dataIndex: 'targetImpressions',
+            key: 'targetImpressions',
+            width: '120px'
+        },
+        {
+            ...bidActionField
+        },
+        {
+            ...infoField
+        }
+    ],
+    [pausedManualPATHighACoS]: [
+        ...defaultKeys,
+        {
+            title: 'ACoS',
+            dataIndex: 'acos',
+            key: 'acos',
+            width: '60px',
+            render: text => <span>{text && `${text}%`}</span>
+        },
+        {
+            title: (
+                <TitleInfo
+                    title="Target ACoS"
+                    info="The ACoS that our algorithm is aiming to reach your business goal."
+                />
+            ),
+            dataIndex: 'targetACoS',
+            key: 'targetACoS',
+            width: '90px',
+            render: text => <span>{text && `${text}%`}</span>
+        },
+        {
+            ...pausePatActionField
+        },
+        {
+            ...infoField
+        }
+    ],
+    [pausedManualPatNoSales]: [
+        ...defaultKeys,
+        {
+            title: 'Average Conv. Rate',
+            dataIndex: 'averageConvRate',
+            key: 'averageConvRate',
+            width: '90px',
+            render: text => <span>{text && `${text}%`}</span>
+        },
+        {
+            title: 'Clicks',
+            dataIndex: 'clicks',
+            key: 'clicks',
+            width: '70px'
+        },
+        {
+            ...pausePatActionField
+        },
+        {
+            ...infoField
+        }
+    ]
 };
 
 const PATsOptimization = ({
-  data,
-  onChangeSubTab,
-  activeTab,
-  currentPage,
-  totalSize,
-  handlePaginationChange,
-  scroll
-}) => {
-  const [activeTable, changeTable] = useState(changedPATBidACoS);
-  const { count, loading, productId } = useSelector(state => ({
-    count: state.reports.counts['pats-optimization'].subtypes_counts,
-    loading: state.reports.loading,
-    productId: state.products.selectedProduct.id
-  }));
+                              data,
+                              onChangeSubTab,
+                              activeTab,
+                              currentPage,
+                              totalSize,
+                              handlePaginationChange,
+                              scroll,
+                              pageSize
+                          }) => {
+    const [activeTable, changeTable] = useState(changedPATBidACoS);
+    const {count, loading, productId} = useSelector(state => ({
+        count: state.reports.counts['pats-optimization'].subtypes_counts,
+        loading: state.reports.loading,
+        productId: state.products.selectedProduct.id
+    }));
 
-  const onChange = tab => {
-    onChangeSubTab(tab);
-    changeTable(tab);
-  };
+    const onChange = tab => {
+        onChangeSubTab(tab);
+        changeTable(tab);
+    };
 
-  // height report-item-table-btn
-  const refTableBtn = useRef(null);
-  const heightTabBtn = refTableBtn.current
-    ? refTableBtn.current.offsetHeight
-    : 0;
+    // height report-item-table-btn
+    const refTableBtn = useRef(null);
+    const heightTabBtn = refTableBtn.current
+        ? refTableBtn.current.offsetHeight
+        : 0;
 
-  useEffect(() => changeTable(changedPATBidACoS), [productId, activeTab]);
+    useEffect(() => changeTable(changedPATBidACoS), [productId, activeTab]);
 
-  return (
-    <div className="report-item-table">
-      <div className="report-item-table-btn" ref={refTableBtn}>
-        <TableButton
-          active={activeTable === changedPATBidACoS}
-          count={count[changedPATBidACoS]}
-          onClick={() => {
-            onChange(changedPATBidACoS);
-          }}
-        >
-          Changed PAT Bid (<span className='underline'>ACoS</span>)
-        </TableButton>
-        <TableButton
-          active={activeTable === changedPATBidImpressions}
-          count={count[changedPATBidImpressions]}
-          onClick={() => {
-            onChange(changedPATBidImpressions);
-          }}
-        >
-          Changed PAT Bid (<span className='underline'>Impressions</span>)
-        </TableButton>
-        <TableButton
-          active={activeTable === pausedManualPATHighACoS}
-          count={count[pausedManualPATHighACoS]}
-          onClick={() => {
-            onChange(pausedManualPATHighACoS);
-          }}
-        >
-          Paused Manual PAT (<span className='underline'>High ACoS</span>)
-        </TableButton>
-        <TableButton
-          active={activeTable === pausedManualPatNoSales}
-          count={count[pausedManualPatNoSales]}
-          onClick={() => {
-            onChange(pausedManualPatNoSales);
-          }}
-        >
-          Paused Manual Pat (<span className='underline'>No Sales</span>)
-        </TableButton>
-      </div>
+    return (
+        <div className="report-item-table">
+            <div className="report-item-table-btn" ref={refTableBtn}>
+                <TableButton
+                    active={activeTable === changedPATBidACoS}
+                    count={count[changedPATBidACoS]}
+                    onClick={() => {
+                        onChange(changedPATBidACoS);
+                    }}
+                >
+                    Changed PAT Bid (<span className='underline'>ACoS</span>)
+                </TableButton>
+                <TableButton
+                    active={activeTable === changedPATBidImpressions}
+                    count={count[changedPATBidImpressions]}
+                    onClick={() => {
+                        onChange(changedPATBidImpressions);
+                    }}
+                >
+                    Changed PAT Bid (<span className='underline'>Impressions</span>)
+                </TableButton>
+                <TableButton
+                    active={activeTable === pausedManualPATHighACoS}
+                    count={count[pausedManualPATHighACoS]}
+                    onClick={() => {
+                        onChange(pausedManualPATHighACoS);
+                    }}
+                >
+                    Paused Manual PAT (<span className='underline'>High ACoS</span>)
+                </TableButton>
+                <TableButton
+                    active={activeTable === pausedManualPatNoSales}
+                    count={count[pausedManualPatNoSales]}
+                    onClick={() => {
+                        onChange(pausedManualPatNoSales);
+                    }}
+                >
+                    Paused Manual Pat (<span className='underline'>No Sales</span>)
+                </TableButton>
+            </div>
 
-      <CustomTable
-        onChangePagination={handlePaginationChange}
-        loading={loading}
-        dataSource={data}
-        columns={columns[activeTable]}
-        currentPage={currentPage}
-        totalSize={totalSize}
-        heightTabBtn={heightTabBtn}
-      />
-    </div>
-  );
+            <CustomTable
+                onChangePagination={handlePaginationChange}
+                loading={loading}
+                dataSource={data}
+                columns={columns[activeTable]}
+                currentPage={currentPage}
+                totalSize={totalSize}
+                heightTabBtn={heightTabBtn}
+                showSizeChanger={true}
+                pageSize={pageSize}
+            />
+        </div>
+    );
 };
 
 export default PATsOptimization;

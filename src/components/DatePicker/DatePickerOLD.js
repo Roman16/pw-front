@@ -31,7 +31,7 @@ class DatePicker extends Component {
                         Today: [moment(), moment()],
                         Yesterday: [
                             moment(new Date()).add(-1, 'days'),
-                            moment()
+                            moment(new Date()).add(-1, 'days'),
                         ],
                         'Last 7 Days': [
                             moment(new Date()).add(-7, 'days'),
