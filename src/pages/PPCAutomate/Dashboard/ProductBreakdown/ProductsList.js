@@ -124,7 +124,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => <div>Budget Allocation<Tooltip
+            title: () => <div>Budget <br/> Allocation<Tooltip
                 description={'A budget allocation is the amount of funding designated to each of your product.'}
             /></div>,
             dataIndex: 'budget_allocation',
