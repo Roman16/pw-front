@@ -158,6 +158,8 @@ class LastReports extends Component {
             onChange={this.onChange}
           />
         )}
+
+        <p style={{ color: "#000" }}>333</p>
       </div>
     );
   }

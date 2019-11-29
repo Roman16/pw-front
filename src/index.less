@@ -54,13 +54,13 @@ img {
     only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
     flex-flow: column;
     position: relative;
-    overflow-y: auto;
+    overflow-y: hidden;
   }
 
   @media (max-width: 799px) {
     position: relative;
     // flex-flow: column;
-    // overflow-y: auto;
+    // overflow-y: hidden;
   }
 
   @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
@@ -68,7 +68,7 @@ img {
     only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
     only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
     flex-flow: column;
-    overflow-y: auto;
+    overflow-y: hidden;
   }
 
   .sidebar {
@@ -141,7 +141,7 @@ img {
       only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
       only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
       only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
-      overflow: hidden;
+      overflow: auto;
       padding-left: 5.142857142857143em;
     }
 
@@ -149,7 +149,7 @@ img {
       only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
       only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
       only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-      overflow: hidden;
+      overflow: auto;
       padding-left: 5.142857142857143em;
     }
   }
