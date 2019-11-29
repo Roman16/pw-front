@@ -12,19 +12,19 @@ const Chart = ({
                    showDailyChart,
                    selectedRangeDate
                }) => {
-
+    //first way
     // const dataWithShadow = data.map(item => ({
     //     ...item,
     //     week_first_metric_shadow: item.week_first_metric - 200,
     //     week_second_metric_shadow: item.week_second_metric - 200,
     // }));
-
+    //
     // const startDate = moment(selectedRangeDate.startDate),
     //     endDate = moment(selectedRangeDate.endDate);
-
+    //
     // let countDays = endDate.diff(startDate, 'days');
     // let allChartValues = [];
-
+    //
     // for (let i = 0; i <= countDays; i++) {
     //     const pickFromApi = data.find(item => moment(item.date).format('YYYY-MM-DD') === moment(startDate).add(i, 'days').format('YYYY-MM-DD'));
     //
@@ -43,13 +43,16 @@ const Chart = ({
     //     }
     // }
 
+    //---------------------------
+    //second way
+
     // const svg = document.querySelector('svg.recharts-surface');
     // const line = document.querySelectorAll('.recharts-line-curve');
     //
     // const defs = document.createElementNS('http://www.w3.org/2000/svg', "defs");
     //
     // defs.innerHTML = '<filter id="f2" x="0" y="0" width="200%" height="200%">\n' +
-    //     '      <feOffset result="offOut" in="SourceGraphic" dx="20" dy="20" />\n' +
+    //     '      <feOffset result="offOut" in="SourceGraphic" dx="0" dy="20" />\n' +
     //     '      <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />\n' +
     //     '      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />\n' +
     //     '    </filter>';
