@@ -1,9 +1,9 @@
-import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import { Icon, Tooltip, Pagination } from 'antd';
+import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
+import { Icon, Tooltip, Pagination } from "antd";
 
-import { reportsServices } from '../../../../services/reports.services';
-import './LastReports.less';
+import { reportsServices } from "../../../../services/reports.services";
+import "./LastReports.less";
 
 const dummy = [
   { id: 1 },
@@ -39,14 +39,14 @@ const TerminalCaption = ({ isTerminal }) => (
 
     <Link
       to="/ppc/report"
-      className={`link-redirect ${isTerminal ? 'active' : 'disabled'}`}
+      className={`link-redirect ${isTerminal ? "active" : "disabled"}`}
     >
       View All
     </Link>
   </div>
 );
 
-const TerminalItem = ({ number = 0, content = '' }) => (
+const TerminalItem = ({ number = 0, content = "" }) => (
   <li className="terminal-item">
     <div className="index">{number}</div>
     <div className="content">
@@ -72,7 +72,7 @@ class LastReports extends Component {
 
   onChange = page => {
     const { reports } = this.state;
-    const getTerminalContentRef = document.querySelector('.terminal-content');
+    const getTerminalContentRef = document.querySelector(".terminal-content");
     const pageSize = 10;
     let counter = 0;
     const records = reports.filter(
@@ -88,12 +88,12 @@ class LastReports extends Component {
 
     getTerminalContentRef.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth"
     });
   };
 
   getReports = () => {
-    const getTerminalContentRef = document.querySelector('.terminal-content');
+    const getTerminalContentRef = document.querySelector(".terminal-content");
     this.props.productId &&
       reportsServices.getLastReports(this.props.productId).then(res => {
         const data = res.length > 0 ? res.slice(0, 150) : [];
@@ -111,7 +111,7 @@ class LastReports extends Component {
 
         getTerminalContentRef.scrollTo({
           top: 0,
-          behavior: 'smooth'
+          behavior: "smooth"
         });
       });
   };
@@ -126,8 +126,8 @@ class LastReports extends Component {
         <TerminalCaption isTerminal={isTerminal} refCaption="refCaption" />
 
         <ul
-          key={'terminal-list'}
-          className={`terminal-content ${isTerminal ? 'auto' : 'hidden'}`}
+          key={"terminal-list"}
+          className={`terminal-content ${isTerminal ? "auto" : "hidden"}`}
         >
           {isTerminal ? (
             <Fragment>
@@ -159,7 +159,7 @@ class LastReports extends Component {
           />
         )}
 
-        <p style={{ color: "#000" }}>333</p>
+        {/* <p style={{ color: "#000" }}>333</p> */}
       </div>
     );
   }

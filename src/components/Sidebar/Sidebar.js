@@ -53,6 +53,7 @@ const Sidebar = () => {
     [collapsed, setCollapsed] = useState(true),
     [automate, setAutomate] = useState(true),
     [regions] = useState(regionsMenu),
+    // [display, setDisplay] = useState("none"),
     dispatch = useDispatch(),
     { user } = useSelector(state => ({
       user: state.user
@@ -77,6 +78,8 @@ const Sidebar = () => {
   };
 
   const toggleAutomate = () => setAutomate(!automate);
+
+  // const displayNone = () => setDisplay("block");
 
   useEffect(() => {
     dispatch(userActions.getAuthorizedUserInfo());
@@ -190,10 +193,17 @@ const Sidebar = () => {
                 )}
 
                 {!collapsed && (
-                  <div className={`collapsed-automate`}>
+                  <div
+                    className={`collapsed-automate`}
+                    // style={{ display: `${display}` }}
+                  >
                     <ul className="collapsed-automate-list">
                       {ppcAutomateMenu.map(item => (
-                        <li className="automate-item" key={shortid.generate()}>
+                        <li
+                          className="automate-item"
+                          key={shortid.generate()}
+                          // onClick={displayNone}
+                        >
                           <NavLink
                             className="automate-link"
                             activeClassName="automate-link-active"
