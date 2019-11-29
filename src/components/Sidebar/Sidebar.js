@@ -101,7 +101,7 @@ const Sidebar = () => {
     >
       <div className="sidebar-header">
         <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed} />
-        <Link to="/" className="sidebar-logo">
+        <Link to="/home" className="sidebar-logo">
           <img className="logo" src={logo} alt="logo" />
         </Link>
       </div>
