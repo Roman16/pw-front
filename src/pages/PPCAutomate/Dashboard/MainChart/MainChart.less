@@ -116,6 +116,25 @@
     }
   }
 
+  @media (max-width: 600px) {
+    & {
+      .chart-header {
+        grid-template-areas: "pairName pairName pairName pairName"
+        "weekSwitchBlock lineFill dailySwitchBlock dailyIcon"
+        "chartLegend chartLegend chartLegend chartLegend"
+        "datePiker datePiker datePiker datePiker";
+
+        .DatePicker {
+          margin: 0 auto;
+        }
+
+        .chart-legend {
+          justify-content: center;
+        }
+      }
+    }
+  }
+
 
   //-------------------------------------
   /*Retina CSS */
