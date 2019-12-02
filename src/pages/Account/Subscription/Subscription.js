@@ -80,7 +80,7 @@ const Subscription = () => {
         <div className="user-cabinet">
             <Navigation/>
 
-            {subscriptionProducts.map((product) => (
+            {subscriptions.length > 0 && subscriptionProducts.map((product) => (
                 <SubscriptionPlan
                     key={product.id}
                     onOpenAccountWindow={handleOpenAccountWindow}

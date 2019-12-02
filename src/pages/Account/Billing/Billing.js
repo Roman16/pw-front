@@ -151,9 +151,11 @@ const Billing = () => {
         getPaymentMethodList();
 
         subscriptionProducts.forEach(item => {
-            if (subscriptions[item.id].incomplete_payment.has_incomplete_payment) {
-                openConfirmWindow(true);
-                setKey(subscriptions[item.id].incomplete_payment.payment_intent_id)
+            if (subscriptions.length > 0) {
+                if (subscriptions[item.id].incomplete_payment.has_incomplete_payment) {
+                    openConfirmWindow(true);
+                    setKey(subscriptions[item.id].incomplete_payment.payment_intent_id)
+                }
             }
         })
     }, []);
