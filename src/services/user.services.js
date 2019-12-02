@@ -12,6 +12,8 @@ export const userService = {
     regist,
     getUserInfo,
     setMWS,
+    unsetMWS,
+    unsetPPC,
     getStripeAvailableCountries,
     updateInformation,
     updatePhoto,
@@ -23,7 +25,11 @@ export const userService = {
     fetchBillingHistory,
     addPaymentMethod,
     setDefaultPaymentMethod,
-    deletePaymentMethod
+    deletePaymentMethod,
+    reactivateSubscription,
+    cancelSubscription,
+    subscribe,
+    confirmPayment
 };
 
 function login(user) {
@@ -44,6 +50,14 @@ function getUserInfo() {
 
 function setMWS(data) {
     return api('post', userUrls.mws, data);
+}
+
+function unsetMWS() {
+    return api('post', userUrls.deleteMws);
+}
+
+function unsetPPC() {
+    return api('post', userUrls.deleteLwa);
 }
 
 function updateInformation({name, last_name, email, private_label_seller}) {
@@ -104,11 +118,26 @@ function deletePaymentMethod(id) {
     return api('post', userUrls.deletePaymentMethod(id));
 }
 
-//-------------------------------------
-//-------------payment history---------
-
 function fetchBillingHistory(pagination) {
     return api('get', userUrls.paymentHistoryList);
+}
+
+function confirmPayment(data) {
+    return api('post', userUrls.confirm, data);
+}
+
+//-------------------------------------
+//-------------subscription---------
+function subscribe(data) {
+    return api('post', userUrls.subscribe(data.subscriptionId),  data);
+}
+
+function reactivateSubscription(data) {
+    return api('post', userUrls.reactivate(data.subscriptionId),  data);
+}
+
+function cancelSubscription(data) {
+    return api('post', userUrls.cancel(data.subscriptionId),  data);
 }
 
 //-------------------------------------

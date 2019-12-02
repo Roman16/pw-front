@@ -51,12 +51,12 @@ const Amazon = ({amazonTokens}) => {
     }
 
     async function handleSetMws() {
-        // try {
-        //     await userService.setMWS(amazonTokensValue);
-        //     dispatch(userActions.getPersonalUserInfo());
-        // } catch (e) {
-        //     console.log(e);
-        // }
+        try {
+            await userService.setMWS(amazonTokensValue);
+            dispatch(userActions.getPersonalUserInfo());
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     return (
@@ -65,7 +65,7 @@ const Amazon = ({amazonTokens}) => {
                 <div className="title-wrap">
                     {mwsConnected && <Fragment>
                         <h3>DbvtskGoods</h3>
-                        <p>A344WPJGDI66R5 - North America (US, CA, MX)</p>
+                        <p>{amazonTokens.amazon_mws.seller_id}</p>
                     </Fragment>}
                 </div>
 
@@ -173,7 +173,8 @@ const Amazon = ({amazonTokens}) => {
                         </button>
                     </div>
                 </div>
-                }            </div>
+                }
+            </div>
         </div>
     );
 };

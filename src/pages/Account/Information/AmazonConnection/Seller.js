@@ -29,7 +29,7 @@ const Seller = () => {
                     </p>
                 </div>
 
-                {(!ppcConnected || !mwsConnected) &&
+                {(!ppcConnected && !mwsConnected) &&
                 <button className="btn green-btn seller-btn" type="button" onClick={() => handleOpenBlock(true)}>
                     <img src={plus} alt="plus"/>
                     Add New Account

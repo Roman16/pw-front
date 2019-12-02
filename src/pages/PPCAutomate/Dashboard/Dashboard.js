@@ -35,8 +35,6 @@ const Dashboard = () => {
 
                 <Chart/>
             </div>
-
-            <SubscriptionNotificationWindow product={'dashboard'}/>
         </div>
     )
 };

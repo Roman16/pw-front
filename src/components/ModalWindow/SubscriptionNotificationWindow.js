@@ -4,30 +4,24 @@ import {history} from "../../utils/history";
 import {useSelector} from "react-redux";
 import {Result, Button} from 'antd';
 import './ModalWindow.less';
-
-const productsName = {
-    dashboard: 'prod_G8YHW9gpThjntf'
-};
+import {subscriptionProducts} from '../../constans/subscription.products.name';
 
 
 const SubscriptionNotificationWindow = ({product}) => {
-
     const currentPage = document.querySelector(`.${product}-page`),
         modalWrap = document.querySelector('.ant-modal-wrap');
 
     const [visibleWindow, openWindow] = useState(false);
-    const {dashboardSubscribed} = useSelector(state => ({
-        dashboardSubscribed: state.user.subscriptions[productsName[product]]
+    const {subscribedProduct} = useSelector(state => ({
+        subscribedProduct: state.user.subscriptions[subscriptionProducts.find(item => item.key === product).id]
     }));
 
-    // useEffect(() => {
-    //     console.log(dashboardSubscribed);
-    //
-    //     if (!dashboardSubscribed.has_access && (currentPage !== null)) {
-    //         openWindow(true);
-    //         currentPage.classList.add("disable-page");
-    //     }
-    // }, [currentPage, dashboardSubscribed]);
+    useEffect(() => {
+        if (!subscribedProduct.has_access && (currentPage != null)) {
+            openWindow(true);
+            currentPage.classList.add("disable-page");
+        }
+    }, [currentPage, subscribedProduct]);
 
     function RenderModalWindow() {
         return (
@@ -50,7 +44,6 @@ const SubscriptionNotificationWindow = ({product}) => {
     }
 
     modalWrap && modalWrap.classList.add('payment-modal-wrap');
-
 
     return (
         <ModalWindow

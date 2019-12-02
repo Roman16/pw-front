@@ -2,16 +2,19 @@ import React, {useState, useEffect} from "react";
 import {Drawer} from 'antd';
 
 import './Billing.less';
-import './DrawerWindows/Window.less';
+import './Windows/Window.less';
 import Navigation from "../Navigation/Navigation";
 import AccountBilling from "./AccountBilling";
 import CompanyDetails from "./CompanyDetails";
 import BillingHistory from "./BillingHistory";
-
-import UpdateCompanyInformationWindow from "./DrawerWindows/UpdateCompanyInformationWindow";
-import UpdateCard from "./DrawerWindows/UpdateCard";
+import ModalWindow from "../../../components/ModalWindow/ModalWindow";
+import UpdateCompanyInformationWindow from "./Windows/UpdateCompanyInformationWindow";
+import ConfirmPaymentWindow from './Windows/ConfirmPaymentWindow';
+import UpdateCard from "./Windows/UpdateCard";
 import {Elements, StripeProvider} from "react-stripe-elements";
 import {userService} from "../../../services/user.services";
+import {useSelector} from "react-redux";
+import {subscriptionProducts} from "../../../constans/subscription.products.name";
 
 const defaultPaginationParams = {
     page: 1,
@@ -25,10 +28,16 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
 const Billing = () => {
     const [openedWindow, openWindow] = useState(null),
         [selectedCard, selectCard] = useState({}),
+        [visibleConfirmPaymentWindow, openConfirmWindow] = useState(false),
+        [userSecretKey, setKey] = useState(),
         [newCard, changeCardType] = useState(true),
         [paginationParams, changePagination] = useState({defaultPaginationParams}),
         [paymentHistory, updateHistoryList] = useState([]),
         [paymentCards, updatePayment] = useState({});
+
+    const {subscriptions} = useSelector(state => ({
+        subscriptions: state.user.subscriptions
+    }));
 
     function handleOpenWindow(window, card) {
         openWindow(window);
@@ -140,6 +149,13 @@ const Billing = () => {
 
     useEffect(() => {
         getPaymentMethodList();
+
+        subscriptionProducts.forEach(item => {
+            if (subscriptions[item.id].incomplete_payment.has_incomplete_payment) {
+                openConfirmWindow(true);
+                setKey(subscriptions[item.id].incomplete_payment.payment_intent_id)
+            }
+        })
     }, []);
 
     useEffect(() => {
@@ -179,6 +195,24 @@ const Billing = () => {
             >
                 {renderDrawer()}
             </Drawer>
+
+            <ModalWindow
+                visible={visibleConfirmPaymentWindow}
+                handleCancel={() => openConfirmWindow(false)}
+                footer={null}
+                mask={true}
+                className={'confirm-payment-window'}
+            >
+                <StripeProvider apiKey={stripeKey}>
+                    <Elements>
+                        <ConfirmPaymentWindow
+                            userSecretKey={userSecretKey}
+                            onClose={() => openConfirmWindow(false)}
+                            paymentCards={paymentCards}
+                        />
+                    </Elements>
+                </StripeProvider>
+            </ModalWindow>
         </div>
     );
 };

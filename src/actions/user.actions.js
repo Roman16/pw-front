@@ -90,9 +90,12 @@ function setMWS(data) {
 
 function unsetAccount(type) {
     return dispatch => {
-        dispatch({
-            type: userConstants[`UNSET_AMAZON_${type}`],
-        });
+        userService[`unset${type}`]()
+            .then(() => {
+                dispatch({
+                    type: userConstants[`UNSET_AMAZON_${type}`],
+                });
+            })
     };
 }
 

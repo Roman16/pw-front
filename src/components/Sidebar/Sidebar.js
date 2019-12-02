@@ -68,7 +68,7 @@ const Sidebar = () => {
     const toggleAutomate = () => setAutomate(!automate);
 
     useEffect(() => {
-        dispatch(userActions.getAuthorizedUserInfo());
+        dispatch(userActions.getPersonalUserInfo());
         window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
     }, []);
 
