@@ -28,7 +28,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             title: 'Date Issued',
             dataIndex: 'date_issued',
             key: 'date_issued',
-            render: (date) => (<span>{moment(date).format('MMM DD, YYYY')}</span>)
+            // render: (date) => (<span>{moment(date).format('MMM DD, YYYY')}</span>)
         },
         {
             title: 'Description',

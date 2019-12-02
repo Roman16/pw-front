@@ -5,7 +5,6 @@ import { debounce } from "throttle-debounce";
 
 import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 
-import ProductList from "../../../components/ProductList/ProductList";
 import OptimizationOptions from "./OptimizationOptions/OptimizationOptions";
 import OptimizationStrategy from "./OptimizationStrategy/OptimizationStrategy";
 
@@ -17,6 +16,7 @@ import LastReports from "./LastReports/LastReports";
 import { productsActions } from "../../../actions/products.actions";
 
 import "./Optimization.less";
+import SubscriptionNotificationWindow from "../../../components/ModalWindow/SubscriptionNotificationWindow";
 
 class Optimization extends Component {
   state = {
@@ -170,6 +170,8 @@ class Optimization extends Component {
         >
           {infoType === "options" ? <OptionsInfo /> : <StrategyInfo />}
         </Drawer>
+
+        {/*<SubscriptionNotificationWindow product={'optimization'}/>*/}
       </Fragment>
     );
   }

@@ -294,7 +294,7 @@ class UpdateCard extends Component {
                 })
                     .then(() => {
                         this.props.stripe.handleCardAction(
-                            'pm_1FjjDNJzUVfwvcYwVtrb2Q1w_sekret_sefwgreg'
+                            'pi_1FjttzJzUVfwvcYwq2nWSUuy_secret_BhymwhXpe6qEVMhvBRFmv8eze'
                         ).then(res => {
                             console.log(res);
                         });

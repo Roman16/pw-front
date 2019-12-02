@@ -3,6 +3,8 @@ export const userUrls = {
     loginAmazon: 'user/login/amazon/callback',
     regist: 'user/register',
     mws: 'user/account/auth/mws/tokens',
+    deleteMws: 'user/account/auth/mws/delete',
+    deleteLwa: 'user/account/auth/lwa/delete',
     allInfo: 'user/status',
     personalInformation: 'user/account/personal/information',
     updatePhoto: 'user/account/personal/change-avatar',
@@ -13,10 +15,14 @@ export const userUrls = {
     updatePaymentMethod: (id) => `user/account/payment/method/${id}/update`,
     deletePaymentMethod: (id) => `user/account/payment/method/${id}/delete`,
     setDefaultPaymentMethod: (id) => `user/account/payment/method/${id}/set-as-default`,
+    paymentHistoryList: 'user/account/payment/history/list',
+    confirm: 'user/account/payment/method/default/confirm-payment-intent',
     //company
     companyInformation: (id) => `user/account/payment/method/${id}/metadata`,
-    //payment history
-    paymentHistoryList: 'user/account/payment/history/list',
+    //subscription
+    subscribe: (subscriptionId) => `user/account/subscription/${subscriptionId}/subscribe`,
+    reactivate: (subscriptionId) => `user/account/subscription/${subscriptionId}/resume`,
+    cancel: (subscriptionId) => `user/account/subscription/${subscriptionId}/cancel`,
 
 };
 

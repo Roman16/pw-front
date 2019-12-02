@@ -79,15 +79,10 @@ const Sidebar = () => {
 
   const toggleAutomate = () => setAutomate(!automate);
 
-  // const displayNone = () => setDisplay("block");
-
-  useEffect(() => {
-    dispatch(userActions.getAuthorizedUserInfo());
-    // width < 800 ? setCollapsed(false) : setCollapsed(true);
-    if (width === 0) return;
-    else if (width < 800) setCollapsed(false);
-    else setCollapsed(true);
-  }, [dispatch, width]);
+    useEffect(() => {
+        dispatch(userActions.getPersonalUserInfo());
+        window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
+    }, []);
 
   window.captchaStyle.innerHTML = `.grecaptcha-badge { display: none !important}`;
 
