@@ -17,6 +17,12 @@ const CardNumberElementStyles = {
     }
 };
 
+const CardElementStyles = {
+    base: {
+        fontSize: '16px',
+    }
+};
+
 const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 
@@ -28,6 +34,8 @@ const StripeForm = ({stripeElementChange, onChangeInput, onChangeCountry, onChan
         selectCountry(country);
         onChangeCountry(country);
     }
+
+    let textInput = React.createRef();
 
     useEffect(() => {
         userService.getStripeAvailableCountries(stripeKey)
@@ -54,7 +62,7 @@ const StripeForm = ({stripeElementChange, onChangeInput, onChangeCountry, onChan
                     <CardExpiryElement
                         onChange={(element) => stripeElementChange(element, 'expiry')}
                         onBlur={onBlurCardElement}
-                        style={CardNumberElementStyles}
+                        style={CardElementStyles}
                         ref={(instance) => {
                             (autofocus && cardNumber && instance && !expiry) && instance._element.focus()
                         }}
@@ -65,7 +73,7 @@ const StripeForm = ({stripeElementChange, onChangeInput, onChangeCountry, onChan
                     <CardCvcElement
                         onChange={(element) => stripeElementChange(element, 'cvc')}
                         onBlur={onBlurCardElement}
-                        style={CardNumberElementStyles}
+                        style={CardElementStyles}
                         ref={(instance) => {
                             (autofocus && expiry && instance && !cvc) && instance._element.focus();
                         }}

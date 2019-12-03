@@ -105,6 +105,7 @@ const Subscription = () => {
             >
                 <CancelAccountWindow
                     onCancel={handleCancelSubscription}
+                    onClose={() => openAccountWindow(false)}
                 />
             </Drawer>
 

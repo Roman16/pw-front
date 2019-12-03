@@ -6,7 +6,7 @@ import bag from '../../../../assets/img/bag.svg';
 import restart from '../../../../assets/img/restart.svg';
 import square from '../../../../assets/img/icons/green-square.svg';
 
-const CancelAccountWindow = ({onCancel}) => {
+const CancelAccountWindow = ({onCancel, onClose}) => {
     return (
         <div className="cancel">
             <div className="cancel-wrap">
@@ -49,16 +49,16 @@ const CancelAccountWindow = ({onCancel}) => {
 
             <div className="btn-wrapper">
                 <div className="btn-wrap">
-                    <button className="keep" type="button">
+                    <button className="keep btn green-btn" type="button" onClick={onClose}>
                         Keep my account
                     </button>
 
-                    <button className="pause-btn" type="button" onClick={onCancel}>
+                    <button className="pause-btn" type="button" >
                         <img className="pause-img" src={square} alt="square" />
                         Yes, pause my subscription
                     </button>
                 </div>
-                <button className="cancel-btn" type="button">
+                <button className="cancel-btn" type="button" onClick={onCancel}>
                     I still want to cancel
                 </button>
             </div>

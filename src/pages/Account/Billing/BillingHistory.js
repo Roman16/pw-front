@@ -43,7 +43,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
                     <span className='payment-status success'>{text}</span>);
                 if ((status === 'PENDING') || (status === 'WAITING') || (status === 'OPEN')) return (
                     <span className='payment-status waiting'>{text}</span>);
-                if ((status === 'CANCELLED') || (status === 'VOID')) return (
+                if ((status === 'CANCELLED') || (status === 'VOID') || (status === 'FAILED')) return (
                     <span className='payment-status error'>{text}</span>);
             }
         },
@@ -89,7 +89,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
                         const status = item.status.toUpperCase();
                         if ((status === 'PAID') || (status === 'SUCCESS')) return ('success-invoice');
                         if ((status === 'PENDING') || (status === 'WAITING') || (status === 'OPEN')) return ('waiting-invoice');
-                        if ((status === 'CANCELLED') || (status === 'VOID')) return ('error-invoice');
+                        if ((status === 'CANCELLED') || (status === 'VOID') || (status === 'FAILED')) return ('error-invoice');
                     }}
                 />
             </div>}
