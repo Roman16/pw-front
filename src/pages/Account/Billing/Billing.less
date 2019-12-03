@@ -74,7 +74,9 @@
 
         .carousel-body {
           max-width: 295px;
-          width: 100%;
+          width: 20vw;
+          height: 15vw;
+          max-height: 180px;
           min-width: 150px;
           display: flex;
           align-items: center;
@@ -87,8 +89,9 @@
             right: 0;
             margin: 0 auto;
             width: 295px;
+            height: 10vw;
             max-width: 100%;
-            height: 180px;
+            max-height: 180px;
             border-radius: 8px;
           }
 
@@ -110,7 +113,7 @@
         .card-block {
           max-width: 295px;
           width: 100%;
-          height: 180px;
+          height: 100%;
           border-radius: 8px;
           background-image: url(../../../assets/img/card-background.svg);
           background-repeat: no-repeat;
@@ -338,12 +341,60 @@
     }
   }
 
-  @media (max-width: 600px) {
-    & {
-      .account-billing-block .user-cards {
+  @media (max-width: 700px) {
+    section {
+      flex-direction: column;
+      align-items: center;
+
+      .block-description {
         width: 100%;
+        text-align: center;
+      }
+    }
+
+    & {
+      .account-billing-block {
+
+
+        .user-cards {
+          width: 100%;
+          flex-direction: column;
+
+          .cards-carousel {
+            width: 100%;
+
+            .carousel-body {
+              width: 100%;
+              height: 180px;
+              margin: 0 auto;
+            }
+
+            .carousel-pagination {
+              justify-content: center;
+            }
+          }
+
+          .billing-address {
+            width: 100%;
+            text-align: center;
+          }
+        }
+      }
+
+      section .buttons-block {
+        height: max-content;
+        margin: 20px 0 0 0;
+      }
+    }
+
+    .company-details-block {
+      .company-information {
+        width: 100%;
+
+        .column {
+          width: 50%;
+        }
       }
     }
   }
-
 }

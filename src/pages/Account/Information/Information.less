@@ -120,13 +120,21 @@
         .ant-switch {
           font-size: inherit;
           width: 5.6em;
-          height: 2.2em;
 
           .ant-switch-inner {
+            height: 100%;
+            display: flex;
+            align-items: center;
             color: @second-account-color;
             font-weight: 600;
             font-size: .7rem;
-            margin-right: 20px;
+            margin-left: 3em;
+          }
+
+          &.ant-switch-checked {
+            .ant-switch-inner {
+              margin-left: 1em;
+            }
           }
         }
       }
@@ -176,13 +184,14 @@
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       & {
         justify-content: center;
         text-align: center;
 
         .personal-information {
           width: 100%;
+          flex-direction: column;
 
           .active-only {
             width: 100%;
@@ -191,7 +200,12 @@
           }
 
           .form-person-info {
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+
+            .form-group {
+              width: 100%;
+            }
 
             .btn-save {
               margin: 20px 0 0 0;
@@ -312,21 +326,27 @@
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       & {
         justify-content: center;
         flex-wrap: wrap;
-
+        flex-direction: column;
 
         .change-password {
           width: 100%;
+          flex-direction: column;
 
           h3 {
             text-align: center;
           }
 
           .input-password {
-            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            .form-group {
+              width: 100%;
+            }
           }
 
           .btn-change {
@@ -382,12 +402,15 @@
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       & {
         justify-content: center;
+        align-items: center;
+        flex-direction: column;
 
         .seller-wrap {
           width: 100%;
+          text-align: center;
         }
       }
     }
@@ -468,6 +491,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
 
       .title-wrap {
         width: 30%;
@@ -488,6 +512,7 @@
       .mws-wrap,
       .login-wrap {
         width: 25%;
+        min-width: 180px;
 
         h3 {
           font-size: 1.1429rem; // 16px
@@ -518,6 +543,7 @@
 
       .approved-text {
         width: 5%;
+        min-width: 100px;
         font-size: 1.1429rem; // 16px
         color: @success-color;
         font-weight: 600;
@@ -737,7 +763,42 @@
       margin: 0 0 0 auto;
 
       button {
-        margin: 0 50px 0 0;
+        margin: 0 6em 0 0;
+        width: max-content;
+
+        img {
+          width: 20px;
+        }
+      }
+    }
+
+    @media (max-width: 600px) {
+      & {
+        .short-connect-information {
+          flex-direction: column;
+
+          .column {
+            margin: 0;
+          }
+
+          .connectors-buttons {
+            margin: 10px 0;
+
+            button {
+              margin: 0;
+            }
+          }
+        }
+
+        .approved-wrapper {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+
+          & > div {
+            margin: 10px 0;
+          }
+        }
       }
     }
   }
@@ -831,3 +892,14 @@
     }
   }
 }
+
+//-------------------------------------
+/*Retina */
+//-------------------------------------
+
+@media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+  .main-pages > .main-container > .user-cabinet .connectors-box .connectors-buttons button {
+    margin-right: 70px;
+  }
+}
+

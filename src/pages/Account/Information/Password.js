@@ -49,7 +49,13 @@ const Password = () => {
         }
 
         if (name === 'new_password' && value.length >= 6) {
-            addNewPasswordError()
+            addNewPasswordError();
+
+            if((inputsValue.password_confirmation !== value) && inputsValue.password_confirmation.length > 1) {
+                addConfirmPasswordError('Please enter the same value again.')
+            } else if(inputsValue.password_confirmation === value) {
+                addConfirmPasswordError()
+            }
         }
 
         if (name === 'password_confirmation' && (value.length > 6 && value !== inputsValue.new_password)) {
