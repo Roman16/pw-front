@@ -339,13 +339,50 @@
         }
       }
 
-      .invoice-actions {
-        i {
-          font-size: 1.5rem;
-          margin: 0 10px 0 0;
+      .custom-table .table-body .table-body__row {
+        margin: 0 0 5px 0;
+        border-left: 5px solid;
 
-          &:hover {
-            color: @action-color;
+        &.success-invoice {
+          border-color: @success-color;
+        }
+
+        &.waiting-invoice {
+          border-color: @waiting-color
+        }
+
+        &.error-invoice {
+          border-color: @dangerous-color
+        }
+      }
+
+      .payment-status {
+        text-transform: capitalize;
+        font-weight: bold;
+
+        &.success {
+          color: @success-color
+        }
+
+        &.waiting {
+          color: @waiting-color
+        }
+
+        &.error {
+          color: @dangerous-color
+        }
+      }
+
+      .invoice-actions {
+        a {
+          margin: 0 20px 0 0;
+
+          i {
+            font-size: 1.5rem;
+
+            &:hover {
+              color: @action-color;
+            }
           }
         }
       }

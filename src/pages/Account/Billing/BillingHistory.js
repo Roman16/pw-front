@@ -11,7 +11,6 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             title: 'Date Issued',
             dataIndex: 'date_issued',
             key: 'date_issued',
-            // render: (date) => (<span>{moment(date).format('MMM DD, YYYY')}</span>)
         },
         {
             title: 'Amount Due',
@@ -38,7 +37,15 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            render: (text) => <b>{text}</b>
+            render: (text) => {
+                const status = text.toUpperCase();
+                if ((status === 'PAID') || (status === 'SUCCESS')) return (
+                    <span className='payment-status success'>{text}</span>);
+                if ((status === 'PENDING') || (status === 'WAITING') || (status === 'OPEN')) return (
+                    <span className='payment-status waiting'>{text}</span>);
+                if ((status === 'CANCELLED') || (status === 'VOID')) return (
+                    <span className='payment-status error'>{text}</span>);
+            }
         },
         {
             title: 'Actions',
@@ -78,6 +85,12 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
                     columns={columns}
                     currentPage={paginationParams.page}
                     totalSize={paginationParams.totalSize}
+                    rowClassName={(item) => {
+                        const status = item.status.toUpperCase();
+                        if ((status === 'PAID') || (status === 'SUCCESS')) return ('success-invoice');
+                        if ((status === 'PENDING') || (status === 'WAITING') || (status === 'OPEN')) return ('waiting-invoice');
+                        if ((status === 'CANCELLED') || (status === 'VOID')) return ('error-invoice');
+                    }}
                 />
             </div>}
         </section>

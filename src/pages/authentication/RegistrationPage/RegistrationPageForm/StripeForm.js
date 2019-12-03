@@ -20,7 +20,7 @@ const CardNumberElementStyles = {
 const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 
-const StripeForm = ({stripeElementChange, onChangeInput, onChangeCountry, onChangeState}) => {
+const StripeForm = ({stripeElementChange, onChangeInput, onChangeCountry, onChangeState, cardNumber, expiry, cvc, autofocus, onBlurCardElement}) => {
     const [countriesList, setCountryList] = useState([]),
         [selectedCountry, selectCountry] = useState('');
 
@@ -53,12 +53,22 @@ const StripeForm = ({stripeElementChange, onChangeInput, onChangeCountry, onChan
                     <label className="label">Expiry</label>
                     <CardExpiryElement
                         onChange={(element) => stripeElementChange(element, 'expiry')}
+                        onBlur={onBlurCardElement}
+                        style={CardNumberElementStyles}
+                        ref={(instance) => {
+                            (autofocus && cardNumber && instance && !expiry) && instance._element.focus()
+                        }}
                     />
                 </div>
                 <div className="card-container__cvc">
                     <label className="label">CVC</label>
                     <CardCvcElement
                         onChange={(element) => stripeElementChange(element, 'cvc')}
+                        onBlur={onBlurCardElement}
+                        style={CardNumberElementStyles}
+                        ref={(instance) => {
+                            (autofocus && expiry && instance && !cvc) && instance._element.focus();
+                        }}
                     />
                 </div>
             </div>

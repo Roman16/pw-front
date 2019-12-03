@@ -17,7 +17,8 @@ const CustomTable = ({
                          loading,
                          heightTabBtn,
                          pageSize,
-                         showSizeChanger = false
+                         showSizeChanger = false,
+                         rowClassName
                      }) => {
     return (
         <div
@@ -42,7 +43,7 @@ const CustomTable = ({
                         dataSource &&
                         dataSource.length > 0 &&
                         dataSource.map(report => (
-                            <div className="table-body__row" key={shortid.generate()}>
+                            <div className={`table-body__row ${rowClassName && rowClassName(report)}`} key={shortid.generate()}>
                                 {columns.map(item => (
                                     <div
                                         className="table-body__field"

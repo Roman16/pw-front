@@ -30,7 +30,10 @@ class RegistrationPage extends Component {
         card_number: false,
         expiry: false,
         cvc: false,
+
+        autofocus: true,
     };
+
 
     onSubmit = async (e) => {
         e.preventDefault();
@@ -156,22 +159,30 @@ class RegistrationPage extends Component {
         // }
     };
 
+    stripeElementChange = (element, name) => {
+        if (!element.empty && element.complete) {
+            this.setState({
+                [name]: true,
+                autofocus: true
+            });
+        }
+    };
+
+    handleBlurCardElement = () => {
+        this.setState({
+            autofocus: false
+        })
+    };
+
+    handleChangeCountry = (country) => this.setState({country: country});
+    handleChangeState = (state) => this.setState({address_state: state});
+    onChange = ({target: {name, value}}) => this.setState({[name]: value});
+
     componentDidMount() {
         this.setState({isLoading: false});
 
         window.captchaStyle.innerHTML = `.grecaptcha-badge { display: block !important; visibility: visible !important}`;
     }
-
-    stripeElementChange = (element, name) => {
-        if (!element.empty && element.complete) {
-            this.setState({[name]: true});
-        }
-    };
-
-
-    handleChangeCountry = (country) => this.setState({country: country});
-    handleChangeState = (state) => this.setState({address_state: state});
-    onChange = ({target: {name, value}}) => this.setState({[name]: value});
 
     render() {
         const {
@@ -181,7 +192,11 @@ class RegistrationPage extends Component {
             password,
             registerSuccess,
             isLoading,
-            country
+            country,
+            card_number,
+            expiry,
+            cvc,
+            autofocus
         } = this.state;
 
         if (isLoading) {
@@ -276,6 +291,13 @@ class RegistrationPage extends Component {
                     onChangeState={this.handleChangeState}
                     onChangeInput={this.onChange}
                     stripeElementChange={this.stripeElementChange}
+                    onBlurCardElement={this.handleBlurCardElement}
+
+                    cardNumber={card_number}
+                    expiry={expiry}
+                    cvc={cvc}
+
+                    autofocus={autofocus}
                 />
 
                 {/*<ReCaptcha*/}
