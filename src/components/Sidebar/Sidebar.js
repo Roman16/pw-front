@@ -12,6 +12,7 @@ import logo from "../../assets/img/logo.svg";
 import soon from "../../assets/img/icons/soon.svg";
 // import showMenu from '../../assets/img/icons/show-menu-arrow.svg';  // стрелка из фигмы в разделе сайдбар > страна
 import "./Sidebar.less";
+import {history} from "../../utils/history";
 
 const domainName =
     window.location.hostname === "localhost"
@@ -55,8 +56,9 @@ const Sidebar = () => {
         [regions] = useState(regionsMenu),
         // [display, setDisplay] = useState("none"),
         dispatch = useDispatch(),
-        {user} = useSelector(state => ({
-            user: state.user
+        {user, notFirstEntry} = useSelector(state => ({
+            user: state.user,
+            notFirstEntry: state.user.notFirstEntry
         }));
 
 

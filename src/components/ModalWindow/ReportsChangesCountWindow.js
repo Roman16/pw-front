@@ -4,10 +4,12 @@ import ModalWindow from "./ModalWindow";
 import {history} from "../../utils/history";
 import whales from '../../assets/img/whales.svg';
 import {userActions} from "../../actions/user.actions";
+import moment from "moment";
 
 const ReportsChangesCountWindow = () => {
     const [visibleWindow, switchWindow] = useState(false);
     const [changesCount, setCount] = useState(0);
+    const [changesDate, setDate] = useState(0);
     const dispatch = useDispatch();
     const {ppcNotification} = useSelector(state => ({
         ppcNotification: state.user.notifications ? state.user.notifications.ppc_optimization : {}
@@ -29,7 +31,8 @@ const ReportsChangesCountWindow = () => {
     useEffect(() => {
         if (ppcNotification.count_from_last_login > 0) {
             switchWindow(true);
-            setCount(ppcNotification.count_from_last_login)
+            setCount(ppcNotification.count_from_last_login);
+            setDate(ppcNotification.last_notice_date);
         }
     }, [ppcNotification]);
 
@@ -44,6 +47,7 @@ const ReportsChangesCountWindow = () => {
             {/*<img src={whales} alt=""/>*/}
             <h3>Yay 👋  </h3>
             While you where away the software performed <b>{changesCount}</b> changes on your ad campaigns.
+             {/*{moment.duration(changesDate, "days").humanize()}*/}
         </ModalWindow>
     )
 };
