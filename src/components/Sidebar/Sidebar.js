@@ -59,6 +59,7 @@ const Sidebar = () => {
             user: state.user
         }));
 
+
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
 
@@ -85,6 +86,12 @@ const Sidebar = () => {
     }, []);
 
     window.captchaStyle.innerHTML = `.grecaptcha-badge { display: none !important}`;
+
+    if (!notFirstEntry) {
+        history.push('/login');
+        // localStorage.removeItem('token');
+        return ('');
+    }
 
     return (
         <div
@@ -214,6 +221,12 @@ const Sidebar = () => {
                                                     </NavLink>
                                                 </li>
                                             ))}
+
+                                            <li className="automate-item">
+                                                <a href="/ppc-scanner" className="automate-link">
+                                                    PPC Scanner
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 )}

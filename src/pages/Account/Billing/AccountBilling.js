@@ -46,12 +46,12 @@ const UserCard = ({card: {last4, brand, exp_month, exp_year}, card, onUpdateCard
                     <span>{exp_month}/{moment(exp_year, 'YYYY').format('YY')}</span>
                 </div>
 
-                <div className='default-card-block'>
+                {card.default && <div className='default-card-block'>
                     Default Card
                     <div>
-                        {card.default && <img src={selectedIcon} alt=""/>}
+                        <img src={selectedIcon} alt=""/>
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     )
@@ -164,12 +164,14 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                         <span className='street'>{paymentCards[selectedCardIndex].address.address.line1}</span>
                         <span className='city'>{paymentCards[selectedCardIndex].address.address.city}</span>
                         <span className='zip'>{paymentCards[selectedCardIndex].address.address.postal_code}</span>
-                        <span className='country'>{allCountries[paymentCards[selectedCardIndex].address.address.country]}</span>
+                        <span
+                            className='country'>{allCountries[paymentCards[selectedCardIndex].address.address.country]}</span>
                     </div>
                 </div>}
 
                 <div className="buttons-block">
-                   {paymentCards.length < 10 && <button className='btn green-btn' onClick={() => onOpenWindow('updateCard')}>
+                    {paymentCards.length < 10 &&
+                    <button className='btn green-btn' onClick={() => onOpenWindow('updateCard')}>
                         Add card
                     </button>}
                 </div>

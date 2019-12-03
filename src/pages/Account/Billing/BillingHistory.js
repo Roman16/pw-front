@@ -2,16 +2,26 @@ import React from "react";
 import CustomTable from "../../../components/Table/CustomTable";
 import visaLogo from '../../../assets/img/visa-logo.svg';
 import masterLogo from '../../../assets/img/mastercard.svg';
+import {Icon} from "antd";
 import moment from "moment";
 
 const BillingHistory = ({historyList, handlePaginationChange, paginationParams}) => {
     const columns = [
         {
-            title: 'Invoice Number',
-            dataIndex: 'invoice_number',
-            key: 'invoice_number',
-            width: '20%',
-            render: (invoiceNumber, item) => (<a href={item.hosted_invoice_url} target='_blank'>{invoiceNumber}</a>)
+            title: 'Date Issued',
+            dataIndex: 'date_issued',
+            key: 'date_issued',
+            // render: (date) => (<span>{moment(date).format('MMM DD, YYYY')}</span>)
+        },
+        {
+            title: 'Amount Due',
+            dataIndex: 'amount_due',
+            key: 'amount_due',
+        },
+        {
+            title: 'Description',
+            dataIndex: 'description',
+            key: 'description',
         },
         {
             title: 'Card',
@@ -25,25 +35,25 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             </span>)
         },
         {
-            title: 'Date Issued',
-            dataIndex: 'date_issued',
-            key: 'date_issued',
-            // render: (date) => (<span>{moment(date).format('MMM DD, YYYY')}</span>)
-        },
-        {
-            title: 'Description',
-            dataIndex: 'description',
-            key: 'description',
-        },
-        {
-            title: 'Amount Due',
-            dataIndex: 'amount_due',
-            key: 'amount_due',
-        },
-        {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
+            render: (text) => <b>{text}</b>
+        },
+        {
+            title: 'Actions',
+            dataIndex: 'status',
+            key: 'status',
+            render: (invoiceNumber, item) => (
+                <div className='invoice-actions'>
+                    <a href={item.hosted_invoice_url} target='_blank'>
+                        <Icon type="eye"/>
+                    </a>
+                    <a href={item.invoice_pdf}>
+                        <Icon type="file-pdf"/>
+                    </a>
+                </div>
+            )
         },
     ];
 
