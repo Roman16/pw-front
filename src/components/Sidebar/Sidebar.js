@@ -46,7 +46,6 @@ const Sidebar = () => {
         }));
 
 
-
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
 
@@ -77,7 +76,7 @@ const Sidebar = () => {
     if (!notFirstEntry) {
         history.push('/login');
         // localStorage.removeItem('token');
-        return('');
+        return ('');
     }
 
     return (
@@ -193,6 +192,12 @@ const Sidebar = () => {
                                                     </NavLink>
                                                 </li>
                                             ))}
+
+                                            <li className="automate-item">
+                                                <a href="/ppc-scanner" className="automate-link">
+                                                    PPC Scanner
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 )}

@@ -15,7 +15,8 @@ const options = [
     },
     {
         value: 'UKDEFRESITINTR',
-        label: 'Europe (UK, DE, FR, ES, IT, IN, TR)'
+        label: 'Europe (UK, DE, FR, ES, IT, IN, TR)',
+        disabled: true
     }
 ];
 
