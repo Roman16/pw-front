@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Drawer, Modal} from 'antd';
 
 import Navigation from '../Navigation/Navigation';
@@ -32,11 +32,11 @@ const Subscription = () => {
         selectPlan(plan)
     }
 
-    async function handleSubscribe({plan_id, productKey}) {
+    async function handleSubscribe({planId, productId}) {
         try {
             await userService.subscribe({
-                subscription_plan_id: plan_id,
-                subscriptionId: productKey,
+                subscription_plan_id: planId,
+                subscriptionId: productId,
                 marketplace_id: 'ATVPDKIKX0DER'
             });
 
@@ -49,8 +49,8 @@ const Subscription = () => {
     async function handleReactivateSubscription() {
         try {
             await userService.reactivateSubscription({
-                subscription_plan_id: selectedPlan.plan_id,
-                subscriptionId: selectedPlan.productKey,
+                subscription_plan_id: selectedPlan.planId,
+                subscriptionId: selectedPlan.productId,
             });
 
             dispatch(userActions.getPersonalUserInfo());
@@ -64,8 +64,8 @@ const Subscription = () => {
     async function handleCancelSubscription() {
         try {
             await userService.cancelSubscription({
-                subscription_plan_id: selectedPlan.plan_id,
-                subscriptionId: selectedPlan.productKey,
+                subscription_plan_id: selectedPlan.planId,
+                subscriptionId: selectedPlan.productId,
             });
 
             dispatch(userActions.getPersonalUserInfo());
@@ -76,6 +76,11 @@ const Subscription = () => {
         }
     }
 
+
+    useEffect(() => {
+        dispatch(userActions.getPersonalUserInfo());
+    }, []);
+
     return (
         <div className="user-cabinet">
             <Navigation/>
@@ -85,7 +90,7 @@ const Subscription = () => {
                     key={product.id}
                     onOpenAccountWindow={handleOpenAccountWindow}
                     onOpenReactivateWindow={handleOpenReactivateWindow}
-                    product={{...subscriptions[product.id], ...product}}
+                    product={{...subscriptions[product.productId], ...product}}
                     onSubscribe={handleSubscribe}
                 />
             ))}
