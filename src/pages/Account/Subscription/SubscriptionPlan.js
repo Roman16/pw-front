@@ -2,13 +2,12 @@ import React from "react";
 import {Link} from "react-router-dom";
 import reload from "../../../assets/img/icons/reload.svg";
 import ppcIcon from "../../../assets/img/icons/ppc-automate-icon.svg";
-import {subscriptionProducts} from '../../../constans/subscription.products.name';
 import moment from "moment";
 
 const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe}) => {
     return (
-        <div className="automate-box" key={product.id}>
-            {product.grace_period.on_grace_period && <div className="reactivate">
+        <div className="automate-box">
+            {product.grace_period && product.grace_period.on_grace_period && <div className="reactivate">
                 <h3 className="reactivate-title">
                     Your Subscription Has Been Cancelled
                 </h3>
@@ -21,10 +20,7 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                 <button
                     className="reactivate-btn"
                     type="button"
-                    onClick={() => onOpenReactivateWindow({
-                        ...product,
-                        productKey: product.id
-                    })}
+                    onClick={() => onOpenReactivateWindow(product)}
                 >
                     Reactivate
                     <img className="reactivate-img" src={reload} alt="reload"/>
@@ -55,21 +51,21 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
 
                             <div className="charged-description">
                                 <p className="charged-text">You’ll be charged</p>
-                                <p className="charged-data">$ {product.next_charge_value}</p>
+                                <p className="charged-data">$ {product.next_charge_value || 0}</p>
                             </div>
                         </div>
                         <div className="indicators">
                             <p className="indicators-text">
                                 based on{" "}
                                 <span className="indicators-data">
-                                          $ {product.flat_amount} + {product.percent_amount}%
+                                          $ {product.flat_amount || 0} + {product.percent_amount || 0}%
                                           <sub>monthly ad spend</sub>
                                         </span>
                             </p>
                         </div>
                     </div>
                     <p className="plan-text">
-                        Your Ad Spend: <span className="plan-data">$ {product.quantity}</span>
+                        Your Ad Spend: <span className="plan-data">$ {product.quantity || 0}</span>
                     </p>
                 </div>
 
@@ -82,10 +78,7 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                     <button
                         className="cancel-btn"
                         type="button"
-                        onClick={() => onOpenAccountWindow({
-                            ...product,
-                            productKey: product.id
-                        })}
+                        onClick={() => onOpenAccountWindow(product)}
                     >
                         Cancel
                     </button>
@@ -93,10 +86,7 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
 
                 {!product.has_access &&
                 <div className="subscribe-btn">
-                    <button className="btn green-btn" onClick={() => onSubscribe({
-                        ...product,
-                        productKey: product.id
-                    })}>
+                    <button className="btn green-btn" onClick={() => onSubscribe(product)}>
                         Subscribe
                     </button>
                 </div>

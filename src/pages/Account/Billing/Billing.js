@@ -150,12 +150,15 @@ const Billing = () => {
     useEffect(() => {
         getPaymentMethodList();
 
-        subscriptionProducts.forEach(item => {
-            if (subscriptions[item.id].incomplete_payment.has_incomplete_payment) {
-                openConfirmWindow(true);
-                setKey(subscriptions[item.id].incomplete_payment.payment_intent_id)
-            }
-        })
+        if (subscriptions.length > 0) {
+            subscriptionProducts.forEach(item => {
+                if (subscriptions[item.productId].incomplete_payment.has_incomplete_payment) {
+                    openConfirmWindow(true);
+                    setKey(subscriptions[item.productId].incomplete_payment.payment_intent_id)
+                }
+            })
+        }
+
     }, []);
 
     useEffect(() => {
