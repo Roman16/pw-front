@@ -1,13 +1,19 @@
 import React, {Component} from "react";
 import {injectStripe} from "react-stripe-elements";
+import {Spin} from "antd";
 import {userService} from "../../../../services/user.services";
 
 class ConfirmPaymentWindow extends Component {
     state = {
-        amount: 0
+        amount: 0,
+        clickedBtn: false
     };
 
     handleConfirm = () => {
+        this.setState({
+            clickedBtn: true
+        });
+
         const defaultCard = this.props.paymentCards.find(card => card.default)
         this.props.stripe.confirmCardPayment(
             this.props.userSecretKey,
@@ -35,7 +41,7 @@ class ConfirmPaymentWindow extends Component {
     }
 
     render() {
-        const {amount} = this.state;
+        const {amount, clickedBtn} = this.state;
 
         return (
             <div>
@@ -43,7 +49,9 @@ class ConfirmPaymentWindow extends Component {
 
                 {amount ? (<h2>$ {amount}</h2>) : ''}
 
-                <button className="btn green-btn" onClick={this.handleConfirm}>Confirm</button>
+                <button className="btn green-btn" onClick={this.handleConfirm} disabled={clickedBtn}>
+                   {clickedBtn ? <Spin /> : 'Confirm'}
+                </button>
             </div>
         )
     }
