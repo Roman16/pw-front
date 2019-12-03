@@ -171,7 +171,7 @@ class Optimization extends Component {
           {infoType === "options" ? <OptionsInfo /> : <StrategyInfo />}
         </Drawer>
 
-        {/*<SubscriptionNotificationWindow product={'optimization'}/>*/}
+        <SubscriptionNotificationWindow product={'optimization'}/>
       </Fragment>
     );
   }

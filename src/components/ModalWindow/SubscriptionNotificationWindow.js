@@ -8,20 +8,26 @@ import {subscriptionProducts} from '../../constans/subscription.products.name';
 
 
 const SubscriptionNotificationWindow = ({product}) => {
-    const currentPage = document.querySelector(`.${product}-page`),
+    const mainContainer = document.querySelector(`.main-pages`),
         modalWrap = document.querySelector('.ant-modal-wrap');
 
     const [visibleWindow, openWindow] = useState(false);
     const {subscribedProduct} = useSelector(state => ({
-        subscribedProduct: state.user.subscriptions[subscriptionProducts.find(item => item.key === product).id]
+        subscribedProduct: state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId]
     }));
 
     useEffect(() => {
-        if (!subscribedProduct.has_access && (currentPage != null)) {
+        if (!subscribedProduct.has_access && (mainContainer != null)) {
             openWindow(true);
-            currentPage.classList.add("disable-page");
+            mainContainer.classList.add("disable-page");
         }
-    }, [currentPage, subscribedProduct]);
+
+        return (() => {
+            if (subscribedProduct.has_access && (mainContainer != null)) {
+                mainContainer.classList.remove("disable-page");
+            }
+        })
+    }, [mainContainer, subscribedProduct]);
 
     function RenderModalWindow() {
         return (
@@ -31,13 +37,19 @@ const SubscriptionNotificationWindow = ({product}) => {
                     title="Hey 👋"
                     subTitle="The PPC Automate tool is only available to customers with an active subscription. Upgrade now."
                 />
-
                 <div className='buttons-block'>
-                    <button onClick={() => history.push('/account-subscription')} className='btn default'>Free Trial
-                    </button>
-                    <button onClick={() => history.push('/account-subscription')} className='btn green-btn'>Upgrade
-                        Now
-                    </button>
+                    {!subscribedProduct.incomplete_payment.has_incomplete_payment && <button onClick={() => history.push('/account-subscription')} className='btn default'>Free Trial
+                    </button>}
+
+                    {subscribedProduct.incomplete_payment.has_incomplete_payment ?
+                        <button onClick={() => history.push('/account-billing')} className='btn green-btn'>
+                            Upgrade Now
+                        </button>
+                        :
+                        <button onClick={() => history.push('/account-subscription')} className='btn green-btn'>
+                            Upgrade Now
+                        </button>
+                    }
                 </div>
             </Fragment>
         )
