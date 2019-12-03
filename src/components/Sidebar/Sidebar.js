@@ -87,6 +87,11 @@ const Sidebar = () => {
         window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
     }, []);
 
+
+    useEffect(() => {
+        window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
+    }, [width]);
+
     window.captchaStyle.innerHTML = `.grecaptcha-badge { display: none !important}`;
 
     if (!notFirstEntry) {
