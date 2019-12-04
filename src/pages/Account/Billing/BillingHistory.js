@@ -4,7 +4,7 @@ import visaLogo from '../../../assets/img/visa-logo.svg';
 import masterLogo from '../../../assets/img/mastercard.svg';
 import {Icon} from "antd";
 import moment from "moment";
-import {currencyMask} from "../../../utils/currencyMask";
+import {numberMask} from "../../../utils/numberMask";
 
 const BillingHistory = ({historyList, handlePaginationChange, paginationParams}) => {
     const columns = [
@@ -19,7 +19,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             dataIndex: 'amount_due',
             key: 'amount_due',
             render: (amount, item) => (
-                <span>{currencyMask(item.amount_value)} {item.currency_code}</span>
+                <span>{numberMask(item.amount_value, 2)} {item.currency_code}</span>
             )
         },
         {

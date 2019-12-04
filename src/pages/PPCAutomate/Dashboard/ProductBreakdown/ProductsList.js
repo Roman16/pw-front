@@ -10,6 +10,7 @@ import {round} from "../../../../utils/round";
 import upWhiteIcon from "../../../../assets/img/icons/metric-arrows/up-white-arrow.svg";
 import downWhiteIcon from "../../../../assets/img/icons/metric-arrows/down-white-arrow.svg";
 import {history} from "../../../../utils/history";
+import {numberMask} from "../../../../utils/numberMask";
 
 const RenderPramsChanges = ({type, product}) => {
     const value = product[type];
@@ -119,7 +120,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             key: 'total_changes',
             render: (text) => (
                 <div className='count-changes'>
-                    {text || 0}
+                    {numberMask(text) || 0}
                 </div>
             )
         },
@@ -131,7 +132,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             key: 'budget_allocation',
             render: (text, record) => (
                 <div className='product-params'>
-                    {text != null ? `${round(text, 2)}%` : 'N/A'}
+                    {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
 
                     <RenderPramsChanges
                         type='budget_allocation_diff'
@@ -148,7 +149,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             key: 'sales_share',
             render: (text, record) => (
                 <div className='product-params'>
-                    {text != null ? `${round(text, 2)}%` : 'N/A'}
+                    {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
 
                     <RenderPramsChanges
                         type='sales_share_diff'
@@ -165,7 +166,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             key: 'cpa',
             render: (text, record) => (
                 <div className='product-params'>
-                    {text != null ? `$${round(text, 2)}` : 'N/A'}
+                    {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
 
                     <RenderPramsChanges
                         type='cpa_diff'
@@ -182,7 +183,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             key: 'conversion_rate',
             render: (text, record) => (
                 <div className='product-params'>
-                    {text != null ? `${round(text, 2)}%` : 'N/A'}
+                    {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
 
                     <RenderPramsChanges
                         type='conversion_rate_diff'
@@ -197,7 +198,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             key: 'acos',
             render: (text, record) => (
                 <div className='product-params'>
-                    {text != null ? `${round(text, 2)}%` : 'N/A'}
+                    {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
 
                     <RenderPramsChanges
                         type='acos_diff'
@@ -212,7 +213,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             key: 'profit',
             render: (text, record) => (
                 <div className='product-params'>
-                    {text != null ? `$${round(text, 2)}` : 'N/A'}
+                    {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
 
                     <RenderPramsChanges
                         type='profit_diff'

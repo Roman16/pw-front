@@ -8,6 +8,7 @@ import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arr
 import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
 import downWhiteIcon from '../../../../assets/img/icons/metric-arrows/down-white-arrow.svg';
 import {round} from "../../../../utils/round";
+import {numberMask} from "../../../../utils/numberMask";
 
 const RenderMetricChanges = ({value, name}) => {
     if (value != null) {
@@ -118,10 +119,9 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
                 name={key}
             />
 
-
             <div className='metric-item__description'>
                 <div className="value">
-                    {metric_value != null ? type === 'currency' ? `$${round(+metric_value, 2)}` : (type === 'percent' ? `${round(+metric_value, 2)}%` : round(+metric_value, 2)) : 'N/A'}
+                    {metric_value != null ? type === 'currency' ? `$${numberMask(metric_value, 2)}` : (type === 'percent' ? `${numberMask(metric_value, 2)}%` : numberMask(metric_value)) : 'N/A'}
                 </div>
                 <div className='label'>{label}</div>
             </div>
