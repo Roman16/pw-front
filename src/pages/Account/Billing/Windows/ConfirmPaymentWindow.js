@@ -45,13 +45,21 @@ class ConfirmPaymentWindow extends Component {
 
         return (
             <div>
-                <h1>You have an unpaid payment</h1>
+                <h2>There was an issue with your payment in the amount of</h2>
 
-                {amount ? (<h2>$ {amount}</h2>) : ''}
+                {amount ? (<h2><b>$ {amount || 0}</b></h2>) : ''}
 
-                <button className="btn green-btn" onClick={this.handleConfirm} disabled={clickedBtn}>
-                   {clickedBtn ? <Spin /> : 'Confirm'}
-                </button>
+                <h2>Please update your payment method or try again.</h2>
+
+                <div className='buttons-block'>
+                    <button className="btn default" onClick={() => window.open('https://profit-whales.kayako.com/')}>
+                        I need help
+                    </button>
+
+                    <button className="btn green-btn" onClick={this.handleConfirm} disabled={clickedBtn}>
+                        {clickedBtn ? <Spin/> : 'Confirm'}
+                    </button>
+                </div>
             </div>
         )
     }

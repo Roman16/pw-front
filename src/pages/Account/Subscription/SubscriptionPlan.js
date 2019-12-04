@@ -49,9 +49,9 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                     <div className="charged">
                         <h3 className="charged-title">{product.planName}</h3>
 
-                        {product.next_charge_value == null || product.flat_amount == null || product.quantity == null ?
+                        {product.next_charge_value !== null || product.flat_amount !== null || product.quantity !== null ?
                             <div className="load-data">
-                                We load your data from amazon
+                                <div className='load-text'>We are loading your Amazon data. <br/>Come back in a few hours.</div>
                                 <Spin />
                             </div>
                             :
