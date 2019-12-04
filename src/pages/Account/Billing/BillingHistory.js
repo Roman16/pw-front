@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import CustomTable from "../../../components/Table/CustomTable";
 import visaLogo from '../../../assets/img/visa-logo.svg';
 import masterLogo from '../../../assets/img/mastercard.svg';
@@ -57,16 +57,18 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             title: 'Actions',
             dataIndex: 'status',
             key: 'status',
-            render: (invoiceNumber, item) => (
-                <div className='invoice-actions'>
-                    <a href={`https://pay.stripe.com/invoice/${item.invoice_link_id}`} target='_blank'>
-                        <Icon type="eye"/>
-                    </a>
-                    <a href={`https://pay.stripe.com/invoice/${item.invoice_link_id}/pdf`}>
-                        <Icon type="file-pdf"/>
-                    </a>
-                </div>
-            )
+            render: (invoiceNumber, item) => {
+                const status = item.status.toUpperCase();
+                if ((status !== 'CANCELLED') && (status !== 'VOID') && (status !== 'FAILED')) return (
+                    <div className='invoice-actions'>
+                        <a href={`https://pay.stripe.com/invoice/${item.invoice_link_id}`} target='_blank'>
+                            <Icon type="eye"/>
+                        </a>
+                        <a href={`https://pay.stripe.com/invoice/${item.invoice_link_id}/pdf`}>
+                            <Icon type="file-pdf"/>
+                        </a>
+                    </div>)
+            }
         },
     ];
 
@@ -82,7 +84,8 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
                 </span>
             </div>
 
-            {paginationParams.totalSize > 0 && <div className={`history-list ${paginationParams.totalSize > 10 && 'full-list'}`}>
+            {paginationParams.totalSize > 0 &&
+            <div className={`history-list ${paginationParams.totalSize > 10 && 'full-list'}`}>
                 <CustomTable
                     onChangePagination={handlePaginationChange}
                     dataSource={historyList}
