@@ -18,6 +18,7 @@ import {subscriptionProducts} from "../../../constans/subscription.products.name
 
 const defaultPaginationParams = {
     page: 1,
+    pageSize: 10,
     totalSize: 50
 };
 
@@ -31,7 +32,7 @@ const Billing = () => {
         [visibleConfirmPaymentWindow, openConfirmWindow] = useState(false),
         [userSecretKey, setKey] = useState(),
         [newCard, changeCardType] = useState(true),
-        [paginationParams, changePagination] = useState({defaultPaginationParams}),
+        [paginationParams, changePagination] = useState(defaultPaginationParams),
         [paymentHistory, updateHistoryList] = useState([]),
         [paymentCards, updatePayment] = useState({});
 
@@ -73,7 +74,11 @@ const Billing = () => {
     async function getPaymentHistory() {
         try {
             const historyData = await userService.fetchBillingHistory(paginationParams);
-            updateHistoryList(historyData);
+            updateHistoryList(historyData.result);
+            changePagination({
+                ...paginationParams,
+                totalSize: historyData.totalSize
+            })
         } catch (e) {
             console.log(e);
         }
@@ -162,7 +167,7 @@ const Billing = () => {
 
     useEffect(() => {
         getPaymentHistory();
-    }, [paginationParams]);
+    }, [paginationParams.page]);
 
     return (
         <div className="user-cabinet billing-page">

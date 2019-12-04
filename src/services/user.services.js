@@ -118,8 +118,8 @@ function deletePaymentMethod(id) {
     return api('post', userUrls.deletePaymentMethod(id));
 }
 
-function fetchBillingHistory(pagination) {
-    return api('get', userUrls.paymentHistoryList);
+function fetchBillingHistory({page, pageSize}) {
+    return api('get', `${userUrls.paymentHistoryList}?page=${page}&size=${pageSize}`);
 }
 
 function confirmPayment(data) {

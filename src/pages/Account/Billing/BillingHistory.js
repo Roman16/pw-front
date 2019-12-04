@@ -4,6 +4,7 @@ import visaLogo from '../../../assets/img/visa-logo.svg';
 import masterLogo from '../../../assets/img/mastercard.svg';
 import {Icon} from "antd";
 import moment from "moment";
+import {currencyMask} from "../../../utils/currencyMask";
 
 const BillingHistory = ({historyList, handlePaginationChange, paginationParams}) => {
     const columns = [
@@ -11,11 +12,15 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             title: 'Date Issued',
             dataIndex: 'date_issued',
             key: 'date_issued',
+            render: (date) => <span>{moment(date).format('MMM DD, YYYY')}</span>
         },
         {
             title: 'Amount Due',
             dataIndex: 'amount_due',
             key: 'amount_due',
+            render: (amount, item) => (
+                <span>{currencyMask(item.amount_value)} {item.currency_code}</span>
+            )
         },
         {
             title: 'Description',
@@ -38,13 +43,14 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             dataIndex: 'status',
             key: 'status',
             render: (text) => {
-                const status = text.toUpperCase();
+                let status = text;
+                status.toUpperCase();
                 if ((status === 'PAID') || (status === 'SUCCESS')) return (
-                    <span className='payment-status success'>{text}</span>);
+                    <span className='payment-status success'>{text.toLowerCase()}</span>);
                 if ((status === 'PENDING') || (status === 'WAITING') || (status === 'OPEN')) return (
-                    <span className='payment-status waiting'>{text}</span>);
+                    <span className='payment-status waiting'>{text.toLowerCase()}</span>);
                 if ((status === 'CANCELLED') || (status === 'VOID') || (status === 'FAILED')) return (
-                    <span className='payment-status error'>{text}</span>);
+                    <span className='payment-status error'>{text.toLowerCase()}</span>);
             }
         },
         {
@@ -53,10 +59,10 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             key: 'status',
             render: (invoiceNumber, item) => (
                 <div className='invoice-actions'>
-                    <a href={item.hosted_invoice_url} target='_blank'>
+                    <a href={`https://pay.stripe.com/invoice/${item.invoice_link_id}`} target='_blank'>
                         <Icon type="eye"/>
                     </a>
-                    <a href={item.invoice_pdf}>
+                    <a href={`https://pay.stripe.com/invoice/${item.invoice_number}`}>
                         <Icon type="file-pdf"/>
                     </a>
                 </div>
@@ -76,7 +82,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
                 </span>
             </div>
 
-            {historyList.length > 0 && <div className='history-list'>
+            {paginationParams.totalSize > 0 && <div className={`history-list ${paginationParams.totalSize > 10 && 'full-list'}`}>
                 <h3>Campaign Statistics</h3>
 
                 <CustomTable
@@ -85,6 +91,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
                     columns={columns}
                     currentPage={paginationParams.page}
                     totalSize={paginationParams.totalSize}
+                    pageSize={paginationParams.pageSize}
                     rowClassName={(item) => {
                         const status = item.status.toUpperCase();
                         if ((status === 'PAID') || (status === 'SUCCESS')) return ('success-invoice');
