@@ -62,7 +62,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
                     <a href={`https://pay.stripe.com/invoice/${item.invoice_link_id}`} target='_blank'>
                         <Icon type="eye"/>
                     </a>
-                    <a href={`https://pay.stripe.com/invoice/${item.invoice_number}`}>
+                    <a href={`https://pay.stripe.com/invoice/${item.invoice_link_id}/pdf`}>
                         <Icon type="file-pdf"/>
                     </a>
                 </div>
