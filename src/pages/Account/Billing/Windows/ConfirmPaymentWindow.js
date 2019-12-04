@@ -14,7 +14,7 @@ class ConfirmPaymentWindow extends Component {
             clickedBtn: true
         });
 
-        const defaultCard = this.props.paymentCards.find(card => card.default)
+        const defaultCard = this.props.paymentCards.find(card => card.default);
         this.props.stripe.confirmCardPayment(
             this.props.userSecretKey,
             {

@@ -322,7 +322,8 @@ class ReportTable extends Component {
                             <i className="download-icon"/>
                         </Button>
                     </div>
-                    <FreeTrial/>
+
+                    {/*<FreeTrial/>*/}
                 </div>
 
                 <Tabs activeKey={activeTab} type="card" onChange={this.handleChangeTab}>

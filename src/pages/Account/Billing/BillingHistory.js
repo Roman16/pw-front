@@ -83,8 +83,6 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             </div>
 
             {paginationParams.totalSize > 0 && <div className={`history-list ${paginationParams.totalSize > 10 && 'full-list'}`}>
-                <h3>Campaign Statistics</h3>
-
                 <CustomTable
                     onChangePagination={handlePaginationChange}
                     dataSource={historyList}

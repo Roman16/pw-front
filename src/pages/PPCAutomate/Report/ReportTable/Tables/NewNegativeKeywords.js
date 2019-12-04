@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
-import {indexField, infoField, negativeMatchTypeField} from './const';
+import {indexField, infoField, negativeMatchTypeField, dateField} from './const';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 
@@ -11,6 +11,9 @@ const noSales = 'created-negative-keyword-from-cst-no-sales';
 const defaultKeys = [
     {
         ...indexField
+    },
+    {
+        ...dateField
     },
     {
         title: 'Campaign',
@@ -63,6 +66,24 @@ const columns = {
             render: text => <span>{text && `${text}%`}</span>
         },
         {
+            title: 'CST Clicks',
+            dataIndex: 'cst_clicks',
+            key: 'cst_clicks',
+            width: '100px',
+        },
+        {
+            title: 'CST Spend',
+            dataIndex: 'cst_spend',
+            key: 'cst_spend',
+            width: '100px',
+        },
+        {
+            title: 'CST Sales',
+            dataIndex: 'cst_sales',
+            key: 'cst_sales',
+            width: '100px',
+        },
+        {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
@@ -92,6 +113,12 @@ const columns = {
             dataIndex: 'CSTClicks',
             key: 'CSTClicks',
             width: '110px'
+        },
+        {
+            title: 'CST Spend',
+            dataIndex: 'cst_spend',
+            key: 'cst_spend',
+            width: '100px',
         },
         {
             title: 'Action',

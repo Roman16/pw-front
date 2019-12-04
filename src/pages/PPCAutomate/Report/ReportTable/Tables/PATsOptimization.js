@@ -5,7 +5,7 @@ import {
     infoField,
     bidActionField,
     patIntentField,
-    pausePatActionField
+    pausePatActionField, dateField
 } from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from 'react-redux';
@@ -19,6 +19,9 @@ const pausedManualPatNoSales = 'paused-manual-pat-no-sales';
 const defaultKeys = [
     {
         ...indexField
+    },
+    {
+        ...dateField
     },
     {
         title: 'Campaign',
@@ -78,6 +81,18 @@ const columns = {
             render: text => <span>{text && `${text}%`}</span>
         },
         {
+            title: 'Clicks',
+            dataIndex: 'clicks',
+            key: 'clicks',
+            width: '70px',
+        },
+        {
+            title: 'Average CVR',
+            dataIndex: 'average_cvr',
+            key: 'average_cvr',
+            width: '120px',
+        },
+        {
             ...bidActionField
         },
         {
@@ -132,6 +147,30 @@ const columns = {
             render: text => <span>{text && `${text}%`}</span>
         },
         {
+            title: 'Clicks',
+            dataIndex: 'clicks',
+            key: 'clicks',
+            width: '70px',
+        },
+        {
+            title: 'Average CVR',
+            dataIndex: 'average_cvr',
+            key: 'average_cvr',
+            width: '120px',
+        },
+        {
+            title: 'Spend',
+            dataIndex: 'spend',
+            key: 'spend',
+            width: '70px',
+        },
+        {
+            title: 'Sales',
+            dataIndex: 'sales',
+            key: 'sales',
+            width: '70px',
+        },
+        {
             ...pausePatActionField
         },
         {
@@ -152,6 +191,12 @@ const columns = {
             dataIndex: 'clicks',
             key: 'clicks',
             width: '70px'
+        },
+        {
+            title: 'Spend',
+            dataIndex: 'spend',
+            key: 'spend',
+            width: '70px',
         },
         {
             ...pausePatActionField

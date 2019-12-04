@@ -9,7 +9,7 @@ const ProductSettingsMain = () => {
     <div className="product-settings-page">
       <div className="page-caption">
         <h3 className="main-title">REMINDER</h3>
-        <FreeTrial />
+        {/*<FreeTrial />*/}
       </div>
 
       <div className="reminder">

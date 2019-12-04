@@ -87,7 +87,7 @@ const Subscription = () => {
 
             {subscriptionProducts.map((product) => (
                 <SubscriptionPlan
-                    key={product.id}
+                    key={product.productId}
                     onOpenAccountWindow={handleOpenAccountWindow}
                     onOpenReactivateWindow={handleOpenReactivateWindow}
                     product={{...subscriptions[product.productId], ...product}}

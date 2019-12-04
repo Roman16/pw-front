@@ -19,7 +19,7 @@ export function user(state = initialState, action) {
     switch (action.type) {
         case userConstants.SET_INFORMATION:
             return {
-                ...state,
+                ...initialState,
                 ...action.payload,
                 notFirstEntry: true
             };

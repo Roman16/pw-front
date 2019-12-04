@@ -44,7 +44,7 @@ export const negativeMatchTypeField = {
 };
 
 export const indexField = {
-    title: '',
+    title: '#',
     dataIndex: 'id',
     key: 'id',
     width: '30px'
@@ -54,7 +54,8 @@ export const dateField = {
     title: 'Date',
     dataIndex: 'date',
     key: 'date',
-    render: text => moment(text).format('Y/M/D')
+    width: '100px',
+    render: date => moment(date).format('MM-DD-YY HH:mm:ss')
 };
 
 export const actionField = {
@@ -73,7 +74,7 @@ export const bidActionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    width: '200px',
+    width: '150px',
     className: 'left-border',
     render: ({data: {current_state, previous_state}}) => (
         <div className="action-field">
@@ -96,7 +97,7 @@ export const pauseKeywordsActionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    width: '200px',
+    width: '180px',
     className: 'left-border',
     render: () => (
         <div className="action-field">

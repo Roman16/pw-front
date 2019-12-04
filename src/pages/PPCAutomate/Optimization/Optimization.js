@@ -100,7 +100,8 @@ class Optimization extends Component {
           {/*<ProductList />*/}
 
           <div className="product-options">
-            <FreeTrial />
+            <FreeTrial product={'optimization'}/>
+
             <div className="options">
               <div className={`options-strategy ${isLess ? "more" : "less"}`}>
                 <div className="product-info-automate">

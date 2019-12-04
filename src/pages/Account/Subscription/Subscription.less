@@ -128,99 +128,87 @@
             flex-flow: column;
           }
 
-          .charged-wrap {
-            width: 50%;
+
+          .charged-title {
+            font-size: 1.1429rem; // 16px
+            position: relative;
+            min-width: 25%;
+            width: max-content;
             height: 100%;
             display: flex;
             align-items: center;
+            color: @second-account-color;
+            font-weight: 600;
+            margin: 0;
+            padding-right: 2em;
 
-            @media (max-width: 1149px) {
-              width: 100%;
-            }
-
-            .charged-title {
-              font-size: 1.1429rem; // 16px
-              position: relative;
-              width: 50%;
-              height: 100%;
-              display: flex;
-              align-items: center;
-              color: @second-account-color;
-              font-weight: 600;
-              margin: 0;
-              padding-right: 1em;
-
-              &::after {
-                width: 0.0625em;
-                height: 3em;
-                display: inline-block;
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                right: 0;
-                content: "";
-                background-color: @border-solid;
-              }
-            }
-
-            .charged-description {
-              width: 50%;
-              height: 100%;
-              display: flex;
-              flex-flow: column;
-              align-items: center;
-
-              .charged-text {
-                font-size: 1rem; // 14px
-                color: @third-account-color;
-                margin: 0 auto;
-              }
-
-              .charged-data {
-                font-size: 1.7143rem; // 24px
-                color: @account-color-action;
-                font-weight: 600;
-              }
+            &::after {
+              width: 0.0625em;
+              height: 3em;
+              display: inline-block;
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              right: 0;
+              content: "";
+              background-color: @border-solid;
             }
           }
 
-          .indicators {
-            width: 50%;
+          .charged-description {
+            width: 20%;
             height: 100%;
             display: flex;
             flex-flow: column;
             align-items: center;
-            justify-content: center;
 
-            @media (max-width: 1149px) {
-              width: 100%;
-            }
-
-            .indicators-text {
+            .charged-text {
               font-size: 1rem; // 14px
               color: @third-account-color;
-              display: flex;
-              align-items: center;
+              margin: 0 auto;
+            }
+
+            .charged-data {
+              font-size: 1.7143rem; // 24px
+              color: @account-color-action;
+              font-weight: 600;
+            }
+          }
+
+          .indicators-text {
+            font-size: 1rem; // 14px
+            color: @third-account-color;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            margin: 0;
+
+            .indicators-data {
+              font-size: 1.7143rem; // 24px
+              align-self: flex-end;
+              color: @third-default-dark;
               white-space: nowrap;
-              margin: 0;
+              margin-left: .5em;
 
-              .indicators-data {
-                font-size: 1.7143rem; // 24px
-                align-self: flex-end;
-                color: @third-default-dark;
+              sub {
+                font-size: 1rem; // 14px
+                width: fit-content;
+                left: 0.25em;
+                color: @account-color-action;
                 white-space: nowrap;
-                margin-left: .5em;
-
-                sub {
-                  font-size: 1rem; // 14px
-                  width: fit-content;
-                  left: 0.25em;
-                  color: @account-color-action;
-                  white-space: nowrap;
-                }
               }
             }
           }
+
+          .load-data {
+            flex: 1;
+            font-size: 1.5rem;
+            text-align: center;
+
+            .ant-spin-spinning {
+              margin: 0 0 0 20px;
+            }
+           }
         }
 
         .plan-text {

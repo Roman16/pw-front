@@ -1,38 +1,45 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Icon, Button } from 'antd';
+import {useSelector} from 'react-redux';
 import moment from 'moment';
+import {history} from "../../utils/history";
 
 import './FreeTrial.less';
+import {subscriptionProducts} from "../../constans/subscription.products.name";
 
-const FreeTrial = ({ expireIn }) => {
-    const todaysDate = moment(new Date());
-    const oDate = moment(expireIn * 1000);
-    const freeTrial = oDate.diff(todaysDate, 'days');
+const FreeTrial = ({product}) => {
+    const {trialEndsDate, onTrial} = useSelector(state => ({
+        trialEndsDate: state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId] && state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId].trial_ends_at,
+        onTrial: state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId] && state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId].on_trial,
+    }));
 
-    return (
-        <div className="additional">
-            <p className="free-trial">
-                Free Trial
-                <span>{freeTrial >= 0 ? freeTrial : 0}</span>
-                Days Left
-            </p>
-            <div className="btn-upgrade">
-                <Button
-                    onClick={() => {
-                        window.open(`/account/subscriptions`);
-                    }}
-                >
-                    Upgrade Now
-                    <Icon type="arrow-up" style={{ color: '#8fd39d' }} />
-                </Button>
+    const todayDate = moment(new Date());
+    const freeTrial = moment(trialEndsDate).diff(todayDate, 'days');
+
+    if (!onTrial) {
+        return (
+            <div className="additional">
+                <p className="free-trial">
+                    Free Trial
+                    <span>{freeTrial >= 0 ? freeTrial : 0}</span>
+                    Days Left
+                </p>
+
+                {/*<div className="btn-upgrade">*/}
+                {/*    <Button*/}
+                {/*        onClick={() => {*/}
+                {/*            history.push(`/account-subscription`);*/}
+                {/*        }}*/}
+                {/*    >*/}
+                {/*        Upgrade Now*/}
+                {/*        <Icon type="arrow-up" style={{color: '#8fd39d'}}/>*/}
+                {/*    </Button>*/}
+                {/*</div>*/}
             </div>
-        </div>
-    );
+        );
+    } else {
+        return ('')
+    }
 };
 
-const mapStateToProps = state => ({
-    expireIn: state.user.plans && state.user.plans.ppc_automation && state.user.plans.ppc_automation.expire_in
-});
 
-export default connect(mapStateToProps)(FreeTrial);
+export default FreeTrial;

@@ -1,5 +1,6 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {Link} from "react-router-dom";
+import {Spin} from "antd";
 import reload from "../../../assets/img/icons/reload.svg";
 import ppcIcon from "../../../assets/img/icons/ppc-automate-icon.svg";
 import moment from "moment";
@@ -46,27 +47,34 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
 
                 <div className="plan">
                     <div className="charged">
-                        <div className="charged-wrap">
-                            <h3 className="charged-title">{product.planName}</h3>
+                        <h3 className="charged-title">{product.planName}</h3>
 
-                            <div className="charged-description">
-                                <p className="charged-text">You’ll be charged</p>
-                                <p className="charged-data">$ {product.next_charge_value || 0}</p>
+                        {product.next_charge_value == null || product.flat_amount == null || product.quantity == null ?
+                            <div className="load-data">
+                                We load your data from amazon
+                                <Spin />
                             </div>
-                        </div>
-                        <div className="indicators">
-                            <p className="indicators-text">
-                                based on{" "}
-                                <span className="indicators-data">
+                            :
+                            <Fragment>
+                                <div className="charged-description">
+                                    <p className="charged-text">You’ll be charged</p>
+                                    <p className="charged-data">$ {product.next_charge_value || 0}</p>
+                                </div>
+
+                                <div className="indicators-text">
+                                    based on{" "}
+                                    <span className="indicators-data">
                                           $ {product.flat_amount || 0} + {product.percent_amount || 0}%
                                           <sub>monthly ad spend</sub>
                                         </span>
-                            </p>
-                        </div>
+                                </div>
+                            </Fragment>
+                        }
                     </div>
-                    <p className="plan-text">
+
+                    {(product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) && <p className="plan-text">
                         Your Ad Spend: <span className="plan-data">$ {product.quantity || 0}</span>
-                    </p>
+                    </p>}
                 </div>
 
                 {(product.has_access && !product.cancelled) && <div className="cancel">

@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import moment from 'moment';
 import TableButton from '../TableButton/TableButton';
-import {indexField, createdKeywordsActionField, infoField} from './const';
+import {indexField, createdKeywordsActionField, infoField, dateField} from './const';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
@@ -15,6 +15,9 @@ const createdKeywordCST = 'created-keyword-cst';
 const defaultKeys = [
     {
         ...indexField
+    },
+    {
+        ...dateField
     }
 ];
 
@@ -138,7 +141,13 @@ const columns = {
             title: 'Keyword',
             dataIndex: 'keyword',
             key: 'keyword',
-            width: '360px'
+            width: '320px'
+        },
+        {
+            title: 'Match Type',
+            dataIndex: 'match_type',
+            key: 'match_type',
+            width: '100px'
         },
         {
             ...createdKeywordsActionField

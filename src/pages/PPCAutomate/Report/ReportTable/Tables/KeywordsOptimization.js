@@ -5,7 +5,8 @@ import {
     indexField,
     infoField,
     bidActionField,
-    pauseKeywordsActionField
+    pauseKeywordsActionField,
+    dateField
 } from './const';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
@@ -18,6 +19,9 @@ const pausedKeywordNoSales = 'paused-keyword-no-sales';
 const defaultKeys = [
     {
         ...indexField
+    },
+    {
+        ...dateField
     },
     {
         title: 'Campaign',
@@ -67,6 +71,18 @@ const columns = {
             key: 'targetACoS',
             width: '90px',
             render: text => <span>{text && `${text}%`}</span>
+        },
+        {
+            title: 'Clicks',
+            dataIndex: 'clicks',
+            key: 'clicks',
+            width: '70px',
+        },
+        {
+            title: 'Average CVR',
+            dataIndex: 'average_cvr',
+            key: 'average_cvr',
+            width: '120px',
         },
         {
             ...bidActionField
@@ -123,6 +139,30 @@ const columns = {
             render: text => <span>{text && `${text}%`}</span>
         },
         {
+            title: 'Clicks',
+            dataIndex: 'clicks',
+            key: 'clicks',
+            width: '70px',
+        },
+        {
+            title: 'Average CVR',
+            dataIndex: 'average_cvr',
+            key: 'average_cvr',
+            width: '120px',
+        },
+        {
+            title: 'Spend',
+            dataIndex: 'spend',
+            key: 'spend',
+            width: '70px',
+        },
+        {
+            title: 'Sales',
+            dataIndex: 'sales',
+            key: 'sales',
+            width: '70px',
+        },
+        {
             ...pauseKeywordsActionField
         },
         {
@@ -143,6 +183,12 @@ const columns = {
             dataIndex: 'clicks',
             key: 'clicks',
             width: '80px'
+        },
+        {
+            title: 'Spend',
+            dataIndex: 'spend',
+            key: 'spend',
+            width: '70px',
         },
         {
             ...pauseKeywordsActionField

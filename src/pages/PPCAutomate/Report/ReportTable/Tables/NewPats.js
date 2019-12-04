@@ -4,7 +4,7 @@ import {
     indexField,
     patIntentField,
     createdKeywordsActionField,
-    infoField
+    infoField, dateField
 } from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from 'react-redux';
@@ -16,7 +16,10 @@ const CreatedPATCST = 'created-pat-cst';
 const defaultKeys = [
     {
         ...indexField
-    }
+    },
+    {
+        ...dateField
+    },
 ];
 
 const columns = {
