@@ -28,9 +28,9 @@ const UserCard = ({card: {last4, brand, exp_month, exp_year}, card, onUpdateCard
                 <div className="card-actions">
                     <Dropdown overlay={menu} trigger={['click']}>
                         <div className="ant-dropdown-link">
-                            <div></div>
-                            <div></div>
-                            <div></div>
+                            <div/>
+                            <div/>
+                            <div/>
                         </div>
                     </Dropdown>
                 </div>
@@ -154,7 +154,7 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                                     style={{opacity: paymentCards[selectedCardIndex].id != item.id && 0.5}}
                                     key={`pagination_${index}`}
                                     onClick={() => onChangePagination(index)}
-                                ></div>
+                                />
                             ))}
                         </div>}
                     </div>

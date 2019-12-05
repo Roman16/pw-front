@@ -4,6 +4,8 @@ import {Spin} from "antd";
 import reload from "../../../assets/img/icons/reload.svg";
 import ppcIcon from "../../../assets/img/icons/ppc-automate-icon.svg";
 import moment from "moment";
+import {numberMask} from "../../../utils/numberMask";
+import {round} from "../../../utils/round";
 
 const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe}) => {
     return (
@@ -58,7 +60,7 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                             <Fragment>
                                 <div className="charged-description">
                                     <p className="charged-text">You’ll be charged</p>
-                                    <p className="charged-data">$ {product.next_charge_value || 0}</p>
+                                    <p className="charged-data">$ {numberMask(product.next_charge_value, 2) || 0}</p>
                                 </div>
 
                                 <div className="indicators-text">
@@ -73,7 +75,7 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                     </div>
 
                     {(product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) && <p className="plan-text">
-                        Your Ad Spend: <span className="plan-data">$ {product.quantity || 0}</span>
+                        Your Ad Spend: <span className="plan-data">$ {numberMask(product.quantity, 2) || 0}</span>
                     </p>}
                 </div>
 
