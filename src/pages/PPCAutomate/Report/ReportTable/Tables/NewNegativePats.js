@@ -4,6 +4,8 @@ import {indexField, patIntentField, infoField, dateField} from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
+import {round} from "../../../../../utils/round";
+import {numberMask} from "../../../../../utils/numberMask";
 
 const HighACoS = 'created-negative-pat-from-cst-high-acos';
 const NoSales = 'created-negative-pat-from-cst-no-sales';
@@ -88,12 +90,14 @@ const columns = {
             dataIndex: 'cst_spend',
             key: 'cst_spend',
             width: '100px',
+            render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>)
         },
         {
             title: 'CST Sales',
             dataIndex: 'cst_sales',
             key: 'cst_sales',
             width: '100px',
+            render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>)
         },
         {
             title: 'Action',
@@ -110,11 +114,11 @@ const columns = {
     [NoSales]: [
         ...defaultKeys,
         {
-            title: 'Average Conv. Rate',
+            title: 'Average CVR',
             dataIndex: 'averageConversionRate',
             key: 'averageConversionRate',
-            render: text => <span>{text && `${text}%`}</span>,
-            width: '90px'
+            width: '90px',
+            render: (text) => (text &&  <span>{round(text, 2)}%</span>)
         },
         {
             title: (
@@ -132,6 +136,7 @@ const columns = {
             dataIndex: 'cst_spend',
             key: 'cst_spend',
             width: '100px',
+            render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>)
         },
         {
             title: 'Action',

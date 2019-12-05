@@ -10,6 +10,8 @@ import {
 } from './const';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
+import {round} from "../../../../../utils/round";
+import {numberMask} from "../../../../../utils/numberMask";
 
 const changedKeywordBidAcos = 'changed-keyword-bid-acos';
 const changedKeywordBidImpression = 'changed-keyword-bid-impressions';
@@ -83,6 +85,7 @@ const columns = {
             dataIndex: 'average_cvr',
             key: 'average_cvr',
             width: '120px',
+            render: (text) => (text &&  <span>{round(text, 2)}%</span>)
         },
         {
             ...bidActionField
@@ -145,22 +148,25 @@ const columns = {
             width: '70px',
         },
         {
-            title: 'Average CVR',
-            dataIndex: 'average_cvr',
-            key: 'average_cvr',
-            width: '120px',
-        },
-        {
             title: 'Spend',
             dataIndex: 'spend',
             key: 'spend',
             width: '70px',
+            render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>)
         },
         {
             title: 'Sales',
             dataIndex: 'sales',
             key: 'sales',
             width: '70px',
+            render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>)
+        },
+        {
+            title: 'Average CVR',
+            dataIndex: 'average_cvr',
+            key: 'average_cvr',
+            width: '120px',
+            render: (text) => (text &&  <span>{round(text, 2)}%</span>)
         },
         {
             ...pauseKeywordsActionField
@@ -172,11 +178,11 @@ const columns = {
     [pausedKeywordNoSales]: [
         ...defaultKeys,
         {
-            title: 'Average Conv. Rate',
+            title: 'Average CVR',
             dataIndex: 'averageConvRate',
             key: 'averageConvRate',
             width: '90px',
-            render: text => <span>{text && `${text}%`}</span>
+            render: (text) => (text &&  <span>{round(text, 2)}%</span>)
         },
         {
             title: 'Clicks',
@@ -189,6 +195,7 @@ const columns = {
             dataIndex: 'spend',
             key: 'spend',
             width: '70px',
+            render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>)
         },
         {
             ...pauseKeywordsActionField

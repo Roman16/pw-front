@@ -5,6 +5,7 @@ import {indexField, createdKeywordsActionField, infoField, dateField} from './co
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
+import {numberMask} from "../../../../../utils/numberMask";
 
 const createdCampaign = 'created-campaign';
 const createdAdGroup = 'created-ad-group';
@@ -40,15 +41,15 @@ const columns = {
             title: 'Daily Budget',
             dataIndex: 'dailyBudget',
             key: 'dailyBudget',
-            render: text => <span>{text && `$${text}`}</span>,
+            render: text => (text != null && <span>{`$${numberMask(text)}`}</span>),
             width: '100px'
         },
         {
             title: 'Start Date.',
             dataIndex: 'startDate',
             key: 'startDate',
-            render: text => moment(text).format('Y/M/D'),
-            width: '90px'
+            render: text => moment(text).format('YYYY-MM-DD'),
+            width: '110px'
         },
         {
             ...createdKeywordsActionField
@@ -75,7 +76,7 @@ const columns = {
             title: 'Default Bid',
             dataIndex: 'defaultBid',
             key: 'defaultBid',
-            render: text => <span>{text && `$${text}`}</span>,
+            render: text =>  (text != null && <span>{`$${numberMask(text, 2)}`}</span>),
             width: '90px'
         },
         {
@@ -186,8 +187,8 @@ const columns = {
             title: 'Bid',
             dataIndex: 'bid',
             key: 'bid',
-            render: text => <span>{text && `$${text}`}</span>,
-            width: '70px'
+            width: '70px',
+            render: text => (text != null && <span>${numberMask(text, 2)}</span>),
         },
         {
             title: (
@@ -221,7 +222,7 @@ const columns = {
             ),
             dataIndex: 'CSTCPC',
             key: 'CSTCPC',
-            render: text => <span>{text && `${text}%`}</span>,
+            render: text => (text != null && <span>${numberMask(text, 2)}</span>),
             width: '100px'
         },
         {
