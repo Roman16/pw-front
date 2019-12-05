@@ -40,13 +40,15 @@ const api = (method, url, data, type) => {
                         reject(error);
 
                         if (error.response.status === 401) {
-                            if(error.response.data) {
+                            if (error.response.data) {
                                 notification.error({
                                     title: error.response.data.message ? error.response.data.message : error.response.data.error,
                                 });
                             }
+                        } else if (error.response.status === 429) {
+
                         } else {
-                            if(error.response.data) {
+                            if (error.response.data) {
                                 notification.error({
                                     title: error.response.data.message ? error.response.data.message : error.response.data.error
                                 });
