@@ -9,6 +9,7 @@ import {
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
+import {numberMask} from "../../../../../utils/numberMask";
 
 const CreatedCrossNegativePAT = 'created-cross-negative-pat';
 const CreatedPATCST = 'created-pat-cst';
@@ -104,8 +105,8 @@ const columns = {
             title: 'Bid',
             dataIndex: 'bid',
             key: 'bid',
-            render: text => <span>${text}</span>,
-            width: '70px'
+            width: '70px',
+            render: text => (text != null && <span>${numberMask(text, 2)}</span>),
         },
         {
             title: (
@@ -139,7 +140,7 @@ const columns = {
             ),
             dataIndex: 'CSTCPC',
             key: 'CSTCPC',
-            render: text => <span>${text}</span>,
+            render: text => (text != null && <span>${numberMask(text, 2)}</span>),
             width: '110px'
         },
         {
