@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Pagination, Spin, Select, Menu, Dropdown, Icon} from 'antd';
 import shortid from 'shortid';
 
@@ -18,8 +18,37 @@ const CustomTable = ({
                          heightTabBtn,
                          pageSize,
                          showSizeChanger = false,
-                         rowClassName
+                         rowClassName,
+                         onChangeSorter
                      }) => {
+    const [sorterColumn, sortColumn] = useState({
+        key: null,
+        type: null
+    });
+
+    function handleChangeSorterButton(column) {
+
+        if (sorterColumn.key === column) {
+            if(sorterColumn.type === 'desc')  sortColumn({key: column, type: 'asc'});
+            if(sorterColumn.type === 'asc')  sortColumn({key: null, type: null});
+
+        } else {
+            sortColumn({
+                key: column,
+                type: 'desc'
+            })
+        }
+        // 'desc'
+
+        // 'asc'^
+    }
+
+    useEffect(() => {
+        onChangeSorter(sorterColumn);
+    }, [sorterColumn]);
+
+    console.log(sorterColumn);
+
     return (
         <div
             className="custom-table"
@@ -28,8 +57,6 @@ const CustomTable = ({
             <div className="table-overflow">
                 <div className="table-head">
                     {columns.map(item => {
-                        console.log(item);
-
                         const menu = (
                             <Menu>
                                 {item.filterIcon && item.filterDropdown()}
@@ -38,14 +65,23 @@ const CustomTable = ({
 
                         return (
                             <div
-                                className={`th ${item.filterIcon && 'filter-column'}`}
+                                className={`th ${item.filterIcon && 'filter-column'} ${item.sorter && 'sorter-column'}`}
                                 key={shortid.generate()}
                                 style={item.width ? {width: item.width} : {flex: 1}}
+                                onClick={() => item.sorter && handleChangeSorterButton(item.key)}
                             >
-                                {typeof item.title === 'function' ? item.title() : item.title}
+                                <div className='title'>
+                                    {typeof item.title === 'function' ? item.title() : item.title}
+
+                                    {item.sorter && (<div className='sorter-buttons'>
+                                        <Icon type="caret-up" style={{color: `${sorterColumn.key === item.key && sorterColumn.type === 'asc' && "#1890ff"}`}}/>
+                                        <Icon type="caret-down" style={{color: `${sorterColumn.key === item.key && sorterColumn.type === 'desc' && "#1890ff"}`}}/>
+                                    </div>)}
+                                </div>
 
                                 {item.filterIcon && (
-                                    <Dropdown overlay={menu} trigger={['contextMenu', 'click']} placement="bottomRight">
+                                    <Dropdown overlay={menu} trigger={['contextMenu', 'click']} placement="bottomRight"
+                                              onClick={(e) => e.stopPropagation()}>
                                         <a className="ant-dropdown-link" href="#">
                                             {item.filterIcon()}
                                         </a>

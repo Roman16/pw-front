@@ -49,7 +49,10 @@ const tabsItem = [
             page,
             totalSize,
             handlePaginationChange,
-            pageSize
+            pageSize,
+            onChangeFilter,
+            filteredColumns,
+            handleChangeSorter
         ) => (
             <KeywordsOptimization
                 onChangeSubTab={onChangeSubTab}
@@ -59,6 +62,9 @@ const tabsItem = [
                 totalSize={totalSize}
                 handlePaginationChange={handlePaginationChange}
                 pageSize={pageSize}
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                handleChangeSorter={handleChangeSorter}
             />
         )
     },
@@ -72,7 +78,10 @@ const tabsItem = [
             page,
             totalSize,
             handlePaginationChange,
-            pageSize
+            pageSize,
+            onChangeFilter,
+            filteredColumns,
+            handleChangeSorter
         ) => (
             <PATsOptimization
                 onChangeSubTab={onChangeSubTab}
@@ -82,6 +91,9 @@ const tabsItem = [
                 totalSize={totalSize}
                 handlePaginationChange={handlePaginationChange}
                 pageSize={pageSize}
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                handleChangeSorter={handleChangeSorter}
             />
         )
     },
@@ -95,7 +107,10 @@ const tabsItem = [
             page,
             totalSize,
             handlePaginationChange,
-            pageSize
+            pageSize,
+            onChangeFilter,
+            filteredColumns,
+            handleChangeSorter
         ) => (
             <NewKeywords
                 onChangeSubTab={onChangeSubTab}
@@ -105,6 +120,9 @@ const tabsItem = [
                 totalSize={totalSize}
                 handlePaginationChange={handlePaginationChange}
                 pageSize={pageSize}
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                handleChangeSorter={handleChangeSorter}
             />
         )
     },
@@ -118,7 +136,10 @@ const tabsItem = [
             page,
             totalSize,
             handlePaginationChange,
-            pageSize
+            pageSize,
+            onChangeFilter,
+            filteredColumns,
+            handleChangeSorter
         ) => (
             <NewNegativeKeywords
                 onChangeSubTab={onChangeSubTab}
@@ -128,6 +149,9 @@ const tabsItem = [
                 totalSize={totalSize}
                 handlePaginationChange={handlePaginationChange}
                 pageSize={pageSize}
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                handleChangeSorter={handleChangeSorter}
             />
         )
     },
@@ -141,7 +165,10 @@ const tabsItem = [
             page,
             totalSize,
             handlePaginationChange,
-            pageSize
+            pageSize,
+            onChangeFilter,
+            filteredColumns,
+            handleChangeSorter
         ) => (
             <NewPats
                 onChangeSubTab={onChangeSubTab}
@@ -151,6 +178,9 @@ const tabsItem = [
                 totalSize={totalSize}
                 handlePaginationChange={handlePaginationChange}
                 pageSize={pageSize}
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                handleChangeSorter={handleChangeSorter}
             />
         )
     },
@@ -164,7 +194,10 @@ const tabsItem = [
             page,
             totalSize,
             handlePaginationChange,
-            pageSize
+            pageSize,
+            onChangeFilter,
+            filteredColumns,
+            handleChangeSorter
         ) => (
             <NewNegativePats
                 onChangeSubTab={onChangeSubTab}
@@ -174,6 +207,9 @@ const tabsItem = [
                 totalSize={totalSize}
                 handlePaginationChange={handlePaginationChange}
                 pageSize={pageSize}
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                handleChangeSorter={handleChangeSorter}
             />
         )
     }
@@ -187,6 +223,7 @@ class ReportTable extends Component {
         pageSize: 10,
         activeTab: "keywords-optimization",
         activeSubTab: "changed-keyword-bid-acos",
+        filteredColumns: {},
         updateSize: {
             "keywords-optimization": 0,
             "pats-optimization": 0,
@@ -238,7 +275,7 @@ class ReportTable extends Component {
     };
 
     fetchReports = () => {
-        const {activeTab, activeSubTab, startDate, endDate, page, pageSize} = this.state,
+        const {activeTab, activeSubTab, startDate, endDate, page, pageSize, filteredColumns} = this.state,
             {selectedAll, selectedProductId} = this.props;
 
         this.props.getReports({
@@ -249,7 +286,8 @@ class ReportTable extends Component {
             startDate,
             endDate,
             page,
-            pageSize
+            pageSize,
+            filteredColumns
         });
     };
 
@@ -282,6 +320,23 @@ class ReportTable extends Component {
         this.setState({activeSubTab: tab, page: 1}, this.fetchReports);
     };
 
+    handleChangeFilter = (key, value) => {
+        this.setState({
+            filteredColumns: {
+                [key]: value
+            }
+        }, this.fetchReports);
+    };
+
+    handleChangeSorter = (sorter) => {
+        // this.setState({
+        //     filteredColumns: {
+        //         [key]: value
+        //     }
+        // }, this.fetchReports);
+        // console.log(sorter);
+    };
+
     componentDidMount() {
         this.fetchReports();
     }
@@ -302,7 +357,7 @@ class ReportTable extends Component {
     }
 
     render() {
-        const {activeTab, page, pageSize} = this.state,
+        const {activeTab, page, pageSize, filteredColumns} = this.state,
             {counts, data, todayChanges, totalSize} = this.props;
 
         return (
@@ -336,7 +391,10 @@ class ReportTable extends Component {
                                 page,
                                 totalSize,
                                 this.handlePaginationChange,
-                                pageSize
+                                pageSize,
+                                this.handleChangeFilter,
+                                filteredColumns,
+                                this.handleChangeSorter
                             )}
                         </TabPane>
                     ))}

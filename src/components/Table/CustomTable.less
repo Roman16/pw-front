@@ -34,6 +34,31 @@
           text-align: center;
         }
 
+        .title {
+          display: flex;
+
+          .sorter-buttons {
+            display: flex;
+            flex-direction: column;
+            margin: 0 0 0 5px;
+
+            i {
+              font-size: 12px;
+              cursor: pointer;
+              color: #bfbfbf;
+
+            }
+          }
+        }
+
+        &.sorter-column {
+          cursor: pointer;
+
+          &:hover {
+            background: #fafafa;
+          }
+        }
+
         &.filter-column {
           display: flex;
           justify-content: space-between;

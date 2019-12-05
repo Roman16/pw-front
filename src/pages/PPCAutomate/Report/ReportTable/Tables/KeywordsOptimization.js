@@ -14,245 +14,12 @@ import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import {round} from "../../../../../utils/round";
 import {numberMask} from "../../../../../utils/numberMask";
+import {columnFilter} from './columnFilter';
 
 const changedKeywordBidAcos = 'changed-keyword-bid-acos';
 const changedKeywordBidImpression = 'changed-keyword-bid-impressions';
 const pausedKeywordHighAcos = 'paused-keyword-high-acos';
 const pausedKeywordNoSales = 'paused-keyword-no-sales';
-
-const getColumnSearchProps = dataIndex => ({
-    filterDropdown: () => (
-        <div className='search-drop-down'>
-            <Input
-                // ref={node => {
-                //     this.searchInput = node;
-                // }}
-                placeholder={`Search ${dataIndex}`}
-                // value={selectedKeys[0]}
-                // onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                // onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-            />
-
-            <div className="buttons">
-                <button
-                    className="btn default"
-                    // onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                >
-                    Search
-                </button>
-                <button
-                    className="btn cancel"
-                    // onClick={() => this.handleReset(clearFilters)}
-                >
-                    Reset
-                </button>
-            </div>
-        </div>
-    ),
-    filterIcon: filtered => (
-        <Icon type="search" style={{color: filtered ? '#1890ff' : undefined}}/>
-    ),
-    onFilter: (value, record) =>
-        record[dataIndex]
-            .toString()
-            .toLowerCase()
-            .includes(value.toLowerCase()),
-    // onFilterDropdownVisibleChange: visible => {
-    //     if (visible) {
-    //         setTimeout(() => this.searchInput.select());
-    //     }
-    // },
-    render: text => text
-});
-
-const defaultKeys = [
-    {
-        ...indexField
-    },
-    {
-        ...dateField
-    },
-    {
-        title: "Campaign",
-        dataIndex: 'campaign',
-        key: 'campaign',
-        width: '180px',
-        ...getColumnSearchProps('campaign')
-    },
-    {
-        title: 'Ad Group',
-        dataIndex: 'adGroup',
-        key: 'adGroup',
-        width: '180px'
-    },
-    {
-        title: 'Keyword',
-        dataIndex: 'keyword',
-        key: 'keyword',
-        width: '200px'
-    },
-    {
-        title: 'Match Type',
-        dataIndex: 'matchType',
-        key: 'matchType',
-        width: '90px',
-        render: text => <span className="capitalize-field">{text}</span>
-    }
-];
-
-const columns = {
-    [changedKeywordBidAcos]: [
-        ...defaultKeys,
-        {
-            title: 'ACoS',
-            dataIndex: 'acos',
-            key: 'acos',
-            width: '70px',
-            render: text => <span>{text && `${text}%`}</span>
-        },
-        {
-            title: () => (
-                <TitleInfo
-                    title="Target ACoS"
-                    info="The ACoS that our algorithm is aiming to reach your business goal."
-                />
-            ),
-            dataIndex: 'targetACoS',
-            key: 'targetACoS',
-            width: '90px',
-            render: text => <span>{text && `${text}%`}</span>
-        },
-        {
-            title: 'Clicks',
-            dataIndex: 'clicks',
-            key: 'clicks',
-            width: '70px',
-        },
-        {
-            title: 'Average CVR',
-            dataIndex: 'average_cvr',
-            key: 'average_cvr',
-            width: '120px',
-            render: (text) => (text &&  <span>{round(text, 2)}%</span>)
-        },
-        {
-            ...bidActionField
-        },
-        {
-            ...infoField
-        }
-    ],
-    [changedKeywordBidImpression]: [
-        ...defaultKeys,
-        {
-            title: 'Impressions',
-            dataIndex: 'impressions',
-            key: 'impressions',
-            width: '100px'
-        },
-        {
-            title: (
-                <TitleInfo
-                    title="Target Impressions"
-                    info="The number of times your ads need to be displayed so you will get the click."
-                />
-            ),
-            dataIndex: 'targetImpressions',
-            key: 'targetImpressions',
-            width: '120px'
-        },
-        {
-            ...bidActionField
-        },
-        {
-            ...infoField
-        }
-    ],
-    [pausedKeywordHighAcos]: [
-        ...defaultKeys,
-        {
-            title: 'ACoS',
-            dataIndex: 'acos',
-            key: 'acos',
-            width: '70px',
-            render: text => <span>{text && `${text}%`}</span>
-        },
-        {
-            title: (
-                <TitleInfo
-                    title="Target ACoS"
-                    info="The ACoS that our algorithm is aiming to reach your business goal."
-                />
-            ),
-            dataIndex: 'targetACoS',
-            key: 'targetACoS',
-            width: '90px',
-            render: text => <span>{text && `${text}%`}</span>
-        },
-        {
-            title: 'Clicks',
-            dataIndex: 'clicks',
-            key: 'clicks',
-            width: '70px',
-        },
-        {
-            title: 'Spend',
-            dataIndex: 'spend',
-            key: 'spend',
-            width: '70px',
-            render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>)
-        },
-        {
-            title: 'Sales',
-            dataIndex: 'sales',
-            key: 'sales',
-            width: '70px',
-            render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>)
-        },
-        {
-            title: 'Average CVR',
-            dataIndex: 'average_cvr',
-            key: 'average_cvr',
-            width: '120px',
-            render: (text) => (text &&  <span>{round(text, 2)}%</span>)
-        },
-        {
-            ...pauseKeywordsActionField
-        },
-        {
-            ...infoField
-        }
-    ],
-    [pausedKeywordNoSales]: [
-        ...defaultKeys,
-        {
-            title: 'Average CVR',
-            dataIndex: 'averageConvRate',
-            key: 'averageConvRate',
-            width: '90px',
-            render: (text) => (text &&  <span>{round(text, 2)}%</span>)
-        },
-        {
-            title: 'Clicks',
-            dataIndex: 'clicks',
-            key: 'clicks',
-            width: '80px'
-        },
-        {
-            title: 'Spend',
-            dataIndex: 'spend',
-            key: 'spend',
-            width: '70px',
-            render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>)
-        },
-        {
-            ...pauseKeywordsActionField
-        },
-        {
-            ...infoField
-        }
-    ]
-};
 
 const KeywordsOptimization = ({
                                   data,
@@ -262,7 +29,10 @@ const KeywordsOptimization = ({
                                   totalSize,
                                   handlePaginationChange,
                                   scroll,
-                                  pageSize
+                                  pageSize,
+                                  onChangeFilter,
+                                  filteredColumns,
+                                  handleChangeSorter
                               }) => {
     const [activeTable, changeTable] = useState(changedKeywordBidAcos);
     const {count, loading, productId} = useSelector(state => ({
@@ -284,7 +54,196 @@ const KeywordsOptimization = ({
 
     useEffect(() => changeTable(changedKeywordBidAcos), [productId, activeTab]);
 
-    console.log('start');
+
+    const defaultKeys = [
+        {
+            ...indexField
+        },
+        {
+            ...dateField
+        },
+        {
+            title: "Campaign",
+            dataIndex: 'campaign',
+            key: 'campaign',
+            width: '180px',
+            sorter: true,
+            ...columnFilter('campaign', onChangeFilter, filteredColumns['campaign'])
+        },
+        {
+            title: 'Ad Group',
+            dataIndex: 'adGroup',
+            key: 'adGroup',
+            width: '180px'
+        },
+        {
+            title: 'Keyword',
+            dataIndex: 'keyword',
+            key: 'keyword',
+            width: '200px'
+        },
+        {
+            title: 'Match Type',
+            dataIndex: 'matchType',
+            key: 'matchType',
+            width: '90px',
+            render: text => <span className="capitalize-field">{text}</span>
+        }
+    ];
+
+    const columns = {
+        [changedKeywordBidAcos]: [
+            ...defaultKeys,
+            {
+                title: 'ACoS',
+                dataIndex: 'acos',
+                key: 'acos',
+                width: '70px',
+                render: text => <span>{text && `${text}%`}</span>
+            },
+            {
+                title: (
+                    <TitleInfo
+                        title="Target ACoS"
+                        info="The ACoS that our algorithm is aiming to reach your business goal."
+                    />
+                ),
+                dataIndex: 'targetACoS',
+                key: 'targetACoS',
+                width: '90px',
+                render: text => <span>{text && `${text}%`}</span>
+            },
+            {
+                title: 'Clicks',
+                dataIndex: 'clicks',
+                key: 'clicks',
+                width: '70px',
+            },
+            {
+                title: 'Average CVR',
+                dataIndex: 'average_cvr',
+                key: 'average_cvr',
+                width: '120px',
+                render: (text) => (text && <span>{round(text, 2)}%</span>)
+            },
+            {
+                ...bidActionField
+            },
+            {
+                ...infoField
+            }
+        ],
+        [changedKeywordBidImpression]: [
+            ...defaultKeys,
+            {
+                title: 'Impressions',
+                dataIndex: 'impressions',
+                key: 'impressions',
+                width: '100px'
+            },
+            {
+                title: (
+                    <TitleInfo
+                        title="Target Impressions"
+                        info="The number of times your ads need to be displayed so you will get the click."
+                    />
+                ),
+                dataIndex: 'targetImpressions',
+                key: 'targetImpressions',
+                width: '120px'
+            },
+            {
+                ...bidActionField
+            },
+            {
+                ...infoField
+            }
+        ],
+        [pausedKeywordHighAcos]: [
+            ...defaultKeys,
+            {
+                title: 'ACoS',
+                dataIndex: 'acos',
+                key: 'acos',
+                width: '70px',
+                render: text => <span>{text && `${text}%`}</span>
+            },
+            {
+                title: (
+                    <TitleInfo
+                        title="Target ACoS"
+                        info="The ACoS that our algorithm is aiming to reach your business goal."
+                    />
+                ),
+                dataIndex: 'targetACoS',
+                key: 'targetACoS',
+                width: '90px',
+                render: text => <span>{text && `${text}%`}</span>
+            },
+            {
+                title: 'Clicks',
+                dataIndex: 'clicks',
+                key: 'clicks',
+                width: '70px',
+            },
+            {
+                title: 'Spend',
+                dataIndex: 'spend',
+                key: 'spend',
+                width: '70px',
+                render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>)
+            },
+            {
+                title: 'Sales',
+                dataIndex: 'sales',
+                key: 'sales',
+                width: '70px',
+                render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>)
+            },
+            {
+                title: 'Average CVR',
+                dataIndex: 'average_cvr',
+                key: 'average_cvr',
+                width: '120px',
+                render: (text) => (text && <span>{round(text, 2)}%</span>)
+            },
+            {
+                ...pauseKeywordsActionField
+            },
+            {
+                ...infoField
+            }
+        ],
+        [pausedKeywordNoSales]: [
+            ...defaultKeys,
+            {
+                title: 'Average CVR',
+                dataIndex: 'averageConvRate',
+                key: 'averageConvRate',
+                width: '90px',
+                render: (text) => (text && <span>{round(text, 2)}%</span>)
+            },
+            {
+                title: 'Clicks',
+                dataIndex: 'clicks',
+                key: 'clicks',
+                width: '80px'
+            },
+            {
+                title: 'Spend',
+                dataIndex: 'spend',
+                key: 'spend',
+                width: '70px',
+                render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>)
+            },
+            {
+                ...pauseKeywordsActionField
+            },
+            {
+                ...infoField
+            }
+        ]
+    };
 
     return (
         <div className="report-item-table">
@@ -329,6 +288,7 @@ const KeywordsOptimization = ({
 
             <CustomTable
                 onChangePagination={handlePaginationChange}
+                onChangeSorter={handleChangeSorter}
                 loading={loading}
                 dataSource={data}
                 columns={columns[activeTable]}

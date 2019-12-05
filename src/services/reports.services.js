@@ -18,11 +18,14 @@ function getAllReports({
                            dataSubType = 'changed-keyword-bid-acos',
                            startDate,
                            endDate,
+                           filteredColumns
                        }) {
     const parameters = [
         startDate ? `&start_date=${startDate}` : '',
-        endDate ? `&end_date=${endDate}` : ''
+        endDate ? `&end_date=${endDate}` : '',
     ];
+
+    Object.keys(filteredColumns).forEach(key => {filteredColumns[key] != null && parameters.push(`&${key}_filter=${filteredColumns[key]}`)});
 
     return api('get', `${reportsUrls.allReports}?product_id=${id}&page=${page}&size=${pageSize}&data_type=${dataType}&data_sub_type=${dataSubType}${parameters.join('')}`)
 }
