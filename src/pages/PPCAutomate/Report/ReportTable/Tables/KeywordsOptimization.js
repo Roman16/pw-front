@@ -1,5 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
+import {Input, Button, Icon} from 'antd';
+
 import TableButton from '../TableButton/TableButton';
 import {
     indexField,
@@ -10,11 +12,57 @@ import {
 } from './const';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
+import Table from '../../../../../components/Table/Table';
 
 const changedKeywordBidAcos = 'changed-keyword-bid-acos';
 const changedKeywordBidImpression = 'changed-keyword-bid-impressions';
 const pausedKeywordHighAcos = 'paused-keyword-high-acos';
 const pausedKeywordNoSales = 'paused-keyword-no-sales';
+
+const getColumnSearchProps = dataIndex => ({
+    filterDropdown: () => (
+        <div className='search-drop-down'>
+            <Input
+                // ref={node => {
+                //     this.searchInput = node;
+                // }}
+                placeholder={`Search ${dataIndex}`}
+                // value={selectedKeys[0]}
+                // onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                // onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+            />
+
+            <div className="buttons">
+                <button
+                    className="btn default"
+                    // onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                >
+                    Search
+                </button>
+                <button
+                    className="btn cancel"
+                    // onClick={() => this.handleReset(clearFilters)}
+                >
+                    Reset
+                </button>
+            </div>
+        </div>
+    ),
+    filterIcon: filtered => (
+        <Icon type="search" style={{color: filtered ? '#1890ff' : undefined}}/>
+    ),
+    onFilter: (value, record) =>
+        record[dataIndex]
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase()),
+    // onFilterDropdownVisibleChange: visible => {
+    //     if (visible) {
+    //         setTimeout(() => this.searchInput.select());
+    //     }
+    // },
+    render: text => text
+});
 
 const defaultKeys = [
     {
@@ -24,10 +72,11 @@ const defaultKeys = [
         ...dateField
     },
     {
-        title: 'Campaign',
+        title: "Campaign",
         dataIndex: 'campaign',
         key: 'campaign',
-        width: '180px'
+        width: '180px',
+        ...getColumnSearchProps('campaign')
     },
     {
         title: 'Ad Group',
@@ -61,7 +110,7 @@ const columns = {
             render: text => <span>{text && `${text}%`}</span>
         },
         {
-            title: (
+            title: () => (
                 <TitleInfo
                     title="Target ACoS"
                     info="The ACoS that our algorithm is aiming to reach your business goal."
@@ -228,6 +277,8 @@ const KeywordsOptimization = ({
         : 0;
 
     useEffect(() => changeTable(changedKeywordBidAcos), [productId, activeTab]);
+
+    console.log('start');
 
     return (
         <div className="report-item-table">

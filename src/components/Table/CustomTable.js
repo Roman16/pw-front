@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Pagination, Spin, Select} from 'antd';
+import {Pagination, Spin, Select, Menu, Dropdown, Icon} from 'antd';
 import shortid from 'shortid';
 
 import './CustomTable.less';
@@ -27,15 +27,33 @@ const CustomTable = ({
         >
             <div className="table-overflow">
                 <div className="table-head">
-                    {columns.map(item => (
-                        <div
-                            className="th"
-                            key={shortid.generate()}
-                            style={item.width ? {width: item.width} : {flex: 1}}
-                        >
-                            {typeof item.title === 'function' ? item.title() : item.title}
-                        </div>
-                    ))}
+                    {columns.map(item => {
+                        console.log(item);
+
+                        const menu = (
+                            <Menu>
+                                {item.filterIcon && item.filterDropdown()}
+                            </Menu>
+                        );
+
+                        return (
+                            <div
+                                className={`th ${item.filterIcon && 'filter-column'}`}
+                                key={shortid.generate()}
+                                style={item.width ? {width: item.width} : {flex: 1}}
+                            >
+                                {typeof item.title === 'function' ? item.title() : item.title}
+
+                                {item.filterIcon && (
+                                    <Dropdown overlay={menu} trigger={['contextMenu', 'click']} placement="bottomRight">
+                                        <a className="ant-dropdown-link" href="#">
+                                            {item.filterIcon()}
+                                        </a>
+                                    </Dropdown>
+                                )}
+                            </div>
+                        )
+                    })}
                 </div>
 
                 <div className="table-body">
@@ -43,7 +61,8 @@ const CustomTable = ({
                         dataSource &&
                         dataSource.length > 0 &&
                         dataSource.map(report => (
-                            <div className={`table-body__row ${rowClassName && rowClassName(report)}`} key={shortid.generate()}>
+                            <div className={`table-body__row ${rowClassName && rowClassName(report)}`}
+                                 key={shortid.generate()}>
                                 {columns.map(item => (
                                     <div
                                         className="table-body__field"
@@ -73,7 +92,8 @@ const CustomTable = ({
                         onChange={(page) => onChangePagination({page})}
                     />
 
-                    {showSizeChanger && <Select onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
+                    {showSizeChanger &&
+                    <Select onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
                         {pageSizeOptions.map(size => (
                             <Option value={size} key={size}>{size}</Option>
                         ))}
