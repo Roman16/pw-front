@@ -23,6 +23,7 @@ export const userUrls = {
     subscribe: (subscriptionId) => `user/account/subscription/${subscriptionId}/subscribe`,
     reactivate: (subscriptionId) => `user/account/subscription/${subscriptionId}/resume`,
     cancel: (subscriptionId) => `user/account/subscription/${subscriptionId}/cancel`,
+    updateStatus: 'user/account/subscription/all/update-preview',
 
 };
 

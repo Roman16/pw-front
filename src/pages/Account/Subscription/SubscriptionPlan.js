@@ -5,7 +5,6 @@ import reload from "../../../assets/img/icons/reload.svg";
 import ppcIcon from "../../../assets/img/icons/ppc-automate-icon.svg";
 import moment from "moment";
 import {numberMask} from "../../../utils/numberMask";
-import {round} from "../../../utils/round";
 
 const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe}) => {
     return (
@@ -53,8 +52,10 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
 
                         {product.next_charge_value == null || product.flat_amount == null || product.quantity == null ?
                             <div className="load-data">
-                                <div className='load-text'>We are loading your Amazon data. <br/>Come back in a few hours.</div>
-                                <Spin />
+                                <div className='load-text'>We are loading your Amazon data. <br/>Come back in a few
+                                    hours.
+                                </div>
+                                <Spin/>
                             </div>
                             :
                             <Fragment>
@@ -74,7 +75,8 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                         }
                     </div>
 
-                    {(product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) && <p className="plan-text">
+                    {(product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&
+                    <p className="plan-text">
                         Your Ad Spend: <span className="plan-data">$ {numberMask(product.quantity, 2) || 0}</span>
                     </p>}
                 </div>

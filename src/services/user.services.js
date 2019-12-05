@@ -29,7 +29,8 @@ export const userService = {
     reactivateSubscription,
     cancelSubscription,
     subscribe,
-    confirmPayment
+    confirmPayment,
+    updateSubscriptionStatus
 };
 
 function login(user) {
@@ -138,6 +139,10 @@ function reactivateSubscription(data) {
 
 function cancelSubscription(data) {
     return api('post', userUrls.cancel(data.subscriptionId),  data);
+}
+
+function updateSubscriptionStatus() {
+    return api('post', userUrls.updateStatus);
 }
 
 //-------------------------------------

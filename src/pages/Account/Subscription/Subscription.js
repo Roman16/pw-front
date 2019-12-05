@@ -14,6 +14,7 @@ import {userActions} from "../../../actions/user.actions";
 import {subscriptionProducts} from "../../../constans/subscription.products.name";
 
 const Subscription = () => {
+    let interval = null;
     const dispatch = useDispatch();
     const [openedReactivateWindow, openReactivateWindow] = useState(false);
     const [openedAccountWindow, openAccountWindow] = useState(false);
@@ -21,6 +22,9 @@ const Subscription = () => {
     const {subscriptions} = useSelector(state => ({
         subscriptions: state.user.subscriptions
     }));
+
+    const subscriptionProduct = subscriptions[subscriptionProducts[0].productId];
+
 
     function handleOpenAccountWindow(plan) {
         openAccountWindow(true);
@@ -76,9 +80,22 @@ const Subscription = () => {
         }
     }
 
+    async function handleUpdateSubscriptionStatus() {
+        if (subscriptionProduct) {
+            if (subscriptionProduct.next_charge_value !== null || subscriptionProduct.flat_amount !== null || subscriptionProduct.quantity !== null) {
+                clearInterval(interval);
+                return
+            }
+        }
+        await userService.updateSubscriptionStatus();
+        dispatch(userActions.getPersonalUserInfo());
+    }
 
     useEffect(() => {
         dispatch(userActions.getPersonalUserInfo());
+        userService.updateSubscriptionStatus();
+
+        interval = setInterval(handleUpdateSubscriptionStatus, 1000 * 60);
     }, []);
 
     return (
@@ -92,6 +109,7 @@ const Subscription = () => {
                     onOpenReactivateWindow={handleOpenReactivateWindow}
                     product={{...subscriptions[product.productId], ...product}}
                     onSubscribe={handleSubscribe}
+                    reloadData={handleUpdateSubscriptionStatus}
                 />
             ))}
 
