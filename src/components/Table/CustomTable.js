@@ -29,8 +29,8 @@ const CustomTable = ({
     function handleChangeSorterButton(column) {
 
         if (sorterColumn.key === column) {
-            if(sorterColumn.type === 'desc')  sortColumn({key: column, type: 'asc'});
-            if(sorterColumn.type === 'asc')  sortColumn({key: null, type: null});
+            if (sorterColumn.type === 'desc') sortColumn({key: column, type: 'asc'});
+            if (sorterColumn.type === 'asc') sortColumn({key: null, type: null});
 
         } else {
             sortColumn({
@@ -44,7 +44,7 @@ const CustomTable = ({
     }
 
     useEffect(() => {
-        onChangeSorter(sorterColumn);
+        onChangeSorter && onChangeSorter(sorterColumn);
     }, [sorterColumn]);
 
     console.log(sorterColumn);
@@ -74,8 +74,10 @@ const CustomTable = ({
                                     {typeof item.title === 'function' ? item.title() : item.title}
 
                                     {item.sorter && (<div className='sorter-buttons'>
-                                        <Icon type="caret-up" style={{color: `${sorterColumn.key === item.key && sorterColumn.type === 'asc' && "#1890ff"}`}}/>
-                                        <Icon type="caret-down" style={{color: `${sorterColumn.key === item.key && sorterColumn.type === 'desc' && "#1890ff"}`}}/>
+                                        <Icon type="caret-up"
+                                              style={{color: `${sorterColumn.key === item.key && sorterColumn.type === 'asc' && "#1890ff"}`}}/>
+                                        <Icon type="caret-down"
+                                              style={{color: `${sorterColumn.key === item.key && sorterColumn.type === 'desc' && "#1890ff"}`}}/>
                                     </div>)}
                                 </div>
 
@@ -113,7 +115,9 @@ const CustomTable = ({
                             </div>
                         ))
                     ) : (
-                        <Spin size="large"/>
+                        <div className='spin-wrap'>
+                            <Spin size="large"/>
+                        </div>
                     )}
                 </div>
             </div>

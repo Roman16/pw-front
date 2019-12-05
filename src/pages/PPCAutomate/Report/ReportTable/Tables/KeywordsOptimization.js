@@ -14,7 +14,7 @@ import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import {round} from "../../../../../utils/round";
 import {numberMask} from "../../../../../utils/numberMask";
-import {columnFilter} from './columnFilter';
+import {columnTextFilter, columnMenuFilter} from './columnFilter';
 
 const changedKeywordBidAcos = 'changed-keyword-bid-acos';
 const changedKeywordBidImpression = 'changed-keyword-bid-impressions';
@@ -68,7 +68,7 @@ const KeywordsOptimization = ({
             key: 'campaign',
             width: '180px',
             sorter: true,
-            ...columnFilter('campaign', onChangeFilter, filteredColumns['campaign'])
+            ...columnTextFilter('campaign', onChangeFilter, filteredColumns)
         },
         {
             title: 'Ad Group',
@@ -87,7 +87,8 @@ const KeywordsOptimization = ({
             dataIndex: 'matchType',
             key: 'matchType',
             width: '90px',
-            render: text => <span className="capitalize-field">{text}</span>
+            render: text => <span className="capitalize-field">{text}</span>,
+            ...columnMenuFilter('matchType', onChangeFilter, filteredColumns, ['exact', 'exact', 'exact'])
         }
     ];
 

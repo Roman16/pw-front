@@ -7,6 +7,8 @@
 
   .table-overflow {
     overflow: auto;
+    display: flex;
+    flex-direction: column;
 
     .table-head {
       min-width: fit-content;
@@ -63,6 +65,7 @@
           display: flex;
           justify-content: space-between;
           position: relative;
+          padding-right: 20px;
 
           .ant-dropdown-trigger {
             height: 100%;
@@ -150,11 +153,18 @@
         }
       }
 
-      .ant-spin-spinning {
-        font-size: 1rem; // 14px
+      .spin-wrap {
         width: 100%;
-        margin: 3.5714286em auto;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .ant-spin-spinning {
+          font-size: 1rem; // 14px
+        }
       }
+
 
       .anticon {
         color: #656a84;
