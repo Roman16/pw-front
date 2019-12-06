@@ -12,207 +12,12 @@ import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import {round} from "../../../../../utils/round";
 import {numberMask} from "../../../../../utils/numberMask";
+import {columnMenuFilter, columnNumberFilter, columnTextFilter} from "./columnFilter";
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
 const changedPATBidImpressions = 'changed-pat-bid-impressions';
 const pausedManualPATHighACoS = 'paused-manual-pat-high-acos';
 const pausedManualPatNoSales = 'paused-manual-pat-no-sales';
-
-const defaultKeys = [
-    {
-        ...indexField
-    },
-    {
-        ...dateField
-    },
-    {
-        title: 'Campaign',
-        dataIndex: 'campaign',
-        key: 'campaign',
-        width: '150px'
-    },
-    {
-        title: 'Ad Group',
-        dataIndex: 'adGroup',
-        key: 'adGroup',
-        width: '150px'
-    },
-    {
-        title: (
-            <TitleInfo
-                title="PAT type"
-                info="The type of Product Targeting. It can be a Manual or Auto."
-            />
-        ),
-        dataIndex: 'PatType',
-        key: 'PatType',
-        width: '100px',
-        render: text => <span className="capitalize-field">{text}</span>
-    },
-    {
-        ...patIntentField
-    },
-    {
-        title: 'PAT Value',
-        dataIndex: 'PatValue',
-        key: 'PatValue',
-        width: '132px'
-    }
-];
-
-const columns = {
-    [changedPATBidACoS]: [
-        ...defaultKeys,
-        {
-            title: 'ACoS',
-            dataIndex: 'acos',
-            key: 'acos',
-            width: '70px',
-            render: text => <span>{text && `${text}%`}</span>
-        },
-        {
-            title: (
-                <TitleInfo
-                    title="Target ACoS"
-                    info="The ACoS that our algorithm is aiming to reach your business goal."
-                />
-            ),
-            dataIndex: 'targetACoS',
-            key: 'targetACoS',
-            width: '80px',
-            render: text => <span>{text && `${text}%`}</span>
-        },
-        {
-            title: 'Clicks',
-            dataIndex: 'clicks',
-            key: 'clicks',
-            width: '70px',
-        },
-        {
-            title: 'Average CVR',
-            dataIndex: 'average_cvr',
-            key: 'average_cvr',
-            width: '120px',
-            render: (text) => (text &&  <span>{round(text, 2)}%</span>)
-        },
-        {
-            ...bidActionField
-        },
-        {
-            ...infoField
-        }
-    ],
-    [changedPATBidImpressions]: [
-        ...defaultKeys,
-        {
-            title: 'Impressions',
-            dataIndex: 'impressions',
-            key: 'impressions',
-            width: '100px'
-        },
-        {
-            title: (
-                <TitleInfo
-                    title={<span>Target Impressions</span>}
-                    info="The number of times your ads need to be displayed so you will get the click."
-                />
-            ),
-            dataIndex: 'targetImpressions',
-            key: 'targetImpressions',
-            width: '120px'
-        },
-        {
-            ...bidActionField
-        },
-        {
-            ...infoField
-        }
-    ],
-    [pausedManualPATHighACoS]: [
-        ...defaultKeys,
-        {
-            title: 'ACoS',
-            dataIndex: 'acos',
-            key: 'acos',
-            width: '60px',
-            render: text => <span>{text && `${text}%`}</span>
-        },
-        {
-            title: (
-                <TitleInfo
-                    title="Target ACoS"
-                    info="The ACoS that our algorithm is aiming to reach your business goal."
-                />
-            ),
-            dataIndex: 'targetACoS',
-            key: 'targetACoS',
-            width: '90px',
-            render: text => <span>{text && `${text}%`}</span>
-        },
-        {
-            title: 'Clicks',
-            dataIndex: 'clicks',
-            key: 'clicks',
-            width: '70px',
-        },
-        {
-            title: 'Spend',
-            dataIndex: 'spend',
-            key: 'spend',
-            width: '70px',
-            render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>)
-        },
-        {
-            title: 'Sales',
-            dataIndex: 'sales',
-            key: 'sales',
-            width: '70px',
-            render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>)
-        },
-        {
-            title: 'Average CVR',
-            dataIndex: 'average_cvr',
-            key: 'average_cvr',
-            width: '120px',
-            render: (text) => (text &&  <span>{round(text, 2)}%</span>)
-        },
-        {
-            ...pausePatActionField
-        },
-        {
-            ...infoField
-        }
-    ],
-    [pausedManualPatNoSales]: [
-        ...defaultKeys,
-        {
-            title: 'Average CVR',
-            dataIndex: 'averageConvRate',
-            key: 'averageConvRate',
-            width: '90px',
-            render: (text) => (text &&  <span>{round(text, 2)}%</span>)
-        },
-        {
-            title: 'Clicks',
-            dataIndex: 'clicks',
-            key: 'clicks',
-            width: '70px'
-        },
-        {
-            title: 'Spend',
-            dataIndex: 'spend',
-            key: 'spend',
-            width: '70px',
-            render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>)
-        },
-        {
-            ...pausePatActionField
-        },
-        {
-            ...infoField
-        }
-    ]
-};
 
 const PATsOptimization = ({
                               data,
@@ -222,7 +27,11 @@ const PATsOptimization = ({
                               totalSize,
                               handlePaginationChange,
                               scroll,
-                              pageSize
+                              pageSize,
+                              onChangeFilter,
+                              filteredColumns,
+                              handleChangeSorter,
+                              sorterColumn
                           }) => {
     const [activeTable, changeTable] = useState(changedPATBidACoS);
     const {count, loading, productId} = useSelector(state => ({
@@ -243,6 +52,244 @@ const PATsOptimization = ({
         : 0;
 
     useEffect(() => changeTable(changedPATBidACoS), [productId, activeTab]);
+
+
+    const defaultKeys = [
+        {
+            ...indexField(currentPage)
+        },
+        {
+            ...dateField
+        },
+        {
+            title: 'Campaign',
+            dataIndex: 'd_campaignName',
+            key: 'd_campaignName',
+            width: '150px',
+            sorter: true,
+            ...columnTextFilter( onChangeFilter, filteredColumns)
+        },
+        {
+            title: 'Ad Group',
+            dataIndex: 'd_adGroupId',
+            key: 'd_adGroupId',
+            width: '150px',
+            sorter: true,
+            ...columnTextFilter( onChangeFilter, filteredColumns)
+        },
+        {
+            title: (
+                <TitleInfo
+                    title="PAT type"
+                    info="The type of Product Targeting. It can be a Manual or Auto."
+                />
+            ),
+            dataIndex: 'd_patType',
+            key: 'd_patType',
+            width: '100px',
+            render: text => <span className="capitalize-field">{text}</span>,
+            sorter: true,
+            ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
+        },
+        {
+            ...patIntentField,
+            width: '120px',
+            sorter: true,
+            ...columnMenuFilter(onChangeFilter, filteredColumns, ['asin'])
+        },
+        {
+            title: 'PAT Value',
+            dataIndex: 'd_patValue',
+            key: 'd_patValue',
+            width: '132px',
+            sorter: true,
+            ...columnTextFilter( onChangeFilter, filteredColumns)
+        }
+    ];
+
+    const columns = {
+        [changedPATBidACoS]: [
+            ...defaultKeys,
+            {
+                title: 'ACoS',
+                dataIndex: 'd_patACoS',
+                key: 'd_patACoS',
+                width: '90px',
+                render: text => <span>{text && `${round(+text, 2)}%`}</span>,
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: (
+                    <TitleInfo
+                        title="Target ACoS"
+                        info="The ACoS that our algorithm is aiming to reach your business goal."
+                    />
+                ),
+                dataIndex: 'd_targetACoSCalculation_d_targetACoS',
+                key: 'd_targetACoSCalculation_d_targetACoS',
+                width: '110px',
+                render: text => <span>{text && `${round(+text, 2)}%`}</span>,
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Clicks',
+                dataIndex: 'd_patClicks',
+                key: 'd_patClicks',
+                width: '90px',
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Average CVR',
+                dataIndex: 'd_averageConversionRate',
+                key: 'd_averageConversionRate',
+                width: '100px',
+                render: (text) => (text &&  <span>{round(text, 2)}%</span>),
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                ...bidActionField
+            },
+            {
+                ...infoField
+            }
+        ],
+        [changedPATBidImpressions]: [
+            ...defaultKeys,
+            {
+                title: 'Impressions',
+                dataIndex: 'd_patImpressions',
+                key: 'd_patImpressions',
+                width: '130px',
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: (
+                    <TitleInfo
+                        title="Target Impressions"
+                        info="The number of times your ads need to be displayed so you will get the click."
+                    />
+                ),
+                dataIndex: 'd_targetImpressions',
+                key: 'd_targetImpressions',
+                width: '150px',
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                ...bidActionField
+            },
+            {
+                ...infoField
+            }
+        ],
+        [pausedManualPATHighACoS]: [
+            ...defaultKeys,
+            {
+                title: 'ACoS',
+                dataIndex: 'd_patACoS',
+                key: 'd_patACoS',
+                width: '90px',
+                render: text => <span>{text && `${round(+text, 2)}%`}</span>,
+                 sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: (
+                    <TitleInfo
+                        title="Target ACoS"
+                        info="The ACoS that our algorithm is aiming to reach your business goal."
+                    />
+                ),
+                dataIndex: 'd_targetACoSCalculation_d_targetACoS',
+                key: 'd_targetACoSCalculation_d_targetACoS',
+                width: '110px',
+                render: text => <span>{text && `${text}%`}</span>,
+                 sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Clicks',
+                dataIndex: 'd_patClicks',
+                key: 'd_patClicks',
+                width: '90px',
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Spend',
+                dataIndex: 'd_patSpend',
+                key: 'd_patSpend',
+                width: '90px',
+                render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
+                 sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Sales',
+                dataIndex: 'd_patSales',
+                key: 'd_patSales',
+                width: '90px',
+                render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
+                 sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Average CVR',
+                dataIndex: 'd_averageConversionRate',
+                key: 'd_averageConversionRate',
+                width: '100px',
+                render: (text) => (text &&  <span>{round(text, 2)}%</span>),
+                 sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                ...pausePatActionField
+            },
+            {
+                ...infoField
+            }
+        ],
+        [pausedManualPatNoSales]: [
+            ...defaultKeys,
+            {
+                title: 'Average CVR',
+                dataIndex: 'd_averageConversionRate',
+                key: 'd_averageConversionRate',
+                render: (text) => (text &&  <span>{round(text, 2)}%</span>),
+                 sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Clicks',
+                dataIndex: 'd_patClicks',
+                key: 'd_patClicks',
+                width: '90px',
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Spend',
+                dataIndex: 'd_patSpend',
+                key: 'd_patSpend',
+                width: '90px',
+                render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
+                 sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                ...pausePatActionField
+            },
+            {
+                ...infoField
+            }
+        ]
+    };
+
 
     return (
         <div className="report-item-table">
@@ -295,6 +342,8 @@ const PATsOptimization = ({
                 heightTabBtn={heightTabBtn}
                 showSizeChanger={true}
                 pageSize={pageSize}
+                sorterColumn={sorterColumn}
+                onChangeSorter={handleChangeSorter}
             />
         </div>
     );

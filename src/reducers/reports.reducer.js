@@ -64,6 +64,7 @@ export function reports(state = initialState, action) {
             return {
                 ...state,
                 ...action.payload,
+                totalSize: action.payload.total_size,
                 loading: false
             };
 

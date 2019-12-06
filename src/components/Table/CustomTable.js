@@ -1,5 +1,5 @@
-import React, {Fragment} from 'react';
-import {Pagination, Spin, Select} from 'antd';
+import React, {useState, useEffect} from 'react';
+import {Pagination, Spin, Select, Menu, Dropdown, Icon} from 'antd';
 import shortid from 'shortid';
 
 import './CustomTable.less';
@@ -18,8 +18,11 @@ const CustomTable = ({
                          heightTabBtn,
                          pageSize,
                          showSizeChanger = false,
-                         rowClassName
+                         rowClassName,
+                         onChangeSorter,
+                         sorterColumn
                      }) => {
+
     return (
         <div
             className="custom-table"
@@ -27,38 +30,69 @@ const CustomTable = ({
         >
             <div className="table-overflow">
                 <div className="table-head">
-                    {columns.map(item => (
-                        <div
-                            className="th"
-                            key={shortid.generate()}
-                            style={item.width ? {width: item.width} : {flex: 1}}
-                        >
-                            {typeof item.title === 'function' ? item.title() : item.title}
-                        </div>
-                    ))}
+                    {columns.map(item => {
+                        const menu = (
+                            <Menu>
+                                {item.filterIcon && item.filterDropdown(item.key)}
+                            </Menu>
+                        );
+
+                        return (
+                            <div
+                                className={`th ${item.filterIcon && 'filter-column'} ${item.sorter && 'sorter-column'}`}
+                                key={item.key}
+                                style={item.width ? {width: item.width} : {flex: 1}}
+                                onClick={() => item.sorter && onChangeSorter(item.key)}
+                            >
+                                <div className='title'>
+                                    {typeof item.title === 'function' ? item.title() : item.title}
+
+                                    {item.sorter && (<div className='sorter-buttons'>
+                                        <Icon type="caret-up"
+                                              style={{color: `${(sorterColumn && sorterColumn.key === item.key && sorterColumn.type === 'asc') ? "#1890ff" : ""}`}}/>
+                                        <Icon type="caret-down"
+                                              style={{color: `${(sorterColumn && sorterColumn.key === item.key && sorterColumn.type === 'desc') ? "#1890ff" : ""}`}}/>
+                                    </div>)}
+                                </div>
+
+                                {(item.filterIcon && (
+                                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight"
+                                              onClick={(e) => e.stopPropagation()}>
+                                        <a className="ant-dropdown-link" href="#">
+                                            {item.filterIcon()}
+                                        </a>
+                                    </Dropdown>
+                                ))
+                                }
+                            </div>
+                        )
+                    })}
                 </div>
 
                 <div className="table-body">
                     {!loading ? (
                         dataSource &&
                         dataSource.length > 0 &&
-                        dataSource.map(report => (
-                            <div className={`table-body__row ${rowClassName && rowClassName(report)}`} key={shortid.generate()}>
-                                {columns.map(item => (
+                        dataSource.map((report, index) => (
+                            <div className={`table-body__row ${rowClassName && rowClassName(report)}`}
+                                 key={report.id}>
+                                {columns.map((item) => (
                                     <div
                                         className="table-body__field"
                                         style={item.width ? {width: item.width} : {flex: 1}}
                                         key={shortid.generate()}
                                     >
                                         {item.render
-                                            ? item.render(report[item.key], report)
+                                            ? item.render(report[item.key], report, index)
                                             : report[item.key]}
                                     </div>
                                 ))}
                             </div>
                         ))
                     ) : (
-                        <Spin size="large"/>
+                        <div className='spin-wrap'>
+                            <Spin size="large"/>
+                        </div>
                     )}
                 </div>
             </div>
@@ -73,7 +107,8 @@ const CustomTable = ({
                         onChange={(page) => onChangePagination({page})}
                     />
 
-                    {showSizeChanger && <Select onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
+                    {showSizeChanger &&
+                    <Select onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
                         {pageSizeOptions.map(size => (
                             <Option value={size} key={size}>{size}</Option>
                         ))}
