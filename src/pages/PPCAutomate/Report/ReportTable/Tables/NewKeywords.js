@@ -6,245 +6,13 @@ import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {numberMask} from "../../../../../utils/numberMask";
+import {columnTextFilter, columnNumberFilter, columnMenuFilter} from "./columnFilter";
 
 const createdCampaign = 'created-campaign';
 const createdAdGroup = 'created-ad-group';
 const createdProductAd = 'created-product-ad';
 const createdCrossNegativeKeyword = 'created-cross-negative-keyword';
 const createdKeywordCST = 'created-keyword-cst';
-
-const defaultKeys = [
-    {
-        ...indexField
-    },
-    {
-        ...dateField
-    }
-];
-
-const columns = {
-    [createdCampaign]: [
-        ...defaultKeys,
-        {
-            title: 'Campaign',
-            dataIndex: 'campaign',
-            key: 'campaign',
-            width: '350px'
-        },
-        {
-            title: 'Campaign Targeting Type',
-            dataIndex: 'campaignTargetingType',
-            key: 'campaignTargetingType',
-            width: '180px'
-        },
-        {
-            title: 'Daily Budget',
-            dataIndex: 'dailyBudget',
-            key: 'dailyBudget',
-            render: text => (text != null && <span>{`$${numberMask(text)}`}</span>),
-            width: '100px'
-        },
-        {
-            title: 'Start Date.',
-            dataIndex: 'startDate',
-            key: 'startDate',
-            render: text => moment(text).format('YYYY-MM-DD'),
-            width: '110px'
-        },
-        {
-            ...createdKeywordsActionField
-        },
-        {
-            ...infoField
-        }
-    ],
-    [createdAdGroup]: [
-        ...defaultKeys,
-        {
-            title: 'Campaign',
-            dataIndex: 'campaign',
-            key: 'campaign',
-            width: '300px'
-        },
-        {
-            title: 'Ad Group',
-            dataIndex: 'adGroup',
-            key: 'adGroup',
-            width: '300px'
-        },
-        {
-            title: 'Default Bid',
-            dataIndex: 'defaultBid',
-            key: 'defaultBid',
-            render: text =>  (text != null && <span>{`$${numberMask(text, 2)}`}</span>),
-            width: '90px'
-        },
-        {
-            ...createdKeywordsActionField
-        },
-        {
-            ...infoField
-        }
-    ],
-    [createdProductAd]: [
-        ...defaultKeys,
-        {
-            title: 'Campaign',
-            dataIndex: 'campaign',
-            key: 'campaign',
-            width: '300px'
-        },
-        {
-            title: 'Ad Group',
-            dataIndex: 'adGroup',
-            key: 'adGroup',
-            width: '300px'
-        },
-        {
-            title: 'ASIN',
-            dataIndex: 'asin',
-            key: 'asin',
-            width: '120px'
-        },
-        {
-            title: 'SKU',
-            dataIndex: 'sku',
-            key: 'sku',
-            width: '120px'
-        },
-        {
-            title: 'Action',
-            dataIndex: 'action',
-            key: 'action',
-            width: '180px',
-            className: 'left-border',
-            render: () => <div className="action-field">Created</div>
-        },
-        {
-            ...infoField
-        }
-    ],
-    [createdCrossNegativeKeyword]: [
-        ...defaultKeys,
-        {
-            title: 'Campaign',
-            dataIndex: 'campaign',
-            key: 'campaign',
-            width: '300px'
-        },
-        {
-            title: 'Ad Group',
-            dataIndex: 'adGroup',
-            key: 'adGroup',
-            width: '300px'
-        },
-        {
-            title: 'Keyword',
-            dataIndex: 'keyword',
-            key: 'keyword',
-            width: '320px'
-        },
-        {
-            title: 'Match Type',
-            dataIndex: 'match_type',
-            key: 'match_type',
-            width: '100px'
-        },
-        {
-            ...createdKeywordsActionField
-        },
-        {
-            ...infoField
-        }
-    ],
-    [createdKeywordCST]: [
-        ...defaultKeys,
-        {
-            title: 'Campaign',
-            dataIndex: 'campaign',
-            key: 'campaign',
-            width: '160px'
-        },
-        {
-            title: 'Ad Group',
-            dataIndex: 'adGroup',
-            key: 'adGroup',
-            width: '160px'
-        },
-        {
-            title: 'Keyword',
-            dataIndex: 'keyword',
-            key: 'keyword',
-            width: '170px'
-        },
-        {
-            title: 'Match Type',
-            dataIndex: 'matchType',
-            key: 'matchType',
-            width: '90px'
-        },
-        {
-            title: 'Bid',
-            dataIndex: 'bid',
-            key: 'bid',
-            width: '70px',
-            render: text => (text != null && <span>${numberMask(text, 2)}</span>),
-        },
-        {
-            title: (
-                <TitleInfo
-                    title="CST Clicks"
-                    info="It displays the number of clicks of certain customer search-term."
-                />
-            ),
-            dataIndex: 'CSTClicks',
-            key: 'CSTClicks',
-            width: '110px'
-        },
-        {
-            title: (
-                <TitleInfo
-                    title="CST ACoS"
-                    info="It displays the ACoS of certain customer search-term from your ad reports. "
-                />
-            ),
-            dataIndex: 'CSTACoS',
-            key: 'CSTACoS',
-            render: text => <span>{text && `${text}%`}</span>,
-            width: '110px'
-        },
-        {
-            title: (
-                <TitleInfo
-                    title="CST CPC"
-                    info="It displays the cost per click of certain customer search-term."
-                />
-            ),
-            dataIndex: 'CSTCPC',
-            key: 'CSTCPC',
-            render: text => (text != null && <span>${numberMask(text, 2)}</span>),
-            width: '100px'
-        },
-        {
-            title: 'Target ACoS',
-            dataIndex: 'targetACoS',
-            key: 'targetACoS',
-            render: text => <span>{text && `${text}%`}</span>,
-            width: '100px'
-        },
-        {
-            title: 'Action',
-            dataIndex: 'action',
-            key: 'action',
-            width: '70px',
-            className: 'left-border',
-            render: () => <div className="action-field">Created</div>
-        },
-        {
-            ...infoField
-        }
-    ]
-};
 
 const NewKeywords = ({
                          data,
@@ -254,7 +22,11 @@ const NewKeywords = ({
                          totalSize,
                          handlePaginationChange,
                          scroll,
-                         pageSize
+                         pageSize,
+                         onChangeFilter,
+                         filteredColumns,
+                         handleChangeSorter,
+                         sorterColumn
                      }) => {
     const [activeTable, changeTable] = useState(createdCampaign);
     const {count, loading, productId} = useSelector(state => ({
@@ -275,6 +47,285 @@ const NewKeywords = ({
         : 0;
 
     useEffect(() => changeTable(createdCampaign), [productId, activeTab]);
+
+
+    const defaultKeys = [
+        {
+            ...indexField(currentPage)
+        },
+        {
+            ...dateField
+        }
+    ];
+
+    const columns = {
+        [createdCampaign]: [
+            ...defaultKeys,
+            {
+                title: 'Campaign',
+                dataIndex: 'd_campaignName',
+                key: 'd_campaignName',
+                width: '350px',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Campaign Targeting Type',
+                dataIndex: 'd_campaignTargetingType',
+                key: 'd_campaignTargetingType',
+                sorter: true,
+                ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
+            },
+            {
+                title: 'Daily Budget',
+                dataIndex: 'd_dailyBudget',
+                key: 'd_dailyBudget',
+                render: text => (text != null && <span>{`$${numberMask(text)}`}</span>),
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Start Date.',
+                dataIndex: 'd_startDate',
+                key: 'd_startDate',
+                render: text => moment(text).format('YYYY-MM-DD'),
+                sorter: true,
+            },
+            {
+                ...createdKeywordsActionField
+            },
+            {
+                ...infoField
+            }
+        ],
+        [createdAdGroup]: [
+            ...defaultKeys,
+            {
+                title: 'Campaign',
+                dataIndex: 'd_campaignName',
+                key: 'd_campaignName',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Ad Group',
+                dataIndex: 'd_adGroupId',
+                key: 'd_adGroupId',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Default Bid',
+                dataIndex: 'd_defaultBid',
+                key: 'd_defaultBid',
+                width: '20%',
+                render: text => (text != null && <span>{`$${numberMask(text, 2)}`}</span>),
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                ...createdKeywordsActionField
+            },
+            {
+                ...infoField
+            }
+        ],
+        [createdProductAd]: [
+            ...defaultKeys,
+            {
+                title: 'Campaign',
+                dataIndex: 'd_campaignName',
+                key: 'd_campaignName',
+                width: '300px',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Ad Group',
+                dataIndex: 'd_adGroupId',
+                key: 'd_adGroupId',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'ASIN',
+                dataIndex: 'd_asin',
+                key: 'd_asin',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'SKU',
+                dataIndex: 'd_sku',
+                key: 'd_sku',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Action',
+                dataIndex: 'action',
+                key: 'action',
+                width: '100px',
+                className: 'left-border',
+                render: () => <div className="action-field">Created</div>
+            },
+            {
+                ...infoField
+            }
+        ],
+        [createdCrossNegativeKeyword]: [
+            ...defaultKeys,
+            {
+                title: 'Campaign',
+                dataIndex: 'd_campaignName',
+                key: 'd_campaignName',
+                width: '300px',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Ad Group',
+                dataIndex: 'd_adGroupId',
+                key: 'd_adGroupId',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Keyword',
+                dataIndex: 'd_keywordText',
+                key: 'd_keywordText',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Match Type',
+                dataIndex: 'd_keywordMatchType',
+                key: 'd_keywordMatchType',
+                width: '200px',
+                sorter: true,
+                ...columnMenuFilter(onChangeFilter, filteredColumns, ['exact', 'exact', 'exact'])
+
+            },
+            {
+                ...createdKeywordsActionField
+            },
+            {
+                ...infoField
+            }
+        ],
+        [createdKeywordCST]: [
+            ...defaultKeys,
+            {
+                title: 'Campaign',
+                dataIndex: 'd_campaignName',
+                key: 'd_campaignName',
+                width: '160px',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Ad Group',
+                dataIndex: 'd_adGroupId',
+                key: 'd_adGroupId',
+                width: '160px',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Keyword',
+                dataIndex: 'd_keywordText',
+                key: 'd_keywordText',
+                width: '170px',
+                sorter: true,
+                ...columnTextFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Match Type',
+                dataIndex: 'd_keywordMatchType',
+                key: 'd_keywordMatchType',
+                width: '90px',
+                sorter: true,
+                ...columnMenuFilter(onChangeFilter, filteredColumns, ['exact', 'exact', 'exact'])
+            },
+            {
+                title: 'Bid',
+                dataIndex: 'd_bid',
+                key: 'd_bid',
+                width: '70px',
+                render: text => (text != null && <span>${numberMask(text, 2)}</span>),
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+
+            },
+            {
+                title: (
+                    <TitleInfo
+                        title="CST Clicks"
+                        info="It displays the number of clicks of certain customer search-term."
+                    />
+                ),
+                dataIndex: 'd_customerSearchTermClicks',
+                key: 'd_customerSearchTermClicks',
+                width: '110px',
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: (
+                    <TitleInfo
+                        title="CST ACoS"
+                        info="It displays the ACoS of certain customer search-term from your ad reports. "
+                    />
+                ),
+                dataIndex: 'd_customerSearchTermACoS',
+                key: 'd_customerSearchTermACoS',
+                render: text => <span>{text && `${text}%`}</span>,
+                width: '110px',
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: (
+                    <TitleInfo
+                        title="CST CPC"
+                        info="It displays the cost per click of certain customer search-term."
+                    />
+                ),
+                dataIndex: 'd_customerSearchTermCPC',
+                key: 'd_customerSearchTermCPC',
+                render: text => (text != null && <span>${numberMask(text, 2)}</span>),
+                width: '100px',
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: (
+                    <TitleInfo
+                        title="Target ACoS"
+                        info="The ACoS that our algorithm is aiming to reach your business goal."
+                    />
+                ),
+                dataIndex: 'd_targetACoSCalculation_d_targetACoS',
+                key: 'd_targetACoSCalculation_d_targetACoS',
+                render: text => <span>{text && `${text}%`}</span>,
+                width: '110px',
+                sorter: true,
+                ...columnNumberFilter(onChangeFilter, filteredColumns)
+            },
+            {
+                title: 'Action',
+                dataIndex: 'action',
+                key: 'action',
+                width: '70px',
+                className: 'left-border',
+                render: () => <div className="action-field">Created</div>
+            },
+            {
+                ...infoField
+            }
+        ]
+    };
+
 
     return (
         <div className="report-item-table">
@@ -336,6 +387,8 @@ const NewKeywords = ({
                 heightTabBtn={heightTabBtn}
                 showSizeChanger={true}
                 pageSize={pageSize}
+                sorterColumn={sorterColumn}
+                onChangeSorter={handleChangeSorter}
             />
         </div>
     );

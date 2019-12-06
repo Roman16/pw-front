@@ -1,7 +1,9 @@
 import React, {useState} from "react";
-import {Icon, Input, Radio} from "antd";
+import {Icon, Input, Menu, Checkbox, Select} from "antd";
 
-let searchInput = null;
+const Option = Select.Option;
+const CheckboxGroup = Checkbox.Group;
+
 
 const radioStyle = {
     display: 'block',
@@ -9,29 +11,31 @@ const radioStyle = {
     lineHeight: '30px',
 };
 
-export const columnTextFilter = (dataIndex, handleSearch, filteredColumns) => {
+export const columnTextFilter = (handleSearch, filteredColumns) => {
+    let searchInput = null;
+
     return ({
-        filterDropdown: () => (
+        filterDropdown: (dataIndex) => (
             <div className='search-drop-down' onClick={(e) => e.stopPropagation()}>
                 <Input
                     ref={node => {
                         searchInput = node;
                     }}
-                    placeholder={`Search ${dataIndex}`}
+                    // placeholder={`Search ${dataIndex}`}
                     defaultValue={filteredColumns[dataIndex]}
                     onPressEnter={() => handleSearch(dataIndex, searchInput.input.value)}
                 />
 
                 <div className="buttons">
-                    <button
-                        className="btn cancel"
-                        onClick={() => {
-                            searchInput.handleReset();
-                            handleSearch(dataIndex, null)
-                        }}
-                    >
-                        Reset
-                    </button>
+                    {/*<button*/}
+                    {/*    className="btn cancel"*/}
+                    {/*    onClick={() => {*/}
+                    {/*        searchInput.handleReset();*/}
+                    {/*        handleSearch(dataIndex, null)*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    Reset*/}
+                    {/*</button>*/}
 
                     <button
                         className="btn default"
@@ -49,35 +53,97 @@ export const columnTextFilter = (dataIndex, handleSearch, filteredColumns) => {
 };
 
 
-export const columnMenuFilter = (dataIndex, handleSearch, filteredColumns, menu) => {
+export const columnMenuFilter = (handleSearch, filteredColumns, menu) => {
+    let searchInput = null;
+    let groupRef = null;
+
     return ({
-        filterDropdown: () => (
+        filterDropdown: (dataIndex) => (
             <div className='search-drop-down' onClick={(e) => e.stopPropagation()}>
-                <Radio.Group
-                    // onChange={this.onChange}
-                    // value={this.state.value}
-                >
-                    {menu.map(item => (
-                        <Radio style={radioStyle} value={item}>
-                            {item}
-                        </Radio>
-                    ))}
-                </Radio.Group>
+                <CheckboxGroup
+                    ref={node => {
+                        groupRef = node;
+                    }}
+                    options={menu}
+                    onChange={(list) => searchInput = list}
+                />
 
                 <div className="buttons">
-                    <button
-                        className="btn cancel"
-                        onClick={() => {
-                            searchInput.handleReset();
-                            handleSearch(dataIndex, null)
-                        }}
-                    >
-                        Reset
-                    </button>
+                    {/*<button*/}
+                    {/*    className="btn cancel"*/}
+                    {/*    onClick={() => {*/}
+                    {/*        console.log(groupRef);*/}
+                    {/*        groupRef.updater.enqueueReplaceState();*/}
+                    {/*        handleSearch(dataIndex, null)*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    Reset*/}
+                    {/*</button>*/}
 
                     <button
                         className="btn default"
-                        onClick={() => handleSearch(dataIndex, searchInput.input.value)}
+                        onClick={() => {
+                            handleSearch(dataIndex, searchInput)
+                        }}
+                    >
+                        Search
+                    </button>
+                </div>
+            </div>
+        ),
+        filterIcon: filtered => (
+            <Icon type="filter" style={{color: filtered ? '#1890ff' : undefined}}/>
+        ),
+    })
+};
+
+export const columnNumberFilter = (handleSearch, filteredColumns) => {
+    let searchType = 'eq',
+        searchValue = null;
+
+    return ({
+        filterDropdown: (dataIndex) => (
+            <div className='search-drop-down' onClick={(e) => e.stopPropagation()}>
+                <Select
+                    onChange={(e) => searchType = e}
+                    defaultValue={filteredColumns[dataIndex] && filteredColumns[dataIndex].type || 'eq'}
+                >
+                    <Option value={'eq'}> {'='} </Option>
+                    <Option value={'neq'}> {'!='} </Option>
+                    <Option value={'gt'}> {'>'} </Option>
+                    <Option value={'lt'}> {'<'} </Option>
+                    <Option value={'gte'}> {'>='} </Option>
+                    <Option value={'lte'}> {'<='} </Option>
+                </Select>
+
+                <Input
+                    ref={node => {
+                        searchValue = node;
+                    }}
+                    defaultValue={filteredColumns[dataIndex] && filteredColumns[dataIndex].value}
+                    onPressEnter={() => handleSearch(dataIndex, {
+                        type: searchType,
+                        value: searchValue.input.value
+                    }, 'number')}
+                />
+
+                <div className="buttons">
+                    {/*<button*/}
+                    {/*    className="btn cancel"*/}
+                    {/*    onClick={() => {*/}
+                    {/*        searchValue.handleReset();*/}
+                    {/*        handleSearch(dataIndex, null)*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    Reset*/}
+                    {/*</button>*/}
+
+                    <button
+                        className="btn default"
+                        onClick={() => handleSearch(dataIndex, {
+                            type: searchType,
+                            value: searchValue.input.value
+                        }, 'number')}
                     >
                         Search
                     </button>

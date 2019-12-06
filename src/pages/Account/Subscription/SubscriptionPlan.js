@@ -37,7 +37,7 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                         <h2 className="ppc-title">{product.productName}</h2>
                     </div>
                     <p className="ppc-text">
-                        Access and edit your accounts <br/> Profit Whales subscription
+                        Access and edit your account's <br/> Profit Whales subscription
                     </p>
                     <p className="ppc-link-wrap">
                         To view your invoices, see&nbsp;

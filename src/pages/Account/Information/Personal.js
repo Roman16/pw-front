@@ -75,8 +75,8 @@ const Personal = () => {
 
             <div className="personal-information">
                 <div className="description">
-                    <h3>Your Personal Information</h3>
-                    <p>Upload your photo and paste the relevant information</p>
+                    <h3>General Information</h3>
+                    <p>Change your avatar and keep your personal information up-to-date</p>
                 </div>
 
                 <div className="active-only">

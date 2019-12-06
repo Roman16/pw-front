@@ -52,7 +52,8 @@ const tabsItem = [
             pageSize,
             onChangeFilter,
             filteredColumns,
-            handleChangeSorter
+            handleChangeSorter,
+            sorterColumn
         ) => (
             <KeywordsOptimization
                 onChangeSubTab={onChangeSubTab}
@@ -65,6 +66,7 @@ const tabsItem = [
                 onChangeFilter={onChangeFilter}
                 filteredColumns={filteredColumns}
                 handleChangeSorter={handleChangeSorter}
+                sorterColumn={sorterColumn}
             />
         )
     },
@@ -81,7 +83,8 @@ const tabsItem = [
             pageSize,
             onChangeFilter,
             filteredColumns,
-            handleChangeSorter
+            handleChangeSorter,
+            sorterColumn
         ) => (
             <PATsOptimization
                 onChangeSubTab={onChangeSubTab}
@@ -94,6 +97,7 @@ const tabsItem = [
                 onChangeFilter={onChangeFilter}
                 filteredColumns={filteredColumns}
                 handleChangeSorter={handleChangeSorter}
+                sorterColumn={sorterColumn}
             />
         )
     },
@@ -110,7 +114,8 @@ const tabsItem = [
             pageSize,
             onChangeFilter,
             filteredColumns,
-            handleChangeSorter
+            handleChangeSorter,
+            sorterColumn
         ) => (
             <NewKeywords
                 onChangeSubTab={onChangeSubTab}
@@ -123,6 +128,7 @@ const tabsItem = [
                 onChangeFilter={onChangeFilter}
                 filteredColumns={filteredColumns}
                 handleChangeSorter={handleChangeSorter}
+                sorterColumn={sorterColumn}
             />
         )
     },
@@ -139,7 +145,8 @@ const tabsItem = [
             pageSize,
             onChangeFilter,
             filteredColumns,
-            handleChangeSorter
+            handleChangeSorter,
+            sorterColumn
         ) => (
             <NewNegativeKeywords
                 onChangeSubTab={onChangeSubTab}
@@ -152,6 +159,7 @@ const tabsItem = [
                 onChangeFilter={onChangeFilter}
                 filteredColumns={filteredColumns}
                 handleChangeSorter={handleChangeSorter}
+                sorterColumn={sorterColumn}
             />
         )
     },
@@ -168,7 +176,8 @@ const tabsItem = [
             pageSize,
             onChangeFilter,
             filteredColumns,
-            handleChangeSorter
+            handleChangeSorter,
+            sorterColumn
         ) => (
             <NewPats
                 onChangeSubTab={onChangeSubTab}
@@ -181,6 +190,7 @@ const tabsItem = [
                 onChangeFilter={onChangeFilter}
                 filteredColumns={filteredColumns}
                 handleChangeSorter={handleChangeSorter}
+                sorterColumn={sorterColumn}
             />
         )
     },
@@ -197,7 +207,8 @@ const tabsItem = [
             pageSize,
             onChangeFilter,
             filteredColumns,
-            handleChangeSorter
+            handleChangeSorter,
+            sorterColumn
         ) => (
             <NewNegativePats
                 onChangeSubTab={onChangeSubTab}
@@ -210,6 +221,7 @@ const tabsItem = [
                 onChangeFilter={onChangeFilter}
                 filteredColumns={filteredColumns}
                 handleChangeSorter={handleChangeSorter}
+                sorterColumn={sorterColumn}
             />
         )
     }
@@ -224,6 +236,10 @@ class ReportTable extends Component {
         activeTab: "keywords-optimization",
         activeSubTab: "changed-keyword-bid-acos",
         filteredColumns: {},
+        sorterColumn: {
+            key: null,
+            type: null
+        },
         updateSize: {
             "keywords-optimization": 0,
             "pats-optimization": 0,
@@ -253,6 +269,24 @@ class ReportTable extends Component {
         window.open(url);
     };
 
+    fetchReports = () => {
+        const {activeTab, activeSubTab, startDate, endDate, page, pageSize, filteredColumns, sorterColumn} = this.state,
+            {selectedAll, selectedProductId} = this.props;
+
+        this.props.getReports({
+            id: selectedAll ? "all" : selectedProductId,
+            dataType: activeTab,
+            dataSubType: activeSubTab,
+            size: 10,
+            startDate,
+            endDate,
+            page,
+            pageSize,
+            filteredColumns,
+            sorterColumn
+        });
+    };
+
     handlePaginationChange = ({page, pageSize}) => {
         if (pageSize) {
             this.setState(
@@ -274,23 +308,6 @@ class ReportTable extends Component {
 
     };
 
-    fetchReports = () => {
-        const {activeTab, activeSubTab, startDate, endDate, page, pageSize, filteredColumns} = this.state,
-            {selectedAll, selectedProductId} = this.props;
-
-        this.props.getReports({
-            id: selectedAll ? "all" : selectedProductId,
-            dataType: activeTab,
-            dataSubType: activeSubTab,
-            size: 10,
-            startDate,
-            endDate,
-            page,
-            pageSize,
-            filteredColumns
-        });
-    };
-
     timeRange = (startDate, endDate) => {
         this.setState(
             {
@@ -310,31 +327,57 @@ class ReportTable extends Component {
             {
                 activeTab: tab,
                 activeSubTab: subTables[tab],
-                page: 1
+                page: 1,
+                filteredColumns: {},
+                sorterColumn: null
             },
             this.fetchReports
         );
     };
 
     handleChangeSubTab = tab => {
-        this.setState({activeSubTab: tab, page: 1}, this.fetchReports);
-    };
-
-    handleChangeFilter = (key, value) => {
         this.setState({
-            filteredColumns: {
-                [key]: value
-            }
+            activeSubTab: tab,
+            page: 1,
+            filteredColumns: {},
+            sorterColumn: null
         }, this.fetchReports);
     };
 
-    handleChangeSorter = (sorter) => {
-        // this.setState({
-        //     filteredColumns: {
-        //         [key]: value
-        //     }
-        // }, this.fetchReports);
-        // console.log(sorter);
+    handleChangeFilter = (key, value, type) => {
+        if (type === 'number') {
+            this.setState({
+                filteredColumns: {
+                    ...this.state.filteredColumns,
+                    [key]: value
+                }
+            }, this.fetchReports);
+
+        } else {
+            this.setState({
+                filteredColumns: {
+                    ...this.state.filteredColumns,
+                    [key]: value
+                }
+            }, this.fetchReports);
+        }
+    };
+
+    handleChangeSorter = (column) => {
+        const {sorterColumn} = this.state;
+
+            if (sorterColumn && sorterColumn.key === column) {
+                if (sorterColumn.type === 'desc') this.setState({sorterColumn: {key: column, type: 'asc'}},  this.fetchReports);
+                if (sorterColumn.type === 'asc') this.setState({sorterColumn: null},  this.fetchReports);
+
+            } else {
+                this.setState({
+                    sorterColumn: {
+                        key: column,
+                        type: 'desc'
+                    }
+                }, this.fetchReports)
+            }
     };
 
     componentDidMount() {
@@ -357,8 +400,9 @@ class ReportTable extends Component {
     }
 
     render() {
-        const {activeTab, page, pageSize, filteredColumns} = this.state,
+        const {activeTab, page, pageSize, filteredColumns, sorterColumn} = this.state,
             {counts, data, todayChanges, totalSize} = this.props;
+
 
         return (
             <div className="ReportTable">
@@ -394,7 +438,8 @@ class ReportTable extends Component {
                                 pageSize,
                                 this.handleChangeFilter,
                                 filteredColumns,
-                                this.handleChangeSorter
+                                this.handleChangeSorter,
+                                sorterColumn
                             )}
                         </TabPane>
                     ))}
@@ -410,7 +455,7 @@ const mapStateToProps = state => ({
     counts: state.reports.counts,
     data: state.reports.data,
     todayChanges: state.reports.today_changes,
-    totalSize: state.reports.total_subtype_size
+    totalSize: state.reports.totalSize
 });
 
 const mapDispatchToProps = dispatch => ({

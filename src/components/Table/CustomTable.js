@@ -19,35 +19,9 @@ const CustomTable = ({
                          pageSize,
                          showSizeChanger = false,
                          rowClassName,
-                         onChangeSorter
+                         onChangeSorter,
+                         sorterColumn
                      }) => {
-    const [sorterColumn, sortColumn] = useState({
-        key: null,
-        type: null
-    });
-
-    function handleChangeSorterButton(column) {
-
-        if (sorterColumn.key === column) {
-            if (sorterColumn.type === 'desc') sortColumn({key: column, type: 'asc'});
-            if (sorterColumn.type === 'asc') sortColumn({key: null, type: null});
-
-        } else {
-            sortColumn({
-                key: column,
-                type: 'desc'
-            })
-        }
-        // 'desc'
-
-        // 'asc'^
-    }
-
-    useEffect(() => {
-        onChangeSorter && onChangeSorter(sorterColumn);
-    }, [sorterColumn]);
-
-    console.log(sorterColumn);
 
     return (
         <div
@@ -59,36 +33,37 @@ const CustomTable = ({
                     {columns.map(item => {
                         const menu = (
                             <Menu>
-                                {item.filterIcon && item.filterDropdown()}
+                                {item.filterIcon && item.filterDropdown(item.key)}
                             </Menu>
                         );
 
                         return (
                             <div
                                 className={`th ${item.filterIcon && 'filter-column'} ${item.sorter && 'sorter-column'}`}
-                                key={shortid.generate()}
+                                key={item.key}
                                 style={item.width ? {width: item.width} : {flex: 1}}
-                                onClick={() => item.sorter && handleChangeSorterButton(item.key)}
+                                onClick={() => item.sorter && onChangeSorter(item.key)}
                             >
                                 <div className='title'>
                                     {typeof item.title === 'function' ? item.title() : item.title}
 
                                     {item.sorter && (<div className='sorter-buttons'>
                                         <Icon type="caret-up"
-                                              style={{color: `${sorterColumn.key === item.key && sorterColumn.type === 'asc' && "#1890ff"}`}}/>
+                                              style={{color: `${(sorterColumn && sorterColumn.key === item.key && sorterColumn.type === 'asc') ? "#1890ff" : ""}`}}/>
                                         <Icon type="caret-down"
-                                              style={{color: `${sorterColumn.key === item.key && sorterColumn.type === 'desc' && "#1890ff"}`}}/>
+                                              style={{color: `${(sorterColumn && sorterColumn.key === item.key && sorterColumn.type === 'desc') ? "#1890ff" : ""}`}}/>
                                     </div>)}
                                 </div>
 
-                                {item.filterIcon && (
-                                    <Dropdown overlay={menu} trigger={['contextMenu', 'click']} placement="bottomRight"
+                                {(item.filterIcon && (
+                                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight"
                                               onClick={(e) => e.stopPropagation()}>
                                         <a className="ant-dropdown-link" href="#">
                                             {item.filterIcon()}
                                         </a>
                                     </Dropdown>
-                                )}
+                                ))
+                                }
                             </div>
                         )
                     })}
@@ -98,17 +73,17 @@ const CustomTable = ({
                     {!loading ? (
                         dataSource &&
                         dataSource.length > 0 &&
-                        dataSource.map(report => (
+                        dataSource.map((report, index) => (
                             <div className={`table-body__row ${rowClassName && rowClassName(report)}`}
-                                 key={shortid.generate()}>
-                                {columns.map(item => (
+                                 key={report.id}>
+                                {columns.map((item) => (
                                     <div
                                         className="table-body__field"
                                         style={item.width ? {width: item.width} : {flex: 1}}
                                         key={shortid.generate()}
                                     >
                                         {item.render
-                                            ? item.render(report[item.key], report)
+                                            ? item.render(report[item.key], report, index)
                                             : report[item.key]}
                                     </div>
                                 ))}

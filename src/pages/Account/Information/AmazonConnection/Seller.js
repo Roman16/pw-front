@@ -20,12 +20,9 @@ const Seller = () => {
             <div className="seller-box">
                 <img src={whales} alt="whales"/>
                 <div className="seller-wrap">
-                    <h2 className="seller-title">Seller Central Connections</h2>
+                    <h2 className="seller-title">Seller Central Account Connection</h2>
                     <p className="seller-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat.
+                        Connect your Amazon account to use our marketing automation software.
                     </p>
                 </div>
 

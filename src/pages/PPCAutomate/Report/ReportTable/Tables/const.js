@@ -6,6 +6,7 @@ import down from '../../../../../assets/img/icons/down-row.svg';
 import right from '../../../../../assets/img/icons/right-row.svg';
 import pause from '../../../../../assets/img/icons/pause.svg';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
+import {columnMenuFilter} from "./columnFilter";
 
 const patIntentValues = {
     queryHighRelMatches: 'close-match',
@@ -29,9 +30,8 @@ export const patIntentField = {
             position="bottom"
         />
     ),
-    dataIndex: 'PatIntentType',
-    key: 'PatIntentType',
-    width: '90px',
+    dataIndex: 'd_patIntentType',
+    key: 'd_patIntentType',
     render: text => <span>{patIntentValues[text]}</span>
 };
 
@@ -40,22 +40,25 @@ export const negativeMatchTypeField = {
     dataIndex: 'negativeMatchType',
     key: 'negativeMatchType',
     width: '150px',
-    render: text => <span>{negativeMatchValues[text]}</span>
+    render: text => <span>{negativeMatchValues[text]}</span>,
+
 };
 
-export const indexField = {
+export const indexField = (currentPage) => ({
     title: '#',
     dataIndex: 'id',
     key: 'id',
-    width: '30px'
-};
+    width: '30px',
+    render: (id, item, index) => (<span>{currentPage * 10 - 10 + index + 1}</span>)
+});
 
 export const dateField = {
     title: 'Date',
-    dataIndex: 'date',
-    key: 'date',
+    dataIndex: 'eventDateTime',
+    key: 'eventDateTime',
     width: '100px',
-    render: date => moment(date).format('MM-DD-YY HH:mm:ss')
+    render: date => moment(date).format('MM-DD-YY HH:mm:ss'),
+    sorter: true,
 };
 
 export const actionField = {
@@ -72,32 +75,32 @@ export const actionField = {
 
 export const bidActionField = {
     title: 'Action',
-    dataIndex: 'action',
-    key: 'action',
-    width: '150px',
-    className: 'left-border',
-    render: ({data: {current_state, previous_state}}) => (
-        <div className="action-field">
-            {current_state > previous_state ? (
-                <span>
-          <img src={up} alt=""/> bid up (${previous_state}{' '}
-                    <img src={right} alt=""/> <b>${current_state}</b>)
-        </span>
-            ) : (
-                <span>
-          <img src={down} alt=""/> bid down (<b>${previous_state}</b>{' '}
-                    <img src={right} alt=""/> ${current_state})
-        </span>
-            )}
-        </div>
-    )
+    // dataIndex: 'action',
+    // key: 'action',
+    // width: '150px',
+    // className: 'left-border',
+    // render: ({data: {current_state, previous_state}}) => (
+    //     <div className="action-field">
+    //         {current_state > previous_state ? (
+    //             <span>
+    //       <img src={up} alt=""/> bid up (${previous_state}{' '}
+    //                 <img src={right} alt=""/> <b>${current_state}</b>)
+    //     </span>
+    //         ) : (
+    //             <span>
+    //       <img src={down} alt=""/> bid down (<b>${previous_state}</b>{' '}
+    //                 <img src={right} alt=""/> ${current_state})
+    //     </span>
+    //         )}
+    //     </div>
+    // )
 };
 
 export const pauseKeywordsActionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    width: '180px',
+    width: '170px',
     className: 'left-border',
     render: () => (
         <div className="action-field">

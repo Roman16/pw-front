@@ -36,7 +36,7 @@ export const productsUrls = {
 
 export const reportsUrls = {
     lastReports: 'ppc-automation/last-changes',
-    allReports: 'ppc-automation/reports',
+    allReports: 'ppc-automation/reports-ch',
     downloadReports: 'ppc-automation/reports/download',
 };
 
