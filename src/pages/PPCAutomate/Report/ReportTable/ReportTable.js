@@ -12,15 +12,12 @@ import NewPats from "./Tables/NewPats";
 import NewNegativePats from "./Tables/NewNegativePats";
 import {reportsActions} from "../../../../actions/reports.actions";
 import {reportsUrls} from "../../../../constans/api.urls";
-import FreeTrial from "../../../../components/FreeTrial/FreeTrial";
 import "./ReportTable.less";
 import {mainChangesCount} from "./Tables/changesCount";
 
 const {TabPane} = Tabs;
 
 const TabName = ({name = null, type, counts}) => {
-    console.log(type);
-    console.log(counts);
     return (
         <div className="TabName">
             <span>{name}</span>

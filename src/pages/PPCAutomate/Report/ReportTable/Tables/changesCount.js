@@ -38,13 +38,12 @@ export const subChangesCount = (counts, type) => {
 };
 
 export const mainChangesCount = (counts, type) => {
-    console.log(counts);
-    console.log(type);
-    const count = mainTypeList[type].reduce((accumulator, type) => {
+    let count = 0;
+    mainTypeList[type].forEach((type) => {
         if (counts.find(item => item.type === type)) {
-            accumulator = +counts.find(item => item.type === type).count;
+            count = count + +counts.find(item => item.type === type).count;
         }
-    }, 0);
+    });
 
-    return count || 0;
+    return count > 999 ? '999+' : count || 0;
 };
