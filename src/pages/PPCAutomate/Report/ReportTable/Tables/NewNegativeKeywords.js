@@ -7,6 +7,7 @@ import CustomTable from '../../../../../components/Table/CustomTable';
 import {round} from "../../../../../utils/round";
 import {numberMask} from "../../../../../utils/numberMask";
 import {columnMenuFilter, columnNumberFilter, columnTextFilter} from "./columnFilter";
+import {subChangesCount} from "./changesCount";
 
 const highACoS = 'created-negative-keyword-from-cst-high-acos';
 const noSales = 'created-negative-keyword-from-cst-no-sales';
@@ -26,8 +27,8 @@ const NewNegativeKeywords = ({
                                  sorterColumn
                              }) => {
     const [activeTable, changeTable] = useState(highACoS);
-    const {count, loading, productId} = useSelector(state => ({
-        count: state.reports.counts['new-negative-keywords'].subtypes_counts,
+    const {counts, loading, productId} = useSelector(state => ({
+        counts: state.reports.counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
@@ -63,8 +64,8 @@ const NewNegativeKeywords = ({
         },
         {
             title: 'Ad Group',
-            dataIndex: 'd_adGroupId',
-            key: 'd_adGroupId',
+            dataIndex: 'd_adGroupName',
+            key: 'd_adGroupName',
             width: '180px',
             sorter: true,
             ...columnTextFilter(onChangeFilter, filteredColumns)
@@ -206,7 +207,7 @@ const NewNegativeKeywords = ({
             <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
                     active={activeTable === highACoS}
-                    count={count[highACoS]}
+                    count={subChangesCount(counts, highACoS)}
                     onClick={() => {
                         onChange(highACoS);
                     }}
@@ -215,7 +216,7 @@ const NewNegativeKeywords = ({
                 </TableButton>
                 <TableButton
                     active={activeTable === noSales}
-                    count={count[noSales]}
+                    count={subChangesCount(counts, noSales)}
                     onClick={() => {
                         onChange(noSales);
                     }}

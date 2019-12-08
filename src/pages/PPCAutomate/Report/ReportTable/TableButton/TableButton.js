@@ -6,7 +6,7 @@ import './TableButton.less';
 class TableButton extends Component {
     render() {
         const { children, active, onClick, count } = this.props;
-
+        console.log(count);
         return (
             <div className={`TableButton ${active ? 'active' : ''}`}>
                 <Button onClick={onClick}>

@@ -14,20 +14,23 @@ import {reportsActions} from "../../../../actions/reports.actions";
 import {reportsUrls} from "../../../../constans/api.urls";
 import FreeTrial from "../../../../components/FreeTrial/FreeTrial";
 import "./ReportTable.less";
+import {mainChangesCount} from "./Tables/changesCount";
 
 const {TabPane} = Tabs;
 
-const TabName = ({name = null, count}) => (
-    <div className="TabName">
-        <span>{name}</span>
+const TabName = ({name = null, type, counts}) => {
+    console.log(type);
+    console.log(counts);
+    return (
+        <div className="TabName">
+            <span>{name}</span>
 
-        {count.total_count > 0 && (
             <div className="tab-name-count">
-                {count.total_count > 999 ? "999+" : count.total_count}
+                {mainChangesCount(counts, type)}
             </div>
-        )}
-    </div>
-);
+        </div>
+    )
+};
 
 const subTables = {
     "keywords-optimization": "changed-keyword-bid-acos",
@@ -40,7 +43,7 @@ const subTables = {
 
 const tabsItem = [
     {
-        tabName: count => <TabName name="Keywords Optimization" count={count}/>,
+        tabName: (key, counts) => <TabName name="Keywords Optimization" type={key} counts={counts}/>,
         key: "keywords-optimization",
         component: (
             onChangeSubTab,
@@ -71,7 +74,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name="PAT’s Optimization" count={count}/>,
+        tabName: (key, counts) => <TabName name="PAT’s Optimization" type={key} counts={counts}/>,
         key: "pats-optimization",
         component: (
             onChangeSubTab,
@@ -102,7 +105,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name="New Keywords" count={count}/>,
+        tabName: (key, counts) => <TabName name="New Keywords" type={key} counts={counts}/>,
         key: "new-keywords",
         component: (
             onChangeSubTab,
@@ -133,7 +136,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name="New Negative Keywords" count={count}/>,
+        tabName: (key, counts) => <TabName name="New Negative Keywords" type={key} counts={counts}/>,
         key: "new-negative-keywords",
         component: (
             onChangeSubTab,
@@ -164,7 +167,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name={"New PAT 's"} count={count}/>,
+        tabName: (key, counts) => <TabName name={"New PAT 's"} type={key} counts={counts}/>,
         key: "new-pats",
         component: (
             onChangeSubTab,
@@ -195,7 +198,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: count => <TabName name={"New Negative PAT's"} count={count}/>,
+        tabName: (key, counts) => <TabName name={"New Negative PAT's"} type={key} counts={counts}/>,
         key: "new-negative-pats",
         component: (
             onChangeSubTab,
@@ -265,7 +268,7 @@ class ReportTable extends Component {
 
         const url = `${process.env.REACT_APP_API_URL || ""}/api/${
             reportsUrls.downloadReports
-        }?token=${token}${parameters.join("")}`;
+            }?token=${token}${parameters.join("")}`;
         window.open(url);
     };
 
@@ -366,18 +369,23 @@ class ReportTable extends Component {
     handleChangeSorter = (column) => {
         const {sorterColumn} = this.state;
 
-            if (sorterColumn && sorterColumn.key === column) {
-                if (sorterColumn.type === 'desc') this.setState({sorterColumn: {key: column, type: 'asc'}},  this.fetchReports);
-                if (sorterColumn.type === 'asc') this.setState({sorterColumn: null},  this.fetchReports);
+        if (sorterColumn && sorterColumn.key === column) {
+            if (sorterColumn.type === 'desc') this.setState({
+                sorterColumn: {
+                    key: column,
+                    type: 'asc'
+                }
+            }, this.fetchReports);
+            if (sorterColumn.type === 'asc') this.setState({sorterColumn: null}, this.fetchReports);
 
-            } else {
-                this.setState({
-                    sorterColumn: {
-                        key: column,
-                        type: 'desc'
-                    }
-                }, this.fetchReports)
-            }
+        } else {
+            this.setState({
+                sorterColumn: {
+                    key: column,
+                    type: 'desc'
+                }
+            }, this.fetchReports)
+        }
     };
 
     componentDidMount() {
@@ -427,7 +435,7 @@ class ReportTable extends Component {
 
                 <Tabs activeKey={activeTab} type="card" onChange={this.handleChangeTab}>
                     {tabsItem.map(({tabName, key, component}) => (
-                        <TabPane tab={tabName(counts[key])} key={key}>
+                        <TabPane tab={tabName(key, counts)} key={key}>
                             {component(
                                 this.handleChangeSubTab,
                                 data,

@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {Input, Button, Icon} from 'antd';
-
+import {subChangesCount} from './changesCount';
 import TableButton from '../TableButton/TableButton';
 import {
     indexField,
@@ -36,8 +36,8 @@ const KeywordsOptimization = ({
                                   sorterColumn
                               }) => {
     const [activeTable, changeTable] = useState(changedKeywordBidAcos);
-    const {count, loading, productId} = useSelector(state => ({
-        count: state.reports.counts['keywords-optimization'].subtypes_counts,
+    const {counts, loading, productId} = useSelector(state => ({
+        counts: state.reports.counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
@@ -72,8 +72,8 @@ const KeywordsOptimization = ({
         },
         {
             title: 'Ad Group',
-            dataIndex: 'd_adGroupId',
-            key: 'd_adGroupId',
+            dataIndex: 'd_adGroupName',
+            key: 'd_adGroupName',
             width: '180px',
             sorter: true,
             ...columnTextFilter( onChangeFilter, filteredColumns)
@@ -283,7 +283,7 @@ const KeywordsOptimization = ({
             <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
                     active={changedKeywordBidAcos === activeTable}
-                    count={count[changedKeywordBidAcos]}
+                    count={subChangesCount(counts, changedKeywordBidAcos)}
                     onClick={() => {
                         onChange(changedKeywordBidAcos);
                     }}
@@ -292,7 +292,7 @@ const KeywordsOptimization = ({
                 </TableButton>
                 <TableButton
                     active={changedKeywordBidImpression === activeTable}
-                    count={count[changedKeywordBidImpression]}
+                    count={subChangesCount(counts, changedKeywordBidImpression)}
                     onClick={() => {
                         onChange(changedKeywordBidImpression);
                     }}
@@ -301,7 +301,7 @@ const KeywordsOptimization = ({
                 </TableButton>
                 <TableButton
                     active={pausedKeywordHighAcos === activeTable}
-                    count={count[pausedKeywordHighAcos]}
+                    count={subChangesCount(counts, pausedKeywordHighAcos)}
                     onClick={() => {
                         onChange(pausedKeywordHighAcos);
                     }}
@@ -310,7 +310,7 @@ const KeywordsOptimization = ({
                 </TableButton>
                 <TableButton
                     active={pausedKeywordNoSales === activeTable}
-                    count={count[pausedKeywordNoSales]}
+                    count={subChangesCount(counts, pausedKeywordNoSales)}
                     onClick={() => {
                         onChange(pausedKeywordNoSales);
                     }}

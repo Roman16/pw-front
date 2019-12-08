@@ -11,6 +11,7 @@ import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import {numberMask} from "../../../../../utils/numberMask";
 import {columnNumberFilter, columnTextFilter} from "./columnFilter";
+import {subChangesCount} from "./changesCount";
 
 const CreatedCrossNegativePAT = 'created-cross-negative-pat';
 const CreatedPATCST = 'created-pat-cst';
@@ -30,8 +31,8 @@ const NewPats = ({
                      sorterColumn
                  }) => {
     const [activeTable, changeTable] = useState(CreatedCrossNegativePAT);
-    const {count, loading, productId} = useSelector(state => ({
-        count: state.reports.counts['new-pats'].subtypes_counts,
+    const {counts, loading, productId} = useSelector(state => ({
+        counts: state.reports.counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
@@ -72,8 +73,8 @@ const NewPats = ({
             },
             {
                 title: 'Ad Group',
-                dataIndex: 'd_adGroupId',
-                key: 'd_adGroupId',
+                dataIndex: 'd_adGroupName',
+                key: 'd_adGroupName',
                 sorter: true,
                 ...columnTextFilter(onChangeFilter, filteredColumns)
             },
@@ -121,8 +122,8 @@ const NewPats = ({
             },
             {
                 title: 'Ad Group',
-                dataIndex: 'd_adGroupId',
-                key: 'd_adGroupId',
+                dataIndex: 'd_adGroupName',
+                key: 'd_adGroupName',
                 width: '150px',
                 sorter: true,
                 ...columnTextFilter(onChangeFilter, filteredColumns)
@@ -233,13 +234,12 @@ const NewPats = ({
         ]
     };
 
-
     return (
         <div className="report-item-table">
             <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
                     active={activeTable === CreatedCrossNegativePAT}
-                    count={count[CreatedCrossNegativePAT]}
+                    count={subChangesCount(counts, CreatedCrossNegativePAT)}
                     onClick={() => {
                         onChange(CreatedCrossNegativePAT);
                     }}
@@ -248,7 +248,7 @@ const NewPats = ({
                 </TableButton>
                 <TableButton
                     active={activeTable === CreatedPATCST}
-                    count={count[CreatedPATCST]}
+                    count={subChangesCount(counts, CreatedPATCST)}
                     onClick={() => {
                         onChange(CreatedPATCST);
                     }}

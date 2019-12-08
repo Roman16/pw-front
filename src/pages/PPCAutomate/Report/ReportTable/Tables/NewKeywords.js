@@ -7,6 +7,7 @@ import CustomTable from '../../../../../components/Table/CustomTable';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {numberMask} from "../../../../../utils/numberMask";
 import {columnTextFilter, columnNumberFilter, columnMenuFilter} from "./columnFilter";
+import {subChangesCount} from "./changesCount";
 
 const createdCampaign = 'created-campaign';
 const createdAdGroup = 'created-ad-group';
@@ -29,8 +30,8 @@ const NewKeywords = ({
                          sorterColumn
                      }) => {
     const [activeTable, changeTable] = useState(createdCampaign);
-    const {count, loading, productId} = useSelector(state => ({
-        count: state.reports.counts['new-keywords'].subtypes_counts,
+    const {counts, loading, productId} = useSelector(state => ({
+        counts: state.reports.counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
@@ -109,8 +110,8 @@ const NewKeywords = ({
             },
             {
                 title: 'Ad Group',
-                dataIndex: 'd_adGroupId',
-                key: 'd_adGroupId',
+                dataIndex: 'd_adGroupName',
+                key: 'd_adGroupName',
                 sorter: true,
                 ...columnTextFilter(onChangeFilter, filteredColumns)
             },
@@ -142,8 +143,8 @@ const NewKeywords = ({
             },
             {
                 title: 'Ad Group',
-                dataIndex: 'd_adGroupId',
-                key: 'd_adGroupId',
+                dataIndex: 'd_adGroupName',
+                key: 'd_adGroupName',
                 sorter: true,
                 ...columnTextFilter(onChangeFilter, filteredColumns)
             },
@@ -185,8 +186,8 @@ const NewKeywords = ({
             },
             {
                 title: 'Ad Group',
-                dataIndex: 'd_adGroupId',
-                key: 'd_adGroupId',
+                dataIndex: 'd_adGroupName',
+                key: 'd_adGroupName',
                 sorter: true,
                 ...columnTextFilter(onChangeFilter, filteredColumns)
             },
@@ -225,8 +226,8 @@ const NewKeywords = ({
             },
             {
                 title: 'Ad Group',
-                dataIndex: 'd_adGroupId',
-                key: 'd_adGroupId',
+                dataIndex: 'd_adGroupName',
+                key: 'd_adGroupName',
                 width: '160px',
                 sorter: true,
                 ...columnTextFilter(onChangeFilter, filteredColumns)
@@ -332,7 +333,7 @@ const NewKeywords = ({
             <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
                     active={createdCampaign === activeTable}
-                    count={count[createdCampaign]}
+                    count={subChangesCount(counts, createdCampaign)}
                     onClick={() => {
                         onChange(createdCampaign);
                     }}
@@ -341,7 +342,7 @@ const NewKeywords = ({
                 </TableButton>
                 <TableButton
                     active={createdAdGroup === activeTable}
-                    count={count[createdAdGroup]}
+                    count={subChangesCount(counts, createdAdGroup)}
                     onClick={() => {
                         onChange(createdAdGroup);
                     }}
@@ -350,7 +351,7 @@ const NewKeywords = ({
                 </TableButton>
                 <TableButton
                     active={createdProductAd === activeTable}
-                    count={count[createdProductAd]}
+                    count={subChangesCount(counts, createdProductAd)}
                     onClick={() => {
                         onChange(createdProductAd);
                     }}
@@ -359,7 +360,7 @@ const NewKeywords = ({
                 </TableButton>
                 <TableButton
                     active={createdCrossNegativeKeyword === activeTable}
-                    count={count[createdCrossNegativeKeyword]}
+                    count={subChangesCount(counts, createdCrossNegativeKeyword)}
                     onClick={() => {
                         onChange(createdCrossNegativeKeyword);
                     }}
@@ -368,7 +369,7 @@ const NewKeywords = ({
                 </TableButton>
                 <TableButton
                     active={createdKeywordCST === activeTable}
-                    count={count[createdKeywordCST]}
+                    count={subChangesCount(counts, createdKeywordCST)}
                     onClick={() => {
                         onChange(createdKeywordCST);
                     }}

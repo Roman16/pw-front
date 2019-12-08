@@ -13,6 +13,7 @@ import CustomTable from '../../../../../components/Table/CustomTable';
 import {round} from "../../../../../utils/round";
 import {numberMask} from "../../../../../utils/numberMask";
 import {columnMenuFilter, columnNumberFilter, columnTextFilter} from "./columnFilter";
+import {subChangesCount} from "./changesCount";
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
 const changedPATBidImpressions = 'changed-pat-bid-impressions';
@@ -34,8 +35,8 @@ const PATsOptimization = ({
                               sorterColumn
                           }) => {
     const [activeTable, changeTable] = useState(changedPATBidACoS);
-    const {count, loading, productId} = useSelector(state => ({
-        count: state.reports.counts['pats-optimization'].subtypes_counts,
+    const {counts, loading, productId} = useSelector(state => ({
+        counts: state.reports.counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id
     }));
@@ -71,8 +72,8 @@ const PATsOptimization = ({
         },
         {
             title: 'Ad Group',
-            dataIndex: 'd_adGroupId',
-            key: 'd_adGroupId',
+            dataIndex: 'd_adGroupName',
+            key: 'd_adGroupName',
             width: '150px',
             sorter: true,
             ...columnTextFilter( onChangeFilter, filteredColumns)
@@ -290,13 +291,12 @@ const PATsOptimization = ({
         ]
     };
 
-
     return (
         <div className="report-item-table">
             <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
                     active={activeTable === changedPATBidACoS}
-                    count={count[changedPATBidACoS]}
+                    count={subChangesCount(counts, changedPATBidACoS)}
                     onClick={() => {
                         onChange(changedPATBidACoS);
                     }}
@@ -305,7 +305,7 @@ const PATsOptimization = ({
                 </TableButton>
                 <TableButton
                     active={activeTable === changedPATBidImpressions}
-                    count={count[changedPATBidImpressions]}
+                    count={subChangesCount(counts, changedPATBidImpressions)}
                     onClick={() => {
                         onChange(changedPATBidImpressions);
                     }}
@@ -314,7 +314,7 @@ const PATsOptimization = ({
                 </TableButton>
                 <TableButton
                     active={activeTable === pausedManualPATHighACoS}
-                    count={count[pausedManualPATHighACoS]}
+                    count={subChangesCount(counts, pausedManualPATHighACoS)}
                     onClick={() => {
                         onChange(pausedManualPATHighACoS);
                     }}
@@ -323,7 +323,7 @@ const PATsOptimization = ({
                 </TableButton>
                 <TableButton
                     active={activeTable === pausedManualPatNoSales}
-                    count={count[pausedManualPatNoSales]}
+                    count={subChangesCount(counts, pausedManualPatNoSales)}
                     onClick={() => {
                         onChange(pausedManualPatNoSales);
                     }}
