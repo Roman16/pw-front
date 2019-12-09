@@ -2,7 +2,8 @@ import {reportsConstants} from '../constans/actions.type';
 import {reportsServices} from '../services/reports.services';
 
 export const reportsActions = {
-    fetchAllReports
+    fetchAllReports,
+    setPageSize
 };
 
 function fetchAllReports(options) {
@@ -18,5 +19,14 @@ function fetchAllReports(options) {
                     payload: res
                 });
             });
+    };
+}
+
+function setPageSize(pageSize) {
+    return dispatch => {
+        dispatch({
+            type: reportsConstants.SET_PAGE_SIZE,
+            payload: pageSize
+        });
     };
 }

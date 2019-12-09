@@ -278,6 +278,8 @@ const KeywordsOptimization = ({
         ]
     };
 
+    console.log(pageSize);
+
     return (
         <div className="report-item-table">
             <div className="report-item-table-btn" ref={refTableBtn}>

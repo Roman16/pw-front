@@ -49,6 +49,7 @@ const initialState = {
         },
     data: [],
     totalSize: 0,
+    pageSize: 10,
     loading: false
 };
 
@@ -66,6 +67,12 @@ export function reports(state = initialState, action) {
                 ...action.payload,
                 totalSize: action.payload.total_size,
                 loading: false
+            };
+
+        case reportsConstants.SET_PAGE_SIZE:
+            return {
+                ...state,
+                pageSize: action.payload
             };
 
         default:

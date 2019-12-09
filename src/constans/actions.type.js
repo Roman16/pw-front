@@ -29,6 +29,7 @@ export const productsConstants = {
 export const reportsConstants = {
     SET_REPORTS_LIST: 'SET_REPORTS_LIST',
     START_FETCH_REPORTS_LIST: 'START_FETCH_REPORTS_LIST',
+    SET_PAGE_SIZE: 'SET_PAGE_SIZE',
 };
 
 //--------------------------------------------

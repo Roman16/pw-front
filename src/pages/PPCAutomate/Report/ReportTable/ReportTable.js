@@ -232,7 +232,7 @@ class ReportTable extends Component {
         startDate: "",
         endDate: "",
         page: 1,
-        pageSize: 10,
+        pageSize: this.props.pageSize || 10,
         activeTab: "keywords-optimization",
         activeSubTab: "changed-keyword-bid-acos",
         filteredColumns: {},
@@ -265,7 +265,7 @@ class ReportTable extends Component {
 
         const url = `${process.env.REACT_APP_API_URL || ""}/api/${
             reportsUrls.downloadReports
-            }?token=${token}${parameters.join("")}`;
+        }?token=${token}${parameters.join("")}`;
         window.open(url);
     };
 
@@ -289,6 +289,8 @@ class ReportTable extends Component {
 
     handlePaginationChange = ({page, pageSize}) => {
         if (pageSize) {
+            this.props.setPageSize(pageSize);
+
             this.setState(
                 {
                     page: 1,
@@ -460,11 +462,13 @@ const mapStateToProps = state => ({
     counts: state.reports.counts,
     data: state.reports.data,
     todayChanges: state.reports.today_changes,
-    totalSize: state.reports.totalSize
+    totalSize: state.reports.totalSize,
+    pageSize: state.reports.pageSize,
 });
 
 const mapDispatchToProps = dispatch => ({
-    getReports: options => dispatch(reportsActions.fetchAllReports(options))
+    getReports: options => dispatch(reportsActions.fetchAllReports(options)),
+    setPageSize: pageSize => dispatch(reportsActions.setPageSize(pageSize)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportTable);
