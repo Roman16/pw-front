@@ -33,17 +33,21 @@ const mainTypeList = {
 };
 
 export const subChangesCount = (counts, type) => {
-    const countObject = counts.find(item => item.type === type) || null;
-    return (countObject ? countObject.count : 0);
+    if (Array.isArray(counts)) {
+        const countObject = counts.find(item => item.type === type) || null;
+        return (countObject ? countObject.count : 0);
+    }
 };
 
-export const mainChangesCount = (counts, type) => {
+export const mainChangesCount = (counts = [], type) => {
     let count = 0;
-    mainTypeList[type].forEach((type) => {
-        if (counts.find(item => item.type === type)) {
-            count = count + +counts.find(item => item.type === type).count;
-        }
-    });
+    if (Array.isArray(counts)) {
+        mainTypeList[type].forEach((type) => {
+            if (counts.find(item => item.type === type)) {
+                count = count + +counts.find(item => item.type === type).count;
+            }
+        });
+    }
 
     return count > 999 ? '999+' : count || 0;
 };
