@@ -17,6 +17,7 @@ import { productsActions } from "../../../actions/products.actions";
 
 import "./Optimization.less";
 import SubscriptionNotificationWindow from "../../../components/ModalWindow/SubscriptionNotificationWindow";
+import {notification} from "../../../components/Notification";
 
 class Optimization extends Component {
   state = {
@@ -67,6 +68,8 @@ class Optimization extends Component {
       ...selectedProduct,
       optimization_strategy: selectedStrategy
     });
+
+    notification.success({title: 'The strategy is changed'});
   });
 
   static getDerivedStateFromProps(props, state) {

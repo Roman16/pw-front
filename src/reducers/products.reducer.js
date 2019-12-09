@@ -13,6 +13,7 @@ const defaultOptions = {
 const initialState = {
     productList: [],
     totalSize: 0,
+    isFirstOptimization: true,
     selectedAll: false,
     onlyOptimization: false,
     onlyActiveOnAmazon: false,
@@ -37,25 +38,25 @@ export function products(state = initialState, action) {
                     if (action.payload.status === "RUNNING") {
                         return {
                             ...item,
-                            under_optimization: true
+                            under_optimization: true,
                         }
                     } else {
                         return {
                             ...item,
-                            under_optimization: false
+                            under_optimization: false,
                         }
                     }
                 } else if (action.payload.product_id === 'all') {
                     if (action.payload.status === "RUNNING") {
                         return {
                             ...item,
-                            under_optimization: true
+                            under_optimization: true,
                         }
 
                     } else {
                         return {
                             ...item,
-                            under_optimization: false
+                            under_optimization: false,
                         }
                     }
                 } else {
@@ -69,7 +70,8 @@ export function products(state = initialState, action) {
                     ...action.payload,
                     product_id: state.selectedProduct.id
                 },
-                productList: newProductsList
+                productList: newProductsList,
+                isFirstOptimization: action.payload.status === 'RUNNING' ? false : state.isFirstOptimization
             };
 
         case productsConstants.UPDATE_PRODUCT_OPTIONS:

@@ -8,6 +8,7 @@ import NetMarginWindow from './NetMarginWindow/NetMarginWindow';
 import {productsActions} from '../../../../actions/products.actions';
 import ConfirmActionPopup from '../../../../components/ModalWindow/ConfirmActionPopup';
 import './OptimizationStatus.less';
+import {notification} from "../../../../components/Notification";
 
 const StatusInfo = ({caption, value = '-----', statusColor = ''}) => (
     <div className="status-info">
@@ -22,10 +23,30 @@ const STOPPED = 'STOPPED';
 class OptimizationStatus extends Component {
     state = {
         isShowModal: false,
-        isShowConfirmModal: false
+        showFirstStartConfirmModal: false,
+        showStopConfirmModal: false
     };
 
     cancelModal = () => this.setState({isShowModal: false});
+
+    handleClickStartOptimization = (status) => {
+        const {isFirstOptimization = true} = this.props;
+        if (isFirstOptimization) {
+            this.setState({
+                showFirstStartConfirmModal: true
+            })
+        } else {
+            this.toStart(status)
+        }
+    };
+
+
+    handleClickStopOptimization = () => {
+        this.setState({
+            showStopConfirmModal: true
+        })
+    };
+
 
     toStart = (status) => {
         const {onSwitchOptimization, product, selectedAll, optimizationOptions} = this.props;
@@ -47,8 +68,15 @@ class OptimizationStatus extends Component {
                     status: status,
                     product_id: 'all'
                 })
-
             }
+
+            this.setState({
+                showFirstStartConfirmModal: false,
+                showStopConfirmModal: false
+            });
+
+            status === RUNNING && notification.start({title: 'Optimization successfully started'});
+            status === STOPPED && notification.error({title: 'The optimization is paused'});
         }
     };
 
@@ -63,7 +91,7 @@ class OptimizationStatus extends Component {
             selectedAll
         } = this.props;
 
-        const {isShowModal, isShowConfirmModal} = this.state;
+        const {isShowModal, showFirstStartConfirmModal, showStopConfirmModal} = this.state;
         const isActive = status === RUNNING;
 
         return (
@@ -88,7 +116,7 @@ class OptimizationStatus extends Component {
                 <div className="control">
                     {!isActive
                         ? (
-                            <Button className="start" onClick={() => this.toStart(RUNNING)}>
+                            <Button className="start" onClick={() => this.handleClickStartOptimization(RUNNING)}>
                                 <div className="control-btn-content">
                                     <Icon type="caret-right" className=" btn-icon"/>
                                     <div className="btn-text">
@@ -97,7 +125,7 @@ class OptimizationStatus extends Component {
                                 </div>
                             </Button>
                         ) : (
-                            <Button className="stop" onClick={() => this.toStart(STOPPED)}>
+                            <Button className="stop" onClick={() => this.handleClickStopOptimization()}>
                                 <div className="control-btn-content">
                                     <div className="icon-stop"/>
                                     <div className="btn-text">
@@ -118,11 +146,18 @@ class OptimizationStatus extends Component {
                 )}
 
                 <ConfirmActionPopup
-                    visible={isShowConfirmModal}
+                    visible={showFirstStartConfirmModal}
                     handleOk={() => this.toStart(RUNNING)}
-                    handleCancel={() => this.setState({isShowConfirmModal: false})}
+                    handleCancel={() => this.setState({showFirstStartConfirmModal: false})}
                     title={'Are you ready to start?'}
                     description={'This action will result in the starting management of your Amazon PPC campaigns.'}
+                />
+
+                <ConfirmActionPopup
+                    visible={showStopConfirmModal}
+                    handleOk={() => this.toStart(STOPPED)}
+                    handleCancel={() => this.setState({showStopConfirmModal: false})}
+                    title={' Are you sure you want to stop?'}
                 />
             </div>
         );
@@ -131,7 +166,8 @@ class OptimizationStatus extends Component {
 
 const mapStateToProps = state => ({
     selectedAll: state.products.selectedAll,
-    optimizationOptions: state.products.defaultOptimizationOptions
+    optimizationOptions: state.products.defaultOptimizationOptions,
+    isFirstOptimization: state.products.isFirstOptimization
 });
 
 const mapDispatchToProps = dispatch => ({

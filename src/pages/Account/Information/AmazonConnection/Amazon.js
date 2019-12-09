@@ -87,7 +87,7 @@ const Amazon = ({amazonTokens}) => {
                 <div className="login-wrap">
                     {ppcConnected && <Fragment>
                         <h3>
-                            Seller Central Log In
+                            PPC Authorization
                             <img src={checked} alt="checked"/>
                         </h3>
 
