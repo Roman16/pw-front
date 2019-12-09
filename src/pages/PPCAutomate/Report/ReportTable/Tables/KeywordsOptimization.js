@@ -90,7 +90,7 @@ const KeywordsOptimization = ({
             title: 'Match Type',
             dataIndex: 'd_keywordMatchType',
             key: 'd_keywordMatchType',
-            width: '90px',
+            width: '10em',
             sorter: true,
             render: text => <span className="capitalize-field">{text}</span>,
             ...columnMenuFilter(onChangeFilter, filteredColumns, ['exact', 'phrase', 'test2'])
@@ -118,7 +118,7 @@ const KeywordsOptimization = ({
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
-                width: '110px',
+                width: '11.5em',
                 sorter: true,
                 render: text => <span>{text && `${round(text, 2)}%`}</span>,
                 ...columnNumberFilter(onChangeFilter, filteredColumns,)
@@ -127,7 +127,7 @@ const KeywordsOptimization = ({
                 title: 'Clicks',
                 dataIndex: 'd_keywordClicks',
                 key: 'd_keywordClicks',
-                width: '90px',
+                width: '6.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -135,7 +135,7 @@ const KeywordsOptimization = ({
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
-                width: '100px',
+                width: '10em',
                 sorter: true,
                 render: (text) => (text && <span>{round(text, 2)}%</span>),
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -153,6 +153,7 @@ const KeywordsOptimization = ({
                 title: 'Impressions',
                 dataIndex: 'd_keywordImpressions',
                 key: 'd_keywordImpressions',
+                width: '10em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -165,6 +166,7 @@ const KeywordsOptimization = ({
                 ),
                 dataIndex: 'd_targetImpressions',
                 key: 'd_targetImpressions',
+                width: '14.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -195,7 +197,7 @@ const KeywordsOptimization = ({
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
-                width: '110px',
+                width: '11.5em',
                 render: text => <span>{text && `${text}%`}</span>,
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -204,7 +206,7 @@ const KeywordsOptimization = ({
                 title: 'Clicks',
                 dataIndex: 'd_keywordClicks',
                 key: 'd_keywordClicks',
-                width: '90px',
+                width: '6.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -212,7 +214,7 @@ const KeywordsOptimization = ({
                 title: 'Spend',
                 dataIndex: 'd_keywordSpend',
                 key: 'd_keywordSpend',
-                width: '90px',
+                width: '7em',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -221,7 +223,7 @@ const KeywordsOptimization = ({
                 title: 'Sales',
                 dataIndex: 'd_keywordSales',
                 key: 'd_keywordSales',
-                width: '90px',
+                width: '6.5em',
                 render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -230,7 +232,7 @@ const KeywordsOptimization = ({
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
-                width: '120px',
+                width: '10em',
                 render: (text) => (text && <span>{round(text, 2)}%</span>),
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -248,6 +250,7 @@ const KeywordsOptimization = ({
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
+                width: '10em',
                 render: (text) => (text && <span>{round(text, 2)}%</span>),
                  sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -256,7 +259,7 @@ const KeywordsOptimization = ({
                 title: 'Clicks',
                 dataIndex: 'd_keywordClicks',
                 key: 'd_keywordClicks',
-                width: '90px',
+                width: '6.5em',
                  sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -264,7 +267,7 @@ const KeywordsOptimization = ({
                 title: 'Spend',
                 dataIndex: 'd_keywordSpend',
                 key: 'd_keywordSpend',
-                width: '90px',
+                width: '7em',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                  sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)

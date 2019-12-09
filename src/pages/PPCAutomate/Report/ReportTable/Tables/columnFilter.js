@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Icon, Input, Menu, Checkbox, Select} from "antd";
-
+import icon from '../../../../../assets/img/icons/filter-icon.svg';
+import iconHover from '../../../../../assets/img/icons/filter-icon-black.svg';
 const Option = Select.Option;
 const CheckboxGroup = Checkbox.Group;
 
@@ -47,7 +48,10 @@ export const columnTextFilter = (handleSearch, filteredColumns) => {
             </div>
         ),
         filterIcon: filtered => (
-            <Icon type="search" style={{color: filtered ? '#1890ff' : undefined}}/>
+            <div className='filter-icon'>
+                <img src={icon} alt="" className='default'/>
+                <img src={iconHover} alt="" className='hover'/>
+            </div>
         ),
     })
 };
@@ -92,7 +96,10 @@ export const columnMenuFilter = (handleSearch, filteredColumns, menu) => {
             </div>
         ),
         filterIcon: filtered => (
-            <Icon type="filter" style={{color: filtered ? '#1890ff' : undefined}}/>
+            <div className='filter-icon'>
+                <img src={icon} alt="" className='default'/>
+                <img src={iconHover} alt="" className='hover'/>
+            </div>
         ),
     })
 };
@@ -151,7 +158,10 @@ export const columnNumberFilter = (handleSearch, filteredColumns) => {
             </div>
         ),
         filterIcon: filtered => (
-            <Icon type="filter" style={{color: filtered ? '#1890ff' : undefined}}/>
+            <div className='filter-icon'>
+                <img src={icon} alt="" className='default'/>
+                <img src={iconHover} alt="" className='hover'/>
+            </div>
         ),
     })
 };

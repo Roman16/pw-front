@@ -47,11 +47,11 @@ const CustomTable = ({
                                 <div className='title'>
                                     {typeof item.title === 'function' ? item.title() : item.title}
 
-                                    {item.sorter && (<div className='sorter-buttons'>
+                                    {sorterColumn && sorterColumn.key === item.key && (<div className='sorter-buttons'>
                                         <Icon type="caret-up"
-                                              style={{color: `${(sorterColumn && sorterColumn.key === item.key && sorterColumn.type === 'asc') ? "#1890ff" : ""}`}}/>
+                                              style={{color: `${(sorterColumn.type === 'asc') ? "#1890ff" : ""}`}}/>
                                         <Icon type="caret-down"
-                                              style={{color: `${(sorterColumn && sorterColumn.key === item.key && sorterColumn.type === 'desc') ? "#1890ff" : ""}`}}/>
+                                              style={{color: `${(sorterColumn.type === 'desc') ? "#1890ff" : ""}`}}/>
                                     </div>)}
                                 </div>
 

@@ -237,8 +237,8 @@ class ReportTable extends Component {
         activeSubTab: "changed-keyword-bid-acos",
         filteredColumns: {},
         sorterColumn: {
-            key: null,
-            type: null
+            key: 'eventDateTime',
+            type: 'desc'
         },
         updateSize: {
             "keywords-optimization": 0,
@@ -331,7 +331,10 @@ class ReportTable extends Component {
                 activeSubTab: subTables[tab],
                 page: 1,
                 filteredColumns: {},
-                sorterColumn: null
+                sorterColumn: {
+                    key: 'eventDateTime',
+                    type: 'desc'
+                }
             },
             this.fetchReports
         );
@@ -342,7 +345,10 @@ class ReportTable extends Component {
             activeSubTab: tab,
             page: 1,
             filteredColumns: {},
-            sorterColumn: null
+            sorterColumn: {
+                key: 'eventDateTime',
+                type: 'desc'
+            }
         }, this.fetchReports);
     };
 

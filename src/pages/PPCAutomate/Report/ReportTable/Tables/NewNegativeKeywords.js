@@ -80,6 +80,7 @@ const NewNegativeKeywords = ({
         },
         {
             ...negativeMatchTypeField,
+            width: '14em',
             sorter: true,
             ...columnMenuFilter(onChangeFilter, filteredColumns, ['Negative Exact', 'Negative Phrase'])
 
@@ -98,7 +99,7 @@ const NewNegativeKeywords = ({
                 ),
                 dataIndex: 'd_customerSearchTermACoS',
                 key: 'd_customerSearchTermACoS',
-                width: '110px',
+                width: '10.5em',
                 render: text => <span>{text && `${text}%`}</span>,
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -112,16 +113,21 @@ const NewNegativeKeywords = ({
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
-                width: '110px',
+                width: '11.5em',
                 render: text => <span>{text && `${text}%`}</span>,
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
             {
-                title: 'CST Clicks',
+                title: (
+                    <TitleInfo
+                        title="CST Clicks"
+                        info="It displays the number of clicks of certain customer search-term."
+                    />
+                ),
                 dataIndex: 'd_customerSearchTermClicks',
                 key: 'd_customerSearchTermClicks',
-                width: '100px',
+                width: '10.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -129,7 +135,7 @@ const NewNegativeKeywords = ({
                 title: 'CST Spend',
                 dataIndex: 'd_customerSearchTermSpend',
                 key: 'd_customerSearchTermSpend',
-                width: '100px',
+                width: '9.5em',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -138,7 +144,7 @@ const NewNegativeKeywords = ({
                 title: 'CST Sales',
                 dataIndex: 'd_customerSearchTermSales',
                 key: 'd_customerSearchTermSales',
-                width: '100px',
+                width: '9em',
                 render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -161,7 +167,7 @@ const NewNegativeKeywords = ({
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
-                width: '100px',
+                width: '10em',
                 render: (text) => (text && <span>{round(text, 2)}%</span>),
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -175,7 +181,7 @@ const NewNegativeKeywords = ({
                 ),
                 dataIndex: 'd_customerSearchTermClicks',
                 key: 'd_customerSearchTermClicks',
-                width: '110px',
+                width: '10.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -183,7 +189,7 @@ const NewNegativeKeywords = ({
                 title: 'CST Spend',
                 dataIndex: 'd_customerSearchTermSpend',
                 key: 'd_customerSearchTermSpend',
-                width: '100px',
+                width: '9.5em',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)

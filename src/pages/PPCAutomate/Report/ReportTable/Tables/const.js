@@ -32,7 +32,7 @@ export const patIntentField = {
     ),
     dataIndex: 'd_patIntentType',
     key: 'd_patIntentType',
-    render: text => <span>{patIntentValues[text]}</span>
+    render: text => <span>{patIntentValues[text]}</span>,
 };
 
 export const negativeMatchTypeField = {
@@ -78,7 +78,7 @@ export const bidActionField = {
     title: 'Action',
     // dataIndex: 'action',
     // key: 'action',
-    // width: '150px',
+    width: '150px',
     // className: 'left-border',
     // render: ({data: {current_state, previous_state}}) => (
     //     <div className="action-field">

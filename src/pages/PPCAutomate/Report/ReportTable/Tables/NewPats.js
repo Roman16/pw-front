@@ -10,7 +10,7 @@ import TableButton from '../TableButton/TableButton';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import {numberMask} from "../../../../../utils/numberMask";
-import {columnNumberFilter, columnTextFilter} from "./columnFilter";
+import {columnMenuFilter, columnNumberFilter, columnTextFilter} from "./columnFilter";
 import {subChangesCount} from "./changesCount";
 
 const CreatedCrossNegativePAT = 'created-cross-negative-pat';
@@ -89,11 +89,13 @@ const NewPats = ({
                 key: 'd_patType',
                 render: text => <span className="capitalize-field">{text}</span>,
                 sorter: true,
+                ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
 
             },
             {
                 ...patIntentField,
                 sorter: true,
+                ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
 
             },
             {
@@ -137,15 +139,17 @@ const NewPats = ({
                 ),
                 dataIndex: 'd_patType',
                 key: 'd_patType',
-                width: '120px',
+                width: '10em',
                 render: text => <span className="capitalize-field">{text}</span>,
                 sorter: true,
+                ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
 
             },
             {
                 ...patIntentField,
-                width: '110px',
+                width: '13em',
                 sorter: true,
+                ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
 
             },
             {
@@ -160,7 +164,7 @@ const NewPats = ({
                 title: 'Bid',
                 dataIndex: 'd_bid',
                 key: 'd_bid',
-                width: '70px',
+                width: '6em',
                 render: text => (text != null && <span>${numberMask(text, 2)}</span>),
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -174,7 +178,7 @@ const NewPats = ({
                 ),
                 dataIndex: 'd_customerSearchTermClicks',
                 key: 'd_customerSearchTermClicks',
-                width: '110px',
+                width: '10.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -188,7 +192,7 @@ const NewPats = ({
                 dataIndex: 'd_customerSearchTermACoS',
                 key: 'd_customerSearchTermACoS',
                 render: text => <span>{text && `${text}%`}</span>,
-                width: '110px',
+                width: '10.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -202,7 +206,7 @@ const NewPats = ({
                 dataIndex: 'd_customerSearchTermCPC',
                 key: 'd_customerSearchTermCPC',
                 render: text => (text != null && <span>${numberMask(text, 2)}</span>),
-                width: '100px',
+                width: '10em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -216,7 +220,7 @@ const NewPats = ({
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
                 render: text => <span>{text && `${text}%`}</span>,
-                width: '110px',
+                width: '11.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },

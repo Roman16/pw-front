@@ -71,7 +71,7 @@ const NewKeywords = ({
                 ...columnTextFilter(onChangeFilter, filteredColumns)
             },
             {
-                title: 'Campaign Targeting Type',
+                title: 'Targeting Type',
                 dataIndex: 'd_campaignTargetingType',
                 key: 'd_campaignTargetingType',
                 sorter: true,
@@ -244,7 +244,7 @@ const NewKeywords = ({
                 title: 'Match Type',
                 dataIndex: 'd_keywordMatchType',
                 key: 'd_keywordMatchType',
-                width: '90px',
+                width: '9.5em',
                 sorter: true,
                 ...columnMenuFilter(onChangeFilter, filteredColumns, ['exact', 'exact', 'exact'])
             },
@@ -252,7 +252,7 @@ const NewKeywords = ({
                 title: 'Bid',
                 dataIndex: 'd_bid',
                 key: 'd_bid',
-                width: '70px',
+                width: '6em',
                 render: text => (text != null && <span>${numberMask(text, 2)}</span>),
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -267,7 +267,7 @@ const NewKeywords = ({
                 ),
                 dataIndex: 'd_customerSearchTermClicks',
                 key: 'd_customerSearchTermClicks',
-                width: '110px',
+                width: '10.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -281,7 +281,7 @@ const NewKeywords = ({
                 dataIndex: 'd_customerSearchTermACoS',
                 key: 'd_customerSearchTermACoS',
                 render: text => <span>{text && `${text}%`}</span>,
-                width: '110px',
+                width: '10.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -295,7 +295,7 @@ const NewKeywords = ({
                 dataIndex: 'd_customerSearchTermCPC',
                 key: 'd_customerSearchTermCPC',
                 render: text => (text != null && <span>${numberMask(text, 2)}</span>),
-                width: '100px',
+                width: '10em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -309,7 +309,7 @@ const NewKeywords = ({
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
                 render: text => <span>{text && `${text}%`}</span>,
-                width: '110px',
+                width: '11.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },

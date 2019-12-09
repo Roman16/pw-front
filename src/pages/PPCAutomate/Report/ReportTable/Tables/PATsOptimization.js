@@ -87,14 +87,14 @@ const PATsOptimization = ({
             ),
             dataIndex: 'd_patType',
             key: 'd_patType',
-            width: '100px',
+            width: '10em',
             render: text => <span className="capitalize-field">{text}</span>,
             sorter: true,
             ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
         },
         {
             ...patIntentField,
-            width: '120px',
+            width: '13em',
             sorter: true,
             ...columnMenuFilter(onChangeFilter, filteredColumns, ['asin'])
         },
@@ -129,7 +129,7 @@ const PATsOptimization = ({
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
-                width: '110px',
+                width: '11.5em',
                 render: text => <span>{text && `${round(+text, 2)}%`}</span>,
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -138,7 +138,7 @@ const PATsOptimization = ({
                 title: 'Clicks',
                 dataIndex: 'd_patClicks',
                 key: 'd_patClicks',
-                width: '90px',
+                width: '6.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -146,7 +146,7 @@ const PATsOptimization = ({
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
-                width: '100px',
+                width: '10em',
                 render: (text) => (text &&  <span>{round(text, 2)}%</span>),
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -164,7 +164,7 @@ const PATsOptimization = ({
                 title: 'Impressions',
                 dataIndex: 'd_patImpressions',
                 key: 'd_patImpressions',
-                width: '130px',
+                width: '10em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -177,7 +177,7 @@ const PATsOptimization = ({
                 ),
                 dataIndex: 'd_targetImpressions',
                 key: 'd_targetImpressions',
-                width: '150px',
+                width: '14.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -208,7 +208,7 @@ const PATsOptimization = ({
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
-                width: '110px',
+                width: '11.5em',
                 render: text => <span>{text && `${text}%`}</span>,
                  sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -217,7 +217,7 @@ const PATsOptimization = ({
                 title: 'Clicks',
                 dataIndex: 'd_patClicks',
                 key: 'd_patClicks',
-                width: '90px',
+                width: '6.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -225,7 +225,7 @@ const PATsOptimization = ({
                 title: 'Spend',
                 dataIndex: 'd_patSpend',
                 key: 'd_patSpend',
-                width: '90px',
+                width: '7em',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                  sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -234,7 +234,7 @@ const PATsOptimization = ({
                 title: 'Sales',
                 dataIndex: 'd_patSales',
                 key: 'd_patSales',
-                width: '90px',
+                width: '6.5em',
                 render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
                  sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -243,7 +243,7 @@ const PATsOptimization = ({
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
-                width: '100px',
+                width: '10em',
                 render: (text) => (text &&  <span>{round(text, 2)}%</span>),
                  sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -261,6 +261,7 @@ const PATsOptimization = ({
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
+                width: '10em',
                 render: (text) => (text &&  <span>{round(text, 2)}%</span>),
                  sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
@@ -269,7 +270,7 @@ const PATsOptimization = ({
                 title: 'Clicks',
                 dataIndex: 'd_patClicks',
                 key: 'd_patClicks',
-                width: '90px',
+                width: '6.5em',
                 sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
             },
@@ -277,7 +278,7 @@ const PATsOptimization = ({
                 title: 'Spend',
                 dataIndex: 'd_patSpend',
                 key: 'd_patSpend',
-                width: '90px',
+                width: '7em',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                  sorter: true,
                 ...columnNumberFilter(onChangeFilter, filteredColumns)
