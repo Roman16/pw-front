@@ -14,6 +14,8 @@ const initialState = {
     productList: [],
     totalSize: 0,
     isFirstOptimization: true,
+    isFirstChangesOptions: true,
+    isFirstChangesStrategy: true,
     selectedAll: false,
     onlyOptimization: false,
     onlyActiveOnAmazon: false,
@@ -52,7 +54,6 @@ export function products(state = initialState, action) {
                             ...item,
                             under_optimization: true,
                         }
-
                     } else {
                         return {
                             ...item,
@@ -81,6 +82,18 @@ export function products(state = initialState, action) {
                     ...state.defaultOptimizationOptions,
                     ...action.payload
                 }
+            };
+
+        case productsConstants.CHANGE_OPTIONS:
+            return {
+                ...state,
+                isFirstChangesOptions: false
+            };
+
+        case productsConstants.CHANGE_STRATEGY:
+            return {
+                ...state,
+                isFirstChangesStrategy: false
             };
 
         case productsConstants.SELECT_PRODUCT:

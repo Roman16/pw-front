@@ -96,6 +96,10 @@ const Subscription = () => {
         userService.updateSubscriptionStatus();
 
         interval = setInterval(handleUpdateSubscriptionStatus, 1000 * 60);
+
+        return () => {
+            clearInterval(interval);
+        }
     }, []);
 
     return (

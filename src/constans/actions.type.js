@@ -21,6 +21,8 @@ export const productsConstants = {
     SELECT_ALL_PRODUCT: 'SELECT_ALL_PRODUCT',
     SHOW_ONLY_OPTIMIZED: 'SHOW_ONLY_OPTIMIZED',
     SHOW_ONLY_ACTIVE: 'SHOW_ONLY_ACTIVE',
+    CHANGE_OPTIONS: 'CHANGE_OPTIONS',
+    CHANGE_STRATEGY: 'CHANGE_STRATEGY',
 };
 
 //--------------------------------------------

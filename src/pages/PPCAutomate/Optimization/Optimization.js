@@ -34,6 +34,8 @@ class Optimization extends Component {
 
   toLess = () => this.setState({ isLess: !this.state.isLess });
 
+  // handleChange
+
   onSelectStrategy = strategy => {
     const product = this.props.selectedProduct;
     this.setState(

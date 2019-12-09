@@ -10,7 +10,9 @@ export const productsActions = {
     setNetMargin,
     updateOptions,
     showOnlyOptimized,
-    showOnlyActive
+    showOnlyActive,
+    changeOptimizedOptions,
+    changeOptimizedStrategy
 };
 
 function fetchProducts(paginationParams) {
@@ -21,7 +23,6 @@ function fetchProducts(paginationParams) {
                     type: productsConstants.SET_PRODUCT_LIST,
                     payload: res
                 });
-
 
                 if (res.result && res.result.length > 0) {
                     dispatch(fetchProductDetails(res.result[0]));
@@ -126,4 +127,19 @@ function showOnlyActive(data) {
     };
 }
 
+function changeOptimizedOptions() {
+    return dispatch => {
+        dispatch({
+            type: productsConstants.CHANGE_OPTIONS,
+        });
+    };
+}
+
+function changeOptimizedStrategy() {
+    return dispatch => {
+        dispatch({
+            type: productsConstants.CHANGE_STRATEGY,
+        });
+    };
+}
 

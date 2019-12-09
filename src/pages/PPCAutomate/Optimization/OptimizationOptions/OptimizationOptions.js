@@ -5,6 +5,7 @@ import {productsActions} from '../../../../actions/products.actions';
 
 import './OptimizationOptions.less';
 import {notification} from "../../../../components/Notification";
+import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup";
 
 export const CheckBoxItem = ({text, value = '', checked, ...props}) => (
     <div className="check-box-item">
@@ -58,20 +59,34 @@ let timerIdSearch = null;
 
 const OptimizationOptions = ({selectedProduct}) => {
     const dispatch = useDispatch();
-    const {defaultOptions, selectedAll} = useSelector(state => ({
+    const {defaultOptions, selectedAll, isFirstChangesOptions} = useSelector(state => ({
         defaultOptions: state.products.defaultOptimizationOptions,
-        selectedAll: state.products.selectedAll
+        selectedAll: state.products.selectedAll,
+        isFirstChangesOptions: state.products.isFirstChangesOptions,
     }));
 
-    const [product, changeOptions] = useState(selectedProduct);
+    const [product, changeOptions] = useState(selectedProduct),
+        [selectedOption, setOption] = useState({}),
+        [showConfirmWindow, switchWindow] = useState(false);
 
-    const onChangeOptions = ({target: {name, checked}}) => {
+    function handleChangeOptions({target: {name, checked}}) {
+        if (product.status === 'RUNNING' && (isFirstChangesOptions === undefined || isFirstChangesOptions)) {
+            switchWindow(true);
+            setOption({name, checked})
+        } else {
+            onChangeOptions({name, checked})
+        }
+    }
+
+    const onChangeOptions = ({name, checked}) => {
         changeOptions({
             ...product,
             [name]: checked
         });
 
+        switchWindow(false);
         dispatch(productsActions.updateOptions({[name]: checked}));
+        dispatch(productsActions.changeOptimizedOptions());
 
         clearTimeout(timerIdSearch);
         timerIdSearch = setTimeout(() => {
@@ -121,10 +136,17 @@ const OptimizationOptions = ({selectedProduct}) => {
                         value={value}
                         name={name}
                         checked={product && product[name]}
-                        onChange={onChangeOptions}
+                        onChange={handleChangeOptions}
                     />
                 ))}
             </div>
+
+            <ConfirmActionPopup
+                visible={showConfirmWindow}
+                handleOk={() => onChangeOptions(selectedOption)}
+                handleCancel={() => switchWindow(false)}
+                title={'Are you sure you want to change Optimization Settings?'}
+            />
         </div>
     );
 };
