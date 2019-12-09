@@ -57,7 +57,7 @@ const KeywordsOptimization = ({
 
     const defaultKeys = [
         {
-            ...indexField(currentPage)
+            ...indexField(currentPage, pageSize)
         },
         {
             ...dateField
@@ -277,8 +277,6 @@ const KeywordsOptimization = ({
             }
         ]
     };
-
-    console.log(pageSize);
 
     return (
         <div className="report-item-table">

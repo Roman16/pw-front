@@ -30,7 +30,7 @@ const CustomTable = ({
         >
             <div className="table-overflow">
                 <div className="table-head">
-                    {columns.map(item => {
+                    {columns.map((item, index) => {
                         const menu = (
                             <Menu>
                                 {item.filterIcon && item.filterDropdown(item.key)}
@@ -40,7 +40,7 @@ const CustomTable = ({
                         return (
                             <div
                                 className={`th ${item.filterIcon && 'filter-column'} ${item.sorter && 'sorter-column'}`}
-                                key={item.key}
+                                key={`${item.dataIndex}_${index}`}
                                 style={item.width ? {width: item.width} : {flex: 1}}
                                 onClick={() => item.sorter && onChangeSorter(item.key)}
                             >
@@ -75,7 +75,7 @@ const CustomTable = ({
                         dataSource.length > 0 &&
                         dataSource.map((report, index) => (
                             <div className={`table-body__row ${rowClassName && rowClassName(report)}`}
-                                 key={report.id}>
+                                 key={`report_${index}_`}>
                                 {columns.map((item) => (
                                     <div
                                         className="table-body__field"

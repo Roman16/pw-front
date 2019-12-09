@@ -49,7 +49,7 @@ const NewNegativeKeywords = ({
 
     const defaultKeys = [
         {
-            ...indexField(currentPage)
+            ...indexField(currentPage, pageSize)
         },
         {
             ...dateField

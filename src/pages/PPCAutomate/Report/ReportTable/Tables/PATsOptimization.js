@@ -57,7 +57,7 @@ const PATsOptimization = ({
 
     const defaultKeys = [
         {
-            ...indexField(currentPage)
+            ...indexField(currentPage, pageSize)
         },
         {
             ...dateField

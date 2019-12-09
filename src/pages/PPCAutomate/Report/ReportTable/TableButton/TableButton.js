@@ -25,7 +25,6 @@ TableButton.propTypes = {
     ]),
     active: PropTypes.bool,
     onClick: PropTypes.func,
-    count: PropTypes.number
 };
 TableButton.defaultProps = {
     children: null,

@@ -269,10 +269,9 @@ class ReportTable extends Component {
         window.open(url);
     };
 
-    fetchReports = () => {
+    fetchReports = (selectedPage) => {
         const {activeTab, activeSubTab, startDate, endDate, page, pageSize, filteredColumns, sorterColumn} = this.state,
             {selectedAll, selectedProductId} = this.props;
-
         this.props.getReports({
             id: selectedAll ? "all" : selectedProductId,
             dataType: activeTab,
@@ -280,7 +279,7 @@ class ReportTable extends Component {
             size: 10,
             startDate,
             endDate,
-            page,
+            page: selectedPage ? selectedPage : page,
             pageSize,
             filteredColumns,
             sorterColumn
@@ -295,16 +294,17 @@ class ReportTable extends Component {
                 {
                     page: 1,
                     pageSize: pageSize
-                },
-                this.fetchReports
+                }, () => {
+                    this.fetchReports()
+                }
             );
         } else {
+            this.fetchReports(page);
             this.setState(
                 {
                     page: page,
                     pageSize: this.state.pageSize
-                },
-                this.fetchReports
+                }
             );
         }
 

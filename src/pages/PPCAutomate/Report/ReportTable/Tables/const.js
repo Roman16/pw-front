@@ -44,12 +44,13 @@ export const negativeMatchTypeField = {
 
 };
 
-export const indexField = (currentPage) => ({
+export const indexField = (currentPage, pageSize) => ({
     title: '#',
     dataIndex: 'id',
     key: 'id',
     width: '30px',
-    render: (id, item, index) => (<span>{currentPage * 10 - 10 + index + 1}</span>)
+    render: (id, item, index) => {
+        return(<span>{currentPage * pageSize - pageSize + index + 1}</span>)}
 });
 
 export const dateField = {

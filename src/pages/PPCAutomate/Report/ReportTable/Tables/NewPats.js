@@ -53,7 +53,7 @@ const NewPats = ({
 
     const defaultKeys = [
         {
-            ...indexField(currentPage)
+            ...indexField(currentPage, pageSize)
         },
         {
             ...dateField
