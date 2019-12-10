@@ -34,7 +34,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             width: '15%',
             render: (text, item) => (<span className='card-number'>
                 {item.card_type === 'visa' && <img src={visaLogo} alt=""/>}
-                {item.card_type === 'master' && <img src={masterLogo} alt=""/>}
+                {item.card_type === 'mastercard' && <img src={masterLogo} alt=""/>}
                 {item.card_number && `**** **** **** ${item.card_number}`}
             </span>)
         },
