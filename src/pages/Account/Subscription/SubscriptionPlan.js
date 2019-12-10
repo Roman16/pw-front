@@ -81,28 +81,33 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                     </p>}
                 </div>
 
-                {(product.has_access && !product.cancelled) && <div className="cancel">
-                    <p className="cancel-text">
-                        Next Invoice Date: <span
-                        className="cancel-data">{moment(product.next_invoice_at).format('MMM DD, YYYY')}</span>
-                    </p>
 
-                    <button
-                        className="cancel-btn"
-                        type="button"
-                        onClick={() => onOpenAccountWindow(product)}
-                    >
-                        Cancel
-                    </button>
-                </div>}
+                <div className="cancel">
+                    {(product.has_access && !product.cancelled) && <Fragment>
+                        <p className="cancel-text">
+                            Next Invoice Date: <span
+                            className="cancel-data">{moment(product.next_invoice_at).format('MMM DD, YYYY')}</span>
+                        </p>
 
-                {!product.has_access &&
-                <div className="subscribe-btn">
-                    <button className="btn green-btn" onClick={() => onSubscribe(product)}>
-                        Subscribe
-                    </button>
+                        <button
+                            className="cancel-btn"
+                            type="button"
+                            onClick={() => onOpenAccountWindow(product)}
+                        >
+                            Cancel
+                        </button>
+                    </Fragment>}
+
+                    {!product.has_access &&
+                    <div className="subscribe-btn">
+                        <button className="btn green-btn" onClick={() => onSubscribe(product)}>
+                            Subscribe
+                        </button>
+                    </div>
+                    }
                 </div>
-                }
+
+
             </div>
         </div>
     )
