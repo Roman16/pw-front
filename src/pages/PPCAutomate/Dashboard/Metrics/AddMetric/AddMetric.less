@@ -57,7 +57,19 @@
 
 
 .metrics-modal {
-  width: 100% !important;
+  width: 85vw !important;
+
+  @media (max-width: 1000px) {
+    & {
+      width: 85vw !important;
+    }
+  }
+  @media (max-width: 700px) {
+    & {
+      width: 90vw !important;
+    }
+  }
+
 
   .modal-title {
     border: 0;

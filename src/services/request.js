@@ -47,6 +47,8 @@ const api = (method, url, data, type) => {
                             }
                         } else if (error.response.status === 429) {
 
+                        } else if (error.response.status === 402 && error.response.statusText === "Payment Required") {
+
                         } else {
                             if (error.response.data) {
                                 notification.error({

@@ -6,7 +6,7 @@ export const subscriptionProducts = production ? [
         productName: 'PPC Automate',
         planName: 'Optimization Setup',
         planId: 'plan_G8d203zIH8MTi5',
-        key: 'optimization',
+        key: 'ppc',
     }
 ] : [
     {
@@ -14,7 +14,7 @@ export const subscriptionProducts = production ? [
         productName: 'PPC Automate',
         planName: 'Optimization Setup',
         planId: 'plan_G8d203zIH8MTi5',
-        key: 'optimization',
+        key: 'ppc',
     }
 
 ];

@@ -69,16 +69,16 @@ const OptimizationOptions = ({selectedProduct}) => {
         [selectedOption, setOption] = useState({}),
         [showConfirmWindow, switchWindow] = useState(false);
 
-    function handleChangeOptions({target: {name, checked}}) {
-        if (product.status === 'RUNNING' && (isFirstChangesOptions === undefined || isFirstChangesOptions)) {
-            switchWindow(true);
-            setOption({name, checked})
-        } else {
-            onChangeOptions({name, checked})
-        }
-    }
+    // function handleChangeOptions({target: {name, checked}}) {
+    //     if (product.status === 'RUNNING' && (isFirstChangesOptions === undefined || isFirstChangesOptions)) {
+    //         switchWindow(true);
+    //         setOption({name, checked})
+    //     } else {
+    //         onChangeOptions({name, checked})
+    //     }
+    // }
 
-    const onChangeOptions = ({name, checked}) => {
+    const onChangeOptions = ({target: {name, checked}}) => {
         changeOptions({
             ...product,
             [name]: checked
@@ -136,7 +136,7 @@ const OptimizationOptions = ({selectedProduct}) => {
                         value={value}
                         name={name}
                         checked={product && product[name]}
-                        onChange={handleChangeOptions}
+                        onChange={onChangeOptions}
                     />
                 ))}
             </div>

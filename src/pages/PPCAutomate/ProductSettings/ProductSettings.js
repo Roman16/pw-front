@@ -1,15 +1,16 @@
-import React from "react";
+import React, {Fragment} from "react";
 
 import ProductsList from "./ProductsList/ProductsList";
 import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 import "./ProductSettings.less";
+import SubscriptionNotificationWindow from "../../../components/ModalWindow/SubscriptionNotificationWindow";
 
 const ProductSettingsMain = () => {
   return (
     <div className="product-settings-page">
       <div className="page-caption">
         <h3 className="main-title">REMINDER</h3>
-        {/*<FreeTrial />*/}
+        <FreeTrial product={'ppc'}/>
       </div>
 
       <div className="reminder">
@@ -26,6 +27,9 @@ const ProductSettingsMain = () => {
       </div>
 
       <ProductsList />
+
+        <SubscriptionNotificationWindow product={'ppc'}/>
+
     </div>
   );
 };

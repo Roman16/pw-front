@@ -105,7 +105,7 @@ class Optimization extends Component {
           {/*<ProductList />*/}
 
           <div className="product-options">
-            <FreeTrial product={'optimization'}/>
+            <FreeTrial product={'ppc'}/>
 
             <div className="options">
               <div className={`options-strategy ${isLess ? "more" : "less"}`}>
@@ -177,7 +177,7 @@ class Optimization extends Component {
           {infoType === "options" ? <OptionsInfo /> : <StrategyInfo />}
         </Drawer>
 
-        <SubscriptionNotificationWindow product={'optimization'}/>
+        <SubscriptionNotificationWindow product={'ppc'}/>
       </Fragment>
     );
   }

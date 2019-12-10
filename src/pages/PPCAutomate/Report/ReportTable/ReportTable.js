@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import moment from "moment";
 import {Tabs, Button} from "antd";
+import FreeTrial from "../../../../components/FreeTrial/FreeTrial";
 
 import KeywordsOptimization from "./Tables/KeywordsOptimization";
 import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
@@ -435,7 +436,7 @@ class ReportTable extends Component {
                         </Button>
                     </div>
 
-                    {/*<FreeTrial/>*/}
+                    <FreeTrial product={'ppc'}/>
                 </div>
 
                 <Tabs activeKey={activeTab} type="card" onChange={this.handleChangeTab}>

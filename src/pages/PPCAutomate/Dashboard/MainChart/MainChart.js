@@ -203,15 +203,14 @@ const MainChart = () => {
 
     useEffect(getChartData, [activeMetrics, selectedRangeDate, selectedProduct]);
 
-
     return (
         <div className='main-chart'>
             <Header
                 timeRange={timeRange}
                 onChangeSwitch={handleChangeSwitch}
                 selectedRangeDate={selectedRangeDate}
-                firstActiveMetricTitle={activeMetrics && activeMetrics[0].title}
-                secondActiveMetricTitle={activeMetrics && activeMetrics[1].title}
+                firstActiveMetricTitle={activeMetrics[0] && activeMetrics[0].title}
+                secondActiveMetricTitle={activeMetrics[0] && activeMetrics[1].title}
                 showWeekChart={showWeekChart}
                 showDailyChart={showDailyChart}
             />

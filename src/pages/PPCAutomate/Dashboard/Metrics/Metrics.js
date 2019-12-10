@@ -44,7 +44,6 @@ const Metrics = () => {
                 />
             ))}
 
-
             {selectedMetrics.length < 16 && <AddMetric/>}
         </div>
     )

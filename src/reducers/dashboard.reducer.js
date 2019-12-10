@@ -33,14 +33,31 @@ export function dashboard(state = initialState, action) {
                 // showWeekChart: (state.showDailyChart && !state.showWeekChart) ? true : state.showWeekChart
             };
 
-        case dashboardConstants.REMOVE_SELECTED_METRIC:
-            const newMetricList = state.selectedMetrics.filter(item => item.key !== action.payload.key);
+        case dashboardConstants.REMOVE_SELECTED_METRIC: {
+            const newMetricList = state.selectedMetrics.filter(item => item.key !== action.payload.key),
+                newActiveMetricsList = state.activeMetrics.map(item => item.key !== action.payload.key && item);
+
+            if (newMetricList.length > 0) {
+                if (!newActiveMetricsList[0].key && (newMetricList[0].key !== newActiveMetricsList[1].key)) {
+                    newActiveMetricsList[0] = newMetricList[0];
+                } else if (!newActiveMetricsList[0].key && (newMetricList[0].key === newActiveMetricsList[1].key)) {
+                    newActiveMetricsList[0] = newMetricList[1] ? newMetricList[1] : {};
+                } else if (!newActiveMetricsList[1].key && (newMetricList[0].key !== newActiveMetricsList[0].key)) {
+                    newActiveMetricsList[1] = newMetricList[0];
+                } else if (!newActiveMetricsList[1].key && (newMetricList[0].key === newActiveMetricsList[0].key)) {
+                    newActiveMetricsList[1] = newMetricList[1] ? newMetricList[1] : {};
+                }
+            } else {
+                newActiveMetricsList[0] = {};
+                newActiveMetricsList[1] = {};
+            }
 
             return {
                 ...state,
                 selectedMetrics: newMetricList,
-                activeMetrics: state.activeMetrics.map(item => item.key === action.payload.key ? {} : item)
+                activeMetrics: newActiveMetricsList
             };
+        }
 
         case dashboardConstants.SET_METRICS_STATISTIC:
             return {
@@ -55,11 +72,41 @@ export function dashboard(state = initialState, action) {
                 }))
             };
 
-        case dashboardConstants.UPDATE_METRICS_LIST:
+        case dashboardConstants.UPDATE_METRICS_LIST: {
+            let newActiveMetricsList = [...state.activeMetrics];
+
+            if(action.payload.length > 0) {
+                if (action.payload.find(item => item.key === state.activeMetrics[0].key) === undefined &&
+                    action.payload.find(item => item.key === state.activeMetrics[1].key) === undefined) {
+                    newActiveMetricsList = action.payload.slice(0, 2);
+                } else if (action.payload.find(item => item.key === state.activeMetrics[0].key) === undefined
+                    && action.payload.find(item => item.key === state.activeMetrics[1].key) !== undefined
+                    && action.payload[0].key !== state.activeMetrics[1].key) {
+                    newActiveMetricsList[0] = action.payload[0]
+                } else if (action.payload.find(item => item.key === state.activeMetrics[0].key) === undefined
+                    && action.payload.find(item => item.key === state.activeMetrics[1].key) !== undefined
+                    && action.payload[0].key === state.activeMetrics[1].key) {
+                    newActiveMetricsList[0] = action.payload[1] ? action.payload[1] : {}
+                } else if (action.payload.find(item => item.key === state.activeMetrics[1].key) === undefined
+                    && action.payload.find(item => item.key === state.activeMetrics[0].key) !== undefined
+                    && action.payload[0].key !== state.activeMetrics[0].key) {
+                    newActiveMetricsList[1] = action.payload[0]
+                } else if (action.payload.find(item => item.key === state.activeMetrics[1].key) === undefined
+                    && action.payload.find(item => item.key === state.activeMetrics[0].key) !== undefined
+                    && action.payload[0].key === state.activeMetrics[0].key) {
+                    newActiveMetricsList[1] = action.payload[1] ? action.payload[1] : {}
+                }
+            } else {
+                newActiveMetricsList[0] = {};
+                newActiveMetricsList[1] = {};
+            }
+
             return {
                 ...state,
-                selectedMetrics: action.payload
+                selectedMetrics: action.payload,
+                activeMetrics: newActiveMetricsList
             };
+        }
 
         case dashboardConstants.SELECT_PRODUCT:
             return {
@@ -101,7 +148,6 @@ export function dashboard(state = initialState, action) {
                     activeMetrics: newActiveMetrics
                 };
             }
-
 
         case dashboardConstants.DEACTIVATE_METRIC:
             let countActiveMetrics = state.activeMetrics.map(item => item.key).filter(str => str);
