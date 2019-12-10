@@ -4,15 +4,14 @@ export const metricsListArray = [
         key: 'impressions',
         info: 'The number of times ads were displayed.',
         label: 'Total',
-        type: ''
+        type: 'number'
     },
     {
         title: 'Clicks',
         key: 'clicks',
         info: 'The number of times your ads were clicked.',
         label: 'Total',
-        type: '',
-        active: true
+        type: 'number',
     },
     {
         title: 'CTR',
@@ -34,7 +33,6 @@ export const metricsListArray = [
         info: 'This is the average amount you paid for each click on an ad.',
         label: 'Average',
         type: 'currency',
-        active: true
     },
     {
         title: 'Orders',
@@ -44,19 +42,19 @@ Sponsored Products: Orders from advertised products as well as other products fr
 It can take up to 12 hours for your orders data to update. As a result, orders data may be delayed in the Today date range. We recommend waiting until all orders data is populated before evaluating campaign performance.<br/>
 Payment failures and orders that are cancelled within 72 hours will be removed from orders totals.`,
         label: 'Total',
-        type: ''
+        type: 'number'
     },
     {
         title: 'Ad Orders',
         key: 'ad_orders',
         label: 'Total',
-        type: ''
+        type: 'number'
     },
     {
         title: 'Organic Orders',
         key: 'organic_orders',
         label: 'Total',
-        type: ''
+        type: 'number'
     },
     {
         title: 'Total Sales',
@@ -114,3 +112,5 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'percent'
     }
 ];
+
+

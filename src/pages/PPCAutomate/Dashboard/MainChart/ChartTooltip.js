@@ -3,20 +3,28 @@ import greenLineIcon from "../../../../assets/img/icons/green-line.svg";
 import violetLineIcon from "../../../../assets/img/icons/violet-line.svg";
 import greenDailyIcon from "../../../../assets/img/icons/green-daily.svg";
 import violetDailyIcon from "../../../../assets/img/icons/violet-daily.svg";
+import {metricsListArray} from "../Metrics/metricsList";
 import moment from "moment";
 import {round} from "../../../../utils/round";
+import {numberMask} from "../../../../utils/numberMask";
 
 
 const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payload}) => {
-    const getChartValue = (key) => {
-        if(payload.find(item => item.dataKey === key)) {
-            return round(payload.find(item => item.dataKey === key).value, 2)
+    const getChartValue = (key, metric) => {
+        if (payload.find(item => item.dataKey === key)) {
+            if (metricsListArray.find(item => item.key === metric).type === 'percent') {
+                return round(payload.find(item => item.dataKey === key).value, 2) + '%'
+            } else if (metricsListArray.find(item => item.key === metric).type === 'currency') {
+                return '$' + numberMask(payload.find(item => item.dataKey === key).value, 2)
+            } else {
+                return numberMask(payload.find(item => item.dataKey === key).value)
+            }
         } else {
-            return '0'
+            return 'N/A'
         }
     };
 
-    if(payload) {
+    if (payload) {
         return (
             <div className='custom-line-chart-tooltip'>
                 <div className='label'>
@@ -36,12 +44,12 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
 
                     {activeMetrics[0].key && <div className="week-value">
                         <img src={greenLineIcon} alt=""/>
-                        {getChartValue('seven_days_first_metric_value')}
+                        {getChartValue('seven_days_first_metric_value', activeMetrics[0].key)}
                     </div>}
 
                     {activeMetrics[1].key && <div className="week-value">
                         <img src={violetLineIcon} alt=""/>
-                        {getChartValue('seven_days_second_metric_value')}
+                        {getChartValue('seven_days_second_metric_value', activeMetrics[1].key)}
                     </div>}
                 </div>}
 
@@ -50,12 +58,12 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
 
                     {activeMetrics[0].key && <div className="daily-value">
                         <img src={greenDailyIcon} alt=""/>
-                        {getChartValue('daily_first_metric_value')}
+                        {getChartValue('daily_first_metric_value', activeMetrics[0].key)}
                     </div>}
 
                     {activeMetrics[1].key && <div className="daily-value">
                         <img src={violetDailyIcon} alt=""/>
-                        {getChartValue('daily_second_metric_value')}
+                        {getChartValue('daily_second_metric_value', activeMetrics[1].key)}
                     </div>}
                 </div>}
             </div>

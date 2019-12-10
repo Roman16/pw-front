@@ -1,13 +1,15 @@
 import React, {Fragment, useEffect, useState} from "react";
 import ModalWindow from "./ModalWindow";
 import {history} from "../../utils/history";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {Result, Button} from 'antd';
 import './ModalWindow.less';
 import {subscriptionProducts} from '../../constans/subscription.products.name';
+import {userActions} from "../../actions/user.actions";
 
 
 const SubscriptionNotificationWindow = ({product}) => {
+    const dispatch = useDispatch();
     const mainContainer = document.querySelector(`.main-pages`),
         modalWrap = document.querySelector('.ant-modal-wrap');
 
@@ -29,6 +31,10 @@ const SubscriptionNotificationWindow = ({product}) => {
         })
     }, [mainContainer, subscribedProduct]);
 
+    useEffect(() => {
+        dispatch(userActions.getPersonalUserInfo())
+    }, []);
+
     function RenderModalWindow() {
         return (
             <Fragment>
@@ -38,7 +44,8 @@ const SubscriptionNotificationWindow = ({product}) => {
                     subTitle="The PPC Automate tool is only available to customers with an active subscription. Upgrade now."
                 />
                 <div className='buttons-block'>
-                    {!subscribedProduct.incomplete_payment.has_incomplete_payment && <button onClick={() => history.push('/account-subscription')} className='btn default'>Free Trial
+                    {!subscribedProduct.incomplete_payment.has_incomplete_payment &&
+                    <button onClick={() => history.push('/account-subscription')} className='btn default'>Free Trial
                     </button>}
 
                     {subscribedProduct.incomplete_payment.has_incomplete_payment ?

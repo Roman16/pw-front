@@ -119,10 +119,7 @@
   @media (max-width: 600px) {
     & {
       .chart-header {
-        grid-template-areas: "pairName pairName pairName pairName"
-        "weekSwitchBlock lineFill dailySwitchBlock dailyIcon"
-        "chartLegend chartLegend chartLegend chartLegend"
-        "datePiker datePiker datePiker datePiker";
+        grid-template-areas: "pairName pairName pairName pairName" "weekSwitchBlock lineFill dailySwitchBlock dailyIcon" "chartLegend chartLegend chartLegend chartLegend" "datePiker datePiker datePiker datePiker";
 
         .DatePicker {
           margin: 0 auto;
@@ -149,18 +146,16 @@
 
 .custom-line-chart-tooltip {
   display: flex;
-  width: 330px;
+  width: 400px;
   padding: 25px;
   background: #FFFFFF;
   border-radius: 8px;
   font-family: ir;
-  font-size: 0.85rem;
+  font-size: 1rem;
   box-shadow: 0px 16px 16px rgba(40, 62, 112, 0.16);
 
   & > div {
     flex: 1;
-
-
 
     & > div:nth-child(2) {
       color: #8FD39D;
@@ -188,7 +183,6 @@
 
     &.date {
       font-weight: bold;
-
     }
   }
 
@@ -204,5 +198,13 @@
 
   .daily-value {
     text-align: right;
+  }
+
+  //retina
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    & {
+      font-size: 1.1428571428571428rem;
+
+    }
   }
 }
