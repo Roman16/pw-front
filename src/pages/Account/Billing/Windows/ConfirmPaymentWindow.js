@@ -3,6 +3,7 @@ import {injectStripe} from "react-stripe-elements";
 import {Spin} from "antd";
 import {userService} from "../../../../services/user.services";
 import {numberMask} from "../../../../utils/numberMask";
+import {notification} from "../../../../components/Notification";
 
 class ConfirmPaymentWindow extends Component {
     state = {
@@ -21,13 +22,16 @@ class ConfirmPaymentWindow extends Component {
             {
                 payment_method: defaultCard.id
             }
-        ).then(res => {
-            console.log(res);
-            // userService.confirmPayment({
-            //     payment_intent_id: res.paymentIntent.id
-            // });
-            this.props.onClose();
-        });
+        )
+            .then((res) => {
+                if(res.error) {
+                    notification.error({title: res.error.message})
+                }
+                this.props.onClose();
+            })
+            .catch(e => {
+                this.props.onClose();
+            })
 
     };
 

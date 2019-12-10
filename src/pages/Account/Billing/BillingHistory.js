@@ -19,7 +19,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             dataIndex: 'amount_due',
             key: 'amount_due',
             render: (amount, item) => (
-                <span>{item.amount_value != null && (numberMask(item.amount_value, 2) + item.currency_code)}</span>
+                <span>{item.amount_value != null ? `${numberMask(item.amount_value, 2)} ${item.currency_code != null ? item.currency_code : ''}` : 'N/A'}</span>
             )
         },
         {
