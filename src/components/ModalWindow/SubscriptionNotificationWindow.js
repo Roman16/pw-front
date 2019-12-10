@@ -22,6 +22,8 @@ const SubscriptionNotificationWindow = ({product}) => {
         if (!subscribedProduct.has_access && (mainContainer != null)) {
             openWindow(true);
             mainContainer.classList.add("disable-page");
+        } else {
+            openWindow(false);
         }
 
         return (() => {
