@@ -27,9 +27,6 @@ const ProductSettingsMain = () => {
       </div>
 
       <ProductsList />
-
-        <SubscriptionNotificationWindow product={'ppc'}/>
-
     </div>
   );
 };
