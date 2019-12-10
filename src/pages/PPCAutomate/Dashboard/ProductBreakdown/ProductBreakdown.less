@@ -202,12 +202,13 @@
       }
 
       .product-params {
-        max-width: 50px;
         font-style: normal;
         font-weight: 500;
         font-size: 1.7142857142857142rem;
         letter-spacing: -0.4375px;
         color: #343C5A;
+        display: flex;
+        flex-direction: column;
 
         .product-metric-changes {
           & > div {
@@ -326,6 +327,8 @@
         }
 
         .ant-table-tbody .product-params .product-metric-changes > div {
+          height: 14px;
+          line-height: 14px;
           font-size: 1rem; //12px
         }
       }
