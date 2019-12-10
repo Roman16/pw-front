@@ -75,6 +75,7 @@ const NewPats = ({
                 title: 'Ad Group',
                 dataIndex: 'd_adGroupName',
                 key: 'd_adGroupName',
+                width: '8.5em',
                 sorter: true,
                 ...columnTextFilter(onChangeFilter, filteredColumns)
             },
@@ -87,6 +88,7 @@ const NewPats = ({
                 ),
                 dataIndex: 'd_patType',
                 key: 'd_patType',
+                width: '10em',
                 render: text => <span className="capitalize-field">{text}</span>,
                 sorter: true,
                 ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
@@ -94,6 +96,7 @@ const NewPats = ({
             },
             {
                 ...patIntentField,
+                width: '13em',
                 sorter: true,
                 ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
 

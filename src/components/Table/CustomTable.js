@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import {Pagination, Spin, Select, Menu, Dropdown, Icon} from 'antd';
 import shortid from 'shortid';
 
@@ -23,6 +23,8 @@ const CustomTable = ({
                          sorterColumn
                      }) => {
 
+    const devicePixelRatio = window.devicePixelRatio;
+
     return (
         <div
             className="custom-table"
@@ -37,11 +39,13 @@ const CustomTable = ({
                             </Menu>
                         );
 
+                        const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
+
                         return (
                             <div
                                 className={`th ${item.filterIcon && 'filter-column'} ${item.sorter && 'sorter-column'}`}
                                 key={`${item.dataIndex}_${index}`}
-                                style={item.width ? {width: item.width} : {flex: 1}}
+                                style={fieldWidth}
                                 onClick={() => item.sorter && onChangeSorter(item.key)}
                             >
                                 <div className='title'>
@@ -76,17 +80,22 @@ const CustomTable = ({
                         dataSource.map((report, index) => (
                             <div className={`table-body__row ${rowClassName && rowClassName(report)}`}
                                  key={`report_${index}_`}>
-                                {columns.map((item) => (
-                                    <div
-                                        className="table-body__field"
-                                        style={item.width ? {width: item.width} : {flex: 1}}
-                                        key={shortid.generate()}
-                                    >
-                                        {item.render
-                                            ? item.render(report[item.key], report, index)
-                                            : report[item.key]}
-                                    </div>
-                                ))}
+                                {columns.map((item) => {
+
+                                    const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
+
+                                    return (
+                                        <div
+                                            className="table-body__field"
+                                            style={fieldWidth}
+                                            key={shortid.generate()}
+                                        >
+                                            {item.render
+                                                ? item.render(report[item.key], report, index)
+                                                : report[item.key]}
+                                        </div>
+                                    )
+                                })}
                             </div>
                         ))
                     ) : (
@@ -97,25 +106,28 @@ const CustomTable = ({
                 </div>
             </div>
 
-            {(totalSize > pageSize) && (
-                <div className='table-pagination'>
-                    <Pagination
-                        defaultCurrent={1}
-                        pageSize={+pageSize || 10}
-                        current={currentPage}
-                        total={totalSize}
-                        onChange={(page) => onChangePagination({page})}
-                    />
+            <div className='table-pagination'>
+                {(totalSize > pageSize) && (
+                    <Fragment>
+                        <Pagination
+                            defaultCurrent={1}
+                            pageSize={+pageSize || 10}
+                            current={currentPage}
+                            total={totalSize}
+                            onChange={(page) => onChangePagination({page})}
+                        />
 
-                    {showSizeChanger &&
-                    <Select onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
-                        {pageSizeOptions.map(size => (
-                            <Option value={size} key={size}>{size}</Option>
-                        ))}
-                    </Select>}
-                </div>
+                        {(showSizeChanger && totalSize > pageSize) &&
+                        <Select onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
+                            {pageSizeOptions.map(size => (
+                                <Option value={size} key={size}>{size}</Option>
+                            ))}
+                        </Select>
+                        }
+                    </Fragment>
+                )}
+            </div>
 
-            )}
         </div>
     );
 };

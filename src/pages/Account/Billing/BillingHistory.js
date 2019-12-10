@@ -58,8 +58,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             dataIndex: 'status',
             key: 'status',
             render: (invoiceNumber, item) => {
-                const status = item.status.toUpperCase();
-                if ((status !== 'CANCELLED') && (status !== 'VOID') && (status !== 'FAILED')) return (
+                if (item.invoice_link_id) return (
                     <div className='invoice-actions'>
                         <a href={`https://pay.stripe.com/invoice/${item.invoice_link_id}`} target='_blank'>
                             <Icon type="eye"/>

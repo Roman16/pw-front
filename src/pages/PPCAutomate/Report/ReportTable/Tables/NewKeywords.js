@@ -66,7 +66,7 @@ const NewKeywords = ({
                 title: 'Campaign',
                 dataIndex: 'd_campaignName',
                 key: 'd_campaignName',
-                width: '350px',
+                width: '250px',
                 sorter: true,
                 ...columnTextFilter(onChangeFilter, filteredColumns)
             },
@@ -180,7 +180,7 @@ const NewKeywords = ({
                 title: 'Campaign',
                 dataIndex: 'd_campaignName',
                 key: 'd_campaignName',
-                width: '300px',
+                width: '250px',
                 sorter: true,
                 ...columnTextFilter(onChangeFilter, filteredColumns)
             },
@@ -188,6 +188,7 @@ const NewKeywords = ({
                 title: 'Ad Group',
                 dataIndex: 'd_adGroupName',
                 key: 'd_adGroupName',
+                width: '150px',
                 sorter: true,
                 ...columnTextFilter(onChangeFilter, filteredColumns)
             },
@@ -195,6 +196,7 @@ const NewKeywords = ({
                 title: 'Keyword',
                 dataIndex: 'd_keywordText',
                 key: 'd_keywordText',
+                width: '150px',
                 sorter: true,
                 ...columnTextFilter(onChangeFilter, filteredColumns)
             },

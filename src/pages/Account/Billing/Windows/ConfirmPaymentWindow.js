@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {injectStripe} from "react-stripe-elements";
 import {Spin} from "antd";
 import {userService} from "../../../../services/user.services";
+import {numberMask} from "../../../../utils/numberMask";
 
 class ConfirmPaymentWindow extends Component {
     state = {
@@ -47,7 +48,7 @@ class ConfirmPaymentWindow extends Component {
             <div>
                 <h2>There was an issue with your payment in the amount of</h2>
 
-                {amount ? (<h2><b>$ {amount || 0}</b></h2>) : ''}
+                {amount ? (<h2><b>$ {numberMask(amount / 100, 2) || 0}</b></h2>) : ''}
 
                 <h2>Please update your payment method or try again.</h2>
 

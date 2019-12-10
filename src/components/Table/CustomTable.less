@@ -192,7 +192,20 @@
 
   .ant-pagination {
     font-size: 1rem; // 14px
-    margin: 1.4285714em 0.7142857em;
+    margin: 1.4285714em 2em;
+  }
+
+  //-------------------------------------
+  /*Retina CSS */
+  //-------------------------------------
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+    & {
+      .ant-pagination {
+        margin: 1.4285714em 5em;
+      }
+    }
   }
 }
+
+
 
