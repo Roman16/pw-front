@@ -49,7 +49,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
                     <span className='payment-status success'>{text.toLowerCase()}</span>);
                 if ((status === 'PENDING') || (status === 'WAITING') || (status === 'OPEN')) return (
                     <span className='payment-status waiting'>{text.toLowerCase()}</span>);
-                if ((status === 'CANCELLED') || (status === 'VOID') || (status === 'FAILED')) return (
+                if ((status === 'CANCELLED') || (status === 'VOID') || (status === 'FAILED') || (status === 'INCOMPLETE')) return (
                     <span className='payment-status error'>{text.toLowerCase()}</span>);
             }
         },
@@ -96,7 +96,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
                         const status = item.status.toUpperCase();
                         if ((status === 'PAID') || (status === 'SUCCESS')) return ('success-invoice');
                         if ((status === 'PENDING') || (status === 'WAITING') || (status === 'OPEN')) return ('waiting-invoice');
-                        if ((status === 'CANCELLED') || (status === 'VOID') || (status === 'FAILED')) return ('error-invoice');
+                        if ((status === 'CANCELLED') || (status === 'VOID') || (status === 'FAILED') || (status === 'INCOMPLETE')) return ('error-invoice');
                     }}
                 />
             </div>}
