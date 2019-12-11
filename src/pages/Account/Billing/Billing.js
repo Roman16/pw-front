@@ -13,8 +13,9 @@ import ConfirmPaymentWindow from './Windows/ConfirmPaymentWindow';
 import UpdateCard from "./Windows/UpdateCard";
 import {Elements, StripeProvider} from "react-stripe-elements";
 import {userService} from "../../../services/user.services";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {subscriptionProducts} from "../../../constans/subscription.products.name";
+import {userActions} from "../../../actions/user.actions";
 
 const defaultPaginationParams = {
     page: 1,
@@ -27,6 +28,7 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
     : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 const Billing = () => {
+    const dispatch = useDispatch();
     const [openedWindow, openWindow] = useState(null),
         [selectedCard, selectCard] = useState({}),
         [visibleConfirmPaymentWindow, openConfirmWindow] = useState(false),
@@ -128,6 +130,13 @@ const Billing = () => {
         updateHistoryList(res);
     }
 
+    function handleUpdateInformation() {
+        dispatch(userActions.getPersonalUserInfo());
+        getPaymentMethodList();
+        getPaymentHistory();
+
+    }
+
     function renderDrawer() {
         if (openedWindow === 'company') {
             return (
@@ -215,6 +224,7 @@ const Billing = () => {
                         <ConfirmPaymentWindow
                             userSecretKey={userSecretKey}
                             onClose={() => openConfirmWindow(false)}
+                            onUpdateInformation={handleUpdateInformation}
                             paymentCards={paymentCards}
                         />
                     </Elements>

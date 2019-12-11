@@ -26,6 +26,8 @@ class ConfirmPaymentWindow extends Component {
             .then((res) => {
                 if(res.error) {
                     notification.error({title: res.error.message})
+                } else {
+                    this.props.onUpdateInformation()
                 }
                 this.props.onClose();
             })
