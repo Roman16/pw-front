@@ -1,12 +1,33 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import {Spin} from "antd";
 import reload from "../../../assets/img/icons/reload.svg";
 import ppcIcon from "../../../assets/img/icons/ppc-automate-icon.svg";
 import moment from "moment";
 import {numberMask} from "../../../utils/numberMask";
+import {history} from "../../../utils/history";
+import {notification} from "../../../components/Notification";
 
 const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe}) => {
+    const [disableButton, changeButton] = useState(false);
+    let timeout = null;
+
+    function handleSubscribe() {
+        notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'})
+        onSubscribe(product);
+        changeButton(true);
+    }
+
+    useEffect(() => {
+        if (disableButton) {
+            timeout = setTimeout(() => history.push('/account-billing'), 10000)
+        }
+
+        return () => {
+            clearTimeout(timeout);
+        }
+    }, [disableButton]);
+
     return (
         <div className="automate-box">
             {product.grace_period && product.grace_period.on_grace_period && <div className="reactivate">
@@ -100,8 +121,8 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
 
                     {!product.has_access &&
                     <div className="subscribe-btn">
-                        <button className="btn green-btn" onClick={() => onSubscribe(product)}>
-                            Subscribe
+                        <button className="btn green-btn" onClick={handleSubscribe} disabled={disableButton}>
+                            {disableButton ? <Spin/> : 'Subscribe'}
                         </button>
                     </div>
                     }
