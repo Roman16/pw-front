@@ -105,10 +105,16 @@ const NewNegativePats = ({
             width: '13em',
         },
         {
+            // title: (
+            //     <TitleInfo
+            //         title="PAT Value"
+            //         info=""
+            //     />
+            // ),
             title: 'PAT Value',
             dataIndex: 'd_patValue',
             key: 'd_patValue',
-            width: '130px',
+            width: '150px',
             sorter: true,
             filter: (dataIndex) => <ColumnTextFilter
                 onChangeFilter={onChangeFilter}
@@ -166,7 +172,7 @@ const NewNegativePats = ({
                 ),
                 dataIndex: 'd_customerSearchTermClicks',
                 key: 'd_customerSearchTermClicks',
-                width: '10.5em',
+                width: '11em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
                     onChangeFilter={onChangeFilter}
@@ -218,7 +224,7 @@ const NewNegativePats = ({
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
-                width: '10em',
+                width: '10.5em',
                 render: (text) => (text && <span>{round(text, 2)}%</span>),
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
@@ -236,7 +242,7 @@ const NewNegativePats = ({
                 ),
                 dataIndex: 'd_customerSearchTermClicks',
                 key: 'd_customerSearchTermClicks',
-                width: '10.5em',
+                width: '11em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
                     onChangeFilter={onChangeFilter}

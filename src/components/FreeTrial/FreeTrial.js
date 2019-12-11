@@ -13,9 +13,9 @@ const FreeTrial = ({product}) => {
     }));
 
     const todayDate = moment(new Date());
-    const freeTrial = moment(trialEndsDate).diff(todayDate, 'days');
+    const freeTrial = Math.round(moment(trialEndsDate).diff(todayDate, 'hours') / 24);
 
-    if (!onTrial) {
+    if (onTrial) {
         return (
             <div className="additional">
                 <p className="free-trial">

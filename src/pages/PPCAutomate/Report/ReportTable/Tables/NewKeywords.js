@@ -240,7 +240,7 @@ const NewKeywords = ({
                 title: 'Campaign',
                 dataIndex: 'd_campaignName',
                 key: 'd_campaignName',
-                width: '250px',
+                width: '300px',
                 sorter: true,
                 filter: (dataIndex) => <ColumnTextFilter
                     onChangeFilter={onChangeFilter}
@@ -252,7 +252,7 @@ const NewKeywords = ({
                 title: 'Ad Group',
                 dataIndex: 'd_adGroupName',
                 key: 'd_adGroupName',
-                width: '150px',
+                width: '15em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnTextFilter
                     onChangeFilter={onChangeFilter}
@@ -264,7 +264,7 @@ const NewKeywords = ({
                 title: 'Keyword',
                 dataIndex: 'd_keywordText',
                 key: 'd_keywordText',
-                width: '150px',
+                width: '15em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnTextFilter
                     onChangeFilter={onChangeFilter}
@@ -376,7 +376,7 @@ const NewKeywords = ({
                 ),
                 dataIndex: 'd_customerSearchTermClicks',
                 key: 'd_customerSearchTermClicks',
-                width: '10.5em',
+                width: '11em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
                     onChangeFilter={onChangeFilter}

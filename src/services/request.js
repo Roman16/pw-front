@@ -38,7 +38,7 @@ const api = (method, url, data, type) => {
                     // console.log('error.response :', error.response);
                     if (typeof error.response.data === 'object') {
                         reject(error);
-
+                        console.log(error.response);
                         if (error.response.status === 401) {
                             if (error.response.data) {
                                 notification.error({
@@ -48,6 +48,8 @@ const api = (method, url, data, type) => {
                         } else if (error.response.status === 429) {
 
                         } else if (error.response.status === 402 && error.response.statusText === "Payment Required") {
+
+                        } else if (error.response.status === 403 && error.response.statusText === "Forbidden") {
 
                         } else {
                             if (error.response.data) {

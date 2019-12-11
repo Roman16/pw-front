@@ -140,6 +140,7 @@ export const ColumnNumberFilter = ({onChangeFilter, filteredColumns, dataIndex})
 
                 <Input
                     value={searchValue}
+                    type={'number'}
                     onChange={e => setValue(e.target.value)}
                     onPressEnter={() => onChangeFilter(dataIndex, {
                         type: searchType,

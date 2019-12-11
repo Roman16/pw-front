@@ -63,6 +63,7 @@ const KeywordsOptimization = ({
         },
         {
             title: "Campaign",
+
             dataIndex: 'd_campaignName',
             key: 'd_campaignName',
             width: '180px',
@@ -167,7 +168,7 @@ const KeywordsOptimization = ({
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
-                width: '10em',
+                width: '10.5em',
                 sorter: true,
                 render: (text) => (text && <span>{round(text, 2)}%</span>),
                 filter: (dataIndex) => <ColumnNumberFilter
@@ -296,7 +297,7 @@ const KeywordsOptimization = ({
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
-                width: '10em',
+                width: '10.5em',
                 render: (text) => (text && <span>{round(text, 2)}%</span>),
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
@@ -318,7 +319,7 @@ const KeywordsOptimization = ({
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
-                width: '10em',
+                width: '10.5em',
                 render: (text) => (text && <span>{round(text, 2)}%</span>),
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter

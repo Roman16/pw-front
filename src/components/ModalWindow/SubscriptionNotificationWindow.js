@@ -46,10 +46,6 @@ const SubscriptionNotificationWindow = ({product}) => {
                     subTitle="The PPC Automate tool is only available to customers with an active subscription. Upgrade now."
                 />
                 <div className='buttons-block'>
-                    {!subscribedProduct.incomplete_payment.has_incomplete_payment &&
-                    <button onClick={() => history.push('/account-subscription')} className='btn default'>Free Trial
-                    </button>}
-
                     {subscribedProduct.incomplete_payment.has_incomplete_payment ?
                         <button onClick={() => history.push('/account-billing')} className='btn green-btn'>
                             Upgrade Now

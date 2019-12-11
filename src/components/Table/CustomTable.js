@@ -47,9 +47,9 @@ const CustomTable = ({
 
                                     {sorterColumn && sorterColumn.key === item.key && (<div className='sorter-buttons'>
                                         <Icon type="caret-up"
-                                              style={{color: `${(sorterColumn.type === 'asc') ? "#1890ff" : ""}`}}/>
+                                              style={{color: `${(sorterColumn.type === 'asc') ? "#6d6df6" : ""}`}}/>
                                         <Icon type="caret-down"
-                                              style={{color: `${(sorterColumn.type === 'desc') ? "#1890ff" : ""}`}}/>
+                                              style={{color: `${(sorterColumn.type === 'desc') ? "#6d6df6" : ""}`}}/>
                                     </div>)}
                                 </div>
 

@@ -79,7 +79,7 @@ const NewPats = ({
                 title: 'Ad Group',
                 dataIndex: 'd_adGroupName',
                 key: 'd_adGroupName',
-                width: '8.5em',
+                width: '9em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnTextFilter
                     onChangeFilter={onChangeFilter}
@@ -96,7 +96,7 @@ const NewPats = ({
                 ),
                 dataIndex: 'd_patType',
                 key: 'd_patType',
-                width: '10em',
+                width: '10.5em',
                 render: str => <span className="capitalize-field">{str}</span>,
                 sorter: true,
                 filter: (dataIndex) => <ColumnMenuFilter
@@ -111,12 +111,19 @@ const NewPats = ({
             },
             {
                 ...patIntentField(onChangeFilter, filteredColumns),
-                width: '13em',
+                width: '13.5em',
             },
             {
+                // title: (
+                //     <TitleInfo
+                //         title="PAT Value"
+                //         info=""
+                //     />
+                // ),
                 title: 'PAT Value',
                 dataIndex: 'd_patValue',
                 key: 'd_patValue',
+                width: '13em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnTextFilter
                     onChangeFilter={onChangeFilter}
@@ -184,10 +191,16 @@ const NewPats = ({
                 width: '13em',
             },
             {
+                // title: (
+                //     <TitleInfo
+                //         title="PAT Value"
+                //         info=""
+                //     />
+                // ),
                 title: 'PAT Value',
                 dataIndex: 'd_patValue',
                 key: 'd_patValue',
-                width: '130px',
+                width: '150px',
                 sorter: true,
                 filter: (dataIndex) => <ColumnTextFilter
                     onChangeFilter={onChangeFilter}
@@ -217,7 +230,7 @@ const NewPats = ({
                 ),
                 dataIndex: 'd_customerSearchTermClicks',
                 key: 'd_customerSearchTermClicks',
-                width: '10.5em',
+                width: '11em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
                     onChangeFilter={onChangeFilter}
