@@ -6,14 +6,12 @@ import ppcIcon from "../../../assets/img/icons/ppc-automate-icon.svg";
 import moment from "moment";
 import {numberMask} from "../../../utils/numberMask";
 import {history} from "../../../utils/history";
-import {notification} from "../../../components/Notification";
 
 const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe}) => {
     const [disableButton, changeButton] = useState(false);
     let timeout = null;
 
     function handleSubscribe() {
-        notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'})
         onSubscribe(product);
         changeButton(true);
     }

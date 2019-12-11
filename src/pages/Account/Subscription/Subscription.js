@@ -12,6 +12,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {userService} from "../../../services/user.services";
 import {userActions} from "../../../actions/user.actions";
 import {subscriptionProducts} from "../../../constans/subscription.products.name";
+import {notification} from "../../../components/Notification";
 
 const Subscription = () => {
     let interval = null;
@@ -43,6 +44,7 @@ const Subscription = () => {
                 subscriptionId: productId,
                 marketplace_id: 'ATVPDKIKX0DER'
             });
+            notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'});
 
             dispatch(userActions.getPersonalUserInfo());
         } catch (e) {
