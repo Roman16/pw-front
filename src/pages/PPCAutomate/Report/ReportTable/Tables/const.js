@@ -6,13 +6,13 @@ import down from '../../../../../assets/img/icons/down-row.svg';
 import right from '../../../../../assets/img/icons/right-row.svg';
 import pause from '../../../../../assets/img/icons/pause.svg';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {columnMenuFilter} from "./columnFilter";
+import {ColumnMenuFilter} from "./columnFilter";
 
 const patIntentValues = {
-    queryHighRelMatches: 'close-match',
-    queryBroadRelMatches: 'loose-match',
-    asinAccessoryRelated: 'complements',
-    asinSubstituteRelated: 'substitutes',
+    queryHighRelMatches: 'Close Match',
+    queryBroadRelMatches: 'Loose Match',
+    asinAccessoryRelated: 'Complements',
+    asinSubstituteRelated: 'Substitutes',
     asinSameAs: 'ASIN',
     asinCategorySameAs: 'Category',
     asinBrandSameAs: 'Brand'
@@ -22,7 +22,7 @@ const negativeMatchValues = {
     negativePhrase: 'Negative Phrase'
 };
 
-export const patIntentField = {
+export const patIntentField = (onChangeFilter, filteredColumns) => ({
     title: (
         <TitleInfo
             title="PAT Intent Type"
@@ -33,7 +33,17 @@ export const patIntentField = {
     dataIndex: 'd_patIntentType',
     key: 'd_patIntentType',
     render: text => <span>{patIntentValues[text]}</span>,
-};
+    sorter: true,
+    filter: (dataIndex) => <ColumnMenuFilter
+        onChangeFilter={onChangeFilter}
+        filteredColumns={filteredColumns}
+        dataIndex={dataIndex}
+        menu={Object.keys(patIntentValues).map(key => ({
+            label: patIntentValues[key],
+            value: key
+        }))}
+    />
+});
 
 export const negativeMatchTypeField = {
     title: 'Negative Match Type',
@@ -50,7 +60,8 @@ export const indexField = (currentPage, pageSize) => ({
     key: 'id',
     width: '30px',
     render: (id, item, index) => {
-        return(<span>{currentPage * pageSize - pageSize + index + 1}</span>)}
+        return (<span>{currentPage * pageSize - pageSize + index + 1}</span>)
+    }
 });
 
 export const dateField = {

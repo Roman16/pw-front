@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import {round} from "../../../../../utils/round";
 import {numberMask} from "../../../../../utils/numberMask";
-import {columnMenuFilter, columnNumberFilter, columnTextFilter} from "./columnFilter";
+import {ColumnMenuFilter, ColumnNumberFilter, ColumnTextFilter,} from "./columnFilter";
 import {subChangesCount} from "./changesCount";
 
 const highACoS = 'created-negative-keyword-from-cst-high-acos';
@@ -60,7 +60,11 @@ const NewNegativeKeywords = ({
             key: 'd_campaignName',
             width: '180px',
             sorter: true,
-            ...columnTextFilter(onChangeFilter, filteredColumns)
+            filter: (dataIndex) => <ColumnTextFilter
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                dataIndex={dataIndex}
+            />
         },
         {
             title: 'Ad Group',
@@ -68,7 +72,11 @@ const NewNegativeKeywords = ({
             key: 'd_adGroupName',
             width: '180px',
             sorter: true,
-            ...columnTextFilter(onChangeFilter, filteredColumns)
+            filter: (dataIndex) => <ColumnTextFilter
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                dataIndex={dataIndex}
+            />
         },
         {
             title: 'Keyword',
@@ -76,14 +84,25 @@ const NewNegativeKeywords = ({
             key: 'd_keywordText',
             width: '180px',
             sorter: true,
-            ...columnTextFilter(onChangeFilter, filteredColumns)
+            filter: (dataIndex) => <ColumnTextFilter
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                dataIndex={dataIndex}
+            />
         },
         {
             ...negativeMatchTypeField,
             width: '14em',
             sorter: true,
-            ...columnMenuFilter(onChangeFilter, filteredColumns, ['Negative Exact', 'Negative Phrase'])
-
+            filter: (dataIndex) => <ColumnMenuFilter
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                dataIndex={dataIndex}
+                menu={[
+                    {label: 'Negative Exact', value: 'negativeExact'},
+                    {label: 'Negative Phrase', value: 'negativePhrase'}
+                ]}
+            />
         }
     ];
 
@@ -102,7 +121,11 @@ const NewNegativeKeywords = ({
                 width: '10.5em',
                 render: text => <span>{text && `${text}%`}</span>,
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -116,7 +139,11 @@ const NewNegativeKeywords = ({
                 width: '11.5em',
                 render: text => <span>{text && `${text}%`}</span>,
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -129,7 +156,11 @@ const NewNegativeKeywords = ({
                 key: 'd_customerSearchTermClicks',
                 width: '10.5em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'CST Spend',
@@ -138,7 +169,11 @@ const NewNegativeKeywords = ({
                 width: '9.5em',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'CST Sales',
@@ -147,7 +182,11 @@ const NewNegativeKeywords = ({
                 width: '9em',
                 render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Action',
@@ -170,7 +209,11 @@ const NewNegativeKeywords = ({
                 width: '10em',
                 render: (text) => (text && <span>{round(text, 2)}%</span>),
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -183,7 +226,11 @@ const NewNegativeKeywords = ({
                 key: 'd_customerSearchTermClicks',
                 width: '10.5em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'CST Spend',
@@ -192,7 +239,11 @@ const NewNegativeKeywords = ({
                 width: '9.5em',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Action',

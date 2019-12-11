@@ -332,7 +332,7 @@ class UpdateCard extends Component {
                     &#215;
                 </button>
 
-                <h3>Update Payment Method</h3>
+                <h3>{selectedCard.id ? 'Update' : 'Add'} Payment Method</h3>
 
                 <h4>Credit Card Information</h4>
 

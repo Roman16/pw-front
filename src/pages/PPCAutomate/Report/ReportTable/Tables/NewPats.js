@@ -10,7 +10,7 @@ import TableButton from '../TableButton/TableButton';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import {numberMask} from "../../../../../utils/numberMask";
-import {columnMenuFilter, columnNumberFilter, columnTextFilter} from "./columnFilter";
+import {ColumnMenuFilter, ColumnNumberFilter, ColumnTextFilter} from "./columnFilter";
 import {subChangesCount} from "./changesCount";
 
 const CreatedCrossNegativePAT = 'created-cross-negative-pat';
@@ -69,7 +69,11 @@ const NewPats = ({
                 key: 'd_campaignName',
                 width: '200px',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Ad Group',
@@ -77,7 +81,11 @@ const NewPats = ({
                 key: 'd_adGroupName',
                 width: '8.5em',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -89,24 +97,32 @@ const NewPats = ({
                 dataIndex: 'd_patType',
                 key: 'd_patType',
                 width: '10em',
-                render: text => <span className="capitalize-field">{text}</span>,
+                render: str => <span className="capitalize-field">{str}</span>,
                 sorter: true,
-                ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
-
+                filter: (dataIndex) => <ColumnMenuFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                    menu={[
+                        {label: 'Auto', value: 'auto'},
+                        {label: 'Manual', value: 'manual'}
+                    ]}
+                />
             },
             {
-                ...patIntentField,
+                ...patIntentField(onChangeFilter, filteredColumns),
                 width: '13em',
-                sorter: true,
-                ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
-
             },
             {
                 title: 'PAT Value',
                 dataIndex: 'd_patValue',
                 key: 'd_patValue',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 ...createdKeywordsActionField
@@ -123,7 +139,11 @@ const NewPats = ({
                 key: 'd_campaignName',
                 width: '150px',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Ad Group',
@@ -131,7 +151,11 @@ const NewPats = ({
                 key: 'd_adGroupName',
                 width: '150px',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -143,17 +167,21 @@ const NewPats = ({
                 dataIndex: 'd_patType',
                 key: 'd_patType',
                 width: '10em',
-                render: text => <span className="capitalize-field">{text}</span>,
+                render: str => <span className="capitalize-field">{str}</span>,
                 sorter: true,
-                ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
-
+                filter: (dataIndex) => <ColumnMenuFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                    menu={[
+                        {label: 'Auto', value: 'auto'},
+                        {label: 'Manual', value: 'manual'}
+                    ]}
+                />
             },
             {
-                ...patIntentField,
+                ...patIntentField(onChangeFilter, filteredColumns),
                 width: '13em',
-                sorter: true,
-                ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
-
             },
             {
                 title: 'PAT Value',
@@ -161,7 +189,11 @@ const NewPats = ({
                 key: 'd_patValue',
                 width: '130px',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Bid',
@@ -170,7 +202,11 @@ const NewPats = ({
                 width: '6em',
                 render: text => (text != null && <span>${numberMask(text, 2)}</span>),
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -183,7 +219,11 @@ const NewPats = ({
                 key: 'd_customerSearchTermClicks',
                 width: '10.5em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -197,7 +237,11 @@ const NewPats = ({
                 render: text => <span>{text && `${text}%`}</span>,
                 width: '10.5em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -211,7 +255,11 @@ const NewPats = ({
                 render: text => (text != null && <span>${numberMask(text, 2)}</span>),
                 width: '10em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -225,7 +273,11 @@ const NewPats = ({
                 render: text => <span>{text && `${text}%`}</span>,
                 width: '11.5em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Action',

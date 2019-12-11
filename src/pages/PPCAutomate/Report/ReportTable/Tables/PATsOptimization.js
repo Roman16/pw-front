@@ -12,7 +12,7 @@ import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import {round} from "../../../../../utils/round";
 import {numberMask} from "../../../../../utils/numberMask";
-import {columnMenuFilter, columnNumberFilter, columnTextFilter} from "./columnFilter";
+import {ColumnMenuFilter, ColumnNumberFilter, ColumnTextFilter} from "./columnFilter";
 import {subChangesCount} from "./changesCount";
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
@@ -68,7 +68,11 @@ const PATsOptimization = ({
             key: 'd_campaignName',
             width: '150px',
             sorter: true,
-            ...columnTextFilter( onChangeFilter, filteredColumns)
+            filter: (dataIndex) => <ColumnTextFilter
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                dataIndex={dataIndex}
+            />
         },
         {
             title: 'Ad Group',
@@ -76,7 +80,11 @@ const PATsOptimization = ({
             key: 'd_adGroupName',
             width: '150px',
             sorter: true,
-            ...columnTextFilter( onChangeFilter, filteredColumns)
+            filter: (dataIndex) => <ColumnTextFilter
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                dataIndex={dataIndex}
+            />
         },
         {
             title: (
@@ -88,15 +96,22 @@ const PATsOptimization = ({
             dataIndex: 'd_patType',
             key: 'd_patType',
             width: '10em',
-            render: text => <span className="capitalize-field">{text}</span>,
+            render: str => <span className="capitalize-field">{str}</span>,
             sorter: true,
-            ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
+            filter: (dataIndex) => <ColumnMenuFilter
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                dataIndex={dataIndex}
+                menu={[
+                    {label: 'Auto', value: 'auto'},
+                    {label: 'Manual', value: 'manual'}
+                ]}
+            />
+
         },
         {
-            ...patIntentField,
+            ...patIntentField(onChangeFilter, filteredColumns),
             width: '13em',
-            sorter: true,
-            ...columnMenuFilter(onChangeFilter, filteredColumns, ['asin'])
         },
         {
             title: 'PAT Value',
@@ -104,7 +119,11 @@ const PATsOptimization = ({
             key: 'd_patValue',
             width: '132px',
             sorter: true,
-            ...columnTextFilter( onChangeFilter, filteredColumns)
+            filter: (dataIndex) => <ColumnTextFilter
+                onChangeFilter={onChangeFilter}
+                filteredColumns={filteredColumns}
+                dataIndex={dataIndex}
+            />
         }
     ];
 
@@ -118,7 +137,11 @@ const PATsOptimization = ({
                 width: '90px',
                 render: text => <span>{text && `${round(+text, 2)}%`}</span>,
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -132,7 +155,11 @@ const PATsOptimization = ({
                 width: '11.5em',
                 render: text => <span>{text && `${round(+text, 2)}%`}</span>,
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Clicks',
@@ -140,16 +167,24 @@ const PATsOptimization = ({
                 key: 'd_patClicks',
                 width: '6.5em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
                 width: '10em',
-                render: (text) => (text &&  <span>{round(text, 2)}%</span>),
+                render: (text) => (text && <span>{round(text, 2)}%</span>),
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 ...bidActionField
@@ -166,7 +201,11 @@ const PATsOptimization = ({
                 key: 'd_patImpressions',
                 width: '10em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -179,7 +218,11 @@ const PATsOptimization = ({
                 key: 'd_targetImpressions',
                 width: '14.5em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 ...bidActionField
@@ -196,8 +239,12 @@ const PATsOptimization = ({
                 key: 'd_patACoS',
                 width: '90px',
                 render: text => <span>{text && `${round(+text, 2)}%`}</span>,
-                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -210,8 +257,12 @@ const PATsOptimization = ({
                 key: 'd_targetACoSCalculation_d_targetACoS',
                 width: '11.5em',
                 render: text => <span>{text && `${text}%`}</span>,
-                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Clicks',
@@ -219,7 +270,11 @@ const PATsOptimization = ({
                 key: 'd_patClicks',
                 width: '6.5em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Spend',
@@ -227,8 +282,12 @@ const PATsOptimization = ({
                 key: 'd_patSpend',
                 width: '7em',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
-                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Sales',
@@ -236,17 +295,25 @@ const PATsOptimization = ({
                 key: 'd_patSales',
                 width: '6.5em',
                 render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
-                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
                 width: '10em',
-                render: (text) => (text &&  <span>{round(text, 2)}%</span>),
-                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                render: (text) => (text && <span>{round(text, 2)}%</span>),
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 ...pausePatActionField
@@ -262,9 +329,13 @@ const PATsOptimization = ({
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
                 width: '10em',
-                render: (text) => (text &&  <span>{round(text, 2)}%</span>),
-                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                render: (text) => (text && <span>{round(text, 2)}%</span>),
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Clicks',
@@ -272,7 +343,11 @@ const PATsOptimization = ({
                 key: 'd_patClicks',
                 width: '6.5em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Spend',
@@ -280,8 +355,12 @@ const PATsOptimization = ({
                 key: 'd_patSpend',
                 width: '7em',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
-                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 ...pausePatActionField

@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, NavLink} from "react-router-dom";
 import {Icon, Avatar} from "antd";
 import shortid from "shortid";
+import {debounce} from "throttle-debounce";
 
 import {regionsMenu, ppcAutomateMenu} from "./menu";
 import {getClassNames} from "../../utils";
@@ -13,6 +14,8 @@ import soon from "../../assets/img/icons/soon.svg";
 // import showMenu from '../../assets/img/icons/show-menu-arrow.svg';  // стрелка из фигмы в разделе сайдбар > страна
 import "./Sidebar.less";
 import {history} from "../../utils/history";
+import moment from "moment";
+import {notification} from "../Notification";
 
 const domainName =
     window.location.hostname === "localhost"
@@ -100,6 +103,19 @@ const Sidebar = () => {
         return ('');
     }
 
+    const rootElement = document.getElementById('root');
+
+    rootElement.addEventListener('mousemove', e => debounce(5000, false, () => {
+        console.log('start function');
+
+        if (moment(new Date())
+            .diff(moment(JSON.parse(sessionStorage.getItem('lastActive'))), 'seconds') > 10) {
+            console.log('run')
+        }
+
+        sessionStorage.setItem('lastActive', JSON.stringify(moment(new Date()).format()));
+    }));
+
     return (
         <div
             className={`sidebar ${className}`}
@@ -146,9 +162,9 @@ const Sidebar = () => {
                                 >
                                     <ItemIcon icon="zeroToHero"/>
                                     <span className="top-span">
-                    Zero to Hero
-                    <img className="soon" src={soon} alt="soon"/>
-                  </span>
+                                        Zero to Hero
+                                        <img className="soon" src={soon} alt="soon"/>
+                                    </span>
                                 </NavLink>
                             </li>
 
@@ -162,24 +178,24 @@ const Sidebar = () => {
                                 >
                                     <ItemIcon icon="analytics"/>
                                     <span className="top-span">
-                    Analytics
-                    <img className="soon" src={soon} alt="soon"/>
-                  </span>
+                                        Analytics
+                                        <img className="soon" src={soon} alt="soon"/>
+                                    </span>
                                 </NavLink>
                             </li>
 
                             <li className="top-nav-item ppc-automate-link">
-                <span onClick={toggleAutomate}>
-                  <NavLink
-                      className="top-nav-link"
-                      activeClassName="top-nav-link-active"
-                      to="/ppc"
-                      replace
-                  >
-                    <ItemIcon icon="ppcAutomate"/>
-                    <span className="top-span">PPC Automate</span>
-                  </NavLink>
-                </span>
+                                    <span onClick={toggleAutomate}>
+                                      <NavLink
+                                          className="top-nav-link"
+                                          activeClassName="top-nav-link-active"
+                                          to="/ppc"
+                                          replace
+                                      >
+                                            <ItemIcon icon="ppcAutomate"/>
+                                            <span className="top-span">PPC Automate</span>
+                                      </NavLink>
+                                    </span>
 
                                 {collapsed && (
                                     <ul

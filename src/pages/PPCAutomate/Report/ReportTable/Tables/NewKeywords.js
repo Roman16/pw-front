@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {numberMask} from "../../../../../utils/numberMask";
-import {columnTextFilter, columnNumberFilter, columnMenuFilter} from "./columnFilter";
+import {ColumnMenuFilter, ColumnTextFilter, ColumnNumberFilter} from "./columnFilter";
 import {subChangesCount} from "./changesCount";
 
 const createdCampaign = 'created-campaign';
@@ -66,16 +66,44 @@ const NewKeywords = ({
                 title: 'Campaign',
                 dataIndex: 'd_campaignName',
                 key: 'd_campaignName',
-                width: '250px',
+                width: '230px',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Type',
+                dataIndex: 'd_campaignType',
+                key: 'd_campaignType',
+                render: (str) => (<span className='capitalize-field'>{str && str.split(/(?=[A-Z])/).join(' ')}</span>),
+                sorter: true,
+                filter: (dataIndex) => <ColumnMenuFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                    menu={[
+                        {label: 'Sponsored Products', value: 'sponsoredProducts'}
+                    ]}
+                />
             },
             {
                 title: 'Targeting Type',
                 dataIndex: 'd_campaignTargetingType',
                 key: 'd_campaignTargetingType',
+                render: (str) => (<span className="capitalize-field">{str}</span>),
                 sorter: true,
-                ...columnMenuFilter(onChangeFilter, filteredColumns, ['manual'])
+                filter: (dataIndex) => <ColumnMenuFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                    menu={[
+                        {label: 'Auto', value: 'auto'},
+                        {label: 'Manual', value: 'manual'}
+                    ]}
+                />
             },
             {
                 title: 'Daily Budget',
@@ -83,7 +111,11 @@ const NewKeywords = ({
                 key: 'd_dailyBudget',
                 render: text => (text != null && <span>{`$${numberMask(text)}`}</span>),
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Start Date.',
@@ -106,14 +138,22 @@ const NewKeywords = ({
                 dataIndex: 'd_campaignName',
                 key: 'd_campaignName',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Ad Group',
                 dataIndex: 'd_adGroupName',
                 key: 'd_adGroupName',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Default Bid',
@@ -122,7 +162,11 @@ const NewKeywords = ({
                 width: '20%',
                 render: text => (text != null && <span>{`$${numberMask(text, 2)}`}</span>),
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 ...createdKeywordsActionField
@@ -139,28 +183,44 @@ const NewKeywords = ({
                 key: 'd_campaignName',
                 width: '300px',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Ad Group',
                 dataIndex: 'd_adGroupName',
                 key: 'd_adGroupName',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'ASIN',
                 dataIndex: 'd_asin',
                 key: 'd_asin',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'SKU',
                 dataIndex: 'd_sku',
                 key: 'd_sku',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Action',
@@ -182,7 +242,11 @@ const NewKeywords = ({
                 key: 'd_campaignName',
                 width: '250px',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Ad Group',
@@ -190,7 +254,11 @@ const NewKeywords = ({
                 key: 'd_adGroupName',
                 width: '150px',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Keyword',
@@ -198,16 +266,29 @@ const NewKeywords = ({
                 key: 'd_keywordText',
                 width: '150px',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Match Type',
                 dataIndex: 'd_keywordMatchType',
                 key: 'd_keywordMatchType',
                 width: '200px',
+                render: (str) => (<span className="capitalize-field">{str}</span>),
                 sorter: true,
-                ...columnMenuFilter(onChangeFilter, filteredColumns, ['exact', 'exact', 'exact'])
-
+                filter: (dataIndex) => <ColumnMenuFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                    menu={[
+                        {label: 'Phrase', value: 'phrase'},
+                        {label: 'Exact', value: 'exact'},
+                        {label: 'Broad', value: 'broad'}
+                    ]}
+                />
             },
             {
                 ...createdKeywordsActionField
@@ -224,7 +305,11 @@ const NewKeywords = ({
                 key: 'd_campaignName',
                 width: '160px',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Ad Group',
@@ -232,7 +317,11 @@ const NewKeywords = ({
                 key: 'd_adGroupName',
                 width: '160px',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Keyword',
@@ -240,15 +329,29 @@ const NewKeywords = ({
                 key: 'd_keywordText',
                 width: '170px',
                 sorter: true,
-                ...columnTextFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Match Type',
                 dataIndex: 'd_keywordMatchType',
                 key: 'd_keywordMatchType',
                 width: '9.5em',
+                render: (str) => (<span className="capitalize-field">{str}</span>),
                 sorter: true,
-                ...columnMenuFilter(onChangeFilter, filteredColumns, ['exact', 'exact', 'exact'])
+                filter: (dataIndex) => <ColumnMenuFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                    menu={[
+                        {label: 'Phrase', value: 'phrase'},
+                        {label: 'Exact', value: 'exact'},
+                        {label: 'Broad', value: 'broad'}
+                    ]}
+                />
             },
             {
                 title: 'Bid',
@@ -257,7 +360,11 @@ const NewKeywords = ({
                 width: '6em',
                 render: text => (text != null && <span>${numberMask(text, 2)}</span>),
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
 
             },
             {
@@ -271,7 +378,11 @@ const NewKeywords = ({
                 key: 'd_customerSearchTermClicks',
                 width: '10.5em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -285,7 +396,11 @@ const NewKeywords = ({
                 render: text => <span>{text && `${text}%`}</span>,
                 width: '10.5em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -299,7 +414,11 @@ const NewKeywords = ({
                 render: text => (text != null && <span>${numberMask(text, 2)}</span>),
                 width: '10em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: (
@@ -313,7 +432,11 @@ const NewKeywords = ({
                 render: text => <span>{text && `${text}%`}</span>,
                 width: '11.5em',
                 sorter: true,
-                ...columnNumberFilter(onChangeFilter, filteredColumns)
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
             },
             {
                 title: 'Action',

@@ -33,17 +33,11 @@ const CustomTable = ({
             <div className="table-overflow">
                 <div className="table-head">
                     {columns.map((item, index) => {
-                        const menu = (
-                            <Menu>
-                                {item.filterIcon && item.filterDropdown(item.key)}
-                            </Menu>
-                        );
-
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
 
                         return (
                             <div
-                                className={`th ${item.filterIcon && 'filter-column'} ${item.sorter && 'sorter-column'}`}
+                                className={`th ${item.filter && 'filter-column'} ${item.sorter && 'sorter-column'}`}
                                 key={`${item.dataIndex}_${index}`}
                                 style={fieldWidth}
                                 onClick={() => item.sorter && onChangeSorter(item.key)}
@@ -59,13 +53,17 @@ const CustomTable = ({
                                     </div>)}
                                 </div>
 
-                                {(item.filterIcon && (
-                                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight"
-                                              onClick={(e) => e.stopPropagation()}>
-                                        <a className="ant-dropdown-link" href="#">
-                                            {item.filterIcon()}
-                                        </a>
-                                    </Dropdown>
+                                {/*{(item.filterIcon && (*/}
+                                {/*    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight"*/}
+                                {/*              onClick={(e) => e.stopPropagation()}>*/}
+                                {/*        <a className="ant-dropdown-link" href="#">*/}
+                                {/*            {item.filterIcon()}*/}
+                                {/*        </a>*/}
+                                {/*    </Dropdown>*/}
+                                {/*))*/}
+                                {/*}*/}
+                                {(item.filter && (
+                                    item.filter(item.key)
                                 ))
                                 }
                             </div>
@@ -107,27 +105,24 @@ const CustomTable = ({
             </div>
 
             <div className='table-pagination'>
-                {(totalSize > pageSize) && (
-                    <Fragment>
-                        <Pagination
-                            defaultCurrent={1}
-                            pageSize={+pageSize || 10}
-                            current={currentPage}
-                            total={totalSize}
-                            onChange={(page) => onChangePagination({page})}
-                        />
-
-                        {(showSizeChanger && totalSize > pageSize) &&
-                        <Select onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
-                            {pageSizeOptions.map(size => (
-                                <Option value={size} key={size}>{size}</Option>
-                            ))}
-                        </Select>
-                        }
-                    </Fragment>
+                {(totalSize > +pageSize) && (
+                    <Pagination
+                        defaultCurrent={1}
+                        pageSize={+pageSize || 10}
+                        current={currentPage}
+                        total={totalSize}
+                        onChange={(page) => onChangePagination({page})}
+                    />
                 )}
-            </div>
 
+                {(showSizeChanger && (totalSize > 10)) &&
+                <Select onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
+                    {pageSizeOptions.map(size => (
+                        <Option value={size} key={size}>{size}</Option>
+                    ))}
+                </Select>
+                }
+            </div>
         </div>
     );
 };

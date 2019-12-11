@@ -354,21 +354,29 @@ class ReportTable extends Component {
     };
 
     handleChangeFilter = (key, value, type) => {
-        if (type === 'number') {
-            this.setState({
-                filteredColumns: {
-                    ...this.state.filteredColumns,
-                    [key]: value
-                }
-            }, this.fetchReports);
+        let newFilteredColumns = {...this.state.filteredColumns};
+        if(value.length > 0 || value.type) {
+            if (type === 'number') {
+                this.setState({
+                    filteredColumns: {
+                        ...this.state.filteredColumns,
+                        [key]: value
+                    }
+                }, this.fetchReports);
 
+            } else {
+                this.setState({
+                    filteredColumns: {
+                        ...this.state.filteredColumns,
+                        [key]: value
+                    }
+                }, this.fetchReports);
+            }
         } else {
+            delete newFilteredColumns[key];
             this.setState({
-                filteredColumns: {
-                    ...this.state.filteredColumns,
-                    [key]: value
-                }
-            }, this.fetchReports);
+                filteredColumns: newFilteredColumns
+            }, this.fetchReports)
         }
     };
 
