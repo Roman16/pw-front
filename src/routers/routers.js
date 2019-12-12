@@ -92,13 +92,13 @@ const routers = () => {
                 {developer && <PrivateRoute exact path="/home" component={Home}/>}
 
                 {/* ACCOUNT */}
-                {developer && <PrivateRoute exact path="/account-settings" component={Information}/>}
-                {developer && <PrivateRoute exact path="/account-billing" component={Billing}/>}
-                {developer && <PrivateRoute
+                <PrivateRoute exact path="/account-settings" component={Information}/>
+                <PrivateRoute exact path="/account-billing" component={Billing}/>
+                <PrivateRoute
                     exact
                     path="/account-subscription"
                     component={Subscription}
-                />}
+                />
 
                 <Route component={NotFound}/>
             </Switch>

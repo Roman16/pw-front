@@ -41,16 +41,19 @@
           display: flex;
 
           .sorter-buttons {
-            display: flex;
             flex-direction: column;
             justify-content: center;
             margin: 0 0 0 5px;
+            display: none;
 
             i {
               font-size: 12px;
               cursor: pointer;
               color: #bfbfbf;
+            }
 
+            &.is-sorter {
+              display: flex;
             }
           }
         }
@@ -60,6 +63,12 @@
 
           &:hover {
             background: #fafafa;
+
+            .title {
+              .sorter-buttons {
+               display: flex;
+              }
+            }
           }
         }
 
