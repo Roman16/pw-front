@@ -85,7 +85,7 @@ const Personal = () => {
           <Switch
             checkedChildren="YES"
             unCheckedChildren="NO"
-            checked={user.private_label_seller}
+            checked={user.private_label_seller === 1}
             onChange={handleChangeSwitch}
           />
         </div>
