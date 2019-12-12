@@ -42,7 +42,8 @@ function fetchProductDetails(product) {
                             ...product,
                             ...res,
                             id: product.id,
-                            product_id: product.id
+                            product_id: product.id,
+                            optimized: !!res.id
                         }
                     });
                 } else {

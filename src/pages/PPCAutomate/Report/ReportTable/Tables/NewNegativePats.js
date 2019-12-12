@@ -281,6 +281,8 @@ const NewNegativePats = ({
         <div className="report-item-table">
             <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={activeTable === HighACoS}
                     count={subChangesCount(counts, HighACoS)}
                     onClick={() => {
@@ -290,6 +292,8 @@ const NewNegativePats = ({
                     Created Negative PAT From CST (<span className='underline'>High ACoS</span>)
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={activeTable === NoSales}
                     count={subChangesCount(counts, NoSales)}
                     onClick={() => {

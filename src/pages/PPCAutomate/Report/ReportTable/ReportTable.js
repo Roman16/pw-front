@@ -355,7 +355,7 @@ class ReportTable extends Component {
 
     handleChangeFilter = (key, value, type) => {
         let newFilteredColumns = {...this.state.filteredColumns};
-        if(value.length > 0 || value.type) {
+        if (value.length > 0 || value.type) {
             if (type === 'number') {
                 this.setState({
                     filteredColumns: {
@@ -438,10 +438,10 @@ class ReportTable extends Component {
 
                         <DatePicker timeRange={this.timeRange}/>
 
-                        <Button className="download-btn" onClick={this.downloadFile}>
-                            Download
+                        <button className="btn default download-btn" onClick={this.downloadFile}>
+                            <span> Download </span>
                             <i className="download-icon"/>
-                        </Button>
+                        </button>
                     </div>
 
                     <FreeTrial product={'ppc'}/>

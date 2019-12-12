@@ -3,14 +3,15 @@ import { Button } from 'antd';
 
 const SelectAllProduct = ({ onSelectAll, isSelectedAll = false, disabled }) => (
     <div className={`${isSelectedAll ? 'selected-all' : ''}`}>
-        <Button
+        <button
             onClick={onSelectAll}
             type="primary"
             disabled={disabled}
+            className='btn default'
         >
             {isSelectedAll ? 'Deselect ' : 'Select All Products'}
 
-        </Button>
+        </button>
     </div>
 );
 

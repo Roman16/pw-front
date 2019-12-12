@@ -366,6 +366,8 @@ const KeywordsOptimization = ({
         <div className="report-item-table">
             <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={changedKeywordBidAcos === activeTable}
                     count={subChangesCount(counts, changedKeywordBidAcos)}
                     onClick={() => {
@@ -375,6 +377,8 @@ const KeywordsOptimization = ({
                     Changed Keyword Bid (<span className='underline'>ACoS</span>)
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={changedKeywordBidImpression === activeTable}
                     count={subChangesCount(counts, changedKeywordBidImpression)}
                     onClick={() => {
@@ -384,6 +388,8 @@ const KeywordsOptimization = ({
                     Changed Keyword Bid (<span className='underline'>Impressions</span>)
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={pausedKeywordHighAcos === activeTable}
                     count={subChangesCount(counts, pausedKeywordHighAcos)}
                     onClick={() => {
@@ -393,6 +399,8 @@ const KeywordsOptimization = ({
                     Paused Keyword (<span className='underline'>High ACoS</span>)
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={pausedKeywordNoSales === activeTable}
                     count={subChangesCount(counts, pausedKeywordNoSales)}
                     onClick={() => {

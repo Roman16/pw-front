@@ -5,13 +5,13 @@ import './TableButton.less';
 
 class TableButton extends Component {
     render() {
-        const { children, active, onClick, count } = this.props;
+        const { children, active, onClick, count, totalSize, loading} = this.props;
         return (
             <div className={`TableButton ${active ? 'active' : ''}`}>
                 <Button onClick={onClick}>
                     {children}
 
-                    {count > 0 && <div className="tab-name-count">{count > 999 ? '999+' : count}</div>}
+                    {count > 0 && <div className="tab-name-count">{(active && !loading) ? totalSize : (count > 999 ? '999+' : count)}</div>}
                 </Button>
             </div>
         );

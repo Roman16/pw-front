@@ -263,6 +263,8 @@ const NewNegativeKeywords = ({
         <div className="report-item-table">
             <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={activeTable === highACoS}
                     count={subChangesCount(counts, highACoS)}
                     onClick={() => {
@@ -272,6 +274,8 @@ const NewNegativeKeywords = ({
                     Created Negative Keyword From CST (<span className='underline'>High ACoS</span>)
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={activeTable === noSales}
                     count={subChangesCount(counts, noSales)}
                     onClick={() => {

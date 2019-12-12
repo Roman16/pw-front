@@ -457,6 +457,8 @@ const NewKeywords = ({
         <div className="report-item-table">
             <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={createdCampaign === activeTable}
                     count={subChangesCount(counts, createdCampaign)}
                     onClick={() => {
@@ -466,6 +468,8 @@ const NewKeywords = ({
                     Created Campaign
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={createdAdGroup === activeTable}
                     count={subChangesCount(counts, createdAdGroup)}
                     onClick={() => {
@@ -475,6 +479,8 @@ const NewKeywords = ({
                     Created Ad Group
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={createdProductAd === activeTable}
                     count={subChangesCount(counts, createdProductAd)}
                     onClick={() => {
@@ -484,6 +490,8 @@ const NewKeywords = ({
                     Created Product Ad
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={createdCrossNegativeKeyword === activeTable}
                     count={subChangesCount(counts, createdCrossNegativeKeyword)}
                     onClick={() => {
@@ -493,6 +501,8 @@ const NewKeywords = ({
                     Created Cross-Negative Keyword
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={createdKeywordCST === activeTable}
                     count={subChangesCount(counts, createdKeywordCST)}
                     onClick={() => {

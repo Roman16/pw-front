@@ -310,6 +310,8 @@ const NewPats = ({
         <div className="report-item-table">
             <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={activeTable === CreatedCrossNegativePAT}
                     count={subChangesCount(counts, CreatedCrossNegativePAT)}
                     onClick={() => {
@@ -319,6 +321,8 @@ const NewPats = ({
                     Created Cross-Negative PAT
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={activeTable === CreatedPATCST}
                     count={subChangesCount(counts, CreatedPATCST)}
                     onClick={() => {

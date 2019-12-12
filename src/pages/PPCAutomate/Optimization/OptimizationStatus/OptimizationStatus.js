@@ -30,8 +30,8 @@ class OptimizationStatus extends Component {
     cancelModal = () => this.setState({isShowModal: false});
 
     handleClickStartOptimization = (status) => {
-        const {isFirstOptimization = true} = this.props;
-        if (isFirstOptimization) {
+        const {product: {optimized}, selectedAll} = this.props;
+        if (!optimized || selectedAll) {
             this.setState({
                 showFirstStartConfirmModal: true
             })
@@ -116,23 +116,24 @@ class OptimizationStatus extends Component {
                 <div className="control">
                     {!isActive
                         ? (
-                            <Button className="start" onClick={() => this.handleClickStartOptimization(RUNNING)}>
+                            <button className="btn default start"
+                                    onClick={() => this.handleClickStartOptimization(RUNNING)}>
                                 <div className="control-btn-content">
-                                    <Icon type="caret-right" className=" btn-icon"/>
+                                    <Icon type="caret-right" className="btn-icon"/>
                                     <div className="btn-text">
                                         START
                                     </div>
                                 </div>
-                            </Button>
+                            </button>
                         ) : (
-                            <Button className="stop" onClick={() => this.handleClickStopOptimization()}>
+                            <button className="btn default stop" onClick={() => this.handleClickStopOptimization()}>
                                 <div className="control-btn-content">
                                     <div className="icon-stop"/>
                                     <div className="btn-text">
                                         STOP
                                     </div>
                                 </div>
-                            </Button>
+                            </button>
                         )
                     }
                 </div>
@@ -150,7 +151,10 @@ class OptimizationStatus extends Component {
                     handleOk={() => this.toStart(RUNNING)}
                     handleCancel={() => this.setState({showFirstStartConfirmModal: false})}
                     title={'Are you ready to start?'}
-                    description={'This action will result in the starting management of your Amazon PPC campaigns.'}
+                    description={selectedAll ?
+                        'Are you sure you want to start the same optimization strategy for All Products?'
+                        :
+                        'This action will result in the starting management of your active Amazon PPC campaigns.'}
                 />
 
                 <ConfirmActionPopup
@@ -158,6 +162,7 @@ class OptimizationStatus extends Component {
                     handleOk={() => this.toStart(STOPPED)}
                     handleCancel={() => this.setState({showStopConfirmModal: false})}
                     title={' Are you sure you want to stop?'}
+                    description={'We will stop the optimization of your active Amazon PPC campaigns. You can restart it anytime.'}
                 />
             </div>
         );

@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from "react";
 import ModalWindow from "./ModalWindow";
 import {history} from "../../utils/history";
 import {useSelector, useDispatch} from "react-redux";
-import {Result, Button} from 'antd';
+import {Result} from 'antd';
 import './ModalWindow.less';
 import {subscriptionProducts} from '../../constans/subscription.products.name';
 import {userActions} from "../../actions/user.actions";

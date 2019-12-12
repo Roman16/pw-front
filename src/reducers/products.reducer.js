@@ -69,7 +69,7 @@ export function products(state = initialState, action) {
                 selectedProduct: {
                     ...state.selectedProduct,
                     ...action.payload,
-                    product_id: state.selectedProduct.id
+                    product_id: state.selectedProduct.id,
                 },
                 productList: newProductsList,
                 isFirstOptimization: action.payload.status === 'RUNNING' ? false : state.isFirstOptimization

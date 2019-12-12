@@ -110,7 +110,7 @@ const CustomTable = ({
                         defaultCurrent={1}
                         pageSize={+pageSize || 10}
                         current={currentPage}
-                        total={totalSize}
+                        total={+totalSize}
                         onChange={(page) => onChangePagination({page})}
                     />
                 )}

@@ -85,12 +85,12 @@ export const StrategyItem = ({caption, selected, onSelect, value, info}) => (
             {selected ? (
                 <Icon type="check" className="check"/>
             ) : (
-                <Button
-                    className="strategy-btn"
+                <button
+                    className="btn default strategy-btn"
                     onClick={() => !info && onSelect(value)}
                 >
                     Select
-                </Button>
+                </button>
             )}
         </div>
     </div>
@@ -98,7 +98,7 @@ export const StrategyItem = ({caption, selected, onSelect, value, info}) => (
 
 const OptimizationStrategy = ({
                                   onSelect,
-                                  selectedStrategy,
+                                  selectedStrategy = 'LaunchProduct',
                                   product: {optimization_strategy}
                               }) => {
     return (

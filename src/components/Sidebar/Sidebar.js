@@ -106,8 +106,6 @@ const Sidebar = () => {
     const rootElement = document.getElementById('root');
 
     rootElement.addEventListener('mousemove', e => debounce(5000, false, () => {
-        console.log('start function');
-
         if (moment(new Date())
             .diff(moment(JSON.parse(sessionStorage.getItem('lastActive'))), 'seconds') > 10) {
             console.log('run')

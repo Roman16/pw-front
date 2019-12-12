@@ -380,6 +380,8 @@ const PATsOptimization = ({
         <div className="report-item-table">
             <div className="report-item-table-btn" ref={refTableBtn}>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={activeTable === changedPATBidACoS}
                     count={subChangesCount(counts, changedPATBidACoS)}
                     onClick={() => {
@@ -389,6 +391,8 @@ const PATsOptimization = ({
                     Changed PAT Bid (<span className='underline'>ACoS</span>)
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={activeTable === changedPATBidImpressions}
                     count={subChangesCount(counts, changedPATBidImpressions)}
                     onClick={() => {
@@ -398,6 +402,8 @@ const PATsOptimization = ({
                     Changed PAT Bid (<span className='underline'>Impressions</span>)
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={activeTable === pausedManualPATHighACoS}
                     count={subChangesCount(counts, pausedManualPATHighACoS)}
                     onClick={() => {
@@ -407,6 +413,8 @@ const PATsOptimization = ({
                     Paused Manual PAT (<span className='underline'>High ACoS</span>)
                 </TableButton>
                 <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
                     active={activeTable === pausedManualPatNoSales}
                     count={subChangesCount(counts, pausedManualPatNoSales)}
                     onClick={() => {
