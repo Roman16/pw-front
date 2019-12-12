@@ -6,7 +6,7 @@ import {history} from '../utils/history';
 
 const baseUrl =
     process.env.REACT_APP_ENV === 'production'
-        ? process.env.REACT_APP_API_PROD
+        ? process.env.REACT_APP_API_PROD || ''
         : process.env.REACT_APP_API_URL || '';
 
 

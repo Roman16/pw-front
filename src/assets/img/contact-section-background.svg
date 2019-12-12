@@ -1,0 +1,34 @@
+<svg width="1920" height="439" viewBox="0 0 1920 439" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1920" height="439">
+<rect width="1920" height="439" rx="8" fill="url(#paint0_linear)"/>
+</mask>
+<g mask="url(#mask0)">
+<path d="M0 0H1920V306.5C1920 306.5 1830 376.5 1653.5 387C1477 397.5 1127.5 298.571 778.5 387C429.5 475.429 0 292 0 292V0Z" fill="url(#paint1_linear)"/>
+<circle opacity="0.2" cx="42" cy="15" r="93" stroke="#D0D0FF" stroke-width="40"/>
+<circle opacity="0.2" cx="329" cy="264" r="56" stroke="white" stroke-width="8"/>
+<circle opacity="0.5" cx="329" cy="264" r="31" stroke="white" stroke-width="8"/>
+<circle opacity="0.1" cx="1571" cy="210" r="67" stroke="white" stroke-width="30"/>
+<circle opacity="0.5" cx="1504" cy="266" r="31" stroke="white" stroke-width="8"/>
+<circle opacity="0.2" cx="477" cy="37" r="20" fill="white"/>
+<circle opacity="0.2" cx="1685" cy="57" r="12" fill="white"/>
+<circle opacity="0.2" cx="1737" cy="32" r="4" fill="white"/>
+<circle opacity="0.1" cx="1907.5" cy="320.5" r="207.5" fill="white"/>
+<circle opacity="0.1" cx="420.5" cy="373.5" r="116.5" fill="white" stroke="white" stroke-width="16"/>
+<g opacity="0.1">
+<circle cx="1341.5" cy="9.5" r="53.5" fill="#D0D0FF"/>
+<circle cx="1341.5" cy="9.5" r="53.5" stroke="#D0D0FF"/>
+</g>
+<circle opacity="0.2" cx="1335" cy="360" r="44" fill="white"/>
+<circle opacity="0.2" cx="704" cy="214" r="16" fill="white"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear" x1="960.126" y1="0" x2="960.126" y2="331.193" gradientUnits="userSpaceOnUse">
+<stop stop-color="#6D6DF6"/>
+<stop offset="1" stop-color="#8FD39D"/>
+</linearGradient>
+<linearGradient id="paint1_linear" x1="932" y1="438.5" x2="925.5" y2="-1.32651e-05" gradientUnits="userSpaceOnUse">
+<stop stop-color="#9999F9"/>
+<stop offset="1" stop-color="#6D6DF6"/>
+</linearGradient>
+</defs>
+</svg>

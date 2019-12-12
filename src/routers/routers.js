@@ -13,6 +13,7 @@ import ProductSettings from "../pages/PPCAutomate/ProductSettings/ProductSetting
 import MWS from "../pages/authentication/AccountBinding/MWS/MWS";
 import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
 import NotFound from "../pages/NotFound/NotFound";
+import LandingAffiliates from "../pages/LandingAffiliates/LandingAffiliates";
 import Dashboard from "../pages/PPCAutomate/Dashboard/Dashboard";
 import Information from "../pages/Account/Information/Information";
 import Billing from "../pages/Account/Billing/Billing";
@@ -58,6 +59,7 @@ const routers = () => {
         <Router history={history}>
             <Switch>
                 <Route exact path="/login" component={LoginPage}/>
+                <Route exact path="/affiliates" component={LandingAffiliates}/>
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                 <Route exact path="/registration" component={RegistrationPage}/>
 
