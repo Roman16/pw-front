@@ -45,11 +45,11 @@ const CustomTable = ({
                                 <div className='title'>
                                     {typeof item.title === 'function' ? item.title() : item.title}
 
-                                    {sorterColumn && sorterColumn.key === item.key && (<div className='sorter-buttons'>
+                                    {sorterColumn && (<div className={`sorter-buttons ${sorterColumn.key === item.key && 'is-sorter'}`}>
                                         <Icon type="caret-up"
-                                              style={{color: `${(sorterColumn.type === 'asc') ? "#6d6df6" : ""}`}}/>
+                                              style={{color: `${(sorterColumn.key === item.key && sorterColumn.type === 'asc') ? "#6d6df6" : ""}`}}/>
                                         <Icon type="caret-down"
-                                              style={{color: `${(sorterColumn.type === 'desc') ? "#6d6df6" : ""}`}}/>
+                                              style={{color: `${(sorterColumn.key === item.key && sorterColumn.type === 'desc') ? "#6d6df6" : ""}`}}/>
                                     </div>)}
                                 </div>
 

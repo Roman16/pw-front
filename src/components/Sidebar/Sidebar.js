@@ -259,42 +259,25 @@ const Sidebar = () => {
                 <nav className="bottom-nav">
                     <ul className="bottom-nav-list">
                         <li className="bottom-nav-item">
-                            {production ? (
-                                <a href="/account/settings">
-                                    {user.user.avatar ? (
-                                        <i className="anticon">
-                                            <Avatar
-                                                className="avatar"
-                                                src={domainName + user.user.avatar}
-                                            />
-                                        </i>
-                                    ) : (
-                                        <ItemIcon icon="account"/>
-                                    )}
+                            <NavLink
+                                className="automate-link"
+                                activeClassName="automate-link-active"
+                                exact
+                                to={`/account-settings`}
+                            >
+                                {user.user.avatar ? (
+                                    <i className="anticon">
+                                        <Avatar
+                                            className="avatar"
+                                            src={domainName + user.user.avatar}
+                                        />
+                                    </i>
+                                ) : (
+                                    <ItemIcon icon="account"/>
+                                )}
 
-                                    <span className="bottom-span">Account</span>
-                                </a>
-                            ) : (
-                                <NavLink
-                                    className="automate-link"
-                                    activeClassName="automate-link-active"
-                                    exact
-                                    to={`/account-settings`}
-                                >
-                                    {user.user.avatar ? (
-                                        <i className="anticon">
-                                            <Avatar
-                                                className="avatar"
-                                                src={domainName + user.user.avatar}
-                                            />
-                                        </i>
-                                    ) : (
-                                        <ItemIcon icon="account"/>
-                                    )}
-
-                                    <span className="bottom-span">Account</span>
-                                </NavLink>
-                            )}
+                                <span className="bottom-span">Account</span>
+                            </NavLink>
                         </li>
 
                         <li className="bottom-nav-item">

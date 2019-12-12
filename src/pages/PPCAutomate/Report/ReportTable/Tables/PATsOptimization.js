@@ -113,13 +113,12 @@ const PATsOptimization = ({
             width: '13em',
         },
         {
-            // title: (
-            //     <TitleInfo
-            //         title="PAT Value"
-            //         info=""
-            //     />
-            // ),
-            title: 'PAT Value',
+            title: (
+                <TitleInfo
+                    title="PAT Value"
+                    info="Manual Product Targetings have specific value assigned to them to match your ads to shoppers. Type of this value depends on PAT's Intent Type. For ASIN Intent Type value may be: B01F9RH0R4. For Category - Cell Phones & Accessories."
+                />
+            ),
             dataIndex: 'd_patValue',
             key: 'd_patValue',
             width: '150px',

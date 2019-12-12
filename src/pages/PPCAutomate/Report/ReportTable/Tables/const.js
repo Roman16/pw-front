@@ -26,7 +26,7 @@ export const patIntentField = (onChangeFilter, filteredColumns) => ({
     title: (
         <TitleInfo
             title="PAT Intent Type"
-            info="Automatic or Manual Product Targetings use multiple strategies to match your ads to shoppers looking for your products. These strategies are: ASIN, Categories, Substitutes, etc."
+            info="Automatic and Manual Product Targetings use multiple strategies to match your ads to shoppers looking for your products. For Automatic Product Targetings these strategies are: Close Match, Loose Match, Complements, Substitutes. For Manual: ASIN, Categories, Brand."
             position="bottom"
         />
     ),
