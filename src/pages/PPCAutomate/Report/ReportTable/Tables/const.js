@@ -87,25 +87,25 @@ export const actionField = {
 
 export const bidActionField = {
     title: 'Action',
-    // dataIndex: 'action',
-    // key: 'action',
-    width: '150px',
-    // className: 'left-border',
-    // render: ({data: {current_state, previous_state}}) => (
-    //     <div className="action-field">
-    //         {current_state > previous_state ? (
-    //             <span>
-    //       <img src={up} alt=""/> bid up (${previous_state}{' '}
-    //                 <img src={right} alt=""/> <b>${current_state}</b>)
-    //     </span>
-    //         ) : (
-    //             <span>
-    //       <img src={down} alt=""/> bid down (<b>${previous_state}</b>{' '}
-    //                 <img src={right} alt=""/> ${current_state})
-    //     </span>
-    //         )}
-    //     </div>
-    // )
+    dataIndex: 'action',
+    key: 'action',
+    width: '13.5em',
+    className: 'left-border',
+    render: ({data: {current_state, previous_state}}) => (
+        <div className="action-field">
+            {current_state > previous_state ? (
+                <span>
+          <img src={up} alt=""/> bid up (${previous_state}{' '}
+                    <img src={right} alt=""/> <b>${current_state}</b>)
+        </span>
+            ) : (
+                <span>
+          <img src={down} alt=""/> bid down (<b>${previous_state}</b>{' '}
+                    <img src={right} alt=""/> ${current_state})
+        </span>
+            )}
+        </div>
+    )
 };
 
 export const pauseKeywordsActionField = {
