@@ -96,7 +96,8 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
 
                     {(product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&
                     <p className="plan-text">
-                        Your Ad Spend: <span className="plan-data">$ {numberMask(product.quantity, 2) || 0}</span>
+                        Your Monthly Amazon PPC Spend: <span
+                        className="plan-data">$ {numberMask(product.quantity, 2) || 0}</span>
                     </p>}
                 </div>
 
@@ -104,8 +105,9 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                 <div className="cancel">
                     {(product.has_access && !product.cancelled) && <Fragment>
                         <p className="cancel-text">
-                            Next Invoice Date: <span
-                            className="cancel-data">{moment(product.next_invoice_at).format('MMM DD, YYYY')}</span>
+                            {product.next_invoice_at && <Fragment> Next Invoice Date: <span
+                                className="cancel-data">{moment(product.next_invoice_at).format('MMM DD, YYYY')}</span>
+                            </Fragment>}
                         </p>
 
                         <button
