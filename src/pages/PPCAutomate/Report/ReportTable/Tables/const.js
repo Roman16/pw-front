@@ -8,6 +8,10 @@ import pause from '../../../../../assets/img/icons/pause.svg';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {ColumnMenuFilter} from "./columnFilter";
 
+function getIndexColumnWidth(count) {
+    return `${25 + count.toString().length * 7}px`;
+}
+
 const patIntentValues = {
     queryHighRelMatches: 'Close Match',
     queryBroadRelMatches: 'Loose Match',
@@ -27,7 +31,7 @@ export const patIntentField = (onChangeFilter, filteredColumns) => ({
         <TitleInfo
             title="PAT Intent Type"
             info="Automatic and Manual Product Targetings use multiple strategies to match your ads to shoppers looking for your products. For Automatic Product Targetings these strategies are: Close Match, Loose Match, Complements, Substitutes. For Manual: ASIN, Categories, Brand."
-            position="bottom"
+            position="top"
         />
     ),
     dataIndex: 'd_patIntentType',
@@ -58,9 +62,9 @@ export const indexField = (currentPage, pageSize) => ({
     title: '#',
     dataIndex: 'id',
     key: 'id',
-    width: '30px',
+    width: getIndexColumnWidth(Number(currentPage * pageSize - pageSize)),
     render: (id, item, index) => {
-        return (<span>{currentPage * pageSize - pageSize + index + 1}</span>)
+        return (<span className='index-field'> {currentPage * pageSize - pageSize + index + 1}</span>)
     }
 });
 
@@ -68,8 +72,8 @@ export const dateField = {
     title: 'Date',
     dataIndex: 'eventDateTime',
     key: 'eventDateTime',
-    width: '100px',
-    render: date => moment(date).format('MM-DD-YY HH:mm:ss'),
+    width: '120px',
+    render: date => moment.utc(date).local().format('MMM DD, YYYY H:mm:ss'),
     sorter: true,
 };
 

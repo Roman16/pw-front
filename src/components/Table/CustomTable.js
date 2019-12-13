@@ -37,7 +37,7 @@ const CustomTable = ({
 
                         return (
                             <div
-                                className={`th ${item.filter && 'filter-column'} ${item.sorter && 'sorter-column'}`}
+                                className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''}`}
                                 key={`${item.dataIndex}_${index}`}
                                 style={fieldWidth}
                                 onClick={() => item.sorter && onChangeSorter(item.key)}
@@ -53,15 +53,6 @@ const CustomTable = ({
                                     </div>)}
                                 </div>
 
-                                {/*{(item.filterIcon && (*/}
-                                {/*    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight"*/}
-                                {/*              onClick={(e) => e.stopPropagation()}>*/}
-                                {/*        <a className="ant-dropdown-link" href="#">*/}
-                                {/*            {item.filterIcon()}*/}
-                                {/*        </a>*/}
-                                {/*    </Dropdown>*/}
-                                {/*))*/}
-                                {/*}*/}
                                 {(item.filter && (
                                     item.filter(item.key)
                                 ))

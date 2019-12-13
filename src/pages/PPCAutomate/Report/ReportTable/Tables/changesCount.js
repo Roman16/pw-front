@@ -49,5 +49,5 @@ export const mainChangesCount = (counts = [], type) => {
         });
     }
 
-    return count > 999 ? '999+' : count || 0;
+    return count || 0;
 };

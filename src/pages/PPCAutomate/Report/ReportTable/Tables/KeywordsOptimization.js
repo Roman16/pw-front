@@ -139,6 +139,7 @@ const KeywordsOptimization = ({
                     <TitleInfo
                         title="Target ACoS"
                         info="The ACoS that our algorithm is aiming to reach your business goal."
+                        position='top'
                     />
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
@@ -201,6 +202,7 @@ const KeywordsOptimization = ({
             {
                 title: (
                     <TitleInfo
+                        position='top'
                         title="Target Impressions"
                         info="The number of times your ads need to be displayed so you will get the click."
                     />
@@ -240,6 +242,7 @@ const KeywordsOptimization = ({
             {
                 title: (
                     <TitleInfo
+                        position='top'
                         title="Target ACoS"
                         info="The ACoS that our algorithm is aiming to reach your business goal."
                     />

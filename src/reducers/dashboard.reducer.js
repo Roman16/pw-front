@@ -75,7 +75,7 @@ export function dashboard(state = initialState, action) {
         case dashboardConstants.UPDATE_METRICS_LIST: {
             let newActiveMetricsList = [...state.activeMetrics];
 
-            if(action.payload.length > 0) {
+            if (action.payload.length > 0) {
                 if (action.payload.find(item => item.key === state.activeMetrics[0].key) === undefined &&
                     action.payload.find(item => item.key === state.activeMetrics[1].key) === undefined) {
                     newActiveMetricsList = action.payload.slice(0, 2);
@@ -161,6 +161,12 @@ export function dashboard(state = initialState, action) {
         case dashboardConstants.RE_SET:
             return {
                 ...initialState
+            };
+
+        case dashboardConstants.SET_PRODUCTS_MARGIN_STATUS:
+            return {
+                ...state,
+                hasMargin: action.payload
             };
 
 

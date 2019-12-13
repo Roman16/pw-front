@@ -95,7 +95,7 @@ export const ProfitTooltipDescription = () => (
 );
 
 
-const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationChange, onSelect, selectedProduct}) => {
+const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationChange, onSelect, selectedProduct, hasMargin}) => {
     const columns = [
         {
             title: () => (
@@ -214,7 +214,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => (<span>Profit <Tooltip type='warning' description={<ProfitTooltipDescription/>}/></span>),
+            title: () => (<span>Profit {!hasMargin && <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>}</span>),
             dataIndex: 'profit',
             key: 'profit',
             width: '10em',

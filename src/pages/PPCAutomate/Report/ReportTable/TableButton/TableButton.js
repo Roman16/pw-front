@@ -1,22 +1,26 @@
-import React, { Component } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'antd';
+import {Button} from 'antd';
 import './TableButton.less';
 
-class TableButton extends Component {
-    render() {
-        const { children, active, onClick, count, totalSize, loading} = this.props;
-        return (
-            <div className={`TableButton ${active ? 'active' : ''}`}>
-                <Button onClick={onClick}>
-                    {children}
+const TableButton = ({children, active, onClick, count, totalSize}) => {
+    const [currentCount, setCount] = useState(active ? totalSize : count);
 
-                    {count > 0 && <div className="tab-name-count">{(active && !loading) ? totalSize : (count > 999 ? '999+' : count)}</div>}
-                </Button>
-            </div>
-        );
-    }
-}
+    useEffect(() => {
+        setCount(active ? totalSize : count)
+    }, [count, totalSize]);
+
+
+    return (
+        <div className={`TableButton ${active ? 'active' : ''}`}>
+            <Button onClick={onClick}>
+                {children}
+
+                {currentCount > 0 && <div className="tab-name-count">{currentCount}</div>}
+            </Button>
+        </div>
+    );
+};
 
 TableButton.propTypes = {
     children: PropTypes.oneOfType([
@@ -30,6 +34,7 @@ TableButton.defaultProps = {
     children: null,
     count: null,
     active: false,
-    onClick: () => {}
+    onClick: () => {
+    }
 };
 export default TableButton;

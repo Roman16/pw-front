@@ -81,6 +81,7 @@ const NewNegativePats = ({
         {
             title: (
                 <TitleInfo
+                    position='top'
                     title="PAT type"
                     info="The type of Product Targeting. It can be a Manual or Auto."
                 />
@@ -107,6 +108,7 @@ const NewNegativePats = ({
         {
             title: (
                 <TitleInfo
+                    position='top'
                     title="PAT Value"
                     info="Manual Product Targetings have specific value assigned to them to match your ads to shoppers. Type of this value depends on PAT's Intent Type. For ASIN Intent Type value may be: B01F9RH0R4. For Category - Cell Phones & Accessories."
                 />
@@ -129,6 +131,7 @@ const NewNegativePats = ({
             {
                 title: (
                     <TitleInfo
+                        position='top'
                         title="CST ACoS"
                         info="It displays the ACoS of certain customer search-term from your ad reports. "
                     />
@@ -147,6 +150,7 @@ const NewNegativePats = ({
             {
                 title: (
                     <TitleInfo
+                        position='top'
                         title="Target ACoS"
                         info="The ACoS that our algorithm is aiming to reach your business goal."
                     />
@@ -165,6 +169,7 @@ const NewNegativePats = ({
             {
                 title: (
                     <TitleInfo
+                        position='top'
                         title="CST Clicks"
                         info="It displays the number of clicks of certain customer search-term."
                     />
@@ -235,6 +240,7 @@ const NewNegativePats = ({
             {
                 title: (
                     <TitleInfo
+                        position='top'
                         title="CST Clicks"
                         info="It displays the number of clicks of certain customer search-term."
                     />

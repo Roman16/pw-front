@@ -308,7 +308,6 @@ class ReportTable extends Component {
                 }
             );
         }
-
     };
 
     timeRange = (startDate, endDate) => {
@@ -362,7 +361,11 @@ class ReportTable extends Component {
                         ...this.state.filteredColumns,
                         [key]: value
                     }
-                }, this.fetchReports);
+                }, () => {
+                    if (JSON.stringify(newFilteredColumns) !== JSON.stringify(this.state.filteredColumns)) {
+                        this.fetchReports()
+                    }
+                });
 
             } else {
                 this.setState({
@@ -370,7 +373,11 @@ class ReportTable extends Component {
                         ...this.state.filteredColumns,
                         [key]: value
                     }
-                }, this.fetchReports);
+                }, () => {
+                    if (JSON.stringify(newFilteredColumns) !== JSON.stringify(this.state.filteredColumns)) {
+                        this.fetchReports()
+                    }
+                });
             }
         } else {
             delete newFilteredColumns[key];
@@ -390,7 +397,7 @@ class ReportTable extends Component {
                     type: 'asc'
                 }
             }, this.fetchReports);
-            if (sorterColumn.type === 'asc') this.setState({sorterColumn: null}, this.fetchReports);
+            if (sorterColumn.type === 'asc') this.setState({sorterColumn: {}}, this.fetchReports);
 
         } else {
             this.setState({

@@ -112,6 +112,7 @@ const NewNegativeKeywords = ({
             {
                 title: (
                     <TitleInfo
+                        position='top'
                         title="CST ACoS"
                         info="It displays the ACoS of certain customer search-term from your ad reports. "
                     />
@@ -130,6 +131,7 @@ const NewNegativeKeywords = ({
             {
                 title: (
                     <TitleInfo
+                        position='top'
                         title="Target ACoS"
                         info="The ACoS that our algorithm is aiming to reach your business goal."
                     />
@@ -148,6 +150,7 @@ const NewNegativeKeywords = ({
             {
                 title: (
                     <TitleInfo
+                        position='top'
                         title="CST Clicks"
                         info="It displays the number of clicks of certain customer search-term."
                     />
@@ -218,6 +221,7 @@ const NewNegativeKeywords = ({
             {
                 title: (
                     <TitleInfo
+                        position='top'
                         title="CST Clicks"
                         info="It displays the number of clicks of certain customer search-term."
                     />

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Input, Menu, Checkbox, Select, Dropdown} from "antd";
+import {Input, Checkbox, Select, Popover} from "antd";
 import icon from '../../../../../assets/img/icons/filter-icon.svg';
 import iconHover from '../../../../../assets/img/icons/filter-icon-black.svg';
 import iconActive from '../../../../../assets/img/icons/filter-icon-blue.svg';
@@ -8,39 +8,32 @@ const Option = Select.Option;
 const CheckboxGroup = Checkbox.Group;
 
 export const ColumnTextFilter = ({onChangeFilter, filteredColumns, dataIndex}) => {
-    const [options, setOptions] = useState([]);
+    const [options, setOptions] = useState([]),
+        [visiblePopup, switchPopup] = useState(false);
+
+    function handleFilteredColumn() {
+        onChangeFilter(dataIndex, options);
+        switchPopup(false)
+    }
 
     const menu = (
-        <Menu>
-            <div className='search-drop-down' onClick={(e) => e.stopPropagation()}>
-                <Input
-                    // placeholder={`Search ${dataIndex}`}
-                    value={options}
-                    onChange={e => setOptions(e.target.value)}
-                    defaultValue={filteredColumns[dataIndex]}
-                    onPressEnter={() => onChangeFilter(dataIndex, options)}
-                />
+        <div className='search-drop-down' onClick={(e) => e.stopPropagation()}>
+            <Input
+                value={options}
+                onChange={e => setOptions(e.target.value)}
+                defaultValue={filteredColumns[dataIndex]}
+                onPressEnter={handleFilteredColumn}
+            />
 
-                <div className="buttons">
-                    {/*<button*/}
-                    {/*    className="btn cancel"*/}
-                    {/*    onClick={() => {*/}
-                    {/*        searchInput.handleReset();*/}
-                    {/*        handleSearch(dataIndex, null)*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*    Reset*/}
-                    {/*</button>*/}
-
-                    <button
-                        className="btn default"
-                        onClick={() => onChangeFilter(dataIndex, options)}
-                    >
-                        Search
-                    </button>
-                </div>
+            <div className="buttons">
+                <button
+                    className="btn default"
+                    onClick={handleFilteredColumn}
+                >
+                    Search
+                </button>
             </div>
-        </Menu>
+        </div>
     );
 
     useEffect(() => {
@@ -50,54 +43,53 @@ export const ColumnTextFilter = ({onChangeFilter, filteredColumns, dataIndex}) =
     }, [filteredColumns]);
 
     return (
-        <Dropdown overlay={menu} trigger={['click']} placement="bottomRight"
-                  onClick={(e) => e.stopPropagation()}>
+        <Popover
+            content={menu}
+            trigger="click"
+            visible={visiblePopup}
+            onVisibleChange={() => switchPopup(!visiblePopup)}
+            onClick={(e) => e.stopPropagation()}
+            getPopupContainer={trigger => trigger.parentNode}
+            placement="bottomRight"
+            className='filter-popover'
+        >
             <a className="ant-dropdown-link" href="#">
                 <div className='filter-icon'>
                     <img src={filteredColumns[dataIndex] !== undefined ? iconActive : icon} alt="" className='default'/>
                     <img src={iconHover} alt="" className='hover'/>
                 </div>
             </a>
-        </Dropdown>
+        </Popover>
     )
 };
 
 
 export const ColumnMenuFilter = ({onChangeFilter, filteredColumns, menu, dataIndex}) => {
-    const [options, setOptions] = useState([]);
+    const [options, setOptions] = useState([]),
+        [visiblePopup, switchPopup] = useState(false);
+
+    function handleFilteredColumn() {
+        onChangeFilter(dataIndex, options);
+        switchPopup(false)
+    }
 
     const dropMenu = (
-        <Menu>
-            <div className='search-drop-down' onClick={(e) => e.stopPropagation()}>
-                <CheckboxGroup
-                    options={menu}
-                    value={options}
-                    onChange={(list) => setOptions(list)}
-                />
+        <div className='search-drop-down' onClick={(e) => e.stopPropagation()}>
+            <CheckboxGroup
+                options={menu}
+                value={options}
+                onChange={(list) => setOptions(list)}
+            />
 
-                <div className="buttons">
-                    {/*<button*/}
-                    {/*    className="btn cancel"*/}
-                    {/*    onClick={() => {*/}
-                    {/*        console.log(groupRef);*/}
-                    {/*        groupRef.updater.enqueueReplaceState();*/}
-                    {/*        handleSearch(dataIndex, null)*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*    Reset*/}
-                    {/*</button>*/}
-
-                    <button
-                        className="btn default"
-                        onClick={() => {
-                            onChangeFilter(dataIndex, options)
-                        }}
-                    >
-                        Search
-                    </button>
-                </div>
+            <div className="buttons">
+                <button
+                    className="btn default"
+                    onClick={handleFilteredColumn}
+                >
+                    Search
+                </button>
             </div>
-        </Menu>
+        </div>
     );
 
     useEffect(() => {
@@ -107,70 +99,69 @@ export const ColumnMenuFilter = ({onChangeFilter, filteredColumns, menu, dataInd
     }, [filteredColumns]);
 
     return (
-        <Dropdown overlay={dropMenu} trigger={['click']} placement="bottomRight"
-                  onClick={(e) => e.stopPropagation()}>
+        <Popover
+            content={dropMenu}
+            trigger="click"
+            visible={visiblePopup}
+            onVisibleChange={() => switchPopup(!visiblePopup)}
+            onClick={(e) => e.stopPropagation()}
+            getPopupContainer={trigger => trigger.parentNode}
+            placement="bottomRight"
+            className='filter-popover'
+        >
             <a className="ant-dropdown-link" href="#">
                 <div className='filter-icon'>
                     <img src={filteredColumns[dataIndex] !== undefined ? iconActive : icon} alt="" className='default'/>
                     <img src={iconHover} alt="" className='hover'/>
                 </div>
             </a>
-        </Dropdown>
+        </Popover>
     )
 };
 
 export const ColumnNumberFilter = ({onChangeFilter, filteredColumns, dataIndex}) => {
     const [searchType, setType] = useState('eq'),
-        [searchValue, setValue] = useState('');
+        [searchValue, setValue] = useState(''),
+        [visiblePopup, switchPopup] = useState(false);
+
+    function handleFilteredColumn() {
+        onChangeFilter(dataIndex, {
+            type: searchType,
+            value: searchValue
+        }, 'number');
+        switchPopup(false)
+    }
 
     const menu = (
-        <Menu>
-            <div className='search-drop-down' onClick={(e) => e.stopPropagation()}>
-                <Select
-                    onChange={(e) => setType(e)}
-                    value={searchType}
+        <div className='search-drop-down' onClick={(e) => e.stopPropagation()}>
+            <Select
+                onChange={(e) => setType(e)}
+                value={searchType}
+            >
+                <Option value={'eq'}> {'='} </Option>
+                <Option value={'neq'}> {'!='} </Option>
+                <Option value={'gt'}> {'>'} </Option>
+                <Option value={'lt'}> {'<'} </Option>
+                <Option value={'gte'}> {'>='} </Option>
+                <Option value={'lte'}> {'<='} </Option>
+            </Select>
+
+            <Input
+                value={searchValue}
+                type={'number'}
+                onChange={e => setValue(e.target.value)}
+                onPressEnter={handleFilteredColumn}
+            />
+
+            <div className="buttons">
+                <button
+                    className="btn default"
+                    onClick={handleFilteredColumn}
                 >
-                    <Option value={'eq'}> {'='} </Option>
-                    <Option value={'neq'}> {'!='} </Option>
-                    <Option value={'gt'}> {'>'} </Option>
-                    <Option value={'lt'}> {'<'} </Option>
-                    <Option value={'gte'}> {'>='} </Option>
-                    <Option value={'lte'}> {'<='} </Option>
-                </Select>
-
-                <Input
-                    value={searchValue}
-                    type={'number'}
-                    onChange={e => setValue(e.target.value)}
-                    onPressEnter={() => onChangeFilter(dataIndex, {
-                        type: searchType,
-                        value: searchValue
-                    }, 'number')}
-                />
-
-                <div className="buttons">
-                    {/*<button*/}
-                    {/*    className="btn cancel"*/}
-                    {/*    onClick={() => {*/}
-                    {/*        searchValue.handleReset();*/}
-                    {/*        handleSearch(dataIndex, null)*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*    Reset*/}
-                    {/*</button>*/}
-
-                    <button
-                        className="btn default"
-                        onClick={() => onChangeFilter(dataIndex, {
-                            type: searchType,
-                            value: searchValue
-                        }, 'number')}
-                    >
-                        Search
-                    </button>
-                </div>
+                    Search
+                </button>
             </div>
-        </Menu>
+        </div>
     );
 
     useEffect(() => {
@@ -181,14 +172,22 @@ export const ColumnNumberFilter = ({onChangeFilter, filteredColumns, dataIndex})
     }, [filteredColumns]);
 
     return (
-        <Dropdown overlay={menu} trigger={['click']} placement="bottomRight"
-                  onClick={(e) => e.stopPropagation()}>
+        <Popover
+            content={menu}
+            trigger="click"
+            visible={visiblePopup}
+            onVisibleChange={() => switchPopup(!visiblePopup)}
+            onClick={(e) => e.stopPropagation()}
+            getPopupContainer={trigger => trigger.parentNode}
+            placement="bottomRight"
+            className='filter-popover'
+        >
             <a className="ant-dropdown-link" href="#">
                 <div className='filter-icon'>
                     <img src={filteredColumns[dataIndex] !== undefined ? iconActive : icon} alt="" className='default'/>
                     <img src={iconHover} alt="" className='hover'/>
                 </div>
             </a>
-        </Dropdown>
+        </Popover>
     )
 };

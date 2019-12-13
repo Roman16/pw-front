@@ -2,6 +2,7 @@ import React, {Fragment} from "react";
 import Tooltip from '../../../../components/Tooltip/Tooltip'
 import {ProfitTooltipDescription} from "../ProductBreakdown/ProductsList";
 import {metricsListArray} from "./metricsList";
+import {useSelector} from "react-redux";
 import closeIcon from '../../../../assets/img/icons/close.svg';
 import upWhiteIcon from '../../../../assets/img/icons/metric-arrows/up-white-arrow.svg';
 import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
@@ -78,6 +79,11 @@ const RenderMetricChanges = ({value, name}) => {
 
 
 const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, metric_value}, metric, removeSelectedMetric, activeMetrics, onActivateMetric, onDeactivateMetric}) => {
+    const {hasMargin} = useSelector(state => ({
+        hasMargin: state.dashboard.hasMargin || false
+    }));
+
+
     const handleClick = () => {
         if (activeMetrics.find(item => item.key === key)) {
             onDeactivateMetric(metric)
@@ -104,7 +110,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
             <div className="title-info">
                 {metricInformation.title}
                 {key === 'profit' ?
-                    <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>
+                    !hasMargin && <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>
                     :
                     metricInformation.info && <Tooltip description={metricInformation.info}/>
                 }

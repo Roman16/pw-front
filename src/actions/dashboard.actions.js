@@ -10,7 +10,8 @@ export const dashboardActions = {
     selectDateRange,
     getMetricsStatistics,
     selectProduct,
-    reSetDashboard
+    reSetDashboard,
+    setProductsMarginStatus
 };
 
 function getMetricsStatistics(parameters) {
@@ -94,6 +95,15 @@ function reSetDashboard() {
     return dispatch => {
         dispatch({
             type: dashboardConstants.RE_SET,
+        });
+    };
+}
+
+function setProductsMarginStatus(status) {
+    return dispatch => {
+        dispatch({
+            type: dashboardConstants.SET_PRODUCTS_MARGIN_STATUS,
+            payload: status
         });
     };
 }

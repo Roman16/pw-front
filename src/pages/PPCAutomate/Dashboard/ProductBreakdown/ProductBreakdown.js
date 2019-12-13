@@ -17,10 +17,11 @@ const initialFetchParams = {
 
 const ProductBreakdown = () => {
     const dispatch = useDispatch();
-    const {selectedProduct, selectedRangeDate, onlyOptimization} = useSelector(state => ({
+    const {selectedProduct, selectedRangeDate, onlyOptimization, hasMargin} = useSelector(state => ({
         selectedProduct: state.dashboard.selectedProduct,
         selectedRangeDate: state.dashboard.selectedRangeDate,
         onlyOptimization: state.products.onlyOptimization,
+        hasMargin: state.dashboard.hasMargin || false
     }));
     const [fetchParams, changeFetchParams] = useState({
             ...initialFetchParams,
@@ -38,10 +39,12 @@ const ProductBreakdown = () => {
         })
             .then(res => {
                 updateProductsList(res.result);
+                dispatch(dashboardActions.setProductsMarginStatus(res.all_products_has_margin));
                 changeFetchParams({
                     ...fetchParams,
                     totalSize: res.totalSize
                 });
+
             })
     };
 
@@ -98,6 +101,7 @@ const ProductBreakdown = () => {
                     handlePaginationChange={handlePaginationChange}
                     onSelect={handleSelectProduct}
                     selectedProduct={selectedProduct}
+                    hasMargin={hasMargin}
                 />
             </div>
         </div>
