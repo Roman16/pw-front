@@ -1,12 +1,16 @@
 import React from "react";
 import Header from "../NotFound/Header/Header";
 import Footer from "../NotFound/Footer/Footer";
+import './LandingAffiliates.less';
 import illustrationImg from '../../assets/img/illustration.svg'
 import benefitsImg from '../../assets/img/benefits-icon.svg'
 import performersImg from '../../assets/img/performers-icon.svg'
 import supportImg from '../../assets/img/support-icon.svg'
 import greenLine from '../../assets/img/green-line.svg';
-import './LandingAffiliates.less';
+import contactUsImage from '../../assets/img/contact-us-image.svg';
+import commissionFreeIcon from '../../assets/img/commission-free-icon.svg';
+import commissionHaveFeeIcon from '../../assets/img/commission-have-fee-icon.svg';
+import howItWorksImage from '../../assets/img/how-it-works-image.svg';
 
 const LandingAffiliates = () => {
 
@@ -99,6 +103,91 @@ const LandingAffiliates = () => {
                     </div>
                 </div>
             </section>
+
+            <section className='contact-us'>
+                <div className="container">
+                    <div className="image">
+                        <img src={contactUsImage} alt=""/>
+                    </div>
+
+                    <div className='have-question'>
+                        <h2>Contact us</h2>
+
+                        <h3>Have Questions?</h3>
+
+                        <img src={greenLine} alt="" className='green-line'/>
+
+                        <span>Contact as at</span>
+                        <a href="mailto: info@profitwhales.agency">
+                            info@profitwhales.agency
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section className='commission-details'>
+                <div className="container">
+                    <h3>Commission Details</h3>
+                    <img src={greenLine} alt="" className='green-line'/>
+
+                    <div className='commissions'>
+                        <div className='free'>
+                            <img src={commissionFreeIcon} alt=""/>
+                            <div className='description'>
+                                <h4>Your Payout for</h4>
+                                <span>Free registration</span>
+                            </div>
+
+                            <div className="commission-value">
+                                $5
+                            </div>
+                        </div>
+                        <div className='have-commissions'>
+                            <img src={commissionHaveFeeIcon} alt=""/>
+                            <div className='description'>
+                                <h4>Your Payout for</h4>
+                                <span>Monthly lifetime <br/> commission</span>
+                            </div>
+
+                            <div className="commission-value">
+                                10%
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='how-it-work'>
+                        <div className="image">
+                            <img src={howItWorksImage} alt=""/>
+                        </div>
+
+                        <div className='description'>
+                            <h4>How it works?</h4>
+
+                            <div className='custom-list'>
+                                <div className="list-item">
+                                    <h5>Register</h5>
+                                    <span>Apply now to get paid for each successful referral you are making.</span>
+                                </div>
+
+                                <div className="list-item">
+                                    <h5>Get your personal link</h5>
+                                    <span>Once you’ve registered, you’ll get your own, unique link to give to your followers.</span>
+                                </div>
+
+                                <div className="list-item">
+                                    <h5>Share your link</h5>
+                                    <span>Share your link with your subscribers and followers to get commissions for each new Amazon Seller that signs up for any ProfitWhales paid or free subscription plan.</span>
+                                </div>
+                            </div>
+
+                            <button className='btn green-btn'>
+                                apply now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
 
             <Footer/>
         </div>
