@@ -21,7 +21,7 @@
     h3 {
       font-family: eb;
       font-size: 2.857142857142857rem;
-      line-height: 2.142857142857143rem;
+      line-height: 3rem;
       letter-spacing: 0.4px;
       color: #363694;
       text-align: center;
@@ -96,9 +96,6 @@
     }
   }
 
-  .ellipse-bg {
-  }
-
   .profitwhales-programs {
     background: #fff url(../../assets/img/programs-background.svg) no-repeat;
     padding-top: 270px;
@@ -155,13 +152,10 @@
               align-items: center;
               margin: 15px 0;
 
-              &::before {
-                display: block;
-                width: 20px;
-                height: 19px;
-                content: ' ';
-                background-image: url(../../assets/img/icons/mark.svg);
-                background-repeat: no-repeat;
+              img {
+                width: 15px;
+                height: 15px;
+                margin: 0 3px 0 0;
               }
             }
           }
@@ -307,6 +301,8 @@
 
         .description {
           width: 40%;
+          padding: 0 0 0 40px;
+          border-left: 2px dashed #fff;
 
           h4 {
             font-family: esb;
@@ -325,6 +321,14 @@
           .custom-list {
             .list-item {
               margin: 0 0 60px 0;
+              position: relative;
+
+              .list-point {
+                position: absolute;
+                left: -49px;
+                top: 12px
+              }
+
               h5 {
                 font-family: eb;
                 font-size: 1.7142857142857142rem;
@@ -335,9 +339,53 @@
               span {
                 font-size: 1.1428571428571428rem;
                 letter-spacing: 0.4px;
+                //display: flex;
+
+                .green-underline {
+                  width: max-content;
+                  color: #8FD39D;
+                  overflow: hidden;
+                  //position: relative;
+
+                  img {
+                    position: absolute;
+                    left: -3px;
+                    bottom: 20px;
+                  }
+                }
               }
             }
           }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 695px) {
+    .program-block .container {
+      margin-bottom: 100px;
+
+      img {
+        opacity: .4;
+      }
+      .description {
+        z-index: 100;
+        text-align: center;
+        align-items: center;
+      }
+    }
+  }
+
+  @media (max-width: 640px) {
+    .program-block .container {
+      .description {
+       h2 {
+         font-size: 3rem;
+         line-height: 4rem;
+       }
+
+        span {
+          font-size: 1.5rem;
         }
       }
     }

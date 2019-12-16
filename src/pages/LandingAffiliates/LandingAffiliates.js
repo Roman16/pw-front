@@ -7,10 +7,13 @@ import benefitsImg from '../../assets/img/benefits-icon.svg'
 import performersImg from '../../assets/img/performers-icon.svg'
 import supportImg from '../../assets/img/support-icon.svg'
 import greenLine from '../../assets/img/green-line.svg';
+import shortGreenLine from '../../assets/img/short-green-line.svg';
+import greenPoint from '../../assets/img/green-point.svg';
 import contactUsImage from '../../assets/img/contact-us-image.svg';
 import commissionFreeIcon from '../../assets/img/commission-free-icon.svg';
 import commissionHaveFeeIcon from '../../assets/img/commission-have-fee-icon.svg';
 import howItWorksImage from '../../assets/img/how-it-works-image.svg';
+import checkedIcon from '../../assets/img/icons/mark.svg';
 
 const LandingAffiliates = () => {
 
@@ -70,10 +73,10 @@ const LandingAffiliates = () => {
                             <h4>Benefits</h4>
 
                             <div className='custom-list'>
-                                <div>High conversion rates (20–30%)</div>
-                                <div>10% Lifetime Commissions</div>
-                                <div>Real-Time Statistics And Reporting</div>
-                                <div>Perks for super-affiliates and influencers</div>
+                                <div><img src={checkedIcon} alt=""/>High conversion rates (20–30%)</div>
+                                <div><img src={checkedIcon} alt=""/>10% Lifetime Commissions</div>
+                                <div><img src={checkedIcon} alt=""/>Real-Time Statistics And Reporting</div>
+                                <div><img src={checkedIcon} alt=""/>Perks for super-affiliates and influencers</div>
                             </div>
                         </div>
 
@@ -83,9 +86,9 @@ const LandingAffiliates = () => {
                             <h4>Perks for Top Performers</h4>
 
                             <div className='custom-list'>
-                                <div>Exclusive discounts</div>
-                                <div>Increased payouts</div>
-                                <div>Premium Support</div>
+                                <div><img src={checkedIcon} alt=""/>Exclusive discounts</div>
+                                <div><img src={checkedIcon} alt=""/>Increased payouts</div>
+                                <div><img src={checkedIcon} alt=""/>Premium Support</div>
                             </div>
                         </div>
 
@@ -95,9 +98,9 @@ const LandingAffiliates = () => {
                             <h4>Support</h4>
 
                             <div className='custom-list'>
-                                <div>We'll help you get the word out</div>
-                                <div>Expert Support</div>
-                                <div>Receive a dedicated referral link</div>
+                                <div><img src={checkedIcon} alt=""/>We'll help you get the word out</div>
+                                <div><img src={checkedIcon} alt=""/>Expert Support</div>
+                                <div><img src={checkedIcon} alt=""/>Receive a dedicated referral link</div>
                             </div>
                         </div>
                     </div>
@@ -165,16 +168,22 @@ const LandingAffiliates = () => {
 
                             <div className='custom-list'>
                                 <div className="list-item">
+                                    <img src={greenPoint} alt="" className="list-point"/>
                                     <h5>Register</h5>
-                                    <span>Apply now to get paid for each successful referral you are making.</span>
+                                    <span>
+                                        <span className='green-underline'>Apply now <img src={shortGreenLine} alt=""/></span>
+                                         to get paid for each successful referral you are making.
+                                    </span>
                                 </div>
 
                                 <div className="list-item">
+                                    <img src={greenPoint} alt="" className="list-point"/>
                                     <h5>Get your personal link</h5>
                                     <span>Once you’ve registered, you’ll get your own, unique link to give to your followers.</span>
                                 </div>
 
                                 <div className="list-item">
+                                    <img src={greenPoint} alt="" className="list-point"/>
                                     <h5>Share your link</h5>
                                     <span>Share your link with your subscribers and followers to get commissions for each new Amazon Seller that signs up for any ProfitWhales paid or free subscription plan.</span>
                                 </div>
@@ -187,7 +196,6 @@ const LandingAffiliates = () => {
                     </div>
                 </div>
             </section>
-
 
             <Footer/>
         </div>
