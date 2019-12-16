@@ -15,7 +15,7 @@ const Dollar = () => (
     <span className="dollar">%</span>
 );
 
-const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll}) => {
+const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handleOk}) => {
     const [value, setValue] = useState(0);
     const [isError, setError] = useState(false);
 

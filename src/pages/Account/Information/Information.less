@@ -209,7 +209,7 @@
             }
 
             .btn-save {
-              margin: 20px 0 0 0;
+              margin: 20px auto !important;
             }
           }
         }
@@ -361,7 +361,7 @@
           }
 
           .btn-change {
-            margin: 20px 0 0 0;
+            margin: 20px auto !important;
           }
         }
       }
@@ -900,6 +900,13 @@
           height: 2.4em;
         }
       }
+    }
+  }
+
+  @media (max-width: 1477px) {
+    & .personal-box .personal-information .form-person-info .btn-save,
+    & .passwords-box .change-password .input-password .btn-change {
+      margin: 10px 0 0 auto;
     }
   }
 }

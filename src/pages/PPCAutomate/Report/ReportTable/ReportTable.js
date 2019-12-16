@@ -234,6 +234,7 @@ class ReportTable extends Component {
         endDate: "",
         page: 1,
         pageSize: this.props.pageSize || 10,
+        totalSize: this.props.totalSize || 0,
         activeTab: "keywords-optimization",
         activeSubTab: "changed-keyword-bid-acos",
         filteredColumns: {},
@@ -330,6 +331,7 @@ class ReportTable extends Component {
                 activeTab: tab,
                 activeSubTab: subTables[tab],
                 page: 1,
+                totalSize: null,
                 filteredColumns: {},
                 sorterColumn: {
                     key: 'eventDateTime',
@@ -426,12 +428,18 @@ class ReportTable extends Component {
                 this.fetchReports
             );
         }
+
+        if (prevProps.totalSize !== this.props.totalSize) {
+            this.setState(
+                {
+                    totalSize: this.props.totalSize
+                });
+        }
     }
 
     render() {
-        const {activeTab, page, pageSize, filteredColumns, sorterColumn} = this.state,
-            {counts, data, todayChanges, totalSize} = this.props;
-
+        const {activeTab, page, pageSize, filteredColumns, sorterColumn, totalSize} = this.state,
+            {counts, data, todayChanges} = this.props;
 
         return (
             <div className="ReportTable">

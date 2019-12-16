@@ -58,6 +58,9 @@
 
 .metrics-modal {
   width: 85vw !important;
+  height: 85vh !important;
+  display: flex;
+  flex-direction: column;
 
   @media (max-width: 1000px) {
     & {
@@ -81,7 +84,13 @@
     color: #363694;
   }
 
+  .ant-modal-content {
+    display: flex;
+    flex-direction: column;
+  }
+
   .ant-modal-body {
+    margin: 0 0 auto 0;
     .visible-list {
       display: grid;
       grid-gap: 1.5em;
@@ -145,6 +154,10 @@
           background: rgba(143, 211, 157, 0.2);
         }
       }
+    }
+
+    .ant-modal-footer {
+      margin: auto 0 0 0;
     }
   }
 

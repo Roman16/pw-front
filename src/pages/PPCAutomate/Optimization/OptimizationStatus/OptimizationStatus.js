@@ -29,6 +29,12 @@ class OptimizationStatus extends Component {
 
     cancelModal = () => this.setState({isShowModal: false});
 
+    handleOk = () => {
+        this.setState({
+            showFirstStartConfirmModal: false
+        })
+    };
+
     handleClickStartOptimization = (status) => {
         const {product: {optimized}, selectedAll} = this.props;
         if (!optimized || selectedAll) {
@@ -143,6 +149,7 @@ class OptimizationStatus extends Component {
                         isShowModal={isShowModal}
                         handleCancel={this.cancelModal}
                         selectedAll={selectedAll}
+                        handleOk={this.handleOk}
                     />
                 )}
 

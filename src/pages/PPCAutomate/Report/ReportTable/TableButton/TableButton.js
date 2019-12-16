@@ -7,9 +7,8 @@ const TableButton = ({children, active, onClick, count, totalSize}) => {
     const [currentCount, setCount] = useState(active ? totalSize : count);
 
     useEffect(() => {
-        setCount(active ? totalSize : count)
+        setCount(active ? totalSize || count : count)
     }, [count, totalSize]);
-
 
     return (
         <div className={`TableButton ${active ? 'active' : ''}`}>

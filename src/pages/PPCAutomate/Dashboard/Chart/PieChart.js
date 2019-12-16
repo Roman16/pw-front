@@ -3,6 +3,7 @@ import {
     PieChart, Pie, Label, Cell, Text, ResponsiveContainer, Line
 } from 'recharts';
 import {round} from "../../../../utils/round";
+import {numberMask} from "../../../../utils/numberMask";
 
 
 const COLORS = ['#5052AD', '#6D6DF6'];
@@ -62,7 +63,7 @@ const FirstPieChart = ({data}) => {
                     <div className='example-fill' style={{background: COLORS[0]}}></div>
                     Organic Sales
                     <div className='value'>
-                        {organicValue != null ? `$ ${round(+organicValue, 2)}` : 'N/A'}
+                        {organicValue != null ? `$ ${numberMask(+organicValue, 2)}` : 'N/A'}
                     </div>
                 </div>
 
@@ -70,7 +71,7 @@ const FirstPieChart = ({data}) => {
                     <div className='example-fill' style={{background: COLORS[1]}}></div>
                     PPC Sales
                     <div className='value'>
-                        {ppcValue != null ? `$ ${round(+ppcValue, 2)}` : 'N/A'}
+                        {ppcValue != null ? `$ ${numberMask(+ppcValue, 2)}` : 'N/A'}
                     </div>
                 </div>
             </div>

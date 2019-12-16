@@ -20,12 +20,13 @@ const Subscription = () => {
     const [openedReactivateWindow, openReactivateWindow] = useState(false);
     const [openedAccountWindow, openAccountWindow] = useState(false);
     const [selectedPlan, selectPlan] = useState();
-    const {subscriptions} = useSelector(state => ({
-        subscriptions: state.user.subscriptions
+    const {subscriptions, mwsConnected, ppcConnected} = useSelector(state => ({
+        subscriptions: state.user.subscriptions,
+        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
+        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false
     }));
 
     const subscriptionProduct = subscriptions[subscriptionProducts[0].productId];
-
 
     function handleOpenAccountWindow(plan) {
         openAccountWindow(true);
@@ -89,13 +90,18 @@ const Subscription = () => {
                 return
             }
         }
-        await userService.updateSubscriptionStatus();
-        dispatch(userActions.getPersonalUserInfo());
+
+        if (ppcConnected || mwsConnected) {
+            await userService.updateSubscriptionStatus();
+            dispatch(userActions.getPersonalUserInfo());
+        }
     }
 
     useEffect(() => {
         dispatch(userActions.getPersonalUserInfo());
-        userService.updateSubscriptionStatus();
+        if (ppcConnected || mwsConnected) {
+            userService.updateSubscriptionStatus();
+        }
 
         interval = setInterval(handleUpdateSubscriptionStatus, 1000 * 60);
 

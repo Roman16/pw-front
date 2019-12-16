@@ -6,8 +6,14 @@ import ppcIcon from "../../../assets/img/icons/ppc-automate-icon.svg";
 import moment from "moment";
 import {numberMask} from "../../../utils/numberMask";
 import {history} from "../../../utils/history";
+import {useSelector} from "react-redux";
 
 const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe}) => {
+    const {mwsConnected, ppcConnected} = useSelector(state => ({
+        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
+        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false
+    }));
+
     const [disableButton, changeButton] = useState(false);
     let timeout = null;
 
@@ -15,6 +21,82 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
         onSubscribe(product);
         changeButton(true);
     }
+
+    function renderPlanContent() {
+        if (!mwsConnected || !ppcConnected) {
+            return (
+                <div className="load-data">
+                    <div className='load-text'>Please connect your Amazon MWS and PPC accounts</div>
+                </div>
+            )
+        } else if (product.next_charge_value == null || product.flat_amount == null || product.quantity == null) {
+            return (
+                <div className="load-data">
+                    <div className='load-text'>We are loading your Amazon data. <br/>Come back in a few
+                        hours.
+                    </div>
+                    <Spin/>
+                </div>
+            )
+        } else {
+            return (
+                <Fragment>
+                    <div className="charged-description">
+                        <p className="charged-text">You’ll be charged</p>
+                        <p className="charged-data">$ {numberMask(product.next_charge_value, 2) || 0}</p>
+                    </div>
+
+                    <div className="indicators-text">
+                        based on{" "}
+                        <span className="indicators-data">
+                                          $ {product.flat_amount || 0} + {product.percent_amount || 0}%
+                                          <sub>monthly ad spend</sub>
+                                        </span>
+                    </div>
+                </Fragment>
+            )
+        }
+    }
+
+    function renderButtonsBlock() {
+        if (!mwsConnected || !ppcConnected) {
+            return (
+                <div className="subscribe-btn">
+                    <button className="btn green-btn">
+                        {!mwsConnected && !ppcConnected && <Link to={'/mws'}>Edit Credentials</Link>}
+                        {mwsConnected && !ppcConnected && <Link to={'/ppc'}>Edit Credentials</Link>}
+                    </button>
+                </div>
+            )
+        } else if (product.has_access && !product.cancelled) {
+            return (
+                <Fragment>
+                    <p className="cancel-text">
+                        {product.next_invoice_at && <Fragment> Next Invoice Date: <span
+                            className="cancel-data">{moment(product.next_invoice_at).format('MMM DD, YYYY')}</span>
+                        </Fragment>}
+                    </p>
+
+                    <button
+                        className="cancel-btn"
+                        type="button"
+                        onClick={() => onOpenAccountWindow(product)}
+                    >
+                        Cancel
+                    </button>
+                </Fragment>
+            )
+        } else if (!product.has_access) {
+            return (
+                <div className="subscribe-btn">
+                    <button className="btn green-btn" onClick={handleSubscribe} disabled={disableButton}>
+                        {disableButton ? <Spin/> : 'Subscribe'}
+                    </button>
+                </div>
+            )
+        }
+    }
+
 
     useEffect(() => {
         if (disableButton) {
@@ -69,29 +151,7 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                     <div className="charged">
                         <h3 className="charged-title">{product.planName}</h3>
 
-                        {product.next_charge_value == null || product.flat_amount == null || product.quantity == null ?
-                            <div className="load-data">
-                                <div className='load-text'>We are loading your Amazon data. <br/>Come back in a few
-                                    hours.
-                                </div>
-                                <Spin/>
-                            </div>
-                            :
-                            <Fragment>
-                                <div className="charged-description">
-                                    <p className="charged-text">You’ll be charged</p>
-                                    <p className="charged-data">$ {numberMask(product.next_charge_value, 2) || 0}</p>
-                                </div>
-
-                                <div className="indicators-text">
-                                    based on{" "}
-                                    <span className="indicators-data">
-                                          $ {product.flat_amount || 0} + {product.percent_amount || 0}%
-                                          <sub>monthly ad spend</sub>
-                                        </span>
-                                </div>
-                            </Fragment>
-                        }
+                        {renderPlanContent()}
                     </div>
 
                     {(product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&
@@ -103,32 +163,8 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
 
 
                 <div className="cancel">
-                    {(product.has_access && !product.cancelled) && <Fragment>
-                        <p className="cancel-text">
-                            {product.next_invoice_at && <Fragment> Next Invoice Date: <span
-                                className="cancel-data">{moment(product.next_invoice_at).format('MMM DD, YYYY')}</span>
-                            </Fragment>}
-                        </p>
-
-                        <button
-                            className="cancel-btn"
-                            type="button"
-                            onClick={() => onOpenAccountWindow(product)}
-                        >
-                            Cancel
-                        </button>
-                    </Fragment>}
-
-                    {!product.has_access &&
-                    <div className="subscribe-btn">
-                        <button className="btn green-btn" onClick={handleSubscribe} disabled={disableButton}>
-                            {disableButton ? <Spin/> : 'Subscribe'}
-                        </button>
-                    </div>
-                    }
+                    {renderButtonsBlock()}
                 </div>
-
-
             </div>
         </div>
     )

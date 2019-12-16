@@ -55,26 +55,39 @@ class ProductsList extends Component {
     onChangeRow = (value, item, index) => {
         const {products} = this.state;
 
-        if (item !== NET_MARGIN && (value > 0.02 || !value)) {
-            if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] !== '') {
+        if (value === '' || value == null) {
+            const dataSourceRow = this.setRowData(null, item, index);
+
+            if (item !== this.prevItem) {
+                this.prevItem = item;
+                this.updateSettings(dataSourceRow);
+            } else {
+                this.prevItem = item;
+                clearTimeout(this.timerId);
+                this.timerId = setTimeout(() => {
+                    this.updateSettings(dataSourceRow);
+                }, delay);
+            }
+        } else if (item !== NET_MARGIN && value > 0.02) {
+            if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null) {
                 notification.warning({
                     title: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
                 });
                 return;
             }
-            if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING]) && products[index][MIN_BID_MANUAL_CAMPING] !== '') {
+            if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING]) && products[index][MIN_BID_MANUAL_CAMPING] != null) {
                 notification.warning({
                     title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
                 });
                 return;
             }
-            if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING]) && products[index][MAX_BID_AUTO_CAMPING] !== '') {
+            if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING]) && products[index][MAX_BID_AUTO_CAMPING] != null) {
                 notification.warning({
                     title: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
                 });
                 return;
             }
-            if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING]) && products[index][MIN_BID_AUTO_CAMPING] !== '') {
+            if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING]) && products[index][MIN_BID_AUTO_CAMPING] != null) {
                 notification.warning({
                     title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
                 });
