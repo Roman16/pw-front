@@ -54,26 +54,27 @@ class ProductsList extends Component {
 
     onChangeRow = (value, item, index) => {
         const {products} = this.state;
-        if (value > 0) {
-            if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING])) {
+
+        if (item !== NET_MARGIN && (value > 0.02 || !value)) {
+            if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] !== '') {
                 notification.warning({
                     title: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
                 });
                 return;
             }
-            if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING])) {
+            if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING]) && products[index][MIN_BID_MANUAL_CAMPING] !== '') {
                 notification.warning({
                     title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
                 });
                 return;
             }
-            if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING])) {
+            if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING]) && products[index][MAX_BID_AUTO_CAMPING] !== '') {
                 notification.warning({
                     title: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
                 });
                 return;
             }
-            if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING])) {
+            if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING]) && products[index][MIN_BID_AUTO_CAMPING] !== '') {
                 notification.warning({
                     title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
                 });
@@ -81,6 +82,7 @@ class ProductsList extends Component {
             }
 
             const dataSourceRow = this.setRowData(value, item, index);
+
             if (item !== this.prevItem) {
                 this.prevItem = item;
                 this.updateSettings(dataSourceRow);
@@ -106,7 +108,7 @@ class ProductsList extends Component {
 
         products[index] = {
             ...products[index],
-            [item]: +value,
+            [item]: value ? +value : null,
         };
         this.setState({
             products: [...products],
@@ -114,7 +116,7 @@ class ProductsList extends Component {
 
         return {
             product_id: products[index].id,
-            [item]: +value
+            [item]: value ? +value : null
         };
     };
 
@@ -275,6 +277,7 @@ class ProductsList extends Component {
                             value={item[MIN_BID_MANUAL_CAMPING]}
                             min={0}
                             max={item[MAX_BID_MANUAL_CAMPING] || 999999999}
+                            step={0.01}
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)
                             }
@@ -290,6 +293,7 @@ class ProductsList extends Component {
                         <InputCurrency
                             value={item[MAX_BID_MANUAL_CAMPING]}
                             min={item[MIN_BID_MANUAL_CAMPING] || 0}
+                            step={0.01}
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)
                             }
@@ -306,6 +310,7 @@ class ProductsList extends Component {
                             value={item[MIN_BID_AUTO_CAMPING]}
                             min={0}
                             max={item[MAX_BID_AUTO_CAMPING] || 999999999}
+                            step={0.01}
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)
                             }
@@ -320,7 +325,8 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[MAX_BID_AUTO_CAMPING]}
-                            min={item[MAX_BID_AUTO_CAMPING] || 0}
+                            min={item[MIN_BID_AUTO_CAMPING] || 0}
+                            step={0.01}
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)
                             }
