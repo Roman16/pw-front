@@ -24,7 +24,8 @@ class ProductList extends Component {
 
     getProducts = () => this.props.getAllProducts({
         ...this.state.paginationParams,
-        onlyOptimization: this.state.onlyOptimization
+        onlyOptimization: this.state.onlyOptimization,
+        selectedAll: this.state.isSelectedAll
     });
 
     changeOpenedProduct = (id) => {

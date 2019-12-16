@@ -24,7 +24,7 @@ function fetchProducts(paginationParams) {
                     payload: res
                 });
 
-                if (res.result && res.result.length > 0) {
+                if (res.result && res.result.length > 0 && !paginationParams.selectedAll) {
                     dispatch(fetchProductDetails(res.result[0]));
                 }
             });
