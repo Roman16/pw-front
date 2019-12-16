@@ -8,6 +8,7 @@ import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {numberMask} from "../../../../../utils/numberMask";
 import {ColumnMenuFilter, ColumnTextFilter, ColumnNumberFilter} from "./columnFilter";
 import {subChangesCount} from "./changesCount";
+import {round} from "../../../../../utils/round";
 
 const createdCampaign = 'created-campaign';
 const createdAdGroup = 'created-ad-group';
@@ -93,6 +94,7 @@ const NewKeywords = ({
                 title: 'Targeting Type',
                 dataIndex: 'd_campaignTargetingType',
                 key: 'd_campaignTargetingType',
+                width: '13em',
                 render: (str) => (<span className="capitalize-field">{str}</span>),
                 sorter: true,
                 filter: (dataIndex) => <ColumnMenuFilter
@@ -121,6 +123,7 @@ const NewKeywords = ({
                 title: 'Start Date.',
                 dataIndex: 'd_startDate',
                 key: 'd_startDate',
+                width: '13em',
                 render: text => moment(text).format('YYYY-MM-DD'),
                 sorter: true,
             },
@@ -395,7 +398,7 @@ const NewKeywords = ({
                 ),
                 dataIndex: 'd_customerSearchTermACoS',
                 key: 'd_customerSearchTermACoS',
-                render: text => <span>{text && `${text}%`}</span>,
+                render: text => <span>{text && `${round(text, 2)}%`}</span>,
                 width: '10.5em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
@@ -433,7 +436,7 @@ const NewKeywords = ({
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
-                render: text => <span>{text && `${text}%`}</span>,
+                render: text => <span>{text && `${round(text, 2)}%`}</span>,
                 width: '11.5em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
