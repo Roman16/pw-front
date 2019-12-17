@@ -1,16 +1,13 @@
-<svg width="1920" height="1876" viewBox="0 0 1920 1876" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle opacity="0.1" cx="1745" cy="1792" r="68" stroke="#8FD39D" stroke-width="32"/>
-<circle opacity="0.1" cx="1766" cy="503" r="68" stroke="#8FD39D" stroke-width="32"/>
-<circle opacity="0.5" cx="1748" cy="1479" r="22" stroke="white" stroke-width="12"/>
-<circle opacity="0.5" cx="1628" cy="419" r="22" stroke="white" stroke-width="12"/>
-<circle opacity="0.7" cx="345" cy="1254" r="11" stroke="white" stroke-width="8"/>
-<circle opacity="0.1" cx="384" cy="1723" r="40" fill="#9999F9"/>
-<circle opacity="0.1" cx="120" cy="407" r="40" fill="#9999F9"/>
-<circle opacity="0.1" cx="709.5" cy="1075.5" r="15.5" fill="#9999F9"/>
-<circle opacity="0.1" cx="550.5" cy="15.5" r="15.5" fill="#9999F9"/>
-<circle opacity="0.1" cx="1826" cy="655" r="26" fill="#9999F9"/>
-<circle opacity="0.1" cx="25.5" cy="1539.5" r="81.5" fill="#9999F9"/>
-<circle opacity="0.1" cx="200" cy="1148" r="30" fill="#8FD39D"/>
-<circle opacity="0.5" cx="832" cy="1667" r="15" fill="white"/>
-<circle opacity="0.1" cx="1920" cy="1342" r="66" fill="#8FD39D" stroke="#8FD39D" stroke-width="40"/>
+<svg width="1920" height="1509" viewBox="0 0 1920 1509" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle opacity="0.1" cx="1745" cy="1425" r="68" stroke="#8FD39D" stroke-width="32"/>
+<circle opacity="0.1" cx="1766" cy="136" r="68" stroke="#8FD39D" stroke-width="32"/>
+<circle opacity="0.5" cx="1748" cy="1112" r="22" stroke="white" stroke-width="12"/>
+<circle opacity="0.1" cx="384" cy="1356" r="40" fill="#9999F9"/>
+<circle opacity="0.1" cx="709.5" cy="708.5" r="15.5" fill="#9999F9"/>
+<circle opacity="0.1" cx="1826" cy="288" r="26" fill="#9999F9"/>
+<circle opacity="0.1" cx="25.5" cy="1172.5" r="81.5" fill="#9999F9"/>
+<circle opacity="0.1" cx="200" cy="781" r="30" fill="#8FD39D"/>
+<circle opacity="0.1" cx="1920" cy="975" r="66" fill="#8FD39D" stroke="#8FD39D" stroke-width="40"/>
+<circle opacity="0.7" cx="345" cy="887" r="11" stroke="white" stroke-width="8"/>
+<circle opacity="0.1" cx="120" cy="40" r="40" fill="#9999F9"/>
 </svg>

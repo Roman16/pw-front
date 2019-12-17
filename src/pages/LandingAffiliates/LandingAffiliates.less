@@ -236,8 +236,10 @@
 
   .commission-details {
     padding: 200px 0 240px 0;
+    background-color: #fff;
     background-image: url(../../assets/img/commission-bg.svg), linear-gradient(180deg, #FFFFFF 0%, #F3F7FD 100%);
-    //background-position: 0 -490px;
+    background-repeat: no-repeat;
+    background-position: 0 20px;
 
     .container {
       .green-line {
@@ -254,7 +256,7 @@
 
         & > div {
           width: 40%;
-          min-width: 300px;
+          min-width: 450px;
           height: 10.714285714285714rem;
           display: flex;
           align-items: center;
@@ -352,7 +354,7 @@
                   img {
                     position: absolute;
                     left: -3px;
-                    bottom: 20px;
+                    top: 5rem;
                   }
                 }
               }
@@ -364,8 +366,97 @@
   }
 
 
-  @media (max-width: 695px) {
+  @media (max-width: 1420px) {
+    .contact-us .container {
+      .image {
+        opacity: .8;
+      }
 
+      .have-question {
+        z-index: 10;
+
+        h2 {
+          right: 0;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 925px) {
+    .commission-details .container {
+      .commissions {
+        flex-direction: column;
+        align-items: center;
+
+        & > div {
+          margin: 0 0 20px 0;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 800px) {
+    .contact-us .container {
+      .image {
+        position: absolute;
+        opacity: .3;
+      }
+
+      .have-question {
+        width: 100%;
+        z-index: 10;
+        margin: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h3 {
+          text-align: center;
+        }
+
+        img.green-line {
+          margin: 0 auto;
+        }
+
+        h2 {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 770px) {
+    .commission-details .container {
+      .how-it-work {
+        display: flex;
+        flex-direction: column;
+        margin-top: 200px;
+        align-items: center;
+
+        .image {
+          width: 50%;
+        }
+
+        .description {
+          width: 70%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          box-sizing: content-box;
+          margin: 0 40px 0 0;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 695px) {
+    section .container {
+      button.green-btn {
+        height: 40px;
+        font-size: 1.1428571428571428rem;
+      }
+    }
   }
 
   @media (max-width: 695px) {
@@ -386,9 +477,9 @@
 
   @media (max-width: 640px) {
     .program-block .container {
-      .description {
-        width: 100%;
+      justify-content: center;
 
+      .description {
         h2 {
           font-size: 3rem;
           line-height: 4rem;
@@ -400,10 +491,14 @@
       }
     }
 
-    .amazon-influencer .container {
-      h2 {
-        font-size: 3rem;
-        line-height: 4rem;
+    .amazon-influencer {
+      height: 390px;
+
+      .container {
+        h2 {
+          font-size: 3rem;
+          line-height: 4rem;
+        }
       }
     }
 
@@ -440,12 +535,40 @@
     }
   }
 
+  @media (max-width: 550px) {
+    .commission-details {
+      padding-bottom: 150px;
+
+      .container {
+        .commissions {
+          & > div {
+            width: 90%;
+            min-width: 300px;
+
+            img {
+              width: 100px;
+              margin: 0 10% -60px -10px;
+            }
+
+            .description {
+              h4,
+              span {
+                font-size: 1.1428571428571428rem;
+              }
+            }
+
+            .commission-value {
+              font-size: 2rem;
+            }
+          }
+        }
+      }
+    }
+  }
 
   @media (max-width: 450px) {
     .program-block .container {
       .description {
-        width: 100%;
-
         h2 {
           font-size: 2.5rem;
           line-height: 3rem;
@@ -476,6 +599,34 @@
 
     }
 
+    .commission-details .container {
+      .commissions {
+        & > div {
+          height: max-content;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          img {
+            margin: 10px 0;
+          }
+
+          .commission-value {
+            margin: 0 auto;
+          }
+        }
+      }
+    }
   }
 
+  @media (max-width: 380px) {
+    section {
+      .container {
+        h2 {
+          font-size: 2rem !important;
+          line-height: initial !important;
+        }
+      }
+    }
+  }
 }
