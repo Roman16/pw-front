@@ -98,7 +98,7 @@
   .profitwhales-programs {
     background: #fff url(../../assets/img/programs-background.svg) no-repeat;
     padding-top: 220px;
-    padding-bottom: 200px;
+    padding-bottom: 100px;
 
 
     .container {
@@ -150,6 +150,7 @@
               display: flex;
               align-items: center;
               margin: 15px 0;
+              font-size: 1.1428571428571428rem;
 
               img {
                 width: 15px;
@@ -235,7 +236,7 @@
   }
 
   .commission-details {
-    padding: 200px 0 240px 0;
+    padding: 100px 0 150px 0;
     background-color: #fff;
     background-image: url(../../assets/img/commission-bg.svg), linear-gradient(180deg, #FFFFFF 0%, #F3F7FD 100%);
     background-repeat: no-repeat;
@@ -270,6 +271,8 @@
           }
 
           .description {
+            width: 40%;
+
             h4 {
               font-family: eb;
               font-size: 1.4285714285714286rem;
@@ -281,6 +284,14 @@
               letter-spacing: 0.4px;
               color: #17175A;
             }
+
+            @media only screen and (min--moz-device-pixel-ratio: 2),
+            only screen and (-webkit-min-device-pixel-ratio: 2),
+            only screen and (min-device-pixel-ratio: 2) {
+              & {
+                width: auto;
+              }
+            }
           }
 
           .commission-value {
@@ -288,7 +299,7 @@
             font-size: 2.357142857142857rem;
             letter-spacing: 0.4px;
             color: #17175A;
-            margin: 0 10% 0 auto;
+            margin: 0 5% 0 auto;
           }
 
         }
@@ -297,7 +308,7 @@
       .how-it-work {
         display: flex;
         justify-content: space-around;
-        margin: 280px 0 0 0;
+        margin: 250px 0 0 0;
 
         .image {
           width: 40%;
@@ -365,7 +376,6 @@
     }
   }
 
-
   @media (max-width: 1420px) {
     .contact-us .container {
       .image {
@@ -381,6 +391,21 @@
       }
     }
   }
+
+  @media only screen and (min--moz-device-pixel-ratio: 2),
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min-device-pixel-ratio: 2) {
+    .contact-us .container {
+      .have-question {
+        z-index: 0;
+
+        h2 {
+          left: 42vw;
+        }
+      }
+    }
+  }
+
 
   @media (max-width: 925px) {
     .commission-details .container {
