@@ -113,8 +113,8 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                     </h3>
 
                     <span>
-                    Your bills are paid using your active <br/> payment method
-                </span>
+                        Your bills are paid using your active <br/> payment method
+                    </span>
                 </div>
 
                 {haveCard && <div className='user-cards'>
