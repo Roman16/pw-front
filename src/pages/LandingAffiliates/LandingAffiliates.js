@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Header from "../NotFound/Header/Header";
 import Footer from "../NotFound/Footer/Footer";
 import './LandingAffiliates.less';
@@ -16,6 +16,31 @@ import howItWorksImage from '../../assets/img/how-it-works-image.svg';
 import checkedIcon from '../../assets/img/icons/mark.svg';
 
 const LandingAffiliates = () => {
+    // const existingScript = document.getElementById('tapfiliate');
+    // const tapfiliateScript = document.createElement('script');
+    //
+    // if (!existingScript) {
+    //     tapfiliateScript.src = 'https://script.tapfiliate.com/tapfiliate.js';
+    //     tapfiliateScript.id = 'tapfiliate';
+    //     document.body.appendChild(tapfiliateScript);
+    // }
+    //
+    // useEffect(() => {
+    //     return (() => {
+    //         document.body.removeChild(tapfiliateScript)
+    //     })
+    // }, []);
+    //
+    // (function (t, a, p) {
+    //     t.TapfiliateObject = a;
+    //     t[a] = t[a] || function () {
+    //         (t[a].q = t[a].q || []).push(arguments)
+    //     }
+    // })(window, 'tap');
+    //
+    // window.tap('create', 'YOUR ACCOUNT ID', {integration: "javascript"});
+    // window.tap('detect');
+
 
     return (
         <div className='landing-affiliates'>
@@ -116,11 +141,11 @@ const LandingAffiliates = () => {
                             <img src={commissionFreeIcon} alt=""/>
                             <div className='description'>
                                 <h4>Your Payout for</h4>
-                                <span>Free registration</span>
+                                <span> Per referral that jups from Free Trial to paid subscription plan.</span>
                             </div>
 
                             <div className="commission-value">
-                                $5
+                                $25
                             </div>
                         </div>
                         <div className='have-commissions'>
@@ -149,7 +174,8 @@ const LandingAffiliates = () => {
                                     <img src={greenPoint} alt="" className="list-point"/>
                                     <h5>Register</h5>
                                     <span>
-                                        <span className='green-underline'>Apply now <img src={shortGreenLine} alt=""/></span>
+                                        <span className='green-underline'>Apply now <img src={shortGreenLine}
+                                                                                         alt=""/></span>
                                          to get paid for each successful referral you are making.
                                     </span>
                                 </div>
