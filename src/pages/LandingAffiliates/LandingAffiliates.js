@@ -62,8 +62,7 @@ const LandingAffiliates = () => {
                     <h3>What Is The ProfitWhales Affiliate Program?</h3>
                     <img src={greenLine} alt=""/>
                     <span>
-                        We provide you with high-quality promotional assets like banners, sidebars, social media graphics and videos.
-                        So you <br/>everything to refer your visitors & drive sales!
+                        Leverage Profit Whales marketing initiatives such as blog posts, videos, and whitepapers to save you the energy of creating content from scratch.
                     </span>
 
                     <div className="programs">
@@ -103,27 +102,6 @@ const LandingAffiliates = () => {
                                 <div><img src={checkedIcon} alt=""/>Receive a dedicated referral link</div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className='contact-us'>
-                <div className="container">
-                    <div className="image">
-                        <img src={contactUsImage} alt=""/>
-                    </div>
-
-                    <div className='have-question'>
-                        <h2>Contact us</h2>
-
-                        <h3>Have Questions?</h3>
-
-                        <img src={greenLine} alt="" className='green-line'/>
-
-                        <span>Contact as at</span>
-                        <a href="mailto: info@profitwhales.agency">
-                            info@profitwhales.agency
-                        </a>
                     </div>
                 </div>
             </section>
@@ -196,6 +174,28 @@ const LandingAffiliates = () => {
                     </div>
                 </div>
             </section>
+
+            <section className='contact-us'>
+                <div className="container">
+                    <div className="image">
+                        <img src={contactUsImage} alt=""/>
+                    </div>
+
+                    <div className='have-question'>
+                        <h2>Contact us</h2>
+
+                        <h3>Have Questions?</h3>
+
+                        <img src={greenLine} alt="" className='green-line'/>
+
+                        <span>Contact as at</span>
+                        <a href="mailto: info@profitwhales.agency">
+                            info@profitwhales.agency
+                        </a>
+                    </div>
+                </div>
+            </section>
+
 
             <Footer/>
         </div>
