@@ -426,6 +426,7 @@ const KeywordsOptimization = ({
                 showSizeChanger={true}
                 pageSize={pageSize}
                 sorterColumn={sorterColumn}
+                rowClassName={(item) => !item.viewed && 'new-report'}
             />
         </div>
     );

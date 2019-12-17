@@ -352,6 +352,7 @@ const NewPats = ({
                 pageSize={pageSize}
                 sorterColumn={sorterColumn}
                 onChangeSorter={handleChangeSorter}
+                rowClassName={(item) => !item.viewed && 'new-report'}
             />
         </div>
     );

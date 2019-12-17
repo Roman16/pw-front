@@ -16,6 +16,8 @@ const TableButton = ({children, active, onClick, count, totalSize}) => {
                 {children}
 
                 {currentCount > 0 && <div className="tab-name-count">{currentCount}</div>}
+
+                <span className='new-count'>new</span>
             </Button>
         </div>
     );
