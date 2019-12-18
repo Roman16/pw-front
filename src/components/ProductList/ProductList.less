@@ -87,10 +87,25 @@
     border-radius: 0.285714286em;
     display: flex;
     flex-direction: column;
-    padding: 0.285714286em;
+    padding: .5em .2em .5em 1em;
     padding-bottom: 0;
     margin: 0.285714286em;
     position: relative;
+
+    .has-new-reports {
+      height: max-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+      right: 3px;
+      background: #8FD39D;
+      border-radius: 2px;
+      color: #fff;
+      font-size: 0.7857142857142857rem;
+      font-weight: normal;
+      margin: 0 0 0 5px;
+    }
 
     .product-information {
       height: 6.571428571em;
@@ -100,7 +115,7 @@
 
       .image-block {
         height: 100%;
-        margin: 0 0.357142857em 0 0;
+        margin: 0 0.8em 0 0;
         display: flex;
         flex-direction: column;
 
@@ -126,6 +141,8 @@
 
         .caption {
           font-weight: 900;
+          display: flex;
+          justify-content: space-between;
         }
 
         .detail {

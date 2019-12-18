@@ -48,7 +48,10 @@ const ProductItem = ({
 
 
                 <div className="product-item-content">
-                    <div className="caption">{maxText(name)}</div>
+                    <div className="caption">
+                        {maxText(name)}
+                        {product.hasNew && <div className='has-new-reports'>New</div>}
+                    </div>
 
                     <div>
                         <div className="detail">

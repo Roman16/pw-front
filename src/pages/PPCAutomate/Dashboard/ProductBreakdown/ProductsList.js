@@ -25,7 +25,7 @@ const RenderPramsChanges = ({type, product}) => {
                     </div>
                 </div>
             )
-        } else if (type === 'acos_diff') {
+        } else if (type === 'acos_diff' || type === 'cpa_diff') {
             return (
                 <div className='product-metric-changes up'>
                     {value >= 25 && <div className='downward-changes'>
