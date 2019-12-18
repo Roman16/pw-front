@@ -1,3 +1,5 @@
+import React from "react";
+
 const mainTypeList = {
     "keywords-optimization": [
         'changed-keyword-bid-acos',
@@ -32,10 +34,18 @@ const mainTypeList = {
     ]
 };
 
-export const subChangesCount = (counts, type) => {
+export const subChangesCount = (counts = [], type, countsWithNew = []) => {
     if (Array.isArray(counts)) {
-        const countObject = counts.find(item => item.type === type) || null;
-        return (countObject ? countObject.count : 0);
+        const countObject = counts.find(item => item.type === type) || null,
+            hasNewReport = countsWithNew.find(item => item.type === type) || false;
+
+        return (countObject ? {
+            ...countObject,
+            hasNewReport: hasNewReport
+        } : {
+            count: 0,
+            hasNewReport: false
+        });
     }
 };
 
@@ -50,4 +60,14 @@ export const mainChangesCount = (counts = [], type) => {
     }
 
     return count || 0;
+};
+
+export const mainHasNewReport = (countsWithNew = [], type) => {
+    if (Array.isArray(countsWithNew)) {
+        mainTypeList[type].forEach((type) => {
+            if (countsWithNew.find(item => item.type === type)) {
+                return true
+            }
+        });
+    }
 };

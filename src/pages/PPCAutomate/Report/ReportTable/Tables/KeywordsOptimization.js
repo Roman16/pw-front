@@ -35,10 +35,11 @@ const KeywordsOptimization = ({
                                   sorterColumn
                               }) => {
     const [activeTable, changeTable] = useState(changedKeywordBidAcos);
-    const {counts, loading, productId} = useSelector(state => ({
+    const {counts, loading, productId, countsWithNew} = useSelector(state => ({
         counts: state.reports.counts,
         loading: state.reports.loading,
-        productId: state.products.selectedProduct.id
+        productId: state.products.selectedProduct.id,
+        countsWithNew: state.reports.counts_with_new
     }));
 
     const onChange = tab => {
@@ -372,7 +373,7 @@ const KeywordsOptimization = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={changedKeywordBidAcos === activeTable}
-                    count={subChangesCount(counts, changedKeywordBidAcos)}
+                    count={subChangesCount(counts, changedKeywordBidAcos, countsWithNew)}
                     onClick={() => {
                         onChange(changedKeywordBidAcos);
                     }}
@@ -383,7 +384,7 @@ const KeywordsOptimization = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={changedKeywordBidImpression === activeTable}
-                    count={subChangesCount(counts, changedKeywordBidImpression)}
+                    count={subChangesCount(counts, changedKeywordBidImpression, countsWithNew)}
                     onClick={() => {
                         onChange(changedKeywordBidImpression);
                     }}
@@ -394,7 +395,7 @@ const KeywordsOptimization = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={pausedKeywordHighAcos === activeTable}
-                    count={subChangesCount(counts, pausedKeywordHighAcos)}
+                    count={subChangesCount(counts, pausedKeywordHighAcos, countsWithNew)}
                     onClick={() => {
                         onChange(pausedKeywordHighAcos);
                     }}
@@ -405,7 +406,7 @@ const KeywordsOptimization = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={pausedKeywordNoSales === activeTable}
-                    count={subChangesCount(counts, pausedKeywordNoSales)}
+                    count={subChangesCount(counts, pausedKeywordNoSales, countsWithNew)}
                     onClick={() => {
                         onChange(pausedKeywordNoSales);
                     }}

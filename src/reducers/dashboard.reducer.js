@@ -62,7 +62,7 @@ export function dashboard(state = initialState, action) {
         case dashboardConstants.SET_METRICS_STATISTIC:
             return {
                 ...state,
-                allMetrics: state.allMetrics.map(item => ({
+                allMetrics: metricsListArray.map(item => ({
                     ...item,
                     ...(action.payload.length > 0 && action.payload.find(metric => metric.metric_key === item.key))
                 })),

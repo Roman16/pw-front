@@ -32,10 +32,11 @@ const NewPats = ({
                      sorterColumn
                  }) => {
     const [activeTable, changeTable] = useState(CreatedCrossNegativePAT);
-    const {counts, loading, productId} = useSelector(state => ({
+    const {counts, loading, productId, countsWithNew} = useSelector(state => ({
         counts: state.reports.counts,
         loading: state.reports.loading,
-        productId: state.products.selectedProduct.id
+        productId: state.products.selectedProduct.id,
+        countsWithNew: state.reports.counts_with_new
     }));
 
     const onChange = tab => {
@@ -320,7 +321,7 @@ const NewPats = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={activeTable === CreatedCrossNegativePAT}
-                    count={subChangesCount(counts, CreatedCrossNegativePAT)}
+                    count={subChangesCount(counts, CreatedCrossNegativePAT, countsWithNew)}
                     onClick={() => {
                         onChange(CreatedCrossNegativePAT);
                     }}
@@ -331,7 +332,7 @@ const NewPats = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={activeTable === CreatedPATCST}
-                    count={subChangesCount(counts, CreatedPATCST)}
+                    count={subChangesCount(counts, CreatedPATCST, countsWithNew)}
                     onClick={() => {
                         onChange(CreatedPATCST);
                     }}
