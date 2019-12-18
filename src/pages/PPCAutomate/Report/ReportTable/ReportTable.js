@@ -19,7 +19,6 @@ import {mainChangesCount, mainHasNewReport} from "./Tables/changesCount";
 const {TabPane} = Tabs;
 
 const TabName = ({name = null, type, counts, countsWithNew}) => {
-    console.log(mainHasNewReport(countsWithNew, type));
     return (
         <div className="TabName">
             <span>{name}</span>
@@ -28,7 +27,7 @@ const TabName = ({name = null, type, counts, countsWithNew}) => {
                 {mainChangesCount(counts, type)}
             </div>
 
-            {mainHasNewReport(countsWithNew, type) && <div className='new-count'>New</div>}
+            {mainHasNewReport(countsWithNew, type) > 0 && <div className='new-count'>New {mainHasNewReport(countsWithNew, type)}</div>}
         </div>
     )
 };

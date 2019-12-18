@@ -17,7 +17,7 @@ const TableButton = ({children, active, onClick, count = {count: 0}, totalSize, 
 
                 {currentCount > 0 && <div className="tab-name-count">{currentCount}</div>}
 
-                {count.hasNewReport && <div className='new-count'>New</div>}
+                {count.hasNewReport && <div className='new-count'>New {count.hasNewReport.count}</div>}
             </Button>
         </div>
     );

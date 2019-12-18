@@ -15,7 +15,7 @@ import soon from "../../assets/img/icons/soon.svg";
 import "./Sidebar.less";
 import {history} from "../../utils/history";
 import moment from "moment";
-import {notification} from "../Notification";
+import {productsActions} from "../../actions/products.actions";
 
 const domainName =
     window.location.hostname === "localhost"
@@ -61,7 +61,7 @@ const Sidebar = () => {
         dispatch = useDispatch(),
         {user, notFirstEntry} = useSelector(state => ({
             user: state.user,
-            notFirstEntry: state.user.notFirstEntry
+            notFirstEntry: state.user.notFirstEntry,
         }));
 
 
@@ -95,6 +95,7 @@ const Sidebar = () => {
         window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
     }, [width]);
 
+
     window.captchaStyle.innerHTML = `.grecaptcha-badge { display: none !important}`;
 
     if (!notFirstEntry) {
@@ -102,17 +103,6 @@ const Sidebar = () => {
         // localStorage.removeItem('token');
         return ('');
     }
-
-    const rootElement = document.getElementById('root');
-
-    rootElement.addEventListener('mousemove', e => debounce(5000, false, () => {
-        if (moment(new Date())
-            .diff(moment(JSON.parse(sessionStorage.getItem('lastActive'))), 'seconds') > 10) {
-            console.log('run')
-        }
-
-        sessionStorage.setItem('lastActive', JSON.stringify(moment(new Date()).format()));
-    }));
 
     return (
         <div
