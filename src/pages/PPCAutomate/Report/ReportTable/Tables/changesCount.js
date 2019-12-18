@@ -63,11 +63,15 @@ export const mainChangesCount = (counts = [], type) => {
 };
 
 export const mainHasNewReport = (countsWithNew = [], type) => {
+    let hasNew = false;
+
     if (Array.isArray(countsWithNew)) {
         mainTypeList[type].forEach((type) => {
             if (countsWithNew.find(item => item.type === type)) {
-                return true
+                hasNew = true;
             }
         });
     }
+
+    return hasNew;
 };

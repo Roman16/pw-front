@@ -19,6 +19,7 @@ import {mainChangesCount, mainHasNewReport} from "./Tables/changesCount";
 const {TabPane} = Tabs;
 
 const TabName = ({name = null, type, counts, countsWithNew}) => {
+    console.log(mainHasNewReport(countsWithNew, type));
     return (
         <div className="TabName">
             <span>{name}</span>
