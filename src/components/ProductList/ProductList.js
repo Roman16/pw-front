@@ -174,13 +174,13 @@ class ProductList extends Component {
                         </div>
                     </div>
 
-                    {pathname === '/ppc/report' && <div className='has-new-reports-only'>
-                        <label htmlFor="">Has new reports only</label>
-                        <Switch
-                            checked={onlyHasNew}
-                            onChange={e => this.handleChangeSwitch(e, 'onlyHasNew')}
-                        />
-                    </div>}
+                    {/*{pathname === '/ppc/report' && <div className='has-new-reports-only'>*/}
+                    {/*    <label htmlFor="">Has new reports only</label>*/}
+                    {/*    <Switch*/}
+                    {/*        checked={onlyHasNew}*/}
+                    {/*        onChange={e => this.handleChangeSwitch(e, 'onlyHasNew')}*/}
+                    {/*    />*/}
+                    {/*</div>}*/}
 
                     <div className='products'>
                         {products &&
