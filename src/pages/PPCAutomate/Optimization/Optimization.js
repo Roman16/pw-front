@@ -16,7 +16,7 @@ import LastReports from "./LastReports/LastReports";
 import { productsActions } from "../../../actions/products.actions";
 
 import "./Optimization.less";
-import SubscriptionNotificationWindow from "../../../components/ModalWindow/SubscriptionNotificationWindow";
+import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 import {notification} from "../../../components/Notification";
 
 class Optimization extends Component {

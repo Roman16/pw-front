@@ -2,10 +2,11 @@ import React, {Fragment} from 'react';
 
 import Sidebar from '../components/Sidebar/Sidebar';
 import ProductList from "../components/ProductList/ProductList";
-import ReportsChangesCountWindow from "../components/ModalWindow/ReportsChangesCountWindow";
+import ReportsChangesCountWindow from "../components/ModalWindow/InformationWindows/ReportsChangesCountWindow";
 import {userActions} from "../actions/user.actions";
 import moment from "moment";
 import {useSelector, useDispatch} from "react-redux";
+import LoadingAmazonAccount from "../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 
 let timerId = null;
 
@@ -63,6 +64,8 @@ const AuthorizedUser = (props) => {
             </div>
 
             <ReportsChangesCountWindow/>
+
+            <LoadingAmazonAccount/>
         </Fragment>
     );
 };

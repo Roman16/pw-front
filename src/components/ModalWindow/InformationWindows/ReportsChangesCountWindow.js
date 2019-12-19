@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import ModalWindow from "./ModalWindow";
-import {history} from "../../utils/history";
-import {userActions} from "../../actions/user.actions";
+import ModalWindow from "../ModalWindow";
+import {history} from "../../../utils/history";
+import {userActions} from "../../../actions/user.actions";
 
 const ReportsChangesCountWindow = () => {
     const [visibleWindow, switchWindow] = useState(false);
