@@ -8,11 +8,12 @@ import './Metrics.less';
 
 const Metrics = () => {
     const dispatch = useDispatch();
-    const {selectedMetrics, activeMetrics, selectedRangeDate, selectedProduct} = useSelector(state => ({
+    const {selectedMetrics, activeMetrics, selectedRangeDate, selectedProduct, onlyOptimization} = useSelector(state => ({
         selectedMetrics: state.dashboard.selectedMetrics,
         activeMetrics: state.dashboard.activeMetrics,
         selectedRangeDate: state.dashboard.selectedRangeDate,
         selectedProduct: state.dashboard.selectedProduct,
+        onlyOptimization: state.products.onlyOptimization,
     }));
 
     const removeSelectedMetric  = (metric) => dispatch(dashboardActions.removeSelectedMetric(metric));
@@ -25,11 +26,12 @@ const Metrics = () => {
         dispatch(dashboardActions.getMetricsStatistics({
             startDate: selectedRangeDate.startDate,
             endDate: selectedRangeDate.endDate,
-            selectedProduct
+            selectedProduct,
+            onlyOptimization
         }));
     };
 
-    useEffect(() => {getMetricsStatistics();}, [selectedRangeDate, selectedProduct]);
+    useEffect(() => {getMetricsStatistics();}, [selectedRangeDate, selectedProduct, onlyOptimization]);
 
     return (
         <div className="metrics-block">
@@ -44,7 +46,7 @@ const Metrics = () => {
                 />
             ))}
 
-            {selectedMetrics.length < 16 && <AddMetric/>}
+            {selectedMetrics.length < 17 && <AddMetric/>}
         </div>
     )
 };

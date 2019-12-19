@@ -55,7 +55,8 @@ const Chart = () => {
             <div className='bloc-title'>
                 <span className='title'>Organic / PPC</span>
 
-                {defaultChart === 'pie' && <Tooltip/>}
+                {defaultChart === 'pie' && <Tooltip
+                    description={`Organic to PPC Sales Ratio shows the percentage of sales that are coming from organic versus pay-per-click — seeing this information can reveal whether or not you may be spending too aggressively on PPC.`}/>}
 
                 <div className='chart-selector'>
                     <img src={defaultChart === 'pie' ? pieActiveIcon : pieDefaultIcon} alt=""

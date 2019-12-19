@@ -111,12 +111,12 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         label: 'Average',
         type: 'percent'
     },
-    {
-        title: 'ROI',
-        key: 'roi',
-        label: 'Average',
-        type: 'number'
-    },
+    // {
+    //     title: 'ROI',
+    //     key: 'roi',
+    //     label: 'Average',
+    //     type: 'number'
+    // },
     {
         title: 'ROAS',
         key: 'roas',

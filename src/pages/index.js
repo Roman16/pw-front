@@ -55,7 +55,9 @@ const AuthorizedUser = (props) => {
 
                 {(props.children.props.location.pathname === '/ppc/optimization' ||
                     props.children.props.location.pathname === '/ppc/report') &&
-                <ProductList/>}
+                <ProductList
+                    pathname={props.children.props.location.pathname}
+                />}
 
                 <div className="main-container">{props.children}</div>
             </div>
