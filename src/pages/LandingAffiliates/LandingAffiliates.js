@@ -15,31 +15,39 @@ import commissionHaveFeeIcon from '../../assets/img/commission-have-fee-icon.svg
 import howItWorksImage from '../../assets/img/how-it-works-image.svg';
 import checkedIcon from '../../assets/img/icons/mark.svg';
 
+const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
+
 const LandingAffiliates = () => {
-    // const existingScript = document.getElementById('tapfiliate');
-    // const tapfiliateScript = document.createElement('script');
-    //
-    // if (!existingScript) {
-    //     tapfiliateScript.src = 'https://script.tapfiliate.com/tapfiliate.js';
-    //     tapfiliateScript.id = 'tapfiliate';
-    //     document.body.appendChild(tapfiliateScript);
-    // }
-    //
-    // useEffect(() => {
-    //     return (() => {
-    //         document.body.removeChild(tapfiliateScript)
-    //     })
-    // }, []);
-    //
-    // (function (t, a, p) {
-    //     t.TapfiliateObject = a;
-    //     t[a] = t[a] || function () {
-    //         (t[a].q = t[a].q || []).push(arguments)
-    //     }
-    // })(window, 'tap');
-    //
-    // window.tap('create', 'YOUR ACCOUNT ID', {integration: "javascript"});
-    // window.tap('detect');
+    const existingScript = document.getElementById('tapfiliate');
+    const tapfiliateScript = document.createElement('script');
+
+    if (!existingScript) {
+        tapfiliateScript.src = 'https://script.tapfiliate.com/tapfiliate.js';
+        tapfiliateScript.id = 'tapfiliate';
+        document.head.appendChild(tapfiliateScript);
+    }
+
+    function handleClick() {
+        window.tap('conversion', tapfiliateKey, 444, {}, 'test', () => {
+            console.log('finished')
+        });
+    }
+
+    useEffect(() => {
+        return (() => {
+            document.body.removeChild(tapfiliateScript)
+        })
+    }, []);
+
+    (function (t, a, p) {
+        t.TapfiliateObject = a;
+        t[a] = t[a] || function () {
+            (t[a].q = t[a].q || []).push(arguments)
+        }
+    })(window, 'tap');
+
+    window.tap('create', tapfiliateKey, {integration: "javascript"});
+    window.tap('detect');
 
 
     return (
@@ -59,7 +67,7 @@ const LandingAffiliates = () => {
                         stream for you. Press the button below.
                     </span>
 
-                        <button className='btn green-btn'>
+                        <button className='btn green-btn' onClick={handleClick}>
                             become an affiliate
                         </button>
                     </div>
