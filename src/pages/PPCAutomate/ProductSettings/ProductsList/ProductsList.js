@@ -106,6 +106,19 @@ class ProductsList extends Component {
                     this.updateSettings(dataSourceRow);
                 }, delay);
             }
+        } else if (item === NET_MARGIN && value > 0) {
+            const dataSourceRow = this.setRowData(value, item, index);
+
+            if (item !== this.prevItem) {
+                this.prevItem = item;
+                this.updateSettings(dataSourceRow);
+            } else {
+                this.prevItem = item;
+                clearTimeout(this.timerId);
+                this.timerId = setTimeout(() => {
+                    this.updateSettings(dataSourceRow);
+                }, delay);
+            }
         } else {
             notification.warning({
                 title: item === NET_MARGIN ?

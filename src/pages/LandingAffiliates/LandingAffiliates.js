@@ -28,14 +28,12 @@ const LandingAffiliates = () => {
     }
 
     function handleClick() {
-        window.tap('conversion', tapfiliateKey, 444, {}, 'test', () => {
-            console.log('finished')
-        });
+        window.tap('click', 'click');
     }
 
     useEffect(() => {
         return (() => {
-            document.body.removeChild(tapfiliateScript)
+            document.head.removeChild(tapfiliateScript)
         })
     }, []);
 
