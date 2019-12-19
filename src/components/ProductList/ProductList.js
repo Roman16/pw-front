@@ -14,6 +14,7 @@ class ProductList extends Component {
         isSelectedAll: false,
         prevProductId: '',
         onlyOptimization: this.props.onlyOptimization || false,
+        onlyHasNew: false,
         openedProduct: '',
         paginationParams: {
             size: 10,
@@ -25,7 +26,8 @@ class ProductList extends Component {
     getProducts = () => this.props.getAllProducts({
         ...this.state.paginationParams,
         onlyOptimization: this.state.onlyOptimization,
-        selectedAll: this.state.isSelectedAll
+        selectedAll: this.state.isSelectedAll,
+        onlyHasNew: this.props.pathname === '/ppc/report' ? this.state.onlyHasNew : false
     });
 
     changeOpenedProduct = (id) => {
@@ -47,12 +49,12 @@ class ProductList extends Component {
         );
     };
 
-    handleChangeSwitch = (event) => {
-        this.props.showOnlyOptimized(event);
+    handleChangeSwitch = (event, type) => {
+        type === 'onlyOptimization' && this.props.showOnlyOptimized(event);
 
         this.setState(
             {
-                onlyOptimization: event,
+                [type]: event,
                 isSelectedAll: false,
                 paginationParams: {
                     ...this.state.paginationParams,
@@ -108,18 +110,30 @@ class ProductList extends Component {
         });
     };
 
-    componentDidMount() {
-        const selectedProductId = window.location.search.split('id=')[1],
-            {products} = this.props;
-
-        if (selectedProductId && products.length > 0) {
-            const product = products.find(
-                item => item.id === +selectedProductId
-            );
-            this.onSelect(product);
-        } else {
-            this.getProducts();
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.pathname !== prevProps.pathname) {
+            if (this.props.pathname === '/ppc/optimization' && this.state.onlyHasNew) {
+                this.setState({
+                    paginationParams: {
+                        ...this.state.paginationParams,
+                        page: 1,
+                        searchStr: ''
+                    }
+                }, this.getProducts);
+            } else if (this.props.pathname === '/ppc/report' && this.state.onlyHasNew) {
+                this.setState({
+                    paginationParams: {
+                        ...this.state.paginationParams,
+                        page: 1,
+                        searchStr: ''
+                    }
+                }, this.getProducts);
+            }
         }
+    }
+
+    componentDidMount() {
+        this.getProducts();
     }
 
     render() {
@@ -127,9 +141,11 @@ class ProductList extends Component {
                 selectedSize,
                 isSelectedAll,
                 openedProduct,
+                onlyHasNew,
                 paginationParams: {size, page}
             } = this.state,
-            {products, selectedProduct, totalSize, onlyOptimization} = this.props;
+            {products, selectedProduct, totalSize, onlyOptimization, pathname} = this.props;
+
 
         return (
             <Fragment>
@@ -152,11 +168,19 @@ class ProductList extends Component {
                                 <label htmlFor="">On optimization only</label>
                                 <Switch
                                     checked={onlyOptimization}
-                                    onChange={this.handleChangeSwitch}
+                                    onChange={e => this.handleChangeSwitch(e, 'onlyOptimization')}
                                 />
                             </div>
                         </div>
                     </div>
+
+                    {pathname === '/ppc/report' && <div className='has-new-reports-only'>
+                        <label htmlFor="">Has new reports only</label>
+                        <Switch
+                            checked={onlyHasNew}
+                            onChange={e => this.handleChangeSwitch(e, 'onlyHasNew')}
+                        />
+                    </div>}
 
                     <div className='products'>
                         {products &&
@@ -172,6 +196,7 @@ class ProductList extends Component {
                                 onOpenChild={this.changeOpenedProduct}
                                 openedProduct={openedProduct}
                                 products={products}
+                                pathname={pathname}
                             />
                         ))}
                     </div>

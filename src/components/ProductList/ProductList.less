@@ -9,6 +9,7 @@
   .products {
     overflow: auto;
     margin-bottom: 20px;
+    margin-top: 1.428571429em;
   }
 
   .ant-input-search {
@@ -43,12 +44,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 1.428571429em 0;
+    margin: 1.428571429em 0 0 0;
 
-    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 379px),
-      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 379px),
-      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 379px),
-      only screen and (max-device-pixel-ratio: 1) and (max-width: 379px) {
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 379px), only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 379px), only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 379px), only screen and (max-device-pixel-ratio: 1) and (max-width: 379px) {
       flex-flow: column;
     }
 
@@ -76,6 +74,17 @@
       span {
         font-size: 1rem;
       }
+    }
+  }
+
+  .has-new-reports-only {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.428571429em;
+
+    label {
+      margin: 0 0.714285714em 0 0;
+      font-weight: 500;
     }
   }
 
@@ -284,15 +293,13 @@
   //-------------------------------------
   /*Retina CSS */
   //-------------------------------------
-  @media only screen and (min--moz-device-pixel-ratio: 2),
-    only screen and (-webkit-min-device-pixel-ratio: 2),
-    only screen and (min-device-pixel-ratio: 2) {
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
     & {
       .product-item
-        .product-children-list
-        .children-information
-        .optimization-waiting
-        .ant-spin {
+      .product-children-list
+      .children-information
+      .optimization-waiting
+      .ant-spin {
         right: 11%;
         bottom: 11%;
       }

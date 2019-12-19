@@ -38,7 +38,6 @@ const api = (method, url, data, type) => {
                     // console.log('error.response :', error.response);
                     if (typeof error.response.data === 'object') {
                         reject(error);
-                        console.log(error.response);
                         if (error.response.status === 401) {
                             if (error.response.data) {
                                 notification.error({

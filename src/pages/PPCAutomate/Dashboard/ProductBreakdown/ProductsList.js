@@ -144,7 +144,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => <div>Sales <br/> Share<Tooltip
+            title: () => <div>Ad Sales <br/> Share<Tooltip
                 description={'The percentage of sales allocated to the given product.'}
             /></div>,
             dataIndex: 'sales_share',

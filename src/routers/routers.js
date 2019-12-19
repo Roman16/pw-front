@@ -59,7 +59,7 @@ const routers = () => {
         <Router history={history}>
             <Switch>
                 <Route exact path="/login" component={LoginPage}/>
-                <Route exact path="/affiliates" component={LandingAffiliates}/>
+                {developer && <Route exact path="/affiliates" component={LandingAffiliates}/>}
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                 <Route exact path="/registration" component={RegistrationPage}/>
 
