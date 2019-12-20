@@ -64,7 +64,7 @@ export const indexField = (currentPage, pageSize) => ({
     key: 'id',
     width: getIndexColumnWidth(Number(currentPage * pageSize - pageSize)),
     render: (id, item, index) => {
-        return (<span className='index-field'> {currentPage * pageSize - pageSize + index + 1}</span>)
+        return (<span className='index-field'> {!item.viewed && <div/>}  {currentPage * pageSize - pageSize + index + 1}</span>)
     }
 });
 

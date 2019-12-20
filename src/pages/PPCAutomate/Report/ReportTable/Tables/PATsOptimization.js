@@ -35,10 +35,11 @@ const PATsOptimization = ({
                               sorterColumn
                           }) => {
     const [activeTable, changeTable] = useState(changedPATBidACoS);
-    const {counts, loading, productId} = useSelector(state => ({
+    const {counts, loading, productId, countsWithNew} = useSelector(state => ({
         counts: state.reports.counts,
         loading: state.reports.loading,
-        productId: state.products.selectedProduct.id
+        productId: state.products.selectedProduct.id,
+        countsWithNew: state.reports.counts_with_new
     }));
 
     const onChange = tab => {
@@ -387,7 +388,7 @@ const PATsOptimization = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={activeTable === changedPATBidACoS}
-                    count={subChangesCount(counts, changedPATBidACoS)}
+                    count={subChangesCount(counts, changedPATBidACoS, countsWithNew)}
                     onClick={() => {
                         onChange(changedPATBidACoS);
                     }}
@@ -398,7 +399,7 @@ const PATsOptimization = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={activeTable === changedPATBidImpressions}
-                    count={subChangesCount(counts, changedPATBidImpressions)}
+                    count={subChangesCount(counts, changedPATBidImpressions, countsWithNew)}
                     onClick={() => {
                         onChange(changedPATBidImpressions);
                     }}
@@ -409,7 +410,7 @@ const PATsOptimization = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={activeTable === pausedManualPATHighACoS}
-                    count={subChangesCount(counts, pausedManualPATHighACoS)}
+                    count={subChangesCount(counts, pausedManualPATHighACoS, countsWithNew)}
                     onClick={() => {
                         onChange(pausedManualPATHighACoS);
                     }}
@@ -420,7 +421,7 @@ const PATsOptimization = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={activeTable === pausedManualPatNoSales}
-                    count={subChangesCount(counts, pausedManualPatNoSales)}
+                    count={subChangesCount(counts, pausedManualPatNoSales, countsWithNew)}
                     onClick={() => {
                         onChange(pausedManualPatNoSales);
                     }}
@@ -441,6 +442,7 @@ const PATsOptimization = ({
                 pageSize={pageSize}
                 sorterColumn={sorterColumn}
                 onChangeSorter={handleChangeSorter}
+                rowClassName={(item) => !item.viewed && 'new-report'}
             />
         </div>
     );

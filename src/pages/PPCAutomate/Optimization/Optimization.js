@@ -16,7 +16,7 @@ import LastReports from "./LastReports/LastReports";
 import { productsActions } from "../../../actions/products.actions";
 
 import "./Optimization.less";
-import SubscriptionNotificationWindow from "../../../components/ModalWindow/SubscriptionNotificationWindow";
+import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 import {notification} from "../../../components/Notification";
 
 class Optimization extends Component {
@@ -43,7 +43,7 @@ class Optimization extends Component {
         selectedStrategy: strategy
       },
       () => {
-        if (product.status === "RUNNING") {
+        if (product.status === "RUNNING" && !this.props.selectedAll) {
           this.props.updateOptions({
             optimization_strategy: strategy,
             add_negative_keywords: product.add_negative_keywords,

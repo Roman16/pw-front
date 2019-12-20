@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import {Button} from 'antd';
 import './TableButton.less';
 
-const TableButton = ({children, active, onClick, count, totalSize}) => {
-    const [currentCount, setCount] = useState(active ? totalSize : count);
+const TableButton = ({children, active, onClick, count = {count: 0}, totalSize, loading}) => {
+    const [currentCount, setCount] = useState(active ? totalSize : count.count);
 
     useEffect(() => {
-        setCount(active ? totalSize || count : count)
+        setCount(active && !loading ? totalSize || count.count : count.count)
     }, [count, totalSize]);
 
     return (
@@ -16,6 +16,8 @@ const TableButton = ({children, active, onClick, count, totalSize}) => {
                 {children}
 
                 {currentCount > 0 && <div className="tab-name-count">{currentCount}</div>}
+
+                {count.hasNewReport && <div className='new-count'>New {count.hasNewReport.count}</div>}
             </Button>
         </div>
     );

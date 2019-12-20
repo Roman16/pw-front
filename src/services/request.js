@@ -9,6 +9,23 @@ const baseUrl =
         ? process.env.REACT_APP_API_PROD || ''
         : process.env.REACT_APP_API_URL || '';
 
+let lastError = null;
+
+
+function handlerErrors(error) {
+    if (lastError !== error) {
+        lastError = error;
+
+        notification.error({
+            title: error,
+        });
+
+        setTimeout(() => {
+            lastError = null;
+        }, 1000)
+    }
+}
+
 
 const api = (method, url, data, type) => {
     loadProgressBar();
@@ -38,12 +55,9 @@ const api = (method, url, data, type) => {
                     // console.log('error.response :', error.response);
                     if (typeof error.response.data === 'object') {
                         reject(error);
-                        console.log(error.response);
                         if (error.response.status === 401) {
                             if (error.response.data) {
-                                notification.error({
-                                    title: error.response.data.message ? error.response.data.message : error.response.data.error,
-                                });
+                                handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
                             }
                         } else if (error.response.status === 429) {
 
@@ -53,11 +67,8 @@ const api = (method, url, data, type) => {
 
                         } else {
                             if (error.response.data) {
-                                notification.error({
-                                    title: error.response.data.message ? error.response.data.message : error.response.data.error
-                                });
+                                handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
                             }
-
                         }
                     }
                 }

@@ -27,10 +27,11 @@ const NewNegativePats = ({
                              sorterColumn
                          }) => {
     const [activeTable, changeTable] = useState(HighACoS);
-    const {counts, loading, productId} = useSelector(state => ({
+    const {counts, loading, productId, countsWithNew} = useSelector(state => ({
         counts: state.reports.counts,
         loading: state.reports.loading,
-        productId: state.products.selectedProduct.id
+        productId: state.products.selectedProduct.id,
+        countsWithNew: state.reports.counts_with_new
     }));
 
     const onChange = tab => {
@@ -289,7 +290,7 @@ const NewNegativePats = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={activeTable === HighACoS}
-                    count={subChangesCount(counts, HighACoS)}
+                    count={subChangesCount(counts, HighACoS, countsWithNew)}
                     onClick={() => {
                         onChange(HighACoS);
                     }}
@@ -300,7 +301,7 @@ const NewNegativePats = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={activeTable === NoSales}
-                    count={subChangesCount(counts, NoSales)}
+                    count={subChangesCount(counts, NoSales, countsWithNew)}
                     onClick={() => {
                         onChange(NoSales);
                     }}
@@ -321,6 +322,7 @@ const NewNegativePats = ({
                 pageSize={pageSize}
                 sorterColumn={sorterColumn}
                 onChangeSorter={handleChangeSorter}
+                rowClassName={(item) => !item.viewed && 'new-report'}
             />
         </div>
     );

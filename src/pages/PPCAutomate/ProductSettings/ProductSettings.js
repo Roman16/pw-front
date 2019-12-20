@@ -3,7 +3,7 @@ import React, {Fragment} from "react";
 import ProductsList from "./ProductsList/ProductsList";
 import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 import "./ProductSettings.less";
-import SubscriptionNotificationWindow from "../../../components/ModalWindow/SubscriptionNotificationWindow";
+import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 
 const ProductSettingsMain = () => {
   return (

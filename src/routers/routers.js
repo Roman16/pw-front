@@ -13,6 +13,7 @@ import ProductSettings from "../pages/PPCAutomate/ProductSettings/ProductSetting
 import MWS from "../pages/authentication/AccountBinding/MWS/MWS";
 import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
 import NotFound from "../pages/NotFound/NotFound";
+import LandingAffiliates from "../pages/LandingAffiliates/LandingAffiliates";
 import Dashboard from "../pages/PPCAutomate/Dashboard/Dashboard";
 import Information from "../pages/Account/Information/Information";
 import Billing from "../pages/Account/Billing/Billing";
@@ -38,8 +39,8 @@ const PrivateRoute = ({component: Component, ...rest}) => (
 
 const ConnectedAmazonRoute = props => {
     const {mwsConnected, ppcConnected} = useSelector(state => ({
-        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : null,
-        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : null
+        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
+        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false
     }));
 
     if (!mwsConnected) {
@@ -58,6 +59,7 @@ const routers = () => {
         <Router history={history}>
             <Switch>
                 <Route exact path="/login" component={LoginPage}/>
+                {developer && <Route exact path="/affiliates" component={LandingAffiliates}/>}
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                 <Route exact path="/registration" component={RegistrationPage}/>
 

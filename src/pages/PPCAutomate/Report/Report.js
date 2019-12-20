@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import ReportTable from './ReportTable/ReportTable';
-import SubscriptionNotificationWindow from "../../../components/ModalWindow/SubscriptionNotificationWindow";
+import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 
 function Report() {
     return (

@@ -9,6 +9,7 @@
   .products {
     overflow: auto;
     margin-bottom: 20px;
+    margin-top: 1.428571429em;
   }
 
   .ant-input-search {
@@ -43,12 +44,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 1.428571429em 0;
+    margin: 1.428571429em 0 0 0;
 
-    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 379px),
-      only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 379px),
-      only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 379px),
-      only screen and (max-device-pixel-ratio: 1) and (max-width: 379px) {
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 379px), only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 379px), only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 379px), only screen and (max-device-pixel-ratio: 1) and (max-width: 379px) {
       flex-flow: column;
     }
 
@@ -79,6 +77,17 @@
     }
   }
 
+  .has-new-reports-only {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.428571429em;
+
+    label {
+      margin: 0 0.714285714em 0 0;
+      font-weight: 500;
+    }
+  }
+
   .product-item {
     min-height: 7.142857143em;
     background: #fff;
@@ -87,10 +96,25 @@
     border-radius: 0.285714286em;
     display: flex;
     flex-direction: column;
-    padding: 0.285714286em;
+    padding: .5em .2em .5em 1em;
     padding-bottom: 0;
     margin: 0.285714286em;
     position: relative;
+
+    .has-new-reports {
+      height: max-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+      right: 3px;
+      background: #8FD39D;
+      border-radius: 2px;
+      color: #fff;
+      font-size: 0.7857142857142857rem;
+      font-weight: normal;
+      margin: 0 0 0 5px;
+    }
 
     .product-information {
       height: 6.571428571em;
@@ -100,7 +124,7 @@
 
       .image-block {
         height: 100%;
-        margin: 0 0.357142857em 0 0;
+        margin: 0 0.8em 0 0;
         display: flex;
         flex-direction: column;
 
@@ -126,6 +150,8 @@
 
         .caption {
           font-weight: 900;
+          display: flex;
+          justify-content: space-between;
         }
 
         .detail {
@@ -267,15 +293,13 @@
   //-------------------------------------
   /*Retina CSS */
   //-------------------------------------
-  @media only screen and (min--moz-device-pixel-ratio: 2),
-    only screen and (-webkit-min-device-pixel-ratio: 2),
-    only screen and (min-device-pixel-ratio: 2) {
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
     & {
       .product-item
-        .product-children-list
-        .children-information
-        .optimization-waiting
-        .ant-spin {
+      .product-children-list
+      .children-information
+      .optimization-waiting
+      .ant-spin {
         right: 11%;
         bottom: 11%;
       }

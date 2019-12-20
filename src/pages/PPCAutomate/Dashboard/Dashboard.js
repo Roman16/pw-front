@@ -9,7 +9,7 @@ import Chart from "./Chart/Chart";
 import ModalWindow from "../../../components/ModalWindow/ModalWindow";
 import AddMetricModal from "./Metrics/AddMetric/AddMetricModal";
 import {history} from "../../../utils/history";
-import SubscriptionNotificationWindow from "../../../components/ModalWindow/SubscriptionNotificationWindow";
+import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 
 
 const Dashboard = () => {

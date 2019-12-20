@@ -27,10 +27,11 @@ const NewNegativeKeywords = ({
                                  sorterColumn
                              }) => {
     const [activeTable, changeTable] = useState(highACoS);
-    const {counts, loading, productId} = useSelector(state => ({
+    const {counts, loading, productId, countsWithNew} = useSelector(state => ({
         counts: state.reports.counts,
         loading: state.reports.loading,
-        productId: state.products.selectedProduct.id
+        productId: state.products.selectedProduct.id,
+        countsWithNew: state.reports.counts_with_new
     }));
 
     const onChange = tab => {
@@ -270,7 +271,7 @@ const NewNegativeKeywords = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={activeTable === highACoS}
-                    count={subChangesCount(counts, highACoS)}
+                    count={subChangesCount(counts, highACoS, countsWithNew)}
                     onClick={() => {
                         onChange(highACoS);
                     }}
@@ -281,7 +282,7 @@ const NewNegativeKeywords = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={activeTable === noSales}
-                    count={subChangesCount(counts, noSales)}
+                    count={subChangesCount(counts, noSales, countsWithNew)}
                     onClick={() => {
                         onChange(noSales);
                     }}
@@ -302,6 +303,7 @@ const NewNegativeKeywords = ({
                 pageSize={pageSize}
                 sorterColumn={sorterColumn}
                 onChangeSorter={handleChangeSorter}
+                rowClassName={(item) => !item.viewed && 'new-report'}
             />
         </div>
     );

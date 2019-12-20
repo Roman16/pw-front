@@ -202,6 +202,10 @@
   //padding: 0 0 0 200px;
 }
 
+//----------------------------------------------
+//----------------------------------------------
+//----------------------------------------------
+
 .payment-notification-window {
   padding-left: 200px;
   max-width: 40vw;
@@ -236,5 +240,49 @@
       padding-left: 150px;
       max-width: 50vw;
     }
+  }
+}
+
+//----------------------------------------------
+//----------------------------------------------
+//----------------------------------------------
+.amazon-loading-window {
+  width: 100% !important;
+  max-width: 700px;
+
+  .ant-modal-body {
+    padding: 80px 90px;
+
+    h2 {
+      font-family: ir;
+      font-size: 2.142857142857143rem;
+      letter-spacing: -0.06px;
+      color: #363694;
+      margin: 40px 0;
+    }
+
+    .social-icons {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 50px 0 0 0;
+
+      img {
+        margin: 0 10px;
+        cursor: pointer;
+        border-radius: 50%;
+        padding: 5px;
+
+        &:hover {
+          -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+          -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+          box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+        }
+      }
+    }
+  }
+
+  .ant-modal-footer {
+    display: none;
   }
 }

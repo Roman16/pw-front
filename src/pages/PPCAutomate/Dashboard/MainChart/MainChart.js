@@ -158,12 +158,13 @@ const MainChart = () => {
 
     const dispatch = useDispatch();
 
-    const {showWeekChart, showDailyChart, selectedRangeDate, activeMetrics, selectedProduct} = useSelector(state => ({
+    const {showWeekChart, showDailyChart, selectedRangeDate, activeMetrics, selectedProduct, onlyOptimization} = useSelector(state => ({
         showWeekChart: state.dashboard.showWeekChart,
         showDailyChart: state.dashboard.showDailyChart,
         selectedRangeDate: state.dashboard.selectedRangeDate,
         activeMetrics: state.dashboard.activeMetrics,
         selectedProduct: state.dashboard.selectedProduct,
+        onlyOptimization: state.products.onlyOptimization,
     }));
 
     const timeRange = (start, end) => {
@@ -191,7 +192,8 @@ const MainChart = () => {
                 endDate: selectedRangeDate.endDate,
                 firstMetric: activeMetrics[0] ? activeMetrics[0].key : null,
                 secondMetric: activeMetrics[1] ? activeMetrics[1].key : null,
-                productId: selectedProduct
+                productId: selectedProduct,
+                onlyOptimization: onlyOptimization
             })
                 .then(res => {
                     updateChartData(res);
@@ -201,7 +203,7 @@ const MainChart = () => {
         }
     };
 
-    useEffect(getChartData, [activeMetrics, selectedRangeDate, selectedProduct]);
+    useEffect(getChartData, [activeMetrics, selectedRangeDate, selectedProduct, onlyOptimization]);
 
     return (
         <div className='main-chart'>

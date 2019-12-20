@@ -6,6 +6,7 @@ import minusIcon from "../../../../../assets/img/icons/minus.svg";
 import {round} from "../../../../../utils/round";
 import {metricsListArray} from "../metricsList";
 import {useSelector} from "react-redux";
+import {numberMask} from "../../../../../utils/numberMask";
 
 const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, item, listType, removeMetric, addMetric}) => {
     const metricInformation = metricsListArray.find(item => item.key === key);
@@ -34,7 +35,7 @@ const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, i
 
         <div className='metric-item__description'>
             <div className="value">
-                {metric_value != null ? type === 'currency' ? `$${round(+metric_value, 2)}` : (type === 'percent' ? `${round(+metric_value, 2)}%` : round(+metric_value, 2)) : 'N/A'}
+                {metric_value != null ? type === 'currency' ? `$${numberMask(metric_value, 2)}` : (type === 'percent' ? `${numberMask(metric_value, 2)}%` : numberMask(metric_value)) : 'N/A'}
             </div>
             <div className='label'>{label}</div>
         </div>

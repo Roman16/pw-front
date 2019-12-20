@@ -1,8 +1,14 @@
 .not-found-page__footer {
-  padding: 0 0 60px 0;
+  padding: 100px 0 60px 0;
+  background: #fff;
 
   .container {
     display: flex;
+    width: 100%;
+    height: 100%;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 10px;
 
     .col {
       flex: 1;
@@ -10,6 +16,11 @@
       flex-direction: column;
       align-items: flex-start;
       margin: 0 0 30px 0;
+
+      h4 {
+        color: #000000;
+        font-weight: bold;
+      }
     }
 
     .logo-wrap {
@@ -138,6 +149,50 @@
       .copyright {
         color: rgba(56, 69, 79, .5);
         font-size: 12px;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    & .container {
+      display: flex;
+      flex-wrap: wrap;
+
+      .col {
+        flex: auto;
+        width: 50%;
+      }
+    }
+  }
+
+  @media (max-width: 450px) {
+    & .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .col {
+        flex: auto;
+        width: 90%;
+        align-items: center;
+
+        .logo {
+          margin-bottom: 20px;
+        }
+
+        form {
+          margin-top: 20px;
+        }
+
+        h4 {
+          margin-bottom: 15px;
+        }
+
+        ul {
+          li {
+            margin-bottom: 10px;
+          }
+        }
       }
     }
   }

@@ -67,7 +67,7 @@ const Chart = ({
     return (
         <ResponsiveContainer height='80%' width='100%'>
             <LineChart
-                data={data}
+                data={Array.isArray(data) ? data : []}
                 margin={{top: 10, bottom: 10}}
             >
                 <CartesianGrid

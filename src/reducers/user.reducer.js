@@ -21,7 +21,8 @@ export function user(state = initialState, action) {
             return {
                 ...initialState,
                 ...action.payload,
-                notFirstEntry: true
+                notFirstEntry: true,
+                lastUserStatusAction: new Date()
             };
 
         case userConstants.UPDATE_USER:

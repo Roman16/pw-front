@@ -20,6 +20,7 @@ const ProductItem = ({
                          onOpenChild,
                          openedProduct,
                          products,
+                         pathname
                      }) => {
 
     const switchList = (e) => {
@@ -48,7 +49,10 @@ const ProductItem = ({
 
 
                 <div className="product-item-content">
-                    <div className="caption">{maxText(name)}</div>
+                    <div className="caption">
+                        {maxText(name)}
+                        {product.hasNew && pathname === '/ppc/report' && <div className='has-new-reports'>New</div>}
+                    </div>
 
                     <div>
                         <div className="detail">

@@ -4,6 +4,8 @@ import plusIcon from '../../../../../assets/img/icons/plus-blue.svg';
 import plusIconWhite from '../../../../../assets/img/icons/plus-white.svg';
 import AddMetricModal from "./AddMetricModal";
 import {dashboardActions} from '../../../../../actions/dashboard.actions';
+import {metricsListArray} from '../metricsList';
+
 import './AddMetric.less';
 
 const AddMetric = () => {
@@ -17,15 +19,14 @@ const AddMetric = () => {
     const openModal = () => switchModal(true);
     const handleCancel = () => switchModal(false);
 
+    const [visibleItems, updateVisibleList] = useState(selectedMetrics);
+    const [hiddenItems, updateHiddenList] = useState(allMetrics);
+
     const metricListFilter = (metric) => {
         return selectedMetrics.every((item) => {
             return item.key !== metric.key;
         });
     };
-
-    const [visibleItems, updateVisibleList] = useState(selectedMetrics);
-
-    const [hiddenItems, updateHiddenList] = useState(allMetrics);
 
     const addMetric = (item) => {
         updateVisibleList([...visibleItems, item]);

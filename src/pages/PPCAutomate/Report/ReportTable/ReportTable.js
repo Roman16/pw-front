@@ -14,11 +14,11 @@ import NewNegativePats from "./Tables/NewNegativePats";
 import {reportsActions} from "../../../../actions/reports.actions";
 import {reportsUrls} from "../../../../constans/api.urls";
 import "./ReportTable.less";
-import {mainChangesCount} from "./Tables/changesCount";
+import {mainChangesCount, mainHasNewReport} from "./Tables/changesCount";
 
 const {TabPane} = Tabs;
 
-const TabName = ({name = null, type, counts}) => {
+const TabName = ({name = null, type, counts, countsWithNew}) => {
     return (
         <div className="TabName">
             <span>{name}</span>
@@ -26,6 +26,8 @@ const TabName = ({name = null, type, counts}) => {
             <div className="tab-name-count">
                 {mainChangesCount(counts, type)}
             </div>
+
+            {mainHasNewReport(countsWithNew, type) > 0 && <div className='new-count'>New {mainHasNewReport(countsWithNew, type)}</div>}
         </div>
     )
 };
@@ -41,7 +43,7 @@ const subTables = {
 
 const tabsItem = [
     {
-        tabName: (key, counts) => <TabName name="Keywords Optimization" type={key} counts={counts}/>,
+        tabName: (key, counts, countsWithNew) => <TabName name="Keywords Optimization" type={key} counts={counts} countsWithNew={countsWithNew}/>,
         key: "keywords-optimization",
         component: (
             onChangeSubTab,
@@ -72,7 +74,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: (key, counts) => <TabName name="PAT’s Optimization" type={key} counts={counts}/>,
+        tabName: (key, counts, countsWithNew) => <TabName name="PAT’s Optimization" type={key} counts={counts} countsWithNew={countsWithNew}/>,
         key: "pats-optimization",
         component: (
             onChangeSubTab,
@@ -103,7 +105,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: (key, counts) => <TabName name="New Keywords" type={key} counts={counts}/>,
+        tabName: (key, counts, countsWithNew) => <TabName name="New Keywords" type={key} counts={counts} countsWithNew={countsWithNew}/>,
         key: "new-keywords",
         component: (
             onChangeSubTab,
@@ -134,7 +136,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: (key, counts) => <TabName name="New Negative Keywords" type={key} counts={counts}/>,
+        tabName: (key, counts, countsWithNew) => <TabName name="New Negative Keywords" type={key} counts={counts} countsWithNew={countsWithNew}/>,
         key: "new-negative-keywords",
         component: (
             onChangeSubTab,
@@ -165,7 +167,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: (key, counts) => <TabName name={"New PAT 's"} type={key} counts={counts}/>,
+        tabName: (key, counts, countsWithNew) => <TabName name={"New PAT 's"} type={key} counts={counts} countsWithNew={countsWithNew}/>,
         key: "new-pats",
         component: (
             onChangeSubTab,
@@ -196,7 +198,7 @@ const tabsItem = [
         )
     },
     {
-        tabName: (key, counts) => <TabName name={"New Negative PAT's"} type={key} counts={counts}/>,
+        tabName: (key, counts, countsWithNew) => <TabName name={"New Negative PAT's"} type={key} counts={counts} countsWithNew={countsWithNew}/>,
         key: "new-negative-pats",
         component: (
             onChangeSubTab,
@@ -439,7 +441,7 @@ class ReportTable extends Component {
 
     render() {
         const {activeTab, page, pageSize, filteredColumns, sorterColumn, totalSize} = this.state,
-            {counts, data, todayChanges} = this.props;
+            {counts, data, todayChanges, countsWithNew} = this.props;
 
         return (
             <div className="ReportTable">
@@ -464,7 +466,7 @@ class ReportTable extends Component {
 
                 <Tabs activeKey={activeTab} type="card" onChange={this.handleChangeTab}>
                     {tabsItem.map(({tabName, key, component}) => (
-                        <TabPane tab={tabName(key, counts)} key={key}>
+                        <TabPane tab={tabName(key, counts, countsWithNew)} key={key}>
                             {component(
                                 this.handleChangeSubTab,
                                 data,
@@ -494,6 +496,7 @@ const mapStateToProps = state => ({
     todayChanges: state.reports.today_changes,
     totalSize: state.reports.totalSize,
     pageSize: state.reports.pageSize,
+    countsWithNew: state.reports.counts_with_new
 });
 
 const mapDispatchToProps = dispatch => ({

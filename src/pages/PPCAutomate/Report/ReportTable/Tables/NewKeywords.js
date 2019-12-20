@@ -31,10 +31,11 @@ const NewKeywords = ({
                          sorterColumn
                      }) => {
     const [activeTable, changeTable] = useState(createdCampaign);
-    const {counts, loading, productId} = useSelector(state => ({
+    const {counts, loading, productId, countsWithNew} = useSelector(state => ({
         counts: state.reports.counts,
         loading: state.reports.loading,
-        productId: state.products.selectedProduct.id
+        productId: state.products.selectedProduct.id,
+        countsWithNew: state.reports.counts_with_new
     }));
 
     const onChange = tab => {
@@ -196,6 +197,7 @@ const NewKeywords = ({
                 title: 'Ad Group',
                 dataIndex: 'd_adGroupName',
                 key: 'd_adGroupName',
+                width: '15em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnTextFilter
                     onChangeFilter={onChangeFilter}
@@ -207,6 +209,7 @@ const NewKeywords = ({
                 title: 'ASIN',
                 dataIndex: 'd_asin',
                 key: 'd_asin',
+                width: '15em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnTextFilter
                     onChangeFilter={onChangeFilter}
@@ -218,6 +221,7 @@ const NewKeywords = ({
                 title: 'SKU',
                 dataIndex: 'd_sku',
                 key: 'd_sku',
+                width: '15em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnTextFilter
                     onChangeFilter={onChangeFilter}
@@ -467,7 +471,7 @@ const NewKeywords = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={createdCampaign === activeTable}
-                    count={subChangesCount(counts, createdCampaign)}
+                    count={subChangesCount(counts, createdCampaign, countsWithNew)}
                     onClick={() => {
                         onChange(createdCampaign);
                     }}
@@ -478,7 +482,7 @@ const NewKeywords = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={createdAdGroup === activeTable}
-                    count={subChangesCount(counts, createdAdGroup)}
+                    count={subChangesCount(counts, createdAdGroup, countsWithNew)}
                     onClick={() => {
                         onChange(createdAdGroup);
                     }}
@@ -489,7 +493,7 @@ const NewKeywords = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={createdProductAd === activeTable}
-                    count={subChangesCount(counts, createdProductAd)}
+                    count={subChangesCount(counts, createdProductAd, countsWithNew)}
                     onClick={() => {
                         onChange(createdProductAd);
                     }}
@@ -500,7 +504,7 @@ const NewKeywords = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={createdCrossNegativeKeyword === activeTable}
-                    count={subChangesCount(counts, createdCrossNegativeKeyword)}
+                    count={subChangesCount(counts, createdCrossNegativeKeyword, countsWithNew)}
                     onClick={() => {
                         onChange(createdCrossNegativeKeyword);
                     }}
@@ -511,7 +515,7 @@ const NewKeywords = ({
                     totalSize={totalSize}
                     loading={loading}
                     active={createdKeywordCST === activeTable}
-                    count={subChangesCount(counts, createdKeywordCST)}
+                    count={subChangesCount(counts, createdKeywordCST, countsWithNew)}
                     onClick={() => {
                         onChange(createdKeywordCST);
                     }}
@@ -532,6 +536,7 @@ const NewKeywords = ({
                 pageSize={pageSize}
                 sorterColumn={sorterColumn}
                 onChangeSorter={handleChangeSorter}
+                rowClassName={(item) => !item.viewed && 'new-report'}
             />
         </div>
     );
