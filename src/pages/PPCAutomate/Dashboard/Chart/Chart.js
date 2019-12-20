@@ -70,11 +70,12 @@ const Chart = () => {
             {defaultChart === 'bar' && <Fragment>
                 <div className='bar-chart-legend'>
                     <div className='first-bar'>
-                        <div className='example-fill'></div>
+                        <div className='example-fill' />
                         Organic
                     </div>
+
                     <div className='second-bar'>
-                        <div className='example-fill'></div>
+                        <div className='example-fill' />
                         PPC
                     </div>
 

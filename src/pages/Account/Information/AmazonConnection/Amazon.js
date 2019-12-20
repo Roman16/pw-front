@@ -159,7 +159,7 @@ const Amazon = ({amazonTokens}) => {
                     </span>
                 </div>
                 }
-                {!ppcConnected && <div className="login-amazon-wrap">
+                {!ppcConnected && mwsConnected && <div className="login-amazon-wrap">
                     <h2 className="login-amazon-title">ADD ADVERTISING ACCESS</h2>
                     <div className="connect-amazon">
                         <span className="connect-amazon-text">

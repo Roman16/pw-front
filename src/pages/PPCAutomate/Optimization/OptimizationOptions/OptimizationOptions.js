@@ -90,7 +90,7 @@ const OptimizationOptions = ({selectedProduct}) => {
 
         clearTimeout(timerIdSearch);
         timerIdSearch = setTimeout(() => {
-            if (product.status === 'RUNNING') {
+            if (product.status === 'RUNNING' && !selectedAll) {
                 updateProduct({...product, [name]: checked});
 
                 dispatch(

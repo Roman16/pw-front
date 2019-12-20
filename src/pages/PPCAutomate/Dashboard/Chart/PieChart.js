@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    PieChart, Pie, Label, Cell, Text, ResponsiveContainer, Line
+    PieChart, Pie, Label, Cell, Text, ResponsiveContainer
 } from 'recharts';
 import {round} from "../../../../utils/round";
 import {numberMask} from "../../../../utils/numberMask";
@@ -60,7 +60,7 @@ const FirstPieChart = ({data}) => {
 
             <div className='chart-legend'>
                 <div className='organic-block'>
-                    <div className='example-fill' style={{background: COLORS[0]}}></div>
+                    <div className='example-fill' style={{background: COLORS[0]}}/>
                     Organic Sales
                     <div className='value'>
                         {organicValue != null ? `$ ${numberMask(+organicValue, 2)}` : 'N/A'}
@@ -68,7 +68,7 @@ const FirstPieChart = ({data}) => {
                 </div>
 
                 <div className='ppc-block'>
-                    <div className='example-fill' style={{background: COLORS[1]}}></div>
+                    <div className='example-fill' style={{background: COLORS[1]}}/>
                     PPC Sales
                     <div className='value'>
                         {ppcValue != null ? `$ ${numberMask(+ppcValue, 2)}` : 'N/A'}

@@ -65,7 +65,7 @@ const AuthorizedUser = (props) => {
 
             <ReportsChangesCountWindow/>
 
-            <LoadingAmazonAccount/>
+            {/*<LoadingAmazonAccount/>*/}
         </Fragment>
     );
 };
