@@ -115,7 +115,7 @@ const Sidebar = () => {
                         <img className="logo" src={logo} alt="logo"/>
                     </Link>
                     :
-                    <Link to="/home" className="sidebar-logo">
+                    <Link to="/ppc/dashboard" className="sidebar-logo">
                         <img className="logo" src={logo} alt="logo"/>
                     </Link>
                 }

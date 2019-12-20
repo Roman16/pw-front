@@ -51,7 +51,7 @@ const ProductItem = ({
                 <div className="product-item-content">
                     <div className="caption">
                         {maxText(name)}
-                        {product.hasNew && pathname === '/ppc/report' && <div className='has-new-reports'>New</div>}
+                        {product.has_new_changes && pathname === '/ppc/report' && <div className='has-new-reports'>New</div>}
                     </div>
 
                     <div>
