@@ -127,7 +127,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
 
             <div className='metric-item__description'>
                 <div className="value">
-                    {metric_value != null ? type === 'currency' ? `$${numberMask(metric_value, 2)}` : (type === 'percent' ? `${numberMask(metric_value, 2)}%` : numberMask(metric_value)) : 'N/A'}
+                    {metric_value != null ? type === 'currency' ? `$${Math.round(metric_value).toString().length > 4 ? numberMask(metric_value) : numberMask(metric_value, 2)}` : (type === 'percent' ? `${numberMask(metric_value, 2)}%` : numberMask(metric_value)) : 'N/A'}
                 </div>
                 <div className='label'>{label}</div>
             </div>

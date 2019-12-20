@@ -56,7 +56,7 @@ const Subscription = () => {
     async function handleReactivateSubscription() {
         try {
             await userService.reactivateSubscription({
-                subscription_plan_id: selectedPlan.planId,
+                subscription_plan_id: selectedPlan.plan_id,
                 subscriptionId: selectedPlan.productId,
             });
 
@@ -71,7 +71,7 @@ const Subscription = () => {
     async function handleCancelSubscription() {
         try {
             await userService.cancelSubscription({
-                subscription_plan_id: selectedPlan.planId,
+                subscription_plan_id: selectedPlan.plan_id,
                 subscriptionId: selectedPlan.productId,
             });
 
