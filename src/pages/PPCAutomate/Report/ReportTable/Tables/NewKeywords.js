@@ -393,6 +393,32 @@ const NewKeywords = ({
                 />
             },
             {
+                title: 'CST Spend',
+                dataIndex: 'd_customerSearchTermSpend',
+                key: 'd_customerSearchTermSpend',
+                width: '9.5em',
+                render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'CST Sales',
+                dataIndex: 'd_customerSearchTermSales',
+                key: 'd_customerSearchTermSales',
+                width: '9em',
+                render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
                 title: (
                     <TitleInfo
                         position='top'

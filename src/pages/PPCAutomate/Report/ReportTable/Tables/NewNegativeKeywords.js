@@ -251,6 +251,19 @@ const NewNegativeKeywords = ({
                 />
             },
             {
+                title: 'CST Sales',
+                dataIndex: 'd_customerSearchTermSales',
+                key: 'd_customerSearchTermSales',
+                width: '9em',
+                render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
                 title: 'Action',
                 dataIndex: 'action',
                 key: 'action',

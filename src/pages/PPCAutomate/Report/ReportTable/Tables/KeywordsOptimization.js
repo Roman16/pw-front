@@ -167,6 +167,32 @@ const KeywordsOptimization = ({
                 />
             },
             {
+                title: 'Spend',
+                dataIndex: 'd_keywordSpend',
+                key: 'd_keywordSpend',
+                render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
+                width: '7em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Sales',
+                dataIndex: 'd_keywordSales',
+                key: 'd_keywordSales',
+                render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
+                width: '6.5em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
                 title: 'Average CVR',
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
@@ -350,6 +376,19 @@ const KeywordsOptimization = ({
                 key: 'd_keywordSpend',
                 width: '7em',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
+                sorter: true,
+                filter: (dataIndex) => <ColumnNumberFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Sales',
+                dataIndex: 'd_keywordSales',
+                key: 'd_keywordSales',
+                render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
+                width: '6.5em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
                     onChangeFilter={onChangeFilter}
