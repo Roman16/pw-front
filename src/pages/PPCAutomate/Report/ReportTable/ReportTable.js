@@ -496,7 +496,7 @@ const mapStateToProps = state => ({
     todayChanges: state.reports.today_changes,
     totalSize: state.reports.totalSize,
     pageSize: state.reports.pageSize,
-    countsWithNew: state.reports.counts_with_new
+    countsWithNew: state.reports.counts_with_new || []
 });
 
 const mapDispatchToProps = dispatch => ({
