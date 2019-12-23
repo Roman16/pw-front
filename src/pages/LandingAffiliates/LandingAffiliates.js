@@ -27,10 +27,6 @@ const LandingAffiliates = () => {
         document.head.appendChild(tapfiliateScript);
     }
 
-    function handleClick() {
-        window.tap('click', 'click');
-    }
-
     useEffect(() => {
         return (() => {
             document.head.removeChild(tapfiliateScript)
@@ -46,7 +42,6 @@ const LandingAffiliates = () => {
 
     window.tap('create', tapfiliateKey, {integration: "javascript"});
     window.tap('detect');
-
 
     return (
         <div className='landing-affiliates'>
@@ -65,7 +60,7 @@ const LandingAffiliates = () => {
                         stream for you. Press the button below.
                     </span>
 
-                        <button className='btn green-btn' onClick={handleClick}>
+                        <button className='btn green-btn'>
                             become an affiliate
                         </button>
                     </div>
@@ -227,7 +222,6 @@ const LandingAffiliates = () => {
                     </div>
                 </div>
             </section>
-
 
             <Footer/>
         </div>
