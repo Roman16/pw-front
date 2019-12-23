@@ -22,7 +22,7 @@ const MainChart = () => {
     }));
 
     const timeRange = (start, end) => {
-        if(start) {
+        if (start) {
             dispatch(dashboardActions.selectDateRange({
                     startDate: moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
                     endDate: end ? moment(end, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]') : moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
@@ -42,8 +42,8 @@ const MainChart = () => {
     const getChartData = () => {
         if (activeMetrics[0].key || activeMetrics[1].key) {
             dashboardServices.fetchLineChartData({
-                startDate: `${moment(selectedRangeDate.startDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
-                endDate: `${moment(selectedRangeDate.endDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
+                startDate: selectedRangeDate.startDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.startDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
+                endDate: selectedRangeDate.endDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.endDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
                 firstMetric: activeMetrics[0] ? activeMetrics[0].key : null,
                 secondMetric: activeMetrics[1] ? activeMetrics[1].key : null,
                 productId: selectedProduct,
