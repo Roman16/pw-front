@@ -39,6 +39,7 @@ class MWS extends Component {
                     disabled: false
                 });
                 this.props.setMWS(res);
+                history.push('/ppc');
             });
     };
 
