@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Input} from "antd";
 import Tooltip from '../../../../components/Tooltip/Tooltip';
 import Table from "../../../../components/Table/Table";
@@ -214,7 +214,8 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => (<span>Profit {!hasMargin && <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>}</span>),
+            title: () => (<span>Profit {!hasMargin &&
+            <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>}</span>),
             dataIndex: 'profit',
             key: 'profit',
             width: '10em',
@@ -231,18 +232,24 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
         },
     ];
 
+    useEffect(() => {
+        if (products.length > 0 && selectedProduct !== null && (products.find(item => item.product.id === selectedProduct) === undefined)) {
+            onSelect(null)
+        }
+    }, [products]);
+
     return (
         <div>
             <Table
                 onChangePagination={handlePaginationChange}
                 dataSource={products}
                 columns={columns}
-                rowClassName={(record) => selectedProduct && (selectedProduct === record.product.id ? 'activated-product' : 'default-product')}
                 currentPage={fetchParams.page}
                 showPagination={true}
                 pageSize={fetchParams.size}
                 totalSize={fetchParams.totalSize}
                 scroll={{x: true}}
+                rowClassName={(record) => selectedProduct && (selectedProduct === record.product.id ? 'activated-product' : 'default-product')}
                 onRow={(record, rowIndex) => {
                     return {
                         onClick: () => onSelect(record.product.id)
