@@ -79,7 +79,7 @@ function setMWS(data) {
         dispatch(setInformation(data));
 
         if (data.account_links) {
-            if (!data.account_links.amazon_ppc.is_connected) {
+            if (!data.account_links[0].amazon_ppc.is_connected) {
                 history.push('/ppc');
             } else {
                 history.push('/ppc/optimization');
