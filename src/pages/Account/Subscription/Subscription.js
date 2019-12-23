@@ -14,19 +14,37 @@ import {userActions} from "../../../actions/user.actions";
 import {subscriptionProducts} from "../../../constans/subscription.products.name";
 import {notification} from "../../../components/Notification";
 
+const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
+
 const Subscription = () => {
     let interval = null;
     const dispatch = useDispatch();
     const [openedReactivateWindow, openReactivateWindow] = useState(false);
     const [openedAccountWindow, openAccountWindow] = useState(false);
     const [selectedPlan, selectPlan] = useState();
-    const {subscriptions, mwsConnected, ppcConnected} = useSelector(state => ({
+    const {subscriptions, mwsConnected, ppcConnected, stripeId} = useSelector(state => ({
         subscriptions: state.user.subscriptions,
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
-        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false
+        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
+        stripeId: state.user.user.stripe_id
     }));
 
     const subscriptionProduct = subscriptions[subscriptionProducts[0].productId];
+
+    const existingScript = document.getElementById('tapfiliate');
+    const tapfiliateScript = document.createElement('script');
+
+    if (!existingScript) {
+        tapfiliateScript.src = 'https://script.tapfiliate.com/tapfiliate.js';
+        tapfiliateScript.id = 'tapfiliate';
+        document.head.appendChild(tapfiliateScript);
+    }
+
+    useEffect(() => {
+        return (() => {
+            document.head.removeChild(tapfiliateScript)
+        })
+    }, []);
 
     function handleOpenAccountWindow(plan) {
         openAccountWindow(true);
@@ -45,7 +63,15 @@ const Subscription = () => {
                 subscriptionId: productId,
                 marketplace_id: 'ATVPDKIKX0DER'
             });
+
             notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'});
+
+
+            (function(t,a,p){t.TapfiliateObject=a;t[a]=t[a]||function(){
+                (t[a].q=t[a].q||[]).push(arguments)}})(window,'tap');
+
+            window.tap('create', tapfiliateKey, { integration: "stripe" });
+            window.tap('trial', stripeId);
 
             dispatch(userActions.getPersonalUserInfo());
         } catch (e) {
@@ -122,9 +148,9 @@ const Subscription = () => {
                     product={{...subscriptions[product.productId], ...product}}
                     onSubscribe={handleSubscribe}
                     reloadData={handleUpdateSubscriptionStatus}
+                    stripeId={stripeId}
                 />
             ))}
-
 
             <Drawer
                 className="cancel-account"
