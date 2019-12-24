@@ -1,5 +1,5 @@
 import React from 'react'
-import {Checkbox} from "antd";
+import {Checkbox, Progress} from "antd";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import InputCurrency from "../../../components/Inputs/InputCurrency";
 
@@ -33,7 +33,13 @@ const ProblemList = ({onScanning}) => {
 
                 <div className="list">
                     <div>
-                        <div className='loader'/>
+                        {/*<div className='loader'/>*/}
+                        <Progress
+                            type="circle"
+                            percent={100}
+                            width={20}
+                        />
+
                         Duplicate keywords
                     </div>
                     <div>

@@ -1,17 +1,10 @@
 import React from "react";
 import {
-    PieChart, Pie, Tooltip, Cell, ResponsiveContainer, Legend,
+    PieChart, Pie, Tooltip, Cell, ResponsiveContainer,
 } from 'recharts';
 import notDataImage from '../../../assets/img/not-data-image.svg';
 
-const defaultData = [
-    {name: 'Group A', value: 400},
-    {name: 'Group B', value: 300},
-    {name: 'Group C', value: 300},
-    {name: 'Group D', value: 200},
-];
-
-const ProblemGraph = ({data = defaultData}) => {
+const ProblemGraph = ({data = []}) => {
 
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 

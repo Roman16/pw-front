@@ -48,3 +48,8 @@ export const dashboardUrls = {
     barChartData: 'ppc-automation/dashboard/charts/bar-data',
     pieChartData: 'ppc-automation/dashboard/charts/pie-data',
 };
+
+export const scannerUrls = {
+    scanStatus: 'ppc-scanner/get-scan-status',
+    getChanges: 'ppc-scanner/get-changes-table',
+};
