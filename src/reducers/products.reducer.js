@@ -16,6 +16,8 @@ const initialState = {
     isFirstOptimization: true,
     isFirstChangesOptions: true,
     isFirstChangesStrategy: true,
+    dontShowStartNotificationAgain: false,
+    dontShowStopNotificationAgain: false,
     selectedAll: false,
     onlyOptimization: false,
     onlyActiveOnAmazon: false,
@@ -123,6 +125,18 @@ export function products(state = initialState, action) {
             return {
                 ...state,
                 onlyActiveOnAmazon: action.payload
+            };
+
+        case productsConstants.SWITCH_START_CONFIRM_WINDOW:
+            return {
+                ...state,
+                dontShowStartNotificationAgain: action.payload
+            };
+
+        case productsConstants.SWITCH_STOP_CONFIRM_WINDOW:
+            return {
+                ...state,
+                dontShowStopNotificationAgain: action.payload
             };
 
         default:

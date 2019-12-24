@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import { Icon } from 'antd';
-import { useSelector } from 'react-redux';
+import {Icon} from 'antd';
+import {useSelector} from 'react-redux';
 
 import logo from '../../../../assets/img/zth.svg';
 import './PPC.less';
@@ -14,42 +14,42 @@ const PPC = () => {
         })),
         token = localStorage.getItem('token');
 
-  const redirectLink = `${ppcLink}&state=${token}`;
+    const redirectLink = `${ppcLink}&state=${token}`;
 
-  useEffect(() => {
-      if(!mwsConnected) {
-          history.push('/mws')
-      } else if(ppcConnected) {
-          history.push('/ppc/dashboard')
-      }
-  }, []);
+    useEffect(() => {
+        if (!mwsConnected) {
+            history.push('/mws')
+        } else if (ppcConnected) {
+            history.push('/ppc/dashboard')
+        }
+    }, []);
 
-  return (
-    <div className="ppc-page">
-      <img src={logo} alt="" />
+    return (
+        <div className="ppc-page">
+            <img src={logo} alt=""/>
 
-      <h2 className="h2">Sign in and start selling</h2>
+            <h2 className="h2">Sign in and start selling</h2>
 
-      <iframe
-        className="video"
-        src="https://www.youtube.com/embed/SRhhgDVB0jk"
-        frameBorder="0"
-        title="video"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      />
+            <iframe
+                className="video"
+                src="https://www.youtube.com/embed/SRhhgDVB0jk"
+                frameBorder="0"
+                title="video"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+            />
 
-      <a
-        className="link"
-        href={redirectLink}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Link with Amazon PPC
-        <Icon type="arrow-right" />
-      </a>
-    </div>
-  );
+            <a
+                className="link"
+                href={redirectLink}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Link with Amazon PPC
+                <Icon type="arrow-right"/>
+            </a>
+        </div>
+    );
 };
 
 export default PPC;

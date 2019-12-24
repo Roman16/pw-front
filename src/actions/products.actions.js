@@ -12,7 +12,8 @@ export const productsActions = {
     showOnlyOptimized,
     showOnlyActive,
     changeOptimizedOptions,
-    changeOptimizedStrategy
+    changeOptimizedStrategy,
+    dontShowWindowAgain
 };
 
 function fetchProducts(paginationParams) {
@@ -140,6 +141,15 @@ function changeOptimizedStrategy() {
     return dispatch => {
         dispatch({
             type: productsConstants.CHANGE_STRATEGY,
+        });
+    };
+}
+
+function dontShowWindowAgain(window) {
+    return dispatch => {
+        dispatch({
+            type: productsConstants[`SWITCH_${window.windowName}_CONFIRM_WINDOW`],
+            payload: window.status
         });
     };
 }

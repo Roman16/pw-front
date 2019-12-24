@@ -8,14 +8,13 @@ import {userActions} from '../../../../actions/user.actions';
 import {injectStripe} from "react-stripe-elements";
 import StripeForm from "./StripeForm";
 
-const recaptchaKey = process.env.GOOGLE_RECAPTCHA_KEY || '6LdVacEUAAAAACxfVkvIWG3r9MXE8PYKXJ5aaqY1';
-
 class RegistrationPage extends Component {
     state = {
         name: '',
         last_name: '',
         email: '',
         password: '',
+        confirmPassword: '',
 
         line1: '',
         city: '',
@@ -23,7 +22,6 @@ class RegistrationPage extends Component {
         country: '',
         postal_code: '',
 
-        captcha_action: 'registration',
         stripe_token: null,
         registerSuccess: false,
         isLoading: false,
@@ -47,6 +45,7 @@ class RegistrationPage extends Component {
             last_name,
             email,
             password,
+            confirmPassword,
             card_number,
             expiry,
             cvc,
@@ -58,7 +57,6 @@ class RegistrationPage extends Component {
             postal_code,
 
             stripe_token,
-            captcha_action
         } = this.state;
 
         // eslint-disable-next-line no-useless-escape
@@ -104,6 +102,14 @@ class RegistrationPage extends Component {
             //         title: 'CVC number is required field'
             //     });
             // }
+        } else if (password !== confirmPassword) {
+            notification.error({
+                title: 'Your passwords don’t match',
+            });
+            this.setState({
+                isLoading: false
+            });
+            return;
         } else {
             // try {
 
@@ -126,30 +132,21 @@ class RegistrationPage extends Component {
 
             let res = stripe_token ? stripe_token : await this.props.stripe.createPaymentMethod('card', {billing_details});
             this.setState({stripe_token: res}, () => {
-                    window.grecaptcha.ready(() => {
-                        window.grecaptcha.execute(recaptchaKey, {action: 'registration'})
-                            .then((token) => {
-                                res.paymentMethod ?
-                                    this.props.regist({
-                                        name,
-                                        last_name,
-                                        email,
-                                        password,
-                                        stripe_token: res.paymentMethod ? res.paymentMethod.id : null,
-                                        captcha_token: token,
-                                        captcha_action
-                                    })
-                                    :
-                                    this.props.regist({
-                                        name,
-                                        last_name,
-                                        email,
-                                        password,
-                                        captcha_token: token,
-                                        captcha_action
-                                    });
-                            });
-                    })
+                    res.paymentMethod ?
+                        this.props.regist({
+                            name,
+                            last_name,
+                            email,
+                            password,
+                            stripe_token: res.paymentMethod ? res.paymentMethod.id : null,
+                        })
+                        :
+                        this.props.regist({
+                            name,
+                            last_name,
+                            email,
+                            password,
+                        });
                 }
             );
         }
@@ -180,8 +177,6 @@ class RegistrationPage extends Component {
 
     componentDidMount() {
         this.setState({isLoading: false});
-
-        window.captchaStyle.innerHTML = `.grecaptcha-badge { display: block !important; visibility: visible !important}`;
     }
 
     render() {
@@ -190,6 +185,7 @@ class RegistrationPage extends Component {
             last_name,
             email,
             password,
+            confirmPassword,
             registerSuccess,
             isLoading,
             country,
@@ -225,8 +221,6 @@ class RegistrationPage extends Component {
                                 value={name}
                                 onChange={this.onChange}
                             />
-                            {/* eslint-disable-next-line max-len */}
-                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
                             <label className="label">First name</label>
                         </div>
                     </Col>
@@ -238,8 +232,6 @@ class RegistrationPage extends Component {
                                 value={last_name}
                                 onChange={this.onChange}
                             />
-                            {/* eslint-disable-next-line max-len */}
-                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
                             <label className="label">Last Name</label>
                         </div>
                     </Col>
@@ -256,8 +248,6 @@ class RegistrationPage extends Component {
                                 // pattern="([a-z0-9_.-]+)@([a-z0-9_.-]+).([a-z.]{2,6})"
                                 required
                             />
-                            {/* eslint-disable-next-line max-len */}
-                            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control,jsx-a11y/label-has-for */}
                             <label
                                 className={`${
                                     isLess ? 'label' : 'label-email'
@@ -278,11 +268,24 @@ class RegistrationPage extends Component {
                                 onChange={this.onChange}
                                 required
                             />
-                            {/* eslint-disable-next-line max-len */}
-                            {/* eslint-disable-next-line jsx-a11y/label-has-for,jsx-a11y/label-has-associated-control */}
                             <label className="label">Password</label>
                         </div>
                     </Col>
+                </Row>
+                <Row>
+                    <Col xs={24} sm={24} md={24}>
+                        <div className="input-container">
+                            <input
+                                type="password"
+                                name="confirmPassword"
+                                value={confirmPassword}
+                                onChange={this.onChange}
+                                required
+                            />
+                            <label className="label">Repeat your password</label>
+                        </div>
+                    </Col>
+
                 </Row>
 
                 <StripeForm
@@ -299,13 +302,6 @@ class RegistrationPage extends Component {
 
                     autofocus={autofocus}
                 />
-
-                {/*<ReCaptcha*/}
-                {/*    sitekey={this.props.recaptchaKey}*/}
-                {/*    action='registration'*/}
-                {/*    verifyCallback={this.verifyCallback}*/}
-                {/*/>*/}
-
 
                 <Row>
                     <Col xs={24} sm={24} md={24}>
@@ -363,5 +359,3 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(injectStripe(RegistrationPage));
-
-// export default RegistrationPage;

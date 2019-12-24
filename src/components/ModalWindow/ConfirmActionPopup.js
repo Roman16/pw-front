@@ -1,7 +1,7 @@
 import React from "react";
-import {Modal} from 'antd';
+import {Modal, Checkbox} from 'antd';
 
-const ConfirmActionPopup = ({title, description, visible, handleOk, handleCancel}) => {
+const ConfirmActionPopup = ({title, description, visible, handleOk, handleCancel, checkboxText, handleChangeCheckbox}) => {
     return (
         <Modal
             title={title}
@@ -13,6 +13,9 @@ const ConfirmActionPopup = ({title, description, visible, handleOk, handleCancel
             cancelText='No'
         >
             {description}
+            {checkboxText && <div>
+                <Checkbox onChange={handleChangeCheckbox}>{checkboxText}</Checkbox>
+            </div>}
         </Modal>
     )
 };

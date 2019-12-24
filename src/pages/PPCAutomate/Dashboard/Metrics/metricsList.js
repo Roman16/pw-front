@@ -21,7 +21,7 @@ export const metricsListArray = [
         type: 'percent'
     },
     {
-        title: 'Spend',
+        title: 'Ad Spend',
         key: 'spend',
         info: 'The total click charges for a campaign',
         label: 'Total',
@@ -121,7 +121,7 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         title: 'ROAS',
         key: 'roas',
         label: 'Average',
-        type: 'number'
+        type: 'roas'
     },
 ];
 

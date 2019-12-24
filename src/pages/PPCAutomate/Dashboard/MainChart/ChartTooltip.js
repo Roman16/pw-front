@@ -16,6 +16,8 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                 return round(payload.find(item => item.dataKey === key).value, 2) + '%'
             } else if (metricsListArray.find(item => item.key === metric).type === 'currency') {
                 return '$' + numberMask(payload.find(item => item.dataKey === key).value, 2)
+            } else if (metricsListArray.find(item => item.key === metric).type === 'roas') {
+                return `${round(payload.find(item => item.dataKey === key).value, 2)}x`
             } else {
                 return numberMask(payload.find(item => item.dataKey === key).value)
             }

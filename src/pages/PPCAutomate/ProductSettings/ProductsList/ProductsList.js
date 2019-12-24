@@ -209,7 +209,10 @@ class ProductsList extends Component {
                 render: () => (
                     <span className='value'><span className="icon">$</span> {props[MAX_BID_AUTO_CAMPING]}</span>)
             },
-            {title: '', width: 150, render: () => (<span>{props[TOTAL_CHANGES]}</span>)},
+            {
+                title: '',
+                width: 150,
+            },
             {
                 title: '',
                 width: 150,

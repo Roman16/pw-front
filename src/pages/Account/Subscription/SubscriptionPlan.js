@@ -8,7 +8,7 @@ import {numberMask} from "../../../utils/numberMask";
 import {history} from "../../../utils/history";
 import {useSelector} from "react-redux";
 
-const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe}) => {
+const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe, stripeId}) => {
     const {mwsConnected, ppcConnected} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false
@@ -86,7 +86,7 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                     </button>
                 </Fragment>
             )
-        } else if (!product.has_access) {
+        } else if (!product.has_access && stripeId) {
             return (
                 <div className="subscribe-btn">
                     <button className="btn green-btn" onClick={handleSubscribe} disabled={disableButton}>

@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import ModalWindow from "../ModalWindow";
 import {history} from "../../../utils/history";
 import {userActions} from "../../../actions/user.actions";
+import unicornEmoji from '../../../assets/img/unicorn-emoji.png';
 
 const ReportsChangesCountWindow = () => {
     const [visibleWindow, switchWindow] = useState(false);
@@ -43,8 +44,8 @@ const ReportsChangesCountWindow = () => {
             handleCancel={handleCancel}
         >
             {/*<img src={whales} alt=""/>*/}
-            <h3>Yay 👋  </h3>
-            While you where away the software performed <b>{changesCount}</b> changes on your ad campaigns.
+            <h3>Yay <img src={unicornEmoji} alt=""/></h3>
+            While you where away <br/> the software performed <b>{changesCount}</b> <span>changes</span>
              {/*{moment.duration(changesDate, "days").humanize()}*/}
         </ModalWindow>
     )

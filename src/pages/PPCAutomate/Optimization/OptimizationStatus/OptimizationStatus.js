@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Icon} from 'antd';
 import moment from 'moment';
-import {Button} from 'antd';
 import {connect} from 'react-redux';
 
 import NetMarginWindow from './NetMarginWindow/NetMarginWindow';
@@ -24,7 +23,10 @@ class OptimizationStatus extends Component {
     state = {
         isShowModal: false,
         showFirstStartConfirmModal: false,
-        showStopConfirmModal: false
+        showAllStartConfirmModal: false,
+        showStopConfirmModal: false,
+        dontShowStartNotificationAgain: this.props.dontShowStartNotificationAgain,
+        dontShowStopNotificationAgain: this.props.dontShowStopNotificationAgain,
     };
 
     cancelModal = () => this.setState({isShowModal: false});
@@ -36,8 +38,14 @@ class OptimizationStatus extends Component {
     };
 
     handleClickStartOptimization = (status) => {
-        const {product: {optimized}, selectedAll} = this.props;
-        if (!optimized || selectedAll) {
+        const {product: {optimized}, selectedAll} = this.props,
+            {dontShowStartNotificationAgain} = this.state;
+
+        if (selectedAll) {
+            this.setState({
+                showAllStartConfirmModal: true
+            })
+        } else if (!dontShowStartNotificationAgain || !optimized) {
             this.setState({
                 showFirstStartConfirmModal: true
             })
@@ -46,13 +54,15 @@ class OptimizationStatus extends Component {
         }
     };
 
-
-    handleClickStopOptimization = () => {
-        this.setState({
-            showStopConfirmModal: true
-        })
+    handleClickStopOptimization = (status) => {
+        if (!this.state.dontShowStopNotificationAgain || this.props.selectedAll) {
+            this.setState({
+                showStopConfirmModal: true
+            })
+        } else {
+            this.toStart(status)
+        }
     };
-
 
     toStart = (status) => {
         const {onSwitchOptimization, product, selectedAll, optimizationOptions} = this.props;
@@ -78,8 +88,12 @@ class OptimizationStatus extends Component {
 
             this.setState({
                 showFirstStartConfirmModal: false,
-                showStopConfirmModal: false
+                showStopConfirmModal: false,
+                showAllStartConfirmModal: false
             });
+
+            this.props.switchConfirmWindow({status: this.state.dontShowStartNotificationAgain, windowName: 'START'});
+            this.props.switchConfirmWindow({status: this.state.dontShowStopNotificationAgain, windowName: 'STOP'});
 
             status === RUNNING && notification.start({title: 'Optimization successfully started'});
             status === STOPPED && notification.error({title: 'The optimization is paused'});
@@ -97,7 +111,7 @@ class OptimizationStatus extends Component {
             selectedAll
         } = this.props;
 
-        const {isShowModal, showFirstStartConfirmModal, showStopConfirmModal} = this.state;
+        const {isShowModal, showFirstStartConfirmModal, showStopConfirmModal, showAllStartConfirmModal} = this.state;
         const isActive = status === RUNNING;
 
         return (
@@ -132,7 +146,8 @@ class OptimizationStatus extends Component {
                                 </div>
                             </button>
                         ) : (
-                            <button className="btn default stop" onClick={() => this.handleClickStopOptimization()}>
+                            <button className="btn default stop"
+                                    onClick={() => this.handleClickStopOptimization(STOPPED)}>
                                 <div className="control-btn-content">
                                     <div className="icon-stop"/>
                                     <div className="btn-text">
@@ -154,22 +169,35 @@ class OptimizationStatus extends Component {
                 )}
 
                 <ConfirmActionPopup
+                    visible={showAllStartConfirmModal}
+                    handleOk={() => this.toStart(RUNNING)}
+                    handleCancel={() => this.setState({showAllStartConfirmModal: false})}
+                    title={'Are you ready to start?'}
+                    description={'Are you sure you want to start the same optimization strategy for All Products?'}
+                />
+
+                <ConfirmActionPopup
                     visible={showFirstStartConfirmModal}
                     handleOk={() => this.toStart(RUNNING)}
                     handleCancel={() => this.setState({showFirstStartConfirmModal: false})}
+                    handleChangeCheckbox={(e) => {
+                        this.setState({dontShowStartNotificationAgain: e.target.checked})
+                    }}
                     title={'Are you ready to start?'}
-                    description={selectedAll ?
-                        'Are you sure you want to start the same optimization strategy for All Products?'
-                        :
-                        'This action will result in the starting management of your active Amazon PPC campaigns.'}
+                    description={'This action will result in the automatic management of your campaigns by our algorithm.'}
+                    checkboxText={`Don't show this message again`}
                 />
 
                 <ConfirmActionPopup
                     visible={showStopConfirmModal}
                     handleOk={() => this.toStart(STOPPED)}
                     handleCancel={() => this.setState({showStopConfirmModal: false})}
+                    handleChangeCheckbox={(e) => {
+                        this.setState({dontShowStopNotificationAgain: e.target.checked})
+                    }}
                     title={' Are you sure you want to stop?'}
                     description={'We will stop the optimization of your active Amazon PPC campaigns. You can restart it anytime.'}
+                    checkboxText={selectedAll ? null : `Don't show this message again`}
                 />
             </div>
         );
@@ -179,7 +207,9 @@ class OptimizationStatus extends Component {
 const mapStateToProps = state => ({
     selectedAll: state.products.selectedAll,
     optimizationOptions: state.products.defaultOptimizationOptions,
-    isFirstOptimization: state.products.isFirstOptimization
+    isFirstOptimization: state.products.isFirstOptimization,
+    dontShowStartNotificationAgain: state.products.dontShowStartNotificationAgain || false,
+    dontShowStopNotificationAgain: state.products.dontShowStopNotificationAgain || false,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -188,6 +218,9 @@ const mapDispatchToProps = dispatch => ({
     },
     setNetMargin: (netMargin) => {
         dispatch(productsActions.setNetMargin(netMargin))
+    },
+    switchConfirmWindow: (status) => {
+        dispatch(productsActions.dontShowWindowAgain(status))
     }
 });
 
