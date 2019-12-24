@@ -10,6 +10,7 @@ import {notification} from '../../../../components/Notification';
 import './TableSettings.less';
 import {productsActions} from "../../../../actions/products.actions";
 import {connect} from "react-redux";
+import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 
 const ACTIVE = 'RUNNING';
 const PRODUCT = 'product';
@@ -282,7 +283,7 @@ class ProductsList extends Component {
                 },
 
                 {
-                    title: 'Net Margin*',
+                    title: <span className='net-margin'>Net Margin* <InformationTooltip description={'It is the percentage of profit generated from revenue after you have accounted for all of your expenses, costs, and open cash flow items. The formula for calculating net profit margin is total revenue minus COGS, divided by total revenue. We need this information, so the algorithm calculates your target ACoS based on your product profitability and business goal.'}/></span>,
                     dataIndex: NET_MARGIN,
                     key: NET_MARGIN,
                     width: 150,
