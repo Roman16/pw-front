@@ -25,6 +25,7 @@ function throttle(func, delay) {
 
 const AuthorizedUser = (props) => {
     const dispatch = useDispatch();
+    const pathname = props.children.props.location.pathname;
     const {lastStatusAction} = useSelector(state => ({
         lastStatusAction: state.user.lastUserStatusAction
     }));
@@ -54,8 +55,10 @@ const AuthorizedUser = (props) => {
             <div className="main-pages">
                 <Sidebar/>
 
-                {(props.children.props.location.pathname === '/ppc/optimization' ||
-                    props.children.props.location.pathname === '/ppc/report') &&
+                {(pathname === '/ppc/optimization' ||
+                    pathname === '/ppc/report' ||
+                    pathname === '/ppc/scanner'
+                ) &&
                 <ProductList
                     pathname={props.children.props.location.pathname}
                 />}

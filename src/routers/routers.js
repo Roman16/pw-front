@@ -21,6 +21,7 @@ import Subscription from "../pages/Account/Subscription/Subscription";
 import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
 import ProductList from "../components/ProductList/ProductList";
 import Home from "../pages/Home/Home";
+import Scanner from "../pages/PPCAutomate/Scanner/Scanner";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -84,6 +85,12 @@ const routers = () => {
                     exact
                     path="/ppc/product-settings"
                     component={ProductSettings}
+                />
+
+                <ConnectedAmazonRoute
+                    exact
+                    path="/ppc/scanner"
+                    component={Scanner}
                 />
 
                 <PrivateRoute exact path="/mws" component={MWS}/>

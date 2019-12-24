@@ -201,12 +201,6 @@ const Sidebar = () => {
                                                 </NavLink>
                                             </li>
                                         ))}
-
-                                        <li className="automate-item">
-                                            <a href="/ppc-scanner" className="automate-link">
-                                                PPC Scanner
-                                            </a>
-                                        </li>
                                     </ul>
                                 )}
 
@@ -232,12 +226,6 @@ const Sidebar = () => {
                                                     </NavLink>
                                                 </li>
                                             ))}
-
-                                            <li className="automate-item">
-                                                <a href="/ppc-scanner" className="automate-link">
-                                                    PPC Scanner
-                                                </a>
-                                            </li>
                                         </ul>
                                     </div>
                                 )}
