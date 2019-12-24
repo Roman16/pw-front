@@ -35,7 +35,7 @@ const NewKeywords = ({
         counts: state.reports.counts,
         loading: state.reports.loading,
         productId: state.products.selectedProduct.id,
-        countsWithNew: state.reports.counts_with_new
+        countsWithNew: state.reports.counts_with_new || []
     }));
 
     const onChange = tab => {
