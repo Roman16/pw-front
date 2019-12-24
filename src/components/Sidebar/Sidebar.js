@@ -96,8 +96,6 @@ const Sidebar = () => {
     }, [width]);
 
 
-    window.captchaStyle.innerHTML = `.grecaptcha-badge { display: none !important}`;
-
     if (!notFirstEntry) {
         history.push('/login');
         // localStorage.removeItem('token');
