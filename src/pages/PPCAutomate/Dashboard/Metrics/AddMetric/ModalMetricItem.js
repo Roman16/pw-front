@@ -8,6 +8,22 @@ import {metricsListArray} from "../metricsList";
 import {useSelector} from "react-redux";
 import {numberMask} from "../../../../../utils/numberMask";
 
+const RenderMetricValue = ({value, type}) => {
+    if (value != null) {
+        if (type === 'currency') {
+            return (`$${Math.round(value).toString().length > 4 ? numberMask(value) : numberMask(value, 2)}`)
+        } else if (type === 'percent') {
+            return (`${numberMask(value, 2)}%`)
+        } else if (type === 'number') {
+            return (numberMask(value))
+        } else if (type === 'roas') {
+            return (`${round(value, 2)}x`)
+        }
+    } else {
+        return 'N/A'
+    }
+};
+
 const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, item, listType, removeMetric, addMetric}) => {
     const metricInformation = metricsListArray.find(item => item.key === key);
     const {hasMargin} = useSelector(state => ({
@@ -35,7 +51,10 @@ const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, i
 
         <div className='metric-item__description'>
             <div className="value">
-                {metric_value != null ? type === 'currency' ? `$${Math.round(metric_value).toString().length > 4 ? numberMask(metric_value) : numberMask(metric_value, 2)}` : (type === 'percent' ? `${numberMask(metric_value, 2)}%` : numberMask(metric_value)) : 'N/A'}
+                <RenderMetricValue
+                    value={metric_value}
+                    type={type}
+                />
             </div>
             <div className='label'>{label}</div>
         </div>
