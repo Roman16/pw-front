@@ -168,7 +168,7 @@ class Scanner extends Component {
                     mask={true}
                     footer={null}
                     visible={visibleStartWindow || visibleRescanWindow || visibleSuccessWindow}
-                    handleCancel={() => this.handleCloseWindow('Start')}
+                    handleCancel={() => this.handleCloseWindow(visibleStartWindow ? 'Start' : visibleRescanWindow ? 'Rescan' : 'Success')}
                 >
                     {this.renderWindowContent()}
                 </ModalWindow>
