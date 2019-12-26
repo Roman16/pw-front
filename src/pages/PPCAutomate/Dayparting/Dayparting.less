@@ -152,7 +152,16 @@
     }
 
     .day-chart {
-      .recharts-cartesian-axis-ticks {}
+      .recharts-layer.recharts-cartesian-axis-tick {
+        .recharts-cartesian-axis-tick-line {
+          display: none;
+        }
+
+        .recharts-cartesian-axis-tick-value {
+          margin: 0 20px 0 0;
+        }
+      }
+
     }
   }
 }

@@ -48,7 +48,7 @@ const SpendStatistics = () => {
                     Out of Budget
                 </div>
 
-                <button className='btn default'>Soon</button>
+                {/*<button className='btn default'>Soon</button>*/}
             </div>
 
             <div className="statistics">
