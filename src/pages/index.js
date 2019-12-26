@@ -55,7 +55,8 @@ const AuthorizedUser = (props) => {
                 <Sidebar/>
 
                 {(props.children.props.location.pathname === '/ppc/optimization' ||
-                    props.children.props.location.pathname === '/ppc/report') &&
+                    props.children.props.location.pathname === '/ppc/report' ||
+                    props.children.props.location.pathname === '/ppc/dayparting') &&
                 <ProductList
                     pathname={props.children.props.location.pathname}
                 />}

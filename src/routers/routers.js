@@ -19,8 +19,8 @@ import Information from "../pages/Account/Information/Information";
 import Billing from "../pages/Account/Billing/Billing";
 import Subscription from "../pages/Account/Subscription/Subscription";
 import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
-import ProductList from "../components/ProductList/ProductList";
 import Home from "../pages/Home/Home";
+import Dayparting from "../pages/PPCAutomate/Dayparting/Dayparting";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -84,6 +84,12 @@ const routers = () => {
                     exact
                     path="/ppc/product-settings"
                     component={ProductSettings}
+                />
+
+                <ConnectedAmazonRoute
+                    exact
+                    path="/ppc/dayparting"
+                    component={Dayparting}
                 />
 
                 <PrivateRoute exact path="/mws" component={MWS}/>
