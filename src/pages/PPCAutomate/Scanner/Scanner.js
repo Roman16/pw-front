@@ -2,6 +2,7 @@ import React, {Fragment, Component} from 'react';
 import SubscriptionNotificationWindow
     from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 import './Scanner.less';
+import {Prompt} from 'react-router-dom';
 import {connect} from "react-redux";
 import ProblemList from "./ProblemList";
 import ProblemGraph from "./ProblemGraph";
@@ -49,6 +50,8 @@ const defaultResults = {
 };
 
 let fetchingInterval = null;
+
+const shouldBlockNavigation = true;
 
 class Scanner extends Component {
     state = {
@@ -111,6 +114,20 @@ class Scanner extends Component {
             })
     };
 
+    componentDidMount() {
+        // this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave)
+    }
+
+    routerWillLeave(nextLocation) {
+        // return false to prevent a transition w/o prompting the user,
+        // or return a string to allow the user to decide:
+        // return `null` or nothing to let other hooks to be executed
+        //
+        // NOTE: if you return true, other hooks will not be executed!
+        if (!this.state.isSaved)
+            return 'Your work is not saved! Are you sure you want to leave?'
+    }
+
     renderWindowContent = () => {
         const {visibleStartWindow, visibleRescanWindow, visibleSuccessWindow} = this.state;
 
@@ -129,6 +146,15 @@ class Scanner extends Component {
             />)
         }
     };
+
+    // componentDidUpdate = () => {
+    //     if (shouldBlockNavigation) {
+    //         window.onbeforeunload = () => true
+    //     } else {
+    //         window.onbeforeunload = undefined
+    //     }
+    // };
+
 
     render() {
         const {
@@ -174,6 +200,11 @@ class Scanner extends Component {
                 </ModalWindow>
 
                 <SubscriptionNotificationWindow product={'ppc'}/>
+
+                {/*<Prompt*/}
+                {/*    when={shouldBlockNavigation}*/}
+                {/*    message='You have unsaved changes, are you sure you want to leave?'*/}
+                {/*/>*/}
             </Fragment>
         )
     }

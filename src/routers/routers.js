@@ -1,11 +1,13 @@
-import React from 'react';
-import {Route, Router, Switch, Redirect} from 'react-router-dom';
+import React, {Fragment} from 'react';
+// import {Route, Router, Switch, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Prompt, Switch, Redirect} from 'react-router-dom';
 import {history} from '../utils/history';
 import {useSelector} from 'react-redux';
+import {Row, Col, Modal} from 'antd';
 
 import LoginPage from "../pages/authentication/LoginPage/LoginPage";
 import RegistrationPage from "../pages/authentication/RegistrationPage/RegistrationPage";
-
+import RescanWindow from '../pages/PPCAutomate/Scanner/ModalWindows/RescanWindow';
 import AuthorizedUser from "../pages";
 import Optimization from "../pages/PPCAutomate/Optimization/Optimization";
 import Report from "../pages/PPCAutomate/Report/Report";
@@ -22,6 +24,7 @@ import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithA
 import ProductList from "../components/ProductList/ProductList";
 import Home from "../pages/Home/Home";
 import Scanner from "../pages/PPCAutomate/Scanner/Scanner";
+import ModalWindow from "../components/ModalWindow/ModalWindow";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -55,9 +58,33 @@ const ConnectedAmazonRoute = props => {
 
 const developer = process.env.REACT_APP_ENV === "developer";
 
+
+const getConfirm = (content, callback) => {
+    Modal.confirm({
+        content: <RescanWindow
+            visible={true}
+            handleOk={() => {
+                callback(true);
+            }}
+            handleCancel={() => {
+                callback(false);
+            }}
+        />,
+        className: 'custom-modal-window leave-confirm-window',
+        footer: false,
+        icon: false,
+        onOk: () => {
+            callback(true);
+        },
+        onCancel: () => {
+            callback(false);
+        }
+    });
+};
+
 const routers = () => {
     return (
-        <Router history={history}>
+        <Router history={history} getUserConfirmation={getConfirm}>
             <Switch>
                 <Route exact path="/login" component={LoginPage}/>
                 {developer && <Route exact path="/affiliates" component={LandingAffiliates}/>}
