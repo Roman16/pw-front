@@ -74,7 +74,7 @@ const ProblemGraph = ({problemsCount = {}}) => {
                                 <div className="color" style={{backgroundColor: COLORS[index]}}/>
                                 <div>
                                     <div className="percent">
-                                        {round((100 / Object.values(problemsCount).reduce((a, b) => a + b)) * item.value, 2)}%
+                                        {round((100 / Object.values(problemsCount).reduce((a, b) => a + b)) * item.value, 0)}%
                                     </div>
                                     <div className='mistake'>mistake #{index + 1}</div>
                                 </div>
