@@ -7,11 +7,16 @@ const baseUrl =
         : process.env.REACT_APP_API_URL || '';
 
 function api(method, url) {
+    const token = localStorage.getItem('token');
+
     return new Promise((resolve, reject) => {
         axios({
             method: method,
             url: url,
             withCredentials: true,
+            headers: {
+                authorization: token ? `Bearer ${token}` : true
+            }
         })
             .then(result => {
                 console.log(result);
