@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import {
-    BarChart,  Bar, XAxis, YAxis, Tooltip
+    BarChart, Cell, Bar, XAxis, YAxis, Tooltip
 } from 'recharts';
 
 const CustomBar = (props) => {
@@ -42,6 +42,7 @@ const data = [
 ];
 
 const DayChart = () => {
+    const [focusBar, setFocusBar] = useState(null);
 
     return (
         <div className='chart-block day-chart'>
@@ -50,24 +51,38 @@ const DayChart = () => {
                 width={500}
                 height={230}
                 data={data}
+                onMouseMove={state => {
+                    if (state.isTooltipActive) {
+                        setFocusBar(state.activeTooltipIndex);
+                    } else {
+                        setFocusBar(null);
+                    }
+                }}
+                onMouseLeave={() => setFocusBar(null)}
                 margin={{
-                    top: 20, right: 20, bottom: 20, left: 20,
+                    top: 20
                 }}
             >
                 <XAxis type="number" hide={true}/>
 
                 <YAxis dataKey="name" type="category"/>
 
-                <Tooltip cursor={{fill: '#6D6DF6'}} strokeWidth={10}/>
+                <Tooltip
+                    cursor={false}
+                    isAnimationActive={false}
+                />
 
                 <Bar
                     dataKey="amt"
                     barSize={20}
-                    fill="rgba(109, 109, 246, 0.5)"
+                    fill=""
                     shape={<CustomBar/>}
                     isAnimationActive={false}
-                />
-
+                >
+                    {data.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={focusBar === index ? '#6D6DF6' : 'rgba(109, 109, 246, 0.5)'}/>
+                    ))}
+                </Bar>
 
             </BarChart>
         </div>

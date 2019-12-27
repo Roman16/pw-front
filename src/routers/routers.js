@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 // import {Route, Router, Switch, Redirect} from 'react-router-dom';
-import {BrowserRouter as Router, Route, Prompt, Switch, Redirect} from 'react-router-dom';
+import {Router, Route, Prompt, Switch, Redirect} from 'react-router-dom';
 import {history} from '../utils/history';
 import {useSelector} from 'react-redux';
 import {Row, Col, Modal} from 'antd';
@@ -84,7 +84,7 @@ const getConfirm = (content, callback) => {
 
 const routers = () => {
     return (
-        <Router history={history} getUserConfirmation={getConfirm}>
+        <Router history={history}>
             <Switch>
                 <Route exact path="/login" component={LoginPage}/>
                 {developer && <Route exact path="/affiliates" component={LandingAffiliates}/>}
