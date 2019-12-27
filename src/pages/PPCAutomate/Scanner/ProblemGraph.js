@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {
-    PieChart, Pie, Tooltip, Sector, Cell, ResponsiveContainer, LineChart,
+    PieChart, Pie, Tooltip, Sector, Cell, ResponsiveContainer
 } from 'recharts';
 import notDataImage from '../../../assets/img/not-data-image.svg';
 import {round} from "../../../utils/round";
@@ -54,10 +54,14 @@ const ProblemGraph = ({problemsCount = {}}) => {
     const COLORS = ['#5052AD', '#FBB13C', '#F17105', '#E93130', '#66D0AA'];
 
     useEffect(() => {
-        setData(problemList.map(item => ({
-            ...item,
-            value: problemsCount[item.key] ? problemsCount[item.key] : 0,
-        })))
+        setData(Object.keys(problemsCount).map(key => {
+            return ({
+                ...problemList.find(item => item.key === key),
+                value: problemsCount[key] ? problemsCount[key] : 0,
+            })
+        }))
+
+        console.log(round(100 / Object.values(problemsCount).reduce((a, b) => a + b, 0), 0) === NaN)
     }, [problemsCount]);
 
     return (
@@ -74,7 +78,11 @@ const ProblemGraph = ({problemsCount = {}}) => {
                                 <div className="color" style={{backgroundColor: COLORS[index]}}/>
                                 <div>
                                     <div className="percent">
-                                        {round((100 / Object.values(problemsCount).reduce((a, b) => a + b)) * item.value, 0)}%
+                                        {round((100 / Object.values(problemsCount).reduce((a, b) => a + b)) * item.value, 0) >= 0 ?
+                                            round((100 / Object.values(problemsCount).reduce((a, b) => a + b)) * item.value, 0)
+                                            :
+                                            0
+                                        }%
                                     </div>
                                     <div className='mistake'>mistake #{index + 1}</div>
                                 </div>
@@ -93,6 +101,8 @@ const ProblemGraph = ({problemsCount = {}}) => {
                                     fill="#8884d8"
                                     dataKey="value"
                                     isAnimationActive={false}
+                                    paddingAngle={0}
+                                    blendStroke={true}
 
                                     activeShape={renderActiveShape}
                                     activeIndex={activeSector}

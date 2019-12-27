@@ -2,7 +2,9 @@ import React, {Fragment, Component} from 'react';
 import SubscriptionNotificationWindow
     from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 import './Scanner.less';
+
 import {Prompt} from 'react-router-dom';
+import {history} from "../../../utils/history";
 import {connect} from "react-redux";
 import ProblemList from "./ProblemList";
 import ProblemGraph from "./ProblemGraph";
@@ -12,49 +14,15 @@ import AfterStartWindow from "./ModalWindows/AfterStartWindow";
 import RescanWindow from "./ModalWindows/RescanWindow";
 import SuccessWindow from "./ModalWindows/SuccessWindow";
 import {scannerServices} from "../../../services/scanner.services";
+import {productsActions} from "../../../actions/products.actions";
 
+let fetchingTimeout = null;
 
-const defaultData = [
-    {
-        id: 0,
-        number: 0,
-        type: "DuplicateKeywords",
-        message: `<span style="color: #343a40;">Mistake: Duplicate Keywords.</span> <span style="">Exact</span> keyword <span style="color: #6610F2;">some customer search term 1</span> in ad group <span class="mistake adGroupName">Exact Medium Acos (ema)</span> in campaign <span style="color: #82BB79;">FM Foot Massager B07P9K167V (ST Exact / Phrase)</span> is a duplicate of <span style="">exact</span> keyword <span style="color: #6610F2;">some customer search term 1</span> in ad group <span class="mistake adGroupName">Exact Low Acos (ela)</span> in campaign <span style="color: #82BB79;">FM Foot Massager B07P9K167V (ST Exact / Phrase)</span>`
-    },
-    {
-        id: 1,
-        number: 1,
-        type: "DuplicateKeywords",
-        message: `<span style="color: #343a40;">Mistake: Duplicate Keywords.</span> <span style="">Exact</span> keyword <span style="color: #6610F2;">some customer search term 1</span> in ad group <span class="mistake adGroupName">Exact Medium Acos (ema)</span> in campaign <span style="color: #82BB79;">FM Foot Massager B07P9K167V (ST Exact / Phrase)</span> is a duplicate of <span style="">exact</span> keyword <span style="color: #6610F2;">some customer search term 1</span> in ad group <span class="mistake adGroupName">Exact Low Acos (ela)</span> in campaign <span style="color: #82BB79;">FM Foot Massager B07P9K167V (ST Exact / Phrase)</span>`
-    },
-    {
-        id: 2,
-        number: 2,
-        type: "DuplicateKeywords",
-        message: `<span style="color: #343a40;">Mistake: Duplicate Keywords.</span> <span style="">Exact</span> keyword <span style="color: #6610F2;">some customer search term 1</span> in ad group <span class="mistake adGroupName">Exact Medium Acos (ema)</span> in campaign <span style="color: #82BB79;">FM Foot Massager B07P9K167V (ST Exact / Phrase)</span> is a duplicate of <span style="">exact</span> keyword <span style="color: #6610F2;">some customer search term 1</span> in ad group <span class="mistake adGroupName">Exact Low Acos (ela)</span> in campaign <span style="color: #82BB79;">FM Foot Massager B07P9K167V (ST Exact / Phrase)</span>`
-    },
-    {
-        id: 3,
-        number: 3,
-        type: "DuplicateKeywords",
-        message: `<span style="color: #343a40;">Mistake: Duplicate Keywords.</span> <span style="">Exact</span> keyword <span style="color: #6610F2;">some customer search term 1</span> in ad group <span class="mistake adGroupName">Exact Medium Acos (ema)</span> in campaign <span style="color: #82BB79;">FM Foot Massager B07P9K167V (ST Exact / Phrase)</span> is a duplicate of <span style="">exact</span> keyword <span style="color: #6610F2;">some customer search term 1</span> in ad group <span class="mistake adGroupName">Exact Low Acos (ela)</span> in campaign <span style="color: #82BB79;">FM Foot Massager B07P9K167V (ST Exact / Phrase)</span>`
-    },
-];
-
-const defaultResults = {
-    DuplicateKeywords: 9,
-    BadPerformingKeywords: 4,
-    KeywordsHarvesting: 21,
-    PoorSemanticCore: 7,
-    PATs: 2
-};
-
-let fetchingInterval = null;
-
-const shouldBlockNavigation = true;
+let nextProductId = null;
 
 class Scanner extends Component {
     state = {
+        productId: this.props.selectedProduct.id,
         visibleStartWindow: false,
         visibleRescanWindow: false,
         visibleSuccessWindow: false,
@@ -62,71 +30,95 @@ class Scanner extends Component {
         mistakeList: [],
         problemsCount: {},
         fetching: false,
-        successFetch: false
+        successFetch: false,
+    };
+
+    handleConfirm = () => {
+        this.setState({
+            productId: nextProductId,
+            mistakeList: [],
+            problemsCount: {},
+            fetching: false,
+            successFetch: false,
+            visibleRescanWindow: false
+        });
+
+        clearTimeout(fetchingTimeout);
     };
 
     handleCloseWindow = (window) => {
+        if (window === 'Rescan') {
+            this.props.selectProduct(this.props.products.find(item => item.id === this.state.productId));
+        }
+
         this.setState({
             [`visible${window}Window`]: false
         })
     };
 
     handleStopScanning = () => {
-        this.setState({fetching: false})
+        this.setState({fetching: false, successFetch: true});
+        clearInterval(fetchingTimeout)
     };
 
-    handleScan = () => {
-        this.setState({
-            visibleStartWindow: true,
-            fetching: true
-        });
+    handleScan = async ({pausedCampaigns, netMargin}) => {
+        try {
+            await scannerServices.scanningProduct({
+                productId: this.state.productId,
+                paused: pausedCampaigns,
+                cogs: netMargin
+            });
 
-        // fetchingInterval = setInterval(this.getScanStatus, 1000);
-        this.getScanStatus();
+            this.setState({
+                problemsCount: {},
+                mistakeList: [],
+                visibleStartWindow: true,
+                fetching: true
+            });
 
-        this.setState({
-            mistakeList: defaultData
-        });
+            this.getScanStatus();
+        } catch (e) {
+
+        }
     };
 
     getScanStatus = () => {
-        this.setState({
-            problemsCount: defaultResults
-        });
-
-        scannerServices.getScanStatus(this.props.selectedProduct.id)
+        scannerServices.getScanStatus(this.state.productId)
             .then(res => {
+                if (res.result && (Object.keys(res.result).length > Object.keys(this.state.problemsCount).length)) {
+                    this.getProductMistakes();
+                }
+
                 this.setState({
-                    problemsCount: res.result
+                    problemsCount: res.msg === 'ok' ? res.result : {}
                 });
 
-                if (res.result.PATs) {
-                    clearInterval(fetchingInterval);
+                if (res.result && Object.keys(res.result).length === 5) {
+                    clearTimeout(fetchingTimeout);
 
-                    scannerServices.getProductMistakes(this.props.selectedProduct.id)
-                        .then(res => {
-                            this.setState({
-                                mistakeList: res.data,
-                                successFetch: true
-                            })
-                        })
+                    this.getProductMistakes();
+
+                    this.setState({
+                        successFetch: true,
+                        fetching: false,
+                        visibleSuccessWindow: true
+                    })
+                } else {
+                    fetchingTimeout = setTimeout(this.getScanStatus, 1000);
                 }
             })
     };
 
-    componentDidMount() {
-        // this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave)
-    }
-
-    routerWillLeave(nextLocation) {
-        // return false to prevent a transition w/o prompting the user,
-        // or return a string to allow the user to decide:
-        // return `null` or nothing to let other hooks to be executed
-        //
-        // NOTE: if you return true, other hooks will not be executed!
-        if (!this.state.isSaved)
-            return 'Your work is not saved! Are you sure you want to leave?'
-    }
+    getProductMistakes = () => {
+        scannerServices.getProductMistakes({
+            productId: this.state.productId,
+        })
+            .then(res => {
+                this.setState({
+                    mistakeList: res.data,
+                })
+            })
+    };
 
     renderWindowContent = () => {
         const {visibleStartWindow, visibleRescanWindow, visibleSuccessWindow} = this.state;
@@ -138,7 +130,7 @@ class Scanner extends Component {
         } else if (visibleRescanWindow) {
             return (<RescanWindow
                 onClose={() => this.handleCloseWindow('Rescan')}
-                onConfirm={this.handleScan}
+                onConfirm={this.handleConfirm}
             />)
         } else if (visibleSuccessWindow) {
             return (<SuccessWindow
@@ -147,14 +139,29 @@ class Scanner extends Component {
         }
     };
 
-    // componentDidUpdate = () => {
-    //     if (shouldBlockNavigation) {
-    //         window.onbeforeunload = () => true
-    //     } else {
-    //         window.onbeforeunload = undefined
-    //     }
-    // };
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.selectedProduct.id !== this.props.selectedProduct.id && this.state.fetching && this.props.selectedProduct.id !== this.state.productId) {
+            this.setState({
+                visibleRescanWindow: true,
+            });
+            nextProductId = this.props.selectedProduct.id
+        } else if (prevProps.selectedProduct.id !== this.props.selectedProduct.id) {
+            this.setState({
+                productId: this.props.selectedProduct.id
+            })
+        }
+    }
 
+    componentWillUnmount() {
+        clearTimeout(fetchingTimeout);
+
+        this.setState({
+            mistakeList: [],
+            problemsCount: {},
+            fetching: false,
+            successFetch: false,
+        })
+    }
 
     render() {
         const {
@@ -177,6 +184,7 @@ class Scanner extends Component {
                             fetching={fetching}
                             successFetch={successFetch}
                             stopScanning={this.handleStopScanning}
+                            onChangeCheckbox={this.handleChangeCheckbox}
                         />
 
                         <ProblemGraph
@@ -194,27 +202,31 @@ class Scanner extends Component {
                     mask={true}
                     footer={null}
                     visible={visibleStartWindow || visibleRescanWindow || visibleSuccessWindow}
-                    handleCancel={() => this.handleCloseWindow(visibleStartWindow ? 'Start' : visibleRescanWindow ? 'Rescan' : 'Success')}
+                    handleCancel={() => this.handleCloseWindow(visibleStartWindow ? 'Start' : (visibleRescanWindow ? 'Rescan' : 'Success'))}
                 >
                     {this.renderWindowContent()}
                 </ModalWindow>
 
                 <SubscriptionNotificationWindow product={'ppc'}/>
 
-                {/*<Prompt*/}
-                {/*    when={shouldBlockNavigation}*/}
-                {/*    message='You have unsaved changes, are you sure you want to leave?'*/}
-                {/*/>*/}
+                <Prompt
+                    when={fetching}
+                    message="Are you sure? The current scanning results will be lost"
+                />
             </Fragment>
         )
     }
 }
 
-
 const mapStateToProps = state => ({
     selectedProduct: state.products.selectedProduct,
+    products: state.products.productList,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+    selectProduct: product => {
+        dispatch(productsActions.fetchProductDetails(product));
+    },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Scanner);

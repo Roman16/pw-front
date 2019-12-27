@@ -1,5 +1,6 @@
 import React from "react";
 import notDataImage from '../../../assets/img/not-data-image.svg';
+import {history} from "../../../utils/history";
 
 const MistakeTerminal = ({mistakeList}) => {
 
@@ -8,10 +9,10 @@ const MistakeTerminal = ({mistakeList}) => {
             <div className="header-block">
                 <h3>Mistakes Terminal</h3>
 
-                {/*{mistakeList.length > 0 &&*/}
-                {/*<button className='btn default' disabled>*/}
-                {/*    Fix It*/}
-                {/*</button>}*/}
+                {mistakeList.length > 0 &&
+                <button className='btn default' onClick={() => {history.push('/ppc/optimization')}}>
+                    Fix It
+                </button>}
 
                 {mistakeList.length > 0 && <div className="total-count">
                     Total Mistakes

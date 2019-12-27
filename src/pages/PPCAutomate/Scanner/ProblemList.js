@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useCallback} from 'react'
 import {Checkbox, Progress} from "antd";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import InputCurrency from "../../../components/Inputs/InputCurrency";
@@ -34,51 +34,85 @@ let problemList = [
 let processingTimeout = null;
 
 const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, successFetch}) => {
+    const devicePixelRatio = window.devicePixelRatio;
+
     const [problems, setProblems] = useState(problemList),
         [processingPercent, setPercent] = useState(),
-        [netMargin, setMargin] = useState(0.00);
+        [netMargin, setMargin] = useState(0.00),
+        [pausedCampaigns, setPausedCampaigns] = useState(false);
 
     function handleStop() {
         stopScanning();
-        clearTimeout(processingTimeout);
-
+        setPercent(0);
         setProblems(problems.map(item => {
-            if (item.percent !== 100) {
+            if (item.percent === 100) {
+                return (item)
+            } else {
                 return ({
                     ...item,
                     percent: 0
                 })
-            } else {
-                return item
             }
-        }))
+        }));
+
+        clearTimeout(processingTimeout);
     }
 
     useEffect(() => {
-        setProblems(problems.map(item => ({
-            ...item,
-            count: problemsCount[item.key]
-        })))
-    }, [problemsCount]);
-
-    useEffect(() => {
         if (fetching) {
-            setPercent(5);
+            setPercent(1);
+        } else if (!fetching && !successFetch) {
+            setPercent(0);
+            setProblems(problemList);
+            clearTimeout(processingTimeout);
         }
     }, [fetching]);
 
     useEffect(() => {
-        if (processingPercent > 0 && processingPercent < 100) {
-            processingTimeout = setTimeout(() => {
-                setPercent(processingPercent + 1);
+        if (successFetch) {
+            setPercent(0);
+        }
+    }, [successFetch]);
 
-                setProblems(problems.map(item => ({
-                    ...item,
-                    percent: processingPercent + 1
-                })))
+    useEffect(() => {
+        if (fetching) {
+            setProblems(problems.map(item => {
+                if (problemsCount[item.key] >= 0) {
+                    return ({
+                        ...item,
+                        count: problemsCount[item.key],
+                        percent: 100
+                    })
+                } else {
+                    return ({
+                        ...item,
+                        count: null,
+                        percent: processingPercent
+                    })
+                }
+            }));
+        }
+    }, [problemsCount]);
+
+
+    useEffect(() => {
+        if ((processingPercent > 0 && processingPercent < 100) || fetching) {
+            processingTimeout = setTimeout(() => {
+                if (problemsCount && processingPercent < Object.keys(problemsCount).length * 20) {
+                    setPercent(Object.keys(problemsCount).length * 20);
+                } else if (Object.keys(problemsCount).length === 5 && processingPercent === 95) {
+                    setPercent(95);
+                } else {
+                    setPercent(processingPercent + 1);
+                }
             }, 500)
         }
+
+        return (() => {
+            clearTimeout(processingTimeout)
+        })
     }, [processingPercent]);
+
 
     return (
         <section className='problems-list-card'>
@@ -115,26 +149,27 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                                 type="circle"
                                 format={percent => percent === 100 && <div className='completed'>&#10004;</div>}
                                 percent={item.percent}
-                                width={24}
+                                width={devicePixelRatio === 2 ? 18 : 24}
                                 strokeWidth={10}
                                 strokeColor={'#8FD39D'}
                             />
                             {item.title}
 
-                            {item.count >= 0 && <div className='count'>{item.count}</div>}
+                            {item.count != null && item.count >= 0 && <div className='count'>{item.count}</div>}
                         </div>
                     ))}
                 </div>
 
-                <Checkbox>Check My Paused Campaigns</Checkbox>
+                <Checkbox onChange={(e) => setPausedCampaigns(e.target.checked)}>Check My Paused Campaigns</Checkbox>
             </div>
 
             {fetching ?
                 <div className='processing-line'>
-                    <div className="processing-green-line" style={{width: `${processingPercent}%`}}/>
+                    <div className="processing-green-line"
+                         style={{width: `${processingPercent >= 100 ? 100 : processingPercent}%`}}/>
                     <div className='processing-status'>
                         Processing...
-                        {processingPercent}%
+                        {processingPercent >= 100 ? 100 : processingPercent}%
 
                         <div className='stop-scan' onClick={handleStop}>
                             &#215;
@@ -144,7 +179,10 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                 :
                 <button
                     className='btn default'
-                    onClick={onScanning}
+                    onClick={() => onScanning({
+                        pausedCampaigns,
+                        netMargin
+                    })}
                 >
                     {successFetch ? 'Scan Again' : ' Scan PPC Campaigns'}
                 </button>
