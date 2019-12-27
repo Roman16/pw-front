@@ -8,6 +8,8 @@ import 'axios-progress-bar/dist/nprogress.css';
 import NotificationContainer from './components/Notification/NotificationContainer';
 
 import {PersistGate} from 'redux-persist/integration/react'
+import ReactDOM from "react-dom";
+import ModalWindow from "./components/ModalWindow/ModalWindow";
 
 function App() {
     return (
@@ -22,5 +24,7 @@ function App() {
         </Provider>
     );
 }
+
+
 
 export default App;
