@@ -15,7 +15,9 @@ import commissionHaveFeeIcon from '../../assets/img/commission-have-fee-icon.svg
 import howItWorksImage from '../../assets/img/how-it-works-image.svg';
 import checkedIcon from '../../assets/img/icons/mark.svg';
 
-const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
+const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY,
+    tapfiliateRegistrationPage = 'https://profitwhales.tapfiliate.com/programs/profit-whales-affiliate-program/signup/',
+    contactUsLink = 'https://profitwhales.com/contact-us';
 
 const LandingAffiliates = () => {
     const existingScript = document.getElementById('tapfiliate');
@@ -60,7 +62,7 @@ const LandingAffiliates = () => {
                         stream for you. Press the button below.
                     </span>
 
-                        <button className='btn green-btn'>
+                        <button className='btn green-btn' onClick={() => window.open(tapfiliateRegistrationPage)}>
                             become an affiliate
                         </button>
                     </div>
@@ -77,7 +79,7 @@ const LandingAffiliates = () => {
 
                     <span>If you expect to generate more than 50 referrals, please reach out to us directly</span>
 
-                    <button className='btn green-btn'>
+                    <button className='btn green-btn' onClick={() => window.open(contactUsLink)}>
                         contact us
                     </button>
                 </div>
@@ -194,7 +196,7 @@ const LandingAffiliates = () => {
                                 </div>
                             </div>
 
-                            <button className='btn green-btn'>
+                            <button className='btn green-btn' onClick={() => window.open(tapfiliateRegistrationPage)}>
                                 apply now
                             </button>
                         </div>

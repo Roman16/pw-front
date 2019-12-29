@@ -20,12 +20,12 @@ const Footer = () => (
                 </div>
 
                 <form action="https://profitwhales.com/subscribe">
-                    <input type="hidden" name="_token" value="" />
-                        <h4>Subscribe to our list</h4>
-                        <label>
-                            <input type="email" name="email" placeholder="Your email address" />
-                        </label>
-                        <button className="btn ripple legitRipple">subscribe</button>
+                    <input type="hidden" name="_token" value=""/>
+                    <h4>Subscribe to our list</h4>
+                    <label>
+                        <input type="email" name="email" placeholder="Your email address"/>
+                    </label>
+                    <button className="btn ripple legitRipple">subscribe</button>
                 </form>
             </div>
 
@@ -74,30 +74,45 @@ const Footer = () => (
             <div className="col contacts">
                 <h4>Contacts</h4>
 
-                <div className="adr">
-                    <a href="mailto:info@profitwhales.agency" className="email">info@profitwhales.agency</a>
-                    <address>Coral Springs, FL 33065</address>
-                </div>
+                <ul>
+                    <li>
+                        <Link to={'/affiliates'}>Affiliates program</Link>
+                    </li>
 
-                <ul className="soc-netw">
                     <li>
-                        <a href="https://twitter.com/ProfitWhales" className="i-tw" target="_blank" title="Twitter">
-                            <Icon type="twitter" />
-                        </a>
+                        <div className="adr">
+                            <a href="mailto:info@profitwhales.agency" className="email">info@profitwhales.agency</a>
+                            <address>Coral Springs, FL 33065</address>
+                        </div>
+
                     </li>
+
                     <li>
-                        <a href="https://www.facebook.com/profitwhales/" className="i-fb" target="_blank"
-                           title="Facebook">
-                            <Icon type="facebook" theme="filled" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.linkedin.com/company/profitwhales/" className="i-in" target="_blank"
-                           title="LinkedIn">
-                            <Icon type="linkedin" />
-                        </a>
+                        <ul className="soc-netw">
+                            <li>
+                                <a href="https://twitter.com/ProfitWhales" className="i-tw" target="_blank"
+                                   title="Twitter">
+                                    <Icon type="twitter"/>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/profitwhales/" className="i-fb" target="_blank"
+                                   title="Facebook">
+                                    <Icon type="facebook" theme="filled"/>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/company/profitwhales/" className="i-in"
+                                   target="_blank"
+                                   title="LinkedIn">
+                                    <Icon type="linkedin"/>
+                                </a>
+                            </li>
+                        </ul>
+
                     </li>
                 </ul>
+
 
                 <div className="copyright">Copyright 2019 Profit Whales © 2018 All Right Reserved</div>
             </div>

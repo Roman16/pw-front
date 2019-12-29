@@ -2,7 +2,7 @@ import React, {Fragment} from "react";
 import warningImage from '../../../../assets/img/warning-image.svg';
 
 
-const RescanWindow = ({handleCancel, handleOk}) => (
+const RescanWindow = ({onClose, onConfirm}) => (
     <Fragment>
         <img src={warningImage} alt=""/>
 
@@ -11,11 +11,11 @@ const RescanWindow = ({handleCancel, handleOk}) => (
         <span>The current scanning results will be lost</span>
 
         <div className='actions'>
-            <button className='btn white' onClick={handleCancel}>
+            <button className='btn white' onClick={onClose}>
                 Cancel
             </button>
 
-            <button className='btn default' onClick={handleOk}>
+            <button className='btn default' onClick={onConfirm}>
                 Yes, I’m sure
             </button>
         </div>

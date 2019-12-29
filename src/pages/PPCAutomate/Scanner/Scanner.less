@@ -5,12 +5,17 @@
   flex-wrap: wrap;
   overflow: auto;
   font-family: ir;
+  overflow: auto;
 
   .col {
-    width: 35%;
+    flex: 1;
+    height: 100%;
+    max-width: 450px;
     min-width: 250px;
     display: flex;
     flex-direction: column;
+
+    margin-right: 1.4285714285714286rem;
   }
 
   section {
@@ -24,7 +29,7 @@
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
-    margin: 0 0 10px 0;
+    margin: 0 0 0.7142857142857143rem 0;
 
     h3 {
       font-size: 1.4285714285714286rem;
@@ -107,7 +112,8 @@
           box-sizing: border-box;
           border-radius: 8px;
           margin: 0 0 5px 0;
-          padding: 10px;
+          padding: 0.7142857142857143rem;
+          font-size: 1rem;
 
           .loader {
             width: 1.4285714285714286rem;
@@ -118,7 +124,7 @@
           }
 
           .ant-progress {
-            margin: 0 15px 0 0;
+            margin: 0 1.0714285714285714rem 0 0;
 
             .ant-progress-circle-trail {
               stroke: #E0E3F3 !important;
@@ -179,7 +185,15 @@
         }
 
         .ant-checkbox {
-          margin: 0 10px 0 3px;
+          margin: 0 1.0714285714285714rem 0 0.21428571428571427rem;
+        }
+
+        .ant-checkbox + span {
+          padding: 0;
+        }
+
+        span {
+          font-size: 1rem;
         }
 
         &:hover {
@@ -241,9 +255,9 @@
 
   .problem-graph-block {
     min-height: 40%;
+    flex: 1;
     display: flex;
     flex-direction: column;
-
 
     .graph {
       display: flex;
@@ -278,14 +292,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
+
+      img {
+        width: 60%;
+      }
     }
   }
 
   .mistake-terminal {
+    min-width: 200px;
     flex: 1;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    margin: 0 0 0 1.4285714285714286rem;
 
     .header-block {
       align-items: center;
@@ -335,13 +354,13 @@
         display: flex;
 
         .index {
-          display: block;
+          min-width: 30px;
+          display: flex;
+          justify-content: center;
           background: rgba(189, 198, 207, .1);
           letter-spacing: -.08px;
           color: #7c8a95;
-          padding: 10px 12px;
-          width: 40px;
-          text-align: center;
+          padding: 10px 0 0 0;
 
           &:first-child {
             border-radius: 5px 5px 0 0;
@@ -349,6 +368,7 @@
         }
 
         .description {
+          flex: 1;
           padding: 10px 0 10px 5px;
           border-bottom: 1px solid #f3f7fd;
 
@@ -369,12 +389,14 @@
 
   @media (max-width: 800px) {
     & {
+      height: max-content;
       display: flex;
       flex-direction: column;
       flex-wrap: initial;
 
       .col {
         width: 100%;
+        max-width: 100%;
       }
 
       .mistake-terminal {
