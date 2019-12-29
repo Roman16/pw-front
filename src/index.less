@@ -78,7 +78,6 @@ img {
 
   .product-list {
     width: 25.428571429em;
-    margin-right: 1.42857em;
 
     @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1349px), only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1349px), only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1349px), only screen and (max-device-pixel-ratio: 1) and (max-width: 1349px) {
       width: 19.071428571em;
@@ -526,6 +525,9 @@ button.btn {
   cursor: pointer;
   transition: .2s;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.default {
     background: #6d6df6;
@@ -564,6 +566,18 @@ button.btn {
       background: #a8a9b1;
       box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
       0px 0px 20px rgba(142, 147, 192, 0.08);
+    }
+  }
+
+  &.white {
+    background: #FFFFFF;
+    box-shadow: 0px 12px 16px rgba(44, 48, 58, 0.08), 0px 0px 20px rgba(44, 48, 58, 0.08);
+    border-radius: 8px;
+    color: #6D6DF6;
+
+    &:hover {
+      box-shadow: 0px 12px 18px rgba(44, 48, 58, 0.2),
+      0px 0px 22px rgba(44, 48, 58, 0.2);
     }
   }
 
