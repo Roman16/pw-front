@@ -87,7 +87,7 @@ const routers = () => {
         <Router history={history} getUserConfirmation={getConfirm}>
             <Switch>
                 <Route exact path="/login" component={LoginPage}/>
-                {developer && <Route exact path="/affiliates" component={LandingAffiliates}/>}
+                <Route exact path="/affiliates" component={LandingAffiliates}/>
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                 <Route exact path="/registration" component={RegistrationPage}/>
 
