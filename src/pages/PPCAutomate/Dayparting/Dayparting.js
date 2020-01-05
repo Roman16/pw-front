@@ -1,8 +1,12 @@
 import React, {Component} from "react";
 import './Dayparting.less';
-import reloadIcon from '../../../assets/img/icons/reload-icon.svg';
+import reloadIcon from '../../../assets/img/icons/reload2-icon.svg';
 import SpendStatistics from "./SpendStatistics";
 import ChartStatistics from "./ChartStatistics/ChartStatistics";
+import DaySwitches from "./DaySwithes/DaySwithes";
+import KeysKeywords from "./KeysKeywords";
+import PlacementsStatistics from "./PlacementsStatistics";
+import {colorList} from "./colorList";
 
 // eslint-disable-next-line no-unused-vars
 class Dayparting extends Component {
@@ -21,15 +25,35 @@ class Dayparting extends Component {
                     </button>
 
                     Data last synced at 3:08 PM GMT+3, 4/22/19
+
+                    <div className="color-gradation">
+                        Min
+                        {colorList.map(item => (
+                            <div key={item.color} style={{background: item.color}}/>
+                        ))}
+                        Max
+                    </div>
                 </div>
 
-                <div className="row">
-                    <SpendStatistics
+                <SpendStatistics
                     data={[]}
-                    />
+                />
 
-                    <ChartStatistics />
-                </div>
+                <ChartStatistics
+
+                />
+
+                <DaySwitches
+
+                />
+
+                <KeysKeywords
+
+                />
+
+                <PlacementsStatistics
+
+                />
             </div>
         )
     }

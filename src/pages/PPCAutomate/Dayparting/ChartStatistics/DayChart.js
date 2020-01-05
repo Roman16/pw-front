@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {
-    BarChart, Cell, Bar, XAxis, YAxis, Tooltip
+    BarChart, Cell, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer
 } from 'recharts';
 
 const CustomBar = (props) => {
@@ -46,45 +46,49 @@ const DayChart = () => {
 
     return (
         <div className='chart-block day-chart'>
-            <BarChart
-                layout="vertical"
-                width={500}
-                height={230}
-                data={data}
-                onMouseMove={state => {
-                    if (state.isTooltipActive) {
-                        setFocusBar(state.activeTooltipIndex);
-                    } else {
-                        setFocusBar(null);
-                    }
-                }}
-                onMouseLeave={() => setFocusBar(null)}
-                margin={{
-                    top: 20
-                }}
-            >
-                <XAxis type="number" hide={true}/>
+            <ResponsiveContainer height='100%' width='100%' className='responsive-bar-container'>
 
-                <YAxis dataKey="name" type="category"/>
-
-                <Tooltip
-                    cursor={false}
-                    isAnimationActive={false}
-                />
-
-                <Bar
-                    dataKey="amt"
-                    barSize={20}
-                    fill=""
-                    shape={<CustomBar/>}
-                    isAnimationActive={false}
+                <BarChart
+                    layout="vertical"
+                    width={500}
+                    height={230}
+                    data={data}
+                    onMouseMove={state => {
+                        if (state.isTooltipActive) {
+                            setFocusBar(state.activeTooltipIndex);
+                        } else {
+                            setFocusBar(null);
+                        }
+                    }}
+                    onMouseLeave={() => setFocusBar(null)}
+                    margin={{
+                        top: 20
+                    }}
                 >
-                    {data.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={focusBar === index ? '#6D6DF6' : 'rgba(109, 109, 246, 0.5)'}/>
-                    ))}
-                </Bar>
+                    <XAxis type="number" hide={true}/>
 
-            </BarChart>
+                    <YAxis dataKey="name" type="category"/>
+
+                    <Tooltip
+                        cursor={false}
+                        isAnimationActive={false}
+                    />
+
+                    <Bar
+                        dataKey="amt"
+                        barSize={20}
+                        fill=""
+                        shape={<CustomBar/>}
+                        isAnimationActive={false}
+                    >
+                        {data.map((entry, index) => (
+                            <Cell key={`cell-${index}`}
+                                  fill={focusBar === index ? '#6D6DF6' : 'rgba(109, 109, 246, 0.5)'}/>
+                        ))}
+                    </Bar>
+
+                </BarChart>
+            </ResponsiveContainer>
         </div>
     )
 };
