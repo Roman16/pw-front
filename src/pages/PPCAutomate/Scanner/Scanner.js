@@ -4,7 +4,7 @@ import SubscriptionNotificationWindow
 import './Scanner.less';
 
 import {Prompt} from 'react-router-dom';
-import {history} from "../../../utils/history";
+import XLSX from 'xlsx';
 import {connect} from "react-redux";
 import ProblemList from "./ProblemList";
 import ProblemGraph from "./ProblemGraph";
@@ -15,6 +15,7 @@ import RescanWindow from "./ModalWindows/RescanWindow";
 import SuccessWindow from "./ModalWindows/SuccessWindow";
 import {scannerServices} from "../../../services/scanner.services";
 import {productsActions} from "../../../actions/products.actions";
+import ErrorWindow from "./ModalWindows/ErrorWindow";
 
 let fetchingTimeout = null;
 
@@ -26,6 +27,7 @@ class Scanner extends Component {
         visibleStartWindow: false,
         visibleRescanWindow: false,
         visibleSuccessWindow: false,
+        visibleErrorWindow: false,
 
         mistakeList: [],
         problemsCount: {},
@@ -47,6 +49,15 @@ class Scanner extends Component {
     };
 
     handleCloseWindow = (window) => {
+        if (window === 'all') {
+            this.setState({
+                visibleStartWindow: false,
+                visibleRescanWindow: false,
+                visibleSuccessWindow: false,
+                visibleErrorWindow: false
+            })
+        }
+
         if (window === 'Rescan') {
             this.props.selectProduct(this.props.products.find(item => item.id === this.state.productId));
         }
@@ -82,9 +93,54 @@ class Scanner extends Component {
         }
     };
 
+    downloadFile = () => {
+        let data = [...this.state.mistakeList];
+
+        data.forEach(function (v) {
+            delete v.mistake_type;
+            delete v.id
+        });
+
+        data = data.map((item, index) => ({...item, number: index + 1}));
+
+        data = data.map(item => {
+            const html = item.message;
+            const div = document.createElement("div");
+            div.innerHTML = html;
+            const text = div.textContent || div.innerText || "";
+
+            return ({
+                ...item,
+                message: text
+            })
+        });
+
+        const ws = XLSX.utils.json_to_sheet([{
+            number: 'Index',
+            type: 'Mistake type',
+            general_type: 'General type',
+            campaign_name: 'Campaign name',
+            ad_group_name: 'Ad Group name',
+            kp_text: 'Keyword / Product Attribute Targeting text',
+            message: 'Message'
+        }, ...data], {skipHeader: 1});
+        const wb = {Sheets: {'data': ws}, SheetNames: ['data']};
+
+        XLSX.writeFile(wb, "Problems Report.xlsx")
+    };
+
     getScanStatus = () => {
         scannerServices.getScanStatus(this.state.productId)
             .then(res => {
+                if (res.code === 500) {
+                    this.setState({
+                        successFetch: false,
+                        fetching: false,
+                        visibleErrorWindow: true
+                    });
+                    return;
+                }
+
                 if (res.result && (Object.keys(res.result).length > Object.keys(this.state.problemsCount).length)) {
                     this.getProductMistakes();
                 }
@@ -121,7 +177,7 @@ class Scanner extends Component {
     };
 
     renderWindowContent = () => {
-        const {visibleStartWindow, visibleRescanWindow, visibleSuccessWindow} = this.state;
+        const {visibleStartWindow, visibleRescanWindow, visibleSuccessWindow, visibleErrorWindow} = this.state;
 
         if (visibleStartWindow) {
             return (<AfterStartWindow
@@ -135,6 +191,10 @@ class Scanner extends Component {
         } else if (visibleSuccessWindow) {
             return (<SuccessWindow
                 onClose={() => this.handleCloseWindow('Success')}
+            />)
+        } else if (visibleErrorWindow) {
+            return (<ErrorWindow
+                onClose={() => this.handleCloseWindow('Error')}
             />)
         }
     };
@@ -168,6 +228,7 @@ class Scanner extends Component {
             visibleStartWindow,
             visibleRescanWindow,
             visibleSuccessWindow,
+            visibleErrorWindow,
             mistakeList,
             problemsCount,
             fetching,
@@ -184,7 +245,7 @@ class Scanner extends Component {
                             fetching={fetching}
                             successFetch={successFetch}
                             stopScanning={this.handleStopScanning}
-                            onChangeCheckbox={this.handleChangeCheckbox}
+                            onDownloadFile={this.downloadFile}
                         />
 
                         <ProblemGraph
@@ -201,8 +262,8 @@ class Scanner extends Component {
                     className={'scanner-window'}
                     mask={true}
                     footer={null}
-                    visible={visibleStartWindow || visibleRescanWindow || visibleSuccessWindow}
-                    handleCancel={() => this.handleCloseWindow(visibleStartWindow ? 'Start' : (visibleRescanWindow ? 'Rescan' : 'Success'))}
+                    visible={visibleStartWindow || visibleRescanWindow || visibleSuccessWindow || visibleErrorWindow}
+                    handleCancel={() => this.handleCloseWindow('all')}
                 >
                     {this.renderWindowContent()}
                 </ModalWindow>

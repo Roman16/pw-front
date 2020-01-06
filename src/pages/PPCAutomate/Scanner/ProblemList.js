@@ -1,7 +1,8 @@
-import React, {useEffect, useState, useCallback} from 'react'
-import {Checkbox, Progress} from "antd";
+import React, {useEffect, useState} from 'react'
+import {Checkbox, Progress, Icon} from "antd";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import InputCurrency from "../../../components/Inputs/InputCurrency";
+import moment from "moment";
 
 let problemList = [
     {
@@ -33,7 +34,7 @@ let problemList = [
 
 let processingTimeout = null;
 
-const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, successFetch}) => {
+const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, successFetch, onDownloadFile}) => {
     const devicePixelRatio = window.devicePixelRatio;
 
     const [problems, setProblems] = useState(problemList),
@@ -163,6 +164,7 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                 <Checkbox onChange={(e) => setPausedCampaigns(e.target.checked)}>Check My Paused Campaigns</Checkbox>
             </div>
 
+
             {fetching ?
                 <div className='processing-line'>
                     <div className="processing-green-line"
@@ -187,6 +189,17 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                     {successFetch ? 'Scan Again' : ' Scan PPC Campaigns'}
                 </button>
             }
+
+            {successFetch && <button
+                className='btn white download'
+                onClick={onDownloadFile}
+            >
+                <div>
+                    {moment(new Date()).format('DD MMM, HH:mm')}
+                    <b>Problems Report</b>
+                </div>
+                <Icon type="download"/>
+            </button>}
         </section>
     )
 };
