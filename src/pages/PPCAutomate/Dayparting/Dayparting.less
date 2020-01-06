@@ -33,9 +33,14 @@
       margin: 0 0 0 30px;
       align-items: center;
 
-      div {
-        width: 32px;
-        height: 0.8571428571428571rem;
+      .custom-tooltip {
+        margin: 0;
+
+        div {
+          width: 32px;
+          height: 0.8571428571428571rem;
+          margin: 0;
+        }
 
         &:first-child {
           margin: 0 0 0 10px;
@@ -408,6 +413,44 @@
     display: flex;
     flex-direction: column;
 
+    .section-header {
+      align-items: center;
+
+      .chart-legend {
+        flex: 1;
+        display: flex;
+        justify-content: space-around;
+
+        & > div {
+          display: flex;
+          flex-direction: column;
+
+          .chart-name {
+            display: flex;
+            align-items: center;
+            font-size: 0.8571428571428571rem;
+
+            div {
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              margin: 0 10px 0 0;
+            }
+          }
+
+          .changes-value {
+            display: flex;
+            align-items: center;
+
+            img {
+              width: 0.5714285714285714rem;
+              margin: 0 10px 0 0;
+            }
+          }
+        }
+      }
+    }
+
     .chart {
       width: 100%;
       padding: 0;
@@ -417,4 +460,5 @@
       }
     }
   }
+
 }

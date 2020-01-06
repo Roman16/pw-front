@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 
-
 const CustomBar = (props) => {
     const {
         fill, x, y, width, height,
@@ -21,76 +20,76 @@ const CustomBar = (props) => {
 
 const data = [
     {
-        name: '01 AM', amt: 1400,
+        name: '01 AM', clicks: 1400,
     },
     {
-        name: '02 AM', amt: 1506,
+        name: '02 AM', clicks: 1506,
     },
     {
-        name: '03 AM', amt: 989,
+        name: '03 AM', clicks: 989,
     },
     {
-        name: '04 AM', amt: 1228,
+        name: '04 AM', clicks: 1228,
     },
     {
-        name: '05 AM', amt: 1100,
+        name: '05 AM', clicks: 1100,
     },
     {
-        name: '06 AM', amt: 1700,
+        name: '06 AM', clicks: 1700,
     },
     {
-        name: '07 AM', amt: 1700,
+        name: '07 AM', clicks: 1700,
     },
     {
-        name: '08 AM', amt: 1700,
+        name: '08 AM', clicks: 1700,
     },
     {
-        name: '09 AM', amt: 1700,
+        name: '09 AM', clicks: 1700,
     },
     {
-        name: '10 AM', amt: 1700,
+        name: '10 AM', clicks: 1700,
     },
     {
-        name: '11 AM', amt: 1700,
+        name: '11 AM', clicks: 1700,
     },
     {
-        name: '12 PM', amt: 1700,
+        name: '12 PM', clicks: 1700,
     },
     {
-        name: '01 PM', amt: 1400,
+        name: '01 PM', clicks: 1400,
     },
     {
-        name: '02 PM', amt: 1506,
+        name: '02 PM', clicks: 1506,
     },
     {
-        name: '03 PM', amt: 989,
+        name: '03 PM', clicks: 989,
     },
     {
-        name: '04 PM', amt: 1228,
+        name: '04 PM', clicks: 1228,
     },
     {
-        name: '05 PM', amt: 1100,
+        name: '05 PM', clicks: 1100,
     },
     {
-        name: '06 PM', amt: 1700,
+        name: '06 PM', clicks: 1700,
     },
     {
-        name: '07 PM', amt: 1700,
+        name: '07 PM', clicks: 1700,
     },
     {
-        name: '08 PM', amt: 1700,
+        name: '08 PM', clicks: 1700,
     },
     {
-        name: '09 PM', amt: 1700,
+        name: '09 PM', clicks: 1700,
     },
     {
-        name: '10 PM', amt: 1700,
+        name: '10 PM', clicks: 1700,
     },
     {
-        name: '11 PM', amt: 1700,
+        name: '11 PM', clicks: 1700,
     },
     {
-        name: '12 AM', amt: 1700,
+        name: '12 AM', clicks: 1700,
     },
 ];
 
@@ -117,7 +116,7 @@ const HourChart = () => {
                         top: 20
                     }}
                 >
-                    <XAxis type="category" dataKey="name"/>
+                    <XAxis type="category" dataKey="name" interval={2}/>
 
                     <YAxis  type="number" hide={true}/>
 
@@ -127,7 +126,7 @@ const HourChart = () => {
                     />
 
                     <Bar
-                        dataKey="amt"
+                        dataKey="clicks"
                         barSize={20}
                         shape={<CustomBar/>}
                         isAnimationActive={false}

@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, Component} from 'react';
 import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
-import moment from "moment";
 import {Switch} from "antd";
-
+import moment from "moment";
 
 const defaultList = [
     {
@@ -47,7 +46,6 @@ const DaySwitches = () => {
     const [hoursStatus, setStatus] = useState(defaultList);
 
     function handleReset() {
-        console.log(defaultList)
         setStatus(hoursStatus.map(item => ({
             ...item,
             value: Array.from({length: 24}, () => false)
@@ -95,7 +93,6 @@ const DaySwitches = () => {
                 </div>
             </div>
 
-
             <div className="switches">
                 {hoursStatus.map((day, dayIndex) => (
                     <div className="row" key={day.day}>
@@ -113,7 +110,6 @@ const DaySwitches = () => {
                                     {moment(timeIndex + 1, 'HH').format('hh A')}
                                 </div>}
 
-
                                 <div
                                     onClick={() => handleSwitchHour(dayIndex, timeIndex, status)}
                                     className='statistic-information'
@@ -124,7 +120,6 @@ const DaySwitches = () => {
                     </div>
                 ))}
             </div>
-
         </section>
     )
 };

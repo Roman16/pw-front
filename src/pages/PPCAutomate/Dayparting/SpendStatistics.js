@@ -1,40 +1,41 @@
 import React from "react";
 import moment from "moment";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
+import {colorList} from "./colorList";
 
 const data = [
     {
         day: 'Sunday',
-        value: Array.from({length: 24}, (v, k) => k + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
     },
     {
         day: 'Monday',
-        value: Array.from({length: 24}, (v, k) => k + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
     },
     {
         day: 'Tuesday',
-        value: Array.from({length: 24}, (v, k) => k + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
     },
     {
         day: 'Wednesday',
-        value: Array.from({length: 24}, (v, k) => k + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
     },
     {
         day: 'Thursday',
-        value: Array.from({length: 24}, (v, k) => k + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
     },
     {
         day: 'Friday',
-        value: Array.from({length: 24}, (v, k) => k + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
     },
     {
         day: 'Saturday',
-        value: Array.from({length: 24}, (v, k) => k + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
     },
 ];
 
-const TooltipDescription = () => {
-    return(<span>45$</span>)
+const TooltipDescription = ({value}) => {
+    return(<span>{value}$</span>)
 };
 
 const SpendStatistics = () => {
@@ -66,9 +67,9 @@ const SpendStatistics = () => {
                                 <InformationTooltip
                                     type={'custom'}
                                     title={day.day}
-                                    description={<TooltipDescription />}
+                                    description={<TooltipDescription value={time}/>}
                                 >
-                                    <div className='statistic-information'/>
+                                    <div className='statistic-information' style={{background: colorList.find(item => time > item.min && time <= item.max).color || '#464898'}} />
                                 </InformationTooltip>
                             </div>
                         ))}

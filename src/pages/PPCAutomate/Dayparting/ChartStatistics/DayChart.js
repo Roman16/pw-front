@@ -22,22 +22,22 @@ const CustomBar = (props) => {
 
 const data = [
     {
-        name: 'S', amt: 1400,
+        name: 'S', clicks: 1400,
     },
     {
-        name: 'M', amt: 1506,
+        name: 'M', clicks: 1506,
     },
     {
-        name: 'T', amt: 989,
+        name: 'T', clicks: 989,
     },
     {
-        name: 'W', amt: 1228,
+        name: 'W', clicks: 1228,
     },
     {
-        name: 'F', amt: 1100,
+        name: 'F', clicks: 1100,
     },
     {
-        name: 'S', amt: 1700,
+        name: 'S', clicks: 1700,
     },
 ];
 
@@ -75,7 +75,7 @@ const DayChart = () => {
                     />
 
                     <Bar
-                        dataKey="amt"
+                        dataKey="clicks"
                         barSize={20}
                         fill=""
                         shape={<CustomBar/>}

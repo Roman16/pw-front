@@ -7,6 +7,7 @@ import DaySwitches from "./DaySwithes/DaySwithes";
 import KeysKeywords from "./KeysKeywords";
 import PlacementsStatistics from "./PlacementsStatistics";
 import {colorList} from "./colorList";
+import InformationTooltip from "../../../components/Tooltip/Tooltip";
 
 // eslint-disable-next-line no-unused-vars
 class Dayparting extends Component {
@@ -29,7 +30,12 @@ class Dayparting extends Component {
                     <div className="color-gradation">
                         Min
                         {colorList.map(item => (
-                            <div key={item.color} style={{background: item.color}}/>
+                            <InformationTooltip
+                                type={'custom'}
+                                description={<span>Min: {item.min} <br/> Max: {item.max}</span>}
+                            >
+                                <div key={item.color} style={{background: item.color}}/>
+                            </InformationTooltip>
                         ))}
                         Max
                     </div>
