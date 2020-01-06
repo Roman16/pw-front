@@ -86,17 +86,19 @@ class OptimizationStatus extends Component {
                 })
             }
 
-            this.setState({
-                showFirstStartConfirmModal: false,
-                showStopConfirmModal: false,
-                showAllStartConfirmModal: false
-            });
 
             this.props.switchConfirmWindow({status: this.state.dontShowStartNotificationAgain, windowName: 'START'});
             this.props.switchConfirmWindow({status: this.state.dontShowStopNotificationAgain, windowName: 'STOP'});
 
             status === RUNNING && notification.start({title: 'Optimization successfully started'});
             status === STOPPED && notification.error({title: 'The optimization is paused'});
+
+
+            this.setState({
+                showFirstStartConfirmModal: false,
+                showStopConfirmModal: false,
+                showAllStartConfirmModal: false
+            });
         }
     };
 
@@ -179,7 +181,7 @@ class OptimizationStatus extends Component {
                 <ConfirmActionPopup
                     visible={showFirstStartConfirmModal}
                     handleOk={() => this.toStart(RUNNING)}
-                    handleCancel={() => this.setState({showFirstStartConfirmModal: false})}
+                    handleCancel={() => this.setState({showFirstStartConfirmModal: false, dontShowStartNotificationAgain: false})}
                     handleChangeCheckbox={(e) => {
                         this.setState({dontShowStartNotificationAgain: e.target.checked})
                     }}
@@ -191,7 +193,7 @@ class OptimizationStatus extends Component {
                 <ConfirmActionPopup
                     visible={showStopConfirmModal}
                     handleOk={() => this.toStart(STOPPED)}
-                    handleCancel={() => this.setState({showStopConfirmModal: false})}
+                    handleCancel={() => this.setState({showStopConfirmModal: false, dontShowStopNotificationAgain: false})}
                     handleChangeCheckbox={(e) => {
                         this.setState({dontShowStopNotificationAgain: e.target.checked})
                     }}

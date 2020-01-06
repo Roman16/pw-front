@@ -59,9 +59,7 @@ const ProblemGraph = ({problemsCount = {}}) => {
                 ...problemList.find(item => item.key === key),
                 value: problemsCount[key] ? problemsCount[key] : 0,
             })
-        }))
-
-        console.log(round(100 / Object.values(problemsCount).reduce((a, b) => a + b, 0), 0) === NaN)
+        }));
     }, [problemsCount]);
 
     return (
