@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
+    AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, Bar,
 } from 'recharts';
 
 const data = [
@@ -37,7 +37,6 @@ const PlacementsStatistics = () => {
 
             <div className='chart'>
                 <ResponsiveContainer height={205} width='100%' className='responsive-bar-container'>
-
                     <AreaChart
                         width={500}
                         height={400}
@@ -49,9 +48,9 @@ const PlacementsStatistics = () => {
                         <XAxis dataKey="name"/>
                         <YAxis/>
                         <Tooltip/>
-                        <Area type="monotone" dataKey="uv" stackId="1" stroke="#6D6DF6" fill="#A1A1F9"/>
-                        <Area type="monotone" dataKey="pv" stackId="1" stroke="#EC7F5C" fill="#F3AD97"/>
-                        <Area type="monotone" dataKey="amt" stackId="1" stroke="#F1C75C" fill="#F6DB97"/>
+                        <Area type="monotone" dataKey="uv" stackId="1" stroke="#6D6DF6" fill="#A1A1F9" isAnimationActive={false}/>
+                        <Area type="monotone" dataKey="pv" stackId="1" stroke="#EC7F5C" fill="#F3AD97" isAnimationActive={false}/>
+                        <Area type="monotone" dataKey="amt" stackId="1" stroke="#F1C75C" fill="#F6DB97" isAnimationActive={false}/>
                     </AreaChart>
                 </ResponsiveContainer>
             </div>

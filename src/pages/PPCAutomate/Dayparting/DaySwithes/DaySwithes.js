@@ -4,7 +4,7 @@ import moment from "moment";
 import {Switch} from "antd";
 
 
-const data = [
+const defaultList = [
     {
         day: 'Sunday',
         shortName: 'Sun',
@@ -44,7 +44,15 @@ const data = [
 
 
 const DaySwitches = () => {
-    const [hoursStatus, setStatus] = useState(data);
+    const [hoursStatus, setStatus] = useState(defaultList);
+
+    function handleReset() {
+        console.log(defaultList)
+        setStatus(hoursStatus.map(item => ({
+            ...item,
+            value: Array.from({length: 24}, () => false)
+        })))
+    }
 
     function handleSwitchHour(dayIndex, timeIndex, value) {
         let newList = [...hoursStatus];
@@ -80,7 +88,7 @@ const DaySwitches = () => {
                         Active
                     </div>
 
-                    <button>
+                    <button onClick={handleReset}>
                         <img src={reloadIcon} alt=""/>
                         Reset
                     </button>
@@ -88,7 +96,7 @@ const DaySwitches = () => {
             </div>
 
 
-            <div className="switches" onMouseDown={handleMultiSelect}>
+            <div className="switches">
                 {hoursStatus.map((day, dayIndex) => (
                     <div className="row" key={day.day}>
                         <div className='day-name'>
