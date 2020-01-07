@@ -46,7 +46,7 @@ const api = (method, url, data, type) => {
                 if (result.status === 200) {
                     resolve(result.data);
                 } else {
-                    resolve({});
+                    reject(null);
                 }
             })
             .catch(error => {

@@ -16,7 +16,7 @@ import howItWorksImage from '../../assets/img/how-it-works-image.svg';
 import checkedIcon from '../../assets/img/icons/mark.svg';
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY,
-    tapfiliateRegistrationPage = 'https://profitwhales.tapfiliate.com/programs/profit-whales-affiliate-program/signup/',
+    tapfiliateRegistrationPage = 'https://profitwhales.tapfiliate.com/programs/subscription-link/signup/',
     contactUsLink = 'https://profitwhales.com/contact-us';
 
 const LandingAffiliates = () => {

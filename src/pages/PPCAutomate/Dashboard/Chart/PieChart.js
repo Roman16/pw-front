@@ -9,15 +9,15 @@ import {numberMask} from "../../../../utils/numberMask";
 const COLORS = ['#5052AD', '#6D6DF6'];
 
 const FirstPieChart = ({data}) => {
-    const organicValue = data.length > 0 && data.find(item => item.metric_key === 'organic').metric_value,
-        ppcValue = data.length > 0 && data.find(item => item.metric_key === 'ppc').metric_value;
+    const organicValue = data && data.length > 0 && data.find(item => item.metric_key === 'organic').metric_value,
+        ppcValue = data && data.length > 0 && data.find(item => item.metric_key === 'ppc').metric_value;
 
     return (
         <div className="pie-chart-container">
             <ResponsiveContainer height={300} width='100%'>
                 <PieChart>
                     <Pie
-                        data={data}
+                        data={data || []}
                         // cx={120}
                         // cy={200}
                         innerRadius={75}

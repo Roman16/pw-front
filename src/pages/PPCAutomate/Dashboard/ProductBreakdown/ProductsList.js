@@ -233,7 +233,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
     ];
 
     useEffect(() => {
-        if (products.length > 0 && selectedProduct !== null && (products.find(item => item.product.id === selectedProduct) === undefined)) {
+        if ((products && products.length > 0) && selectedProduct !== null && (products.find(item => item.product.id === selectedProduct) === undefined)) {
             onSelect(null)
         }
     }, [products]);
