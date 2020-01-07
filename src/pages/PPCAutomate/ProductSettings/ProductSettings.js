@@ -4,6 +4,7 @@ import ProductsList from "./ProductsList/ProductsList";
 import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 import "./ProductSettings.less";
 import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
+import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 
 const ProductSettingsMain = () => {
   return (
@@ -27,6 +28,8 @@ const ProductSettingsMain = () => {
       </div>
 
       <ProductsList />
+
+      <LoadingAmazonAccount/>
     </div>
   );
 };

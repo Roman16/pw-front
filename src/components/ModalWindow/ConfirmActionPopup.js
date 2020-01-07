@@ -13,7 +13,7 @@ const ConfirmActionPopup = ({title, description, visible, handleOk, handleCancel
             cancelText='No'
         >
             {description}
-            {checkboxText && <div>
+            {checkboxText && visible && <div>
                 <Checkbox onChange={handleChangeCheckbox}>{checkboxText}</Checkbox>
             </div>}
         </Modal>

@@ -17,6 +17,7 @@ import { productsActions } from "../../../actions/products.actions";
 
 import "./Optimization.less";
 import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
+import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 import {notification} from "../../../components/Notification";
 
 class Optimization extends Component {
@@ -178,6 +179,7 @@ class Optimization extends Component {
         </Drawer>
 
         <SubscriptionNotificationWindow product={'ppc'}/>
+        <LoadingAmazonAccount/>
       </Fragment>
     );
   }

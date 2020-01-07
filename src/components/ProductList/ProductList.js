@@ -161,7 +161,7 @@ class ProductList extends Component {
                                 onSelectAll={this.selectAll}
                                 selectedSize={selectedSize}
                                 isSelectedAll={isSelectedAll}
-                                disabled={products.length === 0}
+                                disabled={(products && products.length === 0) || this.props.pathname === '/ppc/scanner'}
                             />
 
                             <div className="active-only">

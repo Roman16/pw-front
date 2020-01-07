@@ -356,6 +356,7 @@
 
     .sidebar-logo {
       display: none;
+
       .logo {
         transform: scaleX(0);
         transform-origin: left;
@@ -435,24 +436,35 @@ a.top-nav-link {
 }
 
 .top-nav {
-  .top-nav-list {
-    .top-nav-item:nth-child(-n + 2) {
-      .top-nav-link {
-        span {
-          position: relative;
+  span {
+    position: relative;
 
-          .soon {
-            width: 2.8571em;
-            height: 1.1429em;
-            position: absolute;
-            top: -0.7143em;
-            right: -3em;
-          }
+    .soon {
+      width: 2.8571em;
+      height: 1.1429em;
+      position: absolute;
+      top: -0.7143em;
+      right: -3em;
+    }
+  }
+
+  .automate-list {
+    li {
+      a {
+        position: relative;
+
+        .soon {
+          width: 2.8571em;
+          height: 1.1429em;
+          position: absolute;
+          top: -0.7143em;
+          right: 2.5em;
         }
       }
     }
   }
 }
+
 /*
 * for delete
 */
@@ -462,10 +474,7 @@ a.top-nav-link {
 /*
 * Retina
 */
-@media only screen and (min--moz-device-pixel-ratio: 2),
-  only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (-o-min-device-pixel-ratio: 2/1),
-  only screen and (min-device-pixel-ratio: 2) {
+@media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
   .sidebar {
     &.open {
       width: 150px;

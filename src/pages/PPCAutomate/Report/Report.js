@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
 import ReportTable from './ReportTable/ReportTable';
 import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
+import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 
 function Report() {
     return (
@@ -8,6 +9,7 @@ function Report() {
             <ReportTable />
 
             <SubscriptionNotificationWindow product={'ppc'}/>
+            <LoadingAmazonAccount />
         </div>
     );
 }

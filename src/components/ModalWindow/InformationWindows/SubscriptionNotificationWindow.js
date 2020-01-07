@@ -43,7 +43,7 @@ const SubscriptionNotificationWindow = ({product}) => {
                 <Result
                     status="403"
                     title="Hey 👋"
-                    subTitle="The PPC Automate tool is only available to customers with an active subscription. Upgrade now."
+                    subTitle="The PPC Automate tool is only available to customers with an active subscription. Please upgrade your subscription to continue using the software."
                 />
                 <div className='buttons-block'>
                     {subscribedProduct.incomplete_payment.has_incomplete_payment ?

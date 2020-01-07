@@ -8,6 +8,7 @@ import './Dashboard.less';
 import Chart from "./Chart/Chart";
 
 import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
+import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 
 
 const Dashboard = () => {
@@ -19,7 +20,7 @@ const Dashboard = () => {
     if (!dashboard.selectedRangeDate) {
         dispatch(dashboardActions.reSetDashboard());
     }
-    
+
     return (
         <div className={`dashboard-page`}>
             <Metrics/>
@@ -33,6 +34,7 @@ const Dashboard = () => {
             </div>
 
             <SubscriptionNotificationWindow product={'ppc'}/>
+            <LoadingAmazonAccount/>
         </div>
     )
 };

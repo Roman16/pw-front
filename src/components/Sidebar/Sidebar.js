@@ -193,18 +193,14 @@ const Sidebar = () => {
                                                     className="automate-link"
                                                     activeClassName="automate-link-active"
                                                     exact
-                                                    to={`/ppc${item.link}`}
+                                                    to={item.soon ? '/' : `/ppc${item.link}`}
+                                                    onClick={e => {if(item.soon) e.preventDefault()}}
                                                 >
                                                     {item.title}
+                                                    {item.soon && <img className="soon" src={soon} alt="soon"/>}
                                                 </NavLink>
                                             </li>
                                         ))}
-
-                                        <li className="automate-item">
-                                            <a href="/ppc-scanner" className="automate-link">
-                                                PPC Scanner
-                                            </a>
-                                        </li>
                                     </ul>
                                 )}
 
@@ -224,18 +220,14 @@ const Sidebar = () => {
                                                         className="automate-link"
                                                         activeClassName="automate-link-active"
                                                         exact
-                                                        to={`/ppc${item.link}`}
+                                                        to={item.soon ? '/' : `/ppc${item.link}`}
+                                                        onClick={e => {if(item.soon) e.preventDefault()}}
                                                     >
                                                         {item.title}
+                                                        {item.soon && <img className="soon" src={soon} alt="soon"/>}
                                                     </NavLink>
                                                 </li>
                                             ))}
-
-                                            <li className="automate-item">
-                                                <a href="/ppc-scanner" className="automate-link">
-                                                    PPC Scanner
-                                                </a>
-                                            </li>
                                         </ul>
                                     </div>
                                 )}
