@@ -301,8 +301,6 @@ class Scanner extends Component {
                     {this.renderWindowContent()}
                 </ModalWindow>
 
-                <SubscriptionNotificationWindow product={'ppc'}/>
-
                 <Prompt
                     when={fetching}
                     message="Are you sure? The current scanning results will be lost"
