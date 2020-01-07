@@ -73,95 +73,10 @@ export const ppcAutomateMenu = [
         title: 'PPC Scanner',
         link: '/scanner',
         className: 'ppcScaner'
-    }
-];
-
-export const menuMain = [
-    /*
-     * Zero to Hero
-     */
-    {
-        title: 'Zero to Hero',
-        link: '/zero-to-hero',
-        icon: 'zeroToHero'
-    },
-
-    /*
-     * Analytics
-     */
-    {
-        title: 'Analytics',
-        link: '/analytics',
-        icon: 'analytics'
     },
     {
-        title: 'PPC Automate',
-        link: '/ppc',
-        icon: 'ppcAutomate',
-        subMenu: [
-            {
-                title: 'Dashboard',
-                link: '/dashboard'
-            },
-            {
-                title: 'Optimization Setup',
-                link: '/optimization'
-            },
-            {
-                title: 'Optimization Reports',
-                link: '/report'
-            },
-            {
-                title: 'Product Settings',
-                link: '/product-settings'
-            },
-            {
-                title: 'PPC Scanner',
-                link: '/ppc/scanner',
-                className: 'ppcScaner'
-            }
-            // {
-            //     title: 'Expansion',
-            //     link: '/expansion'
-            // }
-        ]
-    }
-];
-
-export const menuBottom = [
-    /*
-     * Manage Plans
-     */
-    // {
-    //     title: 'Manage Plans',
-    //     link: '',
-    //     icon: 'managePlans'
-    // },
-
-    /*
-     * Wallet
-     */
-    // {
-    //     title: 'Wallet',
-    //     link: '',
-    //     icon: 'wallet'
-    // },
-    {
-        title: 'Account',
-        link: '/account/settings',
-        icon: 'account',
-        className: 'account'
-    },
-    {
-        title: 'Help Center',
-        link: 'https://profit-whales.kayako.com',
-        icon: 'helpCenter',
-        className: 'helpCenter'
-    },
-    {
-        title: 'Log Out',
-        link: '/login',
-        icon: 'logOut',
-        className: 'logOut'
+        title: 'Dayparting',
+        link: '/dayparting',
+        soon: true
     }
 ];

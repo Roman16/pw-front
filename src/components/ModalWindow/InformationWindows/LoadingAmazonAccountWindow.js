@@ -1,27 +1,41 @@
 import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import ModalWindow from "../ModalWindow";
 import whales from '../../../assets/img/whales-loading-window.svg';
 import facebookIcon from '../../../assets/img/icons/facebook-icon-grey.svg';
 import messengerIcon from '../../../assets/img/icons/messenger-icon-grey.svg';
 import emailIcon from '../../../assets/img/icons/email-icon-grey.svg';
+import {userActions} from "../../../actions/user.actions";
 
+let intervalId = null;
 
 const LoadingAmazonAccount = () => {
     const [visibleWindow, switchWindow] = useState(false);
-    const {firstName, lastName} = useSelector(state => ({
+    const dispatch = useDispatch();
+    const {firstName, lastName, bootstrapInProgress} = useSelector(state => ({
         firstName: state.user.user ? state.user.user.name : '',
         lastName: state.user.user ? state.user.user.last_name : '',
+        bootstrapInProgress: state.user.notifications.account_bootstrap.bootstrap_in_progress
     }));
 
-    // useEffect(() => {
-    //     switchWindow(true);
-    // }, []);
+    useEffect(() => {
+        intervalId = setInterval(() => {
+            if (bootstrapInProgress) {
+                dispatch(userActions.getPersonalUserInfo());
+            } else {
+                clearInterval(intervalId)
+            }
+        }, 10000);
+
+        return (() => {
+            clearInterval(intervalId)
+        })
+    }, []);
 
     return (
         <ModalWindow
             className={'reports-changes-window amazon-loading-window'}
-            visible={visibleWindow}
+            visible={bootstrapInProgress}
             okText={'Check it now'}
         >
             <img src={whales} alt=""/>

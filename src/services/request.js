@@ -43,7 +43,11 @@ const api = (method, url, data, type) => {
             }
         })
             .then(result => {
-                resolve(result.data);
+                if (result.status === 200) {
+                    resolve(result.data);
+                } else {
+                    resolve({});
+                }
             })
             .catch(error => {
                 if (error.response && error.response.status === 401) {
