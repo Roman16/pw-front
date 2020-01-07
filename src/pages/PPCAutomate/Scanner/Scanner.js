@@ -30,9 +30,16 @@ class Scanner extends Component {
         visibleErrorWindow: false,
 
         mistakeList: [],
+        totalMistakes: null,
         problemsCount: {},
         fetching: false,
         successFetch: false,
+
+        paginationParams: {
+            totalSize: 0,
+            page: 1,
+            pageSize: 50
+        }
     };
 
     handleConfirm = () => {
@@ -165,13 +172,30 @@ class Scanner extends Component {
             })
     };
 
+
+    onChangePagination = (params) => {
+        this.setState({
+            paginationParams: {
+                ...this.state.paginationParams,
+                ...params
+            }
+        }, this.getProductMistakes)
+
+    };
+
     getProductMistakes = () => {
         scannerServices.getProductMistakes({
             productId: this.state.productId,
+            page: this.state.paginationParams.page,
+            pageSize: this.state.paginationParams.pageSize,
         })
             .then(res => {
                 this.setState({
                     mistakeList: res.data,
+                    paginationParams: {
+                        ...this.state.paginationParams,
+                        totalSize: res.recordsTotal
+                    }
                 })
             })
     };
@@ -232,7 +256,12 @@ class Scanner extends Component {
             mistakeList,
             problemsCount,
             fetching,
-            successFetch
+            successFetch,
+            paginationParams: {
+                totalSize,
+                page,
+                pageSize
+            }
         } = this.state;
 
         return (
@@ -255,6 +284,10 @@ class Scanner extends Component {
 
                     <MistakeTerminal
                         mistakeList={mistakeList}
+                        totalSize={totalSize}
+                        page={page}
+                        pageSize={pageSize}
+                        onChangePagination={this.onChangePagination}
                     />
                 </div>
 
