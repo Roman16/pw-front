@@ -1,8 +1,12 @@
 import React from "react";
 import notDataImage from '../../../assets/img/not-data-image.svg';
 import {history} from "../../../utils/history";
+import {Pagination, Select} from "antd";
 
-const MistakeTerminal = ({mistakeList}) => {
+const pageSizeOptions = ['50', '100', '200'];
+const Option = Select.Option;
+
+const MistakeTerminal = ({mistakeList, totalSize, page, pageSize, onChangePagination}) => {
 
     return (
         <section className='mistake-terminal'>
@@ -17,7 +21,7 @@ const MistakeTerminal = ({mistakeList}) => {
                 {mistakeList.length > 0 && <div className="total-count">
                     Total Mistakes
                     <div>
-                        {mistakeList.length}
+                        {totalSize}
                     </div>
                 </div>
                 }
@@ -37,6 +41,27 @@ const MistakeTerminal = ({mistakeList}) => {
                     <img src={notDataImage} alt=""/>
                 </div>
             }
+
+            <div className='pagination'>
+                {totalSize > 50 && (
+                    <Pagination
+                        defaultCurrent={1}
+                        pageSize={50}
+                        current={page}
+                        total={+totalSize}
+                        onChange={(page) => onChangePagination({page})}
+                    />
+                )}
+
+                {totalSize > 50 &&
+                <Select onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
+                    {pageSizeOptions.map(size => (
+                        <Option value={size} key={size}>{size}</Option>
+                    ))}
+                </Select>
+                }
+            </div>
+
         </section>
     )
 };
