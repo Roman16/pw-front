@@ -64,11 +64,11 @@ export function dashboard(state = initialState, action) {
                 ...state,
                 allMetrics: metricsListArray.map(item => ({
                     ...item,
-                    ...(action.payload.length > 0 && action.payload.find(metric => metric.metric_key === item.key))
+                    ...(action.payload && action.payload.length > 0 && action.payload.find(metric => metric.metric_key === item.key))
                 })),
                 selectedMetrics: state.selectedMetrics.map(item => ({
                     ...item,
-                    ...action.payload.find(metric => metric.metric_key === item.key)
+                    ...action.payload.find(metric => metric.metric_key === item.key) || {}
                 }))
             };
 
