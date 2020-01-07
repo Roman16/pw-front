@@ -2,6 +2,7 @@ import React, {useState, Component} from 'react';
 import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
 import {Switch} from "antd";
 import moment from "moment";
+import Selection from "@simonwep/selection-js/src/selection";
 
 const defaultList = [
     {
@@ -41,6 +42,48 @@ const defaultList = [
     },
 ];
 
+const selection = new Selection({
+
+    // Class for the selection-area-element
+    class: 'selection-area',
+
+    // px, how many pixels the point should move before starting the selection (combined distance).
+    // Or specifiy the threshold for each axis by passing an object like {x: <number>, y: <number>}.
+    startThreshold: 10,
+
+    // Disable the selection functionality for touch devices
+    disableTouch: false,
+
+    // On which point an element should be selected.
+    // Available modes are cover (cover the entire element), center (touch the center) or
+    // the default mode is touch (just touching it).
+    mode: 'touch',
+
+    // Behaviour on single-click
+    // Available modes are 'native' (element was mouse-event target) or
+    // 'touch' (element got touched)
+    tapMode: 'native',
+
+    // Enable single-click selection (Also disables range-selection via shift + ctrl)
+    singleClick: true,
+
+    // Query selectors from elements which can be selected
+    selectables: ['.statistic-information'],
+
+    // Query selectors for elements from where a selection can be start
+    startareas: ['.switches'],
+
+    // Query selectors for elements which will be used as boundaries for the selection
+    boundaries: ['.switches'],
+
+    // Query selector or dom node to set up container for selection-area-element
+    selectionAreaContainer: '.switches',
+
+    // On scrollable areas the number on px per frame is devided by this amount.
+    // Default is 10 to provide a enjoyable scroll experience.
+    scrollSpeedDivider: 10
+});
+
 
 const DaySwitches = () => {
     const [hoursStatus, setStatus] = useState(defaultList);
@@ -66,9 +109,14 @@ const DaySwitches = () => {
         setStatus(newList)
     }
 
-    function handleMultiSelect(e) {
-        console.log(e);
-    }
+    // selection.on('stop', evt => {
+    //     evt.selected.forEach(item => {
+    //         let newList = [...hoursStatus];
+    //         newList[item.getAttribute('rowIndex')].value[item.getAttribute('columnIndex')] = true;
+    //
+    //         setStatus(newList)
+    //     });
+    // });
 
     return (
         <section className='day-switches'>
@@ -114,6 +162,8 @@ const DaySwitches = () => {
                                     onClick={() => handleSwitchHour(dayIndex, timeIndex, status)}
                                     className='statistic-information'
                                     style={{background: status ? '#6D6DF6' : '#E0E1E6'}}
+                                    rowIndex={dayIndex}
+                                    columnIndex={timeIndex}
                                 />
                             </div>
                         ))}
