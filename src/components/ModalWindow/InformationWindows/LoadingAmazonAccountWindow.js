@@ -15,7 +15,7 @@ const LoadingAmazonAccount = () => {
     const {firstName, lastName, bootstrapInProgress} = useSelector(state => ({
         firstName: state.user.user ? state.user.user.name : '',
         lastName: state.user.user ? state.user.user.last_name : '',
-        bootstrapInProgress: state.user.notifications.account_bootstrap.bootstrap_in_progress
+        bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
     }));
 
     useEffect(() => {
