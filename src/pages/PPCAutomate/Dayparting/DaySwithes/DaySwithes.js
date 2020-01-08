@@ -1,9 +1,8 @@
-import React, {useState, Component} from 'react';
+import React, {useState, Component, useEffect} from 'react';
 import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
 import {Switch} from "antd";
 import moment from "moment";
 import Selection from "@simonwep/selection-js/src/selection";
-import {debounce} from "throttle-debounce";
 import shortid from "shortid";
 
 const defaultList = [
@@ -40,50 +39,19 @@ const defaultList = [
     {
         day: 'Saturday',
         shortName: 'Sat',
-        value: Array.from({length: 24}, () => false)
+        value: Array.from({length: 24}, () => true)
     },
 ];
 
-const selection = new Selection({
-
-    // Class for the selection-area-element
+const selection = Selection.create({
+    // Class for the selection-area
     class: 'selection-area',
 
-    // px, how many pixels the point should move before starting the selection (combined distance).
-    // Or specifiy the threshold for each axis by passing an object like {x: <number>, y: <number>}.
-    startThreshold: 10,
-
-    // Disable the selection functionality for touch devices
-    disableTouch: false,
-
-    // On which point an element should be selected.
-    // Available modes are cover (cover the entire element), center (touch the center) or
-    // the default mode is touch (just touching it).
-    mode: 'touch',
-
-    // Behaviour on single-click
-    // Available modes are 'native' (element was mouse-event target) or
-    // 'touch' (element got touched)
-    tapMode: 'native',
-
-    // Enable single-click selection (Also disables range-selection via shift + ctrl)
-    singleClick: true,
-
-    // Query selectors from elements which can be selected
+    // All elements in this container can be selected
     selectables: ['.statistic-information'],
 
-    // Query selectors for elements from where a selection can be start
-    startareas: ['.switches'],
-
-    // Query selectors for elements which will be used as boundaries for the selection
-    boundaries: ['.switches'],
-
-    // Query selector or dom node to set up container for selection-area-element
-    selectionAreaContainer: '.switches',
-
-    // On scrollable areas the number on px per frame is devided by this amount.
-    // Default is 10 to provide a enjoyable scroll experience.
-    scrollSpeedDivider: 10
+    // The container is also the boundary in this case
+    boundaries: ['.switches']
 });
 
 let intervalId = null;
@@ -114,21 +82,40 @@ const DaySwitches = () => {
         setStatus(newList)
     }
 
+    useEffect(() => {
+        selection
+            .on('move', ({changed: {removed, added}}) => {
+                // Add a custom class to the elements that where selected.
+                if(added[0]) {
+                    console.log(added[0].getAttribute('value'));
 
-    selection.on('stop', evt => {
-        clearInterval(intervalId);
-        intervalId = setInterval(() => {
-            const status = evt.selected[0].getAttribute('value') === 'false';
-            evt.selected.forEach(item => {
+                }
+
+                for (const el of added) {
+                    el.classList.add('selected');
+                }
+
+                // Remove the class from elements that where removed
+                // since the last selection
+                if (removed.length > 0) {
+                    for (const el of removed) {
+                        el.classList.remove('selected');
+                    }
+                }
+
+            })
+            .on('stop', (event) => {
                 let newList = [...hoursStatus];
-                newList[item.getAttribute('rowindex')].value[item.getAttribute('columnindex')] = status;
-
+                console.log(hoursStatus);
+                event.selected.forEach(item => {
+                    newList[item.getAttribute('rowindex')].value[item.getAttribute('columnindex')] = true;
+                });
+                //
                 setStatus(newList);
 
-                clearInterval(intervalId);
+                // inst.keepSelection();
             });
-        }, 10)
-    });
+    }, []);
 
     return (
         <section className='day-switches'>
@@ -171,8 +158,7 @@ const DaySwitches = () => {
                                 </div>}
 
                                 <div
-                                    className='statistic-information'
-                                    style={{background: status ? '#6D6DF6' : '#E0E1E6'}}
+                                    className={status ? 'selected statistic-information' : 'statistic-information'}
                                     rowindex={dayIndex}
                                     columnindex={timeIndex}
                                     value={status}
