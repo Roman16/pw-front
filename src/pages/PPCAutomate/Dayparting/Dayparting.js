@@ -8,6 +8,7 @@ import KeysKeywords from "./KeysKeywords";
 import PlacementsStatistics from "./PlacementsStatistics";
 import {colorList} from "./colorList";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
+import shortid from "shortid";
 
 // eslint-disable-next-line no-unused-vars
 class Dayparting extends Component {
@@ -33,6 +34,7 @@ class Dayparting extends Component {
                             <InformationTooltip
                                 type={'custom'}
                                 description={<span>Min: {item.min} <br/> Max: {item.max}</span>}
+                                key={shortid.generate()}
                             >
                                 <div key={item.color} style={{background: item.color}}/>
                             </InformationTooltip>

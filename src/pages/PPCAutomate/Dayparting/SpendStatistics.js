@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import {colorList} from "./colorList";
+import shortid from "shortid";
 
 const data = [
     {
@@ -54,10 +55,10 @@ const SpendStatistics = () => {
 
             <div className="statistics">
                 {data.map((day, dayIndex) => (
-                    <div className="row" key={day.day}>
+                    <div className="row" key={shortid.generate()}>
                         <div className='day-name'>{day.day[0]}</div>
                         {day.value.map((time, timeIndex) => (
-                            <div className='statistic-item' key={time}>
+                            <div className='statistic-item' key={shortid.generate()}>
                                 {dayIndex === 0 && <div className="time-name">
                                     {moment(timeIndex + 1, 'HH').format('hh')}
                                     <br/>

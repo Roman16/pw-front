@@ -3,6 +3,8 @@ import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
 import {Switch} from "antd";
 import moment from "moment";
 import Selection from "@simonwep/selection-js/src/selection";
+import {debounce} from "throttle-debounce";
+import shortid from "shortid";
 
 const defaultList = [
     {
@@ -84,6 +86,7 @@ const selection = new Selection({
     scrollSpeedDivider: 10
 });
 
+let intervalId = null;
 
 const DaySwitches = () => {
     const [hoursStatus, setStatus] = useState(defaultList);
@@ -95,7 +98,9 @@ const DaySwitches = () => {
         })))
     }
 
-    function handleSwitchHour(dayIndex, timeIndex, value) {
+    function handleSwitchHour(dayIndex, timeIndex, value, event) {
+        event.stopPropagation();
+
         let newList = [...hoursStatus];
         newList[dayIndex].value[timeIndex] = !value;
 
@@ -109,14 +114,21 @@ const DaySwitches = () => {
         setStatus(newList)
     }
 
-    // selection.on('stop', evt => {
-    //     evt.selected.forEach(item => {
-    //         let newList = [...hoursStatus];
-    //         newList[item.getAttribute('rowIndex')].value[item.getAttribute('columnIndex')] = true;
-    //
-    //         setStatus(newList)
-    //     });
-    // });
+
+    selection.on('stop', evt => {
+        clearInterval(intervalId);
+        intervalId = setInterval(() => {
+            const status = evt.selected[0].getAttribute('value') === 'false';
+            evt.selected.forEach(item => {
+                let newList = [...hoursStatus];
+                newList[item.getAttribute('rowindex')].value[item.getAttribute('columnindex')] = status;
+
+                setStatus(newList);
+
+                clearInterval(intervalId);
+            });
+        }, 10)
+    });
 
     return (
         <section className='day-switches'>
@@ -143,7 +155,7 @@ const DaySwitches = () => {
 
             <div className="switches">
                 {hoursStatus.map((day, dayIndex) => (
-                    <div className="row" key={day.day}>
+                    <div className="row" key={shortid.generate()}>
                         <div className='day-name'>
                             <Switch
                                 checked={day.value.every(item => item)}
@@ -153,17 +165,17 @@ const DaySwitches = () => {
                         </div>
 
                         {day.value.map((status, timeIndex) => (
-                            <div className='statistic-item' key={`time_${timeIndex + dayIndex}`}>
+                            <div className='statistic-item' key={shortid.generate()}>
                                 {dayIndex === 0 && <div className="time-name">
                                     {moment(timeIndex + 1, 'HH').format('hh A')}
                                 </div>}
 
                                 <div
-                                    onClick={() => handleSwitchHour(dayIndex, timeIndex, status)}
                                     className='statistic-information'
                                     style={{background: status ? '#6D6DF6' : '#E0E1E6'}}
-                                    rowIndex={dayIndex}
-                                    columnIndex={timeIndex}
+                                    rowindex={dayIndex}
+                                    columnindex={timeIndex}
+                                    value={status}
                                 />
                             </div>
                         ))}

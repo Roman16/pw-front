@@ -7,26 +7,17 @@ import downBlackIcon from '../../../assets/img/icons/metric-arrows/down-black-ar
 
 const data = [
     {
-        name: 'Page A', uv: 40, pv: 24, amt: 24,
+        name: '18 Oct 2019', uv: 40, pv: 20, amt: 40,
     },
     {
-        name: 'Page B', uv: 30, pv: 13, amt: 22,
+        name: '19 Oct 2019', uv: 30, pv: 10, amt: 60,
     },
     {
-        name: 'Page C', uv: 20, pv: 98, amt: 22,
+        name: '20 Oct 2019', uv: 20, pv: 70, amt: 10,
     },
     {
-        name: 'Page D', uv: 27, pv: 39, amt: 20,
-    },
-    {
-        name: 'Page E', uv: 18, pv: 48, amt: 21,
-    },
-    {
-        name: 'Page F', uv: 23, pv: 38, amt: 25,
-    },
-    {
-        name: 'Page G', uv: 34, pv: 43, amt: 21,
-    },
+        name: '21 Oct 2019', uv: 25, pv: 25, amt: 50,
+    }
 ];
 
 const chartColors = [
@@ -102,10 +93,15 @@ const PlacementsStatistics = () => {
                     >
                         <XAxis dataKey="name"/>
                         <YAxis/>
-                        <Tooltip/>
-                        <Area type="monotone" dataKey="uv" stackId="1" stroke={chartColors[0].stroke} fill={chartColors[0].fill} isAnimationActive={false}/>
-                        <Area type="monotone" dataKey="pv" stackId="1" stroke={chartColors[1].stroke} fill={chartColors[1].fill} isAnimationActive={false}/>
-                        <Area type="monotone" dataKey="amt" stackId="1" stroke={chartColors[2].stroke} fill={chartColors[2].fill} isAnimationActive={false}/>
+                        <Tooltip
+                            isAnimationActive={false}
+                        />
+                        <Area type="monotone" dataKey="uv" stackId="1" stroke={chartColors[0].stroke}
+                              fill={chartColors[0].fill} isAnimationActive={false}/>
+                        <Area type="monotone" dataKey="pv" stackId="1" stroke={chartColors[1].stroke}
+                              fill={chartColors[1].fill} isAnimationActive={false}/>
+                        <Area type="monotone" dataKey="amt" stackId="1" stroke={chartColors[2].stroke}
+                              fill={chartColors[2].fill} isAnimationActive={false}/>
                     </AreaChart>
                 </ResponsiveContainer>
             </div>

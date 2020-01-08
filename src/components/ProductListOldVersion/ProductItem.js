@@ -5,8 +5,8 @@ import optimizationLabel from '../../assets/img/optimization-label.svg';
 import loaderBg from '../../assets/img/icons/loader-background.svg';
 
 const maxText = text => {
-    if (text && text.length > 60) {
-        return `${text.slice(0, 60)}...`;
+    if (text && text.length > 40) {
+        return `${text.slice(0, 40)}...`;
     }
 
     return text;
@@ -51,17 +51,16 @@ const ProductItem = ({
                 <div className="product-item-content">
                     <div className="caption">
                         {maxText(name)}
-                        {product.has_new_changes && pathname === '/ppc/report' &&
-                        <div className='has-new-reports'>New</div>}
+                        {product.has_new_changes && pathname === '/ppc/report' && <div className='has-new-reports'>New</div>}
                     </div>
 
-                    <div className='detail'>
-                        <div className="asin">
+                    <div>
+                        <div className="detail">
                             <span> ASIN: </span>
                             <span>{asin}</span>
                         </div>
 
-                        <div className="sku">
+                        <div className="detail">
                             <span> SKU: </span>
                             <span>{sku}</span>
                         </div>
@@ -87,13 +86,13 @@ const ProductItem = ({
                         <div className="product-item-content">
                             <div className="caption">{maxText(childrenProduct.name)}</div>
 
-                            <div className='detail'>
-                                <div className="asin">
+                            <div>
+                                <div className="detail">
                                     <span> ASIN: </span>
                                     <span>{childrenProduct.asin}</span>
                                 </div>
 
-                                <div className="sku">
+                                <div className="detail">
                                     <span> SKU: </span>
                                     <span>{childrenProduct.sku}</span>
                                 </div>

@@ -1,0 +1,308 @@
+@import "../../style/variables.less";
+
+.product-list {
+  width: 25.428571429em;
+  display: flex;
+  flex-direction: column;
+  margin: 1.714285714285714em 0 1.7142857em 1.714285714285714em;
+
+  .products {
+    overflow: auto;
+    margin-bottom: 20px;
+    margin-top: 1.428571429em;
+  }
+
+  .ant-input-search {
+    .ant-input {
+      border: none;
+      border-radius: 0.571428571em;
+    }
+
+    .ant-input::placeholder {
+      color: @action-color-dark;
+    }
+
+    .anticon {
+      font-size: 1.4285714285714286rem;
+      color: @third-default-dark;
+    }
+  }
+
+  .ant-btn-primary {
+    font-size: inherit; // 14px
+    width: 9.64286em;
+    height: 2.28571em;
+    text-shadow: none;
+    box-shadow: none;
+
+    span {
+      font-size: inherit; // 14px
+    }
+  }
+
+  .select-all-products {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.428571429em 0 0 0;
+
+    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 379px), only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 379px), only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 379px), only screen and (max-device-pixel-ratio: 1) and (max-width: 379px) {
+      flex-flow: column;
+    }
+
+    div:first-child {
+      //margin-bottom: 0.7em;
+    }
+
+    .active-only {
+      text-align: right;
+      margin-left: 0.714285714em;
+
+      label {
+        margin: 0 0.714285714em 0 0;
+        font-weight: 500;
+      }
+    }
+
+    button.default {
+      width: 12em;
+      display: flex;
+      justify-content: center;
+      border: none;
+      border-radius: 0.571428571em;
+
+      span {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .has-new-reports-only {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.428571429em;
+
+    label {
+      margin: 0 0.714285714em 0 0;
+      font-weight: 500;
+    }
+  }
+
+  .product-item {
+    min-height: 7.142857143em;
+    background: #fff;
+    opacity: 0.5;
+    transition: all 0.3s;
+    border-radius: 0.285714286em;
+    display: flex;
+    flex-direction: column;
+    padding: .5em .2em .5em 1em;
+    padding-bottom: 0;
+    margin: 0.285714286em;
+    position: relative;
+
+    .has-new-reports {
+      height: max-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+      right: 3px;
+      background: #8FD39D;
+      border-radius: 2px;
+      color: #fff;
+      font-size: 0.7857142857142857rem;
+      font-weight: normal;
+      margin: 0 0 0 5px;
+    }
+
+    .product-information {
+      height: 6.571428571em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .image-block {
+        height: 100%;
+        margin: 0 0.8em 0 0;
+        display: flex;
+        flex-direction: column;
+
+        .image {
+          max-width: 5.142857143em;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          margin: auto 0;
+
+          img {
+            max-width: 5.142857143em;
+            max-height: 5.142857143em;
+          }
+        }
+      }
+
+      & > div.product-item-content {
+        font-size: 1rem; // 14px
+        flex: 1 1;
+        display: flex;
+        flex-direction: column;
+
+        .caption {
+          font-weight: 900;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .detail {
+          span:first-child {
+            font-weight: 900;
+          }
+        }
+      }
+    }
+
+    .ant-checkbox-checked::after {
+      border: 0;
+    }
+
+    .open-children-list-button {
+      font-size: 1rem; // 14px
+      width: 100%;
+      height: 1.428571429em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.285714286em;
+      font-family: ir;
+      letter-spacing: -0.4375px;
+      color: #6d6df6;
+      padding: 0 0.357142857em;
+      border: 1px solid #6d6df6;
+
+      &:hover {
+        background: rgba(109, 109, 246, 0.1);
+      }
+
+      i {
+        margin: 0 0 0 0.357142857em;
+      }
+
+      &.opened {
+        i {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      background: #fff;
+      opacity: 1;
+    }
+
+    .on-optimization {
+      position: absolute;
+      right: 0;
+      top: 1.285714286em;
+      width: 5.714285714em;
+    }
+
+    .optimization-waiting {
+      position: absolute;
+      right: 0;
+      top: 0.714285714em;
+      width: 5.714285714em;
+
+      .ant-spin {
+        position: absolute;
+        right: 1.071428571em;
+        bottom: 0.714285714em;
+
+        .ant-spin-dot-item {
+          background-color: #ec7f5c;
+        }
+      }
+    }
+
+    .product-children-list {
+      width: 100%;
+      padding: 0.2em 0 0 5.142857143em;
+
+      .children-information {
+        font-size: 0.8rem; // 11.2px
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #d3d3d3;
+        padding: 0.446428571em 0 0 0;
+        margin: 0 0 0.892857143em 0;
+        position: relative;
+
+        img {
+          max-width: 4.464285714em;
+          max-height: 4.464285714em;
+          margin: 0 0.446428571em 0 0;
+        }
+
+        .caption {
+          font-weight: bold;
+        }
+
+        .detail {
+          span:first-child {
+            font-weight: bold;
+          }
+        }
+
+        .on-optimization,
+        .optimization-waiting {
+          top: auto;
+          bottom: -0.95em;
+          right: -0.38em;
+          text-align: right;
+
+          img {
+            margin: 0;
+          }
+
+          .ant-spin {
+            right: 15%;
+            bottom: 11%;
+          }
+
+          .ant-spin-dot {
+            font-size: 0.8571428571428571rem;
+
+            i {
+              width: 5px;
+              height: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .ant-pagination {
+    margin: auto 0 0 0;
+  }
+
+  //-------------------------------------
+  /*Retina CSS */
+  //-------------------------------------
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    & {
+      .product-item
+      .product-children-list
+      .children-information
+      .optimization-waiting
+      .ant-spin {
+        right: 11%;
+        bottom: 11%;
+      }
+    }
+  }
+}

@@ -15,21 +15,21 @@ const ChartStatistics = () => {
                 <div className="tabs">
                     <div
                         onClick={() => setTab('hour')}
-                        className={activeTab === 'hour' && 'active'}
+                        className={activeTab === 'hour' ? 'active' : ''}
                     >
                         Hour
                     </div>
 
                     <div
                         onClick={() => setTab('dayHour')}
-                        className={activeTab === 'dayHour' && 'active'}
+                        className={activeTab === 'dayHour' ? 'active' : ''}
                     >
                         Day & Hour
                     </div>
 
                     <div
                         onClick={() => setTab('day')}
-                        className={activeTab === 'day' && 'active'}
+                        className={activeTab === 'day' ? 'active' : ''}
                     >
                         Day
                     </div>
