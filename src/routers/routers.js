@@ -120,11 +120,11 @@ const routers = () => {
                     component={Scanner}
                 />
 
-                <ConnectedAmazonRoute
+                {developer && <ConnectedAmazonRoute
                     exact
                     path="/ppc/dayparting"
                     component={Dayparting}
-                />
+                />}
 
                 <PrivateRoute exact path="/mws" component={MWS}/>
                 <PrivateRoute exact path="/ppc" component={PPC}/>
