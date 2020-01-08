@@ -86,6 +86,10 @@ const routers = () => {
     return (
         <Router history={history}>
             <Switch>
+                <Route exact path="/" render={() => {
+                    window.location = '/automation'
+                }}/>
+
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/affiliates" component={LandingAffiliates}/>
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
