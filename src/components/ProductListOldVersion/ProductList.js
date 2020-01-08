@@ -1,16 +1,13 @@
 import React, {Component, Fragment} from 'react';
 import ProductItem from './ProductItem';
 import {connect} from 'react-redux';
-import {Input, Pagination, Select, Switch, Icon, InputNumber} from 'antd';
+import {Input, Pagination, Switch} from 'antd';
 import {productsActions} from '../../actions/products.actions';
 import './ProductList.less';
 import SelectAllProduct from './SelectAllProducts';
 import {debounce} from 'throttle-debounce';
-import leftIcon from '../../assets/img/icons/left-icon.svg';
-import rightIcon from '../../assets/img/icons/right-icon.svg';
-import FilterFields from "./FilterFields";
 
-const Option = Select.Option;
+const {Search} = Input;
 
 class ProductList extends Component {
     state = {
@@ -46,20 +43,6 @@ class ProductList extends Component {
                 paginationParams: {
                     ...this.state.paginationParams,
                     page
-                }
-            },
-            this.getProducts
-        );
-    };
-
-    handleChangePageSize = (pageSize) => {
-        this.setState(
-            {
-                ...this.state,
-                paginationParams: {
-                    ...this.state.paginationParams,
-                    page: 1,
-                    size: pageSize
                 }
             },
             this.getProducts
@@ -163,26 +146,32 @@ class ProductList extends Component {
             } = this.state,
             {products, selectedProduct, totalSize, onlyOptimization, pathname} = this.props;
 
+
         return (
             <Fragment>
                 <div className="product-list">
-                    <FilterFields
-                        handleSearch={this.handleSearch}
-                    />
+                    <div className="search-product">
+                        <Search
+                            placeholder="Search by product name, ASIN, or SKU"
+                            onChange={e => this.handleSearch(e.target.value)}
+                        />
 
-                    <div className='page-items-block'>
-                        <div className='page-size-select'>
-                            <span>Items per page:</span>
-                            <Select value={size} onChange={this.handleChangePageSize}>
-                                <Option value={10}>10</Option>
-                                <Option value={50}>50</Option>
-                                <Option value={100}>100</Option>
-                            </Select>
+                        <div className="select-all-products">
+                            <SelectAllProduct
+                                onSelectAll={this.selectAll}
+                                selectedSize={selectedSize}
+                                isSelectedAll={isSelectedAll}
+                                disabled={(products && products.length === 0) || this.props.pathname === '/ppc/scanner'}
+                            />
+
+                            <div className="active-only">
+                                <label htmlFor="">On optimization only</label>
+                                <Switch
+                                    checked={onlyOptimization}
+                                    onChange={e => this.handleChangeSwitch(e, 'onlyOptimization')}
+                                />
+                            </div>
                         </div>
-
-                        {products && <div className='all-items'>
-                            {page * size - size + 1} - {products.length && page * size - size + products.length} of {totalSize} items
-                        </div>}
                     </div>
 
                     {/*{pathname === '/ppc/report' && <div className='has-new-reports-only'>*/}
@@ -212,36 +201,19 @@ class ProductList extends Component {
                         ))}
                     </div>
 
-                    <div className='product-pagination'>
-                        <div className='total-pages'>
-                            <span>{page}</span> of {Math.ceil(totalSize / size)} pages
-                        </div>
+                    {totalSize > size && (
+                        <Pagination
+                            defaultCurrent={1}
+                            pageSize={size}
+                            total={totalSize}
+                            current={page}
+                            onChange={this.handleChangePagination}
+                        />
+                    )}
+                </div>
 
-                        <div className='custom-pagination'>
-                            <div className='prev'>
-                                <img src={leftIcon} alt=""/>
-                            </div>
-
-                            <div className="line"/>
-
-                            <div className='next'>
-                                <img src={rightIcon} alt=""/>
-                            </div>
-                        </div>
-
-                        <div className="go-to">
-                            Go to
-
-                            <InputNumber
-                                min={1}
-                                // max={Math.ceil(totalSize / size)}
-                                defaultValue={1}
-                                onPressEnter={e => {
-                                    console.log(e.target.value);
-                                }}
-                            />
-                        </div>
-                    </div>
+                <div>
+                    {this.props.children}
                 </div>
             </Fragment>
         );

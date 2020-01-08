@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 
 import Sidebar from '../components/Sidebar/Sidebar';
-import ProductList from "../components/ProductList/ProductList";
+import ProductList from "../components/ProductListOldVersion/ProductList";
 import ReportsChangesCountWindow from "../components/ModalWindow/InformationWindows/ReportsChangesCountWindow";
 import {userActions} from "../actions/user.actions";
 import moment from "moment";
@@ -57,7 +57,8 @@ const AuthorizedUser = (props) => {
 
                 {(pathname === '/ppc/optimization' ||
                     pathname === '/ppc/report' ||
-                    pathname === '/ppc/scanner'
+                    pathname === '/ppc/scanner' ||
+                    pathname === '/ppc/dayparting'
                 ) &&
                 <ProductList
                     pathname={props.children.props.location.pathname}
