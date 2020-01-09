@@ -7,17 +7,26 @@ import downBlackIcon from '../../../assets/img/icons/metric-arrows/down-black-ar
 
 const data = [
     {
-        name: '18 Oct 2019', uv: 40, pv: 20, amt: 40,
+        name: '18 Oct 19', uv: 40, pv: 20, amt: 40,
     },
     {
-        name: '19 Oct 2019', uv: 30, pv: 10, amt: 60,
+        name: '19 Oct 19', uv: 30, pv: 10, amt: 60,
     },
     {
-        name: '20 Oct 2019', uv: 20, pv: 70, amt: 10,
+        name: '20 Oct 19', uv: 20, pv: 70, amt: 10,
     },
     {
-        name: '21 Oct 2019', uv: 25, pv: 25, amt: 50,
-    }
+        name: '21 Oct 19', uv: 25, pv: 25, amt: 50,
+    },
+    {
+        name: '22 Oct 19', uv: 30, pv: 10, amt: 60,
+    },
+    {
+        name: '23 Oct 19', uv: 20, pv: 70, amt: 10,
+    },
+    {
+        name: '24 Oct 19', uv: 25, pv: 25, amt: 50,
+    },
 ];
 
 const chartColors = [
@@ -44,38 +53,53 @@ const PlacementsStatistics = () => {
 
                 <div className="chart-legend">
                     <div>
-                        <div className="chart-name">
-                            <div style={{background: chartColors[0].fill}}/>
-                            Top of search
-                        </div>
-
-                        <div className='changes-value'>
+                        <div className='col'>
+                            <div className='example' style={{background: chartColors[0].fill}}/>
                             <img src={downBlackIcon} alt=""/>
-                            20%
+                        </div>
+
+                        <div className='col'>
+                            <div className="chart-name">
+                                Top of search
+                            </div>
+
+                            <div className='changes-value'>
+                                20%
+                            </div>
                         </div>
                     </div>
 
                     <div>
-                        <div className="chart-name">
-                            <div style={{background: chartColors[1].fill}}/>
-                            Product pages
+                        <div className='col'>
+                            <div className='example' style={{background: chartColors[1].fill}}/>
+                            <img src={upGreenIcon} alt=""/>
                         </div>
 
-                        <div className='changes-value'>
-                            <img src={upGreenIcon} alt=""/>
-                            4%
+                        <div className='col'>
+                            <div className="chart-name">
+                                Product pages
+                            </div>
+
+                            <div className='changes-value'>
+                                4%
+                            </div>
                         </div>
                     </div>
 
                     <div>
-                        <div className="chart-name">
-                            <div style={{background: chartColors[2].fill}}/>
-                            Rest of search
+                        <div className='col'>
+                            <div className='example' style={{background: chartColors[2].fill}}/>
+                            <img src={upGreenIcon} alt=""/>
                         </div>
 
-                        <div className='changes-value'>
-                            <img src={upGreenIcon} alt=""/>
-                            0%
+                        <div className='col'>
+                            <div className="chart-name">
+                                Rest of search
+                            </div>
+
+                            <div className='changes-value'>
+                                0%
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -84,24 +108,41 @@ const PlacementsStatistics = () => {
             <div className='chart'>
                 <ResponsiveContainer height={205} width='100%' className='responsive-bar-container'>
                     <AreaChart
-                        width={500}
+                        width={400}
                         height={400}
                         data={data}
                         margin={{
-                            top: 10, right: 0, left: 0, bottom: 0,
+                            top: 10, right: 5, left: -25, bottom: 0,
                         }}
                     >
+                        <defs>
+                            <linearGradient spreadMethod="pad" id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor='rgb(161, 161, 249)' stopOpacity='1'/>
+                                <stop offset="100%" stopColor='rgba(161, 161, 249, 0)' stopOpacity='0'/>
+                            </linearGradient>
+
+                            <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#F3AD97"/>
+                                <stop offset="100%" stopColor="rgba(243, 173, 151, 0)"/>
+                            </linearGradient>
+
+                            <linearGradient id="colorAmt" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#F6DB97"/>
+                                <stop offset="100%" stopColor="rgba(246, 219, 151, 0)"/>
+                            </linearGradient>
+                        </defs>
+
                         <XAxis dataKey="name"/>
                         <YAxis/>
                         <Tooltip
                             isAnimationActive={false}
                         />
-                        <Area type="monotone" dataKey="uv" stackId="1" stroke={chartColors[0].stroke}
-                              fill={chartColors[0].fill} isAnimationActive={false}/>
-                        <Area type="monotone" dataKey="pv" stackId="1" stroke={chartColors[1].stroke}
-                              fill={chartColors[1].fill} isAnimationActive={false}/>
-                        <Area type="monotone" dataKey="amt" stackId="1" stroke={chartColors[2].stroke}
-                              fill={chartColors[2].fill} isAnimationActive={false}/>
+                        <Area type="linear" dataKey="uv" stackId="1" stroke={chartColors[0].stroke}
+                              fill="url(#colorUv)" fillOpacity={1} isAnimationActive={false}/>
+                        <Area type="linear" dataKey="pv" stackId="1" stroke={chartColors[1].stroke}
+                              fill="url(#colorPv)" fillOpacity={1} isAnimationActive={false}/>
+                        <Area type="linear" dataKey="amt" stackId="1" stroke={chartColors[2].stroke}
+                              fill="url(#colorAmt)" fillOpacity={1} isAnimationActive={false}/>
                     </AreaChart>
                 </ResponsiveContainer>
             </div>

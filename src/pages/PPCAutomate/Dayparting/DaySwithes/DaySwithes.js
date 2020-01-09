@@ -39,7 +39,7 @@ const defaultList = [
     {
         day: 'Saturday',
         shortName: 'Sat',
-        value: Array.from({length: 24}, () => true)
+        value: Array.from({length: 24}, () => false)
     },
 ];
 
@@ -51,13 +51,19 @@ const selection = Selection.create({
     selectables: ['.statistic-information'],
 
     // The container is also the boundary in this case
-    boundaries: ['.switches']
+    boundaries: ['.switches'],
+    singleClick: false,
+
 });
 
 let intervalId = null;
 
 const DaySwitches = () => {
-    const [hoursStatus, setStatus] = useState(defaultList);
+
+    const [hoursStatus, setStatus] = useState([...defaultList.map(item => ({
+        ...item,
+        value: [...item.value]
+    }))]);
 
     function handleReset() {
         setStatus(hoursStatus.map(item => ({
@@ -66,54 +72,78 @@ const DaySwitches = () => {
         })))
     }
 
-    function handleSwitchHour(dayIndex, timeIndex, value, event) {
-        event.stopPropagation();
-
+    function handleSwitchHour(dayIndex, timeIndex, value) {
         let newList = [...hoursStatus];
         newList[dayIndex].value[timeIndex] = !value;
 
         setStatus(newList)
     }
 
-    function handleSwitchDay(dayIndex, value) {
+    function handleSwitchRow(row, value) {
         let newList = [...hoursStatus];
-        newList[dayIndex].value = Array.from({length: 24}, () => !value);
+        newList[row].value = Array.from({length: 24}, () => !value);
+
+        setStatus(newList)
+    }
+
+    function handleSwitchColumn(column, value) {
+        let newList = [...hoursStatus];
+
+        newList.forEach(item => {
+            item.value[column] = !value
+        });
 
         setStatus(newList)
     }
 
     useEffect(() => {
+        let status = 'false';
+
         selection
-            .on('move', ({changed: {removed, added}}) => {
+            .on('start', ({selected}) => {
+                if (selected[0]) {
+                    status = selected[0].getAttribute('value');
+                }
+            })
+            .on('move', (event) => {
+                const {changed: {removed, added}, selected} = event;
                 // Add a custom class to the elements that where selected.
-                if(added[0]) {
-                    console.log(added[0].getAttribute('value'));
+                if (selected.length > 0) {
+                    if (status === 'false') {
+                        for (const el of selected) {
+                            el.classList.add('selected');
+                        }
 
-                }
+                        if (removed.length > 0) {
+                            for (const el of removed) {
+                                el.classList.remove('selected');
+                            }
+                        }
+                    } else {
+                        for (const el of selected) {
+                            el.classList.remove('selected');
+                        }
 
-                for (const el of added) {
-                    el.classList.add('selected');
-                }
-
-                // Remove the class from elements that where removed
-                // since the last selection
-                if (removed.length > 0) {
-                    for (const el of removed) {
-                        el.classList.remove('selected');
+                        if (removed.length > 0) {
+                            for (const el of removed) {
+                                el.classList.add('selected');
+                            }
+                        }
                     }
                 }
-
             })
             .on('stop', (event) => {
-                let newList = [...hoursStatus];
-                console.log(hoursStatus);
-                event.selected.forEach(item => {
+                let newList = [...defaultList.map(item => ({
+                    ...item,
+                    value: [...item.value]
+                }))];
+
+                const allSelected = document.querySelectorAll('.statistic-information.selected');
+                allSelected.forEach(item => {
                     newList[item.getAttribute('rowindex')].value[item.getAttribute('columnindex')] = true;
                 });
-                //
-                setStatus(newList);
 
-                // inst.keepSelection();
+                setStatus(newList);
             });
     }, []);
 
@@ -146,19 +176,26 @@ const DaySwitches = () => {
                         <div className='day-name'>
                             <Switch
                                 checked={day.value.every(item => item)}
-                                onChange={() => handleSwitchDay(dayIndex, day.value.every(item => item))}
+                                onChange={() => handleSwitchRow(dayIndex, day.value.every(item => item))}
                             />
-                            {day.shortName}
+                            <span>
+                                 {window.devicePixelRatio === 2 ? day.shortName[0] : day.shortName}
+                            </span>
                         </div>
 
                         {day.value.map((status, timeIndex) => (
                             <div className='statistic-item' key={shortid.generate()}>
                                 {dayIndex === 0 && <div className="time-name">
                                     {moment(timeIndex + 1, 'HH').format('hh A')}
+                                    <Switch
+                                        checked={hoursStatus.every(item => item.value[timeIndex])}
+                                        onChange={() => handleSwitchColumn(timeIndex, hoursStatus.every(item => item.value[timeIndex]))}
+                                    />
                                 </div>}
 
                                 <div
-                                    className={status ? 'selected statistic-information' : 'statistic-information'}
+                                    onClick={() => handleSwitchHour(dayIndex, timeIndex, status)}
+                                    className={status ? 'statistic-information selected' : 'statistic-information'}
                                     rowindex={dayIndex}
                                     columnindex={timeIndex}
                                     value={status}
