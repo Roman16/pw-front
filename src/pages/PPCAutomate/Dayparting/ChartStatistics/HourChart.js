@@ -127,7 +127,7 @@ const HourChart = () => {
 
                     <Bar
                         dataKey="clicks"
-                        barSize={20}
+                        barSize={window.devicePixelRatio === 2 ? 15 : 20}
                         shape={<CustomBar/>}
                         isAnimationActive={false}
                     >

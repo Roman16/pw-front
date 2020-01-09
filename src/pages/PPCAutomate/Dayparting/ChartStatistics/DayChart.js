@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {
-    BarChart, Cell, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer
+    BarChart, Cell, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Text
 } from 'recharts';
 
 const CustomBar = (props) => {
@@ -11,7 +11,7 @@ const CustomBar = (props) => {
     if (height && height !== 0) {
         return (
             <path
-                d={`M${x},${y} h${width - 5} q5,0 5,5 v${height - 10} q0,5 -5,5 h-${width - 5} z`}
+                d={`M${x + 20},${y + 5} q0,-5 5,-5 h${width - 10} q5,0 5,5 v${height - 10} q0,5 -5,5 h-${width - 10} q-5,0 -5,-5 Z`}
                 fill={fill}
             />
         );
@@ -20,26 +20,43 @@ const CustomBar = (props) => {
     }
 };
 
+
 const data = [
     {
-        name: 'S', clicks: 1400,
+        name: 'S', clicks: 140,
     },
     {
-        name: 'M', clicks: 1506,
+        name: 'M', clicks: 150,
     },
     {
-        name: 'T', clicks: 989,
+        name: 'T', clicks: 289,
     },
     {
         name: 'W', clicks: 1228,
     },
     {
-        name: 'F', clicks: 1100,
+        name: 'T', clicks: 1280,
     },
     {
-        name: 'S', clicks: 1700,
+        name: 'F', clicks: 110,
+    },
+    {
+        name: 'S', clicks: 170,
     },
 ];
+
+const CustomizedAxisTick = (props) => {
+    if (props.index === 1) {
+        return <Text {...props} x={17} textLength={30} text-anchor="middle"
+                     alignment-baseline="central">{props.payload.value}</Text>;
+    } else if (props.index === 3) {
+        return <Text {...props} x={18} textLength={30} text-anchor="middle"
+                     alignment-baseline="central">{props.payload.value}</Text>;
+    } else {
+        return <Text {...props} x={15} textLength={30} text-anchor="middle"
+                     alignment-baseline="central">{props.payload.value}</Text>;
+    }
+};
 
 const DayChart = () => {
     const [focusBar, setFocusBar] = useState(null);
@@ -50,7 +67,6 @@ const DayChart = () => {
 
                 <BarChart
                     layout="vertical"
-                    width={500}
                     height={230}
                     data={data}
                     onMouseMove={state => {
@@ -62,12 +78,19 @@ const DayChart = () => {
                     }}
                     onMouseLeave={() => setFocusBar(null)}
                     margin={{
-                        top: 20
+                        top: 20,
+                        left: -50
                     }}
                 >
                     <XAxis type="number" hide={true}/>
 
-                    <YAxis dataKey="name" type="category"/>
+                    <YAxis
+                        dataKey="name"
+                        type="category"
+                        width={80}
+                        tick={<CustomizedAxisTick/>}
+                        interval={0}
+                    />
 
                     <Tooltip
                         cursor={false}
@@ -76,7 +99,7 @@ const DayChart = () => {
 
                     <Bar
                         dataKey="clicks"
-                        barSize={20}
+                        barSize={window.devicePixelRatio === 2 ? 15 : 20}
                         fill=""
                         shape={<CustomBar/>}
                         isAnimationActive={false}

@@ -3,6 +3,8 @@ import moment from "moment";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import {colorList} from "./colorList";
 import shortid from "shortid";
+import plusIcon from '../../../assets/img/icons/plus-white.svg';
+import soon from "../../../assets/img/icons/soon.svg";
 
 const data = [
     {
@@ -36,7 +38,7 @@ const data = [
 ];
 
 const TooltipDescription = ({value}) => {
-    return(<span>{value}$</span>)
+    return (<span>{value}$</span>)
 };
 
 const SpendStatistics = () => {
@@ -50,7 +52,12 @@ const SpendStatistics = () => {
                     Out of Budget
                 </div>
 
-                {/*<button className='btn default'>Soon</button>*/}
+                <button className='btn default'>
+                    <img src={plusIcon} alt=""/>
+                    Add budget
+
+                    <img src={soon} alt="" className="soon"/>
+                </button>
             </div>
 
             <div className="statistics">
@@ -70,7 +77,8 @@ const SpendStatistics = () => {
                                     title={day.day}
                                     description={<TooltipDescription value={time}/>}
                                 >
-                                    <div className='statistic-information' style={{background: colorList.find(item => time > item.min && time <= item.max).color || '#464898'}} />
+                                    <div className='statistic-information'
+                                         style={{background: colorList.find(item => time > item.min && time <= item.max).color || '#464898'}}/>
                                 </InformationTooltip>
                             </div>
                         ))}

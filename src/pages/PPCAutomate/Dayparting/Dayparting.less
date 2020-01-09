@@ -106,7 +106,24 @@
       }
 
       .btn {
-        padding: 0 20px;
+        height: 2.2857142857142856rem;
+        padding: 0 12px;
+        font-size: 0.8571428571428571rem;
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        img {
+          width: 1.1428571428571428rem;
+          margin: 0 5px 0 0;
+        }
+
+        img.soon {
+          position: absolute;
+          right: 5px;
+          top: -7px;
+          width: 2.5rem;
+        }
       }
     }
 
@@ -123,6 +140,11 @@
           background: inherit;
           text-align: center;
           padding: 0 0 1px 0;
+          margin: 0 2px 0 0;
+        }
+
+        .time-name {
+          margin: 0 0 5px 0;
         }
 
         .statistic-item {
@@ -130,7 +152,7 @@
           display: flex;
           flex-direction: column;
           align-items: center;
-          margin: 0 5px 0 0;
+          margin: 0 4px 0 0;
 
           font-size: 0.8571428571428571rem;
           text-align: center;
@@ -145,14 +167,14 @@
           }
 
           .statistic-information {
-            width: 100%;
+            width: 1.4285714285714286rem;
             height: 1.4285714285714286rem;
             background: #B6B6FB;
             border-radius: 4px;
+          }
 
-            &:last-child {
-              margin: 0;
-            }
+          &:last-child {
+            margin: 0;
           }
         }
       }
@@ -190,15 +212,39 @@
       }
 
       .sorter {
+        letter-spacing: 0.2px;
+        color: #343C5A;
+        position: relative;
+
         .ant-select {
-          margin: 0 0 0 25px;
-          width: 100px;
+          margin: 0 5px 0 25px;
+          width: 70px;
+
+          .ant-select-selection {
+            border: 0;
+            border-bottom: 1px solid #656A84;
+            border-radius: 0;
+          }
+        }
+
+        .full-width-menu {
+          width: max-content !important;
+          right: 0 !important;
+          left: auto !important;
         }
       }
     }
 
     .chart-block {
       flex: 1;
+
+      .recharts-cartesian-axis-line {
+        stroke: #C9CBD4;
+      }
+
+      .recharts-cartesian-axis-ticks {
+        text-anchor: middle;
+      }
     }
 
     .day-chart {
@@ -216,49 +262,102 @@
     }
 
     .day-and-hour-chart {
-      padding: 25px 0 0 0;
+      padding: 20px 0 0 0;
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
 
-      .row {
+      .row-chart {
+        width: 100%;
         display: flex;
-        align-items: center;
+        flex: 1;
 
-        &:last-child {
-          margin: 0;
-        }
-
-        .day-name {
-          width: 20px;
-        }
-
-        .statistic-item {
-          flex: 1 1;
+        .chart-squares {
+          width: 100%;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          margin: 0 5px 0 0;
-          font-size: 0.85714286rem;
-          text-align: center;
-          letter-spacing: -0.4375px;
-          color: #656A84;
-          text-transform: lowercase;
 
-          .custom-tooltip {
-            width: 100%;
-            margin: 0;
+          .row {
+            flex: 1;
+            display: flex;
+            align-items: center;
 
-            .statistic-information {
-              width: 12px;
-              height: 12px;
-              background: #B6B6FB;
-              border-radius: 2px;
+            &:last-child {
+              margin: 0 0 15px 0;
+            }
+
+            .statistic-item {
+              flex: 1 1;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin: 0 5px 0 0;
+              font-size: 0.85714286rem;
+              text-align: center;
+              letter-spacing: -0.4375px;
+              color: #656A84;
+              text-transform: lowercase;
+
+              .custom-tooltip {
+                width: 100%;
+                margin: 0;
+
+                .statistic-information {
+                  width: 1.1428571428571428rem;
+                  height: 1.1428571428571428rem;
+                  background: #B6B6FB;
+                  border-radius: 2px;
+                }
+              }
+
+              &:last-child {
+                margin: 0;
+              }
             }
           }
+        }
+      }
 
+      .yaxis {
+        display: flex;
+        flex-direction: column;
+        width: 30px;
+        border-right: 1px solid #C9CBD4;
+        text-align: center;
+        margin: 0 10px 0 0;
+        padding: 0 15px 15px 0;
 
+        .day-name {
+          height: 1.1428571428571428rem;
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 0 3px 0;
+        }
+      }
+
+      .xaxis {
+        border-top: 1px solid #C9CBD4;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0 0 0;
+        margin: 0 0 0 30px;
+
+        div {
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            height: 8px;
+            width: 1px;
+            background: #C9CBD4;
+          }
         }
       }
     }
@@ -270,7 +369,7 @@
     grid-area: daySwitches;
 
     .section-header {
-      margin: 0 0 2.142857142857143rem 0;
+      margin: 0 0 1.0714285714285714rem 0;
 
       .actions {
         display: flex;
@@ -279,13 +378,13 @@
         .active-example {
           display: flex;
           align-items: center;
-          font-size: 0.8571428571428571rem;
+          font-size: 1rem;
           color: #343C5A;
           margin: 0 20px 0 0;
 
           div {
-            width: 0.8571428571428571rem;
-            height: 0.8571428571428571rem;
+            width: 1rem;
+            height: 1rem;
             border-radius: 2px;
             margin: 0 10px 0 0;
           }
@@ -301,23 +400,26 @@
 
         button {
           display: flex;
-          justify-content: space-between;
+          justify-content: space-around;
           align-items: center;
           font-size: 0.8571428571428571rem;
           height: 2.2857142857142856rem;
-          width: 7.142857142857143rem;
+          width: 6.642857142857143rem;
           border: 1px solid #C9CBD4;
           box-sizing: border-box;
-          border-radius: 64px;
+          border-radius: 4px;
           padding: 0 10px;
+
+          font-weight: 600;
+          color: #343C5A;
 
           img {
             width: 1.1428571428571428rem;
+            //margin: 0 10px 0 0;
           }
         }
       }
     }
-
 
     .switches {
       width: 100%;
@@ -325,6 +427,7 @@
       .row {
         margin: 0 0 5px 0;
         align-items: flex-end;
+        flex-wrap: nowrap;
 
         .day-name {
           display: flex;
@@ -333,11 +436,30 @@
           button {
             margin: 0 5px 0 0;
           }
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+            & {
+              width: 5%;
+              text-align: center;
+              margin: 0 5px 0 0;
+
+              span {
+                text-align: center;
+                width: 20px;
+              }
+            }
+          }
         }
 
         .statistic-item {
           flex: 1;
           margin: 0 5px 0 0;
+
+          .time-name {
+            button {
+              margin: 5px 0 10px 0;
+            }
+          }
 
           &:last-child {
             margin: 0;
@@ -347,6 +469,11 @@
             height: 1.7142857142857142rem;
             border-radius: 4px;
             cursor: pointer;
+            background: #E0E1E6;
+
+            &.selected {
+              background: #6D6DF6;
+            }
           }
         }
       }
@@ -427,19 +554,34 @@
 
         & > div {
           display: flex;
-          flex-direction: column;
+
+          .col {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin: 0 10px 0 0;
+
+            &:first-child {
+              align-items: center;
+            }
+
+            .example {
+              width: 0.8571428571428571rem;
+              height: 0.8571428571428571rem;
+              border-radius: 50%;
+            }
+
+            img {
+              width: 0.7142857142857143rem;
+            }
+          }
 
           .chart-name {
             display: flex;
             align-items: center;
-            font-size: 0.8571428571428571rem;
+            font-size: 1rem;
 
-            div {
-              width: 10px;
-              height: 10px;
-              border-radius: 50%;
-              margin: 0 10px 0 0;
-            }
+
           }
 
           .changes-value {
@@ -466,3 +608,5 @@
   }
 
 }
+
+
