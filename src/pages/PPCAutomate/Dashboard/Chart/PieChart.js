@@ -50,7 +50,7 @@ const FirstPieChart = ({data}) => {
 
                                 return (
                                     <Text {...positioningProps}
-                                          style={stylingProps}>{ppcValue === 0 ? 'N/A' : round((organicValue / ppcValue), 2)}</Text>
+                                          style={stylingProps}>{!organicValue || !ppcValue || ppcValue === 0 ? 'N/A' : round((organicValue / ppcValue), 2)}</Text>
                                 )
                             }}
                         />
