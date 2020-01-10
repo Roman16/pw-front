@@ -124,7 +124,7 @@ const ChartStatistics = () => {
                     Sort By:
 
                     <CustomSelect
-                        defaultValue="clicks"
+                        value="clicks"
                         dropdownClassName={'full-width-menu'}
                     >
                         {metricsList.map(item => (

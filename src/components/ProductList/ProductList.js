@@ -1,14 +1,14 @@
 import React, {Component, Fragment} from 'react';
 import ProductItem from './ProductItem';
 import {connect} from 'react-redux';
-import {Input, Pagination, Select, Switch, Icon, InputNumber} from 'antd';
+import {Select} from 'antd';
 import {productsActions} from '../../actions/products.actions';
 import './ProductList.less';
-import SelectAllProduct from './SelectAllProducts';
 import {debounce} from 'throttle-debounce';
-import leftIcon from '../../assets/img/icons/left-icon.svg';
-import rightIcon from '../../assets/img/icons/right-icon.svg';
 import FilterFields from "./FilterFields";
+import CustomSelect from "../Select/Select";
+import ProductPagination from "./ProductPagination";
+import selectIcon from "../../assets/img/icons/select-icon.svg";
 
 const Option = Select.Option;
 
@@ -18,6 +18,7 @@ class ProductList extends Component {
         prevProductId: '',
         onlyOptimization: this.props.onlyOptimization || false,
         onlyHasNew: false,
+        closedList: false,
         openedProduct: '',
         paginationParams: {
             size: 10,
@@ -40,16 +41,18 @@ class ProductList extends Component {
     };
 
     handleChangePagination = page => {
-        this.setState(
-            {
-                ...this.state,
-                paginationParams: {
-                    ...this.state.paginationParams,
-                    page
-                }
-            },
-            this.getProducts
-        );
+        if (+page !== this.state.paginationParams.page) {
+            this.setState(
+                {
+                    ...this.state,
+                    paginationParams: {
+                        ...this.state.paginationParams,
+                        page: +page
+                    }
+                },
+                this.getProducts
+            );
+        }
     };
 
     handleChangePageSize = (pageSize) => {
@@ -159,25 +162,49 @@ class ProductList extends Component {
                 isSelectedAll,
                 openedProduct,
                 onlyHasNew,
+                closedList,
                 paginationParams: {size, page}
             } = this.state,
             {products, selectedProduct, totalSize, onlyOptimization, pathname} = this.props;
 
         return (
             <Fragment>
-                <div className="product-list">
+                <div className={`${closedList ? 'product-list closed' : 'product-list'} ${pathname === '/ppc/dayparting' && 'daypartin-list'}`}>
+                    <div className="switch-list" onClick={() => this.setState({closedList: !closedList})}>
+                        <img src={selectIcon} alt=""/>
+                    </div>
+
+                   {pathname === '/ppc/dayparting' && <div className="tabs">
+                        <div className='selected'>Products</div>
+                        <div>Campaigns</div>
+                        <div>Portfolios</div>
+                    </div>}
+
                     <FilterFields
-                        handleSearch={this.handleSearch}
+                        onSearch={this.handleSearch}
+                        onSelectAll={this.selectAll}
+                        onChangeSwitch={this.handleChangeSwitch}
+
+                        pathname={pathname}
+                        selectedSize={selectedSize}
+                        isSelectedAll={isSelectedAll}
+                        onlyHasNew={onlyHasNew}
+                        disabled={!products || (products && products.length === 0) || this.props.pathname === '/ppc/scanner'}
                     />
 
                     <div className='page-items-block'>
                         <div className='page-size-select'>
                             <span>Items per page:</span>
-                            <Select value={size} onChange={this.handleChangePageSize}>
+                            <CustomSelect
+                                defaultValue="clicks"
+                                dropdownClassName={'full-width-menu'}
+                                onChange={this.handleChangePageSize}
+                                value={size}
+                            >
                                 <Option value={10}>10</Option>
                                 <Option value={50}>50</Option>
                                 <Option value={100}>100</Option>
-                            </Select>
+                            </CustomSelect>
                         </div>
 
                         {products && <div className='all-items'>
@@ -185,17 +212,8 @@ class ProductList extends Component {
                         </div>}
                     </div>
 
-                    {/*{pathname === '/ppc/report' && <div className='has-new-reports-only'>*/}
-                    {/*    <label htmlFor="">Has new reports only</label>*/}
-                    {/*    <Switch*/}
-                    {/*        checked={onlyHasNew}*/}
-                    {/*        onChange={e => this.handleChangeSwitch(e, 'onlyHasNew')}*/}
-                    {/*    />*/}
-                    {/*</div>}*/}
-
                     <div className='products'>
-                        {products &&
-                        products.map(product => (
+                        {products && products.map(product => (
                             <ProductItem
                                 key={product.id}
                                 product={product}
@@ -212,36 +230,13 @@ class ProductList extends Component {
                         ))}
                     </div>
 
-                    <div className='product-pagination'>
-                        <div className='total-pages'>
-                            <span>{page}</span> of {Math.ceil(totalSize / size)} pages
-                        </div>
 
-                        <div className='custom-pagination'>
-                            <div className='prev'>
-                                <img src={leftIcon} alt=""/>
-                            </div>
-
-                            <div className="line"/>
-
-                            <div className='next'>
-                                <img src={rightIcon} alt=""/>
-                            </div>
-                        </div>
-
-                        <div className="go-to">
-                            Go to
-
-                            <InputNumber
-                                min={1}
-                                // max={Math.ceil(totalSize / size)}
-                                defaultValue={1}
-                                onPressEnter={e => {
-                                    console.log(e.target.value);
-                                }}
-                            />
-                        </div>
-                    </div>
+                    <ProductPagination
+                        page={page}
+                        totalSize={totalSize}
+                        size={size}
+                        onChangePagination={this.handleChangePagination}
+                    />
                 </div>
             </Fragment>
         );

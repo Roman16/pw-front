@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
+    AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, Bar,
 } from 'recharts';
 import upGreenIcon from '../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
 import downBlackIcon from '../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
@@ -106,11 +106,12 @@ const PlacementsStatistics = () => {
             </div>
 
             <div className='chart'>
-                <ResponsiveContainer height={205} width='100%' className='responsive-bar-container'>
+                <ResponsiveContainer height={205} width='99%' className='responsive-bar-container'>
                     <AreaChart
                         width={400}
                         height={400}
                         data={data}
+                        isAnimationActive={false}
                         margin={{
                             top: 10, right: 5, left: -25, bottom: 0,
                         }}

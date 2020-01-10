@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 
 import Sidebar from '../components/Sidebar/Sidebar';
-import ProductList from "../components/ProductListOldVersion/ProductList";
+import ProductList from "../components/ProductList/ProductList";
 import ReportsChangesCountWindow from "../components/ModalWindow/InformationWindows/ReportsChangesCountWindow";
 import {userActions} from "../actions/user.actions";
 import moment from "moment";

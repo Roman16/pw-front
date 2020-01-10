@@ -98,7 +98,7 @@ const HourChart = () => {
 
     return (
         <div className='chart-block hour-chart'>
-            <ResponsiveContainer height='100%' width='100%' className='responsive-bar-container'>
+            <ResponsiveContainer height='100%' width='99%' className='responsive-bar-container'>
 
                 <BarChart
                     width={500}

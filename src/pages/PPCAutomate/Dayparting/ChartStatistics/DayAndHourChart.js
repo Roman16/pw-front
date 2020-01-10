@@ -1,6 +1,7 @@
 import React from "react";
 import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 import {colorList} from "../colorList";
+import shortid from "shortid";
 
 const data = [
     {
@@ -44,15 +45,15 @@ const DayAndHourChart = () => {
             <div className='row-chart'>
                 <div className='yaxis'>
                     {data.map((day, dayIndex) => (
-                        <div className='day-name'>{day.day[0]}</div>
+                        <div className='day-name' key={day.day}>{day.day[0]}</div>
                     ))}
                 </div>
 
                 <div className='chart-squares'>
                     {data.map((day, dayIndex) => (
-                        <div className="row" key={day.day}>
+                        <div className="row" key={shortid.generate()}>
                             {day.value.map((time, timeIndex) => (
-                                <div className='statistic-item' key={time}>
+                                <div className='statistic-item' key={shortid.generate()}>
                                     <InformationTooltip
                                         type={'custom'}
                                         title={day.day}
