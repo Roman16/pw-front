@@ -12,7 +12,7 @@ const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
     }
 
     function goNextPage() {
-        if (totalSize > 0 && page > Math.ceil(totalSize / size)) {
+        if (totalSize > 0 && page < Math.ceil(totalSize / size)) {
             onChangePagination(page + 1)
         }
     }
