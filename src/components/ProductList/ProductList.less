@@ -8,17 +8,21 @@
   border-right: 1px solid rgba(201, 203, 212, 0.2);
   font-family: ir;
   position: relative;
-  padding-top: 80px;
   transition: .3s;
 
+  &.daypartin-list {
+    padding-top: 80px;
+  }
+
   &.closed {
-    width: 100px;
+    width: 20px;
     transition: .3s;
 
     .tabs,
     .search-product,
     .product-pagination,
-    .page-items-block {
+    .page-items-block,
+    .products {
       display: none;
     }
 
@@ -82,7 +86,7 @@
 
     border: 1px solid rgba(201, 203, 212, 0.2);
     border-right: 0;
-    border-radius: 10px 0 0 10px;
+    border-radius: 50% 0 0 50%;
 
     img {
       transform: rotate(90deg);
@@ -110,7 +114,6 @@
     }
 
     .ant-input-search {
-      margin: 0 15px 0 0;
       border-bottom: 1px solid #ffffff;
       border-radius: 8px;
 
@@ -129,9 +132,10 @@
       }
     }
 
-    .filter-block {
+    .filter-btn {
       z-index: 100;
       cursor: pointer;
+      margin: 0 10px;
     }
 
     .filters-list {

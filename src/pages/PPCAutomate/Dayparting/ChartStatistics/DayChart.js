@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     BarChart, Cell, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Text
 } from 'recharts';
@@ -45,6 +45,7 @@ const data = [
     },
 ];
 
+
 const CustomizedAxisTick = (props) => {
     if (props.index === 1) {
         return <Text {...props} x={17} textLength={30} text-anchor="middle"
@@ -63,12 +64,13 @@ const DayChart = () => {
 
     return (
         <div className='chart-block day-chart'>
-            <ResponsiveContainer height='100%' width='100%' className='responsive-bar-container'>
-
+            <ResponsiveContainer height='100%' width='99%'
+                                 className='responsive-bar-container'>
                 <BarChart
                     layout="vertical"
                     height={230}
                     data={data}
+                    isAnimationActive={false}
                     onMouseMove={state => {
                         if (state.isTooltipActive) {
                             setFocusBar(state.activeTooltipIndex);

@@ -12,13 +12,21 @@ const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
     }
 
     function goNextPage() {
-        onChangePagination(page + 1)
+        if (totalSize > 0 && page > Math.ceil(totalSize / size)) {
+            onChangePagination(page + 1)
+        }
+    }
+
+    function goToPage({target: {value}}) {
+        if (totalSize > 0 && value > 0 && value < Math.ceil(totalSize / size)) {
+            onChangePagination(value)
+        }
     }
 
     return (
         <div className='product-pagination'>
             <div className='total-pages'>
-                <span>{page}</span> of {totalSize > 0 ? Math.ceil(totalSize / size) : 0} pages
+                <span>{page}</span> of {totalSize > 0 ? Math.ceil(totalSize / size) : 1} pages
             </div>
 
             <div className='custom-pagination'>
@@ -43,9 +51,7 @@ const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
                     onBlur={e => {
                         onChangePagination(e.target.value)
                     }}
-                    onPressEnter={e => {
-                        onChangePagination(e.target.value)
-                    }}
+                    onPressEnter={goToPage}
                 />
             </div>
         </div>

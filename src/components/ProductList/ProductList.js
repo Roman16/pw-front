@@ -41,16 +41,18 @@ class ProductList extends Component {
     };
 
     handleChangePagination = page => {
-        this.setState(
-            {
-                ...this.state,
-                paginationParams: {
-                    ...this.state.paginationParams,
-                    page: +page
-                }
-            },
-            this.getProducts
-        );
+        if (+page !== this.state.paginationParams.page) {
+            this.setState(
+                {
+                    ...this.state,
+                    paginationParams: {
+                        ...this.state.paginationParams,
+                        page: +page
+                    }
+                },
+                this.getProducts
+            );
+        }
     };
 
     handleChangePageSize = (pageSize) => {
@@ -167,16 +169,16 @@ class ProductList extends Component {
 
         return (
             <Fragment>
-                <div className={`${closedList ? 'product-list closed' : 'product-list'}`}>
+                <div className={`${closedList ? 'product-list closed' : 'product-list'} ${pathname === '/ppc/dayparting' && 'daypartin-list'}`}>
                     <div className="switch-list" onClick={() => this.setState({closedList: !closedList})}>
                         <img src={selectIcon} alt=""/>
                     </div>
 
-                    <div className="tabs">
+                   {pathname === '/ppc/dayparting' && <div className="tabs">
                         <div className='selected'>Products</div>
                         <div>Campaigns</div>
                         <div>Portfolios</div>
-                    </div>
+                    </div>}
 
                     <FilterFields
                         onSearch={this.handleSearch}

@@ -36,7 +36,7 @@ const FilterFields = ({onSearch, pathname,onSelectAll, onChangeSwitch, onlyHasNe
                 onChange={e => onSearch(e.target.value)}
             />
 
-            <div className='filter-block' onClick={() => switchWindow(!openedWindow)}>
+            <div className='filter-btn' onClick={() => switchWindow(!openedWindow)}>
                 <img src={filterIcon} alt=""/>
             </div>
 
