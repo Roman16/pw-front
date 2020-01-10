@@ -7,7 +7,8 @@ const CustomSelect = (props) => {
     const {
         onChange,
         defaultValue,
-        dropdownClassName
+        dropdownClassName,
+        value
     } = props;
 
     return (
@@ -18,6 +19,7 @@ const CustomSelect = (props) => {
             className="custom-select"
             dropdownClassName={dropdownClassName}
             getPopupContainer={trigger => trigger.parentNode}
+            value={value}
         >
             {props.children}
         </Select>

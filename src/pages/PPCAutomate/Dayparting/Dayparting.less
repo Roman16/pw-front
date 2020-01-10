@@ -3,6 +3,7 @@
 }
 
 .dayparting-page {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   font-family: ir;
@@ -219,10 +220,11 @@
         .ant-select {
           margin: 0 5px 0 25px;
           width: 70px;
+          padding: 0 0 5px 0;
+          border-bottom: 1px solid #656A84;
 
           .ant-select-selection {
             border: 0;
-            border-bottom: 1px solid #656A84;
             border-radius: 0;
           }
         }
@@ -409,13 +411,17 @@
           box-sizing: border-box;
           border-radius: 4px;
           padding: 0 10px;
-
           font-weight: 600;
           color: #343C5A;
 
           img {
             width: 1.1428571428571428rem;
             //margin: 0 10px 0 0;
+          }
+
+          &:hover {
+            box-shadow: 0px 12px 18px rgba(44, 48, 58, 0.2),
+            0px 0px 22px rgba(44, 48, 58, 0.2);
           }
         }
       }
