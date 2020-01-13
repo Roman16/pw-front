@@ -29,7 +29,7 @@ const defaultList = [
     {
         day: 'Thursday',
         shortName: 'Thue',
-        value: Array.from({length: 24}, () => false)
+        value: Array.from({length: 24}, () => true)
     },
     {
         day: 'Friday',
@@ -60,16 +60,15 @@ let intervalId = null;
 
 const DaySwitches = () => {
 
-    const [hoursStatus, setStatus] = useState([...defaultList.map(item => ({
-        ...item,
-        value: [...item.value]
-    }))]);
+    const [hoursStatus, setStatus] = useState([...defaultList]);
 
     function handleReset() {
-        setStatus(hoursStatus.map(item => ({
+        let newList = [...defaultList];
+        newList = newList.map(item => ({
             ...item,
             value: Array.from({length: 24}, () => false)
-        })))
+        }));
+        setStatus(newList)
     }
 
     function handleSwitchHour(dayIndex, timeIndex, value) {
@@ -133,12 +132,9 @@ const DaySwitches = () => {
                 }
             })
             .on('stop', (event) => {
-                let newList = [...defaultList.map(item => ({
-                    ...item,
-                    value: [...item.value]
-                }))];
-
+                let newList = [...defaultList];
                 const allSelected = document.querySelectorAll('.statistic-information.selected');
+
                 allSelected.forEach(item => {
                     newList[item.getAttribute('rowindex')].value[item.getAttribute('columnindex')] = true;
                 });
@@ -195,7 +191,7 @@ const DaySwitches = () => {
 
                                 <div
                                     onClick={() => handleSwitchHour(dayIndex, timeIndex, status)}
-                                    className={status ? 'statistic-information selected' : 'statistic-information'}
+                                    className={status ? 'statistic-information active' : 'statistic-information'}
                                     rowindex={dayIndex}
                                     columnindex={timeIndex}
                                     value={status}

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {
     BarChart, Cell, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Text
 } from 'recharts';
+import {metricsList} from "../metricsList";
 
 const CustomBar = (props) => {
     const {
@@ -20,28 +21,51 @@ const CustomBar = (props) => {
     }
 };
 
+const ChartTooltip = ({payload, metric}) => {
+    if (payload.length > 0) {
+        const selectedMetric = metricsList.find(item => item.key === metric);
+
+        return (
+            <div className='chart-tooltip'>
+                <div className='ant-popover-inner-content'>
+                    <h3>{payload[0].payload.name}</h3>
+                    <span className='selected-metric'>{selectedMetric.title}</span>
+                    <div className="value">
+                        <div style={{background: '#6D6DF6'}}/>
+
+                        {selectedMetric.type === 'currency' ? `${payload[0].value}$` : (selectedMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+
+                    </div>
+
+                </div>
+            </div>
+        )
+    } else {
+        return '';
+    }
+};
 
 const data = [
     {
-        name: 'S', clicks: 140,
+        name: 'Sunday', clicks: 140,
     },
     {
-        name: 'M', clicks: 150,
+        name: 'Monday', clicks: 150,
     },
     {
-        name: 'T', clicks: 289,
+        name: 'Tuesday', clicks: 289,
     },
     {
-        name: 'W', clicks: 1228,
+        name: 'Wednesday', clicks: 1228,
     },
     {
-        name: 'T', clicks: 1280,
+        name: 'Thursday', clicks: 1280,
     },
     {
-        name: 'F', clicks: 110,
+        name: 'Friday', clicks: 110,
     },
     {
-        name: 'S', clicks: 170,
+        name: 'Saturday', clicks: 170,
     },
 ];
 
@@ -49,17 +73,17 @@ const data = [
 const CustomizedAxisTick = (props) => {
     if (props.index === 1) {
         return <Text {...props} x={17} textLength={30} text-anchor="middle"
-                     alignment-baseline="central">{props.payload.value}</Text>;
+                     alignment-baseline="central">{props.payload.value[0]}</Text>;
     } else if (props.index === 3) {
         return <Text {...props} x={18} textLength={30} text-anchor="middle"
-                     alignment-baseline="central">{props.payload.value}</Text>;
+                     alignment-baseline="central">{props.payload.value[0]}</Text>;
     } else {
         return <Text {...props} x={15} textLength={30} text-anchor="middle"
-                     alignment-baseline="central">{props.payload.value}</Text>;
+                     alignment-baseline="central">{props.payload.value[0]}</Text>;
     }
 };
 
-const DayChart = () => {
+const DayChart = ({filteredMetric}) => {
     const [focusBar, setFocusBar] = useState(null);
 
     return (
@@ -97,6 +121,11 @@ const DayChart = () => {
                     <Tooltip
                         cursor={false}
                         isAnimationActive={false}
+                        content={
+                            <ChartTooltip
+                                metric={filteredMetric}
+                            />
+                        }
                     />
 
                     <Bar

@@ -12,13 +12,19 @@ import shortid from "shortid";
 
 // eslint-disable-next-line no-unused-vars
 class Dayparting extends Component {
-    state = {};
+    state = {
+        filteredMetric: 'clicks'
+    };
 
     handleReloadDate = () => {
 
     };
 
     render() {
+        const {
+            filteredMetric,
+        } = this.state;
+
         return (
             <div className='dayparting-page'>
                 <div className='last-synced'>
@@ -45,10 +51,12 @@ class Dayparting extends Component {
 
                 <SpendStatistics
                     data={[]}
+                    filteredMetric={filteredMetric}
                 />
 
                 <ChartStatistics
-
+                    onSelectMetric={(metric) => this.setState({filteredMetric: metric})}
+                    filteredMetric={filteredMetric}
                 />
 
                 <DaySwitches

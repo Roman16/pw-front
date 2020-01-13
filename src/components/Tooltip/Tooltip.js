@@ -7,11 +7,12 @@ import warningIcon from '../../assets/img/icons/warningSmall.svg';
 import './Tooltips.less';
 
 const InformationTooltip = (props) => {
-    const {title, description, position, type} = props;
+    const {title, description, position, type, className} = props;
 
     return (
-        <div className="custom-tooltip information-tooltip" onClick={e => e.stopPropagation()}>
+        <div className={`${className} custom-tooltip information-tooltip`} onClick={e => e.stopPropagation()}>
             <Popover
+                {...props}
                 content={typeof description === 'object' ? description :
                     <span dangerouslySetInnerHTML={{__html: description}}/>}
                 title={title || false}

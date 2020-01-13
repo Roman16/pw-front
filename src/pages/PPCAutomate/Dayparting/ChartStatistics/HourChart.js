@@ -1,5 +1,7 @@
-import React, {useState} from "react";
+import React, {Fragment, useState} from "react";
 import {Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {colorList} from "../colorList";
+import {metricsList} from "../metricsList";
 
 const CustomBar = (props) => {
     const {
@@ -15,6 +17,30 @@ const CustomBar = (props) => {
         );
     } else {
         return 0
+    }
+};
+
+const ChartTooltip = ({payload, metric}) => {
+    if (payload.length > 0) {
+        const selectedMetric = metricsList.find(item => item.key === metric);
+
+        return (
+            <div className='chart-tooltip'>
+                <div className='ant-popover-inner-content'>
+                    <h3>{payload[0].payload.name}</h3>
+                    <span className='selected-metric'>{selectedMetric.title}</span>
+                    <div className="value">
+                        <div style={{background: '#6D6DF6'}}/>
+
+                        {selectedMetric.type === 'currency' ? `${payload[0].value}$` : (selectedMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+
+                    </div>
+
+                </div>
+            </div>
+        )
+    } else {
+        return '';
     }
 };
 
@@ -93,7 +119,7 @@ const data = [
     },
 ];
 
-const HourChart = () => {
+const HourChart = ({filteredMetric}) => {
     const [focusBar, setFocusBar] = useState(null);
 
     return (
@@ -118,11 +144,16 @@ const HourChart = () => {
                 >
                     <XAxis type="category" dataKey="name" interval={2}/>
 
-                    <YAxis  type="number" hide={true}/>
+                    <YAxis type="number" hide={true}/>
 
                     <Tooltip
                         cursor={false}
                         isAnimationActive={false}
+                        content={
+                            <ChartTooltip
+                                metric={filteredMetric}
+                            />
+                        }
                     />
 
                     <Bar

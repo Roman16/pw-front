@@ -1,10 +1,12 @@
-import React from "react";
+import React, {Fragment} from "react";
 import moment from "moment";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import {colorList} from "./colorList";
 import shortid from "shortid";
 import plusIcon from '../../../assets/img/icons/plus-white.svg';
+import plusIconGray from '../../../assets/img/icons/plus-gray.svg';
 import soon from "../../../assets/img/icons/soon.svg";
+import {metricsList} from "./metricsList";
 
 const data = [
     {
@@ -37,11 +39,25 @@ const data = [
     },
 ];
 
-const TooltipDescription = ({value}) => {
-    return (<span>{value}$</span>)
+const TooltipDescription = ({value, day, metric}) => {
+    const selectedMetric = metricsList.find(item => item.key === metric);
+
+    return (
+        <Fragment>
+            <h3>{day}</h3>
+            <span className='selected-metric'>{selectedMetric.title}</span>
+
+            <div className="value">
+                <div
+                    style={{background: colorList.find(item => value > item.min && value <= item.max).color || '#464898'}}/>
+
+                {selectedMetric.type === 'currency' ? `${value}$` : (selectedMetric.type === 'percent' ? `${value} %` : value)}
+            </div>
+        </Fragment>
+    )
 };
 
-const SpendStatistics = () => {
+const SpendStatistics = ({filteredMetric}) => {
     return (
         <section className='spend-statistics'>
             <div className="section-header">
@@ -52,8 +68,8 @@ const SpendStatistics = () => {
                     Out of Budget
                 </div>
 
-                <button className='btn default'>
-                    <img src={plusIcon} alt=""/>
+                <button className='btn default' disabled>
+                    <img src={plusIconGray} alt=""/>
                     Add budget
 
                     <img src={soon} alt="" className="soon"/>
@@ -73,9 +89,16 @@ const SpendStatistics = () => {
                                 </div>}
 
                                 <InformationTooltip
+                                    getPopupContainer={trigger => trigger.parentNode}
                                     type={'custom'}
-                                    title={day.day}
-                                    description={<TooltipDescription value={time}/>}
+                                    className={'chart-tooltip'}
+                                    description={
+                                        <TooltipDescription
+                                            value={time}
+                                            day={day.day}
+                                            metric={filteredMetric}
+                                        />
+                                    }
                                 >
                                     <div className='statistic-information'
                                          style={{background: colorList.find(item => time > item.min && time <= item.max).color || '#464898'}}/>
