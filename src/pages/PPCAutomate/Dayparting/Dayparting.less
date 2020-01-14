@@ -384,6 +384,7 @@
             flex: 1;
             display: flex;
             align-items: center;
+            flex-wrap: nowrap;
 
             &:last-child {
               margin: 0 0 15px 0;
@@ -424,11 +425,11 @@
       .yaxis {
         display: flex;
         flex-direction: column;
-        width: 30px;
+        width: 2.142857142857143rem;
         border-right: 1px solid #C9CBD4;
         text-align: center;
-        margin: 0 10px 0 0;
-        padding: 0 15px 15px 0;
+        margin: 0 0.7142857142857143rem 0 0;
+        padding: 0 1.0714285714285714rem 15px 0;
 
         .day-name {
           height: 1.1428571428571428rem;
@@ -445,7 +446,7 @@
         display: flex;
         justify-content: space-between;
         padding: 10px 0 0 0;
-        margin: 0 0 0 30px;
+        margin: 0 0 0 2.142857142857143rem;
 
         div {
           position: relative;
@@ -591,6 +592,12 @@
             }
           }
         }
+      }
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      & {
+        padding-right: 3px;
       }
     }
   }
