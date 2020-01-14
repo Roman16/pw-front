@@ -110,14 +110,9 @@ const Sidebar = () => {
         >
             <div className="sidebar-header">
                 <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed}/>
-                {production ? <Link to="/" className="sidebar-logo">
-                        <img className="logo" src={logo} alt="logo"/>
-                    </Link>
-                    :
-                    <Link to="/ppc/dashboard" className="sidebar-logo">
-                        <img className="logo" src={logo} alt="logo"/>
-                    </Link>
-                }
+                <Link to="/ppc/dashboard" className="sidebar-logo">
+                    <img className="logo" src={logo} alt="logo"/>
+                </Link>
             </div>
 
             <div className="sidebar-menu">
