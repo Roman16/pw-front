@@ -1,14 +1,14 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import moment from "moment";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import {colorList} from "./colorList";
 import shortid from "shortid";
-import plusIcon from '../../../assets/img/icons/plus-white.svg';
 import plusIconGray from '../../../assets/img/icons/plus-gray.svg';
 import soon from "../../../assets/img/icons/soon.svg";
 import {metricsList} from "./metricsList";
+import {daypartingServices} from "../../../services/dayparting.services";
 
-const data = [
+const defaultData = [
     {
         day: 'Sunday',
         value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
@@ -58,6 +58,16 @@ const TooltipDescription = ({value, day, metric}) => {
 };
 
 const SpendStatistics = ({filteredMetric}) => {
+    const [data, setData] = useState(defaultData);
+
+    useEffect(() => {
+        daypartingServices.getSpendOutStatistic(filteredMetric)
+
+            .then(res => {
+                console.log(res);
+            })
+    }, [filteredMetric]);
+
     return (
         <section className='spend-statistics'>
             <div className="section-header">

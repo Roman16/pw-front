@@ -54,3 +54,10 @@ export const scannerUrls = {
     getChanges: 'ppc-scanner/get-changes-table',
     getScanning: 'ppc-scanner/scan-sp-campaigns',
 };
+
+export const daypartingUrls = {
+    spendOutBudget: '',
+    allStatistic: '',
+    dayParting: '',
+    placements: ''
+};

@@ -1,15 +1,24 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Select} from "antd";
 import CustomSelect from "../../../../components/Select/Select";
 import DayChart from './DayChart';
 import HourChart from "./HourChart";
 import DayAndHourChart from "./DayAndHourChart";
 import {metricsList} from "../metricsList";
+import {daypartingServices} from "../../../../services/dayparting.services";
 
 const Option = Select.Option;
 
 const ChartStatistics = ({onSelectMetric, filteredMetric}) => {
-    const [activeTab, setTab] = useState('day');
+    const [activeTab, setTab] = useState('day'),
+        [data, setData] = useState([]);
+
+    useEffect(() => {
+        daypartingServices.getAllStatistic(filteredMetric)
+            .then(res => {
+                console.log(res);
+            })
+    }, [filteredMetric]);
 
     return (
         <section className='chart-statistics'>

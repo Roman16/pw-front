@@ -578,12 +578,16 @@
             cursor: pointer;
             background: #E0E1E6;
 
+            &.active {
+              background: #6D6DF6;
+            }
+
             &.selected {
               background: #6D6DF6;
             }
 
-            &.active {
-              background: #6D6DF6;
+            &.removed {
+              background: #E0E1E6;
             }
           }
         }
@@ -723,7 +727,7 @@
         }
 
         .recharts-cartesian-axis-line {
-         display: none;
+          display: none;
         }
       }
 

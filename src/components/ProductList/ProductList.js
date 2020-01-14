@@ -20,6 +20,7 @@ class ProductList extends Component {
         onlyHasNew: false,
         closedList: false,
         openedProduct: '',
+        activeTab: 'products',
         paginationParams: {
             size: 10,
             page: 1,
@@ -149,6 +150,12 @@ class ProductList extends Component {
                     }
                 }, this.getProducts);
             }
+
+            if (this.props.pathname !== '/ppc/dayparting') {
+                this.setState({
+                    activeTab: 'products'
+                })
+            }
         }
     }
 
@@ -163,21 +170,38 @@ class ProductList extends Component {
                 openedProduct,
                 onlyHasNew,
                 closedList,
+                activeTab,
                 paginationParams: {size, page}
             } = this.state,
             {products, selectedProduct, totalSize, onlyOptimization, pathname} = this.props;
 
         return (
             <Fragment>
-                <div className={`${closedList ? 'product-list closed' : 'product-list'} ${pathname === '/ppc/dayparting' && 'daypartin-list'}`}>
+                <div
+                    className={`${closedList ? 'product-list closed' : 'product-list'} ${pathname === '/ppc/dayparting' && 'daypartin-list'}`}>
                     <div className="switch-list" onClick={() => this.setState({closedList: !closedList})}>
                         <img src={selectIcon} alt=""/>
                     </div>
 
-                   {pathname === '/ppc/dayparting' && <div className="tabs">
-                        <div className='selected'>Products</div>
-                        <div>Campaigns</div>
-                        <div>Portfolios</div>
+                    {pathname === '/ppc/dayparting' && <div className="tabs">
+                        <div
+                            className={activeTab === 'products' ? 'selected' : ''}
+                            onClick={() => this.setState({activeTab: 'products'})}
+                        >
+                            Products
+                        </div>
+                        <div
+                            className={activeTab === 'campaigns' ? 'selected' : ''}
+                            onClick={() => this.setState({activeTab: 'campaigns'})}
+                        >
+                            Campaigns
+                        </div>
+                        <div
+                            className={activeTab === 'portfolios' ? 'selected' : ''}
+                            onClick={() => this.setState({activeTab: 'portfolios'})}
+                        >
+                            Portfolios
+                        </div>
                     </div>}
 
                     <FilterFields
@@ -212,7 +236,7 @@ class ProductList extends Component {
                         </div>}
                     </div>
 
-                    <div className='products'>
+                    {activeTab === 'products' && <div className='products'>
                         {products && products.map(product => (
                             <ProductItem
                                 key={product.id}
@@ -228,7 +252,23 @@ class ProductList extends Component {
                                 pathname={pathname}
                             />
                         ))}
-                    </div>
+                    </div>}
+
+                    {activeTab === 'campaigns' && <div className='campaigns-list'>
+                        {[0, 1, 2, 3, 4].map(item => (
+                            <div className={item === 0 ? 'active' : ''}>
+                                <span>LETSCOM Bluetooth Headphones</span>
+                            </div>
+                        ))}
+                    </div>}
+
+                    {activeTab === 'portfolios' && <div className='portfolios-list'>
+                        {[0, 1, 2, 3, 4].map(item => (
+                            <div className={item === 0 ? 'active' : ''}>
+                                <span>LETSCOM Bluetooth Headphones</span>
+                            </div>
+                        ))}
+                    </div>}
 
 
                     <ProductPagination

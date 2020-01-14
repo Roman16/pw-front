@@ -1,4 +1,4 @@
-import React, {useState, Component, useEffect} from 'react';
+import React, {Component} from 'react';
 import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
 import {Switch} from "antd";
 import moment from "moment";
@@ -29,7 +29,7 @@ const defaultList = [
     {
         day: 'Thursday',
         shortName: 'Thue',
-        value: Array.from({length: 24}, () => true)
+        value: Array.from({length: 24}, () => false)
     },
     {
         day: 'Friday',
@@ -58,58 +58,70 @@ const selection = Selection.create({
 
 let intervalId = null;
 
-const DaySwitches = () => {
-
-    const [hoursStatus, setStatus] = useState([...defaultList]);
-
-    function handleReset() {
-        let newList = [...defaultList];
-        newList = newList.map(item => ({
+class DaySwitches extends Component {
+    state = {
+        hoursStatus: [...defaultList.map(item => ({
             ...item,
-            value: Array.from({length: 24}, () => false)
-        }));
-        setStatus(newList)
-    }
+            value: [...item.value]
+        }))]
+    };
 
-    function handleSwitchHour(dayIndex, timeIndex, value) {
-        let newList = [...hoursStatus];
+    handleReset = () => {
+        let newList = [...this.state.hoursStatus];
+
+        this.setState({
+            hoursStatus: [...newList.map(item => ({
+                ...item,
+                value: Array.from({length: 24}, () => false)
+            }))]
+        });
+    };
+
+    handleSwitchHour = (dayIndex, timeIndex, value) => {
+        let newList = [...this.state.hoursStatus];
         newList[dayIndex].value[timeIndex] = !value;
 
-        setStatus(newList)
-    }
+        this.setState({
+            newList: [...newList]
+        })
+    };
 
-    function handleSwitchRow(row, value) {
-        let newList = [...hoursStatus];
+    handleSwitchRow = (row, value) => {
+        let newList = [...this.state.hoursStatus];
         newList[row].value = Array.from({length: 24}, () => !value);
 
-        setStatus(newList)
-    }
+        this.setState({
+            newList: [...newList]
+        })
+    };
 
-    function handleSwitchColumn(column, value) {
-        let newList = [...hoursStatus];
+    handleSwitchColumn = (column, value) => {
+        let newList = [...this.state.hoursStatus];
 
         newList.forEach(item => {
             item.value[column] = !value
         });
 
-        setStatus(newList)
-    }
+        this.setState({
+            newList: [...newList]
+        })
+    };
 
-    useEffect(() => {
+    componentDidMount() {
         let status = 'false';
 
         selection
             .on('start', ({selected}) => {
-                if (selected[0]) {
+                if (selected.length > 0) {
                     status = selected[0].getAttribute('value');
                 }
             })
             .on('move', (event) => {
-                const {changed: {removed, added}, selected} = event;
-                // Add a custom class to the elements that where selected.
+                const {changed: {removed}, selected} = event;
                 if (selected.length > 0) {
                     if (status === 'false') {
                         for (const el of selected) {
+                            el.classList.remove('removed');
                             el.classList.add('selected');
                         }
 
@@ -120,91 +132,108 @@ const DaySwitches = () => {
                         }
                     } else {
                         for (const el of selected) {
-                            el.classList.remove('selected');
+                            el.classList.add('removed');
                         }
 
                         if (removed.length > 0) {
                             for (const el of removed) {
-                                el.classList.add('selected');
+                                el.classList.remove('removed');
                             }
                         }
                     }
                 }
             })
-            .on('stop', (event) => {
-                let newList = [...defaultList];
-                const allSelected = document.querySelectorAll('.statistic-information.selected');
+            .on('stop', ({selected}) => {
+                let newList = [...this.state.hoursStatus];
 
-                allSelected.forEach(item => {
-                    newList[item.getAttribute('rowindex')].value[item.getAttribute('columnindex')] = true;
-                });
+                for (const el of selected) {
+                    el.classList.remove('removed');
+                    el.classList.remove('selected');
+                }
 
-                setStatus(newList);
+                if (selected.length > 0) {
+                    if (status === 'false') {
+                        selected.forEach(item => {
+                            newList[item.getAttribute('rowindex')].value[item.getAttribute('columnindex')] = true;
+                        });
+                    } else {
+                        selected.forEach(item => {
+                            newList[item.getAttribute('rowindex')].value[item.getAttribute('columnindex')] = false;
+                        });
+                    }
+                }
+
+                this.setState({
+                    newList: [...newList]
+                })
             });
-    }, []);
+    }
 
-    return (
-        <section className='day-switches'>
-            <div className="section-header">
-                <h2>Day parting</h2>
+    render() {
+        const {hoursStatus} = this.state;
 
-                <div className='actions'>
-                    <div className='disabled-example'>
-                        <div/>
-                        Disabled
-                    </div>
+        return (
+            <section className='day-switches'>
+                <div className="section-header">
+                    <h2>Day parting</h2>
 
-                    <div className='active-example'>
-                        <div/>
-                        Active
-                    </div>
-
-                    <button onClick={handleReset}>
-                        <img src={reloadIcon} alt=""/>
-                        Reset
-                    </button>
-                </div>
-            </div>
-
-            <div className="switches">
-                {hoursStatus.map((day, dayIndex) => (
-                    <div className="row" key={shortid.generate()}>
-                        <div className='day-name'>
-                            <Switch
-                                checked={day.value.every(item => item)}
-                                onChange={() => handleSwitchRow(dayIndex, day.value.every(item => item))}
-                            />
-                            <span>
-                                 {window.devicePixelRatio === 2 ? day.shortName[0] : day.shortName}
-                            </span>
+                    <div className='actions'>
+                        <div className='disabled-example'>
+                            <div/>
+                            Disabled
                         </div>
 
-                        {day.value.map((status, timeIndex) => (
-                            <div className='statistic-item' key={shortid.generate()}>
-                                {dayIndex === 0 && <div className="time-name">
-                                    {moment(timeIndex + 1, 'HH').format('hh A')}
-                                    <Switch
-                                        checked={hoursStatus.every(item => item.value[timeIndex])}
-                                        onChange={() => handleSwitchColumn(timeIndex, hoursStatus.every(item => item.value[timeIndex]))}
-                                    />
-                                </div>}
+                        <div className='active-example'>
+                            <div/>
+                            Active
+                        </div>
 
-                                <div
-                                    onClick={() => handleSwitchHour(dayIndex, timeIndex, status)}
-                                    className={status ? 'statistic-information active' : 'statistic-information'}
-                                    rowindex={dayIndex}
-                                    columnindex={timeIndex}
-                                    value={status}
-                                />
-                            </div>
-                        ))}
+                        <button onClick={this.handleReset}>
+                            <img src={reloadIcon} alt=""/>
+                            Reset
+                        </button>
                     </div>
-                ))}
-            </div>
-        </section>
-    )
-};
+                </div>
 
+                <div className="switches">
+                    {hoursStatus.map((day, dayIndex) => (
+                        <div className="row" key={shortid.generate()}>
+                            <div className='day-name'>
+                                <Switch
+                                    checked={day.value.every(item => item)}
+                                    onChange={() => this.handleSwitchRow(dayIndex, day.value.every(item => item))}
+                                />
+                                <span>
+                                 {window.devicePixelRatio === 2 ? day.shortName[0] : day.shortName}
+                            </span>
+                            </div>
+
+                            {day.value.map((status, timeIndex) => (
+                                <div className='statistic-item' key={shortid.generate()}>
+                                    {dayIndex === 0 && <div className="time-name">
+                                        {moment(timeIndex + 1, 'HH').format('hh A')}
+                                        <Switch
+                                            checked={hoursStatus.every(item => item.value[timeIndex])}
+                                            onChange={() => this.handleSwitchColumn(timeIndex, hoursStatus.every(item => item.value[timeIndex]))}
+                                        />
+                                    </div>}
+
+                                    <div
+                                        onClick={() => this.handleSwitchHour(dayIndex, timeIndex, status)}
+                                        className={status ? 'statistic-information active' : 'statistic-information'}
+                                        rowindex={dayIndex}
+                                        columnindex={timeIndex}
+                                        value={status}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            </section>
+        )
+    }
+}
 
 export default DaySwitches
 

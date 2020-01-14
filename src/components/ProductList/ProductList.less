@@ -61,6 +61,7 @@
         color: #6D6DF6;
         font-weight: 600;
         border-bottom: 2px solid #6D6DF6;
+        padding: 22px 0 20px 0;
       }
     }
   }
@@ -69,6 +70,37 @@
     overflow: auto;
     margin-bottom: 20px;
     margin-top: 5px;
+  }
+
+  .campaigns-list,
+  .portfolios-list {
+    overflow: auto;
+
+    div {
+      min-height: 4rem;
+      display: flex;
+      align-items: center;
+      padding: 0 1.1428571428571428rem;
+      margin: 0.2857142857142857rem 0;
+      background: #FFFFFF;
+      border: 1px solid #F5F5FF;
+      border-radius: 8px;
+      font-family: ir;
+      font-size: 1rem;
+      color: #343C5A;
+      opacity: 0.5;
+      cursor: pointer;
+
+      span {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      &.active {
+        opacity: 1;
+      }
+    }
   }
 
   .switch-list {
@@ -170,11 +202,8 @@
         display: flex;
         justify-content: space-between;
       }
-
-
     }
   }
-
 
   .page-items-block {
     width: 100%;
@@ -296,7 +325,7 @@
     flex-direction: column;
     justify-content: center;
     padding: 0.7142857142857143rem 1.5714285714285714rem 0.7142857142857143rem 0.8571428571428571rem;
-    margin: 0.285714286em;
+    margin: 0.2857142857142857rem 0;
     position: relative;
     min-height: 5.714285714285714rem;
     opacity: 0.5;
