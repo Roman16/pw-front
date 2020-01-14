@@ -53,3 +53,10 @@ export const scannerUrls = {
     scanStatus: 'ppc-scanner/get-scan-status',
     getChanges: 'ppc-scanner/get-changes-table',
 };
+
+export const daypartingUrls = {
+    spendOutBudget: '',
+    allStatistic: '',
+    dayParting: '',
+    placements: ''
+};

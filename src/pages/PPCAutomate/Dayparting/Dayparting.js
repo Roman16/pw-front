@@ -50,7 +50,6 @@ class Dayparting extends Component {
                 </div>
 
                 <SpendStatistics
-                    data={[]}
                     filteredMetric={filteredMetric}
                 />
 
