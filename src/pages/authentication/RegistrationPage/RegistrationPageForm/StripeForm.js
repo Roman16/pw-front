@@ -4,8 +4,7 @@ import {Select} from 'antd';
 import {CardNumberElement, CardExpiryElement, CardCvcElement} from 'react-stripe-elements';
 import {userService} from '../../../../services/user.services';
 
-import {states} from '../../../../utils/states';
-import {allCountries} from '../../../../utils/countries';
+import {countries} from '../../../../utils/countries';
 
 
 const {Option} = Select;
@@ -111,20 +110,18 @@ const StripeForm = ({stripeElementChange, onChangeInput, onChangeCountry, onChan
                 </div>
                 <div className="card-container__country">
                     <label className="label">Country</label>
-                    <Select onChange={handleSelectCountry}>
-                        {countriesList.map(item => (
-                            <Option key={item.id}>{allCountries[item.id]}</Option>
+                    <Select
+                        showSearch
+                        filterOption={(input, option) =>
+                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                        onChange={handleSelectCountry}
+                    >
+                        {countries.map(item => (
+                            <Option key={item.code} value={item.code}>{item.name}</Option>
                         ))}
                     </Select>
                 </div>
-                {/*{selectedCountry === 'US' && <div className="card-container__state">*/}
-                {/*    <label className="label">State</label>*/}
-                {/*    <Select onChange={onChangeState}>*/}
-                {/*        {states.map(item => (*/}
-                {/*            <Option key={item.abbreviation}>{item.name}</Option>*/}
-                {/*        ))}*/}
-                {/*    </Select>*/}
-                {/*</div>}*/}
 
                 <div className="card-container__zip">
                     <label className="label">State</label>

@@ -4,7 +4,7 @@ import {Link, NavLink} from "react-router-dom";
 import {Icon, Avatar} from "antd";
 import shortid from "shortid";
 import {debounce} from "throttle-debounce";
-
+import referIcon from '../../assets/img/icons/refer-icon.svg';
 import {regionsMenu, ppcAutomateMenu} from "./menu";
 import {getClassNames} from "../../utils";
 import {userActions} from "../../actions/user.actions";
@@ -23,6 +23,7 @@ const domainName =
         : "";
 
 const production = process.env.REACT_APP_ENV === "production";
+const devicePixelRatio = window.devicePixelRatio;
 
 function useWindowSize() {
     const isClient = typeof window === "object";
@@ -109,14 +110,9 @@ const Sidebar = () => {
         >
             <div className="sidebar-header">
                 <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed}/>
-                {production ? <Link to="/" className="sidebar-logo">
-                        <img className="logo" src={logo} alt="logo"/>
-                    </Link>
-                    :
-                    <Link to="/ppc/dashboard" className="sidebar-logo">
-                        <img className="logo" src={logo} alt="logo"/>
-                    </Link>
-                }
+                <Link to="/ppc/dashboard" className="sidebar-logo">
+                    <img className="logo" src={logo} alt="logo"/>
+                </Link>
             </div>
 
             <div className="sidebar-menu">
@@ -193,8 +189,10 @@ const Sidebar = () => {
                                                     className="automate-link"
                                                     activeClassName="automate-link-active"
                                                     exact
-                                                    to={item.soon ? '/' : `/ppc${item.link}`}
-                                                    onClick={e => {if(item.soon) e.preventDefault()}}
+                                                    to={item.soon && production ? '/' : `/ppc${item.link}`}
+                                                    onClick={e => {
+                                                        if (item.soon && production) e.preventDefault()
+                                                    }}
                                                 >
                                                     {item.title}
                                                     {item.soon && <img className="soon" src={soon} alt="soon"/>}
@@ -220,8 +218,10 @@ const Sidebar = () => {
                                                         className="automate-link"
                                                         activeClassName="automate-link-active"
                                                         exact
-                                                        to={item.soon ? '/' : `/ppc${item.link}`}
-                                                        onClick={e => {if(item.soon) e.preventDefault()}}
+                                                        to={(item.soon && production) ? '/' : `/ppc${item.link}`}
+                                                        onClick={e => {
+                                                            if (item.soon && production) e.preventDefault()
+                                                        }}
                                                     >
                                                         {item.title}
                                                         {item.soon && <img className="soon" src={soon} alt="soon"/>}
@@ -234,6 +234,16 @@ const Sidebar = () => {
                             </li>
                         </ul>
                     </nav>
+                </div>
+
+                <div className="refer-link">
+                    <Link to={'/affiliates'}>
+                        <img src={referIcon} alt=""/>
+                        {devicePixelRatio === 2 ? <span className="bottom-span">Refer sellers! <br/> Get Cash</span>
+                            :
+                            <span className="bottom-span">Refer sellers! Get Cash</span>}
+
+                    </Link>
                 </div>
 
                 <nav className="bottom-nav">

@@ -57,7 +57,8 @@ const AuthorizedUser = (props) => {
 
                 {(pathname === '/ppc/optimization' ||
                     pathname === '/ppc/report' ||
-                    pathname === '/ppc/scanner'
+                    pathname === '/ppc/scanner' ||
+                    pathname === '/ppc/dayparting'
                 ) &&
                 <ProductList
                     pathname={props.children.props.location.pathname}

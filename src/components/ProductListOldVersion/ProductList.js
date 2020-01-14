@@ -1,16 +1,13 @@
 import React, {Component, Fragment} from 'react';
 import ProductItem from './ProductItem';
 import {connect} from 'react-redux';
-import {Select} from 'antd';
+import {Input, Pagination, Switch} from 'antd';
 import {productsActions} from '../../actions/products.actions';
 import './ProductList.less';
+import SelectAllProduct from './SelectAllProducts';
 import {debounce} from 'throttle-debounce';
-import FilterFields from "./FilterFields";
-import CustomSelect from "../Select/Select";
-import ProductPagination from "./ProductPagination";
-import selectIcon from "../../assets/img/icons/select-icon.svg";
 
-const Option = Select.Option;
+const {Search} = Input;
 
 class ProductList extends Component {
     state = {
@@ -18,9 +15,7 @@ class ProductList extends Component {
         prevProductId: '',
         onlyOptimization: this.props.onlyOptimization || false,
         onlyHasNew: false,
-        closedList: false,
         openedProduct: '',
-        activeTab: 'products',
         paginationParams: {
             size: 10,
             page: 1,
@@ -42,28 +37,12 @@ class ProductList extends Component {
     };
 
     handleChangePagination = page => {
-        if (+page !== this.state.paginationParams.page) {
-            this.setState(
-                {
-                    ...this.state,
-                    paginationParams: {
-                        ...this.state.paginationParams,
-                        page: +page
-                    }
-                },
-                this.getProducts
-            );
-        }
-    };
-
-    handleChangePageSize = (pageSize) => {
         this.setState(
             {
                 ...this.state,
                 paginationParams: {
                     ...this.state.paginationParams,
-                    page: 1,
-                    size: pageSize
+                    page
                 }
             },
             this.getProducts
@@ -150,12 +129,6 @@ class ProductList extends Component {
                     }
                 }, this.getProducts);
             }
-
-            if (this.props.pathname !== '/ppc/dayparting') {
-                this.setState({
-                    activeTab: 'products'
-                })
-            }
         }
     }
 
@@ -169,75 +142,49 @@ class ProductList extends Component {
                 isSelectedAll,
                 openedProduct,
                 onlyHasNew,
-                closedList,
-                activeTab,
                 paginationParams: {size, page}
             } = this.state,
             {products, selectedProduct, totalSize, onlyOptimization, pathname} = this.props;
 
+
         return (
             <Fragment>
-                <div
-                    className={`${closedList ? 'product-list closed' : 'product-list'} ${pathname === '/ppc/dayparting' && 'daypartin-list'}`}>
-                    <div className="switch-list" onClick={() => this.setState({closedList: !closedList})}>
-                        <img src={selectIcon} alt=""/>
+                <div className="product-list">
+                    <div className="search-product">
+                        <Search
+                            placeholder="Search by product name, ASIN, or SKU"
+                            onChange={e => this.handleSearch(e.target.value)}
+                        />
+
+                        <div className="select-all-products">
+                            <SelectAllProduct
+                                onSelectAll={this.selectAll}
+                                selectedSize={selectedSize}
+                                isSelectedAll={isSelectedAll}
+                                disabled={(products && products.length === 0) || this.props.pathname === '/ppc/scanner'}
+                            />
+
+                            <div className="active-only">
+                                <label htmlFor="">On optimization only</label>
+                                <Switch
+                                    checked={onlyOptimization}
+                                    onChange={e => this.handleChangeSwitch(e, 'onlyOptimization')}
+                                />
+                            </div>
+                        </div>
                     </div>
 
-                    {pathname === '/ppc/dayparting' && <div className="tabs">
-                        <div
-                            className={activeTab === 'products' ? 'selected' : ''}
-                            onClick={() => this.setState({activeTab: 'products'})}
-                        >
-                            Products
-                        </div>
-                        <div
-                            className={activeTab === 'campaigns' ? 'selected' : ''}
-                            onClick={() => this.setState({activeTab: 'campaigns'})}
-                        >
-                            Campaigns
-                        </div>
-                        <div
-                            className={activeTab === 'portfolios' ? 'selected' : ''}
-                            onClick={() => this.setState({activeTab: 'portfolios'})}
-                        >
-                            Portfolios
-                        </div>
-                    </div>}
+                    {/*{pathname === '/ppc/report' && <div className='has-new-reports-only'>*/}
+                    {/*    <label htmlFor="">Has new reports only</label>*/}
+                    {/*    <Switch*/}
+                    {/*        checked={onlyHasNew}*/}
+                    {/*        onChange={e => this.handleChangeSwitch(e, 'onlyHasNew')}*/}
+                    {/*    />*/}
+                    {/*</div>}*/}
 
-                    <FilterFields
-                        onSearch={this.handleSearch}
-                        onSelectAll={this.selectAll}
-                        onChangeSwitch={this.handleChangeSwitch}
-
-                        pathname={pathname}
-                        selectedSize={selectedSize}
-                        isSelectedAll={isSelectedAll}
-                        onlyHasNew={onlyHasNew}
-                        disabled={!products || (products && products.length === 0) || this.props.pathname === '/ppc/scanner'}
-                    />
-
-                    <div className='page-items-block'>
-                        <div className='page-size-select'>
-                            <span>Items per page:</span>
-                            <CustomSelect
-                                defaultValue="clicks"
-                                dropdownClassName={'full-width-menu'}
-                                onChange={this.handleChangePageSize}
-                                value={size}
-                            >
-                                <Option value={10}>10</Option>
-                                <Option value={50}>50</Option>
-                                <Option value={100}>100</Option>
-                            </CustomSelect>
-                        </div>
-
-                        {products && <div className='all-items'>
-                            {page * size - size + 1} - {products.length && page * size - size + products.length} of {totalSize} items
-                        </div>}
-                    </div>
-
-                    {activeTab === 'products' && <div className='products'>
-                        {products && products.map(product => (
+                    <div className='products'>
+                        {products &&
+                        products.map(product => (
                             <ProductItem
                                 key={product.id}
                                 product={product}
@@ -252,31 +199,21 @@ class ProductList extends Component {
                                 pathname={pathname}
                             />
                         ))}
-                    </div>}
+                    </div>
 
-                    {activeTab === 'campaigns' && <div className='campaigns-list'>
-                        {[0, 1, 2, 3, 4].map(item => (
-                            <div className={item === 0 ? 'active' : ''}>
-                                <span>LETSCOM Bluetooth Headphones</span>
-                            </div>
-                        ))}
-                    </div>}
+                    {totalSize > size && (
+                        <Pagination
+                            defaultCurrent={1}
+                            pageSize={size}
+                            total={totalSize}
+                            current={page}
+                            onChange={this.handleChangePagination}
+                        />
+                    )}
+                </div>
 
-                    {activeTab === 'portfolios' && <div className='portfolios-list'>
-                        {[0, 1, 2, 3, 4].map(item => (
-                            <div className={item === 0 ? 'active' : ''}>
-                                <span>LETSCOM Bluetooth Headphones</span>
-                            </div>
-                        ))}
-                    </div>}
-
-
-                    <ProductPagination
-                        page={page}
-                        totalSize={totalSize}
-                        size={size}
-                        onChangePagination={this.handleChangePagination}
-                    />
+                <div>
+                    {this.props.children}
                 </div>
             </Fragment>
         );

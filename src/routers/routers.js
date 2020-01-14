@@ -21,10 +21,10 @@ import Information from "../pages/Account/Information/Information";
 import Billing from "../pages/Account/Billing/Billing";
 import Subscription from "../pages/Account/Subscription/Subscription";
 import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
-import ProductList from "../components/ProductList/ProductList";
 import Home from "../pages/Home/Home";
 import Scanner from "../pages/PPCAutomate/Scanner/Scanner";
 import ModalWindow from "../components/ModalWindow/ModalWindow";
+import Dayparting from "../pages/PPCAutomate/Dayparting/Dayparting";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -84,8 +84,12 @@ const getConfirm = (content, callback) => {
 
 const routers = () => {
     return (
-        <Router history={history} getUserConfirmation={getConfirm}>
+        <Router history={history}>
             <Switch>
+                <Route exact path="/" render={() => {
+                    window.location = '/automation'
+                }}/>
+
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/affiliates" component={LandingAffiliates}/>
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
@@ -119,6 +123,12 @@ const routers = () => {
                     path="/ppc/scanner"
                     component={Scanner}
                 />
+
+                {developer && <ConnectedAmazonRoute
+                    exact
+                    path="/ppc/dayparting"
+                    component={Dayparting}
+                />}
 
                 <PrivateRoute exact path="/mws" component={MWS}/>
                 <PrivateRoute exact path="/ppc" component={PPC}/>

@@ -106,6 +106,12 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'currency'
     },
     {
+        title: 'Ad Profit',
+        key: 'ad_profit',
+        label: 'Total',
+        type: 'currency'
+    },
+    {
         title: 'MACoS',
         key: 'macos',
         label: 'Average',
