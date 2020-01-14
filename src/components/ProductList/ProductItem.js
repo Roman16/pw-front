@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {func, bool, string} from 'prop-types';
-import {Spin, Icon} from 'antd';
-import optimizationLabel from '../../assets/img/optimization-label.svg';
-import loaderBg from '../../assets/img/icons/loader-background.svg';
+import {Icon} from 'antd';
+import InformationTooltip from "../Tooltip/Tooltip";
 
-const maxText = text => {
-    if (text && text.length > 60) {
-        return `${text.slice(0, 60)}...`;
+const maxText = (text, length = 60) => {
+    if (text && text.length > length) {
+        return `${text.slice(0, length)}...`;
     }
 
     return text;
@@ -19,7 +18,6 @@ const ProductItem = ({
                          isActive,
                          onOpenChild,
                          openedProduct,
-                         products,
                          pathname
                      }) => {
 
@@ -37,7 +35,6 @@ const ProductItem = ({
                 <div className="image-block">
                     <div className="image">
                         <img src={image_url} alt=""/>
-
                     </div>
 
                     {variations && <div className={`open-children-list-button ${openedProduct === id && 'opened'}`}
@@ -68,15 +65,26 @@ const ProductItem = ({
                     </div>
                 </div>
 
-                {under_optimization && has_optimization_results && <div className='on-optimization'>
-                    <img src={optimizationLabel} alt=""/>
-                </div>}
+                <div className='optimization-status'>
+                    {under_optimization && has_optimization_results && <InformationTooltip
+                        arrowPointAtCenter={true}
+                        type={'custom'}
+                        description={'Product on optimization'}
+                        position={'topRight'}
+                    >
+                        <div className='on-optimization'/>
+                    </InformationTooltip>}
 
-                {under_optimization && !has_optimization_results && <div className='optimization-waiting'>
-                    <img src={loaderBg} alt=""/>
 
-                    <Spin/>
-                </div>}
+                    {under_optimization && !has_optimization_results && <InformationTooltip
+                        arrowPointAtCenter={true}
+                        type={'custom'}
+                        description={'Optimization in progress ...'}
+                        position={'topRight'}
+                    >
+                        <div className='optimization-processing'/>
+                    </InformationTooltip>}
+                </div>
             </div>
 
             {(variations) && (openedProduct === id) && <div className='product-children-list'>
@@ -85,7 +93,7 @@ const ProductItem = ({
                         <img src={childrenProduct.image_url} alt=""/>
 
                         <div className="product-item-content">
-                            <div className="caption">{maxText(childrenProduct.name)}</div>
+                            <div className="caption">{maxText(childrenProduct.name, 70)}</div>
 
                             <div className='detail'>
                                 <div className="asin">
@@ -99,15 +107,6 @@ const ProductItem = ({
                                 </div>
                             </div>
                         </div>
-
-                        {under_optimization && has_optimization_results && <div className='on-optimization'>
-                            <img src={optimizationLabel} alt=""/>
-                        </div>}
-
-                        {under_optimization && !has_optimization_results && <div className='optimization-waiting'>
-                            <img src={loaderBg} alt=""/>
-                            <Spin/>
-                        </div>}
                     </div>
                 ))}
             </div>}

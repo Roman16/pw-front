@@ -420,33 +420,33 @@
       border-color: #fff;
     }
 
-    .on-optimization {
+    .optimization-status {
       position: absolute;
-      right: 0;
-      top: 1.285714286em;
-      width: 5.714285714em;
-    }
+      right: 10px;
+      top: 0;
 
-    .optimization-waiting {
-      position: absolute;
-      right: 0;
-      top: 0.714285714em;
-      width: 5.714285714em;
+      .custom-tooltip {
+        margin: 0;
 
-      .ant-spin {
-        position: absolute;
-        right: 1.071428571em;
-        bottom: 0.714285714em;
+        .on-optimization {
+          width: 10px;
+          height: 10px;
+          background: #409600;
+          border-radius: 50%;
+        }
 
-        .ant-spin-dot-item {
-          background-color: #ec7f5c;
+        .optimization-processing {
+          width: 10px;
+          height: 10px;
+          background: #FFDC3F;
+          border-radius: 50%;
         }
       }
     }
 
     .product-children-list {
       width: 100%;
-      padding: 0.2em 0 0 5.142857143em;
+      padding: 0.5em 0 0 0;
 
       .children-information {
         font-size: 0.8rem; // 11.2px
@@ -458,9 +458,9 @@
         position: relative;
 
         img {
-          max-width: 4.464285714em;
-          max-height: 4.464285714em;
-          margin: 0 0.446428571em 0 0;
+          max-width: 2.857142857142857rem;
+          max-height: 2.857142857142857rem;
+          margin: 0 10px 0 0;
         }
 
         .caption {
@@ -468,34 +468,10 @@
         }
 
         .detail {
+          display: flex;
+          justify-content: space-between;
           span:first-child {
             font-weight: bold;
-          }
-        }
-
-        .on-optimization,
-        .optimization-waiting {
-          top: auto;
-          bottom: -0.95em;
-          right: -0.38em;
-          text-align: right;
-
-          img {
-            margin: 0;
-          }
-
-          .ant-spin {
-            right: 15%;
-            bottom: 11%;
-          }
-
-          .ant-spin-dot {
-            font-size: 0.8571428571428571rem;
-
-            i {
-              width: 5px;
-              height: 5px;
-            }
           }
         }
       }

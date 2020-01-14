@@ -9,7 +9,7 @@ import americanExpressLogo from '../../../../assets/img/american-express.svg';
 import stripeLogo from '../../../../assets/img/stripe-logo.svg';
 import {Input, Select, InputNumber} from "antd";
 import {userService} from "../../../../services/user.services";
-import {allCountries} from "../../../../utils/countries";
+import {allCountries, countries} from "../../../../utils/countries";
 import {states} from "../../../../utils/states";
 import moment from "moment";
 
@@ -149,27 +149,21 @@ const StripeForm = (props) => {
                 <div className="row">
                     <div className="form-group">
                         <label>Country</label>
-                        <Select onChange={onChangeSelect('country')} placeholder='Country'
-                                showSearch
-                                optionFilterProp="children"
-                                filterOption={(input, option) =>
-                                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }
-                                value={paymentDetails.country}>
-                            {countriesList.map(item => (
-                                <Option key={item.id}>{allCountries[item.id]}</Option>
+                        <Select
+                            onChange={onChangeSelect('country')}
+                            placeholder='Country'
+                            showSearch
+                            optionFilterProp="children"
+                            filterOption={(input, option) =>
+                                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            }
+                            value={paymentDetails.country}>
+                            {countries.map(item => (
+                                <Option key={item.code} value={item.code}>{item.name}</Option>
                             ))}
                         </Select>
                     </div>
 
-                    {/*{paymentDetails.country === 'US' && <div className="form-group">*/}
-                    {/*    <label>State</label>*/}
-                    {/*    <Select onChange={onChangeSelect('state')} placeholder='State' value={paymentDetails.state}>*/}
-                    {/*        {states.map(item => (*/}
-                    {/*            <Option key={item.abbreviation}>{item.name}</Option>*/}
-                    {/*        ))}*/}
-                    {/*    </Select>*/}
-                    {/*</div>}*/}
                     <div className="form-group">
                         <label>State</label>
                         <Input
