@@ -545,16 +545,29 @@
 
           button {
             margin: 0 5px 0 0;
+
+            @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+              & {
+                min-width: 20px;
+                width: 30px;
+                margin: 0;
+
+                span {
+                  width: 0;
+                }
+              }
+            }
           }
 
           @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
             & {
               width: 5%;
               text-align: center;
-              margin: 0 5px 0 0;
 
               span {
-                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 width: 20px;
               }
             }
@@ -562,14 +575,23 @@
         }
 
         .statistic-item {
-          min-width: 3.2rem;
-
           flex: 1;
           margin: 0 5px 0 0;
 
           .time-name {
             button {
               margin: 5px 0 10px 0;
+
+              @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+                & {
+                  min-width: 20px;
+                  width: 30px;
+
+                  span {
+                    width: 0;
+                  }
+                }
+              }
             }
           }
 
