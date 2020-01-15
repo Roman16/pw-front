@@ -65,7 +65,7 @@ const Amazon = ({amazonTokens}) => {
             {amazonTokens && <div className="approved-wrapper">
                 <div className="title-wrap">
                     {mwsConnected && <Fragment>
-                        <h3>DbvtskGoods</h3>
+                        <h3>Seller Id</h3>
                         <p>{amazonTokens.amazon_mws.seller_id}</p>
                     </Fragment>}
                 </div>
