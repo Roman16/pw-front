@@ -2,8 +2,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {Icon} from "antd";
 
-import logo from '../../../assets/img/logo_black.svg';
-import aLogo from '../../../assets/img/amazon_logo.png';
+import logo from '../../../../assets/img/logo_black.svg';
+import aLogo from '../../../../assets/img/amazon_logo.png';
 
 import './Footer.less';
 

@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import logo from '../../../assets/img/logo-blue.svg';
+import logo from '../../../../assets/img/logo-blue.svg';
 import {Icon} from "antd";
 import {Link} from "react-router-dom";
 

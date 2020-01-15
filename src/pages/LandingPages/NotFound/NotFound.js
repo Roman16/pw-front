@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from './Header/Header';
-import Footer from './Footer/Footer';
+import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
 import {Link} from 'react-router-dom';
 
 import './NotFound.less';
 
-import img from '../../assets/img/404.svg';
+import img from '../../../assets/img/404.svg';
 
 const authorized = localStorage.getItem('token');
 

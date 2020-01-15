@@ -1,19 +1,19 @@
 import React, {useEffect} from "react";
-import Header from "../NotFound/Header/Header";
-import Footer from "../NotFound/Footer/Footer";
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 import './LandingAffiliates.less';
-import illustrationImg from '../../assets/img/illustration.svg'
-import benefitsImg from '../../assets/img/benefits-icon.svg'
-import performersImg from '../../assets/img/performers-icon.svg'
-import supportImg from '../../assets/img/support-icon.svg'
-import greenLine from '../../assets/img/green-line.svg';
-import shortGreenLine from '../../assets/img/short-green-line.svg';
-import greenPoint from '../../assets/img/green-point.svg';
-import contactUsImage from '../../assets/img/contact-us-image.svg';
-import commissionFreeIcon from '../../assets/img/commission-free-icon.svg';
-import commissionHaveFeeIcon from '../../assets/img/commission-have-fee-icon.svg';
-import howItWorksImage from '../../assets/img/how-it-works-image.svg';
-import checkedIcon from '../../assets/img/icons/mark.svg';
+import illustrationImg from '../../../assets/img/illustration.svg'
+import benefitsImg from '../../../assets/img/benefits-icon.svg'
+import performersImg from '../../../assets/img/performers-icon.svg'
+import supportImg from '../../../assets/img/support-icon.svg'
+import greenLine from '../../../assets/img/green-line.svg';
+import shortGreenLine from '../../../assets/img/short-green-line.svg';
+import greenPoint from '../../../assets/img/green-point.svg';
+import contactUsImage from '../../../assets/img/contact-us-image.svg';
+import commissionFreeIcon from '../../../assets/img/commission-free-icon.svg';
+import commissionHaveFeeIcon from '../../../assets/img/commission-have-fee-icon.svg';
+import howItWorksImage from '../../../assets/img/how-it-works-image.svg';
+import checkedIcon from '../../../assets/img/icons/mark.svg';
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY,
     tapfiliateRegistrationPage = 'https://profitwhales.tapfiliate.com/programs/subscription-link/signup/',
