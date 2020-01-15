@@ -3,21 +3,15 @@
 }
 
 .dayparting-page {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  font-family: ir;
-  grid-column-gap: 1.64286em;
-  grid-row-gap: 1.64286em;
-  grid-template-areas: "lastSynced lastSynced" "spendStatistics chartStatistics" "daySwitches daySwitches";
-
+  width: fit-content;
+  overflow: auto;
 
   .last-synced {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding: 0 30px 0;
-
+    margin: 0 0 1.4285714285714286rem 0;
     grid-area: lastSynced;
 
     font-weight: bold;
@@ -68,7 +62,14 @@
 
   .row {
     display: flex;
-    flex-wrap: wrap;
+
+    & > section {
+      flex: 1;
+
+      &:first-child {
+        margin-right: 1.4285714285714286rem;
+      }
+    }
   }
 
   section {
@@ -471,6 +472,7 @@
     display: flex;
     flex-direction: column;
     grid-area: daySwitches;
+    margin: 1.4285714285714286rem 0;
 
     .section-header {
       margin: 0 0 1.0714285714285714rem 0;
@@ -560,6 +562,8 @@
         }
 
         .statistic-item {
+          min-width: 3.2rem;
+
           flex: 1;
           margin: 0 5px 0 0;
 
