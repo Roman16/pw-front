@@ -49,26 +49,30 @@ class Dayparting extends Component {
                     </div>
                 </div>
 
-                <SpendStatistics
-                    filteredMetric={filteredMetric}
-                />
+                <div className="row">
+                    <SpendStatistics
+                        filteredMetric={filteredMetric}
+                    />
 
-                <ChartStatistics
-                    onSelectMetric={(metric) => this.setState({filteredMetric: metric})}
-                    filteredMetric={filteredMetric}
-                />
+                    <ChartStatistics
+                        onSelectMetric={(metric) => this.setState({filteredMetric: metric})}
+                        filteredMetric={filteredMetric}
+                    />
+                </div>
 
                 <DaySwitches
 
                 />
 
-                <KeysKeywords
+                <div className="row">
+                    <KeysKeywords
 
-                />
+                    />
 
-                <PlacementsStatistics
+                    <PlacementsStatistics
 
-                />
+                    />
+                </div>
             </div>
         )
     }
