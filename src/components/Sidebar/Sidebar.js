@@ -22,6 +22,7 @@ const domainName =
         ? "https://front1.profitwhales.com"
         : "";
 
+
 const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
 
