@@ -307,8 +307,7 @@ const commentsList = [
 const LandingAutomation = () => {
     const [currentStepSlide, setStepSlide] = useState(0),
         [currentCaseSlide, setCaseSlide] = useState(0),
-        [currentCommentSlide, setCommentSlide] = useState(0),
-        [visibleWindow, switchWindow] = useState(false);
+        [currentCommentSlide, setCommentSlide] = useState(0);
 
     //step navigation
     function prevStepSlide() {
