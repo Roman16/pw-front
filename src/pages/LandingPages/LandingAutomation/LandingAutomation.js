@@ -4,7 +4,6 @@ import './LandingAutomation.less';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {history} from "../../../utils/history";
-import ModalWindow from "../../../components/ModalWindow/ModalWindow";
 import JeffInPlane from '../../../assets/img/landing-automation/not-in-ads.svg';
 import JeffDaily from '../../../assets/img/landing-automation/jeff-daily.svg';
 import amazonApp from '../../../assets/img/landing-automation/amazon-app-store.svg';
@@ -29,10 +28,17 @@ import case5_2 from '../../../assets/img/landing-automation/case-5(2).svg';
 import {avatars} from "../../../assets/img/landing-automation/avatars/avatars";
 import {underHoodImages} from "../../../assets/img/landing-automation/under-hood";
 
-
+import $ from 'jquery';
+import ionRangeSlider from 'ion-rangeslider'
+import './SurveyPopup';
 import {CarouselProvider, Slider, Slide, ButtonBack, ButtonNext} from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import FormModalWindow from "./FormModalWindow";
+import SurveyPopup from "./SurveyPopup";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faFacebookF, faTwitter, faLinkedinIn} from "@fortawesome/free-brands-svg-icons"
+
+
+const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
 
 const stepsSlider = [
     {
@@ -400,19 +406,91 @@ const LandingAutomation = () => {
     }
 
     useEffect(() => {
+        (function (t, a, p) {
+            t.TapfiliateObject = a;
+            t[a] = t[a] || function () {
+                (t[a].q = t[a].q || []).push(arguments)
+            }
+        })(window, 'tap');
 
-        return (() => {
-            window.removeEventListener('beforeunload', keepOnPage);
-        })
-    }, []);
+        window.tap('create', tapfiliateKey, {integration: "javascript"});
+        window.tap('detect');
 
-    window.addEventListener('beforeunload', () => {
-        switchWindow(true);
 
-        if (visibleWindow) {
-            return undefined;
+        $(".js-range-slider").ionRangeSlider({
+            min: 0,
+            values: [
+                0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000, 3500, 4500, 5000,
+                6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000, 15000, 16000, 17000, 18000, 19000, 20000,
+                22500, 25000, 27500, 30000, 32500, 35000, 37500, 40000, 42500, 45000, 47500, 50000,
+                55000, 60000, 65000, 70000, 75000, 80000, 85000, 90000, 95000, 100000
+            ],
+            hide_min_max: true,
+            from: 10,
+            from_min: 10,
+            prefix: "$ ",
+            max_postfix: "+",
+            postfix: "  / month",
+            onStart: function () {
+                $('.slider-container .slider .irs .irs-bar').html('$35');
+            },
+            onChange: function (data) {
+                var value = data.from_value,
+                    result = 0,
+                    sumElement = $('.result-sum'),
+                    barLabel = $('.slider-container .slider .irs .irs-bar');
+
+
+                if (value <= 1000) {
+                    sumElement.text('$35');
+                    barLabel.html('$35');
+                } else {
+                    if (value >= 50000) {
+                        result = ((2 / 100) * value) + 500;
+                        barLabel.html('$500 + 2% <small>ad spend</small>');
+                    } else if (value >= 20000) {
+                        result = ((3 / 100) * value) + 300;
+                        barLabel.html('$300 + 3% <small>ad spend</small>');
+                    } else {
+                        result = ((4 / 100) * value) + 100;
+                        barLabel.html('$100 + 4% <small>ad spend</small>');
+                    }
+
+                    sumElement.text('$ ' + result);
+                }
+            }
+        });
+
+        const s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.innerHTML = `  !function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+            n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2628499780566506');
+    fbq('track', 'PageView');`;
+
+        document.head.appendChild(s);
+
+        return () => {
+            document.head.removeChild(s);
         }
-    });
+    }, []);
 
 
     return (
@@ -502,14 +580,17 @@ const LandingAutomation = () => {
                             <div/>
                             <span>Connect Seller Central Account</span>
                         </div>
+                        <img src={dots} alt=""/>
                         <div className={currentStepSlide === 1 ? 'active' : ''}>
                             <div/>
                             <span>Choose Your Goal</span>
                         </div>
+                        <img src={dots} alt=""/>
                         <div className={currentStepSlide === 2 ? 'active' : ''}>
                             <div/>
                             <span>Monitor the changes</span>
                         </div>
+                        <img src={dots} alt=""/>
                         <div className={currentStepSlide === 3 ? 'active' : ''}>
                             <div/>
                             <span>Access a lot more data</span>
@@ -537,7 +618,7 @@ const LandingAutomation = () => {
 
                         <div className="slider">
                             <div className="prev" onClick={prevStepSlide}><img src={leftIcon} alt=""/></div>
-                            <div className="image-block">
+                            <div className="image-block" style={{marginTop: currentStepSlide === 3 ? '20px' : 0}}>
                                 <img src={stepsSlider[currentStepSlide].img} alt=""/>
                             </div>
                             <div className="next" onClick={nextStepSlide}><img src={rightIcon} alt=""/></div>
@@ -762,41 +843,21 @@ const LandingAutomation = () => {
                 <div className="container">
                     <h2>Our Pricing</h2>
 
-                    <div className='price-drawer'>
+                    <div className='price-drawer price-list'>
                         <div className="row">
                             <div className="col">
                                 <h2>What’s your monthly Amazon <br/> Advertising Spend?</h2>
-                                <br/>
-                                <div className="range-slider">
 
-                                    <div className="slider-progress" style={{width: `calc(${100 / (100000 / +rangeSliderValue)}% - 5px)`}}>
-                                        ${rangeSliderValue}
+                                <div className="range-slider slider-container">
+                                    <div className="slider">
+                                        <input className="js-range-slider" type="text"/>
                                     </div>
-
-                                    <input
-                                        type="range"
-                                        min={0}
-                                        max={100000}
-                                        step={500}
-                                        value={rangeSliderValue}
-                                        list="steplist"
-                                        class="slider"
-                                        onChange={e => {
-                                            console.log(e.target.value);
-                                            setValue(e.target.value);
-                                        }}/>
-
-                                    <datalist id="steplist">
-                                        {rangeValues.map(item => (
-                                            <option value={item}/>
-                                        ))}
-                                    </datalist>
                                 </div>
                             </div>
 
                             <div className="col">
                                 <div className="sum">
-                                    <span className="result-sum">FREE</span>
+                                    <span className="result-sum">$35</span>
                                     <span className='description'>
                                         Estimated Price per / Month by your 30 Day Ad Spend
                                     </span>
@@ -868,12 +929,19 @@ const LandingAutomation = () => {
                 </div>
             </section>
 
-            <ModalWindow
-                visible={visibleWindow}
-                footer={false}
-            >
-                <FormModalWindow/>
-            </ModalWindow>
+            <SurveyPopup/>
+
+            <div className="scroll-top" onClick={() => $('html, body').animate({scrollTop: 0}, 'slow')}/>
+
+            <div className="social-links">
+
+                <a className="i-tw" href="https://twitter.com/ProfitWhales" target="_blank"
+                   title="Twitter"><FontAwesomeIcon icon={faTwitter}/></a>
+                <a className="i-fb" href="https://www.facebook.com/profitwhales" target="_blank"
+                   title="Facebook"><FontAwesomeIcon icon={faFacebookF}/></a>
+                <a className="i-in" href="https://www.linkedin.com/company/profitwhales" target="_blank"
+                   title="LinkedIn"><FontAwesomeIcon icon={faLinkedinIn}/></a>
+            </div>
 
             <Footer/>
         </div>

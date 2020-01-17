@@ -11,7 +11,7 @@ const Header = () => {
     const [openedMenu, switchMenu] = useState(false);
 
     return(
-        <header className='not-found-page__header'>
+        <header className='not-found-page__header' id={'header'}>
             <div className="container">
                 <div>
                     <img src={logo} alt="Profit Whales" className='logo'/>
