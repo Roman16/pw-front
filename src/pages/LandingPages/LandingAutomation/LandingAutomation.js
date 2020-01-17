@@ -8,10 +8,6 @@ import JeffInPlane from '../../../assets/img/landing-automation/not-in-ads.svg';
 import JeffDaily from '../../../assets/img/landing-automation/jeff-daily.svg';
 import amazonApp from '../../../assets/img/landing-automation/amazon-app-store.svg';
 import dots from '../../../assets/img/landing-automation/dots.svg';
-import step1 from '../../../assets/img/landing-automation/step-1.svg';
-import step2 from '../../../assets/img/landing-automation/step-2.svg';
-import step3 from '../../../assets/img/landing-automation/step-3.svg';
-import step4 from '../../../assets/img/landing-automation/step-4.svg';
 import leftIcon from '../../../assets/img/landing-automation/left-icon.svg';
 import rightIcon from '../../../assets/img/landing-automation/right-icon.svg';
 import dashIcon from '../../../assets/img/landing-automation/dash.svg';
@@ -19,12 +15,8 @@ import dashIcon from '../../../assets/img/landing-automation/dash.svg';
 import listIcon from '../../../assets/img/landing-automation/yes_green.svg'
 import jeffChart from '../../../assets/img/landing-automation/jeffChart.svg'
 
-import case1 from '../../../assets/img/landing-automation/case-1.svg';
-import case2 from '../../../assets/img/landing-automation/case-2.svg';
-import case3 from '../../../assets/img/landing-automation/case-3.svg';
-import case4 from '../../../assets/img/landing-automation/case-4.svg';
-import case5_1 from '../../../assets/img/landing-automation/case-5(1).svg';
-import case5_2 from '../../../assets/img/landing-automation/case-5(2).svg';
+import {casesImages} from "../../../assets/img/landing-automation/cases";
+import {stepsImages} from "../../../assets/img/landing-automation/steps";
 import {avatars} from "../../../assets/img/landing-automation/avatars/avatars";
 import {underHoodImages} from "../../../assets/img/landing-automation/under-hood";
 
@@ -44,22 +36,22 @@ const stepsSlider = [
     {
         title: `Connect Seller <br/> Central Account`,
         description: 'Profit Whales allows you to instantly connect Amazon Seller Central to automate your Amazon Advertising work and find productivity super powers.',
-        img: step1
+        img: stepsImages.step1
     },
     {
         title: `Choose <br/> Your Goal`,
         description: 'Inside the software, you\'ll find four business goals. You have to choose one of them and start optimization. Naturally, for each of them, we use a unique algorithm to achieve efficient results.',
-        img: step2
+        img: stepsImages.step2
     },
     {
         title: `Monitor <br/> The Changes`,
         description: 'You have to make yourself comfortable, sit, and enjoy changes that software would do. You see, for what you pay, it soothes, right?',
-        img: step3
+        img: stepsImages.step3
     },
     {
         title: `Access <br/> A Lot More Data`,
         description: 'We obsessed with data, so we developed a dashboard and day-parting tool so you can see your business metrics at a glance and make more profitable decisions.',
-        img: step4
+        img: stepsImages.step4
     },
 ];
 
@@ -68,7 +60,7 @@ const ourCases = [
         title: 'One year with Profit Whales',
         firstColumnTitle: 'Before',
         secondColumnTitle: 'After',
-        img: case1,
+        img: casesImages.case1,
         firstColumn: [
             {
                 metric: 'Total Sales',
@@ -102,7 +94,7 @@ const ourCases = [
         title: 'One year with Profit Whales results',
         firstColumnTitle: 'Before',
         secondColumnTitle: 'After',
-        img: case2,
+        img: casesImages.case2,
         firstColumn: [
             {
                 metric: 'Orders',
@@ -136,7 +128,7 @@ const ourCases = [
         title: 'One year with Profit Whales results',
         firstColumnTitle: 'Before',
         secondColumnTitle: 'After',
-        img: case3,
+        img: casesImages.case3,
         firstColumn: [
             {
                 metric: 'Orders',
@@ -170,7 +162,7 @@ const ourCases = [
         title: 'One year with Profit Whales results',
         firstColumnTitle: 'Before',
         secondColumnTitle: 'After',
-        img: case4,
+        img: casesImages.case4,
         firstColumn: [
             {
                 metric: 'CPC',
@@ -204,7 +196,7 @@ const ourCases = [
         title: '3 months Profit Whales results',
         firstColumnTitle: '12 months without Profit Whales',
         secondColumnTitle: '3 months with Profit Whales',
-        img: case5_1,
+        img: casesImages.case5_1,
         firstColumn: [
             {
                 metric: 'ACOS',
@@ -238,7 +230,7 @@ const ourCases = [
         title: '3 months Profit Whales results',
         firstColumnTitle: 'For 12 months',
         secondColumnTitle: 'For 3 months',
-        img: case5_2,
+        img: casesImages.case5_2,
         firstColumn: [
             {
                 metric: 'ACOS',

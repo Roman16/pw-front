@@ -322,7 +322,7 @@
         }
 
         .description {
-          min-height: 8.214285714285714rem;
+          min-height: 10rem;
           margin: 2.142857142857143rem 0;
           font-size: 1.1428571428571428rem;
           line-height: 2rem;
@@ -740,16 +740,28 @@
         flex-direction: column;
         align-items: center;
         padding: 2.857142857142857rem 1.4285714285714286rem;
+        transition: .3s;
 
-        &:first-child {
+        &:hover {
           box-shadow: 0px 12px 24px rgba(142, 147, 192, 0.08), 0px 0px 32px rgba(142, 147, 192, 0.08);
           border-radius: 4px;
+          transition: .3s;
+
+          .image {
+            -webkit-filter: grayscale(0);
+            filter: grayscale(0);
+            transition: .3s;
+          }
         }
 
         .image {
           height: 72px;
           display: flex;
           align-items: center;
+          transition: .3s;
+
+          -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
         }
 
         .title {
