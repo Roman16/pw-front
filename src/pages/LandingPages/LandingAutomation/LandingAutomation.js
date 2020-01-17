@@ -387,6 +387,7 @@ const LandingAutomation = () => {
         })(window, 'tap');
 
         window.tap('create', tapfiliateKey, {integration: "javascript"});
+        window.tap('click', {referral_code: ''});
         window.tap('detect');
 
 
