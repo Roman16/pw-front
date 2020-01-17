@@ -68,7 +68,7 @@ const routers = () => {
                 <Route exact path="/registration" component={RegistrationPage}/>
 
                 <Route exact path="/affiliates" component={LandingAffiliates}/>
-                <Route exact path="/automation" component={LandingAutomation}/>
+                <Route exact path="/automation1" component={LandingAutomation}/>
 
                 <ConnectedAmazonRoute
                     exact
