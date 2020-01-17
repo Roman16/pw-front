@@ -1,9 +1,22 @@
 import React, {Fragment, useEffect, useState} from "react";
-import './LandingAutomation.less';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faFacebookF, faTwitter, faLinkedinIn} from "@fortawesome/free-brands-svg-icons"
+import $ from 'jquery';
+import ionRangeSlider from 'ion-rangeslider';
+import {CarouselProvider, Slider, Slide, ButtonBack, ButtonNext} from 'pure-react-carousel';
 
+import './LandingAutomation.less';
+import 'pure-react-carousel/dist/react-carousel.es.css';
+
+import {history} from "../../../utils/history";
+
+import SurveyPopup from "./SurveyPopup";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import {history} from "../../../utils/history";
+import {casesImages} from "../../../assets/img/landing-automation/cases";
+import {stepsImages} from "../../../assets/img/landing-automation/steps";
+import {avatars} from "../../../assets/img/landing-automation/avatars/avatars";
+import {underHoodImages} from "../../../assets/img/landing-automation/under-hood";
 import JeffInPlane from '../../../assets/img/landing-automation/not-in-ads.svg';
 import JeffDaily from '../../../assets/img/landing-automation/jeff-daily.svg';
 import amazonApp from '../../../assets/img/landing-automation/amazon-app-store.svg';
@@ -11,23 +24,8 @@ import dots from '../../../assets/img/landing-automation/dots.svg';
 import leftIcon from '../../../assets/img/landing-automation/left-icon.svg';
 import rightIcon from '../../../assets/img/landing-automation/right-icon.svg';
 import dashIcon from '../../../assets/img/landing-automation/dash.svg';
-
 import listIcon from '../../../assets/img/landing-automation/yes_green.svg'
 import jeffChart from '../../../assets/img/landing-automation/jeffChart.svg'
-
-import {casesImages} from "../../../assets/img/landing-automation/cases";
-import {stepsImages} from "../../../assets/img/landing-automation/steps";
-import {avatars} from "../../../assets/img/landing-automation/avatars/avatars";
-import {underHoodImages} from "../../../assets/img/landing-automation/under-hood";
-
-import $ from 'jquery';
-import ionRangeSlider from 'ion-rangeslider'
-import './SurveyPopup';
-import {CarouselProvider, Slider, Slide, ButtonBack, ButtonNext} from 'pure-react-carousel';
-import 'pure-react-carousel/dist/react-carousel.es.css';
-import SurveyPopup from "./SurveyPopup";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faFacebookF, faTwitter, faLinkedinIn} from "@fortawesome/free-brands-svg-icons"
 
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
@@ -262,13 +260,6 @@ const ourCases = [
     },
 ];
 
-const rangeValues = [
-    0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000, 3500, 4500, 5000,
-    6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000, 15000, 16000, 17000, 18000, 19000, 20000,
-    22500, 25000, 27500, 30000, 32500, 35000, 37500, 40000, 42500, 45000, 47500, 50000,
-    55000, 60000, 65000, 70000, 75000, 80000, 85000, 90000, 95000, 100000
-];
-
 const commentsList = [
     {
         name: 'Claire Williamson',
@@ -317,9 +308,7 @@ const LandingAutomation = () => {
     const [currentStepSlide, setStepSlide] = useState(0),
         [currentCaseSlide, setCaseSlide] = useState(0),
         [currentCommentSlide, setCommentSlide] = useState(0),
-        [visibleWindow, switchWindow] = useState(false),
-        [rangeSliderValue, setValue] = useState(20000);
-
+        [visibleWindow, switchWindow] = useState(false);
 
     //step navigation
     function prevStepSlide() {
@@ -388,13 +377,6 @@ const LandingAutomation = () => {
 
     function goToRegistrationPage() {
         history.push('/registration')
-    }
-
-    function keepOnPage(e) {
-        const message = 'Warning!\n\nNavigating away from this page will delete your text if you haven\'t already saved it.';
-        e.returnValue = message;
-        switchWindow(true);
-        return message;
     }
 
     useEffect(() => {
