@@ -358,7 +358,7 @@ const LandingAutomation = () => {
     }
 
     function nextCaseSlide() {
-        if (currentCaseSlide === 4) {
+        if (currentCaseSlide === 4 || currentCaseSlide === 5) {
             setCaseSlide(0)
         } else {
             setCaseSlide(currentCaseSlide + 1)

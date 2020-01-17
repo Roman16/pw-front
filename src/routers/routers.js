@@ -67,6 +67,7 @@ const routers = () => {
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                 <Route exact path="/registration" component={RegistrationPage}/>
 
+
                 <Route exact path="/affiliates" component={LandingAffiliates}/>
                 <Route exact path="/automation1" component={LandingAutomation}/>
 
