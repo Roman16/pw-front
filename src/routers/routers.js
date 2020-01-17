@@ -1,21 +1,18 @@
-import React, {Fragment} from 'react';
-// import {Route, Router, Switch, Redirect} from 'react-router-dom';
-import {Router, Route, Prompt, Switch, Redirect} from 'react-router-dom';
+import React from 'react';
+import {Router, Route, Switch, Redirect} from 'react-router-dom';
 import {history} from '../utils/history';
 import {useSelector} from 'react-redux';
-import {Row, Col, Modal} from 'antd';
 
 import LoginPage from "../pages/authentication/LoginPage/LoginPage";
 import RegistrationPage from "../pages/authentication/RegistrationPage/RegistrationPage";
-import RescanWindow from '../pages/PPCAutomate/Scanner/ModalWindows/RescanWindow';
 import AuthorizedUser from "../pages";
 import Optimization from "../pages/PPCAutomate/Optimization/Optimization";
 import Report from "../pages/PPCAutomate/Report/Report";
 import ProductSettings from "../pages/PPCAutomate/ProductSettings/ProductSettings";
 import MWS from "../pages/authentication/AccountBinding/MWS/MWS";
 import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
-import NotFound from "../pages/NotFound/NotFound";
-import LandingAffiliates from "../pages/LandingAffiliates/LandingAffiliates";
+import NotFound from "../pages/LandingPages/NotFound/NotFound";
+import LandingAffiliates from "../pages/LandingPages/LandingAffiliates/LandingAffiliates";
 import Dashboard from "../pages/PPCAutomate/Dashboard/Dashboard";
 import Information from "../pages/Account/Information/Information";
 import Billing from "../pages/Account/Billing/Billing";
@@ -23,8 +20,8 @@ import Subscription from "../pages/Account/Subscription/Subscription";
 import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
 import Home from "../pages/Home/Home";
 import Scanner from "../pages/PPCAutomate/Scanner/Scanner";
-import ModalWindow from "../components/ModalWindow/ModalWindow";
 import Dayparting from "../pages/PPCAutomate/Dayparting/Dayparting";
+import LandingAutomation from "../pages/LandingPages/LandingAutomation/LandingAutomation";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -58,30 +55,6 @@ const ConnectedAmazonRoute = props => {
 
 const developer = process.env.REACT_APP_ENV === "developer";
 
-
-const getConfirm = (content, callback) => {
-    Modal.confirm({
-        content: <RescanWindow
-            visible={true}
-            handleOk={() => {
-                callback(true);
-            }}
-            handleCancel={() => {
-                callback(false);
-            }}
-        />,
-        className: 'custom-modal-window leave-confirm-window',
-        footer: false,
-        icon: false,
-        onOk: () => {
-            callback(true);
-        },
-        onCancel: () => {
-            callback(false);
-        }
-    });
-};
-
 const routers = () => {
     return (
         <Router history={history}>
@@ -91,9 +64,11 @@ const routers = () => {
                 }}/>
 
                 <Route exact path="/login" component={LoginPage}/>
-                <Route exact path="/affiliates" component={LandingAffiliates}/>
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                 <Route exact path="/registration" component={RegistrationPage}/>
+
+                <Route exact path="/affiliates" component={LandingAffiliates}/>
+                <Route exact path="/automation" component={LandingAutomation}/>
 
                 <ConnectedAmazonRoute
                     exact
