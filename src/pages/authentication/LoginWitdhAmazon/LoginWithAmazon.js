@@ -2,7 +2,7 @@ import React, {useEffect, Fragment} from "react";
 import {useDispatch} from 'react-redux';
 import {userActions} from '../../../actions/user.actions';
 import logo from '../../../assets/img/logo_black.svg';
-import Header from '../../../pages/NotFound/Header/Header';
+import Header from '../../LandingPages/components/Header/Header';
 import './LoginWithAmazon.less';
 
 const LoginWithAmazon = () => {
