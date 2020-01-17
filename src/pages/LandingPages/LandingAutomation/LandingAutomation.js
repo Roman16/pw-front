@@ -591,7 +591,7 @@ const LandingAutomation = () => {
 
                         <div className="slider">
                             <div className="prev" onClick={prevStepSlide}><img src={leftIcon} alt=""/></div>
-                            <div className="image-block" style={{marginTop: currentStepSlide === 3 ? '20px' : 0}}>
+                            <div className="image-block" style={{marginTop: currentStepSlide === 3 ? '30px' : 0}}>
                                 <img src={stepsSlider[currentStepSlide].img} alt=""/>
                             </div>
                             <div className="next" onClick={nextStepSlide}><img src={rightIcon} alt=""/></div>
