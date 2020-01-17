@@ -429,7 +429,7 @@ const LandingAutomation = () => {
                         barLabel.html('$100 + 4% <small>ad spend</small>');
                     }
 
-                    sumElement.text('$ ' + result);
+                    sumElement.text('$' + result);
                 }
             }
         });
