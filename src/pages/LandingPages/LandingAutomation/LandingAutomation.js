@@ -846,41 +846,41 @@ const LandingAutomation = () => {
                         <div className="row list">
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                300-700 Relevant Keywords
+                                Efficient Budget Management
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                300-700 Relevant Keywords
+                                Business Goal Aware Optimization
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                300-700 Relevant Keywords
-                            </div>
-
-                            <div>
-                                <img src={listIcon} alt="yes"/>
-                                8 Structured Campaigns
-                            </div>
-                            <div>
-                                <img src={listIcon} alt="yes"/>
-                                8 Structured Campaigns
-                            </div>
-                            <div>
-                                <img src={listIcon} alt="yes"/>
-                                8 Structured Campaigns
+                                Unlimited Products & Campaigns
                             </div>
 
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                Premium Support
+                                You'll get Money Making System
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                Premium Support
+                                Keywords Optimization
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                Premium Support
+                                Data-Driven Bid Optimization
+                            </div>
+
+                            <div>
+                                <img src={listIcon} alt="yes"/>
+                                You'll Save a Tot of Time
+                            </div>
+                            <div>
+                                <img src={listIcon} alt="yes"/>
+                                Dashboard View
+                            </div>
+                            <div>
+                                <img src={listIcon} alt="yes"/>
+                                Expert Chat Support
                             </div>
                         </div>
 
