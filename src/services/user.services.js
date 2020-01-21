@@ -32,6 +32,7 @@ export const userService = {
     confirmPayment,
     updateSubscriptionStatus,
     applyCoupon,
+    getSubscription
 };
 
 function login(user) {
@@ -130,24 +131,28 @@ function confirmPayment(data) {
 
 //-------------------------------------
 //-------------subscription---------
+function getSubscription() {
+    return api('get', userUrls.subscriptionList);
+}
+
 function subscribe(data) {
-    return api('post', userUrls.subscribe(data.subscriptionId),  data);
+    return api('post', userUrls.subscribe(data.subscriptionId), data);
 }
 
 function reactivateSubscription(data) {
-    return api('post', userUrls.reactivate(data.subscriptionId),  data);
+    return api('post', userUrls.reactivate(data.subscriptionId), data);
 }
 
 function cancelSubscription(data) {
-    return api('post', userUrls.cancel(data.subscriptionId),  data);
+    return api('post', userUrls.cancel(data.subscriptionId), data);
 }
 
 function updateSubscriptionStatus() {
     return api('post', userUrls.updateStatus);
 }
 
-function applyCoupon(coupon) {
-    return api('post', userUrls.updateStatus);
+function applyCoupon(id, planId, coupon) {
+    return api('post', `${userUrls.coupon(id)}?coupon_code=${coupon}&subscription_plan_id=${planId}`);
 }
 
 //-------------------------------------

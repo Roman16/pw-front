@@ -21,8 +21,10 @@ const Subscription = () => {
     const [openedReactivateWindow, openReactivateWindow] = useState(false);
     const [openedAccountWindow, openAccountWindow] = useState(false);
     const [selectedPlan, selectPlan] = useState();
-    const {subscriptions, mwsConnected, ppcConnected, stripeId} = useSelector(state => ({
-        subscriptions: state.user.subscriptions,
+    const [subscriptions, setSubscriptions] = useState({});
+    const [fetching, switchFetching] = useState(false);
+
+    const {mwsConnected, ppcConnected, stripeId} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
         stripeId: state.user.user.stripe_id
@@ -38,6 +40,24 @@ const Subscription = () => {
     function handleOpenReactivateWindow(plan) {
         openReactivateWindow(true);
         selectPlan(plan)
+    }
+
+    function fetchSubscriptions() {
+        switchFetching(true);
+
+        userService.getSubscription()
+            .then(res => {
+                switchFetching(false);
+
+                setSubscriptions({...res})
+            })
+    }
+
+    function applyCoupon(productId, coupon, planId) {
+        userService.applyCoupon(productId, planId, coupon)
+            .then(() => {
+                fetchSubscriptions();
+            })
     }
 
     async function handleSubscribe({planId, productId}) {
@@ -101,7 +121,8 @@ const Subscription = () => {
     }
 
     useEffect(() => {
-        dispatch(userActions.getPersonalUserInfo());
+        fetchSubscriptions();
+
         if (ppcConnected || mwsConnected) {
             userService.updateSubscriptionStatus();
         }
@@ -126,6 +147,8 @@ const Subscription = () => {
                     onSubscribe={handleSubscribe}
                     reloadData={handleUpdateSubscriptionStatus}
                     stripeId={stripeId}
+                    applyCoupon={applyCoupon}
+                    fetching={fetching}
                 />
             ))}
 

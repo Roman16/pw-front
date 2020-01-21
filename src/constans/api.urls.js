@@ -20,11 +20,12 @@ export const userUrls = {
     //company
     companyInformation: (id) => `user/account/payment/method/${id}/metadata`,
     //subscription
+    subscriptionList: `user/account/subscription/list`,
     subscribe: (subscriptionId) => `user/account/subscription/${subscriptionId}/subscribe`,
     reactivate: (subscriptionId) => `user/account/subscription/${subscriptionId}/resume`,
     cancel: (subscriptionId) => `user/account/subscription/${subscriptionId}/cancel`,
     updateStatus: 'user/account/subscription/all/update-preview',
-    coupon: 'user/account/subscription/all/update-preview',
+    coupon: (subscriptionId) => `user/account/subscription/${subscriptionId}/update`,
 };
 
 export const productsUrls = {

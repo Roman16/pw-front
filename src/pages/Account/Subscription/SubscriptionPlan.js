@@ -7,14 +7,17 @@ import moment from "moment";
 import {numberMask} from "../../../utils/numberMask";
 import {history} from "../../../utils/history";
 import {useSelector} from "react-redux";
+import couponIcon from '../../../assets/img/icons/coupon-icon.svg';
 
-const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe, stripeId}) => {
+const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe, stripeId, applyCoupon, fetching}) => {
     const {mwsConnected, ppcConnected} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false
     }));
 
     const [disableButton, changeButton] = useState(false);
+    const [coupon, setCoupon] = useState('');
+
     let timeout = null;
 
     function handleSubscribe() {
@@ -68,24 +71,6 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                     </button>
                 </div>
             )
-        } else if (product.has_access && !product.cancelled) {
-            return (
-                <Fragment>
-                    <p className="cancel-text">
-                        {product.next_invoice_at && <Fragment> Next Invoice Date: <span
-                            className="cancel-data">{moment(product.next_invoice_at).format('MMM DD, YYYY')}</span>
-                        </Fragment>}
-                    </p>
-
-                    <button
-                        className="cancel-btn"
-                        type="button"
-                        onClick={() => onOpenAccountWindow(product)}
-                    >
-                        Cancel
-                    </button>
-                </Fragment>
-            )
         } else if (!product.has_access && stripeId) {
             return (
                 <div className="subscribe-btn">
@@ -96,7 +81,6 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
             )
         }
     }
-
 
     useEffect(() => {
         if (disableButton) {
@@ -147,36 +131,55 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                     </p>
                 </div>
 
+
                 <div className="plan">
+                    {product.has_access && !product.cancelled && <div className='row'>
+                        <p className="cancel-text">
+                            {product.next_invoice_at && <Fragment> Next Invoice Date: <span
+                                className="cancel-data">{moment(product.next_invoice_at).format('MMM DD, YYYY')}</span>
+                            </Fragment>}
+                        </p>
+
+                        <button
+                            className="cancel-btn"
+                            type="button"
+                            onClick={() => onOpenAccountWindow(product)}
+                        >
+                            Cancel
+                        </button>
+                    </div>}
+
                     <div className="charged">
                         <h3 className="charged-title">{product.planName}</h3>
 
                         {renderPlanContent()}
                     </div>
-
-                    {(product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&
-                    <p className="plan-text">
-                        Your Monthly Amazon PPC Spend: <span
-                        className="plan-data">$ {numberMask(product.quantity, 2) || 0}</span>
-                    </p>}
                 </div>
 
 
                 <div className="cancel">
-                    {/*{(product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&*/}
-                    {/*<div className='coupon'>*/}
-                    {/*    <h4>Do you have coupon code?</h4>*/}
-                    {/*    <div className="row">*/}
-                    {/*        <div className="input-block">*/}
-                    {/*            <img src={couponIcon} alt=""/>*/}
-                    {/*            <input type="text"/>*/}
-                    {/*        </div>*/}
+                    {!fetching && (product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&
+                    <div className='coupon'>
+                        <h4>Do you have coupon code?</h4>
+                        <div className="row">
+                            <div className="input-block">
+                                <img src={couponIcon} alt=""/>
+                                <input type="text" onChange={e => setCoupon(e.target.value)}/>
+                            </div>
 
-                    {/*        <button className="btn green-btn" onClick={applyCoupon}>apply</button>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-                    {/*}*/}
-                    {renderButtonsBlock()}
+                            <button className="btn green-btn"
+                                    onClick={() => applyCoupon(product.productId, coupon, product.planId)}>apply
+                            </button>
+                        </div>
+                    </div>
+                    }
+
+                    {!fetching && renderButtonsBlock()}
+
+                    {!fetching && (product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&
+                    <p className="plan-text">
+                        Your Ad Spend: {product.quantity && <span className="plan-data">$ {numberMask(product.quantity, 2) || 0}</span>}
+                    </p>}
                 </div>
             </div>
         </div>

@@ -22,7 +22,7 @@
       align-items: center;
       border-radius: 0.8em;
       padding: 0 1.6em 0 2em;
-      background-color: rgba(236, 127, 92, 0.2);
+      background-color: rgba(189, 189, 189, 0.2);
       margin: 0 0 20px 0;
 
       .reactivate-title {
@@ -48,7 +48,7 @@
         position: relative;
         border-radius: 0.6667em;
         color: @white;
-        background-color: #e57d31;
+        background-color: #7DD4A1;
 
         .reactivate-img {
           position: absolute;
@@ -246,31 +246,113 @@
             font-weight: 600;
           }
         }
+
+        .row {
+          display: flex;
+          align-items: center;
+          margin: 0 0 15px 0;
+
+          .cancel-text {
+            font-size: 1rem;
+            color: #38454F;
+            margin: 0;
+
+            .cancel-data {
+              color: @second-account-color;
+              white-space: nowrap;
+              font-weight: 600;
+            }
+          }
+
+          .cancel-btn {
+            font-size: 1rem;
+            margin: 0 0 0 20px;
+
+            font-weight: 500;
+            text-decoration-line: underline;
+            color: #656A84;
+          }
+        }
       }
+
+      .coupon {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0 0 20px 0;
+
+        h4 {
+          font-weight: 600;
+          font-size: 1rem;
+          color: #38454F;
+          margin: 0 0 20px 0;
+        }
+
+        .row {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+
+          .input-block {
+            width: 45%;
+            position: relative;
+
+            input {
+              width: 100%;
+              height: 2.2857142857142856rem;
+              background: #F3F7FD;
+              border: 1px solid rgba(148, 163, 173, 0.4);
+              box-sizing: border-box;
+              border-radius: 8px;
+              padding: 0 0 0 40px;
+
+              font-size: 1rem;
+              color: rgba(101, 106, 132, 0.6);
+
+              &:focus {
+                outline: none;
+              }
+            }
+
+            img {
+              position: absolute;
+              left: 15px;
+              top: 0;
+              bottom: 0;
+              margin: auto 0;
+            }
+          }
+
+          .btn {
+            width: 45%;
+            height: 2.2857142857142856rem;
+            text-transform: capitalize;
+          }
+        }
+      }
+
 
       .cancel {
         width: 20%;
         display: flex;
         flex-flow: column;
-        align-items: flex-end;
 
-        .cancel-text {
-          font-size: 1.0714285714285714rem; // 15px
-          color: @success-color;
-          margin-bottom: 2.8333em;
+        .plan-text {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin: auto 0 0 0;
+          font-size: 1rem;
+          letter-spacing: 0.2px;
+          color: #656A84;
 
-          .cancel-data {
-            color: @second-account-color;
-            white-space: nowrap;
+          .plan-data {
+            font-size: 24px;
+            letter-spacing: 0.2px;
+            color: #6D6DF6;
+            font-weight: 600;
+            margin: 0 0 0 auto;
           }
-        }
-
-        .cancel-btn {
-          font-size: 1rem; // 14px
-          width: 8em;
-          height: 2.2857em;
-          border: 1px solid rgba(124, 138, 149, 0.5);
-          border-radius: 0.5714em;
         }
       }
 
@@ -285,7 +367,7 @@
         .btn {
           width: 100%;
           height: 4em;
-          margin-bottom: 3em;
+          margin-bottom: 20px;
 
           .ant-spin-spinning {
             display: flex;
