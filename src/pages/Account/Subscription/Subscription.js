@@ -21,8 +21,10 @@ const Subscription = () => {
     const [openedReactivateWindow, openReactivateWindow] = useState(false);
     const [openedAccountWindow, openAccountWindow] = useState(false);
     const [selectedPlan, selectPlan] = useState();
-    const {subscriptions, mwsConnected, ppcConnected, stripeId} = useSelector(state => ({
-        subscriptions: state.user.subscriptions,
+    const [subscriptions, setSubscriptions] = useState({});
+    const [fetching, switchFetching] = useState(false);
+
+    const {mwsConnected, ppcConnected, stripeId} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
         stripeId: state.user.user.stripe_id
@@ -40,12 +42,38 @@ const Subscription = () => {
         selectPlan(plan)
     }
 
-    async function handleSubscribe({planId, productId}) {
+    function fetchSubscriptions() {
+        switchFetching(true);
+
+        userService.getSubscription()
+            .then(res => {
+                switchFetching(false);
+
+                setSubscriptions({...res})
+            })
+    }
+
+    function applyCoupon(productId, coupon, planId) {
+        userService.applyCoupon(productId, planId, coupon)
+            .then((res) => {
+                setSubscriptions({...res})
+            })
+    }
+
+    function getCouponStatus(coupon) {
+        userService.getCouponStatus(coupon)
+            .then((res) => {
+                setSubscriptions({...res})
+            })
+    }
+
+    async function handleSubscribe({planId, productId, coupon}) {
         try {
             await userService.subscribe({
                 subscription_plan_id: planId,
-                subscriptionId: productId,
-                marketplace_id: 'ATVPDKIKX0DER'
+                subscription_id: productId,
+                marketplace_id: 'ATVPDKIKX0DER',
+                coupon_code: coupon
             });
 
             notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'});
@@ -60,7 +88,7 @@ const Subscription = () => {
         try {
             await userService.reactivateSubscription({
                 subscription_plan_id: selectedPlan.plan_id,
-                subscriptionId: selectedPlan.productId,
+                subscription_id: selectedPlan.productId,
             });
 
             dispatch(userActions.getPersonalUserInfo());
@@ -75,7 +103,7 @@ const Subscription = () => {
         try {
             await userService.cancelSubscription({
                 subscription_plan_id: selectedPlan.plan_id,
-                subscriptionId: selectedPlan.productId,
+                subscription_id: selectedPlan.productId,
             });
 
             dispatch(userActions.getPersonalUserInfo());
@@ -101,7 +129,8 @@ const Subscription = () => {
     }
 
     useEffect(() => {
-        dispatch(userActions.getPersonalUserInfo());
+        fetchSubscriptions();
+
         if (ppcConnected || mwsConnected) {
             userService.updateSubscriptionStatus();
         }
@@ -126,6 +155,9 @@ const Subscription = () => {
                     onSubscribe={handleSubscribe}
                     reloadData={handleUpdateSubscriptionStatus}
                     stripeId={stripeId}
+                    applyCoupon={applyCoupon}
+                    getCouponStatus={getCouponStatus}
+                    fetching={fetching}
                 />
             ))}
 
