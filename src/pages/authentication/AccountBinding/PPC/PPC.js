@@ -30,9 +30,15 @@ const PPC = () => {
             }, 5000)
         } else {
             clearTimeout(intervalId);
-            history.push('/ppc/dashboard')
         }
     }
+
+    useEffect(() => {
+        if (ppcConnected) {
+            clearTimeout(intervalId);
+            history.push('/ppc/dashboard')
+        }
+    }, [ppcConnected]);
 
     useEffect(() => {
         if (!mwsConnected) {
