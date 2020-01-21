@@ -264,41 +264,41 @@ const commentsList = [
         comment: 'ProfitWhales\' software is notably robust, and their analysts have helped us both maximize profitability and truly understand the incremental value of our Amazon Ads. They are a valued partner and we really appreciate the flexibility of their software and service model.',
         avatar: avatars.ClaireWilliamson
     },
-    {
-        name: 'Eduardo Mckinney',
-        comment: 'I remember vividly telling Teikametrics that we were averaging 2,000 orders per week and that my goal is to double that number. As of today, we are averaging 4,500 orders per week. We couldn’t be happier that we partnered with Teikametrics and what the effects of their team and system have had for our success!',
-        avatar: avatars.EduardoMckinney
-    },
+    // {
+    //     name: 'Eduardo Mckinney',
+    //     comment: 'I remember vividly telling Teikametrics that we were averaging 2,000 orders per week and that my goal is to double that number. As of today, we are averaging 4,500 orders per week. We couldn’t be happier that we partnered with Teikametrics and what the effects of their team and system have had for our success!',
+    //     avatar: avatars.EduardoMckinney
+    // },
     {
         name: 'Philip Cooper',
         comment: 'ProfitWhales\' software is notably robust, and their analysts have helped us both maximize profitability and truly understand the incremental value of our Amazon Ads. se ex mollit do enim irure aliqua amet. Nisi irure excepteur magna',
         avatar: avatars.PhilipCooper
     },
-    {
-        name: 'Savannah Hawkins',
-        comment: 'Proident incididunt Lorem et culpa enim ea quis in. Incididunt aute ea esse ex mollit do enim irure aliqua amet. Nisi irure excepteur magna dolore aliqua est do tempor.',
-        avatar: avatars.SavannahHawkins
-    },
-    {
-        name: 'Arlene Murphy',
-        comment: 'Id aliquip laboris fugiat aute officia elit dolor cupidatat quis nisi officia ea. Minim proident occaecat adipisicing cupidatat officia ex velit. Sint officia elit culpa laboris eu occaecat reprehenderit qui eu.',
-        avatar: avatars.ArleneMurphy
-    },
+    // {
+    //     name: 'Savannah Hawkins',
+    //     comment: 'Proident incididunt Lorem et culpa enim ea quis in. Incididunt aute ea esse ex mollit do enim irure aliqua amet. Nisi irure excepteur magna dolore aliqua est do tempor.',
+    //     avatar: avatars.SavannahHawkins
+    // },
+    // {
+    //     name: 'Arlene Murphy',
+    //     comment: 'Id aliquip laboris fugiat aute officia elit dolor cupidatat quis nisi officia ea. Minim proident occaecat adipisicing cupidatat officia ex velit. Sint officia elit culpa laboris eu occaecat reprehenderit qui eu.',
+    //     avatar: avatars.ArleneMurphy
+    // },
     {
         name: 'Jennie Fisher',
         comment: 'ProfitWhales\' software is notably robust, and their analysts have helped us both maximize profitability and truly understand the incremental value of our Amazon Ads. They are a valued partner and we really appreciate the flexibility of their software and service model.',
         avatar: avatars.JennieFisher
     },
-    {
-        name: 'Marjorie Bell',
-        comment: 'Dolor magna ea excepteur aliquip nulla laborum fugiat duis. Laboris proident aliquip do consequat cillum deserunt. Excepteur laborum nulla id pariatur esse laboris et.',
-        avatar: avatars.MarjorieBell
-    },
-    {
-        name: 'Cameron Miles',
-        comment: 'Esse exercitation ipsum consectetur in aute aute non pariatur laborum Lorem culpa. Fugiat aute cillum exercitation eiusmod id sit enim sint. Proident Lorem magna dolor magna aliqua pariatur fugiat aliquip adipisicing mollit sunt amet sint pariatur.',
-        avatar: avatars.CameronMiles
-    },
+    // {
+    //     name: 'Marjorie Bell',
+    //     comment: 'Dolor magna ea excepteur aliquip nulla laborum fugiat duis. Laboris proident aliquip do consequat cillum deserunt. Excepteur laborum nulla id pariatur esse laboris et.',
+    //     avatar: avatars.MarjorieBell
+    // },
+    // {
+    //     name: 'Cameron Miles',
+    //     comment: 'Esse exercitation ipsum consectetur in aute aute non pariatur laborum Lorem culpa. Fugiat aute cillum exercitation eiusmod id sit enim sint. Proident Lorem magna dolor magna aliqua pariatur fugiat aliquip adipisicing mollit sunt amet sint pariatur.',
+    //     avatar: avatars.CameronMiles
+    // },
 
 ];
 
@@ -601,7 +601,7 @@ const LandingAutomation = () => {
 
                         <div className="description">
                             every day, he is dealing with a lot of routine tasks regarding
-                            Amazon PPC instead of launching new products and improve existing ones.
+                            Amazon PPC instead of launching new products and improving existing ones.
                         </div>
 
                         <div className='list'>
@@ -615,7 +615,7 @@ const LandingAutomation = () => {
                             </div>
 
                             <div>
-                                Jeff is always looking in unfriendly Amazon Advertising Reports.
+                                Jeff is always looking into unfriendly Amazon Advertising Reports.
                             </div>
 
                             <div>
@@ -803,54 +803,54 @@ const LandingAutomation = () => {
                 </div>
             </section>
 
-            <section className='comments'>
-                <div className="container">
-                    <h2>What our customers <br/> are saying</h2>
+            {/*<section className='comments'>*/}
+            {/*    <div className="container">*/}
+            {/*        <h2>What our customers <br/> are saying</h2>*/}
 
-                    <CarouselProvider
-                        naturalSlideWidth={100}
-                        naturalSlideHeight={pixelRatio === 2 ? 100 : 60}
-                        totalSlides={commentsList.length}
-                        visibleSlides={window.screen.width < 500 ? 1 : window.screen.width < 1000 ? 2 : 4}
-                        infinite={true}
-                        touchEnabled={false}
-                        dragEnabled={false}
-                        currentSlide={currentCommentSlide}
-                    >
+            {/*        <CarouselProvider*/}
+            {/*            naturalSlideWidth={100}*/}
+            {/*            naturalSlideHeight={pixelRatio === 2 ? 100 : 60}*/}
+            {/*            totalSlides={commentsList.length}*/}
+            {/*            visibleSlides={window.screen.width < 500 ? 1 : window.screen.width < 1000 ? 2 : 3}*/}
+            {/*            infinite={true}*/}
+            {/*            touchEnabled={false}*/}
+            {/*            dragEnabled={false}*/}
+            {/*            currentSlide={currentCommentSlide}*/}
+            {/*        >*/}
 
-                        <Slider>
-                            {commentsList.map((item, index) => (
-                                <Slide index={index}>
-                                    <div className="slide-item">
-                                        <div className="row">
-                                            <img src={item.avatar} alt=""/>
+            {/*            <Slider>*/}
+            {/*                {commentsList.map((item, index) => (*/}
+            {/*                    <Slide index={index}>*/}
+            {/*                        <div className="slide-item">*/}
+            {/*                            <div className="row">*/}
+            {/*                                <img src={item.avatar} alt=""/>*/}
 
-                                            <div className="name">
-                                                {item.name}
-                                            </div>
+            {/*                                <div className="name">*/}
+            {/*                                    {item.name}*/}
+            {/*                                </div>*/}
 
-                                        </div>
+            {/*                            </div>*/}
 
-                                        <div className='comment'>{item.comment}</div>
-                                    </div>
-                                </Slide>
-                            ))}
-                        </Slider>
+            {/*                            <div className='comment'>{item.comment}</div>*/}
+            {/*                        </div>*/}
+            {/*                    </Slide>*/}
+            {/*                ))}*/}
+            {/*            </Slider>*/}
 
-                        <ButtonBack onClick={prevCommentSlide}><FontAwesomeIcon icon={faPlay}/></ButtonBack>
-                        <ButtonNext onClick={nextCommentSlide}><FontAwesomeIcon icon={faPlay}/></ButtonNext>
-                    </CarouselProvider>
+            {/*            /!*<ButtonBack onClick={prevCommentSlide}><FontAwesomeIcon icon={faPlay}/></ButtonBack>*!/*/}
+            {/*            /!*<ButtonNext onClick={nextCommentSlide}><FontAwesomeIcon icon={faPlay}/></ButtonNext>*!/*/}
+            {/*        </CarouselProvider>*/}
 
-                    <div className='navigation'>
-                        {[0, 1, 2, 3, 4].map((item, index) => (
-                            <div
-                                onClick={() => goToCommentSlide(index)}
-                                className={currentCommentSlide === index ? 'active-dot' : ''}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </section>
+            {/*        /!*<div className='navigation'>*!/*/}
+            {/*        /!*    {[0, 1, 2, 3, 4].map((item, index) => (*!/*/}
+            {/*        /!*        <div*!/*/}
+            {/*        /!*            onClick={() => goToCommentSlide(index)}*!/*/}
+            {/*        /!*            className={currentCommentSlide === index ? 'active-dot' : ''}*!/*/}
+            {/*        /!*        />*!/*/}
+            {/*        /!*    ))}*!/*/}
+            {/*        /!*</div>*!/*/}
+            {/*    </div>*/}
+            {/*</section>*/}
 
             <section className='under-hood'>
                 <div className="container">
@@ -863,8 +863,8 @@ const LandingAutomation = () => {
                                 <div className='title'>Product Targetings Optimization</div>
                             </div>
                             <div className="description">
-                                Price aware algorithm optimizing your product attribute targetings(ASIN’s, categories)
-                                based on your Target ACoS and make bid adjustments based on your historical data to
+                                Price aware algorithm optimizes your product attribute targetings (ASIN’s, categories)
+                                based on your Target ACoS and makes bid adjustments based on your historical data to
                                 reach the best results possible.
                             </div>
                         </div>
@@ -887,8 +887,8 @@ const LandingAutomation = () => {
                                 <div className='title'>Keywords Optimization</div>
                             </div>
                             <div className="description">
-                                The algorithm optimizing your keywords based on your product profitability and
-                                conversion rate and make bid adjustment to get the best Ad position for your product.
+                                The algorithm optimizes your keywords based on your product profitability and
+                                conversion rate and makes bid adjustments to get the best Ad position for your product.
                             </div>
                         </div>
 
@@ -899,8 +899,8 @@ const LandingAutomation = () => {
                             </div>
                             <div className="description">
                                 User search terms, which are ASINs that either has large ACoS, or a large number of
-                                clicks and lack of sales and added as negative ASIN PATs to ensure your product is
-                                showing only on competitors pages that convert into a sales.
+                                clicks and lack of sales are added as negative ASIN PATs to ensure your product is
+                                showing only on competitors pages that convert into sales.
                             </div>
                         </div>
 
@@ -922,7 +922,7 @@ const LandingAutomation = () => {
                                 <div className='title'>Adding New Keywords</div>
                             </div>
                             <div className="description">
-                                Adding potential and already valid user search terms as a new keyword to PPC campaigns.
+                                Adding potential and already valid user search terms as new keywords to PPC campaigns.
                                 The quality of the keywords is determined based on your Target ACoS, conversion rate,
                                 number of sales, and other essential metrics.
                             </div>
@@ -976,7 +976,7 @@ const LandingAutomation = () => {
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                You'll Save a Tot of Time
+                                You'll Save a Lot of Time
                             </div>
 
                             <div>
