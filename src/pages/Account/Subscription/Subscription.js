@@ -88,7 +88,7 @@ const Subscription = () => {
         try {
             await userService.reactivateSubscription({
                 subscription_plan_id: selectedPlan.plan_id,
-                subscriptionId: selectedPlan.productId,
+                subscription_id: selectedPlan.productId,
             });
 
             dispatch(userActions.getPersonalUserInfo());
@@ -103,7 +103,7 @@ const Subscription = () => {
         try {
             await userService.cancelSubscription({
                 subscription_plan_id: selectedPlan.plan_id,
-                subscriptionId: selectedPlan.productId,
+                subscription_id: selectedPlan.productId,
             });
 
             dispatch(userActions.getPersonalUserInfo());
