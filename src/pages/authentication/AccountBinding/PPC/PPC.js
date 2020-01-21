@@ -1,10 +1,13 @@
 import React, {useEffect} from 'react';
 import {Icon} from 'antd';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import logo from '../../../../assets/img/zth.svg';
 import './PPC.less';
 import {history} from "../../../../utils/history";
+import {userActions} from "../../../../actions/user.actions";
+
+let intervalId = null;
 
 const PPC = () => {
     const {ppcLink, mwsConnected, ppcConnected} = useSelector(state => ({
@@ -14,14 +17,35 @@ const PPC = () => {
         })),
         token = localStorage.getItem('token');
 
+    const dispatch = useDispatch();
+
     const redirectLink = `${ppcLink}&state=${token}`;
+
+    function getStatus() {
+        if (!ppcConnected) {
+            intervalId = setTimeout(() => {
+                dispatch(userActions.getPersonalUserInfo());
+
+                getStatus();
+            }, 5000)
+        } else {
+            clearTimeout(intervalId);
+            history.push('/ppc/dashboard')
+        }
+    }
 
     useEffect(() => {
         if (!mwsConnected) {
             history.push('/mws')
         } else if (ppcConnected) {
             history.push('/ppc/dashboard')
+        } else {
+            getStatus();
         }
+
+        return (() => {
+            clearTimeout(intervalId);
+        })
     }, []);
 
     return (
@@ -42,7 +66,6 @@ const PPC = () => {
             <a
                 className="link"
                 href={redirectLink}
-                target="_blank"
                 rel="noopener noreferrer"
             >
                 Link with Amazon PPC

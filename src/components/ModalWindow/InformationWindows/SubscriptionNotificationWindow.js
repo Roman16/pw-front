@@ -14,12 +14,13 @@ const SubscriptionNotificationWindow = ({product}) => {
         modalWrap = document.querySelector('.ant-modal-wrap');
 
     const [visibleWindow, openWindow] = useState(false);
-    const {subscribedProduct} = useSelector(state => ({
-        subscribedProduct: state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId]
+    const {subscribedProduct, bootstrapInProgress} = useSelector(state => ({
+        subscribedProduct: state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId],
+        bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
     }));
 
     useEffect(() => {
-        if (!subscribedProduct.has_access && (mainContainer != null)) {
+        if (!subscribedProduct.has_access && (mainContainer != null) && !bootstrapInProgress) {
             openWindow(true);
             mainContainer.classList.add("disable-page");
         } else {
