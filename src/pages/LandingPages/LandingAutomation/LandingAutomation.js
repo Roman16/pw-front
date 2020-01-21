@@ -681,10 +681,12 @@ const LandingAutomation = () => {
                             </div>
 
                             <div className="image-block" style={{
-                                marginTop: currentStepSlide === 3 ? '30px' : 0,
-                                width: currentStepSlide === 1 ? '80%' : '70%'
+                                width: '80%'
                             }}>
-                                <img src={stepsSlider[currentStepSlide].img} alt=""/>
+                                {stepsSlider.map((item, index) => (
+                                    <img src={item.img} alt=""
+                                         style={{display: currentStepSlide === index ? 'block' : 'none'}}/>
+                                ))}
                             </div>
 
                             <div className="next" onClick={nextStepSlide}>
@@ -729,7 +731,10 @@ const LandingAutomation = () => {
                             <div className="prev" onClick={prevCaseSlide}><FontAwesomeIcon icon={faPlay}/></div>
 
                             <div className="image-block">
-                                <img src={ourCases[currentCaseSlide].img} alt=""/>
+                                {ourCases.map((item, index) => (
+                                    <img src={item.img} alt=""
+                                         style={{display: currentCaseSlide === index ? 'block' : 'none'}}/>
+                                ))}
 
                                 {(currentCaseSlide === 4 || currentCaseSlide === 5) &&
                                 <div className='change-chart'
