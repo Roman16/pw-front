@@ -676,6 +676,21 @@
         }
       }
 
+      @media (max-width: 800px) {
+        & {
+          & > div {
+            margin: 0 0 10px 0;
+
+            &:last-child {
+              .value,
+              .description {
+                text-align: right;
+              }
+            }
+          }
+        }
+      }
+
       @media (max-width: 600px) {
         & {
           flex-direction: row;
@@ -849,6 +864,24 @@
         width: 10rem;
         height: 3.4285714285714284rem;
         margin: 3.2142857142857144rem auto 0 auto;
+      }
+    }
+
+    @media (max-width: 800px) {
+      & {
+        .slider {
+          .row {
+            .image-block {
+              width: 90%;
+              margin: 0;
+              height: auto;
+
+              .change-chart {
+                margin: 0 30px 0 0;
+              }
+            }
+          }
+        }
       }
     }
 

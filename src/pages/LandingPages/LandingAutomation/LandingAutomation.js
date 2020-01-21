@@ -633,7 +633,10 @@ const LandingAutomation = () => {
                                 {currentStepSlide !== 0 && <FontAwesomeIcon icon={faPlay}/>}
                             </div>
 
-                            <div className="image-block" style={{marginTop: currentStepSlide === 3 ? '30px' : 0, width: currentStepSlide === 1 || currentStepSlide === 2 ? '85%' : '70%'}}>
+                            <div className="image-block" style={{
+                                marginTop: currentStepSlide === 3 ? '30px' : 0,
+                                width: currentStepSlide === 1 || currentStepSlide === 2 ? '85%' : '70%'
+                            }}>
                                 <img src={stepsSlider[currentStepSlide].img} alt=""/>
                             </div>
 
@@ -752,7 +755,7 @@ const LandingAutomation = () => {
                         naturalSlideWidth={100}
                         naturalSlideHeight={pixelRatio === 2 ? 100 : 60}
                         totalSlides={commentsList.length}
-                        visibleSlides={window.screen.width < 500 ? 1 : 4}
+                        visibleSlides={window.screen.width < 500 ? 1 : window.screen.width < 1000 ? 2 : 4}
                         infinite={true}
                         touchEnabled={false}
                         dragEnabled={false}
