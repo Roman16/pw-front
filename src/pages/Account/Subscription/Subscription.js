@@ -67,12 +67,13 @@ const Subscription = () => {
             })
     }
 
-    async function handleSubscribe({planId, productId}) {
+    async function handleSubscribe({planId, productId, coupon}) {
         try {
             await userService.subscribe({
                 subscription_plan_id: planId,
                 subscriptionId: productId,
-                marketplace_id: 'ATVPDKIKX0DER'
+                marketplace_id: 'ATVPDKIKX0DER',
+                coupon_code: coupon
             });
 
             notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'});

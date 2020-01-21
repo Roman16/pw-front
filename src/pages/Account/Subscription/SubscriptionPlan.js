@@ -21,7 +21,7 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
     let timeout = null;
 
     function handleSubscribe() {
-        onSubscribe(product);
+        onSubscribe({coupon, ...product});
         changeButton(true);
     }
 
