@@ -4,14 +4,16 @@ import ModalWindow from "../ModalWindow";
 import {history} from "../../../utils/history";
 import {userActions} from "../../../actions/user.actions";
 import unicornEmoji from '../../../assets/img/unicorn-emoji.png';
+import {subscriptionProducts} from "../../../constans/subscription.products.name";
 
 const ReportsChangesCountWindow = () => {
     const [visibleWindow, switchWindow] = useState(false);
     const [changesCount, setCount] = useState(0);
     const [changesDate, setDate] = useState(0);
     const dispatch = useDispatch();
-    const {ppcNotification} = useSelector(state => ({
-        ppcNotification: state.user.notifications ? state.user.notifications.ppc_optimization : {}
+    const {ppcNotification, subscribedProduct} = useSelector(state => ({
+        ppcNotification: state.user.notifications ? state.user.notifications.ppc_optimization : {},
+        subscribedProduct: state.user.subscriptions[subscriptionProducts.find(item => item.key === 'ppc').productId],
     }));
 
     function handleOk() {
@@ -28,7 +30,7 @@ const ReportsChangesCountWindow = () => {
     }
 
     useEffect(() => {
-        if (ppcNotification.count_from_last_login > 0) {
+        if (ppcNotification.count_from_last_login > 0 && subscribedProduct.has_access) {
             switchWindow(true);
             setCount(ppcNotification.count_from_last_login);
             setDate(ppcNotification.last_notice_date);

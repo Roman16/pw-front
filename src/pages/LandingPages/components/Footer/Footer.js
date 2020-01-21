@@ -114,7 +114,7 @@ const Footer = () => (
                 </ul>
 
 
-                <div className="copyright">Copyright 2019 Profit Whales © 2018 All Right Reserved</div>
+                <div className="copyright">Profit Whales © 2020 All Right Reserved</div>
             </div>
         </div>
     </footer>

@@ -24,7 +24,7 @@ export const userUrls = {
     reactivate: (subscriptionId) => `user/account/subscription/${subscriptionId}/resume`,
     cancel: (subscriptionId) => `user/account/subscription/${subscriptionId}/cancel`,
     updateStatus: 'user/account/subscription/all/update-preview',
-
+    coupon: 'user/account/subscription/all/update-preview',
 };
 
 export const productsUrls = {

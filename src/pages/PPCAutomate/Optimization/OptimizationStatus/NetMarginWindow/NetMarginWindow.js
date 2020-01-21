@@ -46,7 +46,7 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
                 status: 'RUNNING'
             }));
 
-            handleCancel()
+            handleCancel();
         } else {
             setError(true);
         }

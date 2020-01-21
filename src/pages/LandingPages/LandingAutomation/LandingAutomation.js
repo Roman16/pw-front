@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faFacebookF, faTwitter, faLinkedinIn} from "@fortawesome/free-brands-svg-icons"
+import {faPlay} from "@fortawesome/free-solid-svg-icons"
 import $ from 'jquery';
 import ionRangeSlider from 'ion-rangeslider';
 import {CarouselProvider, Slider, Slide, ButtonBack, ButtonNext} from 'pure-react-carousel';
@@ -9,26 +9,24 @@ import './LandingAutomation.less';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 import {history} from "../../../utils/history";
-
-import SurveyPopup from "./SurveyPopup";
+import {debounce} from "throttle-debounce";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {casesImages} from "../../../assets/img/landing-automation/cases";
 import {stepsImages} from "../../../assets/img/landing-automation/steps";
 import {avatars} from "../../../assets/img/landing-automation/avatars/avatars";
 import {underHoodImages} from "../../../assets/img/landing-automation/under-hood";
-import JeffInPlane from '../../../assets/img/landing-automation/not-in-ads.svg';
+import JeffInPlane from '../../../assets/img/landing-automation/Illustration.png';
 import JeffDaily from '../../../assets/img/landing-automation/jeff-daily.svg';
 import amazonApp from '../../../assets/img/landing-automation/amazon-app-store.svg';
-import dots from '../../../assets/img/landing-automation/dots.svg';
-import leftIcon from '../../../assets/img/landing-automation/left-icon.svg';
-import rightIcon from '../../../assets/img/landing-automation/right-icon.svg';
 import dashIcon from '../../../assets/img/landing-automation/dash.svg';
 import listIcon from '../../../assets/img/landing-automation/yes_green.svg'
 import jeffChart from '../../../assets/img/landing-automation/jeffChart.svg'
 
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
+const pixelRatio = window.devicePixelRatio;
+
 
 const stepsSlider = [
     {
@@ -157,7 +155,7 @@ const ourCases = [
         ]
     },
     {
-        title: 'One year with Profit Whales results',
+        title: '2 months Profit Whales results',
         firstColumnTitle: 'Before',
         secondColumnTitle: 'After',
         img: casesImages.case4,
@@ -326,6 +324,10 @@ const LandingAutomation = () => {
         }
     }
 
+    function goToStep(index) {
+        setStepSlide(index)
+    }
+
     //-----------------------------------
 
     //case navigation
@@ -378,6 +380,15 @@ const LandingAutomation = () => {
         history.push('/registration')
     }
 
+    function goToPricingPage() {
+        window.open('/pricing')
+    }
+
+    function swipeDetect() {
+
+    }
+
+
     useEffect(() => {
         (function (t, a, p) {
             t.TapfiliateObject = a;
@@ -402,23 +413,27 @@ const LandingAutomation = () => {
             hide_min_max: true,
             from: 10,
             from_min: 10,
-            prefix: "$ ",
+            prefix: "< $ ",
             max_postfix: "+",
             postfix: "  / month",
             onStart: function () {
-                $('.slider-container .slider .irs .irs-bar').html('$35');
+                $('.slider-container .slider .irs .irs-bar').html('$ 35');
             },
             onChange: function (data) {
                 var value = data.from_value,
                     result = 0,
                     sumElement = $('.result-sum'),
-                    barLabel = $('.slider-container .slider .irs .irs-bar');
+                    barLabel = $('.slider-container .slider .irs .irs-bar'),
+                    barTooltip = $('.slider-container .slider .irs .irs-single');
 
 
                 if (value <= 1000) {
-                    sumElement.text('$35');
-                    barLabel.html('$35');
+                    sumElement.text('$ 35');
+                    barLabel.html('$ 35');
+                    barTooltip.html('< $ 1000 / month');
                 } else {
+                    barTooltip.html(`$ ${value} / month`);
+
                     if (value >= 50000) {
                         result = ((2 / 100) * value) + 500;
                         barLabel.html('$500 + 2% <small>ad spend</small>');
@@ -430,10 +445,11 @@ const LandingAutomation = () => {
                         barLabel.html('$100 + 4% <small>ad spend</small>');
                     }
 
-                    sumElement.text('$' + result);
+                    sumElement.text('$ ' + result);
                 }
             }
         });
+
 
         const s = document.createElement('script');
         s.type = 'text/javascript';
@@ -461,10 +477,76 @@ const LandingAutomation = () => {
 
         document.head.appendChild(s);
 
+        swipeDetect();
+
+        document.querySelector('html').classList.add('not-retina');
+
         return () => {
             document.head.removeChild(s);
+            document.querySelector('html').classList.remove('not-retina');
         }
     }, []);
+
+    useEffect(() => {
+
+        const dots = document.querySelectorAll('.all-steps i');
+
+        dots.forEach((item, index) => {
+            if (index < currentStepSlide) {
+                dots[index].classList.add('loaded')
+            } else {
+                dots[index].classList.remove('loaded')
+            }
+        });
+    }, [currentStepSlide]);
+
+    useEffect(() => {
+        document.getElementById('cases-slider').addEventListener('touchstart', handleTouchStart, false);
+        document.getElementById('cases-slider').addEventListener('touchmove', handleTouchMove, false);
+
+        let xDown = null;
+        let yDown = null;
+
+        function getTouches(evt) {
+            return evt.touches ||             // browser API
+                evt.originalEvent.touches; // jQuery
+        }
+
+        function handleTouchStart(evt) {
+            const firstTouch = getTouches(evt)[0];
+            xDown = firstTouch.clientX;
+            yDown = firstTouch.clientY;
+        }
+
+        function handleTouchMove(evt) {
+            if (!xDown || !yDown) {
+                return;
+            }
+
+            const xUp = evt.touches[0].clientX;
+            const yUp = evt.touches[0].clientY;
+
+            const xDiff = xDown - xUp;
+            const yDiff = yDown - yUp;
+
+            if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
+                if (xDiff > 0) {
+                    nextCaseSlide();
+                } else {
+                    prevCaseSlide();
+                }
+            } else {
+                if (yDiff > 0) {
+                    /* up swipe */
+                } else {
+                    /* down swipe */
+                }
+            }
+            /* reset values */
+            xDown = null;
+            yDown = null;
+        }
+    }, [currentCaseSlide]);
 
 
     return (
@@ -474,6 +556,10 @@ const LandingAutomation = () => {
             <section className='first-section'>
                 <div className='container'>
                     <div className='content'>
+                        <div className='image-block'>
+                            <img src={JeffInPlane} alt=""/>
+                        </div>
+
                         <h1>Engage in Amazon <br/> business <span>not in ads</span></h1>
 
                         <div className='description'>
@@ -482,26 +568,23 @@ const LandingAutomation = () => {
                             PPC automation software, it's more than possible.
                         </div>
 
-                        <div className='advantages'>
-                            <span>Cancel anytime</span>
-                            <div/>
-                            <span>14 Days Free Trial</span>
-                            <div/>
-                            <span>No credit card required</span>
-                        </div>
+                        <div className="col">
+                            <div className='advantages'>
+                                <span><div/>Cancel anytime</span>
+                                <span><div/>14 Days Free Trial</span>
+                                <span><div/>No credit card required</span>
+                            </div>
 
-                        <div className="actions">
-                            <button className='btn default' onClick={goToRegistrationPage}>
-                                START FREE
-                            </button>
+                            <div className="actions">
+                                <button className='btn default' onClick={goToRegistrationPage}>
+                                    START FREE
+                                </button>
 
-                            <img src={amazonApp} alt=""/>
+                                <img src={amazonApp} alt=""/>
+                            </div>
                         </div>
                     </div>
 
-                    <div className='image-block'>
-                        <img src={JeffInPlane} alt=""/>
-                    </div>
                 </div>
             </section>
 
@@ -551,23 +634,29 @@ const LandingAutomation = () => {
 
                     <div className='all-steps'>
                         <div className={currentStepSlide === 0 ? 'active' : ''}>
-                            <div/>
-                            <span>Connect Seller Central Account</span>
+                            <div onClick={() => goToStep(0)}/>
+                            <span>Connect Seller Central <br/> Account</span>
                         </div>
-                        <img src={dots} alt=""/>
+
+                        <i/>
+
                         <div className={currentStepSlide === 1 ? 'active' : ''}>
-                            <div/>
+                            <div onClick={() => goToStep(1)}/>
                             <span>Choose Your Goal</span>
                         </div>
-                        <img src={dots} alt=""/>
+
+                        <i/>
+
                         <div className={currentStepSlide === 2 ? 'active' : ''}>
-                            <div/>
+                            <div onClick={() => goToStep(2)}/>
                             <span>Monitor the changes</span>
                         </div>
-                        <img src={dots} alt=""/>
+
+                        <i/>
+
                         <div className={currentStepSlide === 3 ? 'active' : ''}>
-                            <div/>
-                            <span>Access a lot more data</span>
+                            <div onClick={() => goToStep(3)}/>
+                            <span>Access a lot more <br/>data</span>
                         </div>
                     </div>
 
@@ -591,11 +680,22 @@ const LandingAutomation = () => {
                         </div>
 
                         <div className="slider">
-                            <div className="prev" onClick={prevStepSlide}><img src={leftIcon} alt=""/></div>
-                            <div className="image-block" style={{marginTop: currentStepSlide === 3 ? '30px' : 0}}>
-                                <img src={stepsSlider[currentStepSlide].img} alt=""/>
+                            <div className="prev" onClick={prevStepSlide}>
+                                {currentStepSlide !== 0 && <FontAwesomeIcon icon={faPlay}/>}
                             </div>
-                            <div className="next" onClick={nextStepSlide}><img src={rightIcon} alt=""/></div>
+
+                            <div className="image-block" style={{
+                                width: '80%'
+                            }}>
+                                {stepsSlider.map((item, index) => (
+                                    <img src={item.img} alt=""
+                                         style={{display: currentStepSlide === index ? 'block' : 'none'}}/>
+                                ))}
+                            </div>
+
+                            <div className="next" onClick={nextStepSlide}>
+                                {currentStepSlide !== 3 && <FontAwesomeIcon icon={faPlay}/>}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -609,7 +709,7 @@ const LandingAutomation = () => {
                     </div>
                     <div>
                         <div className="value">14%</div>
-                        <div className="description">Average Decrease in Acos</div>
+                        <div className="description">Average Decrease in ACoS</div>
                     </div>
                     <div>
                         <div className="value">$40M</div>
@@ -630,20 +730,26 @@ const LandingAutomation = () => {
                 <div className="container">
                     <h2>Our Cases</h2>
 
-                    <div className='slider'>
-                        <div className="image-block">
-                            <img src={ourCases[currentCaseSlide].img} alt=""/>
+                    <div className='slider' id='cases-slider'>
+                        <div className="row">
+                            <div className="prev" onClick={prevCaseSlide}><FontAwesomeIcon icon={faPlay}/></div>
 
-                            {(currentCaseSlide === 4 || currentCaseSlide === 5) &&
-                            <div className='change-chart'
-                                 onClick={() => currentCaseSlide === 4 ? setCaseSlide(5) : setCaseSlide(4)}>
-                                Change chart
+                            <div className="image-block">
+                                {ourCases.map((item, index) => (
+                                    <img src={item.img} alt=""
+                                         style={{display: currentCaseSlide === index ? 'block' : 'none'}}/>
+                                ))}
+
+                                {(currentCaseSlide === 4 || currentCaseSlide === 5) &&
+                                <div className='change-chart'
+                                     onClick={() => currentCaseSlide === 4 ? setCaseSlide(5) : setCaseSlide(4)}>
+                                    Change chart
+                                </div>
+                                }
                             </div>
-                            }
-                        </div>
 
-                        <div className="prev" onClick={prevCaseSlide}><img src={leftIcon} alt=""/></div>
-                        <div className="next" onClick={nextCaseSlide}><img src={rightIcon} alt=""/></div>
+                            <div className="next" onClick={nextCaseSlide}><FontAwesomeIcon icon={faPlay}/></div>
+                        </div>
 
                         <div className='navigation'>
                             {[0, 1, 2, 3].map((item, index) => (
@@ -698,52 +804,52 @@ const LandingAutomation = () => {
             </section>
 
             <section className='comments'>
-                <h2>What our customers <br/> are saying</h2>
+                <div className="container">
+                    <h2>What our customers <br/> are saying</h2>
 
-                <CarouselProvider
-                    naturalSlideWidth={100}
-                    naturalSlideHeight={60}
-                    totalSlides={commentsList.length}
-                    visibleSlides={4}
-                    infinite={true}
-                    touchEnabled={false}
-                    dragEnabled={false}
-                    currentSlide={currentCommentSlide}
-                >
+                    <CarouselProvider
+                        naturalSlideWidth={100}
+                        naturalSlideHeight={pixelRatio === 2 ? 100 : 60}
+                        totalSlides={commentsList.length}
+                        visibleSlides={window.screen.width < 500 ? 1 : window.screen.width < 1000 ? 2 : 4}
+                        infinite={true}
+                        touchEnabled={false}
+                        dragEnabled={false}
+                        currentSlide={currentCommentSlide}
+                    >
 
-                    <Slider>
-                        {commentsList.map((item, index) => (
-                            <Slide index={index}>
-                                <div className="slide-item">
-                                    <div className="row">
-                                        <img src={item.avatar} alt=""/>
+                        <Slider>
+                            {commentsList.map((item, index) => (
+                                <Slide index={index}>
+                                    <div className="slide-item">
+                                        <div className="row">
+                                            <img src={item.avatar} alt=""/>
 
-                                        <div className="name">
-                                            <div>{item.name}</div>
-                                            <span>@Claire</span>
+                                            <div className="name">
+                                                {item.name}
+                                            </div>
+
                                         </div>
 
+                                        <div className='comment'>{item.comment}</div>
                                     </div>
+                                </Slide>
+                            ))}
+                        </Slider>
 
-                                    <div className='comment'>{item.comment}</div>
-                                </div>
-                            </Slide>
+                        <ButtonBack onClick={prevCommentSlide}><FontAwesomeIcon icon={faPlay}/></ButtonBack>
+                        <ButtonNext onClick={nextCommentSlide}><FontAwesomeIcon icon={faPlay}/></ButtonNext>
+                    </CarouselProvider>
+
+                    <div className='navigation'>
+                        {[0, 1, 2, 3, 4].map((item, index) => (
+                            <div
+                                onClick={() => goToCommentSlide(index)}
+                                className={currentCommentSlide === index ? 'active-dot' : ''}
+                            />
                         ))}
-                    </Slider>
-
-                    <ButtonBack onClick={prevCommentSlide}><img src={leftIcon} alt=""/></ButtonBack>
-                    <ButtonNext onClick={nextCommentSlide}><img src={rightIcon} alt=""/></ButtonNext>
-                </CarouselProvider>
-
-                <div className='navigation'>
-                    {[0, 1, 2, 3, 4].map((item, index) => (
-                        <div
-                            onClick={() => goToCommentSlide(index)}
-                            className={currentCommentSlide === index ? 'active-dot' : ''}
-                        />
-                    ))}
+                    </div>
                 </div>
-
             </section>
 
             <section className='under-hood'>
@@ -752,8 +858,10 @@ const LandingAutomation = () => {
 
                     <div className="list">
                         <div>
-                            <div className="image"><img src={underHoodImages.icon1} alt=""/></div>
-                            <div className='title'>Product Targetings Optimization</div>
+                            <div className="col">
+                                <div className="image"><img src={underHoodImages.icon1} alt=""/></div>
+                                <div className='title'>Product Targetings Optimization</div>
+                            </div>
                             <div className="description">
                                 Price aware algorithm optimizing your product attribute targetings(ASIN’s, categories)
                                 based on your Target ACoS and make bid adjustments based on your historical data to
@@ -762,8 +870,10 @@ const LandingAutomation = () => {
                         </div>
 
                         <div>
-                            <div className="image"><img src={underHoodImages.icon2} alt=""/></div>
-                            <div className='title'>Negative Keywords Adding</div>
+                            <div className='col'>
+                                <div className="image"><img src={underHoodImages.icon2} alt=""/></div>
+                                <div className='title'>Negative Keywords Adding</div>
+                            </div>
                             <div className="description">
                                 Adding not relevant customer search terms that have unhealthy ACoS, or too many clicks
                                 and lack of sales, as negative keywords in the Auto and Broad campaigns to ensure you
@@ -772,8 +882,10 @@ const LandingAutomation = () => {
                         </div>
 
                         <div>
-                            <div className="image"><img src={underHoodImages.icon3} alt=""/></div>
-                            <div className='title'>Keywords Optimization</div>
+                            <div className='col'>
+                                <div className="image"><img src={underHoodImages.icon3} alt=""/></div>
+                                <div className='title'>Keywords Optimization</div>
+                            </div>
                             <div className="description">
                                 The algorithm optimizing your keywords based on your product profitability and
                                 conversion rate and make bid adjustment to get the best Ad position for your product.
@@ -781,8 +893,10 @@ const LandingAutomation = () => {
                         </div>
 
                         <div>
-                            <div className="image"><img src={underHoodImages.icon4} alt=""/></div>
-                            <div className='title'>Negative Pat Creation</div>
+                            <div className='col'>
+                                <div className="image"><img src={underHoodImages.icon4} alt=""/></div>
+                                <div className='title'>Negative Pat Creation</div>
+                            </div>
                             <div className="description">
                                 User search terms, which are ASINs that either has large ACoS, or a large number of
                                 clicks and lack of sales and added as negative ASIN PATs to ensure your product is
@@ -791,8 +905,10 @@ const LandingAutomation = () => {
                         </div>
 
                         <div>
-                            <div className="image"><img src={underHoodImages.icon5} alt=""/></div>
-                            <div className='title'>Mining New Product Targetings</div>
+                            <div className='col'>
+                                <div className="image"><img src={underHoodImages.icon5} alt=""/></div>
+                                <div className='title'>Mining New Product Targetings</div>
+                            </div>
                             <div className="description">
                                 The algorithm will search through your advertising reports to find profitable and
                                 relevant ASIN's and add them to your PPC campaign so you can steal traffic from your
@@ -801,8 +917,10 @@ const LandingAutomation = () => {
                         </div>
 
                         <div>
-                            <div className="image"><img src={underHoodImages.icon6} alt=""/></div>
-                            <div className='title'>Adding New Keywords</div>
+                            <div className='col'>
+                                <div className="image"><img src={underHoodImages.icon6} alt=""/></div>
+                                <div className='title'>Adding New Keywords</div>
+                            </div>
                             <div className="description">
                                 Adding potential and already valid user search terms as a new keyword to PPC campaigns.
                                 The quality of the keywords is determined based on your Target ACoS, conversion rate,
@@ -831,35 +949,39 @@ const LandingAutomation = () => {
 
                             <div className="col">
                                 <div className="sum">
-                                    <span className="result-sum">$35</span>
+                                    <span className="result-sum">$ 35</span>
                                     <span className='description'>
-                                        Estimated Price per / Month by your 30 Day Ad Spend
+                                       Estimated Price per month based on your 30 days Amazon Ad spend
                                     </span>
+
+                                    <a href="https://profitwhales.com/pricing">
+                                        How is this calculated?
+                                    </a>
                                 </div>
 
-                                <button className='btn default' onClick={goToRegistrationPage}>
+                                <button className='btn green-btn' onClick={goToRegistrationPage}>
                                     Free Trial
                                 </button>
                             </div>
                         </div>
 
-                        <div className="row list">
+                        <div className="list">
                             <div>
                                 <img src={listIcon} alt="yes"/>
                                 Efficient Budget Management
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                Business Goal Aware Optimization
+                                You'll get Money Making System
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                Unlimited Products & Campaigns
+                                You'll Save a Tot of Time
                             </div>
 
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                You'll get Money Making System
+                                Business Goal Aware Optimization
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
@@ -867,16 +989,16 @@ const LandingAutomation = () => {
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                Data-Driven Bid Optimization
+                                Dashboard View
                             </div>
 
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                You'll Save a Tot of Time
+                                Unlimited Products & Campaigns
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                Dashboard View
+                                Data-Driven Bid Optimization
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
@@ -884,7 +1006,7 @@ const LandingAutomation = () => {
                             </div>
                         </div>
 
-                        <button className='btn white' onClick={goToRegistrationPage}>
+                        <button className='btn white' onClick={goToPricingPage}>
                             Learn more
                         </button>
                     </div>
@@ -895,7 +1017,9 @@ const LandingAutomation = () => {
                 <div className="container">
                     <h2>Go for Profit, be a Whale</h2>
 
-                    <img src={jeffChart} alt=""/>
+                    <div className="image">
+                        <img src={jeffChart} alt=""/>
+                    </div>
 
                     <button className='btn default' onClick={goToRegistrationPage}>
                         Try It For Free
@@ -903,19 +1027,7 @@ const LandingAutomation = () => {
                 </div>
             </section>
 
-            <SurveyPopup/>
-
             <div className="scroll-top" onClick={() => $('html, body').animate({scrollTop: 0}, 'slow')}/>
-
-            <div className="social-links">
-
-                <a className="i-tw" href="https://twitter.com/ProfitWhales" target="_blank"
-                   title="Twitter"><FontAwesomeIcon icon={faTwitter}/></a>
-                <a className="i-fb" href="https://www.facebook.com/profitwhales" target="_blank"
-                   title="Facebook"><FontAwesomeIcon icon={faFacebookF}/></a>
-                <a className="i-in" href="https://www.linkedin.com/company/profitwhales" target="_blank"
-                   title="LinkedIn"><FontAwesomeIcon icon={faLinkedinIn}/></a>
-            </div>
 
             <Footer/>
         </div>

@@ -6,13 +6,15 @@ import facebookIcon from '../../../assets/img/icons/facebook-icon-grey.svg';
 import messengerIcon from '../../../assets/img/icons/messenger-icon-grey.svg';
 import emailIcon from '../../../assets/img/icons/email-icon-grey.svg';
 import {userActions} from "../../../actions/user.actions";
+import {productsActions} from "../../../actions/products.actions";
 
 let intervalId = null;
 
 const LoadingAmazonAccount = () => {
     const [visibleWindow, switchWindow] = useState(false);
     const dispatch = useDispatch();
-    const {firstName, lastName, bootstrapInProgress} = useSelector(state => ({
+    const {firstName, lastName, bootstrapInProgress, productList} = useSelector(state => ({
+        productList: state.products.productList,
         firstName: state.user.user ? state.user.user.name : '',
         lastName: state.user.user ? state.user.user.last_name : '',
         bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
@@ -23,6 +25,17 @@ const LoadingAmazonAccount = () => {
             if (bootstrapInProgress) {
                 dispatch(userActions.getPersonalUserInfo());
             } else {
+                if (!productList && productList.length <= 0) {
+                    dispatch(productsActions.fetchProducts({
+                        size: 10,
+                        page: 1,
+                        searchStr: '',
+                        onlyOptimization: false,
+                        selectedAll: false,
+                        onlyHasNew: false
+                    }));
+                }
+
                 clearInterval(intervalId)
             }
         }, 10000);
@@ -47,9 +60,8 @@ const LoadingAmazonAccount = () => {
             </span>
 
             <div className='social-icons'>
-                <img src={facebookIcon} alt=""/>
-                <img src={messengerIcon} alt=""/>
-                <img src={emailIcon} alt=""/>
+                <a href="https://www.facebook.com/profitwhales/" target='_blank'><img src={facebookIcon} alt=""/></a>
+                <a href="mailto: support@profitwhales.agency"><img src={emailIcon} alt=""/></a>
             </div>
         </ModalWindow>
     )

@@ -75,7 +75,7 @@
 }
 
 .confirm-action-modal {
-  max-width: 270px;
+  max-width: 300px;
   font-family: ir;
   border-radius: 9px;
   height: max-content;
@@ -89,23 +89,24 @@
   }
 
   .ant-modal-title {
-    font-size: 16px;
+    font-size: 1.2857142857142858rem;
     letter-spacing: -0.08px;
     color: #17175A;
   }
 
   .ant-modal-body {
     padding: 10px 0;
-    font-size: 12px;
+    font-size: 1.1428571428571428rem;
     text-align: center;
     letter-spacing: -0.08px;
     color: rgba(23, 23, 90, 0.5);
 
     .ant-checkbox-wrapper {
       margin: 20px 0 0 0;
+      font-size: 1.1428571428571428rem;
 
       span {
-        font-size: 0.8571428571428571rem;
+        font-size: 1.1428571428571428rem;
         color: rgba(23, 23, 90, 0.5);
       }
 
@@ -118,6 +119,11 @@
           width: 1em;
           height: 1em;
         }
+
+      .ant-checkbox-inner::after {
+        //width: 0.35714285714285715rem;
+        //height: 0.6428571428571429rem;
+      }
       }
 
       .ant-checkbox-checked .ant-checkbox-inner::after {

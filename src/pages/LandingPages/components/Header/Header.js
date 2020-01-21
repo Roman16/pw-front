@@ -10,7 +10,7 @@ const authorized = localStorage.getItem('token');
 const Header = () => {
     const [openedMenu, switchMenu] = useState(false);
 
-    return(
+    return (
         <header className='not-found-page__header' id={'header'}>
             <div className="container">
                 <div>
@@ -32,8 +32,8 @@ const Header = () => {
                             </li>
                             <li className="has-child"><a href="#">Products</a>
                                 <ul className="sub-menu">
-                                    <li><a href="https://profitwhales.com/scanner">PPC Scanner</a></li>
-                                    <li><a href="https://profitwhales.com/automation">PPC Automate</a></li>
+                                    <li><a href='https://profitwhales.com/scanner'>PPC Scanner</a></li>
+                                    <li><Link to='/automation'>PPC Automate</Link></li>
                                 </ul>
                             </li>
                             <li className="has-child"><a>Services</a>
@@ -62,7 +62,7 @@ const Header = () => {
                             <Link to='/registration' className='register-btn'>GET STARTED</Link>
                         </Fragment>
                         :
-                        <Link to='/ppc/optimization' className='register-btn'>BACK TO SITE</Link>
+                        <Link to='/ppc/optimization' className='register-btn'>SIGN IN</Link>
                     }
 
                 </div>

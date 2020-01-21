@@ -29,7 +29,10 @@ class OptimizationStatus extends Component {
         dontShowStopNotificationAgain: this.props.dontShowStopNotificationAgain,
     };
 
-    cancelModal = () => this.setState({isShowModal: false});
+    cancelModal = () => this.setState({
+        isShowModal: false,
+        showFirstStartConfirmModal: false
+    });
 
     handleOk = () => {
         this.setState({
@@ -45,7 +48,7 @@ class OptimizationStatus extends Component {
             this.setState({
                 showAllStartConfirmModal: true
             })
-        } else if (!dontShowStartNotificationAgain || !optimized) {
+        } else if (!dontShowStartNotificationAgain) {
             this.setState({
                 showFirstStartConfirmModal: true
             })
@@ -68,7 +71,10 @@ class OptimizationStatus extends Component {
         const {onSwitchOptimization, product, selectedAll, optimizationOptions} = this.props;
 
         if (status === RUNNING && !product.product_margin) {
-            this.setState({isShowModal: true});
+            this.setState({
+                isShowModal: true,
+                showFirstStartConfirmModal: false
+            });
         } else {
             if (product.id) {
                 onSwitchOptimization({
@@ -181,7 +187,10 @@ class OptimizationStatus extends Component {
                 <ConfirmActionPopup
                     visible={showFirstStartConfirmModal}
                     handleOk={() => this.toStart(RUNNING)}
-                    handleCancel={() => this.setState({showFirstStartConfirmModal: false, dontShowStartNotificationAgain: false})}
+                    handleCancel={() => this.setState({
+                        showFirstStartConfirmModal: false,
+                        dontShowStartNotificationAgain: false
+                    })}
                     handleChangeCheckbox={(e) => {
                         this.setState({dontShowStartNotificationAgain: e.target.checked})
                     }}
@@ -193,7 +202,10 @@ class OptimizationStatus extends Component {
                 <ConfirmActionPopup
                     visible={showStopConfirmModal}
                     handleOk={() => this.toStart(STOPPED)}
-                    handleCancel={() => this.setState({showStopConfirmModal: false, dontShowStopNotificationAgain: false})}
+                    handleCancel={() => this.setState({
+                        showStopConfirmModal: false,
+                        dontShowStopNotificationAgain: false
+                    })}
                     handleChangeCheckbox={(e) => {
                         this.setState({dontShowStopNotificationAgain: e.target.checked})
                     }}
