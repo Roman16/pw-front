@@ -6,6 +6,7 @@ import facebookIcon from '../../../assets/img/icons/facebook-icon-grey.svg';
 import messengerIcon from '../../../assets/img/icons/messenger-icon-grey.svg';
 import emailIcon from '../../../assets/img/icons/email-icon-grey.svg';
 import {userActions} from "../../../actions/user.actions";
+import {productsActions} from "../../../actions/products.actions";
 
 let intervalId = null;
 
@@ -23,6 +24,15 @@ const LoadingAmazonAccount = () => {
             if (bootstrapInProgress) {
                 dispatch(userActions.getPersonalUserInfo());
             } else {
+                dispatch(productsActions.fetchProducts({
+                    size: 10,
+                    page: 1,
+                    searchStr: '',
+                    onlyOptimization: false,
+                    selectedAll: false,
+                    onlyHasNew: false
+                }));
+
                 clearInterval(intervalId)
             }
         }, 10000);

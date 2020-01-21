@@ -62,7 +62,7 @@ const Header = () => {
                             <Link to='/registration' className='register-btn'>GET STARTED</Link>
                         </Fragment>
                         :
-                        <Link to='/ppc/optimization' className='register-btn'>BACK TO SITE</Link>
+                        <Link to='/ppc/optimization' className='register-btn'>SIGN IN</Link>
                     }
 
                 </div>
