@@ -129,11 +129,22 @@
           letter-spacing: 0.4px;
           color: #7C8A95;
 
-          div {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #BDC6CF;
+          span {
+            display: flex;
+            align-items: center;
+            margin: 0 20px 0 0;
+
+            &:last-child {
+              margin: 0;
+            }
+
+            div {
+              width: 6px;
+              height: 6px;
+              border-radius: 50%;
+              background: #BDC6CF;
+              margin: 0 10px 0 0;
+            }
           }
         }
 
@@ -403,10 +414,6 @@
 
         &:last-child {
           align-items: flex-end;
-
-          span {
-            text-align: right;
-          }
         }
 
         div {
@@ -536,7 +543,6 @@
         position: relative;
 
         .image-block {
-          width: 80%;
           left: 0;
           right: 0;
           margin: 0 auto;
@@ -544,6 +550,10 @@
           align-items: center;
           justify-content: center;
           position: absolute;
+
+          img {
+            width: 100%;
+          }
         }
 
         .prev,
@@ -658,7 +668,7 @@
 
         .description {
           font-style: normal;
-          font-size: 0.9285714285714286rem;
+          font-size: 15px;
           line-height: 1.3571428571428572rem;
           letter-spacing: 0.4px;
           color: #FFFFFF;
@@ -849,6 +859,10 @@
             .image-block {
               margin: 0;
               height: 120px;
+
+              .change-chart {
+                margin: 0;
+              }
             }
 
             .prev {
@@ -1063,6 +1077,7 @@
         transition: .3s;
 
         .col {
+          width: 100%;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -1091,6 +1106,7 @@
         }
 
         .title {
+          width: 100%;
           font-family: esb;
           font-size: 16px;
           letter-spacing: 0.4px;
@@ -1101,7 +1117,7 @@
         }
 
         .description {
-          text-align: center;
+          text-align: left;
         }
       }
     }
@@ -1190,17 +1206,17 @@
             }
 
             &:first-child {
-              width: 60%;
+              width: 55%;
             }
 
             &:last-child {
-              width: 30%;
+              width: 40%;
             }
           }
         }
 
         .slider-container {
-          margin: 100px 0 15px 0;
+          margin: 80px 0 15px 0;
 
           .slider .irs .irs-bar {
             background: #6d6df6;
@@ -1276,6 +1292,7 @@
           .result-sum {
             font-family: e3sb;
             font-size: 64px;
+            line-height: 75px;
             letter-spacing: 0.4px;
             color: #17175A;
           }
