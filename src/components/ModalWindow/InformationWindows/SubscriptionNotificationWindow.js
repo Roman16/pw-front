@@ -20,11 +20,15 @@ const SubscriptionNotificationWindow = ({product}) => {
     }));
 
     useEffect(() => {
-        if (!subscribedProduct.has_access && (mainContainer != null) && !bootstrapInProgress) {
-            openWindow(true);
-            mainContainer.classList.add("disable-page");
-        } else {
+        if (bootstrapInProgress) {
             openWindow(false);
+        } else {
+            if (!subscribedProduct.has_access && (mainContainer != null)) {
+                openWindow(true);
+                mainContainer.classList.add("disable-page");
+            } else {
+                openWindow(false);
+            }
         }
 
         return (() => {

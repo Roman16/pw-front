@@ -57,9 +57,8 @@ const LoadingAmazonAccount = () => {
             </span>
 
             <div className='social-icons'>
-                <img src={facebookIcon} alt=""/>
-                <img src={messengerIcon} alt=""/>
-                <img src={emailIcon} alt=""/>
+                <a href="https://www.facebook.com/profitwhales/" target='_blank'><img src={facebookIcon} alt=""/></a>
+                <a href="mailto: support@profitwhales.agency"><img src={emailIcon} alt=""/></a>
             </div>
         </ModalWindow>
     )
