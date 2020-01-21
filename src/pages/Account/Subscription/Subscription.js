@@ -71,7 +71,7 @@ const Subscription = () => {
         try {
             await userService.subscribe({
                 subscription_plan_id: planId,
-                subscriptionId: productId,
+                subscription_id: productId,
                 marketplace_id: 'ATVPDKIKX0DER',
                 coupon_code: coupon
             });
