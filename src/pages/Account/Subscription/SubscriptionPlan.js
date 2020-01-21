@@ -163,6 +163,19 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
 
 
                 <div className="cancel">
+                    {/*{(product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&*/}
+                    {/*<div className='coupon'>*/}
+                    {/*    <h4>Do you have coupon code?</h4>*/}
+                    {/*    <div className="row">*/}
+                    {/*        <div className="input-block">*/}
+                    {/*            <img src={couponIcon} alt=""/>*/}
+                    {/*            <input type="text"/>*/}
+                    {/*        </div>*/}
+
+                    {/*        <button className="btn green-btn" onClick={applyCoupon}>apply</button>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    {/*}*/}
                     {renderButtonsBlock()}
                 </div>
             </div>

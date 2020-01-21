@@ -32,8 +32,8 @@ const Header = () => {
                             </li>
                             <li className="has-child"><a href="#">Products</a>
                                 <ul className="sub-menu">
-                                    <li><Link to='/ppc/scanner'>PPC Scanner</Link></li>
-                                    <li><a href="https://profitwhales.com/automation">PPC Automate</a></li>
+                                    <li><a href='https://profitwhales.com/scanner'>PPC Scanner</a></li>
+                                    <li><Link to='/automation'>PPC Automate</Link></li>
                                 </ul>
                             </li>
                             <li className="has-child"><a>Services</a>

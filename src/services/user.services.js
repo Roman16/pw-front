@@ -30,7 +30,8 @@ export const userService = {
     cancelSubscription,
     subscribe,
     confirmPayment,
-    updateSubscriptionStatus
+    updateSubscriptionStatus,
+    applyCoupon,
 };
 
 function login(user) {
@@ -142,6 +143,10 @@ function cancelSubscription(data) {
 }
 
 function updateSubscriptionStatus() {
+    return api('post', userUrls.updateStatus);
+}
+
+function applyCoupon(coupon) {
     return api('post', userUrls.updateStatus);
 }
 
