@@ -101,10 +101,12 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
             processingTimeout = setTimeout(() => {
                 if (problemsCount && processingPercent < Object.keys(problemsCount).length * 20) {
                     setPercent(Object.keys(problemsCount).length * 20);
-                } else if (Object.keys(problemsCount).length === 5 && processingPercent === 95) {
-                    setPercent(95);
                 } else {
-                    setPercent(processingPercent + 1);
+                    if(Object.keys(problemsCount).length < 5 && processingPercent === 90) {
+                        setPercent(90);
+                    } else {
+                        setPercent(processingPercent + 1);
+                    }
                 }
             }, 500)
         }

@@ -181,6 +181,11 @@
           .image-block {
             right: -200px;
           }
+
+          .content .advantages {
+            width: max-content;
+            flex-wrap: nowrap;
+          }
         }
       }
 
@@ -694,28 +699,32 @@
       @media (max-width: 600px) {
         & {
           flex-direction: row;
-          padding-top: 60px;
-          padding-bottom: 60px;
+          padding-top: 20px;
+          padding-bottom: 50px;
 
           & > div {
-            width: 45%;
+            width: 50%;
             border: 0;
-            margin: 10px 0;
+            margin: 0;
             flex: inherit;
 
             .value {
-              font-size: 35px;
+              font-size: 55px;
               line-height: 80px;
               margin: 0;
             }
 
             .description {
-              font-size: 12px;
-              line-height: 15px;
+              font-size: 15px;
             }
 
             &:last-child {
               display: none;
+            }
+
+            &:nth-child(1),
+            &:nth-child(2) {
+             margin: 0 0 20px 0;
             }
 
             &:nth-child(2n) {
@@ -890,29 +899,19 @@
         .slider {
           .row {
             .image-block {
+              width: 100%;
               margin: 0;
-              height: 120px;
 
               .change-chart {
                 margin: 0;
               }
             }
 
-            .prev {
-              top: 0;
-              bottom: 0;
-              margin: auto 0;
-              position: absolute;
-              left: -30px;
+            .prev,
+            .next {
+              display: none;
             }
 
-            .next {
-              top: 0;
-              bottom: 0;
-              margin: auto 0;
-              position: absolute;
-              right: -30px;
-            }
           }
         }
 
@@ -1321,11 +1320,12 @@
         .sum {
           display: flex;
           flex-direction: column;
+          margin: -15px 0 0 0;
 
           .result-sum {
             font-family: e3sb;
             font-size: 64px;
-            line-height: 75px;
+            line-height: 85px;
             letter-spacing: 0.4px;
             color: #17175A;
           }
@@ -1345,7 +1345,7 @@
         .btn {
           width: 8.571428571428571rem;
           height: 3.4285714285714284rem;
-          margin: 10px 0 0 0;
+          margin: 15px 0 0 0;
         }
 
         .list {
@@ -1474,7 +1474,7 @@
 
           .image {
             width: 120%;
-            margin: 30px 0;
+            height: 200px;
           }
 
           .btn {

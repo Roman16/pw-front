@@ -1,6 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faFacebookF, faTwitter, faLinkedinIn} from "@fortawesome/free-brands-svg-icons"
 import {faPlay} from "@fortawesome/free-solid-svg-icons"
 import $ from 'jquery';
 import ionRangeSlider from 'ion-rangeslider';
@@ -10,8 +9,7 @@ import './LandingAutomation.less';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 import {history} from "../../../utils/history";
-
-import SurveyPopup from "./SurveyPopup";
+import {debounce} from "throttle-debounce";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {casesImages} from "../../../assets/img/landing-automation/cases";
@@ -21,13 +19,9 @@ import {underHoodImages} from "../../../assets/img/landing-automation/under-hood
 import JeffInPlane from '../../../assets/img/landing-automation/Illustration.png';
 import JeffDaily from '../../../assets/img/landing-automation/jeff-daily.svg';
 import amazonApp from '../../../assets/img/landing-automation/amazon-app-store.svg';
-import dots from '../../../assets/img/landing-automation/dots.svg';
-import leftIcon from '../../../assets/img/landing-automation/left-icon.svg';
-import rightIcon from '../../../assets/img/landing-automation/right-icon.svg';
 import dashIcon from '../../../assets/img/landing-automation/dash.svg';
 import listIcon from '../../../assets/img/landing-automation/yes_green.svg'
 import jeffChart from '../../../assets/img/landing-automation/jeffChart.svg'
-import {Link} from "react-router-dom";
 
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
@@ -390,6 +384,10 @@ const LandingAutomation = () => {
         window.open('/pricing')
     }
 
+    function swipeDetect() {
+
+    }
+
 
     useEffect(() => {
         (function (t, a, p) {
@@ -475,8 +473,9 @@ const LandingAutomation = () => {
 
         document.head.appendChild(s);
 
-        document.querySelector('html').classList.add('not-retina');
+        swipeDetect();
 
+        document.querySelector('html').classList.add('not-retina');
 
         return () => {
             document.head.removeChild(s);
@@ -496,6 +495,54 @@ const LandingAutomation = () => {
             }
         });
     }, [currentStepSlide]);
+
+    useEffect(() => {
+        document.getElementById('cases-slider').addEventListener('touchstart', handleTouchStart, false);
+        document.getElementById('cases-slider').addEventListener('touchmove', handleTouchMove, false);
+
+        let xDown = null;
+        let yDown = null;
+
+        function getTouches(evt) {
+            return evt.touches ||             // browser API
+                evt.originalEvent.touches; // jQuery
+        }
+
+        function handleTouchStart(evt) {
+            const firstTouch = getTouches(evt)[0];
+            xDown = firstTouch.clientX;
+            yDown = firstTouch.clientY;
+        }
+
+        function handleTouchMove(evt) {
+            if (!xDown || !yDown) {
+                return;
+            }
+
+            const xUp = evt.touches[0].clientX;
+            const yUp = evt.touches[0].clientY;
+
+            const xDiff = xDown - xUp;
+            const yDiff = yDown - yUp;
+
+            if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
+                if (xDiff > 0) {
+                    nextCaseSlide();
+                } else {
+                    prevCaseSlide();
+                }
+            } else {
+                if (yDiff > 0) {
+                    /* up swipe */
+                } else {
+                    /* down swipe */
+                }
+            }
+            /* reset values */
+            xDown = null;
+            yDown = null;
+        }
+    }, [currentCaseSlide]);
 
 
     return (
@@ -635,7 +682,7 @@ const LandingAutomation = () => {
 
                             <div className="image-block" style={{
                                 marginTop: currentStepSlide === 3 ? '30px' : 0,
-                                width: currentStepSlide === 1 || currentStepSlide === 2 ? '85%' : '70%'
+                                width: currentStepSlide === 1 ? '80%' : '70%'
                             }}>
                                 <img src={stepsSlider[currentStepSlide].img} alt=""/>
                             </div>
@@ -677,7 +724,7 @@ const LandingAutomation = () => {
                 <div className="container">
                     <h2>Our Cases</h2>
 
-                    <div className='slider'>
+                    <div className='slider' id='cases-slider'>
                         <div className="row">
                             <div className="prev" onClick={prevCaseSlide}><FontAwesomeIcon icon={faPlay}/></div>
 
