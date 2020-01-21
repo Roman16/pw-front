@@ -26,6 +26,7 @@ export const userUrls = {
     cancel: (subscriptionId) => `user/account/subscription/${subscriptionId}/cancel`,
     updateStatus: 'user/account/subscription/all/update-preview',
     coupon: (subscriptionId) => `user/account/subscription/${subscriptionId}/update`,
+    couponStatus: 'user/account/subscription/check-coupon',
 };
 
 export const productsUrls = {

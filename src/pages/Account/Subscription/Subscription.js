@@ -55,8 +55,15 @@ const Subscription = () => {
 
     function applyCoupon(productId, coupon, planId) {
         userService.applyCoupon(productId, planId, coupon)
-            .then(() => {
-                fetchSubscriptions();
+            .then((res) => {
+                setSubscriptions({...res})
+            })
+    }
+
+    function getCouponStatus(coupon) {
+        userService.getCouponStatus(coupon)
+            .then((res) => {
+                setSubscriptions({...res})
             })
     }
 
@@ -148,6 +155,7 @@ const Subscription = () => {
                     reloadData={handleUpdateSubscriptionStatus}
                     stripeId={stripeId}
                     applyCoupon={applyCoupon}
+                    getCouponStatus={getCouponStatus}
                     fetching={fetching}
                 />
             ))}

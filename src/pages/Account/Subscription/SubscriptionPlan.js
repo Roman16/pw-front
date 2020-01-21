@@ -9,7 +9,7 @@ import {history} from "../../../utils/history";
 import {useSelector} from "react-redux";
 import couponIcon from '../../../assets/img/icons/coupon-icon.svg';
 
-const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe, stripeId, applyCoupon, fetching}) => {
+const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe, stripeId, applyCoupon, fetching, getCouponStatus}) => {
     const {mwsConnected, ppcConnected} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false
@@ -168,7 +168,9 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                             </div>
 
                             <button className="btn green-btn"
-                                    onClick={() => applyCoupon(product.productId, coupon, product.planId)}>apply
+                                    onClick={() => {
+                                        (!product.has_access && stripeId) ? getCouponStatus(coupon) : applyCoupon(product.productId, coupon, product.planId)
+                                    }}>apply
                             </button>
                         </div>
                     </div>
@@ -178,7 +180,8 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
 
                     {!fetching && (product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&
                     <p className="plan-text">
-                        Your Ad Spend: {product.quantity && <span className="plan-data">$ {numberMask(product.quantity, 2) || 0}</span>}
+                        Your Ad Spend: {product.quantity &&
+                    <span className="plan-data">$ {numberMask(product.quantity, 2) || 0}</span>}
                     </p>}
                 </div>
             </div>
