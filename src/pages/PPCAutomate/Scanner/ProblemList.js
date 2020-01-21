@@ -108,7 +108,7 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                         setPercent(processingPercent + 1);
                     }
                 }
-            }, 500)
+            }, 1000)
         }
 
         return (() => {
@@ -192,7 +192,7 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                 </button>
             }
 
-            {successFetch && <button
+            {successFetch && !fetching && <button
                 className='btn white download'
                 onClick={onDownloadFile}
             >

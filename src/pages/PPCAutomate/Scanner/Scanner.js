@@ -168,7 +168,7 @@ class Scanner extends Component {
                         visibleSuccessWindow: true
                     })
                 } else {
-                    fetchingTimeout = setTimeout(this.getScanStatus, 1000);
+                    fetchingTimeout = setTimeout(this.getScanStatus, 10000);
                 }
             })
     };

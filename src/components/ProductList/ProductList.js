@@ -21,6 +21,7 @@ class ProductList extends Component {
         closedList: false,
         openedProduct: '',
         activeTab: 'products',
+        ungroupVariations: this.props.pathname === '/ppc/scanner' ? 1 : 0,
         paginationParams: {
             size: 10,
             page: 1,
@@ -32,7 +33,9 @@ class ProductList extends Component {
         ...this.state.paginationParams,
         onlyOptimization: this.state.onlyOptimization,
         selectedAll: this.state.isSelectedAll,
-        onlyHasNew: this.props.pathname === '/ppc/report' ? this.state.onlyHasNew : false
+        onlyHasNew: this.props.pathname === '/ppc/report' ? this.state.onlyHasNew : false,
+        ungroupVariations: this.state.ungroupVariations,
+        pathname: this.props.pathname
     });
 
     changeOpenedProduct = (id) => {
@@ -124,7 +127,7 @@ class ProductList extends Component {
 
     onSelect = product => {
         const {selectProduct, selectedProduct} = this.props;
-        if (selectedProduct.id !== product.id) selectProduct(product);
+        if (selectedProduct.id !== product.id) selectProduct(product, this.props.pathname);
 
         this.setState({
             isSelectedAll: false
@@ -155,6 +158,16 @@ class ProductList extends Component {
                 this.setState({
                     activeTab: 'products'
                 })
+            }
+
+            if (this.props.pathname === '/ppc/scanner') {
+                this.setState({
+                    ungroupVariations: 1
+                }, this.getProducts)
+            } else if (this.props.pathname !== '/ppc/scanner' && this.state.ungroupVariations === 1) {
+                this.setState({
+                    ungroupVariations: 0
+                }, this.getProducts)
             }
         }
     }
@@ -294,8 +307,8 @@ const mapDispatchToProps = dispatch => ({
     getAllProducts: params => {
         dispatch(productsActions.fetchProducts(params));
     },
-    selectProduct: product => {
-        dispatch(productsActions.fetchProductDetails(product));
+    selectProduct: (product, pathname) => {
+        dispatch(productsActions.fetchProductDetails(product, pathname));
     },
     showOnlyOptimized: (data) => {
         dispatch(productsActions.showOnlyOptimized(data));

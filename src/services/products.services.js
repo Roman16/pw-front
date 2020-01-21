@@ -1,5 +1,5 @@
 import api from './request';
-import { productsUrls } from '../constans/api.urls';
+import {productsUrls} from '../constans/api.urls';
 import {productsConstants} from '../constans/actions.type';
 
 export const productsServices = {
@@ -10,11 +10,11 @@ export const productsServices = {
     updateProductSettings
 };
 
-function getProducts({size, page, searchStr='', onlyOptimization, onlyHasNew}) {
-    return api('get', `${productsUrls.allProducts}?search_query=${searchStr}&page=${page}&size=${size}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}`,null,null,true, productsConstants.SET_PRODUCT_LIST)
+function getProducts({size, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0}) {
+    return api('get', `${productsUrls.allProducts}?search_query=${searchStr}&page=${page}&size=${size}&ungroup_variations=${ungroupVariations}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}`, null, null, true, productsConstants.SET_PRODUCT_LIST)
 }
 
-function getProductsSettingsList({size, page, searchStr='', onlyActive}) {
+function getProductsSettingsList({size, page, searchStr = '', onlyActive}) {
     return api('get', `${productsUrls.productsSettingsList}?search_query=${searchStr}&page=${page}&size=${size}&is_active=${onlyActive ? 1 : 0}`)
 }
 

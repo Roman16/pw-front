@@ -26,34 +26,45 @@ function fetchProducts(paginationParams) {
                 });
 
                 if (res.result && res.result.length > 0 && !paginationParams.selectedAll) {
-                    dispatch(fetchProductDetails(res.result[0]));
+                    dispatch(fetchProductDetails(res.result[0], paginationParams.pathname));
                 }
             });
     };
 }
 
-function fetchProductDetails(product) {
+function fetchProductDetails(product, pathname) {
     return dispatch => {
-        productsServices.getProductDetails(product === 'all' ? 'all' : product.id)
-            .then(res => {
-                if (product !== 'all') {
-                    dispatch({
-                        type: productsConstants.SELECT_PRODUCT,
-                        payload: {
-                            ...product,
-                            ...res,
-                            id: product.id,
-                            product_id: product.id,
-                            optimized: !!res.id
-                        }
-                    });
-                } else {
-                    dispatch({
-                        type: productsConstants.SELECT_ALL_PRODUCT,
-                        payload: res
-                    });
+        if (pathname === '/ppc/scanner') {
+            dispatch({
+                type: productsConstants.SELECT_PRODUCT,
+                payload: {
+                    ...product,
+                    id: product.id,
+                    product_id: product.id,
                 }
             });
+        } else {
+            productsServices.getProductDetails(product === 'all' ? 'all' : product.id)
+                .then(res => {
+                    if (product !== 'all') {
+                        dispatch({
+                            type: productsConstants.SELECT_PRODUCT,
+                            payload: {
+                                ...product,
+                                ...res,
+                                id: product.id,
+                                product_id: product.id,
+                                optimized: !!res.id
+                            }
+                        });
+                    } else {
+                        dispatch({
+                            type: productsConstants.SELECT_ALL_PRODUCT,
+                            payload: res
+                        });
+                    }
+                });
+        }
     };
 }
 

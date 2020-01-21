@@ -13,7 +13,8 @@ let intervalId = null;
 const LoadingAmazonAccount = () => {
     const [visibleWindow, switchWindow] = useState(false);
     const dispatch = useDispatch();
-    const {firstName, lastName, bootstrapInProgress} = useSelector(state => ({
+    const {firstName, lastName, bootstrapInProgress, productList} = useSelector(state => ({
+        productList: state.products.productList,
         firstName: state.user.user ? state.user.user.name : '',
         lastName: state.user.user ? state.user.user.last_name : '',
         bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
@@ -24,14 +25,16 @@ const LoadingAmazonAccount = () => {
             if (bootstrapInProgress) {
                 dispatch(userActions.getPersonalUserInfo());
             } else {
-                dispatch(productsActions.fetchProducts({
-                    size: 10,
-                    page: 1,
-                    searchStr: '',
-                    onlyOptimization: false,
-                    selectedAll: false,
-                    onlyHasNew: false
-                }));
+                if (!productList && productList.length <= 0) {
+                    dispatch(productsActions.fetchProducts({
+                        size: 10,
+                        page: 1,
+                        searchStr: '',
+                        onlyOptimization: false,
+                        selectedAll: false,
+                        onlyHasNew: false
+                    }));
+                }
 
                 clearInterval(intervalId)
             }
