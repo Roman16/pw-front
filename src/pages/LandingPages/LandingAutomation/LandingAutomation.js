@@ -519,11 +519,9 @@ const LandingAutomation = () => {
 
                         <div className="col">
                             <div className='advantages'>
-                                <span>Cancel anytime</span>
-                                <div/>
-                                <span>14 Days Free Trial</span>
-                                <div/>
-                                <span>No credit card required</span>
+                                <span><div/>Cancel anytime</span>
+                                <span><div/>14 Days Free Trial</span>
+                                <span><div/>No credit card required</span>
                             </div>
 
                             <div className="actions">
@@ -635,7 +633,7 @@ const LandingAutomation = () => {
                                 {currentStepSlide !== 0 && <FontAwesomeIcon icon={faPlay}/>}
                             </div>
 
-                            <div className="image-block" style={{marginTop: currentStepSlide === 3 ? '30px' : 0}}>
+                            <div className="image-block" style={{marginTop: currentStepSlide === 3 ? '30px' : 0, width: currentStepSlide === 1 || currentStepSlide === 2 ? '85%' : '70%'}}>
                                 <img src={stepsSlider[currentStepSlide].img} alt=""/>
                             </div>
 
@@ -655,7 +653,7 @@ const LandingAutomation = () => {
                     </div>
                     <div>
                         <div className="value">14%</div>
-                        <div className="description">Average Decrease in Acos</div>
+                        <div className="description">Average Decrease in ACoS</div>
                     </div>
                     <div>
                         <div className="value">$40M</div>

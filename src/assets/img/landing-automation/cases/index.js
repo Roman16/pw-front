@@ -1,9 +1,9 @@
-import case1 from './case-1.png'
-import case2 from './case-2.png'
-import case3 from './case-3.png'
-import case4 from './case-4.png'
-import case5_1 from './case-5(1).png'
-import case5_2 from './case-5(2).png'
+import case1 from './case-1.svg'
+import case2 from './case-2.svg'
+import case3 from './case-3.svg'
+import case4 from './case-4.svg'
+import case5_1 from './case-5(1).svg'
+import case5_2 from './case-5(2).svg'
 
 export const casesImages = {
     case1,
