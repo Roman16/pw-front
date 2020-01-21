@@ -127,7 +127,7 @@ class MWS extends Component {
                         />
                     </div>
 
-                    <button type="submit" className="btn" disabled={disabled}>
+                    <button type="submit" className="btn green-btn" disabled={disabled}>
                         Save
                         <Icon type="check"/>
                     </button>

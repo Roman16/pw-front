@@ -155,7 +155,7 @@ const ourCases = [
         ]
     },
     {
-        title: 'One year with Profit Whales results',
+        title: '2 months Profit Whales results',
         firstColumnTitle: 'Before',
         secondColumnTitle: 'After',
         img: casesImages.case4,
@@ -413,7 +413,7 @@ const LandingAutomation = () => {
             hide_min_max: true,
             from: 10,
             from_min: 10,
-            prefix: "$ ",
+            prefix: "< $ ",
             max_postfix: "+",
             postfix: "  / month",
             onStart: function () {
@@ -423,13 +423,17 @@ const LandingAutomation = () => {
                 var value = data.from_value,
                     result = 0,
                     sumElement = $('.result-sum'),
-                    barLabel = $('.slider-container .slider .irs .irs-bar');
+                    barLabel = $('.slider-container .slider .irs .irs-bar'),
+                    barTooltip = $('.slider-container .slider .irs .irs-single');
 
 
                 if (value <= 1000) {
                     sumElement.text('$ 35');
                     barLabel.html('$ 35');
+                    barTooltip.html('< $ 1000 / month');
                 } else {
+                    barTooltip.html(`$ ${value} / month`);
+
                     if (value >= 50000) {
                         result = ((2 / 100) * value) + 500;
                         barLabel.html('$500 + 2% <small>ad spend</small>');
@@ -947,7 +951,7 @@ const LandingAutomation = () => {
                                 <div className="sum">
                                     <span className="result-sum">$ 35</span>
                                     <span className='description'>
-                                        Estimated Price per / Month by your 30 Day Ad Spend
+                                       Estimated Price per month based on your 30 days Amazon Ad spend
                                     </span>
 
                                     <a href="https://profitwhales.com/pricing">
