@@ -9,7 +9,17 @@ import {history} from "../../../utils/history";
 import {useSelector} from "react-redux";
 import couponIcon from '../../../assets/img/icons/coupon-icon.svg';
 
-const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product, onSubscribe, stripeId, applyCoupon, fetching, getCouponStatus}) => {
+const SubscriptionPlan = ({
+                              onOpenAccountWindow,
+                              onOpenReactivateWindow,
+                              product,
+                              onSubscribe,
+                              stripeId,
+                              applyCoupon,
+                              fetching,
+                              getCouponStatus,
+                          }) => {
+
     const {mwsConnected, ppcConnected} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false
@@ -26,7 +36,13 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
     }
 
     function renderPlanContent() {
-        if (!mwsConnected || !ppcConnected) {
+        if (fetching) {
+            return (
+                <div className="load-data">
+                    <Spin/>
+                </div>
+            )
+        } else if (!mwsConnected || !ppcConnected) {
             return (
                 <div className="load-data">
                     <div className='load-text'>Please connect your Amazon MWS and PPC accounts</div>
@@ -92,6 +108,10 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
         }
     }, [disableButton]);
 
+    useEffect(() => {
+        setCoupon('');
+    }, [product])
+
     return (
         <div className="automate-box">
             {product.grace_period && product.grace_period.on_grace_period && <div className="reactivate">
@@ -133,6 +153,12 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
 
 
                 <div className="plan">
+                    <div className="charged">
+                        <h3 className="charged-title">{product.planName}</h3>
+
+                        {renderPlanContent()}
+                    </div>
+
                     {product.has_access && !product.cancelled && <div className='row'>
                         <p className="cancel-text">
                             {product.next_invoice_at && <Fragment> Next Invoice Date: <span
@@ -149,13 +175,7 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                         </button>
                     </div>}
 
-                    <div className="charged">
-                        <h3 className="charged-title">{product.planName}</h3>
-
-                        {renderPlanContent()}
-                    </div>
                 </div>
-
 
                 <div className="cancel">
                     {!fetching && (product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&
@@ -164,7 +184,11 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                         <div className="row">
                             <div className="input-block">
                                 <img src={couponIcon} alt=""/>
-                                <input type="text" onChange={e => setCoupon(e.target.value)}/>
+                                <input
+                                    type="text"
+                                    value={coupon}
+                                    onChange={e => setCoupon(e.target.value)}
+                                />
                             </div>
 
                             <button className="btn green-btn"
@@ -173,16 +197,28 @@ const SubscriptionPlan = ({onOpenAccountWindow, onOpenReactivateWindow, product,
                                     }}>apply
                             </button>
                         </div>
+
+                        {product.applied_coupon && product.applied_coupon.name && <div className='applied-coupon'>
+                            <div className="row">
+                                <div className="name">
+                                    Coupon Applied:
+                                </div>
+                                <div className="discount">
+                                    {product.applied_coupon.amount_off ? `$ ${product.applied_coupon.amount_off}` : `${product.applied_coupon.percent_off} %`} off
+                                </div>
+                            </div>
+                        </div>}
                     </div>
                     }
 
                     {!fetching && renderButtonsBlock()}
 
                     {!fetching && (product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&
-                    <p className="plan-text">
-                        Your Ad Spend: {product.quantity &&
-                    <span className="plan-data">$ {numberMask(product.quantity, 2) || 0}</span>}
-                    </p>}
+                    <div className="plan-text">
+                        <div> Your Ad Spend:</div>
+                        {product.quantity &&
+                        <div className="plan-data">$ {numberMask(product.quantity, 2) || 0}</div>}
+                    </div>}
                 </div>
             </div>
         </div>

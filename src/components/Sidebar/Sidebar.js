@@ -9,7 +9,7 @@ import {regionsMenu, ppcAutomateMenu} from "./menu";
 import {getClassNames} from "../../utils";
 import {userActions} from "../../actions/user.actions";
 import ItemIcon from "../ItemIcon/ItemIcon";
-import logo from "../../assets/img/logo.svg";
+import logo from "../../assets/img/ProfitWhales-logo-white.svg";
 import soon from "../../assets/img/icons/soon.svg";
 // import showMenu from '../../assets/img/icons/show-menu-arrow.svg';  // стрелка из фигмы в разделе сайдбар > страна
 import "./Sidebar.less";
@@ -111,7 +111,7 @@ const Sidebar = () => {
         >
             <div className="sidebar-header">
                 <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed}/>
-                <Link to="/ppc/dashboard" className="sidebar-logo">
+                <Link to="/automation" className="sidebar-logo">
                     <img className="logo" src={logo} alt="logo"/>
                 </Link>
             </div>

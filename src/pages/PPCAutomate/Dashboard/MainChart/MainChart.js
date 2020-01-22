@@ -6,9 +6,11 @@ import {dashboardActions} from "../../../../actions/dashboard.actions";
 import {dashboardServices} from "../../../../services/dashboard.services";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
+import {Spin} from "antd";
 
 const MainChart = () => {
     const [chartData, updateChartData] = useState([]);
+    const [fetching, switchFetch] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -41,6 +43,8 @@ const MainChart = () => {
 
     const getChartData = () => {
         if (activeMetrics[0].key || activeMetrics[1].key) {
+            switchFetch(true);
+
             dashboardServices.fetchLineChartData({
                 startDate: selectedRangeDate.startDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.startDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
                 endDate: selectedRangeDate.endDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.endDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
@@ -51,6 +55,7 @@ const MainChart = () => {
             })
                 .then(res => {
                     updateChartData(res);
+                    switchFetch(false);
                 })
         } else {
             updateChartData([])
@@ -78,6 +83,10 @@ const MainChart = () => {
                 data={chartData}
                 selectedRangeDate={selectedRangeDate}
             />
+
+            {fetching && <div className="loading">
+                <Spin size="large"/>
+            </div>}
         </div>
     )
 };

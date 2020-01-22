@@ -3,7 +3,7 @@ import {Row, Col} from 'antd';
 import LoginPageForm from './LoginPageForm/LoginPageForm';
 import './LoginPage.less';
 
-import logo from '../../../assets/img/logo.svg';
+import logo from '../../../assets/img/ProfitWhales-logo-white.svg';
 
 const LoginPage = () => {
     return (

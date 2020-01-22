@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Switch} from "antd";
+import {Spin, Switch} from "antd";
 import {useDispatch, useSelector} from 'react-redux';
 import {dashboardServices} from '../../../../services/dashboard.services';
 import './ProductBreakdown.less';
@@ -28,16 +28,21 @@ const ProductBreakdown = () => {
             onlyOptimization: onlyOptimization || false
         }),
         [products, updateProductsList] = useState([]);
+    const [fetching, switchFetch] = useState(false);
 
     let timerIdSearch = null;
 
     const getProducts = () => {
+        switchFetch(true);
+
         dashboardServices.fetchProducts({
             ...fetchParams,
             startDate: selectedRangeDate.startDate,
             endDate: selectedRangeDate.endDate,
         })
             .then(res => {
+                switchFetch(false);
+
                 updateProductsList(res.result);
                 dispatch(dashboardActions.setProductsMarginStatus(res.all_products_has_margin));
                 changeFetchParams({
@@ -104,6 +109,10 @@ const ProductBreakdown = () => {
                     hasMargin={hasMargin}
                 />
             </div>
+
+            {fetching && <div className="loading">
+                <Spin size="large"/>
+            </div>}
         </div>
     )
 };

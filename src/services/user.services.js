@@ -137,15 +137,15 @@ function getSubscription() {
 }
 
 function subscribe(data) {
-    return api('post', userUrls.subscribe(data.subscriptionId), data);
+    return api('post', userUrls.subscribe(data.subscription_id), data);
 }
 
 function reactivateSubscription(data) {
-    return api('post', userUrls.reactivate(data.subscriptionId), data);
+    return api('post', userUrls.reactivate(data.subscription_id), data);
 }
 
 function cancelSubscription(data) {
-    return api('post', userUrls.cancel(data.subscriptionId), data);
+    return api('post', userUrls.cancel(data.subscription_id), data);
 }
 
 function updateSubscriptionStatus() {
