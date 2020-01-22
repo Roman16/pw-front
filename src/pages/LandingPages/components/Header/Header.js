@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import logo from '../../../../assets/img/logo-blue.svg';
+import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
 import {Icon} from "antd";
 import {Link} from "react-router-dom";
 
@@ -14,7 +14,9 @@ const Header = () => {
         <header className='not-found-page__header' id={'header'}>
             <div className="container">
                 <div>
-                    <img src={logo} alt="Profit Whales" className='logo'/>
+                    <Link to='/automation'>
+                        <img src={logo} alt="Profit Whales" className='logo'/>
+                    </Link>
 
                     <button className='burger-menu-button' onClick={() => switchMenu(!openedMenu)}>
                         <div/>
@@ -59,7 +61,7 @@ const Header = () => {
                     {!authorized ?
                         <Fragment>
                             <Link to='/login' className='login-btn'>LOG IN</Link>
-                            <Link to='/registration' className='register-btn'>GET STARTED</Link>
+                            <Link to='/registration' className='register-btn'>TRY IT FOR FREE</Link>
                         </Fragment>
                         :
                         <Link to='/ppc/optimization' className='register-btn'>SIGN IN</Link>

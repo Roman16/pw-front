@@ -4,6 +4,7 @@ import {Col, Row} from 'antd';
 import './RegistrationPage.less';
 import RegistrationPageForm from './RegistrationPageForm/RegistrationPageForm';
 import {Elements, StripeProvider} from "react-stripe-elements";
+import logo from '../../../assets/img/ProfitWhales-logo-white.svg';
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
@@ -14,7 +15,7 @@ const RegistrationPage = () => {
         <div className="RegisterFormContainer">
             <div className="sign-page">
                 <div className="logo-auth">
-                    <img src="/logo.svg" alt="logo"/>
+                    <img src={logo} alt="logo"/>
                 </div>
 
                 <Row className="container">

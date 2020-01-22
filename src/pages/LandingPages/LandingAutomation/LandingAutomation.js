@@ -22,10 +22,13 @@ import amazonApp from '../../../assets/img/landing-automation/amazon-app-store.s
 import dashIcon from '../../../assets/img/landing-automation/dash.svg';
 import listIcon from '../../../assets/img/landing-automation/yes_green.svg'
 import jeffChart from '../../../assets/img/landing-automation/jeffChart.svg'
+import {func} from "prop-types";
 
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
 const pixelRatio = window.devicePixelRatio;
+
+let swipeTimeoutId = null;
 
 
 const stepsSlider = [
@@ -307,48 +310,50 @@ const LandingAutomation = () => {
         [currentCaseSlide, setCaseSlide] = useState(0),
         [currentCommentSlide, setCommentSlide] = useState(0);
 
-    //step navigation
-    function prevStepSlide() {
-        if (currentStepSlide === 0) {
-            setStepSlide(3)
-        } else {
-            setStepSlide(currentStepSlide - 1)
+    function nextSlide(type) {
+        clearTimeout(swipeTimeoutId);
+        swipeTimeoutId = setTimeout(() => {
+            if (type === 'step') {
+                if (currentStepSlide === 3) {
+                    setStepSlide(0)
+                } else {
+                    setStepSlide(currentStepSlide + 1)
+                }
+            } else if (type === 'case') {
+                if (currentCaseSlide === 4 || currentCaseSlide === 5) {
+                    setCaseSlide(0)
+                } else {
+                    setCaseSlide(currentCaseSlide + 1)
+                }
+            }
+        }, 10)
+    }
+
+    function prevSlide(type) {
+        clearTimeout(swipeTimeoutId);
+        swipeTimeoutId = setTimeout(() => {
+            if (type === 'step') {
+                if (currentStepSlide === 0) {
+                    setStepSlide(3)
+                } else {
+                    setStepSlide(currentStepSlide - 1)
+                }
+            } else if (type === 'case') {
+                if (currentCaseSlide === 0) {
+                    setCaseSlide(4)
+                } else {
+                    setCaseSlide(currentCaseSlide - 1)
+                }
+            }
+        }, 10)
+    }
+
+    function goToSlide(slide, type) {
+        if (type === 'step') {
+            setStepSlide(slide)
+        } else if (type === 'case') {
+            setCaseSlide(slide)
         }
-    }
-
-    function nextStepSlide() {
-        if (currentStepSlide === 3) {
-            setStepSlide(0)
-        } else {
-            setStepSlide(currentStepSlide + 1)
-        }
-    }
-
-    function goToStep(index) {
-        setStepSlide(index)
-    }
-
-    //-----------------------------------
-
-    //case navigation
-    function prevCaseSlide() {
-        if (currentCaseSlide === 0) {
-            setCaseSlide(4)
-        } else {
-            setCaseSlide(currentCaseSlide - 1)
-        }
-    }
-
-    function nextCaseSlide() {
-        if (currentCaseSlide === 4 || currentCaseSlide === 5) {
-            setCaseSlide(0)
-        } else {
-            setCaseSlide(currentCaseSlide + 1)
-        }
-    }
-
-    function goToCaseSlide(index) {
-        setCaseSlide(index)
     }
 
     //---------------------------------------
@@ -500,53 +505,58 @@ const LandingAutomation = () => {
         });
     }, [currentStepSlide]);
 
+    let xDown = null;
+    let yDown = null;
+
+    function getTouches(evt) {
+        return evt.touches ||             // browser API
+            evt.originalEvent.touches; // jQuery
+    }
+
+    function handleTouchStart(evt) {
+        const firstTouch = getTouches(evt)[0];
+        xDown = firstTouch.clientX;
+        yDown = firstTouch.clientY;
+    }
+
+    function handleTouchMove(evt, type) {
+        if (!xDown || !yDown) {
+            return;
+        }
+
+        const xUp = evt.touches[0].clientX;
+        const yUp = evt.touches[0].clientY;
+
+        const xDiff = xDown - xUp;
+        const yDiff = yDown - yUp;
+
+        if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
+            if (xDiff > 0) {
+                nextSlide(type);
+            } else {
+                prevSlide(type);
+            }
+        } else {
+            if (yDiff > 0) {
+                /* up swipe */
+            } else {
+                /* down swipe */
+            }
+        }
+        /* reset values */
+        xDown = null;
+        yDown = null;
+    }
+
     useEffect(() => {
         document.getElementById('cases-slider').addEventListener('touchstart', handleTouchStart, false);
-        document.getElementById('cases-slider').addEventListener('touchmove', handleTouchMove, false);
-
-        let xDown = null;
-        let yDown = null;
-
-        function getTouches(evt) {
-            return evt.touches ||             // browser API
-                evt.originalEvent.touches; // jQuery
-        }
-
-        function handleTouchStart(evt) {
-            const firstTouch = getTouches(evt)[0];
-            xDown = firstTouch.clientX;
-            yDown = firstTouch.clientY;
-        }
-
-        function handleTouchMove(evt) {
-            if (!xDown || !yDown) {
-                return;
-            }
-
-            const xUp = evt.touches[0].clientX;
-            const yUp = evt.touches[0].clientY;
-
-            const xDiff = xDown - xUp;
-            const yDiff = yDown - yUp;
-
-            if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
-                if (xDiff > 0) {
-                    nextCaseSlide();
-                } else {
-                    prevCaseSlide();
-                }
-            } else {
-                if (yDiff > 0) {
-                    /* up swipe */
-                } else {
-                    /* down swipe */
-                }
-            }
-            /* reset values */
-            xDown = null;
-            yDown = null;
-        }
+        document.getElementById('cases-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'case'), false);
     }, [currentCaseSlide]);
+
+    useEffect(() => {
+        document.getElementById('steps-slider').addEventListener('touchstart', handleTouchStart, false);
+        document.getElementById('steps-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'step'), false);
+    }, [currentStepSlide]);
 
 
     return (
@@ -634,28 +644,28 @@ const LandingAutomation = () => {
 
                     <div className='all-steps'>
                         <div className={currentStepSlide === 0 ? 'active' : ''}>
-                            <div onClick={() => goToStep(0)}/>
+                            <div onClick={() => goToSlide(0, 'step')}/>
                             <span>Connect Seller Central <br/> Account</span>
                         </div>
 
                         <i/>
 
                         <div className={currentStepSlide === 1 ? 'active' : ''}>
-                            <div onClick={() => goToStep(1)}/>
+                            <div onClick={() => goToSlide(1, 'step')}/>
                             <span>Choose Your Goal</span>
                         </div>
 
                         <i/>
 
                         <div className={currentStepSlide === 2 ? 'active' : ''}>
-                            <div onClick={() => goToStep(2)}/>
+                            <div onClick={() => goToSlide(2, 'step')}/>
                             <span>Monitor the changes</span>
                         </div>
 
                         <i/>
 
                         <div className={currentStepSlide === 3 ? 'active' : ''}>
-                            <div onClick={() => goToStep(3)}/>
+                            <div onClick={() => goToSlide(3, 'step')}/>
                             <span>Access a lot more <br/>data</span>
                         </div>
                     </div>
@@ -679,8 +689,8 @@ const LandingAutomation = () => {
                             </button>
                         </div>
 
-                        <div className="slider">
-                            <div className="prev" onClick={prevStepSlide}>
+                        <div className="slider" id='steps-slider'>
+                            <div className="prev" onClick={() => prevSlide('step')}>
                                 {currentStepSlide !== 0 && <FontAwesomeIcon icon={faPlay}/>}
                             </div>
 
@@ -693,7 +703,7 @@ const LandingAutomation = () => {
                                 ))}
                             </div>
 
-                            <div className="next" onClick={nextStepSlide}>
+                            <div className="next" onClick={() => nextSlide('step')}>
                                 {currentStepSlide !== 3 && <FontAwesomeIcon icon={faPlay}/>}
                             </div>
                         </div>
@@ -709,7 +719,7 @@ const LandingAutomation = () => {
                     </div>
                     <div>
                         <div className="value">14%</div>
-                        <div className="description">Average Decrease in ACoS</div>
+                        <div className="description">Average Decrease <br/> in ACoS</div>
                     </div>
                     <div>
                         <div className="value">$40M</div>
@@ -717,7 +727,7 @@ const LandingAutomation = () => {
                     </div>
                     <div>
                         <div className="value">19%</div>
-                        <div className="description">Average Increase in Revenue</div>
+                        <div className="description">Average Increase in <br/>Revenue</div>
                     </div>
                     <div>
                         <div className="value">25%</div>
@@ -732,7 +742,8 @@ const LandingAutomation = () => {
 
                     <div className='slider' id='cases-slider'>
                         <div className="row">
-                            <div className="prev" onClick={prevCaseSlide}><FontAwesomeIcon icon={faPlay}/></div>
+                            <div className="prev" onClick={() => prevSlide('case')}><FontAwesomeIcon icon={faPlay}/>
+                            </div>
 
                             <div className="image-block">
                                 {ourCases.map((item, index) => (
@@ -748,19 +759,20 @@ const LandingAutomation = () => {
                                 }
                             </div>
 
-                            <div className="next" onClick={nextCaseSlide}><FontAwesomeIcon icon={faPlay}/></div>
+                            <div className="next" onClick={() => nextSlide('case')}><FontAwesomeIcon icon={faPlay}/>
+                            </div>
                         </div>
 
                         <div className='navigation'>
                             {[0, 1, 2, 3].map((item, index) => (
                                 <div
-                                    onClick={() => goToCaseSlide(index)}
+                                    onClick={() => goToSlide(index, 'case')}
                                     className={currentCaseSlide === index ? 'active-dot' : ''}
                                 />
                             ))}
 
                             <div
-                                onClick={() => goToCaseSlide(4)}
+                                onClick={() => goToSlide(4, 'case')}
                                 className={currentCaseSlide === 4 || currentCaseSlide === 5 ? 'active-dot' : ''}
                             />
                         </div>
