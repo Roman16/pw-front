@@ -3,7 +3,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlay} from "@fortawesome/free-solid-svg-icons"
 import $ from 'jquery';
 import ionRangeSlider from 'ion-rangeslider';
-// import {CarouselProvider, Slider, Slide, ButtonBack, ButtonNext} from 'pure-react-carousel';
 
 import './LandingAutomation.less';
 import 'pure-react-carousel/dist/react-carousel.es.css';
