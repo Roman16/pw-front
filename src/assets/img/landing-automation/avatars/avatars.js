@@ -1,19 +1,19 @@
-import ClaireWilliamson from './ClaireWilliamson.svg';
-import EduardoMckinney from './EduardoMckinney.svg';
-import PhilipCooper from './PhilipCooper.svg';
-import SavannahHawkins from './SavannahHawkins.svg';
-import ArleneMurphy from './ArleneMurphy.svg';
-import JennieFisher from './JennieFisher.svg';
-import MarjorieBell from './MarjorieBell.svg';
-import CameronMiles from './CameronMiles.svg';
+import CorinaElenaDamian from './CorinaElenaDamian.png';
+import MeetPatel from './MeetPatel.png';
+import MaximAntonov from './MaximAntonov.png';
+import EmilSirbu from './EmilSirbu.png';
+import DmitriyGolubovskiy from './DmitriyGolubovskiy.png';
+import AndreyKaminskiy from './AndreyKaminskiy.png';
+import JennieFisher from './JennieFisher.png';
+import DanielJennings from './DanielJennings.png';
 
 export const avatars = {
-    ClaireWilliamson,
-    EduardoMckinney,
-    PhilipCooper,
-    SavannahHawkins,
-    ArleneMurphy,
+    CorinaElenaDamian,
+    MeetPatel,
+    MaximAntonov,
+    EmilSirbu,
+    DmitriyGolubovskiy,
+    AndreyKaminskiy,
     JennieFisher,
-    MarjorieBell,
-    CameronMiles
+    DanielJennings
 };

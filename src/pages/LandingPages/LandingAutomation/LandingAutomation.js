@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlay} from "@fortawesome/free-solid-svg-icons"
 import $ from 'jquery';
 import ionRangeSlider from 'ion-rangeslider';
-import {CarouselProvider, Slider, Slide, ButtonBack, ButtonNext} from 'pure-react-carousel';
+// import {CarouselProvider, Slider, Slide, ButtonBack, ButtonNext} from 'pure-react-carousel';
 
 import './LandingAutomation.less';
 import 'pure-react-carousel/dist/react-carousel.es.css';
@@ -22,8 +22,10 @@ import amazonApp from '../../../assets/img/landing-automation/amazon-app-store.s
 import dashIcon from '../../../assets/img/landing-automation/dash.svg';
 import listIcon from '../../../assets/img/landing-automation/yes_green.svg'
 import jeffChart from '../../../assets/img/landing-automation/jeffChart.svg'
-import {func} from "prop-types";
 
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
 const pixelRatio = window.devicePixelRatio;
@@ -263,44 +265,44 @@ const ourCases = [
 
 const commentsList = [
     {
-        name: 'Claire Williamson',
-        comment: 'ProfitWhales\' software is notably robust, and their analysts have helped us both maximize profitability and truly understand the incremental value of our Amazon Ads. They are a valued partner and we really appreciate the flexibility of their software and service model.',
-        avatar: avatars.ClaireWilliamson
+        name: 'Corina Elena Damian',
+        comment: 'I only have words of praise and I warmly recommend this software, but especially the person who has guided me and who does not get rid of me until I win £100,000. Professional vitals, explains the steps in detail and has a lot of patience! For beginners on Amazon and not only recommend PROFIT WHALES!',
+        avatar: avatars.CorinaElenaDamian
     },
-    // {
-    //     name: 'Eduardo Mckinney',
-    //     comment: 'I remember vividly telling Teikametrics that we were averaging 2,000 orders per week and that my goal is to double that number. As of today, we are averaging 4,500 orders per week. We couldn’t be happier that we partnered with Teikametrics and what the effects of their team and system have had for our success!',
-    //     avatar: avatars.EduardoMckinney
-    // },
     {
-        name: 'Philip Cooper',
-        comment: 'ProfitWhales\' software is notably robust, and their analysts have helped us both maximize profitability and truly understand the incremental value of our Amazon Ads. se ex mollit do enim irure aliqua amet. Nisi irure excepteur magna',
-        avatar: avatars.PhilipCooper
+        name: 'Meet Patel',
+        comment: 'It was an amazing experience working with Amzbizon, I was really lost in my PPC spending and ACOS, So I took the help of Amzbizon. We started our campaigns on the 21st of November With 48% Acos, With good Keyword targeting and well established and optimized Bulk operation Campaigns, We shoot down to 24.71% in just 12 days, It is a miracle, I wish I could share my Screenshot here. But they have really worked on my ACOS. Thank You so much.',
+        avatar: avatars.MeetPatel
     },
-    // {
-    //     name: 'Savannah Hawkins',
-    //     comment: 'Proident incididunt Lorem et culpa enim ea quis in. Incididunt aute ea esse ex mollit do enim irure aliqua amet. Nisi irure excepteur magna dolore aliqua est do tempor.',
-    //     avatar: avatars.SavannahHawkins
-    // },
-    // {
-    //     name: 'Arlene Murphy',
-    //     comment: 'Id aliquip laboris fugiat aute officia elit dolor cupidatat quis nisi officia ea. Minim proident occaecat adipisicing cupidatat officia ex velit. Sint officia elit culpa laboris eu occaecat reprehenderit qui eu.',
-    //     avatar: avatars.ArleneMurphy
-    // },
+    {
+        name: 'Maxim Antonov',
+        comment: 'Yes, very good company! They helped me a lot with advertising on Amazon and not only with advertising, there are practitioners working there who really know a lot about their business.',
+        avatar: avatars.MaximAntonov
+    },
+    {
+        name: 'Emil Sirbu',
+        comment: 'I highly recommend the services of these great guys. As their tool gives incredible results, that\'s obvious. I appreciated the attitude of this team for the client. We had a very humanized experience, where the money wasn\'t the first priority of our collaboration but customer satisfaction! Flexibility and promptness to any of my questions. I highly recommend!',
+        avatar: avatars.EmilSirbu
+    },
+    {
+        name: 'Dmitriy Golubovskiy',
+        comment: 'These guys are doing an amazing job, solved my problem with huge Acos. It took only 2-3 weeks for them to fully optimize all campaigns. I would like to mention separately communication level: wrote even in Sat/Sunday and got answers. Recommend!',
+        avatar: avatars.DmitriyGolubovskiy
+    },
+    {
+        name: 'Andrey Kaminskiy',
+        comment: 'The team behind the agency is doing an amazing job by consulting about how to grow the conversion rate and managing our Amazon Advertising campaigns. Their support team is incredibly responsible all day long. Highly recommend!',
+        avatar: avatars.AndreyKaminskiy
+    },
     {
         name: 'Jennie Fisher',
         comment: 'ProfitWhales\' software is notably robust, and their analysts have helped us both maximize profitability and truly understand the incremental value of our Amazon Ads. They are a valued partner and we really appreciate the flexibility of their software and service model.',
         avatar: avatars.JennieFisher
     },
     // {
-    //     name: 'Marjorie Bell',
-    //     comment: 'Dolor magna ea excepteur aliquip nulla laborum fugiat duis. Laboris proident aliquip do consequat cillum deserunt. Excepteur laborum nulla id pariatur esse laboris et.',
-    //     avatar: avatars.MarjorieBell
-    // },
-    // {
-    //     name: 'Cameron Miles',
-    //     comment: 'Esse exercitation ipsum consectetur in aute aute non pariatur laborum Lorem culpa. Fugiat aute cillum exercitation eiusmod id sit enim sint. Proident Lorem magna dolor magna aliqua pariatur fugiat aliquip adipisicing mollit sunt amet sint pariatur.',
-    //     avatar: avatars.CameronMiles
+    //     name: 'Daniel Jennings',
+    //     comment: 'I really enjoy Profit Whales\' user interface, the massive amounts of data and the differentoptimization strategies.I\'ve noticed that the software makes extremely dialed in bidding decisions that convert very well. I\'m really working on creating a successful PPC strategy to template the other 3 products!',
+    //     avatar: avatars.DanielJennings
     // },
 
 ];
@@ -326,6 +328,8 @@ const LandingAutomation = () => {
                 } else {
                     setCaseSlide(currentCaseSlide + 1)
                 }
+            } else if (type === 'comment') {
+                Slider.slickNext();
             }
         }, 10)
     }
@@ -358,28 +362,6 @@ const LandingAutomation = () => {
     }
 
     //---------------------------------------
-
-    //comment navigation
-    function prevCommentSlide() {
-        if (currentCommentSlide === 0) {
-            setCommentSlide(4)
-        } else {
-            setCommentSlide(currentCommentSlide - 1)
-        }
-    }
-
-    function nextCommentSlide() {
-        if (currentCommentSlide === 4) {
-            setCommentSlide(0)
-        } else {
-            setCommentSlide(currentCommentSlide + 1)
-        }
-    }
-
-    function goToCommentSlide(index) {
-        setCommentSlide(index)
-    }
-
     //---------------------------------------
 
     function goToRegistrationPage() {
@@ -390,10 +372,15 @@ const LandingAutomation = () => {
         window.open('/pricing')
     }
 
-    function swipeDetect() {
-
+    function SampleNextArrow({onClick}) {
+        return (<div className='next' onClick={onClick}><FontAwesomeIcon icon={faPlay}/></div>)
     }
 
+    function SamplePrevArrow({onClick}) {
+        return (
+            <div className='prev' onClick={onClick}><FontAwesomeIcon icon={faPlay}/></div>
+        );
+    }
 
     useEffect(() => {
         (function (t, a, p) {
@@ -481,8 +468,6 @@ const LandingAutomation = () => {
     fbq('track', 'PageView');`;
 
         document.head.appendChild(s);
-
-        swipeDetect();
 
         document.querySelector('html').classList.add('not-retina');
 
@@ -830,54 +815,65 @@ const LandingAutomation = () => {
                 </div>
             </section>
 
-            {/*<section className='comments'>*/}
-            {/*    <div className="container">*/}
-            {/*        <h2>What our customers <br/> are saying</h2>*/}
+            <section className='comments'>
+                <div className="container">
+                    <h2>What our customers <br/> are saying</h2>
 
-            {/*        <CarouselProvider*/}
-            {/*            naturalSlideWidth={100}*/}
-            {/*            naturalSlideHeight={pixelRatio === 2 ? 100 : 60}*/}
-            {/*            totalSlides={commentsList.length}*/}
-            {/*            visibleSlides={window.screen.width < 500 ? 1 : window.screen.width < 1000 ? 2 : 3}*/}
-            {/*            infinite={true}*/}
-            {/*            touchEnabled={false}*/}
-            {/*            dragEnabled={false}*/}
-            {/*            currentSlide={currentCommentSlide}*/}
-            {/*        >*/}
+                    <div className="carousel">
 
-            {/*            <Slider>*/}
-            {/*                {commentsList.map((item, index) => (*/}
-            {/*                    <Slide index={index}>*/}
-            {/*                        <div className="slide-item">*/}
-            {/*                            <div className="row">*/}
-            {/*                                <img src={item.avatar} alt=""/>*/}
 
-            {/*                                <div className="name">*/}
-            {/*                                    {item.name}*/}
-            {/*                                </div>*/}
+                        <Slider
+                            dots={true}
+                            infinite={true}
+                            speed={500}
+                            slidesToShow={4}
+                            slidesToScroll={1}
+                            nextArrow={<SampleNextArrow/>}
+                            prevArrow={<SamplePrevArrow/>}
+                            responsive={[
+                                {
+                                    breakpoint: 1024,
+                                    settings: {
+                                        slidesToShow: 3,
+                                        slidesToScroll: 3,
+                                    }
+                                },
+                                {
+                                    breakpoint: 740,
+                                    settings: {
+                                        slidesToShow: 2,
+                                        slidesToScroll: 2
+                                    }
+                                },
+                                {
+                                    breakpoint: 500,
+                                    settings: {
+                                        slidesToShow: 1,
+                                        slidesToScroll: 1
+                                    }
+                                }
+                            ]}
+                        >
+                            {commentsList.map((item, index) => (
+                                <div className="slide-item">
+                                    <div className="row">
+                                        <img src={item.avatar} alt=""/>
 
-            {/*                            </div>*/}
+                                        <div className="name">
+                                            {item.name}
+                                        </div>
 
-            {/*                            <div className='comment'>{item.comment}</div>*/}
-            {/*                        </div>*/}
-            {/*                    </Slide>*/}
-            {/*                ))}*/}
-            {/*            </Slider>*/}
+                                    </div>
 
-            {/*            /!*<ButtonBack onClick={prevCommentSlide}><FontAwesomeIcon icon={faPlay}/></ButtonBack>*!/*/}
-            {/*            /!*<ButtonNext onClick={nextCommentSlide}><FontAwesomeIcon icon={faPlay}/></ButtonNext>*!/*/}
-            {/*        </CarouselProvider>*/}
+                                    <div className='comment'>{item.comment}</div>
+                                </div>
+                            ))}
+                        </Slider>
 
-            {/*        /!*<div className='navigation'>*!/*/}
-            {/*        /!*    {[0, 1, 2, 3, 4].map((item, index) => (*!/*/}
-            {/*        /!*        <div*!/*/}
-            {/*        /!*            onClick={() => goToCommentSlide(index)}*!/*/}
-            {/*        /!*            className={currentCommentSlide === index ? 'active-dot' : ''}*!/*/}
-            {/*        /!*        />*!/*/}
-            {/*        /!*    ))}*!/*/}
-            {/*        /!*</div>*!/*/}
-            {/*    </div>*/}
-            {/*</section>*/}
+
+                    </div>
+                </div>
+            </section>
 
             <section className='under-hood'>
                 <div className="container">
