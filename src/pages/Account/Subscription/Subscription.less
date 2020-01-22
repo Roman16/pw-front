@@ -121,7 +121,7 @@
           padding: 1em 2em 1.4em;
           border-radius: 0.8em;
           background-color: #f3f7fd;
-          margin-bottom: 2em;
+          margin-bottom: 1em;
 
           .charged-title {
             font-size: 1.1429rem; // 16px
@@ -321,6 +321,7 @@
               bottom: 0;
               margin: auto 0;
             }
+
           }
 
           .btn {
@@ -329,6 +330,41 @@
             text-transform: capitalize;
           }
         }
+
+        .applied-coupon {
+          width: 100%;
+          margin: 10px 0 0 0;
+
+          h4 {
+            left: 0;
+            color: #82BB79;
+            font-size: 1rem;
+            margin: 0 0 10px 0;
+          }
+
+          .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .name {
+              left: 0;
+              color: #82BB79;
+              font-weight: 600;
+              font-size: 1rem;
+            }
+
+            .discount {
+              width: 50%;
+              min-width: max-content;
+              font-size: 18px;
+              color: #6D6DF6;
+              text-align: left;
+              margin: 0 0 0 10px;
+            }
+          }
+        }
+
       }
 
 
@@ -347,11 +383,14 @@
           color: #656A84;
 
           .plan-data {
-            font-size: 24px;
+            width: 50%;
+            min-width: max-content;
+            font-size: 1.7142857142857142rem;
             letter-spacing: 0.2px;
             color: #6D6DF6;
             font-weight: 600;
-            margin: 0 0 0 auto;
+            margin: 0 0 0 10px;
+            text-align: left;
           }
         }
       }
@@ -390,9 +429,14 @@
 
         .automate {
           .cancel {
-            width: 100%;
+            width: 50%;
             margin: 0 auto;
             align-items: center;
+
+            .coupon,
+            .plan-text {
+              width: 100%;
+            }
           }
         }
       }
@@ -472,6 +516,7 @@
           }
 
           .cancel {
+            width: 100%;
             align-items: center;
           }
         }

@@ -30,8 +30,6 @@ const Subscription = () => {
         stripeId: state.user.user.stripe_id
     }));
 
-    const subscriptionProduct = subscriptions[subscriptionProducts[0].productId];
-
     function handleOpenAccountWindow(plan) {
         openAccountWindow(true);
         selectPlan(plan)
@@ -115,8 +113,8 @@ const Subscription = () => {
     }
 
     async function handleUpdateSubscriptionStatus() {
-        if (subscriptionProduct) {
-            if (subscriptionProduct.next_charge_value !== null || subscriptionProduct.flat_amount !== null || subscriptionProduct.quantity !== null) {
+        if (subscriptions[subscriptionProducts[0].productId]) {
+            if (subscriptions[subscriptionProducts[0].productId].next_charge_value !== null || subscriptions[subscriptionProducts[0].productId].flat_amount !== null || subscriptions[subscriptionProducts[0].productId].quantity !== null) {
                 clearInterval(interval);
                 return
             }
