@@ -308,7 +308,8 @@ const commentsList = [
 const LandingAutomation = () => {
     const [currentStepSlide, setStepSlide] = useState(0),
         [currentCaseSlide, setCaseSlide] = useState(0),
-        [currentCommentSlide, setCommentSlide] = useState(0);
+        [currentCommentSlide, setCommentSlide] = useState(0),
+        [selectedImage, selectImage] = useState(null);
 
     function nextSlide(type) {
         clearTimeout(swipeTimeoutId);
@@ -455,7 +456,6 @@ const LandingAutomation = () => {
             }
         });
 
-
         const s = document.createElement('script');
         s.type = 'text/javascript';
         s.async = true;
@@ -557,6 +557,14 @@ const LandingAutomation = () => {
         document.getElementById('steps-slider').addEventListener('touchstart', handleTouchStart, false);
         document.getElementById('steps-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'step'), false);
     }, [currentStepSlide]);
+
+    useEffect(() => {
+        if (selectedImage && (window.screen.orientation === "portrait-secondary" || window.screen.orientation === "portrait-primary")) {
+            document.querySelector('body').style.overflow = 'hidden';
+        } else {
+            document.querySelector('body').style.overflow = 'auto';
+        }
+    }, [selectedImage, window.screen.orientation]);
 
 
     return (
@@ -698,8 +706,11 @@ const LandingAutomation = () => {
                                 width: '80%'
                             }}>
                                 {stepsSlider.map((item, index) => (
-                                    <img src={item.img} alt=""
-                                         style={{display: currentStepSlide === index ? 'block' : 'none'}}/>
+                                    <img
+                                        src={item.img}
+                                        onClick={() => selectImage(item.img)}
+                                        alt=""
+                                        style={{display: currentStepSlide === index ? 'block' : 'none'}}/>
                                 ))}
                             </div>
 
@@ -747,8 +758,12 @@ const LandingAutomation = () => {
 
                             <div className="image-block">
                                 {ourCases.map((item, index) => (
-                                    <img src={item.img} alt=""
-                                         style={{display: currentCaseSlide === index ? 'block' : 'none'}}/>
+                                    <img
+                                        src={item.img}
+                                        onClick={() => selectImage(item.img)}
+                                        alt=""
+                                        style={{display: currentCaseSlide === index ? 'block' : 'none'}}
+                                    />
                                 ))}
 
                                 {(currentCaseSlide === 4 || currentCaseSlide === 5) &&
@@ -1040,6 +1055,12 @@ const LandingAutomation = () => {
             </section>
 
             <div className="scroll-top" onClick={() => $('html, body').animate({scrollTop: 0}, 'slow')}/>
+
+            {selectedImage && <div className="modal-image">
+                <span className="close" onClick={() => selectImage(null)}>&times;</span>
+
+                <img src={selectedImage} alt=""/>
+            </div>}
 
             <Footer/>
         </div>

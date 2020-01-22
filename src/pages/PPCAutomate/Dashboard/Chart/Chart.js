@@ -10,12 +10,14 @@ import {dashboardServices} from '../../../../services/dashboard.services'
 import './Chart.less';
 import {useSelector} from "react-redux";
 import moment from "moment";
+import {Spin} from "antd";
 
 const Chart = () => {
 
     const [defaultChart, changeChart] = useState('pie'),
         [pieChartData, updatePieChart] = useState([]),
         [barChartData, updateBarChart] = useState([]);
+    const [fetching, switchFetch] = useState(false);
 
     const {selectedRangeDate, selectedProduct} = useSelector(state => ({
         activeMetrics: state.dashboard.activeMetrics,
@@ -28,15 +30,21 @@ const Chart = () => {
 
 
     const getPieChartData = () => {
+        switchFetch(true);
         dashboardServices.fetchPieChartData({startDate, endDate, selectedProduct})
             .then(res => {
+                switchFetch(false);
+
                 updatePieChart(res);
             })
     };
 
     const getBarChartData = () => {
+        switchFetch(true);
         dashboardServices.fetchBarChartData({endDate, selectedProduct})
             .then(res => {
+                switchFetch(false);
+
                 updateBarChart(res);
             })
     };
@@ -70,12 +78,12 @@ const Chart = () => {
             {defaultChart === 'bar' && <Fragment>
                 <div className='bar-chart-legend'>
                     <div className='first-bar'>
-                        <div className='example-fill' />
+                        <div className='example-fill'/>
                         Organic
                     </div>
 
                     <div className='second-bar'>
-                        <div className='example-fill' />
+                        <div className='example-fill'/>
                         PPC
                     </div>
 
@@ -94,6 +102,9 @@ const Chart = () => {
             />
             }
 
+            {fetching && <div className="loading">
+                <Spin size="large"/>
+            </div>}
         </div>
     )
 };

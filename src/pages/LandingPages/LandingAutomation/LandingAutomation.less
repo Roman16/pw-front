@@ -1484,6 +1484,38 @@
     }
   }
 
+  .modal-image {
+    background: #fff;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    display: none;
+
+    img {
+      width: 100%;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #000000;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    @media (max-width: 500px) and (orientation: portrait) {
+      display: flex;
+    }
+  }
+
   .survey-modal-window {
     display: flex;
     justify-content: flex-start;

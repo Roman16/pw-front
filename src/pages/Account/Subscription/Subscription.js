@@ -77,6 +77,7 @@ const Subscription = () => {
             notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'});
 
             dispatch(userActions.getPersonalUserInfo());
+            fetchSubscriptions();
         } catch (e) {
             console.log(e);
         }
@@ -85,11 +86,12 @@ const Subscription = () => {
     async function handleReactivateSubscription() {
         try {
             await userService.reactivateSubscription({
-                subscription_plan_id: selectedPlan.plan_id,
+                subscription_plan_id: selectedPlan.planId,
                 subscription_id: selectedPlan.productId,
             });
 
             dispatch(userActions.getPersonalUserInfo());
+            fetchSubscriptions();
             selectPlan(null);
             openReactivateWindow(false);
         } catch (e) {
@@ -100,11 +102,12 @@ const Subscription = () => {
     async function handleCancelSubscription() {
         try {
             await userService.cancelSubscription({
-                subscription_plan_id: selectedPlan.plan_id,
+                subscription_plan_id: selectedPlan.planId,
                 subscription_id: selectedPlan.productId,
             });
 
             dispatch(userActions.getPersonalUserInfo());
+            fetchSubscriptions();
             selectPlan(null);
             openAccountWindow(false);
         } catch (e) {

@@ -10,7 +10,7 @@ const Chart = ({
                    activeMetrics,
                    showWeekChart,
                    showDailyChart,
-                   selectedRangeDate
+                   selectedRangeDate,
                }) => {
     //first way
     // const dataWithShadow = data.map(item => ({
