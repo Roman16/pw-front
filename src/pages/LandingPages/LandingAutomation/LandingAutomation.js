@@ -5,7 +5,6 @@ import $ from 'jquery';
 import ionRangeSlider from 'ion-rangeslider';
 
 import './LandingAutomation.less';
-import 'pure-react-carousel/dist/react-carousel.es.css';
 
 import {history} from "../../../utils/history";
 import {debounce} from "throttle-debounce";
