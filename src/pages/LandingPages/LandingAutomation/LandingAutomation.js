@@ -297,12 +297,11 @@ const commentsList = [
         comment: 'ProfitWhales\' software is notably robust, and their analysts have helped us both maximize profitability and truly understand the incremental value of our Amazon Ads. They are a valued partner and we really appreciate the flexibility of their software and service model.',
         avatar: avatars.JennieFisher
     },
-    // {
-    //     name: 'Daniel Jennings',
-    //     comment: 'I really enjoy Profit Whales\' user interface, the massive amounts of data and the differentoptimization strategies.I\'ve noticed that the software makes extremely dialed in bidding decisions that convert very well. I\'m really working on creating a successful PPC strategy to template the other 3 products!',
-    //     avatar: avatars.DanielJennings
-    // },
-
+    {
+        name: 'Daniel Jennings',
+        comment: 'I really enjoy Profit Whales\' user interface, the massive amounts of data and the differentoptimization strategies.I\'ve noticed that the software makes extremely dialed in bidding decisions that convert very well. I\'m really working on creating a successful PPC strategy to template the other 3 products!',
+        avatar: avatars.DanielJennings
+    },
 ];
 
 const LandingAutomation = () => {
@@ -426,14 +425,14 @@ const LandingAutomation = () => {
                     barTooltip.html(`$ ${value} / month`);
 
                     if (value >= 50000) {
-                        result = ((2 / 100) * value) + 500;
-                        barLabel.html('$500 + 2% <small>ad spend</small>');
+                        result = ((1.5 / 100) * value) + 500;
+                        barLabel.html('$500 + 1,5% <small>ad spend</small>');
                     } else if (value >= 20000) {
-                        result = ((3 / 100) * value) + 300;
-                        barLabel.html('$300 + 3% <small>ad spend</small>');
+                        result = ((2 / 100) * value) + 250;
+                        barLabel.html('$250 + 2% <small>ad spend</small>');
                     } else {
-                        result = ((4 / 100) * value) + 100;
-                        barLabel.html('$100 + 4% <small>ad spend</small>');
+                        result = ((2.5/ 100) * value) + 100;
+                        barLabel.html('$100 + 2,5% <small>ad spend</small>');
                     }
 
                     sumElement.text('$ ' + result);

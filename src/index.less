@@ -103,6 +103,11 @@ img {
   display: flex;
   background: #f5f5ff;
 
+  .product-list-container {
+    display: flex;
+    flex: 1;
+  }
+
   .main-container {
     position: relative;
     flex: 1;
@@ -123,6 +128,12 @@ img {
         padding: 1.7142857em 1.1428571em;
       }
     }
+  }
+
+  @media (max-width: 500px) {
+    overflow-y: auto;
+    height: max-content;
+    flex-direction: column;
   }
 }
 

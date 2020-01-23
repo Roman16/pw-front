@@ -218,7 +218,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>}</span>),
             dataIndex: 'profit',
             key: 'profit',
-            width: '10em',
+            width: '12em',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
