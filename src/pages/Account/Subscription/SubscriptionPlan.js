@@ -67,14 +67,14 @@ const SubscriptionPlan = ({
 
                     <div className="spend-text">
                         <div className="spend-data">$ {numberMask(product.quantity, 2) || 0}</div>
-                        <div>Your monthly <br/> Ad Spend <InformationTooltip
-                            description={'Lorem ipsum dolor sit amet, consectetur adipisicing elit. A animi, aperiam at dolor ducimus eum, exercitationem hic illum labore magni molestiae nobis nostrum optio pariatur placeat porro quos voluptatibus voluptatum?\n'}/>
+                        <div className='description'>Your monthly <br/> Ad Spend <InformationTooltip
+                            description={'This is the amount of your spend on Amazon PPC for the past 30 days. We update it daily.'}/>
                         </div>
                     </div>
 
                     <div className="charged-description">
                         <div className="charged-data">$ {numberMask(product.next_charge_value, 2) || 0}</div>
-                        <div>You’ll be charged <br/> next month</div>
+                        <div className='description'>You’ll be charged <br/> next month</div>
                     </div>
                 </Fragment>
             )

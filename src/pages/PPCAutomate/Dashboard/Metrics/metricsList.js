@@ -37,10 +37,7 @@ export const metricsListArray = [
     {
         title: 'Orders',
         key: 'total_orders',
-        info: `Orders is the number of Amazon orders shoppers submitted after clicking on your ads.<br/>
-Sponsored Products: Orders from advertised products as well as other products from your inventory purchased within 7 days.<br/>
-It can take up to 12 hours for your orders data to update. As a result, orders data may be delayed in the Today date range. We recommend waiting until all orders data is populated before evaluating campaign performance.<br/>
-Payment failures and orders that are cancelled within 72 hours will be removed from orders totals.`,
+        info: 'This metric shows the total amount of orders from organic and paid traffic.',
         label: 'Total',
         type: 'number'
     },
@@ -95,7 +92,7 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
     {
         title: 'CPA',
         key: 'cpa',
-        info: 'Cost to acquire one paying customer on a campaign.',
+        info: 'Cost per one customer of a paid customer through Amazon Advertising',
         label: 'Average',
         type: 'currency'
     },
@@ -113,6 +110,8 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
     },
     {
         title: 'MACoS',
+        info: 'MACoS will consider advertising spend relative to your total revenue so that organic sales will be incorporated into the overall performance.\n' +
+            'A low MACoS indicates that a product generates strong sales when advertised. High MACoS tells you that advertising is cannibalizing your overall sales. It will help if you work on your conversion rate.',
         key: 'macos',
         label: 'Average',
         type: 'percent'
@@ -125,6 +124,7 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
     // },
     {
         title: 'ROAS',
+        info: 'Return On Advertising Spend, (ROAS), is a marketing metric that measures the efficacy of a digital advertising campaign. ROAS helps online businesses evaluate which methods are working and how they can improve future advertising efforts.',
         key: 'roas',
         label: 'Average',
         type: 'roas'

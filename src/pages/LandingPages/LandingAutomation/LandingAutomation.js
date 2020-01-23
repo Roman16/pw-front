@@ -425,14 +425,14 @@ const LandingAutomation = () => {
                     barTooltip.html(`$ ${value} / month`);
 
                     if (value >= 50000) {
-                        result = ((2 / 100) * value) + 500;
-                        barLabel.html('$500 + 2% <small>ad spend</small>');
+                        result = ((1.5 / 100) * value) + 500;
+                        barLabel.html('$500 + 1,5% <small>ad spend</small>');
                     } else if (value >= 20000) {
-                        result = ((3 / 100) * value) + 300;
-                        barLabel.html('$300 + 3% <small>ad spend</small>');
+                        result = ((2 / 100) * value) + 250;
+                        barLabel.html('$250 + 2% <small>ad spend</small>');
                     } else {
-                        result = ((4 / 100) * value) + 100;
-                        barLabel.html('$100 + 4% <small>ad spend</small>');
+                        result = ((2.5/ 100) * value) + 100;
+                        barLabel.html('$100 + 2,5% <small>ad spend</small>');
                     }
 
                     sumElement.text('$ ' + result);

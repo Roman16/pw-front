@@ -47,7 +47,7 @@ const LoadingAmazonAccount = () => {
 
     return (
         <ModalWindow
-            className={'reports-changes-window amazon-loading-window'}
+            className={'amazon-loading-window'}
             visible={bootstrapInProgress}
             okText={'Check it now'}
         >

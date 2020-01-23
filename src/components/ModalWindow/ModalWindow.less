@@ -120,10 +120,10 @@
           height: 1em;
         }
 
-      .ant-checkbox-inner::after {
-        //width: 0.35714285714285715rem;
-        //height: 0.6428571428571429rem;
-      }
+        .ant-checkbox-inner::after {
+          //width: 0.35714285714285715rem;
+          //height: 0.6428571428571429rem;
+        }
       }
 
       .ant-checkbox-checked .ant-checkbox-inner::after {
@@ -295,10 +295,19 @@
 //----------------------------------------------
 .amazon-loading-window {
   width: 100% !important;
-  max-width: 700px;
+  max-width: 700px !important;
 
   .ant-modal-body {
     padding: 80px 90px;
+    display: flex;
+    flex-direction: column;
+
+    span {
+      font-size: 1.4285714285714286rem;
+      font-weight: bold;
+      margin: -20px 0 0 0;
+      text-align: center;
+    }
 
     h2 {
       font-family: ir;
@@ -306,6 +315,7 @@
       letter-spacing: -0.06px;
       color: #363694;
       margin: 40px 0;
+      text-align: center;
     }
 
     .social-icons {
