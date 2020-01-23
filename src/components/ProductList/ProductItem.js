@@ -75,7 +75,6 @@ const ProductItem = ({
                         <div className='on-optimization'/>
                     </InformationTooltip>}
 
-
                     {under_optimization && !has_optimization_results && <InformationTooltip
                         arrowPointAtCenter={true}
                         type={'custom'}
@@ -84,6 +83,7 @@ const ProductItem = ({
                     >
                         <div className='optimization-processing'/>
                     </InformationTooltip>}
+
                 </div>
             </div>
 
