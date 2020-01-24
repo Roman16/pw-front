@@ -541,12 +541,12 @@ const LandingAutomation = () => {
     }, [currentStepSlide]);
 
     useEffect(() => {
-        if (selectedImage && (window.screen.orientation === "portrait-secondary" || window.screen.orientation === "portrait-primary")) {
+        if (selectedImage && (window.innerHeight > window.innerWidth)) {
             document.querySelector('body').style.overflow = 'hidden';
         } else {
             document.querySelector('body').style.overflow = 'auto';
         }
-    }, [selectedImage, window.screen.orientation]);
+    }, [selectedImage, window.innerHeight]);
 
 
     return (

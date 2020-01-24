@@ -74,7 +74,8 @@ const SubscriptionPlan = ({
 
                     <div className="charged-description">
                         <div className="charged-data">$ {numberMask(product.next_charge_value, 2) || 0}</div>
-                        <div className='description'>You’ll be charged <br/> next month</div>
+                        <div className='description'>You'll be charged <br/> next billing cycle <InformationTooltip
+                            description={'This amount is calculated based on your last 30 days ad spend. It\'s updating every hour, so the exact amount of the invoice will be visible right before the end of the current billing cycle.'}/></div>
                     </div>
                 </Fragment>
             )

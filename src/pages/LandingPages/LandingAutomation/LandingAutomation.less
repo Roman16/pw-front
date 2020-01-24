@@ -701,8 +701,7 @@
       @media (max-width: 600px) {
         & {
           flex-direction: row;
-          padding-top: 20px;
-          padding-bottom: 50px;
+          padding: 20px 20px 50px 20px;
 
           & > div {
             width: 50%;
@@ -711,13 +710,13 @@
             flex: inherit;
 
             .value {
-              font-size: 55px;
+              font-size: 48px;
               line-height: 80px;
               margin: 0;
             }
 
             .description {
-              font-size: 15px;
+              font-size: 13px;
             }
 
             &:last-child {
@@ -1090,7 +1089,22 @@
           margin-bottom: 30px;
         }
 
-        //display: none;
+        .carousel {
+          padding: 0 30px;
+
+          .slick-track {
+            & > div {
+              padding: 0;
+            }
+          }
+        }
+
+        .container {
+          .prev,
+          .next {
+            display: none;
+          }
+        }
       }
     }
   }

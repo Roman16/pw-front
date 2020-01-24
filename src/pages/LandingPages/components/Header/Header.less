@@ -154,12 +154,13 @@
 
       .header-menu {
         display: none;
-        position: absolute;
+        position: fixed;
         left: 0;
         top: 96px;
         background: #fff;
         width: 100%;
         z-index: 110;
+        height: calc(100vh - 96px);
 
         ul {
           display: flex;
@@ -178,6 +179,7 @@
                 box-shadow: none;
               }
             }
+
             .sub-menu {
               position: relative;
               display: flex;
