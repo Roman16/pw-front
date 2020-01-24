@@ -391,7 +391,11 @@ const LandingAutomation = () => {
         // window.tap('click', {referral_code: ''});
         window.tap('detect');
 
+        //----------------------------------------------------------------------
+        document.querySelector('html').classList.add('not-retina');
+        //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         $(".js-range-slider").ionRangeSlider({
             min: 0,
             values: [
@@ -431,7 +435,7 @@ const LandingAutomation = () => {
                         result = ((2 / 100) * value) + 250;
                         barLabel.html('$250 + 2% <small>ad spend</small>');
                     } else {
-                        result = ((2.5/ 100) * value) + 100;
+                        result = ((2.5 / 100) * value) + 100;
                         barLabel.html('$100 + 2,5% <small>ad spend</small>');
                     }
 
@@ -439,11 +443,17 @@ const LandingAutomation = () => {
                 }
             }
         });
+        //----------------------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        const s = document.createElement('script');
+        const s = document.createElement('script'),
+         mailchimpScript = document.createElement('script');
+
         s.type = 'text/javascript';
+        mailchimpScript.type = 'text/javascript';
+
         s.async = true;
-        s.innerHTML = `  !function (f, b, e, v, n, t, s) {
+        s.innerHTML = `!function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function () {
             n.callMethod ?
@@ -464,12 +474,16 @@ const LandingAutomation = () => {
     fbq('init', '2628499780566506');
     fbq('track', 'PageView');`;
 
-        document.head.appendChild(s);
+        mailchimpScript.innerHTML = `window.dojoRequire(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us20.list-manage.com","uuid":"ded622a105926b256014e2410","lid":"74874aa336","uniqueMethods":true}) })`;
 
-        document.querySelector('html').classList.add('not-retina');
+        document.head.appendChild(s);
+        document.head.appendChild(mailchimpScript);
+
 
         return () => {
             document.head.removeChild(s);
+            document.head.removeChild(mailchimpScript);
+
             document.querySelector('html').classList.remove('not-retina');
         }
     }, []);
@@ -541,12 +555,12 @@ const LandingAutomation = () => {
     }, [currentStepSlide]);
 
     useEffect(() => {
-        if (selectedImage && (window.screen.orientation === "portrait-secondary" || window.screen.orientation === "portrait-primary")) {
+        if (selectedImage && (window.innerHeight > window.innerWidth)) {
             document.querySelector('body').style.overflow = 'hidden';
         } else {
             document.querySelector('body').style.overflow = 'auto';
         }
-    }, [selectedImage, window.screen.orientation]);
+    }, [selectedImage, window.innerHeight]);
 
 
     return (

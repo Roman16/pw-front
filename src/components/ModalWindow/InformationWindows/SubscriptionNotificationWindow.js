@@ -10,10 +10,8 @@ import {userActions} from "../../../actions/user.actions";
 
 const SubscriptionNotificationWindow = ({product}) => {
     const dispatch = useDispatch();
-    const mainContainer = document.querySelector(`.main-pages`),
-        modalWrap = document.querySelector('.ant-modal-wrap');
 
-    const [visibleWindow, openWindow] = useState(false);
+    const [visibleWindow, openWindow] = useState(true);
     const {subscribedProduct, bootstrapInProgress} = useSelector(state => ({
         subscribedProduct: state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId],
         bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
@@ -23,20 +21,13 @@ const SubscriptionNotificationWindow = ({product}) => {
         if (bootstrapInProgress) {
             openWindow(false);
         } else {
-            if (!subscribedProduct.has_access && (mainContainer != null)) {
+            if (!subscribedProduct.has_access) {
                 openWindow(true);
-                mainContainer.classList.add("disable-page");
             } else {
                 openWindow(false);
             }
         }
-
-        return (() => {
-            if (mainContainer != null) {
-                mainContainer.classList.remove("disable-page");
-            }
-        })
-    }, [mainContainer, subscribedProduct]);
+    }, [subscribedProduct]);
 
     useEffect(() => {
         dispatch(userActions.getPersonalUserInfo())
@@ -65,13 +56,12 @@ const SubscriptionNotificationWindow = ({product}) => {
         )
     }
 
-    modalWrap && modalWrap.classList.add('payment-modal-wrap');
 
     return (
         <ModalWindow
             className={'payment-notification-window'}
-            mask={false}
             footer={null}
+            container={true}
             visible={visibleWindow}
         >
 

@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
 import {Icon} from "antd";
 import {Link} from "react-router-dom";
@@ -9,6 +9,21 @@ const authorized = localStorage.getItem('token');
 
 const Header = () => {
     const [openedMenu, switchMenu] = useState(false);
+
+    useEffect(() => {
+        document.querySelector('.header-menu').addEventListener('click', () => {
+            switchMenu(false);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (openedMenu) {
+            document.querySelector('body').style.overflow = 'hidden';
+        } else {
+            document.querySelector('body').style.overflow = 'auto';
+        }
+    }, [openedMenu]);
+
 
     return (
         <header className='not-found-page__header' id={'header'}>
