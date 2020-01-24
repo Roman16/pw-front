@@ -6,6 +6,7 @@ const ConfirmActionPopup = ({title, description, visible, handleOk, handleCancel
         <Modal
             title={title}
             className='confirm-action-modal'
+            wrapClassName={'over-modal-wrap'}
             visible={visible}
             onOk={handleOk}
             onCancel={handleCancel}

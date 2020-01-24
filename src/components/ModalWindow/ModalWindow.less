@@ -1,8 +1,35 @@
 @import '../../style/variables.less';
 
+
 .ant-modal-wrap {
   display: flex;
-  margin: auto;
+  align-items: center;
+
+
+}
+
+.over-modal-wrap {
+  z-index: 100000;
+}
+
+.custom-modal-wrap {
+  left: 200px;
+
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+    left: 150px;
+  }
+
+  @media (max-width: 600px) {
+    left: 0 !important;
+
+    z-index: 100000;
+  }
+}
+
+.main-container {
+  .modalInContainer {
+    left: 150px;
+  }
 }
 
 .custom-modal-window {
@@ -176,14 +203,9 @@
   }
 }
 
-.payment-notification-window {
-
-}
-
-
 .reports-changes-window {
   max-width: 15vw;
-  width: max-content;
+  width: max-content !important;
   text-align: center;
 
   .ant-modal-content {
@@ -240,13 +262,10 @@
     }
   }
 
-}
 
-
-//----------------------------------------------
-.payment-modal-wrap {
-  //width: max-content;
-  //padding: 0 0 0 200px;
+  @media (max-width: 500px) {
+    max-width: 95vw;
+  }
 }
 
 //----------------------------------------------
@@ -254,8 +273,8 @@
 //----------------------------------------------
 
 .payment-notification-window {
-  padding-left: 200px;
-  max-width: 40vw;
+  max-width: 35vw;
+  min-width: 400px;
   width: 100% !important;
 
   .ant-result-title {
@@ -284,9 +303,12 @@
 
   @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
     & {
-      padding-left: 150px;
-      max-width: 50vw;
+      max-width: 40vw;
     }
+  }
+
+  @media (max-width: 500px) {
+    max-width: 95vw;
   }
 }
 
@@ -341,5 +363,9 @@
 
   .ant-modal-footer {
     display: none;
+  }
+
+  @media (max-width: 500px) {
+    max-width: 95vw !important;
   }
 }
