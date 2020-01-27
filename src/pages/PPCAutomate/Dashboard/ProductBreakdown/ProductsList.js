@@ -250,6 +250,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
                 totalSize={fetchParams.totalSize}
                 scroll={{x: true}}
                 rowClassName={(record) => selectedProduct && (selectedProduct === record.product.id ? 'activated-product' : 'default-product')}
+                rowKey={record => record.product.id}
                 onRow={(record, rowIndex) => {
                     return {
                         onClick: () => onSelect(record.product.id)

@@ -238,7 +238,7 @@ const Sidebar = () => {
                 </div>
 
                 <div className="refer-link">
-                    <Link to={'/affiliates'}>
+                    <Link to={'/affiliates'} target="_blank">
                         <img src={referIcon} alt=""/>
                         {devicePixelRatio === 2 ? <span className="bottom-span">Refer sellers! <br/> Get Cash</span>
                             :

@@ -9,7 +9,9 @@ const ModalWindow = (props) => {
     useEffect(() => {
         document.querySelector('.sidebar-header .anticon-menu').addEventListener('click', () => {
             setTimeout(() => {
-                document.querySelector('.custom-modal-wrap').style.left = `${document.querySelector('.sidebar').clientWidth}px`;
+                if (document.querySelector('.custom-modal-wrap')) {
+                    document.querySelector('.custom-modal-wrap').style.left = `${document.querySelector('.sidebar').clientWidth}px`;
+                }
             }, 400)
         })
     }, []);

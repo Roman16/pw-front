@@ -447,7 +447,7 @@ const LandingAutomation = () => {
         //----------------------------------------------------------------------
 
         const s = document.createElement('script'),
-         mailchimpScript = document.createElement('script');
+            mailchimpScript = document.createElement('script');
 
         s.type = 'text/javascript';
         mailchimpScript.type = 'text/javascript';
@@ -483,6 +483,7 @@ const LandingAutomation = () => {
         return () => {
             document.head.removeChild(s);
             document.head.removeChild(mailchimpScript);
+            window.location.reload();
 
             document.querySelector('html').classList.remove('not-retina');
         }

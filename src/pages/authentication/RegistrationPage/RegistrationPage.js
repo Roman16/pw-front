@@ -5,6 +5,7 @@ import './RegistrationPage.less';
 import RegistrationPageForm from './RegistrationPageForm/RegistrationPageForm';
 import {Elements, StripeProvider} from "react-stripe-elements";
 import logo from '../../../assets/img/ProfitWhales-logo-white.svg';
+import {history} from "../../../utils/history";
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
@@ -14,7 +15,7 @@ const RegistrationPage = () => {
     return (
         <div className="RegisterFormContainer">
             <div className="sign-page">
-                <div className="logo-auth">
+                <div className="logo-auth" onClick={() => history.push('/automation')}>
                     <img src={logo} alt="logo"/>
                 </div>
 

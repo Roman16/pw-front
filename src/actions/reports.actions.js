@@ -6,13 +6,13 @@ export const reportsActions = {
     setPageSize
 };
 
-function fetchAllReports(options) {
+function fetchAllReports(options, cancelToken) {
     return dispatch => {
         dispatch({
             type: reportsConstants.START_FETCH_REPORTS_LIST,
         });
 
-        reportsServices.getAllReports(options)
+        reportsServices.getAllReports(options, cancelToken)
             .then(res => {
                 dispatch({
                     type: reportsConstants.SET_REPORTS_LIST,

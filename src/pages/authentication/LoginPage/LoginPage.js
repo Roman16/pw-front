@@ -2,14 +2,14 @@ import React from 'react';
 import {Row, Col} from 'antd';
 import LoginPageForm from './LoginPageForm/LoginPageForm';
 import './LoginPage.less';
-
+import {history} from "../../../utils/history";
 import logo from '../../../assets/img/ProfitWhales-logo-white.svg';
 
 const LoginPage = () => {
     return (
         <div className="LoginFormContainer">
             <div className="sign-page">
-                <div className="logo-auth">
+                <div className="logo-auth" onClick={() => history.push('/automation')}>
                     <img src={logo} alt="logo"/>
                 </div>
                 <Row className="container">

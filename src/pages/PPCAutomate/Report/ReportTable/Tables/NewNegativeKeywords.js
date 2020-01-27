@@ -121,7 +121,7 @@ const NewNegativeKeywords = ({
                 dataIndex: 'd_customerSearchTermACoS',
                 key: 'd_customerSearchTermACoS',
                 width: '10.5em',
-                render: text => <span>{text && `${round(text, 2)}%`}</span>,
+                render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
                     onChangeFilter={onChangeFilter}
@@ -140,7 +140,7 @@ const NewNegativeKeywords = ({
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
                 width: '11.5em',
-                render: text => <span>{text && `${round(text, 2)}%`}</span>,
+                render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
                     onChangeFilter={onChangeFilter}
@@ -211,7 +211,7 @@ const NewNegativeKeywords = ({
                 dataIndex: 'd_averageConversionRate',
                 key: 'd_averageConversionRate',
                 width: '10.5em',
-                render: (text) => (text && <span>{round(text, 2)}%</span>),
+                render: (text) => (text && <span>{round(+text * 100, 2)}%</span>),
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
                     onChangeFilter={onChangeFilter}

@@ -7,6 +7,11 @@ import {dashboardServices} from "../../../../services/dashboard.services";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {Spin} from "antd";
+import axios from "axios";
+
+const CancelToken = axios.CancelToken;
+let source = null;
+
 
 const MainChart = () => {
     const [chartData, updateChartData] = useState([]);
@@ -44,6 +49,7 @@ const MainChart = () => {
     const getChartData = () => {
         if (activeMetrics[0].key || activeMetrics[1].key) {
             switchFetch(true);
+            source = CancelToken.source();
 
             dashboardServices.fetchLineChartData({
                 startDate: selectedRangeDate.startDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.startDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
@@ -51,7 +57,8 @@ const MainChart = () => {
                 firstMetric: activeMetrics[0] ? activeMetrics[0].key : null,
                 secondMetric: activeMetrics[1] ? activeMetrics[1].key : null,
                 productId: selectedProduct,
-                onlyOptimization: onlyOptimization
+                onlyOptimization: onlyOptimization,
+                cancelToken: source.token
             })
                 .then(res => {
                     updateChartData(res);
@@ -62,7 +69,10 @@ const MainChart = () => {
         }
     };
 
-    useEffect(getChartData, [activeMetrics, selectedRangeDate, selectedProduct, onlyOptimization]);
+    useEffect(() => {
+        source && source.cancel();
+        getChartData();
+    }, [activeMetrics, selectedRangeDate, selectedProduct, onlyOptimization]);
 
     return (
         <div className='main-chart'>

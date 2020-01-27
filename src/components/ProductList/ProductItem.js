@@ -66,6 +66,15 @@ const ProductItem = ({
                 </div>
 
                 <div className='optimization-status'>
+                    {/*{true && <InformationTooltip*/}
+                    {/*    arrowPointAtCenter={true}*/}
+                    {/*    type={'custom'}*/}
+                    {/*    description={'Product has new changes'}*/}
+                    {/*    position={'topRight'}*/}
+                    {/*>*/}
+                    {/*    <div className='has-changes'/>*/}
+                    {/*</InformationTooltip>}*/}
+
                     {under_optimization && has_optimization_results && <InformationTooltip
                         arrowPointAtCenter={true}
                         type={'custom'}
