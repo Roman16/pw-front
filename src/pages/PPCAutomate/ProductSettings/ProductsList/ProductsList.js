@@ -81,12 +81,13 @@ class ProductsList extends Component {
             await productsServices.updateProductSettings(data);
             this.prevItemIndex = null;
 
+            clearTimeout(this.timerNotificationId);
 
             this.timerNotificationId = setTimeout(() => {
                 notification.success({
                     title: 'Changes saved'
                 });
-            }, 1000)
+            }, 1500)
 
         } catch (e) {
             console.log(e);
