@@ -6,6 +6,10 @@ import './ProductBreakdown.less';
 import ProductsList from "./ProductsList";
 import {dashboardActions} from "../../../../actions/dashboard.actions";
 import {productsActions} from "../../../../actions/products.actions";
+import axios from "axios";
+
+const CancelToken = axios.CancelToken;
+let source = null;
 
 const initialFetchParams = {
     page: 1,
@@ -34,11 +38,13 @@ const ProductBreakdown = () => {
 
     const getProducts = () => {
         switchFetch(true);
+        source = CancelToken.source();
 
         dashboardServices.fetchProducts({
             ...fetchParams,
             startDate: selectedRangeDate.startDate,
             endDate: selectedRangeDate.endDate,
+            cancelToken: source.token
         })
             .then(res => {
                 switchFetch(false);
@@ -50,6 +56,9 @@ const ProductBreakdown = () => {
                     totalSize: res.totalSize
                 });
 
+            })
+            .catch(error => {
+                console.log(error);
             })
     };
 
@@ -72,7 +81,7 @@ const ProductBreakdown = () => {
                 searchText: value,
                 page: 1
             });
-        }, 500);
+        }, 1000);
     };
 
     const handlePaginationChange = page => changeFetchParams({...fetchParams, page: page});
@@ -81,7 +90,10 @@ const ProductBreakdown = () => {
         dispatch(dashboardActions.selectProduct(id))
     };
 
-    useEffect(getProducts, [fetchParams.page, fetchParams.searchText, fetchParams.onlyOptimization, selectedRangeDate]);
+    useEffect(() => {
+        source && source.cancel();
+        getProducts();
+    }, [fetchParams.page, fetchParams.searchText, fetchParams.onlyOptimization, selectedRangeDate]);
 
     return (
         <div className='product-breakdown'>

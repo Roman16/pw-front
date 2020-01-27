@@ -11,7 +11,7 @@ export const dashboardActions = {
     getMetricsStatistics,
     selectProduct,
     reSetDashboard,
-    setProductsMarginStatus
+    setProductsMarginStatus,
 };
 
 function getMetricsStatistics(parameters) {

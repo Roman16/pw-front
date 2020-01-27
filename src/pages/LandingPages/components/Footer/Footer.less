@@ -26,6 +26,7 @@
     .logo-wrap {
       .logo {
         margin-bottom: 45px;
+        max-width: 10em;
       }
 
       .a-logo {
@@ -127,11 +128,13 @@
 
       .soc-netw {
         margin-bottom: 40px;
+        display: flex;
+        justify-content: space-between;
 
         li {
           display: inline-block;
           vertical-align: middle;
-          margin-right: 25px;
+          margin-right: 5px;
           margin-bottom: 0;
 
           a {
@@ -162,6 +165,14 @@
         flex: auto;
         width: 50%;
       }
+
+    .adr {
+      text-align: center;
+
+      address {
+        text-align: center;
+      }
+    }
     }
   }
 
@@ -175,6 +186,10 @@
         flex: auto;
         width: 90%;
         align-items: center;
+
+        a {
+          text-align: center;
+        }
 
         .logo {
           margin-bottom: 20px;
@@ -192,6 +207,15 @@
           li {
             margin-bottom: 10px;
           }
+        }
+      }
+
+      .soc-netw {
+        display: flex;
+        justify-content: space-between;
+
+        li {
+          margin: 0;
         }
       }
     }

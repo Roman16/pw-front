@@ -11,6 +11,10 @@ import './TableSettings.less';
 import {productsActions} from "../../../../actions/products.actions";
 import {connect} from "react-redux";
 import InformationTooltip from "../../../../components/Tooltip/Tooltip";
+import axios from "axios";
+
+const CancelToken = axios.CancelToken;
+let source = null;
 
 const ACTIVE = 'RUNNING';
 const PRODUCT = 'product';
@@ -22,7 +26,7 @@ const MAX_BID_AUTO_CAMPING = 'max_bid_auto_campaign';
 const TOTAL_CHANGES = 'total_changes';
 const OPTIMIZATION_STATUS = 'optimization_status';
 
-const delay = 500; // ms
+const delay = 1000; // ms
 
 class ProductsList extends Component {
     state = {
@@ -31,101 +35,122 @@ class ProductsList extends Component {
         totalSize: 0,
         page: 1,
         size: 10,
-        onlyActive: this.props.onlyActiveOnAmazon || false
+        onlyActive: this.props.onlyActiveOnAmazon || false,
+        fetching: false
     };
 
     timerId = null;
+    timerNotificationId = null;
     timerIdSearch = null;
-    prevItem = 0;
+
+    prevItem = null;
+    prevItemIndex = null;
 
     fetchProducts = async (searchText = '') => {
-        const {page, size, onlyActive} = this.state;
+        const {page, size, onlyActive, fetching} = this.state;
+
+        if (fetching && source) {
+            source.cancel();
+        }
+
+        source = CancelToken.source();
+
+        this.setState({
+            fetching: true
+        });
+
         const {result, totalSize} = await productsServices.getProductsSettingsList({
             searchStr: searchText,
             page: page,
             size: size,
-            onlyActive: onlyActive
+            onlyActive: onlyActive,
+            cancelToken: source.token
         });
-        this.setState({products: result, totalSize});
+
+        this.setState({
+            products: result,
+            totalSize,
+            fetching: false
+        });
     };
 
     updateSettings = async (data) => {
-        await productsServices.updateProductSettings(data);
+        clearTimeout(this.timerNotificationId);
+
+        try {
+            await productsServices.updateProductSettings(data);
+            this.prevItemIndex = null;
+
+
+            this.timerNotificationId = setTimeout(() => {
+                notification.success({
+                    title: 'Changes saved'
+                });
+            }, 1000)
+
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     onChangeRow = (value, item, index) => {
         const {products} = this.state;
+        let dataSourceRow;
 
-        if (value === '' || value == null) {
-            const dataSourceRow = this.setRowData(null, item, index);
+        if (products[index][item] !== value) {
+            this.prevItemIndex = index;
 
-            if (item !== this.prevItem) {
-                this.prevItem = item;
-                this.updateSettings(dataSourceRow);
+            if (value === '' || value == null) {
+                dataSourceRow = this.setRowData(null, item, index);
+            } else if (item !== NET_MARGIN && value > 0.02) {
+                if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null) {
+                    notification.warning({
+                        title: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
+                    });
+                    return;
+                }
+                if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING]) && products[index][MIN_BID_MANUAL_CAMPING] != null) {
+                    notification.warning({
+                        title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                    });
+                    return;
+                }
+                if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING]) && products[index][MAX_BID_AUTO_CAMPING] != null) {
+                    notification.warning({
+                        title: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
+                    });
+                    return;
+                }
+                if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING]) && products[index][MIN_BID_AUTO_CAMPING] != null) {
+                    notification.warning({
+                        title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                    });
+                    return;
+                }
+                dataSourceRow = this.setRowData(value, item, index);
+            } else if (item === NET_MARGIN && value > 0) {
+                dataSourceRow = this.setRowData(value, NET_MARGIN, index);
             } else {
-                this.prevItem = item;
-                clearTimeout(this.timerId);
-                this.timerId = setTimeout(() => {
-                    this.updateSettings(dataSourceRow);
-                }, delay);
-            }
-        } else if (item !== NET_MARGIN && value > 0.02) {
-            if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null) {
                 notification.warning({
-                    title: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
+                    title: item === NET_MARGIN ? 'Product net margin should be greater than 0%' : 'Bids should be greater than or equal to 0.02$'
                 });
-                return;
-            }
-            if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING]) && products[index][MIN_BID_MANUAL_CAMPING] != null) {
-                notification.warning({
-                    title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
-                });
-                return;
-            }
-            if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING]) && products[index][MAX_BID_AUTO_CAMPING] != null) {
-                notification.warning({
-                    title: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
-                });
-                return;
-            }
-            if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING]) && products[index][MIN_BID_AUTO_CAMPING] != null) {
-                notification.warning({
-                    title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
-                });
-                return;
             }
 
-            const dataSourceRow = this.setRowData(value, item, index);
-
-            if (item !== this.prevItem) {
-                this.prevItem = item;
+            clearTimeout(this.timerId);
+            this.timerId = setTimeout(() => {
                 this.updateSettings(dataSourceRow);
-            } else {
-                this.prevItem = item;
-                clearTimeout(this.timerId);
-                this.timerId = setTimeout(() => {
-                    this.updateSettings(dataSourceRow);
-                }, delay);
-            }
-        } else if (item === NET_MARGIN && value > 0) {
-            const dataSourceRow = this.setRowData(value, item, index);
+            }, delay);
+        }
+    };
 
-            if (item !== this.prevItem) {
-                this.prevItem = item;
-                this.updateSettings(dataSourceRow);
-            } else {
-                this.prevItem = item;
-                clearTimeout(this.timerId);
-                this.timerId = setTimeout(() => {
-                    this.updateSettings(dataSourceRow);
-                }, delay);
-            }
-        } else {
-            notification.warning({
-                title: item === NET_MARGIN ?
-                    'Product net margin should be greater than 0%'
-                    :
-                    'Bids should be greater than or equal to 0.02$'
+    onBlurRow = () => {
+        const {products} = this.state;
+        if (this.prevItemIndex !== null) {
+            clearTimeout(this.timerId);
+
+            this.updateSettings({
+                ...products[this.prevItemIndex],
+                product_id: products[this.prevItemIndex].id,
             });
         }
     };
@@ -283,7 +308,8 @@ class ProductsList extends Component {
                 },
 
                 {
-                    title: <span className='net-margin'>Net Margin* <InformationTooltip description={'It is the percentage of profit generated from revenue after you have accounted for all of your expenses, costs, and open cash flow items. The formula for calculating net profit margin is total revenue minus COGS, divided by total revenue. We need this information, so the algorithm calculates your target ACoS based on your product profitability and business goal.'}/></span>,
+                    title: <span className='net-margin'>Net Margin* <InformationTooltip
+                        description={'It is the percentage of profit generated from revenue after you have accounted for all of your expenses, costs, and open cash flow items. The formula for calculating net profit margin is total revenue minus COGS, divided by total revenue. We need this information, so the algorithm calculates your target ACoS based on your product profitability and business goal.'}/></span>,
                     dataIndex: NET_MARGIN,
                     key: NET_MARGIN,
                     width: 150,
@@ -294,6 +320,9 @@ class ProductsList extends Component {
                             onChange={event =>
                                 this.onChangeRow(event, NET_MARGIN, indexRow)
                             }
+                            onBlur={() => {
+                                this.onBlurRow()
+                            }}
                         />
                     )
                 },
@@ -311,6 +340,9 @@ class ProductsList extends Component {
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)
                             }
+                            onBlur={() => {
+                                this.onBlurRow()
+                            }}
                         />
                     )
                 },
@@ -327,6 +359,9 @@ class ProductsList extends Component {
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)
                             }
+                            onBlur={() => {
+                                this.onBlurRow()
+                            }}
                         />
                     )
                 },
@@ -344,6 +379,9 @@ class ProductsList extends Component {
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)
                             }
+                            onBlur={() => {
+                                this.onBlurRow()
+                            }}
                         />
                     )
                 },
@@ -360,6 +398,9 @@ class ProductsList extends Component {
                             onChange={event =>
                                 this.onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)
                             }
+                            onBlur={() => {
+                                this.onBlurRow()
+                            }}
                         />
                     )
                 },

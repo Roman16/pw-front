@@ -17,6 +17,7 @@ export const productsActions = {
 };
 
 function fetchProducts(paginationParams) {
+
     return dispatch => {
         productsServices.getProducts(paginationParams)
             .then(res => {

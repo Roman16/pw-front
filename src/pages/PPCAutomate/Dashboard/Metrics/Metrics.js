@@ -5,6 +5,8 @@ import MetricItem from './MetricItem';
 import AddMetric from './AddMetric/AddMetric';
 
 import './Metrics.less';
+import {history} from "../../../../utils/history";
+import {dashboardServices} from "../../../../services/dashboard.services";
 
 const Metrics = () => {
     const dispatch = useDispatch();
@@ -16,7 +18,7 @@ const Metrics = () => {
         onlyOptimization: state.products.onlyOptimization,
     }));
 
-    const removeSelectedMetric  = (metric) => dispatch(dashboardActions.removeSelectedMetric(metric));
+    const removeSelectedMetric = (metric) => dispatch(dashboardActions.removeSelectedMetric(metric));
 
     const activateMetric = (metric) => dispatch(dashboardActions.activateMetric(metric));
 
@@ -31,7 +33,10 @@ const Metrics = () => {
         }));
     };
 
-    useEffect(() => {getMetricsStatistics();}, [selectedRangeDate, selectedProduct, onlyOptimization]);
+
+    useEffect(() => {
+        getMetricsStatistics();
+    }, [selectedRangeDate, selectedProduct, onlyOptimization]);
 
     return (
         <div className="metrics-block">

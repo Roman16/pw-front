@@ -20,7 +20,7 @@ function fetchMetricsStatistics({startDate, endDate, selectedProduct, onlyOptimi
     return api('get', `${dashboardUrls.allMetricsStatistic}${parameters.join('')}`)
 }
 
-function fetchLineChartData({startDate, endDate, firstMetric, secondMetric, productId, onlyOptimization}) {
+function fetchLineChartData({startDate, endDate, firstMetric, secondMetric, productId, onlyOptimization, cancelToken}) {
     const parameters = [
         startDate ? `?start_date=${startDate}` : '',
         endDate ? `&end_date=${endDate}` : '',
@@ -30,15 +30,17 @@ function fetchLineChartData({startDate, endDate, firstMetric, secondMetric, prod
         onlyOptimization ? '&only_under_optimization=1' : '&only_under_optimization=0'
     ];
 
-    return api('get', `${dashboardUrls.chartData}${parameters.join('')}`)
+    return api('get', `${dashboardUrls.chartData}${parameters.join('')}`, false, false, cancelToken)
 }
 
-function fetchProducts({page, size = 10, searchText, onlyOptimization, startDate, endDate}) {
+function fetchProducts({page, size = 10, searchText, onlyOptimization, startDate, endDate, cancelToken}) {
+
     const parameters = [
         startDate ? `&start_date=${startDate}` : '',
         endDate ? `&end_date=${endDate}` : '',
     ];
-    return api('get', `${dashboardUrls.products}?size=${size}&page=${page}&only_under_optimization=${onlyOptimization ? 1 : 0}&search_query=${searchText}${parameters.join('')}`)
+
+    return api('get', `${dashboardUrls.products}?size=${size}&page=${page}&only_under_optimization=${onlyOptimization ? 1 : 0}&search_query=${searchText}${parameters.join('')}`, false, false, cancelToken)
 }
 
 function fetchBarChartData({startDate, endDate, selectedProduct}) {

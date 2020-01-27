@@ -218,7 +218,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>}</span>),
             dataIndex: 'profit',
             key: 'profit',
-            width: '10em',
+            width: '12em',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
@@ -250,6 +250,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
                 totalSize={fetchParams.totalSize}
                 scroll={{x: true}}
                 rowClassName={(record) => selectedProduct && (selectedProduct === record.product.id ? 'activated-product' : 'default-product')}
+                rowKey={record => record.product.id}
                 onRow={(record, rowIndex) => {
                     return {
                         onClick: () => onSelect(record.product.id)

@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {Icon} from "antd";
 
-import logo from '../../../../assets/img/logo_black.svg';
+import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
 import aLogo from '../../../../assets/img/amazon_logo.png';
 
 import './Footer.less';
@@ -106,6 +106,13 @@ const Footer = () => (
                                    target="_blank"
                                    title="LinkedIn">
                                     <Icon type="linkedin"/>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCtUreqMG_C_P8Ymqa-LJ2Yg" className="you"
+                                   target="_blank"
+                                   title="Youtube">
+                                    <Icon type="youtube" />
                                 </a>
                             </li>
                         </ul>

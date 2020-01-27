@@ -5,7 +5,6 @@ import $ from 'jquery';
 import ionRangeSlider from 'ion-rangeslider';
 
 import './LandingAutomation.less';
-import 'pure-react-carousel/dist/react-carousel.es.css';
 
 import {history} from "../../../utils/history";
 import {debounce} from "throttle-debounce";
@@ -298,12 +297,11 @@ const commentsList = [
         comment: 'ProfitWhales\' software is notably robust, and their analysts have helped us both maximize profitability and truly understand the incremental value of our Amazon Ads. They are a valued partner and we really appreciate the flexibility of their software and service model.',
         avatar: avatars.JennieFisher
     },
-    // {
-    //     name: 'Daniel Jennings',
-    //     comment: 'I really enjoy Profit Whales\' user interface, the massive amounts of data and the differentoptimization strategies.I\'ve noticed that the software makes extremely dialed in bidding decisions that convert very well. I\'m really working on creating a successful PPC strategy to template the other 3 products!',
-    //     avatar: avatars.DanielJennings
-    // },
-
+    {
+        name: 'Daniel Jennings',
+        comment: 'I really enjoy Profit Whales\' user interface, the massive amounts of data and the differentoptimization strategies.I\'ve noticed that the software makes extremely dialed in bidding decisions that convert very well. I\'m really working on creating a successful PPC strategy to template the other 3 products!',
+        avatar: avatars.DanielJennings
+    },
 ];
 
 const LandingAutomation = () => {
@@ -393,7 +391,11 @@ const LandingAutomation = () => {
         // window.tap('click', {referral_code: ''});
         window.tap('detect');
 
+        //----------------------------------------------------------------------
+        document.querySelector('html').classList.add('not-retina');
+        //----------------------------------------------------------------------
 
+        //----------------------------------------------------------------------
         $(".js-range-slider").ionRangeSlider({
             min: 0,
             values: [
@@ -427,25 +429,31 @@ const LandingAutomation = () => {
                     barTooltip.html(`$ ${value} / month`);
 
                     if (value >= 50000) {
-                        result = ((2 / 100) * value) + 500;
-                        barLabel.html('$500 + 2% <small>ad spend</small>');
+                        result = ((1.5 / 100) * value) + 500;
+                        barLabel.html('$500 + 1,5% <small>ad spend</small>');
                     } else if (value >= 20000) {
-                        result = ((3 / 100) * value) + 300;
-                        barLabel.html('$300 + 3% <small>ad spend</small>');
+                        result = ((2 / 100) * value) + 250;
+                        barLabel.html('$250 + 2% <small>ad spend</small>');
                     } else {
-                        result = ((4 / 100) * value) + 100;
-                        barLabel.html('$100 + 4% <small>ad spend</small>');
+                        result = ((2.5 / 100) * value) + 100;
+                        barLabel.html('$100 + 2,5% <small>ad spend</small>');
                     }
 
                     sumElement.text('$ ' + result);
                 }
             }
         });
+        //----------------------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        const s = document.createElement('script');
+        const s = document.createElement('script'),
+            mailchimpScript = document.createElement('script');
+
         s.type = 'text/javascript';
+        mailchimpScript.type = 'text/javascript';
+
         s.async = true;
-        s.innerHTML = `  !function (f, b, e, v, n, t, s) {
+        s.innerHTML = `!function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function () {
             n.callMethod ?
@@ -466,12 +474,17 @@ const LandingAutomation = () => {
     fbq('init', '2628499780566506');
     fbq('track', 'PageView');`;
 
-        document.head.appendChild(s);
+        mailchimpScript.innerHTML = `window.dojoRequire(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us20.list-manage.com","uuid":"ded622a105926b256014e2410","lid":"74874aa336","uniqueMethods":true}) })`;
 
-        document.querySelector('html').classList.add('not-retina');
+        document.head.appendChild(s);
+        document.head.appendChild(mailchimpScript);
+
 
         return () => {
             document.head.removeChild(s);
+            document.head.removeChild(mailchimpScript);
+            window.location.reload();
+
             document.querySelector('html').classList.remove('not-retina');
         }
     }, []);
@@ -543,12 +556,12 @@ const LandingAutomation = () => {
     }, [currentStepSlide]);
 
     useEffect(() => {
-        if (selectedImage && (window.screen.orientation === "portrait-secondary" || window.screen.orientation === "portrait-primary")) {
+        if (selectedImage && (window.innerHeight > window.innerWidth)) {
             document.querySelector('body').style.overflow = 'hidden';
         } else {
             document.querySelector('body').style.overflow = 'auto';
         }
-    }, [selectedImage, window.screen.orientation]);
+    }, [selectedImage, window.innerHeight]);
 
 
     return (

@@ -288,20 +288,20 @@ class RegistrationPage extends Component {
 
                 </Row>
 
-                <StripeForm
-                    onSubmit={this.onSubmit}
-                    onChangeCountry={this.handleChangeCountry}
-                    onChangeState={this.handleChangeState}
-                    onChangeInput={this.onChange}
-                    stripeElementChange={this.stripeElementChange}
-                    onBlurCardElement={this.handleBlurCardElement}
+                {/*<StripeForm*/}
+                {/*    onSubmit={this.onSubmit}*/}
+                {/*    onChangeCountry={this.handleChangeCountry}*/}
+                {/*    onChangeState={this.handleChangeState}*/}
+                {/*    onChangeInput={this.onChange}*/}
+                {/*    stripeElementChange={this.stripeElementChange}*/}
+                {/*    onBlurCardElement={this.handleBlurCardElement}*/}
 
-                    cardNumber={card_number}
-                    expiry={expiry}
-                    cvc={cvc}
+                {/*    cardNumber={card_number}*/}
+                {/*    expiry={expiry}*/}
+                {/*    cvc={cvc}*/}
 
-                    autofocus={autofocus}
-                />
+                {/*    autofocus={autofocus}*/}
+                {/*/>*/}
 
                 <Row>
                     <Col xs={24} sm={24} md={24}>

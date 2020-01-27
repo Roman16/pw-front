@@ -11,6 +11,8 @@ const baseUrl =
 
 let lastError = null;
 
+const CancelToken = axios.CancelToken;
+let cancel;
 
 function handlerErrors(error) {
     if (lastError !== error) {
@@ -27,7 +29,7 @@ function handlerErrors(error) {
 }
 
 
-const api = (method, url, data, type) => {
+const api = (method, url, data, type, abortToken) => {
     loadProgressBar();
 
     const token = localStorage.getItem('token');
@@ -40,7 +42,9 @@ const api = (method, url, data, type) => {
             headers: {
                 'Content-Type': type || 'application/json',
                 authorization: token ? `Bearer ${token}` : true
-            }
+            },
+            cancelToken: abortToken
+
         })
             .then(result => {
                 if (result.status === 200) {
@@ -56,7 +60,6 @@ const api = (method, url, data, type) => {
                 }
 
                 if (error.response) {
-                    // console.log('error.response :', error.response);
                     if (typeof error.response.data === 'object') {
                         reject(error);
                         if (error.response.status === 401) {

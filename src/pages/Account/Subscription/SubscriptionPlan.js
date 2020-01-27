@@ -8,6 +8,7 @@ import {numberMask} from "../../../utils/numberMask";
 import {history} from "../../../utils/history";
 import {useSelector} from "react-redux";
 import couponIcon from '../../../assets/img/icons/coupon-icon.svg';
+import InformationTooltip from "../../../components/Tooltip/Tooltip";
 
 const SubscriptionPlan = ({
                               onOpenAccountWindow,
@@ -60,17 +61,21 @@ const SubscriptionPlan = ({
         } else {
             return (
                 <Fragment>
-                    <div className="charged-description">
-                        <p className="charged-text">You’ll be charged</p>
-                        <p className="charged-data">$ {numberMask(product.next_charge_value, 2) || 0}</p>
+                    <div className="indicators-data">
+                        $ {product.flat_amount || 0} + <span>{product.percent_amount || 0}%  <div>Monthly <br/> ad spend</div></span>
                     </div>
 
-                    <div className="indicators-text">
-                        based on{" "}
-                        <span className="indicators-data">
-                                          $ {product.flat_amount || 0} + {product.percent_amount || 0}%
-                                          <sub>monthly ad spend</sub>
-                                        </span>
+                    <div className="spend-text">
+                        <div className="spend-data">$ {numberMask(product.quantity, 2) || 0}</div>
+                        <div className='description'>Your monthly <br/> Ad Spend <InformationTooltip
+                            description={'This is the amount of your spend on Amazon PPC for the past 30 days. We update it daily.'}/>
+                        </div>
+                    </div>
+
+                    <div className="charged-description">
+                        <div className="charged-data">$ {numberMask(product.next_charge_value, 2) || 0}</div>
+                        <div className='description'>You'll be charged <br/> next billing cycle <InformationTooltip
+                            description={'This amount is calculated based on your last 30 days ad spend. It\'s updating every hour, so the exact amount of the invoice will be visible right before the end of the current billing cycle.'}/></div>
                     </div>
                 </Fragment>
             )
@@ -154,7 +159,7 @@ const SubscriptionPlan = ({
 
                 <div className="plan">
                     <div className="charged">
-                        <h3 className="charged-title">{product.planName}</h3>
+                        <h3 className="subscription-plan">Subscription <br/> Plan</h3>
 
                         {renderPlanContent()}
                     </div>
@@ -180,7 +185,7 @@ const SubscriptionPlan = ({
                 <div className="cancel">
                     {!fetching && (product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&
                     <div className='coupon'>
-                        <h4>Do you have coupon code?</h4>
+                        <h4>Do you have a coupon?</h4>
                         <div className="row">
                             <div className="input-block">
                                 <img src={couponIcon} alt=""/>
@@ -199,12 +204,12 @@ const SubscriptionPlan = ({
                         </div>
 
                         {product.applied_coupon && product.applied_coupon.name && <div className='applied-coupon'>
-                            <div className="row">
+                            <div className="col">
                                 <div className="name">
-                                    Coupon Applied:
+                                    Coupon
                                 </div>
                                 <div className="discount">
-                                    {product.applied_coupon.amount_off ? `$ ${product.applied_coupon.amount_off}` : `${product.applied_coupon.percent_off} %`} off
+                                    {product.applied_coupon.amount_off ? `$ ${product.applied_coupon.amount_off}` : `${product.applied_coupon.percent_off} %`}
                                 </div>
                             </div>
                         </div>}
@@ -212,13 +217,6 @@ const SubscriptionPlan = ({
                     }
 
                     {!fetching && renderButtonsBlock()}
-
-                    {!fetching && (product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&
-                    <div className="plan-text">
-                        <div> Your Ad Spend:</div>
-                        {product.quantity &&
-                        <div className="plan-data">$ {numberMask(product.quantity, 2) || 0}</div>}
-                    </div>}
                 </div>
             </div>
         </div>

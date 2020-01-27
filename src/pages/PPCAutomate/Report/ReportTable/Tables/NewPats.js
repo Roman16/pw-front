@@ -279,7 +279,7 @@ const NewPats = ({
                 ),
                 dataIndex: 'd_customerSearchTermACoS',
                 key: 'd_customerSearchTermACoS',
-                render: text => <span>{text && `${round(text, 2)}%`}</span>,
+                render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
                 width: '10.5em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
@@ -317,7 +317,7 @@ const NewPats = ({
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
-                render: text => <span>{text && `${round(text, 2)}%`}</span>,
+                render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
                 width: '11.5em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
