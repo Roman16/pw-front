@@ -5,7 +5,6 @@ import {colorList} from "./colorList";
 import shortid from "shortid";
 import plusIconGray from '../../../assets/img/icons/plus-gray.svg';
 import soon from "../../../assets/img/icons/soon.svg";
-import {metricsList} from "./metricsList";
 import {daypartingServices} from "../../../services/dayparting.services";
 
 const defaultData = [
@@ -40,18 +39,16 @@ const defaultData = [
 ];
 
 const TooltipDescription = ({value, day, metric}) => {
-    const selectedMetric = metricsList.find(item => item.key === metric);
 
     return (
         <Fragment>
             <h3>{day}</h3>
-            <span className='selected-metric'>{selectedMetric.title}</span>
+            {/*<span className='selected-metric'>Clicks</span>*/}
 
             <div className="value">
                 <div
                     style={{background: colorList.find(item => value > item.min && value <= item.max).color || '#464898'}}/>
-
-                {selectedMetric.type === 'currency' ? `${value}$` : (selectedMetric.type === 'percent' ? `${value} %` : value)}
+                {value}
             </div>
         </Fragment>
     )

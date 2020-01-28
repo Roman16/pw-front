@@ -1,43 +1,33 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {
-    BarChart, Cell, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Text, LineChart, Line, CartesianGrid
+    XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid
 } from 'recharts';
-import {metricsList} from "../metricsList";
-import moment from "moment";
 
-const CustomBar = (props) => {
-    const {
-        fill, x, y, width, height,
-    } = props;
-
-    if (height && height !== 0) {
-        return (
-            <path
-                d={`M${x + 20},${y + 5} q0,-5 5,-5 h${width - 10} q5,0 5,5 v${height - 10} q0,5 -5,5 h-${width - 10} q-5,0 -5,-5 Z`}
-                fill={fill}
-            />
-        );
-    } else {
-        return 0
-    }
-};
-
-const ChartTooltip = ({payload, metric}) => {
+const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
     if (payload.length > 0) {
-        const selectedMetric = metricsList.find(item => item.key === metric);
 
         return (
-            <div className='chart-tooltip'>
+            <div className='chart-tooltip twice-metrics'>
                 <div className='ant-popover-inner-content'>
                     <h3>{payload[0].payload.name}</h3>
-                    <span className='selected-metric'>{selectedMetric.title}</span>
-                    <div className="value">
-                        <div style={{background: '#6D6DF6'}}/>
 
-                        {selectedMetric.type === 'currency' ? `${payload[0].value}$` : (selectedMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                    <div className="row">
+                        <div className='example-fill' style={{background: '#82ca9d'}}/>
+                        <span className='selected-metric'>{firstMetric.title}</span>
 
+                        <div className="value">
+                            {firstMetric.type === 'currency' ? `${payload[0].value}$` : (firstMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                        </div>
                     </div>
 
+                    {secondMetric.key !== 'nothing' && <div className="row">
+                        <div className='example-fill' style={{background: '#8884d8'}}/>
+                        <span className='selected-metric'>{secondMetric.title}</span>
+
+                        <div className="value">
+                            {secondMetric.type === 'currency' ? `${payload[1].value}$` : (secondMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                        </div>
+                    </div>}
                 </div>
             </div>
         )
@@ -70,23 +60,7 @@ const data = [
     },
 ];
 
-
-const CustomizedAxisTick = (props) => {
-    if (props.index === 1) {
-        return <Text {...props} x={17} textLength={30} text-anchor="middle"
-                     alignment-baseline="central">{props.payload.value[0]}</Text>;
-    } else if (props.index === 3) {
-        return <Text {...props} x={18} textLength={30} text-anchor="middle"
-                     alignment-baseline="central">{props.payload.value[0]}</Text>;
-    } else {
-        return <Text {...props} x={15} textLength={30} text-anchor="middle"
-                     alignment-baseline="central">{props.payload.value[0]}</Text>;
-    }
-};
-
-const DayChart = ({filteredMetric}) => {
-    const [focusBar, setFocusBar] = useState(null);
-
+const DayChart = ({firstMetric, secondMetric}) => {
     return (
         <div className='chart-block day-chart'>
             <ResponsiveContainer height='100%' width='100%'>
@@ -120,9 +94,11 @@ const DayChart = ({filteredMetric}) => {
                     />
 
                     <Tooltip
+                        isAnimationActive={false}
                         content={
                             <ChartTooltip
-                                metric={filteredMetric}
+                                firstMetric={firstMetric}
+                                secondMetric={secondMetric}
                             />
                         }
                     />
@@ -136,14 +112,14 @@ const DayChart = ({filteredMetric}) => {
                         activeDot={{r: 4}}
                     />
 
-                    <Line
+                    {secondMetric.key !== 'nothing' && <Line
                         dot={false}
                         isAnimationActive={false}
                         yAxisId="right"
                         dataKey="test"
                         stroke="#8884d8"
                         activeDot={{r: 4}}
-                    />
+                    />}
                 </LineChart>
             </ResponsiveContainer>
         </div>

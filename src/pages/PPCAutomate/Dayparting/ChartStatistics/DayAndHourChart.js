@@ -2,7 +2,7 @@ import React, {Fragment} from "react";
 import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 import {colorList} from "../colorList";
 import shortid from "shortid";
-import {metricsList} from "../metricsList";
+import {metricsList} from "./metricsList";
 import moment from "moment";
 
 const data = [
@@ -37,24 +37,21 @@ const data = [
 ];
 
 const TooltipDescription = ({value, day, metric}) => {
-    const selectedMetric = metricsList.find(item => item.key === metric);
-
     return (
         <Fragment>
             <h3>{day}</h3>
-            <span className='selected-metric'>{selectedMetric.title}</span>
+            <span className='selected-metric'>{metric.title}</span>
 
             <div className="value">
-                <div
-                    style={{background: colorList.find(item => value > item.min && value <= item.max).color || '#464898'}}/>
+                <div style={{background: colorList.find(item => value > item.min && value <= item.max).color || '#464898'}}/>
 
-                {selectedMetric.type === 'currency' ? `${value}$` : (selectedMetric.type === 'percent' ? `${value} %` : value)}
+                {metric.type === 'currency' ? `${value}$` : (metric.type === 'percent' ? `${value} %` : value)}
             </div>
         </Fragment>
     )
 };
 
-const DayAndHourChart = ({filteredMetric}) => {
+const DayAndHourChart = ({firstMetric}) => {
 
     return (
         <div className='chart-block day-and-hour-chart'>
@@ -78,7 +75,7 @@ const DayAndHourChart = ({filteredMetric}) => {
                                         <TooltipDescription
                                             value={time}
                                             day={day.day}
-                                            metric={filteredMetric}
+                                            metric={firstMetric}
                                         />
                                     }
                                 >

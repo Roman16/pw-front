@@ -1,5 +1,10 @@
 export const metricsList =  [
     {
+        title: 'Nothing',
+        key: 'nothing',
+        type: ''
+    },
+    {
         title: 'Impressions',
         key: 'impressions',
         type: 'number'

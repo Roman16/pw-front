@@ -1,43 +1,34 @@
-import React, {Fragment, useState} from "react";
+import React from "react";
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from "recharts";
-import {colorList} from "../colorList";
-import {metricsList} from "../metricsList";
+import {metricsList} from "./metricsList";
 
-const CustomBar = (props) => {
-    const {
-        fill, x, y, width, height,
-    } = props;
 
-    if (height && height !== 0) {
-        return (
-            <path
-                d={`M${x},${y + 5} q0,-5 5,-5 h${width - 10} q5,0 5,5 v${height - 5} h-${width} z`}
-                fill={fill}
-            />
-        );
-    } else {
-        return 0
-    }
-};
-
-const ChartTooltip = ({payload, metric}) => {
+const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
     if (payload.length > 0) {
-        const selectedMetric = metricsList.find(item => item.key === metric);
-
         return (
-            <div className='chart-tooltip'>
+            <div className='chart-tooltip twice-metrics'>
                 <div className='ant-popover-inner-content'>
                     <h3>{payload[0].payload.name}</h3>
-                    <span className='selected-metric'>{selectedMetric.title}</span>
-                    <div className="value">
-                        <div style={{background: '#6D6DF6'}}/>
 
-                        {selectedMetric.type === 'currency' ? `${payload[0].value}$` : (selectedMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                    <div className="row">
+                        <div className='example-fill' style={{background: '#82ca9d'}}/>
+                        <span className='selected-metric'>{firstMetric.title}</span>
 
+                        <div className="value">
+                            {firstMetric.type === 'currency' ? `${payload[0].value}$` : (firstMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                        </div>
                     </div>
 
+                    {secondMetric.key !== 'nothing' && <div className="row">
+                        <div className='example-fill' style={{background: '#8884d8'}}/>
+                        <span className='selected-metric'>{secondMetric.title}</span>
+
+                        <div className="value">
+                            {secondMetric.type === 'currency' ? `${payload[1].value}$` : (secondMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                        </div>
+                    </div>}
                 </div>
             </div>
         )
@@ -121,9 +112,7 @@ const data = [
     },
 ];
 
-const HourChart = ({filteredMetric}) => {
-    const [focusBar, setFocusBar] = useState(null);
-
+const HourChart = ({firstMetric, secondMetric}) => {
     return (
         <div className='chart-block hour-chart'>
             <ResponsiveContainer height='100%' width='100%'>
@@ -158,9 +147,11 @@ const HourChart = ({filteredMetric}) => {
                     />
 
                     <Tooltip
+                        isAnimationActive={false}
                         content={
                             <ChartTooltip
-                                metric={filteredMetric}
+                                firstMetric={firstMetric}
+                                secondMetric={secondMetric}
                             />
                         }
                     />
@@ -174,14 +165,14 @@ const HourChart = ({filteredMetric}) => {
                         activeDot={{r: 4}}
                     />
 
-                    <Line
+                    {secondMetric.key !== 'nothing' && <Line
                         dot={false}
                         isAnimationActive={false}
                         yAxisId="right"
                         dataKey="test"
                         stroke="#8884d8"
                         activeDot={{r: 4}}
-                    />
+                    />}
                 </LineChart>
             </ResponsiveContainer>
         </div>
