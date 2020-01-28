@@ -312,6 +312,7 @@
       @media (max-width: 700px) {
         & {
           flex-direction: column;
+
           .image-block {
             position: relative;
             width: 90%;
@@ -1865,5 +1866,30 @@
       left: 20px;
     }
   }
+}
+
+.video-modal-window-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-modal-window {
+  width: max-content !important;
+  padding: 0;
+  top: 0;
+  bottom: 0;
+
+  .ant-modal-content {
+    width: max-content;
+    background: none;
+
+    .ant-modal-body {
+      padding: 0;
+      width: max-content;
+      height: max-content;
+    }
+  }
+
 }
 
