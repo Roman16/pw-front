@@ -612,7 +612,9 @@ const LandingAutomation = () => {
 
                 <div className="video-btn">
                     Why Profit Whales?
-                    <div className="pulse" onClick={() => window.open('https://youtu.be/m608kntHUzU', 'blank')}>
+                    <div className="pulse" onClick={() => {
+                        window.open('https://youtu.be/m608kntHUzU', 'myWindow', 'left=200,right=200,top=200,height=500,width=820,scrollbars=no');
+                    }}>
                         <div/>
                         <FontAwesomeIcon icon={faPlay}/>
                     </div>
