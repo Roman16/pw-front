@@ -4,6 +4,7 @@ import {Icon} from "antd";
 import {Link} from "react-router-dom";
 
 import './Header.less';
+import {history} from "../../../../utils/history";
 
 const authorized = localStorage.getItem('token');
 
@@ -75,11 +76,13 @@ const Header = () => {
                 <div className='nav-buttons'>
                     {!authorized ?
                         <Fragment>
-                            <Link to='/login' className='login-btn'>LOG IN</Link>
-                            <Link to='/registration' className='register-btn'>TRY IT FOR FREE</Link>
+                            <div onClick={() => history.push('/login')} className='login-btn'>LOG IN</div>
+                            <div onClick={() => history.push('/registration')} className='register-btn'>TRY IT FOR
+                                FREE
+                            </div>
                         </Fragment>
                         :
-                        <Link to='/ppc/optimization' className='register-btn'>SIGN IN</Link>
+                        <div onClick={() => history.push('/ppc/optimization')} className='register-btn'>SIGN IN</div>
                     }
 
                 </div>
