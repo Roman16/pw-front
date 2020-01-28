@@ -16,7 +16,7 @@ const ChartStatistics = ({onSelectMetric, filteredMetric}) => {
     useEffect(() => {
         daypartingServices.getAllStatistic(filteredMetric)
             .then(res => {
-                console.log(res);
+                // console.log(res);
             })
     }, [filteredMetric]);
 
@@ -47,17 +47,31 @@ const ChartStatistics = ({onSelectMetric, filteredMetric}) => {
                 </div>
 
                 <div className='sorter'>
-                    Sort By:
+                    <div className="select">
+                        <CustomSelect
+                            value={filteredMetric}
+                            dropdownClassName={'full-width-menu'}
+                            onChange={(e) => onSelectMetric(e)}
+                        >
+                            {metricsList.map(item => (
+                                <Option key={item.key} value={item.key}>{item.title}</Option>
+                            ))}
+                        </CustomSelect>
+                    </div>
 
-                    <CustomSelect
-                        value={filteredMetric}
-                        dropdownClassName={'full-width-menu'}
-                        onChange={(e) => onSelectMetric(e)}
-                    >
-                        {metricsList.map(item => (
-                            <Option key={item.key} value={item.key}>{item.title}</Option>
-                        ))}
-                    </CustomSelect>
+                    <span>Compare with</span>
+
+                    <div className="select">
+                        <CustomSelect
+                            value={filteredMetric}
+                            dropdownClassName={'full-width-menu'}
+                            onChange={(e) => onSelectMetric(e)}
+                        >
+                            {metricsList.map(item => (
+                                <Option key={item.key} value={item.key}>{item.title}</Option>
+                            ))}
+                        </CustomSelect>
+                    </div>
                 </div>
             </div>
 

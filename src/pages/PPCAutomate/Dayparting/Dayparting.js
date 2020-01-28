@@ -64,15 +64,15 @@ class Dayparting extends Component {
 
                 />
 
-                <div className="row">
-                    <KeysKeywords
+                {/*<div className="row">*/}
+                {/*<KeysKeywords*/}
 
-                    />
+                {/*/>*/}
 
-                    <PlacementsStatistics
+                <PlacementsStatistics
 
-                    />
-                </div>
+                />
+                {/*</div>*/}
             </div>
         )
     }

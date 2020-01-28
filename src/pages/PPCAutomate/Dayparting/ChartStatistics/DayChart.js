@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {
-    BarChart, Cell, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Text
+    BarChart, Cell, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Text, LineChart, Line, CartesianGrid
 } from 'recharts';
 import {metricsList} from "../metricsList";
+import moment from "moment";
 
 const CustomBar = (props) => {
     const {
@@ -47,25 +48,25 @@ const ChartTooltip = ({payload, metric}) => {
 
 const data = [
     {
-        name: 'Sunday', clicks: 140,
+        name: 'Sunday', clicks: 140, test: 890
     },
     {
-        name: 'Monday', clicks: 150,
+        name: 'Monday', clicks: 150, test: 490
     },
     {
-        name: 'Tuesday', clicks: 289,
+        name: 'Tuesday', clicks: 289, test: 990
     },
     {
-        name: 'Wednesday', clicks: 1228,
+        name: 'Wednesday', clicks: 1228, test: 890
     },
     {
-        name: 'Thursday', clicks: 1280,
+        name: 'Thursday', clicks: 1280, test: 390
     },
     {
-        name: 'Friday', clicks: 110,
+        name: 'Friday', clicks: 110, test: 790
     },
     {
-        name: 'Saturday', clicks: 170,
+        name: 'Saturday', clicks: 170, test: 890
     },
 ];
 
@@ -88,39 +89,37 @@ const DayChart = ({filteredMetric}) => {
 
     return (
         <div className='chart-block day-chart'>
-            <ResponsiveContainer height='100%' width='99%'
-                                 className='responsive-bar-container'>
-                <BarChart
-                    layout="vertical"
-                    height={230}
+            <ResponsiveContainer height='100%' width='100%'>
+                <LineChart
                     data={data}
-                    isAnimationActive={false}
-                    onMouseMove={state => {
-                        if (state.isTooltipActive) {
-                            setFocusBar(state.activeTooltipIndex);
-                        } else {
-                            setFocusBar(null);
-                        }
-                    }}
-                    onMouseLeave={() => setFocusBar(null)}
                     margin={{
-                        top: 20,
-                        left: -50
+                        top: 25, right: -15, left: -15, bottom: 0,
                     }}
                 >
-                    <XAxis type="number" hide={true}/>
+                    <CartesianGrid
+                        vertical={false}
+                        stroke="#DBDCE2"
+                    />
+
+                    <XAxis
+                        axisLine={false}
+                        dataKey="name"
+                        tickFormatter={(date) => date[0]}
+                    />
 
                     <YAxis
-                        dataKey="name"
-                        type="category"
-                        width={80}
-                        tick={<CustomizedAxisTick/>}
-                        interval={0}
+                        axisLine={false}
+                        yAxisId="left"
+                        stroke="#82ca9d"
+                    />
+                    <YAxis
+                        axisLine={false}
+                        stroke="#8884d8"
+                        yAxisId="right"
+                        orientation="right"
                     />
 
                     <Tooltip
-                        cursor={false}
-                        isAnimationActive={false}
                         content={
                             <ChartTooltip
                                 metric={filteredMetric}
@@ -128,20 +127,24 @@ const DayChart = ({filteredMetric}) => {
                         }
                     />
 
-                    <Bar
-                        dataKey="clicks"
-                        barSize={window.devicePixelRatio === 2 ? 15 : 20}
-                        fill=""
-                        shape={<CustomBar/>}
+                    <Line
+                        dot={false}
                         isAnimationActive={false}
-                    >
-                        {data.map((entry, index) => (
-                            <Cell key={`cell-${index}`}
-                                  fill={focusBar === index ? '#6D6DF6' : 'rgba(109, 109, 246, 0.5)'}/>
-                        ))}
-                    </Bar>
+                        yAxisId="left"
+                        dataKey="clicks"
+                        stroke="#82ca9d"
+                        activeDot={{r: 4}}
+                    />
 
-                </BarChart>
+                    <Line
+                        dot={false}
+                        isAnimationActive={false}
+                        yAxisId="right"
+                        dataKey="test"
+                        stroke="#8884d8"
+                        activeDot={{r: 4}}
+                    />
+                </LineChart>
             </ResponsiveContainer>
         </div>
     )

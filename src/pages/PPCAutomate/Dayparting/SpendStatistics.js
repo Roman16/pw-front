@@ -64,7 +64,7 @@ const SpendStatistics = ({filteredMetric}) => {
         daypartingServices.getSpendOutStatistic(filteredMetric)
 
             .then(res => {
-                console.log(res);
+                // console.log(res);
             })
     }, [filteredMetric]);
 
@@ -111,7 +111,7 @@ const SpendStatistics = ({filteredMetric}) => {
                                     }
                                 >
                                     <div className='statistic-information'
-                                         style={{background: colorList.find(item => time > item.min && time <= item.max).color || '#464898'}}/>
+                                         style={{background: (timeIndex > 18 && dayIndex > 4) ? '#EC7F5C' : colorList.find(item => time > item.min && time <= item.max).color || '#464898'}}/>
                                 </InformationTooltip>
                             </div>
                         ))}

@@ -3,6 +3,7 @@ import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 import {colorList} from "../colorList";
 import shortid from "shortid";
 import {metricsList} from "../metricsList";
+import moment from "moment";
 
 const data = [
     {
@@ -57,55 +58,37 @@ const DayAndHourChart = ({filteredMetric}) => {
 
     return (
         <div className='chart-block day-and-hour-chart'>
-            <div className='row-chart'>
-                <div className='yaxis'>
-                    {data.map((day, dayIndex) => (
-                        <div className='day-name' key={day.day}>{day.day[0]}</div>
-                    ))}
-                </div>
+            <div className="statistics">
+                {data.map((day, dayIndex) => (
+                    <div className="row" key={shortid.generate()}>
+                        <div className='day-name'>{day.day[0]}</div>
+                        {day.value.map((time, timeIndex) => (
+                            <div className='statistic-item' key={shortid.generate()}>
+                                {dayIndex === 0 && <div className="time-name">
+                                    {moment(timeIndex + 1, 'HH').format('hh')}
+                                    <br/>
+                                    {moment(timeIndex + 1, 'HH').format('A')}
+                                </div>}
 
-                <div className='chart-squares'>
-                    {data.map((day, dayIndex) => (
-                        <div className="row" key={shortid.generate()}>
-                            {day.value.map((time, timeIndex) => (
-                                <div className='statistic-item' key={shortid.generate()}>
-                                    <InformationTooltip
-                                        getPopupContainer={trigger => trigger.parentNode}
-                                        type={'custom'}
-                                        className={'chart-tooltip'}
-                                        description={<TooltipDescription
+                                <InformationTooltip
+                                    getPopupContainer={trigger => trigger.parentNode}
+                                    type={'custom'}
+                                    className={'chart-tooltip'}
+                                    description={
+                                        <TooltipDescription
                                             value={time}
                                             day={day.day}
                                             metric={filteredMetric}
-                                        />}
-                                    >
-                                        <div className='statistic-information'
-                                             style={{background: colorList.find(item => time > item.min && time <= item.max).color || '#464898'}}/>
-                                    </InformationTooltip>
-                                </div>
-                            ))}
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-
-            <div className="xaxis">
-                <div>
-                    12 AM
-                </div>
-                <div>
-                    6 AM
-                </div>
-                <div>
-                    12 PM
-                </div>
-                <div>
-                    6 PM
-                </div>
-                <div>
-                    12AM
-                </div>
+                                        />
+                                    }
+                                >
+                                    <div className='statistic-information'
+                                         style={{background: colorList.find(item => time > item.min && time <= item.max).color || '#464898'}}/>
+                                </InformationTooltip>
+                            </div>
+                        ))}
+                    </div>
+                ))}
             </div>
         </div>
     )
