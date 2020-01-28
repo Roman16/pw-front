@@ -3,7 +3,7 @@
 }
 
 .dayparting-page {
-  width: fit-content;
+  width: 100%;
   overflow: auto;
 
   .last-synced {
@@ -62,13 +62,10 @@
 
   .row {
     display: flex;
+    justify-content: space-between;
 
     & > section {
-      flex: 1;
-
-      &:first-child {
-        margin-right: 1.4285714285714286rem;
-      }
+      width: calc(50% - 0.7142857142857143rem);
     }
   }
 
@@ -91,9 +88,15 @@
         margin: 0;
       }
     }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+      padding: 10px 5px 1.0714285714285714rem;
+    }
   }
 
   .chart-tooltip {
+    justify-content: center;
+
     .ant-popover-inner-content {
       background: #fff;
       width: 140px;
@@ -133,6 +136,37 @@
           height: 12px;
           border-radius: 4px;
           margin: 0 12px 0 0;
+        }
+      }
+    }
+
+    &.twice-metrics {
+      .ant-popover-inner-content {
+        width: max-content;
+
+        .row {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start !important;
+        }
+
+        .example-fill {
+          width: 12px;
+          height: 12px;
+          border-radius: 4px;
+          margin: 0 10px 0 0;
+        }
+
+        .selected-metric {
+          display: flex;
+          margin: 0 0 0 0;
+          width: 120px;
+        }
+
+        .value {
+          justify-content: flex-start;
+          margin: 0 auto 0 0;
+          font-size: 1.1428571428571428rem;
         }
       }
     }
@@ -189,8 +223,7 @@
   }
 
   .spend-statistics {
-    flex: 1;
-    grid-area: spendStatistics;
+    //grid-area: spendStatistics;
 
     .section-header {
       .out-of-budget {
@@ -198,6 +231,7 @@
         align-items: center;
         font-size: 0.8571428571428571rem;
         color: #343C5A;
+        margin: 0 30px 0 auto;
 
         div {
           width: 12px;
@@ -285,7 +319,6 @@
   }
 
   .chart-statistics {
-    flex: 1;
     display: flex;
     flex-direction: column;
 
@@ -315,24 +348,55 @@
       }
 
       .sorter {
+        width: 55%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
         letter-spacing: 0.2px;
         color: #343C5A;
         position: relative;
 
+        .select {
+          flex: 1;
+          max-width: 130px;
+        }
+
+        .select.first {
+          .ant-select {
+            border-bottom: 2px solid #82ca9d;
+          }
+        }
+
+        .select.second {
+          .ant-select {
+            border-bottom: 2px solid #8884d8;
+          }
+        }
+
+        & > div {
+          position: relative;
+        }
+
+        & > span {
+          margin: 0 1.4285714285714286rem;
+        }
+
         .ant-select {
-          margin: 0 5px 0 25px;
-          width: 70px;
-          padding: 0 0 5px 0;
-          border-bottom: 1px solid #656A84;
+          width: 100% !important;
+          padding: 0 0 0.35714285714285715rem 0;
 
           .ant-select-selection {
             border: 0;
             border-radius: 0;
           }
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+            width: 70px;
+          }
         }
 
         .full-width-menu {
-          width: max-content !important;
+          width: 100% !important;
           right: 0 !important;
           left: auto !important;
         }
@@ -351,7 +415,8 @@
       }
     }
 
-    .day-chart {
+    .day-chart,
+    .hour-chart {
       width: 100%;
 
       .recharts-layer.recharts-cartesian-axis-tick {
@@ -366,102 +431,59 @@
     }
 
     .day-and-hour-chart {
-      padding: 20px 0 0 0;
       flex: 1;
       display: flex;
       flex-direction: column;
 
-      .row-chart {
-        width: 100%;
-        display: flex;
-        flex: 1;
+      .statistics {
+        margin: 15px 0 0 0;
 
-        .chart-squares {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
+        .row {
+          margin: 0 0 0.35714285714285715rem 0;
+          align-items: flex-end;
+          flex-wrap: nowrap;
 
-          .row {
+          .day-name {
+            width: 20px;
+            background: inherit;
+            text-align: center;
+            padding: 0 0 1px 0;
+            margin: 0 2px 0 0;
+          }
+
+          .time-name {
+            margin: 0 0 5px 0;
+          }
+
+          .statistic-item {
             flex: 1;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            flex-wrap: nowrap;
+            margin: 0 4px 0 0;
+
+            font-size: 0.8571428571428571rem;
+            text-align: center;
+            letter-spacing: -0.4375px;
+            color: #656A84;
+
+            text-transform: lowercase;
+
+            .custom-tooltip {
+              width: 100%;
+              margin: 0;
+            }
+
+            .statistic-information {
+              width: 1.4285714285714286rem;
+              height: 1.4285714285714286rem;
+              background: #B6B6FB;
+              border-radius: 4px;
+            }
 
             &:last-child {
-              margin: 0 0 15px 0;
+              margin: 0;
             }
-
-            .statistic-item {
-              flex: 1 1;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              margin: 0 5px 0 0;
-              font-size: 0.85714286rem;
-              text-align: center;
-              letter-spacing: -0.4375px;
-              color: #656A84;
-              text-transform: lowercase;
-
-              .custom-tooltip {
-                width: 100%;
-                margin: 0;
-
-                .statistic-information {
-                  width: 1.1428571428571428rem;
-                  height: 1.1428571428571428rem;
-                  background: #B6B6FB;
-                  border-radius: 2px;
-                }
-              }
-
-              &:last-child {
-                margin: 0;
-              }
-            }
-          }
-        }
-      }
-
-      .yaxis {
-        display: flex;
-        flex-direction: column;
-        width: 2.142857142857143rem;
-        border-right: 1px solid #C9CBD4;
-        text-align: center;
-        margin: 0 0.7142857142857143rem 0 0;
-        padding: 0 1.0714285714285714rem 15px 0;
-
-        .day-name {
-          height: 1.1428571428571428rem;
-          flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0 0 3px 0;
-        }
-      }
-
-      .xaxis {
-        border-top: 1px solid #C9CBD4;
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0 0 0;
-        margin: 0 0 0 2.142857142857143rem;
-
-        div {
-          position: relative;
-
-          &::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-            height: 8px;
-            width: 1px;
-            background: #C9CBD4;
           }
         }
       }
@@ -579,6 +601,8 @@
           margin: 0 5px 0 0;
 
           .time-name {
+            text-align: center;
+
             button {
               margin: 5px 0 10px 0;
 
@@ -689,10 +713,14 @@
   }
 
   .placements-statistics {
+    width: 100%;
     display: flex;
     flex-direction: column;
+    margin: 0 !important;
+
 
     .section-header {
+      width: 70%;
       align-items: center;
       margin: 0 0 10px 0;
 
@@ -703,6 +731,7 @@
 
         & > div {
           display: flex;
+          margin: 0 0 0 10px;
 
           .col {
             display: flex;
@@ -729,8 +758,6 @@
             display: flex;
             align-items: center;
             font-size: 1rem;
-
-
           }
 
           .changes-value {
@@ -747,7 +774,7 @@
     }
 
     .chart {
-      width: 100%;
+      width: 50%;
       padding: 0;
 
       .recharts-responsive-container.responsive-bar-container {
@@ -773,6 +800,36 @@
           display: none;
         }
       }
+    }
+
+    .metrics-statistics {
+      width: 30%;
+      display: flex;
+
+      .col {
+        flex: 1;
+
+        & > div {
+          padding: 0 20px;
+        }
+
+        .title {
+          display: flex;
+          border-right: 1px solid rgba(138, 138, 138, 0.48);
+        }
+
+        .value {
+          padding: 10px 20px;
+        }
+
+        &:last-child {
+          .title {
+            border: 0;
+          }
+        }
+      }
+
+
     }
   }
 }

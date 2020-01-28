@@ -24,6 +24,7 @@ import jeffChart from '../../../assets/img/landing-automation/jeffChart.svg'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {Modal} from "antd";
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
 const pixelRatio = window.devicePixelRatio;
@@ -308,7 +309,8 @@ const LandingAutomation = () => {
     const [currentStepSlide, setStepSlide] = useState(0),
         [currentCaseSlide, setCaseSlide] = useState(0),
         [currentCommentSlide, setCommentSlide] = useState(0),
-        [selectedImage, selectImage] = useState(null);
+        [selectedImage, selectImage] = useState(null),
+        [visibleVideoWindow, switchWindow] = useState(false);
 
     function nextSlide(type) {
         clearTimeout(swipeTimeoutId);
@@ -612,7 +614,7 @@ const LandingAutomation = () => {
 
                 <div className="video-btn">
                     Why Profit Whales?
-                    <div className="pulse" onClick={() => window.open('https://youtu.be/m608kntHUzU', 'blank')}>
+                    <div className="pulse" onClick={() => switchWindow(true)}>
                         <div/>
                         <FontAwesomeIcon icon={faPlay}/>
                     </div>
@@ -1092,6 +1094,20 @@ const LandingAutomation = () => {
             </div>}
 
             <Footer/>
+
+            <Modal
+                className={'video-modal-window'}
+                wrapClassName={'video-modal-window-wrap'}
+                visible={visibleVideoWindow}
+                onCancel={() => switchWindow(false)}
+                footer={false}
+                destroyOnClose={true}
+            >
+                <iframe width="853" height="480" src="https://www.youtube.com/embed/m608kntHUzU?autoplay=1" frameBorder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen></iframe>
+            </Modal>
+
         </div>
     )
 };

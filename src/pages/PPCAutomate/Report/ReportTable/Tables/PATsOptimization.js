@@ -5,7 +5,7 @@ import {
     infoField,
     bidActionField,
     patIntentField,
-    pausePatActionField, dateField
+    pausePatActionField, dateField, patIntentValues
 } from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from 'react-redux';
@@ -19,6 +19,8 @@ const changedPATBidACoS = 'changed-pat-bid-acos';
 const changedPATBidImpressions = 'changed-pat-bid-impressions';
 const pausedManualPATHighACoS = 'paused-manual-pat-high-acos';
 const pausedManualPatNoSales = 'paused-manual-pat-no-sales';
+
+const pausedPATDuplicate = 'paused-pat-duplicate';
 
 const PATsOptimization = ({
                               data,
@@ -160,7 +162,7 @@ const PATsOptimization = ({
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
-                width: '11.5em',
+                width: '12em',
                 render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
@@ -251,7 +253,7 @@ const PATsOptimization = ({
                 ),
                 dataIndex: 'd_targetImpressions',
                 key: 'd_targetImpressions',
-                width: '14.5em',
+                width: '15em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
                     onChangeFilter={onChangeFilter}
@@ -291,7 +293,7 @@ const PATsOptimization = ({
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
-                width: '11.5em',
+                width: '12em',
                 render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
@@ -399,13 +401,78 @@ const PATsOptimization = ({
                 />
             },
             {
-                title: 'Sales',
-                dataIndex: 'd_patSales',
-                key: 'd_keywordSales',
-                render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
-                width: '6.5em',
+                ...pausePatActionField
+            },
+            {
+                ...infoField
+            }
+        ],
+        [pausedPATDuplicate]: [
+            ...defaultKeys,
+            {
+                title: 'Origin Campaign',
+                dataIndex: 'd_originCampaignName',
+                key: 'd_originCampaignName',
+                width: '13em',
                 sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Origin Ad Group',
+                dataIndex: 'd_originAdGroupName',
+                key: 'd_originAdGroupName',
+                width: '13em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Origin PAT Type',
+                dataIndex: 'd_originPATType',
+                key: 'd_originPATType',
+                width: '13em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnMenuFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                    menu={[
+                        {label: 'Auto', value: 'auto'},
+                        {label: 'Manual', value: 'manual'}
+                    ]}
+                />
+            },
+            {
+                title: 'PAT Intent Type',
+                dataIndex: 'd_originPATIntentType',
+                key: 'd_originPATIntentType',
+                render: text => <span>{patIntentValues[text]}</span>,
+                width: '12em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnMenuFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                    menu={Object.keys(patIntentValues).map(key => ({
+                        label: patIntentValues[key],
+                        value: key
+                    }))}
+                />
+            },
+            {
+                title: 'Origin PAT Value',
+                dataIndex: 'd_originPATValue',
+                key: 'd_originPATValue',
+                width: '12em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnTextFilter
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
@@ -417,7 +484,7 @@ const PATsOptimization = ({
             {
                 ...infoField
             }
-        ]
+        ],
     };
 
     return (
@@ -466,6 +533,17 @@ const PATsOptimization = ({
                     }}
                 >
                     Paused Manual Pat (<span className='underline'>No Sales</span>)
+                </TableButton>
+                <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
+                    active={activeTable === pausedPATDuplicate}
+                    count={subChangesCount(counts, pausedPATDuplicate, countsWithNew)}
+                    onClick={() => {
+                        onChange(pausedPATDuplicate);
+                    }}
+                >
+                    Paused PAT Duplicate
                 </TableButton>
             </div>
 

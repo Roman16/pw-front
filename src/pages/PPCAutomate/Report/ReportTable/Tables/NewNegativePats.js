@@ -158,7 +158,7 @@ const NewNegativePats = ({
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
-                width: '11.5em',
+                width: '12em',
                 render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
@@ -269,19 +269,19 @@ const NewNegativePats = ({
                     dataIndex={dataIndex}
                 />
             },
-            {
-                title: 'CST Sales',
-                dataIndex: 'd_customerSearchTermSales',
-                key: 'd_customerSearchTermSales',
-                width: '9em',
-                render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
-                sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                />
-            },
+            // {
+            //     title: 'CST Sales',
+            //     dataIndex: 'd_customerSearchTermSales',
+            //     key: 'd_customerSearchTermSales',
+            //     width: '9em',
+            //     render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
+            //     sorter: true,
+            //     filter: (dataIndex) => <ColumnNumberFilter
+            //         onChangeFilter={onChangeFilter}
+            //         filteredColumns={filteredColumns}
+            //         dataIndex={dataIndex}
+            //     />
+            // },
             {
                 title: 'Action',
                 dataIndex: 'action',

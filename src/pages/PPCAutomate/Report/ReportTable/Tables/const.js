@@ -12,7 +12,7 @@ function getIndexColumnWidth(count) {
     return `${25 + count.toString().length * 7}px`;
 }
 
-const patIntentValues = {
+export const patIntentValues = {
     queryHighRelMatches: 'Close Match',
     queryBroadRelMatches: 'Loose Match',
     asinAccessoryRelated: 'Complements',

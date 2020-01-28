@@ -276,6 +276,7 @@ class ReportTable extends Component {
     fetchReports = (selectedPage) => {
         const {activeTab, activeSubTab, startDate, endDate, page, pageSize, filteredColumns, sorterColumn} = this.state,
             {selectedAll, selectedProductId} = this.props;
+
         this.props.getReports({
             id: selectedAll ? "all" : selectedProductId,
             dataType: activeTab,

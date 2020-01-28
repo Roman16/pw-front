@@ -318,7 +318,7 @@ const NewPats = ({
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
                 render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
-                width: '11.5em',
+                width: '12em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
                     onChangeFilter={onChangeFilter}
