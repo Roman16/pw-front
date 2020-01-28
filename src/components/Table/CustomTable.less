@@ -40,6 +40,12 @@
           min-height: 24px;
           display: flex;
 
+
+          .title-info {
+            display: flex;
+            align-items: center;
+          }
+
           .sorter-buttons {
             flex-direction: column;
             justify-content: center;
@@ -55,6 +61,11 @@
             &.is-sorter {
               display: flex;
             }
+          }
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+            align-items: center;
+            line-height: 0;
           }
         }
 

@@ -80,6 +80,7 @@ const NewKeywords = ({
                 title: 'Type',
                 dataIndex: 'd_campaignType',
                 key: 'd_campaignType',
+                width: '7em',
                 render: (str) => (<span className='capitalize-field'>{str && str.split(/(?=[A-Z])/).join(' ')}</span>),
                 sorter: true,
                 filter: (dataIndex) => <ColumnMenuFilter
@@ -112,6 +113,7 @@ const NewKeywords = ({
                 title: 'Daily Budget',
                 dataIndex: 'd_dailyBudget',
                 key: 'd_dailyBudget',
+                width: '10em',
                 render: text => (text != null && <span>{`$${numberMask(text)}`}</span>),
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
@@ -121,7 +123,7 @@ const NewKeywords = ({
                 />
             },
             {
-                title: 'Start Date.',
+                title: 'Start Date',
                 dataIndex: 'd_startDate',
                 key: 'd_startDate',
                 width: '13em',
@@ -467,7 +469,7 @@ const NewKeywords = ({
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
                 render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
-                width: '11.5em',
+                width: '12em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
                     onChangeFilter={onChangeFilter}

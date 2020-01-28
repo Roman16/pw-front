@@ -67,6 +67,10 @@ function regist(user) {
             .then(res => {
                 dispatch(setInformation(res.data));
 
+                window.dataLayer.push({
+                    'event': 'Registration',
+                });
+
                 localStorage.setItem('token', res.access_token);
 
                 dispatch(getUserInfo());

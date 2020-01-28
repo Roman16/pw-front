@@ -170,93 +170,123 @@ const PlacementsStatistics = () => {
                 </div>
             </div>
 
-            <div className='chart'>
-                <ResponsiveContainer height={205} width='99%' className='responsive-bar-container'>
-                    <AreaChart
-                        width={400}
-                        height={400}
-                        data={data}
-                        stackOffset="expand"
-                        isAnimationActive={false}
-                        margin={{
-                            top: 10, right: 5, left: -20, bottom: 0,
-                        }}
-                    >
-                        <defs>
-                            <linearGradient spreadMethod="pad" id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stopColor='rgb(161, 161, 249)' stopOpacity='1'/>
-                                <stop offset="100%" stopColor='rgba(161, 161, 249, 0)' stopOpacity='0'/>
-                            </linearGradient>
-
-                            <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stopColor="#F3AD97"/>
-                                <stop offset="100%" stopColor="rgba(243, 173, 151, 0)"/>
-                            </linearGradient>
-
-                            <linearGradient id="colorAmt" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stopColor="#F6DB97"/>
-                                <stop offset="100%" stopColor="rgba(246, 219, 151, 0)"/>
-                            </linearGradient>
-                        </defs>
-
-                        <CartesianGrid vertical={false} stroke={'rgba(101, 106, 132, 0.2)'}/>
-
-                        <YAxis
-                            tickFormatter={toPercent}
-                            interval={1}
-                        />
-
-                        <XAxis
-                            minTickGap={2}
-                            tickSize={9}
-                            dataKey="name"
-                            interval={5}
-                            padding={{left: 10, right: 10}}
-                            tick={<CustomizedAxisTick/>}
-                        />
-
-                        <Tooltip
+            <div className="row">
+                <div className='chart'>
+                    <ResponsiveContainer height={280} width='100%'>
+                        <AreaChart
+                            width={400}
+                            height={400}
+                            data={data}
+                            stackOffset="expand"
                             isAnimationActive={false}
-                            content={
-                                <ChartTooltip/>
-                            }
-                        />
+                            margin={{
+                                top: 10, right: 5, left: -20, bottom: 0,
+                            }}
+                        >
+                            <defs>
+                                <linearGradient spreadMethod="pad" id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor='rgb(161, 161, 249)' stopOpacity='1'/>
+                                    <stop offset="100%" stopColor='rgba(161, 161, 249, 0)' stopOpacity='0'/>
+                                </linearGradient>
 
-                        <Area
-                            type="linear"
-                            dataKey="top_search"
-                            stackId="1"
-                            stroke={chartColors[0].stroke}
-                            fill="url(#colorUv)"
-                            fillOpacity={1}
-                            isAnimationActive={false}
-                            activeDot={{stroke: chartColors[0].stroke, strokeWidth: 2}}
-                        />
+                                <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#F3AD97"/>
+                                    <stop offset="100%" stopColor="rgba(243, 173, 151, 0)"/>
+                                </linearGradient>
 
-                        <Area
-                            type="linear"
-                            dataKey="product"
-                            stackId="1"
-                            stroke={chartColors[1].stroke}
-                            fill="url(#colorPv)"
-                            fillOpacity={1}
-                            isAnimationActive={false}
-                            activeDot={{stroke: chartColors[1].stroke, strokeWidth: 2}}
-                        />
+                                <linearGradient id="colorAmt" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#F6DB97"/>
+                                    <stop offset="100%" stopColor="rgba(246, 219, 151, 0)"/>
+                                </linearGradient>
+                            </defs>
 
-                        <Area
-                            type="linear"
-                            dataKey="rest_search"
-                            stackId="1"
-                            stroke={chartColors[2].stroke}
-                            fill="url(#colorAmt)"
-                            fillOpacity={1}
-                            isAnimationActive={false}
-                            activeDot={{stroke: chartColors[2].stroke, strokeWidth: 2}}
-                        />
-                    </AreaChart>
-                </ResponsiveContainer>
+                            <CartesianGrid vertical={false} stroke={'rgba(101, 106, 132, 0.2)'}/>
+
+                            <YAxis
+                                tickFormatter={toPercent}
+                                interval={1}
+                            />
+
+                            <XAxis
+                                minTickGap={2}
+                                tickSize={9}
+                                dataKey="name"
+                                interval={5}
+                                padding={{left: 10, right: 10}}
+                                tick={<CustomizedAxisTick/>}
+                            />
+
+                            <Tooltip
+                                isAnimationActive={false}
+                                content={
+                                    <ChartTooltip/>
+                                }
+                            />
+
+                            <Area
+                                type="linear"
+                                dataKey="top_search"
+                                stackId="1"
+                                stroke={chartColors[0].stroke}
+                                fill="url(#colorUv)"
+                                fillOpacity={1}
+                                isAnimationActive={false}
+                                activeDot={{stroke: chartColors[0].stroke, strokeWidth: 2}}
+                            />
+
+                            <Area
+                                type="linear"
+                                dataKey="product"
+                                stackId="1"
+                                stroke={chartColors[1].stroke}
+                                fill="url(#colorPv)"
+                                fillOpacity={1}
+                                isAnimationActive={false}
+                                activeDot={{stroke: chartColors[1].stroke, strokeWidth: 2}}
+                            />
+
+                            <Area
+                                type="linear"
+                                dataKey="rest_search"
+                                stackId="1"
+                                stroke={chartColors[2].stroke}
+                                fill="url(#colorAmt)"
+                                fillOpacity={1}
+                                isAnimationActive={false}
+                                activeDot={{stroke: chartColors[2].stroke, strokeWidth: 2}}
+                            />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                </div>
+
+                <div className='metrics-statistics'>
+                    <div className="col">
+                        <div className='title'>Clicks</div>
+                        <div className='value'>100</div>
+                        <div className='value'>100</div>
+                        <div className='value'>100</div>
+                    </div>
+                    <div className="col">
+                        <div className='title'>CTR</div>
+                        <div className='value'>100</div>
+                        <div className='value'>100</div>
+                        <div className='value'>100</div>
+                    </div>
+                    <div className="col">
+                        <div className='title'>ACoS</div>
+                        <div className='value'>100</div>
+                        <div className='value'>100</div>
+                        <div className='value'>100</div>
+                    </div>
+                    <div className="col">
+                        <div className='title'>Orders</div>
+                        <div className='value'>100</div>
+                        <div className='value'>100</div>
+                        <div className='value'>100</div>
+                    </div>
+                </div>
             </div>
+
         </section>
     )
 };

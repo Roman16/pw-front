@@ -9,37 +9,37 @@ const defaultList = [
     {
         day: 'Sunday',
         shortName: 'Sun',
-        value: Array.from({length: 24}, () => false)
+        value: Array.from({length: 24}, () => true)
     },
     {
         day: 'Monday',
         shortName: 'Mon',
-        value: Array.from({length: 24}, () => false)
+        value: Array.from({length: 24}, () => true)
     },
     {
         day: 'Tuesday',
         shortName: 'Thur',
-        value: Array.from({length: 24}, () => false)
+        value: Array.from({length: 24}, () => true)
     },
     {
         day: 'Wednesday',
         shortName: 'Wed',
-        value: Array.from({length: 24}, () => false)
+        value: Array.from({length: 24}, () => true)
     },
     {
         day: 'Thursday',
         shortName: 'Thue',
-        value: Array.from({length: 24}, () => false)
+        value: Array.from({length: 24}, () => true)
     },
     {
         day: 'Friday',
         shortName: 'Fri',
-        value: Array.from({length: 24}, () => false)
+        value: Array.from({length: 24}, () => true)
     },
     {
         day: 'Saturday',
         shortName: 'Sat',
-        value: Array.from({length: 24}, () => false)
+        value: Array.from({length: 24}, () => true)
     },
 ];
 
@@ -72,7 +72,7 @@ class DaySwitches extends Component {
         this.setState({
             hoursStatus: [...newList.map(item => ({
                 ...item,
-                value: Array.from({length: 24}, () => false)
+                value: Array.from({length: 24}, () => true)
             }))]
         });
     };

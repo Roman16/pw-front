@@ -1,42 +1,33 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {
-    BarChart, Cell, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Text
+    XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid
 } from 'recharts';
-import {metricsList} from "../metricsList";
 
-const CustomBar = (props) => {
-    const {
-        fill, x, y, width, height,
-    } = props;
-
-    if (height && height !== 0) {
-        return (
-            <path
-                d={`M${x + 20},${y + 5} q0,-5 5,-5 h${width - 10} q5,0 5,5 v${height - 10} q0,5 -5,5 h-${width - 10} q-5,0 -5,-5 Z`}
-                fill={fill}
-            />
-        );
-    } else {
-        return 0
-    }
-};
-
-const ChartTooltip = ({payload, metric}) => {
+const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
     if (payload.length > 0) {
-        const selectedMetric = metricsList.find(item => item.key === metric);
 
         return (
-            <div className='chart-tooltip'>
+            <div className='chart-tooltip twice-metrics'>
                 <div className='ant-popover-inner-content'>
                     <h3>{payload[0].payload.name}</h3>
-                    <span className='selected-metric'>{selectedMetric.title}</span>
-                    <div className="value">
-                        <div style={{background: '#6D6DF6'}}/>
 
-                        {selectedMetric.type === 'currency' ? `${payload[0].value}$` : (selectedMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                    <div className="row">
+                        <div className='example-fill' style={{background: '#82ca9d'}}/>
+                        <span className='selected-metric'>{firstMetric.title}</span>
 
+                        <div className="value">
+                            {firstMetric.type === 'currency' ? `${payload[0].value}$` : (firstMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                        </div>
                     </div>
 
+                    {secondMetric.key !== 'nothing' && <div className="row">
+                        <div className='example-fill' style={{background: '#8884d8'}}/>
+                        <span className='selected-metric'>{secondMetric.title}</span>
+
+                        <div className="value">
+                            {secondMetric.type === 'currency' ? `${payload[1].value}$` : (secondMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                        </div>
+                    </div>}
                 </div>
             </div>
         )
@@ -47,101 +38,89 @@ const ChartTooltip = ({payload, metric}) => {
 
 const data = [
     {
-        name: 'Sunday', clicks: 140,
+        name: 'Sunday', clicks: 140, test: 890
     },
     {
-        name: 'Monday', clicks: 150,
+        name: 'Monday', clicks: 150, test: 490
     },
     {
-        name: 'Tuesday', clicks: 289,
+        name: 'Tuesday', clicks: 289, test: 990
     },
     {
-        name: 'Wednesday', clicks: 1228,
+        name: 'Wednesday', clicks: 1228, test: 890
     },
     {
-        name: 'Thursday', clicks: 1280,
+        name: 'Thursday', clicks: 1280, test: 390
     },
     {
-        name: 'Friday', clicks: 110,
+        name: 'Friday', clicks: 110, test: 790
     },
     {
-        name: 'Saturday', clicks: 170,
+        name: 'Saturday', clicks: 170, test: 890
     },
 ];
 
-
-const CustomizedAxisTick = (props) => {
-    if (props.index === 1) {
-        return <Text {...props} x={17} textLength={30} text-anchor="middle"
-                     alignment-baseline="central">{props.payload.value[0]}</Text>;
-    } else if (props.index === 3) {
-        return <Text {...props} x={18} textLength={30} text-anchor="middle"
-                     alignment-baseline="central">{props.payload.value[0]}</Text>;
-    } else {
-        return <Text {...props} x={15} textLength={30} text-anchor="middle"
-                     alignment-baseline="central">{props.payload.value[0]}</Text>;
-    }
-};
-
-const DayChart = ({filteredMetric}) => {
-    const [focusBar, setFocusBar] = useState(null);
-
+const DayChart = ({firstMetric, secondMetric}) => {
     return (
         <div className='chart-block day-chart'>
-            <ResponsiveContainer height='100%' width='99%'
-                                 className='responsive-bar-container'>
-                <BarChart
-                    layout="vertical"
-                    height={230}
+            <ResponsiveContainer height='100%' width='100%'>
+                <LineChart
                     data={data}
-                    isAnimationActive={false}
-                    onMouseMove={state => {
-                        if (state.isTooltipActive) {
-                            setFocusBar(state.activeTooltipIndex);
-                        } else {
-                            setFocusBar(null);
-                        }
-                    }}
-                    onMouseLeave={() => setFocusBar(null)}
                     margin={{
-                        top: 20,
-                        left: -50
+                        top: 25, right: -15, left: -15, bottom: 0,
                     }}
                 >
-                    <XAxis type="number" hide={true}/>
+                    <CartesianGrid
+                        vertical={false}
+                        stroke="#DBDCE2"
+                    />
+
+                    <XAxis
+                        axisLine={false}
+                        dataKey="name"
+                        tickFormatter={(date) => date[0]}
+                    />
 
                     <YAxis
-                        dataKey="name"
-                        type="category"
-                        width={80}
-                        tick={<CustomizedAxisTick/>}
-                        interval={0}
+                        axisLine={false}
+                        yAxisId="left"
+                        stroke="#82ca9d"
+                    />
+                    <YAxis
+                        axisLine={false}
+                        stroke="#8884d8"
+                        yAxisId="right"
+                        orientation="right"
                     />
 
                     <Tooltip
-                        cursor={false}
                         isAnimationActive={false}
                         content={
                             <ChartTooltip
-                                metric={filteredMetric}
+                                firstMetric={firstMetric}
+                                secondMetric={secondMetric}
                             />
                         }
                     />
 
-                    <Bar
-                        dataKey="clicks"
-                        barSize={window.devicePixelRatio === 2 ? 15 : 20}
-                        fill=""
-                        shape={<CustomBar/>}
+                    <Line
+                        dot={false}
                         isAnimationActive={false}
-                    >
-                        {data.map((entry, index) => (
-                            <Cell key={`cell-${index}`}
-                                  fill={focusBar === index ? '#6D6DF6' : 'rgba(109, 109, 246, 0.5)'}/>
-                        ))}
-                    </Bar>
+                        yAxisId="left"
+                        dataKey="clicks"
+                        stroke="#82ca9d"
+                        activeDot={{r: 4}}
+                    />
 
-                </BarChart>
+                    {secondMetric.key !== 'nothing' && <Line
+                        dot={false}
+                        isAnimationActive={false}
+                        yAxisId="right"
+                        dataKey="test"
+                        stroke="#8884d8"
+                        activeDot={{r: 4}}
+                    />}
+                </LineChart>
             </ResponsiveContainer>
         </div>
     )

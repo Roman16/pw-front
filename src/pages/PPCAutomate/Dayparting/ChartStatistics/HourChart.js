@@ -1,41 +1,34 @@
-import React, {Fragment, useState} from "react";
-import {Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
-import {colorList} from "../colorList";
-import {metricsList} from "../metricsList";
+import React from "react";
+import {
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+} from "recharts";
+import {metricsList} from "./metricsList";
 
-const CustomBar = (props) => {
-    const {
-        fill, x, y, width, height,
-    } = props;
 
-    if (height && height !== 0) {
-        return (
-            <path
-                d={`M${x},${y + 5} q0,-5 5,-5 h${width - 10} q5,0 5,5 v${height - 5} h-${width} z`}
-                fill={fill}
-            />
-        );
-    } else {
-        return 0
-    }
-};
-
-const ChartTooltip = ({payload, metric}) => {
+const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
     if (payload.length > 0) {
-        const selectedMetric = metricsList.find(item => item.key === metric);
-
         return (
-            <div className='chart-tooltip'>
+            <div className='chart-tooltip twice-metrics'>
                 <div className='ant-popover-inner-content'>
                     <h3>{payload[0].payload.name}</h3>
-                    <span className='selected-metric'>{selectedMetric.title}</span>
-                    <div className="value">
-                        <div style={{background: '#6D6DF6'}}/>
 
-                        {selectedMetric.type === 'currency' ? `${payload[0].value}$` : (selectedMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                    <div className="row">
+                        <div className='example-fill' style={{background: '#82ca9d'}}/>
+                        <span className='selected-metric'>{firstMetric.title}</span>
 
+                        <div className="value">
+                            {firstMetric.type === 'currency' ? `${payload[0].value}$` : (firstMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                        </div>
                     </div>
 
+                    {secondMetric.key !== 'nothing' && <div className="row">
+                        <div className='example-fill' style={{background: '#8884d8'}}/>
+                        <span className='selected-metric'>{secondMetric.title}</span>
+
+                        <div className="value">
+                            {secondMetric.type === 'currency' ? `${payload[1].value}$` : (secondMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                        </div>
+                    </div>}
                 </div>
             </div>
         )
@@ -46,129 +39,141 @@ const ChartTooltip = ({payload, metric}) => {
 
 const data = [
     {
-        name: '01 AM', clicks: 1400,
+        name: '01 AM', clicks: 1400, test: 4890
     },
     {
-        name: '02 AM', clicks: 1506,
+        name: '02 AM', clicks: 1506, test: 4890
     },
     {
-        name: '03 AM', clicks: 989,
+        name: '03 AM', clicks: 989, test: 2890
     },
     {
-        name: '04 AM', clicks: 1228,
+        name: '04 AM', clicks: 1228, test: 4890
     },
     {
-        name: '05 AM', clicks: 1100,
+        name: '05 AM', clicks: 1100, test: 2890
     },
     {
-        name: '06 AM', clicks: 1700,
+        name: '06 AM', clicks: 1700, test: 4890
     },
     {
-        name: '07 AM', clicks: 1700,
+        name: '07 AM', clicks: 1700, test: 2890
     },
     {
-        name: '08 AM', clicks: 1700,
+        name: '08 AM', clicks: 1700, test: 4890
     },
     {
-        name: '09 AM', clicks: 1700,
+        name: '09 AM', clicks: 1700, test: 4890
     },
     {
-        name: '10 AM', clicks: 1700,
+        name: '10 AM', clicks: 1700, test: 4890
     },
     {
-        name: '11 AM', clicks: 1700,
+        name: '11 AM', clicks: 1700, test: 4890
     },
     {
-        name: '12 PM', clicks: 1700,
+        name: '12 PM', clicks: 1700, test: 4890
     },
     {
-        name: '01 PM', clicks: 1400,
+        name: '01 PM', clicks: 1400, test: 4890
     },
     {
-        name: '02 PM', clicks: 1506,
+        name: '02 PM', clicks: 1506, test: 3890
     },
     {
-        name: '03 PM', clicks: 989,
+        name: '03 PM', clicks: 989, test: 4890
     },
     {
-        name: '04 PM', clicks: 1228,
+        name: '04 PM', clicks: 1228, test: 3890
     },
     {
-        name: '05 PM', clicks: 1100,
+        name: '05 PM', clicks: 1100, test: 7890
     },
     {
-        name: '06 PM', clicks: 1700,
+        name: '06 PM', clicks: 1700, test: 4890
     },
     {
-        name: '07 PM', clicks: 1700,
+        name: '07 PM', clicks: 1700, test: 7890
     },
     {
-        name: '08 PM', clicks: 1700,
+        name: '08 PM', clicks: 1700, test: 4890
     },
     {
-        name: '09 PM', clicks: 1700,
+        name: '09 PM', clicks: 1700, test: 3890
     },
     {
-        name: '10 PM', clicks: 1700,
+        name: '10 PM', clicks: 1700, test: 4890
     },
     {
-        name: '11 PM', clicks: 1700,
+        name: '11 PM', clicks: 1700, test: 5890
     },
     {
-        name: '12 AM', clicks: 1700,
+        name: '12 AM', clicks: 1700, test: 5890
     },
 ];
 
-const HourChart = ({filteredMetric}) => {
-    const [focusBar, setFocusBar] = useState(null);
-
+const HourChart = ({firstMetric, secondMetric}) => {
     return (
         <div className='chart-block hour-chart'>
-            <ResponsiveContainer height='100%' width='99%' className='responsive-bar-container'>
-
-                <BarChart
-                    width={500}
-                    height={230}
+            <ResponsiveContainer height='100%' width='100%'>
+                <LineChart
                     data={data}
-                    onMouseMove={state => {
-                        if (state.isTooltipActive) {
-                            setFocusBar(state.activeTooltipIndex);
-                        } else {
-                            setFocusBar(null);
-                        }
-                    }}
-                    onMouseLeave={() => setFocusBar(null)}
                     margin={{
-                        top: 20
+                        top: 25, right: -15, left: -15, bottom: 0,
                     }}
                 >
-                    <XAxis type="category" dataKey="name" interval={2}/>
+                    <CartesianGrid
+                        vertical={false}
+                        stroke="#DBDCE2"
+                    />
 
-                    <YAxis type="number" hide={true}/>
+                    <XAxis
+                        interval={2}
+                        axisLine={false}
+                        dataKey="name"
+                        tickFormatter={(date) => date}
+                    />
+
+                    <YAxis
+                        axisLine={false}
+                        yAxisId="left"
+                        stroke="#82ca9d"
+                    />
+                    <YAxis
+                        axisLine={false}
+                        stroke="#8884d8"
+                        yAxisId="right"
+                        orientation="right"
+                    />
 
                     <Tooltip
-                        cursor={false}
                         isAnimationActive={false}
                         content={
                             <ChartTooltip
-                                metric={filteredMetric}
+                                firstMetric={firstMetric}
+                                secondMetric={secondMetric}
                             />
                         }
                     />
 
-                    <Bar
-                        dataKey="clicks"
-                        barSize={window.devicePixelRatio === 2 ? 15 : 20}
-                        shape={<CustomBar/>}
+                    <Line
+                        dot={false}
                         isAnimationActive={false}
-                    >
-                        {data.map((entry, index) => (
-                            <Cell key={`cell-${index}`}
-                                  fill={focusBar === index ? '#6D6DF6' : 'rgba(109, 109, 246, 0.5)'}/>
-                        ))}
-                    </Bar>
+                        yAxisId="left"
+                        dataKey="clicks"
+                        stroke="#82ca9d"
+                        activeDot={{r: 4}}
+                    />
 
-                </BarChart>
+                    {secondMetric.key !== 'nothing' && <Line
+                        dot={false}
+                        isAnimationActive={false}
+                        yAxisId="right"
+                        dataKey="test"
+                        stroke="#8884d8"
+                        activeDot={{r: 4}}
+                    />}
+                </LineChart>
             </ResponsiveContainer>
         </div>
     )

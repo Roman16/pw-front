@@ -130,25 +130,33 @@ class RegistrationPage extends Component {
 
             billing_details.address && Object.keys(billing_details.address).forEach((key) => !billing_details.address[key] && delete billing_details.address[key]);
 
-            let res = stripe_token ? stripe_token : await this.props.stripe.createPaymentMethod('card', {billing_details});
-            this.setState({stripe_token: res}, () => {
-                    res.paymentMethod ?
-                        this.props.regist({
-                            name,
-                            last_name,
-                            email,
-                            password,
-                            stripe_token: res.paymentMethod ? res.paymentMethod.id : null,
-                        })
-                        :
-                        this.props.regist({
-                            name,
-                            last_name,
-                            email,
-                            password,
-                        });
-                }
-            );
+            // let res = stripe_token ? stripe_token : await this.props.stripe.createPaymentMethod('card', {billing_details});
+
+            // this.setState({stripe_token: res}, () => {
+            //         res.paymentMethod ?
+            //             this.props.regist({
+            //                 name,
+            //                 last_name,
+            //                 email,
+            //                 password,
+            //                 stripe_token: res.paymentMethod ? res.paymentMethod.id : null,
+            //             })
+            //             :
+            //             this.props.regist({
+            //                 name,
+            //                 last_name,
+            //                 email,
+            //                 password,
+            //             });
+            //     }
+            // );
+
+            this.props.regist({
+                name,
+                last_name,
+                email,
+                password,
+            });
         }
 
         // } catch (e) {
