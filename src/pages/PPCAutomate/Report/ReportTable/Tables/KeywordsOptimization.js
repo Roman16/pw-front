@@ -516,6 +516,7 @@ const KeywordsOptimization = ({
                 dataIndex: 'd_originPATIntentType',
                 key: 'd_originPATIntentType',
                 width: '12em',
+                render: text => <span>{patIntentValues[text]}</span>,
                 sorter: true,
                 filter: (dataIndex) => <ColumnMenuFilter
                     onChangeFilter={onChangeFilter}

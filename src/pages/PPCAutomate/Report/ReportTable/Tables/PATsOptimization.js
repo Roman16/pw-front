@@ -453,6 +453,7 @@ const PATsOptimization = ({
                 title: 'PAT Intent Type',
                 dataIndex: 'd_originPATIntentType',
                 key: 'd_originPATIntentType',
+                render: text => <span>{patIntentValues[text]}</span>,
                 width: '12em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnMenuFilter
