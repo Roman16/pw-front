@@ -575,6 +575,11 @@ const LandingAutomation = () => {
                             <img src={JeffInPlane} alt=""/>
                         </div>
 
+                        <div className="sponsored">
+                            <span><div/>Sponsored Products</span>
+                            <span><div/>US Marketplace</span>
+                        </div>
+
                         <h1>Engage in Amazon <br/> business <span>not in ads</span></h1>
 
                         <div className='description'>
@@ -599,7 +604,14 @@ const LandingAutomation = () => {
                             </div>
                         </div>
                     </div>
+                </div>
 
+                <div className="video-btn">
+                    Why Profit Whales?
+                    <div className="pulse" onClick={() => window.open('https://youtu.be/m608kntHUzU', 'blank')}>
+                        <div/>
+                        <FontAwesomeIcon icon={faPlay}/>
+                    </div>
                 </div>
             </section>
 
