@@ -7,7 +7,8 @@ import {
     infoField,
     bidActionField,
     pauseKeywordsActionField,
-    dateField
+    dateField,
+    patIntentValues
 } from './const';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
@@ -19,6 +20,10 @@ const changedKeywordBidAcos = 'changed-keyword-bid-acos';
 const changedKeywordBidImpression = 'changed-keyword-bid-impressions';
 const pausedKeywordHighAcos = 'paused-keyword-high-acos';
 const pausedKeywordNoSales = 'paused-keyword-no-sales';
+
+const pausedKeywordDuplicate = 'paused-keyword-duplicate';
+const pausedKeywordDuplicateOfPAT = 'paused-keyword-duplicate-of-pat';
+const pausedKeywordDuplicateFromCustomerSearchTerm = 'paused-keyword-duplicate-from-customer-search-term';
 
 const KeywordsOptimization = ({
                                   data,
@@ -145,7 +150,7 @@ const KeywordsOptimization = ({
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
-                width: '11.5em',
+                width: '12em',
                 sorter: true,
                 render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
                 filter: (dataIndex) => <ColumnNumberFilter
@@ -236,7 +241,7 @@ const KeywordsOptimization = ({
                 ),
                 dataIndex: 'd_targetImpressions',
                 key: 'd_targetImpressions',
-                width: '14.5em',
+                width: '15em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
                     onChangeFilter={onChangeFilter}
@@ -276,7 +281,7 @@ const KeywordsOptimization = ({
                 ),
                 dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                 key: 'd_targetACoSCalculation_d_targetACoS',
-                width: '11.5em',
+                width: '12em',
                 render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter
@@ -384,13 +389,74 @@ const KeywordsOptimization = ({
                 />
             },
             {
-                title: 'Sales',
-                dataIndex: 'd_keywordSales',
-                key: 'd_keywordSales',
-                render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
-                width: '6.5em',
+                ...pauseKeywordsActionField
+            },
+            {
+                ...infoField
+            }
+        ],
+        [pausedKeywordDuplicate]: [
+            ...defaultKeys,
+            {
+                title: 'Origin Campaign',
+                dataIndex: 'd_originCampaignName',
+                key: 'd_originCampaignName',
+                width: '13em',
                 sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Origin Ad Group',
+                dataIndex: 'd_originAdGroupName',
+                key: 'd_originAdGroupName',
+                width: '13em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Origin Keyword',
+                dataIndex: 'd_originKeywordText',
+                key: 'd_originKeywordText',
+                width: '13em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Origin Match Type',
+                dataIndex: 'd_originKeywordMatchType',
+                key: 'd_originKeywordMatchType',
+                width: '13.5em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnMenuFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                    menu={[
+                        {label: 'Phrase', value: 'phrase'},
+                        {label: 'Exact', value: 'exact'},
+                        {label: 'Broad', value: 'broad'}
+                    ]}
+                />
+            },
+            {
+                title: 'Identity',
+                dataIndex: 'd_identity',
+                key: 'd_identity',
+                width: '9em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnTextFilter
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
@@ -402,7 +468,158 @@ const KeywordsOptimization = ({
             {
                 ...infoField
             }
-        ]
+        ],
+        [pausedKeywordDuplicateOfPAT]: [
+            ...defaultKeys,
+            {
+                title: 'Origin Campaign',
+                dataIndex: 'd_originCampaignName',
+                key: 'd_originCampaignName',
+                width: '13em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Origin Ad Group',
+                dataIndex: 'd_originAdGroupName',
+                key: 'd_originAdGroupName',
+                width: '13em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Origin PAT Type',
+                dataIndex: 'd_originPATType',
+                key: 'd_originPATType',
+                width: '13em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnMenuFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                    menu={[
+                        {label: 'Auto', value: 'auto'},
+                        {label: 'Manual', value: 'manual'}
+                    ]}
+                />
+            },
+            {
+                title: 'PAT Intent Type',
+                dataIndex: 'd_originPATIntentType',
+                key: 'd_originPATIntentType',
+                width: '12em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnMenuFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                    menu={Object.keys(patIntentValues).map(key => ({
+                        label: patIntentValues[key],
+                        value: key
+                    }))}
+                />
+            },
+            {
+                title: 'Origin PAT Value',
+                dataIndex: 'd_originPATValue',
+                key: 'd_originPATValue',
+                width: '12em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                ...pauseKeywordsActionField
+            },
+            {
+                ...infoField
+            }
+        ],
+        [pausedKeywordDuplicateFromCustomerSearchTerm]: [
+            ...defaultKeys,
+            {
+                title: 'Origin Campaign',
+                dataIndex: 'd_originCampaignName',
+                key: 'd_originCampaignName',
+                width: '13em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Origin Ad Group',
+                dataIndex: 'd_originAdGroupName',
+                key: 'd_originAdGroupName',
+                width: '13em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Origin Keyword',
+                dataIndex: 'd_originKeywordText',
+                key: 'd_originKeywordText',
+                width: '12em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                title: 'Origin Match Type',
+                dataIndex: 'd_originKeywordMatchType',
+                key: 'd_originKeywordMatchType',
+                width: '13em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnMenuFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                    menu={[
+                        {label: 'Phrase', value: 'phrase'},
+                        {label: 'Exact', value: 'exact'},
+                        {label: 'Broad', value: 'broad'}
+                    ]}
+                />
+            },
+            {
+                title: 'Query',
+                dataIndex: 'd_query',
+                key: 'd_query',
+                width: '8em',
+                sorter: true,
+                filter: (dataIndex) => <ColumnTextFilter
+                    onChangeFilter={onChangeFilter}
+                    filteredColumns={filteredColumns}
+                    dataIndex={dataIndex}
+                />
+            },
+            {
+                ...pauseKeywordsActionField
+            },
+            {
+                ...infoField
+            }
+        ],
     };
 
     return (
@@ -451,6 +668,40 @@ const KeywordsOptimization = ({
                     }}
                 >
                     Paused Keyword (<span className='underline'>No Sales</span>)
+                </TableButton>
+
+                <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
+                    active={pausedKeywordDuplicate === activeTable}
+                    count={subChangesCount(counts, pausedKeywordDuplicate, countsWithNew)}
+                    onClick={() => {
+                        onChange(pausedKeywordDuplicate);
+                    }}
+                >
+                    Paused Keyword Duplicate
+                </TableButton>
+                <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
+                    active={pausedKeywordDuplicateOfPAT === activeTable}
+                    count={subChangesCount(counts, pausedKeywordDuplicateOfPAT, countsWithNew)}
+                    onClick={() => {
+                        onChange(pausedKeywordDuplicateOfPAT);
+                    }}
+                >
+                    Paused Keyword Duplicate of PAT
+                </TableButton>
+                <TableButton
+                    totalSize={totalSize}
+                    loading={loading}
+                    active={pausedKeywordDuplicateFromCustomerSearchTerm === activeTable}
+                    count={subChangesCount(counts, pausedKeywordDuplicateFromCustomerSearchTerm, countsWithNew)}
+                    onClick={() => {
+                        onChange(pausedKeywordDuplicateFromCustomerSearchTerm);
+                    }}
+                >
+                    Paused Keyword Duplicate From CST
                 </TableButton>
             </div>
 
