@@ -90,36 +90,36 @@ const ourCases = [
         ]
     },
     {
-        title: 'One year with Profit Whales results',
+        title: '2 months Profit Whales results',
         firstColumnTitle: 'Before',
         secondColumnTitle: 'After',
-        img: casesImages.case2,
+        img: casesImages.case4,
         firstColumn: [
             {
-                metric: 'Orders',
-                value: '113,620'
+                metric: 'CPC',
+                value: '2.89'
             },
             {
-                metric: 'Total Sales',
-                value: '$3,044,884'
+                metric: 'ACOS',
+                value: '38.12%'
             },
             {
                 metric: 'PPC Sales',
-                value: '$1,378,785'
+                value: '$142,496'
             },
         ],
         secondColumn: [
             {
-                metric: 'Orders',
-                value: '239,643'
+                metric: 'CPC',
+                value: '2.11'
             },
             {
-                metric: 'Total Sales',
-                value: '$6,761,369'
+                metric: 'ACOS',
+                value: '24.44%'
             },
             {
                 metric: 'PPC Sales',
-                value: '$3,814,759'
+                value: '$361,740'
             },
         ]
     },
@@ -158,40 +158,6 @@ const ourCases = [
         ]
     },
     {
-        title: '2 months Profit Whales results',
-        firstColumnTitle: 'Before',
-        secondColumnTitle: 'After',
-        img: casesImages.case4,
-        firstColumn: [
-            {
-                metric: 'CPC',
-                value: '2.89'
-            },
-            {
-                metric: 'ACOS',
-                value: '38.12%'
-            },
-            {
-                metric: 'PPC Sales',
-                value: '$142,496'
-            },
-        ],
-        secondColumn: [
-            {
-                metric: 'CPC',
-                value: '2.11'
-            },
-            {
-                metric: 'ACOS',
-                value: '24.44%'
-            },
-            {
-                metric: 'PPC Sales',
-                value: '$361,740'
-            },
-        ]
-    },
-    {
         title: '3 months Profit Whales results',
         firstColumnTitle: '12 months without Profit Whales',
         secondColumnTitle: '3 months with Profit Whales',
@@ -222,6 +188,40 @@ const ourCases = [
             {
                 metric: 'PPC Sales',
                 value: '$197,993'
+            },
+        ]
+    },
+    {
+        title: 'One year with Profit Whales results',
+        firstColumnTitle: 'Before',
+        secondColumnTitle: 'After',
+        img: casesImages.case2,
+        firstColumn: [
+            {
+                metric: 'Orders',
+                value: '113,620'
+            },
+            {
+                metric: 'Total Sales',
+                value: '$3,044,884'
+            },
+            {
+                metric: 'PPC Sales',
+                value: '$1,378,785'
+            },
+        ],
+        secondColumn: [
+            {
+                metric: 'Orders',
+                value: '239,643'
+            },
+            {
+                metric: 'Total Sales',
+                value: '$6,761,369'
+            },
+            {
+                metric: 'PPC Sales',
+                value: '$3,814,759'
             },
         ]
     },
@@ -320,8 +320,10 @@ const LandingAutomation = () => {
                     setStepSlide(currentStepSlide + 1)
                 }
             } else if (type === 'case') {
-                if (currentCaseSlide === 4 || currentCaseSlide === 5) {
+                if (currentCaseSlide === 4) {
                     setCaseSlide(0)
+                } else if (currentCaseSlide === 5) {
+                    setCaseSlide(4)
                 } else {
                     setCaseSlide(currentCaseSlide + 1)
                 }
@@ -343,6 +345,8 @@ const LandingAutomation = () => {
             } else if (type === 'case') {
                 if (currentCaseSlide === 0) {
                     setCaseSlide(4)
+                } else if (currentCaseSlide === 5) {
+                    setCaseSlide(2)
                 } else {
                     setCaseSlide(currentCaseSlide - 1)
                 }
@@ -575,6 +579,11 @@ const LandingAutomation = () => {
                             <img src={JeffInPlane} alt=""/>
                         </div>
 
+                        <div className="sponsored">
+                            <span><div/>Sponsored Products</span>
+                            <span><div/>US Marketplace</span>
+                        </div>
+
                         <h1>Engage in Amazon <br/> business <span>not in ads</span></h1>
 
                         <div className='description'>
@@ -599,7 +608,14 @@ const LandingAutomation = () => {
                             </div>
                         </div>
                     </div>
+                </div>
 
+                <div className="video-btn">
+                    Why Profit Whales?
+                    <div className="pulse" onClick={() => window.open('https://youtu.be/m608kntHUzU', 'blank')}>
+                        <div/>
+                        <FontAwesomeIcon icon={faPlay}/>
+                    </div>
                 </div>
             </section>
 
@@ -763,9 +779,9 @@ const LandingAutomation = () => {
                                     />
                                 ))}
 
-                                {(currentCaseSlide === 4 || currentCaseSlide === 5) &&
+                                {(currentCaseSlide === 3 || currentCaseSlide === 5) &&
                                 <div className='change-chart'
-                                     onClick={() => currentCaseSlide === 4 ? setCaseSlide(5) : setCaseSlide(4)}>
+                                     onClick={() => currentCaseSlide === 3 ? setCaseSlide(5) : setCaseSlide(3)}>
                                     Change chart
                                 </div>
                                 }
@@ -776,7 +792,7 @@ const LandingAutomation = () => {
                         </div>
 
                         <div className='navigation'>
-                            {[0, 1, 2, 3].map((item, index) => (
+                            {[0, 1, 2].map((item, index) => (
                                 <div
                                     onClick={() => goToSlide(index, 'case')}
                                     className={currentCaseSlide === index ? 'active-dot' : ''}
@@ -784,8 +800,13 @@ const LandingAutomation = () => {
                             ))}
 
                             <div
+                                onClick={() => goToSlide(3, 'case')}
+                                className={currentCaseSlide === 3 || currentCaseSlide === 5 ? 'active-dot' : ''}
+                            />
+
+                            <div
                                 onClick={() => goToSlide(4, 'case')}
-                                className={currentCaseSlide === 4 || currentCaseSlide === 5 ? 'active-dot' : ''}
+                                className={currentCaseSlide === 4 ? 'active-dot' : ''}
                             />
                         </div>
                     </div>
