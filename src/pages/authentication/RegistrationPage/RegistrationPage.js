@@ -15,7 +15,7 @@ const RegistrationPage = () => {
     return (
         <div className="RegisterFormContainer">
             <div className="sign-page">
-                <div className="logo-auth" onClick={() => history.push('/automation')}>
+                <div className="logo-auth" onClick={() => history.push('/')}>
                     <img src={logo} alt="logo"/>
                 </div>
 
