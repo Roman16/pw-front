@@ -54,9 +54,9 @@ const Footer = () => (
                 <h4>Knowledge</h4>
                 <ul>
                     <li>
-                        <a href="https://profitwhales.com/amazon-ppc-blueprint">
+                        <Link to={'/amazon-ppc-blueprint'}>
                             Amazon PPC Blueprint
-                        </a>
+                        </Link>
                     </li>
                     <li>
                         <a href="https://profitwhales.com/terms-and-conditions">
@@ -112,7 +112,7 @@ const Footer = () => (
                                 <a href="https://www.youtube.com/channel/UCtUreqMG_C_P8Ymqa-LJ2Yg" className="you"
                                    target="_blank"
                                    title="Youtube">
-                                    <Icon type="youtube" />
+                                    <Icon type="youtube"/>
                                 </a>
                             </li>
                         </ul>

@@ -3,7 +3,7 @@ import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 import upGreenIcon from '../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
-import downBlackIcon from '../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
+import downRedIcon from '../../../assets/img/icons/metric-arrows/down-red-arrow.svg';
 import moment from "moment";
 
 const data = [
@@ -115,59 +115,6 @@ const PlacementsStatistics = () => {
         <section className='placements-statistics'>
             <div className="section-header">
                 <h2>Placements</h2>
-
-                <div className="chart-legend">
-                    <div>
-                        <div className='col'>
-                            <div className='example' style={{background: chartColors[0].fill}}/>
-                            <img src={downBlackIcon} alt=""/>
-                        </div>
-
-                        <div className='col'>
-                            <div className="chart-name">
-                                Top of search
-                            </div>
-
-                            <div className='changes-value'>
-                                20%
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className='col'>
-                            <div className='example' style={{background: chartColors[1].fill}}/>
-                            <img src={upGreenIcon} alt=""/>
-                        </div>
-
-                        <div className='col'>
-                            <div className="chart-name">
-                                Product pages
-                            </div>
-
-                            <div className='changes-value'>
-                                4%
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className='col'>
-                            <div className='example' style={{background: chartColors[2].fill}}/>
-                            <img src={upGreenIcon} alt=""/>
-                        </div>
-
-                        <div className='col'>
-                            <div className="chart-name">
-                                Rest of search
-                            </div>
-
-                            <div className='changes-value'>
-                                0%
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div className="row">
@@ -260,30 +207,36 @@ const PlacementsStatistics = () => {
                 </div>
 
                 <div className='metrics-statistics'>
-                    <div className="col">
-                        <div className='title'>Clicks</div>
-                        <div className='value'>100</div>
-                        <div className='value'>100</div>
-                        <div className='value'>100</div>
+                    <div className="row metrics-name">
+                        <div/>
+                        <div>Clicks</div>
+                        <div>CTR</div>
+                        <div>ACoS</div>
+                        <div>Orders</div>
                     </div>
-                    <div className="col">
-                        <div className='title'>CTR</div>
-                        <div className='value'>100</div>
-                        <div className='value'>100</div>
-                        <div className='value'>100</div>
+
+                    <div className="row">
+                        <div className="parameter-name"><div style={{background: '#F1C75C'}}/>Top of search</div>
+                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
+                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
+                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
+                        <div className="value"><img src={downRedIcon} alt=""/>100</div>
                     </div>
-                    <div className="col">
-                        <div className='title'>ACoS</div>
-                        <div className='value'>100</div>
-                        <div className='value'>100</div>
-                        <div className='value'>100</div>
+                    <div className="row">
+                        <div className="parameter-name"><div style={{background: '#EC7F5C'}}/>Product pages</div>
+                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
+                        <div className="value"><img src={downRedIcon} alt=""/>100</div>
+                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
+                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
                     </div>
-                    <div className="col">
-                        <div className='title'>Orders</div>
-                        <div className='value'>100</div>
-                        <div className='value'>100</div>
-                        <div className='value'>100</div>
+                    <div className="row">
+                        <div className="parameter-name"><div style={{background: '#6D6DF6'}}/>Rest of search</div>
+                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
+                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
+                        <div className="value"><img src={downRedIcon} alt=""/>100</div>
+                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
                     </div>
+
                 </div>
             </div>
 

@@ -34,7 +34,6 @@ function fetchLineChartData({startDate, endDate, firstMetric, secondMetric, prod
 }
 
 function fetchProducts({page, size = 10, searchText, onlyOptimization, startDate, endDate, cancelToken}) {
-
     const parameters = [
         startDate ? `&start_date=${startDate}` : '',
         endDate ? `&end_date=${endDate}` : '',

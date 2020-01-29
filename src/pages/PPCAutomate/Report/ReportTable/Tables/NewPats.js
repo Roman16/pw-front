@@ -286,6 +286,7 @@ const NewPats = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -324,6 +325,7 @@ const NewPats = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {

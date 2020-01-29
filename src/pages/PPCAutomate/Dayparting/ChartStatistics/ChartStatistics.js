@@ -49,7 +49,7 @@ const ChartStatistics = ({onSelectMetric, filteredMetric}) => {
                 </div>
 
                 <div className='sorter'>
-                    <div className="select first">
+                    <div className={`${activeTab === 'dayHour' ? "select first no-border" : "select first"}`}>
                         <CustomSelect
                             value={firstCompareMetric.key}
                             dropdownClassName={'full-width-menu'}
@@ -62,7 +62,13 @@ const ChartStatistics = ({onSelectMetric, filteredMetric}) => {
                             }}
                         >
                             {metricsList.map(item => (
-                                <Option key={item.key} value={item.key}>{item.title}</Option>
+                                <Option
+                                    title={item.title}
+                                    key={item.key}
+                                    value={item.key}
+                                >
+                                    {item.title}
+                                </Option>
                             ))}
                         </CustomSelect>
                     </div>
@@ -78,6 +84,7 @@ const ChartStatistics = ({onSelectMetric, filteredMetric}) => {
                             >
                                 {metricsList.map(item => (
                                     <Option
+                                        title={item.title}
                                         disabled={firstCompareMetric.key === item.key}
                                         key={item.key}
                                         value={item.key}

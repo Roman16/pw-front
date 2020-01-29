@@ -4,6 +4,7 @@ import {Switch} from "antd";
 import moment from "moment";
 import Selection from "@simonwep/selection-js/src/selection";
 import shortid from "shortid";
+import './DaySwitches.less';
 
 const defaultList = [
     {
@@ -51,7 +52,7 @@ const selection = Selection.create({
     selectables: ['.statistic-information'],
 
     // The container is also the boundary in this case
-    boundaries: ['.switches'],
+    boundaries: ['.multi-select'],
     singleClick: false,
 
 });
@@ -196,39 +197,52 @@ class DaySwitches extends Component {
                 </div>
 
                 <div className="switches">
-                    {hoursStatus.map((day, dayIndex) => (
-                        <div className="row" key={shortid.generate()}>
-                            <div className='day-name'>
+                    <div className="row time-name">
+                        <div/>
+                        {hoursStatus[0].value.map((status, timeIndex) => (
+                            <div key={shortid.generate()}>
+                                {moment(timeIndex + 1, 'HH').format('hh A')}
                                 <Switch
-                                    checked={day.value.every(item => item)}
-                                    onChange={() => this.handleSwitchRow(dayIndex, day.value.every(item => item))}
+                                    checked={hoursStatus.every(item => item.value[timeIndex])}
+                                    onChange={() => this.handleSwitchColumn(timeIndex, hoursStatus.every(item => item.value[timeIndex]))}
                                 />
-                                <span>
-                                 {window.devicePixelRatio === 2 ? day.shortName[0] : day.shortName}
-                            </span>
                             </div>
+                        ))}
+                    </div>
 
-                            {day.value.map((status, timeIndex) => (
-                                <div className='statistic-item' key={shortid.generate()}>
-                                    {dayIndex === 0 && <div className="time-name">
-                                        {moment(timeIndex + 1, 'HH').format('hh A')}
-                                        <Switch
-                                            checked={hoursStatus.every(item => item.value[timeIndex])}
-                                            onChange={() => this.handleSwitchColumn(timeIndex, hoursStatus.every(item => item.value[timeIndex]))}
-                                        />
-                                    </div>}
-
-                                    <div
-                                        onClick={() => this.handleSwitchHour(dayIndex, timeIndex, status)}
-                                        className={status ? 'statistic-information active' : 'statistic-information'}
-                                        rowindex={dayIndex}
-                                        columnindex={timeIndex}
-                                        value={status}
+                    <div className="row">
+                        <div className="col day-axis">
+                            {hoursStatus.map((day, dayIndex) => (
+                                <div className='day-name' key={shortid.generate()}>
+                                    <Switch
+                                        checked={day.value.every(item => item)}
+                                        onChange={() => this.handleSwitchRow(dayIndex, day.value.every(item => item))}
                                     />
+                                    <span>
+                                            {window.devicePixelRatio === 2 ? day.shortName[0] : day.shortName}
+                                        </span>
                                 </div>
                             ))}
                         </div>
-                    ))}
+
+                        <div className="col multi-select">
+                            {hoursStatus.map((day, dayIndex) => (
+                                <div className="row" key={shortid.generate()}>
+                                    {day.value.map((status, timeIndex) => (
+                                        <div className='statistic-item' key={shortid.generate()}>
+                                            <div
+                                                onClick={() => this.handleSwitchHour(dayIndex, timeIndex, status)}
+                                                className={status ? 'statistic-information active' : 'statistic-information'}
+                                                rowindex={dayIndex}
+                                                columnindex={timeIndex}
+                                                value={status}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </section>
         )

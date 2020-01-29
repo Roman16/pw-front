@@ -150,6 +150,7 @@ const PATsOptimization = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -169,6 +170,7 @@ const PATsOptimization = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -220,6 +222,7 @@ const PATsOptimization = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -281,6 +284,7 @@ const PATsOptimization = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -300,6 +304,7 @@ const PATsOptimization = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -351,6 +356,7 @@ const PATsOptimization = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -373,6 +379,7 @@ const PATsOptimization = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -434,10 +441,16 @@ const PATsOptimization = ({
                 />
             },
             {
-                title: 'Origin PAT Type',
+                title: (
+                    <TitleInfo
+                        position='top'
+                        title="Origin PAT Type"
+                        info="The type of Product Targeting. It can be a Manual or Auto."
+                    />
+                ),
                 dataIndex: 'd_originPATType',
                 key: 'd_originPATType',
-                width: '13em',
+                width: '13.5em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnMenuFilter
                     onChangeFilter={onChangeFilter}
@@ -450,10 +463,17 @@ const PATsOptimization = ({
                 />
             },
             {
-                title: 'PAT Intent Type',
+                title: (
+                    <TitleInfo
+                        title="Origin PAT Intent Type"
+                        info="Automatic and Manual Product Targetings use multiple strategies to match your ads to shoppers looking for your products. For Automatic Product Targetings these strategies are: Close Match, Loose Match, Complements, Substitutes. For Manual: ASIN, Categories, Brand."
+                        position="top"
+                    />
+                ),
                 dataIndex: 'd_originPATIntentType',
                 key: 'd_originPATIntentType',
-                width: '12em',
+                render: text => <span>{patIntentValues[text]}</span>,
+                width: '16.5em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnMenuFilter
                     onChangeFilter={onChangeFilter}
@@ -466,10 +486,16 @@ const PATsOptimization = ({
                 />
             },
             {
-                title: 'Origin PAT Value',
+                title: (
+                    <TitleInfo
+                        position='top'
+                        title="Origin PAT Value"
+                        info="Manual Product Targetings have specific value assigned to them to match your ads to shoppers. Type of this value depends on PAT's Intent Type. For ASIN Intent Type value may be: B01F9RH0R4. For Category - Cell Phones & Accessories."
+                    />
+                ),
                 dataIndex: 'd_originPATValue',
                 key: 'd_originPATValue',
-                width: '12em',
+                width: '14em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnTextFilter
                     onChangeFilter={onChangeFilter}

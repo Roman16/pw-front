@@ -119,7 +119,7 @@ export const ColumnMenuFilter = ({onChangeFilter, filteredColumns, menu, dataInd
     )
 };
 
-export const ColumnNumberFilter = ({onChangeFilter, filteredColumns, dataIndex}) => {
+export const ColumnNumberFilter = ({onChangeFilter, filteredColumns, dataIndex, percent}) => {
     const [searchType, setType] = useState('eq'),
         [searchValue, setValue] = useState(''),
         [visiblePopup, switchPopup] = useState(false);
@@ -127,7 +127,7 @@ export const ColumnNumberFilter = ({onChangeFilter, filteredColumns, dataIndex})
     function handleFilteredColumn() {
         onChangeFilter(dataIndex, {
             type: searchType,
-            value: searchValue
+            value: percent && searchValue ? searchValue / 100 : searchValue
         }, 'number');
         switchPopup(false)
     }

@@ -12,7 +12,7 @@ import ProductSettings from "../pages/PPCAutomate/ProductSettings/ProductSetting
 import MWS from "../pages/authentication/AccountBinding/MWS/MWS";
 import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
 import NotFound from "../pages/LandingPages/NotFound/NotFound";
-import LandingAffiliates from "../pages/LandingPages/LandingAffiliates/LandingAffiliates";
+import LandingAffiliates from "../pages/LandingPages/Affiliates/LandingAffiliates";
 import Dashboard from "../pages/PPCAutomate/Dashboard/Dashboard";
 import Information from "../pages/Account/Information/Information";
 import Billing from "../pages/Account/Billing/Billing";
@@ -21,7 +21,8 @@ import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithA
 import Home from "../pages/Home/Home";
 import Scanner from "../pages/PPCAutomate/Scanner/Scanner";
 import Dayparting from "../pages/PPCAutomate/Dayparting/Dayparting";
-import LandingAutomation from "../pages/LandingPages/LandingAutomation/LandingAutomation";
+import LandingAutomation from "../pages/LandingPages/Automation/LandingAutomation";
+import Ebook from "../pages/LandingPages/Ebook/Ebook";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -59,9 +60,7 @@ const routers = () => {
     return (
         <Router history={history}>
             <Switch>
-                <Route exact path="/" render={() => {
-                    window.location = '/automation'
-                }}/>
+                <Route exact path="/" component={LandingAutomation}/>
 
                 <Route exact path="/login" component={LoginPage}/>
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
@@ -69,7 +68,7 @@ const routers = () => {
 
 
                 <Route exact path="/affiliates" component={LandingAffiliates}/>
-                <Route exact path="/automation" component={LandingAutomation}/>
+                <Route exact path="/amazon-ppc-blueprint" component={Ebook}/>
 
                 <ConnectedAmazonRoute
                     exact
