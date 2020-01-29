@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
-import {Icon} from "antd";
+import logoDark from '../../../../assets/img/ProfitWhales-logo-dark.svg';
+import logoWhite from '../../../../assets/img/ProfitWhales-logo-white.svg';
 import {Link} from "react-router-dom";
 
 import './Header.less';
@@ -31,7 +31,8 @@ const Header = () => {
             <div className="container">
                 <div>
                     <Link to='/automation'>
-                        <img src={logo} alt="Profit Whales" className='logo'/>
+                        <img src={logoDark} alt="Profit Whales" className='logo dark'/>
+                        <img src={logoWhite} alt="Profit Whales" className='logo white'/>
                     </Link>
 
                     <button className='burger-menu-button' onClick={() => switchMenu(!openedMenu)}>

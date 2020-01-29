@@ -22,6 +22,7 @@ import Home from "../pages/Home/Home";
 import Scanner from "../pages/PPCAutomate/Scanner/Scanner";
 import Dayparting from "../pages/PPCAutomate/Dayparting/Dayparting";
 import LandingAutomation from "../pages/LandingPages/Automation/LandingAutomation";
+import Ebook from "../pages/LandingPages/Ebook/Ebook";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -70,6 +71,7 @@ const routers = () => {
 
                 <Route exact path="/affiliates" component={LandingAffiliates}/>
                 <Route exact path="/automation" component={LandingAutomation}/>
+                <Route exact path="/amazon-ppc-blueprint" component={Ebook}/>
 
                 <ConnectedAmazonRoute
                     exact

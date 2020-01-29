@@ -56,16 +56,28 @@ const RegistrationPage = () => {
                         <div className="title">
                             You’ll receive these features in all plans:
                         </div>
+
                         <ul className="info-list">
-                            <li>AI powered PPC campaigns</li>
                             <li>
-                                Easy to set up and launch your campaigns in
-                                a few clicks
+                                Focus on your Amazon business, not on ads
                             </li>
-                            <li>Enjoyable interface</li>
-                            <li>Tens of hours saved per week</li>
-                            <li>Thousands of dollars saved per ASIN</li>
+                            <li>
+                                Automatic data-driven bid management in real-time
+                            </li>
+                            <li>
+                                Harvesting new keywords and cutting bleeding ones to improve your conversions so to boost organic sales
+                            </li>
+                            <li>
+                                Data-driven dashboard with a lot of metrics to make profitable decisions for your business
+                            </li>
+                            <li>
+                                Day-parting tool to run your ads on a certain time of the day
+                            </li>
+                            <li>
+                                You sell, we will do the rest!
+                            </li>
                         </ul>
+
                         <Link to="/login" className="btn-container">
                             Already have an account?
                             <p>Log In</p>
