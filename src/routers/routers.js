@@ -12,7 +12,7 @@ import ProductSettings from "../pages/PPCAutomate/ProductSettings/ProductSetting
 import MWS from "../pages/authentication/AccountBinding/MWS/MWS";
 import PPC from "../pages/authentication/AccountBinding/PPC/PPC";
 import NotFound from "../pages/LandingPages/NotFound/NotFound";
-import LandingAffiliates from "../pages/LandingPages/LandingAffiliates/LandingAffiliates";
+import LandingAffiliates from "../pages/LandingPages/Affiliates/LandingAffiliates";
 import Dashboard from "../pages/PPCAutomate/Dashboard/Dashboard";
 import Information from "../pages/Account/Information/Information";
 import Billing from "../pages/Account/Billing/Billing";
@@ -21,7 +21,7 @@ import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithA
 import Home from "../pages/Home/Home";
 import Scanner from "../pages/PPCAutomate/Scanner/Scanner";
 import Dayparting from "../pages/PPCAutomate/Dayparting/Dayparting";
-import LandingAutomation from "../pages/LandingPages/LandingAutomation/LandingAutomation";
+import LandingAutomation from "../pages/LandingPages/Automation/LandingAutomation";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
