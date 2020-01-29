@@ -1,8 +1,7 @@
 import React from "react";
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Text
 } from "recharts";
-import {metricsList} from "./metricsList";
 
 
 const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
@@ -112,6 +111,15 @@ const data = [
     },
 ];
 
+const CustomizedAxisTick = (props) => {
+    if (props.index === 0 || props.index % 4 === 0 || props.index === 23) {
+        return <Text {...props} textLength={30} text-anchor="middle"
+                     alignment-baseline="central">{props.payload.value}</Text>;
+    } else {
+        return '';
+    }
+};
+
 const HourChart = ({firstMetric, secondMetric}) => {
     return (
         <div className='chart-block hour-chart'>
@@ -128,7 +136,8 @@ const HourChart = ({firstMetric, secondMetric}) => {
                     />
 
                     <XAxis
-                        interval={2}
+                        interval={0}
+                        tick={<CustomizedAxisTick/>}
                         axisLine={false}
                         dataKey="name"
                         tickFormatter={(date) => date}
