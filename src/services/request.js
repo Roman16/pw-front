@@ -59,6 +59,10 @@ const api = (method, url, data, type, abortToken) => {
                     localStorage.clear();
                 }
 
+                if (axios.isCancel(error)) {
+                    console.log('Request canceled');
+                }
+
                 if (error.response) {
                     if (typeof error.response.data === 'object') {
                         reject(error);

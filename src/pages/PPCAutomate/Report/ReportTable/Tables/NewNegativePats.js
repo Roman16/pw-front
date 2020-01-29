@@ -146,6 +146,7 @@ const NewNegativePats = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -165,6 +166,7 @@ const NewNegativePats = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -236,6 +238,7 @@ const NewNegativePats = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {

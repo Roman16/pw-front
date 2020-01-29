@@ -49,7 +49,7 @@ const ChartStatistics = ({onSelectMetric, filteredMetric}) => {
                 </div>
 
                 <div className='sorter'>
-                    <div className="select first">
+                    <div className={`${activeTab === 'dayHour' ? "select first no-border" : "select first"}`}>
                         <CustomSelect
                             value={firstCompareMetric.key}
                             dropdownClassName={'full-width-menu'}

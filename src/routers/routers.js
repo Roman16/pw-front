@@ -60,9 +60,7 @@ const routers = () => {
     return (
         <Router history={history}>
             <Switch>
-                <Route exact path="/" render={() => {
-                    window.location = '/automation'
-                }}/>
+                <Route exact path="/" component={LandingAutomation}/>
 
                 <Route exact path="/login" component={LoginPage}/>
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
@@ -70,7 +68,6 @@ const routers = () => {
 
 
                 <Route exact path="/affiliates" component={LandingAffiliates}/>
-                <Route exact path="/automation" component={LandingAutomation}/>
                 <Route exact path="/amazon-ppc-blueprint" component={Ebook}/>
 
                 <ConnectedAmazonRoute

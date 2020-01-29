@@ -27,6 +27,7 @@ export const userUrls = {
     updateStatus: 'user/account/subscription/all/update-preview',
     coupon: (subscriptionId) => `user/account/subscription/${subscriptionId}/update`,
     couponStatus: 'user/account/subscription/check-coupon',
+    ebookSubscribe: 'landings/ebook/send-me',
 };
 
 export const productsUrls = {

@@ -127,6 +127,7 @@ const NewNegativeKeywords = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -146,6 +147,7 @@ const NewNegativeKeywords = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -217,6 +219,7 @@ const NewNegativeKeywords = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {

@@ -33,7 +33,8 @@ export const userService = {
     updateSubscriptionStatus,
     applyCoupon,
     getSubscription,
-    getCouponStatus
+    getCouponStatus,
+    ebookOnSubscribe
 };
 
 function login(user) {
@@ -158,6 +159,11 @@ function applyCoupon(id, planId, coupon) {
 
 function getCouponStatus(coupon) {
     return api('post', `${userUrls.couponStatus}?coupon_code=${coupon}`);
+}
+
+//-------------------------------------
+function ebookOnSubscribe(email) {
+    return api('post', `${userUrls.ebookSubscribe}`, email);
 }
 
 //-------------------------------------

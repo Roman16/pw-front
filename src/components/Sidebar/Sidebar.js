@@ -111,7 +111,7 @@ const Sidebar = () => {
         >
             <div className="sidebar-header">
                 <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed}/>
-                <Link to="/automation" className="sidebar-logo">
+                <Link to="/" className="sidebar-logo">
                     <img className="logo" src={logo} alt="logo"/>
                 </Link>
             </div>

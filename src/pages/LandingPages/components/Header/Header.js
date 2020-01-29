@@ -30,7 +30,7 @@ const Header = () => {
         <header className='not-found-page__header' id={'header'}>
             <div className="container">
                 <div>
-                    <Link to='/automation'>
+                    <Link to='/'>
                         <img src={logoDark} alt="Profit Whales" className='logo dark'/>
                         <img src={logoWhite} alt="Profit Whales" className='logo white'/>
                     </Link>
@@ -52,7 +52,7 @@ const Header = () => {
                             <li className="has-child"><a href="#">Products</a>
                                 <ul className="sub-menu">
                                     <li><a href='https://profitwhales.com/scanner'>PPC Scanner</a></li>
-                                    <li><Link to='/automation'>PPC Automate</Link></li>
+                                    <li><Link to='/'>PPC Automate</Link></li>
                                 </ul>
                             </li>
                             <li className="has-child"><a>Services</a>

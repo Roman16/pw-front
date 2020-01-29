@@ -15,6 +15,10 @@ import {reportsActions} from "../../../../actions/reports.actions";
 import {reportsUrls} from "../../../../constans/api.urls";
 import "./ReportTable.less";
 import {mainChangesCount, mainHasNewReport} from "./Tables/changesCount";
+import axios from "axios";
+
+const CancelToken = axios.CancelToken;
+let source = null;
 
 const {TabPane} = Tabs;
 
@@ -27,7 +31,8 @@ const TabName = ({name = null, type, counts, countsWithNew}) => {
                 {mainChangesCount(counts, type)}
             </div>
 
-            {mainHasNewReport(countsWithNew, type) > 0 && <div className='new-count'>New {mainHasNewReport(countsWithNew, type)}</div>}
+            {mainHasNewReport(countsWithNew, type) > 0 &&
+            <div className='new-count'>New {mainHasNewReport(countsWithNew, type)}</div>}
         </div>
     )
 };
@@ -43,7 +48,8 @@ const subTables = {
 
 const tabsItem = [
     {
-        tabName: (key, counts, countsWithNew) => <TabName name="Keywords Optimization" type={key} counts={counts} countsWithNew={countsWithNew}/>,
+        tabName: (key, counts, countsWithNew) => <TabName name="Keywords Optimization" type={key} counts={counts}
+                                                          countsWithNew={countsWithNew}/>,
         key: "keywords-optimization",
         component: (
             onChangeSubTab,
@@ -74,7 +80,8 @@ const tabsItem = [
         )
     },
     {
-        tabName: (key, counts, countsWithNew) => <TabName name="PAT’s Optimization" type={key} counts={counts} countsWithNew={countsWithNew}/>,
+        tabName: (key, counts, countsWithNew) => <TabName name="PAT’s Optimization" type={key} counts={counts}
+                                                          countsWithNew={countsWithNew}/>,
         key: "pats-optimization",
         component: (
             onChangeSubTab,
@@ -105,7 +112,8 @@ const tabsItem = [
         )
     },
     {
-        tabName: (key, counts, countsWithNew) => <TabName name="New Keywords" type={key} counts={counts} countsWithNew={countsWithNew}/>,
+        tabName: (key, counts, countsWithNew) => <TabName name="New Keywords" type={key} counts={counts}
+                                                          countsWithNew={countsWithNew}/>,
         key: "new-keywords",
         component: (
             onChangeSubTab,
@@ -136,7 +144,8 @@ const tabsItem = [
         )
     },
     {
-        tabName: (key, counts, countsWithNew) => <TabName name="New Negative Keywords" type={key} counts={counts} countsWithNew={countsWithNew}/>,
+        tabName: (key, counts, countsWithNew) => <TabName name="New Negative Keywords" type={key} counts={counts}
+                                                          countsWithNew={countsWithNew}/>,
         key: "new-negative-keywords",
         component: (
             onChangeSubTab,
@@ -167,7 +176,8 @@ const tabsItem = [
         )
     },
     {
-        tabName: (key, counts, countsWithNew) => <TabName name={"New PAT 's"} type={key} counts={counts} countsWithNew={countsWithNew}/>,
+        tabName: (key, counts, countsWithNew) => <TabName name={"New PAT 's"} type={key} counts={counts}
+                                                          countsWithNew={countsWithNew}/>,
         key: "new-pats",
         component: (
             onChangeSubTab,
@@ -198,7 +208,8 @@ const tabsItem = [
         )
     },
     {
-        tabName: (key, counts, countsWithNew) => <TabName name={"New Negative PAT's"} type={key} counts={counts} countsWithNew={countsWithNew}/>,
+        tabName: (key, counts, countsWithNew) => <TabName name={"New Negative PAT's"} type={key} counts={counts}
+                                                          countsWithNew={countsWithNew}/>,
         key: "new-negative-pats",
         component: (
             onChangeSubTab,
@@ -277,6 +288,10 @@ class ReportTable extends Component {
         const {activeTab, activeSubTab, startDate, endDate, page, pageSize, filteredColumns, sorterColumn} = this.state,
             {selectedAll, selectedProductId} = this.props;
 
+        source && source.cancel();
+
+        source = CancelToken.source();
+
         this.props.getReports({
             id: selectedAll ? "all" : selectedProductId,
             dataType: activeTab,
@@ -288,7 +303,7 @@ class ReportTable extends Component {
             pageSize,
             filteredColumns,
             sorterColumn
-        });
+        }, source.token);
     };
 
     handlePaginationChange = ({page, pageSize}) => {
@@ -340,8 +355,10 @@ class ReportTable extends Component {
                     key: 'eventDateTime',
                     type: 'desc'
                 }
-            },
-            this.fetchReports
+            }, () => {
+                // source && source.cancel();
+                this.fetchReports();
+            }
         );
     };
 
@@ -354,7 +371,10 @@ class ReportTable extends Component {
                 key: 'eventDateTime',
                 type: 'desc'
             }
-        }, this.fetchReports);
+        }, () => {
+            // source && source.cancel();
+            this.fetchReports();
+        });
     };
 
     handleChangeFilter = (key, value, type) => {
@@ -501,7 +521,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getReports: options => dispatch(reportsActions.fetchAllReports(options)),
+    getReports: (options, cancelToken) => dispatch(reportsActions.fetchAllReports(options, cancelToken)),
     setPageSize: pageSize => dispatch(reportsActions.setPageSize(pageSize)),
 });
 

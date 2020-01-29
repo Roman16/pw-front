@@ -437,6 +437,7 @@ const NewKeywords = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
@@ -475,6 +476,7 @@ const NewKeywords = ({
                     onChangeFilter={onChangeFilter}
                     filteredColumns={filteredColumns}
                     dataIndex={dataIndex}
+                    percent={true}
                 />
             },
             {
