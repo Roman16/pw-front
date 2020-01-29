@@ -330,21 +330,21 @@ class RegistrationPage extends Component {
                         <a href="/#">Privacy Statement</a>
                     </Col>
                 </Row>
-                <Row className="payments-row">
-                    <Col xs={24} sm={24} md={10}>
-                        <Row type="flex">
-                            <Col xs={12} sm={12} md={12}>
-                                <img src="/scrill.svg" alt="scrill"/>
-                            </Col>
-                            <Col xs={12} sm={12} md={12}>
-                                <img src="/visa.svg" alt="visa"/>
-                            </Col>
-                        </Row>
-                    </Col>
-                    <Col xs={24} sm={24} md={14}>
-                        <p>This is a secure 128-bit ssl encrypted payment</p>
-                    </Col>
-                </Row>
+                {/*<Row className="payments-row">*/}
+                {/*    <Col xs={24} sm={24} md={10}>*/}
+                {/*        <Row type="flex">*/}
+                {/*            <Col xs={12} sm={12} md={12}>*/}
+                {/*                <img src="/scrill.svg" alt="scrill"/>*/}
+                {/*            </Col>*/}
+                {/*            <Col xs={12} sm={12} md={12}>*/}
+                {/*                <img src="/visa.svg" alt="visa"/>*/}
+                {/*            </Col>*/}
+                {/*        </Row>*/}
+                {/*    </Col>*/}
+                {/*    <Col xs={24} sm={24} md={14}>*/}
+                {/*        <p>This is a secure 128-bit ssl encrypted payment</p>*/}
+                {/*    </Col>*/}
+                {/*</Row>*/}
             </form>
         );
     }
