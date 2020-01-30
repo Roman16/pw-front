@@ -45,12 +45,12 @@ const stepsSlider = [
     },
     {
         title: `Monitor <br/> The Changes`,
-        description: 'You have to make yourself comfortable, sit, and enjoy changes that software would do. You see, for what you pay, it soothes, right?',
+        description: 'You have to make yourself comfortable, sit, and enjoy changes that the software would do. You see, for what you pay, it’s soothing, right?',
         img: stepsImages.step3
     },
     {
         title: `Access <br/> A Lot More Data`,
-        description: 'We obsessed with data, so we developed a dashboard and day-parting tool so you can see your business metrics at a glance and make more profitable decisions.',
+        description: 'We’re obsessed with data, so we developed a dashboard and day-parting tool, so you can see your business metrics at a glance and make more profitable decisions.',
         img: stepsImages.step4
     },
 ];
@@ -589,15 +589,15 @@ const LandingAutomation = () => {
                         <h1>Engage in Amazon <br/> business <span>not in ads</span></h1>
 
                         <div className='description'>
-                            Imagine the software could save you a ton of time and money while
-                            increasing return on your Amazon ad spends. With the help of our data-driven algorithms and
-                            PPC automation software, it's more than possible.
+                            Imagine that software could save you a ton of time and money while increasing return on your
+                            Amazon ad spending. With the help of our data-driven algorithms and PPC automation software,
+                            it's more than possible.
                         </div>
 
                         <div className="col">
                             <div className='advantages'>
                                 <span><div/>Cancel anytime</span>
-                                <span><div/>14 Days Free Trial</span>
+                                <span><div/>14-day Free Trial</span>
                                 <span><div/>No credit card required</span>
                             </div>
 
@@ -643,7 +643,7 @@ const LandingAutomation = () => {
                             </div>
 
                             <div>
-                                He is waisting ton of money on bleeding keywords, and losing money from keywords, he
+                                He is wasting a ton of money on bleeding keywords and losing money from the ones he
                                 isn’t bidding on.
                             </div>
 
@@ -852,7 +852,7 @@ const LandingAutomation = () => {
 
             <section className='comments'>
                 <div className="container">
-                    <h2>What our customers <br/> are saying</h2>
+                    <h2>What Our Customers Say</h2>
 
                     <div className="carousel">
 
@@ -921,9 +921,9 @@ const LandingAutomation = () => {
                                 <div className='title'>Product Targetings Optimization</div>
                             </div>
                             <div className="description">
-                                Price aware algorithm optimizes your product attribute targetings (ASIN’s, categories)
-                                based on your Target ACoS and makes bid adjustments based on your historical data to
-                                reach the best results possible.
+                                Price aware algorithm optimizes your product attribute targeting (ASIN’s, categories)
+                                based on your target ACoS. It also makes bid adjustments based on your historical data
+                                to reach the best results possible.
                             </div>
                         </div>
 
@@ -1009,7 +1009,7 @@ const LandingAutomation = () => {
                                 <div className="sum">
                                     <span className="result-sum">$ 35</span>
                                     <span className='description'>
-                                       Estimated Price per month based on your 30 days Amazon Ad spend
+                                       Estimated price per month based on your 30-day Amazon ad spending
                                     </span>
 
                                     <a href="https://profitwhales.com/pricing">
@@ -1103,7 +1103,8 @@ const LandingAutomation = () => {
                 footer={false}
                 destroyOnClose={true}
             >
-                <iframe width="853" height="480" src="https://www.youtube.com/embed/m608kntHUzU?autoplay=1" frameBorder="0"
+                <iframe width="853" height="480" src="https://www.youtube.com/embed/m608kntHUzU?autoplay=1"
+                        frameBorder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen></iframe>
             </Modal>

@@ -338,6 +338,13 @@
             margin: 0 auto;
             text-align: left;
 
+            .sponsored {
+              flex-direction: column;
+              span {
+                margin: 5px 0;
+              }
+            }
+
             h1 {
               font-size: 21px;
               line-height: 25px;
@@ -407,6 +414,16 @@
     @media (max-width: 700px) {
       .video-btn {
         margin: 40px 0 0 0;
+      }
+    }
+    @media (max-width: 500px) {
+      .video-btn {
+        margin: 0;
+        flex-direction: column;
+
+        .pulse {
+          margin: 20px 0 0 0;
+        }
       }
     }
   }
@@ -1927,5 +1944,14 @@
     }
   }
 
+  @media (max-width: 800px) {
+    width: 100vw !important;
+
+    .ant-modal-content,
+    .ant-modal-body,
+    iframe {
+      width: 100% !important;
+    }
+  }
 }
 
