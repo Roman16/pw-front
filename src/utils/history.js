@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import ModalWindow from "../components/ModalWindow/ModalWindow";
 import RescanWindow from "../pages/PPCAutomate/Scanner/ModalWindows/RescanWindow";
 
+
 const getUserConfirmation = (message, callback) => {
     const modal = document.createElement("div");
     document.body.appendChild(modal);
@@ -33,3 +34,10 @@ const getUserConfirmation = (message, callback) => {
 
 export const history = createBrowserHistory({getUserConfirmation});
 
+let prevLocation = {};
+history.listen(location => {
+    const pathChanged = prevLocation.pathname !== location.pathname;
+    const hashChanged = prevLocation.hash !== location.hash;
+    if (pathChanged || hashChanged) window.scrollTo(0, 0);
+    prevLocation = location;
+});

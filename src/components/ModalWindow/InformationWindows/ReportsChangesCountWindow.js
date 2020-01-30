@@ -13,7 +13,7 @@ const ReportsChangesCountWindow = () => {
     const dispatch = useDispatch();
     const {ppcNotification, subscribedProduct} = useSelector(state => ({
         ppcNotification: state.user.notifications ? state.user.notifications.ppc_optimization : {},
-        subscribedProduct: state.user.subscriptions[subscriptionProducts.find(item => item.key === 'ppc').productId],
+        subscribedProduct: state.user.subscriptions ? state.user.subscriptions[subscriptionProducts.find(item => item.key === 'ppc').productId] : null,
     }));
 
     function handleOk() {

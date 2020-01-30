@@ -38,17 +38,20 @@ const defaultData = [
     },
 ];
 
-const TooltipDescription = ({value, day, metric}) => {
+const TooltipDescription = ({value, day}) => {
 
     return (
         <Fragment>
             <h3>{day}</h3>
-            {/*<span className='selected-metric'>Clicks</span>*/}
 
-            <div className="value">
-                <div
-                    style={{background: colorList.find(item => value > item.min && value <= item.max).color || '#464898'}}/>
-                {value}
+            <div className="row-metric">
+                <div className='example-fill' style={{background: colorList.find(item => value > item.min && value <= item.max).color || '#464898'}}/>
+
+                <span className='selected-metric'>Budget</span>
+
+                <div className="value">
+                    ${value}
+                </div>
             </div>
         </Fragment>
     )

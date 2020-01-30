@@ -15,7 +15,7 @@ const Ebook = () => {
             email
         })
             .then(() => {
-                window.location.replace(`${window.location.origin}/thank-you`)
+                history.push('/thank-you');
             })
     }
 

@@ -706,9 +706,45 @@
       }
     }
 
+    @media (max-width: 850px) {
+      & {
+        .all-steps {
+          & > div {
+            span {
+             font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+
+    @media (max-width: 750px) {
+      & {
+        .all-steps {
+          margin-bottom: 60px;
+
+          & > div {
+            span {
+              width: 18vw;
+            }
+          }
+        }
+      }
+    }
+
+    @media (max-width: 630px) {
+      & {
+        .all-steps {
+          flex-wrap: nowrap;
+        }
+      }
+    }
+
     @media (max-width: 500px) {
       & {
         .all-steps {
+          margin: 30px 0;
+
           & > div {
             span {
               display: none;
