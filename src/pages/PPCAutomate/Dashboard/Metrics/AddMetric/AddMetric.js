@@ -4,7 +4,6 @@ import plusIcon from '../../../../../assets/img/icons/plus-blue.svg';
 import plusIconWhite from '../../../../../assets/img/icons/plus-white.svg';
 import AddMetricModal from "./AddMetricModal";
 import {dashboardActions} from '../../../../../actions/dashboard.actions';
-import {metricsListArray} from '../metricsList';
 
 import './AddMetric.less';
 

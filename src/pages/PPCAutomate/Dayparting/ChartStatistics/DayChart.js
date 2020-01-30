@@ -12,22 +12,30 @@ const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
                     <h3>{payload[0].payload.name}</h3>
 
                     <div className="row">
-                        <div className='example-fill' style={{background: '#82ca9d'}}/>
-                        <span className='selected-metric'>{firstMetric.title}</span>
+                        <div className="col fills">
+                            <div className='example-fill' style={{background: '#82ca9d'}}/>
 
-                        <div className="value">
-                            {firstMetric.type === 'currency' ? `${payload[0].value}$` : (firstMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                            {secondMetric.key !== 'nothing' &&
+                            <div className='example-fill' style={{background: '#8884d8'}}/>}
+                        </div>
+
+                        <div className="col metrics-name">
+                            <span className='selected-metric'>{firstMetric.title}</span>
+
+                            {secondMetric.key !== 'nothing' &&
+                            <span className='selected-metric'>{secondMetric.title}</span>}
+                        </div>
+
+                        <div className="col values">
+                            <div className="value">
+                                {firstMetric.type === 'currency' ? `$${payload[0].value}` : (firstMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                            </div>
+
+                            {secondMetric.key !== 'nothing' && <div className="value">
+                                {secondMetric.type === 'currency' ? `$${payload[1].value}` : (secondMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                            </div>}
                         </div>
                     </div>
-
-                    {secondMetric.key !== 'nothing' && <div className="row">
-                        <div className='example-fill' style={{background: '#8884d8'}}/>
-                        <span className='selected-metric'>{secondMetric.title}</span>
-
-                        <div className="value">
-                            {secondMetric.type === 'currency' ? `${payload[1].value}$` : (secondMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
-                        </div>
-                    </div>}
                 </div>
             </div>
         )
