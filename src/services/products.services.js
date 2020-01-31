@@ -10,8 +10,8 @@ export const productsServices = {
     updateProductSettings
 };
 
-function getProducts({size, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0}) {
-    return api('get', `${productsUrls.allProducts}?search_query=${searchStr}&page=${page}&size=${size}&ungroup_variations=${ungroupVariations}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}`, null, null)
+function getProducts({size, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0, cancelToken}) {
+    return api('get', `${productsUrls.allProducts}?search_query=${searchStr}&page=${page}&size=${size}&ungroup_variations=${ungroupVariations}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}`, null, null, cancelToken)
 }
 
 function getProductsSettingsList({size, page, searchStr = '', onlyActive, cancelToken}) {
