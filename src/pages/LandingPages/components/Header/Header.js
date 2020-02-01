@@ -6,7 +6,6 @@ import {Link} from "react-router-dom";
 import './Header.less';
 import {history} from "../../../../utils/history";
 
-const authorized = localStorage.getItem('token');
 
 const Header = () => {
     const [openedMenu, switchMenu] = useState(false);
@@ -24,6 +23,8 @@ const Header = () => {
             document.querySelector('body').style.overflow = 'auto';
         }
     }, [openedMenu]);
+
+    const authorized = localStorage.getItem('token');
 
 
     return (
@@ -43,33 +44,21 @@ const Header = () => {
 
                     <nav className={`header-menu ${openedMenu ? 'open' : ''}`}>
                         <ul className="">
-                            <li className="has-child">
-                                <a>Company</a>
-                                <ul className="sub-menu">
-                                    <li><a href="https://profitwhales.com/about-us">About us</a></li>
-                                </ul>
+                            <li>
+                                <Link to={'/about-us'}>About us</Link>
                             </li>
-                            <li className="has-child"><a href="#">Products</a>
+                            <li className="has-child"><a href="#">Services</a>
                                 <ul className="sub-menu">
+                                    <li><Link to='/'>PPC Optimization</Link></li>
                                     <li><a href='https://profitwhales.com/scanner'>PPC Scanner</a></li>
-                                    <li><Link to='/'>PPC Automate</Link></li>
-                                </ul>
-                            </li>
-                            <li className="has-child"><a>Services</a>
-                                <ul className="sub-menu">
-                                    <li><a href="https://profitwhales.com/expert-service">Expert Service</a>
-                                    </li>
+                                    <li className="soon"><a href='#'>Zero To Hero</a></li>
+                                    <li className="soon"><a href='#'>Analytics</a></li>
                                 </ul>
                             </li>
                             <li><a href="https://profitwhales.com/pricing">Pricing</a></li>
+                            <li><Link to={'/affiliates'}>Affiliate Program</Link></li>
                             <li><a href="https://profitwhales.com/blog">Blog</a></li>
-                            <li className="has-child">
-                                <a href="#">Help</a>
-                                <ul className="sub-menu">
-                                    <li><a href="https://profitwhales.com/contact-us">Contact us</a></li>
-                                    <li><a href="https://profit-whales.kayako.com">Help Center</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="https://profitwhales.com/contact-us">Contact us</a></li>
                         </ul>
                     </nav>
                 </div>
