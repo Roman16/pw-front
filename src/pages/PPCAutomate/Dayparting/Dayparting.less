@@ -244,6 +244,8 @@
     margin: 0 0.7142857142857143rem 0 0;
 
     .section-header {
+      height: 27px;
+
       .out-of-budget {
         display: flex;
         align-items: center;
@@ -286,9 +288,13 @@
       margin: 15px 0 0 0;
 
       .row {
-        margin: 0 0 5px 0;
+        margin: 0 0 0.35714285714285715rem 0;
         align-items: flex-end;
         flex-wrap: nowrap;
+
+        &:last-child {
+          margin: 0;
+        }
 
         .day-name {
           width: 1.0714285714285714rem;
@@ -343,6 +349,7 @@
     grid-area: chartStatistics;
 
     .section-header {
+      height: 27px;
       .tabs {
         display: flex;
         background: #F5F5FF;
@@ -467,6 +474,10 @@
           margin: 0 0 0.35714285714285715rem 0;
           align-items: flex-end;
           flex-wrap: nowrap;
+
+          &:last-child {
+            margin: 0;
+          }
 
           .day-name {
             width: 1.0714285714285714rem;

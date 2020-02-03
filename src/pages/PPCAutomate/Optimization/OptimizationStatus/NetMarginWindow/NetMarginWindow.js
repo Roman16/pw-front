@@ -8,6 +8,7 @@ import './NetMarginWindow.less';
 import {useDispatch, useSelector} from "react-redux";
 import {productsActions} from "../../../../../actions/products.actions";
 import {productsServices} from "../../../../../services/products.services";
+import ModalWindow from "../../../../../components/ModalWindow/ModalWindow";
 
 const errorText = 'net margin should be more than 0';
 
@@ -53,10 +54,10 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
     };
 
     return (
-        <Modal
+        <ModalWindow
             visible={isShowModal}
-            onCancel={handleCancel}
-
+            handleCancel={handleCancel}
+            className={'net-margin-window'}
             footer={null}
         >
             <div className="net-margin">
@@ -93,8 +94,9 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
                     If you want to set Product Net Margin for all your products go to
                     Products Settings
                 </div>
+                <br/>
             </div>
-        </Modal>
+        </ModalWindow>
 
     );
 };
