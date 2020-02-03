@@ -53,9 +53,9 @@ export const dashboardUrls = {
 };
 
 export const scannerUrls = {
-    scanStatus: 'ppc/scanner/get-scan-status',
-    getChanges: 'ppc/scanner/get-changes-table',
-    getScanning: 'ppc/scanner/scan-sp-campaigns',
+    scanStatus: 'ppc-scanner/get-scan-status',
+    getChanges: 'ppc-scanner/get-changes-table',
+    getScanning: 'ppc-scanner/scan-sp-campaigns',
 };
 
 export const daypartingUrls = {
