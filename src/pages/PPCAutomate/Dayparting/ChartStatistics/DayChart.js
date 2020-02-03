@@ -71,7 +71,7 @@ const data = [
 const DayChart = ({firstMetric, secondMetric}) => {
     return (
         <div className='chart-block day-chart'>
-            <ResponsiveContainer height='100%' width='100%'>
+            <ResponsiveContainer height='99%' width='100%'>
                 <LineChart
                     data={data}
                     margin={{

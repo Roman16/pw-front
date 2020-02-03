@@ -209,7 +209,7 @@ const SubscriptionPlan = ({
                                     Coupon
                                 </div>
                                 <div className="discount">
-                                    {product.applied_coupon.amount_off ? `$ ${product.applied_coupon.amount_off}` : `${product.applied_coupon.percent_off} %`}
+                                    {product.applied_coupon.amount_off ? `$ ${product.applied_coupon.amount_off}` : `${product.applied_coupon.percent_off} %`} off
                                 </div>
                             </div>
                         </div>}
