@@ -6,10 +6,10 @@ import {Link} from "react-router-dom";
 import './Header.less';
 import {history} from "../../../../utils/history";
 
-const authorized = localStorage.getItem('token');
 
 const Header = () => {
     const [openedMenu, switchMenu] = useState(false);
+    const authorized = localStorage.getItem('token');
 
     useEffect(() => {
         document.querySelector('.header-menu').addEventListener('click', () => {
