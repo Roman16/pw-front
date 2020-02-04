@@ -93,6 +93,7 @@ const NewNegativeKeywords = ({
         },
         {
             ...negativeMatchTypeField,
+            key: 'd_negativeKeywordMatchType',
             width: '14em',
             sorter: true,
             filter: (dataIndex) => <ColumnMenuFilter
