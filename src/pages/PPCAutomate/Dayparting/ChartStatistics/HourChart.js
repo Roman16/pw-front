@@ -128,9 +128,9 @@ const CustomizedAxisTick = (props) => {
     }
 };
 
-const HourChart = ({firstMetric, secondMetric}) => {
+const HourChart = ({firstMetric, secondMetric, activeChart}) => {
     return (
-        <div className='chart-block hour-chart'>
+        <div className={`chart-block hour-chart ${activeChart ? 'active' : ''}`}>
             <ResponsiveContainer height='99%' width='100%'>
                 <LineChart
                     data={data}

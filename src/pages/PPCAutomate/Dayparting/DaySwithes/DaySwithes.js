@@ -5,44 +5,23 @@ import moment from "moment";
 import Selection from "@simonwep/selection-js/src/selection";
 import shortid from "shortid";
 import './DaySwitches.less';
+import {hold} from "../../../../utils/hold";
+import {daypartingServices} from "../../../../services/dayparting.services";
+import {notification} from "../../../../components/Notification";
 
-const defaultList = [
-    {
-        day: 'Sunday',
-        shortName: 'Sun',
-        value: Array.from({length: 24}, () => true)
-    },
-    {
-        day: 'Monday',
-        shortName: 'Mon',
-        value: Array.from({length: 24}, () => true)
-    },
-    {
-        day: 'Tuesday',
-        shortName: 'Thur',
-        value: Array.from({length: 24}, () => true)
-    },
-    {
-        day: 'Wednesday',
-        shortName: 'Wed',
-        value: Array.from({length: 24}, () => true)
-    },
-    {
-        day: 'Thursday',
-        shortName: 'Thue',
-        value: Array.from({length: 24}, () => true)
-    },
-    {
-        day: 'Friday',
-        shortName: 'Fri',
-        value: Array.from({length: 24}, () => true)
-    },
-    {
-        day: 'Saturday',
-        shortName: 'Sat',
-        value: Array.from({length: 24}, () => true)
-    },
+const defaultList = Array.from({length: 168}, () => '1').join('');
+
+const days = [
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
 ];
+
+const hours = Array.from({length: 24}, (item, index) => index);
 
 const selection = Selection.create({
     // Class for the selection-area
@@ -54,57 +33,63 @@ const selection = Selection.create({
     // The container is also the boundary in this case
     boundaries: ['.multi-select'],
     singleClick: false,
-
 });
 
-let intervalId = null;
 
 class DaySwitches extends Component {
     state = {
-        hoursStatus: [...defaultList.map(item => ({
-            ...item,
-            value: [...item.value]
-        }))]
+        hoursStatus: [...defaultList]
+    };
+
+    handleUpdateStatus = async () => {
+        hold(async () => {
+            try {
+                await daypartingServices.updateDayPartingParams(this.state.hoursStatus.join(''));
+                notification.success({title: 'Saved'})
+            } catch (e) {
+                notification.error({title: 'Not Saved'})
+            }
+        }, 1000)
+
     };
 
     handleReset = () => {
-        let newList = [...this.state.hoursStatus];
-
         this.setState({
-            hoursStatus: [...newList.map(item => ({
-                ...item,
-                value: Array.from({length: 24}, () => true)
-            }))]
+            hoursStatus: [...defaultList]
         });
     };
 
-    handleSwitchHour = (dayIndex, timeIndex, value) => {
+    handleSwitchHour = (index, value) => {
         let newList = [...this.state.hoursStatus];
-        newList[dayIndex].value[timeIndex] = !value;
+        newList[index] = value === '1' ? '0' : '1';
 
         this.setState({
-            newList: [...newList]
+            hoursStatus: [...newList]
         })
     };
 
     handleSwitchRow = (row, value) => {
-        let newList = [...this.state.hoursStatus];
-        newList[row].value = Array.from({length: 24}, () => !value);
+        let newList = this.state.hoursStatus.map((item, index) => {
+            if (index >= 24 * row && index < 24 * (row + 1)) {
+                return value ? '1' : '0'
+            } else {
+                return item
+            }
+        });
 
         this.setState({
-            newList: [...newList]
+            hoursStatus: [...newList]
         })
     };
 
     handleSwitchColumn = (column, value) => {
         let newList = [...this.state.hoursStatus];
-
-        newList.forEach(item => {
-            item.value[column] = !value
+        [0, 1, 2, 3, 4, 5, 6].forEach(item => {
+            newList[24 * item + column] = value ? '1' : '0';
         });
 
         this.setState({
-            newList: [...newList]
+            hoursStatus: [...newList]
         })
     };
 
@@ -120,7 +105,7 @@ class DaySwitches extends Component {
             .on('move', (event) => {
                 const {changed: {removed}, selected} = event;
                 if (selected.length > 0) {
-                    if (status === 'false') {
+                    if (status === '0') {
                         for (const el of selected) {
                             el.classList.remove('removed');
                             el.classList.add('selected');
@@ -153,21 +138,27 @@ class DaySwitches extends Component {
                 }
 
                 if (selected.length > 0) {
-                    if (status === 'false') {
+                    if (status === '0') {
                         selected.forEach(item => {
-                            newList[item.getAttribute('rowindex')].value[item.getAttribute('columnindex')] = true;
+                            newList[item.getAttribute('hourIndex')] = '1';
                         });
                     } else {
                         selected.forEach(item => {
-                            newList[item.getAttribute('rowindex')].value[item.getAttribute('columnindex')] = false;
+                            newList[item.getAttribute('hourIndex')] = '0';
                         });
                     }
                 }
 
                 this.setState({
-                    newList: [...newList]
+                    hoursStatus: [...newList]
                 })
             });
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevState.hoursStatus.join('') !== this.state.hoursStatus.join('')) {
+            this.handleUpdateStatus()
+        }
     }
 
     render() {
@@ -199,12 +190,12 @@ class DaySwitches extends Component {
                 <div className="switches">
                     <div className="row time-name">
                         <div/>
-                        {hoursStatus[0].value.map((status, timeIndex) => (
+                        {hours.map((status, timeIndex) => (
                             <div key={shortid.generate()}>
                                 {moment(timeIndex + 1, 'HH').format('hh A')}
                                 <Switch
-                                    checked={hoursStatus.every(item => item.value[timeIndex])}
-                                    onChange={() => this.handleSwitchColumn(timeIndex, hoursStatus.every(item => item.value[timeIndex]))}
+                                    checked={[0, 1, 2, 3, 4, 5, 6].map(item => hoursStatus[24 * item + timeIndex]).every(item => item === '1')}
+                                    onChange={(value) => this.handleSwitchColumn(timeIndex, value)}
                                 />
                             </div>
                         ))}
@@ -212,33 +203,28 @@ class DaySwitches extends Component {
 
                     <div className="row">
                         <div className="col day-axis">
-                            {hoursStatus.map((day, dayIndex) => (
+                            {days.map((day, dayIndex) => (
                                 <div className='day-name' key={shortid.generate()}>
                                     <Switch
-                                        checked={day.value.every(item => item)}
-                                        onChange={() => this.handleSwitchRow(dayIndex, day.value.every(item => item))}
+                                        checked={hoursStatus.slice(24 * dayIndex, 24 * (dayIndex + 1)).every(item => item === '1')}
+                                        onChange={(value) => this.handleSwitchRow(dayIndex, value)}
                                     />
                                     <span>
-                                            {window.devicePixelRatio === 2 ? day.shortName[0] : day.shortName}
-                                        </span>
+                                       {window.devicePixelRatio === 2 ? day[0] : day}
+                                    </span>
                                 </div>
                             ))}
                         </div>
 
                         <div className="col multi-select">
-                            {hoursStatus.map((day, dayIndex) => (
-                                <div className="row" key={shortid.generate()}>
-                                    {day.value.map((status, timeIndex) => (
-                                        <div className='statistic-item' key={shortid.generate()}>
-                                            <div
-                                                onClick={() => this.handleSwitchHour(dayIndex, timeIndex, status)}
-                                                className={status ? 'statistic-information active' : 'statistic-information'}
-                                                rowindex={dayIndex}
-                                                columnindex={timeIndex}
-                                                value={status}
-                                            />
-                                        </div>
-                                    ))}
+                            {hoursStatus.map((value, hourIndex) => (
+                                <div className='statistic-item' key={shortid.generate()}>
+                                    <div
+                                        onClick={() => this.handleSwitchHour(hourIndex, value)}
+                                        className={value === '1' ? 'statistic-information active' : 'statistic-information'}
+                                        hourIndex={hourIndex}
+                                        value={value}
+                                    />
                                 </div>
                             ))}
                         </div>

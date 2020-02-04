@@ -31,7 +31,7 @@ class Dayparting extends Component {
                         {colorList.map(item => (
                             <InformationTooltip
                                 type={'custom'}
-                                description={<span>Min: {item.min} <br/> Max: {item.max}</span>}
+                                description={<span>Min: {item.min} % <br/> Max: {item.max} %</span>}
                                 key={shortid.generate()}
                             >
                                 <div key={item.color} style={{background: item.color}}/>

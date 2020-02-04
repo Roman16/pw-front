@@ -29,12 +29,14 @@
     .logo {
       margin: 0 20px 0 0;
       min-width: 100px;
-      max-width: 10em;
+      max-width: 140px;
     }
 
     .logo.white {
       display: none;
     }
+
+
 
     .burger-menu-button {
       cursor: pointer;
@@ -59,8 +61,10 @@
       ul {
         margin: 0;
         display: flex;
+        flex-wrap: wrap;
 
         li {
+          width: max-content;
           display: inline-block;
           vertical-align: middle;
           position: relative;
@@ -71,19 +75,32 @@
             left: 0;
             display: none;
             min-width: 150px;
-            padding: 10px 0;
-            z-index: 100;
+            width: fit-content;
+            border-radius: 8px;
+            z-index: 10000;
+            background-color: #fff;
+            -webkit-box-shadow: 0 7px 7px rgba(44, 48, 58, .08);
+            box-shadow: 0 7px 7px rgba(44, 48, 58, .08);
+            overflow: hidden;
           }
 
           &.has-child:hover .sub-menu {
             display: block;
-            background-color: #fff;
-            -webkit-box-shadow: 0 7px 7px rgba(44, 48, 58, .08);
-            box-shadow: 0 7px 7px rgba(44, 48, 58, .08);
 
             li {
+              min-width: max-content;
               width: 100%;
               text-align: left;
+
+              &.soon {
+                background: rgba(156, 156, 156, 0.49);
+                opacity: .5;
+
+                a {
+                  cursor: default;
+                  pointer-events: none;
+                }
+              }
             }
           }
 
@@ -97,8 +114,11 @@
             transition: .2s;
             opacity: .7;
             padding: 10px 25px;
-
             font-size: 14px;
+
+            &:hover {
+              color: #15191f;
+            }
           }
         }
       }
@@ -116,7 +136,6 @@
         display: block;
         color: #363694;
         font-size: 12px;
-        font-weight: 700;
         -webkit-transition: .2s;
         -o-transition: .2s;
         transition: .2s;
@@ -137,8 +156,9 @@
         border-radius: 8px;
         text-transform: uppercase;
         color: #fff;
-        font-weight: 700;
         margin: 0 0 0 30px;
+        font-size: 14px;
+        font-weight: initial;
 
         &:hover {
           background-color: #60c375;

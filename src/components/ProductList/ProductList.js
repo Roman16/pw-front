@@ -61,7 +61,7 @@ class ProductList extends Component {
                     ...this.state,
                     paginationParams: {
                         ...this.state.paginationParams,
-                        page: +page
+                        page: page ? +page : 1
                     }
                 },
                 this.getProducts

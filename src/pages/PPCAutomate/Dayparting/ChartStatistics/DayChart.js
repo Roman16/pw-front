@@ -68,9 +68,10 @@ const data = [
     },
 ];
 
-const DayChart = ({firstMetric, secondMetric}) => {
+const DayChart = ({firstMetric, secondMetric, activeChart}) => {
+
     return (
-        <div className='chart-block day-chart'>
+        <div className={`chart-block day-chart ${activeChart ? 'active' : ''}`}>
             <ResponsiveContainer height='99%' width='100%'>
                 <LineChart
                     data={data}

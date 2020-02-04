@@ -13,8 +13,12 @@ function getSpendOutStatistic() {
     return api('get', `${daypartingUrls.spendOutBudget}`)
 }
 
-function getAllStatistic(metric) {
-    return api('get', `${daypartingUrls.allStatistic}?metric=${metric}`)
+function getAllStatistic(firstMetric, secondMetric) {
+    const parameters = [
+        secondMetric ? `&secondMetric=${secondMetric}` : '',
+    ];
+
+    return api('get', `${daypartingUrls.allStatistic}?firstMetric=${firstMetric}${parameters.join('')}`)
 }
 
 function getPlacementsStatistic() {
