@@ -444,6 +444,7 @@ const KeywordsOptimization = ({
                 title: 'Origin Match Type',
                 dataIndex: 'd_originKeywordMatchType',
                 key: 'd_originKeywordMatchType',
+                render: (str) => (<span className="capitalize-field">{str}</span>),
                 width: '13.5em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnMenuFilter
@@ -512,6 +513,7 @@ const KeywordsOptimization = ({
                 ),
                 dataIndex: 'd_originPATType',
                 key: 'd_originPATType',
+                render: str => <span className="capitalize-field">{str}</span>,
                 width: '13.5em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnMenuFilter
@@ -614,6 +616,7 @@ const KeywordsOptimization = ({
                 title: 'Origin Match Type',
                 dataIndex: 'd_originKeywordMatchType',
                 key: 'd_originKeywordMatchType',
+                render: (str) => (<span className="capitalize-field">{str}</span>),
                 width: '13em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnMenuFilter
