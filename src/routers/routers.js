@@ -25,6 +25,7 @@ import LandingAutomation from "../pages/LandingPages/Automation/LandingAutomatio
 import Ebook from "../pages/LandingPages/Ebook/Ebook";
 import ThankYou from "../pages/LandingPages/Ebook/ThankYou";
 import AboutUs from "../pages/LandingPages/AboutUs/AboutUs";
+import Pricing from "../pages/LandingPages/Pricing/Pricing";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -71,6 +72,7 @@ const routers = () => {
 
                 <Route exact path="/affiliates" component={LandingAffiliates}/>
                 <Route exact path="/about-us" component={AboutUs}/>
+                <Route exact path="/pricing" component={Pricing}/>
                 <Route exact path="/amazon-ppc-blueprint" component={Ebook}/>
                 <Route exact path="/thank-you" component={ThankYou}/>
 

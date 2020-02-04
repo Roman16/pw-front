@@ -55,7 +55,7 @@ const Header = () => {
                                     <li className="soon"><a href='#'>Analytics</a></li>
                                 </ul>
                             </li>
-                            <li><a href="https://profitwhales.com/pricing">Pricing</a></li>
+                            <li><Link to={'/pricing'}>Pricing</Link></li>
                             <li><Link to={'/affiliates'}>Affiliate Program</Link></li>
                             <li><a href="https://profitwhales.com/blog">Blog</a></li>
                             <li><a href="https://profitwhales.com/contact-us">Contact us</a></li>

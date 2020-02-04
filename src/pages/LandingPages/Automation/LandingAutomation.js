@@ -420,7 +420,7 @@ const LandingAutomation = () => {
                 $('.slider-container .slider .irs .irs-bar').html('$ 35');
             },
             onChange: function (data) {
-                var value = data.from_value,
+                let value = data.from_value,
                     result = 0,
                     sumElement = $('.result-sum'),
                     barLabel = $('.slider-container .slider .irs .irs-bar'),
