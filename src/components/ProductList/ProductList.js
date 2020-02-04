@@ -37,8 +37,6 @@ class ProductList extends Component {
 
         source = CancelToken.source();
 
-        console.log(this.props.pathname);
-
         this.props.getAllProducts({
             ...this.state.paginationParams,
             onlyOptimization:  this.props.pathname !== '/ppc/scanner' ? this.state.onlyOptimization : false,
