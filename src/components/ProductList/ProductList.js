@@ -39,7 +39,7 @@ class ProductList extends Component {
 
         this.props.getAllProducts({
             ...this.state.paginationParams,
-            onlyOptimization: this.state.onlyOptimization,
+            onlyOptimization:  this.props.pathname !== '/ppc/scanner' ? this.state.onlyOptimization : false,
             selectedAll: this.state.isSelectedAll,
             onlyHasNew: this.props.pathname === '/ppc/report' ? this.state.onlyHasNew : false,
             ungroupVariations: this.state.ungroupVariations,
@@ -61,7 +61,7 @@ class ProductList extends Component {
                     ...this.state,
                     paginationParams: {
                         ...this.state.paginationParams,
-                        page: +page
+                        page: page ? +page : 1
                     }
                 },
                 this.getProducts

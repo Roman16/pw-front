@@ -6,7 +6,7 @@ import {Input, Switch} from "antd";
 const {Search} = Input;
 
 
-const FilterFields = ({onSearch, pathname,onSelectAll, onChangeSwitch, onlyHasNew, isSelectedAll, disabled}) => {
+const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasNew, isSelectedAll, disabled}) => {
     const [openedWindow, switchWindow] = useState(false);
     const {onlyOptimization} = useSelector(state => ({
         onlyOptimization: state.products.onlyOptimization,
@@ -36,11 +36,11 @@ const FilterFields = ({onSearch, pathname,onSelectAll, onChangeSwitch, onlyHasNe
                 onChange={e => onSearch(e.target.value)}
             />
 
-            <div className='filter-btn' onClick={() => switchWindow(!openedWindow)}>
+            {pathname !== '/ppc/scanner' && <div className='filter-btn' onClick={() => switchWindow(!openedWindow)}>
                 <img src={filterIcon} alt=""/>
-            </div>
+            </div>}
 
-            <div className={`${openedWindow ? 'filters-list opened' : 'filters-list'}`}>
+            {pathname !== '/ppc/scanner' && <div className={`${openedWindow ? 'filters-list opened' : 'filters-list'}`}>
                 <button
                     onClick={onSelectAll}
                     type="primary"
@@ -66,7 +66,7 @@ const FilterFields = ({onSearch, pathname,onSelectAll, onChangeSwitch, onlyHasNe
                 {/*        onChange={e => onChangeSwitch(e, 'onlyHasNew')}*/}
                 {/*    />*/}
                 {/*</div>}*/}
-            </div>
+            </div>}
         </div>
 
     )
