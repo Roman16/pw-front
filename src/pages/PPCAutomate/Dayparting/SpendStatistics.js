@@ -10,60 +10,93 @@ import {daypartingServices} from "../../../services/dayparting.services";
 const defaultData = [
     {
         day: 'Sunday',
-        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 555) + 1)
     },
     {
         day: 'Monday',
-        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 555) + 1)
     },
     {
         day: 'Tuesday',
-        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 555) + 1)
     },
     {
         day: 'Wednesday',
-        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 555) + 1)
     },
     {
         day: 'Thursday',
-        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 555) + 1)
     },
     {
         day: 'Friday',
-        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 555) + 1)
     },
     {
         day: 'Saturday',
-        value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
+        value: Array.from({length: 24}, () => Math.floor(Math.random() * 555) + 1)
     },
 ];
 
-const TooltipDescription = ({value, day, metric}) => {
-
-    return (
-        <Fragment>
-            <h3>{day}</h3>
-            {/*<span className='selected-metric'>Clicks</span>*/}
-
-            <div className="value">
-                <div
-                    style={{background: colorList.find(item => value > item.min && value <= item.max).color || '#464898'}}/>
-                {value}
-            </div>
-        </Fragment>
-    )
-};
-
-const SpendStatistics = ({filteredMetric}) => {
-    const [data, setData] = useState(defaultData);
+const SpendStatistics = () => {
+    const [data, setData] = useState(defaultData),
+        [percentParams, setParams] = useState({min: 0, max: 1});
 
     useEffect(() => {
-        daypartingServices.getSpendOutStatistic(filteredMetric)
-
+        daypartingServices.getSpendOutStatistic()
             .then(res => {
                 // console.log(res);
-            })
-    }, [filteredMetric]);
+            });
+
+        const minValue = Math.min(...defaultData.reduce((accumulator, item) => {
+                return [...accumulator, ...item.value]
+            }, [])),
+            maxValue = Math.max(...defaultData.reduce((accumulator, item) => {
+                return [...accumulator, ...item.value]
+            }, []));
+
+        setParams({
+            min: minValue,
+            max: maxValue
+        });
+    }, []);
+
+    const StatisticItem = ({value}) => {
+        let color;
+
+        colorList.forEach(item => {
+            const percent = ((value - percentParams.min) * 100) / (percentParams.max - percentParams.min);
+            if (percent > item.min && percent <= item.max) {
+                color = item.color;
+                return;
+            }
+        });
+
+        return (
+            <div className='statistic-information' style={{background: color}}/>
+        )
+    };
+
+    const TooltipDescription = ({value, day}) => {
+        return (
+            <Fragment>
+                <h3>{day}</h3>
+
+                <div className="row-metric">
+                    <StatisticItem value={value} />
+                    <div className='example-fill'
+                        // style={{background: color}}
+                    />
+
+                    <span className='selected-metric'>Budget</span>
+
+                    <div className="value">
+                        ${value}
+                    </div>
+                </div>
+            </Fragment>
+        )
+    };
 
     return (
         <section className='spend-statistics'>
@@ -103,12 +136,10 @@ const SpendStatistics = ({filteredMetric}) => {
                                         <TooltipDescription
                                             value={time}
                                             day={day.day}
-                                            metric={filteredMetric}
                                         />
                                     }
                                 >
-                                    <div className='statistic-information'
-                                         style={{background: (timeIndex > 18 && dayIndex > 4) ? '#EC7F5C' : colorList.find(item => time > item.min && time <= item.max).color || '#464898'}}/>
+                                    <StatisticItem value={time}/>
                                 </InformationTooltip>
                             </div>
                         ))}

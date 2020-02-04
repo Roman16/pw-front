@@ -3,19 +3,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, NavLink} from "react-router-dom";
 import {Icon, Avatar} from "antd";
 import shortid from "shortid";
-import {debounce} from "throttle-debounce";
 import referIcon from '../../assets/img/icons/refer-icon.svg';
+import facebookIcon from '../../assets/img/icons/facebook-icon-white.svg';
 import {regionsMenu, ppcAutomateMenu} from "./menu";
 import {getClassNames} from "../../utils";
 import {userActions} from "../../actions/user.actions";
 import ItemIcon from "../ItemIcon/ItemIcon";
 import logo from "../../assets/img/ProfitWhales-logo-white.svg";
 import soon from "../../assets/img/icons/soon.svg";
-// import showMenu from '../../assets/img/icons/show-menu-arrow.svg';  // стрелка из фигмы в разделе сайдбар > страна
 import "./Sidebar.less";
 import {history} from "../../utils/history";
-import moment from "moment";
-import {productsActions} from "../../actions/products.actions";
 
 const domainName =
     window.location.hostname === "localhost"
@@ -237,13 +234,25 @@ const Sidebar = () => {
                     </nav>
                 </div>
 
+                <div className="facebook-link">
+                    <a href='https://www.facebook.com/groups/profitwhales.software/' target="_blank">
+                        <div className="icon">
+                            <img src={facebookIcon} alt=""/>
+                        </div>
+
+                        <span className="bottom-span">Join us on Facebook</span>
+                    </a>
+                </div>
+
                 <div className="refer-link">
                     <Link to={'/affiliates'} target="_blank">
-                        <img src={referIcon} alt=""/>
+                        <div className="icon">
+                            <img src={referIcon} alt=""/>
+                        </div>
+
                         {devicePixelRatio === 2 ? <span className="bottom-span">Refer sellers! <br/> Get Cash</span>
                             :
                             <span className="bottom-span">Refer sellers! Get Cash</span>}
-
                     </Link>
                 </div>
 

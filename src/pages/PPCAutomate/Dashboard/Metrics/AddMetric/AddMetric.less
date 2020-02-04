@@ -57,8 +57,9 @@
 
 
 .metrics-modal {
-  width: 85vw !important;
+  width: 70vw !important;
   height: 85vh !important;
+  max-width: 1340px;
   display: flex;
   flex-direction: column;
 
@@ -72,7 +73,6 @@
       width: 90vw !important;
     }
   }
-
 
   .modal-title {
     border: 0;
@@ -91,10 +91,11 @@
 
   .ant-modal-body {
     margin: 0 0 auto 0;
+
     .visible-list {
       display: grid;
       grid-gap: 1.5em;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       grid-auto-flow: dense;
 
       .default-visible-item {
@@ -134,7 +135,7 @@
     .hidden-list {
       display: grid;
       grid-gap: 1.5em;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       grid-auto-flow: dense;
 
       .metric-item {
@@ -161,8 +162,14 @@
     }
   }
 
+  .ant-modal-footer {
+    padding-bottom: 20px;
+  }
+
   @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
     & {
+      width: 80vw !important;
+
       .modal-title {
         padding: 45px 0;
       }

@@ -52,11 +52,18 @@ export function dashboard(state = initialState, action) {
                 newActiveMetricsList[1] = {};
             }
 
-            return {
-                ...state,
-                selectedMetrics: newMetricList,
-                activeMetrics: newActiveMetricsList
-            };
+            if (JSON.stringify(state.activeMetrics) !== JSON.stringify(newActiveMetricsList)) {
+                return {
+                    ...state,
+                    selectedMetrics: newMetricList,
+                    activeMetrics: newActiveMetricsList
+                };
+            } else {
+                return {
+                    ...state,
+                    selectedMetrics: newMetricList,
+                };
+            }
         }
 
         case dashboardConstants.SET_METRICS_STATISTIC:

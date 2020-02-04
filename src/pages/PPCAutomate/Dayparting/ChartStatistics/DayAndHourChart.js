@@ -1,11 +1,12 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 import {colorList} from "../colorList";
 import shortid from "shortid";
 import {metricsList} from "./metricsList";
 import moment from "moment";
+import {daypartingServices} from "../../../../services/dayparting.services";
 
-const data = [
+const testData = [
     {
         day: 'Sunday',
         value: Array.from({length: 24}, () => Math.floor(Math.random() * 100) + 1)
@@ -36,25 +37,36 @@ const data = [
     },
 ];
 
-const TooltipDescription = ({value, day, metric}) => {
+const TooltipDescription = ({value, day, metric, maxValue}) => {
     return (
         <Fragment>
             <h3>{day}</h3>
-            <span className='selected-metric'>{metric.title}</span>
+            <div className="row-metric">
+                <div className='example-fill'
+                     style={{background: maxValue ? colorList.find(item => (value / maxValue * 100) > item.min && (value / maxValue * 100) <= item.max).color : ''}}
+                />
 
-            <div className="value">
-                <div style={{background: colorList.find(item => value > item.min && value <= item.max).color || '#464898'}}/>
+                <span className='selected-metric'>{metric.title}</span>
 
-                {metric.type === 'currency' ? `${value}$` : (metric.type === 'percent' ? `${value} %` : value)}
+                <div className="value">
+                    {metric.type === 'currency' ? `$${value}` : (metric.type === 'percent' ? `${value} %` : value)}
+                </div>
             </div>
         </Fragment>
     )
 };
 
-const DayAndHourChart = ({firstMetric}) => {
+const DayAndHourChart = ({firstMetric, data = testData, activeChart}) => {
+    const [maxValue, setValue] = useState(null);
+
+    useEffect(() => {
+        setValue(Math.max(...data.reduce((accumulator, item) => {
+            return [...accumulator, ...item.value]
+        }, [])))
+    }, [data]);
 
     return (
-        <div className='chart-block day-and-hour-chart'>
+        <div className={`chart-block day-and-hour-chart ${activeChart ? 'active' : ''}`}>
             <div className="statistics">
                 {data.map((day, dayIndex) => (
                     <div className="row" key={shortid.generate()}>
@@ -74,13 +86,16 @@ const DayAndHourChart = ({firstMetric}) => {
                                     description={
                                         <TooltipDescription
                                             value={time}
+                                            maxValue={maxValue}
                                             day={day.day}
                                             metric={firstMetric}
                                         />
                                     }
                                 >
-                                    <div className='statistic-information'
-                                         style={{background: colorList.find(item => time > item.min && time <= item.max).color || '#464898'}}/>
+                                    <div
+                                        className='statistic-information'
+                                        style={{background: maxValue ? colorList.find(item => (time / maxValue * 100) > item.min && (time / maxValue * 100) <= item.max).color : ''}}
+                                    />
                                 </InformationTooltip>
                             </div>
                         ))}

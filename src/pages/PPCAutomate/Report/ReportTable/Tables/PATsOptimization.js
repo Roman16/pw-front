@@ -188,7 +188,7 @@ const PATsOptimization = ({
             {
                 title: 'Spend',
                 dataIndex: 'd_patSpend',
-                key: 'd_keywordSpend',
+                key: 'd_patSpend',
                 width: '7em',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                 sorter: true,
@@ -201,7 +201,7 @@ const PATsOptimization = ({
             {
                 title: 'Sales',
                 dataIndex: 'd_patSales',
-                key: 'd_keywordSales',
+                key: 'd_patSales',
                 render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                 width: '6.5em',
                 sorter: true,
@@ -450,6 +450,7 @@ const PATsOptimization = ({
                 ),
                 dataIndex: 'd_originPATType',
                 key: 'd_originPATType',
+                render: str => <span className="capitalize-field">{str}</span>,
                 width: '13.5em',
                 sorter: true,
                 filter: (dataIndex) => <ColumnMenuFilter

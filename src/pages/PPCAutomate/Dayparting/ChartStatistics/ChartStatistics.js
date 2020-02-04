@@ -98,20 +98,23 @@ const ChartStatistics = ({onSelectMetric, filteredMetric}) => {
                 </div>
             </div>
 
-            {activeTab === 'hour' && <HourChart
+            <HourChart
                 firstMetric={firstCompareMetric}
                 secondMetric={secondCompareMetric}
-            />}
+                activeChart={activeTab === 'hour'}
+            />
 
-            {activeTab === 'dayHour' && <DayAndHourChart
+            <DayAndHourChart
                 firstMetric={firstCompareMetric}
                 secondMetric={secondCompareMetric}
-            />}
+                activeChart={activeTab === 'dayHour'}
+            />
 
-            {activeTab === 'day' && <DayChart
+            <DayChart
                 firstMetric={firstCompareMetric}
                 secondMetric={secondCompareMetric}
-            />}
+                activeChart={activeTab === 'day'}
+            />
         </section>
     )
 };

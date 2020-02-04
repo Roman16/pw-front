@@ -9,7 +9,10 @@ import FilterFields from "./FilterFields";
 import CustomSelect from "../Select/Select";
 import ProductPagination from "./ProductPagination";
 import selectIcon from "../../assets/img/icons/select-icon.svg";
+import axios from "axios";
 
+const CancelToken = axios.CancelToken;
+let source = null;
 const Option = Select.Option;
 
 class ProductList extends Component {
@@ -29,14 +32,21 @@ class ProductList extends Component {
         }
     };
 
-    getProducts = () => this.props.getAllProducts({
-        ...this.state.paginationParams,
-        onlyOptimization: this.state.onlyOptimization,
-        selectedAll: this.state.isSelectedAll,
-        onlyHasNew: this.props.pathname === '/ppc/report' ? this.state.onlyHasNew : false,
-        ungroupVariations: this.state.ungroupVariations,
-        pathname: this.props.pathname
-    });
+    getProducts = () => {
+        source && source.cancel();
+
+        source = CancelToken.source();
+
+        this.props.getAllProducts({
+            ...this.state.paginationParams,
+            onlyOptimization:  this.props.pathname !== '/ppc/scanner' ? this.state.onlyOptimization : false,
+            selectedAll: this.state.isSelectedAll,
+            onlyHasNew: this.props.pathname === '/ppc/report' ? this.state.onlyHasNew : false,
+            ungroupVariations: this.state.ungroupVariations,
+            pathname: this.props.pathname,
+            cancelToken: source.token
+        });
+    };
 
     changeOpenedProduct = (id) => {
         this.setState({
@@ -51,7 +61,7 @@ class ProductList extends Component {
                     ...this.state,
                     paginationParams: {
                         ...this.state.paginationParams,
-                        page: +page
+                        page: page ? +page : 1
                     }
                 },
                 this.getProducts

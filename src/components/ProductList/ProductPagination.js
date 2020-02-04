@@ -2,6 +2,7 @@ import React from "react";
 import leftIcon from "../../assets/img/icons/left-icon.svg";
 import rightIcon from "../../assets/img/icons/right-icon.svg";
 import {InputNumber} from "antd";
+import {hold} from "../../utils/hold";
 
 const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
 
@@ -17,8 +18,8 @@ const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
         }
     }
 
-    function goToPage({target: {value}}) {
-        if (totalSize > 0 && value > 0 && value < Math.ceil(totalSize / size)) {
+    function goToPage(value) {
+        if (totalSize > 0 && value > 0 && value < Math.ceil(totalSize / size) + 1) {
             onChangePagination(value)
         }
     }
@@ -51,7 +52,8 @@ const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
                     onBlur={e => {
                         onChangePagination(e.target.value)
                     }}
-                    onPressEnter={goToPage}
+                    onChange={e => hold(() => goToPage(e), 500)}
+                    onPressEnter={(e) => goToPage(e.target.value)}
                 />
             </div>
         </div>

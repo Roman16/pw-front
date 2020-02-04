@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {dashboardActions} from '../../../../actions/dashboard.actions';
 import MetricItem from './MetricItem';
 import AddMetric from './AddMetric/AddMetric';
+import {metricsListArray} from './metricsList';
 
 import './Metrics.less';
-import {history} from "../../../../utils/history";
-import {dashboardServices} from "../../../../services/dashboard.services";
 
 const Metrics = () => {
     const dispatch = useDispatch();
@@ -33,7 +32,6 @@ const Metrics = () => {
         }));
     };
 
-
     useEffect(() => {
         getMetricsStatistics();
     }, [selectedRangeDate, selectedProduct, onlyOptimization]);
@@ -51,7 +49,7 @@ const Metrics = () => {
                 />
             ))}
 
-            {selectedMetrics.length < 17 && <AddMetric/>}
+            {selectedMetrics.length < metricsListArray.length && <AddMetric/>}
         </div>
     )
 };

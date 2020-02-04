@@ -214,8 +214,8 @@ const NewPats = ({
             },
             {
                 title: 'Bid',
-                dataIndex: 'd_bid',
-                key: 'd_bid',
+                dataIndex: 'd_newBid',
+                key: 'd_newBid',
                 width: '6em',
                 render: text => (text != null && <span>${numberMask(text, 2)}</span>),
                 sorter: true,
