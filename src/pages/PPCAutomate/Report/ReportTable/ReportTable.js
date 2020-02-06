@@ -280,7 +280,7 @@ class ReportTable extends Component {
 
         const url = `${process.env.REACT_APP_API_URL || ""}/api/${
             reportsUrls.downloadReports
-        }?token=${token}${parameters.join("")}`;
+            }?token=${token}${parameters.join("")}`;
         window.open(url);
     };
 
@@ -363,7 +363,9 @@ class ReportTable extends Component {
     };
 
     handleChangeSubTab = tab => {
+
         this.setState({
+            totalSize: null,
             activeSubTab: tab,
             page: 1,
             filteredColumns: {},

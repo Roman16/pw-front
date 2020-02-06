@@ -6,6 +6,7 @@ import {productsActions} from '../../../../actions/products.actions';
 import './OptimizationOptions.less';
 import {notification} from "../../../../components/Notification";
 import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup";
+import {productsServices} from "../../../../services/products.services";
 
 export const CheckBoxItem = ({text, value = '', checked, ...props}) => (
     <div className="check-box-item">
@@ -54,7 +55,7 @@ export const options = [
     }
 ];
 
-const delay = 500;
+const delay = 1000;
 let timerIdSearch = null;
 
 const OptimizationOptions = ({selectedProduct}) => {
@@ -69,14 +70,6 @@ const OptimizationOptions = ({selectedProduct}) => {
         [selectedOption, setOption] = useState({}),
         [showConfirmWindow, switchWindow] = useState(false);
 
-    // function handleChangeOptions({target: {name, checked}}) {
-    //     if (product.status === 'RUNNING' && (isFirstChangesOptions === undefined || isFirstChangesOptions)) {
-    //         switchWindow(true);
-    //         setOption({name, checked})
-    //     } else {
-    //         onChangeOptions({name, checked})
-    //     }
-    // }
 
     const onChangeOptions = ({target: {name, checked}}) => {
         changeOptions({
@@ -89,12 +82,12 @@ const OptimizationOptions = ({selectedProduct}) => {
         dispatch(productsActions.changeOptimizedOptions());
 
         clearTimeout(timerIdSearch);
+
         timerIdSearch = setTimeout(() => {
             if (product.status === 'RUNNING' && !selectedAll) {
                 updateProduct({...product, [name]: checked});
 
-                dispatch(
-                    productsActions.updateOptions({
+                dispatch(productsActions.updateOptions({
                         optimization_strategy: product.optimization_strategy,
                         add_negative_keywords: product.add_negative_keywords,
                         optimize_keywords: product.optimize_keywords,
@@ -105,6 +98,8 @@ const OptimizationOptions = ({selectedProduct}) => {
                         [name]: checked
                     })
                 );
+
+                timerIdSearch = null;
             }
         }, delay);
     };
@@ -115,6 +110,16 @@ const OptimizationOptions = ({selectedProduct}) => {
     };
 
     useEffect(() => {
+        if (product.status === 'RUNNING' && timerIdSearch) {
+            clearTimeout(timerIdSearch);
+            timerIdSearch = null;
+
+            productsServices.updateProductById({...product})
+                .then(() => {
+                    notification.success({title: 'The strategy is changed'});
+                })
+        }
+
         if (
             !selectedProduct.status ||
             selectedProduct.status === 'STOPPED' ||
