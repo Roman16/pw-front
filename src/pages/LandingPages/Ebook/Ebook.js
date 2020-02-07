@@ -26,7 +26,7 @@ const Ebook = () => {
             <section>
                 <div className="container">
                     <div className="col">
-                        <h1>Want to take your Amazon <br/> business <span>to the next level?</span></h1>
+                        <h1>Learn how to structure your <br/> Amazon PPC campaigns properly.</h1>
 
                         <h4>Get this FREE Amazon PPC Blueprint to crush your Sales in 2020.</h4>
 
