@@ -127,7 +127,7 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         info: 'Return On Advertising Spend, (ROAS), is a marketing metric that measures the efficacy of a digital advertising campaign. ROAS helps online businesses evaluate which methods are working and how they can improve future advertising efforts.',
         key: 'roas',
         label: 'Average',
-        type: 'number'
+        type: 'roas'
     },
     {
         title: 'Sales Share',
