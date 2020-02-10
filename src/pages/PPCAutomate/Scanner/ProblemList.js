@@ -134,6 +134,8 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                         <InputCurrency
                             value={netMargin}
                             onChange={value => setMargin(value)}
+                            min={0}
+                            max={100}
                         />
                     </div>
                 </div>

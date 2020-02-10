@@ -1,12 +1,12 @@
 import React, {useEffect, useState, useRef} from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, patIntentField, infoField, dateField} from './const';
+import {indexField, patIntentField, infoField, dateField, averageCVRField} from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import {round} from "../../../../../utils/round";
 import {numberMask} from "../../../../../utils/numberMask";
-import {ColumnMenuFilter, ColumnNumberFilter,ColumnTextFilter} from "./columnFilter";
+import {ColumnMenuFilter, ColumnNumberFilter, ColumnTextFilter} from "./columnFilter";
 import {subChangesCount} from "./changesCount";
 
 const HighACoS = 'created-negative-pat-from-cst-high-acos';
@@ -214,6 +214,9 @@ const NewNegativePats = ({
                 />
             },
             {
+                ...averageCVRField(onChangeFilter, filteredColumns)
+            },
+            {
                 title: 'Action',
                 dataIndex: 'action',
                 key: 'action',
@@ -228,18 +231,7 @@ const NewNegativePats = ({
         [NoSales]: [
             ...defaultKeys,
             {
-                title: 'Average CVR',
-                dataIndex: 'd_averageConversionRate',
-                key: 'd_averageConversionRate',
-                width: '10.5em',
-                render: (text) => (text && <span>{round(+text * 100, 2)}%</span>),
-                sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                    percent={true}
-                />
+                ...averageCVRField(onChangeFilter, filteredColumns)
             },
             {
                 title: (

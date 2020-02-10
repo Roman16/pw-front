@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import moment from 'moment';
 import TableButton from '../TableButton/TableButton';
-import {indexField, createdKeywordsActionField, infoField, dateField} from './const';
+import {indexField, createdKeywordsActionField, infoField, dateField, averageCVRField} from './const';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
@@ -478,6 +478,9 @@ const NewKeywords = ({
                     dataIndex={dataIndex}
                     percent={true}
                 />
+            },
+            {
+                ...averageCVRField(onChangeFilter, filteredColumns)
             },
             {
                 title: 'Action',

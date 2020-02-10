@@ -3,8 +3,10 @@ import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {
     indexField,
     patIntentField,
+    averageCVRField,
     createdKeywordsActionField,
-    infoField, dateField
+    infoField,
+    dateField
 } from './const';
 import TableButton from '../TableButton/TableButton';
 import {useSelector} from 'react-redux';
@@ -327,6 +329,9 @@ const NewPats = ({
                     dataIndex={dataIndex}
                     percent={true}
                 />
+            },
+            {
+                ...averageCVRField(onChangeFilter, filteredColumns)
             },
             {
                 title: 'Action',

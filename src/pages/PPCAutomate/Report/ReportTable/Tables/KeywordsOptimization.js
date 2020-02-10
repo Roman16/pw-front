@@ -8,7 +8,7 @@ import {
     bidActionField,
     pauseKeywordsActionField,
     dateField,
-    patIntentValues
+    patIntentValues, averageCVRField
 } from './const';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
@@ -200,18 +200,7 @@ const KeywordsOptimization = ({
                 />
             },
             {
-                title: 'Average CVR',
-                dataIndex: 'd_averageConversionRate',
-                key: 'd_averageConversionRate',
-                width: '10.5em',
-                sorter: true,
-                render: (text) => (text && <span>{round(+text * 100, 2)}%</span>),
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                    percent={true}
-                />
+                ...averageCVRField(onChangeFilter, filteredColumns)
             },
             {
                 ...bidActionField
@@ -334,18 +323,7 @@ const KeywordsOptimization = ({
                 />
             },
             {
-                title: 'Average CVR',
-                dataIndex: 'd_averageConversionRate',
-                key: 'd_averageConversionRate',
-                width: '10.5em',
-                render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
-                sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                    percent={true}
-                />
+                ...averageCVRField(onChangeFilter, filteredColumns)
             },
             {
                 ...pauseKeywordsActionField
@@ -357,18 +335,7 @@ const KeywordsOptimization = ({
         [pausedKeywordNoSales]: [
             ...defaultKeys,
             {
-                title: 'Average CVR',
-                dataIndex: 'd_averageConversionRate',
-                key: 'd_averageConversionRate',
-                width: '10.5em',
-                render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
-                sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                    percent={true}
-                />
+                ...averageCVRField(onChangeFilter, filteredColumns)
             },
             {
                 title: 'Clicks',

@@ -6,7 +6,8 @@ import down from '../../../../../assets/img/icons/down-row.svg';
 import right from '../../../../../assets/img/icons/right-row.svg';
 import pause from '../../../../../assets/img/icons/pause.svg';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {ColumnMenuFilter} from "./columnFilter";
+import {ColumnMenuFilter, ColumnNumberFilter} from "./columnFilter";
+import {round} from "../../../../../utils/round";
 
 function getIndexColumnWidth(count) {
     return `${25 + count.toString().length * 7}px`;
@@ -64,7 +65,8 @@ export const indexField = (currentPage, pageSize) => ({
     key: 'id',
     width: getIndexColumnWidth(Number(currentPage * pageSize - pageSize)),
     render: (id, item, index) => {
-        return (<span className='index-field'> {!item.viewed && <div/>}  {currentPage * pageSize - pageSize + index + 1}</span>)
+        return (<span className='index-field'> {!item.viewed &&
+        <div/>} {currentPage * pageSize - pageSize + index + 1}</span>)
     }
 });
 
@@ -73,7 +75,8 @@ export const dateField = {
     dataIndex: 'eventDateTime',
     key: 'eventDateTime',
     width: '120px',
-    render: date => <span>{moment.utc(date).local().format('MMM DD, YYYY')} <br/> {moment.utc(date).local().format('H:mm:ss')}</span>,
+    render: date => <span>{moment.utc(date).local().format('MMM DD, YYYY')}
+        <br/> {moment.utc(date).local().format('H:mm:ss')}</span>,
     sorter: true,
 };
 
@@ -146,6 +149,27 @@ export const pausePatActionField = {
         </div>
     )
 };
+
+export const averageCVRField = (onChangeFilter, filteredColumns) => ({
+    title: (
+        <TitleInfo
+            position='top'
+            title="Average CVR"
+            info="Average CVR"
+        />
+    ),
+    dataIndex: 'd_averageConversionRate',
+    key: 'd_averageConversionRate',
+    width: '12.5em',
+    render: (text) => (text && <span>{round(+text * 100, 2)}%</span>),
+    sorter: true,
+    filter: (dataIndex) => <ColumnNumberFilter
+        onChangeFilter={onChangeFilter}
+        filteredColumns={filteredColumns}
+        dataIndex={dataIndex}
+        percent={true}
+    />
+});
 
 export const infoField = {
     title: '',
