@@ -25,28 +25,7 @@ const ChartStatistics = ({onSelectMetric, filteredMetric}) => {
     return (
         <section className='chart-statistics'>
             <div className="section-header">
-                <div className="tabs">
-                    <div
-                        onClick={() => setTab('hour')}
-                        className={activeTab === 'hour' ? 'active' : ''}
-                    >
-                        Hour
-                    </div>
-
-                    <div
-                        onClick={() => setTab('dayHour')}
-                        className={activeTab === 'dayHour' ? 'active' : ''}
-                    >
-                        Day & Hour
-                    </div>
-
-                    <div
-                        onClick={() => setTab('day')}
-                        className={activeTab === 'day' ? 'active' : ''}
-                    >
-                        Day
-                    </div>
-                </div>
+                <h2>Day</h2>
 
                 <div className='sorter'>
                     <div className={`${activeTab === 'dayHour' ? "select first no-border" : "select first"}`}>
@@ -98,17 +77,17 @@ const ChartStatistics = ({onSelectMetric, filteredMetric}) => {
                 </div>
             </div>
 
-            <HourChart
-                firstMetric={firstCompareMetric}
-                secondMetric={secondCompareMetric}
-                activeChart={activeTab === 'hour'}
-            />
+            {/*<HourChart*/}
+            {/*    firstMetric={firstCompareMetric}*/}
+            {/*    secondMetric={secondCompareMetric}*/}
+            {/*    activeChart={activeTab === 'hour'}*/}
+            {/*/>*/}
 
-            <DayAndHourChart
-                firstMetric={firstCompareMetric}
-                secondMetric={secondCompareMetric}
-                activeChart={activeTab === 'dayHour'}
-            />
+            {/*<DayAndHourChart*/}
+            {/*    firstMetric={firstCompareMetric}*/}
+            {/*    secondMetric={secondCompareMetric}*/}
+            {/*    activeChart={activeTab === 'dayHour'}*/}
+            {/*/>*/}
 
             <DayChart
                 firstMetric={firstCompareMetric}
