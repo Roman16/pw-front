@@ -556,8 +556,8 @@ button.btn {
     color: #6D6DF6;
 
     &:hover {
-      box-shadow: 0px 12px 18px rgba(44, 48, 58, 0.2),
-      0px 0px 22px rgba(44, 48, 58, 0.2);
+      box-shadow: 0px 6px 10px rgba(44, 48, 58, 0.2),
+      0px 0px 10px rgba(44, 48, 58, 0.2);
     }
   }
 
@@ -570,18 +570,12 @@ button.btn {
 
 button:disabled,
 button[disabled] {
-  background: linear-gradient(0deg,
-  rgba(189, 198, 207, 0.4),
-  rgba(189, 198, 207, 0.4)),
-  #e8edf1 !important;
   color: #868891 !important;
-  cursor: initial;
+  cursor: not-allowed;
+  opacity: .7;
 
   &:hover {
-    background: linear-gradient(0deg,
-    rgba(189, 198, 207, 0.4),
-    rgba(189, 198, 207, 0.4)),
-    #e8edf1 !important;
+    opacity: .4;
   }
 }
 
@@ -632,6 +626,7 @@ button[disabled] {
       display: flex !important;
     }
   }
+
   .ant-select-selection-selected-value {
     font-size: 1rem;
   }
@@ -640,6 +635,7 @@ button[disabled] {
 .ant-select-dropdown-menu-item {
   font-size: 1rem;
 }
+
 /*
 *  /SELECT
 */
