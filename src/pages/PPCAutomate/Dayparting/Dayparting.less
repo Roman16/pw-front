@@ -28,6 +28,25 @@
       }
     }
 
+    .week-select {
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+
+      .custom-select {
+        width: max-content;
+        margin: 0 0 0 20px;
+        border-bottom: 2px solid #656A84;
+        padding: 0 0 0.35714286rem 0;
+
+        .ant-select-selection {
+          background-color: initial;
+          border: 0;
+          border-radius: 0;
+        }
+      }
+    }
+
     .color-gradation {
       display: flex;
       margin: 0 0 0 30px;
@@ -96,6 +115,7 @@
     }
   }
 
+
   .chart-tooltip {
     justify-content: center;
 
@@ -114,12 +134,20 @@
       border-radius: 4px;
 
       h3 {
+        display: flex;
+        align-items: flex-end;
         font-size: 1rem;
         font-weight: 600;
         text-transform: capitalize;
         letter-spacing: 0.2px;
         color: #343C5A;
         margin: 0;
+
+        .time {
+          margin: 0 0 0 20px;
+          font-size: 0.8571428571428571rem;
+          line-height: initial;
+        }
       }
 
       .row-metric {
@@ -340,6 +368,26 @@
 
           &:last-child {
             margin: 0;
+
+            .statistic-information {
+              position: relative;
+              border: 3px solid #EC7F5C;
+              //width: 18px;
+              //height: 18px;
+              //z-index: 100;
+
+              //&::before {
+              //  content: "";
+              //  display: block;
+              //  position: absolute;
+              //  top: -3px;
+              //  left: -3px;
+              //  width: calc(100% + 4px);
+              //  height: calc(100% + 4px);
+              //  border-radius: 4px;
+              //  background-color: #EC7F5C;
+              //}
+            }
           }
         }
       }
@@ -354,6 +402,7 @@
 
     .section-header {
       height: 27px;
+
       .tabs {
         display: flex;
         background: #F5F5FF;

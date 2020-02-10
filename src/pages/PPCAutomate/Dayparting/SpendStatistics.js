@@ -76,13 +76,18 @@ const SpendStatistics = () => {
         )
     };
 
-    const TooltipDescription = ({value, day}) => {
+    const TooltipDescription = ({value, day, timeIndex}) => {
         return (
             <Fragment>
-                <h3>{day}</h3>
+                <h3>{day}
+
+                    <span className="time">
+                        {`${moment(timeIndex, 'HH').format('hh A')} - ${moment(timeIndex + 1, 'HH').format('hh A')}`}
+                    </span>
+                </h3>
 
                 <div className="row-metric">
-                    <StatisticItem value={value} />
+                    <StatisticItem value={value}/>
                     <div className='example-fill'
                         // style={{background: color}}
                     />
@@ -133,6 +138,7 @@ const SpendStatistics = () => {
                                         <TooltipDescription
                                             value={time}
                                             day={day.day}
+                                            timeIndex={timeIndex}
                                         />
                                     }
                                 >

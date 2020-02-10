@@ -25,12 +25,13 @@ const ChartStatistics = ({onSelectMetric, filteredMetric}) => {
     return (
         <section className='chart-statistics'>
             <div className="section-header">
-                <h2>Day</h2>
+                <h2>Daily</h2>
 
                 <div className='sorter'>
                     <div className={`${activeTab === 'dayHour' ? "select first no-border" : "select first"}`}>
                         <CustomSelect
                             value={firstCompareMetric.key}
+                            getPopupContainer={trigger => trigger.parentNode}
                             dropdownClassName={'full-width-menu'}
                             onChange={(metric) => {
                                 setFirstMetric(metricsList.find(item => item.key === metric));
@@ -57,6 +58,7 @@ const ChartStatistics = ({onSelectMetric, filteredMetric}) => {
 
                         <div className="select second">
                             <CustomSelect
+                                getPopupContainer={trigger => trigger.parentNode}
                                 value={secondCompareMetric.key}
                                 dropdownClassName={'full-width-menu'}
                                 onChange={(metric) => setSecondMetric(metricsList.find(item => item.key === metric))}

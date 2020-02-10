@@ -31,14 +31,21 @@ const selection = Selection.create({
     selectables: ['.statistic-information'],
 
     // The container is also the boundary in this case
-    boundaries: ['.multi-select'],
+    boundaries: ['.multi-select.enabled'],
     singleClick: false,
 });
 
 
 class DaySwitches extends Component {
     state = {
-        hoursStatus: [...defaultList]
+        hoursStatus: [...defaultList],
+        activeSection: false
+    };
+
+    switchDayPartingHandler = () => {
+        this.setState({
+            activeSection: !this.state.activeSection
+        })
     };
 
     handleUpdateStatus = async () => {
@@ -47,10 +54,10 @@ class DaySwitches extends Component {
                 await daypartingServices.updateDayPartingParams(this.state.hoursStatus.join(''));
                 notification.success({title: 'Saved'})
             } catch (e) {
-                notification.error({title: 'Not Saved'})
+                console.log(e);
+                // notification.error({title: 'Not Saved'})
             }
         }, 1000)
-
     };
 
     handleReset = () => {
@@ -162,12 +169,17 @@ class DaySwitches extends Component {
     }
 
     render() {
-        const {hoursStatus} = this.state;
+        const {hoursStatus, activeSection} = this.state;
 
         return (
             <section className='day-switches'>
                 <div className="section-header">
-                    <h2>Day parting</h2>
+                    <button
+                        className='btn default switch-day-parting'
+                        onClick={this.switchDayPartingHandler}
+                    >
+                        {activeSection ? 'Disable Day Parting' : 'Enable Day Parting'}
+                    </button>
 
                     <div className='actions'>
                         <div className='disabled-example'>
@@ -180,7 +192,7 @@ class DaySwitches extends Component {
                             Active
                         </div>
 
-                        <button onClick={this.handleReset}>
+                        <button onClick={this.handleReset} disabled={!activeSection}>
                             <img src={reloadIcon} alt=""/>
                             Reset
                         </button>
@@ -194,6 +206,7 @@ class DaySwitches extends Component {
                             <div key={shortid.generate()}>
                                 {moment(timeIndex + 1, 'HH').format('hh A')}
                                 <Switch
+                                    disabled={!activeSection}
                                     checked={[0, 1, 2, 3, 4, 5, 6].map(item => hoursStatus[24 * item + timeIndex]).every(item => item === '1')}
                                     onChange={(value) => this.handleSwitchColumn(timeIndex, value)}
                                 />
@@ -206,6 +219,7 @@ class DaySwitches extends Component {
                             {days.map((day, dayIndex) => (
                                 <div className='day-name' key={shortid.generate()}>
                                     <Switch
+                                        disabled={!activeSection}
                                         checked={hoursStatus.slice(24 * dayIndex, 24 * (dayIndex + 1)).every(item => item === '1')}
                                         onChange={(value) => this.handleSwitchRow(dayIndex, value)}
                                     />
@@ -216,11 +230,11 @@ class DaySwitches extends Component {
                             ))}
                         </div>
 
-                        <div className="col multi-select">
+                        <div className={`col multi-select ${activeSection ? 'enabled' : 'disabled'}`}>
                             {hoursStatus.map((value, hourIndex) => (
                                 <div className='statistic-item' key={shortid.generate()}>
                                     <div
-                                        onClick={() => this.handleSwitchHour(hourIndex, value)}
+                                        onClick={() => activeSection && this.handleSwitchHour(hourIndex, value)}
                                         className={value === '1' ? 'statistic-information active' : 'statistic-information'}
                                         hourIndex={hourIndex}
                                         value={value}
