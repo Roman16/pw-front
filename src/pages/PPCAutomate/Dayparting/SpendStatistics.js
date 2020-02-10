@@ -3,8 +3,7 @@ import moment from "moment";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import {colorList} from "./colorList";
 import shortid from "shortid";
-import plusIconGray from '../../../assets/img/icons/plus-gray.svg';
-import soon from "../../../assets/img/icons/soon.svg";
+import plusIconWhite from '../../../assets/img/icons/plus-white.svg';
 import {daypartingServices} from "../../../services/dayparting.services";
 
 const defaultData = [
@@ -88,7 +87,7 @@ const SpendStatistics = () => {
                         // style={{background: color}}
                     />
 
-                    <span className='selected-metric'>Budget</span>
+                    <span className='selected-metric'>Sales</span>
 
                     <div className="value">
                         ${value}
@@ -101,18 +100,16 @@ const SpendStatistics = () => {
     return (
         <section className='spend-statistics'>
             <div className="section-header">
-                <h2>Spend/Out of Budget</h2>
+                <h2>Sales / Out of Budget</h2>
 
                 <div className='out-of-budget'>
                     <div/>
                     Out of Budget
                 </div>
 
-                <button className='btn default' disabled>
-                    <img src={plusIconGray} alt=""/>
+                <button className='btn default'>
+                    <img src={plusIconWhite} alt=""/>
                     Add budget
-
-                    <img src={soon} alt="" className="soon"/>
                 </button>
             </div>
 

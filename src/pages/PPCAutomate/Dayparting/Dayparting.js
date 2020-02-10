@@ -9,6 +9,7 @@ import PlacementsStatistics from "./PlacementsStatistics";
 import {colorList} from "./colorList";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import shortid from "shortid";
+import moment from "moment";
 
 // eslint-disable-next-line no-unused-vars
 class Dayparting extends Component {
@@ -20,11 +21,7 @@ class Dayparting extends Component {
         return (
             <div className='dayparting-page'>
                 <div className='last-synced'>
-                    <button className='reload-btn' onClick={this.handleReloadDate}>
-                        <img src={reloadIcon} alt=""/>
-                    </button>
-
-                    Data last synced at 3:08 PM GMT+3, 4/22/19
+                    {moment(new Date()).utc().format('HH:mm')}
 
                     <div className="color-gradation">
                         Min
