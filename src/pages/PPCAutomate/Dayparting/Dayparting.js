@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import './Dayparting.less';
-import SpendStatistics from "./SpendStatistics";
+import OutBudget from "./OutBudget";
 import ChartStatistics from "./ChartStatistics/ChartStatistics";
 import DaySwitches from "./DaySwithes/DaySwithes";
 import PlacementsStatistics from "./PlacementsStatistics";
@@ -72,7 +72,7 @@ class Dayparting extends PureComponent {
                 </div>
 
                 <div className="row">
-                    <SpendStatistics
+                    <OutBudget
                     />
 
                     <ChartStatistics
