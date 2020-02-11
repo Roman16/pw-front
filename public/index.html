@@ -7,7 +7,7 @@
             href="./assets/icons/pwfavico.ico"
             type="image/x-icon"
     />
-    <meta name="yandex-verification" content="a9af1d76563e6057" />
+    <meta name="yandex-verification" content="a9af1d76563e6057"/>
     <meta name="p:domain_verify" content="ebd0413d2a7f8ffa0338b0e5207d3c66"/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -21,23 +21,67 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KC6F6BM');</script>
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-KC6F6BM');</script>
     <!-- End Google Tag Manager -->
+
+    <!-- Autopilot tracking    -->
+    <script type="text/javascript">
+        (function (o) {
+            var b = "https://apenterprise.io/anywhere/",
+                t = "043860d65a73467fa3169ff6cc2bc83d8bef599241164a59b61be7e5231514d5", a = window.AutopilotAnywhere = {
+                    _runQueue: [], run: function () {
+                        this._runQueue.push(arguments);
+                    }
+                }, c = encodeURIComponent, s = "SCRIPT", d = document, l = d.getElementsByTagName(s)[0],
+                p = "t=" + c(d.title || "") + "&u=" + c(d.location.href || "") + "&r=" + c(d.referrer || ""),
+                j = "text/javascript", z, y;
+            if (!window.Autopilot) window.Autopilot = a;
+            if (o.app) p = "devmode=true&" + p;
+            z = function (src, asy) {
+                var e = d.createElement(s);
+                e.src = src;
+                e.type = j;
+                e.async = asy;
+                l.parentNode.insertBefore(e, l);
+            };
+            y = function () {
+                z(b + t + '?' + p, true);
+            };
+            if (window.attachEvent) {
+                window.attachEvent("onload", y);
+            } else {
+                window.addEventListener("load", y, false);
+            }
+        })({});
+    </script>
+    <!--  /Autopilot tracking  -->
+
 
     <script src="https://script.tapfiliate.com/tapfiliate.js" type="text/javascript" async></script>
     <script src="https://js.stripe.com/v3/"></script>
-    <script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/unique-methods/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
+    <script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/unique-methods/embed.js"
+            data-dojo-config="usePlainJson: true, isDebug: false"></script>
 
     <title>Profit Whales</title>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KC6F6BM"
-                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KC6F6BM"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
 <!-- End Google Tag Manager (noscript) -->
 <!----------------------------------------------->
 <!-- Facebook Pixel Code -->
@@ -47,9 +91,7 @@
 <!-- End Facebook Pixel Code -->
 
 
-
 <div id="root"></div>
-
 
 
 <script>

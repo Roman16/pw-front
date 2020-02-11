@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import TableButton from '../TableButton/TableButton';
-import {indexField, infoField, negativeMatchTypeField, dateField} from './const';
+import {indexField, infoField, negativeMatchTypeField, dateField, averageCVRField} from './const';
 import {useSelector} from 'react-redux';
 import CustomTable from '../../../../../components/Table/CustomTable';
 import {round} from "../../../../../utils/round";
@@ -196,6 +196,9 @@ const NewNegativeKeywords = ({
                 />
             },
             {
+                ...averageCVRField(onChangeFilter, filteredColumns)
+            },
+            {
                 title: 'Action',
                 dataIndex: 'action',
                 key: 'action',
@@ -210,18 +213,7 @@ const NewNegativeKeywords = ({
         [noSales]: [
             ...defaultKeys,
             {
-                title: 'Average CVR',
-                dataIndex: 'd_averageConversionRate',
-                key: 'd_averageConversionRate',
-                width: '10.5em',
-                render: (text) => (text && <span>{round(+text * 100, 2)}%</span>),
-                sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                    percent={true}
-                />
+                ...averageCVRField(onChangeFilter, filteredColumns)
             },
             {
                 title: (

@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 import upGreenIcon from '../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
 import downRedIcon from '../../../assets/img/icons/metric-arrows/down-red-arrow.svg';
 import moment from "moment";
+import {daypartingServices} from "../../../services/dayparting.services";
+import {useSelector} from "react-redux";
 
-const data = [
+const defaultData = [
     {
         name: '2020-01-13T16:28:02', top_search: 4034, product: 2036, rest_search: 4054,
     },
@@ -110,7 +112,23 @@ const getPercent = (value, total) => {
 
 const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
 
-const PlacementsStatistics = () => {
+const PlacementsStatistics = ({date}) => {
+    const [chartData, setChartData] = useState(defaultData);
+    const {campaignId} = useSelector(state => ({
+        campaignId: state.products.selectedProduct.productId
+    }));
+
+    useEffect(() => {
+        daypartingServices.getPlacementsStatistic({campaignId, date})
+            .then(res => {
+                console.log(res);
+                // setChartData(res)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }, [date, campaignId]);
+
     return (
         <section className='placements-statistics'>
             <div className="section-header">
@@ -123,7 +141,7 @@ const PlacementsStatistics = () => {
                         <AreaChart
                             width={400}
                             height={400}
-                            data={data}
+                            data={chartData}
                             stackOffset="expand"
                             isAnimationActive={false}
                             margin={{
@@ -216,21 +234,30 @@ const PlacementsStatistics = () => {
                     </div>
 
                     <div className="row">
-                        <div className="parameter-name"><div style={{background: '#F1C75C'}}/>Top of search</div>
+                        <div className="parameter-name">
+                            <div style={{background: '#F1C75C'}}/>
+                            Top of search
+                        </div>
                         <div className="value"><img src={upGreenIcon} alt=""/>100</div>
                         <div className="value"><img src={upGreenIcon} alt=""/>100</div>
                         <div className="value"><img src={upGreenIcon} alt=""/>100</div>
                         <div className="value"><img src={downRedIcon} alt=""/>100</div>
                     </div>
                     <div className="row">
-                        <div className="parameter-name"><div style={{background: '#EC7F5C'}}/>Product pages</div>
+                        <div className="parameter-name">
+                            <div style={{background: '#EC7F5C'}}/>
+                            Product pages
+                        </div>
                         <div className="value"><img src={upGreenIcon} alt=""/>100</div>
                         <div className="value"><img src={downRedIcon} alt=""/>100</div>
                         <div className="value"><img src={upGreenIcon} alt=""/>100</div>
                         <div className="value"><img src={upGreenIcon} alt=""/>100</div>
                     </div>
                     <div className="row">
-                        <div className="parameter-name"><div style={{background: '#6D6DF6'}}/>Rest of search</div>
+                        <div className="parameter-name">
+                            <div style={{background: '#6D6DF6'}}/>
+                            Rest of search
+                        </div>
                         <div className="value"><img src={upGreenIcon} alt=""/>100</div>
                         <div className="value"><img src={upGreenIcon} alt=""/>100</div>
                         <div className="value"><img src={downRedIcon} alt=""/>100</div>

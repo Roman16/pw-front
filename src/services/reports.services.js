@@ -40,7 +40,8 @@ function getAllReports(options, cancelToken) {
         }
     });
 
-    if (sorterColumn) {
+
+    if (sorterColumn.type) {
         parameters.push(`&order_by:${sorterColumn.type}=${sorterColumn.key}`)
     }
 

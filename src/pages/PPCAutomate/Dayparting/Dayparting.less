@@ -28,6 +28,25 @@
       }
     }
 
+    .week-select {
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+
+      .custom-select {
+        width: max-content;
+        margin: 0 0 0 20px;
+        border-bottom: 2px solid #656A84;
+        padding: 0 0 0.35714286rem 0;
+
+        .ant-select-selection {
+          background-color: initial;
+          border: 0;
+          border-radius: 0;
+        }
+      }
+    }
+
     .color-gradation {
       display: flex;
       margin: 0 0 0 30px;
@@ -96,6 +115,7 @@
     }
   }
 
+
   .chart-tooltip {
     justify-content: center;
 
@@ -105,7 +125,6 @@
 
     .ant-popover-inner-content {
       background: #fff;
-      width: 140px;
       padding: 0.8571428571428571rem 1.1428571428571428rem !important;
       width: max-content;
       border: 0.5px solid rgba(148, 163, 173, 0.4);
@@ -114,17 +133,36 @@
       border-radius: 4px;
 
       h3 {
+        display: flex;
+        align-items: flex-end;
         font-size: 1rem;
         font-weight: 600;
         text-transform: capitalize;
         letter-spacing: 0.2px;
         color: #343C5A;
         margin: 0;
+
+        .time {
+          margin: 0 0 0 20px;
+          font-size: 0.8571428571428571rem;
+          line-height: initial;
+        }
       }
 
       .row-metric {
         display: flex;
         align-items: center;
+
+        .out-budget-item {
+          width: 16px !important;
+          height: 16px !important;
+          margin: 0 10px 0 0;
+
+          .statistic-information {
+            margin: 0;
+          }
+
+        }
 
         .statistic-information {
           width: 12px !important;
@@ -243,110 +281,8 @@
     }
   }
 
-  .spend-statistics {
-    //grid-area: spendStatistics;
-    margin: 0 0.7142857142857143rem 0 0;
-
-    .section-header {
-      height: 27px;
-
-      .out-of-budget {
-        display: flex;
-        align-items: center;
-        font-size: 0.8571428571428571rem;
-        color: #343C5A;
-        margin: 0 30px 0 auto;
-
-        div {
-          width: 12px;
-          height: 12px;
-          background: #EC7F5C;
-          border-radius: 2px;
-          margin: 0 10px 0 0;
-        }
-      }
-
-      .btn {
-        height: 2.2857142857142856rem;
-        padding: 0 12px;
-        font-size: 0.8571428571428571rem;
-        display: flex;
-        align-items: center;
-        position: relative;
-
-        img {
-          width: 1.1428571428571428rem;
-          margin: 0 5px 0 0;
-        }
-
-        img.soon {
-          position: absolute;
-          right: 5px;
-          top: -7px;
-          width: 2.5rem;
-        }
-      }
-    }
-
-    .statistics {
-      margin: 15px 0 0 0;
-
-      & > .row {
-        margin: 0 0 0.35714285714285715rem 0;
-        align-items: flex-end;
-        flex-wrap: nowrap;
-
-        &:last-child {
-          margin: 0;
-        }
-
-        .day-name {
-          width: 1.0714285714285714rem;
-          background: inherit;
-          text-align: center;
-          padding: 0 0 1px 0;
-          margin: 0 2px 0 0;
-        }
-
-        .time-name {
-          margin: 0 0 5px 0;
-        }
-
-        .statistic-item {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin: 0;
-
-          font-size: 0.8571428571428571rem;
-          text-align: center;
-          letter-spacing: -0.4375px;
-          color: #656A84;
-
-          text-transform: lowercase;
-
-          .custom-tooltip {
-            width: 100%;
-            margin: 0;
-          }
-
-          .statistic-information {
-            width: 1.4285714285714286rem;
-            height: 1.4285714285714286rem;
-            background: #B6B6FB;
-            border-radius: 4px;
-          }
-
-          &:last-child {
-            margin: 0;
-          }
-        }
-      }
-    }
-  }
-
   .chart-statistics {
+    min-width: initial !important;
     display: flex;
     flex-direction: column;
 
@@ -354,6 +290,7 @@
 
     .section-header {
       height: 27px;
+
       .tabs {
         display: flex;
         background: #F5F5FF;
@@ -444,8 +381,9 @@
     }
 
     .chart-block {
+      width: 100%;
+      height: 100%;
       flex: 1;
-      display: none;
 
       .recharts-cartesian-axis-line {
         stroke: #C9CBD4;
@@ -462,7 +400,7 @@
 
     .day-chart,
     .hour-chart {
-      width: 99%;
+      width: 100%;
 
       .recharts-layer.recharts-cartesian-axis-tick {
         .recharts-cartesian-axis-tick-line {

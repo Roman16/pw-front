@@ -1,30 +1,61 @@
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 import './Dayparting.less';
-import reloadIcon from '../../../assets/img/icons/reload2-icon.svg';
-import SpendStatistics from "./SpendStatistics";
+import OutBudget from "./OutBudget/OutBudget";
 import ChartStatistics from "./ChartStatistics/ChartStatistics";
 import DaySwitches from "./DaySwithes/DaySwithes";
-import KeysKeywords from "./KeysKeywords";
 import PlacementsStatistics from "./PlacementsStatistics";
 import {colorList} from "./colorList";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import shortid from "shortid";
+import CustomSelect from "../../../components/Select/Select";
+import {Select} from "antd";
+import moment from "moment";
+
+const Option = Select.Option;
+
+const weeks = [0, 1, 2, 3].map((item) => ({
+    id: item,
+    startDate: moment().clone().startOf('isoweek').subtract(item, 'w').subtract(1, 'd'),
+    endDate: moment().clone().startOf('isoweek').subtract(item, 'w').add(6, 'days').subtract(1, 'd')
+}));
 
 // eslint-disable-next-line no-unused-vars
-class Dayparting extends Component {
+class Dayparting extends PureComponent {
+    state = {
+        selectedDate: weeks[0]
+    };
+
     handleReloadDate = () => {
 
     };
 
     render() {
+        const {selectedDate} = this.state;
+
         return (
             <div className='dayparting-page'>
                 <div className='last-synced'>
-                    <button className='reload-btn' onClick={this.handleReloadDate}>
-                        <img src={reloadIcon} alt=""/>
-                    </button>
+                    <div className="week-select">
+                        <label htmlFor="">Select Week:</label>
 
-                    Data last synced at 3:08 PM GMT+3, 4/22/19
+                        <CustomSelect
+                            getPopupContainer={trigger => trigger.parentNode}
+                            value={selectedDate.id}
+                            dropdownClassName={'full-width-menu'}
+                            onChange={(index) => {
+                                this.setState({selectedDate: weeks[index]})
+                            }}
+                        >
+                            {weeks.map((item, index) => (
+                                <Option
+                                    key={item}
+                                    value={item.id}
+                                >
+                                    {`${moment(item.startDate).format('MMM DD')} - ${moment(item.endDate).format('MMM DD')}`}
+                                </Option>
+                            ))}
+                        </CustomSelect>
+                    </div>
 
                     <div className="color-gradation">
                         Min
@@ -42,7 +73,7 @@ class Dayparting extends Component {
                 </div>
 
                 <div className="row">
-                    <SpendStatistics
+                    <OutBudget
                     />
 
                     <ChartStatistics
@@ -53,15 +84,9 @@ class Dayparting extends Component {
 
                 />
 
-                {/*<div className="row">*/}
-                {/*<KeysKeywords*/}
-
-                {/*/>*/}
-
                 <PlacementsStatistics
-
+                    date={selectedDate}
                 />
-                {/*</div>*/}
             </div>
         )
     }

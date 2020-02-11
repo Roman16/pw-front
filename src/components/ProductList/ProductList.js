@@ -23,7 +23,6 @@ class ProductList extends Component {
         onlyHasNew: false,
         closedList: false,
         openedProduct: '',
-        activeTab: 'products',
         ungroupVariations: this.props.pathname === '/ppc/scanner' ? 1 : 0,
         paginationParams: {
             size: 10,
@@ -39,7 +38,7 @@ class ProductList extends Component {
 
         this.props.getAllProducts({
             ...this.state.paginationParams,
-            onlyOptimization:  this.props.pathname !== '/ppc/scanner' ? this.state.onlyOptimization : false,
+            onlyOptimization: this.props.pathname !== '/ppc/scanner' ? this.state.onlyOptimization : false,
             selectedAll: this.state.isSelectedAll,
             onlyHasNew: this.props.pathname === '/ppc/report' ? this.state.onlyHasNew : false,
             ungroupVariations: this.state.ungroupVariations,
@@ -164,12 +163,6 @@ class ProductList extends Component {
                 }, this.getProducts);
             }
 
-            if (this.props.pathname !== '/ppc/dayparting') {
-                this.setState({
-                    activeTab: 'products'
-                })
-            }
-
             if (this.props.pathname === '/ppc/scanner') {
                 this.setState({
                     ungroupVariations: 1
@@ -193,7 +186,6 @@ class ProductList extends Component {
                 openedProduct,
                 onlyHasNew,
                 closedList,
-                activeTab,
                 paginationParams: {size, page}
             } = this.state,
             {products, selectedProduct, totalSize, onlyOptimization, pathname} = this.props;
@@ -201,31 +193,10 @@ class ProductList extends Component {
         return (
             <Fragment>
                 <div
-                    className={`${closedList ? 'product-list closed' : 'product-list'} ${pathname === '/ppc/dayparting' && 'daypartin-list'}`}>
+                    className={`${closedList ? 'product-list closed' : 'product-list'}`}>
                     <div className="switch-list" onClick={() => this.setState({closedList: !closedList})}>
                         <img src={selectIcon} alt=""/>
                     </div>
-
-                    {pathname === '/ppc/dayparting' && <div className="tabs">
-                        <div
-                            className={activeTab === 'products' ? 'selected' : ''}
-                            onClick={() => this.setState({activeTab: 'products'})}
-                        >
-                            Products
-                        </div>
-                        <div
-                            className={activeTab === 'campaigns' ? 'selected' : ''}
-                            onClick={() => this.setState({activeTab: 'campaigns'})}
-                        >
-                            Campaigns
-                        </div>
-                        <div
-                            className={activeTab === 'portfolios' ? 'selected' : ''}
-                            onClick={() => this.setState({activeTab: 'portfolios'})}
-                        >
-                            Portfolios
-                        </div>
-                    </div>}
 
                     <FilterFields
                         onSearch={this.handleSearch}
@@ -259,40 +230,33 @@ class ProductList extends Component {
                         </div>}
                     </div>
 
-                    {activeTab === 'products' && <div className='products'>
-                        {products && products.map(product => (
-                            <ProductItem
-                                key={product.id}
-                                product={product}
-                                isActive={
-                                    isSelectedAll ||
-                                    selectedProduct.id === product.id
-                                }
-                                onClick={item => this.onSelect(item)}
-                                onOpenChild={this.changeOpenedProduct}
-                                openedProduct={openedProduct}
-                                products={products}
-                                pathname={pathname}
-                            />
-                        ))}
-                    </div>}
-
-                    {activeTab === 'campaigns' && <div className='campaigns-list'>
-                        {[0, 1, 2, 3, 4].map(item => (
-                            <div className={item === 0 ? 'active' : ''}>
-                                <span>LETSCOM Bluetooth Headphones</span>
-                            </div>
-                        ))}
-                    </div>}
-
-                    {activeTab === 'portfolios' && <div className='portfolios-list'>
-                        {[0, 1, 2, 3, 4].map(item => (
-                            <div className={item === 0 ? 'active' : ''}>
-                                <span>LETSCOM Bluetooth Headphones</span>
-                            </div>
-                        ))}
-                    </div>}
-
+                    {pathname !== '/ppc/dayparting' ?
+                        <div className='products'>
+                            {products && products.map(product => (
+                                <ProductItem
+                                    key={product.id}
+                                    product={product}
+                                    isActive={
+                                        isSelectedAll ||
+                                        selectedProduct.id === product.id
+                                    }
+                                    onClick={item => this.onSelect(item)}
+                                    onOpenChild={this.changeOpenedProduct}
+                                    openedProduct={openedProduct}
+                                    products={products}
+                                    pathname={pathname}
+                                />
+                            ))}
+                        </div>
+                        :
+                        <div className='campaigns-list'>
+                            {[0, 1, 2, 3, 4].map(item => (
+                                <div className={item === 0 ? 'active' : ''}>
+                                    <span>LETSCOM Bluetooth Headphones</span>
+                                </div>
+                            ))}
+                        </div>
+                    }
 
                     <ProductPagination
                         page={page}
