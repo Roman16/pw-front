@@ -80,7 +80,7 @@ const NewKeywords = ({
                 title: 'Type',
                 dataIndex: 'd_campaignType',
                 key: 'd_campaignType',
-                width: '7em',
+                width: '12em',
                 render: (str) => (<span className='capitalize-field'>{str && str.split(/(?=[A-Z])/).join(' ')}</span>),
                 sorter: true,
                 filter: (dataIndex) => <ColumnMenuFilter
@@ -113,7 +113,7 @@ const NewKeywords = ({
                 title: 'Daily Budget',
                 dataIndex: 'd_dailyBudget',
                 key: 'd_dailyBudget',
-                width: '10em',
+                width: '11em',
                 render: text => (text != null && <span>{`$${numberMask(text)}`}</span>),
                 sorter: true,
                 filter: (dataIndex) => <ColumnNumberFilter

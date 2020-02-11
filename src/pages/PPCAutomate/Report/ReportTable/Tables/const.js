@@ -151,16 +151,17 @@ export const pausePatActionField = {
 };
 
 export const averageCVRField = (onChangeFilter, filteredColumns) => ({
-    title: (
-        <TitleInfo
-            position='top'
-            title="Average CVR"
-            info="Average CVR"
-        />
-    ),
+    // title: (
+    //     <TitleInfo
+    //         position='top'
+    //         title="Average CVR"
+    //         info="Average CVR"
+    //     />
+    // ),
+    title: 'Average CVR',
     dataIndex: 'd_averageConversionRate',
     key: 'd_averageConversionRate',
-    width: '12.5em',
+    width: '11em',
     render: (text) => (text && <span>{round(+text * 100, 2)}%</span>),
     sorter: true,
     filter: (dataIndex) => <ColumnNumberFilter
