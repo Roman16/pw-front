@@ -25,10 +25,6 @@ class Dayparting extends PureComponent {
         selectedDate: weeks[0]
     };
 
-    handleReloadDate = () => {
-
-    };
-
     render() {
         const {selectedDate} = this.state;
 
