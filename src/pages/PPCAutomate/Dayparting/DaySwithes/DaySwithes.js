@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
 import {Switch} from "antd";
 import moment from "moment";
@@ -8,6 +8,7 @@ import './DaySwitches.less';
 import {hold} from "../../../../utils/hold";
 import {daypartingServices} from "../../../../services/dayparting.services";
 import {notification} from "../../../../components/Notification";
+import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
 
 const defaultList = Array.from({length: 168}, () => '1').join('');
 
@@ -39,13 +40,27 @@ const selection = Selection.create({
 class DaySwitches extends Component {
     state = {
         hoursStatus: [...defaultList],
-        activeSection: false
+        activeSection: false,
+        visibleWindow: false
+    };
+
+    deactivateDaypartingHandler = () => {
+        this.setState({
+            activeSection: false,
+            visibleWindow: false
+        })
     };
 
     switchDayPartingHandler = () => {
-        this.setState({
-            activeSection: !this.state.activeSection
-        })
+        if (this.state.activeSection) {
+            this.setState({
+                visibleWindow: true
+            })
+        } else {
+            this.setState({
+                activeSection: !this.state.activeSection
+            })
+        }
     };
 
     handleUpdateStatus = async () => {
@@ -169,82 +184,116 @@ class DaySwitches extends Component {
     }
 
     render() {
-        const {hoursStatus, activeSection} = this.state;
+        const {hoursStatus, activeSection, visibleWindow} = this.state;
 
         return (
-            <section className='day-switches'>
-                <div className="section-header">
-                    <button
-                        className='btn default switch-day-parting'
-                        onClick={this.switchDayPartingHandler}
-                    >
-                        {activeSection ? 'Disable Day Parting' : 'Enable Day Parting'}
-                    </button>
-
-                    <div className='actions'>
-                        <div className='disabled-example'>
-                            <div/>
-                            Disabled
-                        </div>
-
-                        <div className='active-example'>
-                            <div/>
-                            Active
-                        </div>
-
-                        <button onClick={this.handleReset} disabled={!activeSection}>
-                            <img src={reloadIcon} alt=""/>
-                            Reset
+            <Fragment>
+                <section className={`day-switches ${activeSection ? 'enabled' : 'disabled'}`}>
+                    <div className="section-header">
+                        <button
+                            className='btn default switch-day-parting'
+                            onClick={this.switchDayPartingHandler}
+                        >
+                            {activeSection ? 'Disable Day Parting' : 'Enable Day Parting'}
                         </button>
-                    </div>
-                </div>
 
-                <div className="switches">
-                    <div className="row time-name">
-                        <div/>
-                        {hours.map((status, timeIndex) => (
-                            <div key={shortid.generate()}>
-                                {moment(timeIndex + 1, 'HH').format('hh A')}
-                                <Switch
-                                    disabled={!activeSection}
-                                    checked={[0, 1, 2, 3, 4, 5, 6].map(item => hoursStatus[24 * item + timeIndex]).every(item => item === '1')}
-                                    onChange={(value) => this.handleSwitchColumn(timeIndex, value)}
-                                />
+                        <div className='actions'>
+                            <div className='disabled-example'>
+                                <div/>
+                                Disabled
                             </div>
-                        ))}
+
+                            <div className='active-example'>
+                                <div/>
+                                Active
+                            </div>
+
+                            <button onClick={this.handleReset} disabled={!activeSection}>
+                                <img src={reloadIcon} alt=""/>
+                                Reset
+                            </button>
+                        </div>
                     </div>
 
-                    <div className="row">
-                        <div className="col day-axis">
-                            {days.map((day, dayIndex) => (
-                                <div className='day-name' key={shortid.generate()}>
+                    <div className="switches">
+                        <div className="row time-name">
+                            <div/>
+                            {hours.map((status, timeIndex) => (
+                                <div key={shortid.generate()}>
+                                    {moment(timeIndex + 1, 'HH').format('hh A')}
                                     <Switch
                                         disabled={!activeSection}
-                                        checked={hoursStatus.slice(24 * dayIndex, 24 * (dayIndex + 1)).every(item => item === '1')}
-                                        onChange={(value) => this.handleSwitchRow(dayIndex, value)}
+                                        checked={[0, 1, 2, 3, 4, 5, 6].map(item => hoursStatus[24 * item + timeIndex]).every(item => item === '1')}
+                                        onChange={(value) => this.handleSwitchColumn(timeIndex, value)}
                                     />
-                                    <span>
-                                       {window.devicePixelRatio === 2 ? day[0] : day}
-                                    </span>
                                 </div>
                             ))}
                         </div>
 
-                        <div className={`col multi-select ${activeSection ? 'enabled' : 'disabled'}`}>
-                            {hoursStatus.map((value, hourIndex) => (
-                                <div className='statistic-item' key={shortid.generate()}>
-                                    <div
-                                        onClick={() => activeSection && this.handleSwitchHour(hourIndex, value)}
-                                        className={value === '1' ? 'statistic-information active' : 'statistic-information'}
-                                        hourIndex={hourIndex}
-                                        value={value}
-                                    />
-                                </div>
-                            ))}
+                        <div className="row">
+                            <div className="col day-axis">
+                                {days.map((day, dayIndex) => (
+                                    <div className='day-name' key={shortid.generate()}>
+                                        <Switch
+                                            disabled={!activeSection}
+                                            checked={hoursStatus.slice(24 * dayIndex, 24 * (dayIndex + 1)).every(item => item === '1')}
+                                            onChange={(value) => this.handleSwitchRow(dayIndex, value)}
+                                        />
+                                        <span>
+                                       {window.devicePixelRatio === 2 ? day[0] : day}
+                                    </span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className={`col multi-select ${activeSection ? 'enabled' : 'disabled'}`}>
+                                {hoursStatus.map((value, hourIndex) => (
+                                    <div className='statistic-item' key={shortid.generate()}>
+                                        <div
+                                            onClick={() => activeSection && this.handleSwitchHour(hourIndex, value)}
+                                            className={value === '1' ? 'statistic-information active' : 'statistic-information'}
+                                            hourIndex={hourIndex}
+                                            value={value}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+
+
+                <ModalWindow
+                    visible={visibleWindow}
+                    className={'confirm-disable-day-parting-window'}
+                    handleCancel={() => this.setState({visibleWindow: false})}
+                    footer={false}
+                >
+                    <Fragment>
+                        <h2>Are you sure?</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur culpa distinctio
+                            dolorum ea excepturi, expedita explicabo quia ratione reiciendis rem saepe voluptatibus!
+                            Enim excepturi explicabo iure, magnam nulla officia quo?
+                        </p>
+
+                        <div className="action">
+                            <button
+                                className='btn default'
+                                onClick={this.deactivateDaypartingHandler}>
+                                Yes
+                            </button>
+
+                            <button
+                                className='btn green-btn'
+                                onClick={() => this.setState({visibleWindow: false})}>
+                                No
+                            </button>
+                        </div>
+                    </Fragment>
+
+                </ModalWindow>
+            </Fragment>
         )
     }
 }
