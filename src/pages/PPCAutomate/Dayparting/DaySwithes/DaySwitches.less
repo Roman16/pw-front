@@ -5,9 +5,16 @@
   grid-area: daySwitches;
   margin: 1.4285714285714286rem 0;
   width: 100%;
+  position: relative;
 
   .section-header {
     margin: 0 0 1.0714285714285714rem 0;
+
+    .switch-day-parting {
+      height: 2.28571429rem;
+      width: 13%;
+
+    }
 
     .actions {
       display: flex;
@@ -60,6 +67,20 @@
           0px 0px 22px rgba(44, 48, 58, 0.2);
         }
       }
+    }
+  }
+
+  &.disabled {
+    .section-header {
+      .actions {
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+      }
+    }
+
+    .switches {
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%);
     }
   }
 
@@ -164,6 +185,7 @@
         grid-gap: 5px;
         grid-template-columns: repeat(24, minmax(33px, 1fr));
         grid-auto-flow: dense;
+        position: relative;
 
         &:last-child {
           margin: 0;
@@ -195,13 +217,42 @@
             }
           }
         }
+
+        &.disabled {
+          .statistic-information {
+            cursor: not-allowed;
+          }
+        }
       }
     }
   }
 
+
   @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
     & {
       padding-right: 3px;
+    }
+  }
+}
+
+.confirm-disable-day-parting-window {
+  .ant-modal-body {
+    text-align: center;
+    padding-bottom: 20px;
+
+    h2 {
+      margin: 0;
+      padding: 0 0 10px 0;
+    }
+
+    .action {
+      display: flex;
+      justify-content: space-around;
+
+      .btn {
+        width: 30%;
+        font-size: 1rem;
+      }
     }
   }
 }

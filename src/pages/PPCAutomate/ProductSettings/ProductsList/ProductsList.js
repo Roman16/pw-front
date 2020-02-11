@@ -103,6 +103,11 @@ class ProductsList extends Component {
 
             if (value === '' || value == null) {
                 dataSourceRow = this.setRowData(null, item, index);
+
+                clearTimeout(this.timerId);
+                this.timerId = setTimeout(() => {
+                    this.updateSettings(dataSourceRow);
+                }, delay);
             } else if (item !== NET_MARGIN && value > 0.02) {
                 if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null) {
                     notification.warning({
@@ -129,18 +134,23 @@ class ProductsList extends Component {
                     return;
                 }
                 dataSourceRow = this.setRowData(value, item, index);
-            } else if (item === NET_MARGIN && value > 0) {
+
+                clearTimeout(this.timerId);
+                this.timerId = setTimeout(() => {
+                    this.updateSettings(dataSourceRow);
+                }, delay);
+            } else if (item === NET_MARGIN && value > 0 && value <= 100) {
                 dataSourceRow = this.setRowData(value, NET_MARGIN, index);
+
+                clearTimeout(this.timerId);
+                this.timerId = setTimeout(() => {
+                    this.updateSettings(dataSourceRow);
+                }, delay);
             } else {
                 notification.warning({
-                    title: item === NET_MARGIN ? 'Product net margin should be greater than 0%' : 'Bids should be greater than or equal to 0.02$'
+                    title: item === NET_MARGIN ? 'Product net margin should be greater than 0% and less than 100%' : 'Bids should be greater than or equal to 0.02$'
                 });
             }
-
-            clearTimeout(this.timerId);
-            this.timerId = setTimeout(() => {
-                this.updateSettings(dataSourceRow);
-            }, delay);
         }
     };
 
@@ -317,6 +327,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[NET_MARGIN]}
+                            max={100}
                             typeIcon='margin'
                             onChange={event =>
                                 this.onChangeRow(event, NET_MARGIN, indexRow)

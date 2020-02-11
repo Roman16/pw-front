@@ -18,7 +18,7 @@
   &.closed {
     width: 20px;
     min-width: 20px;
-    transition: .3s;
+    transition: .1s;
 
     .tabs,
     .search-product,
@@ -186,13 +186,16 @@
       border-radius: 4px;
       transition: .2s;
 
-      overflow: hidden;
 
       &.opened {
         width: 100%;
         height: max-content;
         transition: .2s;
         padding: 60px 10px 10px 10px;
+      }
+
+      &.closed {
+        overflow: hidden;
       }
 
       .selected-all-btn {
@@ -204,6 +207,43 @@
       .has-new-reports-only {
         display: flex;
         justify-content: space-between;
+      }
+
+      .select-block {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 0 20px 0;
+
+        &:last-child {
+          margin: 0;
+        }
+
+        .custom-select {
+          .ant-select-selection {
+            width: 100px;
+            padding-left: 10px;
+
+            .ant-select-selection-selected-value {
+              align-items: center;
+            }
+          }
+
+          .ant-select-arrow {
+            right: 5px;
+          }
+        }
+
+        .full-width-menu {
+          position: absolute;
+          bottom: 0 !important;
+          top: 23px !important;
+          z-index: 10000;
+
+          ul {
+            background: #fff;
+          }
+        }
       }
     }
   }

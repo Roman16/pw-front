@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {productsActions} from "../../../../../actions/products.actions";
 import {productsServices} from "../../../../../services/products.services";
 import ModalWindow from "../../../../../components/ModalWindow/ModalWindow";
+import InputCurrency from "../../../../../components/Inputs/InputCurrency";
 
 const errorText = 'net margin should be more than 0';
 
@@ -26,9 +27,12 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
         options: state.products.defaultOptimizationOptions
     }));
 
-    const onChange = ({target: {value}}) => {
-        setValue(+value);
-        // setError(+value === 0);
+    const onChange = (value) => {
+        if(value > 100) {
+            setValue(100);
+        } else {
+            setValue(+value);
+        }
     };
 
     const submit = async () => {
@@ -76,16 +80,16 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
                             <div className="product-net-margin">
                                 <span>Product Net Margin</span>
 
-                                <Input
-                                    prefix={<Dollar/>}
-                                    // value={value}
-                                    // type="number"
-                                    defaultValue={0}
+                                <InputCurrency
+                                    value={value}
+                                    max={100}
+                                    min={0}
+                                    typeIcon='margin'
                                     onChange={onChange}
                                 />
                             </div>
 
-                            <Button className="start" onClick={submit}> Start </Button>
+                            <button className="btn default start" onClick={submit}> Start </button>
                         </Fragment>
                     }
                 </div>

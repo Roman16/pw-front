@@ -13,12 +13,12 @@ const CustomSelect = (props) => {
 
     return (
         <Select
+            {...props}
             onChange={onChange}
             defaultValue={defaultValue}
             suffixIcon={<img src={selectIcon} alt=""/>}
             className="custom-select"
             dropdownClassName={dropdownClassName}
-            getPopupContainer={trigger => trigger.parentNode}
             value={value}
         >
             {props.children}
