@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import './Dayparting.less';
-import SpendStatistics from "./SpendStatistics";
+import OutBudget from "./OutBudget/OutBudget";
 import ChartStatistics from "./ChartStatistics/ChartStatistics";
 import DaySwitches from "./DaySwithes/DaySwithes";
 import PlacementsStatistics from "./PlacementsStatistics";
@@ -13,25 +13,25 @@ import moment from "moment";
 
 const Option = Select.Option;
 
-const weeks = [
-    {
-        startDate: moment().clone().startOf('isoweek'),
-        endDate: moment().clone().startOf('isoweek').add(6, 'days')
-    },
-    {
-        startDate: moment().clone().startOf('isoweek').subtract(1, 'w'),
-        endDate: moment().clone().startOf('isoweek').subtract(1, 'w').add(6, 'days')
-    },
-
-];
+const weeks = [0, 1, 2, 3].map((item) => ({
+    id: item,
+    startDate: moment().clone().startOf('isoweek').subtract(item, 'w').subtract(1, 'd'),
+    endDate: moment().clone().startOf('isoweek').subtract(item, 'w').add(6, 'days').subtract(1, 'd')
+}));
 
 // eslint-disable-next-line no-unused-vars
 class Dayparting extends PureComponent {
+    state = {
+        selectedDate: weeks[0]
+    };
+
     handleReloadDate = () => {
 
     };
 
     render() {
+        const {selectedDate} = this.state;
+
         return (
             <div className='dayparting-page'>
                 <div className='last-synced'>
@@ -40,17 +40,18 @@ class Dayparting extends PureComponent {
 
                         <CustomSelect
                             getPopupContainer={trigger => trigger.parentNode}
-                            value={0}
+                            value={selectedDate.id}
                             dropdownClassName={'full-width-menu'}
-                            onChange={(metric) => {
+                            onChange={(index) => {
+                                this.setState({selectedDate: weeks[index]})
                             }}
                         >
-                            {[0, 1, 2, 3].map(item => (
+                            {weeks.map((item, index) => (
                                 <Option
                                     key={item}
-                                    value={item}
+                                    value={item.id}
                                 >
-                                    {`${moment().clone().startOf('isoweek').subtract(item, 'w').subtract(1, 'd').format('MMM DD')} - ${moment().clone().startOf('isoweek').subtract(item, 'w').add(6, 'days').subtract(1, 'd').format('MMM DD')}`}
+                                    {`${moment(item.startDate).format('MMM DD')} - ${moment(item.endDate).format('MMM DD')}`}
                                 </Option>
                             ))}
                         </CustomSelect>
@@ -72,7 +73,7 @@ class Dayparting extends PureComponent {
                 </div>
 
                 <div className="row">
-                    <SpendStatistics
+                    <OutBudget
                     />
 
                     <ChartStatistics
@@ -84,7 +85,7 @@ class Dayparting extends PureComponent {
                 />
 
                 <PlacementsStatistics
-
+                    date={selectedDate}
                 />
             </div>
         )

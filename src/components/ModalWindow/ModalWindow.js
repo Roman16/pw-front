@@ -39,6 +39,7 @@ const ModalWindow = (props) => {
     } else {
         return (
             <Modal
+                {...props}
                 className={`${className} custom-modal-window`}
                 wrapClassName={'over-modal-wrap'}
                 visible={visible}
