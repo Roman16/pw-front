@@ -115,7 +115,7 @@ const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
 const PlacementsStatistics = ({date}) => {
     const [chartData, setChartData] = useState(defaultData);
     const {campaignId} = useSelector(state => ({
-        campaignId: state.products.selectedProduct.productId
+        campaignId: state.products.selectedProduct.id
     }));
 
     useEffect(() => {

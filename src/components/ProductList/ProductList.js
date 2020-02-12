@@ -43,6 +43,7 @@ class ProductList extends Component {
             onlyHasNew: this.props.pathname === '/ppc/report' ? this.state.onlyHasNew : false,
             ungroupVariations: this.state.ungroupVariations,
             pathname: this.props.pathname,
+            type: this.props.pathname === '/ppc/dayparting' ? 'campaigns' : 'products',
             cancelToken: source.token
         });
     };
@@ -172,6 +173,12 @@ class ProductList extends Component {
                     ungroupVariations: 0
                 }, this.getProducts)
             }
+
+            if (this.props.pathname === '/ppc/dayparting') {
+                this.getProducts();
+            } else if (prevProps.pathname === '/ppc/dayparting' && this.props.pathname !== '/ppc/dayparting') {
+                this.getProducts();
+            }
         }
     }
 
@@ -250,9 +257,13 @@ class ProductList extends Component {
                         </div>
                         :
                         <div className='campaigns-list'>
-                            {[0, 1, 2, 3, 4].map(item => (
-                                <div className={item === 0 ? 'active' : ''}>
-                                    <span>LETSCOM Bluetooth Headphones</span>
+                            {products && products.map(item => (
+                                <div
+                                    key={item.id}
+                                    className={isSelectedAll || selectedProduct.id === item.id ? 'active' : ''}
+                                    onClick={() => this.onSelect(item)}
+                                >
+                                    <span>{item.name}</span>
                                 </div>
                             ))}
                         </div>

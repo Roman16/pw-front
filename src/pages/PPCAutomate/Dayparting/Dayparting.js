@@ -25,6 +25,14 @@ class Dayparting extends PureComponent {
         selectedDate: weeks[0]
     };
 
+    changeDateHandler = (dateIndex) => {
+        console.log(dateIndex);
+
+        this.setState({
+            selectedDate: weeks[dateIndex]
+        })
+    };
+
     render() {
         const {selectedDate} = this.state;
 
@@ -36,11 +44,9 @@ class Dayparting extends PureComponent {
 
                         <CustomSelect
                             getPopupContainer={trigger => trigger.parentNode}
-                            value={selectedDate.id}
+                            defaultValue={0}
                             dropdownClassName={'full-width-menu'}
-                            onChange={(index) => {
-                                this.setState({selectedDate: weeks[index]})
-                            }}
+                            onChange={this.changeDateHandler}
                         >
                             {weeks.map((item, index) => (
                                 <Option
@@ -70,9 +76,11 @@ class Dayparting extends PureComponent {
 
                 <div className="row">
                     <OutBudget
+                        date={selectedDate}
                     />
 
                     <ChartStatistics
+                        date={selectedDate}
                     />
                 </div>
 
