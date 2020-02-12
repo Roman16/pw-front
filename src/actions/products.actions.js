@@ -1,6 +1,7 @@
 import {productsConstants} from '../constans/actions.type';
 import {productsServices} from '../services/products.services';
 import {notification} from '../components/Notification';
+import {daypartingServices} from "../services/dayparting.services";
 
 export const productsActions = {
     fetchProducts,
@@ -17,19 +18,37 @@ export const productsActions = {
 };
 
 function fetchProducts(paginationParams) {
-
     return dispatch => {
-        productsServices.getProducts(paginationParams)
-            .then(res => {
-                dispatch({
-                    type: productsConstants.SET_PRODUCT_LIST,
-                    payload: res
-                });
+        dispatch({
+            type: productsConstants.SET_PRODUCT_LIST,
+            payload: {result: []}
+        });
 
-                if (res.result && res.result.length > 0 && !paginationParams.selectedAll) {
-                    dispatch(fetchProductDetails(res.result[0], paginationParams.pathname));
-                }
-            });
+        if (paginationParams.type === 'campaigns') {
+            daypartingServices.getCampaigns(paginationParams)
+                .then(res => {
+                    dispatch({
+                        type: productsConstants.SET_PRODUCT_LIST,
+                        payload: {result: res}
+                    });
+
+                    if (res.length > 0 && !paginationParams.selectedAll) {
+                        dispatch(fetchProductDetails(res[0], paginationParams.pathname));
+                    }
+                });
+        } else {
+            productsServices.getProducts(paginationParams)
+                .then(res => {
+                    dispatch({
+                        type: productsConstants.SET_PRODUCT_LIST,
+                        payload: res
+                    });
+
+                    if (res.result && res.result.length > 0 && !paginationParams.selectedAll) {
+                        dispatch(fetchProductDetails(res.result[0], paginationParams.pathname));
+                    }
+                });
+        }
     };
 }
 
@@ -44,6 +63,16 @@ function fetchProductDetails(product, pathname) {
                     product_id: product.id,
                 }
             });
+        } else if (pathname === '/ppc/dayparting') {
+            dispatch({
+                type: productsConstants.SELECT_PRODUCT,
+                payload: {
+                    ...product,
+                    id: product.id,
+                    product_id: product.id,
+                }
+            });
+
         } else {
             productsServices.getProductDetails(product === 'all' ? 'all' : product.id)
                 .then(res => {

@@ -59,8 +59,9 @@ export const scannerUrls = {
 };
 
 export const daypartingUrls = {
+    campaigns: 'ppc-automation/dayparting/campaigns',
     spendOutBudget: '',
     allStatistic: '',
     dayParting: '',
-    placements: ''
+    placements: 'ppc-automation/dayparting/campaigns/placements'
 };

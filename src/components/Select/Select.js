@@ -8,7 +8,6 @@ const CustomSelect = (props) => {
         onChange,
         defaultValue,
         dropdownClassName,
-        value
     } = props;
 
     return (
@@ -19,7 +18,6 @@ const CustomSelect = (props) => {
             suffixIcon={<img src={selectIcon} alt=""/>}
             className="custom-select"
             dropdownClassName={dropdownClassName}
-            value={value}
         >
             {props.children}
         </Select>
