@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, Fragment} from 'react';
 import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
@@ -7,28 +7,29 @@ import downRedIcon from '../../../assets/img/icons/metric-arrows/down-red-arrow.
 import moment from "moment";
 import {daypartingServices} from "../../../services/dayparting.services";
 import {useSelector} from "react-redux";
+import {numberMask} from "../../../utils/numberMask";
 
 const defaultData = [
     {
-        name: '2020-01-13T16:28:02', top_search: 4034, product: 2036, rest_search: 4054,
+        date: '2020-01-13T16:28:02', top_search: 4034, product: 2036, rest_search: 4054,
     },
     {
-        name: '2020-01-14T16:28:02', top_search: 3047, product: 1078, rest_search: 6034,
+        date: '2020-01-14T16:28:02', top_search: 3047, product: 1078, rest_search: 6034,
     },
     {
-        name: '2020-01-15T16:28:02', top_search: 2034, product: 7046, rest_search: 1034,
+        date: '2020-01-15T16:28:02', top_search: 2034, product: 7046, rest_search: 1034,
     },
     {
-        name: '2020-01-16T16:28:02', top_search: 887, product: 256, rest_search: 508,
+        date: '2020-01-16T16:28:02', top_search: 887, product: 256, rest_search: 508,
     },
     {
-        name: '2020-01-17T16:28:02', top_search: 3087, product: 1034, rest_search: 6077,
+        date: '2020-01-17T16:28:02', top_search: 3087, product: 1034, rest_search: 6077,
     },
     {
-        name: '2020-01-18T16:28:02', top_search: 2087, product: 7023, rest_search: 5609,
+        date: '2020-01-18T16:28:02', top_search: 2087, product: 7023, rest_search: 5609,
     },
     {
-        name: '2020-01-19T16:28:02', top_search: 2534, product: 2523, rest_search: 5023,
+        date: '2020-01-19T16:28:02', top_search: 2534, product: 2523, rest_search: 5023,
     },
 ];
 
@@ -37,6 +38,40 @@ const chartLabel = {
     product: 'Product pages',
     rest_search: 'Rest of search'
 };
+
+const statisticParams = [
+    {
+        title: 'Top of search',
+        key: 'Top of Search on-Amazon'
+    },
+    {
+        title: 'Product pages',
+        key: 'Detail Page on-Amazon'
+    },
+    {
+        title: 'Rest of search',
+        key: 'Other on-Amazon'
+    }
+];
+
+const statisticMetrics = [
+    {
+        title: 'Clicks',
+        key: 'clicks'
+    },
+    {
+        title: 'CTR',
+        key: 'ctr'
+    },
+    {
+        title: 'ACoS',
+        key: 'acos'
+    },
+    {
+        title: 'Orders',
+        key: 'orders'
+    }
+];
 
 const chartColors = [
     {
@@ -104,6 +139,23 @@ const CustomizedAxisTick = ({x, y, payload}) => {
     }
 };
 
+const MetricValue = ({metric, type}) => {
+    if (metric.diff) {
+        return (
+            <div className="value">
+                {+metric.diff === 0 ? <div/> : <img src={metric.diff > 0 ? upGreenIcon : downRedIcon} alt=""/>}
+                {type === 'ctr' || type === 'acos' ? numberMask(metric.value, 2) : metric.value}
+            </div>
+        )
+    } else {
+        return (
+            <div className="value">
+                {type === 'ctr' || type === 'acos' ? numberMask(metric.value, 2) : metric.value}
+            </div>
+        )
+    }
+};
+
 const getPercent = (value, total) => {
     const ratio = total > 0 ? value / total : 0;
 
@@ -113,7 +165,8 @@ const getPercent = (value, total) => {
 const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
 
 const PlacementsStatistics = ({date}) => {
-    const [chartData, setChartData] = useState(defaultData);
+    const [chartData, setChartData] = useState(defaultData),
+        [statisticData, setStatisticData] = useState({});
     const {campaignId} = useSelector(state => ({
         campaignId: state.products.selectedProduct.id
     }));
@@ -122,7 +175,8 @@ const PlacementsStatistics = ({date}) => {
         daypartingServices.getPlacementsStatistic({campaignId, date})
             .then(res => {
                 console.log(res);
-                // setChartData(res)
+                // setChartData(res.data)
+                setStatisticData(res.statistics)
             })
             .catch(error => {
                 console.log(error);
@@ -175,7 +229,7 @@ const PlacementsStatistics = ({date}) => {
                             <XAxis
                                 minTickGap={2}
                                 tickSize={9}
-                                dataKey="name"
+                                dataKey="date"
                                 interval={5}
                                 padding={{left: 10, right: 10}}
                                 tick={<CustomizedAxisTick/>}
@@ -227,43 +281,29 @@ const PlacementsStatistics = ({date}) => {
                 <div className='metrics-statistics'>
                     <div className="row metrics-name">
                         <div/>
-                        <div>Clicks</div>
-                        <div>CTR</div>
-                        <div>ACoS</div>
-                        <div>Orders</div>
+                        {statisticMetrics.map(item => (
+                            <div>{item.title}</div>
+                        ))}
                     </div>
 
-                    <div className="row">
-                        <div className="parameter-name">
-                            <div style={{background: '#F1C75C'}}/>
-                            Top of search
-                        </div>
-                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
-                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
-                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
-                        <div className="value"><img src={downRedIcon} alt=""/>100</div>
-                    </div>
-                    <div className="row">
-                        <div className="parameter-name">
-                            <div style={{background: '#EC7F5C'}}/>
-                            Product pages
-                        </div>
-                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
-                        <div className="value"><img src={downRedIcon} alt=""/>100</div>
-                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
-                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
-                    </div>
-                    <div className="row">
-                        <div className="parameter-name">
-                            <div style={{background: '#6D6DF6'}}/>
-                            Rest of search
-                        </div>
-                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
-                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
-                        <div className="value"><img src={downRedIcon} alt=""/>100</div>
-                        <div className="value"><img src={upGreenIcon} alt=""/>100</div>
-                    </div>
+                    {statisticParams.map((item, index) => {
+                        const metricValues = statisticData[item.key] || null;
 
+                        return (
+                            <div className="row">
+                                <div className="parameter-name">
+                                    <div style={{background: chartColors[index].stroke}}/>
+                                    {item.title}
+                                </div>
+
+                                {metricValues && <Fragment>
+                                    {statisticMetrics.map(item => (
+                                        <MetricValue metric={metricValues[item.key]} type={item.key}/>
+                                    ))}
+                                </Fragment>}
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
 

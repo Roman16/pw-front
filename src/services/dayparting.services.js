@@ -1,5 +1,6 @@
 import api from './request';
 import {daypartingUrls} from '../constans/api.urls';
+import moment from "moment";
 
 export const daypartingServices = {
     getCampaigns,
@@ -27,7 +28,8 @@ function getAllStatistic(firstMetric, secondMetric) {
 }
 
 function getPlacementsStatistic({campaignId, date}) {
-    return api('get', `${daypartingUrls.placements}?size=10&campaignId=${campaignId}&page=1&startDate=1-12-2020&endDate=1-12-2020`)
+    return api('get', `${daypartingUrls.placements}?campaignId=${campaignId}&start_date=${moment(date.startDate).format('YYYY-MM-DD')}&end_date=${moment(date.endDate).format('YYYY-MM-DD')}`)
+    // return api('get', `${daypartingUrls.placements}?start_date=${moment(date.startDate).format('YYYY-MM-DD')}&end_date=${moment(date.endDate).format('YYYY-MM-DD')}`)
 }
 
 function getDayPartingParams() {

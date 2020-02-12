@@ -26,8 +26,6 @@ class Dayparting extends PureComponent {
     };
 
     changeDateHandler = (dateIndex) => {
-        console.log(dateIndex);
-
         this.setState({
             selectedDate: weeks[dateIndex]
         })
