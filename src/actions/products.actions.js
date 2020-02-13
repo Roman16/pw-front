@@ -19,13 +19,13 @@ export const productsActions = {
 
 function fetchProducts(paginationParams) {
     return dispatch => {
-        dispatch({
-            type: productsConstants.SET_PRODUCT_LIST,
-            payload: {
-                result: [],
-                fetching: true
-            }
-        });
+        // dispatch({
+        //     type: productsConstants.SET_PRODUCT_LIST,
+        //     payload: {
+        //         result: [],
+        //         fetching: true
+        //     }
+        // });
 
         if (paginationParams.type === 'campaigns') {
             daypartingServices.getCampaigns(paginationParams)
@@ -33,13 +33,13 @@ function fetchProducts(paginationParams) {
                     dispatch({
                         type: productsConstants.SET_PRODUCT_LIST,
                         payload: {
-                            ...res,
+                            result: res,
                             fetching: false
                         }
                     });
 
-                    if (res.result && res.result.length > 0 && !paginationParams.selectedAll) {
-                        dispatch(fetchProductDetails(res.result[0], paginationParams.pathname));
+                    if (res.length > 0 && !paginationParams.selectedAll) {
+                        dispatch(fetchProductDetails(res[0], paginationParams.pathname));
                     }
                 });
         } else {
