@@ -33,13 +33,13 @@ function fetchProducts(paginationParams) {
                     dispatch({
                         type: productsConstants.SET_PRODUCT_LIST,
                         payload: {
-                            result: res,
+                            ...res,
                             fetching: false
                         }
                     });
 
-                    if (res.length > 0 && !paginationParams.selectedAll) {
-                        dispatch(fetchProductDetails(res[0], paginationParams.pathname));
+                    if (res.result && res.result.length > 0 && !paginationParams.selectedAll) {
+                        dispatch(fetchProductDetails(res.result[0], paginationParams.pathname));
                     }
                 });
         } else {
