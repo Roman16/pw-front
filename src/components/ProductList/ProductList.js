@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import ProductItem from './ProductItem';
 import {connect} from 'react-redux';
-import {Select} from 'antd';
+import {Select, Spin} from 'antd';
 import {productsActions} from '../../actions/products.actions';
 import './ProductList.less';
 import {debounce} from 'throttle-debounce';
@@ -43,6 +43,7 @@ class ProductList extends Component {
             onlyHasNew: this.props.pathname === '/ppc/report' ? this.state.onlyHasNew : false,
             ungroupVariations: this.state.ungroupVariations,
             pathname: this.props.pathname,
+            type: this.props.pathname === '/ppc/dayparting' ? 'campaigns' : 'products',
             cancelToken: source.token
         });
     };
@@ -172,6 +173,12 @@ class ProductList extends Component {
                     ungroupVariations: 0
                 }, this.getProducts)
             }
+
+            if (this.props.pathname === '/ppc/dayparting') {
+                this.getProducts();
+            } else if (prevProps.pathname === '/ppc/dayparting' && this.props.pathname !== '/ppc/dayparting') {
+                this.getProducts();
+            }
         }
     }
 
@@ -188,7 +195,7 @@ class ProductList extends Component {
                 closedList,
                 paginationParams: {size, page}
             } = this.state,
-            {products, selectedProduct, totalSize, onlyOptimization, pathname} = this.props;
+            {products, selectedProduct, totalSize, onlyOptimization, pathname, fetching} = this.props;
 
         return (
             <Fragment>
@@ -230,6 +237,8 @@ class ProductList extends Component {
                         </div>}
                     </div>
 
+                    {fetching && <div className='fetching-data'><Spin size={'large'}/></div>}
+
                     {pathname !== '/ppc/dayparting' ?
                         <div className='products'>
                             {products && products.map(product => (
@@ -250,9 +259,13 @@ class ProductList extends Component {
                         </div>
                         :
                         <div className='campaigns-list'>
-                            {[0, 1, 2, 3, 4].map(item => (
-                                <div className={item === 0 ? 'active' : ''}>
-                                    <span>LETSCOM Bluetooth Headphones</span>
+                            {products && products.map(item => (
+                                <div
+                                    key={item.id}
+                                    className={isSelectedAll || selectedProduct.id === item.id ? 'active' : ''}
+                                    onClick={() => this.onSelect(item)}
+                                >
+                                    <span>{item.name}</span>
                                 </div>
                             ))}
                         </div>
@@ -275,6 +288,7 @@ const mapStateToProps = state => ({
     totalSize: state.products.totalSize,
     selectedProduct: state.products.selectedProduct,
     onlyOptimization: state.products.onlyOptimization,
+    fetching: state.products.fetching
 });
 
 const mapDispatchToProps = dispatch => ({
