@@ -13,6 +13,7 @@ const defaultOptions = {
 const initialState = {
     productList: [],
     totalSize: 0,
+    fetching: false,
     isFirstOptimization: true,
     isFirstChangesOptions: true,
     isFirstChangesStrategy: true,
@@ -33,7 +34,8 @@ export function products(state = initialState, action) {
             return {
                 ...state,
                 productList: action.payload.result,
-                totalSize: action.payload.totalSize
+                totalSize: action.payload.totalSize,
+                fetching: action.payload.fetching
             };
 
         case productsConstants.UPDATE_SELECTED_PRODUCT:

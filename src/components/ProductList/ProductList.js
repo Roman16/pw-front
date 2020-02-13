@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import ProductItem from './ProductItem';
 import {connect} from 'react-redux';
-import {Select} from 'antd';
+import {Select, Spin} from 'antd';
 import {productsActions} from '../../actions/products.actions';
 import './ProductList.less';
 import {debounce} from 'throttle-debounce';
@@ -195,7 +195,7 @@ class ProductList extends Component {
                 closedList,
                 paginationParams: {size, page}
             } = this.state,
-            {products, selectedProduct, totalSize, onlyOptimization, pathname} = this.props;
+            {products, selectedProduct, totalSize, onlyOptimization, pathname, fetching} = this.props;
 
         return (
             <Fragment>
@@ -236,6 +236,8 @@ class ProductList extends Component {
                             {page * size - size + 1} - {products.length && page * size - size + products.length} of {totalSize} items
                         </div>}
                     </div>
+
+                    {fetching && <div className='fetching-data'><Spin size={'large'}/></div>}
 
                     {pathname !== '/ppc/dayparting' ?
                         <div className='products'>
@@ -286,6 +288,7 @@ const mapStateToProps = state => ({
     totalSize: state.products.totalSize,
     selectedProduct: state.products.selectedProduct,
     onlyOptimization: state.products.onlyOptimization,
+    fetching: state.products.fetching
 });
 
 const mapDispatchToProps = dispatch => ({
