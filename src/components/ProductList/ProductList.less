@@ -24,7 +24,8 @@
     .search-product,
     .product-pagination,
     .page-items-block,
-    .products {
+    .products,
+    .fetching-data{
       display: none;
     }
 
@@ -33,6 +34,17 @@
         transform: rotate(-90deg);
       }
     }
+  }
+
+  .fetching-data {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
 

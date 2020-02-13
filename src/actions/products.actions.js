@@ -21,7 +21,10 @@ function fetchProducts(paginationParams) {
     return dispatch => {
         dispatch({
             type: productsConstants.SET_PRODUCT_LIST,
-            payload: {result: []}
+            payload: {
+                result: [],
+                fetching: true
+            }
         });
 
         if (paginationParams.type === 'campaigns') {
@@ -29,7 +32,10 @@ function fetchProducts(paginationParams) {
                 .then(res => {
                     dispatch({
                         type: productsConstants.SET_PRODUCT_LIST,
-                        payload: {result: res}
+                        payload: {
+                            result: res,
+                            fetching: false
+                        }
                     });
 
                     if (res.length > 0 && !paginationParams.selectedAll) {
@@ -41,7 +47,10 @@ function fetchProducts(paginationParams) {
                 .then(res => {
                     dispatch({
                         type: productsConstants.SET_PRODUCT_LIST,
-                        payload: res
+                        payload: {
+                            ...res,
+                            fetching: false
+                        }
                     });
 
                     if (res.result && res.result.length > 0 && !paginationParams.selectedAll) {
