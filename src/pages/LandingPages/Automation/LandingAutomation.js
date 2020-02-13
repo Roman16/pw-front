@@ -606,7 +606,7 @@ const LandingAutomation = () => {
                                     START FREE
                                 </button>
 
-                                <img src={amazonApp} alt=""/>
+                                <img src={amazonApp} alt="" onClick={() => window.open('https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9')}/>
                             </div>
                         </div>
                     </div>
