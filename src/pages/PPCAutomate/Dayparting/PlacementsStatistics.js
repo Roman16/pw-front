@@ -65,12 +65,13 @@ const chartColors = [
 ];
 
 const ChartTooltip = ({payload}) => {
+    console.log(payload);
     if (payload && payload.length > 0) {
         const total = payload.reduce((result, entry) => (result + entry.value), 0);
 
         return (
             <div className='area-chart-tooltip'>
-                <h3>{moment(payload[0].payload.name).format('DD MMMM YYYY')}</h3>
+                <h3>{moment(payload[0].payload.date).format('DD MMMM YYYY')}</h3>
 
                 <div className='content'>
                     {payload.map((entry, index) => (
