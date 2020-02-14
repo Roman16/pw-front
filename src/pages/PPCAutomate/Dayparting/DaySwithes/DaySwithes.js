@@ -2,7 +2,6 @@ import React, {Component, Fragment} from 'react';
 import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
 import {Switch} from "antd";
 import moment from "moment";
-import {} from 'redux';
 import Selection from "@simonwep/selection-js/src/selection";
 import shortid from "shortid";
 import './DaySwitches.less';
@@ -47,12 +46,13 @@ class DaySwitches extends Component {
     state = {
         hoursStatus: [...defaultList],
         activeSection: false,
-        visibleWindow: false
+        visibleWindow: false,
+        processing: false
     };
 
     deactivateDaypartingHandler = async () => {
         try {
-            await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId});
+            // await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId});
 
             this.setState({
                 activeSection: false,
@@ -64,11 +64,19 @@ class DaySwitches extends Component {
     };
 
     activateDaypartingHandler = async () => {
+        this.setState({
+            processing: true
+        });
+
         try {
-            await daypartingServices.activateDayparting({campaignId: this.props.campaignId});
+            // await daypartingServices.activateDayparting({campaignId: this.props.campaignId});
         } catch (e) {
             console.log(e);
         }
+
+        this.setState({
+            processing: false
+        });
     };
 
     switchDayPartingHandler = () => {
@@ -249,7 +257,7 @@ class DaySwitches extends Component {
     }
 
     render() {
-        const {hoursStatus, activeSection, visibleWindow} = this.state;
+        const {hoursStatus, activeSection, visibleWindow, processing} = this.state;
 
         return (
             <Fragment>
@@ -258,6 +266,7 @@ class DaySwitches extends Component {
                         <button
                             className='btn default switch-day-parting'
                             onClick={this.switchDayPartingHandler}
+                            disabled={processing}
                         >
                             {activeSection ? 'Disable Day Parting' : 'Enable Day Parting'}
                         </button>
