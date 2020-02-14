@@ -8,8 +8,14 @@ import plusIconWhite from '../../../../assets/img/icons/plus-white.svg';
 import {daypartingServices} from "../../../../services/dayparting.services";
 import BudgetDrawer from "./BudgetDrawer";
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
+import {useSelector} from "react-redux";
+import axios from "axios";
+import {numberMask} from "../../../../utils/numberMask";
 
-const defaultData = Array.from({length: 168}, () => ({value: Math.floor(Math.random() * 555) + 1}));
+const CancelToken = axios.CancelToken;
+let source = null;
+
+const defaultData = Array.from({length: 168}, () => 0);
 
 const days = [
     'Sunday',
@@ -24,10 +30,14 @@ const days = [
 const hours = Array.from({length: 24}, (item, index) => index);
 
 
-const OutBudget = () => {
+const OutBudget = ({date}) => {
     const [data, setData] = useState(defaultData),
         [percentParams, setParams] = useState({min: 0, max: 1}),
         [visibleModal, setModal] = useState(false);
+
+    const {campaignId} = useSelector(state => ({
+        campaignId: state.products.selectedProduct.id
+    }));
 
     function saveBudget(data) {
         console.log(data);
@@ -35,32 +45,43 @@ const OutBudget = () => {
     }
 
     useEffect(() => {
-        daypartingServices.getSpendOutStatistic()
-            .then(res => {
-                // console.log(res);
-            });
+        async function fetchData() {
+            source && source.cancel();
+            source = CancelToken.source();
 
-        const minValue = Math.min(...defaultData.map(item => item.value)),
-            maxValue = Math.max(...defaultData.map(item => item.value));
+            try {
+                const res = await daypartingServices.getOutBudgetStatistic({campaignId, date, cancelToken: source.token});
 
-        setParams({
-            min: minValue,
-            max: maxValue
-        });
-    }, []);
+                const minValue = Math.min(...res.response.map(item => item.sales ? item.sales : 0)),
+                    maxValue = Math.max(...res.response.map(item => item.sales));
 
-    const StatisticItem = ({value, index}) => {
+                setParams({
+                    min: minValue,
+                    max: maxValue
+                });
+
+                setData(res.response)
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        fetchData();
+
+    }, [campaignId, date]);
+
+    const StatisticItem = ({value, index, outBudget}) => {
         let color;
 
         colorList.forEach(item => {
-           const percent = ((value - percentParams.min) * 100) / (percentParams.max - percentParams.min);
+            const percent = ((value - percentParams.min) * 100) / (percentParams.max - percentParams.min);
             if (percent > item.min && percent <= item.max) {
                 color = item.color;
                 return;
             }
         });
 
-        if (index === 166 || index === 167) {
+        if (outBudget) {
             return (
                 <div className="out-budget-item">
                     <div className='statistic-information' style={{background: color}}/>
@@ -73,24 +94,23 @@ const OutBudget = () => {
         }
     };
 
-    const TooltipDescription = ({value, timeIndex}) => {
+    const TooltipDescription = ({value, timeIndex, date}) => {
         return (
             <Fragment>
-                <h3>
-                    {days[Math.floor(timeIndex / 24)]}
-
-                    <span className="time">
-                        {`${moment(timeIndex - 24 * Math.floor(timeIndex / 24), 'HH').format('hh A')} - ${moment(timeIndex - 24 * Math.floor(timeIndex / 24) + 1, 'HH').format('hh A')}`}
-                    </span>
-                </h3>
-
-                <div className="row-metric">
-                    <StatisticItem value={value} index={timeIndex}/>
+                <div className="col">
+                    <h3>
+                        {`${days[Math.floor(timeIndex / 24)]}`}
+                    </h3>
 
                     <span className='selected-metric'>Sales</span>
+                </div>
+                <div className="col">
+                    <h3>
+                        {`${moment(timeIndex - 24 * Math.floor(timeIndex / 24), 'HH').format('hh A')} - ${moment(timeIndex - 24 * Math.floor(timeIndex / 24) + 1, 'HH').format('hh A')}`}
+                    </h3>
 
                     <div className="value">
-                        ${value}
+                        {value ? `$${numberMask(value, 2)}` : <div className='no-value'/>}
                     </div>
                 </div>
             </Fragment>
@@ -143,13 +163,15 @@ const OutBudget = () => {
                                         className={'chart-tooltip'}
                                         description={
                                             <TooltipDescription
-                                                value={item.value}
+                                                value={item.sales}
+                                                date={item.date}
                                                 timeIndex={index}
                                             />
                                         }
                                     >
                                         <StatisticItem
-                                            value={item.value}
+                                            value={item.sales}
+                                            outBudget={item.out_of_budget}
                                             index={index}
                                         />
                                     </InformationTooltip>

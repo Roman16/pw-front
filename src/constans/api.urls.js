@@ -60,8 +60,8 @@ export const scannerUrls = {
 
 export const daypartingUrls = {
     campaigns: 'ppc-automation/dayparting/campaigns',
-    spendOutBudget: '',
-    allStatistic: '',
-    dayParting: '',
-    placements: 'ppc-automation/dayparting/campaigns/placements'
+    outBudget: (id) => `ppc-automation/dayparting/campaigns/${id}/sales-oob`,
+    dailyStatistic: (id) => `ppc-automation/dayparting/campaigns/${id}/`, //???
+    dayParting: (id) => `ppc-automation/dayparting/campaigns/${id}/state`,
+    placements: (id) => `ppc-automation/dayparting/campaigns/${id}/placements`
 };

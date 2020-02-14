@@ -166,18 +166,42 @@ class ProductList extends Component {
 
             if (this.props.pathname === '/ppc/scanner') {
                 this.setState({
+                    paginationParams: {
+                        ...this.state.paginationParams,
+                        page: 1,
+                        searchStr: ''
+                    },
                     ungroupVariations: 1
                 }, this.getProducts)
             } else if (this.props.pathname !== '/ppc/scanner' && this.state.ungroupVariations === 1) {
                 this.setState({
+                    paginationParams: {
+                        ...this.state.paginationParams,
+                        page: 1,
+                        searchStr: ''
+                    },
                     ungroupVariations: 0
                 }, this.getProducts)
             }
 
             if (this.props.pathname === '/ppc/dayparting') {
-                this.getProducts();
+                this.setState({
+                    paginationParams: {
+                        ...this.state.paginationParams,
+                        page: 1,
+                        searchStr: ''
+                    }
+                }, this.getProducts);
+
             } else if (prevProps.pathname === '/ppc/dayparting' && this.props.pathname !== '/ppc/dayparting') {
-                this.getProducts();
+                this.setState({
+                    paginationParams: {
+                        ...this.state.paginationParams,
+                        page: 1,
+                        searchStr: ''
+                    }
+                }, this.getProducts);
+
             }
         }
     }

@@ -2,10 +2,14 @@ import api from './request';
 import {daypartingUrls} from '../constans/api.urls';
 import moment from "moment";
 
+function dateFormatter(date) {
+    return moment(date).format('YYYY-MM-DD')
+}
+
 export const daypartingServices = {
     getCampaigns,
-    getSpendOutStatistic,
-    getAllStatistic,
+    getOutBudgetStatistic,
+    getDailyStatistic,
     getPlacementsStatistic,
     getDayPartingParams,
     updateDayPartingParams,
@@ -15,27 +19,26 @@ function getCampaigns({size, page, searchStr = '', cancelToken}) {
     return api('get', `${daypartingUrls.campaigns}?search_query=${searchStr}&page=${page}&size=${size}`, null, null, cancelToken)
 }
 
-function getSpendOutStatistic() {
-    return api('get', `${daypartingUrls.spendOutBudget}`)
+function getOutBudgetStatistic({campaignId, date, cancelToken}) {
+    return api('get', `${daypartingUrls.outBudget(campaignId)}?start_date=${dateFormatter(date.startDate)}&end_date=${dateFormatter(date.endDate)}`, null, null, cancelToken)
 }
 
-function getAllStatistic(firstMetric, secondMetric) {
+function getDailyStatistic({campaignId, date, firstMetric, secondMetric, cancelToken}) {
     const parameters = [
-        secondMetric ? `&secondMetric=${secondMetric}` : '',
+        secondMetric && secondMetric.key !== 'nothing' ? `&secondMetric=${secondMetric.key}` : '',
     ];
 
-    return api('get', `${daypartingUrls.allStatistic}?firstMetric=${firstMetric}${parameters.join('')}`)
+    return api('get', `${daypartingUrls.dailyStatistic(campaignId)}?start_date=${dateFormatter(date.startDate)}&end_date=${dateFormatter(date.endDate)}&firstMetric=${firstMetric.key}${parameters.join('')}`, null, null, cancelToken)
 }
 
-function getPlacementsStatistic({campaignId, date}) {
-    return api('get', `${daypartingUrls.placements}?campaignId=${campaignId}&start_date=${moment(date.startDate).format('YYYY-MM-DD')}&end_date=${moment(date.endDate).format('YYYY-MM-DD')}`)
-    // return api('get', `${daypartingUrls.placements}?start_date=${moment(date.startDate).format('YYYY-MM-DD')}&end_date=${moment(date.endDate).format('YYYY-MM-DD')}`)
+function getPlacementsStatistic({campaignId, date, cancelToken}) {
+    return api('get', `${daypartingUrls.placements(campaignId)}?start_date=${dateFormatter(date.startDate)}&end_date=${dateFormatter(date.endDate)}`, null, null, cancelToken)
 }
 
-function getDayPartingParams() {
-    return api('get', `${daypartingUrls.dayParting}`)
+function getDayPartingParams({campaignId, cancelToken}) {
+    return api('get', `${daypartingUrls.dayParting(campaignId)}?size=1&page=6`, null, null, cancelToken)
 }
 
-function updateDayPartingParams() {
-    return api('post', `${daypartingUrls.dayParting}`)
+function updateDayPartingParams({campaignId, state_encoded_string}) {
+    return api('post', `${daypartingUrls.dayParting(campaignId)}`, {state_encoded_string})
 }

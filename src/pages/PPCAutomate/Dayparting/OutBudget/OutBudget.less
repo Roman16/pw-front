@@ -125,6 +125,46 @@
           background: #B6B6FB;
         }
 
+        .chart-tooltip {
+          .ant-popover-inner-content {
+            display: flex;
+
+            .col {
+              margin: 0 20px 0 0;
+              display: flex;
+              flex-direction: column;
+
+              &:last-child {
+                margin: 0;
+              }
+
+              h3 {
+                margin: 0 0 10px 0;
+              }
+
+              .selected-metric {
+                height: 20px;
+                display: flex;
+                align-items: center;
+                text-transform: capitalize;
+              }
+            }
+
+            .value {
+              height: 20px;
+              margin: auto 0 0 0;
+              display: flex;
+              align-items: center;
+
+              .no-value {
+                width: 6px;
+                height: 2px;
+                background: #000c17;
+              }
+            }
+          }
+        }
+
 
         .out-budget-item {
           width: 1.4285714285714286rem;
@@ -137,8 +177,8 @@
           position: relative;
 
           .statistic-information {
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
 
             @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
               width: 11px;

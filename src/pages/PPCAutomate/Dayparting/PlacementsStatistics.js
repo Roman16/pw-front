@@ -8,6 +8,10 @@ import moment from "moment";
 import {daypartingServices} from "../../../services/dayparting.services";
 import {useSelector} from "react-redux";
 import {numberMask} from "../../../utils/numberMask";
+import axios from "axios";
+
+const CancelToken = axios.CancelToken;
+let source = null;
 
 const chartLabel = {
     top_search: 'Top of search',
@@ -65,7 +69,6 @@ const chartColors = [
 ];
 
 const ChartTooltip = ({payload}) => {
-    console.log(payload);
     if (payload && payload.length > 0) {
         const total = payload.reduce((result, entry) => (result + entry.value), 0);
 
@@ -152,23 +155,34 @@ const PlacementsStatistics = ({date}) => {
     }));
 
     useEffect(() => {
-        daypartingServices.getPlacementsStatistic({campaignId, date})
-            .then(res => {
-                const chartData = Object.keys(res.data).map(date => ({
+        async function fetchData() {
+            source && source.cancel();
+            source = CancelToken.source();
+
+            try {
+                const res = await daypartingServices.getPlacementsStatistic({
+                    campaignId,
+                    date,
+                    cancelToken: source.token
+                });
+
+                const chartData = Object.keys(res.response.points).map(date => ({
                     date: date,
-                    top_search: +res.data[date].data['Top of Search on-Amazon'].value,
-                    product_pages: +res.data[date].data['Detail Page on-Amazon'].value,
-                    rest_search: +res.data[date].data['Other on-Amazon'].value,
+                    top_search: +res.response.points[date].data['Top of Search on-Amazon'].value,
+                    product_pages: +res.response.points[date].data['Detail Page on-Amazon'].value,
+                    rest_search: +res.response.points[date].data['Other on-Amazon'].value,
                 }));
 
-                setStatisticData(res.statistics);
+                setStatisticData(res.response.statistics);
                 setChartData(chartData);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }, [date, campaignId]);
+            } catch (e) {
+                console.log(e);
+            }
+        }
 
+        fetchData();
+
+    }, [date, campaignId]);
 
     return (
         <section className='placements-statistics'>
@@ -285,7 +299,7 @@ const PlacementsStatistics = ({date}) => {
 
                                 {metricValues && <Fragment>
                                     {statisticMetrics.map(item => (
-                                        <MetricValue metric={metricValues[item.key]} type={item.key}/>
+                                        <MetricValue key={item.key} metric={metricValues[item.key]} type={item.key}/>
                                     ))}
                                 </Fragment>}
                             </div>

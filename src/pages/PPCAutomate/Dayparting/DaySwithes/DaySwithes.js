@@ -2,13 +2,18 @@ import React, {Component, Fragment} from 'react';
 import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
 import {Switch} from "antd";
 import moment from "moment";
+import {} from 'redux';
 import Selection from "@simonwep/selection-js/src/selection";
 import shortid from "shortid";
 import './DaySwitches.less';
-import {hold} from "../../../../utils/hold";
 import {daypartingServices} from "../../../../services/dayparting.services";
 import {notification} from "../../../../components/Notification";
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
+import {connect} from "react-redux";
+import axios from "axios";
+
+const CancelToken = axios.CancelToken;
+let source = null;
 
 const defaultList = Array.from({length: 168}, () => '1').join('');
 
@@ -36,6 +41,7 @@ const selection = Selection.create({
     singleClick: false,
 });
 
+let timeoutId = null;
 
 class DaySwitches extends Component {
     state = {
@@ -63,16 +69,37 @@ class DaySwitches extends Component {
         }
     };
 
+    getDaypartingStatus = async () => {
+        try {
+            source && source.cancel();
+            source = CancelToken.source();
+
+            const res = await daypartingServices.getDayPartingParams({
+                campaignId: this.props.campaignId,
+                cancelToken: source.token
+            });
+            console.log(res);
+        } catch (e) {
+
+        }
+    };
+
     handleUpdateStatus = async () => {
-        hold(async () => {
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(async () => {
             try {
-                await daypartingServices.updateDayPartingParams(this.state.hoursStatus.join(''));
-                notification.success({title: 'Saved'})
+                await daypartingServices.updateDayPartingParams({
+                    campaignId: this.props.campaignId,
+                    state_encoded_string: this.state.hoursStatus.join('')
+                });
+                notification.success({title: 'Saved'});
+                timeoutId = null;
             } catch (e) {
                 console.log(e);
                 // notification.error({title: 'Not Saved'})
             }
-        }, 1000)
+        }, 2000)
     };
 
     handleReset = () => {
@@ -117,6 +144,8 @@ class DaySwitches extends Component {
 
     componentDidMount() {
         let status = 'false';
+
+        this.getDaypartingStatus();
 
         selection
             .on('start', ({selected}) => {
@@ -180,6 +209,27 @@ class DaySwitches extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevState.hoursStatus.join('') !== this.state.hoursStatus.join('')) {
             this.handleUpdateStatus()
+        }
+
+        if (prevProps.campaignId !== this.props.campaignId) {
+            if (timeoutId) {
+                try {
+                    daypartingServices.updateDayPartingParams({
+                        campaignId: prevProps.campaignId,
+                        state_encoded_string: prevState.hoursStatus.join('')
+                    })
+                        .then(() => {
+                            notification.success({title: 'Saved'});
+                            clearTimeout(timeoutId);
+                        });
+                } catch (e) {
+                    console.log(e);
+                    // notification.error({title: 'Not Saved'})
+                }
+
+            }
+
+            this.getDaypartingStatus()
         }
     }
 
@@ -298,5 +348,15 @@ class DaySwitches extends Component {
     }
 }
 
-export default DaySwitches
+
+const mapStateToProps = state => ({
+    campaignId: state.products.selectedProduct.id
+});
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DaySwitches);
 
