@@ -43,7 +43,7 @@ function getPlacementsStatistic({campaignId, date, cancelToken}) {
 }
 
 function getDayPartingParams({campaignId, cancelToken}) {
-    return api('get', `${daypartingUrls.dayParting(campaignId)}?size=1&page=6`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.dayParting(campaignId)}?size=1&page=1`, null, null, cancelToken)
 }
 
 function updateDayPartingParams({campaignId, state_encoded_string}) {

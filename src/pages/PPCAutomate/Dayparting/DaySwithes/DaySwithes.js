@@ -45,7 +45,7 @@ let timeoutId = null;
 class DaySwitches extends Component {
     state = {
         hoursStatus: [...defaultList],
-        activeSection: false,
+        activeDayparting: false,
         visibleWindow: false,
         processing: false
     };
@@ -55,7 +55,7 @@ class DaySwitches extends Component {
             // await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId});
 
             this.setState({
-                activeSection: false,
+                activeDayparting: false,
                 visibleWindow: false
             })
         } catch (e) {
@@ -80,7 +80,7 @@ class DaySwitches extends Component {
     };
 
     switchDayPartingHandler = () => {
-        if (this.state.activeSection) {
+        if (this.state.activeDayparting) {
             this.setState({
                 visibleWindow: true
             })
@@ -88,7 +88,7 @@ class DaySwitches extends Component {
             this.activateDaypartingHandler();
 
             this.setState({
-                activeSection: true
+                activeDayparting: true
             })
         }
     };
@@ -102,7 +102,11 @@ class DaySwitches extends Component {
                 campaignId: this.props.campaignId,
                 cancelToken: source.token
             });
-            console.log(res);
+
+            this.setState({
+                hoursStatus: [...res.response[0].state_encoded_string],
+                activeDayparting: res.response[0].status === 'active'
+            });
         } catch (e) {
 
         }
@@ -128,7 +132,7 @@ class DaySwitches extends Component {
     handleReset = () => {
         this.setState({
             hoursStatus: [...defaultList]
-        });
+        }, this.handleUpdateStatus);
     };
 
     handleSwitchHour = (index, value) => {
@@ -137,7 +141,7 @@ class DaySwitches extends Component {
 
         this.setState({
             hoursStatus: [...newList]
-        })
+        }, this.handleUpdateStatus)
     };
 
     handleSwitchRow = (row, value) => {
@@ -151,7 +155,7 @@ class DaySwitches extends Component {
 
         this.setState({
             hoursStatus: [...newList]
-        })
+        }, this.handleUpdateStatus)
     };
 
     handleSwitchColumn = (column, value) => {
@@ -162,7 +166,7 @@ class DaySwitches extends Component {
 
         this.setState({
             hoursStatus: [...newList]
-        })
+        }, this.handleUpdateStatus)
     };
 
     componentDidMount() {
@@ -225,15 +229,11 @@ class DaySwitches extends Component {
 
                 this.setState({
                     hoursStatus: [...newList]
-                })
+                }, this.handleUpdateStatus)
             });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevState.hoursStatus.join('') !== this.state.hoursStatus.join('')) {
-            this.handleUpdateStatus()
-        }
-
         if (prevProps.campaignId !== this.props.campaignId) {
             if (timeoutId) {
                 try {
@@ -257,18 +257,18 @@ class DaySwitches extends Component {
     }
 
     render() {
-        const {hoursStatus, activeSection, visibleWindow, processing} = this.state;
+        const {hoursStatus, activeDayparting, visibleWindow, processing} = this.state;
 
         return (
             <Fragment>
-                <section className={`day-switches ${activeSection ? 'enabled' : 'disabled'}`}>
+                <section className={`day-switches ${activeDayparting ? 'enabled' : 'disabled'}`}>
                     <div className="section-header">
                         <button
                             className='btn default switch-day-parting'
                             onClick={this.switchDayPartingHandler}
                             disabled={processing}
                         >
-                            {activeSection ? 'Disable Day Parting' : 'Enable Day Parting'}
+                            {activeDayparting ? 'Disable Day Parting' : 'Enable Day Parting'}
                         </button>
 
                         <div className='actions'>
@@ -282,7 +282,7 @@ class DaySwitches extends Component {
                                 Active
                             </div>
 
-                            <button onClick={this.handleReset} disabled={!activeSection}>
+                            <button onClick={this.handleReset} disabled={!activeDayparting}>
                                 <img src={reloadIcon} alt=""/>
                                 Reset
                             </button>
@@ -296,7 +296,7 @@ class DaySwitches extends Component {
                                 <div key={shortid.generate()}>
                                     {moment(timeIndex + 1, 'HH').format('hh A')}
                                     <Switch
-                                        disabled={!activeSection}
+                                        disabled={!activeDayparting}
                                         checked={[0, 1, 2, 3, 4, 5, 6].map(item => hoursStatus[24 * item + timeIndex]).every(item => item === '1')}
                                         onChange={(value) => this.handleSwitchColumn(timeIndex, value)}
                                     />
@@ -309,7 +309,7 @@ class DaySwitches extends Component {
                                 {days.map((day, dayIndex) => (
                                     <div className='day-name' key={shortid.generate()}>
                                         <Switch
-                                            disabled={!activeSection}
+                                            disabled={!activeDayparting}
                                             checked={hoursStatus.slice(24 * dayIndex, 24 * (dayIndex + 1)).every(item => item === '1')}
                                             onChange={(value) => this.handleSwitchRow(dayIndex, value)}
                                         />
@@ -320,11 +320,11 @@ class DaySwitches extends Component {
                                 ))}
                             </div>
 
-                            <div className={`col multi-select ${activeSection ? 'enabled' : 'disabled'}`}>
+                            <div className={`col multi-select ${activeDayparting ? 'enabled' : 'disabled'}`}>
                                 {hoursStatus.map((value, hourIndex) => (
                                     <div className='statistic-item' key={shortid.generate()}>
                                         <div
-                                            onClick={() => activeSection && this.handleSwitchHour(hourIndex, value)}
+                                            onClick={() => activeDayparting && this.handleSwitchHour(hourIndex, value)}
                                             className={value === '1' ? 'statistic-information active' : 'statistic-information'}
                                             hourIndex={hourIndex}
                                             value={value}
