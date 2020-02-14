@@ -14,6 +14,16 @@ import commissionFreeIcon from '../../../assets/img/commission-free-icon.svg';
 import commissionHaveFeeIcon from '../../../assets/img/commission-have-fee-icon.svg';
 import howItWorksImage from '../../../assets/img/how-it-works-image.svg';
 import checkedIcon from '../../../assets/img/icons/mark.svg';
+import registrImage from '../../../assets/img/landing-affiliate/register-step.svg';
+import getLinkImage from '../../../assets/img/landing-affiliate/get-link-step.svg';
+import shareLinkImage from '../../../assets/img/landing-affiliate/share-link-step.svg';
+
+import step1Image from '../../../assets/img/landing-affiliate/step-1.svg';
+import step2Image from '../../../assets/img/landing-affiliate/step-2.svg';
+import step3Image from '../../../assets/img/landing-affiliate/step-3.svg';
+
+import arrowImage from '../../../assets/img/landing-affiliate/right-arrow.svg';
+
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY,
     tapfiliateRegistrationPage = 'https://profitwhales.tapfiliate.com/programs/subscription-link/signup/',
@@ -72,6 +82,83 @@ const LandingAffiliates = () => {
                     </div>
                 </div>
             </section>
+
+            <section className='affiliate-program'>
+                <div className="container">
+                    <h3>Affiliate Program with Profit Whales</h3>
+
+                    <div className="affiliate-steps">
+                        <div>
+                            <div className="image">
+                                <img src={registrImage} alt=""/>
+                            </div>
+                            <h3>1. Register</h3>
+                            <p>Apply now to get paid for each <br/> successful referral you are making.</p>
+                        </div>
+                        <div>
+                            <div className="image">
+                                <img src={getLinkImage} alt=""/>
+                            </div>
+                            <h3>2. Get your personal link</h3>
+                            <p>Once you’ve registered, you’ll get your own, unique link to give to your followers.</p>
+                        </div>
+                        <div>
+                            <div className="image">
+                                <img src={shareLinkImage} alt=""/>
+                            </div>
+                            <h3>3. Share your link</h3>
+                            <p>Share your link with your subscribers <br/> and followers to get commissions</p>
+                        </div>
+                    </div>
+
+                    <div className="steps">
+                        <div className="row images">
+                            <div className="image">
+                                <img src={step1Image} alt=""/>
+
+                                <p>You invited Jack who also deals <br/> with Amazon PPC with our referral <br/> link.
+                                </p>
+                            </div>
+                            <div className="arrow-img">
+                                <img src={arrowImage} alt=""/>
+                            </div>
+                            <div className="image">
+                                <img src={step2Image} alt=""/>
+
+                                <p>Jack pays for monthly management <br/> with our software $280 as a fee and <br/> $28
+                                    is
+                                    yours.</p>
+                            </div>
+                            <div className="arrow-img">
+                                <img src={arrowImage} alt=""/>
+                            </div>
+                            <div className="image">
+                                <img src={step3Image} alt=""/>
+
+                                <p>More referrals - more <br/> profit.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="profit">
+                        <div className="col">
+                            <h3 className='value'>
+                                $25
+                            </h3>
+                            <p>Per referral that jups from Free Trial to <br/> paid subscription plan.</p>
+                        </div>
+
+                        <div className="col">
+                            <h3 className='value'>
+                                10%
+                            </h3>
+                            <p>Monthly lifetime <br/> commission</p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
 
             <section className='amazon-influencer'>
                 <div className="container">
