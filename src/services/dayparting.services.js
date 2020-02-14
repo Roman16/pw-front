@@ -9,10 +9,13 @@ function dateFormatter(date) {
 export const daypartingServices = {
     getCampaigns,
     getOutBudgetStatistic,
+    setCampaignBudget,
     getDailyStatistic,
     getPlacementsStatistic,
     getDayPartingParams,
     updateDayPartingParams,
+    activateDayparting,
+    deactivateDayparting
 };
 
 function getCampaigns({size, page, searchStr = '', cancelToken}) {
@@ -21,6 +24,10 @@ function getCampaigns({size, page, searchStr = '', cancelToken}) {
 
 function getOutBudgetStatistic({campaignId, date, cancelToken}) {
     return api('get', `${daypartingUrls.outBudget(campaignId)}?start_date=${dateFormatter(date.startDate)}&end_date=${dateFormatter(date.endDate)}`, null, null, cancelToken)
+}
+
+function setCampaignBudget({campaignId, data}) {
+    return api('post', `${daypartingUrls.outBudget(campaignId)}`)
 }
 
 function getDailyStatistic({campaignId, date, firstMetric, secondMetric, cancelToken}) {
@@ -41,4 +48,12 @@ function getDayPartingParams({campaignId, cancelToken}) {
 
 function updateDayPartingParams({campaignId, state_encoded_string}) {
     return api('post', `${daypartingUrls.dayParting(campaignId)}`, {state_encoded_string})
+}
+
+function activateDayparting({campaignId}) {
+    return api('post', `${daypartingUrls.dayParting(campaignId)}`)
+}
+
+function deactivateDayparting({campaignId}) {
+    return api('post', `${daypartingUrls.dayParting(campaignId)}`)
 }

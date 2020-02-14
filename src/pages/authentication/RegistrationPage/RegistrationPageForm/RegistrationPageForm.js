@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {Col, Row, Spin} from 'antd';
-import {Redirect} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {notification} from '../../../../components/Notification';
 
 import {userActions} from '../../../../actions/user.actions';
 import {injectStripe} from "react-stripe-elements";
 import StripeForm from "./StripeForm";
+import {history} from "../../../../utils/history";
 
 class RegistrationPage extends Component {
     state = {
@@ -317,6 +318,10 @@ class RegistrationPage extends Component {
                                 className="submit"
                         >
                             Create your account
+                        </button>
+
+                        <button className='btn white' onClick={() => history.push('/login')}>
+                            Log In
                         </button>
                     </Col>
                 </Row>

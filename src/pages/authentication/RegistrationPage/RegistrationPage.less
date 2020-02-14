@@ -16,6 +16,30 @@
   .logo-auth {
     cursor: pointer;
   }
+
+  #payment-form2 {
+    .btn.white {
+      display: none;
+      width: 100%;
+      height: 40px;
+      margin: 20px 0 0 0;
+      font-size: 12px;
+      font-family: im;
+      border-radius: 33px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .info-col {
+      display: none;
+    }
+
+    #payment-form2 {
+      .btn.white {
+        display: block;
+      }
+    }
+  }
 }
 
 #payment-form2 {
@@ -325,6 +349,7 @@
           font-size: 16px;
         }
       }
+
       i {
         color: #38454f
       }

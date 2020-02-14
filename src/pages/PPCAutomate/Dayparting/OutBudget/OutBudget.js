@@ -39,10 +39,16 @@ const OutBudget = ({date}) => {
         campaignId: state.products.selectedProduct.id
     }));
 
-    function saveBudget(data) {
+   async function saveBudget(data) {
         console.log(data);
-        setModal(false)
-    }
+
+       try {
+           await daypartingServices.setCampaignBudget({campaignId});
+           setModal(false);
+       } catch (e) {
+           console.log(e);
+       }
+   }
 
     useEffect(() => {
         async function fetchData() {

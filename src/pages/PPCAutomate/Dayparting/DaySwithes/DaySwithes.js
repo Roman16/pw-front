@@ -50,11 +50,25 @@ class DaySwitches extends Component {
         visibleWindow: false
     };
 
-    deactivateDaypartingHandler = () => {
-        this.setState({
-            activeSection: false,
-            visibleWindow: false
-        })
+    deactivateDaypartingHandler = async () => {
+        try {
+            await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId});
+
+            this.setState({
+                activeSection: false,
+                visibleWindow: false
+            })
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    activateDaypartingHandler = async () => {
+        try {
+            await daypartingServices.activateDayparting({campaignId: this.props.campaignId});
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     switchDayPartingHandler = () => {
@@ -63,8 +77,10 @@ class DaySwitches extends Component {
                 visibleWindow: true
             })
         } else {
+            this.activateDaypartingHandler();
+
             this.setState({
-                activeSection: !this.state.activeSection
+                activeSection: true
             })
         }
     };
@@ -86,7 +102,6 @@ class DaySwitches extends Component {
 
     handleUpdateStatus = async () => {
         clearTimeout(timeoutId);
-
         timeoutId = setTimeout(async () => {
             try {
                 await daypartingServices.updateDayPartingParams({
