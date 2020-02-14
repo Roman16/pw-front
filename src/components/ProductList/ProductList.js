@@ -22,6 +22,8 @@ class ProductList extends Component {
         onlyOptimization: this.props.onlyOptimization || false,
         onlyHasNew: false,
         closedList: false,
+        campaign_type: 'all',
+        campaign_status: 'all',
         openedProduct: '',
         ungroupVariations: this.props.pathname === '/ppc/scanner' ? 1 : 0,
         paginationParams: {
@@ -44,8 +46,16 @@ class ProductList extends Component {
             ungroupVariations: this.state.ungroupVariations,
             pathname: this.props.pathname,
             type: this.props.pathname === '/ppc/dayparting' ? 'campaigns' : 'products',
+            campaign_type: this.state.campaign_type,
+            campaign_status: this.state.campaign_status,
             cancelToken: source.token
         });
+    };
+
+    selectChangeHandler = ({name, value}) => {
+        this.setState({
+            [name]: value
+        }, this.getProducts)
     };
 
     changeOpenedProduct = (id) => {
@@ -233,6 +243,7 @@ class ProductList extends Component {
                         onSearch={this.handleSearch}
                         onSelectAll={this.selectAll}
                         onChangeSwitch={this.handleChangeSwitch}
+                        onChangeSelect={this.selectChangeHandler}
 
                         pathname={pathname}
                         selectedSize={selectedSize}
