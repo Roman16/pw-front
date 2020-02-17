@@ -9,7 +9,7 @@ import supportImg from '../../../assets/img/support-icon.svg'
 import greenLine from '../../../assets/img/green-line.svg';
 import shortGreenLine from '../../../assets/img/short-green-line.svg';
 import greenPoint from '../../../assets/img/green-point.svg';
-import contactUsImage from '../../../assets/img/contact-us-image.svg';
+import contactUsImage from '../../../assets/img/landing-affiliate/undraw_contact_us.png';
 import commissionFreeIcon from '../../../assets/img/commission-free-icon.svg';
 import commissionHaveFeeIcon from '../../../assets/img/commission-have-fee-icon.svg';
 import howItWorksImage from '../../../assets/img/how-it-works-image.svg';
@@ -85,7 +85,11 @@ const LandingAffiliates = () => {
 
             <section className='affiliate-program'>
                 <div className="container">
-                    <h3>Affiliate Program with Profit Whales</h3>
+                    <h3>
+                        Affiliate Program with Profit Whales
+                        <img src={greenLine} alt=""/>
+                    </h3>
+
 
                     <div className="affiliate-steps">
                         <div>
@@ -174,10 +178,10 @@ const LandingAffiliates = () => {
 
             <section className='profitwhales-programs'>
                 <div className="container">
-                    <h3>What Is The ProfitWhales Affiliate Program?</h3>
-                    <img src={greenLine} alt=""/>
+                    {/*<h3>What Is The ProfitWhales Affiliate Program?</h3>*/}
+                    {/*<img src={greenLine} alt=""/>*/}
                     <span>
-                        Leverage Profit Whales marketing initiatives such as blog posts, videos, and whitepapers to save you the energy of creating content from scratch.
+                        We provide you with high-quality promotional assets like banners, sidebars, social media graphics <br/> and videos. So you everything to refer your visitors & drive sales!
                     </span>
 
                     <div className="programs">
@@ -221,75 +225,75 @@ const LandingAffiliates = () => {
                 </div>
             </section>
 
-            <section className='commission-details'>
-                <div className="container">
-                    <h3>Commission Details</h3>
-                    <img src={greenLine} alt="" className='green-line'/>
+            {/*<section className='commission-details'>*/}
+            {/*    <div className="container">*/}
+            {/*        <h3>Commission Details</h3>*/}
+            {/*        <img src={greenLine} alt="" className='green-line'/>*/}
 
-                    <div className='commissions'>
-                        <div className='free'>
-                            <img src={commissionFreeIcon} alt=""/>
-                            <div className='description'>
-                                <h4>Your Payout for</h4>
-                                <span> Per referral that jups from Free Trial to paid subscription plan.</span>
-                            </div>
+            {/*        <div className='commissions'>*/}
+            {/*            <div className='free'>*/}
+            {/*                <img src={commissionFreeIcon} alt=""/>*/}
+            {/*                <div className='description'>*/}
+            {/*                    <h4>Your Payout for</h4>*/}
+            {/*                    <span> Per referral that jups from Free Trial to paid subscription plan.</span>*/}
+            {/*                </div>*/}
 
-                            <div className="commission-value">
-                                $25
-                            </div>
-                        </div>
-                        <div className='have-commissions'>
-                            <img src={commissionHaveFeeIcon} alt=""/>
-                            <div className='description'>
-                                <h4>Your Payout for</h4>
-                                <span>Monthly lifetime <br/> commission</span>
-                            </div>
+            {/*                <div className="commission-value">*/}
+            {/*                    $25*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*            <div className='have-commissions'>*/}
+            {/*                <img src={commissionHaveFeeIcon} alt=""/>*/}
+            {/*                <div className='description'>*/}
+            {/*                    <h4>Your Payout for</h4>*/}
+            {/*                    <span>Monthly lifetime <br/> commission</span>*/}
+            {/*                </div>*/}
 
-                            <div className="commission-value">
-                                10%
-                            </div>
-                        </div>
-                    </div>
+            {/*                <div className="commission-value">*/}
+            {/*                    10%*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
 
-                    <div className='how-it-work'>
-                        <div className="image">
-                            <img src={howItWorksImage} alt=""/>
-                        </div>
+            {/*        <div className='how-it-work'>*/}
+            {/*            <div className="image">*/}
+            {/*                <img src={howItWorksImage} alt=""/>*/}
+            {/*            </div>*/}
 
-                        <div className='description'>
-                            <h4>How it works?</h4>
+            {/*            <div className='description'>*/}
+            {/*                <h4>How it works?</h4>*/}
 
-                            <div className='custom-list'>
-                                <div className="list-item">
-                                    <img src={greenPoint} alt="" className="list-point"/>
-                                    <h5>Register</h5>
-                                    <span>
-                                        <span className='green-underline'>Apply now <img src={shortGreenLine}
-                                                                                         alt=""/></span>
-                                         to get paid for each successful referral you are making.
-                                    </span>
-                                </div>
+            {/*                <div className='custom-list'>*/}
+            {/*                    <div className="list-item">*/}
+            {/*                        <img src={greenPoint} alt="" className="list-point"/>*/}
+            {/*                        <h5>Register</h5>*/}
+            {/*                        <span>*/}
+            {/*                            <span className='green-underline'>Apply now <img src={shortGreenLine}*/}
+            {/*                                                                             alt=""/></span>*/}
+            {/*                             to get paid for each successful referral you are making.*/}
+            {/*                        </span>*/}
+            {/*                    </div>*/}
 
-                                <div className="list-item">
-                                    <img src={greenPoint} alt="" className="list-point"/>
-                                    <h5>Get your personal link</h5>
-                                    <span>Once you’ve registered, you’ll get your own, unique link to give to your followers.</span>
-                                </div>
+            {/*                    <div className="list-item">*/}
+            {/*                        <img src={greenPoint} alt="" className="list-point"/>*/}
+            {/*                        <h5>Get your personal link</h5>*/}
+            {/*                        <span>Once you’ve registered, you’ll get your own, unique link to give to your followers.</span>*/}
+            {/*                    </div>*/}
 
-                                <div className="list-item">
-                                    <img src={greenPoint} alt="" className="list-point"/>
-                                    <h5>Share your link</h5>
-                                    <span>Share your link with your subscribers and followers to get commissions for each new Amazon Seller that signs up for any ProfitWhales paid or free subscription plan.</span>
-                                </div>
-                            </div>
+            {/*                    <div className="list-item">*/}
+            {/*                        <img src={greenPoint} alt="" className="list-point"/>*/}
+            {/*                        <h5>Share your link</h5>*/}
+            {/*                        <span>Share your link with your subscribers and followers to get commissions for each new Amazon Seller that signs up for any ProfitWhales paid or free subscription plan.</span>*/}
+            {/*                    </div>*/}
+            {/*                </div>*/}
 
-                            <button className='btn green-btn' onClick={() => window.open(tapfiliateRegistrationPage)}>
-                                apply now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            {/*                <button className='btn green-btn' onClick={() => window.open(tapfiliateRegistrationPage)}>*/}
+            {/*                    apply now*/}
+            {/*                </button>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
 
             <section className='contact-us'>
                 <div className="container">
@@ -304,10 +308,32 @@ const LandingAffiliates = () => {
 
                         <img src={greenLine} alt="" className='green-line'/>
 
-                        <span>Contact as at</span>
-                        <a href="mailto: info@profitwhales.agency">
-                            info@profitwhales.agency
-                        </a>
+                        <form action="">
+                            <h4>Fill the form:</h4>
+
+                            <div className="row">
+                                <div className="input-group">
+                                    <label htmlFor="">Name</label>
+                                    <input type="text"/>
+                                </div>
+                                <div className="input-group">
+                                    <label htmlFor="">E-mail</label>
+                                    <input type="text"/>
+                                </div>
+                            </div>
+
+                            <div className="row">
+                                <div className="input-group question-block">
+                                    <label htmlFor="">Your question</label>
+                                    <textarea/>
+                                    <span>We treat your contact information according to our policy</span>
+                                </div>
+                            </div>
+
+                            <button className="btn green-btn">
+                                send
+                            </button>
+                        </form>
                     </div>
                 </div>
             </section>
