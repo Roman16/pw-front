@@ -7,11 +7,11 @@
     padding-bottom: 50px;
 
     h2 {
+      font-family: e3sb;
       color: #2c303a;
       font-weight: 600;
       font-size: 33px;
       line-height: 48px;
-      padding-bottom: 18px;
     }
 
     p {
@@ -21,14 +21,17 @@
       max-width: 650px;
       margin: 0 auto;
       padding-top: 10px;
-      text-align: center;
+      text-align: left;
+      font-family: e2r;
     }
 
     &.ta-left {
-      text-align: left
+      text-align: left;
+      align-items: flex-start;
     }
 
     .ttl {
+      font-family: e2sb;
       font-weight: 600;
       font-size: 12px;
       margin-bottom: 22px;
@@ -52,25 +55,27 @@
     z-index: 9999;
 
     header {
-      margin-bottom: 70px;
       background-color: transparent;
       -webkit-box-shadow: none;
       box-shadow: none;
     }
 
     .title h1 {
-      margin-bottom: 55px;
+      font-family: eb;
+      margin-bottom: 45px;
       font-size: 100px;
-      font-weight: 600;
       color: #363694;
     }
 
     .title p {
+      font-family: e2r;
       font-size: 20px;
-      color: #363694;
-      line-height: 1.5;
+      line-height: 30px;
       max-width: 550px;
       margin: 0 auto;
+
+      letter-spacing: 0.4px;
+      color: #363694;
     }
 
     .title .scroll-down {
@@ -446,7 +451,11 @@
     .block-title {
       max-width: 480px;
       margin: 0 auto;
-      padding: 0
+      padding: 0;
+
+      p {
+        text-align: center;
+      }
     }
 
     .team {
@@ -516,17 +525,17 @@
     }
 
     .team .emp:nth-of-type(1) {
-      left: 10%;
+      left: 12%;
       top: 50px
     }
 
     .team .emp:nth-of-type(2) {
-      left: 30%;
-      top: 50px
+      left: 33%;
+      top: 75px
     }
 
     .team .emp:nth-of-type(3) {
-      right: 20%;
+      right: 15%;
       top: 0
     }
 
@@ -551,7 +560,7 @@
     }
 
     .team .emp:nth-of-type(8) {
-      right: 15%;
+      right: 12%;
       bottom: 15%
     }
 
@@ -613,7 +622,13 @@
 
     .text {
       width: 450px;
-      text-align: center
+      text-align: center;
+
+      .block-title {
+        p {
+          text-align: center;
+        }
+      }
     }
 
     .text address {

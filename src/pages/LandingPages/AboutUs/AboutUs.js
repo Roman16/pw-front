@@ -45,7 +45,7 @@ const AboutUs = () => {
                             <div className="title">
                                 <h1>Who We Are?</h1>
                                 <p>
-                                    We are here to change the way brands and sellers growing their business on Amazon.
+                                    We are here to change the way brands and sellers <br/> growing their business on Amazon.
                                 </p>
 
                                 <div className="scroll-down" onClick={() => {
@@ -152,6 +152,8 @@ const AboutUs = () => {
                         <div className="block-title">
                             <div className="ttl">Crew</div>
                             <h2>Meet our <br/>leadership team</h2>
+                            <img src={greenLine} alt="title-line"/>
+
                             <p>We are here to help you scale your business and achive your growth goals.</p>
                         </div>
                         <div className="team">
@@ -187,7 +189,7 @@ const AboutUs = () => {
                             </div>
                             <div className="emp">
                                 <div className="img"><img src={teamImage7} alt=""/></div>
-                                <div className="name">Andrew bulat</div>
+                                <div className="name">Andrew Bulat</div>
                                 <div className="position">Lead Node.js Developer</div>
                             </div>
                             <div className="emp">
@@ -210,7 +212,7 @@ const AboutUs = () => {
                         <div className="text">
                             <div className="block-title">
                                 <h2>Office in Kyiv</h2>
-                                <p>Our headquarter office is located in beautiful capital of Ukraine, Kyiv.</p>
+                                <p>Our headquarter office is located in beautiful capital of <br/> Ukraine, Kyiv.</p>
                             </div>
                             <address><img src={flagImage} alt=""/>st. Konovalca 32 G Kyiv, 02000</address>
                         </div>
@@ -224,6 +226,7 @@ const AboutUs = () => {
                             <h2>Subscribe</h2>
                             <p>Subscribe to our newsletter to receive up to date information about our services.</p>
                         </div>
+
                         <form action="#">
                             <input type="email" placeholder="Your email address" required=""/>
                                 <button className="btn ripple default">Subscribe</button>

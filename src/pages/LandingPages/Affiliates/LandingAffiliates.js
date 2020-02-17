@@ -40,6 +40,8 @@ const LandingAffiliates = () => {
     }
 
     useEffect(() => {
+        document.querySelector('html').classList.add('not-retina');
+
         return (() => {
             document.head.removeChild(tapfiliateScript)
         })
@@ -145,12 +147,12 @@ const LandingAffiliates = () => {
                     </div>
 
                     <div className="profit">
-                        <div className="col">
-                            <h3 className='value'>
-                                $25
-                            </h3>
-                            <p>Per referral that jups from Free Trial to <br/> paid subscription plan.</p>
-                        </div>
+                        {/*<div className="col">*/}
+                        {/*    <h3 className='value'>*/}
+                        {/*        $25*/}
+                        {/*    </h3>*/}
+                        {/*    <p>Per referral that jups from Free Trial to <br/> paid subscription plan.</p>*/}
+                        {/*</div>*/}
 
                         <div className="col">
                             <h3 className='value'>
