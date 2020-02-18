@@ -386,6 +386,21 @@ const LandingAutomation = () => {
     }
 
     useEffect(() => {
+        const hideStyle = '#kayako-messenger {display:none}',
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+
+
+        head.appendChild(style);
+
+        style.type = 'text/css';
+        if (style.styleSheet) {
+            // This is required for IE8 and below.
+            style.styleSheet.cssText = hideStyle;
+        } else {
+            style.appendChild(document.createTextNode(hideStyle));
+        }
+
         (function (t, a, p) {
             t.TapfiliateObject = a;
             t[a] = t[a] || function () {
@@ -400,7 +415,6 @@ const LandingAutomation = () => {
         //----------------------------------------------------------------------
         document.querySelector('html').classList.add('not-retina');
         //----------------------------------------------------------------------
-
         //----------------------------------------------------------------------
         $(".js-range-slider").ionRangeSlider({
             min: 0,
@@ -492,6 +506,7 @@ const LandingAutomation = () => {
             window.location.reload();
 
             document.querySelector('html').classList.remove('not-retina');
+            head.removeChild(style);
         }
     }, []);
 
@@ -606,7 +621,8 @@ const LandingAutomation = () => {
                                     START FREE
                                 </button>
 
-                                <img src={amazonApp} alt="" onClick={() => window.open('https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9')}/>
+                                <img src={amazonApp} alt=""
+                                     onClick={() => window.open('https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9')}/>
                             </div>
                         </div>
                     </div>

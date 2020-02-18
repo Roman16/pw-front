@@ -18,8 +18,12 @@ export const daypartingServices = {
     deactivateDayparting
 };
 
-function getCampaigns({size, page, searchStr = '', cancelToken, campaign_type, campaign_status}) {
-    return api('get', `${daypartingUrls.campaigns}?search_query=${searchStr}&page=${page}&size=${size}&campaign_type=${campaign_type}&campaign_status=${campaign_status}`, null, null, cancelToken)
+function getCampaigns({size, page, searchStr, cancelToken, campaign_type, campaign_status}) {
+    const parameters = [
+        searchStr ? `&name:search=${searchStr}` : '',
+    ];
+
+    return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${size}&targetingType:in=${campaign_type}&state:in=${campaign_status}${parameters.join('')}`, null, null, cancelToken)
 }
 
 function getOutBudgetStatistic({campaignId, date, cancelToken}) {

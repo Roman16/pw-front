@@ -144,9 +144,9 @@ const OutBudget = ({date}) => {
                     <div className="row time-axis">
                         {hours.map((status, timeIndex) => (
                             <div className="time-name" key={shortid.generate()}>
-                                {moment(timeIndex + 1, 'HH').format('hh')}
+                                {moment(timeIndex, 'HH').format('hh')}
                                 <br/>
-                                {moment(timeIndex + 1, 'HH').format('A')}
+                                {moment(timeIndex, 'HH').format('A')}
                             </div>
                         ))}
                     </div>

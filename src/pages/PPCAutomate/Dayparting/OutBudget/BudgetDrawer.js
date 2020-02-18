@@ -53,7 +53,7 @@ const BudgetDrawer = ({onClose, onSave}) => {
             </Radio.Group>
 
             <div className="actions">
-                <button className='btn default' onClick={onClose}>Cancel</button>
+                <button className='btn white' onClick={onClose}>Cancel</button>
 
                 <button className='btn green-btn' onClick={saveHandler}>Apply</button>
             </div>

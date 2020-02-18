@@ -126,7 +126,7 @@ class DaySwitches extends Component {
                 console.log(e);
                 // notification.error({title: 'Not Saved'})
             }
-        }, 2000)
+        }, 1000)
     };
 
     handleReset = () => {
@@ -236,6 +236,8 @@ class DaySwitches extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.campaignId !== this.props.campaignId) {
             if (timeoutId) {
+                clearTimeout(timeoutId);
+
                 try {
                     daypartingServices.updateDayPartingParams({
                         campaignId: prevProps.campaignId,
@@ -243,7 +245,7 @@ class DaySwitches extends Component {
                     })
                         .then(() => {
                             notification.success({title: 'Saved'});
-                            clearTimeout(timeoutId);
+                            timeoutId = null;
                         });
                 } catch (e) {
                     console.log(e);
@@ -294,7 +296,7 @@ class DaySwitches extends Component {
                             <div/>
                             {hours.map((status, timeIndex) => (
                                 <div key={shortid.generate()}>
-                                    {moment(timeIndex + 1, 'HH').format('hh A')}
+                                    {moment(timeIndex, 'HH').format('hh A')}
                                     <Switch
                                         disabled={!activeDayparting}
                                         checked={[0, 1, 2, 3, 4, 5, 6].map(item => hoursStatus[24 * item + timeIndex]).every(item => item === '1')}
