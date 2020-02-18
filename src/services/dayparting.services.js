@@ -23,7 +23,7 @@ function getCampaigns({size, page, searchStr, cancelToken, campaign_type, campai
         searchStr ? `&name:search=${searchStr}` : '',
     ];
 
-    return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${size}&targetingType:in=${campaign_type}&state:in=${campaign_status}${parameters.join('')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${size}&targetingType:in=${campaign_type === 'all' ? 'manual,auto' : campaign_type}&state:in=${campaign_status === 'all' ? 'enabled,paused' : campaign_status}${parameters.join('')}`, null, null, cancelToken)
 }
 
 function getOutBudgetStatistic({campaignId, date, cancelToken}) {
