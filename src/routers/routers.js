@@ -26,6 +26,7 @@ import Ebook from "../pages/LandingPages/Ebook/Ebook";
 import ThankYou from "../pages/LandingPages/Ebook/ThankYou";
 import AboutUs from "../pages/LandingPages/AboutUs/AboutUs";
 import Pricing from "../pages/LandingPages/Pricing/Pricing";
+import PPCScanner from "../pages/LandingPages/PPCScanner/PPCScanner";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -72,6 +73,7 @@ const routers = () => {
 
                 <Route exact path="/affiliates" component={LandingAffiliates}/>
                 <Route exact path="/about-us" component={AboutUs}/>
+                <Route exact path="/ppc-scanner" component={PPCScanner}/>
                 <Route exact path="/pricing" component={Pricing}/>
                 <Route exact path="/amazon-ppc-blueprint" component={Ebook}/>
                 <Route exact path="/thank-you" component={ThankYou}/>

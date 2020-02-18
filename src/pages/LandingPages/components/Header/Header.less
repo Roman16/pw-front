@@ -166,6 +166,26 @@
     }
   }
 
+  &.dark {
+    .container {
+      nav {
+        ul li a {
+          color: #fff;
+          opacity: 1;
+        }
+
+        ul  li.has-child .sub-menu {
+          background: #2f2f2fba;
+          box-shadow: none;
+
+          li.soon {
+            background: none;
+          }
+        }
+      }
+    }
+  }
+
   @media (max-width: 695px) {
     & .container {
       .burger-menu-button {

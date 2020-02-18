@@ -21,7 +21,7 @@ const Ebook = () => {
 
     return (
         <div className='ebook-landing'>
-            <Header/>
+            <Header type={'dark'}/>
 
             <section>
                 <div className="container">

@@ -7,7 +7,7 @@ import './Header.less';
 import {history} from "../../../../utils/history";
 
 
-const Header = () => {
+const Header = ({type = 'light'}) => {
     const [openedMenu, switchMenu] = useState(false);
 
     useEffect(() => {
@@ -28,12 +28,11 @@ const Header = () => {
 
 
     return (
-        <header className='not-found-page__header' id={'header'}>
+        <header className={`not-found-page__header ${type}`} id={'header'}>
             <div className="container">
                 <div>
                     <Link to='/'>
-                        <img src={logoDark} alt="Profit Whales" className='logo dark'/>
-                        <img src={logoWhite} alt="Profit Whales" className='logo white'/>
+                        <img src={type === 'dark' ? logoWhite : logoDark} alt="Profit Whales" className='logo'/>
                     </Link>
 
                     <button className='burger-menu-button' onClick={() => switchMenu(!openedMenu)}>
@@ -50,7 +49,7 @@ const Header = () => {
                             <li className="has-child"><a href="#">Services</a>
                                 <ul className="sub-menu">
                                     <li><Link to='/'>PPC Optimization</Link></li>
-                                    <li><a href='https://profitwhales.com/scanner'>PPC Scanner</a></li>
+                                    <li><Link to='/ppc-scanner'>PPC Scanner</Link></li>
                                     <li className="soon"><a href='#'>Zero To Hero</a></li>
                                     <li className="soon"><a href='#'>Analytics</a></li>
                                 </ul>
