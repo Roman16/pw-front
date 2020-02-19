@@ -206,7 +206,7 @@
 
     .container {
       h2 {
-        margin-bottom: 70px;
+        margin-bottom: 20px;
       }
     }
   }
@@ -225,6 +225,7 @@
         justify-content: space-between;
         align-items: flex-start;
         list-style: none;
+        position: relative;
 
 
         li {
@@ -289,9 +290,6 @@
           }
         }
 
-        li.loaded i:before {
-          width: 100%
-        }
 
         li.active, li:hover {
           color: #6d6df6
@@ -309,17 +307,16 @@
           border: 9px solid #6d6df6
         }
 
-        li i {
-          position: absolute;
-          left: 75px;
-          width: 16vw;
+         i {
+          flex: 1;
           top: 0;
           bottom: 0;
-          margin: auto 0;
+          margin: auto 20px;
           height: 2px;
           border-radius: 10px;
           background: url(../../../assets/img/landing-ppc-scanner/point.svg) center repeat-x;
           background-size: auto 2px;
+           position: relative;
 
           &:before {
             content: "";

@@ -9,6 +9,8 @@
   -webkit-box-shadow: 0 4px 12px rgba(44, 48, 58, .08), 0 0 20px rgba(44, 48, 58, .04);
   box-shadow: 0 4px 12px rgba(44, 48, 58, .08), 0 0 20px rgba(44, 48, 58, .04);
 
+  font-family: ir;
+
   .container {
     display: flex;
     align-items: center;
@@ -116,7 +118,7 @@
             font-size: 14px;
 
             &:hover {
-              color: #15191f;
+             opacity: .9;
             }
           }
         }
@@ -176,12 +178,19 @@
       nav {
         ul li a {
           color: #fff;
-          opacity: 1;
+
+          &:hover {
+            opacity: .9;
+          }
         }
 
-        ul  li.has-child .sub-menu {
-          background: #2f2f2fba;
-          box-shadow: none;
+        ul li.has-child .sub-menu {
+          //background: #2f2f2fba;
+          //box-shadow: none;
+
+          li a {
+            color: #38454f;
+          }
 
           li.soon {
             background: none;

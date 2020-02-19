@@ -178,19 +178,22 @@ const PPCScanner = () => {
                         <div className="nav"/>
                         <ul className="dots">
                             <li className={selectedSlide === 0 && 'active'} onClick={() => goToSlide(0)}>
-                                <i/>
                                 <span>Choose product</span>
                             </li>
 
+                            <i/>
+
                             <li className={selectedSlide === 1 && 'active'} onClick={() => goToSlide(1)}>
-                                <i/>
                                 <span>Enter your COGS</span>
                             </li>
 
+                            <i/>
+
                             <li className={selectedSlide === 2 && 'active'} onClick={() => goToSlide(2)}>
-                                <i/>
                                 <span>See all the mistakes<br/>your are making</span>
                             </li>
+
+                            <i/>
 
                             <li className={selectedSlide === 3 && 'active'} onClick={() => goToSlide(3)}>
                                 <span>Done</span>

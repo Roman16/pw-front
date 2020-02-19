@@ -230,7 +230,9 @@ const Pricing = () => {
                 <div className="box">
                     <div className="inside">
                         <p>Do you spend over <strong>$100,000</strong> per month on Amazon Advertising?</p>
-                        <button className="btn default">Contact Us</button>
+                        <button className="btn default" onClick={() => history.push('/contact-us')}>
+                            Contact Us
+                        </button>
                     </div>
                 </div>
             </section>

@@ -779,6 +779,10 @@
       min-height: 600px
     }
 
+    .box {
+      width: 100%;
+    }
+
     .fix-menu {
       left: 10px
     }
@@ -828,40 +832,6 @@
 
     .our-mission .text {
       width: calc(100% - 450px)
-    }
-
-    .crew .team .emp:nth-of-type(3) {
-      right: 10%
-    }
-
-    .crew .team .emp:first-of-type {
-      left: 0
-    }
-
-    .crew .team .emp:nth-of-type(6) {
-      right: 20%
-    }
-
-    .crew .team .emp:nth-of-type(8) {
-      right: 10%
-    }
-
-    .crew .team .emp:nth-of-type(4) {
-      top: 65%;
-      left: 0
-    }
-
-    .crew .team .emp:nth-of-type(5) {
-      left: 20%
-    }
-
-    .crew .team .emp:nth-of-type(7) {
-      bottom: 0
-    }
-
-    .crew .team .emp:nth-of-type(9) {
-      left: 25%;
-      bottom: -10%
     }
 
     .office .image {
@@ -1042,6 +1012,21 @@
       max-width: 100%
     }
 
+    .box {
+      padding: 0 30px;
+
+      .block-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        p {
+          text-align: center;
+        }
+      }
+    }
+
     .our-story .images {
       width: 100%;
       -webkit-box-orient: horizontal;
@@ -1101,7 +1086,7 @@
     }
 
     .our-mission {
-      overflow: hidden
+      overflow: hidden;
     }
   }
 
@@ -1194,8 +1179,12 @@
       margin-top: 10px
     }
 
-    .our-mission, .our-story {
+    .our-mission {
       padding-top: 35px
+    }
+
+    .our-story {
+      padding-top: 50px;
     }
 
     .features .list .item .title {
