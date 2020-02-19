@@ -9,6 +9,8 @@
   -webkit-box-shadow: 0 4px 12px rgba(44, 48, 58, .08), 0 0 20px rgba(44, 48, 58, .04);
   box-shadow: 0 4px 12px rgba(44, 48, 58, .08), 0 0 20px rgba(44, 48, 58, .04);
 
+  font-family: ir;
+
   .container {
     display: flex;
     align-items: center;
@@ -36,8 +38,6 @@
       display: none;
     }
 
-
-
     .burger-menu-button {
       cursor: pointer;
       display: none;
@@ -64,7 +64,6 @@
         flex-wrap: wrap;
 
         li {
-          width: max-content;
           display: inline-block;
           vertical-align: middle;
           position: relative;
@@ -82,16 +81,8 @@
             -webkit-box-shadow: 0 7px 7px rgba(44, 48, 58, .08);
             box-shadow: 0 7px 7px rgba(44, 48, 58, .08);
             overflow: hidden;
-          }
-
-          &.has-child:hover .sub-menu {
-            display: block;
 
             li {
-              min-width: max-content;
-              width: 100%;
-              text-align: left;
-
               &.soon {
                 background: rgba(156, 156, 156, 0.49);
                 opacity: .5;
@@ -101,6 +92,16 @@
                   pointer-events: none;
                 }
               }
+            }
+          }
+
+          &.has-child:hover .sub-menu {
+            display: block;
+
+            li {
+              min-width: max-content;
+              width: 100%;
+              text-align: left;
             }
           }
 
@@ -117,7 +118,7 @@
             font-size: 14px;
 
             &:hover {
-              color: #15191f;
+             opacity: .9;
             }
           }
         }
@@ -169,7 +170,37 @@
     }
   }
 
-  @media (max-width: 695px) {
+  &.dark {
+    background: initial;
+    box-shadow: none;
+
+    .container {
+      nav {
+        ul li a {
+          color: #fff;
+
+          &:hover {
+            opacity: .9;
+          }
+        }
+
+        ul li.has-child .sub-menu {
+          //background: #2f2f2fba;
+          //box-shadow: none;
+
+          li a {
+            color: #38454f;
+          }
+
+          li.soon {
+            background: none;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 785px) {
     & .container {
       .burger-menu-button {
         display: block;
@@ -193,15 +224,23 @@
         z-index: 110;
         height: calc(100vh - 96px);
 
+        .sub-menu {
+          box-shadow: none !important;
+        }
+
         ul {
           display: flex;
           flex-direction: column;
 
-          li.has-child {
+          a {
+            color: #363694 !important;
+          }
 
-            & > a {
-              color: #363694;
-            }
+          li {
+            text-align: left;
+          }
+
+          li.has-child {
 
             &:hover {
               box-shadow: none;
@@ -217,6 +256,7 @@
               flex-direction: column;
               padding: 0 0 0 20px;
               top: auto;
+              background: #fff !important;
             }
           }
         }

@@ -63,6 +63,144 @@
     }
   }
 
+  .affiliate-program {
+    background: #fff;
+
+    .container {
+      padding-top: 130px;
+      padding-bottom: 50px;
+      max-width: 1686px;
+
+      & > h3 {
+        margin: 0 0 50px 0;
+        display: flex;
+        flex-direction: column;
+
+        img {
+          margin: 20px 0 0 0;
+        }
+      }
+
+      .affiliate-steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        & > div {
+          width: 25%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .image {
+            margin: 0 0 30px 0;
+          }
+
+          h3 {
+            font-family: eb;
+            font-size: 20px;
+            line-height: 23px;
+            text-align: center;
+            color: #363694;
+            margin: 0 0 20px 0;
+          }
+
+          p {
+            margin: 0;
+            font-family: er;
+            font-size: 16px;
+            line-height: 21px;
+            text-align: center;
+            color: #343C5A;
+          }
+        }
+      }
+
+      .steps {
+        display: flex;
+        flex-direction: column;
+        margin: 30px 0 0 0;
+        padding: 0 0 100px 0;
+
+        .row {
+          display: flex;
+          justify-content: center;
+
+          div {
+            position: relative;
+          }
+
+          div:nth-child(3) {
+            width: 18%;
+            display: flex;
+            justify-content: center;
+          }
+
+          div:first-child {
+            padding: 0 70px;
+          }
+
+          div:last-child {
+            padding: 0 70px;
+
+            p {
+              bottom: -49px;
+            }
+          }
+
+          p {
+            width: max-content;
+            text-align: center;
+            font-family: er;
+            font-size: 16px;
+            line-height: 21px;
+            color: #272A53;
+
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -70px;
+            margin: 0 auto;
+          }
+        }
+
+        .arrow-img {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+      }
+
+      .profit {
+        display: flex;
+        justify-content: center;
+        padding: 50px 0;
+
+        .col {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin: 0 35px 0 0;
+
+          h3.value {
+            font-family: eb;
+            font-size: 70px;
+            text-align: center;
+            color: #272A53;
+          }
+
+          p {
+            font-family: er;
+            font-size: 20px;
+            line-height: 20px;
+            text-align: center;
+            color: #272A53;
+          }
+        }
+      }
+    }
+  }
+
   .amazon-influencer {
     background: #fff url(../../../assets/img/contact-section-background.svg) center no-repeat;
     background-size: cover;
@@ -97,9 +235,9 @@
   }
 
   .profitwhales-programs {
-    background: #fff url(../../../assets/img/programs-background.svg) no-repeat;
-    padding-top: 220px;
-    padding-bottom: 100px;
+    background: #fff url(../../../assets/img/programs-background.svg) no-repeat 0 -130px;
+    padding-top: 200px;
+    padding-bottom: 150px;
 
 
     .container {
@@ -117,7 +255,6 @@
         text-align: center;
         letter-spacing: 0.4px;
         color: #38454F;
-        margin-top: 50px;
       }
 
       .programs {
@@ -173,11 +310,12 @@
   }
 
   .contact-us {
-    background: #F3F7FD url(../../../assets/img/programs-background.svg) no-repeat 0 -1215px;
-    height: 430px;
+    background: #6D6DF6 url(../../../assets/img/landing-affiliate/contact-us-bg.png) no-repeat 0 30px;
 
     .container {
       height: 100%;
+      max-width: 1686px;
+
       display: flex;
       align-items: center;
       justify-content: center;
@@ -185,25 +323,26 @@
 
       .image {
         z-index: 10;
+        margin: 0 150px 0 -150px;
       }
 
       .have-question {
-        width: 40%;
-        //position: relative;
+        width: max-content;
+        position: relative;
         display: flex;
         flex-direction: column;
-        margin: 70px 0 0 60px;
+        margin: 130px 0 0 0;
 
         h2 {
           width: max-content;
           position: absolute;
           font-family: eb;
-          font-size: 10.714285714285714rem;
-          line-height: 7.142857142857143rem;
+          font-size: 150px;
+          line-height: 130px;
           letter-spacing: 0.4px;
-          color: #FFFFFF;
-          top: 7rem;
-          right: -2rem;
+          color: rgba(255, 255, 255, 0.4);;
+          top: -85px;
+          left: -80px;
           margin: 0;
         }
 
@@ -231,6 +370,86 @@
           letter-spacing: 0.4px;
           text-decoration-line: underline;
           color: #6D6DF6;
+        }
+
+        form {
+          color: #fff;
+          display: flex;
+          flex-direction: column;
+          margin: 0 0 80px 0;
+
+          .row {
+            display: flex;
+            justify-content: space-between;
+            margin: 0 0 20px 0;
+          }
+
+          h4 {
+            font-family: e2r;
+            font-size: 21px;
+            letter-spacing: 0.4px;
+            color: #FFFFFF;
+            margin: 45px 0 25px 0;
+          }
+
+          .input-group {
+            display: flex;
+            flex-direction: column;
+            margin: 0 25px 0 0;
+
+            &:last-child {
+              margin: 0;
+            }
+
+            label {
+              font-family: e3r;
+              font-size: 13px;
+              letter-spacing: -0.4375px;
+              margin: 0 0 10px 0;
+            }
+
+            input {
+              width: 240px;
+              border: 1px solid #FFFFFF;
+              box-sizing: border-box;
+              border-radius: 4px;
+              color: #fff;
+              height: 40px;
+              background: inherit;
+              padding: 0 15px;
+            }
+
+            textarea {
+              border: 1px solid #FFFFFF;
+              box-sizing: border-box;
+              border-radius: 4px;
+              color: #fff;
+              background: inherit;
+              padding: 0 15px;
+              resize: none;
+              height: 105px;
+            }
+
+            span {
+              padding: 0;
+              font-family: e2r;
+              font-size: 10px;
+              letter-spacing: 0.4px;
+              color: #FFFFFF;
+              margin: 5px 0 0 0;
+            }
+          }
+
+          .question-block {
+            width: 100%;
+          }
+
+          .green-btn {
+            width: 120px;
+            height: 40px;
+            font-family: eb;
+            font-size: 12px;
+          }
         }
       }
     }
@@ -286,9 +505,7 @@
               color: #17175A;
             }
 
-            @media only screen and (min--moz-device-pixel-ratio: 2),
-            only screen and (-webkit-min-device-pixel-ratio: 2),
-            only screen and (min-device-pixel-ratio: 2) {
+            @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
               & {
                 width: auto;
               }
@@ -377,6 +594,26 @@
     }
   }
 
+  @media (max-width: 1500px) {
+    .contact-us .container {
+      .image {
+        margin: 0 100px 0 -40px;
+      }
+
+      .have-question {
+        h2 {
+          right: 0;
+          font-size: 125px;
+        }
+      }
+    }
+    .affiliate-program .container {
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+  }
+
+
   @media (max-width: 1420px) {
     .contact-us .container {
       .image {
@@ -393,16 +630,35 @@
     }
   }
 
-  @media only screen and (min--moz-device-pixel-ratio: 2),
-  only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (min-device-pixel-ratio: 2) {
+  @media (max-width: 1300px) {
+    .profitwhales-programs {
+      padding-top: 150px;
+    }
+
+    .contact-us {
+      background-image: none;
+
+      .container {
+        .image {
+          margin-left: 0;
+        }
+
+        .have-question {
+          z-index: 10;
+
+          h2 {
+            left: 0;
+            font-size: 95px;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
     .contact-us .container {
       .have-question {
         z-index: 0;
-
-        h2 {
-          left: 42vw;
-        }
       }
     }
   }
@@ -416,6 +672,21 @@
 
         & > div {
           margin: 0 0 20px 0;
+        }
+      }
+    }
+
+    .contact-us .container {
+      .image {
+        display: none;
+      }
+
+      .have-question {
+        margin: 0;
+
+        h2 {
+          position: relative;
+          top: 0;
         }
       }
     }
@@ -443,10 +714,6 @@
 
         img.green-line {
           margin: 0 auto;
-        }
-
-        h2 {
-          display: none;
         }
       }
     }
@@ -555,6 +822,79 @@
               width: max-content;
               margin: 0 auto;
             }
+          }
+        }
+      }
+    }
+
+    .affiliate-program .container {
+      .affiliate-steps {
+        flex-direction: column;
+
+        & > div {
+          width: 85%;
+          margin: 0 auto 30px auto;
+
+          .image {
+            width: 50%;
+          }
+        }
+      }
+
+      .steps {
+        padding: 0;
+
+        .images {
+          margin: 50px 0 0 0;
+          flex-direction: column;
+
+          .image {
+            width: 100% !important;
+            display: flex;
+            flex-direction: column;
+            margin: 0 0 30px 0;
+
+            p {
+              position: initial;
+              margin-top: 20px;
+            }
+          }
+
+          .arrow-img {
+            display: none;
+          }
+        }
+      }
+
+      .profit {
+        justify-content: space-around;
+      }
+    }
+
+    .contact-us .container {
+      .have-question {
+        h2 {
+          font-size: 70px;
+        }
+
+        form {
+          width: 100%;
+          .row {
+            flex-direction: column;
+            margin: 0;
+
+            .input-group {
+              width: 100%;
+              margin: 0 0 20px 0;
+
+              input {
+                width: 100%;
+              }
+            }
+          }
+
+          .btn {
+            width: 100%;
           }
         }
       }
