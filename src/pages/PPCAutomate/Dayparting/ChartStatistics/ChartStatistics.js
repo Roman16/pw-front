@@ -26,16 +26,25 @@ const ChartStatistics = ({date}) => {
             source = CancelToken.source();
 
             try {
-                // const res = await daypartingServices.getDailyStatistic({
-                //     campaignId,
-                //     date,
-                //     firstMetric,
-                //     secondMetric,
-                //     cancelToken: source.token
-                // });
+                const res = await daypartingServices.getDailyStatistic({
+                    campaignId,
+                    date,
+                    firstMetric,
+                    secondMetric,
+                    cancelToken: source.token
+                });
 
-                // setData(res.response);
-                // console.log(res);
+                setData([...res.response.points.map(item => {
+                    const point = {};
+                    point.date = item.date;
+                    point[firstMetric.key] = item.metrics[firstMetric.key].value !== null ? +item.metrics[firstMetric.key].value : null;
+
+                    if (secondMetric.key !== 'nothing') {
+                        point[secondMetric.key] = item.metrics[secondMetric.key].value !== null ? +item.metrics[secondMetric.key].value : null;
+                    }
+
+                    return (point);
+                })]);
             } catch (e) {
                 console.log(e);
             }

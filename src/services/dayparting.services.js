@@ -35,11 +35,7 @@ function setCampaignBudget({campaignId, data}) {
 }
 
 function getDailyStatistic({campaignId, date, firstMetric, secondMetric, cancelToken}) {
-    const parameters = [
-        secondMetric && secondMetric.key !== 'nothing' ? `&secondMetric=${secondMetric.key}` : '',
-    ];
-
-    return api('get', `${daypartingUrls.dailyStatistic(campaignId)}?start_date=${dateFormatter(date.startDate)}&end_date=${dateFormatter(date.endDate)}&firstMetric=${firstMetric.key}${parameters.join('')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.dailyStatistic(campaignId)}?start_date=${dateFormatter(date.startDate)}&end_date=${dateFormatter(date.endDate)}&metrics=${firstMetric.key}${secondMetric.key !== 'nothing' ? `,${secondMetric.key}` : ''}`, null, null, cancelToken)
 }
 
 function getPlacementsStatistic({campaignId, date, cancelToken}) {
@@ -55,9 +51,9 @@ function updateDayPartingParams({campaignId, state_encoded_string}) {
 }
 
 function activateDayparting({campaignId}) {
-    return api('post', `${daypartingUrls.dayParting(campaignId)}`)
+    return api('PUT', `${daypartingUrls.dayParting(campaignId)}?status=ACTIVE`)
 }
 
 function deactivateDayparting({campaignId}) {
-    return api('post', `${daypartingUrls.dayParting(campaignId)}`)
+    return api('PUT', `${daypartingUrls.dayParting(campaignId)}?status=DISABLED`)
 }

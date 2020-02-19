@@ -53,7 +53,7 @@ class DaySwitches extends Component {
 
     deactivateDaypartingHandler = async () => {
         try {
-            // await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId});
+            await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId});
 
             this.setState({
                 activeDayparting: false,
@@ -70,7 +70,11 @@ class DaySwitches extends Component {
         });
 
         try {
-            // await daypartingServices.activateDayparting({campaignId: this.props.campaignId});
+            await daypartingServices.activateDayparting({campaignId: this.props.campaignId});
+
+            this.setState({
+                activeDayparting: true,
+            })
         } catch (e) {
             console.log(e);
         }
@@ -87,10 +91,6 @@ class DaySwitches extends Component {
             })
         } else {
             this.activateDaypartingHandler();
-
-            this.setState({
-                activeDayparting: true
-            })
         }
     };
 
@@ -107,7 +107,7 @@ class DaySwitches extends Component {
             this.setState({
                 hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
                 // hoursStatus: [...res.response[0].state_encoded_string],
-                activeDayparting: res.response[0].status === 'active'
+                activeDayparting: res.response[0].status === 'ACTIVE'
             });
         } catch (e) {
             console.log(e);
@@ -130,6 +130,24 @@ class DaySwitches extends Component {
                 // notification.error({title: 'Not Saved'})
             }
         }, 1000)
+    };
+
+    forceUpdateStatus = async (id, status) => {
+        clearTimeout(timeoutId);
+
+        try {
+            daypartingServices.updateDayPartingParams({
+                campaignId: id,
+                state_encoded_string:  [...status.slice(timeLineShift, 168), ...status.slice(0, timeLineShift)].join('')
+            })
+                .then(() => {
+                    notification.success({title: 'Saved'});
+                    timeoutId = null;
+                });
+        } catch (e) {
+            console.log(e);
+            // notification.error({title: 'Not Saved'})
+        }
     };
 
     handleReset = () => {
@@ -236,25 +254,16 @@ class DaySwitches extends Component {
             });
     }
 
+    componentWillUnmount() {
+        if (timeoutId) {
+            this.forceUpdateStatus(this.props.campaignId, this.state.hoursStatus)
+        }
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.campaignId !== this.props.campaignId) {
             if (timeoutId) {
-                clearTimeout(timeoutId);
-
-                try {
-                    daypartingServices.updateDayPartingParams({
-                        campaignId: prevProps.campaignId,
-                        state_encoded_string: prevState.hoursStatus.join('')
-                    })
-                        .then(() => {
-                            notification.success({title: 'Saved'});
-                            timeoutId = null;
-                        });
-                } catch (e) {
-                    console.log(e);
-                    // notification.error({title: 'Not Saved'})
-                }
-
+                this.forceUpdateStatus(prevProps.campaignId, prevState.hoursStatus)
             }
 
             this.getDaypartingStatus()

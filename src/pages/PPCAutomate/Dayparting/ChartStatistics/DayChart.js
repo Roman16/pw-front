@@ -2,14 +2,41 @@ import React from "react";
 import {
     XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid
 } from 'recharts';
+import moment from "moment";
+import {numberMask} from "../../../../utils/numberMask";
+import {round} from "../../../../utils/round";
+
+
+const weakDays = [
+    {
+        date: 'Sunday',
+    },
+    {
+        date: 'Monday',
+    },
+    {
+        date: 'Tuesday',
+    },
+    {
+        date: 'Wednesday',
+    },
+    {
+        date: 'Thursday',
+    },
+    {
+        date: 'Friday',
+    },
+    {
+        date: 'Saturday',
+    },
+];
 
 const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
-    if (payload.length > 0) {
-
+    if (payload && payload.length > 0) {
         return (
             <div className='chart-tooltip twice-metrics'>
                 <div className='ant-popover-inner-content'>
-                    <h3>{payload[0].payload.name}</h3>
+                    <h3>{weakDays[moment(payload[0].payload.date).day()].date}</h3>
 
                     <div className="row">
                         <div className="col fills">
@@ -28,11 +55,11 @@ const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
 
                         <div className="col values">
                             <div className="value">
-                                {firstMetric.type === 'currency' ? `$${payload[0].value}` : (firstMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                                {firstMetric.type === 'currency' ? `$${numberMask(payload[0].payload[firstMetric.key], 2)}` : (firstMetric.type === 'percent' ? `${round(payload[0].payload[firstMetric.key], 2)} %` : round(payload[0].payload[firstMetric.key], 2))}
                             </div>
 
                             {secondMetric.key !== 'nothing' && <div className="value">
-                                {secondMetric.type === 'currency' ? `$${payload[1].value}` : (secondMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                                {secondMetric.type === 'currency' ? `$${numberMask(payload[0].payload[secondMetric.key], 2)}` : (secondMetric.type === 'percent' ? `${round(payload[0].payload[secondMetric.key], 2)} %` : round(payload[0].payload[secondMetric.key], 2))}
                             </div>}
                         </div>
                     </div>
@@ -44,39 +71,15 @@ const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
     }
 };
 
-const data = [
-    {
-        name: 'Sunday', clicks: 140, test: 890
-    },
-    {
-        name: 'Monday', clicks: 150, test: 490
-    },
-    {
-        name: 'Tuesday', clicks: 289, test: 990
-    },
-    {
-        name: 'Wednesday', clicks: 1228, test: 890
-    },
-    {
-        name: 'Thursday', clicks: 1280, test: 390
-    },
-    {
-        name: 'Friday', clicks: 110, test: 790
-    },
-    {
-        name: 'Saturday', clicks: 170, test: 890
-    },
-];
 
-const DayChart = ({firstMetric, secondMetric}) => {
-
+const DayChart = ({data, firstMetric, secondMetric}) => {
     return (
         <div className={'chart-block day-chart'}>
             <ResponsiveContainer height='99%' width='100%'>
                 <LineChart
                     data={data}
                     margin={{
-                        top: 25, right: -15, left: -15, bottom: 0,
+                        top: 25, right: -10, left: -10, bottom: 0,
                     }}
                 >
                     <CartesianGrid
@@ -86,8 +89,8 @@ const DayChart = ({firstMetric, secondMetric}) => {
 
                     <XAxis
                         axisLine={false}
-                        dataKey="name"
-                        tickFormatter={(date) => date[0]}
+                        dataKey="date"
+                        tickFormatter={(date) => weakDays[moment(date).day()].date[0]}
                     />
 
                     <YAxis
@@ -95,6 +98,7 @@ const DayChart = ({firstMetric, secondMetric}) => {
                         yAxisId="left"
                         stroke="#82ca9d"
                     />
+
                     <YAxis
                         axisLine={false}
                         stroke="#8884d8"
@@ -116,7 +120,7 @@ const DayChart = ({firstMetric, secondMetric}) => {
                         dot={false}
                         isAnimationActive={false}
                         yAxisId="left"
-                        dataKey="clicks"
+                        dataKey={firstMetric.key}
                         stroke="#82ca9d"
                         activeDot={{r: 4}}
                     />
@@ -125,7 +129,7 @@ const DayChart = ({firstMetric, secondMetric}) => {
                         dot={false}
                         isAnimationActive={false}
                         yAxisId="right"
-                        dataKey="test"
+                        dataKey={secondMetric.key}
                         stroke="#8884d8"
                         activeDot={{r: 4}}
                     />}
