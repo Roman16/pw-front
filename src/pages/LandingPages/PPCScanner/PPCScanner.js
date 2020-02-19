@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './PPCScanner.less';
 import Header from "../components/Header/Header";
 import afterScanImage from '../../../assets/img/landing-ppc-scanner/after-scan.png';
-import howItWork1 from '../../../assets/img/landing-ppc-scanner/how_it_works_1.png';
+import howItWork1 from '../../../assets/img/landing-ppc-scanner/how_it_works_1.svg';
 import howItWork2 from '../../../assets/img/landing-ppc-scanner/how_it_works_2.png';
 import howItWork3 from '../../../assets/img/landing-ppc-scanner/how_it_works_3.png';
 import howItWork4 from '../../../assets/img/landing-ppc-scanner/how_it_works_4.png';
@@ -11,9 +11,74 @@ import ebookImage from '../../../assets/img/landing-ppc-scanner/ebook.svg';
 import readBookImage from '../../../assets/img/landing-ppc-scanner/read-book.svg';
 import willGetImage from '../../../assets/img/landing-ppc-scanner/will-get.svg';
 import Footer from "../components/Footer/Footer";
+import Slider from "react-slick";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlay} from "@fortawesome/free-solid-svg-icons";
+import {userService} from "../../../services/user.services";
+import {history} from "../../../utils/history";
 
 
 const PPCScanner = () => {
+    const [selectedSlide, setSlide] = useState(0),
+        [email, setEmail] = useState('');
+
+    let slider = null;
+
+    function goToSlide(index) {
+        slider.slickGoTo(index);
+        setSlide(index);
+    }
+
+    function SampleNextArrow({currentSlide, onClick}) {
+        if (selectedSlide < 3) {
+            return (<div className='next' onClick={() => {
+                onClick();
+                setSlide(currentSlide === 3 ? 0 : currentSlide + 1)
+            }}><FontAwesomeIcon icon={faPlay}/></div>)
+        } else {
+            return '';
+        }
+    }
+
+    function SamplePrevArrow({currentSlide, onClick}) {
+        if (selectedSlide > 0) {
+            return (
+                <div className='prev' onClick={() => {
+                    onClick();
+                    setSlide(currentSlide === 0 ? 3 : currentSlide - 1)
+                }}><FontAwesomeIcon icon={faPlay}/></div>
+            );
+        } else {
+            return '';
+        }
+    }
+
+    function subscribeHandler(e) {
+        e.preventDefault();
+
+        userService.ebookOnSubscribe({
+            email
+        })
+            .then(() => {
+                history.push('/thank-you');
+            })
+    }
+
+    function goToScanPage() {
+        history.push('/ppc/scanner');
+    }
+
+    useEffect(() => {
+        const dots = document.querySelectorAll('.dots i');
+
+        dots.forEach((item, index) => {
+            if (index < selectedSlide) {
+                dots[index].classList.add('loaded')
+            } else {
+                dots[index].classList.remove('loaded')
+            }
+        });
+    }, [selectedSlide]);
 
     return (
         <div className='landing-ppc-scanner'>
@@ -34,7 +99,7 @@ const PPCScanner = () => {
                             <div className="row">
                                 <h3>Completely FREE</h3>
 
-                                <button className="btn green-btn">scan it</button>
+                                <button className="btn green-btn" onClick={goToScanPage}>scan it</button>
                             </div>
 
                             {/*<div className="scroll-down" onClick={() => {*/}
@@ -109,79 +174,121 @@ const PPCScanner = () => {
                 <div className="container">
                     <h2>How it works?</h2>
 
-
                     <div className="nav_wrap animateIt animateUp">
                         <div className="nav"/>
                         <ul className="dots">
-                            <li className="active"><i/><span>Choose product</span></li>
-                            <li><i/><span>Enter your COGS</span></li>
-                            <li><i/><span>See all the mistakes<br/>your are making</span></li>
-                            <li><span>Done</span></li>
+                            <li className={selectedSlide === 0 && 'active'} onClick={() => goToSlide(0)}>
+                                <i/>
+                                <span>Choose product</span>
+                            </li>
+
+                            <li className={selectedSlide === 1 && 'active'} onClick={() => goToSlide(1)}>
+                                <i/>
+                                <span>Enter your COGS</span>
+                            </li>
+
+                            <li className={selectedSlide === 2 && 'active'} onClick={() => goToSlide(2)}>
+                                <i/>
+                                <span>See all the mistakes<br/>your are making</span>
+                            </li>
+
+                            <li className={selectedSlide === 3 && 'active'} onClick={() => goToSlide(3)}>
+                                <span>Done</span>
+                            </li>
                         </ul>
                     </div>
 
-                    {/*<div className="box">*/}
-                    {/*    <div className="slider animateIt animateUp">*/}
-                    {/*        <div className="item step_1">*/}
-                    {/*            <div className="image"><img src={howItWork1} alt=""/></div>*/}
-                    {/*            <div className="text">*/}
-                    {/*                <div className="ttl"><span>01</span>Choose*/}
-                    {/*                    your*/}
-                    {/*                    product*/}
-                    {/*                </div>*/}
-                    {/*                <div className="desc">*/}
-                    {/*                    <p>After connecting to your Amazon Store, you will be able to choose a product*/}
-                    {/*                        to*/}
-                    {/*                        scan.</p>*/}
-                    {/*                    <p>Note! You can scan only 1 product at the same time.</p>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
+                    <Slider
+                        ref={ref => {
+                            slider = ref
+                        }}
+                        dots={false}
+                        infinite={true}
+                        speed={500}
+                        slidesToShow={1}
+                        slidesToScroll={1}
+                        nextArrow={<SampleNextArrow/>}
+                        prevArrow={<SamplePrevArrow/>}
+                        afterChange={e => {
+                            setSlide(e);
+                        }}
+                    >
+                        <div className="item step_1">
+                            <div className="text">
+                                <div className="ttl">
+                                    <span>01/</span>Choose your product
+                                </div>
+                                <div className="desc">
+                                    <p>
+                                        After connecting to your Amazon Store with Amazon API, you will be able to
+                                        choose
+                                        a product. Our software will download all your campaigns and start looking for
+                                        mistakes.
+                                    </p>
 
-                    {/*        <div className="item step_2">*/}
-                    {/*            <div className="image"><img src={howItWork2} alt=""/></div>*/}
-                    {/*            <div className="text">*/}
-                    {/*                <div className="ttl"><span>02</span>Enter*/}
-                    {/*                    your*/}
-                    {/*                    Cost of goods sold (COGS), so we can calculate your Target ACoS*/}
-                    {/*                </div>*/}
-                    {/*                <div className="desc">*/}
-                    {/*                    <p>Calculating your target ACoS will make scanning of your advertising campaigns*/}
-                    {/*                        more data-driven and deliver you accurate results.</p>*/}
-                    {/*                    <p><strong>* COGS is the inventory cost + freight + duty.</strong></p>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
+                                    <p>
+                                        Note! You can scan only 1 product at the same time, and it works only
+                                        for North America accounts.
+                                    </p>
+                                </div>
+                            </div>
 
-                    {/*        <div className="item step_3">*/}
-                    {/*            <div className="image"><img src={howItWork3} alt=""/></div>*/}
-                    {/*            <div className="text">*/}
-                    {/*                <div className="ttl"><span>03</span>See all*/}
-                    {/*                    the*/}
-                    {/*                    mistakes you are making inside our terminal and on the graph*/}
-                    {/*                </div>*/}
-                    {/*                <div className="desc">*/}
-                    {/*                    <p>The graph is showing in what risk zone you are locating. The terminal is*/}
-                    {/*                        showing*/}
-                    {/*                        the exact mistakes you are doing in your Amazon PPC campaigns.</p>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
+                            <div className="image"><img src={howItWork1} alt=""/></div>
+                        </div>
 
-                    {/*        <div className="item step_4">*/}
-                    {/*            <div className="image"><img src={howItWork4} alt=""/></div>*/}
-                    {/*            <div className="text">*/}
-                    {/*                <div className="ttl"><span>04</span>Done.*/}
-                    {/*                    You*/}
-                    {/*                    can also download the report with all the mistakes.*/}
-                    {/*                </div>*/}
-                    {/*                <div className="desc">*/}
-                    {/*                    <p>Whant to know how good your PPC is? Let PPC Scanner figure it out now.</p>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                        <div className="item step_2">
+                            <div className="image"><img src={howItWork2} alt=""/></div>
+                            <div className="text">
+                                <div className="ttl">
+                                    <span>02/</span>
+                                    Enter your Product Margin, so we can calculate your Target ACoS
+                                </div>
+
+                                <div className="desc">
+                                    <p>
+                                        Price - (Product Cost + Amazon Fees + Shipping Cost + Overhead + Labor + Taxes +
+                                        Insurance) = Net Profit
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="item step_3">
+                            <div className="image"><img src={howItWork3} alt=""/></div>
+                            <div className="text">
+                                <div className="ttl">
+                                    <span>03/</span>See all the mistakes you are making inside our terminal and on the
+                                    graph
+                                </div>
+                                <div className="desc">
+                                    <p>
+                                        The problems graph is showing in what risk zone you are now. The terminal is
+                                        showing the exact mistakes you are doing in your Amazon PPC campaigns so you can
+                                        go to your Seller Central and fix them or you can use our Optimization tool to
+                                        automate this process.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="item step_4">
+                            <div className="image"><img src={howItWork4} alt=""/></div>
+                            <div className="text">
+                                <div className="ttl">
+                                    <span>04/</span>Done. You can also download the report with all the mistakes.
+                                </div>
+                                <div className="desc">
+                                    <p>
+                                        After finishing scanning one product, you can choose another. Want to know how
+                                        good your PPC is? Let PPC Scanner figure it out now.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </Slider>
+
+
                 </div>
             </section>
 
@@ -219,7 +326,7 @@ const PPCScanner = () => {
                         PPC Scanner is completely free.
                     </p>
 
-                    <button className='btn green-btn'>scan it</button>
+                    <button className='btn green-btn' onClick={goToScanPage}>scan it</button>
                 </div>
             </section>
 
@@ -240,13 +347,17 @@ const PPCScanner = () => {
                             Sales in 2020.
                         </p>
 
-                        <form action="">
+                        <form onSubmit={subscribeHandler}>
                             <div>
                                 <label htmlFor="">Email Address</label>
-                                <input placeholder={'E-MAIL ADDRESS'} type="text"/>
+                                <input
+                                    onChange={e => setEmail(e.target.value)}
+                                    placeholder={'E-MAIL ADDRESS'}
+                                    type="email"
+                                />
                             </div>
 
-                            <button className='btn green-btn'>Get It Now</button>
+                            <button className='btn green-btn' onClick={goToScanPage}>Get It Now</button>
                         </form>
                     </div>
                 </div>
@@ -302,7 +413,7 @@ const PPCScanner = () => {
                                 <li>Conclusion</li>
                             </ul>
 
-                            <button className='btn green-btn'>get it now</button>
+                            <button className='btn green-btn' onClick={goToScanPage}>get it now</button>
                         </div>
                     </div>
                 </div>
