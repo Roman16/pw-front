@@ -13,6 +13,7 @@ import axios from "axios";
 
 const CancelToken = axios.CancelToken;
 let source = null;
+const timeLineShift = 16;
 
 const defaultList = Array.from({length: 168}, () => '1').join('');
 
@@ -104,7 +105,7 @@ class DaySwitches extends Component {
             });
 
             this.setState({
-                hoursStatus: [...res.response[0].state_encoded_string.slice(152, 168), ...res.response[0].state_encoded_string.slice(0, 152)],
+                hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
                 // hoursStatus: [...res.response[0].state_encoded_string],
                 activeDayparting: res.response[0].status === 'active'
             });
@@ -119,7 +120,7 @@ class DaySwitches extends Component {
             try {
                 await daypartingServices.updateDayPartingParams({
                     campaignId: this.props.campaignId,
-                    state_encoded_string: [...this.state.hoursStatus.slice(16, 168), ...this.state.hoursStatus.slice(0, 16)].join('')
+                    state_encoded_string: [...this.state.hoursStatus.slice(timeLineShift, 168), ...this.state.hoursStatus.slice(0, timeLineShift)].join('')
                     // state_encoded_string: this.state.hoursStatus.join('')
                 });
                 notification.success({title: 'Saved'});
