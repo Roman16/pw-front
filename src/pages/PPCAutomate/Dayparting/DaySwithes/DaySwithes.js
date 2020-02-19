@@ -104,7 +104,8 @@ class DaySwitches extends Component {
             });
 
             this.setState({
-                hoursStatus: [...res.response[0].state_encoded_string.slice(8, 168), ...res.response[0].state_encoded_string.slice(0, 8)],
+                hoursStatus: [...res.response[0].state_encoded_string.slice(152, 168), ...res.response[0].state_encoded_string.slice(0, 152)],
+                // hoursStatus: [...res.response[0].state_encoded_string],
                 activeDayparting: res.response[0].status === 'active'
             });
         } catch (e) {
@@ -118,7 +119,8 @@ class DaySwitches extends Component {
             try {
                 await daypartingServices.updateDayPartingParams({
                     campaignId: this.props.campaignId,
-                    state_encoded_string: [...this.state.hoursStatus.slice(160, 168), ...this.state.hoursStatus.slice(0, 160)].join('')
+                    state_encoded_string: [...this.state.hoursStatus.slice(16, 168), ...this.state.hoursStatus.slice(0, 16)].join('')
+                    // state_encoded_string: this.state.hoursStatus.join('')
                 });
                 notification.success({title: 'Saved'});
                 timeoutId = null;
