@@ -642,6 +642,7 @@
   .rich-bro .box {
     max-width: 960px;
     display: flex;
+    flex-wrap: wrap;
 
     .inside {
       flex: 1;
@@ -681,6 +682,15 @@
         height: 40px;
         font-size: 12px;
         text-transform: uppercase;
+      }
+    }
+
+    @media (max-width: 700px) {
+      & {
+
+        .inside:first-child {
+          margin: 0 0 20px 0;
+        }
       }
     }
   }
