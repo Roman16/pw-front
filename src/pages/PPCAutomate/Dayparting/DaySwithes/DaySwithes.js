@@ -99,6 +99,10 @@ class DaySwitches extends Component {
     };
 
     getDaypartingStatus = async () => {
+        this.setState({
+            activeDayparting: false
+        });
+
         try {
             source && source.cancel();
             source = CancelToken.source();
@@ -119,9 +123,7 @@ class DaySwitches extends Component {
                     hoursStatus: [...defaultList],
                     activeDayparting: false
                 });
-
             }
-
         } catch (e) {
             console.log(e);
         }
