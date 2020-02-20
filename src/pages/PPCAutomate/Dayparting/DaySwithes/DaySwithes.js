@@ -46,9 +46,9 @@ let timeoutId = null;
 class DaySwitches extends Component {
     state = {
         hoursStatus: [...defaultList],
-        activeDayparting: false,
         visibleWindow: false,
         processing: false,
+        activeDayparting: false,
         hasDayparting: false
     };
 
@@ -71,7 +71,7 @@ class DaySwitches extends Component {
         });
 
         try {
-            if(this.state.hasDayparting) {
+            if (this.state.hasDayparting) {
                 await daypartingServices.activateDayparting({campaignId: this.props.campaignId});
             } else {
                 await daypartingServices.updateDayPartingParams({
@@ -124,7 +124,6 @@ class DaySwitches extends Component {
             if (res.response[0]) {
                 this.setState({
                     hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
-                    // hoursStatus: [...res.response[0].state_encoded_string],
                     activeDayparting: res.response[0].status === 'ACTIVE',
                     hasDayparting: true
                 });
@@ -147,13 +146,11 @@ class DaySwitches extends Component {
                 await daypartingServices.updateDayPartingParams({
                     campaignId: this.props.campaignId,
                     state_encoded_string: [...this.state.hoursStatus.slice(timeLineShift, 168), ...this.state.hoursStatus.slice(0, timeLineShift)].join('')
-                    // state_encoded_string: this.state.hoursStatus.join('')
                 });
                 notification.success({title: 'Saved'});
                 timeoutId = null;
             } catch (e) {
                 console.log(e);
-                // notification.error({title: 'Not Saved'})
             }
         }, 1000)
     };
@@ -172,7 +169,6 @@ class DaySwitches extends Component {
                 });
         } catch (e) {
             console.log(e);
-            // notification.error({title: 'Not Saved'})
         }
     };
 
@@ -411,7 +407,6 @@ class DaySwitches extends Component {
                             </button>
                         </div>
                     </Fragment>
-
                 </ModalWindow>
             </Fragment>
         )
