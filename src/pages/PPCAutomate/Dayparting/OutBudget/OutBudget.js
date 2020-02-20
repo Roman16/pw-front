@@ -13,6 +13,7 @@ import axios from "axios";
 import {numberMask} from "../../../../utils/numberMask";
 import {productsActions} from "../../../../actions/products.actions";
 import {notification} from "../../../../components/Notification";
+import successImage from '../../../../assets/img/landing-contact-us/checked.svg';
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -35,7 +36,8 @@ const hours = Array.from({length: 24}, (item, index) => index);
 const OutBudget = ({date}) => {
     const [data, setData] = useState(defaultData),
         [percentParams, setParams] = useState({min: 0, max: 1}),
-        [visibleModal, setModal] = useState(false);
+        [visibleModal, setModal] = useState(false),
+        [saved, setStatus] = useState(false);
 
     const dispatch = useDispatch();
     const {campaignId} = useSelector(state => ({
@@ -45,7 +47,7 @@ const OutBudget = ({date}) => {
     async function saveBudget(data) {
         try {
             await daypartingServices.setCampaignBudget({campaignId, data: {'value_in_usd': data.value}});
-            setModal(false);
+            setStatus(true);
             notification.success({title: 'Saved'});
 
             dispatch(productsActions.updateCampaignBudget({
@@ -205,14 +207,34 @@ const OutBudget = ({date}) => {
             <ModalWindow
                 visible={visibleModal}
                 className={'budget-window'}
-                handleCancel={() => setModal(false)}
+                handleCancel={() => {
+                    setModal(false);
+                    setStatus(false);
+                }}
                 footer={false}
                 destroyOnClose={true}
             >
-                <BudgetDrawer
-                    onClose={() => setModal(false)}
-                    onSave={saveBudget}
-                />
+                {saved ?
+                    <div className='success'>
+                        <img src={successImage} alt=""/>
+                        <h3>Budget saved</h3>
+
+                        <button
+                            onClick={() => {
+                                setModal(false);
+                                setStatus(false);
+                            }}
+                            className='btn green-btn'
+                        >
+                            Done
+                        </button>
+                    </div>
+                    :
+                    <BudgetDrawer
+                        onClose={() => setModal(false)}
+                        onSave={saveBudget}
+                    />
+                }
             </ModalWindow>
         </Fragment>
     )
