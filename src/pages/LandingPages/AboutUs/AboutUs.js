@@ -207,18 +207,18 @@ const AboutUs = () => {
                     </div>
                 </section>
 
-                <section className="office">
-                    <div className="box">
-                        <div className="text">
-                            <div className="block-title">
-                                <h2>Office in Kyiv</h2>
-                                <p>Our headquarter office is located in beautiful capital of <br/> Ukraine, Kyiv.</p>
-                            </div>
-                            <address><img src={flagImage} alt=""/>st. Konovalca 32 G Kyiv, 02000</address>
-                        </div>
-                        <div className="image"><img src={officeImage} alt=""/></div>
-                    </div>
-                </section>
+                {/*<section className="office">*/}
+                {/*    <div className="box">*/}
+                {/*        <div className="text">*/}
+                {/*            <div className="block-title">*/}
+                {/*                <h2>Office in Kyiv</h2>*/}
+                {/*                <p>Our headquarter office is located in beautiful capital of <br/> Ukraine, Kyiv.</p>*/}
+                {/*            </div>*/}
+                {/*            <address><img src={flagImage} alt=""/>st. Konovalca 32 G Kyiv, 02000</address>*/}
+                {/*        </div>*/}
+                {/*        <div className="image"><img src={officeImage} alt=""/></div>*/}
+                {/*    </div>*/}
+                {/*</section>*/}
 
                 <section className="subscribe">
                     <div className="box">

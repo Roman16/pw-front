@@ -48,7 +48,8 @@ class DaySwitches extends Component {
         hoursStatus: [...defaultList],
         activeDayparting: false,
         visibleWindow: false,
-        processing: false
+        processing: false,
+        hasDayparting: false
     };
 
     deactivateDaypartingHandler = async () => {
@@ -70,7 +71,15 @@ class DaySwitches extends Component {
         });
 
         try {
-            await daypartingServices.activateDayparting({campaignId: this.props.campaignId});
+            if(this.state.hasDayparting) {
+                await daypartingServices.activateDayparting({campaignId: this.props.campaignId});
+            } else {
+                await daypartingServices.updateDayPartingParams({
+                    campaignId: this.props.campaignId,
+                    state_encoded_string: defaultList,
+                    status: 'ACTIVE'
+                });
+            }
 
             this.setState({
                 activeDayparting: true,
@@ -116,12 +125,14 @@ class DaySwitches extends Component {
                 this.setState({
                     hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
                     // hoursStatus: [...res.response[0].state_encoded_string],
-                    activeDayparting: res.response[0].status === 'ACTIVE'
+                    activeDayparting: res.response[0].status === 'ACTIVE',
+                    hasDayparting: true
                 });
             } else {
                 this.setState({
                     hoursStatus: [...defaultList],
-                    activeDayparting: false
+                    activeDayparting: false,
+                    hasDayparting: false
                 });
             }
         } catch (e) {

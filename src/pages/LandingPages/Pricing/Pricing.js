@@ -13,6 +13,10 @@ import $ from "jquery";
 
 const Pricing = () => {
 
+    function goToScanner() {
+        history.push('/ppc/optimization')
+    }
+
     useEffect(() => {
         $(".js-range-slider").ionRangeSlider({
             min: 0,
@@ -196,7 +200,9 @@ const Pricing = () => {
                             <div className="price">35$</div>
                             <hr/>
                             <p>Start growing your business with our Starter plan</p>
+                            <button className='btn green-btn' onClick={goToScanner}>start free</button>
                         </div>
+
                         <div className="item">
                             <div className="title">Grind</div>
                             <div className="sum">$1k - $20k</div>
@@ -205,7 +211,9 @@ const Pricing = () => {
                             <hr/>
                             <p>Automatic system of your Amazon advertising for your success as a growing Amazon
                                 Seller</p>
+                            <button className='btn green-btn' onClick={goToScanner}>start free</button>
                         </div>
+
                         <div className="item">
                             <div className="title">Successful Seller</div>
                             <div className="sum">$20k - $50k</div>
@@ -213,7 +221,9 @@ const Pricing = () => {
                             <div className="price">$250 + 2% monthly ad spend</div>
                             <hr/>
                             <p>Focus on the profitability of your business with our Data-Driven Optimization</p>
+                            <button className='btn green-btn' onClick={goToScanner}>start free</button>
                         </div>
+
                         <div className="item">
                             <div className="title">Established Brand</div>
                             <div className="sum"> &gt; $50k</div>
@@ -221,6 +231,7 @@ const Pricing = () => {
                             <div className="price">$500 + 1.5% monthly ad spend</div>
                             <hr/>
                             <p>Maximize your sales &amp; profit with automatic optimization</p>
+                            <button className='btn green-btn' onClick={goToScanner}>start free</button>
                         </div>
                     </div>
                 </div>
@@ -229,7 +240,14 @@ const Pricing = () => {
             <section className="rich-bro">
                 <div className="box">
                     <div className="inside">
-                        <p>Do you spend over <strong>$100,000</strong> per month on Amazon Advertising?</p>
+                        <p>Spending more than <br/> <strong>100k</strong> on ads?</p>
+                        <button className="btn default" onClick={() => history.push('/contact-us')}>
+                            Contact Us
+                        </button>
+                    </div>
+
+                    <div className="inside">
+                        <p>Interested in <strong>annual plan?</strong></p>
                         <button className="btn default" onClick={() => history.push('/contact-us')}>
                             Contact Us
                         </button>

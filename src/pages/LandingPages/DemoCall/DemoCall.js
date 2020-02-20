@@ -43,7 +43,7 @@ const DemoCall = () => {
                             <input type="email"/>
                         </div>
 
-                        <button className='btn green-btn'>request</button>
+                        <button className='btn default'>request</button>
                     </form>
 
                 </div>

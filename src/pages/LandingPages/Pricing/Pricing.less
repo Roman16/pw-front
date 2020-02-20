@@ -197,10 +197,10 @@
   .price-list {
     padding-top: 90px;
 
-
     .block-title h2 {
       color: #363694;
-      padding-bottom: 10px
+      padding: 0;
+      margin: 0 0 15px 0;
     }
 
     .block-title p {
@@ -356,12 +356,13 @@
     }
 
     .slider-container .title {
+      font-family: e3sb;
       text-align: left;
       font-size: 33px;
       line-height: 32px;
       padding-bottom: 60px;
-      color: #17175A;
-      font-family: e3sb;
+      color: #363694;
+      letter-spacing: 0.4px;
     }
 
     .slider-container .sum {
@@ -516,8 +517,12 @@
   }
 
   .pricing-guide .block-title h2 {
+    font-family: e3sb;
+    font-size: 33px;
+    letter-spacing: 0.4px;
     color: #363694;
-    padding-bottom: 10px
+    margin: 0;
+    padding: 0;
   }
 
   .pricing-guide .box {
@@ -545,7 +550,18 @@
     padding-top: 30px;
     padding-left: 16px;
     padding-right: 16px;
-    padding-bottom: 15px
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+
+    .btn {
+      margin: auto auto 20px auto;
+      width: 112px;
+      text-transform: uppercase;
+
+      font-family: eb;
+      font-size: 12px;
+    }
   }
 
   .pricing-guide .list .item:nth-child(1) {
@@ -624,42 +640,48 @@
   }
 
   .rich-bro .box {
-    max-width: 960px
-  }
-
-  .rich-bro .inside {
-    background: #fff;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
+    max-width: 960px;
     display: flex;
-    padding-right: 35px;
-    padding-left: 35px;
-    padding-top: 28px;
-    padding-bottom: 28px;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
 
-    p {
-      padding-left: 52px;
-      font-size: 20px;
-      line-height: 30px;
-      letter-spacing: .4px;
-      color: #363694;
-      margin: 0;
-    }
+    .inside {
+      flex: 1;
+      background: #fff;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      padding-right: 35px;
+      padding-left: 35px;
+      padding-top: 28px;
+      padding-bottom: 28px;
+      -webkit-box-pack: justify;
+      -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      border-radius: 8px;
 
-    .btn {
-      width: 162px;
-      height: 40px;
-      font-size: 12px;
-      text-transform: uppercase;
+      &:first-child {
+        margin: 0 20px 0 0;
+      }
+
+      p {
+        font-size: 20px;
+        line-height: 30px;
+        letter-spacing: .4px;
+        color: #363694;
+        margin: 0;
+      }
+
+      .btn {
+        width: 112px;
+        height: 40px;
+        font-size: 12px;
+        text-transform: uppercase;
+      }
     }
   }
 

@@ -46,14 +46,14 @@ function getDayPartingParams({campaignId, cancelToken}) {
     return api('get', `${daypartingUrls.dayParting(campaignId)}?size=1&page=1`, null, null, cancelToken)
 }
 
-function updateDayPartingParams({campaignId, state_encoded_string}) {
-    return api('post', `${daypartingUrls.dayParting(campaignId)}`, {state_encoded_string})
+function updateDayPartingParams({campaignId, state_encoded_string, status}) {
+    return api('post', `${daypartingUrls.dayParting(campaignId)}`, {state_encoded_string, status})
 }
 
 function activateDayparting({campaignId}) {
-    return api('put', `${daypartingUrls.dayParting(campaignId)}?status=ACTIVE`)
+    return api('put', `${daypartingUrls.dayParting(campaignId)}`, {status: 'ACTIVE'})
 }
 
 function deactivateDayparting({campaignId}) {
-    return api('put', `${daypartingUrls.dayParting(campaignId)}?status=DISABLED`)
+    return api('put', `${daypartingUrls.dayParting(campaignId)}`, {status: 'DISABLED'})
 }

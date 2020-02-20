@@ -68,9 +68,8 @@ const ContactUs = () => {
                             <img src={addressImage} alt=""/>
 
                             <div className="col">
-                                <h4>Mailing Address:</h4>
-                                <span>ProfitWhales</span>
-                                <span>st. Konovalca 32 G Kyiv, 02000</span>
+                                <h4>Just shoot me a message</h4>
+                                <a href="mailto:official@profitwhales.com">official@profitwhales.com</a>
                             </div>
                         </div>
                     </div>

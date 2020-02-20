@@ -682,7 +682,7 @@
 
         ul {
           list-style: none;
-          margin: 30px 0 25px 30px;
+          margin: 30px 0 63px 30px;
 
           li {
             display: flex;
@@ -695,6 +695,7 @@
 
             &::before {
               content: '';
+              min-width: 6px;
               width: 6px;
               height: 6px;
               border-radius: 50%;
@@ -821,6 +822,13 @@
             }
           }
 
+          ul {
+            margin: 30px 0;
+          }
+
+          .btn {
+            margin: 0 auto;
+          }
         }
       }
     }

@@ -91,9 +91,9 @@ const PPCScanner = () => {
 
                         <div className="txt animateIt animateUp">
                             <p>
-                                The Software Automatically scanning your advertising Campaigns and showing you all
+                                The Software is automatically scanning your advertising campaigns and showing you all
                                 <br/>
-                                the mistakes Wanna know how good you are?
+                                the mistakes and recommendations. Wanna test how good you are?
                             </p>
 
                             <div className="row">
@@ -122,9 +122,8 @@ const PPCScanner = () => {
                         <div className="item animateIt animateUp">
                             <div className="ttl">Duplicate Keywords</div>
                             <div className="desc">
-                                PPC scanner quickly finds duplicate keywords that costing you a lot of money. The
-                                software detects not only the same keywords but the keywords that Amazon recognizes as
-                                duplicates.
+                                PPC scanner quickly finds duplicate keywords that costing you a lot of money. It detects
+                                keywords that eating your budget and raising your CPC.
                             </div>
                         </div>
                         <div className="item animateIt animateUp">
@@ -162,7 +161,7 @@ const PPCScanner = () => {
 
             <section className='after-scan'>
                 <div className="container">
-                    <h2>How it looks after scan?</h2>
+                    <h2>How does it look after the scan?</h2>
 
                     <div className="image">
                         <img src={afterScanImage} alt=""/>
@@ -324,9 +323,9 @@ const PPCScanner = () => {
                     </h3>
 
                     <p>
-                        Big Data Driven Advertising Campaign Scanner. Let’s see what you’re missing.
+                        Data-Driven advertising campaign scanner. Let’s see what you’re missing.
                         <br/>
-                        PPC Scanner is completely free.
+                        PPC Scanner is completely free forever.
                     </p>
 
                     <button className='btn green-btn' onClick={goToScanPage}>scan it</button>
@@ -377,15 +376,15 @@ const PPCScanner = () => {
                             <p>
                                 Since the ancient days when Google just appeared, and nobody knew how to find something
                                 useful on the Internet, the arguably fastest and most reliable way to obtain relevant
-                                traffic to a website came to exist. It was a paid search advertising. Sounds epic and it
-                                actually was an epic breakthrough in the Internet business.
+                                traffic to a website came to exist. It was a paid search advertising. Sounds epic, and
+                                it actually was an epic breakthrough in the Internet business.
                             </p>
 
                             <p>
-                                You may not believe it, but
-                                there were days when Google was on the edge of the bankruptcy. Savior came in 2000, and
-                                his name was Pay Per Click (PPC) advertising model. It was the PPC that gave a hand to
-                                save search engine giant from the money pit.
+                                Nowadays, we see the same with Amazon PPC when people are starting to search for
+                                products on Amazon first. The latest studies show that it brings the highest ROI among
+                                all PPC platforms, and we are predicting that it will be the game-changer for e-commerce
+                                sellers for the next ten years.
                             </p>
                         </div>
 
@@ -403,20 +402,18 @@ const PPCScanner = () => {
 
                         <div className="col">
                             <ul>
-                                <li>Semantic Core Collection</li>
-                                <li>Sort a Search Term Report report by maximum conversion</li>
-                                <li>Black Box building</li>
-                                <li>Negative keywords list building</li>
-                                <li>Semantic Core Segmentation</li>
-                                <li>Build Structure</li>
-                                <li>Tracking organic results</li>
-                                <li>Elimination of keyword competition</li>
-                                <li>Choose your betting strategy</li>
-                                <li>Increase Semantic Core to 300-5000 + keywords. Hard PPC Launch</li>
-                                <li>Conclusion</li>
+                                <li>Why do you need Amazon PPC for your business</li>
+                                <li>How does Amazon PPC affect positions in organic results</li>
+                                <li>How to increase your business using Amazon PPC dramatically</li>
+                                <li>Long-tail theory to save money</li>
+                                <li>How to find more keywords for your Amazon PPC campaigns</li>
+                                <li>What is a Semantic Core and why do you need it</li>
+                                <li>What goals are you able to achieve using Amazon PPC</li>
+                                <li>How to set up PPC for a product launch</li>
+                                <li>And many more inside the book.</li>
                             </ul>
 
-                            <button className='btn green-btn' onClick={goToScanPage}>get it now</button>
+                            <button className='btn green-btn' onClick={() => history.push('/amazon-ppc-blueprint')}>get it now</button>
                         </div>
                     </div>
                 </div>
