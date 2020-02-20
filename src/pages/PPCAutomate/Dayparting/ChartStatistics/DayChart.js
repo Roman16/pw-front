@@ -55,11 +55,11 @@ const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
 
                         <div className="col values">
                             <div className="value">
-                                {firstMetric.type === 'currency' ? `$${numberMask(payload[0].payload[firstMetric.key], 2)}` : (firstMetric.type === 'percent' ? `${round(payload[0].payload[firstMetric.key], 2)} %` : round(payload[0].payload[firstMetric.key], 2))}
+                                {firstMetric.type === 'currency' ? `$${numberMask(payload[0].payload[firstMetric.key], 2)}` : (firstMetric.type === 'percent' ? `${round(payload[0].payload[firstMetric.key], 3)} %` : round(payload[0].payload[firstMetric.key], 2))}
                             </div>
 
                             {secondMetric.key !== 'nothing' && <div className="value">
-                                {secondMetric.type === 'currency' ? `$${numberMask(payload[0].payload[secondMetric.key], 2)}` : (secondMetric.type === 'percent' ? `${round(payload[0].payload[secondMetric.key], 2)} %` : round(payload[0].payload[secondMetric.key], 2))}
+                                {secondMetric.type === 'currency' ? `$${numberMask(payload[0].payload[secondMetric.key], 2)}` : (secondMetric.type === 'percent' ? `${round(payload[0].payload[secondMetric.key], 3)} %` : round(payload[0].payload[secondMetric.key], 2))}
                             </div>}
                         </div>
                     </div>
@@ -97,6 +97,7 @@ const DayChart = ({data, firstMetric, secondMetric}) => {
                         axisLine={false}
                         yAxisId="left"
                         stroke="#82ca9d"
+                        tickFormatter={(data) => round(data, 3)}
                     />
 
                     <YAxis
@@ -104,6 +105,7 @@ const DayChart = ({data, firstMetric, secondMetric}) => {
                         stroke="#8884d8"
                         yAxisId="right"
                         orientation="right"
+                        tickFormatter={(data) => round(data, 3)}
                     />
 
                     <Tooltip

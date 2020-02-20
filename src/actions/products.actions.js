@@ -14,7 +14,8 @@ export const productsActions = {
     showOnlyActive,
     changeOptimizedOptions,
     changeOptimizedStrategy,
-    dontShowWindowAgain
+    dontShowWindowAgain,
+    updateCampaignBudget
 };
 
 function fetchProducts(paginationParams) {
@@ -205,6 +206,15 @@ function dontShowWindowAgain(window) {
         dispatch({
             type: productsConstants[`SWITCH_${window.windowName}_CONFIRM_WINDOW`],
             payload: window.status
+        });
+    };
+}
+
+function updateCampaignBudget(product) {
+    return dispatch => {
+        dispatch({
+            type: productsConstants.CAMPAIGN_BUDGET,
+            payload: product
         });
     };
 }

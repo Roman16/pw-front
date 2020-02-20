@@ -21,16 +21,16 @@ const chartLabel = {
 
 const statisticParams = [
     {
-        title: 'Top of search',
-        key: 'Top of Search on-Amazon'
+        title: 'Rest of search',
+        key: 'Other on-Amazon'
     },
     {
         title: 'Product pages',
         key: 'Detail Page on-Amazon'
     },
     {
-        title: 'Rest of search',
-        key: 'Other on-Amazon'
+        title: 'Top of search',
+        key: 'Top of Search on-Amazon'
     }
 ];
 
@@ -55,17 +55,18 @@ const statisticMetrics = [
 
 const chartColors = [
     {
-        stroke: '#6D6DF6',
-        fill: '#A1A1F9'
+        stroke: '#F1C75C',
+        fill: '#F6DB97'
     },
     {
         stroke: '#EC7F5C',
         fill: '#F3AD97'
     },
     {
-        stroke: '#F1C75C',
-        fill: '#F6DB97'
+        stroke: '#6D6DF6',
+        fill: '#A1A1F9'
     }
+
 ];
 
 const ChartTooltip = ({payload}) => {
@@ -77,7 +78,7 @@ const ChartTooltip = ({payload}) => {
                 <h3>{moment(payload[0].payload.date).format('DD MMMM YYYY')}</h3>
 
                 <div className='content'>
-                    {payload.map((entry, index) => (
+                    {payload.reverse().map((entry, index) => (
                         <div key={`item-${index}`}>
                             <div className='name'>
                                 <div style={{background: entry.color}}/>
@@ -168,9 +169,9 @@ const PlacementsStatistics = ({date}) => {
 
                 const chartData = Object.keys(res.response.points).map(date => ({
                     date: date,
-                    top_search: +res.response.points[date].data['Top of Search on-Amazon'].value,
-                    product_pages: +res.response.points[date].data['Detail Page on-Amazon'].value,
-                    rest_search: +res.response.points[date].data['Other on-Amazon'].value,
+                    top_search: res.response.points[date].data['Top of Search on-Amazon'].value != null ? +res.response.points[date].data['Top of Search on-Amazon'].value : null,
+                    product_pages: res.response.points[date].data['Detail Page on-Amazon'].value != null ? +res.response.points[date].data['Detail Page on-Amazon'].value : null,
+                    rest_search: res.response.points[date].data['Other on-Amazon'].value != null ? +res.response.points[date].data['Other on-Amazon'].value : null,
                 }));
 
                 setStatisticData(res.response.statistics);
@@ -247,11 +248,11 @@ const PlacementsStatistics = ({date}) => {
                                 type="linear"
                                 dataKey="top_search"
                                 stackId="1"
-                                stroke={chartColors[0].stroke}
+                                stroke={chartColors[2].stroke}
                                 fill="url(#colorUv)"
                                 fillOpacity={1}
                                 isAnimationActive={false}
-                                activeDot={{stroke: chartColors[0].stroke, strokeWidth: 2}}
+                                activeDot={{stroke: chartColors[2].stroke, strokeWidth: 2}}
                             />
 
                             <Area
@@ -269,11 +270,11 @@ const PlacementsStatistics = ({date}) => {
                                 type="linear"
                                 dataKey="rest_search"
                                 stackId="1"
-                                stroke={chartColors[2].stroke}
+                                stroke={chartColors[0].stroke}
                                 fill="url(#colorAmt)"
                                 fillOpacity={1}
                                 isAnimationActive={false}
-                                activeDot={{stroke: chartColors[2].stroke, strokeWidth: 2}}
+                                activeDot={{stroke: chartColors[0].stroke, strokeWidth: 2}}
                             />
                         </AreaChart>
                     </ResponsiveContainer>

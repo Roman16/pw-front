@@ -25,6 +25,7 @@ export const productsConstants = {
     CHANGE_STRATEGY: 'CHANGE_STRATEGY',
     SWITCH_START_CONFIRM_WINDOW: 'SWITCH_START_CONFIRM_WINDOW',
     SWITCH_STOP_CONFIRM_WINDOW: 'SWITCH_STOP_CONFIRM_WINDOW',
+    CAMPAIGN_BUDGET: 'CAMPAIGN_BUDGET',
 };
 
 //--------------------------------------------

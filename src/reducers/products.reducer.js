@@ -141,6 +141,22 @@ export function products(state = initialState, action) {
                 dontShowStopNotificationAgain: action.payload
             };
 
+        case productsConstants.CAMPAIGN_BUDGET:
+            return {
+                ...state,
+                productList: state.productList.map(item => {
+                    if (item.id === action.payload.id) {
+                        item = {...item, ...action.payload}
+                    }
+
+                    return item;
+                }),
+                selectedProduct: {
+                    ...state.selectedProduct,
+                    dailyBudget: action.payload.dailyBudget
+                }
+            };
+
         default:
             return state;
     }

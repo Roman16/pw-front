@@ -8,9 +8,11 @@ import plusIconWhite from '../../../../assets/img/icons/plus-white.svg';
 import {daypartingServices} from "../../../../services/dayparting.services";
 import BudgetDrawer from "./BudgetDrawer";
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import axios from "axios";
 import {numberMask} from "../../../../utils/numberMask";
+import {productsActions} from "../../../../actions/products.actions";
+import {notification} from "../../../../components/Notification";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -35,20 +37,25 @@ const OutBudget = ({date}) => {
         [percentParams, setParams] = useState({min: 0, max: 1}),
         [visibleModal, setModal] = useState(false);
 
+    const dispatch = useDispatch();
     const {campaignId} = useSelector(state => ({
         campaignId: state.products.selectedProduct.id
     }));
 
-   async function saveBudget(data) {
-        console.log(data);
+    async function saveBudget(data) {
+        try {
+            await daypartingServices.setCampaignBudget({campaignId, data: {'value_in_usd': data.value}});
+            setModal(false);
+            notification.success({title: 'Saved'});
 
-       try {
-           await daypartingServices.setCampaignBudget({campaignId});
-           setModal(false);
-       } catch (e) {
-           console.log(e);
-       }
-   }
+            dispatch(productsActions.updateCampaignBudget({
+                id: campaignId,
+                dailyBudget: data.value
+            }));
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     useEffect(() => {
         async function fetchData() {
@@ -56,9 +63,13 @@ const OutBudget = ({date}) => {
             source = CancelToken.source();
 
             try {
-                const res = await daypartingServices.getOutBudgetStatistic({campaignId, date, cancelToken: source.token});
+                const res = await daypartingServices.getOutBudgetStatistic({
+                    campaignId,
+                    date,
+                    cancelToken: source.token
+                });
 
-                const minValue = Math.min(...res.response.map(item => item.sales ? item.sales : 0)),
+                const minValue = Math.min(...res.response.map(item => item.sales).filter(item => item != null)),
                     maxValue = Math.max(...res.response.map(item => item.sales));
 
                 setParams({
@@ -81,7 +92,7 @@ const OutBudget = ({date}) => {
 
         colorList.forEach(item => {
             const percent = ((value - percentParams.min) * 100) / (percentParams.max - percentParams.min);
-            if (percent > item.min && percent <= item.max) {
+            if (percent >= item.min && percent <= item.max) {
                 color = item.color;
                 return;
             }
@@ -196,6 +207,7 @@ const OutBudget = ({date}) => {
                 className={'budget-window'}
                 handleCancel={() => setModal(false)}
                 footer={false}
+                destroyOnClose={true}
             >
                 <BudgetDrawer
                     onClose={() => setModal(false)}

@@ -86,6 +86,10 @@ class DaySwitches extends Component {
 
     switchDayPartingHandler = () => {
         if (this.state.activeDayparting) {
+            if (timeoutId) {
+                this.forceUpdateStatus(this.props.campaignId, this.state.hoursStatus)
+            }
+
             this.setState({
                 visibleWindow: true
             })
@@ -104,11 +108,20 @@ class DaySwitches extends Component {
                 cancelToken: source.token
             });
 
-            this.setState({
-                hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
-                // hoursStatus: [...res.response[0].state_encoded_string],
-                activeDayparting: res.response[0].status === 'ACTIVE'
-            });
+            if (res.response[0]) {
+                this.setState({
+                    hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
+                    // hoursStatus: [...res.response[0].state_encoded_string],
+                    activeDayparting: res.response[0].status === 'ACTIVE'
+                });
+            } else {
+                this.setState({
+                    hoursStatus: [...defaultList],
+                    activeDayparting: false
+                });
+
+            }
+
         } catch (e) {
             console.log(e);
         }
@@ -138,7 +151,7 @@ class DaySwitches extends Component {
         try {
             daypartingServices.updateDayPartingParams({
                 campaignId: id,
-                state_encoded_string:  [...status.slice(timeLineShift, 168), ...status.slice(0, timeLineShift)].join('')
+                state_encoded_string: [...status.slice(timeLineShift, 168), ...status.slice(0, timeLineShift)].join('')
             })
                 .then(() => {
                     notification.success({title: 'Saved'});
@@ -268,7 +281,13 @@ class DaySwitches extends Component {
 
             this.getDaypartingStatus()
         }
+
+        //     window.onbeforeunload = confirmExit;
+        //     function confirmExit() {
+        //         return "You have attempted to leave this page. Are you sure?";
+        //     }
     }
+
 
     render() {
         const {hoursStatus, activeDayparting, visibleWindow, processing} = this.state;

@@ -31,7 +31,7 @@ function getOutBudgetStatistic({campaignId, date, cancelToken}) {
 }
 
 function setCampaignBudget({campaignId, data}) {
-    return api('post', `${daypartingUrls.outBudget(campaignId)}`)
+    return api('put', `${daypartingUrls.dailyBudget(campaignId)}`, data)
 }
 
 function getDailyStatistic({campaignId, date, firstMetric, secondMetric, cancelToken}) {
@@ -51,9 +51,9 @@ function updateDayPartingParams({campaignId, state_encoded_string}) {
 }
 
 function activateDayparting({campaignId}) {
-    return api('PUT', `${daypartingUrls.dayParting(campaignId)}?status=ACTIVE`)
+    return api('put', `${daypartingUrls.dayParting(campaignId)}?status=ACTIVE`)
 }
 
 function deactivateDayparting({campaignId}) {
-    return api('PUT', `${daypartingUrls.dayParting(campaignId)}?status=DISABLED`)
+    return api('put', `${daypartingUrls.dayParting(campaignId)}?status=DISABLED`)
 }
