@@ -94,16 +94,18 @@ class DaySwitches extends Component {
     };
 
     switchDayPartingHandler = () => {
-        if (this.state.activeDayparting) {
-            if (timeoutId) {
-                this.forceUpdateStatus(this.props.campaignId, this.state.hoursStatus)
-            }
+        if (this.props.campaignId) {
+            if (this.state.activeDayparting) {
+                if (timeoutId) {
+                    this.forceUpdateStatus(this.props.campaignId, this.state.hoursStatus)
+                }
 
-            this.setState({
-                visibleWindow: true
-            })
-        } else {
-            this.activateDaypartingHandler();
+                this.setState({
+                    visibleWindow: true
+                })
+            } else {
+                this.activateDaypartingHandler();
+            }
         }
     };
 

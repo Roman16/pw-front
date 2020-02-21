@@ -18,7 +18,20 @@ function fetchAllReports(options, cancelToken) {
                     type: reportsConstants.SET_REPORTS_LIST,
                     payload: res
                 });
-            });
+            })
+            .catch(e => {
+                console.log(e);
+                dispatch({
+                    type: reportsConstants.SET_REPORTS_LIST,
+                    payload: {
+                        data: [],
+                        total_size: 0,
+                        today_changes: "0",
+                        counts: [],
+                        counts_with_new: [],
+                    }
+                });
+            })
     };
 }
 

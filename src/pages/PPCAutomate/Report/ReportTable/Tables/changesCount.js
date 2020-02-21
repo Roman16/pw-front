@@ -1,6 +1,5 @@
-import React from "react";
-
 const mainTypeList = {
+    'all-reports': [],
     "keywords-optimization": [
         'changed-keyword-bid-acos',
         'changed-keyword-bid-impressions',

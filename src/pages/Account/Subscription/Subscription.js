@@ -52,10 +52,12 @@ const Subscription = () => {
     }
 
     function applyCoupon(productId, coupon, planId) {
-        userService.applyCoupon(productId, planId, coupon)
-            .then((res) => {
-                setSubscriptions({...res})
-            })
+        if (coupon) {
+            userService.applyCoupon(productId, planId, coupon)
+                .then((res) => {
+                    setSubscriptions({...res})
+                })
+        }
     }
 
     function getCouponStatus(coupon) {
@@ -67,12 +69,20 @@ const Subscription = () => {
 
     async function handleSubscribe({planId, productId, coupon}) {
         try {
-            await userService.subscribe({
-                subscription_plan_id: planId,
-                subscription_id: productId,
-                marketplace_id: 'ATVPDKIKX0DER',
-                coupon_code: coupon
-            });
+            if (coupon) {
+                await userService.subscribe({
+                    subscription_plan_id: planId,
+                    subscription_id: productId,
+                    marketplace_id: 'ATVPDKIKX0DER',
+                    coupon_code: coupon
+                });
+            } else {
+                await userService.subscribe({
+                    subscription_plan_id: planId,
+                    subscription_id: productId,
+                    marketplace_id: 'ATVPDKIKX0DER',
+                });
+            }
 
             notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'});
 
