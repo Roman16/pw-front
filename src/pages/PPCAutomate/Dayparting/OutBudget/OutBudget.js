@@ -113,25 +113,31 @@ const OutBudget = ({date}) => {
         }
     };
 
-    const TooltipDescription = ({value, timeIndex, date}) => {
+    const TooltipDescription = ({value, timeIndex, date, outBudget}) => {
         return (
             <Fragment>
-                <div className="col">
-                    <h3>
-                        {`${days[Math.floor(timeIndex / 24)]}`}
-                    </h3>
+                <div className="row">
+                    <div className="col">
+                        <h3>
+                            {`${days[Math.floor(timeIndex / 24)]}`}
+                        </h3>
 
-                    <span className='selected-metric'>Sales</span>
-                </div>
-                <div className="col">
-                    <h3>
-                        {`${moment(timeIndex - 24 * Math.floor(timeIndex / 24), 'HH').format('hh A')} - ${moment(timeIndex - 24 * Math.floor(timeIndex / 24) + 1, 'HH').format('hh A')}`}
-                    </h3>
+                        <span className='selected-metric'>Sales</span>
+                    </div>
+                    <div className="col">
+                        <h3>
+                            {`${moment(timeIndex - 24 * Math.floor(timeIndex / 24), 'HH').format('hh A')} - ${moment(timeIndex - 24 * Math.floor(timeIndex / 24) + 1, 'HH').format('hh A')}`}
+                        </h3>
 
-                    <div className="value">
-                        {value ? `$${numberMask(value, 2)}` : <div className='no-value'/>}
+                        <div className="value">
+                            {value ? `$${numberMask(value, 2)}` : <div className='no-value'/>}
+                        </div>
                     </div>
                 </div>
+
+                {outBudget && <div className="row out-of">
+                    Out of Budget
+                </div>}
             </Fragment>
         )
     };
@@ -185,6 +191,7 @@ const OutBudget = ({date}) => {
                                                 value={item.sales}
                                                 date={item.date}
                                                 timeIndex={index}
+                                                outBudget={item.out_of_budget}
                                             />
                                         }
                                     >

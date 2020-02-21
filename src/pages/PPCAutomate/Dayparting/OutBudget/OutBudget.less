@@ -128,6 +128,7 @@
         .chart-tooltip {
           .ant-popover-inner-content {
             display: flex;
+            flex-direction: column;
 
             .col {
               margin: 0 20px 0 0;
@@ -139,7 +140,7 @@
               }
 
               h3 {
-                margin: 0 0 10px 0;
+                margin: 0 0 5px 0;
               }
 
               .selected-metric {
@@ -161,6 +162,11 @@
                 height: 2px;
                 background: #000c17;
               }
+            }
+
+            .out-of {
+              text-transform: initial;
+              color: #EC7F5C;
             }
           }
         }
