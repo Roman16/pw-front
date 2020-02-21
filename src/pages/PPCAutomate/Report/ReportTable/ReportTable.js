@@ -51,7 +51,7 @@ const subTables = {
 const tabsItem = [
     {
         tabName: (key, counts, countsWithNew) => <TabName
-            name="All"
+            name="All Reports"
             type={key}
             counts={counts}
             countsWithNew={countsWithNew}
