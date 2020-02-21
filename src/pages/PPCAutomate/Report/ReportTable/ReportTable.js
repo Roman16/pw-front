@@ -287,7 +287,7 @@ class ReportTable extends Component {
         pageSize: this.props.pageSize || 10,
         totalSize: this.props.totalSize || 0,
         activeTab: "all-reports",
-        activeSubTab: "changed-keyword-bid-acos",
+        activeSubTab: "",
         filteredColumns: {},
         sorterColumn: {
             key: 'eventDateTime',
@@ -486,8 +486,8 @@ class ReportTable extends Component {
         ) {
             this.setState(
                 {
-                    activeTab: "keywords-optimization",
-                    activeSubTab: "changed-keyword-bid-acos"
+                    activeTab: "all-reports",
+                    activeSubTab: ""
                 },
                 this.fetchReports
             );

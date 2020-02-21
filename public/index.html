@@ -94,31 +94,47 @@
 <div id="root"></div>
 
 
-<script>
-    (function (d, a) {
-        function c() {
-            var b = d.createElement("script");
-            b.async = !0;
-            b.type = "text/javascript";
-            b.src = a._settings.messengerUrl;
-            b.crossOrigin = "anonymous";
-            var c = d.getElementsByTagName("script")[0];
-            c.parentNode.insertBefore(b, c)
-        }
+<!--<script>-->
+<!--    (function (d, a) {-->
+<!--        function c() {-->
+<!--            var b = d.createElement("script");-->
+<!--            b.async = !0;-->
+<!--            b.type = "text/javascript";-->
+<!--            b.src = a._settings.messengerUrl;-->
+<!--            b.crossOrigin = "anonymous";-->
+<!--            var c = d.getElementsByTagName("script")[0];-->
+<!--            c.parentNode.insertBefore(b, c)-->
+<!--        }-->
 
-        window.kayako = a;
-        a.readyQueue = [];
-        a.newEmbedCode = !0;
-        a.ready = function (b) {
-            a.readyQueue.push(b)
-        };
-        a._settings = {
-            apiUrl: "https://profit-whales.kayako.com/api/v1",
-            messengerUrl: "https://profit-whales.kayakocdn.com/messenger",
-            realtimeUrl: "wss://kre.kayako.net/socket"
-        };
-        window.attachEvent ? window.attachEvent("onload", c) : window.addEventListener("load", c, !1)
-    })(document, window.kayako || {});
+<!--        window.kayako = a;-->
+<!--        a.readyQueue = [];-->
+<!--        a.newEmbedCode = !0;-->
+<!--        a.ready = function (b) {-->
+<!--            a.readyQueue.push(b)-->
+<!--        };-->
+<!--        a._settings = {-->
+<!--            apiUrl: "https://profit-whales.kayako.com/api/v1",-->
+<!--            messengerUrl: "https://profit-whales.kayakocdn.com/messenger",-->
+<!--            realtimeUrl: "wss://kre.kayako.net/socket"-->
+<!--        };-->
+<!--        window.attachEvent ? window.attachEvent("onload", c) : window.addEventListener("load", c, !1)-->
+<!--    })(document, window.kayako || {});-->
+<!--</script>-->
+
+<!-- Start of LiveChat (www.livechatinc.com) code -->
+<script type="text/javascript">
+    window.__lc = window.__lc || {};
+    window.__lc.license = 11745246;
+    (function() {
+        var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+        lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+    })();
 </script>
+<noscript>
+    <a href="https://www.livechatinc.com/chat-with/11745246/" rel="nofollow">Chat with us</a>,
+    powered by <a href="https://www.livechatinc.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a>
+</noscript>
+<!-- End of LiveChat code -->
 </body>
 </html>
