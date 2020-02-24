@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux';
 
 import LoginPage from "../pages/authentication/LoginPage/LoginPage";
 import RegistrationPage from "../pages/authentication/RegistrationPage/RegistrationPage";
+import ResetPassword from "../pages/authentication/ResetPassword/ResetPassword";
 import AuthorizedUser from "../pages";
 import Optimization from "../pages/PPCAutomate/Optimization/Optimization";
 import Report from "../pages/PPCAutomate/Report/Report";
@@ -71,6 +72,8 @@ const routers = () => {
                 <Route exact path="/login" component={LoginPage}/>
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                 <Route exact path="/registration" component={RegistrationPage}/>
+                <Route exact path="/registration" component={RegistrationPage}/>
+                <Route exact path="/reset-password" component={ResetPassword}/>
 
 
                 <Route exact path="/affiliates" component={LandingAffiliates}/>

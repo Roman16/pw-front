@@ -486,8 +486,8 @@ class ReportTable extends Component {
         ) {
             this.setState(
                 {
-                    activeTab: "all-reports",
-                    activeSubTab: ""
+                    activeTab: "keywords-optimization",
+                    activeSubTab: "changed-keyword-bid-acos",
                 },
                 this.fetchReports
             );
