@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Form, Row, Input, Spin, Col} from 'antd';
-import {Redirect} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {notification} from '../../../../components/Notification';
 
@@ -168,6 +168,11 @@ class RegistrationPage extends Component {
                         onChange={this.onChange}
                     />
                 </Form.Item>
+
+                <div className='terms-and-privacy'>
+                    By signing in, you agree to Profit Whales <b><Link target="_blank" to={'/terms-and-conditions'}> Terms
+                    and <br/> Conditions</Link> & <Link target="_blank" to={'/policy'}>Privacy Policy</Link></b>
+                </div>
 
                 <button type='submit'
                         className="btn default"

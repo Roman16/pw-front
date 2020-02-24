@@ -6,7 +6,6 @@ import {notification} from "../../../../components/Notification";
 import {userActions} from "../../../../actions/user.actions";
 import eyeClosed from "../../../../assets/img/icons/eye-closed.svg";
 import eyeOpened from "../../../../assets/img/icons/eye-opened.svg";
-import "./LoginPageForm.less";
 
 class LoginPageForm extends React.Component {
     state = {
@@ -148,8 +147,13 @@ class LoginPageForm extends React.Component {
                 </Row>
 
                 <div className='terms-and-privacy'>
-                    By signing in, you agree to Profit Whales <b><Link to={'/terms-and-conditions'}> Terms
-                    and <br/> Conditions</Link> & <Link to={'/policy'}>Privacy Policy</Link></b>
+                    By signing in, you agree to Profit Whales <b>
+                    <Link
+                        target="_blank"
+                        to={'/terms-and-conditions'}>
+                        Terms and <br/>Conditions
+                    </Link> & <Link target="_blank" to={'/policy'}>
+                    Privacy Policy</Link></b>
                 </div>
 
                 <button className="btn default">

@@ -167,8 +167,8 @@ const Billing = () => {
         subscriptionProducts.forEach(item => {
             if (subscriptions[item.productId]) {
                 if (subscriptions[item.productId].incomplete_payment.has_incomplete_payment) {
+                    setKey(subscriptions[item.productId].incomplete_payment.payment_intent_id);
                     openConfirmWindow(true);
-                    setKey(subscriptions[item.productId].incomplete_payment.payment_intent_id)
                 }
             }
         })

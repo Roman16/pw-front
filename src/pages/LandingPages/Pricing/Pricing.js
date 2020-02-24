@@ -254,7 +254,7 @@ const Pricing = () => {
                     </div>
                     <div className="list">
                         <div className="item">
-                            <div className="title">Starter</div>
+                            <div className="title">Startup</div>
                             <div className="sum">&lt;$1000</div>
                             <div className="sub-sum">in ad spend / per month</div>
                             <div className="price">35$</div>
