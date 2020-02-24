@@ -1,7 +1,7 @@
 import React from "react";
 import {Form, Row, Input, Checkbox, Spin} from "antd";
 import {connect} from "react-redux";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {notification} from "../../../../components/Notification";
 import {userActions} from "../../../../actions/user.actions";
 import eyeClosed from "../../../../assets/img/icons/eye-closed.svg";
@@ -132,7 +132,7 @@ class LoginPageForm extends React.Component {
                     />
                 </Form.Item>
 
-                <Row type="flex" justify="space-between" align='middle'  className="form-bottom">
+                <Row type="flex" justify="space-between" align='middle' className="form-bottom">
                     <Checkbox
                         onChange={e => this.setState({remember_me: e.target.checked})}
                     >
@@ -148,7 +148,8 @@ class LoginPageForm extends React.Component {
                 </Row>
 
                 <div className='terms-and-privacy'>
-                    By signing in, you agree to Profit Whales <b>Terms and <br/> Conditions & Privacy Policy</b>
+                    By signing in, you agree to Profit Whales <b><Link to={'/terms-and-conditions'}> Terms
+                    and <br/> Conditions</Link> & <Link to={'/policy'}>Privacy Policy</Link></b>
                 </div>
 
                 <button className="btn default">
