@@ -10,11 +10,71 @@ import peopleImage from '../../../assets/img/landing-pricing/people-icon.svg';
 import yesGreenIcon from '../../../assets/img/landing-pricing/yes_green.svg';
 import {history} from "../../../utils/history";
 import $ from "jquery";
+import {avatars} from "../../../assets/img/landing-automation/avatars/avatars";
+import Slider from "react-slick";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlay} from "@fortawesome/free-solid-svg-icons";
+import emojiImage from "../../../assets/img/landing-automation/emoji.png";
+import supportImage from "../../../assets/img/landing-automation/Vitalik-help.png";
+
+
+const commentsList = [
+    {
+        name: 'Corina Elena Damian',
+        comment: 'I only have words of praise and I warmly recommend this software, but especially the person who has guided me and who does not get rid of me until I win £100,000. Professional vitals, explains the steps in detail and has a lot of patience! For beginners on Amazon and not only recommend PROFIT WHALES!',
+        avatar: avatars.CorinaElenaDamian
+    },
+    {
+        name: 'Meet Patel',
+        comment: 'It was an amazing experience working with Amzbizon, I was really lost in my PPC spending and ACOS, So I took the help of Amzbizon. We started our campaigns on the 21st of November With 48% Acos, With good Keyword targeting and well established and optimized Bulk operation Campaigns, We shoot down to 24.71% in just 12 days, It is a miracle, I wish I could share my Screenshot here. But they have really worked on my ACOS. Thank You so much.',
+        avatar: avatars.MeetPatel
+    },
+    {
+        name: 'Maxim Antonov',
+        comment: 'Yes, very good company! They helped me a lot with advertising on Amazon and not only with advertising, there are practitioners working there who really know a lot about their business.',
+        avatar: avatars.MaximAntonov
+    },
+    {
+        name: 'Emil Sirbu',
+        comment: 'I highly recommend the services of these great guys. As their tool gives incredible results, that\'s obvious. I appreciated the attitude of this team for the client. We had a very humanized experience, where the money wasn\'t the first priority of our collaboration but customer satisfaction! Flexibility and promptness to any of my questions. I highly recommend!',
+        avatar: avatars.EmilSirbu
+    },
+    {
+        name: 'Dmitriy Golubovskiy',
+        comment: 'These guys are doing an amazing job, solved my problem with huge Acos. It took only 2-3 weeks for them to fully optimize all campaigns. I would like to mention separately communication level: wrote even in Sat/Sunday and got answers. Recommend!',
+        avatar: avatars.DmitriyGolubovskiy
+    },
+    {
+        name: 'Andrey Kaminskiy',
+        comment: 'The team behind the agency is doing an amazing job by consulting about how to grow the conversion rate and managing our Amazon Advertising campaigns. Their support team is incredibly responsible all day long. Highly recommend!',
+        avatar: avatars.AndreyKaminskiy
+    },
+    {
+        name: 'Jennie Fisher',
+        comment: 'ProfitWhales\' software is notably robust, and their analysts have helped us both maximize profitability and truly understand the incremental value of our Amazon Ads. They are a valued partner and we really appreciate the flexibility of their software and service model.',
+        avatar: avatars.JennieFisher
+    },
+    {
+        name: 'Daniel Jennings',
+        comment: 'I really enjoy Profit Whales\' user interface, the massive amounts of data and the differentoptimization strategies.I\'ve noticed that the software makes extremely dialed in bidding decisions that convert very well. I\'m really working on creating a successful PPC strategy to template the other 3 products!',
+        avatar: avatars.DanielJennings
+    },
+];
 
 const Pricing = () => {
 
     function goToScanner() {
         history.push('/ppc/optimization')
+    }
+
+    function SampleNextArrow({onClick}) {
+        return (<div className='next' onClick={onClick}><FontAwesomeIcon icon={faPlay}/></div>)
+    }
+
+    function SamplePrevArrow({onClick}) {
+        return (
+            <div className='prev' onClick={onClick}><FontAwesomeIcon icon={faPlay}/></div>
+        );
     }
 
     useEffect(() => {
@@ -255,97 +315,104 @@ const Pricing = () => {
                 </div>
             </section>
 
-            <section className="faq">
-                <div className="box">
-                    <div className="block-title">
-                        <h2>We have the answers for your questions!</h2>
-                    </div>
-                    <div className="accordions">
-                        <div className="accordion">
-                            <input id="acc1" type="checkbox" name="accordion"/>
-                            <label htmlFor="acc1">How does Profit Whales protect my data?</label>
-                            <div className="body">
-                                <p>
-                                    We take your security very seriously. Our security practices are the best in the
-                                    industry. We have no access to your Amazon Seller Central credentials so, nobody
-                                    can steal your data. For a detailed description, please visit our Privacy
-                                    Policy.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="accordion">
-                            <input id="acc2" type="checkbox" name="accordion"/>
-                            <label htmlFor="acc2">Do you offer managed services for my Amazon PPC Account?</label>
-                            <div className="body">
-                                <p>
-                                    Yes, we offered managed service for Brands who want to combine software with a
-                                    team of PPC Experts to reach a desired business goal. Check our Expert Managed
-                                    Service here.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="accordion">
-                            <input id="acc3" type="checkbox" name="accordion"/>
-                            <label htmlFor="acc3">Is there a free trial on Profit Whales?</label>
-                            <div className="body">
-                                <p>
-                                    Yes, we have 14 days of the free trial. When it ends, you can switch to a paid
-                                    account.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="accordion">
-                            <input id="acc4" type="checkbox" name="accordion"/>
-                            <label htmlFor="acc4">Which marketplaces do the Amazon PPC Tool support?</label>
-                            <div className="body">
-                                <p>
-                                    Currently, the Profit Whales Amazon PPC Automate Tool supports the Amazon US/CA
-                                    marketplace. Our team of developers is expanding Profit Whales to the other
-                                    marketplaces very soon.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="accordion">
-                            <input id="acc5" type="checkbox" name="accordion"/>
-                            <label htmlFor="acc5">Can I use one SellerApp account for managing multiple PPC
-                                accounts?</label>
-                            <div className="body">
-                                <p>
-                                    Absolutely. You can manage more than one PPC account from your SellerApp Agency
-                                    Platform.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="accordion">
-                            <input id="acc6" type="checkbox" name="accordion"/>
-                            <label htmlFor="acc6">What if I exceed my plan limit on my account?</label>
-                            <div className="body">
-                                <p>
-                                    We'll inform you as soon as you reached your plan limit. From then on you have 14
-                                    days to upgrade your account otherwise we will stop the adjustments.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="accordion">
-                            <input id="acc7" type="checkbox" name="accordion"/>
-                            <label htmlFor="acc7">How long does it take to upload all my data?</label>
-                            <div className="body">
-                                <p>It takes up to 2 hours to pull up all the data.</p>
-                            </div>
-                        </div>
-                        <div className="accordion">
-                            <input id="acc8" type="checkbox" name="accordion"/>
-                            <label htmlFor="acc8">How can I cancel my account?</label>
-                            <div className="body">
-                                <p>
-                                    You can just go to Settings page and press «Cancel». It's as easy as it
-                                    sounds.
-                                </p>
-                            </div>
-                        </div>
+            <section className='comments'>
+                <div className="container">
+                    <h2>What our customers <br/> are saying</h2>
+
+                    <div className="carousel">
+
+
+                        <Slider
+                            dots={true}
+                            infinite={true}
+                            speed={500}
+                            slidesToShow={4}
+                            slidesToScroll={1}
+                            nextArrow={<SampleNextArrow/>}
+                            prevArrow={<SamplePrevArrow/>}
+                            responsive={[
+                                {
+                                    breakpoint: 1024,
+                                    settings: {
+                                        slidesToShow: 3,
+                                        slidesToScroll: 3,
+                                    }
+                                },
+                                {
+                                    breakpoint: 740,
+                                    settings: {
+                                        slidesToShow: 2,
+                                        slidesToScroll: 2
+                                    }
+                                },
+                                {
+                                    breakpoint: 500,
+                                    settings: {
+                                        slidesToShow: 1,
+                                        slidesToScroll: 1
+                                    }
+                                }
+                            ]}
+                        >
+                            {commentsList.map((item, index) => (
+                                <div className="slide-item">
+                                    <div className="row">
+                                        <img src={item.avatar} alt=""/>
+
+                                        <div className="name">
+                                            {item.name}
+                                        </div>
+
+                                    </div>
+
+                                    <div className='comment'>{item.comment}</div>
+                                </div>
+                            ))}
+                        </Slider>
                     </div>
                 </div>
             </section>
+
+            <section className='support'>
+                <div className="container">
+                    <div className="col">
+                        <h3>Human Support <img src={emojiImage} alt=""/></h3>
+                        <p>
+                            Our expert team is here to help you
+                            <br/>
+                            on your journey as Amazon Seller. We
+                            <br/>
+                            are here to answer your questions
+                            <br/>
+                            and provide actionable steps that
+                            <br/>
+                            you can implement in your business.
+                        </p>
+                        <h4>Don’t take our word for it</h4>
+
+                        <a href="https://www.trustpilot.com/review/profitwhales.com" target={'_blank'}>
+                            Check our customer reviews on Trustpilot
+                        </a>
+                    </div>
+
+                    <img src={supportImage} alt="" className='image'/>
+                </div>
+
+                <div className="rectangle"/>
+            </section>
+
+            <section className='trial'>
+                <div className="container">
+                    <h2>What are you waiting for?</h2>
+                    <p>Get started wit 14-day free trial and get time saving machine for your business.</p>
+                    <button onClick={() => history.push('/registration')}>START 14 DAY FREE TRIAL TODAY</button>
+                    <ul>
+                        <li>No credit card required</li>
+                        <li>Cancel anytime</li>
+                    </ul>
+                </div>
+            </section>
+
             <Footer/>
         </div>
     )

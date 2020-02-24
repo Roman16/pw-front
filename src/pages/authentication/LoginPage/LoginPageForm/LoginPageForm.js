@@ -1,10 +1,11 @@
 import React from "react";
-import {Form, Row, Input, Button, Checkbox, Col, Spin} from "antd";
+import {Form, Row, Input, Checkbox, Spin} from "antd";
 import {connect} from "react-redux";
-import {Link, Redirect} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {notification} from "../../../../components/Notification";
 import {userActions} from "../../../../actions/user.actions";
-import amazon from "../../../../assets/img/amazon.png";
+import eyeClosed from "../../../../assets/img/icons/eye-closed.svg";
+import eyeOpened from "../../../../assets/img/icons/eye-opened.svg";
 import "./LoginPageForm.less";
 
 class LoginPageForm extends React.Component {
@@ -13,7 +14,8 @@ class LoginPageForm extends React.Component {
         password: "",
         remember_me: false,
         isLoading: false,
-        loginSuccess: false
+        loginSuccess: false,
+        passwordType: true
     };
 
     onChange = ({target}) => {
@@ -71,12 +73,19 @@ class LoginPageForm extends React.Component {
         });
     };
 
+    switchPasswordType = () => {
+        this.setState((state) => ({
+            passwordType: !state.passwordType
+        }))
+    };
+
     componentDidMount() {
         this.setState({isLoading: false});
     }
 
+
     render() {
-        const {email, password, isLoading, loginSuccess} = this.state;
+        const {email, password, isLoading, loginSuccess, passwordType} = this.state;
 
         if (isLoading) {
             return (
@@ -90,35 +99,40 @@ class LoginPageForm extends React.Component {
             return <Redirect to="/ppc/optimization"/>;
         }
 
-        return (
-            <Form className="login-form">
-                <div className="form-group">
-                    <Form.Item className="input-form-group" label="E-mail">
-                        <Input
-                            className="email-input"
-                            type="email"
-                            name="email"
-                            id="email"
-                            autoComplete="off"
-                            placeholder="Type Your e-mail here"
-                            value={email}
-                            onChange={this.onChange}
-                        />
-                    </Form.Item>
 
-                    <Form.Item className="input-form-group" label="Password">
-                        <Input.Password
-                            className="password-input"
-                            type="password"
-                            name="password"
-                            placeholder="Type Your password here"
-                            autoComplete="off"
-                            value={password}
-                            onChange={this.onChange}
-                        />
-                    </Form.Item>
-                </div>
-                <Row type="flex" justify="space-between" className="form-bottom">
+        return (
+            <Form className="login-form" onSubmit={this.onSubmit}>
+                <Form.Item className="input-form-group">
+                    <Input
+                        className="email-input"
+                        type="email"
+                        name="email"
+                        id="email"
+                        autoComplete="off"
+                        placeholder="E-mail"
+                        value={email}
+                        onChange={this.onChange}
+                    />
+                </Form.Item>
+
+                <Form.Item className="input-form-group">
+                    <Input
+                        className="password-input"
+                        type={passwordType ? 'password' : 'text'}
+                        name="password"
+                        placeholder="Password"
+                        autoComplete="off"
+                        value={password}
+                        onChange={this.onChange}
+                        suffix={<img
+                            src={passwordType ? eyeClosed : eyeOpened}
+                            alt=""
+                            onClick={this.switchPasswordType}
+                        />}
+                    />
+                </Form.Item>
+
+                <Row type="flex" justify="space-between" align='middle'  className="form-bottom">
                     <Checkbox
                         onChange={e => this.setState({remember_me: e.target.checked})}
                     >
@@ -129,47 +143,17 @@ class LoginPageForm extends React.Component {
                         className="login-form-forgot forget"
                         href="https://profitwhales.com/password/reset"
                     >
-                        Forgot your password?
+                        Forgot password?
                     </a>
                 </Row>
 
-                <Row type="flex" justify="start" className="form-btns">
-                    <Col xs={24} sm={24} md={9} className="form-btns-login">
-                        <Button
-                            className="submit"
-                            htmlType="submit"
-                            onClick={this.onSubmit}
-                            data-badge="inline"
-                        >
-                            Log in
-                        </Button>
-                    </Col>
+                <div className='terms-and-privacy'>
+                    By signing in, you agree to Profit Whales <b>Terms and <br/> Conditions & Privacy Policy</b>
+                </div>
 
-                    <Col xs={24} sm={24} md={9} className="form-btns-signup">
-                        <Link to="/registration" className="sign-up-link">
-                            Sign up
-                        </Link>
-                    </Col>
-                </Row>
-
-                <Row className="form-details">
-                    <Col>
-                        By signing up, you agree to
-                        <br/>
-                        <a href="/#">Terms and Conditions &amp; Privacy Policy</a>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-                        <div className="amazon-login-wrap">
-                            <p>or</p>
-                            <a onClick={() => window.open("/login/amazon", "_self")}>
-                                <img src={amazon} alt="LWA-GOld"/>
-                            </a>
-                        </div>
-                    </Col>
-                </Row>
+                <button className="btn default">
+                    sign in
+                </button>
             </Form>
         );
     }

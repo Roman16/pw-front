@@ -57,7 +57,7 @@ const LoadingAmazonAccount = () => {
             <h2>Welcome {firstName} {lastName}!</h2>
 
             <span>
-                we’re currently syncing your Amazon account witch can take up to 24 hours. You’ll get an email when the sync is done so you can close the app and come back later
+               We’re currently syncing your Amazon account, which can take up to 24 hours. You’ll get an email when the sync is done so you can close the app and come back later
             </span>
 
             <div className='social-icons'>
