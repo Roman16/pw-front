@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Row, Input, Spin, Col} from 'antd';
+import {Form, Input, Spin} from 'antd';
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {notification} from '../../../../components/Notification';

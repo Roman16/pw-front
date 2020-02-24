@@ -1111,10 +1111,8 @@ const LandingAutomation = () => {
                     <p>
                         Want to try Profit Whales but worried about the risk of a program
                         <br/>
-                        handling your PPC management? Don’t worry. Profit Whales and
-                        <br/>
-                        Amazon have safeguards in place to ensure every decision we make
-                        <br/>
+                        handling your PPC management? Don’t worry. <br/> Profit Whales and
+                        Amazon have safeguards in place to ensure <br/> every decision we make
                         is not risky for your account.
                     </p>
 
@@ -1219,7 +1217,7 @@ const LandingAutomation = () => {
                 <div className="container">
                     <h2>What are you waiting for?</h2>
                     <p>Get started wit 14-day free trial and get time saving machine for your business.</p>
-                    <button onClick={() => history.push('/registration')}>START 14 DAY FREE TRIAL TODAY</button>
+                    <button onClick={() => history.push('/registration')}>START 14-DAY FREE TRIAL TODAY</button>
                     <ul>
                         <li>No credit card required</li>
                         <li>Cancel anytime</li>
