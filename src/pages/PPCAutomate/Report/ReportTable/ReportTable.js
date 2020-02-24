@@ -49,42 +49,42 @@ const subTables = {
 };
 
 const tabsItem = [
-    {
-        tabName: (key, counts, countsWithNew) => <TabName
-            name="All Reports"
-            type={key}
-            counts={counts}
-            countsWithNew={countsWithNew}
-        />,
-        key: "all-reports",
-        component: (
-            onChangeSubTab,
-            data,
-            activeTab,
-            page,
-            totalSize,
-            handlePaginationChange,
-            pageSize,
-            onChangeFilter,
-            filteredColumns,
-            handleChangeSorter,
-            sorterColumn
-        ) => (
-            <AllReports
-                onChangeSubTab={onChangeSubTab}
-                data={data}
-                activeTab={activeTab}
-                currentPage={page}
-                totalSize={totalSize}
-                handlePaginationChange={handlePaginationChange}
-                pageSize={pageSize}
-                onChangeFilter={onChangeFilter}
-                filteredColumns={filteredColumns}
-                handleChangeSorter={handleChangeSorter}
-                sorterColumn={sorterColumn}
-            />
-        )
-    },
+    // {
+    //     tabName: (key, counts, countsWithNew) => <TabName
+    //         name="All Reports"
+    //         type={key}
+    //         counts={counts}
+    //         countsWithNew={countsWithNew}
+    //     />,
+    //     key: "all-reports",
+    //     component: (
+    //         onChangeSubTab,
+    //         data,
+    //         activeTab,
+    //         page,
+    //         totalSize,
+    //         handlePaginationChange,
+    //         pageSize,
+    //         onChangeFilter,
+    //         filteredColumns,
+    //         handleChangeSorter,
+    //         sorterColumn
+    //     ) => (
+    //         <AllReports
+    //             onChangeSubTab={onChangeSubTab}
+    //             data={data}
+    //             activeTab={activeTab}
+    //             currentPage={page}
+    //             totalSize={totalSize}
+    //             handlePaginationChange={handlePaginationChange}
+    //             pageSize={pageSize}
+    //             onChangeFilter={onChangeFilter}
+    //             filteredColumns={filteredColumns}
+    //             handleChangeSorter={handleChangeSorter}
+    //             sorterColumn={sorterColumn}
+    //         />
+    //     )
+    // },
     {
         tabName: (key, counts, countsWithNew) => <TabName name="Keywords Optimization" type={key} counts={counts}
                                                           countsWithNew={countsWithNew}/>,
@@ -286,8 +286,8 @@ class ReportTable extends Component {
         page: 1,
         pageSize: this.props.pageSize || 10,
         totalSize: this.props.totalSize || 0,
-        activeTab: "all-reports",
-        activeSubTab: "",
+        activeTab: "keywords-optimization",
+        activeSubTab: "changed-keyword-bid-acos",
         filteredColumns: {},
         sorterColumn: {
             key: 'eventDateTime',

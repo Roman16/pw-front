@@ -514,7 +514,7 @@ const PATsOptimization = ({
                         onChange(pausedManualPATHighACoS);
                     }}
                 >
-                    Paused Manual PAT (<span className='underline'>High ACoS</span>)
+                    PAUSED PAT (<span className='underline'>HIGH ACOS</span>)
                 </TableButton>
                 <TableButton
                     totalSize={totalSize}
@@ -525,7 +525,7 @@ const PATsOptimization = ({
                         onChange(pausedManualPatNoSales);
                     }}
                 >
-                    Paused Manual Pat (<span className='underline'>No Sales</span>)
+                    PAUSED PAT (<span className='underline'>NO SALES</span>)
                 </TableButton>
                 <TableButton
                     totalSize={totalSize}

@@ -6,7 +6,7 @@ import Table from '../../../../components/Table/Table';
 import ProductItem from '../../../../components/ProductList/ProductItem';
 import {productsServices} from '../../../../services/products.services';
 import {notification} from '../../../../components/Notification';
-
+import {throttling} from "../../../../utils/throttling";
 import './TableSettings.less';
 import {productsActions} from "../../../../actions/products.actions";
 import {connect} from "react-redux";
@@ -73,6 +73,10 @@ class ProductsList extends Component {
             fetching: false
         });
     };
+
+    showNotification = throttling((text) => {
+        notification.warning({title: text});
+    }, 3000);
 
     updateSettings = async (data) => {
         clearTimeout(this.timerNotificationId);
@@ -146,16 +150,23 @@ class ProductsList extends Component {
                 this.timerId = setTimeout(() => {
                     this.updateSettings(dataSourceRow);
                 }, delay);
+            } else if (item === NET_MARGIN && (value < 0 || value > 100)) {
+                dataSourceRow = this.setRowData(null, NET_MARGIN, index);
+                this.showNotification('Product net margin should be greater than 0% and less than 100%');
+
+                clearTimeout(this.timerId);
+                this.timerId = setTimeout(() => {
+                    this.updateSettings(dataSourceRow);
+                }, delay);
             } else {
-                notification.warning({
-                    title: item === NET_MARGIN ? 'Product net margin should be greater than 0% and less than 100%' : 'Bids should be greater than or equal to 0.02$'
-                });
+                this.showNotification(item === NET_MARGIN ? 'Product net margin should be greater than 0% and less than 100%' : 'Bids should be greater than or equal to 0.02$')
             }
         }
     };
 
     onBlurRow = () => {
         const {products} = this.state;
+
         if (this.prevItemIndex !== null) {
             clearTimeout(this.timerId);
 
@@ -327,7 +338,6 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[NET_MARGIN]}
-                            max={100}
                             typeIcon='margin'
                             onChange={event =>
                                 this.onChangeRow(event, NET_MARGIN, indexRow)
