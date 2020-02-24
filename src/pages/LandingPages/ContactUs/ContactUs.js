@@ -41,7 +41,7 @@ const ContactUs = () => {
                                 <img src={callHelpImage} alt=""/>
                                 <h3>How could we help you?</h3>
                                 <p>Our support team is spread across the globe to give you answers fast.</p>
-                                <button onClick={openWindowHandler} className='btn green-btn'>Send a request</button>
+                                <button onClick={() => window.open('https://direct.lc.chat/11745246')} className='btn green-btn'>Send a request</button>
                             </div>
 
                             <div className='item'>
@@ -49,7 +49,7 @@ const ContactUs = () => {
                                 <h3>Partnership? Of course, let’s discuss</h3>
                                 <p>Don't be shy. If you've got something to create and move forward with Profit
                                     Whales.</p>
-                                <button onClick={openWindowHandler} className='btn green-btn'>Send a proposal</button>
+                                <button onClick={() => window.open('https://calendly.com/vitalii-pw-success-manager/profit-whales-collaboration')} className='btn green-btn'>Send a proposal</button>
                             </div>
 
                             <div className='item'>

@@ -31,21 +31,7 @@ const DemoCall = () => {
 
                     <h2>Request your demo</h2>
 
-                    <form action="">
-                        <div className="input-group">
-                            <label htmlFor="">Name</label>
-                            <input type="text"/>
-                            <span>We treat your contact information according to our policy</span>
-                        </div>
-
-                        <div className="input-group">
-                            <label htmlFor="">E-mail</label>
-                            <input type="email"/>
-                        </div>
-
-                        <button className='btn default'>request</button>
-                    </form>
-
+                    <button className='btn default' onClick={() => window.open('https://calendly.com/vitalii-pw-success-manager/demo-call-with-profit-whales')}>request</button>
                 </div>
             </section>
         </div>
