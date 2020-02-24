@@ -571,12 +571,11 @@ button.btn {
 
 button:disabled,
 button[disabled] {
-  color: #868891 !important;
   cursor: not-allowed;
-  opacity: .7;
+  filter: grayscale(100%);
 
   &:hover {
-    opacity: .4;
+    opacity: .6;
   }
 }
 

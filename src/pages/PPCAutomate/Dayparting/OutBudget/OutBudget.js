@@ -153,7 +153,11 @@ const OutBudget = ({date}) => {
                         Out of Budget
                     </div>
 
-                    <button className='btn default' onClick={() => setModal(true)}>
+                    <button
+                        className='btn default'
+                        onClick={() => setModal(true)}
+                        disabled={!campaignId}
+                    >
                         <img src={plusIconWhite} alt=""/>
                         Add budget
                     </button>
