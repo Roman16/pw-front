@@ -1,5 +1,4 @@
 import React from 'react';
-import {Row, Col} from 'antd';
 import LoginPageForm from './LoginPageForm/LoginPageForm';
 import './LoginPage.less';
 import {history} from "../../../utils/history";
@@ -20,7 +19,6 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 fbq('init', '2628499780566506');
 fbq('track', 'PageView');`
     });
-
 
     return (
         <div className="auth-page ">
