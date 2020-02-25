@@ -390,21 +390,6 @@ const LandingAutomation = () => {
     }
 
     useEffect(() => {
-        const hideStyle = '#kayako-messenger {display:none}',
-            head = document.head || document.getElementsByTagName('head')[0],
-            style = document.createElement('style');
-
-
-        head.appendChild(style);
-
-        style.type = 'text/css';
-        if (style.styleSheet) {
-            // This is required for IE8 and below.
-            style.styleSheet.cssText = hideStyle;
-        } else {
-            style.appendChild(document.createTextNode(hideStyle));
-        }
-
         (function (t, a, p) {
             t.TapfiliateObject = a;
             t[a] = t[a] || function () {
@@ -503,14 +488,12 @@ const LandingAutomation = () => {
         document.head.appendChild(s);
         document.head.appendChild(mailchimpScript);
 
-
         return () => {
+            document.querySelector('html').classList.remove('not-retina');
+
             document.head.removeChild(s);
             document.head.removeChild(mailchimpScript);
             window.location.reload();
-
-            document.querySelector('html').classList.remove('not-retina');
-            head.removeChild(style);
         }
     }, []);
 

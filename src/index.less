@@ -191,8 +191,7 @@ img {
     opacity: 0.8;
 
     &:hover {
-      box-shadow: 0px 0.8571429em 1.1428571em rgba(142, 147, 192, 0.08),
-      0px 0px 1.4285714em rgba(142, 147, 192, 0.08);
+      background: rgba(109, 109, 246, 0.3);
     }
 
     &[title] > a {
@@ -211,7 +210,20 @@ img {
     }
 
     &.ant-pagination-item-active {
-      box-shadow: @tooltip-shadow;
+      box-shadow: none;
+      background: #6D6DF6;
+      opacity: 1;
+
+      a {
+        color: #fff;
+      }
+    }
+  }
+
+  .ant-pagination-prev:hover,
+  .ant-pagination-next:hover {
+    a {
+      background: rgba(109, 109, 246, 0.3);
     }
   }
 
