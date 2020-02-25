@@ -26,10 +26,9 @@ const ContactUs = () => {
         e.preventDefault();
 
         try {
-            // await userService.sendContacts(formValue);
-            // notification.success({title: 'Successful'});
-            // setStatus(true);
-            switchWindow(false);
+            await userService.sendContacts(formValue);
+            setStatus(true);
+            // switchWindow(false);
         } catch (e) {
             console.log(e);
         }
@@ -128,18 +127,18 @@ const ContactUs = () => {
                         <h2>Fill the form: </h2>
                         <div className="input-group">
                             <label htmlFor="">First & Last Name</label>
-                            <input type="text" name='name' onChange={inputChangeHandler}/>
+                            <input type="text" name='first_name' onChange={inputChangeHandler}/>
                         </div>
 
                         <div className="input-group email-block">
                             <label htmlFor="">E-mail</label>
-                            <input type="email" name='email' onChange={inputChangeHandler}/>
+                            <input type="email" name='email' required onChange={inputChangeHandler}/>
                             <span>@</span>
                         </div>
 
                         <div className="input-group">
                             <label htmlFor="">Comment</label>
-                            <textarea name='comment' onChange={inputChangeHandler}/>
+                            <textarea name='comment' required onChange={inputChangeHandler}/>
                         </div>
 
                         <button className='btn green-btn'>send</button>

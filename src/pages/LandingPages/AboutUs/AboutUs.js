@@ -42,8 +42,9 @@ const AboutUs = () => {
         e.preventDefault();
 
         try {
-            // await userService.onSubscribe({email});
-            // notification.success({title: 'Successful'})
+            await userService.onSubscribe({email});
+            notification.success({title: 'Successful'})
+            setEmail('');
         } catch (e) {
             console.log(e);
         }
@@ -250,6 +251,7 @@ const AboutUs = () => {
                             type="email"
                             placeholder="Your email address"
                             required
+                            value={email}
                             onChange={e => setEmail(e.target.value)}
                         />
 

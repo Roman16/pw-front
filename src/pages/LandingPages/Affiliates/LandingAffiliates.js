@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import './LandingAffiliates.less';
@@ -7,12 +7,7 @@ import benefitsImg from '../../../assets/img/benefits-icon.svg'
 import performersImg from '../../../assets/img/performers-icon.svg'
 import supportImg from '../../../assets/img/support-icon.svg'
 import greenLine from '../../../assets/img/green-line.svg';
-import shortGreenLine from '../../../assets/img/short-green-line.svg';
-import greenPoint from '../../../assets/img/green-point.svg';
 import contactUsImage from '../../../assets/img/landing-affiliate/undraw_contact_us.png';
-import commissionFreeIcon from '../../../assets/img/commission-free-icon.svg';
-import commissionHaveFeeIcon from '../../../assets/img/commission-have-fee-icon.svg';
-import howItWorksImage from '../../../assets/img/how-it-works-image.svg';
 import checkedIcon from '../../../assets/img/icons/mark.svg';
 import registrImage from '../../../assets/img/landing-affiliate/register-step.svg';
 import getLinkImage from '../../../assets/img/landing-affiliate/get-link-step.svg';
@@ -23,6 +18,8 @@ import step2Image from '../../../assets/img/landing-affiliate/step-2.svg';
 import step3Image from '../../../assets/img/landing-affiliate/step-3.svg';
 
 import arrowImage from '../../../assets/img/landing-affiliate/right-arrow.svg';
+import {userService} from "../../../services/user.services";
+import {notification} from "../../../components/Notification";
 
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY,
@@ -32,12 +29,42 @@ const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY,
 const LandingAffiliates = () => {
     const existingScript = document.getElementById('tapfiliate');
     const tapfiliateScript = document.createElement('script');
+    const [formValue, setForm] = useState({
+        first_name: '',
+        email: '',
+        comment: ''
+    });
 
     if (!existingScript) {
         tapfiliateScript.src = 'https://script.tapfiliate.com/tapfiliate.js';
         tapfiliateScript.id = 'tapfiliate';
         document.head.appendChild(tapfiliateScript);
     }
+
+
+    async function submitFormHandler(e) {
+        e.preventDefault();
+
+        try {
+            await userService.sendContacts(formValue);
+            notification.success({title: 'Successful'});
+            setForm({
+                first_name: '',
+                email: '',
+                comment: ''
+            })
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    function inputChangeHandler({target: {value, name}}) {
+        setForm({
+            ...formValue,
+            [name]: value
+        })
+    }
+
 
     useEffect(() => {
         document.querySelector('html').classList.add('not-retina');
@@ -310,24 +337,39 @@ const LandingAffiliates = () => {
 
                         <img src={greenLine} alt="" className='green-line'/>
 
-                        <form action="">
+                        <form onSubmit={submitFormHandler}>
                             <h4>Fill the form:</h4>
 
                             <div className="row">
                                 <div className="input-group">
                                     <label htmlFor="">Name</label>
-                                    <input type="text"/>
+                                    <input
+                                        type="text"
+                                        name={'first_name'}
+                                        value={formValue.first_name}
+                                        onChange={inputChangeHandler}
+                                    />
                                 </div>
+
                                 <div className="input-group">
                                     <label htmlFor="">E-mail</label>
-                                    <input type="text"/>
+                                    <input
+                                        type="email"
+                                        name={'email'}
+                                        value={formValue.email}
+                                        onChange={inputChangeHandler}
+                                    />
                                 </div>
                             </div>
 
                             <div className="row">
                                 <div className="input-group question-block">
                                     <label htmlFor="">Your question</label>
-                                    <textarea/>
+                                    <textarea
+                                        name={'comment'}
+                                        onChange={inputChangeHandler}
+                                        value={formValue.comment}
+                                    />
                                     <span>We treat your contact information according to our policy</span>
                                 </div>
                             </div>
