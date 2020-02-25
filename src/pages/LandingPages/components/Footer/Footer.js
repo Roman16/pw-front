@@ -59,14 +59,14 @@ const Footer = () => (
                         </Link>
                     </li>
                     <li>
-                        <a href="https://profitwhales.com/terms-and-conditions">
+                        <Link to='/terms-and-conditions'>
                             Terms and Conditions
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="https://profitwhales.com/policy">
+                        <Link to='policy'>
                             Privacy policy
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>
