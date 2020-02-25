@@ -28,7 +28,8 @@ const ContactUs = () => {
         try {
             // await userService.sendContacts(formValue);
             // notification.success({title: 'Successful'});
-            setStatus(true);
+            // setStatus(true);
+            switchWindow(false);
         } catch (e) {
             console.log(e);
         }
