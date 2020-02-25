@@ -1,0 +1,319 @@
+.landing-contact-us {
+  font-family: 'Open Sans', sans-serif;
+
+  section {
+    background: #F3F7FD;
+    padding: 100px 0 50px 0;
+
+    .container {
+      width: 100%;
+      height: 100%;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 10px;
+
+      .title {
+        h2 {
+          font-family: e3sb;
+          font-size: 33px;
+          line-height: 48px;
+          letter-spacing: 0.4px;
+          color: #363694;
+          text-align: center;
+          margin: 0 0 15px 0;
+        }
+
+        p {
+          font-family: e2r;
+          font-size: 16px;
+          letter-spacing: 0.4px;
+          color: #38454F;
+          text-align: center;
+
+        }
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        margin: 80px 0 40px 0;
+
+        .item {
+          flex: 1;
+          min-height: 456px;
+          padding: 35px 45px 80px;
+          background: #FFFFFF;
+          box-shadow: 0px 15.2681px 15.2681px rgba(140, 151, 182, 0.08), 0px 5.72553px 38.1702px rgba(140, 151, 182, 0.03), 0px 0px 15.2681px rgba(140, 151, 182, 0.03);
+          border-radius: 20px;
+
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          position: relative;
+
+          &:nth-child(2) {
+            margin: 0 20px;
+          }
+
+          h3 {
+            margin: 25px 0 15px 0;
+            font-family: esb;
+            font-size: 20px;
+            letter-spacing: 0.76px;
+            color: #17175A;
+            text-align: center;
+          }
+
+          p {
+            font-size: 14px;
+            line-height: 18px;
+            text-align: center;
+            letter-spacing: 0.4px;
+            color: #4B5271;
+          }
+
+          .btn {
+            width: 100%;
+            height: 48px;
+            margin: auto 0 0 0;
+
+            font-family: eb;
+            font-size: 16px;
+            letter-spacing: 0.4px;
+          }
+
+          .djo {
+            position: absolute;
+            top: -100px;
+            right: -170px;
+          }
+        }
+      }
+
+      .address {
+        display: flex;
+        justify-content: center;
+
+        .col {
+          display: flex;
+          flex-direction: column;
+          margin: 33px 0 0 25px;
+
+          h4 {
+            font-family: e2sb;
+            font-size: 20px;
+            letter-spacing: 0.4px;
+            color: #17175A;
+            margin: 0 0 30px 0;
+          }
+
+          a {
+            font-family: er;
+            font-size: 16px;
+            letter-spacing: 0.4px;
+            color: #17175A;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      @media (max-width: 1680px) {
+        padding: 0 50px;
+      }
+
+      @media (max-width: 1600px) {
+        padding: 0 150px;
+      }
+
+      @media (max-width: 1600px) {
+        padding: 0 170px;
+      }
+
+      @media (max-width: 1250px) {
+        padding: 0 20px;
+
+        .row .item .djo {
+          display: none;
+        }
+      }
+    }
+
+    @media (max-width: 800px) {
+      padding-top: 50px;
+
+      .container {
+        padding: 0 20px;
+
+        .row {
+          flex-direction: column;
+          margin-top: 50px;
+
+          .item {
+            margin: 0 0 30px 0;
+            min-height: 300px;
+            padding-bottom: 35px;
+
+            &:nth-child(2) {
+              margin: 0 0 30px 0;
+            }
+          }
+        }
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        .address {
+          img {
+            display: none;
+          }
+
+          .col {
+            margin: 0;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+.contact-us-window {
+  width: 400px !important;
+  min-height: 462px;
+  display: flex;
+  flex-direction: column;
+
+  .ant-modal-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ant-modal-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h2 {
+        font-family: esb;
+        font-size: 24px;
+        letter-spacing: 0.76px;
+        color: #17175A;
+        margin: 0 0 20px 0;
+      }
+
+      .input-group {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin: 0 0 10px 0;
+        position: relative;
+
+        label {
+          font-family: er;
+          font-size: 12px;
+          letter-spacing: -0.05px;
+          color: #394163;
+          margin: 0 0 5px 0;
+        }
+
+        input {
+          width: 100%;
+          height: 32px;
+          background: #FFFFFF;
+          border: 1px solid rgba(148, 163, 173, 0.4);
+          box-sizing: border-box;
+          border-radius: 8px;
+          padding: 0 20px;
+
+          font-size: 12px;
+          color: #394163;
+        }
+
+        textarea {
+          height: 80px;
+          background: #FFFFFF;
+          border: 1px solid rgba(148, 163, 173, 0.4);
+          box-sizing: border-box;
+          border-radius: 8px;
+          padding: 5px 20px;
+          resize: none;
+        }
+
+        input:focus, textarea:focus {
+          outline: none;
+          border-color: rgb(77, 144, 254);
+        }
+
+        &.email-block {
+          input {
+            position: relative;
+            padding-left: 35px;
+          }
+
+          span {
+            position: absolute;
+            left: 10px;
+            bottom: 5px;
+            font-size: 16px;
+            color: #6D6DF6;
+          }
+        }
+      }
+
+      .btn {
+        width: 100%;
+        height: 48px;
+        margin: 15px 0 0 0;
+        font-family: eb;
+        font-size: 16px;
+        text-transform: capitalize;
+      }
+    }
+
+    .message-set-out {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        margin: 30px 0 0 0;
+      }
+
+      h2 {
+        margin: 30px 0;
+        font-family: esb;
+        font-size: 20px;
+        letter-spacing: -0.06px;
+        color: #394163;
+      }
+
+      p {
+        font-family: er;
+        font-size: 14px;
+        text-align: center;
+        letter-spacing: -0.05px;
+        color: #656A84;
+      }
+
+      .btn {
+        width: 100%;
+        height: 48px;
+        margin: auto 0 0 0;
+        font-family: eb;
+        font-size: 16px;
+        text-transform: capitalize;
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@ const {Search} = Input;
 const Option = Select.Option;
 
 
-const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasNew, isSelectedAll, disabled}) => {
+const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasNew, isSelectedAll, disabled, onChangeSelect}) => {
     const [openedWindow, switchWindow] = useState(false);
     const {onlyOptimization} = useSelector(state => ({
         onlyOptimization: state.products.onlyOptimization,
@@ -48,7 +48,8 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                         <CustomSelect
                             getPopupContainer={trigger => trigger.parentNode}
                             dropdownClassName={'full-width-menu'}
-                            value={'all'}
+                            onChange={(e) => {onChangeSelect({name: 'campaign_type', value: e})}}
+                            defaultValue={'all'}
                         >
                             <Option value={'all'}>
                                 All
@@ -67,7 +68,8 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                         <CustomSelect
                             getPopupContainer={trigger => trigger.parentNode}
                             dropdownClassName={'full-width-menu'}
-                            value={'all'}
+                            onChange={(e) => {onChangeSelect({name: 'campaign_status', value: e})}}
+                            defaultValue={'all'}
                         >
                             <Option value={'all'}>
                                 All

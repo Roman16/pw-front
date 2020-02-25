@@ -24,7 +24,7 @@ class ConfirmPaymentWindow extends Component {
             }
         )
             .then((res) => {
-                if(res.error) {
+                if (res.error) {
                     notification.error({title: res.error.message})
                 } else {
                     this.props.onUpdateInformation()
@@ -38,13 +38,17 @@ class ConfirmPaymentWindow extends Component {
     };
 
     componentDidMount() {
-        this.props.stripe.retrievePaymentIntent(
-            this.props.userSecretKey
-        ).then(res => {
-            this.setState({
-                amount: res.paymentIntent.amount
-            });
-        });
+        try {
+            this.props.stripe.retrievePaymentIntent(
+                this.props.userSecretKey
+            ).then(res => {
+                this.setState({
+                    amount: res.paymentIntent.amount
+                });
+            })
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     render() {

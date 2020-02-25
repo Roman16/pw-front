@@ -122,7 +122,53 @@
           width: 1.4285714285714286rem;
           height: 1.4285714285714286rem;
           border-radius: 4px;
-          background: #B6B6FB;
+          background: #E0E1E6;
+        }
+
+        .chart-tooltip {
+          .ant-popover-inner-content {
+            display: flex;
+            flex-direction: column;
+
+            .col {
+              margin: 0 20px 0 0;
+              display: flex;
+              flex-direction: column;
+
+              &:last-child {
+                margin: 0;
+              }
+
+              h3 {
+                margin: 0 0 5px 0;
+              }
+
+              .selected-metric {
+                height: 20px;
+                display: flex;
+                align-items: center;
+                text-transform: capitalize;
+              }
+            }
+
+            .value {
+              height: 20px;
+              margin: auto 0 0 0;
+              display: flex;
+              align-items: center;
+
+              .no-value {
+                width: 6px;
+                height: 2px;
+                background: #000c17;
+              }
+            }
+
+            .out-of {
+              text-transform: initial;
+              color: #EC7F5C;
+            }
+          }
         }
 
 
@@ -137,8 +183,8 @@
           position: relative;
 
           .statistic-information {
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
 
             @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
               width: 11px;
@@ -152,10 +198,11 @@
 }
 
 .budget-window {
+  width: 350px !important;
 
   .ant-modal-body {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 
   h2 {
@@ -168,6 +215,30 @@
 
   .ant-radio-wrapper {
     width: max-content;
+
+    .ant-radio-inner {
+      &::after {
+        background-color: #8FD39D;
+        width: 10px;
+        height: 10px;
+        top: 2px;
+        left: 2px;
+      }
+    }
+
+    &.ant-radio-wrapper-checked {
+      .ant-radio-inner {
+        border-color: #8FD39D;
+
+        &::after {
+          background-color: #8FD39D;
+          width: 10px;
+          height: 10px;
+          top: 2px;
+          left: 2px;
+        }
+      }
+    }
   }
 
   .current-budget {
@@ -181,14 +252,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #EC7F5C;
       border-radius: 4px;
-      color: #fff;
+      color: #EC7F5C;
     }
   }
 
   .recommend-budget {
-    margin: 30px 0;
+    margin: 10px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -199,9 +269,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #8fd39d;
       border-radius: 4px;
-      color: #fff;
+      color: #8fd39d;
     }
   }
 
@@ -209,17 +278,57 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .ant-input-number, input {
+      border-radius: 8px;
+    }
   }
 
   .actions {
     display: flex;
     justify-content: space-between;
     margin: 20px 0 20px 0;
+    height: 32px;
 
 
     .btn {
-      width: 35%;
+      width: 45%;
+      height: 32px;
       padding: 0 10px;
+      border-radius: 4px;
+
+      &.white {
+        background: #FFFFFF;
+        border: 0.5px solid rgba(148, 163, 173, 0.4);
+        box-sizing: border-box;
+        box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
+        border-radius: 4px;
+        color: #94A3AD;
+
+        &:hover {
+          background: #f0f0f0;
+        }
+      }
+    }
+
+    .ant-spin {
+      margin: 0 auto;
+    }
+  }
+
+  .success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      margin: 0 0 20px 0;
+    }
+
+    .btn {
+      width: 45%;
+      height: 32px;
+      margin: 25px auto 25px auto;
     }
   }
 }

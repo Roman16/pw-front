@@ -2,11 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <link
-            rel="icon"
-            href="./assets/icons/pwfavico.ico"
-            type="image/x-icon"
-    />
+
+    <link rel="icon"  type="image/x-icon" href="%PUBLIC_URL%/assets/icons/pwfavicon.ico">
+
     <meta name="yandex-verification" content="a9af1d76563e6057"/>
     <meta name="p:domain_verify" content="ebd0413d2a7f8ffa0338b0e5207d3c66"/>
 
@@ -93,32 +91,61 @@
 
 <div id="root"></div>
 
+<!-- Start of LiveChat (www.livechatinc.com) code -->
+<!--<script type="text/javascript">-->
+<!--    window.__lc = window.__lc || {};-->
+<!--    window.__lc.license = 11745246;-->
+<!--    (function() {-->
+<!--        var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;-->
+<!--        lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';-->
+<!--        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);-->
+<!--    })();-->
+<!--</script>-->
+<!--<noscript>-->
+<!--    <a href="https://www.livechatinc.com/chat-with/11745246/" rel="nofollow">Chat with us</a>,-->
+<!--    powered by <a href="https://www.livechatinc.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a>-->
+<!--</noscript>-->
+<!-- End of LiveChat code -->
 
 <script>
-    (function (d, a) {
-        function c() {
-            var b = d.createElement("script");
-            b.async = !0;
-            b.type = "text/javascript";
-            b.src = a._settings.messengerUrl;
-            b.crossOrigin = "anonymous";
-            var c = d.getElementsByTagName("script")[0];
-            c.parentNode.insertBefore(b, c)
-        }
+    window.intercomSettings = {
+        app_id: "hkyfju3m"
+    };
+</script>
 
-        window.kayako = a;
-        a.readyQueue = [];
-        a.newEmbedCode = !0;
-        a.ready = function (b) {
-            a.readyQueue.push(b)
-        };
-        a._settings = {
-            apiUrl: "https://profit-whales.kayako.com/api/v1",
-            messengerUrl: "https://profit-whales.kayakocdn.com/messenger",
-            realtimeUrl: "wss://kre.kayako.net/socket"
-        };
-        window.attachEvent ? window.attachEvent("onload", c) : window.addEventListener("load", c, !1)
-    })(document, window.kayako || {});
+<script>
+    // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/hkyfju3m'
+    (function () {
+        var w = window;
+        var ic = w.Intercom;
+        if (typeof ic === "function") {
+            ic('reattach_activator');
+            ic('update', w.intercomSettings);
+        } else {
+            var d = document;
+            var i = function () {
+                i.c(arguments);
+            };
+            i.q = [];
+            i.c = function (args) {
+                i.q.push(args);
+            };
+            w.Intercom = i;
+            var l = function () {
+                var s = d.createElement('script');
+                s.type = 'text/javascript';
+                s.async = true;
+                s.src = 'https://widget.intercom.io/widget/hkyfju3m';
+                var x = d.getElementsByTagName('script')[0];
+                x.parentNode.insertBefore(s, x);
+            };
+            if (w.attachEvent) {
+                w.attachEvent('onload', l);
+            } else {
+                w.addEventListener('load', l, false);
+            }
+        }
+    })();
 </script>
 </body>
 </html>

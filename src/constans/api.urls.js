@@ -28,6 +28,8 @@ export const userUrls = {
     coupon: (subscriptionId) => `user/account/subscription/${subscriptionId}/update`,
     couponStatus: 'user/account/subscription/check-coupon',
     ebookSubscribe: 'landings/ebook/send-me',
+    userSubscribe: 'landings/subscribe',
+    contacts: 'landings/contact-us',
 };
 
 export const productsUrls = {
@@ -60,8 +62,9 @@ export const scannerUrls = {
 
 export const daypartingUrls = {
     campaigns: 'ppc-automation/dayparting/campaigns',
-    spendOutBudget: '',
-    allStatistic: '',
-    dayParting: '',
-    placements: 'ppc-automation/dayparting/campaigns/placements'
+    outBudget: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/sales-oob` : 'ppc-automation/dayparting/campaigns/sales-oob',
+    dailyBudget: (id) => `ppc-automation/dayparting/campaigns/${id}/daily-budget`,
+    dailyStatistic: (id) => `ppc-automation/dayparting/campaigns/${id}/chart-data`,
+    dayParting: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/state` : 'ppc-automation/dayparting/campaigns/state',
+    placements: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/placements` : 'ppc-automation/dayparting/campaigns/placements'
 };

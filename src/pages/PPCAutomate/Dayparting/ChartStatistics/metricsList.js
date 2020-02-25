@@ -31,7 +31,7 @@ export const metricsList =  [
     },
     {
         title: 'Orders',
-        key: 'orders',
+        key: 'total_orders',
         type: 'number'
     },
     {

@@ -34,7 +34,9 @@ export const userService = {
     applyCoupon,
     getSubscription,
     getCouponStatus,
-    ebookOnSubscribe
+    ebookOnSubscribe,
+    onSubscribe,
+    sendContacts
 };
 
 function login(user) {
@@ -164,6 +166,14 @@ function getCouponStatus(coupon) {
 //-------------------------------------
 function ebookOnSubscribe(email) {
     return api('post', `${userUrls.ebookSubscribe}`, email);
+}
+
+function onSubscribe(email) {
+    return api('post', `${userUrls.userSubscribe}`, email);
+}
+
+function sendContacts(data) {
+    return api('post', `${userUrls.contacts}`, data);
 }
 
 //-------------------------------------

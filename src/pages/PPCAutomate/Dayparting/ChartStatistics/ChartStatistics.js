@@ -1,23 +1,58 @@
-import React, {useEffect, useState, Fragment} from "react";
+import React, {useEffect, useState} from "react";
 import {Select} from "antd";
 import CustomSelect from "../../../../components/Select/Select";
 import DayChart from './DayChart';
 import {metricsList} from "./metricsList";
 import {daypartingServices} from "../../../../services/dayparting.services";
+import {useSelector} from "react-redux";
+import axios from "axios";
 
+const CancelToken = axios.CancelToken;
+let source = null;
 const Option = Select.Option;
 
-const ChartStatistics = ({filteredMetric}) => {
+const ChartStatistics = ({date}) => {
     const [data, setData] = useState([]),
-        [firstCompareMetric, setFirstMetric] = useState(metricsList[1]),
-        [secondCompareMetric, setSecondMetric] = useState(metricsList[0]);
+        [firstMetric, setFirstMetric] = useState(metricsList[1]),
+        [secondMetric, setSecondMetric] = useState(metricsList[0]);
+
+    const {campaignId} = useSelector(state => ({
+        campaignId: state.products.selectedProduct.id
+    }));
 
     useEffect(() => {
-        daypartingServices.getAllStatistic(filteredMetric)
-            .then(res => {
-                // console.log(res);
-            })
-    }, [filteredMetric]);
+        async function fetchData() {
+            source && source.cancel();
+            source = CancelToken.source();
+
+            try {
+                const res = await daypartingServices.getDailyStatistic({
+                    campaignId,
+                    date,
+                    firstMetric,
+                    secondMetric,
+                    cancelToken: source.token
+                });
+
+                setData([...res.response.points.map(item => {
+                    const point = {};
+                    point.date = item.date;
+                    point[firstMetric.key] = item.metrics[firstMetric.key].value !== null ? +item.metrics[firstMetric.key].value : null;
+
+                    if (secondMetric.key !== 'nothing') {
+                        point[secondMetric.key] = item.metrics[secondMetric.key].value !== null ? +item.metrics[secondMetric.key].value : null;
+                    }
+
+                    return (point);
+                })]);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        fetchData();
+
+    }, [campaignId, date, firstMetric, secondMetric]);
 
     return (
         <section className='chart-statistics'>
@@ -27,13 +62,13 @@ const ChartStatistics = ({filteredMetric}) => {
                 <div className='sorter'>
                     <div className={"select first"}>
                         <CustomSelect
-                            value={firstCompareMetric.key}
+                            value={firstMetric.key}
                             getPopupContainer={trigger => trigger.parentNode}
                             dropdownClassName={'full-width-menu'}
                             onChange={(metric) => {
                                 setFirstMetric(metricsList.find(item => item.key === metric));
 
-                                if (metric === secondCompareMetric.key) {
+                                if (metric === secondMetric.key) {
                                     setSecondMetric(metricsList[0])
                                 }
                             }}
@@ -55,14 +90,14 @@ const ChartStatistics = ({filteredMetric}) => {
                     <div className="select second">
                         <CustomSelect
                             getPopupContainer={trigger => trigger.parentNode}
-                            value={secondCompareMetric.key}
+                            value={secondMetric.key}
                             dropdownClassName={'full-width-menu'}
                             onChange={(metric) => setSecondMetric(metricsList.find(item => item.key === metric))}
                         >
                             {metricsList.map(item => (
                                 <Option
                                     title={item.title}
-                                    disabled={firstCompareMetric.key === item.key}
+                                    disabled={firstMetric.key === item.key}
                                     key={item.key}
                                     value={item.key}
                                 >
@@ -76,8 +111,8 @@ const ChartStatistics = ({filteredMetric}) => {
 
             <DayChart
                 data={data}
-                firstMetric={firstCompareMetric}
-                secondMetric={secondCompareMetric}
+                firstMetric={firstMetric}
+                secondMetric={secondMetric}
             />
         </section>
     )

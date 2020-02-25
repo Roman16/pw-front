@@ -153,15 +153,6 @@
           width: 1em;
           height: 1em;
         }
-
-        .ant-checkbox-inner::after {
-          //width: 0.35714285714285715rem;
-          //height: 0.6428571428571429rem;
-        }
-      }
-
-      .ant-checkbox-checked .ant-checkbox-inner::after {
-        margin: 0 0 0 -2px;
       }
     }
   }
@@ -212,18 +203,22 @@
 
 .reports-changes-window {
   max-width: 15vw;
+  min-width: 250px;
   width: max-content !important;
   text-align: center;
 
   .ant-modal-content {
-    width: max-content;
+    width: 100%;
+    min-width: max-content;
   }
 
   .ant-modal-body {
-    width: max-content;
+    width: 100%;
+    min-width: max-content;
     padding: 30px 30px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 
     h3 {
       margin: 0 0 20px 0;
@@ -234,6 +229,7 @@
     }
 
     b {
+      width: max-content;
       color: @success-color;
       font-size: 5rem;
     }
@@ -241,7 +237,7 @@
     span {
       font-size: 1.4285714285714286rem;
       font-weight: bold;
-      margin: -20px 0 0 0;
+      margin: -15px 0 0 0;
     }
   }
 

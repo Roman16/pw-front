@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlay} from "@fortawesome/free-solid-svg-icons"
 import $ from 'jquery';
@@ -7,7 +7,6 @@ import ionRangeSlider from 'ion-rangeslider';
 import './LandingAutomation.less';
 
 import {history} from "../../../utils/history";
-import {debounce} from "throttle-debounce";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {casesImages} from "../../../assets/img/landing-automation/cases";
@@ -19,12 +18,19 @@ import JeffDaily from '../../../assets/img/landing-automation/jeff-daily.svg';
 import amazonApp from '../../../assets/img/landing-automation/amazon-app-store.svg';
 import dashIcon from '../../../assets/img/landing-automation/dash.svg';
 import listIcon from '../../../assets/img/landing-automation/yes_green.svg'
-import jeffChart from '../../../assets/img/landing-automation/jeffChart.svg'
+import confidenceLevelImage from '../../../assets/img/landing-automation/confidence-level.svg';
+import awsImage from '../../../assets/img/landing-automation/aws.svg';
+import appStoreImage from '../../../assets/img/landing-automation/app-store.svg';
+import blogPostImage from '../../../assets/img/landing-automation/blog-post.png';
+import supportImage from '../../../assets/img/landing-automation/Vitalik-help.png';
+import emojiImage from '../../../assets/img/landing-automation/emoji.png';
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {Modal} from "antd";
+import favicon from '../../../assets/img/icons/favicon.ico';
+
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
 const pixelRatio = window.devicePixelRatio;
@@ -400,7 +406,6 @@ const LandingAutomation = () => {
         //----------------------------------------------------------------------
         document.querySelector('html').classList.add('not-retina');
         //----------------------------------------------------------------------
-
         //----------------------------------------------------------------------
         $(".js-range-slider").ionRangeSlider({
             min: 0,
@@ -420,7 +425,7 @@ const LandingAutomation = () => {
                 $('.slider-container .slider .irs .irs-bar').html('$ 35');
             },
             onChange: function (data) {
-                var value = data.from_value,
+                let value = data.from_value,
                     result = 0,
                     sumElement = $('.result-sum'),
                     barLabel = $('.slider-container .slider .irs .irs-bar'),
@@ -485,13 +490,12 @@ const LandingAutomation = () => {
         document.head.appendChild(s);
         document.head.appendChild(mailchimpScript);
 
-
         return () => {
+            document.querySelector('html').classList.remove('not-retina');
+
             document.head.removeChild(s);
             document.head.removeChild(mailchimpScript);
             window.location.reload();
-
-            document.querySelector('html').classList.remove('not-retina');
         }
     }, []);
 
@@ -606,7 +610,8 @@ const LandingAutomation = () => {
                                     START FREE
                                 </button>
 
-                                <img src={amazonApp} alt="" onClick={() => window.open('https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9')}/>
+                                <img src={amazonApp} alt=""
+                                     onClick={() => window.open('https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9')}/>
                             </div>
                         </div>
                     </div>
@@ -1071,17 +1076,137 @@ const LandingAutomation = () => {
                 </div>
             </section>
 
-            <section className='last-section'>
-                <div className="container">
-                    <h2>Go for Profit, be a Whale</h2>
+            {/*<section className='last-section'>*/}
+            {/*    <div className="container">*/}
+            {/*        <h2>Go for Profit, be a Whale</h2>*/}
 
-                    <div className="image">
-                        <img src={jeffChart} alt=""/>
+            {/*        <div className="image">*/}
+            {/*            <img src={jeffChart} alt=""/>*/}
+            {/*        </div>*/}
+
+            {/*        <button className='btn default' onClick={goToRegistrationPage}>*/}
+            {/*            Try It For Free*/}
+            {/*        </button>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
+
+            <section className='secure'>
+                <div className="container">
+                    <h2><span>Safe</span> and secure</h2>
+                    <p>
+                        Want to try Profit Whales but worried about the risk of a program
+                        <br/>
+                        handling your PPC management? Don’t worry. <br/> Profit Whales and
+                        Amazon have safeguards in place to ensure <br/> every decision we make
+                        is not risky for your account.
+                    </p>
+
+                    <div className="list">
+                        <div className="item">
+                            <div className="image">
+                                <img src={confidenceLevelImage} alt=""/>
+                            </div>
+                            <h4>Confidence Level</h4>
+                            <p>
+                                This is an algorithm that makes sure that the decision that our optimization makes is
+                                right by at least 90%. We will not reveal all the cards about how we calculate this, but
+                                we can assure you that the algorithm does not make deliberately wrong decisions.
+                            </p>
+                        </div>
+                        <div className="item">
+                            <div className="image">
+                                <img src={appStoreImage} alt=""/>
+                            </div>
+                            <h4>Amazon Appstore</h4>
+                            <p>
+                                Profit Whales is an official Amazon FBA Appstore participant. Amazon takes the
+                                information security of its sellers very seriously, and we have complied with its
+                                policy, so you can be sure your data is saved and not shared.
+                            </p>
+                        </div>
+                        <div className="item">
+                            <div className="image">
+                                <img src={awsImage} alt=""/>
+                            </div>
+                            <h4>Amazon Partner</h4>
+                            <p>
+                                As an official Amazon Web Services partner, Profit Whales is hosted on Amazon servers
+                                and infrastructure, ensuring we can respond to any Amazon Advertising changes as fast as
+                                possible.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/*<section className='blog-posts'>*/}
+            {/*    <div className="container">*/}
+            {/*        <h2>Stay up-to-date with the latest Amazon expert content</h2>*/}
+
+            {/*        <p>*/}
+            {/*            We are one the mission to provide Amazon Sellers with the most <br/>*/}
+            {/*            useful and actionable content possible. Check it out.*/}
+            {/*        </p>*/}
+
+
+            {/*        <div className="posts">*/}
+            {/*            <div className="item">*/}
+            {/*                <div className="image"><img src={blogPostImage} alt=""/></div>*/}
+            {/*                <h4>text text</h4>*/}
+            {/*                <span className="date">Apr 4, 2020</span>*/}
+            {/*            </div>*/}
+            {/*            <div className="item">*/}
+            {/*                <div className="image"><img src={blogPostImage} alt=""/></div>*/}
+            {/*                <h4>text text</h4>*/}
+            {/*                <span className="date">Apr 4, 2020</span>*/}
+            {/*            </div>*/}
+            {/*            <div className="item">*/}
+            {/*                <div className="image"><img src={blogPostImage} alt=""/></div>*/}
+            {/*                <h4>text text</h4>*/}
+            {/*                <span className="date">Apr 4, 2020</span>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
+
+            <section className='support'>
+                <div className="container">
+                    <div className="col">
+                        <h3>Human Support <img src={emojiImage} alt=""/></h3>
+                        <p>
+                            Our expert team is here to help you
+                            <br/>
+                            on your journey as Amazon Seller. We
+                            <br/>
+                            are here to answer your questions
+                            <br/>
+                            and provide actionable steps that
+                            <br/>
+                            you can implement in your business.
+                        </p>
+                        <h4>Don’t take our word for it</h4>
+
+                        <a href="https://www.trustpilot.com/review/profitwhales.com" target={'_blank'}>
+                            Check our customer reviews on Trustpilot
+                        </a>
                     </div>
 
-                    <button className='btn default' onClick={goToRegistrationPage}>
-                        Try It For Free
-                    </button>
+                    <img src={supportImage} alt="" className='image'/>
+
+                </div>
+
+                <div className="rectangle"/>
+            </section>
+
+            <section className='trial'>
+                <div className="container">
+                    <h2>What are you waiting for?</h2>
+                    <p>Get started wit 14-day free trial and get time saving machine for your business.</p>
+                    <button onClick={() => history.push('/registration')}>START 14-DAY FREE TRIAL TODAY</button>
+                    <ul>
+                        <li>No credit card required</li>
+                        <li>Cancel anytime</li>
+                    </ul>
                 </div>
             </section>
 

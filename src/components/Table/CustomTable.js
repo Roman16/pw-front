@@ -1,8 +1,9 @@
-import React, {useState, useEffect, Fragment} from 'react';
-import {Pagination, Spin, Select, Menu, Dropdown, Icon} from 'antd';
+import React from 'react';
+import {Pagination, Spin, Select, Icon} from 'antd';
 import shortid from 'shortid';
 
 import './CustomTable.less';
+import CustomSelect from "../Select/Select";
 
 const Option = Select.Option;
 
@@ -107,11 +108,11 @@ const CustomTable = ({
                 )}
 
                 {(showSizeChanger && (totalSize > 10)) &&
-                <Select onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
+                <CustomSelect onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
                     {pageSizeOptions.map(size => (
                         <Option value={size} key={size}>{size}</Option>
                     ))}
-                </Select>
+                </CustomSelect>
                 }
             </div>
         </div>

@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux';
 
 import LoginPage from "../pages/authentication/LoginPage/LoginPage";
 import RegistrationPage from "../pages/authentication/RegistrationPage/RegistrationPage";
+import ResetPassword from "../pages/authentication/ResetPassword/ResetPassword";
 import AuthorizedUser from "../pages";
 import Optimization from "../pages/PPCAutomate/Optimization/Optimization";
 import Report from "../pages/PPCAutomate/Report/Report";
@@ -24,6 +25,13 @@ import Dayparting from "../pages/PPCAutomate/Dayparting/Dayparting";
 import LandingAutomation from "../pages/LandingPages/Automation/LandingAutomation";
 import Ebook from "../pages/LandingPages/Ebook/Ebook";
 import ThankYou from "../pages/LandingPages/Ebook/ThankYou";
+import AboutUs from "../pages/LandingPages/AboutUs/AboutUs";
+import Pricing from "../pages/LandingPages/Pricing/Pricing";
+import PPCScanner from "../pages/LandingPages/PPCScanner/PPCScanner";
+import DemoCall from "../pages/LandingPages/DemoCall/DemoCall";
+import ContactUs from "../pages/LandingPages/ContactUs/ContactUs";
+import PrivacyPolicy from "../pages/LandingPages/PrivacyPolicy/PrivacyPolicy";
+import TermsOfUse from "../pages/LandingPages/TermsOfUse/TermsOfUse";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
@@ -66,11 +74,20 @@ const routers = () => {
                 <Route exact path="/login" component={LoginPage}/>
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                 <Route exact path="/registration" component={RegistrationPage}/>
+                <Route exact path="/registration" component={RegistrationPage}/>
+                <Route exact path="/reset-password" component={ResetPassword}/>
 
 
                 <Route exact path="/affiliates" component={LandingAffiliates}/>
+                <Route exact path="/about-us" component={AboutUs}/>
+                <Route exact path="/ppc-scanner" component={PPCScanner}/>
+                <Route exact path="/pricing" component={Pricing}/>
                 <Route exact path="/amazon-ppc-blueprint" component={Ebook}/>
                 <Route exact path="/thank-you" component={ThankYou}/>
+                <Route exact path="/demo-call" component={DemoCall}/>
+                <Route exact path="/contact-us" component={ContactUs}/>
+                <Route exact path="/policy" component={PrivacyPolicy}/>
+                <Route exact path="/terms-and-conditions" component={TermsOfUse}/>
 
                 <ConnectedAmazonRoute
                     exact

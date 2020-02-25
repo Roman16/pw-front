@@ -1,14 +1,19 @@
 import React, {Component, Fragment} from 'react';
 import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
-import {Switch} from "antd";
+import {Spin, Switch} from "antd";
 import moment from "moment";
 import Selection from "@simonwep/selection-js/src/selection";
 import shortid from "shortid";
 import './DaySwitches.less';
-import {hold} from "../../../../utils/hold";
 import {daypartingServices} from "../../../../services/dayparting.services";
 import {notification} from "../../../../components/Notification";
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
+import {connect} from "react-redux";
+import axios from "axios";
+
+const CancelToken = axios.CancelToken;
+let source = null;
+const timeLineShift = 16;
 
 const defaultList = Array.from({length: 168}, () => '1').join('');
 
@@ -36,49 +41,155 @@ const selection = Selection.create({
     singleClick: false,
 });
 
+let timeoutId = null;
 
 class DaySwitches extends Component {
     state = {
         hoursStatus: [...defaultList],
-        activeSection: false,
-        visibleWindow: false
+        visibleWindow: false,
+        processing: false,
+        activeDayparting: false,
+        hasDayparting: false
     };
 
-    deactivateDaypartingHandler = () => {
+    deactivateDaypartingHandler = async () => {
         this.setState({
-            activeSection: false,
-            visibleWindow: false
-        })
+            processing: true
+        });
+
+        try {
+            await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId});
+
+            this.setState({
+                activeDayparting: false,
+                visibleWindow: false
+            })
+        } catch (e) {
+            console.log(e);
+        }
+
+        setTimeout(() => {
+            this.setState({
+                processing: false
+            });
+        }, 500)
+    };
+
+    activateDaypartingHandler = async () => {
+        this.setState({
+            processing: true
+        });
+
+        try {
+            if (this.state.hasDayparting) {
+                await daypartingServices.activateDayparting({campaignId: this.props.campaignId});
+            } else {
+                await daypartingServices.updateDayPartingParams({
+                    campaignId: this.props.campaignId,
+                    state_encoded_string: defaultList,
+                    status: 'ACTIVE'
+                });
+            }
+
+            this.setState({
+                activeDayparting: true,
+            })
+        } catch (e) {
+            console.log(e);
+        }
+
+        this.setState({
+            processing: false
+        });
     };
 
     switchDayPartingHandler = () => {
-        if (this.state.activeSection) {
-            this.setState({
-                visibleWindow: true
-            })
-        } else {
-            this.setState({
-                activeSection: !this.state.activeSection
-            })
+        if (this.props.campaignId) {
+            if (this.state.activeDayparting) {
+                if (timeoutId) {
+                    this.forceUpdateStatus(this.props.campaignId, this.state.hoursStatus)
+                }
+
+                this.setState({
+                    visibleWindow: true
+                })
+            } else {
+                this.activateDaypartingHandler();
+            }
+        }
+    };
+
+    getDaypartingStatus = async () => {
+        this.setState({
+            activeDayparting: false
+        });
+
+        try {
+            source && source.cancel();
+            source = CancelToken.source();
+
+            const res = await daypartingServices.getDayPartingParams({
+                campaignId: this.props.campaignId,
+                cancelToken: source.token
+            });
+
+            if (res.response[0]) {
+                this.setState({
+                    hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
+                    activeDayparting: res.response[0].status === 'ACTIVE',
+                    hasDayparting: true
+                });
+            } else {
+                this.setState({
+                    hoursStatus: [...defaultList],
+                    activeDayparting: false,
+                    hasDayparting: false
+                });
+            }
+        } catch (e) {
+            console.log(e);
         }
     };
 
     handleUpdateStatus = async () => {
-        hold(async () => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(async () => {
             try {
-                await daypartingServices.updateDayPartingParams(this.state.hoursStatus.join(''));
-                notification.success({title: 'Saved'})
+                await daypartingServices.updateDayPartingParams({
+                    campaignId: this.props.campaignId,
+                    state_encoded_string: [...this.state.hoursStatus.slice(timeLineShift, 168), ...this.state.hoursStatus.slice(0, timeLineShift)].join('')
+                });
+                notification.success({title: 'Saved'});
+                timeoutId = null;
             } catch (e) {
                 console.log(e);
-                // notification.error({title: 'Not Saved'})
             }
         }, 1000)
     };
 
+    forceUpdateStatus = async (id, status) => {
+        clearTimeout(timeoutId);
+
+        try {
+            daypartingServices.updateDayPartingParams({
+                campaignId: id,
+                state_encoded_string: [...status.slice(timeLineShift, 168), ...status.slice(0, timeLineShift)].join('')
+            })
+                .then(() => {
+                    notification.success({title: 'Saved'});
+                    timeoutId = null;
+                });
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     handleReset = () => {
-        this.setState({
-            hoursStatus: [...defaultList]
-        });
+        if (defaultList !== this.state.hoursStatus.join('')) {
+            this.setState({
+                hoursStatus: [...defaultList]
+            }, this.handleUpdateStatus);
+        }
     };
 
     handleSwitchHour = (index, value) => {
@@ -87,7 +198,7 @@ class DaySwitches extends Component {
 
         this.setState({
             hoursStatus: [...newList]
-        })
+        }, this.handleUpdateStatus)
     };
 
     handleSwitchRow = (row, value) => {
@@ -101,7 +212,7 @@ class DaySwitches extends Component {
 
         this.setState({
             hoursStatus: [...newList]
-        })
+        }, this.handleUpdateStatus)
     };
 
     handleSwitchColumn = (column, value) => {
@@ -112,11 +223,13 @@ class DaySwitches extends Component {
 
         this.setState({
             hoursStatus: [...newList]
-        })
+        }, this.handleUpdateStatus)
     };
 
     componentDidMount() {
         let status = 'false';
+
+        this.getDaypartingStatus();
 
         selection
             .on('start', ({selected}) => {
@@ -173,28 +286,45 @@ class DaySwitches extends Component {
 
                 this.setState({
                     hoursStatus: [...newList]
-                })
+                }, this.handleUpdateStatus)
             });
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevState.hoursStatus.join('') !== this.state.hoursStatus.join('')) {
-            this.handleUpdateStatus()
+    componentWillUnmount() {
+        if (timeoutId) {
+            this.forceUpdateStatus(this.props.campaignId, this.state.hoursStatus)
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.campaignId !== this.props.campaignId) {
+            if (timeoutId) {
+                this.forceUpdateStatus(prevProps.campaignId, prevState.hoursStatus)
+            }
+
+            this.getDaypartingStatus()
+        }
+
+        //     window.onbeforeunload = confirmExit;
+        //     function confirmExit() {
+        //         return "You have attempted to leave this page. Are you sure?";
+        //     }
+    }
+
+
     render() {
-        const {hoursStatus, activeSection, visibleWindow} = this.state;
+        const {hoursStatus, activeDayparting, visibleWindow, processing} = this.state;
 
         return (
             <Fragment>
-                <section className={`day-switches ${activeSection ? 'enabled' : 'disabled'}`}>
+                <section className={`day-switches ${activeDayparting ? 'enabled' : 'disabled'}`}>
                     <div className="section-header">
                         <button
                             className='btn default switch-day-parting'
                             onClick={this.switchDayPartingHandler}
+                            disabled={processing || !this.props.campaignId}
                         >
-                            {activeSection ? 'Disable Day Parting' : 'Enable Day Parting'}
+                            {activeDayparting ? 'Disable Day Parting' : 'Enable Day Parting'}
                         </button>
 
                         <div className='actions'>
@@ -208,7 +338,7 @@ class DaySwitches extends Component {
                                 Active
                             </div>
 
-                            <button onClick={this.handleReset} disabled={!activeSection}>
+                            <button className='btn' onClick={this.handleReset} disabled={!activeDayparting}>
                                 <img src={reloadIcon} alt=""/>
                                 Reset
                             </button>
@@ -220,9 +350,9 @@ class DaySwitches extends Component {
                             <div/>
                             {hours.map((status, timeIndex) => (
                                 <div key={shortid.generate()}>
-                                    {moment(timeIndex + 1, 'HH').format('hh A')}
+                                    {moment(timeIndex, 'HH').format('hh A')}
                                     <Switch
-                                        disabled={!activeSection}
+                                        disabled={!activeDayparting}
                                         checked={[0, 1, 2, 3, 4, 5, 6].map(item => hoursStatus[24 * item + timeIndex]).every(item => item === '1')}
                                         onChange={(value) => this.handleSwitchColumn(timeIndex, value)}
                                     />
@@ -235,7 +365,7 @@ class DaySwitches extends Component {
                                 {days.map((day, dayIndex) => (
                                     <div className='day-name' key={shortid.generate()}>
                                         <Switch
-                                            disabled={!activeSection}
+                                            disabled={!activeDayparting}
                                             checked={hoursStatus.slice(24 * dayIndex, 24 * (dayIndex + 1)).every(item => item === '1')}
                                             onChange={(value) => this.handleSwitchRow(dayIndex, value)}
                                         />
@@ -246,11 +376,11 @@ class DaySwitches extends Component {
                                 ))}
                             </div>
 
-                            <div className={`col multi-select ${activeSection ? 'enabled' : 'disabled'}`}>
+                            <div className={`col multi-select ${activeDayparting ? 'enabled' : 'disabled'}`}>
                                 {hoursStatus.map((value, hourIndex) => (
                                     <div className='statistic-item' key={shortid.generate()}>
                                         <div
-                                            onClick={() => activeSection && this.handleSwitchHour(hourIndex, value)}
+                                            onClick={() => activeDayparting && this.handleSwitchHour(hourIndex, value)}
                                             className={value === '1' ? 'statistic-information active' : 'statistic-information'}
                                             hourIndex={hourIndex}
                                             value={value}
@@ -278,25 +408,36 @@ class DaySwitches extends Component {
                         </p>
 
                         <div className="action">
-                            <button
-                                className='btn default'
-                                onClick={this.deactivateDaypartingHandler}>
-                                Yes
-                            </button>
+                            {processing ? <Spin/> : <Fragment>
+                                <button
+                                    className='btn default'
+                                    onClick={this.deactivateDaypartingHandler}>
+                                    Yes
+                                </button>
 
-                            <button
-                                className='btn green-btn'
-                                onClick={() => this.setState({visibleWindow: false})}>
-                                No
-                            </button>
+                                <button
+                                    className='btn green-btn'
+                                    onClick={() => this.setState({visibleWindow: false})}>
+                                    No
+                                </button>
+                            </Fragment>}
                         </div>
                     </Fragment>
-
                 </ModalWindow>
             </Fragment>
         )
     }
 }
 
-export default DaySwitches
+
+const mapStateToProps = state => ({
+    campaignId: state.products.selectedProduct.id
+});
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DaySwitches);
 

@@ -34,7 +34,7 @@ export function products(state = initialState, action) {
             return {
                 ...state,
                 productList: action.payload.result,
-                totalSize: action.payload.totalSize,
+                totalSize: action.payload.fetching ? state.totalSize : action.payload.totalSize,
                 fetching: action.payload.fetching
             };
 
@@ -139,6 +139,22 @@ export function products(state = initialState, action) {
             return {
                 ...state,
                 dontShowStopNotificationAgain: action.payload
+            };
+
+        case productsConstants.CAMPAIGN_BUDGET:
+            return {
+                ...state,
+                productList: state.productList.map(item => {
+                    if (item.id === action.payload.id) {
+                        item = {...item, ...action.payload}
+                    }
+
+                    return item;
+                }),
+                selectedProduct: {
+                    ...state.selectedProduct,
+                    dailyBudget: action.payload.dailyBudget
+                }
             };
 
         default:

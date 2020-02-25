@@ -8,49 +8,29 @@ import moment from "moment";
 import {daypartingServices} from "../../../services/dayparting.services";
 import {useSelector} from "react-redux";
 import {numberMask} from "../../../utils/numberMask";
+import axios from "axios";
 
-const defaultData = [
-    {
-        date: '2020-01-13T16:28:02', top_search: 4034, product: 2036, rest_search: 4054,
-    },
-    {
-        date: '2020-01-14T16:28:02', top_search: 3047, product: 1078, rest_search: 6034,
-    },
-    {
-        date: '2020-01-15T16:28:02', top_search: 2034, product: 7046, rest_search: 1034,
-    },
-    {
-        date: '2020-01-16T16:28:02', top_search: 887, product: 256, rest_search: 508,
-    },
-    {
-        date: '2020-01-17T16:28:02', top_search: 3087, product: 1034, rest_search: 6077,
-    },
-    {
-        date: '2020-01-18T16:28:02', top_search: 2087, product: 7023, rest_search: 5609,
-    },
-    {
-        date: '2020-01-19T16:28:02', top_search: 2534, product: 2523, rest_search: 5023,
-    },
-];
+const CancelToken = axios.CancelToken;
+let source = null;
 
 const chartLabel = {
     top_search: 'Top of search',
-    product: 'Product pages',
+    product_pages: 'Product pages',
     rest_search: 'Rest of search'
 };
 
 const statisticParams = [
     {
-        title: 'Top of search',
-        key: 'Top of Search on-Amazon'
+        title: 'Rest of search',
+        key: 'Other on-Amazon'
     },
     {
         title: 'Product pages',
         key: 'Detail Page on-Amazon'
     },
     {
-        title: 'Rest of search',
-        key: 'Other on-Amazon'
+        title: 'Top of search',
+        key: 'Top of Search on-Amazon'
     }
 ];
 
@@ -75,29 +55,30 @@ const statisticMetrics = [
 
 const chartColors = [
     {
-        stroke: '#6D6DF6',
-        fill: '#A1A1F9'
+        stroke: '#F1C75C',
+        fill: '#F6DB97'
     },
     {
         stroke: '#EC7F5C',
         fill: '#F3AD97'
     },
     {
-        stroke: '#F1C75C',
-        fill: '#F6DB97'
+        stroke: '#6D6DF6',
+        fill: '#A1A1F9'
     }
+
 ];
 
 const ChartTooltip = ({payload}) => {
-    if (payload.length > 0) {
+    if (payload && payload.length > 0) {
         const total = payload.reduce((result, entry) => (result + entry.value), 0);
 
         return (
             <div className='area-chart-tooltip'>
-                <h3>{moment(payload[0].payload.name).format('DD MMMM YYYY')}</h3>
+                <h3>{moment(payload[0].payload.date).format('DD MMMM YYYY')}</h3>
 
                 <div className='content'>
-                    {payload.map((entry, index) => (
+                    {payload.reverse().map((entry, index) => (
                         <div key={`item-${index}`}>
                             <div className='name'>
                                 <div style={{background: entry.color}}/>
@@ -121,7 +102,7 @@ const ChartTooltip = ({payload}) => {
     }
 };
 
-const CustomizedAxisTick = ({x, y, payload}) => {
+const CustomizedAxisTick = ({x, y, payload, lastIndex}) => {
     if (payload.index === 0) {
         return (
             <g transform={`translate(${x},${y})`}>
@@ -129,13 +110,16 @@ const CustomizedAxisTick = ({x, y, payload}) => {
                       fill="#666">{moment(payload.value).format('DD MMM YY')}</text>
             </g>
         );
-    } else {
+    } else if (payload.index === lastIndex) {
         return (
             <g transform={`translate(${x},${y})`}>
                 <text x={0} y={0} dy={16} textAnchor="end"
                       fill="#666">{moment(payload.value).format('DD MMM YY')}</text>
             </g>
         );
+
+    } else {
+        return ('');
     }
 };
 
@@ -165,22 +149,40 @@ const getPercent = (value, total) => {
 const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
 
 const PlacementsStatistics = ({date}) => {
-    const [chartData, setChartData] = useState(defaultData),
+    const [chartData, setChartData] = useState([]),
         [statisticData, setStatisticData] = useState({});
     const {campaignId} = useSelector(state => ({
         campaignId: state.products.selectedProduct.id
     }));
 
     useEffect(() => {
-        daypartingServices.getPlacementsStatistic({campaignId, date})
-            .then(res => {
-                console.log(res);
-                // setChartData(res.data)
-                setStatisticData(res.statistics)
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        async function fetchData() {
+            source && source.cancel();
+            source = CancelToken.source();
+
+            try {
+                const res = await daypartingServices.getPlacementsStatistic({
+                    campaignId,
+                    date,
+                    cancelToken: source.token
+                });
+
+                const chartData = Object.keys(res.response.points).map(date => ({
+                    date: date,
+                    top_search: res.response.points[date].data['Top of Search on-Amazon'].value != null ? +res.response.points[date].data['Top of Search on-Amazon'].value : null,
+                    product_pages: res.response.points[date].data['Detail Page on-Amazon'].value != null ? +res.response.points[date].data['Detail Page on-Amazon'].value : null,
+                    rest_search: res.response.points[date].data['Other on-Amazon'].value != null ? +res.response.points[date].data['Other on-Amazon'].value : null,
+                }));
+
+                setStatisticData(res.response.statistics);
+                setChartData(chartData);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        fetchData();
+
     }, [date, campaignId]);
 
     return (
@@ -230,9 +232,9 @@ const PlacementsStatistics = ({date}) => {
                                 minTickGap={2}
                                 tickSize={9}
                                 dataKey="date"
-                                interval={5}
+                                interval={chartData.length - 2}
                                 padding={{left: 10, right: 10}}
-                                tick={<CustomizedAxisTick/>}
+                                tick={<CustomizedAxisTick lastIndex={chartData.length - 1}/>}
                             />
 
                             <Tooltip
@@ -246,16 +248,16 @@ const PlacementsStatistics = ({date}) => {
                                 type="linear"
                                 dataKey="top_search"
                                 stackId="1"
-                                stroke={chartColors[0].stroke}
+                                stroke={chartColors[2].stroke}
                                 fill="url(#colorUv)"
                                 fillOpacity={1}
                                 isAnimationActive={false}
-                                activeDot={{stroke: chartColors[0].stroke, strokeWidth: 2}}
+                                activeDot={{stroke: chartColors[2].stroke, strokeWidth: 2}}
                             />
 
                             <Area
                                 type="linear"
-                                dataKey="product"
+                                dataKey="product_pages"
                                 stackId="1"
                                 stroke={chartColors[1].stroke}
                                 fill="url(#colorPv)"
@@ -268,11 +270,11 @@ const PlacementsStatistics = ({date}) => {
                                 type="linear"
                                 dataKey="rest_search"
                                 stackId="1"
-                                stroke={chartColors[2].stroke}
+                                stroke={chartColors[0].stroke}
                                 fill="url(#colorAmt)"
                                 fillOpacity={1}
                                 isAnimationActive={false}
-                                activeDot={{stroke: chartColors[2].stroke, strokeWidth: 2}}
+                                activeDot={{stroke: chartColors[0].stroke, strokeWidth: 2}}
                             />
                         </AreaChart>
                     </ResponsiveContainer>
@@ -282,7 +284,7 @@ const PlacementsStatistics = ({date}) => {
                     <div className="row metrics-name">
                         <div/>
                         {statisticMetrics.map(item => (
-                            <div>{item.title}</div>
+                            <div key={item.key}>{item.title}</div>
                         ))}
                     </div>
 
@@ -290,7 +292,7 @@ const PlacementsStatistics = ({date}) => {
                         const metricValues = statisticData[item.key] || null;
 
                         return (
-                            <div className="row">
+                            <div className="row" key={item.key}>
                                 <div className="parameter-name">
                                     <div style={{background: chartColors[index].stroke}}/>
                                     {item.title}
@@ -298,7 +300,7 @@ const PlacementsStatistics = ({date}) => {
 
                                 {metricValues && <Fragment>
                                     {statisticMetrics.map(item => (
-                                        <MetricValue metric={metricValues[item.key]} type={item.key}/>
+                                        <MetricValue key={item.key} metric={metricValues[item.key]} type={item.key}/>
                                     ))}
                                 </Fragment>}
                             </div>

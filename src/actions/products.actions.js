@@ -14,7 +14,8 @@ export const productsActions = {
     showOnlyActive,
     changeOptimizedOptions,
     changeOptimizedStrategy,
-    dontShowWindowAgain
+    dontShowWindowAgain,
+    updateCampaignBudget
 };
 
 function fetchProducts(paginationParams) {
@@ -33,13 +34,16 @@ function fetchProducts(paginationParams) {
                     dispatch({
                         type: productsConstants.SET_PRODUCT_LIST,
                         payload: {
-                            result: res,
+                            result: res.response,
+                            totalSize: res.total_count,
                             fetching: false
                         }
                     });
 
-                    if (res.length > 0 && !paginationParams.selectedAll) {
-                        dispatch(fetchProductDetails(res[0], paginationParams.pathname));
+                    if (res.response && res.response.length > 0 && !paginationParams.selectedAll) {
+                        dispatch(fetchProductDetails(res.response[0], paginationParams.pathname));
+                    } else {
+                        dispatch(fetchProductDetails({id: null}, paginationParams.pathname));
                     }
                 });
         } else {
@@ -55,6 +59,8 @@ function fetchProducts(paginationParams) {
 
                     if (res.result && res.result.length > 0 && !paginationParams.selectedAll) {
                         dispatch(fetchProductDetails(res.result[0], paginationParams.pathname));
+                    } else {
+                        dispatch(fetchProductDetails({id: null}, paginationParams.pathname));
                     }
                 });
         }
@@ -200,6 +206,15 @@ function dontShowWindowAgain(window) {
         dispatch({
             type: productsConstants[`SWITCH_${window.windowName}_CONFIRM_WINDOW`],
             payload: window.status
+        });
+    };
+}
+
+function updateCampaignBudget(product) {
+    return dispatch => {
+        dispatch({
+            type: productsConstants.CAMPAIGN_BUDGET,
+            payload: product
         });
     };
 }

@@ -4,16 +4,18 @@ import {Modal, Popover} from "antd";
 import './ModalWindow.less';
 
 const ModalWindow = (props) => {
-    const {visible, handleOk, handleCancel, className, okText, mask, footer, container} = props;
+    const {visible, handleOk, handleCancel, className, okText, mask, footer, container, destroyOnClose} = props;
 
     useEffect(() => {
-        document.querySelector('.sidebar-header .anticon-menu').addEventListener('click', () => {
-            setTimeout(() => {
-                if (document.querySelector('.custom-modal-wrap')) {
-                    document.querySelector('.custom-modal-wrap').style.left = `${document.querySelector('.sidebar').clientWidth}px`;
-                }
-            }, 400)
-        })
+        if (container) {
+            document.querySelector('.sidebar-header .anticon-menu').addEventListener('click', () => {
+                setTimeout(() => {
+                    if (document.querySelector('.custom-modal-wrap')) {
+                        document.querySelector('.custom-modal-wrap').style.left = `${document.querySelector('.sidebar').clientWidth}px`;
+                    }
+                }, 400)
+            })
+        }
     }, []);
 
 
@@ -48,6 +50,7 @@ const ModalWindow = (props) => {
                 okText={okText}
                 mask={mask}
                 footer={footer}
+                destroyOnClose={destroyOnClose}
             >
                 <Fragment>
                     {props.children}

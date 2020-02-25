@@ -8,8 +8,17 @@ import plusIconWhite from '../../../../assets/img/icons/plus-white.svg';
 import {daypartingServices} from "../../../../services/dayparting.services";
 import BudgetDrawer from "./BudgetDrawer";
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
+import {useSelector, useDispatch} from "react-redux";
+import axios from "axios";
+import {numberMask} from "../../../../utils/numberMask";
+import {productsActions} from "../../../../actions/products.actions";
+import {notification} from "../../../../components/Notification";
+import successImage from '../../../../assets/img/landing-contact-us/checked.svg';
 
-const defaultData = Array.from({length: 168}, () => ({value: Math.floor(Math.random() * 555) + 1}));
+const CancelToken = axios.CancelToken;
+let source = null;
+
+const defaultData = Array.from({length: 168}, () => 0);
 
 const days = [
     'Sunday',
@@ -24,43 +33,78 @@ const days = [
 const hours = Array.from({length: 24}, (item, index) => index);
 
 
-const OutBudget = () => {
+const OutBudget = ({date}) => {
     const [data, setData] = useState(defaultData),
         [percentParams, setParams] = useState({min: 0, max: 1}),
-        [visibleModal, setModal] = useState(false);
+        [visibleModal, setModal] = useState(false),
+        [saved, setStatus] = useState(false),
+        [processing, setProcessing] = useState(false);
 
-    function saveBudget(data) {
-        console.log(data);
-        setModal(false)
+    const dispatch = useDispatch();
+    const {campaignId} = useSelector(state => ({
+        campaignId: state.products.selectedProduct.id
+    }));
+
+    async function saveBudget(data) {
+        setProcessing(true);
+        try {
+            await daypartingServices.setCampaignBudget({campaignId, data: {'value_in_usd': data.value}});
+            // notification.success({title: 'Saved'});
+            setStatus(true);
+
+            dispatch(productsActions.updateCampaignBudget({
+                id: campaignId,
+                dailyBudget: data.value
+            }));
+        } catch (e) {
+            console.log(e);
+        }
+
+        setProcessing(false);
     }
 
     useEffect(() => {
-        daypartingServices.getSpendOutStatistic()
-            .then(res => {
-                // console.log(res);
-            });
+        async function fetchData() {
+            source && source.cancel();
+            source = CancelToken.source();
 
-        const minValue = Math.min(...defaultData.map(item => item.value)),
-            maxValue = Math.max(...defaultData.map(item => item.value));
+            try {
+                const res = await daypartingServices.getOutBudgetStatistic({
+                    campaignId,
+                    date,
+                    cancelToken: source.token
+                });
 
-        setParams({
-            min: minValue,
-            max: maxValue
-        });
-    }, []);
+                const minValue = Math.min(...res.response.map(item => item.sales).filter(item => item != null)),
+                    maxValue = Math.max(...res.response.map(item => item.sales));
 
-    const StatisticItem = ({value, index}) => {
+                setParams({
+                    min: minValue,
+                    max: maxValue
+                });
+
+                setData(res.response)
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        fetchData();
+
+    }, [campaignId, date]);
+
+    const StatisticItem = ({value, index, outBudget}) => {
         let color;
 
         colorList.forEach(item => {
-           const percent = ((value - percentParams.min) * 100) / (percentParams.max - percentParams.min);
-            if (percent > item.min && percent <= item.max) {
+            const percent = ((value - percentParams.min) * 100) / (percentParams.max - percentParams.min);
+            if (percent >= item.min && percent <= item.max) {
                 color = item.color;
                 return;
             }
         });
 
-        if (index === 166 || index === 167) {
+        if (outBudget) {
             return (
                 <div className="out-budget-item">
                     <div className='statistic-information' style={{background: color}}/>
@@ -73,26 +117,31 @@ const OutBudget = () => {
         }
     };
 
-    const TooltipDescription = ({value, timeIndex}) => {
+    const TooltipDescription = ({value, timeIndex, date, outBudget}) => {
         return (
             <Fragment>
-                <h3>
-                    {days[Math.floor(timeIndex / 24)]}
+                <div className="row">
+                    <div className="col">
+                        <h3>
+                            {`${days[Math.floor(timeIndex / 24)]}`}
+                        </h3>
 
-                    <span className="time">
-                        {`${moment(timeIndex - 24 * Math.floor(timeIndex / 24), 'HH').format('hh A')} - ${moment(timeIndex - 24 * Math.floor(timeIndex / 24) + 1, 'HH').format('hh A')}`}
-                    </span>
-                </h3>
+                        <span className='selected-metric'>Sales</span>
+                    </div>
+                    <div className="col">
+                        <h3>
+                            {`${moment(timeIndex - 24 * Math.floor(timeIndex / 24), 'HH').format('hh A')} - ${moment(timeIndex - 24 * Math.floor(timeIndex / 24) + 1, 'HH').format('hh A')}`}
+                        </h3>
 
-                <div className="row-metric">
-                    <StatisticItem value={value} index={timeIndex}/>
-
-                    <span className='selected-metric'>Sales</span>
-
-                    <div className="value">
-                        ${value}
+                        <div className="value">
+                            {value ? `$${numberMask(value, 2)}` : <div className='no-value'/>}
+                        </div>
                     </div>
                 </div>
+
+                {outBudget && <div className="row out-of">
+                    Out of Budget
+                </div>}
             </Fragment>
         )
     };
@@ -108,7 +157,11 @@ const OutBudget = () => {
                         Out of Budget
                     </div>
 
-                    <button className='btn default' onClick={() => setModal(true)}>
+                    <button
+                        className='btn default'
+                        onClick={() => setModal(true)}
+                        disabled={!campaignId}
+                    >
                         <img src={plusIconWhite} alt=""/>
                         Add budget
                     </button>
@@ -118,9 +171,9 @@ const OutBudget = () => {
                     <div className="row time-axis">
                         {hours.map((status, timeIndex) => (
                             <div className="time-name" key={shortid.generate()}>
-                                {moment(timeIndex + 1, 'HH').format('hh')}
+                                {moment(timeIndex, 'HH').format('hh')}
                                 <br/>
-                                {moment(timeIndex + 1, 'HH').format('A')}
+                                {moment(timeIndex, 'HH').format('A')}
                             </div>
                         ))}
                     </div>
@@ -143,13 +196,16 @@ const OutBudget = () => {
                                         className={'chart-tooltip'}
                                         description={
                                             <TooltipDescription
-                                                value={item.value}
+                                                value={item.sales}
+                                                date={item.date}
                                                 timeIndex={index}
+                                                outBudget={item.out_of_budget}
                                             />
                                         }
                                     >
                                         <StatisticItem
-                                            value={item.value}
+                                            value={item.sales}
+                                            outBudget={item.out_of_budget}
                                             index={index}
                                         />
                                     </InformationTooltip>
@@ -158,21 +214,41 @@ const OutBudget = () => {
                         </div>
                     </div>
                 </div>
-
-
             </section>
 
 
             <ModalWindow
                 visible={visibleModal}
                 className={'budget-window'}
-                handleCancel={() => setModal(false)}
+                handleCancel={() => {
+                    setModal(false);
+                    setStatus(false);
+                }}
                 footer={false}
+                destroyOnClose={true}
             >
-                <BudgetDrawer
-                    onClose={() => setModal(false)}
-                    onSave={saveBudget}
-                />
+                {saved ?
+                    <div className='success'>
+                        <img src={successImage} alt=""/>
+                        <h3>Budget saved</h3>
+
+                        <button
+                            onClick={() => {
+                                setModal(false);
+                                setStatus(false);
+                            }}
+                            className='btn green-btn'
+                        >
+                            Done
+                        </button>
+                    </div>
+                    :
+                    <BudgetDrawer
+                        onClose={() => setModal(false)}
+                        onSave={saveBudget}
+                        processing={processing}
+                    />
+                }
             </ModalWindow>
         </Fragment>
     )

@@ -11,6 +11,7 @@ import NewKeywords from "./Tables/NewKeywords";
 import NewNegativeKeywords from "./Tables/NewNegativeKeywords";
 import NewPats from "./Tables/NewPats";
 import NewNegativePats from "./Tables/NewNegativePats";
+import AllReports from "./Tables/AllReports";
 import {reportsActions} from "../../../../actions/reports.actions";
 import {reportsUrls} from "../../../../constans/api.urls";
 import "./ReportTable.less";
@@ -38,6 +39,7 @@ const TabName = ({name = null, type, counts, countsWithNew}) => {
 };
 
 const subTables = {
+    "all-reports": "all-reports",
     "keywords-optimization": "changed-keyword-bid-acos",
     "pats-optimization": "changed-pat-bid-acos",
     "new-keywords": "created-campaign",
@@ -47,6 +49,42 @@ const subTables = {
 };
 
 const tabsItem = [
+    // {
+    //     tabName: (key, counts, countsWithNew) => <TabName
+    //         name="All Reports"
+    //         type={key}
+    //         counts={counts}
+    //         countsWithNew={countsWithNew}
+    //     />,
+    //     key: "all-reports",
+    //     component: (
+    //         onChangeSubTab,
+    //         data,
+    //         activeTab,
+    //         page,
+    //         totalSize,
+    //         handlePaginationChange,
+    //         pageSize,
+    //         onChangeFilter,
+    //         filteredColumns,
+    //         handleChangeSorter,
+    //         sorterColumn
+    //     ) => (
+    //         <AllReports
+    //             onChangeSubTab={onChangeSubTab}
+    //             data={data}
+    //             activeTab={activeTab}
+    //             currentPage={page}
+    //             totalSize={totalSize}
+    //             handlePaginationChange={handlePaginationChange}
+    //             pageSize={pageSize}
+    //             onChangeFilter={onChangeFilter}
+    //             filteredColumns={filteredColumns}
+    //             handleChangeSorter={handleChangeSorter}
+    //             sorterColumn={sorterColumn}
+    //         />
+    //     )
+    // },
     {
         tabName: (key, counts, countsWithNew) => <TabName name="Keywords Optimization" type={key} counts={counts}
                                                           countsWithNew={countsWithNew}/>,
@@ -256,6 +294,7 @@ class ReportTable extends Component {
             type: 'desc'
         },
         updateSize: {
+            'all-reports': 0,
             "keywords-optimization": 0,
             "pats-optimization": 0,
             "new-keywords": 0,
@@ -280,7 +319,7 @@ class ReportTable extends Component {
 
         const url = `${process.env.REACT_APP_API_URL || ""}/api/${
             reportsUrls.downloadReports
-            }?token=${token}${parameters.join("")}`;
+        }?token=${token}${parameters.join("")}`;
         window.open(url);
     };
 
@@ -448,7 +487,7 @@ class ReportTable extends Component {
             this.setState(
                 {
                     activeTab: "keywords-optimization",
-                    activeSubTab: "changed-keyword-bid-acos"
+                    activeSubTab: "changed-keyword-bid-acos",
                 },
                 this.fetchReports
             );
