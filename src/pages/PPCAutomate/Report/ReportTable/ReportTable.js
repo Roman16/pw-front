@@ -1,27 +1,28 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import moment from "moment";
-import {Tabs, Button} from "antd";
+import axios from "axios";
+import Slider from "react-slick";
+import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
 import FreeTrial from "../../../../components/FreeTrial/FreeTrial";
 
-import KeywordsOptimization from "./Tables/KeywordsOptimization";
-import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
-import PATsOptimization from "./Tables/PATsOptimization";
-import NewKeywords from "./Tables/NewKeywords";
-import NewNegativeKeywords from "./Tables/NewNegativeKeywords";
-import NewPats from "./Tables/NewPats";
-import NewNegativePats from "./Tables/NewNegativePats";
-import AllReports from "./Tables/AllReports";
+import {indexField, dateField} from './Tables/const';
+import {keywordsOptimization} from "./Tables/KeywordsOptimization";
+import {patsOptimization} from "./Tables/PATsOptimization";
+import {newKeywords} from "./Tables/NewKeywords";
+import {newNegativeKeywords} from "./Tables/NewNegativeKeywords";
+import {newPats} from "./Tables/NewPats";
+import {newNegativePats} from "./Tables/NewNegativePats";
+import {allReports} from "./Tables/AllReports";
 import {reportsActions} from "../../../../actions/reports.actions";
 import {reportsUrls} from "../../../../constans/api.urls";
 import "./ReportTable.less";
-import {mainChangesCount, mainHasNewReport} from "./Tables/changesCount";
-import axios from "axios";
+import {mainChangesCount, mainHasNewReport, subChangesCount} from "./Tables/changesCount";
+import CustomTable from "../../../../components/Table/CustomTable";
+import TableButton from "./TableButton/TableButton";
 
 const CancelToken = axios.CancelToken;
 let source = null;
-
-const {TabPane} = Tabs;
 
 const TabName = ({name = null, type, counts, countsWithNew}) => {
     return (
@@ -48,237 +49,6 @@ const subTables = {
     "new-negative-pats": "created-negative-pat-from-cst-high-acos"
 };
 
-const tabsItem = [
-    // {
-    //     tabName: (key, counts, countsWithNew) => <TabName
-    //         name="All Reports"
-    //         type={key}
-    //         counts={counts}
-    //         countsWithNew={countsWithNew}
-    //     />,
-    //     key: "all-reports",
-    //     component: (
-    //         onChangeSubTab,
-    //         data,
-    //         activeTab,
-    //         page,
-    //         totalSize,
-    //         handlePaginationChange,
-    //         pageSize,
-    //         onChangeFilter,
-    //         filteredColumns,
-    //         handleChangeSorter,
-    //         sorterColumn
-    //     ) => (
-    //         <AllReports
-    //             onChangeSubTab={onChangeSubTab}
-    //             data={data}
-    //             activeTab={activeTab}
-    //             currentPage={page}
-    //             totalSize={totalSize}
-    //             handlePaginationChange={handlePaginationChange}
-    //             pageSize={pageSize}
-    //             onChangeFilter={onChangeFilter}
-    //             filteredColumns={filteredColumns}
-    //             handleChangeSorter={handleChangeSorter}
-    //             sorterColumn={sorterColumn}
-    //         />
-    //     )
-    // },
-    {
-        tabName: (key, counts, countsWithNew) => <TabName name="Keywords Optimization" type={key} counts={counts}
-                                                          countsWithNew={countsWithNew}/>,
-        key: "keywords-optimization",
-        component: (
-            onChangeSubTab,
-            data,
-            activeTab,
-            page,
-            totalSize,
-            handlePaginationChange,
-            pageSize,
-            onChangeFilter,
-            filteredColumns,
-            handleChangeSorter,
-            sorterColumn
-        ) => (
-            <KeywordsOptimization
-                onChangeSubTab={onChangeSubTab}
-                data={data}
-                activeTab={activeTab}
-                currentPage={page}
-                totalSize={totalSize}
-                handlePaginationChange={handlePaginationChange}
-                pageSize={pageSize}
-                onChangeFilter={onChangeFilter}
-                filteredColumns={filteredColumns}
-                handleChangeSorter={handleChangeSorter}
-                sorterColumn={sorterColumn}
-            />
-        )
-    },
-    {
-        tabName: (key, counts, countsWithNew) => <TabName name="PAT’s Optimization" type={key} counts={counts}
-                                                          countsWithNew={countsWithNew}/>,
-        key: "pats-optimization",
-        component: (
-            onChangeSubTab,
-            data,
-            activeTab,
-            page,
-            totalSize,
-            handlePaginationChange,
-            pageSize,
-            onChangeFilter,
-            filteredColumns,
-            handleChangeSorter,
-            sorterColumn
-        ) => (
-            <PATsOptimization
-                onChangeSubTab={onChangeSubTab}
-                data={data}
-                activeTab={activeTab}
-                currentPage={page}
-                totalSize={totalSize}
-                handlePaginationChange={handlePaginationChange}
-                pageSize={pageSize}
-                onChangeFilter={onChangeFilter}
-                filteredColumns={filteredColumns}
-                handleChangeSorter={handleChangeSorter}
-                sorterColumn={sorterColumn}
-            />
-        )
-    },
-    {
-        tabName: (key, counts, countsWithNew) => <TabName name="New Keywords" type={key} counts={counts}
-                                                          countsWithNew={countsWithNew}/>,
-        key: "new-keywords",
-        component: (
-            onChangeSubTab,
-            data,
-            activeTab,
-            page,
-            totalSize,
-            handlePaginationChange,
-            pageSize,
-            onChangeFilter,
-            filteredColumns,
-            handleChangeSorter,
-            sorterColumn
-        ) => (
-            <NewKeywords
-                onChangeSubTab={onChangeSubTab}
-                data={data}
-                activeTab={activeTab}
-                currentPage={page}
-                totalSize={totalSize}
-                handlePaginationChange={handlePaginationChange}
-                pageSize={pageSize}
-                onChangeFilter={onChangeFilter}
-                filteredColumns={filteredColumns}
-                handleChangeSorter={handleChangeSorter}
-                sorterColumn={sorterColumn}
-            />
-        )
-    },
-    {
-        tabName: (key, counts, countsWithNew) => <TabName name="New Negative Keywords" type={key} counts={counts}
-                                                          countsWithNew={countsWithNew}/>,
-        key: "new-negative-keywords",
-        component: (
-            onChangeSubTab,
-            data,
-            activeTab,
-            page,
-            totalSize,
-            handlePaginationChange,
-            pageSize,
-            onChangeFilter,
-            filteredColumns,
-            handleChangeSorter,
-            sorterColumn
-        ) => (
-            <NewNegativeKeywords
-                onChangeSubTab={onChangeSubTab}
-                data={data}
-                activeTab={activeTab}
-                currentPage={page}
-                totalSize={totalSize}
-                handlePaginationChange={handlePaginationChange}
-                pageSize={pageSize}
-                onChangeFilter={onChangeFilter}
-                filteredColumns={filteredColumns}
-                handleChangeSorter={handleChangeSorter}
-                sorterColumn={sorterColumn}
-            />
-        )
-    },
-    {
-        tabName: (key, counts, countsWithNew) => <TabName name={"New PAT 's"} type={key} counts={counts}
-                                                          countsWithNew={countsWithNew}/>,
-        key: "new-pats",
-        component: (
-            onChangeSubTab,
-            data,
-            activeTab,
-            page,
-            totalSize,
-            handlePaginationChange,
-            pageSize,
-            onChangeFilter,
-            filteredColumns,
-            handleChangeSorter,
-            sorterColumn
-        ) => (
-            <NewPats
-                onChangeSubTab={onChangeSubTab}
-                data={data}
-                activeTab={activeTab}
-                currentPage={page}
-                totalSize={totalSize}
-                handlePaginationChange={handlePaginationChange}
-                pageSize={pageSize}
-                onChangeFilter={onChangeFilter}
-                filteredColumns={filteredColumns}
-                handleChangeSorter={handleChangeSorter}
-                sorterColumn={sorterColumn}
-            />
-        )
-    },
-    {
-        tabName: (key, counts, countsWithNew) => <TabName name={"New Negative PAT's"} type={key} counts={counts}
-                                                          countsWithNew={countsWithNew}/>,
-        key: "new-negative-pats",
-        component: (
-            onChangeSubTab,
-            data,
-            activeTab,
-            page,
-            totalSize,
-            handlePaginationChange,
-            pageSize,
-            onChangeFilter,
-            filteredColumns,
-            handleChangeSorter,
-            sorterColumn
-        ) => (
-            <NewNegativePats
-                onChangeSubTab={onChangeSubTab}
-                data={data}
-                activeTab={activeTab}
-                currentPage={page}
-                totalSize={totalSize}
-                handlePaginationChange={handlePaginationChange}
-                pageSize={pageSize}
-                onChangeFilter={onChangeFilter}
-                filteredColumns={filteredColumns}
-                handleChangeSorter={handleChangeSorter}
-                sorterColumn={sorterColumn}
-            />
-        )
-    }
-];
-
 class ReportTable extends Component {
     state = {
         startDate: "",
@@ -286,8 +56,8 @@ class ReportTable extends Component {
         page: 1,
         pageSize: this.props.pageSize || 10,
         totalSize: this.props.totalSize || 0,
-        activeTab: "keywords-optimization",
-        activeSubTab: "changed-keyword-bid-acos",
+        activeTab: "all-reports",
+        activeSubTab: "all-reports",
         filteredColumns: {},
         sorterColumn: {
             key: 'eventDateTime',
@@ -383,12 +153,32 @@ class ReportTable extends Component {
     };
 
     handleChangeTab = tab => {
-        this.setState(
-            {
-                activeTab: tab,
-                activeSubTab: subTables[tab],
-                page: 1,
+        if (tab !== this.state.activeTab) {
+            this.setState(
+                {
+                    activeTab: tab,
+                    activeSubTab: subTables[tab],
+                    page: 1,
+                    totalSize: null,
+                    filteredColumns: {},
+                    sorterColumn: {
+                        key: 'eventDateTime',
+                        type: 'desc'
+                    }
+                }, () => {
+                    // source && source.cancel();
+                    this.fetchReports();
+                }
+            );
+        }
+    };
+
+    handleChangeSubTab = tab => {
+        if (tab !== this.state.activeSubTab) {
+            this.setState({
                 totalSize: null,
+                activeSubTab: tab,
+                page: 1,
                 filteredColumns: {},
                 sorterColumn: {
                     key: 'eventDateTime',
@@ -397,25 +187,8 @@ class ReportTable extends Component {
             }, () => {
                 // source && source.cancel();
                 this.fetchReports();
-            }
-        );
-    };
-
-    handleChangeSubTab = tab => {
-
-        this.setState({
-            totalSize: null,
-            activeSubTab: tab,
-            page: 1,
-            filteredColumns: {},
-            sorterColumn: {
-                key: 'eventDateTime',
-                type: 'desc'
-            }
-        }, () => {
-            // source && source.cancel();
-            this.fetchReports();
-        });
+            });
+        }
     };
 
     handleChangeFilter = (key, value, type) => {
@@ -486,8 +259,8 @@ class ReportTable extends Component {
         ) {
             this.setState(
                 {
-                    activeTab: "keywords-optimization",
-                    activeSubTab: "changed-keyword-bid-acos",
+                    activeTab: "all-reports",
+                    activeSubTab: "all-reports",
                 },
                 this.fetchReports
             );
@@ -502,8 +275,60 @@ class ReportTable extends Component {
     }
 
     render() {
-        const {activeTab, page, pageSize, filteredColumns, sorterColumn, totalSize} = this.state,
-            {counts, data, todayChanges, countsWithNew} = this.props;
+        const {activeTab, page, pageSize, filteredColumns, sorterColumn, totalSize, activeSubTab} = this.state,
+            {counts, data, todayChanges, countsWithNew, loading} = this.props;
+
+        const mainTabs = {
+            'all-reports': {
+                tabName: (key) => <TabName
+                    name="All Reports"
+                    type={key}
+                />,
+                ...allReports({page, pageSize})
+            },
+            "keywords-optimization": {
+                tabName: (key) => <TabName
+                    name="Keywords Optimization"
+                    type={key}
+                />,
+                ...keywordsOptimization({page, pageSize, onChangeFilter: this.handleChangeFilter, filteredColumns})
+            },
+            "pats-optimization": {
+                tabName: (key) => <TabName
+                    name="PAT’s Optimization"
+                    type={key}
+                />,
+                ...patsOptimization({page, pageSize, onChangeFilter: this.handleChangeFilter, filteredColumns})
+            },
+            "new-keywords": {
+                tabName: (key) => <TabName
+                    name="New Keywords"
+                    type={key}
+                />,
+                ...newKeywords({page, pageSize, onChangeFilter: this.handleChangeFilter, filteredColumns})
+            },
+            "new-negative-keywords": {
+                tabName: (key) => <TabName
+                    name="New Negative Keywords"
+                    type={key}
+                />,
+                ...newNegativeKeywords({page, pageSize, onChangeFilter: this.handleChangeFilter, filteredColumns})
+            },
+            "new-pats": {
+                tabName: (key) => <TabName
+                    name="New PAT's"
+                    type={key}
+                />,
+                ...newPats({page, pageSize, onChangeFilter: this.handleChangeFilter, filteredColumns})
+            },
+            "new-negative-pats": {
+                tabName: (key) => <TabName
+                    name="New Negative PAT's"
+                    type={key}
+                />,
+                ...newNegativePats({page, pageSize, onChangeFilter: this.handleChangeFilter, filteredColumns})
+            }
+        };
 
         return (
             <div className="ReportTable">
@@ -526,25 +351,87 @@ class ReportTable extends Component {
                     <FreeTrial product={'ppc'}/>
                 </div>
 
-                <Tabs activeKey={activeTab} type="card" onChange={this.handleChangeTab}>
-                    {tabsItem.map(({tabName, key, component}) => (
-                        <TabPane tab={tabName(key, counts, countsWithNew)} key={key}>
-                            {component(
-                                this.handleChangeSubTab,
-                                data,
-                                activeTab,
-                                page,
-                                totalSize,
-                                this.handlePaginationChange,
-                                pageSize,
-                                this.handleChangeFilter,
-                                filteredColumns,
-                                this.handleChangeSorter,
-                                sorterColumn
-                            )}
-                        </TabPane>
-                    ))}
-                </Tabs>
+                <div className="tabs">
+                    <Slider
+                        dots={false}
+                        infinite={false}
+                        speed={500}
+                        slidesToShow={7}
+                        slidesToScroll={1}
+                        nextArrow={<button>&#8250;</button>}
+                        prevArrow={<button>&#8249;</button>}
+                        responsive={[
+                            {
+                                breakpoint: 2000,
+                                settings: {
+                                    slidesToShow: 6,
+                                    slidesToScroll: 1,
+                                }
+                            },
+                            {
+                                breakpoint: 1300,
+                                settings: {
+                                    slidesToShow: 5,
+                                    slidesToScroll: 1,
+                                }
+                            },
+                            {
+                                breakpoint: 1150,
+                                settings: {
+                                    slidesToShow: 4,
+                                    slidesToScroll: 1
+                                }
+                            },
+                            {
+                                breakpoint: 500,
+                                settings: {
+                                    slidesToShow: 1,
+                                    slidesToScroll: 1
+                                }
+                            }
+                        ]}
+                    >
+                        {Object.keys(mainTabs).map((item) => (
+                            <div className={`tab ${activeTab === item && 'active'}`}
+                                 onClick={() => this.handleChangeTab(item)}>
+                                {mainTabs[item].tabName(item, counts, countsWithNew)}
+                            </div>
+                        ))}
+                    </Slider>
+                </div>
+
+                <div className="content">
+                    <div className="report-item-table-btn">
+                        {mainTabs[activeTab].subTabs.map(item => (
+                            <TableButton
+                                totalSize={totalSize}
+                                loading={loading}
+                                active={item.key === activeSubTab}
+                                count={subChangesCount(counts, item.key, countsWithNew)}
+                                onClick={() => {
+                                    this.handleChangeSubTab(item.key);
+                                }}
+                            >
+                                {item.title}
+                            </TableButton>
+                        ))}
+                    </div>
+
+                    <CustomTable
+                        onChangePagination={this.handlePaginationChange}
+                        onChangeSorter={this.handleChangeSorter}
+                        loading={loading}
+                        dataSource={data}
+                        columns={[
+                            {...indexField(page, pageSize)}, {...dateField}, ...mainTabs[activeTab].columns[activeSubTab]]}
+                        currentPage={page}
+                        totalSize={totalSize}
+                        showSizeChanger={true}
+                        pageSize={pageSize}
+                        sorterColumn={sorterColumn}
+                        rowClassName={(item) => !item.viewed && 'new-report'}
+                    />
+                </div>
             </div>
         );
     }
@@ -558,7 +445,9 @@ const mapStateToProps = state => ({
     todayChanges: state.reports.today_changes,
     totalSize: state.reports.totalSize,
     pageSize: state.reports.pageSize,
-    countsWithNew: state.reports.counts_with_new
+    countsWithNew: state.reports.counts_with_new,
+    loading: state.reports.loading,
+
 });
 
 const mapDispatchToProps = dispatch => ({

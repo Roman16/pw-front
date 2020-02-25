@@ -875,8 +875,6 @@ const LandingAutomation = () => {
                     <h2>What Our Customers Say</h2>
 
                     <div className="carousel">
-
-
                         <Slider
                             dots={true}
                             infinite={true}
