@@ -37,7 +37,8 @@ const OutBudget = ({date}) => {
     const [data, setData] = useState(defaultData),
         [percentParams, setParams] = useState({min: 0, max: 1}),
         [visibleModal, setModal] = useState(false),
-        [saved, setStatus] = useState(false);
+        [saved, setStatus] = useState(false),
+        [processing, setProcessing] = useState(false);
 
     const dispatch = useDispatch();
     const {campaignId} = useSelector(state => ({
@@ -45,10 +46,11 @@ const OutBudget = ({date}) => {
     }));
 
     async function saveBudget(data) {
+        setProcessing(true);
         try {
             await daypartingServices.setCampaignBudget({campaignId, data: {'value_in_usd': data.value}});
+            // notification.success({title: 'Saved'});
             setStatus(true);
-            notification.success({title: 'Saved'});
 
             dispatch(productsActions.updateCampaignBudget({
                 id: campaignId,
@@ -57,6 +59,8 @@ const OutBudget = ({date}) => {
         } catch (e) {
             console.log(e);
         }
+
+        setProcessing(false);
     }
 
     useEffect(() => {
@@ -210,8 +214,6 @@ const OutBudget = ({date}) => {
                         </div>
                     </div>
                 </div>
-
-
             </section>
 
 
@@ -244,6 +246,7 @@ const OutBudget = ({date}) => {
                     <BudgetDrawer
                         onClose={() => setModal(false)}
                         onSave={saveBudget}
+                        processing={processing}
                     />
                 }
             </ModalWindow>

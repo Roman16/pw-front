@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
-import {Switch} from "antd";
+import {Spin, Switch} from "antd";
 import moment from "moment";
 import Selection from "@simonwep/selection-js/src/selection";
 import shortid from "shortid";
@@ -53,6 +53,10 @@ class DaySwitches extends Component {
     };
 
     deactivateDaypartingHandler = async () => {
+        this.setState({
+            processing: true
+        });
+
         try {
             await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId});
 
@@ -63,6 +67,12 @@ class DaySwitches extends Component {
         } catch (e) {
             console.log(e);
         }
+
+        setTimeout(() => {
+            this.setState({
+                processing: false
+            });
+        }, 500)
     };
 
     activateDaypartingHandler = async () => {
@@ -175,9 +185,11 @@ class DaySwitches extends Component {
     };
 
     handleReset = () => {
-        this.setState({
-            hoursStatus: [...defaultList]
-        }, this.handleUpdateStatus);
+        if (defaultList !== this.state.hoursStatus.join('')) {
+            this.setState({
+                hoursStatus: [...defaultList]
+            }, this.handleUpdateStatus);
+        }
     };
 
     handleSwitchHour = (index, value) => {
@@ -326,7 +338,7 @@ class DaySwitches extends Component {
                                 Active
                             </div>
 
-                            <button onClick={this.handleReset} disabled={!activeDayparting}>
+                            <button className='btn' onClick={this.handleReset} disabled={!activeDayparting}>
                                 <img src={reloadIcon} alt=""/>
                                 Reset
                             </button>
@@ -396,17 +408,19 @@ class DaySwitches extends Component {
                         </p>
 
                         <div className="action">
-                            <button
-                                className='btn default'
-                                onClick={this.deactivateDaypartingHandler}>
-                                Yes
-                            </button>
+                            {processing ? <Spin/> : <Fragment>
+                                <button
+                                    className='btn default'
+                                    onClick={this.deactivateDaypartingHandler}>
+                                    Yes
+                                </button>
 
-                            <button
-                                className='btn green-btn'
-                                onClick={() => this.setState({visibleWindow: false})}>
-                                No
-                            </button>
+                                <button
+                                    className='btn green-btn'
+                                    onClick={() => this.setState({visibleWindow: false})}>
+                                    No
+                                </button>
+                            </Fragment>}
                         </div>
                     </Fragment>
                 </ModalWindow>
