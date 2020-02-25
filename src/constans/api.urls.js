@@ -28,6 +28,8 @@ export const userUrls = {
     coupon: (subscriptionId) => `user/account/subscription/${subscriptionId}/update`,
     couponStatus: 'user/account/subscription/check-coupon',
     ebookSubscribe: 'landings/ebook/send-me',
+    userSubscribe: 'landings/subscribe',
+    contacts: 'landings/contact-us',
 };
 
 export const productsUrls = {

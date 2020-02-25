@@ -10,17 +10,35 @@ import addressImage from '../../../assets/img/landing-contact-us/address-image.s
 import helpDjoImage from '../../../assets/img/landing-contact-us/helpDjo.svg';
 import checkedIcon from '../../../assets/img/landing-contact-us/checked.svg';
 import ModalWindow from "../../../components/ModalWindow/ModalWindow";
+import {userService} from "../../../services/user.services";
+import {notification} from "../../../components/Notification";
 
 const ContactUs = () => {
     const [visibleWindow, switchWindow] = useState(false),
-        [completed, setStatus] = useState(false);
+        [completed, setStatus] = useState(false),
+        [formValue, setForm] = useState({});
 
     function openWindowHandler() {
         switchWindow(true)
     }
 
-    function submitFormHandler() {
-        setStatus(true)
+    async function submitFormHandler(e) {
+        e.preventDefault();
+
+        try {
+            // await userService.sendContacts(formValue);
+            // notification.success({title: 'Successful'});
+            setStatus(true);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    function inputChangeHandler({target: {value, name}}) {
+        setForm({
+            ...formValue,
+            [name]: value
+        })
     }
 
     return (
@@ -41,7 +59,9 @@ const ContactUs = () => {
                                 <img src={callHelpImage} alt=""/>
                                 <h3>How could we help you?</h3>
                                 <p>Our support team is spread across the globe to give you answers fast.</p>
-                                <button onClick={() => window.open('https://direct.lc.chat/11745246')} className='btn green-btn'>Send a request</button>
+                                <button onClick={() => window.open('https://direct.lc.chat/11745246')}
+                                        className='btn green-btn'>Send a request
+                                </button>
                             </div>
 
                             <div className='item'>
@@ -49,7 +69,10 @@ const ContactUs = () => {
                                 <h3>Partnership? Of course, let’s discuss</h3>
                                 <p>Don't be shy. If you've got something to create and move forward with Profit
                                     Whales.</p>
-                                <button onClick={() => window.open('https://calendly.com/vitalii-pw-success-manager/profit-whales-collaboration')} className='btn green-btn'>Send a proposal</button>
+                                <button
+                                    onClick={() => window.open('https://calendly.com/vitalii-pw-success-manager/profit-whales-collaboration')}
+                                    className='btn green-btn'>Send a proposal
+                                </button>
                             </div>
 
                             <div className='item'>
@@ -92,7 +115,11 @@ const ContactUs = () => {
 
                         <p>We’ll reach you within 24 hours.</p>
 
-                        <button className='btn green-btn' onClick={() => {switchWindow(false); setStatus(false)}}>Done</button>
+                        <button className='btn green-btn' onClick={() => {
+                            switchWindow(false);
+                            setStatus(false)
+                        }}>Done
+                        </button>
                     </div>
                     :
 
@@ -100,18 +127,18 @@ const ContactUs = () => {
                         <h2>Fill the form: </h2>
                         <div className="input-group">
                             <label htmlFor="">First & Last Name</label>
-                            <input type="text"/>
+                            <input type="text" name='name' onChange={inputChangeHandler}/>
                         </div>
 
                         <div className="input-group email-block">
                             <label htmlFor="">E-mail</label>
-                            <input type="email"/>
+                            <input type="email" name='email' onChange={inputChangeHandler}/>
                             <span>@</span>
                         </div>
 
                         <div className="input-group">
                             <label htmlFor="">Comment</label>
-                            <textarea/>
+                            <textarea name='comment' onChange={inputChangeHandler}/>
                         </div>
 
                         <button className='btn green-btn'>send</button>
