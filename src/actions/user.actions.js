@@ -2,6 +2,7 @@ import {userConstants} from '../constans/actions.type';
 import {history} from '../utils/history';
 import {userService} from '../services/user.services';
 import {notification} from "../components/Notification";
+import moment from "moment";
 
 export const userActions = {
     login,
@@ -107,6 +108,14 @@ function getUserInfo() {
     return dispatch => {
         userService.getUserInfo().then(res => {
             dispatch(setInformation(res));
+            console.log(res);
+
+            window.Intercom("boot", {
+                app_id: "hkyfju3m",
+                name: res.user.name, // Full name
+                email: res.user.email, // Email address
+                created_at: moment(new Date()).unix()// Signup date as a Unix timestamp
+            });
 
             if (!res.account_links[0].amazon_mws.is_connected) {
                 history.push('/mws');
@@ -131,7 +140,8 @@ function getPersonalUserInfo() {
 
 function getAuthorizedUserInfo() {
     return dispatch => {
-        userService.getUserInfo().then(res => {
+        userService.getUserInfo()
+            .then(res => {
             dispatch(setInformation(res));
 
             if (!res.account_links[0].amazon_mws.is_connected) {

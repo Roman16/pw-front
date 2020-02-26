@@ -667,5 +667,18 @@ button[disabled] {
 }
 
 /*
-*  SCROLLBAR
+*  ////////////////
 */
+
+body {
+  .intercom-launcher-frame {
+    display: none !important;
+  }
+
+  &.visible-intercom {
+    .intercom-launcher-frame {
+      display: block !important;
+    }
+  }
+}
+
