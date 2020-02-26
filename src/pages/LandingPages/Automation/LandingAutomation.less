@@ -273,6 +273,7 @@
         top: 0;
         bottom: 0;
         margin: 3% 0 0 0;
+        z-index: 10;
 
         img {
           height: 100%;
@@ -1986,14 +1987,26 @@
       }
 
       ul {
+        max-width: 331px;
         display: flex;
-        justify-content: center;
-        margin: 0;
+        justify-content: space-between;
+        margin: 0 auto;
         padding: 0;
         color: #fff;
+        list-style: none;
 
         li {
-          margin: 0 20px;
+          display: flex;
+          align-items: center;
+
+          &::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            margin: 0 5px 0 0;
+            border-radius: 50%;
+          }
         }
       }
 
@@ -2181,11 +2194,11 @@
     transform: rotate(45deg);
     width: 40px;
     height: 40px;
-    z-index: 99;
     -webkit-transition: .3s;
     -o-transition: .3s;
     transition: .3s;
     cursor: pointer;
+    z-index: 100000;
 
     &:hover {
       -webkit-box-shadow: 0 0 20px rgba(109, 109, 246, .15), 0 0 24px rgba(109, 109, 246, .3);

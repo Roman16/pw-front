@@ -10,6 +10,8 @@ import shortid from "shortid";
 import CustomSelect from "../../../components/Select/Select";
 import {Select} from "antd";
 import moment from "moment";
+import SubscriptionNotificationWindow
+    from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 
 const Option = Select.Option;
 
@@ -89,6 +91,8 @@ class Dayparting extends PureComponent {
                 <PlacementsStatistics
                     date={selectedDate}
                 />
+
+                <SubscriptionNotificationWindow product={'ppc'} page={'dayparting'}/>
             </div>
         )
     }
