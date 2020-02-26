@@ -59,7 +59,7 @@ const ContactUs = () => {
                                 <img src={callHelpImage} alt=""/>
                                 <h3>How could we help you?</h3>
                                 <p>Our support team is spread across the globe to give you answers fast.</p>
-                                <button onClick={() => window.open('https://direct.lc.chat/11745246')}
+                                <button onClick={() => window.Intercom('show')}
                                         className='btn green-btn'>Send a request
                                 </button>
                             </div>
