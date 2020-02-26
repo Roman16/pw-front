@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from "react";
+import React, {useState, Fragment, useEffect} from "react";
 import './ContactUs.less';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -53,13 +53,14 @@ const ContactUs = () => {
                             <p>Have any questions? We’d love to hear from you.</p>
                         </div>
 
-
                         <div className="row">
                             <div className='item'>
                                 <img src={callHelpImage} alt=""/>
                                 <h3>How could we help you?</h3>
                                 <p>Our support team is spread across the globe to give you answers fast.</p>
-                                <button onClick={() => window.Intercom('show')}
+                                <button onClick={() => {
+                                    window.Intercom('show')
+                                }}
                                         className='btn green-btn'>Send a request
                                 </button>
                             </div>
