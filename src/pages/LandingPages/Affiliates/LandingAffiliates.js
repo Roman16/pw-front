@@ -70,7 +70,8 @@ const LandingAffiliates = () => {
         document.querySelector('html').classList.add('not-retina');
 
         return (() => {
-            document.head.removeChild(tapfiliateScript)
+            document.querySelector('html').classList.remove('not-retina');
+            document.head.removeChild(tapfiliateScript);
         })
     }, []);
 
