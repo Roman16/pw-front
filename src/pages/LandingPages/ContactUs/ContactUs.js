@@ -41,6 +41,13 @@ const ContactUs = () => {
         })
     }
 
+    useEffect(() => {
+       return(() => {
+           document.querySelector('body').classList.remove('visible-intercom');
+       })
+    }, []);
+
+
     return (
         <Fragment>
             <div className="landing-contact-us">
@@ -59,6 +66,7 @@ const ContactUs = () => {
                                 <h3>How could we help you?</h3>
                                 <p>Our support team is spread across the globe to give you answers fast.</p>
                                 <button onClick={() => {
+                                    document.querySelector('body').classList.add('visible-intercom');
                                     window.Intercom('show')
                                 }}
                                         className='btn green-btn'>Send a request
