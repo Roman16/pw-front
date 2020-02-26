@@ -8,10 +8,10 @@ import {subscriptionProducts} from '../../../constans/subscription.products.name
 import {userActions} from "../../../actions/user.actions";
 
 
-const SubscriptionNotificationWindow = ({product}) => {
+const SubscriptionNotificationWindow = ({product, page}) => {
     const dispatch = useDispatch();
 
-    const [visibleWindow, openWindow] = useState(true);
+    const [visibleWindow, setWindow] = useState(true);
     const {subscribedProduct, bootstrapInProgress} = useSelector(state => ({
         subscribedProduct: state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId],
         bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
@@ -19,12 +19,15 @@ const SubscriptionNotificationWindow = ({product}) => {
 
     useEffect(() => {
         if (bootstrapInProgress) {
-            openWindow(false);
+            setWindow(false);
         } else {
-            if (!subscribedProduct.has_access) {
-                openWindow(true);
+            if (!subscribedProduct.has_access || (subscribedProduct.pending_payment && subscribedProduct.pending_payment.has_pending_payment)) {
+                setWindow(true);
+            } else if (page === 'dayparting' && subscribedProduct.on_trial) {
+                setWindow(true);
+
             } else {
-                openWindow(false);
+                setWindow(false);
             }
         }
     }, [subscribedProduct]);
@@ -34,26 +37,47 @@ const SubscriptionNotificationWindow = ({product}) => {
     }, []);
 
     function RenderModalWindow() {
-        return (
-            <Fragment>
-                <Result
-                    status="403"
-                    title="Hey 👋"
-                    subTitle="The PPC Automate tool is only available to customers with an active subscription. Please upgrade your subscription to continue using the software."
-                />
-                <div className='buttons-block'>
-                    {subscribedProduct.incomplete_payment.has_incomplete_payment ?
+        if (page === 'dayparting' && subscribedProduct.on_trial) {
+            return (
+                <Fragment>
+                    <Result
+                        status="403"
+                        title="Hey 👋"
+                        subTitle="The Dayparting tool is only available to customers with an active subscription. Please upgrade your subscription to continue using the software."
+                    />
+
+                    <div className='buttons-block'>
                         <button onClick={() => history.push('/account-billing')} className='btn green-btn'>
                             Upgrade Now
                         </button>
-                        :
-                        <button onClick={() => history.push('/account-subscription')} className='btn green-btn'>
-                            Upgrade Now
-                        </button>
-                    }
-                </div>
-            </Fragment>
-        )
+                    </div>
+                </Fragment>
+            )
+        } else {
+            return (
+                <Fragment>
+                    {subscribedProduct.pending_payment && subscribedProduct.pending_payment.has_pending_payment &&
+                    <button onClick={() => setWindow(false)} className='close-window'>&#215;</button>}
+
+                    <Result
+                        status="403"
+                        title="Hey 👋"
+                        subTitle="The PPC Automate tool is only available to customers with an active subscription. Please upgrade your subscription to continue using the software."
+                    />
+                    <div className='buttons-block'>
+                        {subscribedProduct.incomplete_payment.has_incomplete_payment || (subscribedProduct.pending_payment && subscribedProduct.pending_payment.has_pending_payment) ?
+                            <button onClick={() => history.push('/account-billing')} className='btn green-btn'>
+                                Upgrade Now
+                            </button>
+                            :
+                            <button onClick={() => history.push('/account-subscription')} className='btn green-btn'>
+                                Upgrade Now
+                            </button>
+                        }
+                    </div>
+                </Fragment>
+            )
+        }
     }
 
 
@@ -63,6 +87,7 @@ const SubscriptionNotificationWindow = ({product}) => {
             footer={null}
             container={true}
             visible={visibleWindow}
+            handleCancel={() => subscribedProduct.pending_payment && subscribedProduct.pending_payment.has_pending_payment && setWindow(false)}
         >
 
             <RenderModalWindow/>

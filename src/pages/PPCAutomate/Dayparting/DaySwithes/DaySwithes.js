@@ -49,7 +49,8 @@ class DaySwitches extends Component {
         visibleWindow: false,
         processing: false,
         activeDayparting: false,
-        hasDayparting: false
+        hasDayparting: false,
+        initialState: ''
     };
 
     deactivateDaypartingHandler = async () => {
@@ -137,6 +138,7 @@ class DaySwitches extends Component {
                 this.setState({
                     hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
                     activeDayparting: res.response[0].status === 'ACTIVE',
+                    initialState: res.response[0].initial_campaign_state,
                     hasDayparting: true
                 });
             } else {
@@ -313,7 +315,7 @@ class DaySwitches extends Component {
 
 
     render() {
-        const {hoursStatus, activeDayparting, visibleWindow, processing} = this.state;
+        const {hoursStatus, activeDayparting, visibleWindow, processing, initialState} = this.state;
 
         return (
             <Fragment>
@@ -402,9 +404,9 @@ class DaySwitches extends Component {
                     <Fragment>
                         <h2>Are you sure?</h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur culpa distinctio
-                            dolorum ea excepturi, expedita explicabo quia ratione reiciendis rem saepe voluptatibus!
-                            Enim excepturi explicabo iure, magnam nulla officia quo?
+                            This will result in pausing the day-parting feature for this particular campaign. Your
+                            settings will be saved. <br/> Please note, that this campaign will be set to its initial state: <br/>
+                            <b>{initialState}</b>
                         </p>
 
                         <div className="action">

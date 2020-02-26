@@ -150,7 +150,10 @@ const OutBudget = ({date}) => {
         <Fragment>
             <section className='spend-statistics'>
                 <div className="section-header">
-                    <h2>Sales / Out of Budget</h2>
+                    <h2>
+                        Sales / Out of Budget
+                        {/*<InformationTooltip description={''}/>*/}
+                    </h2>
 
                     <div className='out-of-budget'>
                         <div/>

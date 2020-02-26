@@ -88,8 +88,6 @@ const Sidebar = () => {
         dispatch(userActions.getPersonalUserInfo());
         window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
 
-        console.log(document.getElementById('intercom-container'));
-
         document.querySelector('body').classList.add('visible-intercom');
 
         return(() => {

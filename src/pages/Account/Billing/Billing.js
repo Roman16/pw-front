@@ -169,6 +169,9 @@ const Billing = () => {
                 if (subscriptions[item.productId].incomplete_payment.has_incomplete_payment) {
                     setKey(subscriptions[item.productId].incomplete_payment.payment_intent_id);
                     openConfirmWindow(true);
+                } else if(subscriptions[item.productId].pending_payment && subscriptions[item.productId].pending_payment.has_pending_payment) {
+                    setKey(subscriptions[item.productId].pending_payment.payment_intent_id);
+                    openConfirmWindow(true);
                 }
             }
         })
