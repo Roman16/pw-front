@@ -319,7 +319,7 @@ class ProductsList extends Component {
                     ),
                     dataIndex: PRODUCT,
                     key: PRODUCT,
-                    width: '350px',
+                    width: 150,
                     render: (product) => (
                         <ProductItem
                             product={product}
@@ -430,7 +430,7 @@ class ProductsList extends Component {
                     title: 'Total Changes',
                     dataIndex: TOTAL_CHANGES,
                     key: TOTAL_CHANGES,
-                    width: 150,
+                    width: 100,
                     render: (index, item) => (
                         <div style={{fontWeight: 600}}>{item[TOTAL_CHANGES]}</div>
                     )
@@ -439,7 +439,7 @@ class ProductsList extends Component {
                     title: 'Optimization Status',
                     dataIndex: OPTIMIZATION_STATUS,
                     key: OPTIMIZATION_STATUS,
-                    width: 150,
+                    width: 100,
                     render: (index, item) => (
                         <div
                             className={`settings-status ${
