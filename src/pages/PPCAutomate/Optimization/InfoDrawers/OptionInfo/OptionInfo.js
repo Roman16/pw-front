@@ -6,12 +6,12 @@ class OptionInfo extends Component {
     render() {
         return (
             <div className="OptionInfo">
-                {options.map(({ text, description }) => (
-                    <div style={{ marginBottom: '20px' }} key={text}>
-                        <CheckBoxItem text={text} checked />
-                        <div>{description}</div>
-                    </div>
-                ))}
+                {/*{options.map(({ text, description }) => (*/}
+                {/*    <div style={{ marginBottom: '20px' }} key={text}>*/}
+                {/*        <CheckBoxItem text={text} checked />*/}
+                {/*        <div>{description}</div>*/}
+                {/*    </div>*/}
+                {/*))}*/}
             </div>
         );
     }

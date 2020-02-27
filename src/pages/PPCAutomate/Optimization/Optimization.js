@@ -1,17 +1,16 @@
-import React, {Component, Fragment} from "react";
-import {Drawer, Icon} from "antd";
-import {connect} from "react-redux";
-import {debounce} from "throttle-debounce";
+import React, {Fragment, useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import {Drawer} from "antd";
 
 import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 
 import OptimizationOptions from "./OptimizationOptions/OptimizationOptions";
 import OptimizationStrategy from "./OptimizationStrategy/OptimizationStrategy";
 
-import OptionsInfo from "./InfoItem/OptionInfo/OptionInfo";
-import StrategyInfo from "./InfoItem/StrategyInfo/StrategyInfo";
+import OptionsInfo from "./InfoDrawers/OptionInfo/OptionInfo";
+import StrategyInfo from "./InfoDrawers/StrategyInfo/StrategyInfo";
 import OptimizationStatus from "./OptimizationStatus/OptimizationStatus";
-import LastReports from "./LastReports/LastReports";
+import NetMarginWindow from './NetMarginWindow/NetMarginWindow';
 
 import {productsActions} from "../../../actions/products.actions";
 
@@ -21,209 +20,237 @@ import SubscriptionNotificationWindow
 import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 import {notification} from "../../../components/Notification";
 import {productsServices} from "../../../services/products.services";
+import OptimizationIncludes from "./OptimizationIncludes/OptimizationIncludes";
 
-let timerId = null;
+const Optimization = () => {
+    const [selectedProduct, setProduct] = useState({}),
+        [infoType, setInfoType] = useState(false),
+        [visibleNetMarginWindow, setNetMarginWindow] = useState(false);
 
-class Optimization extends Component {
-    state = {
-        isLess: false,
-        visible: false,
-        infoType: "",
-        product: this.props.selectedProduct,
-        selectedStrategy: this.props.selectedProduct.optimization_strategy
-    };
+    const {productId, selectedAll} = useSelector(state => ({
+        productId: state.products.selectedProduct.id,
+        selectedAll: state.products.selectedAll,
+    }));
 
-    showDrawer = type => this.setState({visible: true, infoType: type});
+    // state = {
+    //     isLess: false,
+    //     visible: false,
+    //     infoType: "",
+    //     product: this.props.selectedProduct,
+    //     selectedStrategy: this.props.selectedProduct.optimization_strategy
+    // };
+    //
+    // showDrawer = type => this.setState({visible: true, infoType: type});
+    //
+    // onCloseDrawer = () => this.setState({visible: false});
+    //
+    // toLess = () => this.setState({isLess: !this.state.isLess});
+    //
+    // // handleChange
+    //
+    // onSelectStrategy = strategy => {
+    //     const product = this.props.selectedProduct;
+    //     this.setState(
+    //         {
+    //             selectedStrategy: strategy
+    //         },
+    //         () => {
+    //             if (product.status === "RUNNING" && !this.props.selectedAll) {
+    //                 clearTimeout(timerId);
+    //
+    //                 timerId = setTimeout(() => {
+    //
+    //                     this.handleUpdateProduct();
+    //                 }, 1000);
+    //             } else {
+    //                 this.props.updateOptions({optimization_strategy: strategy});
+    //             }
+    //         }
+    //     );
+    // };
+    //
+    // handleUpdateProduct = () => {
+    //     const {selectedStrategy} = this.state,
+    //         {updateProduct, selectedProduct, updateOptions} = this.props;
+    //
+    //
+    //     updateProduct({
+    //         ...selectedProduct,
+    //         optimization_strategy: selectedStrategy
+    //     });
+    //
+    //     updateOptions({
+    //         optimization_strategy: selectedStrategy,
+    //         add_negative_keywords: selectedProduct.add_negative_keywords,
+    //         optimize_keywords: selectedProduct.optimize_keywords,
+    //         create_new_keywords: selectedProduct.create_new_keywords,
+    //         optimize_pats: selectedProduct.optimize_pats,
+    //         add_negative_pats: selectedProduct.add_negative_pats,
+    //         create_new_pats: selectedProduct.create_new_pats
+    //     });
+    //
+    //     clearTimeout(timerId);
+    //     timerId = null;
+    //
+    //     notification.success({title: 'The strategy is changed'});
+    // };
+    //
+    // static getDerivedStateFromProps(props, state) {
+    //     if (props.selectedProduct.id !== state.product.id) {
+    //
+    //         if (state.product.status === "RUNNING" && !props.selectedAll && timerId) {
+    //             clearTimeout(timerId);
+    //             timerId = null;
+    //
+    //             productsServices.updateProductById({...state.product, optimization_strategy: state.selectedStrategy})
+    //                 .then(() => {
+    //                     notification.success({title: 'The strategy is changed'});
+    //                 })
+    //         }
+    //
+    //
+    //         if (props.selectedProduct.status === "RUNNING" && !props.selectedAll) {
+    //
+    //             return {
+    //                 product: props.selectedProduct,
+    //                 selectedStrategy: props.selectedProduct.optimization_strategy
+    //             };
+    //         } else {
+    //             return {
+    //                 product: {
+    //                     ...props.selectedProduct,
+    //                     ...props.defaultOptions
+    //                 },
+    //                 selectedStrategy: props.defaultOptions.optimization_strategy
+    //             };
+    //         }
+    //     } else {
+    //         return null;
+    //     }
+    // }
 
-    onCloseDrawer = () => this.setState({visible: false});
+    useEffect(() => {
+        async function fetchProductDetails() {
+            try {
+                const res = await productsServices.getProductDetails(selectedAll ? 'all' : productId);
 
-    toLess = () => this.setState({isLess: !this.state.isLess});
-
-    // handleChange
-
-    onSelectStrategy = strategy => {
-        const product = this.props.selectedProduct;
-        this.setState(
-            {
-                selectedStrategy: strategy
-            },
-            () => {
-                if (product.status === "RUNNING" && !this.props.selectedAll) {
-                    clearTimeout(timerId);
-
-                    timerId = setTimeout(() => {
-
-                        this.handleUpdateProduct();
-                    }, 1000);
-                } else {
-                    this.props.updateOptions({optimization_strategy: strategy});
-                }
+                setProduct(res);
+            } catch (e) {
+                console.log(e);
             }
-        );
-    };
-
-    handleUpdateProduct = () => {
-        const {selectedStrategy} = this.state,
-            {updateProduct, selectedProduct, updateOptions} = this.props;
-
-
-        updateProduct({
-            ...selectedProduct,
-            optimization_strategy: selectedStrategy
-        });
-
-        updateOptions({
-            optimization_strategy: selectedStrategy,
-            add_negative_keywords: selectedProduct.add_negative_keywords,
-            optimize_keywords: selectedProduct.optimize_keywords,
-            create_new_keywords: selectedProduct.create_new_keywords,
-            optimize_pats: selectedProduct.optimize_pats,
-            add_negative_pats: selectedProduct.add_negative_pats,
-            create_new_pats: selectedProduct.create_new_pats
-        });
-
-        clearTimeout(timerId);
-        timerId = null;
-
-        notification.success({title: 'The strategy is changed'});
-    };
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.selectedProduct.id !== state.product.id) {
-
-            if (state.product.status === "RUNNING" && !props.selectedAll && timerId) {
-                clearTimeout(timerId);
-                timerId = null;
-
-                productsServices.updateProductById({...state.product, optimization_strategy: state.selectedStrategy})
-                    .then(() => {
-                        notification.success({title: 'The strategy is changed'});
-                    })
-            }
-
-
-            if (props.selectedProduct.status === "RUNNING" && !props.selectedAll) {
-
-                return {
-                    product: props.selectedProduct,
-                    selectedStrategy: props.selectedProduct.optimization_strategy
-                };
-            } else {
-                return {
-                    product: {
-                        ...props.selectedProduct,
-                        ...props.defaultOptions
-                    },
-                    selectedStrategy: props.defaultOptions.optimization_strategy
-                };
-            }
-        } else {
-            return null;
         }
+
+        fetchProductDetails();
+    }, [productId, selectedAll]);
+
+    function startOptimizationHandler(strategy) {
+        productsServices.updateProductById({
+            product_id: selectedAll ? 'all' : productId,
+            status: 'RUNNING',
+            optimization_strategy: strategy
+        })
     }
 
-    render() {
-        const {isLess, selectedStrategy, infoType} = this.state,
-            {selectedProduct, selectedAll} = this.props;
+    function stopOptimizationHandler() {
+        productsServices.updateProductById({
+            product_id: selectedAll ? 'all' : productId,
+            status: 'STOPPED',
+        })
+    }
 
-        return (
-            <Fragment>
-                <div className="optimization-page">
-                    {/*<ProductList />*/}
+    function showDrawerHandler(type) {
+        setInfoType(type);
+    }
 
-                    <div className="product-options">
-                        <FreeTrial product={'ppc'}/>
+    function closeDrawerHandler() {
+        setInfoType(false);
+    }
 
-                        <div className="options">
-                            <div className={`options-strategy ${isLess ? "more" : "less"}`}>
-                                <div className="product-info-automate">
-                                    <span>What Parts Do You Want To Automate?</span>
-                                    <Icon
-                                        type="info-circle"
-                                        theme="filled"
-                                        onClick={() => this.showDrawer("options")}
-                                    />
-                                </div>
-                                <OptimizationOptions selectedProduct={selectedProduct}/>
+    return (
+        <Fragment>
+            <div className="optimization-page">
+                <FreeTrial product={'ppc'}/>
 
-                                <div className="product-info-strategy">
-                                    <div className="product-select">
-                                        <span>Select Optimization Strategy</span>
-                                        <Icon
-                                            type="info-circle"
-                                            theme="filled"
-                                            onClick={() => this.showDrawer("strategy")}
-                                        />
-                                    </div>
-                                    {selectedAll && !isLess && (
-                                        <div className="description-all">
-                                            Changes to those settings will be applied to all selected
-                                            products
-                                        </div>
-                                    )}
-                                </div>
-                                <OptimizationStrategy
-                                    onSelect={this.onSelectStrategy}
-                                    selectedStrategy={selectedStrategy}
-                                    product={selectedProduct}
-                                    selectedAll={selectedAll}
-                                />
+                <div className="product-optimization-info">
+                    <OptimizationIncludes
+                        onShowDrawer={showDrawerHandler}
+                    />
 
-                                <div className="descriptions options-content">
-                                    {`NOTE! You can only choose one Strategy per product. Also, you can have any number of Optimization Parts, and you can change them anytime you want even if the product is already under optimization.`}
-                                </div>
-                            </div>
-
-                            <div className={`less-more-control ${isLess ? "more" : "less"}`}>
-                                <div
-                                    role="button"
-                                    className={`icon ${isLess ? "more" : "less"}`}
-                                    onClick={this.toLess}
-                                >
-                                    <Icon type="up"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <OptimizationStatus product={selectedProduct}/>
-
-                        <LastReports productId={selectedAll ? "all" : selectedProduct.id}/>
-                    </div>
+                    <OptimizationStatus
+                        product={selectedProduct}
+                    />
                 </div>
 
-                <Drawer
-                    title={
-                        infoType === "options"
-                            ? "Here is the quick review of the actions you can automate with the Software."
-                            : "Here is the quick review of the PPC Strategies you can reach with our Software."
-                    }
-                    width={500}
-                    onClose={this.onCloseDrawer}
-                    visible={this.state.visible}
-                >
-                    {infoType === "options" ? <OptionsInfo/> : <StrategyInfo/>}
-                </Drawer>
+                <OptimizationStrategy
+                    product={selectedProduct}
 
-                <SubscriptionNotificationWindow product={'ppc'}/>
-                <LoadingAmazonAccount/>
-            </Fragment>
-        );
-    }
-}
+                    onShowDrawer={showDrawerHandler}
+                    onStart={startOptimizationHandler}
+                    onStop={stopOptimizationHandler}
+                />
+            </div>
 
-const mapStateToProps = state => ({
-    selectedProduct: state.products.selectedProduct,
-    defaultOptions: state.products.defaultOptimizationOptions,
-    selectedAll: state.products.selectedAll
-});
+            <Drawer
+                title={infoType === "options"
+                    ? "Here is the quick review of the actions you can automate with the Software."
+                    : "Here is the quick review of the PPC Strategies you can reach with our Software."
+                }
+                width={500}
+                onClose={closeDrawerHandler}
+                visible={infoType}
+            >
+                {infoType === "options" ? <OptionsInfo/> : <StrategyInfo/>}
+            </Drawer>
 
-const mapDispatchToProps = dispatch => ({
-    updateProduct: product => {
-        dispatch(productsActions.updateProduct(product));
-    },
-    updateOptions: data => {
-        dispatch(productsActions.updateOptions(data));
-    }
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Optimization);
+            <NetMarginWindow
+                isShowModal={visibleNetMarginWindow}
+                selectedAll={selectedAll}
+                // handleCancel={cancelModal}
+                // handleOk={handleOk}
+            />
+
+            {/*<ConfirmActionPopup*/}
+            {/*    visible={showAllStartConfirmModal}*/}
+            {/*    handleOk={() => this.toStart(RUNNING)}*/}
+            {/*    handleCancel={() => this.setState({showAllStartConfirmModal: false})}*/}
+            {/*    title={'Are you ready to start?'}*/}
+            {/*    description={'Are you sure you want to start the same optimization strategy for All Products?'}*/}
+            {/*/>*/}
+
+            {/*<ConfirmActionPopup*/}
+            {/*    visible={showFirstStartConfirmModal}*/}
+            {/*    handleOk={() => this.toStart(RUNNING)}*/}
+            {/*    handleCancel={() => this.setState({*/}
+            {/*        showFirstStartConfirmModal: false,*/}
+            {/*        dontShowStartNotificationAgain: false*/}
+            {/*    })}*/}
+            {/*    handleChangeCheckbox={(e) => {*/}
+            {/*        this.setState({dontShowStartNotificationAgain: e.target.checked})*/}
+            {/*    }}*/}
+            {/*    title={'Are you ready to start?'}*/}
+            {/*    description={'This action will result in the automatic management of your campaigns by our algorithm.'}*/}
+            {/*    checkboxText={`Don't show this message again`}*/}
+            {/*/>*/}
+
+            {/*<ConfirmActionPopup*/}
+            {/*    visible={showStopConfirmModal}*/}
+            {/*    handleOk={() => this.toStart(STOPPED)}*/}
+            {/*    handleCancel={() => this.setState({*/}
+            {/*        showStopConfirmModal: false,*/}
+            {/*        dontShowStopNotificationAgain: false*/}
+            {/*    })}*/}
+            {/*    handleChangeCheckbox={(e) => {*/}
+            {/*        this.setState({dontShowStopNotificationAgain: e.target.checked})*/}
+            {/*    }}*/}
+            {/*    title={' Are you sure you want to stop?'}*/}
+            {/*    description={'We will stop the optimization of your active Amazon PPC campaigns. You can restart it anytime.'}*/}
+            {/*    checkboxText={selectedAll ? null : `Don't show this message again`}*/}
+
+            <SubscriptionNotificationWindow product={'ppc'}/>
+            <LoadingAmazonAccount/>
+        </Fragment>
+    );
+};
+
+export default Optimization;
