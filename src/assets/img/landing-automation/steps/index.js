@@ -1,11 +1,17 @@
-import step1 from './step-1.svg'
-import step2 from './step-2.svg'
-import step3 from './step-3.svg'
-import step4 from './step-4.svg'
+import slide1 from './slide-1.png'
+import slide2 from './slide-2.png'
+import slide3 from './slide-3.png'
+import slide4 from './slide-4.png'
+import moreDataImage from './more-data.png';
+import seeChangesImage from './see-changes.png';
+import dayPartingImage from './day-parting.png';
 
 export const stepsImages = {
-    step1,
-    step2,
-    step3,
-    step4,
+    slide1,
+    slide2,
+    slide3,
+    slide4,
+    moreDataImage,
+    seeChangesImage,
+    dayPartingImage
 };

@@ -30,6 +30,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {Modal} from "antd";
 import favicon from '../../../assets/img/icons/favicon.ico';
+import {Link} from "react-router-dom";
 
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
@@ -555,15 +556,15 @@ const LandingAutomation = () => {
         yDown = null;
     }
 
-    useEffect(() => {
-        document.getElementById('cases-slider').addEventListener('touchstart', handleTouchStart, false);
-        document.getElementById('cases-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'case'), false);
-    }, [currentCaseSlide]);
-
-    useEffect(() => {
-        document.getElementById('steps-slider').addEventListener('touchstart', handleTouchStart, false);
-        document.getElementById('steps-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'step'), false);
-    }, [currentStepSlide]);
+    // useEffect(() => {
+    //     document.getElementById('cases-slider').addEventListener('touchstart', handleTouchStart, false);
+    //     document.getElementById('cases-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'case'), false);
+    // }, [currentCaseSlide]);
+    //
+    // useEffect(() => {
+    //     document.getElementById('steps-slider').addEventListener('touchstart', handleTouchStart, false);
+    //     document.getElementById('steps-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'step'), false);
+    // }, [currentStepSlide]);
 
     useEffect(() => {
         if (selectedImage && (window.innerHeight > window.innerWidth)) {
@@ -609,6 +610,8 @@ const LandingAutomation = () => {
                                 <button className='btn default' onClick={goToRegistrationPage}>
                                     START FREE
                                 </button>
+
+                                <span>Or <Link to={'/demo-call'} target={'_blank'}>Book a Demo</Link></span>
 
                                 <img src={amazonApp} alt=""
                                      onClick={() => window.open('https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9')}/>
@@ -668,77 +671,91 @@ const LandingAutomation = () => {
 
             <section className='steps'>
                 <div className='container'>
-                    <h2>N steps to Solve It</h2>
+                    <h2>What’s inside?</h2>
 
-                    <div className='all-steps'>
-                        <div className={currentStepSlide === 0 ? 'active' : ''}>
-                            <div onClick={() => goToSlide(0, 'step')}/>
-                            <span>Connect Seller Central <br/> Account</span>
+                    <div className="row">
+                        <Slider
+                            dots={false}
+                            infinite={true}
+                            slidesToShow={1}
+                            slidesToScroll={1}
+                        >
+                            <div>
+                                <img src={stepsImages.slide1} alt=""/>
+                            </div>
+                            <div>
+                                <img src={stepsImages.slide2} alt=""/>
+                            </div>
+                            <div>
+                                <img src={stepsImages.slide3} alt=""/>
+                            </div>
+                            <div>
+                                <img src={stepsImages.slide4} alt=""/>
+                            </div>
+                        </Slider>
+
+                        <div className="content">
+                            <h3>Strategy based algorithm</h3>
+                            <p>
+                                We designed five business and advertising goals that you can choose. Every strategy will
+                                adjust the algorithm to reach your desired results. You can change the goals as your
+                                business situation changes. Just select the right strategy and press START. That’s all
+                                you need to automate your whole PPC management.
+                            </p>
                         </div>
 
-                        <i/>
+                    </div>
 
-                        <div className={currentStepSlide === 1 ? 'active' : ''}>
-                            <div onClick={() => goToSlide(1, 'step')}/>
-                            <span>Choose Your Goal</span>
+                    <div className="row">
+                        <div className="content">
+                            <h3>See the changes it performs</h3>
+                            <p>
+                                You have to make yourself comfortable, sit, and enjoy changes that the software
+                                performed. We created the reporting tool that shows you everything that was made by the
+                                algorithm and why it did it. You see, for what you pay, it’s soothing, right?
+                            </p>
                         </div>
 
-                        <i/>
+                        <div className="image">
+                            <img src={stepsImages.seeChangesImage} alt=""/>
+                        </div>
+                    </div>
 
-                        <div className={currentStepSlide === 2 ? 'active' : ''}>
-                            <div onClick={() => goToSlide(2, 'step')}/>
-                            <span>Monitor the changes</span>
+                    <div className="row">
+                        <div className="image">
+                            <img src={stepsImages.moreDataImage} alt=""/>
                         </div>
 
-                        <i/>
-
-                        <div className={currentStepSlide === 3 ? 'active' : ''}>
-                            <div onClick={() => goToSlide(3, 'step')}/>
-                            <span>Access a lot more <br/>data</span>
+                        <div className="content">
+                            <h3>Access a lot more data</h3>
+                            <p>
+                                We’re obsessed with data, and we guess you too, so we developed a dashboard, so you can
+                                see your business metrics at a glance and make more profitable decisions. Twenty-one
+                                metrics will help you understand your business from a different perspective.
+                            </p>
                         </div>
                     </div>
 
                     <div className="row">
                         <div className="content">
-                            <div className="title">
-                                0{currentStepSlide + 1}
-                                <span className='dash'>
-                                    <img src={dashIcon} alt=""/>
-                                </span>
-                                <span dangerouslySetInnerHTML={{__html: stepsSlider[currentStepSlide].title}}/>
-                            </div>
-
-                            <div className="description">
-                                {stepsSlider[currentStepSlide].description}
-                            </div>
-
-                            <button className='btn default' onClick={goToRegistrationPage}>
-                                Get Started
-                            </button>
+                            <h3>Day-parting</h3>
+                            <p>
+                                Day-parting tool will allow you to see what time of the day your campaigns is out of
+                                budget, what hours drives most of the daily sales so that you can set up days and hours
+                                for your PPC campaigns. ”70% of the sales happened from 7 am to 8 pm” Let’s test it!
+                            </p>
                         </div>
 
-                        <div className="slider" id='steps-slider'>
-                            <div className="prev" onClick={() => prevSlide('step')}>
-                                {currentStepSlide !== 0 && <FontAwesomeIcon icon={faPlay}/>}
-                            </div>
-
-                            <div className="image-block" style={{
-                                width: '80%'
-                            }}>
-                                {stepsSlider.map((item, index) => (
-                                    <img
-                                        src={item.img}
-                                        onClick={() => selectImage(item.img)}
-                                        alt=""
-                                        style={{display: currentStepSlide === index ? 'block' : 'none'}}/>
-                                ))}
-                            </div>
-
-                            <div className="next" onClick={() => nextSlide('step')}>
-                                {currentStepSlide !== 3 && <FontAwesomeIcon icon={faPlay}/>}
-                            </div>
+                        <div className="image">
+                            <img src={stepsImages.dayPartingImage} alt=""/>
                         </div>
                     </div>
+
+                    <div className="col">
+                        <button className="btn default" onClick={goToRegistrationPage}>start free trial</button>
+                        <p>Or <Link to={'/demo-call'} target={'_blank'}>Book a Demo</Link> No credit card <br/> required. 60-second sign up.</p>
+                    </div>
+
                 </div>
             </section>
 
