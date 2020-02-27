@@ -611,7 +611,7 @@ const LandingAutomation = () => {
                                     START FREE
                                 </button>
 
-                                <span>Or <Link to={'/demo-call'}>Book a Demo</Link></span>
+                                <span>Or <Link to={'/demo-call'} target={'_blank'}>Book a Demo</Link></span>
 
                                 <img src={amazonApp} alt=""
                                      onClick={() => window.open('https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9')}/>
@@ -753,7 +753,7 @@ const LandingAutomation = () => {
 
                     <div className="col">
                         <button className="btn default" onClick={goToRegistrationPage}>start free trial</button>
-                        <p>Or <Link to={'/demo-call'}>Book a Demo</Link> No credit card <br/> required. 60-second sign up.</p>
+                        <p>Or <Link to={'/demo-call'} target={'_blank'}>Book a Demo</Link> No credit card <br/> required. 60-second sign up.</p>
                     </div>
 
                 </div>
