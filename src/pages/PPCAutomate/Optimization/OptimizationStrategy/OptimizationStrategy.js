@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay, faStop} from "@fortawesome/free-solid-svg-icons";
 
-import acosTargetingImage from '../../../../assets/img/optimization/acos-targeting.png';
+import acosTargetingImage from '../../../../assets/img/optimization/acos-targeting.svg';
 import productLaunchImage from '../../../../assets/img/optimization/product-launch.png';
 import organicSalesGrowthImage from '../../../../assets/img/optimization/organic-sales-growth.png';
 import revenueGrowthImage from '../../../../assets/img/optimization/revenue-growth.png';
@@ -48,7 +48,7 @@ const strategies = [
         name: 'Organic Sales Growth',
         key: 'BoostPPCProfit',
         img: organicSalesGrowthImage,
-        jeffRemark: `All I care about is <span>organic sales.</span> I want to <br> break-even on PPC so to boost my keywords <br> position.`,
+        jeffRemark: `All I care about is <span>organic sales.</span> I want to break-even  <br> on PPC so to boost my keywords position.`,
         description: `This strategy designed for sellers who want to keep their organic ranking positions with PPC efforts. So they can make more profit from Organic Sales.`,
         descriptionTitle: 'Leverage organic sales!',
         value: {
@@ -237,6 +237,15 @@ const OptimizationStrategy = ({product: {optimization_strategy, status}, onShowD
                             />
                         ))}
                     </Slider>
+
+                        {/*<StrategyItem*/}
+                        {/*    strategy={strategies[selectedSlide]}*/}
+                        {/*    index={selectedSlide}*/}
+                        {/*    activeStrategy={optimization_strategy}*/}
+                        {/*    isActivated={status === 'RUNNING'}*/}
+                        {/*    onStart={startOptimizationHandler}*/}
+                        {/*    onStop={stopOptimizationHandler}*/}
+                        {/*/>*/}
 
                 </div>
             </section>

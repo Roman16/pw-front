@@ -2,20 +2,20 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin: 20px 0 0 0;
 
   .strategies {
+    max-width: 1000px;
+    width: 100%;
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 0 10%;
+    margin: 0 auto;
 
     .all-strategies {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 0 0 20px 0;
-      padding: 0 10px;
+      padding: 0 10px 0 10px;
 
       .strategy-name {
         width: 180px;
@@ -76,6 +76,9 @@
       }
     }
 
+
+
+
     .slick-slider {
       flex: 1;
       display: flex;
@@ -92,6 +95,7 @@
 
             & > div {
               height: 100%;
+              display: flex;
             }
           }
         }
@@ -103,7 +107,7 @@
 
 
       .strategy-item {
-        height: 100%;
+        flex: 1;
         display: flex;
         flex-direction: column;
         position: relative;
@@ -113,10 +117,10 @@
           display: flex;
           justify-content: space-between;
           position: relative;
-          margin: 30px 0;
+          padding: 40px 0;
 
           .col {
-            width: 30%;
+            width: 35%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -134,11 +138,11 @@
             }
 
             .value-list {
-              margin: 25px 0 0 0;
+              margin: 10px 0 0 0;
 
               div {
                 width: 100%;
-                padding: 10px 0;
+                padding: 8px 0;
                 border-bottom: 1px solid rgba(208, 208, 208, 0.4);
                 display: flex;
                 justify-content: space-between;
@@ -175,31 +179,60 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative;
 
             .target-acos {
               display: flex;
               justify-content: flex-end;
               align-items: center;
-              margin: 0 0 auto 0;
+              margin: 0 0 auto auto;
 
               font-weight: 600;
-              font-size: 0.8571428571428571rem;
+              font-size: 1rem;
               letter-spacing: 0.2px;
 
               color: #283E70;
 
+              //position: absolute;
+              //right: 0;
+              //top: 0;
+
               .InputCurrency {
-                margin: 0 30px;
+                margin: 0 20px;
+                height: 2.142857142857143rem;
+
+                .Dollar {
+                  right: 5px;
+                  left: auto;
+                  font-size: 1rem;
+                }
+
+                .ant-input-number {
+                  border-radius: 8px;
+                  height: 2.142857142857143rem;
+                }
+
+                .ant-input-number-handler-wrap {
+                  display: none;
+                }
+
+                input {
+                  padding: 0 25px 0 5px;
+                  height: 2.142857142857143rem;
+                  font-size: 1rem;
+                }
               }
 
               .btn {
                 text-transform: capitalize;
                 padding: 0 20px;
+                height: 2.142857142857143rem;
               }
             }
 
             img {
               width: 85%;
+              height: 13vw;
               margin: 0 0 0 auto;
             }
           }
@@ -211,12 +244,12 @@
 
           .remark {
             font-weight: 600;
-            font-size: 2.142857142857143rem;
+            font-size: 20px;
             line-height: 2.142857142857143rem;
             text-align: center;
             letter-spacing: 0.2px;
             color: #17175A;
-            margin: 0 0 30px 0;
+            margin: 0 0 20px 0;
 
             span {
               color: #6D6DF6;
@@ -229,7 +262,7 @@
             max-width: 300px;
             height: 3.4285714285714284rem;
             font-size: 1.1428571428571428rem;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 10px auto;
             position: relative;
             text-transform: uppercase;
 
@@ -248,24 +281,19 @@
 
     @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
       & {
-        padding: 0;
+        max-width: 850px;
 
         .slick-slider .strategy-item .description-block {
-          flex: 1;
-          margin: 0;
+          padding: 15px 0;
         }
 
         .slick-slider .strategy-item .description-block .image img {
-          width: 75%;
+          height: 15vw;
         }
 
         .slick-slider .strategy-item > .col {
           .remark {
-            margin: 15px 0 15px 0;
-          }
-
-          .btn {
-            margin-bottom: 0;
+            //margin: 15px 0 15px 0;
           }
         }
       }
