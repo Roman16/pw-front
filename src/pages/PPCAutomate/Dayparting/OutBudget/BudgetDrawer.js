@@ -3,15 +3,16 @@ import {Radio, Spin} from "antd";
 import {useSelector} from "react-redux";
 import InputCurrency from "../../../../components/Inputs/InputCurrency";
 import {daypartingServices} from "../../../../services/dayparting.services";
+import {notification} from "../../../../components/Notification";
 
 const BudgetDrawer = ({onClose, onSave, processing}) => {
     const [selectedRadio, setRadio] = useState('recommend'),
         [userBudget, setBudget] = useState(0),
-        [dailyBudget, setDailyBudget] = useState(0),
-        [recommendedBudget, setRecommendedBudget] = useState(0);
+        [recommendedBudget, setRecommendedBudget] = useState(false);
 
-    const {campaignId} = useSelector(state => ({
+    const {campaignId, dailyBudget} = useSelector(state => ({
         campaignId: state.products.selectedProduct.id,
+        dailyBudget: state.products.selectedProduct.dailyBudget
     }));
 
     function changesRadioHandler(e) {
@@ -23,16 +24,19 @@ const BudgetDrawer = ({onClose, onSave, processing}) => {
     }
 
     function saveHandler() {
-        onSave({
-            type: selectedRadio,
-            value: selectedRadio === 'recommend' ? recommendedBudget : userBudget
-        });
+        if(selectedRadio === 'recommend' && !recommendedBudget) {
+            notification.error({title: 'Enter budget'})
+        } else {
+            onSave({
+                type: selectedRadio,
+                value: selectedRadio === 'recommend' ? recommendedBudget : userBudget
+            });
+        }
     }
 
     useEffect(() => {
         daypartingServices.getRecommendedBudget(campaignId)
             .then(res => {
-                setDailyBudget(res.response.statistics.current.daily_budget);
                 setRecommendedBudget(res.response.statistics.recommended.daily_budget);
             })
     }, []);
@@ -52,7 +56,7 @@ const BudgetDrawer = ({onClose, onSave, processing}) => {
                         Recommended budget
                     </Radio>
 
-                    <span className='value'>${recommendedBudget || 0}</span>
+                    <span className='value'>{recommendedBudget ? `$${recommendedBudget}` : <Spin size={"small"}/>}</span>
                 </div>
 
                 <div className="custom-budget">
