@@ -1,14 +1,17 @@
-import React, {useState, Fragment} from "react";
+import React, {useState, Fragment, useEffect} from "react";
 import {Radio, Spin} from "antd";
 import {useSelector} from "react-redux";
 import InputCurrency from "../../../../components/Inputs/InputCurrency";
+import {daypartingServices} from "../../../../services/dayparting.services";
 
 const BudgetDrawer = ({onClose, onSave, processing}) => {
     const [selectedRadio, setRadio] = useState('recommend'),
-        [userBudget, setBudget] = useState(0);
+        [userBudget, setBudget] = useState(0),
+        [dailyBudget, setDailyBudget] = useState(0),
+        [recommendedBudget, setRecommendedBudget] = useState(0);
 
-    const {dailyBudget} = useSelector(state => ({
-        dailyBudget: state.products.selectedProduct.dailyBudget
+    const {campaignId} = useSelector(state => ({
+        campaignId: state.products.selectedProduct.id,
     }));
 
     function changesRadioHandler(e) {
@@ -22,9 +25,17 @@ const BudgetDrawer = ({onClose, onSave, processing}) => {
     function saveHandler() {
         onSave({
             type: selectedRadio,
-            value: selectedRadio === 'recommend' ? 100 : userBudget
+            value: selectedRadio === 'recommend' ? recommendedBudget : userBudget
         });
     }
+
+    useEffect(() => {
+        daypartingServices.getRecommendedBudget(campaignId)
+            .then(res => {
+                setDailyBudget(res.response.statistics.current.daily_budget);
+                setRecommendedBudget(res.response.statistics.recommended.daily_budget);
+            })
+    }, []);
 
 
     return (
@@ -41,7 +52,7 @@ const BudgetDrawer = ({onClose, onSave, processing}) => {
                         Recommended budget
                     </Radio>
 
-                    <span className='value'>$100.00</span>
+                    <span className='value'>${recommendedBudget || 0}</span>
                 </div>
 
                 <div className="custom-budget">
@@ -60,7 +71,6 @@ const BudgetDrawer = ({onClose, onSave, processing}) => {
             </Radio.Group>
 
             <div className="actions">
-
                 {processing ? <Spin/> : <Fragment>
                     <button className='btn white' onClick={onClose}>Cancel</button>
 

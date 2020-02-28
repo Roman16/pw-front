@@ -404,7 +404,7 @@
               }
 
               .actions {
-                margin: 0 0 20px 0;
+                margin: 0 0 40px 0;
 
                 img {
                   width: 40%;
@@ -615,6 +615,7 @@
 
         .slick-arrow {
           z-index: 100;
+          height: max-content;
 
           &:before {
             color: #030303;
@@ -680,7 +681,14 @@
 
         .content {
           width: 100%;
-          text-align: center;
+
+          h3 {
+            text-align: center;
+          }
+
+          p {
+            text-align: left;
+          }
         }
 
         .slick-slider, .image {
@@ -705,7 +713,7 @@
 
         .content {
           width: 100%;
-          text-align: center;
+          text-align: left;
 
           h3 {
             font-size: 30px;
@@ -721,11 +729,16 @@
         .slick-slider, .image {
           width: 100%;
 
-          .slick-prev {
-            margin: 0 0 0 -10px;
+          img {
+            height: 55vw;
           }
+
+          .slick-prev {
+            left: -5px !important;
+          }
+
           .slick-next {
-            margin: 0 -10px 0 0;
+            right: -10px !important;
           }
         }
       }
