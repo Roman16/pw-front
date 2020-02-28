@@ -153,7 +153,9 @@ const OutBudget = ({date}) => {
                 <div className="section-header">
                     <h2>
                         Sales / Out of Budget
-                        {/*<InformationTooltip description={''}/>*/}
+                        <InformationTooltip
+                            description={'Sales are total earnings (organic + PPC) from orders for your products that are being advertised in currently selected campaign (you have enabled product ads for these products in campaign)'}
+                        />
                     </h2>
 
                     <div className='out-of-budget'>

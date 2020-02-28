@@ -40,7 +40,7 @@ class Dayparting extends PureComponent {
             <div className='dayparting-page'>
                 <div className='last-synced'>
                     <div className="date-stamp">
-                        Day-parting is operating in PST (Pacific Standard Time).
+                        Day-parting is operating in PST (Pacific Standard Time)
                     </div>
 
                     <div className="week-select">
