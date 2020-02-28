@@ -577,6 +577,10 @@
       align-items: center;
       margin: 0 0 100px 0;
 
+      &:nth-child(5) {
+        margin-bottom: 60px;
+      }
+
       .content {
         width: 45%;
 
@@ -598,8 +602,13 @@
 
       .image {
         width: 50%;
+        height: 24vw;
         display: flex;
         justify-content: flex-end;
+
+        img {
+          height: 100%;
+        }
       }
 
       .slick-slider {
@@ -608,8 +617,13 @@
 
         .slick-slide {
           div {
+            height: 24vw;
             display: flex !important;
             justify-content: center;
+
+            img {
+              height: 100%;
+            }
           }
         }
 
@@ -693,6 +707,13 @@
 
         .slick-slider, .image {
           width: 80%;
+          height: auto;
+
+          .slick-slide {
+            div {
+              height: 60vw;
+            }
+          }
         }
       }
     }
