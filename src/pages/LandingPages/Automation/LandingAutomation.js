@@ -556,10 +556,10 @@ const LandingAutomation = () => {
         yDown = null;
     }
 
-    // useEffect(() => {
-    //     document.getElementById('cases-slider').addEventListener('touchstart', handleTouchStart, false);
-    //     document.getElementById('cases-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'case'), false);
-    // }, [currentCaseSlide]);
+    useEffect(() => {
+        document.getElementById('cases-slider').addEventListener('touchstart', handleTouchStart, false);
+        document.getElementById('cases-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'case'), false);
+    }, [currentCaseSlide]);
     //
     // useEffect(() => {
     //     document.getElementById('steps-slider').addEventListener('touchstart', handleTouchStart, false);
@@ -669,9 +669,10 @@ const LandingAutomation = () => {
                 </div>
             </section>
 
+
             <section className='steps'>
                 <div className='container'>
-                    <h2>What’s inside?</h2>
+                    <h2>How can we help?</h2>
 
                     <div className="row">
                         <Slider
@@ -691,6 +692,9 @@ const LandingAutomation = () => {
                             </div>
                             <div>
                                 <img src={stepsImages.slide4} alt=""/>
+                            </div>
+                            <div>
+                                <img src={stepsImages.slide5} alt=""/>
                             </div>
                         </Slider>
 
@@ -1209,7 +1213,6 @@ const LandingAutomation = () => {
                     </div>
 
                     <img src={supportImage} alt="" className='image'/>
-
                 </div>
 
                 <div className="rectangle"/>

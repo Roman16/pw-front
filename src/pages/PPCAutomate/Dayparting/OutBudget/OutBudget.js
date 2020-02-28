@@ -120,6 +120,7 @@ const OutBudget = ({date}) => {
     const TooltipDescription = ({value, timeIndex, date, outBudget}) => {
         return (
             <Fragment>
+                <h3 className="date">{moment(date).format('MMMM DD')}</h3>
                 <div className="row">
                     <div className="col">
                         <h3>

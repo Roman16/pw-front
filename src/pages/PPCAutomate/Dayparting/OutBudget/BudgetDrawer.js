@@ -1,13 +1,17 @@
-import React, {useState, Fragment} from "react";
+import React, {useState, Fragment, useEffect} from "react";
 import {Radio, Spin} from "antd";
 import {useSelector} from "react-redux";
 import InputCurrency from "../../../../components/Inputs/InputCurrency";
+import {daypartingServices} from "../../../../services/dayparting.services";
+import {notification} from "../../../../components/Notification";
 
 const BudgetDrawer = ({onClose, onSave, processing}) => {
     const [selectedRadio, setRadio] = useState('recommend'),
-        [userBudget, setBudget] = useState(0);
+        [userBudget, setBudget] = useState(0),
+        [recommendedBudget, setRecommendedBudget] = useState(false);
 
-    const {dailyBudget} = useSelector(state => ({
+    const {campaignId, dailyBudget} = useSelector(state => ({
+        campaignId: state.products.selectedProduct.id,
         dailyBudget: state.products.selectedProduct.dailyBudget
     }));
 
@@ -20,11 +24,22 @@ const BudgetDrawer = ({onClose, onSave, processing}) => {
     }
 
     function saveHandler() {
-        onSave({
-            type: selectedRadio,
-            value: selectedRadio === 'recommend' ? 100 : userBudget
-        });
+        if(selectedRadio === 'recommend' && !recommendedBudget) {
+            notification.error({title: 'Enter budget'})
+        } else {
+            onSave({
+                type: selectedRadio,
+                value: selectedRadio === 'recommend' ? recommendedBudget : userBudget
+            });
+        }
     }
+
+    useEffect(() => {
+        daypartingServices.getRecommendedBudget(campaignId)
+            .then(res => {
+                setRecommendedBudget(res.response.statistics.recommended.daily_budget);
+            })
+    }, []);
 
 
     return (
@@ -41,7 +56,7 @@ const BudgetDrawer = ({onClose, onSave, processing}) => {
                         Recommended budget
                     </Radio>
 
-                    <span className='value'>$100.00</span>
+                    <span className='value'>{recommendedBudget ? `$${recommendedBudget}` : <Spin size={"small"}/>}</span>
                 </div>
 
                 <div className="custom-budget">
@@ -60,7 +75,6 @@ const BudgetDrawer = ({onClose, onSave, processing}) => {
             </Radio.Group>
 
             <div className="actions">
-
                 {processing ? <Spin/> : <Fragment>
                     <button className='btn white' onClick={onClose}>Cancel</button>
 

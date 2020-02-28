@@ -9,6 +9,7 @@ function dateFormatter(date) {
 export const daypartingServices = {
     getCampaigns,
     getOutBudgetStatistic,
+    getRecommendedBudget,
     setCampaignBudget,
     getDailyStatistic,
     getPlacementsStatistic,
@@ -28,6 +29,10 @@ function getCampaigns({size, page, searchStr, cancelToken, campaign_type, campai
 
 function getOutBudgetStatistic({campaignId, date, cancelToken}) {
     return api('get', `${daypartingUrls.outBudget(campaignId)}?start_date=${dateFormatter(date.startDate)}&end_date=${dateFormatter(date.endDate)}`, null, null, cancelToken)
+}
+
+function getRecommendedBudget(campaignId) {
+    return api('get', `${daypartingUrls.recommendedBudget(campaignId)}`)
 }
 
 function setCampaignBudget({campaignId, data}) {
