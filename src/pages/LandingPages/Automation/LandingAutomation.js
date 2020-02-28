@@ -1213,7 +1213,6 @@ const LandingAutomation = () => {
                     </div>
 
                     <img src={supportImage} alt="" className='image'/>
-
                 </div>
 
                 <div className="rectangle"/>
