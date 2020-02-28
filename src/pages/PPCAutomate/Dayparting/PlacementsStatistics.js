@@ -19,6 +19,30 @@ const chartLabel = {
     rest_search: 'Rest of search'
 };
 
+const weakDays = [
+    {
+        date: 'Sunday',
+    },
+    {
+        date: 'Monday',
+    },
+    {
+        date: 'Tuesday',
+    },
+    {
+        date: 'Wednesday',
+    },
+    {
+        date: 'Thursday',
+    },
+    {
+        date: 'Friday',
+    },
+    {
+        date: 'Saturday',
+    },
+];
+
 const statisticParams = [
     {
         title: 'Rest of search',
@@ -75,7 +99,8 @@ const ChartTooltip = ({payload}) => {
 
         return (
             <div className='area-chart-tooltip'>
-                <h3>{moment(payload[0].payload.date).format('DD MMMM YYYY')}</h3>
+                {/*<h3>{moment(payload[0].payload.date).format('DD MMMM YYYY')}</h3>*/}
+                <h3>{`${weakDays[moment(payload[0].payload.date).day()].date}, ${moment(payload[0].payload.date).format('MMMM DD')}`}</h3>
 
                 <div className='content'>
                     {payload.reverse().map((entry, index) => (

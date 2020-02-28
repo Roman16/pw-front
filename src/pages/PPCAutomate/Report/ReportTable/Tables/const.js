@@ -151,17 +151,19 @@ export const pausePatActionField = {
 };
 
 export const averageCVRField = (onChangeFilter, filteredColumns) => ({
-    // title: (
-    //     <TitleInfo
-    //         position='top'
-    //         title="Average CVR"
-    //         info="Average CVR"
-    //     />
-    // ),
-    title: 'Average CVR',
+    title: (
+        <TitleInfo
+            position='top'
+            title="Normalized CVR"
+            info={`Normalized CVR is our own calculated metric that gives better representation of an expected CVR for a keyword or a Product Targeting. <br/>
+                   When no data is available for product in PPC we use average numbers calculated based on millions of data points.
+                   When there is data for product we smoothly transition into using the product's specific numbers.<br/>
+                   We also account for trends between different match types and apply correction to CVR if needed based on these trends`}
+        />
+    ),
     dataIndex: 'd_averageConversionRate',
     key: 'd_averageConversionRate',
-    width: '11em',
+    width: '14em',
     render: (text) => (text && <span>{round(+text * 100, 2)}%</span>),
     sorter: true,
     filter: (dataIndex) => <ColumnNumberFilter
