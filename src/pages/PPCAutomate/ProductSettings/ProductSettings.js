@@ -23,7 +23,7 @@ const ProductSettingsMain = () => {
           "Fixed Bids." bidding strategy. Additionally, "Adjust bids by
           placement" should be set to 0% (default) as it will negatively affect
           your performance with our algorithm. Also, you should have only one
-          Active SKU per Ad Group.
+          Active SKU per Ad Group, or its variations.
         </div>
       </div>
 
