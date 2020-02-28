@@ -75,6 +75,7 @@ export function dashboard(state = initialState, action) {
                 })),
                 selectedMetrics: state.selectedMetrics.map(item => ({
                     ...item,
+                    ...metricsListArray.find(metric => metric.key === item.metric_key) || {},
                     ...action.payload.find(metric => metric.metric_key === item.key) || {}
                 }))
             };
