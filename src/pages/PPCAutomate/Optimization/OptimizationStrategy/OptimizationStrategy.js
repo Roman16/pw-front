@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, Fragment, useEffect} from "react";
 import {Icon} from "antd";
 
 import "./OptimizationStrategy.less";
@@ -12,6 +12,8 @@ import organicSalesGrowthImage from '../../../../assets/img/optimization/organic
 import revenueGrowthImage from '../../../../assets/img/optimization/revenue-growth.png';
 import profitablePpcImage from '../../../../assets/img/optimization/profitable-ppc.png';
 import InputCurrency from "../../../../components/Inputs/InputCurrency";
+import NetMarginWindow from "../NetMarginWindow/NetMarginWindow";
+import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup";
 
 const strategies = [
     {
@@ -86,22 +88,18 @@ const strategies = [
     },
 ];
 
-export function SampleNextArrow({onClick}) {
-    return (<div className='next' onClick={onClick}><FontAwesomeIcon icon={faPlay}/></div>)
-}
+const RUNNING = 'RUNNING';
+const STOPPED = 'STOPPED';
 
-export function SamplePrevArrow({onClick}) {
-    return (<div className='prev' onClick={onClick}><FontAwesomeIcon icon={faPlay}/></div>);
-}
 
-export function StrategyItem({
-                                 strategy: {description, descriptionTitle, value, img, jeffRemark, key},
-                                 index,
-                                 activeStrategy,
-                                 isActivated,
-                                 onStart,
-                                 onStop
-                             }) {
+function StrategyItem({
+                          strategy: {description, descriptionTitle, value, img, jeffRemark, key},
+                          index,
+                          activeStrategy,
+                          isActivated,
+                          onStart,
+                          onStop
+                      }) {
     return (
         <div className={`strategy-item  slide-${index + 1}`}>
             <div className="description-block">
@@ -151,66 +149,138 @@ export function StrategyItem({
     )
 }
 
-const OptimizationStrategy = ({product: {optimization_strategy, status}, onShowDrawer, onStart, onStop}) => {
+let sliding = false;
+
+
+const OptimizationStrategy = ({product: {optimization_strategy, status}, onShowDrawer, onStart, onStop, selectedAll}) => {
     const [slider, setSlider] = useState(),
-        [selectedSlide, setSelectedSlide] = useState(0);
+        [selectedSlide, setSelectedSlide] = useState(0),
+        [visibleNetMarginWindow, setNetMarginWindow] = useState(false),
+        [visibleConfirmWindows, setConfirmWindows] = useState({
+            confirmStartAllProducts: false,
+            confirmStartProduct: false,
+            confirmStopProduct: false
+        });
+
+
+    function startOptimizationHandler() {
+        setConfirmWindows({
+            ...visibleConfirmWindows,
+            [selectedAll ? 'confirmStartAllProducts' : 'confirmStartProduct']: true
+        })
+    }
+
+    function stopOptimizationHandler() {
+        setConfirmWindows({
+            ...visibleConfirmWindows,
+            confirmStopProduct: true
+        })
+    }
 
     function goToSlideHandler(index) {
-        slider.slickGoTo(index);
-        setSelectedSlide(index);
+        if (!sliding) {
+            sliding = true;
+            slider.slickGoTo(index);
+            setSelectedSlide(index);
+
+            setTimeout(() => {
+                sliding = false;
+            }, 600)
+        }
     }
 
     return (
-        <section className="optimize-strategy">
-            <h3>
-                Our Strategies
-                <Icon
-                    type="info-circle"
-                    theme="filled"
-                    onClick={() => onShowDrawer("strategy")}
-                />
-            </h3>
+        <Fragment>
+            <section className="optimize-strategy">
+                <h3>
+                    Our Strategies
+                    <Icon
+                        type="info-circle"
+                        theme="filled"
+                        onClick={() => onShowDrawer("strategy")}
+                    />
+                </h3>
 
-            <div className="strategies ">
-                <div className="all-strategies">
-                    {strategies.map((item, index) => (
-                        <div
-                            key={item.key}
-                            className={`strategy-name ${index === selectedSlide && 'selected-strategy'}`}
-                            onClick={() => goToSlideHandler(index)}>
-                            {item.name}
-                        </div>
-                    ))}
+                <div className="strategies ">
+                    <div className="all-strategies">
+                        {strategies.map((item, index) => (
+                            <div
+                                key={item.key}
+                                className={`strategy-name ${index === selectedSlide && 'selected-strategy'} ${optimization_strategy === item.key && status === RUNNING && 'running-strategy'}`}
+                                onClick={() => goToSlideHandler(index)}>
+                                {item.name}
+                            </div>
+                        ))}
+                    </div>
+
+                    <Slider
+                        dots={false}
+                        infinite={true}
+                        swipe={false}
+                        speed={500}
+                        initialSlide={selectedSlide}
+                        slidesToShow={1}
+                        slidesToScroll={1}
+                        ref={slider => {
+                            setSlider(slider)
+                        }}
+                    >
+                        {strategies.map((item, index) => (
+                            <StrategyItem
+                                key={item.key}
+                                strategy={item}
+                                index={index}
+                                activeStrategy={optimization_strategy}
+                                isActivated={status === 'RUNNING'}
+                                onStart={startOptimizationHandler}
+                                onStop={stopOptimizationHandler}
+                            />
+                        ))}
+                    </Slider>
+
                 </div>
+            </section>
 
-                <Slider
-                    dots={false}
-                    infinite={true}
-                    swipe={false}
-                    speed={500}
-                    slidesToShow={1}
-                    slidesToScroll={1}
-                    nextArrow={<SampleNextArrow/>}
-                    prevArrow={<SamplePrevArrow/>}
-                    ref={slider => {
-                        setSlider(slider)
-                    }}
-                >
-                    {strategies.map((item, index) => (
-                        <StrategyItem
-                            key={item.key}
-                            strategy={item}
-                            index={index}
-                            activeStrategy={optimization_strategy}
-                            isActivated={status === 'RUNNING'}
-                            onStart={onStart}
-                            onStop={onStop}
-                        />
-                    ))}
-                </Slider>
 
-            </div>
-        </section>
+            <NetMarginWindow
+                isShowModal={visibleNetMarginWindow}
+                selectedAll={selectedAll}
+                // handleCancel={cancelModal}
+                // handleOk={handleOk}
+            />
+
+            <ConfirmActionPopup
+                visible={visibleConfirmWindows.confirmStartAllProducts}
+                handleOk={() => onStart(strategies[selectedSlide].key)}
+                handleCancel={() => setConfirmWindows({...visibleConfirmWindows, confirmStartAllProducts: false})}
+                title={'Are you ready to start?'}
+                description={'Are you sure you want to start the same optimization strategy for All Products?'}
+            />
+
+            <ConfirmActionPopup
+                visible={visibleConfirmWindows.confirmStartProduct}
+                handleOk={() => onStart(strategies[selectedSlide].key)}
+                handleCancel={() => setConfirmWindows({...visibleConfirmWindows, confirmStartProduct: false})}
+                handleChangeCheckbox={(e) => {
+                    this.setState({dontShowStartNotificationAgain: e.target.checked})
+                }}
+                title={'Are you ready to start?'}
+                description={'This action will result in the automatic management of your campaigns by our algorithm.'}
+                checkboxText={`Don't show this message again`}
+            />
+
+            <ConfirmActionPopup
+                visible={visibleConfirmWindows.confirmStopProduct}
+                handleOk={() => onStop(strategies[selectedSlide].key)}
+                handleCancel={() => setConfirmWindows({...visibleConfirmWindows, confirmStopProduct: false})}
+                handleChangeCheckbox={(e) => {
+                    this.setState({dontShowStopNotificationAgain: e.target.checked})
+                }}
+                title={' Are you sure you want to stop?'}
+                description={'We will stop the optimization of your active Amazon PPC campaigns. You can restart it anytime.'}
+                checkboxText={selectedAll ? null : `Don't show this message again`}
+            />
+        </Fragment>
     );
 };
 

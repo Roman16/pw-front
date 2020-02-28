@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { CheckBoxItem, options } from '../../OptimizationOptions/OptimizationOptions';
 import './OptionInfo.less';
 
 class OptionInfo extends Component {

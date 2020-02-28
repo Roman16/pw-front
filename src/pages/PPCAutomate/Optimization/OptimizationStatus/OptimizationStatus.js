@@ -3,6 +3,14 @@ import './OptimizationStatus.less';
 import {history} from "../../../../utils/history";
 import moment from "moment";
 
+const strategies = {
+    'ACoS_targeting': 'ACoS Targeting',
+    'LaunchProduct': 'Product Launch',
+    'BoostPPCProfit': 'Organic Sales Growth',
+    'GrowOverallSales': 'Revenue Growth',
+    'BoostOverallProfit': 'Profitable PPC'
+};
+
 const StatusInfo = ({caption, value = '-----', statusColor = ''}) => (
     <div className="status-info">
         <div className="caption">{caption}</div>
@@ -10,11 +18,20 @@ const StatusInfo = ({caption, value = '-----', statusColor = ''}) => (
     </div>
 );
 
-const OptimizationStatus = ({product: {status, created_at, total_changes, today_changes}}) => {
+const OptimizationStatus = ({product: {status, created_at, total_changes, today_changes, optimization_strategy}}) => {
 
     return (
         <section className="product-status">
-            <h3>Current Status</h3>
+            <div className="section-header">
+                <h3>Current Status </h3>
+
+                <button
+                    className='btn default'
+                    onClick={() => history.push('/ppc/report')}
+                >
+                    VIEW REPORT
+                </button>
+            </div>
 
             <div className="row">
                 <StatusInfo
@@ -38,12 +55,11 @@ const OptimizationStatus = ({product: {status, created_at, total_changes, today_
                     value={today_changes}
                 />
 
-                <button
-                    className='btn default'
-                    onClick={() => history.push('/ppc/report')}
-                >
-                    VIEW REPORT
-                </button>
+                <StatusInfo
+                    caption="Current Strategy"
+                    value={status === 'RUNNING' ? strategies[optimization_strategy] : undefined}
+                />
+
             </div>
         </section>
     );

@@ -100,9 +100,6 @@ export function products(state = initialState, action) {
             return {
                 ...state,
                 selectedAll: !state.selectedAll,
-                selectedProduct: {
-                    ...action.payload,
-                }
             };
 
         case productsConstants.SHOW_ONLY_OPTIMIZED:

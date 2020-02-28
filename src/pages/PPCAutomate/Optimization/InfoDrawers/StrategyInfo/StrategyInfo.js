@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { StrategyItem } from '../../OptimizationStrategy/OptimizationStrategy';
 import './StrategyInfo.less';
 
 const info = [

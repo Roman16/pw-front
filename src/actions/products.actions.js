@@ -69,10 +69,16 @@ function fetchProducts(paginationParams) {
 
 function fetchProductDetails(product, pathname) {
     return dispatch => {
-        dispatch({
-            type: productsConstants.SELECT_PRODUCT,
-            payload: product
-        });
+        if (product !== 'all') {
+            dispatch({
+                type: productsConstants.SELECT_PRODUCT,
+                payload: product
+            });
+        } else {
+            dispatch({
+                type: productsConstants.SELECT_ALL_PRODUCT,
+            });
+        }
     };
 }
 
