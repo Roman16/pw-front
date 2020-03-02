@@ -235,8 +235,10 @@ class ProductList extends Component {
             <Fragment>
                 <div
                     className={`${closedList ? 'product-list closed' : 'product-list'}`}>
-                    <div className="switch-list" onClick={() => this.setState({closedList: !closedList})}>
-                        <img src={selectIcon} alt=""/>
+                    <div className="switch-list">
+                        <div className="image" onClick={() => this.setState({closedList: !closedList})}>
+                            <img src={selectIcon} alt=""/>
+                        </div>
                     </div>
 
                     <FilterFields

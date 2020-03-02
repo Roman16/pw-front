@@ -57,7 +57,7 @@ const ChartStatistics = ({date}) => {
     return (
         <section className='chart-statistics'>
             <div className="section-header">
-                <h2>Daily</h2>
+                <h2>Metrics Comparison</h2>
 
                 <div className='sorter'>
                     <div className={"select first"}>
