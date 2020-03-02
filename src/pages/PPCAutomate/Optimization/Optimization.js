@@ -26,14 +26,15 @@ const Optimization = () => {
 
     const dispatch = useDispatch();
 
-    const {productId, selectedAll} = useSelector(state => ({
+    const {productId, selectedAll, type} = useSelector(state => ({
         productId: state.products.selectedProduct.id,
+        type: state.products.selectedProduct.type,
         selectedAll: state.products.selectedAll,
     }));
 
 
     useEffect(() => {
-        if (selectedAll || productId) {
+        if ((selectedAll || productId) && type==='product' ) {
             async function fetchProductDetails() {
                 try {
                     const res = await productsServices.getProductDetails(selectedAll ? 'all' : productId);

@@ -72,7 +72,7 @@ function fetchProductDetails(product, pathname) {
         if (product !== 'all') {
             dispatch({
                 type: productsConstants.SELECT_PRODUCT,
-                payload: product
+                payload: {...product, type: pathname === '/ppc/dayparting' ? 'campaign' : 'product'},
             });
         } else {
             dispatch({

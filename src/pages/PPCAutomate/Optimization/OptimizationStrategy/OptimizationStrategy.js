@@ -23,7 +23,9 @@ const strategies = [
         key: 'ACoS_targeting',
         img: acosTargetingImage,
         jeffRemark: `I’m hunting this <span>target ACoS</span> for over <br> decades. Let’s get it!`,
-        description: `The algorithm will optimize campaigns to get you the Target ACoS`,
+        description: `This strategy designed for sellers who know what ACoS they are targeting.
+Make sure you've correctly calculated your Target ACoS. <br/>
+Press start and see how the algorithm is making changes to get the results you want.`,
         descriptionTitle: 'Get the desired ACoS!',
         value: {
             Spend: "Mid",
@@ -37,7 +39,7 @@ const strategies = [
         key: 'LaunchProduct',
         img: productLaunchImage,
         jeffRemark: `I’m just starting up. Please help me launch my <br> brand <span>new product.</span>`,
-        description: `Strategy designed for sellers who wants to launch or relaunch the product. The algorithm will be more aggressive with the bids, so you will get your first sales, reviews, and increase your brand awareness.`,
+        description: `Strategy designed for sellers who wants to launch or relaunch the product. The algorithm will be more aggressive with the bids, so you will get your first sales, reviews, and increase your brand awareness. It works fantastic with other launch activities like giveaways and promotions.`,
         descriptionTitle: 'Launch my product!',
         value: {
             Spend: "High",
@@ -51,7 +53,7 @@ const strategies = [
         key: 'BoostPPCProfit',
         img: organicSalesGrowthImage,
         jeffRemark: `All I care about is <span>organic sales.</span> I want to break-even  <br> on PPC so to boost my keywords position.`,
-        description: `This strategy designed for sellers who want to keep their organic ranking positions with PPC efforts. So they can make more profit from Organic Sales.`,
+        description: `This strategy designed for sellers who want to keep their organic ranking positions with PPC efforts. So they can make more profit from Organic Sales. It will achieve your break-even ACoS to keep higher sales from ads that will lead to growing your organic sales.`,
         descriptionTitle: 'Leverage organic sales!',
         value: {
             Spend: "Mid",
@@ -111,7 +113,7 @@ function StrategyItem({
                 <div className="col">
                     <div>
                         <h4>{descriptionTitle}</h4>
-                        <p>{description}</p>
+                        <p dangerouslySetInnerHTML={{__html: description}}/>
                     </div>
 
                     <div className="value-list">
