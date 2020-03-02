@@ -29,7 +29,7 @@ export function products(state = initialState, action) {
 
         case productsConstants.UPDATE_SELECTED_PRODUCT:
             const newProductsList = state.productList.map(item => {
-                if (item.id === action.payload.product_id) {
+                if (item.id === action.payload.id) {
                     if (action.payload.status === "RUNNING") {
                         return {
                             ...item,
@@ -41,7 +41,7 @@ export function products(state = initialState, action) {
                             under_optimization: false,
                         }
                     }
-                } else if (action.payload.product_id === 'all') {
+                } else if (action.payload.id === 'all') {
                     if (action.payload.status === "RUNNING") {
                         return {
                             ...item,

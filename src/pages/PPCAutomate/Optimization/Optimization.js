@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {Drawer} from "antd";
 
 import "./Optimization.less";
@@ -11,15 +11,20 @@ import StrategyInfo from "./InfoDrawers/StrategyInfo/StrategyInfo";
 import OptimizationStatus from "./OptimizationStatus/OptimizationStatus";
 import OptimizationIncludes from "./OptimizationIncludes/OptimizationIncludes";
 
-import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
+import SubscriptionNotificationWindow
+    from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 
 import {productsServices} from "../../../services/products.services";
+import {notification} from "../../../components/Notification";
+import {productsActions} from "../../../actions/products.actions";
 
 const Optimization = () => {
     const [selectedProduct, setProduct] = useState({}),
-        [infoType, setInfoType] = useState(false);
+        [infoType, setInfoType] = useState(false),
+        [processing, setProcessing] = useState(false);
 
+    const dispatch = useDispatch();
 
     const {productId, selectedAll} = useSelector(state => ({
         productId: state.products.selectedProduct.id,
@@ -28,33 +33,87 @@ const Optimization = () => {
 
 
     useEffect(() => {
-        async function fetchProductDetails() {
-            try {
-                const res = await productsServices.getProductDetails(selectedAll ? 'all' : productId);
+        if (selectedAll || productId) {
+            async function fetchProductDetails() {
+                try {
+                    const res = await productsServices.getProductDetails(selectedAll ? 'all' : productId);
 
-                setProduct(res);
-            } catch (e) {
-                console.log(e);
+                    setProduct(res);
+                } catch (e) {
+                    console.log(e);
+                }
             }
+
+            fetchProductDetails();
         }
 
-        fetchProductDetails();
     }, [productId, selectedAll]);
 
-    function startOptimizationHandler(strategy) {
-        productsServices.updateProductById({
-            product_id: selectedAll ? 'all' : productId,
-            status: 'RUNNING',
-            optimization_strategy: strategy
-        })
+    async function startOptimizationHandler(optimization_strategy, targetAcosValue, netMargin) {
+        setProcessing(true);
+
+        try {
+            await productsServices.updateProductById({
+                product_id: selectedAll ? 'all' : productId,
+                status: 'RUNNING',
+                optimization_strategy,
+                ...optimization_strategy === 'ACoS_targeting' && {
+                    target_acos: targetAcosValue
+                }
+            });
+
+            setProduct({
+                ...selectedProduct,
+                status: 'RUNNING',
+                optimization_strategy,
+                ...netMargin && {
+                    product_margin: true,
+                    product_margin_value: netMargin,
+                }
+            });
+
+            dispatch(productsActions.updateProduct({
+                id: selectedAll ? 'all' : selectedProduct.product_id,
+                status: 'RUNNING',
+                optimization_strategy
+            }));
+
+            notification.start({title: 'Optimization successfully started'})
+        } catch (e) {
+            console.log(e);
+        }
+
+        setProcessing(false);
     }
 
-    function stopOptimizationHandler(optimization_strategy) {
-        productsServices.updateProductById({
-            product_id: selectedAll ? 'all' : productId,
-            status: 'STOPPED',
-            optimization_strategy
-        })
+    async function stopOptimizationHandler(optimization_strategy) {
+        setProcessing(true);
+
+        try {
+            await productsServices.updateProductById({
+                product_id: selectedAll ? 'all' : productId,
+                status: 'STOPPED',
+                optimization_strategy
+            });
+
+            setProduct({
+                ...selectedProduct,
+                status: 'STOPPED',
+                optimization_strategy
+            });
+
+            dispatch(productsActions.updateProduct({
+                id: selectedAll ? 'all' : selectedProduct.product_id,
+                status: 'STOPPED',
+                optimization_strategy
+            }));
+
+            notification.error({title: 'The optimization is paused'})
+        } catch (e) {
+            console.log(e);
+        }
+
+        setProcessing(false);
     }
 
     function showDrawerHandler(type) {
@@ -83,6 +142,7 @@ const Optimization = () => {
                 <OptimizationStrategy
                     product={selectedProduct}
                     selectedAll={selectedAll}
+                    processing={processing}
 
                     onShowDrawer={showDrawerHandler}
                     onStart={startOptimizationHandler}

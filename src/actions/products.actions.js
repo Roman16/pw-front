@@ -84,15 +84,10 @@ function fetchProductDetails(product, pathname) {
 
 function updateProduct(product) {
     return dispatch => {
-        productsServices.updateProductById(product)
-            .then(() => {
-                dispatch({
-                    type: productsConstants.UPDATE_SELECTED_PRODUCT,
-                    payload: product
-                });
-
-                // notification.start({title: 'Optimization successfully started'});
-            });
+        dispatch({
+            type: productsConstants.UPDATE_SELECTED_PRODUCT,
+            payload: product
+        });
     };
 }
 

@@ -1,5 +1,6 @@
-import React, {useState, Fragment, useEffect} from "react";
-import {Icon} from "antd";
+import React, {useState, Fragment} from "react";
+import {Icon, Spin} from "antd";
+import {useDispatch, useSelector} from "react-redux";
 
 import "./OptimizationStrategy.less";
 import Slider from "react-slick";
@@ -14,6 +15,7 @@ import profitablePpcImage from '../../../../assets/img/optimization/profitable-p
 import InputCurrency from "../../../../components/Inputs/InputCurrency";
 import NetMarginWindow from "../NetMarginWindow/NetMarginWindow";
 import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup";
+import {productsActions} from "../../../../actions/products.actions";
 
 const strategies = [
     {
@@ -98,8 +100,11 @@ function StrategyItem({
                           activeStrategy,
                           isActivated,
                           onStart,
-                          onStop
+                          onStop,
+                          processing
                       }) {
+    const [targetAcos, setTargetAcos] = useState(undefined);
+
     return (
         <div className={`strategy-item  slide-${index + 1}`}>
             <div className="description-block">
@@ -122,7 +127,7 @@ function StrategyItem({
                 <div className="image">
                     {index === 0 && <div className="target-acos">
                         <span>Enter yor target ACoS</span>
-                        <InputCurrency typeIcon={'margin'}/>
+                        <InputCurrency typeIcon={'margin'} value={targetAcos} onChange={value => setTargetAcos(value)}/>
                         <button className='btn green-btn'>save</button>
                     </div>}
 
@@ -134,13 +139,13 @@ function StrategyItem({
                 <div className="remark" dangerouslySetInnerHTML={{__html: jeffRemark}}/>
 
                 {activeStrategy === key && isActivated ?
-                    <button className='btn default stop-btn' onClick={onStop}>
-                        <FontAwesomeIcon icon={faStop}/>
+                    <button disabled={processing} className='btn default stop-btn' onClick={onStop}>
+                        {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
                         stop
                     </button>
                     :
-                    <button className='btn default' onClick={() => onStart(key)}>
-                        <FontAwesomeIcon icon={faPlay}/>
+                    <button disabled={processing} className='btn default' onClick={() => onStart(targetAcos)}>
+                        {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
                         start
                     </button>
                 }
@@ -151,8 +156,15 @@ function StrategyItem({
 
 let sliding = false;
 
+const OptimizationStrategy = ({product: {optimization_strategy, status, product_margin}, onShowDrawer, onStart, onStop, selectedAll, processing}) => {
+    const dispatch = useDispatch();
+    let targetAcosValue;
 
-const OptimizationStrategy = ({product: {optimization_strategy, status}, onShowDrawer, onStart, onStop, selectedAll}) => {
+    const {dontShowStartWindowAgain, dontShowStopWindowAgain} = useSelector(state => ({
+        dontShowStartWindowAgain: state.products.dontShowStartNotificationAgain,
+        dontShowStopWindowAgain: state.products.dontShowStopNotificationAgain,
+    }));
+
     const [slider, setSlider] = useState(),
         [selectedSlide, setSelectedSlide] = useState(0),
         [visibleNetMarginWindow, setNetMarginWindow] = useState(false),
@@ -160,21 +172,84 @@ const OptimizationStrategy = ({product: {optimization_strategy, status}, onShowD
             confirmStartAllProducts: false,
             confirmStartProduct: false,
             confirmStopProduct: false
+        }),
+        [showAgainConfirmWindow, setShowAgainWindow] = useState({
+            startWindow: dontShowStartWindowAgain,
+            stopWindow: dontShowStopWindowAgain
         });
 
+    function startOptimizationHandler(targetAcos) {
+        targetAcosValue = targetAcos;
 
-    function startOptimizationHandler() {
-        setConfirmWindows({
-            ...visibleConfirmWindows,
-            [selectedAll ? 'confirmStartAllProducts' : 'confirmStartProduct']: true
-        })
+        if (dontShowStartWindowAgain && !selectedAll) {
+            onStartProductOptimization();
+        } else {
+            setConfirmWindows({
+                ...visibleConfirmWindows,
+                [selectedAll ? 'confirmStartAllProducts' : 'confirmStartProduct']: true
+            })
+        }
     }
 
     function stopOptimizationHandler() {
+        if (dontShowStopWindowAgain && !selectedAll) {
+            onStopProductOptimization();
+        } else {
+            setConfirmWindows({
+                ...visibleConfirmWindows,
+                confirmStopProduct: true
+            })
+        }
+    }
+
+    function onStartProductOptimization() {
+        setConfirmWindows({...visibleConfirmWindows, confirmStartAllProducts: false, confirmStartProduct: false});
+
+        if (!product_margin) {
+            setNetMarginWindow(true)
+        } else {
+            onStart(strategies[selectedSlide].key, targetAcosValue);
+
+            dispatch(productsActions.dontShowWindowAgain({
+                windowName: 'START',
+                status: showAgainConfirmWindow.startWindow
+            }))
+        }
+    }
+
+    function onStopProductOptimization() {
+        onStop(strategies[selectedSlide].key);
+        setConfirmWindows({...visibleConfirmWindows, confirmStopProduct: false});
+
+        dispatch(productsActions.dontShowWindowAgain({
+            windowName: 'STOP',
+            status: showAgainConfirmWindow.stopWindow
+        }))
+    }
+
+    function setNetMarginHandler(netMargin) {
+        onStart(strategies[selectedSlide].key, targetAcosValue, netMargin);
+
+        dispatch(productsActions.dontShowWindowAgain({
+            windowName: 'START',
+            status: showAgainConfirmWindow.startWindow
+        }));
+
+        setNetMarginWindow(false);
+    }
+
+    function checkboxChangeHandler(name, value) {
+        setShowAgainWindow({
+            ...showAgainConfirmWindow,
+            [name]: value
+        });
+    }
+
+    function onCloseWindow(window) {
         setConfirmWindows({
             ...visibleConfirmWindows,
-            confirmStopProduct: true
-        })
+            [window]: false
+        });
     }
 
     function goToSlideHandler(index) {
@@ -194,11 +269,11 @@ const OptimizationStrategy = ({product: {optimization_strategy, status}, onShowD
             <section className="optimize-strategy">
                 <h3>
                     Our Strategies
-                    <Icon
-                        type="info-circle"
-                        theme="filled"
-                        onClick={() => onShowDrawer("strategy")}
-                    />
+                    {/*<Icon*/}
+                    {/*    type="info-circle"*/}
+                    {/*    theme="filled"*/}
+                    {/*    onClick={() => onShowDrawer("strategy")}*/}
+                    {/*/>*/}
                 </h3>
 
                 <div className="strategies ">
@@ -230,6 +305,7 @@ const OptimizationStrategy = ({product: {optimization_strategy, status}, onShowD
                                 key={item.key}
                                 strategy={item}
                                 index={index}
+                                processing={processing}
                                 activeStrategy={optimization_strategy}
                                 isActivated={status === 'RUNNING'}
                                 onStart={startOptimizationHandler}
@@ -237,16 +313,6 @@ const OptimizationStrategy = ({product: {optimization_strategy, status}, onShowD
                             />
                         ))}
                     </Slider>
-
-                        {/*<StrategyItem*/}
-                        {/*    strategy={strategies[selectedSlide]}*/}
-                        {/*    index={selectedSlide}*/}
-                        {/*    activeStrategy={optimization_strategy}*/}
-                        {/*    isActivated={status === 'RUNNING'}*/}
-                        {/*    onStart={startOptimizationHandler}*/}
-                        {/*    onStop={stopOptimizationHandler}*/}
-                        {/*/>*/}
-
                 </div>
             </section>
 
@@ -254,25 +320,23 @@ const OptimizationStrategy = ({product: {optimization_strategy, status}, onShowD
             <NetMarginWindow
                 isShowModal={visibleNetMarginWindow}
                 selectedAll={selectedAll}
-                // handleCancel={cancelModal}
-                // handleOk={handleOk}
+                handleCancel={() => setNetMarginWindow(false)}
+                handleOk={setNetMarginHandler}
             />
 
             <ConfirmActionPopup
                 visible={visibleConfirmWindows.confirmStartAllProducts}
-                handleOk={() => onStart(strategies[selectedSlide].key)}
-                handleCancel={() => setConfirmWindows({...visibleConfirmWindows, confirmStartAllProducts: false})}
+                handleOk={onStartProductOptimization}
+                handleCancel={() => onCloseWindow('confirmStartAllProducts')}
                 title={'Are you ready to start?'}
                 description={'Are you sure you want to start the same optimization strategy for All Products?'}
             />
 
             <ConfirmActionPopup
                 visible={visibleConfirmWindows.confirmStartProduct}
-                handleOk={() => onStart(strategies[selectedSlide].key)}
-                handleCancel={() => setConfirmWindows({...visibleConfirmWindows, confirmStartProduct: false})}
-                handleChangeCheckbox={(e) => {
-                    this.setState({dontShowStartNotificationAgain: e.target.checked})
-                }}
+                handleOk={onStartProductOptimization}
+                handleCancel={() => onCloseWindow('confirmStartProduct')}
+                handleChangeCheckbox={(e) => checkboxChangeHandler('startWindow', e.target.checked)}
                 title={'Are you ready to start?'}
                 description={'This action will result in the automatic management of your campaigns by our algorithm.'}
                 checkboxText={`Don't show this message again`}
@@ -280,11 +344,9 @@ const OptimizationStrategy = ({product: {optimization_strategy, status}, onShowD
 
             <ConfirmActionPopup
                 visible={visibleConfirmWindows.confirmStopProduct}
-                handleOk={() => onStop(strategies[selectedSlide].key)}
-                handleCancel={() => setConfirmWindows({...visibleConfirmWindows, confirmStopProduct: false})}
-                handleChangeCheckbox={(e) => {
-                    this.setState({dontShowStopNotificationAgain: e.target.checked})
-                }}
+                handleOk={onStopProductOptimization}
+                handleCancel={() => onCloseWindow('confirmStopProduct')}
+                handleChangeCheckbox={e => checkboxChangeHandler('stopWindow', e.target.checked)}
                 title={' Are you sure you want to stop?'}
                 description={'We will stop the optimization of your active Amazon PPC campaigns. You can restart it anytime.'}
                 checkboxText={selectedAll ? null : `Don't show this message again`}

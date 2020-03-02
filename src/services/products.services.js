@@ -27,15 +27,17 @@ function getProductDetails(id) {
 }
 
 function updateProductById(product) {
+    console.log(product);
     return api('post', productsUrls.saveProductData, {
+        ...product,
         product_id: product.product_id ? product.product_id : product.id,
         status: product.status,
         optimization_strategy: product.optimization_strategy,
-        add_negative_keywords: product.add_negative_keywords,
-        optimize_keywords: product.optimize_keywords,
-        create_new_keywords: product.create_new_keywords,
-        optimize_pats: product.optimize_pats,
-        add_negative_pats: product.add_negative_pats,
-        create_new_pats: product.create_new_pats
+        add_negative_keywords: true,
+        optimize_keywords: true,
+        create_new_keywords: true,
+        optimize_pats: true,
+        add_negative_pats: true,
+        create_new_pats: true
     })
 }

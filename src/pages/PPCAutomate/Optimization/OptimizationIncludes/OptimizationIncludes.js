@@ -7,11 +7,11 @@ const OptimizationIncludes = ({onShowDrawer}) => {
     return (
         <section className='optimization-includes'>
             <h3>Automation includes:
-                <Icon
-                    type="info-circle"
-                    theme="filled"
-                    onClick={() => onShowDrawer("options")}
-                />
+                {/*<Icon*/}
+                {/*    type="info-circle"*/}
+                {/*    theme="filled"*/}
+                {/*    onClick={() => onShowDrawer("options")}*/}
+                {/*/>*/}
             </h3>
 
             <ul>
