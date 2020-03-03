@@ -27,7 +27,7 @@
     .page-items-block,
     .products,
     .fetching-data {
-      display: none;
+      //display: none;
     }
 
     .switch-list {
@@ -101,29 +101,68 @@
   .portfolios-list {
     overflow: auto;
 
-    div {
+    & > div {
       min-height: 4rem;
       display: flex;
       align-items: center;
       padding: 0 1.1428571428571428rem;
       margin: 5px 0;
-      background: #FFFFFF;
-      border: 1px solid #F5F5FF;
+      //background: #FFFFFF;
+      background: #fbfbff;
       border-radius: 8px;
       font-family: ir;
       font-size: 1rem;
-      color: #343C5A;
-      opacity: 0.5;
+      color: rgba(52, 60, 90, 0.5);
+      //opacity: 0.5;
       cursor: pointer;
+      position: relative;
 
-      span {
+      .name {
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        background: #FAFAFF;
+
+        //&:hover {
+        //  width: 100%;
+        //  position: absolute;
+        //  top: 1.2857142857142858rem;
+        //  left: 0;
+        //  overflow: auto;
+        //  white-space: pre-wrap;
+        //  padding: 0 1.1428571428571428rem 1.1428571428571428rem;
+        //  border-radius: 8px;
+        //  z-index: 100;
+        //}
+      }
+
+      .custom-tooltip {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+
+        .on-optimization {
+          width: 10px;
+          height: 10px;
+          background: #409600;
+          border-radius: 50%;
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+            & {
+              width: 8px;
+              height: 8px;
+            }
+          }
+        }
       }
 
       &.active {
-        opacity: 1;
+        background: #fff;
+
+        .name {
+          background: #fff;
+          color: #343C5A;
+        }
       }
     }
   }
@@ -165,6 +204,12 @@
 
     .search-field {
       z-index: 100;
+
+      .ant-input:placeholder-shown {
+        font-size: 0.8571428571428571rem;
+        line-height: 1.1428571428571428rem;
+        transition: 0s;
+      }
     }
 
     &.active {

@@ -34,7 +34,7 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
             <div className={`${openedWindow ? 'search-product active' : 'search-product'}`} ref={wrapperRef}>
                 <Search
                     className="search-field"
-                    placeholder={'Search by campaign name'}
+                    placeholder={'Search by campaign name, ASIN or SKU'}
                     onChange={e => onSearch(e.target.value)}
                 />
 
@@ -90,7 +90,7 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
             <div className={`${openedWindow ? 'search-product active' : 'search-product'}`} ref={wrapperRef}>
                 <Search
                     className="search-field"
-                    placeholder={"Search by product name, ASIN, or SKU"}
+                    placeholder={"Search by product name, ASIN or SKU"}
                     onChange={e => onSearch(e.target.value)}
                 />
 

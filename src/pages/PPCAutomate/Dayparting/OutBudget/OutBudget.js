@@ -97,17 +97,19 @@ const OutBudget = ({date}) => {
         let color;
 
         colorList.forEach(item => {
-            const percent = ((value - percentParams.min) * 100) / (percentParams.max - percentParams.min);
-            if (percent >= item.min && percent <= item.max) {
-                color = item.color;
-                return;
+            if (value != null) {
+                const percent = ((value - percentParams.min) * 100) / (percentParams.max - percentParams.min);
+                if (percent >= item.min && percent <= item.max) {
+                    color = item.color;
+                    return;
+                }
             }
         });
 
         if (outBudget) {
             return (
                 <div className="out-budget-item">
-                    <div className='statistic-information' style={{background: color}}/>
+                    <div className='statistic-information' style={{background: color, opacity: color ? 1 : 0}}/>
                 </div>
             )
         } else {
@@ -135,7 +137,7 @@ const OutBudget = ({date}) => {
                         </h3>
 
                         <div className="value">
-                            {value ? `$${numberMask(value, 2)}` : <div className='no-value'/>}
+                            {value != null ? `$${numberMask(value, 2)}` : <div className='no-value'/>}
                         </div>
                     </div>
                 </div>
@@ -260,4 +262,4 @@ const OutBudget = ({date}) => {
     )
 };
 
-export default OutBudget;
+export default React.memo(OutBudget);

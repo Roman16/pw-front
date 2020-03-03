@@ -118,4 +118,4 @@ const ChartStatistics = ({date}) => {
     )
 };
 
-export default ChartStatistics;
+export default React.memo(ChartStatistics);

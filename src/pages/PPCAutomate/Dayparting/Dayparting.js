@@ -10,6 +10,7 @@ import shortid from "shortid";
 import CustomSelect from "../../../components/Select/Select";
 import {Select} from "antd";
 import moment from "moment";
+import tz from 'moment-timezone';
 import SubscriptionNotificationWindow
     from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 
@@ -19,11 +20,10 @@ const Option = Select.Option;
 // eslint-disable-next-line no-unused-vars
 const Dayparting = () => {
     const weeks = [0, 1, 2, 3].map((item) => {
-
         return ({
             id: item,
-            startDate: moment().day() !== 0 ? moment().subtract(item, 'w').startOf('isoweek').subtract(1, 'd') : moment().add(1, 'days').subtract(item, 'w').startOf('isoweek').subtract(1, 'd'),
-            endDate: moment().day() !== 0 ? moment().subtract(item, 'w').endOf('isoweek').subtract(1, 'd') : moment().add(1, 'days').subtract(item, 'w').endOf('isoweek').subtract(1, 'd')
+            startDate: moment.tz(new Date(), 'America/Los_Angeles').day() !== 0 ? moment.tz(new Date(), 'America/Los_Angeles').subtract(item, 'w').startOf('isoweek').subtract(1, 'd') : moment.tz(new Date(), 'America/Los_Angeles').add(1, 'days').subtract(item, 'w').startOf('isoweek').subtract(1, 'd'),
+            endDate: moment.tz(new Date(), 'America/Los_Angeles').day() !== 0 ? moment.tz(new Date(), 'America/Los_Angeles').subtract(item, 'w').endOf('isoweek').subtract(1, 'd') : moment.tz(new Date(), 'America/Los_Angeles').add(1, 'days').subtract(item, 'w').endOf('isoweek').subtract(1, 'd')
         })
     });
 

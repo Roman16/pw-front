@@ -10,6 +10,7 @@ import CustomSelect from "../Select/Select";
 import ProductPagination from "./ProductPagination";
 import selectIcon from "../../assets/img/icons/select-icon.svg";
 import axios from "axios";
+import InformationTooltip from "../Tooltip/Tooltip";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -302,7 +303,20 @@ class ProductList extends Component {
                                     className={isSelectedAll || selectedProduct.id === item.id ? 'active' : ''}
                                     onClick={() => this.onSelect(item)}
                                 >
-                                    <span>{item.name}</span>
+                                    {true && <InformationTooltip
+                                        arrowPointAtCenter={true}
+                                        type={'custom'}
+                                        description={'Campaign on day-parting'}
+                                        position={'topRight'}
+                                    >
+                                        <div className='on-optimization'/>
+                                    </InformationTooltip>}
+
+                                    <span className={'name'}>{item.name}</span>
+
+                                    {/*<div className="full-name">*/}
+                                    {/*    {item.name}*/}
+                                    {/*</div>*/}
                                 </div>
                             ))}
                         </div>
