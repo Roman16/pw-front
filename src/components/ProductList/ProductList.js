@@ -300,10 +300,10 @@ class ProductList extends Component {
                             {products && products.map(item => (
                                 <div
                                     key={item.id}
-                                    className={isSelectedAll || selectedProduct.id === item.id ? 'active' : ''}
+                                    className={isSelectedAll || selectedProduct.id === item.id ? 'campaign-item active' : 'campaign-item'}
                                     onClick={() => this.onSelect(item)}
                                 >
-                                    {true && <InformationTooltip
+                                    {item.on_dayparting && <InformationTooltip
                                         arrowPointAtCenter={true}
                                         type={'custom'}
                                         description={'Campaign on day-parting'}
@@ -312,11 +312,13 @@ class ProductList extends Component {
                                         <div className='on-optimization'/>
                                     </InformationTooltip>}
 
-                                    <span className={'name'}>{item.name}</span>
+                                    <span className={'name'}>
+                                       <span> {item.name}</span>
 
-                                    {/*<div className="full-name">*/}
-                                    {/*    {item.name}*/}
-                                    {/*</div>*/}
+                                        <div className="full-name">
+                                        {item.name}
+                                    </div>
+                                    </span>
                                 </div>
                             ))}
                         </div>

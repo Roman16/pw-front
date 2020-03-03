@@ -165,7 +165,7 @@ const Pricing = () => {
                                     <span className="img">
                                         <img src={analyticImage} alt="analytic"/>
                                     </span>
-                                    Analytica
+                                    Analytics
                                 </a>
                             </li>
                             <li className="disabled">
@@ -173,7 +173,7 @@ const Pricing = () => {
                                     <span className="img">
                                         <img src={peopleImage} alt="people-icon"/>
                                     </span>
-                                    Agencis Vendors
+                                    Agencies Vendors
                                 </a>
                             </li>
                         </ul>

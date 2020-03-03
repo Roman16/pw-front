@@ -6,6 +6,7 @@ import {notification} from "../../../../components/Notification";
 import {userActions} from "../../../../actions/user.actions";
 import eyeClosed from "../../../../assets/img/icons/eye-closed.svg";
 import eyeOpened from "../../../../assets/img/icons/eye-opened.svg";
+import amazonImage from '../../../../assets/img/amazon.png';
 
 class LoginPageForm extends React.Component {
     state = {
@@ -159,6 +160,10 @@ class LoginPageForm extends React.Component {
                 <button className="btn default">
                     sign in
                 </button>
+
+                {/*<div className="login-with-amazon">*/}
+                {/*    <img src={amazonImage} alt=""/>*/}
+                {/*</div>*/}
             </Form>
         );
     }

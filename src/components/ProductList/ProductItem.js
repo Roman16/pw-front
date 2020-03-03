@@ -47,10 +47,15 @@ const ProductItem = ({
 
                 <div className="product-item-content">
                     <div className="caption">
-                        {maxText(name)}
+                        <span>{name}</span>
                         {product.has_new_changes && pathname === '/ppc/report' &&
                         <div className='has-new-reports'>New</div>}
+
+                        <div className='full-name'>
+                            {name}
+                        </div>
                     </div>
+
 
                     <div className='detail'>
                         <div className="asin">
