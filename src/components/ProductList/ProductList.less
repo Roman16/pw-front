@@ -119,41 +119,39 @@
         z-index: 100;
       }
 
-      .name {
-        position: relative;
-        width: 100%;
-        display: flex;
 
-        span {
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
-        }
+      .short-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        width: fit-content;
+      }
 
-        .full-name {
-          position: absolute;
-          top: 100%;
-          left: 0;
-          color: #fff;
-          padding: 4px 5px;
-          max-width: 300px;
-          word-wrap: break-word;
-          line-height: 1.4em;
-          border-radius: 4px;
-          background-color: rgba(57, 57, 57, 0.9);
-          font-size: 0.8571428571428571rem;
-          font-weight: 400;
-          opacity: 0;
-          visibility: hidden;
-          transition: opacity 0.5s ease;
-          z-index: 1000;
-        }
+      .full-name {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        color: #fff;
+        padding: 4px 5px;
+        max-width: 300px;
+        word-wrap: break-word;
+        line-height: 1.4em;
+        border-radius: 4px;
+        background-color: rgba(57, 57, 57, 0.9);
+        font-size: 0.8571428571428571rem;
+        font-weight: 400;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease;
+        z-index: 1000;
+      }
 
-        span:hover + .full-name {
-          visibility: visible;
-          transition: opacity 0.5s ease;
-          opacity: 1;
-        }
+      span:hover + .full-name {
+        visibility: visible;
+        transition: opacity 0.5s ease;
+        opacity: 1;
       }
 
       .custom-tooltip {
@@ -176,10 +174,18 @@
         }
       }
 
+      .name-tooltip {
+        position: relative;
+        margin: 0;
+        top: 0;
+        right: auto;
+      }
+
+
       &.active {
         background: #fff;
 
-        .name {
+        .short-name {
           background: #fff;
           color: #343C5A;
         }
@@ -547,7 +553,11 @@
           margin-bottom: 0.21428571428571427rem;
           position: relative;
 
-          span {
+          .custom-tooltip {
+            margin: 0;
+          }
+
+          .short-name {
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;

@@ -312,13 +312,21 @@ class ProductList extends Component {
                                         <div className='on-optimization'/>
                                     </InformationTooltip>}
 
-                                    <span className={'name'}>
-                                       <span> {item.name}</span>
 
-                                        <div className="full-name">
-                                        {item.name}
-                                    </div>
-                                    </span>
+                                    <InformationTooltip
+                                        onClick={(e) => {
+                                            e.target.parentNode.parentNode.parentNode.click()
+                                        }}
+                                        className={'name-tooltip'}
+                                        getPopupContainer={trigger => trigger.parentNode}
+                                        arrowPointAtCenter={true}
+                                        type={'custom'}
+                                        description={item.name}
+                                        position={'top'}
+                                    >
+                                        <span className={'short-name'}>{item.name}</span>
+                                    </InformationTooltip>
+
                                 </div>
                             ))}
                         </div>

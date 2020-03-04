@@ -1,6 +1,6 @@
 import React from 'react';
 import {func, bool, string} from 'prop-types';
-import {Icon} from 'antd';
+import {Icon, Popover} from 'antd';
 import InformationTooltip from "../Tooltip/Tooltip";
 
 const maxText = (text, length = 60) => {
@@ -47,13 +47,26 @@ const ProductItem = ({
 
                 <div className="product-item-content">
                     <div className="caption">
-                        <span>{name}</span>
+                        <InformationTooltip
+                            onClick={(e) => {
+                                e.target.parentNode.parentNode.parentNode.click()
+                            }}
+                            getPopupContainer={trigger => trigger.parentNode}
+                            arrowPointAtCenter={true}
+                            type={'custom'}
+                            description={name}
+                            position={'top'}
+                        >
+                            <span className={'short-name'}>{name}</span>
+                        </InformationTooltip>
+
+
                         {product.has_new_changes && pathname === '/ppc/report' &&
                         <div className='has-new-reports'>New</div>}
 
-                        <div className='full-name'>
-                            {name}
-                        </div>
+                        {/*<div className='full-name'>*/}
+                        {/*    {name}*/}
+                        {/*</div>*/}
                     </div>
 
 
