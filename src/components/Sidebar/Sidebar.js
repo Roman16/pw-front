@@ -288,7 +288,7 @@ const Sidebar = () => {
 
                         <li className="bottom-nav-item">
                             <a
-                                href="https://profit-whales.kayako.com"
+                                href="https://intercom.help/profitwhales/en/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
