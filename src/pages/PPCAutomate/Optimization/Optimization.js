@@ -34,7 +34,7 @@ const Optimization = () => {
 
 
     useEffect(() => {
-        if ((selectedAll || productId) && type==='product' ) {
+        if ((selectedAll || productId) && type === 'product') {
             async function fetchProductDetails() {
                 try {
                     const res = await productsServices.getProductDetails(selectedAll ? 'all' : productId);
@@ -94,19 +94,19 @@ const Optimization = () => {
             await productsServices.updateProductById({
                 product_id: selectedAll ? 'all' : productId,
                 status: 'STOPPED',
-                optimization_strategy
+                optimization_strategy: selectedProduct.optimization_strategy
             });
 
             setProduct({
                 ...selectedProduct,
                 status: 'STOPPED',
-                optimization_strategy
+                optimization_strategy: selectedProduct.optimization_strategy
             });
 
             dispatch(productsActions.updateProduct({
                 id: selectedAll ? 'all' : selectedProduct.product_id,
                 status: 'STOPPED',
-                optimization_strategy
+                optimization_strategy: selectedProduct.optimization_strategy
             }));
 
             notification.error({title: 'The optimization is paused'})

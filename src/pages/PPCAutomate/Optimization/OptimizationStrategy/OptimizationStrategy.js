@@ -140,17 +140,34 @@ function StrategyItem({
             <div className="col">
                 <div className="remark" dangerouslySetInnerHTML={{__html: jeffRemark}}/>
 
-                {activeStrategy === key && isActivated ?
-                    <button disabled={processing} className='btn default stop-btn' onClick={onStop}>
-                        {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
-                        stop
-                    </button>
-                    :
-                    <button disabled={processing} className='btn default' onClick={() => onStart(targetAcos)}>
-                        {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
-                        start
-                    </button>
-                }
+                <div className="actions">
+                    {isActivated ? (
+                            activeStrategy === key ?
+                                <button disabled={processing} className='btn default stop-btn' onClick={onStop}>
+                                    {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
+                                    stop
+                                </button>
+                                :
+                                <>
+                                    <button disabled={processing} className='btn default'
+                                            onClick={() => onStart(targetAcos)}>
+                                        {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
+                                        update
+                                    </button>
+
+                                    <button disabled={processing} className='btn default stop-btn' onClick={onStop}>
+                                        {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
+                                        stop
+                                    </button>
+                                </>
+                        )
+                        :
+                        <button disabled={processing} className='btn default' onClick={() => onStart(targetAcos)}>
+                            {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
+                            start
+                        </button>
+                    }
+                </div>
             </div>
         </div>
     )
