@@ -5,7 +5,7 @@ import axios from "axios";
 import Slider from "react-slick";
 import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
 import FreeTrial from "../../../../components/FreeTrial/FreeTrial";
-
+import {allColumnsOrder} from "./Tables/allColumnsOrder";
 import {indexField, dateField} from './Tables/const';
 import {keywordsOptimization} from "./Tables/KeywordsOptimization";
 import {patsOptimization} from "./Tables/PATsOptimization";
@@ -423,7 +423,12 @@ class ReportTable extends Component {
                         loading={loading}
                         dataSource={data}
                         columns={[
-                            {...indexField(page, pageSize)}, {...dateField}, ...mainTabs[activeTab].columns[activeSubTab]]}
+                            {...indexField(page, pageSize)},
+                            {...dateField},
+                            ...allColumnsOrder
+                                .map(column => (mainTabs[activeTab].columns[activeSubTab].find(item => item.key === column.key)))
+                                .filter(column => column != null)
+                        ]}
                         currentPage={page}
                         totalSize={totalSize}
                         showSizeChanger={true}

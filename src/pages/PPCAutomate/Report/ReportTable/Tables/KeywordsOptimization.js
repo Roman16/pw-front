@@ -11,12 +11,12 @@ import {
 import {round} from "../../../../../utils/round";
 import {numberMask} from "../../../../../utils/numberMask";
 import {ColumnMenuFilter, ColumnTextFilter, ColumnNumberFilter} from './columnFilter';
+import {allColumnsOrder} from "./allColumnsOrder";
 
 const changedKeywordBidAcos = 'changed-keyword-bid-acos';
 const changedKeywordBidImpression = 'changed-keyword-bid-impressions';
 const pausedKeywordHighAcos = 'paused-keyword-high-acos';
 const pausedKeywordNoSales = 'paused-keyword-no-sales';
-
 const pausedKeywordDuplicate = 'paused-keyword-duplicate';
 const pausedKeywordDuplicateOfPAT = 'paused-keyword-duplicate-of-pat';
 const pausedKeywordDuplicateFromCustomerSearchTerm = 'paused-keyword-duplicate-from-customer-search-term';
