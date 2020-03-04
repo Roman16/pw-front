@@ -131,24 +131,140 @@ div.ReportTable {
     }
   }
 
-  //.table-body__row {
-  //  .table-body__field:first-child {
-  //    position: relative;
-  //
-  //    .new-item {
-  //      position: absolute;
-  //      height: 100%;
-  //      width: 3px;
-  //      background: #8fd39d;
-  //      top: 0;
-  //      left: 0;
-  //    }
-  //  }
-  //
-  //  &.new-report {
-  //    background: rgba(143, 211, 157, 0.2);
-  //  }
-  //}
+  .tabs {
+    .slick-slider {
+      align-items: flex-start;
+
+      .slick-list {
+        width: 97%;
+        margin: 0 auto;
+      }
+
+      .slick-prev, .slick-next {
+        height: max-content;
+        transform: none;
+        font-size: 50px;
+        color: #c9cbd4;
+        top: 15px;
+
+        &:hover {
+          color: #6d6df6;
+        }
+
+        &:before {
+          display: none;
+        }
+
+        &.slick-disabled {
+          color: rgba(201, 203, 212, 0.67);
+
+          &:hover {
+            color: rgba(201, 203, 212, 0.67);
+          }
+        }
+
+
+      }
+
+      .slick-prev {
+        left: 0;
+      }
+      .slick-next {
+        right: 0;
+      }
+    }
+
+    .tab {
+      min-width: max-content !important;
+      cursor: pointer;
+      padding: 10px 0;
+
+      &:hover {
+        span {
+          color: #6d6df6;
+        }
+      }
+
+      &.active {
+        border-bottom: 2px solid #6d6df6;
+
+        span {
+          color: #6d6df6;
+        }
+      }
+
+      .TabName {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+          font-size: 1rem; // 14px
+        }
+
+        .tab-name-count {
+          font-size: 0.8571429rem; // 12px
+          margin-left: 1.25em;
+          min-width: 2.3333333em;
+          padding: 0 0.5em;
+          height: 1.5em;
+          border-radius: 1em;
+          border: 1px solid #c9cbd4;
+          text-align: center;
+        }
+
+        .new-count {
+          height: 16px;
+          margin: 0 0 0 5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.8571428571428571rem;
+          color: #fff !important;
+          position: absolute;
+          left: 10px;
+          top: 0;
+          background: #8FD39D;
+          border-radius: 2px;
+          padding: 0 4px;
+        }
+      }
+    }
+  }
+
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: .5714286em;
+    padding-top: 1.4285714em;
+
+    .report-item-table-btn {
+      font-size: 1rem; // 14px
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
+      padding-left: 1.4285714em;
+      padding-right: 1.4285714em;
+
+
+      .TableButton {
+        margin-bottom: 1.4285714em;
+      }
+
+      .TableButton:not(:last-child) {
+        margin-right: 1.4285714em;
+      }
+    }
+
+    .custom-table {
+      .table-overflow {
+        flex: 1;
+      }
+    }
+  }
 
 
   .report-table {
@@ -341,42 +457,16 @@ div.ReportTable {
     }
   }
 
+
   & > div.ant-tabs.ant-tabs-top.ant-tabs-card.ant-tabs-no-animation {
     border-radius: 0 0 0.5714286em 0.5714286em;
 
     .ant-tabs-content.ant-tabs-content-no-animated.ant-tabs-top-content.ant-tabs-card-content {
       height: calc(100% - 50px);
 
-      // @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
-      //   only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
-      //   only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
-      //   only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
-      //   height: fit-content;
-      // }
-
-      // @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
-      //   only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
-      //   only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
-      //   only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-      //   height: fit-content;
-      // }
-
       .ant-tabs-tabpane.ant-tabs-tabpane-active {
         height: 100%;
 
-        // @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
-        //   only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
-        //   only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
-        //   only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
-        //   height: fit-content;
-        // }
-
-        // @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
-        //   only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
-        //   only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
-        //   only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-        //   height: fit-content;
-        // }
 
         .report-item-table {
           height: 100%;
@@ -385,38 +475,6 @@ div.ReportTable {
           background: #fff;
           border-radius: 0.5714286em;
           padding-top: 1.4285714em;
-
-          // @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 979px),
-          //   only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 979px),
-          //   only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 979px),
-          //   only screen and (max-device-pixel-ratio: 1) and (max-width: 979px) {
-          //   height: fit-content;
-          // }
-
-          // @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
-          //   only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
-          //   only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
-          //   only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-          //   height: fit-content;
-          // }
-
-          .report-item-table-btn {
-            font-size: 1rem; // 14px
-            min-height: 5.1428571em;
-            padding: 0 1.4285714em 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-items: center;
-
-            .TableButton {
-              margin-bottom: 1.4285714em;
-            }
-
-            .TableButton:not(:last-child) {
-              margin-right: 1.4285714em;
-            }
-          }
 
           .custom-table {
             flex: 1;
@@ -509,41 +567,6 @@ div.ReportTable {
   }
 }
 
-.TabName {
-  display: flex;
-  align-items: center;
-
-  span {
-    font-size: 1rem; // 14px
-  }
-
-  .tab-name-count {
-    font-size: 0.8571429rem; // 12px
-    margin-left: 1.25em;
-    min-width: 2.3333333em;
-    padding: 0 0.5em;
-    height: 1.5em;
-    border-radius: 1em;
-    border: 1px solid #c9cbd4;
-    text-align: center;
-  }
-
-  .new-count {
-    height: 16px;
-    margin: 0 0 0 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8571428571428571rem;
-    color: #fff !important;
-    position: absolute;
-    left: 10px;
-    top: 0;
-    background: #8FD39D;
-    border-radius: 2px;
-    padding: 0 4px;
-  }
-}
 
 .ant-calendar-range {
   width: 100%;

@@ -1,60 +1,19 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React from 'react';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {indexField, patIntentField, infoField, dateField, averageCVRField} from './const';
-import TableButton from '../TableButton/TableButton';
-import {useSelector} from 'react-redux';
-import CustomTable from '../../../../../components/Table/CustomTable';
+import {patIntentField, infoField, averageCVRField} from './const';
 import {round} from "../../../../../utils/round";
 import {numberMask} from "../../../../../utils/numberMask";
 import {ColumnMenuFilter, ColumnNumberFilter, ColumnTextFilter} from "./columnFilter";
-import {subChangesCount} from "./changesCount";
 
 const HighACoS = 'created-negative-pat-from-cst-high-acos';
 const NoSales = 'created-negative-pat-from-cst-no-sales';
 
-const NewNegativePats = ({
-                             data,
-                             onChangeSubTab,
-                             activeTab,
-                             currentPage,
-                             totalSize,
-                             handlePaginationChange,
-                             scroll,
-                             pageSize,
-                             onChangeFilter,
-                             filteredColumns,
-                             handleChangeSorter,
-                             sorterColumn
-                         }) => {
-    const [activeTable, changeTable] = useState(HighACoS);
-    const {counts, loading, productId, countsWithNew} = useSelector(state => ({
-        counts: state.reports.counts,
-        loading: state.reports.loading,
-        productId: state.products.selectedProduct.id,
-        countsWithNew: state.reports.counts_with_new || []
-    }));
-
-    const onChange = tab => {
-        onChangeSubTab(tab);
-        changeTable(tab);
-    };
-
-    // height report-item-table-btn
-    const refTableBtn = useRef(null);
-    const heightTabBtn = refTableBtn.current
-        ? refTableBtn.current.offsetHeight
-        : 0;
-
-    useEffect(() => changeTable(HighACoS), [productId, activeTab]);
-
+export const newNegativePats = ({
+                                    onChangeFilter,
+                                    filteredColumns,
+                                }) => {
 
     const defaultKeys = [
-        {
-            ...indexField(currentPage, pageSize)
-        },
-        {
-            ...dateField
-        },
         {
             title: 'Campaign',
             dataIndex: 'd_campaignName',
@@ -126,214 +85,176 @@ const NewNegativePats = ({
         }
     ];
 
-    const columns = {
-        [HighACoS]: [
-            ...defaultKeys,
-            {
-                title: (
-                    <TitleInfo
-                        position='top'
-                        title="CST ACoS"
-                        info="It displays the ACoS of certain customer search-term from your ad reports. "
+
+    return ({
+        columns: {
+            [HighACoS]: [
+                ...defaultKeys,
+                {
+                    title: (
+                        <TitleInfo
+                            position='top'
+                            title="CST ACoS"
+                            info="It displays the ACoS of certain customer search-term from your ad reports. "
+                        />
+                    ),
+                    dataIndex: 'd_customerSearchTermACoS',
+                    key: 'd_customerSearchTermACoS',
+                    width: '10.5em',
+                    render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
+                        percent={true}
                     />
-                ),
-                dataIndex: 'd_customerSearchTermACoS',
-                key: 'd_customerSearchTermACoS',
-                width: '10.5em',
-                render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
-                sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                    percent={true}
-                />
-            },
-            {
-                title: (
-                    <TitleInfo
-                        position='top'
-                        title="Target ACoS"
-                        info="The ACoS that our algorithm is aiming to reach your business goal."
+                },
+                {
+                    title: (
+                        <TitleInfo
+                            position='top'
+                            title="Target ACoS"
+                            info="The ACoS that our algorithm is aiming to reach your business goal."
+                        />
+                    ),
+                    dataIndex: 'd_targetACoSCalculation_d_targetACoS',
+                    key: 'd_targetACoSCalculation_d_targetACoS',
+                    width: '12em',
+                    render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
+                        percent={true}
                     />
-                ),
-                dataIndex: 'd_targetACoSCalculation_d_targetACoS',
-                key: 'd_targetACoSCalculation_d_targetACoS',
-                width: '12em',
-                render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
-                sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                    percent={true}
-                />
-            },
-            {
-                title: (
-                    <TitleInfo
-                        position='top'
-                        title="CST Clicks"
-                        info="It displays the number of clicks of certain customer search-term."
+                },
+                {
+                    title: (
+                        <TitleInfo
+                            position='top'
+                            title="CST Clicks"
+                            info="It displays the number of clicks of certain customer search-term."
+                        />
+                    ),
+                    dataIndex: 'd_customerSearchTermClicks',
+                    key: 'd_customerSearchTermClicks',
+                    width: '11em',
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
                     />
-                ),
-                dataIndex: 'd_customerSearchTermClicks',
-                key: 'd_customerSearchTermClicks',
-                width: '11em',
-                sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                />
-            },
-            {
-                title: 'CST Spend',
-                dataIndex: 'd_customerSearchTermSpend',
-                key: 'd_customerSearchTermSpend',
-                width: '9.5em',
-                render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
-                sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                />
-            },
-            {
-                title: 'CST Sales',
-                dataIndex: 'd_customerSearchTermSales',
-                key: 'd_customerSearchTermSales',
-                width: '9em',
-                render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
-                sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                />
-            },
-            {
-                ...averageCVRField(onChangeFilter, filteredColumns)
-            },
-            {
-                title: 'Action',
-                dataIndex: 'action',
-                key: 'action',
-                width: '70px',
-                className: 'left-border',
-                render: () => <div className="action-field">Created</div>
-            },
-            {
-                ...infoField
-            }
-        ],
-        [NoSales]: [
-            ...defaultKeys,
-            {
-                ...averageCVRField(onChangeFilter, filteredColumns)
-            },
-            {
-                title: (
-                    <TitleInfo
-                        position='top'
-                        title="CST Clicks"
-                        info="It displays the number of clicks of certain customer search-term."
+                },
+                {
+                    title: 'CST Spend',
+                    dataIndex: 'd_customerSearchTermSpend',
+                    key: 'd_customerSearchTermSpend',
+                    width: '9.5em',
+                    render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
                     />
-                ),
-                dataIndex: 'd_customerSearchTermClicks',
-                key: 'd_customerSearchTermClicks',
-                width: '11em',
-                sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                />
-            },
-            {
-                title: 'CST Spend',
-                dataIndex: 'd_customerSearchTermSpend',
-                key: 'd_customerSearchTermSpend',
-                width: '9.5em',
-                render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
-                sorter: true,
-                filter: (dataIndex) => <ColumnNumberFilter
-                    onChangeFilter={onChangeFilter}
-                    filteredColumns={filteredColumns}
-                    dataIndex={dataIndex}
-                />
-            },
-            // {
-            //     title: 'CST Sales',
-            //     dataIndex: 'd_customerSearchTermSales',
-            //     key: 'd_customerSearchTermSales',
-            //     width: '9em',
-            //     render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
-            //     sorter: true,
-            //     filter: (dataIndex) => <ColumnNumberFilter
-            //         onChangeFilter={onChangeFilter}
-            //         filteredColumns={filteredColumns}
-            //         dataIndex={dataIndex}
-            //     />
-            // },
-            {
-                title: 'Action',
-                dataIndex: 'action',
-                key: 'action',
-                width: '70px',
-                className: 'left-border',
-                render: () => <div className="action-field">Created</div>
-            },
-            {
-                ...infoField
-            }
+                },
+                {
+                    title: 'CST Sales',
+                    dataIndex: 'd_customerSearchTermSales',
+                    key: 'd_customerSearchTermSales',
+                    width: '9em',
+                    render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
+                    />
+                },
+                {
+                    ...averageCVRField(onChangeFilter, filteredColumns)
+                },
+                {
+                    title: 'Action',
+                    dataIndex: 'action',
+                    key: 'action',
+                    width: '70px',
+                    className: 'left-border',
+                    render: () => <div className="action-field">Created</div>
+                },
+                {
+                    ...infoField
+                }
+            ],
+            [NoSales]: [
+                ...defaultKeys,
+                {
+                    ...averageCVRField(onChangeFilter, filteredColumns)
+                },
+                {
+                    title: (
+                        <TitleInfo
+                            position='top'
+                            title="CST Clicks"
+                            info="It displays the number of clicks of certain customer search-term."
+                        />
+                    ),
+                    dataIndex: 'd_customerSearchTermClicks',
+                    key: 'd_customerSearchTermClicks',
+                    width: '11em',
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
+                    />
+                },
+                {
+                    title: 'CST Spend',
+                    dataIndex: 'd_customerSearchTermSpend',
+                    key: 'd_customerSearchTermSpend',
+                    width: '9.5em',
+                    render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
+                    />
+                },
+                // {
+                //     title: 'CST Sales',
+                //     dataIndex: 'd_customerSearchTermSales',
+                //     key: 'd_customerSearchTermSales',
+                //     width: '9em',
+                //     render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
+                //     sorter: true,
+                //     filter: (dataIndex) => <ColumnNumberFilter
+                //         onChangeFilter={onChangeFilter}
+                //         filteredColumns={filteredColumns}
+                //         dataIndex={dataIndex}
+                //     />
+                // },
+                {
+                    title: 'Action',
+                    dataIndex: 'action',
+                    key: 'action',
+                    width: '70px',
+                    className: 'left-border',
+                    render: () => <div className="action-field">Created</div>
+                },
+                {
+                    ...infoField
+                }
+            ]
+        },
+        subTabs: [
+            {title: <>Created Negative PAT From CST (<span className='underline'>High ACoS</span>)</>, key: HighACoS},
+            {title: <>Created Negative PAT From CST (<span className='underline'>No Sales</span>)</>, key: NoSales},
         ]
-    };
-
-    return (
-        <div className="report-item-table">
-            <div className="report-item-table-btn" ref={refTableBtn}>
-                <TableButton
-                    totalSize={totalSize}
-                    loading={loading}
-                    active={activeTable === HighACoS}
-                    count={subChangesCount(counts, HighACoS, countsWithNew)}
-                    onClick={() => {
-                        onChange(HighACoS);
-                    }}
-                >
-                    Created Negative PAT From CST (<span className='underline'>High ACoS</span>)
-                </TableButton>
-                <TableButton
-                    totalSize={totalSize}
-                    loading={loading}
-                    active={activeTable === NoSales}
-                    count={subChangesCount(counts, NoSales, countsWithNew)}
-                    onClick={() => {
-                        onChange(NoSales);
-                    }}
-                >
-                    Created Negative PAT From CST (<span className='underline'>No Sales</span>)
-                </TableButton>
-            </div>
-
-            <CustomTable
-                onChangePagination={handlePaginationChange}
-                loading={loading}
-                dataSource={data}
-                columns={columns[activeTable]}
-                currentPage={currentPage}
-                totalSize={totalSize}
-                heightTabBtn={heightTabBtn}
-                showSizeChanger={true}
-                pageSize={pageSize}
-                sorterColumn={sorterColumn}
-                onChangeSorter={handleChangeSorter}
-                rowClassName={(item) => !item.viewed && 'new-report'}
-            />
-        </div>
-    );
+    });
 };
 
-export default NewNegativePats;
