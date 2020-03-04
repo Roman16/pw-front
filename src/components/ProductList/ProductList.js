@@ -22,6 +22,7 @@ class ProductList extends Component {
         prevProductId: '',
         onlyOptimization: this.props.onlyOptimization || false,
         onlyHasNew: false,
+        onlyOndayparting: false,
         closedList: false,
         campaign_type: 'all',
         campaign_status: 'all',
@@ -49,6 +50,7 @@ class ProductList extends Component {
             type: this.props.pathname === '/ppc/dayparting' ? 'campaigns' : 'products',
             campaign_type: this.state.campaign_type,
             campaign_status: this.state.campaign_status,
+            onlyOndayparting: this.state.onlyOndayparting,
             cancelToken: source.token
         });
     };
@@ -228,6 +230,7 @@ class ProductList extends Component {
                 openedProduct,
                 onlyHasNew,
                 closedList,
+                onlyOndayparting,
                 paginationParams: {size, page}
             } = this.state,
             {products, selectedProduct, totalSize, onlyOptimization, pathname, fetching} = this.props;
@@ -236,18 +239,13 @@ class ProductList extends Component {
             <Fragment>
                 <div
                     className={`${closedList ? 'product-list closed' : 'product-list'}`}>
-                    <div className="switch-list">
-                        <div className="image" onClick={() => this.setState({closedList: !closedList})}>
-                            <img src={selectIcon} alt=""/>
-                        </div>
-                    </div>
 
                     <FilterFields
                         onSearch={this.handleSearch}
                         onSelectAll={this.selectAll}
                         onChangeSwitch={this.handleChangeSwitch}
                         onChangeSelect={this.selectChangeHandler}
-
+                        onlyOndayparting={onlyOndayparting}
                         pathname={pathname}
                         selectedSize={selectedSize}
                         isSelectedAll={isSelectedAll}
@@ -338,6 +336,12 @@ class ProductList extends Component {
                         size={size}
                         onChangePagination={this.handleChangePagination}
                     />
+                </div>
+
+                <div className={`switch-list ${closedList ? 'closed' : 'opened'}`}>
+                    <div className="image" onClick={() => this.setState({closedList: !closedList})}>
+                        <img src={selectIcon} alt=""/>
+                    </div>
                 </div>
             </Fragment>
         );

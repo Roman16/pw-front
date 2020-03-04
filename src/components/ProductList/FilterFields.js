@@ -8,7 +8,7 @@ const {Search} = Input;
 const Option = Select.Option;
 
 
-const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasNew, isSelectedAll, disabled, onChangeSelect}) => {
+const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasNew, isSelectedAll, disabled, onChangeSelect, onlyOndayparting}) => {
     const [openedWindow, switchWindow] = useState(false);
     const {onlyOptimization} = useSelector(state => ({
         onlyOptimization: state.products.onlyOptimization,
@@ -82,6 +82,16 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                             </Option>
                         </CustomSelect>
                     </div>
+
+                    <div className="active-only">
+                        <label htmlFor="">On day-parting only</label>
+
+                        <Switch
+                            checked={onlyOndayparting}
+                            onChange={e => onChangeSwitch(e, 'onlyOndayparting')}
+                        />
+                    </div>
+
                 </div>
             </div>
         )
