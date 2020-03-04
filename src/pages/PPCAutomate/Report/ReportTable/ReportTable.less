@@ -64,6 +64,21 @@ div.ReportTable {
   //  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.4);
   //}
 
+  .tab-name-count {
+    font-size: 0.8571429rem; // 12px
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: inherit;
+    border: 1px solid #c9cbd4;
+    color: #000000;
+    min-width: 3em;
+    height: 1.3333333em !important;
+    border-radius: 1em;
+    margin: 0 0 0 0.8333333em;
+    font-weight: 500;
+  }
+
   .new-report {
     background: rgba(143, 211, 157, 0.1);
 
@@ -88,21 +103,6 @@ div.ReportTable {
 
   .ant-tabs {
     flex: 1;
-
-    .tab-name-count {
-      font-size: 0.8571429rem; // 12px
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: inherit;
-      border: 1px solid #c9cbd4;
-      color: #000000;
-      min-width: 3em;
-      height: 1.3333333em !important;
-      border-radius: 1em;
-      margin: 0 0 0 0.8333333em;
-      font-weight: 500;
-    }
 
     .ant-tabs {
       height: 90%;
@@ -232,6 +232,26 @@ div.ReportTable {
     }
   }
 
+  .report-item-table-btn {
+    font-size: 1rem; // 14px
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 1.4285714em;
+    padding-right: 1.4285714em;
+
+
+    .TableButton {
+      margin-bottom: 1.4285714em;
+    }
+
+    .TableButton:not(:last-child) {
+      margin-right: 1.4285714em;
+    }
+  }
+
+
   .content {
     flex: 1;
     display: flex;
@@ -239,25 +259,6 @@ div.ReportTable {
     background: #fff;
     border-radius: .5714286em;
     padding-top: 1.4285714em;
-
-    .report-item-table-btn {
-      font-size: 1rem; // 14px
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      align-items: center;
-      padding-left: 1.4285714em;
-      padding-right: 1.4285714em;
-
-
-      .TableButton {
-        margin-bottom: 1.4285714em;
-      }
-
-      .TableButton:not(:last-child) {
-        margin-right: 1.4285714em;
-      }
-    }
 
     .custom-table {
       .table-overflow {
@@ -269,7 +270,6 @@ div.ReportTable {
 
   .report-table {
     font-size: 1rem; // 14px
-    min-height: 2.1428571em;
     display: flex;
     justify-content: space-between;
     align-items: center;

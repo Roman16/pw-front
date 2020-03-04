@@ -59,7 +59,7 @@ export const allColumnsOrder = [
 
     {
         title: 'Bid',
-        key: 'd_newBid',
+        key: 'd_bid',
     },
 
     //Metrics

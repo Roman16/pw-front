@@ -168,8 +168,8 @@ export const newPats = ({
                 },
                 {
                     title: 'Bid',
-                    dataIndex: 'd_newBid',
-                    key: 'd_newBid',
+                    dataIndex: 'd_bid',
+                    key: 'd_bid',
                     width: '6em',
                     render: text => (text != null && <span>${numberMask(text, 2)}</span>),
                     sorter: true,

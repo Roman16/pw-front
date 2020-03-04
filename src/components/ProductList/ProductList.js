@@ -303,7 +303,7 @@ class ProductList extends Component {
                                     className={isSelectedAll || selectedProduct.id === item.id ? 'campaign-item active' : 'campaign-item'}
                                     onClick={() => this.onSelect(item)}
                                 >
-                                    {item.on_dayparting && <InformationTooltip
+                                    {item.hasEnabledDayparting && <InformationTooltip
                                         arrowPointAtCenter={true}
                                         type={'custom'}
                                         description={'Campaign on day-parting'}

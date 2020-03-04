@@ -24,21 +24,6 @@ import TableButton from "./TableButton/TableButton";
 const CancelToken = axios.CancelToken;
 let source = null;
 
-const TabName = ({name = null, type, counts, countsWithNew}) => {
-    return (
-        <div className="TabName">
-            <span>{name}</span>
-
-            <div className="tab-name-count">
-                {mainChangesCount(counts, type)}
-            </div>
-
-            {mainHasNewReport(countsWithNew, type) > 0 &&
-            <div className='new-count'>New {mainHasNewReport(countsWithNew, type)}</div>}
-        </div>
-    )
-};
-
 const subTables = {
     "all-reports": "all-reports",
     "keywords-optimization": "changed-keyword-bid-acos",
@@ -277,6 +262,21 @@ class ReportTable extends Component {
     render() {
         const {activeTab, page, pageSize, filteredColumns, sorterColumn, totalSize, activeSubTab} = this.state,
             {counts, data, todayChanges, countsWithNew, loading} = this.props;
+
+        const TabName = ({name = null, type}) => {
+            return (
+                <div className="TabName">
+                    <span>{name}</span>
+
+                    <div className="tab-name-count">
+                        {mainChangesCount(counts, type) > 10000 ? '9999+' : mainChangesCount(counts, type)}
+                    </div>
+
+                    {mainHasNewReport(countsWithNew, type) > 0 &&
+                    <div className='new-count'>New {mainHasNewReport(countsWithNew, type)}</div>}
+                </div>
+            )
+        };
 
         const mainTabs = {
             'all-reports': {

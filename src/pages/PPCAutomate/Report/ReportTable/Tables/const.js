@@ -98,18 +98,18 @@ export const bidActionField = {
     key: 'action',
     width: '13.5em',
     className: 'left-border',
-    render: ({data: {current_state, previous_state}}) => (
+    render: ({data}) => (
         <div className="action-field">
-            {current_state > previous_state ? (
+            {data && data.current_state > data.previous_state ? (
                 <span>
-          <img src={up} alt=""/> bid up (${previous_state}{' '}
-                    <img src={right} alt=""/> <b>${current_state}</b>)
-        </span>
-            ) : (
+                    <img src={up} alt=""/> bid up (${data.previous_state}{' '}
+                    <img src={right} alt=""/> <b>${data.current_state}</b>)
+                </span>
+                ) : (
                 <span>
-          <img src={down} alt=""/> bid down (<b>${previous_state}</b>{' '}
-                    <img src={right} alt=""/> ${current_state})
-        </span>
+                    <img src={down} alt=""/> bid down (<b>${data.previous_state}</b>{' '}
+                    <img src={right} alt=""/> ${data.current_state})
+                </span>
             )}
         </div>
     )
