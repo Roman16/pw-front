@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { StrategyItem } from '../../OptimizationStrategy/OptimizationStrategy';
 import './StrategyInfo.less';
 
 const info = [
@@ -38,17 +37,17 @@ class StrategyInfo extends Component {
     render() {
         return (
             <div className="StrategyInfo">
-                {info.map(({ caption, key, text, value }) => (
-                    <div key={key} className="info-item">
-                        <div className="info-caption small">{caption}</div>
+                {/*{info.map(({ caption, key, text, value }) => (*/}
+                {/*    <div key={key} className="info-item">*/}
+                {/*        <div className="info-caption small">{caption}</div>*/}
 
-                        <StrategyItem caption={caption} value={value} info/>
-                        <div>
-                            <div className="info-caption large">{caption}</div>
-                            <div>{text}</div>
-                        </div>
-                    </div>
-                ))}
+                {/*        <StrategyItem caption={caption} value={value} info/>*/}
+                {/*        <div>*/}
+                {/*            <div className="info-caption large">{caption}</div>*/}
+                {/*            <div>{text}</div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*))}*/}
             </div>
         );
     }

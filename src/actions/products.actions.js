@@ -69,61 +69,25 @@ function fetchProducts(paginationParams) {
 
 function fetchProductDetails(product, pathname) {
     return dispatch => {
-        if (pathname === '/ppc/scanner') {
+        if (product !== 'all') {
             dispatch({
                 type: productsConstants.SELECT_PRODUCT,
-                payload: {
-                    ...product,
-                    id: product.id,
-                    product_id: product.id,
-                }
+                payload: {...product, type: pathname === '/ppc/dayparting' ? 'campaign' : 'product'},
             });
-        } else if (pathname === '/ppc/dayparting') {
-            dispatch({
-                type: productsConstants.SELECT_PRODUCT,
-                payload: {
-                    ...product,
-                    id: product.id,
-                    product_id: product.id,
-                }
-            });
-
         } else {
-            productsServices.getProductDetails(product === 'all' ? 'all' : product.id)
-                .then(res => {
-                    if (product !== 'all') {
-                        dispatch({
-                            type: productsConstants.SELECT_PRODUCT,
-                            payload: {
-                                ...product,
-                                ...res,
-                                id: product.id,
-                                product_id: product.id,
-                                optimized: !!res.id
-                            }
-                        });
-                    } else {
-                        dispatch({
-                            type: productsConstants.SELECT_ALL_PRODUCT,
-                            payload: res
-                        });
-                    }
-                });
+            dispatch({
+                type: productsConstants.SELECT_ALL_PRODUCT,
+            });
         }
     };
 }
 
 function updateProduct(product) {
     return dispatch => {
-        productsServices.updateProductById(product)
-            .then(() => {
-                dispatch({
-                    type: productsConstants.UPDATE_SELECTED_PRODUCT,
-                    payload: product
-                });
-
-                // notification.start({title: 'Optimization successfully started'});
-            });
+        dispatch({
+            type: productsConstants.UPDATE_SELECTED_PRODUCT,
+            payload: product
+        });
     };
 }
 

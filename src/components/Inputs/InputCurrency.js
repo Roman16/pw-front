@@ -27,4 +27,8 @@ const InputCurrency = ({
     </div>
 );
 
+//typeIcon:
+//margin -> %
+//other -> $
+
 export default InputCurrency;
