@@ -1,5 +1,5 @@
 import React, {useState, Fragment} from "react";
-import {Icon, Spin} from "antd";
+import {Spin} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 
 import "./OptimizationStrategy.less";
@@ -93,7 +93,7 @@ Press start and see how the algorithm is making changes to get the results you w
 ];
 
 const RUNNING = 'RUNNING';
-const STOPPED = 'STOPPED';
+// const STOPPED = 'STOPPED';
 
 
 function StrategyItem({
