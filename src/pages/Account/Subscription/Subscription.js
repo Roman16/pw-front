@@ -13,6 +13,7 @@ import {userService} from "../../../services/user.services";
 import {userActions} from "../../../actions/user.actions";
 import {subscriptionProducts} from "../../../constans/subscription.products.name";
 import {notification} from "../../../components/Notification";
+import {history} from "../../../utils/history";
 
 
 const Subscription = () => {
@@ -23,6 +24,7 @@ const Subscription = () => {
     const [selectedPlan, selectPlan] = useState();
     const [subscriptions, setSubscriptions] = useState({});
     const [fetching, switchFetching] = useState(false);
+    const [cardsList, setCardsList] = useState(null);
 
     const {mwsConnected, ppcConnected, stripeId} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
@@ -68,28 +70,32 @@ const Subscription = () => {
     }
 
     async function handleSubscribe({planId, productId, coupon}) {
-        try {
-            if (coupon) {
-                await userService.subscribe({
-                    subscription_plan_id: planId,
-                    subscription_id: productId,
-                    marketplace_id: 'ATVPDKIKX0DER',
-                    coupon_code: coupon
-                });
-            } else {
-                await userService.subscribe({
-                    subscription_plan_id: planId,
-                    subscription_id: productId,
-                    marketplace_id: 'ATVPDKIKX0DER',
-                });
+        if (cardsList && cardsList.length) {
+            try {
+                if (coupon) {
+                    await userService.subscribe({
+                        subscription_plan_id: planId,
+                        subscription_id: productId,
+                        marketplace_id: 'ATVPDKIKX0DER',
+                        coupon_code: coupon
+                    });
+                } else {
+                    await userService.subscribe({
+                        subscription_plan_id: planId,
+                        subscription_id: productId,
+                        marketplace_id: 'ATVPDKIKX0DER',
+                    });
+                }
+
+                notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'});
+
+                dispatch(userActions.getPersonalUserInfo());
+                fetchSubscriptions();
+            } catch (e) {
+                console.log(e);
             }
-
-            notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'});
-
-            dispatch(userActions.getPersonalUserInfo());
-            fetchSubscriptions();
-        } catch (e) {
-            console.log(e);
+        } else {
+            history.push('/account-billing')
         }
     }
 
@@ -145,6 +151,11 @@ const Subscription = () => {
         if (ppcConnected || mwsConnected) {
             userService.updateSubscriptionStatus();
         }
+
+        userService.fetchBillingInformation()
+            .then(res => {
+                setCardsList(res)
+            });
 
         interval = setInterval(handleUpdateSubscriptionStatus, 1000 * 60);
 

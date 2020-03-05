@@ -42,7 +42,7 @@ const SubscriptionNotificationWindow = ({product, page}) => {
                 <Fragment>
                     <Result
                         status="403"
-                        title="Hey 👋"
+                        title="Oops !"
                         subTitle="The Dayparting tool is only available to customers with an active subscription. Please upgrade your subscription to continue using the software."
                     />
 
@@ -61,8 +61,8 @@ const SubscriptionNotificationWindow = ({product, page}) => {
 
                     <Result
                         status="403"
-                        title="Hey 👋"
-                        subTitle="The PPC Automate tool is only available to customers with an active subscription. Please upgrade your subscription to continue using the software."
+                        title="Oops !"
+                        subTitle="It looks like your trial has expired, or you didn’t renew your subscription plan. Please upgrade to Pro subscription to continue using Profit Whales Software."
                     />
                     <div className='buttons-block'>
                         {subscribedProduct.incomplete_payment.has_incomplete_payment || (subscribedProduct.pending_payment && subscribedProduct.pending_payment.has_pending_payment) ?
