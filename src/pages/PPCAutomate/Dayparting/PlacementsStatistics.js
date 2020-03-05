@@ -225,7 +225,6 @@ const PlacementsStatistics = ({date}) => {
                             data={chartData}
                             stackOffset="expand"
                             isAnimationActive={false}
-                            isAbove
                             margin={{
                                 top: 10, right: 5, left: -20, bottom: 0,
                             }}
