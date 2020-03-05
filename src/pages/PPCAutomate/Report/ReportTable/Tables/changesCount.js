@@ -12,8 +12,8 @@ const mainTypeList = {
     "pats-optimization": [
         'changed-pat-bid-acos',
         'changed-pat-bid-impressions',
-        'paused-manual-pat-high-acos',
-        'paused-manual-pat-no-sales',
+        'paused-pat-high-acos',
+        'paused-pat-no-sales',
         'paused-pat-duplicate'
     ],
     "new-keywords": [
