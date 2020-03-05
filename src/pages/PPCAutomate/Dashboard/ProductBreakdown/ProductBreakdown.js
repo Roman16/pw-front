@@ -33,11 +33,13 @@ const ProductBreakdown = () => {
         }),
         [products, updateProductsList] = useState([]);
     const [fetching, switchFetch] = useState(false);
+    const [fetchingError, setFetchingError] = useState(false);
 
     let timerIdSearch = null;
 
     const getProducts = () => {
         switchFetch(true);
+        setFetchingError(false);
         source = CancelToken.source();
 
         dashboardServices.fetchProducts({
@@ -58,7 +60,8 @@ const ProductBreakdown = () => {
 
             })
             .catch(error => {
-                console.log(error);
+                switchFetch(false);
+                setFetchingError(true)
             })
     };
 
@@ -124,6 +127,10 @@ const ProductBreakdown = () => {
 
             {fetching && <div className="loading">
                 <Spin size="large"/>
+            </div>}
+
+            {fetchingError && <div className="loading">
+                <button className='btn default' onClick={getProducts}>reload</button>
             </div>}
         </div>
     )
