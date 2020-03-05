@@ -14,8 +14,8 @@ import {ColumnMenuFilter, ColumnNumberFilter, ColumnTextFilter} from "./columnFi
 
 const changedPATBidACoS = 'changed-pat-bid-acos';
 const changedPATBidImpressions = 'changed-pat-bid-impressions';
-const pausedManualPATHighACoS = 'paused-manual-pat-high-acos';
-const pausedManualPatNoSales = 'paused-manual-pat-no-sales';
+const pausedManualPATHighACoS = 'paused-pat-high-acos';
+const pausedManualPatNoSales = 'paused-pat-no-sales';
 
 const pausedPATDuplicate = 'paused-pat-duplicate';
 
