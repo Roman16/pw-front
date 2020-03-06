@@ -1,5 +1,5 @@
 import React, {useState, Fragment} from "react";
-import {Spin} from "antd";
+import {Spin, Select} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 
 import "./OptimizationStrategy.less";
@@ -16,6 +16,9 @@ import InputCurrency from "../../../../components/Inputs/InputCurrency";
 import NetMarginWindow from "../NetMarginWindow/NetMarginWindow";
 import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup";
 import {productsActions} from "../../../../actions/products.actions";
+import CustomSelect from "../../../../components/Select/Select";
+
+const Option = Select.Option;
 
 const strategies = [
     {
@@ -93,6 +96,7 @@ Press start and see how the algorithm is making changes to get the results you w
 ];
 
 const RUNNING = 'RUNNING';
+
 // const STOPPED = 'STOPPED';
 
 
@@ -103,12 +107,13 @@ function StrategyItem({
                           isActivated,
                           onStart,
                           onStop,
-                          processing
+                          processing,
+                          visible
                       }) {
     const [targetAcos, setTargetAcos] = useState(undefined);
 
     return (
-        <div className={`strategy-item  slide-${index + 1}`}>
+        <div className={`strategy-item  slide-${index + 1} ${visible && 'visible'}`}>
             <div className="description-block">
                 <div className="col">
                     <div>
@@ -295,7 +300,7 @@ const OptimizationStrategy = ({product: {optimization_strategy, status, product_
                     {/*/>*/}
                 </h3>
 
-                <div className="strategies ">
+                <div className="strategies desc">
                     <div className="all-strategies">
                         {strategies.map((item, index) => (
                             <div
@@ -332,6 +337,31 @@ const OptimizationStrategy = ({product: {optimization_strategy, status, product_
                             />
                         ))}
                     </Slider>
+                </div>
+
+                <div className="strategies mob">
+                    <div className="all-strategies">
+                        <CustomSelect onChange={goToSlideHandler} value={selectedSlide}>
+                            {strategies.map((item, index) => (
+                                <Option key={item.key} value={index}>{item.name}</Option>
+                            ))}
+                        </CustomSelect>
+                    </div>
+
+                    {strategies.map((item, index) => (
+                        <StrategyItem
+                            key={item.key}
+                            strategy={item}
+                            index={index}
+                            processing={processing}
+                            activeStrategy={optimization_strategy}
+                            isActivated={status === 'RUNNING'}
+                            onStart={startOptimizationHandler}
+                            onStop={stopOptimizationHandler}
+
+                            visible={selectedSlide === index}
+                        />
+                    ))}
                 </div>
             </section>
 

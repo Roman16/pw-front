@@ -63,8 +63,8 @@ const commentsList = [
 
 const Pricing = () => {
 
-    function goToScanner() {
-        history.push('/ppc/optimization')
+    function goToRegistration() {
+        history.push('/registration')
     }
 
     function SampleNextArrow({onClick}) {
@@ -260,7 +260,7 @@ const Pricing = () => {
                             <div className="price">35$</div>
                             <hr/>
                             <p>Start growing your business with our Starter plan</p>
-                            <button className='btn green-btn' onClick={goToScanner}>start free</button>
+                            <button className='btn green-btn' onClick={goToRegistration}>start free</button>
                         </div>
 
                         <div className="item">
@@ -271,7 +271,7 @@ const Pricing = () => {
                             <hr/>
                             <p>Automatic system of your Amazon advertising for your success as a growing Amazon
                                 Seller</p>
-                            <button className='btn green-btn' onClick={goToScanner}>start free</button>
+                            <button className='btn green-btn' onClick={goToRegistration}>start free</button>
                         </div>
 
                         <div className="item">
@@ -281,7 +281,7 @@ const Pricing = () => {
                             <div className="price">$250 + 2% monthly ad spend</div>
                             <hr/>
                             <p>Focus on the profitability of your business with our Data-Driven Optimization</p>
-                            <button className='btn green-btn' onClick={goToScanner}>start free</button>
+                            <button className='btn green-btn' onClick={goToRegistration}>start free</button>
                         </div>
 
                         <div className="item">
@@ -291,7 +291,7 @@ const Pricing = () => {
                             <div className="price">$500 + 1.5% monthly ad spend</div>
                             <hr/>
                             <p>Maximize your sales &amp; profit with automatic optimization</p>
-                            <button className='btn green-btn' onClick={goToScanner}>start free</button>
+                            <button className='btn green-btn' onClick={goToRegistration}>start free</button>
                         </div>
                     </div>
                 </div>

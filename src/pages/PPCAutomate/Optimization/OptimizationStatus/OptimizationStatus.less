@@ -7,6 +7,7 @@
 
   .section-header {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 
     h3 {
@@ -31,6 +32,11 @@
       flex: 1;
       min-width: 8.214285714285714rem;
 
+      &:nth-child(1),
+      &:nth-child(2) {
+        min-width: 6rem;
+      }
+
       .caption {
         font-weight: 600;
         font-size: 1rem;
@@ -46,7 +52,37 @@
         color: #8fd39d;
       }
     }
+  }
+
+  @media only screen and (min--moz-device-pixel-ratio: 1) and (max-width: 1663px), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-width: 1663px), only screen and (min-device-pixel-ratio: 1) and (max-width: 1663px) {
+    & {
+      margin-left: 0;
+    }
+  }
+
+  @media only screen and (min--moz-device-pixel-ratio: 1) and (max-width: 1160px), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-width: 1160px), only screen and (min-device-pixel-ratio: 1) and (max-width: 1160px) {
+    & {
+      .row {
+        flex-wrap: wrap;
+
+        .status-info {
+          min-width: max-content;
+          margin-bottom: 20px;
+
+          .caption {
+            margin: 0 0 10px 0;
+          }
+        }
+      }
+    }
+  }
 
 
+  @media only screen and (min--moz-device-pixel-ratio: 1) and (max-width: 910px), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-width: 910px), only screen and (min-device-pixel-ratio: 1) and (max-width: 910px) {
+    & {
+      .section-header {
+        margin-bottom: 20px;
+      }
+    }
   }
 }

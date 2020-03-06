@@ -1,5 +1,6 @@
 .optimization-includes {
   margin: 0 0 20px 0;
+
   ul {
     list-style: none;
     column-count: 2;
@@ -34,6 +35,30 @@
           position: absolute;
           right: -40px;
           top: -5px;
+        }
+      }
+    }
+  }
+
+  @media only screen and (min--moz-device-pixel-ratio: 1) and (max-width: 1663px),
+  only screen and (-webkit-min-device-pixel-ratio: 1) and (max-width: 1663px),
+  only screen and (min-device-pixel-ratio: 1) and (max-width: 1663px) {
+    & {
+      flex: 1;
+      min-width: 100%;
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+
+        li {
+          margin: 0 20px 10px 0;
+
+          &.soon::after {
+            position: initial;
+            margin: -12px 0 0 5px;
+          }
         }
       }
     }
