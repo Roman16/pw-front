@@ -16,7 +16,6 @@ const changedPATBidACoS = 'changed-pat-bid-acos';
 const changedPATBidImpressions = 'changed-pat-bid-impressions';
 const pausedManualPATHighACoS = 'paused-pat-high-acos';
 const pausedManualPatNoSales = 'paused-pat-no-sales';
-
 const pausedPATDuplicate = 'paused-pat-duplicate';
 
 export const patsOptimization = ({
