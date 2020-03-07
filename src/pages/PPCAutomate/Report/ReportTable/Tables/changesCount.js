@@ -56,7 +56,8 @@ export const mainChangesCount = (counts = [], type) => {
     let count = 0;
     if (Array.isArray(counts)) {
         if (type === 'all-reports') {
-            count = counts.reduce((a, b) => +a.count + +b.count, 0);
+            console.log(counts);
+            count = counts.reduce((a, b) => a + +b.count, 0);
         } else {
             mainTypeList[type].forEach((type) => {
                 if (counts.find(item => item.type === type)) {

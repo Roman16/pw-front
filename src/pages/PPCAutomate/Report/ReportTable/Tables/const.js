@@ -98,21 +98,25 @@ export const bidActionField = {
     key: 'action',
     width: '13.5em',
     className: 'left-border',
-    render: ({data}) => (
-        <div className="action-field">
-            {data && data.current_state > data.previous_state ? (
-                <span>
+    render: ({data}) => {
+        if (data) {
+            return (
+                <div className="action-field">
+                    {data && data.current_state > data.previous_state ? (
+                        <span>
                     <img src={up} alt=""/> bid up (${data.previous_state}{' '}
-                    <img src={right} alt=""/> <b>${data.current_state}</b>)
+                            <img src={right} alt=""/> <b>${data.current_state}</b>)
                 </span>
-                ) : (
-                <span>
+                    ) : (
+                        <span>
                     <img src={down} alt=""/> bid down (<b>${data.previous_state}</b>{' '}
-                    <img src={right} alt=""/> ${data.current_state})
+                            <img src={right} alt=""/> ${data.current_state})
                 </span>
-            )}
-        </div>
-    )
+                    )}
+                </div>
+            )
+        }
+    }
 };
 
 export const pauseKeywordsActionField = {

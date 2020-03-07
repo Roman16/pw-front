@@ -41,7 +41,7 @@ export const allReports = () => {
                     dataIndex: 'type',
                     key: 'type',
                     width: '20%',
-                    render: key => <span>{allSubTabs[key]}</span>,
+                    // render: key => <span>{allSubTabs[key]}</span>,
                 },
                 {
                     title: 'Message',
