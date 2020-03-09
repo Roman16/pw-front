@@ -155,7 +155,7 @@ const SubscriptionPlan = ({
                         </Link>
                     </p>
 
-                    <Link to={'/pricing'} className={'learn-more'}>Learn more</Link>
+                    <Link to={'/pricing'} className={'learn-more'} target={'blank'}>Learn more</Link>
                 </div>
 
 

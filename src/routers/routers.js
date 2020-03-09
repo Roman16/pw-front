@@ -4,7 +4,6 @@ import {history} from '../utils/history';
 import {useSelector} from 'react-redux';
 
 
-import ResetPassword from "../pages/authentication/ResetPassword/ResetPassword";
 import AuthorizedUser from "../pages";
 import Optimization from "../pages/PPCAutomate/Optimization/Optimization";
 import Report from "../pages/PPCAutomate/Report/Report";
@@ -37,6 +36,7 @@ const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFoun
 
 const LoginPage = React.lazy(() => import('../pages/authentication/LoginPage/LoginPage'));
 const RegistrationPage = React.lazy(() => import('../pages/authentication/RegistrationPage/RegistrationPage'));
+const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPassword/ResetPassword'));
 
 // import LandingAutomation from "../pages/LandingPages/Automation/LandingAutomation";
 // import LandingAffiliates from "../pages/LandingPages/Affiliates/LandingAffiliates";
@@ -53,6 +53,7 @@ const RegistrationPage = React.lazy(() => import('../pages/authentication/Regist
 
 // import LoginPage from "../pages/authentication/LoginPage/LoginPage";
 // import RegistrationPage from "../pages/authentication/RegistrationPage/RegistrationPage";
+// import ResetPassword from "../pages/authentication/ResetPassword/ResetPassword";
 
 
 const PrivateRoute = ({component: Component, ...rest}) => (
@@ -92,7 +93,6 @@ const routers = () => {
         <Router history={history}>
             <Switch>
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
-                <Route exact path="/reset-password" component={ResetPassword}/>
 
                 <ConnectedAmazonRoute
                     exact
@@ -137,16 +137,13 @@ const routers = () => {
                 {/* ACCOUNT */}
                 <PrivateRoute exact path="/account-settings" component={Information}/>
                 <PrivateRoute exact path="/account-billing" component={Billing}/>
-                <PrivateRoute
-                    exact
-                    path="/account-subscription"
-                    component={Subscription}
-                />
+                <PrivateRoute exact path="/account-subscription" component={Subscription}/>
                 {/*---------------*/}
 
                 <Suspense fallback={<div/>}>
                     <Route exact path="/login" component={LoginPage}/>
                     <Route exact path="/registration" component={RegistrationPage}/>
+                    <Route exact path="/reset-password" component={ResetPassword}/>
 
                     <Route exact path="/" component={LandingAutomation}/>
                     <Route exact path="/affiliates" component={LandingAffiliates}/>
@@ -159,7 +156,6 @@ const routers = () => {
                     <Route exact path="/contact-us" component={ContactUs}/>
                     <Route exact path="/policy" component={PrivacyPolicy}/>
                     <Route exact path="/terms-and-conditions" component={TermsOfUse}/>
-
                 </Suspense>
 
                 <Route component={NotFound}/>
