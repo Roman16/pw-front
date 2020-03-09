@@ -30,7 +30,7 @@ function fetchAllReports(options, cancelToken) {
                                     data: res.data.slice(0, item === 1 ? 200 : 20)
                                 }
                             });
-                        },  (500 * index));
+                        },  (200 * index));
                     })
                 } else {
                     dispatch({
