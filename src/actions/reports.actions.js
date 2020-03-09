@@ -7,8 +7,6 @@ export const reportsActions = {
 };
 
 function fetchAllReports(options, cancelToken) {
-    const infinityScrollCount = 20;
-
     return dispatch => {
         dispatch({
             type: reportsConstants.START_FETCH_REPORTS_LIST,
@@ -16,25 +14,30 @@ function fetchAllReports(options, cancelToken) {
 
         reportsServices.getAllReports(options, cancelToken)
             .then(res => {
-                // if (options.size >= 100) {
-                //     Array.from({length: Math.ceil(res.data.length / infinityScrollCount + 1)}, (item, index) => index).forEach((item, index) => {
-                //
-                //       setTimeout(() => {
-                //             dispatch({
-                //                 type: reportsConstants.SET_REPORTS_LIST,
-                //                 payload: {
-                //                     ...res,
-                //                     data: res.data.slice(index * infinityScrollCount, index * infinityScrollCount + infinityScrollCount)
-                //                 }
-                //             });
-                //         }, (index * 200));
-                //     })
-                // } else {
+
+                if (res.data.length === 0) {
                     dispatch({
                         type: reportsConstants.SET_REPORTS_LIST,
                         payload: res
                     });
-                // }
+                } else if (options.pageSize >= 100) {
+                    [0, 1].forEach((item, index) => {
+                        setTimeout(() => {
+                            dispatch({
+                                type: reportsConstants.SET_REPORTS_LIST,
+                                payload: {
+                                    ...res,
+                                    data: res.data.slice(0, item === 1 ? 200 : 20)
+                                }
+                            });
+                        },  (500 * index));
+                    })
+                } else {
+                    dispatch({
+                        type: reportsConstants.SET_REPORTS_LIST,
+                        payload: res
+                    });
+                }
             })
             .catch(e => {
                 dispatch({
