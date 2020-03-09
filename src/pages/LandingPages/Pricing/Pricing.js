@@ -10,6 +10,7 @@ import peopleImage from '../../../assets/img/landing-pricing/people-icon.svg';
 import yesGreenIcon from '../../../assets/img/landing-pricing/yes_green.svg';
 import {history} from "../../../utils/history";
 import $ from "jquery";
+import ionRangeSlider from 'ion-rangeslider';
 import {avatars} from "../../../assets/img/landing-automation/avatars/avatars";
 import Slider from "react-slick";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

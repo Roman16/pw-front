@@ -406,6 +406,8 @@ const LandingAutomation = () => {
 
         //----------------------------------------------------------------------
         document.querySelector('html').classList.add('not-retina');
+        document.querySelector('body').classList.remove('hide-mc-modal');
+
         //----------------------------------------------------------------------
         //----------------------------------------------------------------------
         $(".js-range-slider").ionRangeSlider({
@@ -493,10 +495,11 @@ const LandingAutomation = () => {
 
         return () => {
             document.querySelector('html').classList.remove('not-retina');
+            document.querySelector('body').classList.add('hide-mc-modal');
 
             document.head.removeChild(s);
             document.head.removeChild(mailchimpScript);
-            window.location.reload();
+
         }
     }, []);
 

@@ -2,8 +2,6 @@ import React, {Fragment, useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {Drawer} from "antd";
 
-import "./Optimization.less";
-
 import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 import OptimizationStrategy from "./OptimizationStrategy/OptimizationStrategy";
 import OptionsInfo from "./InfoDrawers/OptionInfo/OptionInfo";
@@ -18,6 +16,10 @@ import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWin
 import {productsServices} from "../../../services/products.services";
 import {notification} from "../../../components/Notification";
 import {productsActions} from "../../../actions/products.actions";
+
+import "./Optimization.less";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Optimization = () => {
     const [selectedProduct, setProduct] = useState({}),
