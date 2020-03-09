@@ -89,26 +89,29 @@ function fetchProductDetails(product, pathname) {
             });
 
         } else {
-            productsServices.getProductDetails(product === 'all' ? 'all' : product.id)
-                .then(res => {
-                    if (product !== 'all') {
-                        dispatch({
-                            type: productsConstants.SELECT_PRODUCT,
-                            payload: {
-                                ...product,
-                                ...res,
-                                id: product.id,
-                                product_id: product.id,
-                                optimized: !!res.id
-                            }
-                        });
-                    } else {
-                        dispatch({
-                            type: productsConstants.SELECT_ALL_PRODUCT,
-                            payload: res
-                        });
-                    }
-                });
+            if(product === 'all' || product.id) {
+                productsServices.getProductDetails(product === 'all' ? 'all' : product.id)
+                    .then(res => {
+                        if (product !== 'all') {
+                            dispatch({
+                                type: productsConstants.SELECT_PRODUCT,
+                                payload: {
+                                    ...product,
+                                    ...res,
+                                    id: product.id,
+                                    product_id: product.id,
+                                    optimized: !!res.id
+                                }
+                            });
+                        } else {
+                            dispatch({
+                                type: productsConstants.SELECT_ALL_PRODUCT,
+                                payload: res
+                            });
+                        }
+                    });
+
+            }
         }
     };
 }
