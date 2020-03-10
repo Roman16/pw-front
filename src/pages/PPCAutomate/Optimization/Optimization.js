@@ -93,7 +93,18 @@ const Optimization = () => {
         setProcessing(false);
     }
 
-    async function stopOptimizationHandler(optimization_strategy) {
+    async function onSaveTargetAcos(targetAcos) {
+        try {
+            await productsServices.updateProductTargetAcos({
+                product_id: selectedAll ? 'all' : productId,
+                targetAcos
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function stopOptimizationHandler() {
         setProcessing(true);
 
         try {
@@ -155,6 +166,7 @@ const Optimization = () => {
                     onShowDrawer={showDrawerHandler}
                     onStart={startOptimizationHandler}
                     onStop={stopOptimizationHandler}
+                    onSaveTargetAcos={onSaveTargetAcos}
                 />
             </div>
 

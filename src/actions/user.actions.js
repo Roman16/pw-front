@@ -108,8 +108,6 @@ function getUserInfo() {
     return dispatch => {
         userService.getUserInfo().then(res => {
             dispatch(setInformation(res));
-            console.log(res);
-
             window.Intercom("boot", {
                 app_id: "hkyfju3m",
                 name: res.user.name, // Full name

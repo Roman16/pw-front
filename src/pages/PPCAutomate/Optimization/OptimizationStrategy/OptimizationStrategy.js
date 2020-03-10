@@ -109,7 +109,8 @@ function StrategyItem({
                           onStop,
                           processing,
                           visible,
-                          productId
+                          productId,
+                          onSaveTargetAcos
                       }) {
     const [targetAcos, setTargetAcos] = useState(undefined);
 
@@ -136,7 +137,7 @@ function StrategyItem({
                     {index === 0 && <div className="target-acos">
                         <span>Enter yor target ACoS</span>
                         <InputCurrency typeIcon={'margin'} value={targetAcos} onChange={value => setTargetAcos(value)}/>
-                        <button className='btn green-btn'>save</button>
+                        <button className='btn green-btn' onClick={() => onSaveTargetAcos(targetAcos)}>save</button>
                     </div>}
 
                     <img src={img} alt=""/>
@@ -181,7 +182,7 @@ function StrategyItem({
 
 let sliding = false;
 
-const OptimizationStrategy = ({product: {optimization_strategy, status, product_margin}, onShowDrawer, onStart, onStop, selectedAll, processing, productId}) => {
+const OptimizationStrategy = ({product: {optimization_strategy, status, product_margin}, onShowDrawer, onStart, onStop, selectedAll, processing, productId, onSaveTargetAcos}) => {
     const dispatch = useDispatch();
     let targetAcosValue;
 
@@ -336,6 +337,7 @@ const OptimizationStrategy = ({product: {optimization_strategy, status, product_
                                 isActivated={status === 'RUNNING'}
                                 onStart={startOptimizationHandler}
                                 onStop={stopOptimizationHandler}
+                                onSaveTargetAcos={onSaveTargetAcos}
                             />
                         ))}
                     </Slider>

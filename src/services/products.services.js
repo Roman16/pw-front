@@ -7,7 +7,8 @@ export const productsServices = {
     updateProductById,
     getProductDetails,
     getProductsSettingsList,
-    updateProductSettings
+    updateProductSettings,
+    updateProductTargetAcos
 };
 
 function getProducts({size, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0, cancelToken}) {
@@ -20,6 +21,10 @@ function getProductsSettingsList({size, page, searchStr = '', onlyActive, cancel
 
 function updateProductSettings(parameters) {
     return api('post', `${productsUrls.updateSettings}`, parameters)
+}
+
+function updateProductTargetAcos(acos) {
+    return api('post', `${productsUrls.updateSettings}`, acos)
 }
 
 function getProductDetails(id) {
