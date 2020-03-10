@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from "react";
+import React, {useState, Fragment, useEffect} from "react";
 import {Spin, Select} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -110,9 +110,14 @@ function StrategyItem({
                           processing,
                           visible,
                           productId,
-                          onSaveTargetAcos
+                          onSaveTargetAcos,
+                          status
                       }) {
     const [targetAcos, setTargetAcos] = useState(undefined);
+
+    useEffect(() => {
+        setTargetAcos(undefined)
+    }, [status]);
 
     return (
         <div className={`strategy-item  slide-${index + 1} ${visible && 'visible'}`}>
@@ -335,6 +340,7 @@ const OptimizationStrategy = ({product: {optimization_strategy, status, product_
                                 processing={processing}
                                 activeStrategy={optimization_strategy}
                                 isActivated={status === 'RUNNING'}
+                                status={status}
                                 onStart={startOptimizationHandler}
                                 onStop={stopOptimizationHandler}
                                 onSaveTargetAcos={onSaveTargetAcos}
@@ -358,6 +364,7 @@ const OptimizationStrategy = ({product: {optimization_strategy, status, product_
                             key={item.key}
                             strategy={item}
                             index={index}
+                            status={status}
                             processing={processing}
                             activeStrategy={optimization_strategy}
                             isActivated={status === 'RUNNING'}
