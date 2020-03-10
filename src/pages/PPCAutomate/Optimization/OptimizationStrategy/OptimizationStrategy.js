@@ -108,10 +108,11 @@ function StrategyItem({
                           onStart,
                           onStop,
                           processing,
-                          visible
+                          visible,
+                          productId
                       }) {
     const [targetAcos, setTargetAcos] = useState(undefined);
-
+    console.log(productId);
     return (
         <div className={`strategy-item  slide-${index + 1} ${visible && 'visible'}`}>
             <div className="description-block">
@@ -148,26 +149,26 @@ function StrategyItem({
                 <div className="actions">
                     {isActivated ? (
                             activeStrategy === key ?
-                                <button disabled={processing} className='btn default stop-btn' onClick={onStop}>
+                                <button disabled={processing || productId == null} className='btn default stop-btn' onClick={onStop}>
                                     {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
                                     stop
                                 </button>
                                 :
                                 <>
-                                    <button disabled={processing} className='btn default'
+                                    <button disabled={processing || productId == null} className='btn default'
                                             onClick={() => onStart(targetAcos)}>
                                         {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
                                         update
                                     </button>
 
-                                    <button disabled={processing} className='btn default stop-btn' onClick={onStop}>
+                                    <button disabled={processing || productId == null} className='btn default stop-btn' onClick={onStop}>
                                         {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
                                         stop
                                     </button>
                                 </>
                         )
                         :
-                        <button disabled={processing} className='btn default' onClick={() => onStart(targetAcos)}>
+                        <button disabled={processing || productId == null} className='btn default' onClick={() => onStart(targetAcos)}>
                             {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
                             start
                         </button>
@@ -180,7 +181,7 @@ function StrategyItem({
 
 let sliding = false;
 
-const OptimizationStrategy = ({product: {optimization_strategy, status, product_margin}, onShowDrawer, onStart, onStop, selectedAll, processing}) => {
+const OptimizationStrategy = ({product: {optimization_strategy, status, product_margin}, onShowDrawer, onStart, onStop, selectedAll, processing, productId}) => {
     const dispatch = useDispatch();
     let targetAcosValue;
 
@@ -326,6 +327,7 @@ const OptimizationStrategy = ({product: {optimization_strategy, status, product_
                     >
                         {strategies.map((item, index) => (
                             <StrategyItem
+                                productId={productId}
                                 key={item.key}
                                 strategy={item}
                                 index={index}
@@ -350,6 +352,7 @@ const OptimizationStrategy = ({product: {optimization_strategy, status, product_
 
                     {strategies.map((item, index) => (
                         <StrategyItem
+                            productId={productId}
                             key={item.key}
                             strategy={item}
                             index={index}

@@ -52,7 +52,6 @@ const ProductItem = ({
                                 e.target.parentNode.parentNode.parentNode.click()
                             }}
                             getPopupContainer={trigger => trigger.parentNode}
-                            arrowPointAtCenter={true}
                             type={'custom'}
                             description={name}
                             position={'top'}

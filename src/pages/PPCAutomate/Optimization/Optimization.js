@@ -37,13 +37,17 @@ const Optimization = () => {
 
     useEffect(() => {
         if ((selectedAll || productId) && type === 'product') {
+            setProcessing(true);
+
             async function fetchProductDetails() {
                 try {
                     const res = await productsServices.getProductDetails(selectedAll ? 'all' : productId);
 
                     setProduct(res);
+                    setProcessing(false)
                 } catch (e) {
                     console.log(e);
+                    setProcessing(false)
                 }
             }
 
@@ -143,6 +147,7 @@ const Optimization = () => {
                 </div>
 
                 <OptimizationStrategy
+                    productId={productId}
                     product={selectedProduct}
                     selectedAll={selectedAll}
                     processing={processing}

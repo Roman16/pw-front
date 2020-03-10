@@ -3,7 +3,6 @@ import {Router, Route, Switch, Redirect} from 'react-router-dom';
 import {history} from '../utils/history';
 import {useSelector} from 'react-redux';
 
-
 import AuthorizedUser from "../pages";
 import Optimization from "../pages/PPCAutomate/Optimization/Optimization";
 import Report from "../pages/PPCAutomate/Report/Report";
@@ -14,7 +13,6 @@ import Dashboard from "../pages/PPCAutomate/Dashboard/Dashboard";
 import Information from "../pages/Account/Information/Information";
 import Billing from "../pages/Account/Billing/Billing";
 import Subscription from "../pages/Account/Subscription/Subscription";
-import LoginWithAmazon from "../pages/authentication/LoginWitdhAmazon/LoginWithAmazon";
 import Home from "../pages/Home/Home";
 import Scanner from "../pages/PPCAutomate/Scanner/Scanner";
 import Dayparting from "../pages/PPCAutomate/Dayparting/Dayparting";
@@ -37,6 +35,7 @@ const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFoun
 const LoginPage = React.lazy(() => import('../pages/authentication/LoginPage/LoginPage'));
 const RegistrationPage = React.lazy(() => import('../pages/authentication/RegistrationPage/RegistrationPage'));
 const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPassword/ResetPassword'));
+const LoginWithAmazon = React.lazy(() => import('../pages/authentication/LoginWithAmazon/LoginWithAmazon'));
 
 // import LandingAutomation from "../pages/LandingPages/Automation/LandingAutomation";
 // import LandingAffiliates from "../pages/LandingPages/Affiliates/LandingAffiliates";
@@ -54,6 +53,7 @@ const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPass
 // import LoginPage from "../pages/authentication/LoginPage/LoginPage";
 // import RegistrationPage from "../pages/authentication/RegistrationPage/RegistrationPage";
 // import ResetPassword from "../pages/authentication/ResetPassword/ResetPassword";
+// import LoginWithAmazon from "../pages/authentication/LoginWithAmazon/LoginWithAmazon";
 
 
 const PrivateRoute = ({component: Component, ...rest}) => (
@@ -92,7 +92,6 @@ const routers = () => {
     return (
         <Router history={history}>
             <Switch>
-                <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
 
                 <ConnectedAmazonRoute
                     exact
@@ -144,6 +143,7 @@ const routers = () => {
                     <Route exact path="/login" component={LoginPage}/>
                     <Route exact path="/registration" component={RegistrationPage}/>
                     <Route exact path="/reset-password" component={ResetPassword}/>
+                    <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
 
                     <Route exact path="/" component={LandingAutomation}/>
                     <Route exact path="/affiliates" component={LandingAffiliates}/>
