@@ -270,10 +270,11 @@ class ReportTable extends Component {
 
                     <div className="tab-name-count">
                         {mainChangesCount(counts, type) > 10000 ? '9999+' : mainChangesCount(counts, type)}
+
+                        {mainHasNewReport(countsWithNew, type) > 0 && <div className='new-count'>New {mainHasNewReport(countsWithNew, type)}</div>}
+
                     </div>
 
-                    {mainHasNewReport(countsWithNew, type) > 0 &&
-                    <div className='new-count'>New {mainHasNewReport(countsWithNew, type)}</div>}
                 </div>
             )
         };
