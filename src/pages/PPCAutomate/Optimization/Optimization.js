@@ -59,6 +59,7 @@ const Optimization = () => {
     async function startOptimizationHandler(optimization_strategy, targetAcosValue, netMargin) {
         setProcessing(true);
 
+
         if (optimization_strategy === 'AchieveTargetACoS' && (!targetAcosValue || targetAcosValue === 0 || targetAcosValue < 0)) {
             notification.error({
                 title: 'Enter yor target ACoS'
@@ -84,6 +85,7 @@ const Optimization = () => {
                     }
                 });
 
+
                 dispatch(productsActions.updateProduct({
                     id: selectedAll ? 'all' : selectedProduct.product_id,
                     status: 'RUNNING',
@@ -101,20 +103,26 @@ const Optimization = () => {
     }
 
     async function onSaveTargetAcos(targetAcos) {
-        try {
-            await productsServices.updateProductById({
-                product_id: selectedAll ? 'all' : productId,
-                status: selectedProduct.status,
-                optimization_strategy: selectedProduct.optimization_strategy,
-                desired_target_acos: targetAcos
-            });
-
-            notification.success({
-                title: 'Saved'
+        if (!targetAcos || targetAcos === 0 || targetAcos < 0) {
+            notification.error({
+                title: 'Enter yor target ACoS'
             })
+        } else {
+            try {
+                await productsServices.updateProductById({
+                    product_id: selectedAll ? 'all' : productId,
+                    status: selectedProduct.status,
+                    optimization_strategy: selectedProduct.optimization_strategy,
+                    desired_target_acos: targetAcos
+                });
 
-        } catch (e) {
-            console.log(e);
+                notification.success({
+                    title: 'Saved'
+                })
+
+            } catch (e) {
+                console.log(e);
+            }
         }
     }
 
