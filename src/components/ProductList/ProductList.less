@@ -89,6 +89,11 @@
 
     .ant-popover-inner-content {
       width: max-content;
+      max-width: 300px;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        max-width: 270px;
+      }
 
       span {
         cursor: auto;

@@ -40,7 +40,7 @@ function fetchProducts(paginationParams) {
                         }
                     });
 
-                    if (res.response && res.response.length > 0 && !paginationParams.selectedAll) {
+                    if (res.response && res.response.length > 0) {
                         dispatch(fetchProductDetails(res.response[0], paginationParams.pathname));
                     } else {
                         dispatch(fetchProductDetails({id: null}, paginationParams.pathname));
