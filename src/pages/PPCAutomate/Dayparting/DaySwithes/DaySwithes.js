@@ -15,7 +15,8 @@ import axios from "axios";
 
 const CancelToken = axios.CancelToken;
 let source = null;
-const timeLineShift = 24 - moment(new Date()).tz('America/Los_Angeles').format('h');
+
+const timeLineShift = 24 - (moment.tz.zone('America/Los_Angeles').utcOffset(moment().utc()) / 60);
 
 const defaultList = Array.from({length: 168}, () => '1').join('');
 
@@ -54,6 +55,7 @@ class DaySwitches extends Component {
         hasDayparting: false,
         initialState: ''
     };
+
 
     deactivateDaypartingHandler = async () => {
         this.setState({
