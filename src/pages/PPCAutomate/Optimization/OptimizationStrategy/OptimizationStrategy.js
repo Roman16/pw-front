@@ -190,10 +190,10 @@ function StrategyItem({
 }
 
 let sliding = false;
+let targetAcosValue;
 
 const OptimizationStrategy = ({product: {desired_target_acos, optimization_strategy, status, product_margin}, onShowDrawer, onStart, onStop, selectedAll, processing, productId, onSaveTargetAcos}) => {
     const dispatch = useDispatch();
-    let targetAcosValue;
 
 
     const {dontShowStartWindowAgain, dontShowStopWindowAgain} = useSelector(state => ({
@@ -216,7 +216,6 @@ const OptimizationStrategy = ({product: {desired_target_acos, optimization_strat
 
     function startOptimizationHandler(targetAcos) {
         targetAcosValue = targetAcos;
-
         if (dontShowStartWindowAgain && !selectedAll) {
             onStartProductOptimization();
         } else {
