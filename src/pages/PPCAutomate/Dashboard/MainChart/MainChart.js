@@ -16,6 +16,7 @@ let source = null;
 const MainChart = () => {
     const [chartData, updateChartData] = useState([]);
     const [fetching, switchFetch] = useState(false);
+    const [fetchingError, setFetchingError] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -49,6 +50,7 @@ const MainChart = () => {
     const getChartData = () => {
         if (activeMetrics[0].key || activeMetrics[1].key) {
             switchFetch(true);
+            setFetchingError(false);
             source = CancelToken.source();
 
             dashboardServices.fetchLineChartData({
@@ -62,6 +64,10 @@ const MainChart = () => {
             })
                 .then(res => {
                     updateChartData(res);
+                    switchFetch(false);
+                })
+                .catch(error => {
+                    setFetchingError(true);
                     switchFetch(false);
                 })
         } else {
@@ -96,6 +102,10 @@ const MainChart = () => {
 
             {fetching && <div className="loading">
                 <Spin size="large"/>
+            </div>}
+
+            {fetchingError && <div className="loading">
+               <button className='btn default' onClick={getChartData}>reload</button>
             </div>}
         </div>
     )

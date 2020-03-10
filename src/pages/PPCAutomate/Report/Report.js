@@ -2,6 +2,8 @@ import React from 'react';
 import ReportTable from './ReportTable/ReportTable';
 import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function Report() {
     return (
@@ -14,4 +16,4 @@ function Report() {
     );
 }
 
-export default Report;
+export default React.memo(Report);

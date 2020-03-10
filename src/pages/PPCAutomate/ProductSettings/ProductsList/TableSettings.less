@@ -32,6 +32,10 @@
     width: 4.7857143em;
   }
 
+  .ant-popover-arrow {
+    display: none;
+  }
+
   .optimization-waiting {
     display: none;
   }
@@ -187,6 +191,28 @@
         .on-optimization {
           display: none;
         }
+
+
+        .caption {
+          .custom-tooltip {
+            margin: 0;
+          }
+
+          .ant-popover-inner-content {
+            span {
+              cursor: auto;
+            }
+          }
+
+          .short-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            width: fit-content;
+          }
+        }
       }
 
       .open-children-list-button {
@@ -273,6 +299,8 @@
 
         .product-item-content {
           font-size: 0.7857143rem; // 11px
+
+
         }
       }
     }

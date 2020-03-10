@@ -11,7 +11,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 0 30px 0 0;
+    //padding: 0 30px 0 0;
     margin: 0 0 1.4285714285714286rem 0;
     grid-area: lastSynced;
 
@@ -324,7 +324,7 @@
       }
 
       .sorter {
-        width: 70%;
+        flex: 1;
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -612,6 +612,10 @@
       width: 60%;
       padding: 0;
 
+      .recharts-active-dot {
+        z-index: 10000000 !important;
+      }
+
       .recharts-responsive-container.responsive-bar-container {
         margin: 0;
       }
@@ -683,7 +687,7 @@
           align-items: center;
           justify-content: flex-start;
           width: 25%;
-          font-size: 0.8571428571428571rem;
+          font-size: 1rem;
           font-weight: 600;
           color: #656A84;
 

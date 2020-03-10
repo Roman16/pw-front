@@ -46,7 +46,8 @@ const CustomTable = ({
                                 <div className='title'>
                                     {typeof item.title === 'function' ? item.title() : item.title}
 
-                                    {sorterColumn && (<div className={`sorter-buttons ${sorterColumn.key === item.key && 'is-sorter'}`}>
+                                    {sorterColumn && (<div
+                                        className={`sorter-buttons ${sorterColumn.key === item.key && 'is-sorter'}`}>
                                         <Icon type="caret-up"
                                               style={{color: `${(sorterColumn.key === item.key && sorterColumn.type === 'asc') ? "#6d6df6" : ""}`}}/>
                                         <Icon type="caret-down"
@@ -68,8 +69,10 @@ const CustomTable = ({
                         dataSource &&
                         dataSource.length > 0 &&
                         dataSource.map((report, index) => (
-                            <div className={`table-body__row ${rowClassName && rowClassName(report)}`}
-                                 key={`report_${index}_`}>
+                            <div
+                                className={`table-body__row ${rowClassName && rowClassName(report)}`}
+                                key={`report_${index}_`}
+                            >
                                 {columns.map((item) => {
 
                                     const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};

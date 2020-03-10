@@ -55,11 +55,15 @@ export const subChangesCount = (counts = [], type, countsWithNew = []) => {
 export const mainChangesCount = (counts = [], type) => {
     let count = 0;
     if (Array.isArray(counts)) {
-        mainTypeList[type].forEach((type) => {
-            if (counts.find(item => item.type === type)) {
-                count = count + +counts.find(item => item.type === type).count;
-            }
-        });
+        if (type === 'all-reports') {
+            count = counts.reduce((a, b) => a + +b.count, 0);
+        } else {
+            mainTypeList[type].forEach((type) => {
+                if (counts.find(item => item.type === type)) {
+                    count = count + +counts.find(item => item.type === type).count;
+                }
+            });
+        }
     }
 
     return count || 0;
@@ -69,11 +73,15 @@ export const mainHasNewReport = (countsWithNew = [], type) => {
     let count = null;
 
     if (Array.isArray(countsWithNew)) {
-        mainTypeList[type].forEach((type) => {
-            if (countsWithNew.find(item => item.type === type)) {
-                count = count + +countsWithNew.find(item => item.type === type).count;
-            }
-        });
+        if (type === 'all') {
+            count = countsWithNew.reduce((a, b) => +a.count + +b.count, 0);
+        } else {
+            mainTypeList[type].forEach((type) => {
+                if (countsWithNew.find(item => item.type === type)) {
+                    count = count + +countsWithNew.find(item => item.type === type).count;
+                }
+            });
+        }
     }
 
     return count || null;

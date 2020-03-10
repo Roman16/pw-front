@@ -2,6 +2,8 @@ import React, {Component, Fragment} from 'react';
 import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
 import {Spin, Switch} from "antd";
 import moment from "moment";
+import tz from 'moment-timezone';
+
 import Selection from "@simonwep/selection-js/src/selection";
 import shortid from "shortid";
 import './DaySwitches.less';
@@ -13,7 +15,8 @@ import axios from "axios";
 
 const CancelToken = axios.CancelToken;
 let source = null;
-const timeLineShift = 16;
+
+const timeLineShift = 24 - (moment.tz.zone('America/Los_Angeles').utcOffset(moment().utc()) / 60);
 
 const defaultList = Array.from({length: 168}, () => '1').join('');
 
@@ -52,6 +55,7 @@ class DaySwitches extends Component {
         hasDayparting: false,
         initialState: ''
     };
+
 
     deactivateDaypartingHandler = async () => {
         this.setState({
@@ -122,7 +126,8 @@ class DaySwitches extends Component {
 
     getDaypartingStatus = async () => {
         this.setState({
-            activeDayparting: false
+            activeDayparting: false,
+            processing: true,
         });
 
         try {
@@ -130,22 +135,24 @@ class DaySwitches extends Component {
             source = CancelToken.source();
 
             const res = await daypartingServices.getDayPartingParams({
-                campaignId: this.props.campaignId,
+                campaignId: this.props.campaignId || '',
                 cancelToken: source.token
             });
 
             if (res.response[0]) {
                 this.setState({
                     hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
-                    activeDayparting: res.response[0].status === 'ACTIVE',
+                    activeDayparting: this.props.campaignId ? res.response[0].status === 'ACTIVE' : false,
                     initialState: res.response[0].initial_campaign_state,
-                    hasDayparting: true
+                    hasDayparting: true,
+                    processing: false,
                 });
             } else {
                 this.setState({
                     hoursStatus: [...defaultList],
                     activeDayparting: false,
-                    hasDayparting: false
+                    hasDayparting: false,
+                    processing: false
                 });
             }
         } catch (e) {
@@ -155,34 +162,39 @@ class DaySwitches extends Component {
 
     handleUpdateStatus = async () => {
         clearTimeout(timeoutId);
-        timeoutId = setTimeout(async () => {
-            try {
-                await daypartingServices.updateDayPartingParams({
-                    campaignId: this.props.campaignId,
-                    state_encoded_string: [...this.state.hoursStatus.slice(timeLineShift, 168), ...this.state.hoursStatus.slice(0, timeLineShift)].join('')
-                });
-                notification.success({title: 'Saved'});
-                timeoutId = null;
-            } catch (e) {
-                console.log(e);
-            }
-        }, 1000)
+
+        if (this.props.campaignId) {
+            timeoutId = setTimeout(async () => {
+                try {
+                    await daypartingServices.updateDayPartingParams({
+                        campaignId: this.props.campaignId,
+                        state_encoded_string: [...this.state.hoursStatus.slice(timeLineShift, 168), ...this.state.hoursStatus.slice(0, timeLineShift)].join('')
+                    });
+                    notification.success({title: 'Saved'});
+                    timeoutId = null;
+                } catch (e) {
+                    console.log(e);
+                }
+            }, 1000)
+        }
     };
 
     forceUpdateStatus = async (id, status) => {
         clearTimeout(timeoutId);
 
-        try {
-            daypartingServices.updateDayPartingParams({
-                campaignId: id,
-                state_encoded_string: [...status.slice(timeLineShift, 168), ...status.slice(0, timeLineShift)].join('')
-            })
-                .then(() => {
-                    notification.success({title: 'Saved'});
-                    timeoutId = null;
-                });
-        } catch (e) {
-            console.log(e);
+        if (id) {
+            try {
+                daypartingServices.updateDayPartingParams({
+                    campaignId: id,
+                    state_encoded_string: [...status.slice(timeLineShift, 168), ...status.slice(0, timeLineShift)].join('')
+                })
+                    .then(() => {
+                        notification.success({title: 'Saved'});
+                        timeoutId = null;
+                    });
+            } catch (e) {
+                console.log(e);
+            }
         }
     };
 
@@ -405,7 +417,8 @@ class DaySwitches extends Component {
                         <h2>Are you sure?</h2>
                         <p>
                             This will result in pausing the day-parting feature for this particular campaign. Your
-                            settings will be saved. <br/> Please note, that this campaign will be set to its initial state: <br/>
+                            settings will be saved. <br/> Please note, that this campaign will be set to its initial
+                            state: <br/>
                             <b>{initialState}</b>
                         </p>
 

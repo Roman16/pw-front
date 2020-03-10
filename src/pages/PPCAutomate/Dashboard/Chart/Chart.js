@@ -18,6 +18,8 @@ const Chart = () => {
         [pieChartData, updatePieChart] = useState([]),
         [barChartData, updateBarChart] = useState([]);
     const [fetching, switchFetch] = useState(false);
+    const [barFetchingError, setBarFetchingError] = useState(false);
+    const [pieFetchingError, setPieFetchingError] = useState(false);
 
     const {selectedRangeDate, selectedProduct} = useSelector(state => ({
         activeMetrics: state.dashboard.activeMetrics,
@@ -31,21 +33,35 @@ const Chart = () => {
 
     const getPieChartData = () => {
         switchFetch(true);
+        setPieFetchingError(false);
+
         dashboardServices.fetchPieChartData({startDate, endDate, selectedProduct})
             .then(res => {
                 switchFetch(false);
+                setPieFetchingError(false);
 
                 updatePieChart(res);
+            })
+            .catch(error => {
+                switchFetch(false);
+                setPieFetchingError(true);
             })
     };
 
     const getBarChartData = () => {
         switchFetch(true);
+        setBarFetchingError(false);
+
         dashboardServices.fetchBarChartData({endDate, selectedProduct})
             .then(res => {
                 switchFetch(false);
+                setBarFetchingError(false);
 
                 updateBarChart(res);
+            })
+            .catch(error => {
+                switchFetch(false);
+                setBarFetchingError(true);
             })
     };
 
@@ -104,6 +120,14 @@ const Chart = () => {
 
             {fetching && <div className="loading">
                 <Spin size="large"/>
+            </div>}
+
+            {(pieFetchingError || barFetchingError) && <div className="loading">
+                <button className='btn default' onClick={() => {
+                    pieFetchingError && getPieChartData();
+                    barFetchingError && getBarChartData();
+                }}>reload
+                </button>
             </div>}
         </div>
     )

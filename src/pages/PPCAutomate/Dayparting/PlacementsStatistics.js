@@ -338,4 +338,4 @@ const PlacementsStatistics = ({date}) => {
     )
 };
 
-export default PlacementsStatistics;
+export default React.memo(PlacementsStatistics);

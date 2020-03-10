@@ -52,8 +52,8 @@ const SubscriptionPlan = ({
         } else if (product.next_charge_value == null || product.flat_amount == null || product.quantity == null) {
             return (
                 <div className="load-data">
-                    <div className='load-text'>We are loading your Amazon data. <br/>Come back in a few
-                        hours.
+                    <div className='load-text'>
+                        We are calculating your subscription price. <br/> Please wait for a few seconds.
                     </div>
                     <Spin/>
                 </div>
@@ -75,7 +75,8 @@ const SubscriptionPlan = ({
                     <div className="charged-description">
                         <div className="charged-data">$ {numberMask(product.next_charge_value, 2) || 0}</div>
                         <div className='description'>You'll be charged <br/> next billing cycle <InformationTooltip
-                            description={'This amount is calculated based on your last 30 days ad spend. It\'s updating every hour, so the exact amount of the invoice will be visible right before the end of the current billing cycle.'}/></div>
+                            description={'This amount is calculated based on your last 30 days ad spend. It\'s updating every hour, so the exact amount of the invoice will be visible right before the end of the current billing cycle.'}/>
+                        </div>
                     </div>
                 </Fragment>
             )

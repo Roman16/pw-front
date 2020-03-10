@@ -1,6 +1,4 @@
 import React from 'react';
-// import { Icon, Tooltip } from 'antd';
-
 import Tooltip from '../../Tooltip/Tooltip';
 import './TitleInfo.less';
 

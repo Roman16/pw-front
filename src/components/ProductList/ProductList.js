@@ -10,6 +10,7 @@ import CustomSelect from "../Select/Select";
 import ProductPagination from "./ProductPagination";
 import selectIcon from "../../assets/img/icons/select-icon.svg";
 import axios from "axios";
+import InformationTooltip from "../Tooltip/Tooltip";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -21,6 +22,7 @@ class ProductList extends Component {
         prevProductId: '',
         onlyOptimization: this.props.onlyOptimization || false,
         onlyHasNew: false,
+        onlyOndayparting: false,
         closedList: false,
         campaign_type: 'all',
         campaign_status: 'all',
@@ -48,6 +50,7 @@ class ProductList extends Component {
             type: this.props.pathname === '/ppc/dayparting' ? 'campaigns' : 'products',
             campaign_type: this.state.campaign_type,
             campaign_status: this.state.campaign_status,
+            onlyOndayparting: this.state.onlyOndayparting,
             cancelToken: source.token
         });
     };
@@ -227,6 +230,7 @@ class ProductList extends Component {
                 openedProduct,
                 onlyHasNew,
                 closedList,
+                onlyOndayparting,
                 paginationParams: {size, page}
             } = this.state,
             {products, selectedProduct, totalSize, onlyOptimization, pathname, fetching} = this.props;
@@ -235,16 +239,13 @@ class ProductList extends Component {
             <Fragment>
                 <div
                     className={`${closedList ? 'product-list closed' : 'product-list'}`}>
-                    <div className="switch-list" onClick={() => this.setState({closedList: !closedList})}>
-                        <img src={selectIcon} alt=""/>
-                    </div>
 
                     <FilterFields
                         onSearch={this.handleSearch}
                         onSelectAll={this.selectAll}
                         onChangeSwitch={this.handleChangeSwitch}
                         onChangeSelect={this.selectChangeHandler}
-
+                        onlyOndayparting={onlyOndayparting}
                         pathname={pathname}
                         selectedSize={selectedSize}
                         isSelectedAll={isSelectedAll}
@@ -297,10 +298,33 @@ class ProductList extends Component {
                             {products && products.map(item => (
                                 <div
                                     key={item.id}
-                                    className={isSelectedAll || selectedProduct.id === item.id ? 'active' : ''}
+                                    className={isSelectedAll || selectedProduct.id === item.id ? 'campaign-item active' : 'campaign-item'}
                                     onClick={() => this.onSelect(item)}
                                 >
-                                    <span>{item.name}</span>
+                                    {item.hasEnabledDayparting && <InformationTooltip
+                                        arrowPointAtCenter={true}
+                                        type={'custom'}
+                                        description={'Campaign on day-parting'}
+                                        position={'topRight'}
+                                    >
+                                        <div className='on-optimization'/>
+                                    </InformationTooltip>}
+
+
+                                    <InformationTooltip
+                                        onClick={(e) => {
+                                            e.target.parentNode.parentNode.parentNode.click()
+                                        }}
+                                        className={'name-tooltip'}
+                                        getPopupContainer={trigger => trigger.parentNode}
+                                        arrowPointAtCenter={true}
+                                        type={'custom'}
+                                        description={item.name}
+                                        position={'top'}
+                                    >
+                                        <span className={'short-name'}>{item.name}</span>
+                                    </InformationTooltip>
+
                                 </div>
                             ))}
                         </div>
@@ -312,6 +336,12 @@ class ProductList extends Component {
                         size={size}
                         onChangePagination={this.handleChangePagination}
                     />
+                </div>
+
+                <div className={`switch-list ${closedList ? 'closed' : 'opened'}`}>
+                    <div className="image" onClick={() => this.setState({closedList: !closedList})}>
+                        <img src={selectIcon} alt=""/>
+                    </div>
                 </div>
             </Fragment>
         );

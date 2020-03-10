@@ -21,6 +21,8 @@ import arrowImage from '../../../assets/img/landing-affiliate/right-arrow.svg';
 import {userService} from "../../../services/user.services";
 import {notification} from "../../../components/Notification";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY,
     tapfiliateRegistrationPage = 'https://profitwhales.tapfiliate.com/programs/subscription-link/signup/',

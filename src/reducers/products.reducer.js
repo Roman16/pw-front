@@ -1,15 +1,5 @@
 import {productsConstants} from '../constans/actions.type';
 
-const defaultOptions = {
-    optimization_strategy: 'LaunchProduct',
-    add_negative_keywords: true,
-    optimize_keywords: true,
-    create_new_keywords: true,
-    optimize_pats: true,
-    add_negative_pats: true,
-    create_new_pats: true,
-};
-
 const initialState = {
     productList: [],
     totalSize: 0,
@@ -22,7 +12,6 @@ const initialState = {
     selectedAll: false,
     onlyOptimization: false,
     onlyActiveOnAmazon: false,
-    defaultOptimizationOptions: defaultOptions,
     selectedProduct: {
         optimization_strategy: '',
     }
@@ -40,7 +29,7 @@ export function products(state = initialState, action) {
 
         case productsConstants.UPDATE_SELECTED_PRODUCT:
             const newProductsList = state.productList.map(item => {
-                if (item.id === action.payload.product_id) {
+                if (item.id === action.payload.id) {
                     if (action.payload.status === "RUNNING") {
                         return {
                             ...item,
@@ -52,7 +41,7 @@ export function products(state = initialState, action) {
                             under_optimization: false,
                         }
                     }
-                } else if (action.payload.product_id === 'all') {
+                } else if (action.payload.id === 'all') {
                     if (action.payload.status === "RUNNING") {
                         return {
                             ...item,
@@ -111,10 +100,6 @@ export function products(state = initialState, action) {
             return {
                 ...state,
                 selectedAll: !state.selectedAll,
-                selectedProduct: {
-                    ...action.payload,
-                },
-                defaultOptimizationOptions: {...defaultOptions}
             };
 
         case productsConstants.SHOW_ONLY_OPTIMIZED:

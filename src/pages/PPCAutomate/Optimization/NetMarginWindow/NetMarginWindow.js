@@ -1,21 +1,16 @@
 import React, {useState, Fragment} from 'react';
 import {func, bool} from 'prop-types';
-import {Modal, Button, Input} from 'antd';
+import {Button} from 'antd';
 import {Link} from 'react-router-dom';
-import Warning from '../../../../../assets/img/icons/warning.svg';
+import Warning from '../../../../assets/img/icons/warning.svg';
 
 import './NetMarginWindow.less';
 import {useDispatch, useSelector} from "react-redux";
-import {productsActions} from "../../../../../actions/products.actions";
-import {productsServices} from "../../../../../services/products.services";
-import ModalWindow from "../../../../../components/ModalWindow/ModalWindow";
-import InputCurrency from "../../../../../components/Inputs/InputCurrency";
+import {productsActions} from "../../../../actions/products.actions";
+import {productsServices} from "../../../../services/products.services";
+import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
+import InputCurrency from "../../../../components/Inputs/InputCurrency";
 
-const errorText = 'net margin should be more than 0';
-
-const Dollar = () => (
-    <span className="dollar">%</span>
-);
 
 const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handleOk}) => {
     const [value, setValue] = useState(0);
@@ -51,7 +46,7 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
                 status: 'RUNNING'
             }));
 
-            handleCancel();
+            handleOk(value);
         } else {
             setError(true);
         }

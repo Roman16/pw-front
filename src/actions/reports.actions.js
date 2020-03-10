@@ -14,13 +14,32 @@ function fetchAllReports(options, cancelToken) {
 
         reportsServices.getAllReports(options, cancelToken)
             .then(res => {
-                dispatch({
-                    type: reportsConstants.SET_REPORTS_LIST,
-                    payload: res
-                });
+
+                if (res.data.length === 0) {
+                    dispatch({
+                        type: reportsConstants.SET_REPORTS_LIST,
+                        payload: res
+                    });
+                } else if (options.pageSize >= 100) {
+                    [0, 1].forEach((item, index) => {
+                        setTimeout(() => {
+                            dispatch({
+                                type: reportsConstants.SET_REPORTS_LIST,
+                                payload: {
+                                    ...res,
+                                    data: res.data.slice(0, item === 1 ? 200 : 20)
+                                }
+                            });
+                        },  (200 * index));
+                    })
+                } else {
+                    dispatch({
+                        type: reportsConstants.SET_REPORTS_LIST,
+                        payload: res
+                    });
+                }
             })
             .catch(e => {
-                console.log(e);
                 dispatch({
                     type: reportsConstants.SET_REPORTS_LIST,
                     payload: {

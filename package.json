@@ -17,6 +17,7 @@
     "ion-rangeslider": "^2.3.1",
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
+    "moment-timezone": "^0.5.28",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-app-rewire-less": "^2.1.3",
@@ -40,7 +41,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build production",
+    "build": "react-app-rewired build -p",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },

@@ -66,6 +66,7 @@ export const daypartingUrls = {
     recommendedBudget: (id) => `ppc-automation/dayparting/campaigns/${id}/recommended-budget`,
     dailyBudget: (id) => `ppc-automation/dayparting/campaigns/${id}/daily-budget`,
     dailyStatistic: (id) => `ppc-automation/dayparting/campaigns/${id}/chart-data`,
-    dayParting: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/state` : 'ppc-automation/dayparting/campaigns/state',
+    getDayParting: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/state` : `ppc-automation/dayparting/campaigns/state`,
+    dayParting: (id) => `ppc-automation/dayparting/campaigns/${id}/state`,
     placements: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/placements` : 'ppc-automation/dayparting/campaigns/placements'
 };
