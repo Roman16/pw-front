@@ -32,7 +32,6 @@ function getProductDetails(id) {
 }
 
 function updateProductById(product) {
-    console.log(product);
     return api('post', productsUrls.saveProductData, {
         ...product,
         product_id: product.product_id ? product.product_id : product.id,

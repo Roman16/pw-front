@@ -103,6 +103,7 @@ const RUNNING = 'RUNNING';
 function StrategyItem({
                           strategy: {description, descriptionTitle, value, img, jeffRemark, key},
                           index,
+                          desired_target_acos,
                           activeStrategy,
                           isActivated,
                           onStart,
@@ -113,11 +114,11 @@ function StrategyItem({
                           onSaveTargetAcos,
                           status
                       }) {
-    const [targetAcos, setTargetAcos] = useState(undefined);
+    const [targetAcos, setTargetAcos] = useState(desired_target_acos);
 
     useEffect(() => {
-        setTargetAcos(undefined)
-    }, [status]);
+        setTargetAcos(desired_target_acos)
+    }, [desired_target_acos]);
 
     return (
         <div className={`strategy-item  slide-${index + 1} ${visible && 'visible'}`}>
@@ -142,7 +143,7 @@ function StrategyItem({
                     {index === 0 && <div className="target-acos">
                         <span>Enter yor target ACoS</span>
                         <InputCurrency typeIcon={'margin'} value={targetAcos} onChange={value => setTargetAcos(value)}/>
-                        <button className='btn green-btn' onClick={() => onSaveTargetAcos(targetAcos)}>save</button>
+                        <button className='btn green-btn' onClick={() => onSaveTargetAcos(targetAcos)} disabled={processing || productId == null}>save</button>
                     </div>}
 
                     <img src={img} alt=""/>
@@ -155,7 +156,8 @@ function StrategyItem({
                 <div className="actions">
                     {isActivated ? (
                             activeStrategy === key ?
-                                <button disabled={processing || productId == null} className='btn default stop-btn' onClick={onStop}>
+                                <button disabled={processing || productId == null} className='btn default stop-btn'
+                                        onClick={onStop}>
                                     {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
                                     stop
                                 </button>
@@ -167,14 +169,16 @@ function StrategyItem({
                                         update
                                     </button>
 
-                                    <button disabled={processing || productId == null} className='btn default stop-btn' onClick={onStop}>
+                                    <button disabled={processing || productId == null} className='btn default stop-btn'
+                                            onClick={onStop}>
                                         {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
                                         stop
                                     </button>
                                 </>
                         )
                         :
-                        <button disabled={processing || productId == null} className='btn default' onClick={() => onStart(targetAcos)}>
+                        <button disabled={processing || productId == null} className='btn default'
+                                onClick={() => onStart(targetAcos)}>
                             {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
                             start
                         </button>
@@ -187,9 +191,10 @@ function StrategyItem({
 
 let sliding = false;
 
-const OptimizationStrategy = ({product: {optimization_strategy, status, product_margin}, onShowDrawer, onStart, onStop, selectedAll, processing, productId, onSaveTargetAcos}) => {
+const OptimizationStrategy = ({product: {desired_target_acos, optimization_strategy, status, product_margin}, onShowDrawer, onStart, onStop, selectedAll, processing, productId, onSaveTargetAcos}) => {
     const dispatch = useDispatch();
     let targetAcosValue;
+
 
     const {dontShowStartWindowAgain, dontShowStopWindowAgain} = useSelector(state => ({
         dontShowStartWindowAgain: state.products.dontShowStartNotificationAgain,
@@ -334,6 +339,7 @@ const OptimizationStrategy = ({product: {optimization_strategy, status, product_
                         {strategies.map((item, index) => (
                             <StrategyItem
                                 productId={productId}
+                                desired_target_acos={desired_target_acos}
                                 key={item.key}
                                 strategy={item}
                                 index={index}
@@ -361,6 +367,7 @@ const OptimizationStrategy = ({product: {optimization_strategy, status, product_
                     {strategies.map((item, index) => (
                         <StrategyItem
                             productId={productId}
+                            desired_target_acos={desired_target_acos}
                             key={item.key}
                             strategy={item}
                             index={index}

@@ -102,10 +102,17 @@ const Optimization = () => {
 
     async function onSaveTargetAcos(targetAcos) {
         try {
-            await productsServices.updateProductTargetAcos({
+            await productsServices.updateProductById({
                 product_id: selectedAll ? 'all' : productId,
+                status: selectedProduct.status,
+                optimization_strategy: selectedProduct.optimization_strategy,
                 desired_target_acos: targetAcos
             });
+
+            notification.success({
+                title: 'Saved'
+            })
+
         } catch (e) {
             console.log(e);
         }
