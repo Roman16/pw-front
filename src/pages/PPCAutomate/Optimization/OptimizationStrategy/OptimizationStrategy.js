@@ -112,7 +112,7 @@ function StrategyItem({
                           productId
                       }) {
     const [targetAcos, setTargetAcos] = useState(undefined);
-    console.log(productId);
+
     return (
         <div className={`strategy-item  slide-${index + 1} ${visible && 'visible'}`}>
             <div className="description-block">

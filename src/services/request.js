@@ -76,7 +76,7 @@ const api = (method, url, data, type, abortToken) => {
 
                         } else if (error.response.status === 403 && error.response.statusText === "Forbidden") {
 
-                        } else {
+                        } else if (error.response.data.message !== 'Product not found') {
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
                             }

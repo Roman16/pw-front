@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import './RegistrationPage.less';
+import '../LoginPage/LoginPage.less';
+
 import RegistrationPageForm from './RegistrationPageForm/RegistrationPageForm';
 import logo from '../../../assets/img/ProfitWhales-logo-white.svg';
 import {history} from "../../../utils/history";
