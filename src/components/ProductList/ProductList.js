@@ -298,7 +298,7 @@ class ProductList extends Component {
                             {products && products.map(item => (
                                 <div
                                     key={item.id}
-                                    className={isSelectedAll || selectedProduct.id === item.id ? 'campaign-item active' : 'campaign-item'}
+                                    className={selectedProduct.id === item.id ? 'campaign-item active' : 'campaign-item'}
                                     onClick={() => this.onSelect(item)}
                                 >
                                     {item.hasEnabledDayparting && <InformationTooltip
