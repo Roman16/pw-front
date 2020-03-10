@@ -59,36 +59,43 @@ const Optimization = () => {
     async function startOptimizationHandler(optimization_strategy, targetAcosValue, netMargin) {
         setProcessing(true);
 
-        try {
-            await productsServices.updateProductById({
-                product_id: selectedAll ? 'all' : productId,
-                status: 'RUNNING',
-                optimization_strategy,
-                ...optimization_strategy === 'ACoS_targeting' && {
-                    target_acos: targetAcosValue
-                }
-            });
+        if (optimization_strategy === 'AchieveTargetACoS' && (!targetAcosValue || targetAcosValue === 0 || targetAcosValue < 0)) {
+            notification.error({
+                title: 'Enter yor target ACoS'
+            })
+        } else {
+            try {
+                await productsServices.updateProductById({
+                    product_id: selectedAll ? 'all' : productId,
+                    status: 'RUNNING',
+                    optimization_strategy,
+                    ...optimization_strategy === 'AchieveTargetACoS' && {
+                        desired_target_acos: targetAcosValue
+                    }
+                });
 
-            setProduct({
-                ...selectedProduct,
-                status: 'RUNNING',
-                optimization_strategy,
-                ...netMargin && {
-                    product_margin: true,
-                    product_margin_value: netMargin,
-                }
-            });
+                setProduct({
+                    ...selectedProduct,
+                    status: 'RUNNING',
+                    optimization_strategy,
+                    ...netMargin && {
+                        product_margin: true,
+                        product_margin_value: netMargin,
+                    }
+                });
 
-            dispatch(productsActions.updateProduct({
-                id: selectedAll ? 'all' : selectedProduct.product_id,
-                status: 'RUNNING',
-                optimization_strategy
-            }));
+                dispatch(productsActions.updateProduct({
+                    id: selectedAll ? 'all' : selectedProduct.product_id,
+                    status: 'RUNNING',
+                    optimization_strategy
+                }));
 
-            notification.start({title: 'Optimization successfully started'})
-        } catch (e) {
-            console.log(e);
+                notification.start({title: 'Optimization successfully started'})
+            } catch (e) {
+                console.log(e);
+            }
         }
+
 
         setProcessing(false);
     }
@@ -97,7 +104,7 @@ const Optimization = () => {
         try {
             await productsServices.updateProductTargetAcos({
                 product_id: selectedAll ? 'all' : productId,
-                targetAcos
+                desired_target_acos: targetAcos
             });
         } catch (e) {
             console.log(e);

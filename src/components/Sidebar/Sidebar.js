@@ -193,9 +193,9 @@ const Sidebar = () => {
                                                     className="automate-link"
                                                     activeClassName="automate-link-active"
                                                     exact
-                                                    to={item.soon && production ? '/' : `/ppc${item.link}`}
+                                                    to={item.soon && (production && user.id !== 714) ? '/' : `/ppc${item.link}`}
                                                     onClick={e => {
-                                                        if (item.soon && production) e.preventDefault()
+                                                        if (item.soon && (production && user.id !== 714)) e.preventDefault()
                                                     }}
                                                 >
                                                     {item.title}
@@ -222,9 +222,9 @@ const Sidebar = () => {
                                                         className="automate-link"
                                                         activeClassName="automate-link-active"
                                                         exact
-                                                        to={(item.soon && production) ? '/' : `/ppc${item.link}`}
+                                                        to={(item.soon && (production && user.id !== 714)) ? '/' : `/ppc${item.link}`}
                                                         onClick={e => {
-                                                            if (item.soon && production) e.preventDefault()
+                                                            if (item.soon && (production && user.id !== 714)) e.preventDefault()
                                                         }}
                                                     >
                                                         {item.title}

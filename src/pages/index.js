@@ -40,9 +40,9 @@ const developer = process.env.REACT_APP_ENV === "developer";
 
 
 const ConnectedAmazonRoute = props => {
-    const {mwsConnected, ppcConnected} = useSelector(state => ({
+    const {mwsConnected, ppcConnected } = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
-        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false
+        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
     }));
 
     if (!mwsConnected) {
@@ -57,8 +57,9 @@ const ConnectedAmazonRoute = props => {
 const AuthorizedUser = (props) => {
     const dispatch = useDispatch();
     const pathname = props.location.pathname;
-    const {lastStatusAction} = useSelector(state => ({
-        lastStatusAction: state.user.lastUserStatusAction
+    const {lastStatusAction, userId} = useSelector(state => ({
+        lastStatusAction: state.user.lastUserStatusAction,
+        userId: state.user.id,
     }));
 
     function getUserStatus() {
@@ -128,7 +129,7 @@ const AuthorizedUser = (props) => {
                             component={Scanner}
                         />
 
-                        {developer && <ConnectedAmazonRoute
+                        {(developer || userId === 714) && <ConnectedAmazonRoute
                             exact
                             path="/ppc/dayparting"
                             component={Dayparting}

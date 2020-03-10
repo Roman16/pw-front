@@ -4,7 +4,7 @@ import {history} from "../../../../utils/history";
 import moment from "moment";
 
 const strategies = {
-    'ACoS_targeting': 'ACoS Targeting',
+    'AchieveTargetACoS': 'ACoS Targeting',
     'LaunchProduct': 'Product Launch',
     'BoostPPCProfit': 'Organic Sales Growth',
     'GrowOverallSales': 'Revenue Growth',

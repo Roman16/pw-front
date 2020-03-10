@@ -23,7 +23,7 @@ const Option = Select.Option;
 const strategies = [
     {
         name: 'ACoS Targeting',
-        key: 'ACoS_targeting',
+        key: 'AchieveTargetACoS',
         img: acosTargetingImage,
         jeffRemark: `I’m hunting this <span>target ACoS</span> for over <br> decades. Let’s get it!`,
         description: `This strategy designed for sellers who know what ACoS they are targeting.
