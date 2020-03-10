@@ -20,13 +20,13 @@ export const productsActions = {
 
 function fetchProducts(paginationParams) {
     return dispatch => {
-        // dispatch({
-        //     type: productsConstants.SET_PRODUCT_LIST,
-        //     payload: {
-        //         result: [],
-        //         fetching: true
-        //     }
-        // });
+        dispatch({
+            type: productsConstants.SET_PRODUCT_LIST,
+            payload: {
+                result: [],
+                fetching: true
+            }
+        });
 
         if (paginationParams.type === 'campaigns') {
             daypartingServices.getCampaigns(paginationParams)
