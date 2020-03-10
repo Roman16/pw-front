@@ -37,15 +37,6 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
                 product_margin_value: value
             });
 
-            dispatch(productsActions.updateProduct({
-                ...product,
-                ...options,
-                product_id: product.id,
-                product_margin: true,
-                product_margin_value: value,
-                status: 'RUNNING'
-            }));
-
             handleOk(value);
         } else {
             setError(true);
