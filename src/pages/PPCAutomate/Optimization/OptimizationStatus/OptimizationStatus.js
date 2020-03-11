@@ -6,9 +6,9 @@ import moment from "moment";
 const strategies = {
     'AchieveTargetACoS': 'ACoS Targeting',
     'LaunchProduct': 'Product Launch',
-    'BoostPPCProfit': 'Organic Sales Growth',
+    'BoostOverallProfit': 'Organic Sales Growth',
     'GrowOverallSales': 'Revenue Growth',
-    'BoostOverallProfit': 'Profitable PPC'
+    'BoostPPCProfit': 'Profitable PPC'
 };
 
 const StatusInfo = ({caption, value = '-----', statusColor = ''}) => (
