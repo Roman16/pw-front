@@ -40,7 +40,7 @@ const developer = process.env.REACT_APP_ENV === "developer";
 
 
 const ConnectedAmazonRoute = props => {
-    const {mwsConnected, ppcConnected } = useSelector(state => ({
+    const {mwsConnected, ppcConnected} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
     }));
@@ -59,7 +59,7 @@ const AuthorizedUser = (props) => {
     const pathname = props.location.pathname;
     const {lastStatusAction, userId} = useSelector(state => ({
         lastStatusAction: state.user.lastUserStatusAction,
-        userId: state.user.id,
+        userId: state.user.user.id,
     }));
 
     function getUserStatus() {
@@ -81,6 +81,7 @@ const AuthorizedUser = (props) => {
             }
         }, 1000 * 60)
     );
+
 
     return (
         <Fragment>
@@ -129,11 +130,14 @@ const AuthorizedUser = (props) => {
                             component={Scanner}
                         />
 
-                        {(developer || userId === 714) && <ConnectedAmazonRoute
-                            exact
-                            path="/ppc/dayparting"
-                            component={Dayparting}
-                        />}
+                        {(developer || userId === 714) ? <ConnectedAmazonRoute
+                                exact
+                                path="/ppc/dayparting"
+                                component={Dayparting}
+                            />
+                            :
+                            <Redirect to={'/ppc/optimization'}/>
+                        }
 
                         <Route exact path="/mws" component={MWS}/>
                         <Route exact path="/ppc" component={PPC}/>
