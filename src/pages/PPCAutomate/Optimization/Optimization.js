@@ -1,6 +1,7 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {Drawer} from "antd";
+import axios from "axios";
 
 import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 import OptimizationStrategy from "./OptimizationStrategy/OptimizationStrategy";
@@ -21,6 +22,9 @@ import "./Optimization.less";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+const CancelToken = axios.CancelToken;
+let source = null;
+
 const Optimization = () => {
     const [selectedProduct, setProduct] = useState({}),
         [infoType, setInfoType] = useState(false),
@@ -40,8 +44,12 @@ const Optimization = () => {
             setProcessing(true);
 
             async function fetchProductDetails() {
+                source && source.cancel();
+
+                source = CancelToken.source();
+
                 try {
-                    const res = await productsServices.getProductDetails(selectedAll ? 'all' : productId);
+                    const res = await productsServices.getProductDetails(selectedAll ? 'all' : productId, source.token);
 
                     setProduct(res);
                     setProcessing(false)
@@ -55,6 +63,12 @@ const Optimization = () => {
         }
 
     }, [productId, selectedAll]);
+
+    useEffect(() => {
+        return(() => {
+            dispatch(productsActions.fetchProductDetails({id: null}))
+        })
+    }, []);
 
     async function startOptimizationHandler(optimization_strategy, targetAcosValue, netMargin) {
         setProcessing(true);

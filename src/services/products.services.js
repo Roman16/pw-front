@@ -27,8 +27,8 @@ function updateProductTargetAcos(acos) {
     return api('post', `${productsUrls.updateSettings}`, acos)
 }
 
-function getProductDetails(id) {
-    return api('get', `${productsUrls.productDetails(id)}`)
+function getProductDetails(id, cancelToken) {
+    return api('get', `${productsUrls.productDetails(id)}`, false, false, cancelToken)
 }
 
 function updateProductById(product) {

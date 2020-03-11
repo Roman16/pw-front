@@ -28,6 +28,9 @@ function fetchProducts(paginationParams) {
             }
         });
 
+        dispatch(fetchProductDetails({id: null}, paginationParams.pathname));
+
+
         if (paginationParams.type === 'campaigns') {
             daypartingServices.getCampaigns(paginationParams)
                 .then(res => {
