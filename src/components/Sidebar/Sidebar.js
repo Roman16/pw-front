@@ -107,6 +107,7 @@ const Sidebar = () => {
         return ('');
     }
 
+
     return (
         <div
             className={`sidebar ${className}`}
@@ -193,9 +194,9 @@ const Sidebar = () => {
                                                     className="automate-link"
                                                     activeClassName="automate-link-active"
                                                     exact
-                                                    to={item.soon && (production && user.id !== 714) ? '/' : `/ppc${item.link}`}
+                                                    to={item.soon && (production && user.user.id !== 714) ? '/' : `/ppc${item.link}`}
                                                     onClick={e => {
-                                                        if (item.soon && (production && user.id !== 714)) e.preventDefault()
+                                                        if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
                                                     }}
                                                 >
                                                     {item.title}
@@ -222,9 +223,9 @@ const Sidebar = () => {
                                                         className="automate-link"
                                                         activeClassName="automate-link-active"
                                                         exact
-                                                        to={(item.soon && (production && user.id !== 714)) ? '/' : `/ppc${item.link}`}
+                                                        to={(item.soon && (production && user.user.id !== 714)) ? '/' : `/ppc${item.link}`}
                                                         onClick={e => {
-                                                            if (item.soon && (production && user.id !== 714)) e.preventDefault()
+                                                            if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
                                                         }}
                                                     >
                                                         {item.title}
