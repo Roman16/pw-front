@@ -32,15 +32,16 @@ const Optimization = () => {
 
     const dispatch = useDispatch();
 
-    const {productId, selectedAll, type} = useSelector(state => ({
+    const {productId, selectedAll, type, productList} = useSelector(state => ({
         productId: state.products.selectedProduct.id,
         type: state.products.selectedProduct.type,
         selectedAll: state.products.selectedAll,
+        productList: state.products.productList,
     }));
 
 
     useEffect(() => {
-        if ((selectedAll || productId) && type === 'product') {
+        if ((selectedAll || productId) && type === 'product' && productList.length > 0) {
             setProcessing(true);
 
             async function fetchProductDetails() {
@@ -65,9 +66,12 @@ const Optimization = () => {
     }, [productId, selectedAll]);
 
     useEffect(() => {
-        return(() => {
-            dispatch(productsActions.fetchProductDetails({id: null}))
-        })
+        window.onbeforeunload = function() {
+            dispatch(productsActions.fetchProductDetails({id: null}));
+
+            this.onUnload();
+            return "";
+        }.bind(this);
     }, []);
 
     async function startOptimizationHandler(optimization_strategy, targetAcosValue, netMargin) {
