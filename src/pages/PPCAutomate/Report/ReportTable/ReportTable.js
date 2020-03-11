@@ -86,18 +86,20 @@ class ReportTable extends Component {
 
         source = CancelToken.source();
 
-        this.props.getReports({
-            id: selectedAll ? "all" : selectedProductId,
-            dataType: activeTab,
-            dataSubType: activeSubTab,
-            size: 10,
-            startDate,
-            endDate,
-            page: selectedPage ? selectedPage : page,
-            pageSize,
-            filteredColumns,
-            sorterColumn
-        }, source.token);
+        if (selectedAll || selectedProductId) {
+            this.props.getReports({
+                id: selectedAll ? "all" : selectedProductId,
+                dataType: activeTab,
+                dataSubType: activeSubTab,
+                size: 10,
+                startDate,
+                endDate,
+                page: selectedPage ? selectedPage : page,
+                pageSize,
+                filteredColumns,
+                sorterColumn
+            }, source.token);
+        }
     };
 
     handlePaginationChange = ({page, pageSize}) => {
