@@ -1,8 +1,9 @@
-import {userConstants} from '../constans/actions.type';
+import {productsConstants, reportsConstants, userConstants} from '../constans/actions.type';
 import {history} from '../utils/history';
 import {userService} from '../services/user.services';
 import {notification} from "../components/Notification";
 import moment from "moment";
+import {store} from "../store/store";
 
 export const userActions = {
     login,
@@ -25,8 +26,6 @@ function login(user) {
     return dispatch => {
         userService.login(user)
             .then(res => {
-                dispatch(setInformation(res));
-
                 localStorage.setItem('token', res.access_token);
 
                 dispatch(getUserInfo());
@@ -107,6 +106,29 @@ function unsetAccount(type) {
 function getUserInfo() {
     return dispatch => {
         userService.getUserInfo().then(res => {
+            const user = store.getState().user.user || null;
+
+            if(user && (user.id !== res.user.id)) {
+                dispatch({
+                    type: productsConstants.SET_PRODUCT_LIST,
+                    payload: {
+                        result: [],
+                        fetching: false
+                    }
+                });
+
+                dispatch({
+                    type: reportsConstants.SET_REPORTS_LIST,
+                    payload: {
+                        data: [],
+                        total_size: 0,
+                        today_changes: "0",
+                        counts: [],
+                        counts_with_new: [],
+                    }
+                });
+            }
+
             dispatch(setInformation(res));
             window.Intercom("boot", {
                 app_id: "hkyfju3m",

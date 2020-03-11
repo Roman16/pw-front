@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay, faStop} from "@fortawesome/free-solid-svg-icons";
 
-import acosTargetingImage from '../../../../assets/img/optimization/acos-targeting.svg';
+import acosTargetingImage from '../../../../assets/img/optimization/acos-targeting.png';
 import productLaunchImage from '../../../../assets/img/optimization/product-launch.png';
 import organicSalesGrowthImage from '../../../../assets/img/optimization/organic-sales-growth.png';
 import revenueGrowthImage from '../../../../assets/img/optimization/revenue-growth.png';
@@ -26,9 +26,7 @@ const strategies = [
         key: 'AchieveTargetACoS',
         img: acosTargetingImage,
         jeffRemark: `I’m hunting this <span>target ACoS</span> for over <br> decades. Let’s get it!`,
-        description: `This strategy designed for sellers who know what ACoS they are targeting.
-Make sure you've correctly calculated your Target ACoS. <br/>
-Press start and see how the algorithm is making changes to get the results you want.`,
+        description: `This strategy designed for sellers who know what ACoS they are targeting.Make sure you've correctly calculated your Target ACoS. <br/>Press start and see how the algorithm is making changes to get the results you want.`,
         descriptionTitle: 'Get the desired ACoS!',
         value: {
             Spend: "Mid",
@@ -53,7 +51,7 @@ Press start and see how the algorithm is making changes to get the results you w
     },
     {
         name: 'Organic Sales Growth',
-        key: 'BoostPPCProfit',
+        key: 'BoostOverallProfit',
         img: organicSalesGrowthImage,
         jeffRemark: `All I care about is <span>organic sales.</span> I want to break-even  <br> on PPC so to boost my keywords position.`,
         description: `This strategy designed for sellers who want to keep their organic ranking positions with PPC efforts. So they can make more profit from Organic Sales. It will achieve your break-even ACoS to keep higher sales from ads that will lead to growing your organic sales.`,
@@ -81,7 +79,7 @@ Press start and see how the algorithm is making changes to get the results you w
     },
     {
         name: 'Profitable PPC',
-        key: 'BoostOverallProfit',
+        key: 'BoostPPCProfit',
         img: profitablePpcImage,
         jeffRemark: `I don't care about all these metrics. I just want <span>low <br> ACoS</span> so I can share it on my Facebook page.`,
         description: `This strategy designed for sellers who want to increase their PPC profit. The Software will optimize all the bleeding and unprofitable keywords with proper bid management to get the best converting ad position possible.`,

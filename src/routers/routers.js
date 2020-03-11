@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, {Suspense } from 'react';
 import {Router, Route, Switch, Redirect} from 'react-router-dom';
 import {history} from '../utils/history';
 import RouteLoader from "../components/RouteLoader/RouteLoader";

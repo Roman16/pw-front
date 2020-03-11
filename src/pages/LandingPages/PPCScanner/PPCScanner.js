@@ -396,7 +396,7 @@ const PPCScanner = () => {
                     <h3>What will you get</h3>
 
                     <div className="row">
-                        <div className="image">
+                        <div className="image will-get">
                             <img src={willGetImage} alt=""/>
                         </div>
 
