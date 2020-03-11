@@ -13,7 +13,7 @@ import InformationTooltip from "../../../components/Tooltip/Tooltip";
 const SubscriptionPlan = ({
                               onOpenAccountWindow,
                               onOpenReactivateWindow,
-                              product,
+                              subscribedProduct,
                               onSubscribe,
                               stripeId,
                               applyCoupon,
@@ -28,8 +28,14 @@ const SubscriptionPlan = ({
 
     const [disableButton, changeButton] = useState(false);
     const [coupon, setCoupon] = useState('');
+    const [product, setProduct] = useState({});
 
     let timeout = null;
+
+    useEffect(() => {
+        console.log(subscribedProduct);
+        setProduct({...subscribedProduct});
+    }, [subscribedProduct]);
 
     function handleSubscribe() {
         onSubscribe({coupon, ...product});

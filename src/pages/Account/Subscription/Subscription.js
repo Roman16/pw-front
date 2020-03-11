@@ -173,7 +173,7 @@ const Subscription = () => {
                     key={product.productId}
                     onOpenAccountWindow={handleOpenAccountWindow}
                     onOpenReactivateWindow={handleOpenReactivateWindow}
-                    product={{...subscriptions[product.productId], ...product}}
+                    subscribedProduct={{...subscriptions[product.productId], ...product}}
                     onSubscribe={handleSubscribe}
                     reloadData={handleUpdateSubscriptionStatus}
                     stripeId={stripeId}
