@@ -47,7 +47,6 @@
 
     .country-nav {
       .country-active {
-        height: 5.6em;
         display: grid;
         padding: 1.2em 0 1.2em 1.8em;
         margin: 0 0 2em 4px;
@@ -78,8 +77,12 @@
           font-size: 0.8rem; // 11.2px
           color: @sidebar-text-color;
           line-height: 1.3333em;
-          margin-top: 3px;
+          margin-top: 2px;
           transform-origin: left;
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+            margin-top: 1px;
+          }
         }
       }
 
