@@ -34,6 +34,8 @@ const subTables = {
     "new-negative-pats": "created-negative-pat-from-cst-high-acos"
 };
 
+const device = window.devicePixelRatio === 2;
+
 class ReportTable extends Component {
     state = {
         startDate: "",
@@ -364,35 +366,35 @@ class ReportTable extends Component {
                         prevArrow={<button>&#8249;</button>}
                         responsive={[
                             {
-                                breakpoint: 2000,
+                                breakpoint: device ? 2400 : 2000,
                                 settings: {
                                     slidesToShow: 6,
                                     slidesToScroll: 1,
                                 }
                             },
                             {
-                                breakpoint: 1700,
+                                breakpoint: device ? 1400 : 1700,
                                 settings: {
                                     slidesToShow: 5,
                                     slidesToScroll: 1,
                                 }
                             },
                             {
-                                breakpoint: 1400,
+                                breakpoint: device ? 1250 : 1600,
                                 settings: {
                                     slidesToShow: 4,
                                     slidesToScroll: 1
                                 }
                             },
                             {
-                                breakpoint: 1300,
+                                breakpoint: device ? 1100 : 1350,
                                 settings: {
                                     slidesToShow: 3,
                                     slidesToScroll: 1
                                 }
                             },
                             {
-                                breakpoint: 500,
+                                breakpoint: device ? 2400 : 1150,
                                 settings: {
                                     slidesToShow: 2,
                                     slidesToScroll: 1
