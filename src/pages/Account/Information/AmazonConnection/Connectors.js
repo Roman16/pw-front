@@ -15,7 +15,7 @@ const Connectors = ({amazonTokens}) => {
 
                 <div className="column">
                     <div className="title">
-                        Amazon Seller Central Connection {amazonTokens && `- SELLER ID: ${amazonTokens.amazon_mws.seller_id}`}
+                        Amazon Seller Central Connection {amazonTokens && `- SELLER ID: ${amazonTokens.amazon_mws.seller_id || 'not connected'}`}
                     </div>
 
                     <a
