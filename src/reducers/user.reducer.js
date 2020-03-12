@@ -59,13 +59,13 @@ export function user(state = initialState, action) {
         case userConstants.UNSET_AMAZON_PPC:
             return {
                 ...state,
-                account_links: {
+                account_links: [{
                     ...state.account_links[0],
                     amazon_ppc: {
                         ...state.account_links[0].amazon_ppc,
                         is_connected: false
                     }
-                }
+                }]
             };
 
         default:
