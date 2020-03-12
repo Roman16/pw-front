@@ -10,6 +10,7 @@ import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black
 import downWhiteIcon from '../../../../assets/img/icons/metric-arrows/down-white-arrow.svg';
 import {round} from "../../../../utils/round";
 import {numberMask} from "../../../../utils/numberMask";
+import { SVG , SVGSource} from "../../../../utils/icons";
 
 const RenderMetricChanges = ({value, name}) => {
     if (value != null) {
@@ -132,8 +133,8 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
                 }
 
                 <div className="close" onClick={handleRemoveItem}>
-                    <img src={closeIcon} alt=""/>
-                    {/*<SVG id='checked'/>*/}
+                    {/*<img src={closeIcon} alt=""/>*/}
+                    <SVG id='close'/>
                 </div>
             </div>
 
