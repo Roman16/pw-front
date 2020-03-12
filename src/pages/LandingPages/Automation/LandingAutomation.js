@@ -29,7 +29,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {Modal} from "antd";
-import favicon from '../../../assets/img/icons/favicon.ico';
 import {Link} from "react-router-dom";
 
 
@@ -1097,20 +1096,6 @@ const LandingAutomation = () => {
                     </div>
                 </div>
             </section>
-
-            {/*<section className='last-section'>*/}
-            {/*    <div className="container">*/}
-            {/*        <h2>Go for Profit, be a Whale</h2>*/}
-
-            {/*        <div className="image">*/}
-            {/*            <img src={jeffChart} alt=""/>*/}
-            {/*        </div>*/}
-
-            {/*        <button className='btn default' onClick={goToRegistrationPage}>*/}
-            {/*            Try It For Free*/}
-            {/*        </button>*/}
-            {/*    </div>*/}
-            {/*</section>*/}
 
             <section className='secure'>
                 <div className="container">

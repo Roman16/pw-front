@@ -148,7 +148,6 @@ const AuthorizedUser = (props) => {
                             :
                             <Redirect to={'/ppc/optimization'}/>
                         }
-                        {/*---------------*/}
                     </Switch>
 
                 </div>

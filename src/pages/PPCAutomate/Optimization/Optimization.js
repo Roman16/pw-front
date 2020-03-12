@@ -1,6 +1,7 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {Drawer} from "antd";
+import axios from "axios";
 
 import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 import OptimizationStrategy from "./OptimizationStrategy/OptimizationStrategy";
@@ -21,6 +22,9 @@ import "./Optimization.less";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+const CancelToken = axios.CancelToken;
+let source = null;
+
 const Optimization = () => {
     const [selectedProduct, setProduct] = useState({}),
         [infoType, setInfoType] = useState(false),
@@ -28,20 +32,25 @@ const Optimization = () => {
 
     const dispatch = useDispatch();
 
-    const {productId, selectedAll, type} = useSelector(state => ({
+    const {productId, selectedAll, type, productList} = useSelector(state => ({
         productId: state.products.selectedProduct.id,
         type: state.products.selectedProduct.type,
         selectedAll: state.products.selectedAll,
+        productList: state.products.productList,
     }));
 
 
     useEffect(() => {
-        if ((selectedAll || productId) && type === 'product') {
+        if ((selectedAll || productId) && type === 'product' && productList.length > 0) {
             setProcessing(true);
 
             async function fetchProductDetails() {
+                source && source.cancel();
+
+                source = CancelToken.source();
+
                 try {
-                    const res = await productsServices.getProductDetails(selectedAll ? 'all' : productId);
+                    const res = await productsServices.getProductDetails(selectedAll ? 'all' : productId, source.token);
 
                     setProduct(res);
                     setProcessing(false)

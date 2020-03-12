@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay, faStop} from "@fortawesome/free-solid-svg-icons";
 
-import acosTargetingImage from '../../../../assets/img/optimization/acos-targeting.svg';
+import acosTargetingImage from '../../../../assets/img/optimization/acos-targeting.png';
 import productLaunchImage from '../../../../assets/img/optimization/product-launch.png';
 import organicSalesGrowthImage from '../../../../assets/img/optimization/organic-sales-growth.png';
 import revenueGrowthImage from '../../../../assets/img/optimization/revenue-growth.png';

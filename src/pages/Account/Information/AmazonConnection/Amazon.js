@@ -169,9 +169,9 @@ const Amazon = ({amazonTokens}) => {
                         <a className="login-amazon-btn" href={redirectLink}>
                             <img className="login-amazon-img" src={amazon} alt="LWA-GOld"/>
                         </a>
-                        <button className="connect-another-btn" type="button">
-                            Need another Storefront?
-                        </button>
+                        {/*<button className="connect-another-btn" type="button">*/}
+                        {/*    Need another Storefront?*/}
+                        {/*</button>*/}
                     </div>
                 </div>
                 }
