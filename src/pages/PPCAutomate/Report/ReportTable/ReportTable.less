@@ -57,6 +57,7 @@
 div.ReportTable {
   flex: 1;
   width: 100%;
+  min-width: 570px;
   //display: flex;
   //flex-direction: column;
   margin: 0;
@@ -287,17 +288,17 @@ div.ReportTable {
 
 
   .report-table {
+    min-width: min-content;
     font-size: 1rem; // 14px
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: nowrap;
     color: @second-default-dark;
     margin: 0 0 0.8571429em 0;
 
 
     @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1629px), only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1629px), only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1629px), only screen and (max-device-pixel-ratio: 1) and (max-width: 1629px) {
-      flex-flow: wrap;
-
       & > div.changes-calendar-download {
         order: 2;
         margin: 1em 0 0 auto;
