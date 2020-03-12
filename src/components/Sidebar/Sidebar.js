@@ -155,21 +155,21 @@ const Sidebar = () => {
                                 </NavLink>
                             </li>
 
-                            <li className="top-nav-item">
-                                <NavLink
-                                    className="top-nav-link"
-                                    activeClassName="top-nav-link-active"
-                                    exact
-                                    to="/"
-                                    disabled
-                                >
-                                    <ItemIcon icon="analytics"/>
-                                    <span className="top-span">
-                                        Analytics
-                                        <img className="soon" src={soon} alt="soon"/>
-                                    </span>
-                                </NavLink>
-                            </li>
+                            {/*<li className="top-nav-item">*/}
+                            {/*    <NavLink*/}
+                            {/*        className="top-nav-link"*/}
+                            {/*        activeClassName="top-nav-link-active"*/}
+                            {/*        exact*/}
+                            {/*        to="/"*/}
+                            {/*        disabled*/}
+                            {/*    >*/}
+                            {/*        <ItemIcon icon="analytics"/>*/}
+                            {/*        <span className="top-span">*/}
+                            {/*            Analytics*/}
+                            {/*            <img className="soon" src={soon} alt="soon"/>*/}
+                            {/*        </span>*/}
+                            {/*    </NavLink>*/}
+                            {/*</li>*/}
 
                             <li className="top-nav-item ppc-automate-link">
                                     <span onClick={toggleAutomate}>

@@ -133,8 +133,8 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
                 }
 
                 <div className="close" onClick={handleRemoveItem}>
-                    {/*<img src={closeIcon} alt=""/>*/}
-                    <SVG id='close'/>
+                    <img src={closeIcon} alt=""/>
+                    {/*<SVG id='close'/>*/}
                 </div>
             </div>
 

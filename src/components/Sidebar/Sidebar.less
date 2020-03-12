@@ -79,6 +79,10 @@
           line-height: 1.3333em;
           margin-top: 2px;
           transform-origin: left;
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+            margin-top: 1px;
+          }
         }
       }
 
@@ -525,10 +529,10 @@ a:focus {
 /*
 * for delete
 */
-.top-nav-item:nth-child(-n + 2),
-a.top-nav-link {
-  pointer-events: none;
-}
+//.top-nav-item:nth-child(-n + 2),
+//a.top-nav-link {
+//  pointer-events: none;
+//}
 
 .top-nav {
   span {
