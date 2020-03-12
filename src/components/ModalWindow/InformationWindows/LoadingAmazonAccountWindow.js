@@ -3,7 +3,6 @@ import {useSelector, useDispatch} from "react-redux";
 import ModalWindow from "../ModalWindow";
 import whales from '../../../assets/img/whales-loading-window.svg';
 import facebookIcon from '../../../assets/img/icons/facebook-icon-grey.svg';
-import messengerIcon from '../../../assets/img/icons/messenger-icon-grey.svg';
 import emailIcon from '../../../assets/img/icons/email-icon-grey.svg';
 import {userActions} from "../../../actions/user.actions";
 import {productsActions} from "../../../actions/products.actions";

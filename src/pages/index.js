@@ -130,15 +130,6 @@ const AuthorizedUser = (props) => {
                             component={Scanner}
                         />
 
-                        {(developer || userId === 714) ? <ConnectedAmazonRoute
-                                exact
-                                path="/ppc/dayparting"
-                                component={Dayparting}
-                            />
-                            :
-                            <Redirect to={'/ppc/optimization'}/>
-                        }
-
                         <Route exact path="/mws" component={MWS}/>
                         <Route exact path="/ppc" component={PPC}/>
 
@@ -148,7 +139,15 @@ const AuthorizedUser = (props) => {
                         <Route exact path="/account-settings" component={Information}/>
                         <Route exact path="/account-billing" component={Billing}/>
                         <Route exact path="/account-subscription" component={Subscription}/>
-                        {/*---------------*/}
+
+                        {(developer || userId === 714) ? <ConnectedAmazonRoute
+                                exact
+                                path="/ppc/dayparting"
+                                component={Dayparting}
+                            />
+                            :
+                            <Redirect to={'/ppc/optimization'}/>
+                        }
                     </Switch>
 
                 </div>

@@ -15,6 +15,9 @@ const Seller = () => {
         mwsConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.is_connected
     }));
 
+    console.log(ppcConnected);
+    console.log(mwsConnected);
+
     return (
         <Fragment>
             <div className="seller-box">
