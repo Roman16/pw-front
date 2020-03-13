@@ -94,7 +94,7 @@ const OutBudget = ({date}) => {
 
     }, [campaignId, date]);
 
-    const StatisticItem = ({value, index, outBudget, accountAutBudget = false}) => {
+    const StatisticItem = ({value, index, outBudget}) => {
         let color;
 
         colorList.forEach(item => {
@@ -107,13 +107,7 @@ const OutBudget = ({date}) => {
             }
         });
 
-        if (accountAutBudget) {
-            return (
-                <div className="account-out-budget-item">
-                    <div className='statistic-information' style={{background: color, opacity: color ? 1 : 0}}/>
-                </div>
-            )
-        } else if (outBudget) {
+      if (outBudget) {
             return (
                 <div className="out-budget-item">
                     <div className='statistic-information' style={{background: color, opacity: color ? 1 : 0}}/>
@@ -171,10 +165,6 @@ const OutBudget = ({date}) => {
                         <div className="campaign">
                             <div/>
                             Out of Budget
-                        </div>
-                        <div className="account">
-                            <div/>
-                            Account Out of Budget
                         </div>
                     </div>
 

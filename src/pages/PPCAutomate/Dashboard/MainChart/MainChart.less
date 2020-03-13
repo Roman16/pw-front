@@ -66,7 +66,6 @@
     }
 
 
-
     .line-fill {
       display: flex;
       grid-area: lineFill;
@@ -112,23 +111,16 @@
   @media (max-width: 1200px) {
     & {
       .chart-header {
-        //display: grid;
-        //grid-gap: 10px;
-        //grid-template-rows: 20px;
-        //grid-template-areas: "pairName pairName pairName pairName" "weekSwitchBlock lineFill dailySwitchBlock dailyIcon" "chartLegend chartLegend datePiker datePiker";
-        //background-color: #fff;
-        //color: #444;
+        display: grid;
+        grid-template-areas: "pairName pairName pairName pairName"
+        "weekSwitchBlock lineFill dailySwitchBlock dailyIcon"
+        "chartLegend chartLegend chartLegend chartLegend"
+        "datePiker datePiker datePiker datePiker";
 
-        .pair-name {
-          text-align: center;
-        }
 
-        .chart-legend {
-          margin: 0;
-        }
 
         .DatePicker {
-          margin: 0 0 0 auto;
+          //margin: 0 0 0 auto;
         }
       }
     }

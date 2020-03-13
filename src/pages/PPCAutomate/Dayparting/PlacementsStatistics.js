@@ -157,7 +157,7 @@ const CustomizedAxisTick = ({x, y, payload, lastIndex}) => {
     }
 };
 
-const MetricValue = ({metric, type}) => {
+const MetricValue = ({metric = {}, type}) => {
     if (metric.diff) {
         return (
             <div className="value">
