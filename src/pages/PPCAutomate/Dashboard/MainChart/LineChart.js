@@ -65,121 +65,123 @@ const Chart = ({
     // });
 
     return (
-        <ResponsiveContainer height='80%' width='100%'>
-            <LineChart
-                data={Array.isArray(data) ? data : []}
-                margin={{top: 10, bottom: 10}}
-            >
-                <CartesianGrid
-                    vertical={false}
-                    stroke="#DBDCE2"
-                />
+        <div className='main-chart-container'>
+            <ResponsiveContainer height='100%' width='100%'>
+                <LineChart
+                    data={Array.isArray(data) ? data : []}
+                    margin={{top: 10, bottom: 10}}
+                >
+                    <CartesianGrid
+                        vertical={false}
+                        stroke="#DBDCE2"
+                    />
 
-                {/*<Customized component={(props) => console.log(props)} />*/}
+                    {/*<Customized component={(props) => console.log(props)} />*/}
 
-                <XAxis
-                    dataKey="date"
-                    axisLine={false}
-                    // interval={0}
-                    // angle={50}
-                    // dx={15}
-                    // dy={2}
+                    <XAxis
+                        dataKey="date"
+                        axisLine={false}
+                        // interval={0}
+                        // angle={50}
+                        // dx={15}
+                        // dy={2}
 
-                    tickFormatter={(date) => moment(date).format('MMM DD')}
-                />
+                        tickFormatter={(date) => moment(date).format('MMM DD')}
+                    />
 
-                <YAxis
-                    yAxisId="left"
-                    axisLine={false}
-                    stroke="#82ca9d"
-                />
+                    <YAxis
+                        yAxisId="left"
+                        axisLine={false}
+                        stroke="#82ca9d"
+                    />
 
-                <YAxis
-                    yAxisId="right"
-                    orientation="right"
-                    stroke="#8884d8"
-                    axisLine={false}
-                />
+                    <YAxis
+                        yAxisId="right"
+                        orientation="right"
+                        stroke="#8884d8"
+                        axisLine={false}
+                    />
 
-                <Tooltip
-                    isAnimationActive={false}
-                    content={
-                        <ChartTooltip
-                            activeMetrics={activeMetrics}
-                            showWeekChart={showWeekChart}
-                            showDailyChart={showDailyChart}
-                        />
-                    }/>
+                    <Tooltip
+                        isAnimationActive={false}
+                        content={
+                            <ChartTooltip
+                                activeMetrics={activeMetrics}
+                                showWeekChart={showWeekChart}
+                                showDailyChart={showDailyChart}
+                            />
+                        }/>
 
-                {(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line
-                    yAxisId="left"
-                    type="monotone"
-                    dataKey="seven_days_first_metric_value"
-                    stroke="#82ca9d"
-                    strokeWidth={3}
-                    dot={false}
-                    // isAnimationActive={false}
-                />}
+                    {(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line
+                        yAxisId="left"
+                        type="monotone"
+                        dataKey="seven_days_first_metric_value"
+                        stroke="#82ca9d"
+                        strokeWidth={3}
+                        dot={false}
+                        // isAnimationActive={false}
+                    />}
 
-                {(activeMetrics && activeMetrics[0].key && showDailyChart) && <Line
-                    yAxisId='left'
-                    type="linear"
-                    strokeOpacity={0.8}
-                    dataKey="daily_first_metric_value"
-                    stroke="#8FD39D"
-                    strokeWidth={2}
-                    activeDot={{r: 5}}
-                    dot={{r: 3}}
-                    // isAnimationActive={false}
-                />}
+                    {(activeMetrics && activeMetrics[0].key && showDailyChart) && <Line
+                        yAxisId='left'
+                        type="linear"
+                        strokeOpacity={0.8}
+                        dataKey="daily_first_metric_value"
+                        stroke="#8FD39D"
+                        strokeWidth={2}
+                        activeDot={{r: 5}}
+                        dot={{r: 3}}
+                        // isAnimationActive={false}
+                    />}
 
-                {/*{(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line*/}
-                {/*    yAxisId="left"*/}
-                {/*    type="monotone"*/}
-                {/*    dataKey="week_first_metric_shadow"*/}
-                {/*    strokeOpacity={0.4}*/}
-                {/*    stroke="#8FD39D"*/}
-                {/*    strokeWidth={5}*/}
-                {/*    dot={false}*/}
-                {/*    activeDot={{r: 0}}*/}
-                {/*/>}*/}
+                    {/*{(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line*/}
+                    {/*    yAxisId="left"*/}
+                    {/*    type="monotone"*/}
+                    {/*    dataKey="week_first_metric_shadow"*/}
+                    {/*    strokeOpacity={0.4}*/}
+                    {/*    stroke="#8FD39D"*/}
+                    {/*    strokeWidth={5}*/}
+                    {/*    dot={false}*/}
+                    {/*    activeDot={{r: 0}}*/}
+                    {/*/>}*/}
 
 
-                {(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line
-                    yAxisId="right"
-                    type="monotone"
-                    dataKey="seven_days_second_metric_value"
-                    stroke="#8884d8"
-                    strokeWidth={3}
-                    dot={false}
-                    // isAnimationActive={false}
-                />}
+                    {(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line
+                        yAxisId="right"
+                        type="monotone"
+                        dataKey="seven_days_second_metric_value"
+                        stroke="#8884d8"
+                        strokeWidth={3}
+                        dot={false}
+                        // isAnimationActive={false}
+                    />}
 
-                {(activeMetrics && activeMetrics[1].key && showDailyChart) && <Line
-                    yAxisId='right'
-                    type="linear"
-                    strokeOpacity={0.5}
-                    dataKey="daily_second_metric_value"
-                    stroke="#6D6DF6"
-                    strokeWidth={2}
-                    activeDot={{r: 5}}
-                    dot={{r: 3}}
-                    // isAnimationActive={false}
-                />}
+                    {(activeMetrics && activeMetrics[1].key && showDailyChart) && <Line
+                        yAxisId='right'
+                        type="linear"
+                        strokeOpacity={0.5}
+                        dataKey="daily_second_metric_value"
+                        stroke="#6D6DF6"
+                        strokeWidth={2}
+                        activeDot={{r: 5}}
+                        dot={{r: 3}}
+                        // isAnimationActive={false}
+                    />}
 
-                {/*{(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line*/}
-                {/*    yAxisId='right'*/}
-                {/*    type="monotone"*/}
-                {/*    strokeOpacity={0.4}*/}
-                {/*    dataKey="week_second_metric_shadow"*/}
-                {/*    strokeWidth={5}*/}
-                {/*    stroke="#6D6DF6"*/}
-                {/*    dot={false}*/}
-                {/*    activeDot={{r: 0}}*/}
-                {/*/>}*/}
+                    {/*{(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line*/}
+                    {/*    yAxisId='right'*/}
+                    {/*    type="monotone"*/}
+                    {/*    strokeOpacity={0.4}*/}
+                    {/*    dataKey="week_second_metric_shadow"*/}
+                    {/*    strokeWidth={5}*/}
+                    {/*    stroke="#6D6DF6"*/}
+                    {/*    dot={false}*/}
+                    {/*    activeDot={{r: 0}}*/}
+                    {/*/>}*/}
 
-            </LineChart>
-        </ResponsiveContainer>
+                </LineChart>
+            </ResponsiveContainer>
+        </div>
     );
 };
 

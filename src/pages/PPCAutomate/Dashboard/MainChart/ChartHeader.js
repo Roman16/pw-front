@@ -14,23 +14,26 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
                     checked={showWeekChart}
                     onChange={onChangeSwitch('week')}
                 />
-                7-day average
+
+                <span>7-day average</span>
+
+                <div className='line-fill'>
+                    <img src={greenLineIcon} alt="" className="green-line"/>
+                    <img src={violetLineIcon} alt="" className="violet-line"/>
+                </div>
             </div>
 
-            <div className='line-fill'>
-                <img src={greenLineIcon} alt="" className="green-line"/>
-                <img src={violetLineIcon} alt="" className="violet-line"/>
-            </div>
 
             <div className='switch-block daily-switch'>
                 <Switch
                     checked={showDailyChart}
                     onChange={onChangeSwitch('daily')}
                 />
-                Daily
+                <span>Daily</span>
+
+                <img src={dailyLineIcon} alt="" className='daily-icon'/>
             </div>
 
-            <img src={dailyLineIcon} alt="" className='daily-icon'/>
 
             <div className='chart-legend'>
                 {firstActiveMetricTitle && <div className="first-line">
