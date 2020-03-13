@@ -12,7 +12,6 @@ import {useSelector, useDispatch} from "react-redux";
 import axios from "axios";
 import {numberMask} from "../../../../utils/numberMask";
 import {productsActions} from "../../../../actions/products.actions";
-import {notification} from "../../../../components/Notification";
 import successImage from '../../../../assets/img/landing-contact-us/checked.svg';
 
 const CancelToken = axios.CancelToken;
@@ -50,7 +49,6 @@ const OutBudget = ({date}) => {
         setProcessing(true);
         try {
             await daypartingServices.setCampaignBudget({campaignId, data: {'value_in_usd': data.value}});
-            // notification.success({title: 'Saved'});
             setStatus(true);
 
             dispatch(productsActions.updateCampaignBudget({
@@ -96,7 +94,7 @@ const OutBudget = ({date}) => {
 
     }, [campaignId, date]);
 
-    const StatisticItem = ({value, index, outBudget}) => {
+    const StatisticItem = ({value, index, outBudget, accountAutBudget = false}) => {
         let color;
 
         colorList.forEach(item => {
@@ -109,7 +107,13 @@ const OutBudget = ({date}) => {
             }
         });
 
-        if (outBudget) {
+        if (accountAutBudget) {
+            return (
+                <div className="account-out-budget-item">
+                    <div className='statistic-information' style={{background: color, opacity: color ? 1 : 0}}/>
+                </div>
+            )
+        } else if (outBudget) {
             return (
                 <div className="out-budget-item">
                     <div className='statistic-information' style={{background: color, opacity: color ? 1 : 0}}/>
@@ -164,8 +168,14 @@ const OutBudget = ({date}) => {
                     </h2>
 
                     <div className='out-of-budget'>
-                        <div/>
-                        Out of Budget
+                        <div className="campaign">
+                            <div/>
+                            Out of Budget
+                        </div>
+                        <div className="account">
+                            <div/>
+                            Account Out of Budget
+                        </div>
                     </div>
 
                     <button

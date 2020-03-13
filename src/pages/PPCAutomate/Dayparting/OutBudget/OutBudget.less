@@ -12,17 +12,33 @@
 
     .out-of-budget {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       font-size: 0.8571428571428571rem;
       color: #343C5A;
       margin: 0 30px 0 auto;
 
-      div {
-        width: 16px;
-        height: 3px;
-        background: #EC7F5C;
-        border-radius: 20px;
-        margin: 0 10px 0 0;
+      & > div {
+        display: flex;
+        align-items: center;
+
+        div {
+          width: 16px;
+          height: 3px;
+          border-radius: 20px;
+          margin: 0 10px 1px 0;
+        }
+
+        &.campaign {
+          div {
+            background: #EC7F5C;
+          }
+        }
+
+        &.account {
+          div {
+            background: #FBB13C;
+          }
+        }
       }
     }
 
@@ -176,6 +192,28 @@
             .out-of {
               text-transform: initial;
               color: #EC7F5C;
+            }
+          }
+        }
+
+        .account-out-budget-item {
+          width: 1.4285714285714286rem;
+          height: 1.4285714285714286rem;
+          background: #FBB13C;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+
+          .statistic-information {
+            width: 14px;
+            height: 14px;
+            opacity: 0;
+
+            @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+              width: 11px;
+              height: 11px;
             }
           }
         }
