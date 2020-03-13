@@ -8,6 +8,16 @@ import moment from "moment";
 import {round} from "../../../../utils/round";
 import {numberMask} from "../../../../utils/numberMask";
 
+const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+];
+
 
 const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payload}) => {
     const getChartValue = (key, metric) => {
@@ -27,10 +37,11 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
     };
 
     if (payload) {
+        console.log(moment(label).weekday());
         return (
             <div className='custom-line-chart-tooltip'>
                 <div className='label'>
-                    <div className='date title'>{moment(label).format('DD.MM.YY')}</div>
+                    <div className='date title'>{days[moment(label).weekday()] + ', ' + moment(label).format('DD MMM YY')}</div>
 
                     {activeMetrics[0].key && <div className='name'>
                         {activeMetrics[0].title}
@@ -56,7 +67,7 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                 </div>}
 
                 {showDailyChart && <div className='daily-value'>
-                    <div className='daily-title title'>daily</div>
+                    <div className='daily-title title'>Daily</div>
 
                     {activeMetrics[0].key && <div className="daily-value">
                         <img src={greenDailyIcon} alt=""/>

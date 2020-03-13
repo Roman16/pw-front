@@ -164,6 +164,35 @@
 
   .ant-modal-footer {
     padding-bottom: 20px;
+
+    @media (max-width: 600px) {
+      padding-left: 50px;
+      padding-right: 50px;
+
+      div {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+          margin: 0;
+        }
+      }
+    }
+
+    @media (max-width: 500px) {
+      padding-left: 30px;
+      padding-right: 30px;
+
+      div {
+        button {
+          width: 100px;
+
+          &:first-child {
+            margin: 0 10px 0 0;
+          }
+        }
+      }
+    }
   }
 
   @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
