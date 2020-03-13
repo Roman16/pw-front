@@ -140,14 +140,7 @@ const AuthorizedUser = (props) => {
                         <Route exact path="/account-billing" component={Billing}/>
                         <Route exact path="/account-subscription" component={Subscription}/>
 
-                        {(developer || userId === 714) ? <ConnectedAmazonRoute
-                                exact
-                                path="/ppc/dayparting"
-                                component={Dayparting}
-                            />
-                            :
-                            <Redirect to={'/ppc/optimization'}/>
-                        }
+                       <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
                     </Switch>
 
                 </div>

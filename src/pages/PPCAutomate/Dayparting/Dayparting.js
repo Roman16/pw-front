@@ -13,8 +13,12 @@ import moment from "moment";
 import tz from 'moment-timezone';
 import SubscriptionNotificationWindow
     from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
+import {useSelector} from "react-redux";
+import {Redirect} from 'react-router-dom';
 
 const Option = Select.Option;
+
+const developer = process.env.REACT_APP_ENV === "developer";
 
 
 // eslint-disable-next-line no-unused-vars
@@ -27,6 +31,11 @@ const Dayparting = () => {
         })
     });
 
+    const {userId} = useSelector(state => ({
+        userId: state.user.user.id,
+    }));
+
+
     const [selectedDate, setSelectedDate] = useState(weeks[0]);
 
     function changeDateHandler(dateIndex) {
@@ -34,69 +43,73 @@ const Dayparting = () => {
     }
 
 
-    return (
-        <div className='dayparting-page'>
-            <div className='last-synced'>
-                <div className="date-stamp">
-                    Day-parting is operating in PST (Pacific Standard Time)
-                </div>
+    if (developer || userId === 714) {
+        return (
+            <div className='dayparting-page'>
+                <div className='last-synced'>
+                    <div className="date-stamp">
+                        Day-parting is operating in PST (Pacific Standard Time)
+                    </div>
 
-                <div className="week-select">
-                    <label htmlFor="">Select Week:</label>
+                    <div className="week-select">
+                        <label htmlFor="">Select Week:</label>
 
-                    <CustomSelect
-                        getPopupContainer={trigger => trigger.parentNode}
-                        defaultValue={0}
-                        dropdownClassName={'full-width-menu'}
-                        onChange={changeDateHandler}
-                    >
-                        {weeks.map((item, index) => (
-                            <Option
-                                key={item}
-                                value={item.id}
-                            >
-                                {`${moment(item.startDate).format('MMM DD')} - ${moment(item.endDate).format('MMM DD')}`}
-                            </Option>
-                        ))}
-                    </CustomSelect>
-                </div>
-
-                <div className="color-gradation">
-                    Min
-                    {colorList.map(item => (
-                        <InformationTooltip
-                            type={'custom'}
-                            description={<span>Min: {item.min} % <br/> Max: {item.max} %</span>}
-                            key={shortid.generate()}
+                        <CustomSelect
+                            getPopupContainer={trigger => trigger.parentNode}
+                            defaultValue={0}
+                            dropdownClassName={'full-width-menu'}
+                            onChange={changeDateHandler}
                         >
-                            <div key={item.color} style={{background: item.color}}/>
-                        </InformationTooltip>
-                    ))}
-                    Max
+                            {weeks.map((item, index) => (
+                                <Option
+                                    key={item}
+                                    value={item.id}
+                                >
+                                    {`${moment(item.startDate).format('MMM DD')} - ${moment(item.endDate).format('MMM DD')}`}
+                                </Option>
+                            ))}
+                        </CustomSelect>
+                    </div>
+
+                    <div className="color-gradation">
+                        Min
+                        {colorList.map(item => (
+                            <InformationTooltip
+                                type={'custom'}
+                                description={<span>Min: {item.min} % <br/> Max: {item.max} %</span>}
+                                key={shortid.generate()}
+                            >
+                                <div key={item.color} style={{background: item.color}}/>
+                            </InformationTooltip>
+                        ))}
+                        Max
+                    </div>
                 </div>
-            </div>
 
-            <div className="row">
-                <OutBudget
+                <div className="row">
+                    <OutBudget
+                        date={selectedDate}
+                    />
+
+                    <ChartStatistics
+                        date={selectedDate}
+                    />
+                </div>
+
+                <DaySwitches
+
+                />
+
+                <PlacementsStatistics
                     date={selectedDate}
                 />
 
-                <ChartStatistics
-                    date={selectedDate}
-                />
+                <SubscriptionNotificationWindow product={'ppc'} page={'dayparting'}/>
             </div>
-
-            <DaySwitches
-
-            />
-
-            <PlacementsStatistics
-                date={selectedDate}
-            />
-
-            <SubscriptionNotificationWindow product={'ppc'} page={'dayparting'}/>
-        </div>
-    )
+        )
+    } else {
+        return (<Redirect to={'/ppc/optimization'}/>)
+    }
 };
 
 export default React.memo(Dayparting);
