@@ -37,7 +37,6 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
     };
 
     if (payload) {
-        console.log(moment(label).weekday());
         return (
             <div className='custom-line-chart-tooltip'>
                 <div className='label'>

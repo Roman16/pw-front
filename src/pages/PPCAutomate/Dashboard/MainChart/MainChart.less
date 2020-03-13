@@ -16,6 +16,12 @@
   .main-chart-container {
     flex: 1;
     height: 500px;
+
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      & {
+        height: 420px;
+      }
+    }
   }
 
   .chart-header {
@@ -143,6 +149,9 @@
 
   @media (max-width: 550px) {
     & {
+      padding-left: 10px;
+      padding-right: 10px;
+
       .chart-header {
         .week-switch .line-fill,
         .daily-switch img {
@@ -172,6 +181,7 @@
         }
 
         .chart-legend {
+          justify-content: space-around;
           div {
             flex-direction: column-reverse;
 
@@ -182,17 +192,6 @@
           }
         }
       }
-    }
-  }
-
-
-  //-------------------------------------
-  /*Retina CSS */
-  //-------------------------------------
-
-  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-    & {
-      height: 420px;
     }
   }
 }
