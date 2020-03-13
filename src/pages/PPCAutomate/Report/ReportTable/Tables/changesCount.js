@@ -74,7 +74,7 @@ export const mainHasNewReport = (countsWithNew = [], type) => {
 
     if (Array.isArray(countsWithNew)) {
         if (type === 'all') {
-            count = countsWithNew.reduce((a, b) => +a.count + +b.count, 0);
+            count = countsWithNew.reduce((a, b) => a + +b.count, 0);
         } else {
             mainTypeList[type].forEach((type) => {
                 if (countsWithNew.find(item => item.type === type)) {
