@@ -41,8 +41,9 @@ const OutBudget = ({date}) => {
         [processing, setProcessing] = useState(false);
 
     const dispatch = useDispatch();
-    const {campaignId} = useSelector(state => ({
-        campaignId: state.products.selectedProduct.id
+    const {campaignId, fetching} = useSelector(state => ({
+        campaignId: state.products.selectedProduct.id,
+        fetching: state.products.fetching,
     }));
 
     async function saveBudget(data) {
@@ -68,24 +69,26 @@ const OutBudget = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
-            try {
-                const res = await daypartingServices.getOutBudgetStatistic({
-                    campaignId,
-                    date,
-                    cancelToken: source.token
-                });
+            if (!fetching) {
+                try {
+                    const res = await daypartingServices.getOutBudgetStatistic({
+                        campaignId,
+                        date,
+                        cancelToken: source.token
+                    });
 
-                const minValue = Math.min(...res.response.map(item => item.sales).filter(item => item != null)),
-                    maxValue = Math.max(...res.response.map(item => item.sales));
+                    const minValue = Math.min(...res.response.map(item => item.sales).filter(item => item != null)),
+                        maxValue = Math.max(...res.response.map(item => item.sales));
 
-                setParams({
-                    min: minValue,
-                    max: maxValue
-                });
+                    setParams({
+                        min: minValue,
+                        max: maxValue
+                    });
 
-                setData(res.response)
-            } catch (e) {
-                console.log(e);
+                    setData(res.response)
+                } catch (e) {
+                    console.log(e);
+                }
             }
         }
 

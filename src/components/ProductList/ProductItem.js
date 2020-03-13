@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {func, bool, string} from 'prop-types';
 import {Icon, Popover} from 'antd';
 import InformationTooltip from "../Tooltip/Tooltip";
+import {productsActions} from "../../actions/products.actions";
+import {useDispatch} from "react-redux";
 
 const maxText = (text, length = 60) => {
     if (text && text.length > length) {
@@ -25,6 +27,13 @@ const ProductItem = ({
         e.stopPropagation();
         onOpenChild(id)
     };
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(productsActions.fetchProductDetails({id: null}));
+
+    }, []);
 
     return (
         <div

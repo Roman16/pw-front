@@ -130,33 +130,35 @@ class DaySwitches extends Component {
             processing: true,
         });
 
-        try {
-            source && source.cancel();
-            source = CancelToken.source();
+        if (!this.props.fetching) {
+            try {
+                source && source.cancel();
+                source = CancelToken.source();
 
-            const res = await daypartingServices.getDayPartingParams({
-                campaignId: this.props.campaignId || '',
-                cancelToken: source.token
-            });
+                const res = await daypartingServices.getDayPartingParams({
+                    campaignId: this.props.campaignId || '',
+                    cancelToken: source.token
+                });
 
-            if (res.response[0]) {
-                this.setState({
-                    hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
-                    activeDayparting: this.props.campaignId ? res.response[0].status === 'ACTIVE' : false,
-                    initialState: res.response[0].initial_campaign_state,
-                    hasDayparting: true,
-                    processing: false,
-                });
-            } else {
-                this.setState({
-                    hoursStatus: [...defaultList],
-                    activeDayparting: false,
-                    hasDayparting: false,
-                    processing: false
-                });
+                if (res.response[0]) {
+                    this.setState({
+                        hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
+                        activeDayparting: this.props.campaignId ? res.response[0].status === 'ACTIVE' : false,
+                        initialState: res.response[0].initial_campaign_state,
+                        hasDayparting: true,
+                        processing: false,
+                    });
+                } else {
+                    this.setState({
+                        hoursStatus: [...defaultList],
+                        activeDayparting: false,
+                        hasDayparting: false,
+                        processing: false
+                    });
+                }
+            } catch (e) {
+                console.log(e);
             }
-        } catch (e) {
-            console.log(e);
         }
     };
 
@@ -446,7 +448,8 @@ class DaySwitches extends Component {
 
 
 const mapStateToProps = state => ({
-    campaignId: state.products.selectedProduct.id
+    campaignId: state.products.selectedProduct.id,
+    fetching: state.products.fetching
 });
 
 const mapDispatchToProps = dispatch => ({});

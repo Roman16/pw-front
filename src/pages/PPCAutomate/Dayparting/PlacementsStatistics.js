@@ -176,8 +176,9 @@ const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
 const PlacementsStatistics = ({date}) => {
     const [chartData, setChartData] = useState([]),
         [statisticData, setStatisticData] = useState({});
-    const {campaignId} = useSelector(state => ({
-        campaignId: state.products.selectedProduct.id
+    const {campaignId, fetching} = useSelector(state => ({
+        campaignId: state.products.selectedProduct.id,
+        fetching: state.products.fetching,
     }));
 
     useEffect(() => {
@@ -185,24 +186,26 @@ const PlacementsStatistics = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
-            try {
-                const res = await daypartingServices.getPlacementsStatistic({
-                    campaignId,
-                    date,
-                    cancelToken: source.token
-                });
+            if(!fetching) {
+                try {
+                    const res = await daypartingServices.getPlacementsStatistic({
+                        campaignId,
+                        date,
+                        cancelToken: source.token
+                    });
 
-                const chartData = Object.keys(res.response.points).map(date => ({
-                    date: date,
-                    top_search: res.response.points[date].data['Top of Search on-Amazon'].value != null ? +res.response.points[date].data['Top of Search on-Amazon'].value : null,
-                    product_pages: res.response.points[date].data['Detail Page on-Amazon'].value != null ? +res.response.points[date].data['Detail Page on-Amazon'].value : null,
-                    rest_search: res.response.points[date].data['Other on-Amazon'].value != null ? +res.response.points[date].data['Other on-Amazon'].value : null,
-                }));
+                    const chartData = Object.keys(res.response.points).map(date => ({
+                        date: date,
+                        top_search: res.response.points[date].data['Top of Search on-Amazon'].value != null ? +res.response.points[date].data['Top of Search on-Amazon'].value : null,
+                        product_pages: res.response.points[date].data['Detail Page on-Amazon'].value != null ? +res.response.points[date].data['Detail Page on-Amazon'].value : null,
+                        rest_search: res.response.points[date].data['Other on-Amazon'].value != null ? +res.response.points[date].data['Other on-Amazon'].value : null,
+                    }));
 
-                setStatisticData(res.response.statistics);
-                setChartData(chartData);
-            } catch (e) {
-                console.log(e);
+                    setStatisticData(res.response.statistics);
+                    setChartData(chartData);
+                } catch (e) {
+                    console.log(e);
+                }
             }
         }
 

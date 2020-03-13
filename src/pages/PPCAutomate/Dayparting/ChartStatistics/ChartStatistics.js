@@ -16,8 +16,9 @@ const ChartStatistics = ({date}) => {
         [firstMetric, setFirstMetric] = useState(metricsList[1]),
         [secondMetric, setSecondMetric] = useState(metricsList[0]);
 
-    const {campaignId} = useSelector(state => ({
-        campaignId: state.products.selectedProduct.id
+    const {campaignId, fetching} = useSelector(state => ({
+        campaignId: state.products.selectedProduct.id,
+        fetching: state.products.fetching,
     }));
 
     useEffect(() => {
@@ -25,28 +26,30 @@ const ChartStatistics = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
-            try {
-                const res = await daypartingServices.getDailyStatistic({
-                    campaignId,
-                    date,
-                    firstMetric,
-                    secondMetric,
-                    cancelToken: source.token
-                });
+            if (!fetching) {
+                try {
+                    const res = await daypartingServices.getDailyStatistic({
+                        campaignId,
+                        date,
+                        firstMetric,
+                        secondMetric,
+                        cancelToken: source.token
+                    });
 
-                setData([...res.response.points.map(item => {
-                    const point = {};
-                    point.date = item.date;
-                    point[firstMetric.key] = item.metrics[firstMetric.key].value !== null ? +item.metrics[firstMetric.key].value : null;
+                    setData([...res.response.points.map(item => {
+                        const point = {};
+                        point.date = item.date;
+                        point[firstMetric.key] = item.metrics[firstMetric.key].value !== null ? +item.metrics[firstMetric.key].value : null;
 
-                    if (secondMetric.key !== 'nothing') {
-                        point[secondMetric.key] = item.metrics[secondMetric.key].value !== null ? +item.metrics[secondMetric.key].value : null;
-                    }
+                        if (secondMetric.key !== 'nothing') {
+                            point[secondMetric.key] = item.metrics[secondMetric.key].value !== null ? +item.metrics[secondMetric.key].value : null;
+                        }
 
-                    return (point);
-                })]);
-            } catch (e) {
-                console.log(e);
+                        return (point);
+                    })]);
+                } catch (e) {
+                    console.log(e);
+                }
             }
         }
 
