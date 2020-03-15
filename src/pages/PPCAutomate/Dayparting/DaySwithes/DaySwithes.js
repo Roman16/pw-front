@@ -12,6 +12,7 @@ import {notification} from "../../../../components/Notification";
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
 import {connect} from "react-redux";
 import axios from "axios";
+import {productsActions} from '../../../../actions/products.actions'
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -64,6 +65,9 @@ class DaySwitches extends Component {
 
         try {
             await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId});
+            this.props.deactivated(this.props.campaignId)
+
+            notification.success({title: 'Done!'});
 
             this.setState({
                 activeDayparting: false,
@@ -88,12 +92,16 @@ class DaySwitches extends Component {
         try {
             if (this.state.hasDayparting) {
                 await daypartingServices.activateDayparting({campaignId: this.props.campaignId});
+
+                this.props.activated(this.props.campaignId)
             } else {
                 await daypartingServices.updateDayPartingParams({
                     campaignId: this.props.campaignId,
                     state_encoded_string: defaultList,
                     status: 'ACTIVE'
                 });
+
+                this.props.activated(this.props.campaignId)
             }
 
             this.setState({
@@ -452,7 +460,10 @@ const mapStateToProps = state => ({
     fetching: state.products.fetching
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+    activated: (id) => dispatch(productsActions.activatedDayparing(id)),
+    deactivated: (id) => dispatch(productsActions.deactivatedDayparing(id)),
+});
 
 export default connect(
     mapStateToProps,
