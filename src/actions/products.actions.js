@@ -12,10 +12,10 @@ export const productsActions = {
     updateOptions,
     showOnlyOptimized,
     showOnlyActive,
-    changeOptimizedOptions,
-    changeOptimizedStrategy,
     dontShowWindowAgain,
-    updateCampaignBudget
+    updateCampaignBudget,
+    activatedDayparing,
+    deactivatedDayparing
 };
 
 function fetchProducts(paginationParams) {
@@ -152,20 +152,18 @@ function showOnlyActive(data) {
     };
 }
 
-function changeOptimizedOptions() {
-    return dispatch => {
-        dispatch({
-            type: productsConstants.CHANGE_OPTIONS,
+function activatedDayparing(id) {
+        return({
+            type: productsConstants.ACTIVATED_DAYPARTING,
+            payload: id
         });
-    };
 }
 
-function changeOptimizedStrategy() {
-    return dispatch => {
-        dispatch({
-            type: productsConstants.CHANGE_STRATEGY,
+function deactivatedDayparing(id) {
+        return({
+            type: productsConstants.DEACTIVATED_DAYPARTING,
+            payload: id
         });
-    };
 }
 
 function dontShowWindowAgain(window) {

@@ -176,7 +176,9 @@ function StrategyItem({
                         )
                         :
                         <button disabled={processing || productId == null} className='btn default'
-                                onClick={() => onStart(targetAcos)}>
+                                onClick={() => onStart(targetAcos)}
+                                data-intercom-target="start-button"
+                        >
                             {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
                             start
                         </button>

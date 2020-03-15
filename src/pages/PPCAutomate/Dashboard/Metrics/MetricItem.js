@@ -10,7 +10,7 @@ import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black
 import downWhiteIcon from '../../../../assets/img/icons/metric-arrows/down-white-arrow.svg';
 import {round} from "../../../../utils/round";
 import {numberMask} from "../../../../utils/numberMask";
-import { SVG , SVGSource} from "../../../../utils/icons";
+import {SVG, SVGSource} from "../../../../utils/icons";
 
 const RenderMetricChanges = ({value, name}) => {
     if (value != null) {
@@ -127,9 +127,11 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
             <div className="title-info">
                 {metricInformation.title}
                 {key === 'profit' ?
-                    !hasMargin && <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>
+                    !hasMargin && <Tooltip getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode.parentNode}
+                                           type='warning' description={<ProfitTooltipDescription/>}/>
                     :
-                    metricInformation.info && <Tooltip description={metricInformation.info}/>
+                    metricInformation.info && <Tooltip getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode.parentNode}
+                                                       description={metricInformation.info}/>
                 }
 
                 <div className="close" onClick={handleRemoveItem}>

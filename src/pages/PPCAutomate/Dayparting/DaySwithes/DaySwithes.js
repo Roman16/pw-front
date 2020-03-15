@@ -12,6 +12,7 @@ import {notification} from "../../../../components/Notification";
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
 import {connect} from "react-redux";
 import axios from "axios";
+import {productsActions} from '../../../../actions/products.actions'
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -64,6 +65,9 @@ class DaySwitches extends Component {
 
         try {
             await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId});
+            this.props.deactivated(this.props.campaignId)
+
+            notification.success({title: 'Done!'});
 
             this.setState({
                 activeDayparting: false,
@@ -88,12 +92,16 @@ class DaySwitches extends Component {
         try {
             if (this.state.hasDayparting) {
                 await daypartingServices.activateDayparting({campaignId: this.props.campaignId});
+
+                this.props.activated(this.props.campaignId)
             } else {
                 await daypartingServices.updateDayPartingParams({
                     campaignId: this.props.campaignId,
                     state_encoded_string: defaultList,
                     status: 'ACTIVE'
                 });
+
+                this.props.activated(this.props.campaignId)
             }
 
             this.setState({
@@ -130,33 +138,35 @@ class DaySwitches extends Component {
             processing: true,
         });
 
-        try {
-            source && source.cancel();
-            source = CancelToken.source();
+        if (!this.props.fetching) {
+            try {
+                source && source.cancel();
+                source = CancelToken.source();
 
-            const res = await daypartingServices.getDayPartingParams({
-                campaignId: this.props.campaignId || '',
-                cancelToken: source.token
-            });
+                const res = await daypartingServices.getDayPartingParams({
+                    campaignId: this.props.campaignId || '',
+                    cancelToken: source.token
+                });
 
-            if (res.response[0]) {
-                this.setState({
-                    hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
-                    activeDayparting: this.props.campaignId ? res.response[0].status === 'ACTIVE' : false,
-                    initialState: res.response[0].initial_campaign_state,
-                    hasDayparting: true,
-                    processing: false,
-                });
-            } else {
-                this.setState({
-                    hoursStatus: [...defaultList],
-                    activeDayparting: false,
-                    hasDayparting: false,
-                    processing: false
-                });
+                if (res.response[0]) {
+                    this.setState({
+                        hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
+                        activeDayparting: this.props.campaignId ? res.response[0].status === 'ACTIVE' : false,
+                        initialState: res.response[0].initial_campaign_state,
+                        hasDayparting: true,
+                        processing: false,
+                    });
+                } else {
+                    this.setState({
+                        hoursStatus: [...defaultList],
+                        activeDayparting: false,
+                        hasDayparting: false,
+                        processing: false
+                    });
+                }
+            } catch (e) {
+                console.log(e);
             }
-        } catch (e) {
-            console.log(e);
         }
     };
 
@@ -446,10 +456,14 @@ class DaySwitches extends Component {
 
 
 const mapStateToProps = state => ({
-    campaignId: state.products.selectedProduct.id
+    campaignId: state.products.selectedProduct.id,
+    fetching: state.products.fetching
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+    activated: (id) => dispatch(productsActions.activatedDayparing(id)),
+    deactivated: (id) => dispatch(productsActions.deactivatedDayparing(id)),
+});
 
 export default connect(
     mapStateToProps,

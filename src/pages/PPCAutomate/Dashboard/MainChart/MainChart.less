@@ -1,21 +1,35 @@
 .main-chart {
   width: 100%;
-  height: 560px;
   padding: 20px 25px 0;
   margin: 25px 0 0 0;
   background: #fff;
   border-radius: 8px;
   font-family: ir;
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   .recharts-cartesian-axis-tick-line {
     display: none;
   }
 
+  .main-chart-container {
+    flex: 1;
+    height: 500px;
+
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      & {
+        height: 420px;
+      }
+    }
+  }
+
   .chart-header {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
-    margin: 0 0 50px 0;
+    margin: 0 0 40px 0;
     padding: 0 20px;
 
     .pair-name {
@@ -29,10 +43,12 @@
     }
 
     .switch-block {
-      margin: 0 0 0 35px;
       font-size: 0.8571428571428571rem;
       letter-spacing: 0.2px;
       color: #38454F;
+
+      display: flex;
+      align-items: center;
 
       button {
         margin: 0 13px 0 0;
@@ -40,23 +56,26 @@
     }
 
     .week-switch {
-      margin-right: 10px;
-      margin-left: 0;
+      margin-right: 20px;
       grid-area: weekSwitchBlock;
+
     }
 
     .daily-switch {
+      margin: 0 20px 0 0;
       grid-area: dailySwitchBlock;
+
+      .daily-icon {
+        margin: 0 0 0 20px;
+        grid-area: dailyIcon;
+      }
     }
 
-    .daily-icon {
-      margin: 0 0 0 10px;
-      grid-area: dailyIcon;
-    }
 
     .line-fill {
       display: flex;
       grid-area: lineFill;
+      margin: 0 0 0 20px;
 
       & > div {
         margin: 0 3px;
@@ -79,6 +98,10 @@
         align-items: center;
         margin: 0 30px 0 0;
 
+        &:last-child {
+          margin: 0;
+        }
+
         & > img {
           margin: 0 10px 0 0;
         }
@@ -86,76 +109,106 @@
     }
 
     .DatePicker {
+      margin: 0 0 0 20px;
       grid-area: datePiker;
     }
-
   }
 
   @media (max-width: 1200px) {
     & {
       .chart-header {
+        margin-bottom: 30px;
         display: grid;
-        grid-gap: 10px;
-        grid-template-rows: 20px;
-        grid-template-areas: "pairName pairName pairName pairName" "weekSwitchBlock lineFill dailySwitchBlock dailyIcon" "chartLegend chartLegend datePiker datePiker";
-        background-color: #fff;
-        color: #444;
-
-        .pair-name {
-          text-align: center;
-        }
-
-        .chart-legend {
-          margin: 0;
-        }
-
-        .DatePicker {
-          margin: 0 0 0 auto;
-        }
-      }
-    }
-  }
-
-  @media (max-width: 600px) {
-    & {
-      .chart-header {
-        grid-template-areas: "pairName pairName pairName pairName" "weekSwitchBlock lineFill dailySwitchBlock dailyIcon" "chartLegend chartLegend chartLegend chartLegend" "datePiker datePiker datePiker datePiker";
+        grid-row-gap: 20px;
+        grid-template-areas: "weekSwitchBlock dailySwitchBlock  chartLegend" "datePiker datePiker datePiker";
 
         .DatePicker {
           margin: 0 auto;
         }
+      }
+    }
+  }
+
+  @media (max-width: 905px) {
+    & {
+      .chart-header {
+        grid-template-areas: "weekSwitchBlock dailySwitchBlock" "chartLegend chartLegend" "datePiker datePiker";
+
+        .daily-switch {
+          margin: 0;
+        }
 
         .chart-legend {
-          justify-content: center;
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
         }
       }
     }
   }
 
-
-  //-------------------------------------
-  /*Retina CSS */
-  //-------------------------------------
-
-  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+  @media (max-width: 550px) {
     & {
-      height: 420px;
+      padding-left: 10px;
+      padding-right: 10px;
+
+      .chart-header {
+        .week-switch .line-fill,
+        .daily-switch img {
+          display: none;
+        }
+
+      }
+    }
+  }
+
+
+  @media (max-width: 450px) {
+    & {
+      .chart-header {
+        justify-content: center;
+        grid-template-areas: "weekSwitchBlock " "dailySwitchBlock" "chartLegend" "datePiker";
+
+        .switch-block {
+          width: 100%;
+          flex-direction: row-reverse;
+          justify-content: space-between;
+          margin: 0;
+
+          button {
+            margin: 0;
+          }
+        }
+
+        .chart-legend {
+          justify-content: space-around;
+          div {
+            flex-direction: column-reverse;
+
+            img {
+              width: 100%;
+              height: 3px;
+            }
+          }
+        }
+      }
     }
   }
 }
 
 .custom-line-chart-tooltip {
   display: flex;
-  width: 400px;
-  padding: 25px;
+  width: max-content;
+  padding: 15px;
   background: #FFFFFF;
   border-radius: 8px;
   font-family: ir;
   font-size: 1rem;
-  box-shadow: 0px 16px 16px rgba(40, 62, 112, 0.16);
+  box-shadow: 0px 5px 20px rgba(40, 62, 112, 0.1);
 
   & > div {
     flex: 1;
+    min-width: max-content;
 
     & > div:nth-child(2) {
       color: #8FD39D;
@@ -183,7 +236,13 @@
 
     &.date {
       font-weight: bold;
+      width: max-content;
     }
+  }
+
+  & > .week-value,
+  & > .daily-value {
+    margin: 0 !important;
   }
 
   .name,
@@ -194,17 +253,21 @@
 
   .week-value {
     text-align: left;
+
+    div {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
   }
 
   .daily-value {
-    text-align: right;
+    text-align: left;
   }
 
   //retina
   @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
     & {
       font-size: 1.1428571428571428rem;
-
     }
   }
 }

@@ -4,17 +4,18 @@
   font-family: ir;
   position: relative;
 
-  .title {
+  & > .title {
     width: 100%;
     padding: 0 0 0 30px;
     margin: 0 0 10px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     border-left: 2px solid #6D6DF6;
 
 
-    span:first-child {
+   & > span:first-child {
       font-size: 1.4285714285714286rem;
       line-height: 2rem;
       letter-spacing: -0.06px;
@@ -25,12 +26,23 @@
       display: flex;
       align-items: center;
       font-size: 1rem;
+      margin: 0 0 0 20px;
 
       button {
         margin: 0 0 0 10px;
       }
     }
+
+    @media (max-width: 532px) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .switch-block {
+        margin: 10px 0 0 0;
+      }
+    }
   }
+
 
   .ant-popover-arrow {
     display: none;
@@ -81,6 +93,10 @@
           background-color: #ec7f5c;
         }
       }
+    }
+
+    @media (max-width: 532px) {
+      height: calc(100% - 70px);
     }
 
   }
@@ -202,6 +218,7 @@
 
               .ant-popover-inner-content {
                 width: max-content;
+
                 span {
                   cursor: auto;
                   font-size: 1rem;

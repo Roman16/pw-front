@@ -12,7 +12,6 @@ import {useSelector, useDispatch} from "react-redux";
 import axios from "axios";
 import {numberMask} from "../../../../utils/numberMask";
 import {productsActions} from "../../../../actions/products.actions";
-import {notification} from "../../../../components/Notification";
 import successImage from '../../../../assets/img/landing-contact-us/checked.svg';
 
 const CancelToken = axios.CancelToken;
@@ -41,15 +40,15 @@ const OutBudget = ({date}) => {
         [processing, setProcessing] = useState(false);
 
     const dispatch = useDispatch();
-    const {campaignId} = useSelector(state => ({
-        campaignId: state.products.selectedProduct.id
+    const {campaignId, fetching} = useSelector(state => ({
+        campaignId: state.products.selectedProduct.id,
+        fetching: state.products.fetching,
     }));
 
     async function saveBudget(data) {
         setProcessing(true);
         try {
             await daypartingServices.setCampaignBudget({campaignId, data: {'value_in_usd': data.value}});
-            // notification.success({title: 'Saved'});
             setStatus(true);
 
             dispatch(productsActions.updateCampaignBudget({
@@ -68,24 +67,26 @@ const OutBudget = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
-            try {
-                const res = await daypartingServices.getOutBudgetStatistic({
-                    campaignId,
-                    date,
-                    cancelToken: source.token
-                });
+            if (!fetching) {
+                try {
+                    const res = await daypartingServices.getOutBudgetStatistic({
+                        campaignId,
+                        date,
+                        cancelToken: source.token
+                    });
 
-                const minValue = Math.min(...res.response.map(item => item.sales).filter(item => item != null)),
-                    maxValue = Math.max(...res.response.map(item => item.sales));
+                    const minValue = Math.min(...res.response.map(item => item.sales).filter(item => item != null)),
+                        maxValue = Math.max(...res.response.map(item => item.sales));
 
-                setParams({
-                    min: minValue,
-                    max: maxValue
-                });
+                    setParams({
+                        min: minValue,
+                        max: maxValue
+                    });
 
-                setData(res.response)
-            } catch (e) {
-                console.log(e);
+                    setData(res.response)
+                } catch (e) {
+                    console.log(e);
+                }
             }
         }
 
@@ -106,7 +107,7 @@ const OutBudget = ({date}) => {
             }
         });
 
-        if (outBudget) {
+      if (outBudget) {
             return (
                 <div className="out-budget-item">
                     <div className='statistic-information' style={{background: color, opacity: color ? 1 : 0}}/>
@@ -161,8 +162,10 @@ const OutBudget = ({date}) => {
                     </h2>
 
                     <div className='out-of-budget'>
-                        <div/>
-                        Out of Budget
+                        <div className="campaign">
+                            <div/>
+                            Out of Budget
+                        </div>
                     </div>
 
                     <button

@@ -9,6 +9,7 @@ import {daypartingServices} from "../../../services/dayparting.services";
 import {useSelector} from "react-redux";
 import {numberMask} from "../../../utils/numberMask";
 import axios from "axios";
+import {round} from "../../../utils/round";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -74,7 +75,15 @@ const statisticMetrics = [
     {
         title: 'Orders',
         key: 'orders'
-    }
+    },
+    {
+        title: 'Spend',
+        key: 'spend'
+    },
+    {
+        title: 'Sales',
+        key: 'sales'
+    },
 ];
 
 const chartColors = [
@@ -148,18 +157,18 @@ const CustomizedAxisTick = ({x, y, payload, lastIndex}) => {
     }
 };
 
-const MetricValue = ({metric, type}) => {
+const MetricValue = ({metric = {}, type}) => {
     if (metric.diff) {
         return (
             <div className="value">
                 {+metric.diff === 0 ? <div/> : <img src={metric.diff > 0 ? upGreenIcon : downRedIcon} alt=""/>}
-                {type === 'ctr' || type === 'acos' ? numberMask(metric.value, 2) : metric.value}
+                {type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${round(metric.value, 2)}` : metric.value)}
             </div>
         )
     } else {
         return (
             <div className="value">
-                {type === 'ctr' || type === 'acos' ? numberMask(metric.value, 2) : metric.value}
+                {type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${round(metric.value, 2)}` : metric.value)}
             </div>
         )
     }
@@ -176,8 +185,9 @@ const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
 const PlacementsStatistics = ({date}) => {
     const [chartData, setChartData] = useState([]),
         [statisticData, setStatisticData] = useState({});
-    const {campaignId} = useSelector(state => ({
-        campaignId: state.products.selectedProduct.id
+    const {campaignId, fetching} = useSelector(state => ({
+        campaignId: state.products.selectedProduct.id,
+        fetching: state.products.fetching,
     }));
 
     useEffect(() => {
@@ -185,24 +195,26 @@ const PlacementsStatistics = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
-            try {
-                const res = await daypartingServices.getPlacementsStatistic({
-                    campaignId,
-                    date,
-                    cancelToken: source.token
-                });
+            if (!fetching) {
+                try {
+                    const res = await daypartingServices.getPlacementsStatistic({
+                        campaignId,
+                        date,
+                        cancelToken: source.token
+                    });
 
-                const chartData = Object.keys(res.response.points).map(date => ({
-                    date: date,
-                    top_search: res.response.points[date].data['Top of Search on-Amazon'].value != null ? +res.response.points[date].data['Top of Search on-Amazon'].value : null,
-                    product_pages: res.response.points[date].data['Detail Page on-Amazon'].value != null ? +res.response.points[date].data['Detail Page on-Amazon'].value : null,
-                    rest_search: res.response.points[date].data['Other on-Amazon'].value != null ? +res.response.points[date].data['Other on-Amazon'].value : null,
-                }));
+                    const chartData = Object.keys(res.response.points).map(date => ({
+                        date: date,
+                        top_search: res.response.points[date].data['Top of Search on-Amazon'].value != null ? +res.response.points[date].data['Top of Search on-Amazon'].value : null,
+                        product_pages: res.response.points[date].data['Detail Page on-Amazon'].value != null ? +res.response.points[date].data['Detail Page on-Amazon'].value : null,
+                        rest_search: res.response.points[date].data['Other on-Amazon'].value != null ? +res.response.points[date].data['Other on-Amazon'].value : null,
+                    }));
 
-                setStatisticData(res.response.statistics);
-                setChartData(chartData);
-            } catch (e) {
-                console.log(e);
+                    setStatisticData(res.response.statistics);
+                    setChartData(chartData);
+                } catch (e) {
+                    console.log(e);
+                }
             }
         }
 

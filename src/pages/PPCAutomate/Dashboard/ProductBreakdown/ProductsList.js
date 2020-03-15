@@ -126,8 +126,9 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => <div>Budget <br/> Allocation<Tooltip
-                description={'A budget allocation is the amount of funding designated to each of your product.'}
+            title: () => <div>Budget <br/> Allocation<Tooltip getPopupContainer={trigger => trigger.parentNode}
+
+                                                              description={'A budget allocation is the amount of funding designated to each of your product.'}
             /></div>,
             dataIndex: 'budget_allocation',
             key: 'budget_allocation',
@@ -144,8 +145,9 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => <div>Ad Sales <br/> Share<Tooltip
-                description={'The percentage of sales allocated to the given product.'}
+            title: () => <div>Ad Sales <br/> Share<Tooltip getPopupContainer={trigger => trigger.parentNode}
+
+                                                           description={'The percentage of sales allocated to the given product.'}
             /></div>,
             dataIndex: 'sales_share',
             key: 'sales_share',
@@ -162,8 +164,9 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => <div>CPA<Tooltip
-                description={'Cost to acquire one paying customer on a campaign.'}
+            title: () => <div>CPA<Tooltip getPopupContainer={trigger => trigger.parentNode}
+
+                                          description={'Cost to acquire one paying customer on a campaign.'}
             /></div>,
             dataIndex: 'cpa',
             key: 'cpa',
@@ -180,8 +183,9 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => <div>Ad CVR<Tooltip
-                description={'The Conversion Rate of a campaign is the percentage of people who clicked on an ad and then completed an action/purchase/conversion.'}
+            title: () => <div>Ad CVR<Tooltip getPopupContainer={trigger => trigger.parentNode}
+
+                                             description={'The Conversion Rate of a campaign is the percentage of people who clicked on an ad and then completed an action/purchase/conversion.'}
             /></div>,
             dataIndex: 'conversion_rate',
             key: 'conversion_rate',
@@ -215,7 +219,8 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
         },
         {
             title: () => (<span>Profit {!hasMargin &&
-            <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>}</span>),
+            <Tooltip getPopupContainer={trigger => trigger.parentNode}
+                     type='warning' description={<ProfitTooltipDescription/>}/>}</span>),
             dataIndex: 'profit',
             key: 'profit',
             width: '12em',

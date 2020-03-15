@@ -142,7 +142,6 @@ const AuthorizedUser = (props) => {
 
                        <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
                     </Switch>
-
                 </div>
             </div>
 
