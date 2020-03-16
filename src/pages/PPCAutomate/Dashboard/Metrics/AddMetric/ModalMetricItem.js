@@ -31,34 +31,37 @@ const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, i
     }));
 
     return (<div className='metric-item' onClick={() => listType === 'visible' ? removeMetric(item) : addMetric(item)}>
-        <div className="title-info">
-            {metricInformation.title}
+            <div className="title-info">
+                {metricInformation.title}
 
-            {key === 'profit' ?
-                !hasMargin && <Tooltip type='warning' description={<ProfitTooltipDescription />}/>
-                :
-                metricInformation.info && <Tooltip description={metricInformation.info}/>
-            }
+                {key === 'profit' ?
+                    !hasMargin && <Tooltip getPopupContainer={trigger => trigger.parentNode}
+                                           type='warning' description={<ProfitTooltipDescription/>}/>
+                    :
+                    metricInformation.info && <Tooltip getPopupContainer={trigger => trigger.parentNode}
+                                                       description={metricInformation.info}/>
+                }
 
-            {listType === 'hidden' && <div className="add-item">
-                <img src={plusIcon} alt=""/>
-            </div>}
+                {listType === 'hidden' && <div className="add-item">
+                    <img src={plusIcon} alt=""/>
+                </div>}
 
-            {listType === 'visible' && <div className="remove-item">
-                <img src={minusIcon} alt=""/>
-            </div>}
-        </div>
-
-        <div className='metric-item__description'>
-            <div className="value">
-                <RenderMetricValue
-                    value={metric_value}
-                    type={type}
-                />
+                {listType === 'visible' && <div className="remove-item">
+                    <img src={minusIcon} alt=""/>
+                </div>}
             </div>
-            <div className='label'>{label}</div>
+
+            <div className='metric-item__description'>
+                <div className="value">
+                    <RenderMetricValue
+                        value={metric_value}
+                        type={type}
+                    />
+                </div>
+                <div className='label'>{label}</div>
+            </div>
         </div>
-    </div>
-)};
+    )
+};
 
 export default ModalMetricItem;

@@ -126,6 +126,31 @@ export function products(state = initialState, action) {
                 dontShowStopNotificationAgain: action.payload
             };
 
+
+        case productsConstants.ACTIVATED_DAYPARTING:
+            return {
+                ...state,
+                productList: state.productList.map(item => {
+                    if (item.id === action.payload) {
+                        item.hasEnabledDayparting = true;
+                    }
+
+                    return item;
+                })
+            };
+
+        case productsConstants.DEACTIVATED_DAYPARTING:
+            return {
+                ...state,
+                productList: state.productList.map(item => {
+                    if (item.id === action.payload) {
+                        item.hasEnabledDayparting = false;
+                    }
+
+                    return item;
+                })
+            };
+
         case productsConstants.CAMPAIGN_BUDGET:
             return {
                 ...state,
