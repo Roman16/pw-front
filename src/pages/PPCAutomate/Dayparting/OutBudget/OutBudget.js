@@ -42,9 +42,9 @@ const OutBudget = ({date}) => {
         [fetchingData, setFetchingData] = useState(false);
 
     const dispatch = useDispatch();
-    const {campaignId, fetching} = useSelector(state => ({
+    const {campaignId, fetchingCampaignList} = useSelector(state => ({
         campaignId: state.products.selectedProduct.id,
-        fetching: state.products.fetching,
+        fetchingCampaignList: state.products.fetching,
     }));
 
     async function saveBudget(data) {
@@ -69,7 +69,7 @@ const OutBudget = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
-            if (!fetching) {
+            if (!fetchingCampaignList) {
                 setFetchingData(true);
                 try {
                     const res = await daypartingServices.getOutBudgetStatistic({
@@ -156,7 +156,7 @@ const OutBudget = ({date}) => {
 
     return (
         <Fragment>
-            <section className={` ${fetchingData ? 'spend-statistics disabled' : 'spend-statistics'}`}>
+            <section className={` ${(fetchingData || fetchingCampaignList) ? 'spend-statistics disabled' : 'spend-statistics'}`}>
                 <div className="section-header">
                     <h2>
                         Sales / Out of Budget
@@ -230,7 +230,7 @@ const OutBudget = ({date}) => {
                     </div>
                 </div>
 
-                {fetchingData && <div className="disable-page-loading">
+                {(fetchingData || fetchingCampaignList) && <div className="disable-page-loading">
                     <Spin size="large"/>
                 </div>}
             </section>

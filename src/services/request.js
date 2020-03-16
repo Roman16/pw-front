@@ -70,6 +70,8 @@ const api = (method, url, data, type, abortToken) => {
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
                             }
+                        } else if (error.response.status === 500 && (!error.response.data || !error.response.data.message)) {
+                            handlerErrors('Something wrong!')
                         } else if (error.response.status === 429) {
 
                         } else if (error.response.status === 402 && error.response.statusText === "Payment Required") {

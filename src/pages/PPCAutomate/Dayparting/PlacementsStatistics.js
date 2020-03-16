@@ -163,13 +163,13 @@ const MetricValue = ({metric = {}, type}) => {
         return (
             <div className="value">
                 {+metric.diff === 0 ? <div/> : <img src={metric.diff > 0 ? upGreenIcon : downRedIcon} alt=""/>}
-                {type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${round(metric.value, 2)}` : metric.value)}
+                {metric.value == null ? 'NaN' : type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${round(metric.value, 2)}` : metric.value)}
             </div>
         )
     } else {
         return (
             <div className="value">
-                {type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${round(metric.value, 2)}` : metric.value)}
+                {metric.value == null ? 'NaN' : type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${round(metric.value, 2)}` : metric.value)}
             </div>
         )
     }
@@ -188,9 +188,9 @@ const PlacementsStatistics = ({date}) => {
         [statisticData, setStatisticData] = useState({}),
         [processing, setProcessing] = useState(false);
 
-    const {campaignId, fetching} = useSelector(state => ({
+    const {campaignId, fetchingCampaignList} = useSelector(state => ({
         campaignId: state.products.selectedProduct.id,
-        fetching: state.products.fetching,
+        fetchingCampaignList: state.products.fetching,
     }));
 
     useEffect(() => {
@@ -198,7 +198,7 @@ const PlacementsStatistics = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
-            if (!fetching) {
+            if (!fetchingCampaignList) {
                 setProcessing(true);
 
                 try {
@@ -230,7 +230,7 @@ const PlacementsStatistics = ({date}) => {
     }, [date, campaignId]);
 
     return (
-        <section className={`${processing ? 'placements-statistics disabled' : 'placements-statistics'}`}>
+        <section className={`${(processing || fetchingCampaignList) ? 'placements-statistics disabled' : 'placements-statistics'}`}>
             <div className="section-header">
                 <h2>Placements</h2>
             </div>
@@ -354,7 +354,7 @@ const PlacementsStatistics = ({date}) => {
             </div>
 
 
-            {processing && <div className="disable-page-loading">
+            {(processing || fetchingCampaignList) && <div className="disable-page-loading">
                 <Spin size="large"/>
             </div>}
         </section>

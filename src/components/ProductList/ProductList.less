@@ -2,34 +2,52 @@
 
 .product-list {
   width: 19%;
-  min-width: 350px;
+  min-width: 365px;
   display: flex;
   flex-direction: column;
-  padding: 1.714285714285714em 0 1.714285714285714em 1.4285714285714286rem;
+  padding: 1.714285714285714em 1.4285714285714286rem 1.714285714285714em 1.4285714285714286rem;
   //border-right: 1px solid rgba(201, 203, 212, 0.2);
   font-family: ir;
   position: relative;
-  transition: .2s;
+  transition: all 0.3s ease-in;
+  overflow: hidden;
 
   &.daypartin-list {
     padding-top: 80px;
   }
 
-  &.closed {
-    //width: 20px;
-    //min-width: 20px;
-    transition: .3s;
-    margin: 0 10px 0 -100%;
-    padding: 0 100% 0 0;
+  .ant-input-search-icon {
+    transition: initial;
+  }
 
-    .tabs,
+  &.closed {
+    width: 20px;
+    min-width: 20px;
+    transition: all 0.3s ease-in;
+    padding-right: 10px;
+
+    .fetching-data {
+      display: none;
+    }
+
     .search-product,
     .product-pagination,
     .page-items-block,
-    .products,
-    .fetching-data {
-      //display: none;
+    .campaigns-list,
+    .products {
+      visibility: hidden;
+      transition: .3s;
     }
+  }
+
+  .search-product,
+  .product-pagination,
+  .page-items-block,
+  .campaigns-list,
+  .products {
+    min-width: 325px;
+    visibility: visible;
+    transition: .1s;
   }
 
   .fetching-data {
@@ -197,6 +215,7 @@
     display: flex;
     align-items: center;
     position: relative;
+    min-width: 325px;
 
     .search-field {
       z-index: 100;
@@ -329,7 +348,6 @@
     display: flex;
     align-items: center;
     margin: 5px 0 0 0;
-    min-width: 250px;
 
     & > div {
       padding: 4px 0;
@@ -444,12 +462,10 @@
     overflow: auto;
     margin-bottom: 20px;
     margin-top: 5px;
-    min-width: 250px;
   }
 
 
   .product-item {
-    transition: all 0.3s;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -776,6 +792,7 @@
     margin: auto 0 0 0;
 
     .total-pages {
+      flex: 1;
       font-size: 1rem;
       letter-spacing: 0.16px;
       color: #656A84;
@@ -808,8 +825,10 @@
     }
 
     .go-to {
+      flex: 1;
       display: flex;
       align-items: center;
+      justify-content: flex-end;
 
       .ant-input-number {
         width: 50px;
@@ -835,7 +854,6 @@
           background: inherit;
           border: 0;
           border-bottom: 1px solid #C9CBD4;
-          margin: 0 0 0 5px;
           border-radius: 0;
           padding-left: 0;
           font-size: 1rem;
@@ -858,21 +876,33 @@
     width: 19.071428571em;
   }
 
-  @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 800px), only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 800px), only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 800px), only screen and (max-device-pixel-ratio: 1) and (max-width: 800px) {
+  @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 800px),
+  only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 800px),
+  only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 800px),
+  only screen and (max-device-pixel-ratio: 1) and (max-width: 800px) {
     width: 100%;
-    // height: fit-content;
+    height: 40vh;
     overflow: hidden;
-    padding: 1.71428571em 1.71428571em 0 6.2em;
+    padding: 1.71428571em 1.71428571em 1.71428571em 6.2em;
     margin: 0;
+
+    &.closed {
+      padding: 1.71428571em 1.71428571em 1.71428571em 6.2em;
+
+      width: 100%;
+      height: 20px;
+    }
   }
 
-  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 799px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 799px), only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 799px), only screen and (min-device-pixel-ratio: 2) and (max-width: 799px) {
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 799px),
+  only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 799px),
+  only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 799px),
+  only screen and (min-device-pixel-ratio: 2) and (max-width: 799px) {
     margin-left: 7.2em;
   }
 
   @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px), only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px), only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
     & {
-      width: 100%;
       height: 40vh;
       // height: fit-content;
       overflow: hidden;
@@ -885,11 +915,6 @@
 
       .search-product .filters-list.opened {
         top: -5px;
-      }
-
-      &.closed {
-        margin: -100% 0 35% 0;
-        padding: 0;
       }
     }
   }
@@ -926,6 +951,9 @@
   z-index: 100;
   border-right: 1px solid rgba(201, 203, 212, 0.2);
 
+  position: absolute;
+  right: 0;
+
 
   .image {
     height: 30px;
@@ -957,14 +985,16 @@
   }
 }
 
-@media (max-width: 679px) {
+@media (max-width: 800px) {
   .switch-list {
     width: 100%;
     border: 0;
     border-bottom: 1px solid rgba(201, 203, 212, 0.2);
-    padding-left: 5.14285714em;
-    padding-right: 36px;
+    padding-left: 6.2rem;
+    padding-right: 1.7142857142857142rem;
     height: 25px;
+    bottom: 0;
+    top: auto;
 
     .image {
       transform: rotate(90deg);

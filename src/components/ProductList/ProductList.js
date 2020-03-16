@@ -336,13 +336,15 @@ class ProductList extends Component {
                         size={size}
                         onChangePagination={this.handleChangePagination}
                     />
+
+                    <div className={`switch-list ${closedList ? 'closed' : 'opened'}`}>
+                        <div className="image" onClick={() => this.setState({closedList: !closedList})}>
+                            <img src={selectIcon} alt=""/>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div className={`switch-list ${closedList ? 'closed' : 'opened'}`}>
-                    <div className="image" onClick={() => this.setState({closedList: !closedList})}>
-                        <img src={selectIcon} alt=""/>
-                    </div>
-                </div>
             </Fragment>
         );
     }

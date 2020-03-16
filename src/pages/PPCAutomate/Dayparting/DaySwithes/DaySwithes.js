@@ -54,7 +54,8 @@ class DaySwitches extends Component {
         processing: false,
         activeDayparting: false,
         hasDayparting: false,
-        initialState: ''
+        initialState: '',
+        fetchingData: false
     };
 
 
@@ -65,7 +66,7 @@ class DaySwitches extends Component {
 
         try {
             await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId});
-            this.props.deactivated(this.props.campaignId)
+            this.props.deactivated(this.props.campaignId);
 
             notification.success({title: 'Done!'});
 
@@ -133,12 +134,13 @@ class DaySwitches extends Component {
     };
 
     getDaypartingStatus = async () => {
-        this.setState({
-            activeDayparting: false,
-            processing: true,
-        });
+        if (!this.props.fetchingCampaignList) {
+            this.setState({
+                activeDayparting: false,
+                processing: true,
+                fetchingData: true,
+            });
 
-        if (!this.props.fetching) {
             try {
                 source && source.cancel();
                 source = CancelToken.source();
@@ -155,17 +157,22 @@ class DaySwitches extends Component {
                         initialState: res.response[0].initial_campaign_state,
                         hasDayparting: true,
                         processing: false,
+                        fetchingData: false
                     });
                 } else {
                     this.setState({
                         hoursStatus: [...defaultList],
                         activeDayparting: false,
                         hasDayparting: false,
-                        processing: false
+                        processing: false,
+                        fetchingData: false
                     });
                 }
             } catch (e) {
-                console.log(e);
+                this.setState({
+                    processing: false,
+                    fetchingData: false
+                });
             }
         }
     };
@@ -337,11 +344,11 @@ class DaySwitches extends Component {
 
 
     render() {
-        const {hoursStatus, activeDayparting, visibleWindow, processing, initialState} = this.state;
+        const {hoursStatus, activeDayparting, visibleWindow, processing, initialState, fetchingData} = this.state;
 
         return (
             <Fragment>
-                <section className={`${processing ? 'day-switches in-processing' : 'day-switches'}  ${activeDayparting ? 'enabled' : 'disabled'}`}>
+                <section className={`${(fetchingData || this.props.fetchingCampaignList) ? 'day-switches in-processing' : 'day-switches'}  ${activeDayparting ? 'enabled' : 'disabled'}`}>
                     <div className="section-header">
                         <button
                             className='btn default switch-day-parting'
@@ -415,7 +422,7 @@ class DaySwitches extends Component {
                         </div>
                     </div>
 
-                    {processing && <div className="disable-page-loading">
+                    {(fetchingData || this.props.fetchingCampaignList) && <div className="disable-page-loading">
                         <Spin size="large"/>
                     </div>}
                 </section>
@@ -461,7 +468,7 @@ class DaySwitches extends Component {
 
 const mapStateToProps = state => ({
     campaignId: state.products.selectedProduct.id,
-    fetching: state.products.fetching
+    fetchingCampaignList: state.products.fetching
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -119,7 +119,7 @@ const DayChart = ({data, firstMetric, secondMetric}) => {
                     />
 
                     <Line
-                        dot={false}
+                        dot={{r: 2}}
                         isAnimationActive={false}
                         yAxisId="left"
                         dataKey={firstMetric.key}
@@ -128,7 +128,7 @@ const DayChart = ({data, firstMetric, secondMetric}) => {
                     />
 
                     {secondMetric.key !== 'nothing' && <Line
-                        dot={false}
+                        dot={{r: 2}}
                         isAnimationActive={false}
                         yAxisId="right"
                         dataKey={secondMetric.key}

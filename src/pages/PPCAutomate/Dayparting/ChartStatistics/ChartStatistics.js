@@ -17,9 +17,9 @@ const ChartStatistics = ({date}) => {
         [secondMetric, setSecondMetric] = useState(metricsList[0]),
         [processing, setProcessing] = useState(false);
 
-    const {campaignId, fetching} = useSelector(state => ({
+    const {campaignId, fetchingCampaignList} = useSelector(state => ({
         campaignId: state.products.selectedProduct.id,
-        fetching: state.products.fetching,
+        fetchingCampaignList: state.products.fetching,
     }));
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const ChartStatistics = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
-            if (!fetching) {
+            if (!fetchingCampaignList) {
                 setProcessing(true);
                 try {
                     const res = await daypartingServices.getDailyStatistic({
@@ -63,7 +63,7 @@ const ChartStatistics = ({date}) => {
     }, [campaignId, date, firstMetric, secondMetric]);
 
     return (
-        <section className={`${processing ? 'chart-statistics disabled' : 'chart-statistics'}`}>
+        <section className={`${(processing || fetchingCampaignList) ? 'chart-statistics disabled' : 'chart-statistics'}`}>
             <div className="section-header">
                 <h2>Metrics Comparison</h2>
 
@@ -86,6 +86,7 @@ const ChartStatistics = ({date}) => {
                                     title={item.title}
                                     key={item.key}
                                     value={item.key}
+                                    disabled={secondMetric.key === 'nothing' && item.key === 'nothing'}
                                 >
                                     {item.title}
                                 </Option>
@@ -123,7 +124,7 @@ const ChartStatistics = ({date}) => {
                 secondMetric={secondMetric}
             />
 
-            {processing && <div className="disable-page-loading">
+            {(processing || fetchingCampaignList) && <div className="disable-page-loading">
                 <Spin size="large"/>
             </div>}
         </section>
