@@ -40,7 +40,8 @@ function setCampaignBudget({campaignId, data}) {
 }
 
 function getDailyStatistic({campaignId, date, firstMetric, secondMetric, cancelToken}) {
-    return api('get', `${daypartingUrls.dailyStatistic(campaignId)}?start_date=${dateFormatter(date.startDate)}&end_date=${dateFormatter(date.endDate)}&metrics=${firstMetric.key}${secondMetric.key !== 'nothing' ? `,${secondMetric.key}` : ''}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.dailyStatistic(campaignId)}?start_date=${dateFormatter(date.startDate)}&end_date=${dateFormatter(date.endDate)}&metrics=${firstMetric.key !== 'nothing' ? firstMetric.key : ''}${secondMetric.key !== 'nothing' ? (firstMetric.key === 'nothing' ? secondMetric.key : `,${secondMetric.key}`) : ''}`,
+        null, null, cancelToken)
 }
 
 function getPlacementsStatistic({campaignId, date, cancelToken}) {

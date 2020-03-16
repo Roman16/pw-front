@@ -1,7 +1,7 @@
 @import "../../style/variables.less";
 
 .product-list {
-  width: 19%;
+  width: 20%;
   min-width: 365px;
   display: flex;
   flex-direction: column;
@@ -9,7 +9,7 @@
   //border-right: 1px solid rgba(201, 203, 212, 0.2);
   font-family: ir;
   position: relative;
-  transition: all 0.3s ease-in;
+  transition: all 0.2s ease-in;
   overflow: hidden;
 
   &.daypartin-list {
@@ -23,7 +23,7 @@
   &.closed {
     width: 20px;
     min-width: 20px;
-    transition: all 0.3s ease-in;
+    transition: all 0.2s ease-in;
     padding-right: 10px;
 
     .fetching-data {
@@ -36,7 +36,7 @@
     .campaigns-list,
     .products {
       visibility: hidden;
-      transition: .3s;
+      transition: .2s;
     }
   }
 
@@ -876,10 +876,7 @@
     width: 19.071428571em;
   }
 
-  @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 800px),
-  only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 800px),
-  only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 800px),
-  only screen and (max-device-pixel-ratio: 1) and (max-width: 800px) {
+  @media (max-width: 800px) {
     width: 100%;
     height: 40vh;
     overflow: hidden;
@@ -894,19 +891,12 @@
     }
   }
 
-  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 799px),
-  only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 799px),
-  only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 799px),
-  only screen and (min-device-pixel-ratio: 2) and (max-width: 799px) {
-    margin-left: 7.2em;
-  }
-
   @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px), only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px), only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
     & {
       height: 40vh;
       // height: fit-content;
       overflow: hidden;
-      padding: 1.71428571em 1.71428571em 0 6.2em;
+      padding: 1.71428571em 1.71428571em 1.71428571em 6.2em;
       margin: 0;
 
       .page-items-block {
@@ -924,7 +914,7 @@
   //-------------------------------------
   @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
     & {
-      min-width: 290px;
+      min-width: 305px;
 
       .product-item
       .product-children-list
@@ -933,6 +923,14 @@
       .ant-spin {
         right: 11%;
         bottom: 11%;
+      }
+
+      .search-product,
+      .product-pagination,
+      .page-items-block,
+      .campaigns-list,
+      .products {
+        min-width: 275px;
       }
     }
   }
@@ -969,7 +967,7 @@
     img {
       width: 1rem;
       transform: rotate(90deg);
-      transition: .4s;
+      transition: .3s;
     }
   }
 
@@ -978,7 +976,7 @@
       img {
         transform: rotate(-90deg);
         margin: 0 0 0 3px;
-        transition: .3s;
+        transition: .2s;
 
       }
     }
@@ -1001,8 +999,6 @@
 
       img {
         transform: rotate(90deg);
-        margin: 0 0 0 3px;
-        transition: .3s;
       }
     }
 

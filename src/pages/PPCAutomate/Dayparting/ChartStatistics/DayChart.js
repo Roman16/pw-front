@@ -54,11 +54,11 @@ const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
                         </div>
 
                         <div className="col values">
-                            <div className="value">
+                            <div className="value" style={{color: '#82ca9d'}}>
                                 {firstMetric.type === 'currency' ? `$${numberMask(payload[0].payload[firstMetric.key], 2)}` : (firstMetric.type === 'percent' ? `${round(payload[0].payload[firstMetric.key], 3)} %` : round(payload[0].payload[firstMetric.key], 2))}
                             </div>
 
-                            {secondMetric.key !== 'nothing' && <div className="value">
+                            {secondMetric.key !== 'nothing' && <div className="value" style={{color: '#8884d8'}}>
                                 {secondMetric.type === 'currency' ? `$${numberMask(payload[0].payload[secondMetric.key], 2)}` : (secondMetric.type === 'percent' ? `${round(payload[0].payload[secondMetric.key], 3)} %` : round(payload[0].payload[secondMetric.key], 2))}
                             </div>}
                         </div>

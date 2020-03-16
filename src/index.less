@@ -72,7 +72,10 @@ img {
     // overflow-y: hidden;
   }
 
-  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px), only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px), only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 800px),
+  only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 800px),
+  only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 800px),
+  only screen and (min-device-pixel-ratio: 2) and (max-width: 800px) {
     flex-flow: column;
     overflow-y: hidden;
   }
@@ -93,20 +96,18 @@ img {
 
 
   .main-container {
-    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 800px), only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 800px), only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 800px), only screen and (max-device-pixel-ratio: 1) and (max-width: 800px) {
+    @media (max-width: 800px) {
       overflow-y: auto;
-      overflow-x: hidden;
       padding-left: 5.142857142857143em;
     }
 
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 799px),
-    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 799px),
-    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 799px),
-    only screen and (min-device-pixel-ratio: 2) and (max-width: 799px) {
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding-left: 5.142857142857143em;
-    }
+    //@media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+    //only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+    //only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+    //only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+    //  overflow-y: auto;
+    //  padding-left: 5.142857142857143em;
+    //}
   }
 }
 

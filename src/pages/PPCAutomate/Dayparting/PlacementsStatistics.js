@@ -120,7 +120,7 @@ const ChartTooltip = ({payload}) => {
                                 {chartLabel[entry.name]}
                             </div>
 
-                            <div className='percent'>
+                            <div className='percent' style={{color: entry.color}}>
                                 {getPercent(entry.value, total)}
                             </div>
 

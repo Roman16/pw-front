@@ -18,7 +18,6 @@ import {Spin} from "antd";
 const CancelToken = axios.CancelToken;
 let source = null;
 
-const defaultData = Array.from({length: 168}, () => 0);
 
 const days = [
     'Sunday',
@@ -34,6 +33,8 @@ const hours = Array.from({length: 24}, (item, index) => index);
 
 
 const OutBudget = ({date}) => {
+    const defaultData = Array.from({length: 168}, (item, index) => moment(`${moment(date.startDate).add( Math.floor(index / 24), 'days').format('DD.MM.YYYY')} ${index - 24 * Math.floor(index / 24)}`, 'DD.MM.YYYY HH').format('YYYY-MM-DD HH:mm:ss'));
+
     const [data, setData] = useState(defaultData),
         [percentParams, setParams] = useState({min: 0, max: 1}),
         [visibleModal, setModal] = useState(false),
@@ -86,7 +87,11 @@ const OutBudget = ({date}) => {
                         max: maxValue
                     });
 
-                    setData(res.response);
+
+                    // setData(res.response);
+                    setData(defaultData.map(item => {
+                      return res.response.find(dataDot => dataDot.date === item) ? res.response.find(dataDot => dataDot.date === item) : {}
+                    }));
                     setFetchingData(false);
                 } catch (e) {
                     setFetchingData(false);

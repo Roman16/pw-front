@@ -322,9 +322,9 @@ class ProductList extends Component {
                                         description={item.name}
                                         position={'top'}
                                     >
+                                        {/*<span className={'short-name'} title={item.name}>{item.name}</span>*/}
                                         <span className={'short-name'}>{item.name}</span>
                                     </InformationTooltip>
-
                                 </div>
                             ))}
                         </div>
@@ -342,9 +342,7 @@ class ProductList extends Component {
                             <img src={selectIcon} alt=""/>
                         </div>
                     </div>
-
                 </div>
-
             </Fragment>
         );
     }
