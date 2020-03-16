@@ -295,8 +295,16 @@
     min-width: initial !important;
     display: flex;
     flex-direction: column;
+    position: relative;
 
     grid-area: chartStatistics;
+
+    &.disabled {
+      .section-header,
+      .chart-block {
+        filter: grayscale(100%);
+      }
+    }
 
     .section-header {
       height: 27px;
@@ -552,6 +560,14 @@
     display: flex;
     flex-direction: column;
     margin: 0 !important;
+    position: relative;
+
+    &.disabled {
+      .section-header,
+      .row {
+        filter: grayscale(100%);
+      }
+    }
 
 
     .section-header {

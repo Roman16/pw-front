@@ -333,7 +333,7 @@ class DaySwitches extends Component {
 
         return (
             <Fragment>
-                <section className={`day-switches ${activeDayparting ? 'enabled' : 'disabled'}`}>
+                <section className={`${processing ? 'day-switches in-processing' : 'day-switches'}  ${activeDayparting ? 'enabled' : 'disabled'}`}>
                     <div className="section-header">
                         <button
                             className='btn default switch-day-parting'
@@ -406,6 +406,10 @@ class DaySwitches extends Component {
                             </div>
                         </div>
                     </div>
+
+                    {processing && <div className="disable-page-loading">
+                        <Spin size="large"/>
+                    </div>}
                 </section>
 
 

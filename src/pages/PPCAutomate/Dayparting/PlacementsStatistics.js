@@ -10,6 +10,7 @@ import {useSelector} from "react-redux";
 import {numberMask} from "../../../utils/numberMask";
 import axios from "axios";
 import {round} from "../../../utils/round";
+import {Spin} from "antd";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -184,7 +185,9 @@ const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
 
 const PlacementsStatistics = ({date}) => {
     const [chartData, setChartData] = useState([]),
-        [statisticData, setStatisticData] = useState({});
+        [statisticData, setStatisticData] = useState({}),
+        [processing, setProcessing] = useState(false);
+
     const {campaignId, fetching} = useSelector(state => ({
         campaignId: state.products.selectedProduct.id,
         fetching: state.products.fetching,
@@ -196,6 +199,8 @@ const PlacementsStatistics = ({date}) => {
             source = CancelToken.source();
 
             if (!fetching) {
+                setProcessing(true);
+
                 try {
                     const res = await daypartingServices.getPlacementsStatistic({
                         campaignId,
@@ -212,7 +217,9 @@ const PlacementsStatistics = ({date}) => {
 
                     setStatisticData(res.response.statistics);
                     setChartData(chartData);
+                    setProcessing(false);
                 } catch (e) {
+                    setProcessing(false);
                     console.log(e);
                 }
             }
@@ -223,7 +230,7 @@ const PlacementsStatistics = ({date}) => {
     }, [date, campaignId]);
 
     return (
-        <section className='placements-statistics'>
+        <section className={`${processing ? 'placements-statistics disabled' : 'placements-statistics'}`}>
             <div className="section-header">
                 <h2>Placements</h2>
             </div>
@@ -346,6 +353,10 @@ const PlacementsStatistics = ({date}) => {
                 </div>
             </div>
 
+
+            {processing && <div className="disable-page-loading">
+                <Spin size="large"/>
+            </div>}
         </section>
     )
 };

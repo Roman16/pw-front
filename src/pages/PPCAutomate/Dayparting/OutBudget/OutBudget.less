@@ -4,6 +4,13 @@
   position: relative;
   overflow: hidden;
 
+  &.disabled {
+    .section-header,
+    .statistics-block {
+      filter: grayscale(100%);
+    }
+  }
+
   .section-header {
     h2 {
       display: flex;

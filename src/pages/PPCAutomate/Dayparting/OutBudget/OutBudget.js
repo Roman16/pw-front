@@ -13,6 +13,7 @@ import axios from "axios";
 import {numberMask} from "../../../../utils/numberMask";
 import {productsActions} from "../../../../actions/products.actions";
 import successImage from '../../../../assets/img/landing-contact-us/checked.svg';
+import {Spin} from "antd";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -37,7 +38,8 @@ const OutBudget = ({date}) => {
         [percentParams, setParams] = useState({min: 0, max: 1}),
         [visibleModal, setModal] = useState(false),
         [saved, setStatus] = useState(false),
-        [processing, setProcessing] = useState(false);
+        [processing, setProcessing] = useState(false),
+        [fetchingData, setFetchingData] = useState(false);
 
     const dispatch = useDispatch();
     const {campaignId, fetching} = useSelector(state => ({
@@ -68,6 +70,7 @@ const OutBudget = ({date}) => {
             source = CancelToken.source();
 
             if (!fetching) {
+                setFetchingData(true);
                 try {
                     const res = await daypartingServices.getOutBudgetStatistic({
                         campaignId,
@@ -83,9 +86,10 @@ const OutBudget = ({date}) => {
                         max: maxValue
                     });
 
-                    setData(res.response)
+                    setData(res.response);
+                    setFetchingData(false);
                 } catch (e) {
-                    console.log(e);
+                    setFetchingData(false);
                 }
             }
         }
@@ -107,7 +111,7 @@ const OutBudget = ({date}) => {
             }
         });
 
-      if (outBudget) {
+        if (outBudget) {
             return (
                 <div className="out-budget-item">
                     <div className='statistic-information' style={{background: color, opacity: color ? 1 : 0}}/>
@@ -152,7 +156,7 @@ const OutBudget = ({date}) => {
 
     return (
         <Fragment>
-            <section className='spend-statistics'>
+            <section className={` ${fetchingData ? 'spend-statistics disabled' : 'spend-statistics'}`}>
                 <div className="section-header">
                     <h2>
                         Sales / Out of Budget
@@ -225,6 +229,10 @@ const OutBudget = ({date}) => {
                         </div>
                     </div>
                 </div>
+
+                {fetchingData && <div className="disable-page-loading">
+                    <Spin size="large"/>
+                </div>}
             </section>
 
 

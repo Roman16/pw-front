@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Select} from "antd";
+import {Select, Spin} from "antd";
 import CustomSelect from "../../../../components/Select/Select";
 import DayChart from './DayChart';
 import {metricsList} from "./metricsList";
@@ -14,7 +14,8 @@ const Option = Select.Option;
 const ChartStatistics = ({date}) => {
     const [data, setData] = useState([]),
         [firstMetric, setFirstMetric] = useState(metricsList[1]),
-        [secondMetric, setSecondMetric] = useState(metricsList[0]);
+        [secondMetric, setSecondMetric] = useState(metricsList[0]),
+        [processing, setProcessing] = useState(false);
 
     const {campaignId, fetching} = useSelector(state => ({
         campaignId: state.products.selectedProduct.id,
@@ -27,6 +28,7 @@ const ChartStatistics = ({date}) => {
             source = CancelToken.source();
 
             if (!fetching) {
+                setProcessing(true);
                 try {
                     const res = await daypartingServices.getDailyStatistic({
                         campaignId,
@@ -47,7 +49,10 @@ const ChartStatistics = ({date}) => {
 
                         return (point);
                     })]);
+
+                    setProcessing(false);
                 } catch (e) {
+                    setProcessing(false);
                     console.log(e);
                 }
             }
@@ -58,7 +63,7 @@ const ChartStatistics = ({date}) => {
     }, [campaignId, date, firstMetric, secondMetric]);
 
     return (
-        <section className='chart-statistics'>
+        <section className={`${processing ? 'chart-statistics disabled' : 'chart-statistics'}`}>
             <div className="section-header">
                 <h2>Metrics Comparison</h2>
 
@@ -117,6 +122,10 @@ const ChartStatistics = ({date}) => {
                 firstMetric={firstMetric}
                 secondMetric={secondMetric}
             />
+
+            {processing && <div className="disable-page-loading">
+                <Spin size="large"/>
+            </div>}
         </section>
     )
 };
