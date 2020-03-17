@@ -355,7 +355,7 @@ class DaySwitches extends Component {
                             onClick={this.switchDayPartingHandler}
                             disabled={processing || !this.props.campaignId}
                         >
-                            {activeDayparting ? 'Disable Day Parting' : 'Enable Day Parting'}
+                            {activeDayparting ? 'Disable Day-parting' : 'Enable Day-parting'}
                         </button>
 
                         <div className='actions'>
