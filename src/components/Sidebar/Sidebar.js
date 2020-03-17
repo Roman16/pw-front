@@ -232,6 +232,7 @@ const Sidebar = () => {
                                                     >
                                                         {item.title}
                                                         {item.soon && <img className="soon" src={soon} alt="soon"/>}
+                                                        {item.new && <img className="new-fiches" src={newLabel} />}
                                                     </NavLink>
                                                 </li>
                                             ))}
