@@ -13,11 +13,11 @@ import axios from "axios";
 import {numberMask} from "../../../../utils/numberMask";
 import {productsActions} from "../../../../actions/products.actions";
 import successImage from '../../../../assets/img/landing-contact-us/checked.svg';
+import {Spin} from "antd";
 
 const CancelToken = axios.CancelToken;
 let source = null;
 
-const defaultData = Array.from({length: 168}, () => 0);
 
 const days = [
     'Sunday',
@@ -33,16 +33,19 @@ const hours = Array.from({length: 24}, (item, index) => index);
 
 
 const OutBudget = ({date}) => {
+    const defaultData = Array.from({length: 168}, (item, index) => moment(`${moment(date.startDate).add( Math.floor(index / 24), 'days').format('DD.MM.YYYY')} ${index - 24 * Math.floor(index / 24)}`, 'DD.MM.YYYY HH').format('YYYY-MM-DD HH:mm:ss'));
+
     const [data, setData] = useState(defaultData),
         [percentParams, setParams] = useState({min: 0, max: 1}),
         [visibleModal, setModal] = useState(false),
         [saved, setStatus] = useState(false),
-        [processing, setProcessing] = useState(false);
+        [processing, setProcessing] = useState(false),
+        [fetchingData, setFetchingData] = useState(false);
 
     const dispatch = useDispatch();
-    const {campaignId, fetching} = useSelector(state => ({
+    const {campaignId, fetchingCampaignList} = useSelector(state => ({
         campaignId: state.products.selectedProduct.id,
-        fetching: state.products.fetching,
+        fetchingCampaignList: state.products.fetching,
     }));
 
     async function saveBudget(data) {
@@ -67,7 +70,8 @@ const OutBudget = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
-            if (!fetching) {
+            if (!fetchingCampaignList) {
+                setFetchingData(true);
                 try {
                     const res = await daypartingServices.getOutBudgetStatistic({
                         campaignId,
@@ -83,9 +87,14 @@ const OutBudget = ({date}) => {
                         max: maxValue
                     });
 
-                    setData(res.response)
+
+                    // setData(res.response);
+                    setData(defaultData.map(item => {
+                      return res.response.find(dataDot => dataDot.date === item) ? res.response.find(dataDot => dataDot.date === item) : {}
+                    }));
+                    setFetchingData(false);
                 } catch (e) {
-                    console.log(e);
+                    setFetchingData(false);
                 }
             }
         }
@@ -107,7 +116,7 @@ const OutBudget = ({date}) => {
             }
         });
 
-      if (outBudget) {
+        if (outBudget) {
             return (
                 <div className="out-budget-item">
                     <div className='statistic-information' style={{background: color, opacity: color ? 1 : 0}}/>
@@ -123,11 +132,11 @@ const OutBudget = ({date}) => {
     const TooltipDescription = ({value, timeIndex, date, outBudget}) => {
         return (
             <Fragment>
-                <h3 className="date">{moment(date).format('MMMM DD')}</h3>
+                <h3 className="date">{`${days[Math.floor(timeIndex / 24)]}`}</h3>
                 <div className="row">
                     <div className="col">
                         <h3>
-                            {`${days[Math.floor(timeIndex / 24)]}`}
+                            {moment(date).format('MMMM DD')}
                         </h3>
 
                         <span className='selected-metric'>Sales</span>
@@ -152,7 +161,7 @@ const OutBudget = ({date}) => {
 
     return (
         <Fragment>
-            <section className='spend-statistics'>
+            <section className={` ${(fetchingData || fetchingCampaignList) ? 'spend-statistics disabled' : 'spend-statistics'}`}>
                 <div className="section-header">
                     <h2>
                         Sales / Out of Budget
@@ -225,6 +234,10 @@ const OutBudget = ({date}) => {
                         </div>
                     </div>
                 </div>
+
+                {(fetchingData || fetchingCampaignList) && <div className="disable-page-loading">
+                    <Spin size="large"/>
+                </div>}
             </section>
 
 

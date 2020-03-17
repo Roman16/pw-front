@@ -45,6 +45,10 @@
     overflow-y: auto;
     overflow-x: hidden;
 
+    .disabled-link {
+      pointer-events: none;
+    }
+
     .country-nav {
       .country-active {
         display: grid;
@@ -177,7 +181,7 @@
               width: 200px;
               display: none;
               position: absolute;
-              top: 27em;
+              top: 21em;
               padding: 0 0 0 30px;
               left: 4.5em;
               // opacity: 0;
@@ -187,6 +191,8 @@
               //   // display: none;
               //   // background-color: #f00;
               // }
+
+
 
               .collapsed-automate-list {
                 width: 200px;
@@ -199,9 +205,22 @@
                 background-color: @third-default-dark;
                 border-radius: 8px;
 
+                .new-fiches {
+                  height: 1.1429em;
+                  position: absolute;
+                  padding: 0 5px;
+                  top: -0.1em;
+                  left: 67px;
+
+                  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+                    left: 53px;
+                  }
+                }
+
                 .automate-item {
                   padding: 1.1em 0;
                   cursor: pointer;
+                  position: relative;
 
                   .automate-link {
                     font-size: 1rem; // 14px
@@ -545,6 +564,18 @@ a:focus {
       top: -0.7143em;
       right: -3em;
     }
+
+    .new-fiches {
+      height: 1.1429em;
+      position: absolute;
+      padding: 0 5px;
+      top: -0.7143em;
+      left: 67px;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+        left: 53px;
+      }
+    }
   }
 
   .automate-list {
@@ -553,11 +584,22 @@ a:focus {
         position: relative;
 
         .soon {
-          width: 2.8571em;
           height: 1.1429em;
           position: absolute;
           top: -0.7143em;
           right: 2.5em;
+        }
+
+        .new-fiches {
+          height: 1.1429em;
+          position: absolute;
+          padding: 0 5px;
+          top: -0.7143em;
+          left: 67px;
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+            left: 53px;
+          }
         }
       }
     }

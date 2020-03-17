@@ -77,6 +77,6 @@ export const ppcAutomateMenu = [
     {
         title: 'Dayparting',
         link: '/dayparting',
-        soon: true
+        new: true
     }
 ];

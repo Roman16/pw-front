@@ -10,7 +10,8 @@ import {getClassNames} from "../../utils";
 import {userActions} from "../../actions/user.actions";
 import ItemIcon from "../ItemIcon/ItemIcon";
 import logo from "../../assets/img/ProfitWhales-logo-white.svg";
-import soon from "../../assets/img/icons/soon.svg";
+import soon from "../../assets/img/soon-label.svg";
+import newLabel from "../../assets/img/new-label.svg";
 import "./Sidebar.less";
 import {history} from "../../utils/history";
 
@@ -174,7 +175,7 @@ const Sidebar = () => {
                             <li className="top-nav-item ppc-automate-link">
                                     <span onClick={toggleAutomate}>
                                       <NavLink
-                                          className="top-nav-link"
+                                          className="top-nav-link disabled-link"
                                           activeClassName="top-nav-link-active"
                                           to="/ppc"
                                           replace
@@ -200,7 +201,8 @@ const Sidebar = () => {
                                                     }}
                                                 >
                                                     {item.title}
-                                                    {item.soon && <img className="soon" src={soon} alt="soon"/>}
+                                                    {item.new && <img className="new-fiches" src={newLabel} />}
+                                                    {item.soon && <img className="soon" src={soon} />}
                                                 </NavLink>
                                             </li>
                                         ))}
@@ -230,6 +232,7 @@ const Sidebar = () => {
                                                     >
                                                         {item.title}
                                                         {item.soon && <img className="soon" src={soon} alt="soon"/>}
+                                                        {item.new && <img className="new-fiches" src={newLabel} />}
                                                     </NavLink>
                                                 </li>
                                             ))}

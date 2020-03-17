@@ -48,7 +48,17 @@ function fetchProducts(paginationParams) {
                     } else {
                         dispatch(fetchProductDetails({id: null}, paginationParams.pathname));
                     }
-                });
+                })
+                .catch(error => {
+                    dispatch({
+                        type: productsConstants.SET_PRODUCT_LIST,
+                        payload: {
+                            result: [],
+                            totalSize: 0,
+                            fetching: false
+                        }
+                    });
+                })
         } else {
             productsServices.getProducts(paginationParams)
                 .then(res => {
@@ -65,6 +75,16 @@ function fetchProducts(paginationParams) {
                     } else {
                         dispatch(fetchProductDetails({id: null}, paginationParams.pathname));
                     }
+                })
+                .catch(error => {
+                    dispatch({
+                        type: productsConstants.SET_PRODUCT_LIST,
+                        payload: {
+                            result: [],
+                            totalSize: 0,
+                            fetching: false
+                        }
+                    });
                 });
         }
     };

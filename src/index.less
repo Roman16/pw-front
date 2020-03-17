@@ -72,7 +72,10 @@ img {
     // overflow-y: hidden;
   }
 
-  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px), only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px), only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+  @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 800px),
+  only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 800px),
+  only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 800px),
+  only screen and (min-device-pixel-ratio: 2) and (max-width: 800px) {
     flex-flow: column;
     overflow-y: hidden;
   }
@@ -93,20 +96,18 @@ img {
 
 
   .main-container {
-    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 800px), only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 800px), only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 800px), only screen and (max-device-pixel-ratio: 1) and (max-width: 800px) {
+    @media (max-width: 800px) {
       overflow-y: auto;
-      overflow-x: hidden;
       padding-left: 5.142857142857143em;
     }
 
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 799px),
-    only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 799px),
-    only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 799px),
-    only screen and (min-device-pixel-ratio: 2) and (max-width: 799px) {
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding-left: 5.142857142857143em;
-    }
+    //@media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+    //only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+    //only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+    //only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+    //  overflow-y: auto;
+    //  padding-left: 5.142857142857143em;
+    //}
   }
 }
 
@@ -697,5 +698,24 @@ body {
       display: block !important;
     }
   }
+}
+
+.disable-page-loading {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+
+    .btn {
+      text-transform: uppercase;
+      padding: 0 20px;
+      font-size: 1.2857142857142858rem;
+    }
 }
 

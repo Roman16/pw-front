@@ -59,12 +59,11 @@ const api = (method, url, data, type, abortToken) => {
                     localStorage.clear();
                 }
 
-                if (axios.isCancel(error)) {
-                    console.log('Request canceled');
-                }
-
                 if (error.response) {
-                    if (typeof error.response.data === 'object') {
+                    if (error.response.status === 500 && (!error.response.data || !error.response.data.message)) {
+                        handlerErrors('Something wrong!');
+                        reject(error);
+                    } else if (typeof error.response.data === 'object') {
                         reject(error);
                         if (error.response.status === 401) {
                             if (error.response.data) {

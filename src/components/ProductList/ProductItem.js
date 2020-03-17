@@ -39,6 +39,7 @@ const ProductItem = ({
         <div
             className={`product-item ${isActive ? 'active' : ''}`}
             onClick={() => onClick(product)}
+            title={name}
         >
             <div className='product-information'>
                 <div className="image-block">
@@ -56,18 +57,7 @@ const ProductItem = ({
 
                 <div className="product-item-content">
                     <div className="caption">
-                        <InformationTooltip
-                            onClick={(e) => {
-                                e.target.parentNode.parentNode.parentNode.click()
-                            }}
-                            getPopupContainer={trigger => trigger.parentNode}
-                            type={'custom'}
-                            description={name}
-                            position={'top'}
-                        >
-                            <span className={'short-name'}>{name}</span>
-                        </InformationTooltip>
-
+                        <span className={'short-name'}>{name}</span>
 
                         {product.has_new_changes && pathname === '/ppc/report' &&
                         <div className='has-new-reports'>New</div>}

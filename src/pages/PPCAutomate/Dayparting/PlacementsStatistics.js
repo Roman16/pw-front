@@ -10,6 +10,7 @@ import {useSelector} from "react-redux";
 import {numberMask} from "../../../utils/numberMask";
 import axios from "axios";
 import {round} from "../../../utils/round";
+import {Spin} from "antd";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -119,7 +120,7 @@ const ChartTooltip = ({payload}) => {
                                 {chartLabel[entry.name]}
                             </div>
 
-                            <div className='percent'>
+                            <div className='percent' style={{color: entry.color}}>
                                 {getPercent(entry.value, total)}
                             </div>
 
@@ -162,13 +163,13 @@ const MetricValue = ({metric = {}, type}) => {
         return (
             <div className="value">
                 {+metric.diff === 0 ? <div/> : <img src={metric.diff > 0 ? upGreenIcon : downRedIcon} alt=""/>}
-                {type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${round(metric.value, 2)}` : metric.value)}
+                {metric.value == null ? 'NaN' : type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${round(metric.value, 2)}` : metric.value)}
             </div>
         )
     } else {
         return (
             <div className="value">
-                {type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${round(metric.value, 2)}` : metric.value)}
+                {metric.value == null ? 'NaN' : type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${round(metric.value, 2)}` : metric.value)}
             </div>
         )
     }
@@ -184,10 +185,12 @@ const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
 
 const PlacementsStatistics = ({date}) => {
     const [chartData, setChartData] = useState([]),
-        [statisticData, setStatisticData] = useState({});
-    const {campaignId, fetching} = useSelector(state => ({
+        [statisticData, setStatisticData] = useState({}),
+        [processing, setProcessing] = useState(false);
+
+    const {campaignId, fetchingCampaignList} = useSelector(state => ({
         campaignId: state.products.selectedProduct.id,
-        fetching: state.products.fetching,
+        fetchingCampaignList: state.products.fetching,
     }));
 
     useEffect(() => {
@@ -195,7 +198,9 @@ const PlacementsStatistics = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
-            if (!fetching) {
+            if (!fetchingCampaignList) {
+                setProcessing(true);
+
                 try {
                     const res = await daypartingServices.getPlacementsStatistic({
                         campaignId,
@@ -212,7 +217,9 @@ const PlacementsStatistics = ({date}) => {
 
                     setStatisticData(res.response.statistics);
                     setChartData(chartData);
+                    setProcessing(false);
                 } catch (e) {
+                    setProcessing(false);
                     console.log(e);
                 }
             }
@@ -223,7 +230,8 @@ const PlacementsStatistics = ({date}) => {
     }, [date, campaignId]);
 
     return (
-        <section className='placements-statistics'>
+        <section
+            className={`${(processing || fetchingCampaignList) ? 'placements-statistics disabled' : 'placements-statistics'}`}>
             <div className="section-header">
                 <h2>Placements</h2>
             </div>
@@ -335,17 +343,28 @@ const PlacementsStatistics = ({date}) => {
                                     {item.title}
                                 </div>
 
-                                {metricValues && <Fragment>
-                                    {statisticMetrics.map(item => (
-                                        <MetricValue key={item.key} metric={metricValues[item.key]} type={item.key}/>
-                                    ))}
-                                </Fragment>}
+                                {metricValues ? <Fragment>
+                                        {statisticMetrics.map(item => (
+                                            <MetricValue key={item.key} metric={metricValues[item.key]} type={item.key}/>
+                                        ))}
+                                    </Fragment>
+                                    :
+                                    <Fragment>
+                                        {statisticMetrics.map(item => (
+                                            <MetricValue key={item.key} metric={{diff: null, value: 0}}
+                                                         type={item.key}/>
+                                        ))}
+                                    </Fragment>}
                             </div>
                         )
                     })}
                 </div>
             </div>
 
+
+            {(processing || fetchingCampaignList) && <div className="disable-page-loading">
+                <Spin size="large"/>
+            </div>}
         </section>
     )
 };

@@ -36,7 +36,7 @@ const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
         return (
             <div className='chart-tooltip twice-metrics'>
                 <div className='ant-popover-inner-content'>
-                    <h3>{`${weakDays[moment(payload[0].payload.date).day()].date}, ${moment(payload[0].payload.date).format('MMMM DD')}`}</h3>
+                    <h3 className='border-title'>{`${weakDays[moment(payload[0].payload.date).day()].date}, ${moment(payload[0].payload.date).format('MMMM DD')}`}</h3>
 
                     <div className="row">
                         <div className="col fills">
@@ -54,11 +54,11 @@ const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
                         </div>
 
                         <div className="col values">
-                            <div className="value">
+                            <div className="value" style={{color: '#82ca9d'}}>
                                 {firstMetric.type === 'currency' ? `$${numberMask(payload[0].payload[firstMetric.key], 2)}` : (firstMetric.type === 'percent' ? `${round(payload[0].payload[firstMetric.key], 3)} %` : round(payload[0].payload[firstMetric.key], 2))}
                             </div>
 
-                            {secondMetric.key !== 'nothing' && <div className="value">
+                            {secondMetric.key !== 'nothing' && <div className="value" style={{color: '#8884d8'}}>
                                 {secondMetric.type === 'currency' ? `$${numberMask(payload[0].payload[secondMetric.key], 2)}` : (secondMetric.type === 'percent' ? `${round(payload[0].payload[secondMetric.key], 3)} %` : round(payload[0].payload[secondMetric.key], 2))}
                             </div>}
                         </div>
@@ -119,7 +119,7 @@ const DayChart = ({data, firstMetric, secondMetric}) => {
                     />
 
                     <Line
-                        dot={false}
+                        dot={{r: 2}}
                         isAnimationActive={false}
                         yAxisId="left"
                         dataKey={firstMetric.key}
@@ -128,7 +128,7 @@ const DayChart = ({data, firstMetric, secondMetric}) => {
                     />
 
                     {secondMetric.key !== 'nothing' && <Line
-                        dot={false}
+                        dot={{r: 2}}
                         isAnimationActive={false}
                         yAxisId="right"
                         dataKey={secondMetric.key}

@@ -57,7 +57,11 @@ class ProductList extends Component {
 
     selectChangeHandler = ({name, value}) => {
         this.setState({
-            [name]: value
+            [name]: value,
+            paginationParams: {
+                ...this.state.paginationParams,
+                page: 1
+            }
         }, this.getProducts)
     };
 
@@ -300,6 +304,7 @@ class ProductList extends Component {
                                     key={item.id}
                                     className={selectedProduct.id === item.id ? 'campaign-item active' : 'campaign-item'}
                                     onClick={() => this.onSelect(item)}
+                                    title={item.name}
                                 >
                                     {item.hasEnabledDayparting && <InformationTooltip
                                         arrowPointAtCenter={true}
@@ -311,20 +316,7 @@ class ProductList extends Component {
                                     </InformationTooltip>}
 
 
-                                    <InformationTooltip
-                                        onClick={(e) => {
-                                            e.target.parentNode.parentNode.parentNode.click()
-                                        }}
-                                        className={'name-tooltip'}
-                                        getPopupContainer={trigger => trigger.parentNode}
-                                        arrowPointAtCenter={true}
-                                        type={'custom'}
-                                        description={item.name}
-                                        position={'top'}
-                                    >
-                                        <span className={'short-name'}>{item.name}</span>
-                                    </InformationTooltip>
-
+                                    <span className={'short-name'}>{item.name}</span>
                                 </div>
                             ))}
                         </div>
@@ -336,11 +328,11 @@ class ProductList extends Component {
                         size={size}
                         onChangePagination={this.handleChangePagination}
                     />
-                </div>
 
-                <div className={`switch-list ${closedList ? 'closed' : 'opened'}`}>
-                    <div className="image" onClick={() => this.setState({closedList: !closedList})}>
-                        <img src={selectIcon} alt=""/>
+                    <div className={`switch-list ${closedList ? 'closed' : 'opened'}`}>
+                        <div className="image" onClick={() => this.setState({closedList: !closedList})}>
+                            <img src={selectIcon} alt=""/>
+                        </div>
                     </div>
                 </div>
             </Fragment>

@@ -1,10 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import leftIcon from "../../assets/img/icons/left-icon.svg";
 import rightIcon from "../../assets/img/icons/right-icon.svg";
-import {InputNumber} from "antd";
-import {hold} from "../../utils/hold";
+import {Input} from "antd";
 
 const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
+    const [pageNumber, setPageNumber] = useState(null);
 
     function goPrevPage() {
         if (page > 1) {
@@ -19,8 +19,9 @@ const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
     }
 
     function goToPage(value) {
-        if (totalSize > 0 && value > 0 && value < Math.ceil(totalSize / size) + 1) {
-            onChangePagination(value)
+        if (totalSize > 0 && value > 0 && value < Math.ceil(totalSize / size) + 1 && value !== page && value !== null) {
+            onChangePagination(value);
+            setPageNumber(null);
         }
     }
 
@@ -31,13 +32,13 @@ const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
             </div>
 
             <div className='custom-pagination'>
-                <div className='prev' onClick={goPrevPage}>
+                <div className={page > 1 ? 'prev' : 'prev disabled'} onClick={goPrevPage}>
                     <img src={leftIcon} alt=""/>
                 </div>
 
                 <div className="line"/>
 
-                <div className='next' onClick={goNextPage}>
+                <div className={totalSize > 0 && page < Math.ceil(totalSize / size) ? 'next' : 'next disabled'} onClick={goNextPage}>
                     <img src={rightIcon} alt=""/>
                 </div>
             </div>
@@ -45,15 +46,23 @@ const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
             <div className="go-to">
                 Go to
 
-                <InputNumber
+                <Input
+                    type={'number'}
                     min={1}
-                    max={totalSize > 0 ? Math.ceil(totalSize / size) : 1}
-                    defaultValue={1}
+                    value={pageNumber}
                     onBlur={e => {
-                        onChangePagination(e.target.value)
+                        if(e.target.value >  Math.ceil(totalSize / size)) {
+                            setPageNumber(null)
+                        }
+
+                        goToPage(e.target.value)
                     }}
-                    onChange={e => hold(() => goToPage(e), 500)}
-                    onPressEnter={(e) => goToPage(e.target.value)}
+                    onChange={e => {
+                        setPageNumber(e.target.value);
+                    }}
+                    onPressEnter={(e) => {
+                        goToPage(e.target.value)
+                    }}
                 />
             </div>
         </div>
