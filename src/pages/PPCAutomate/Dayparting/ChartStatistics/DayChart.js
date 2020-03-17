@@ -40,23 +40,24 @@ const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
 
                     <div className="row">
                         <div className="col fills">
-                            <div className='example-fill' style={{background: '#82ca9d'}}/>
+                            {firstMetric.key !== 'nothing' && <div className='example-fill' style={{background: '#82ca9d'}}/>}
 
                             {secondMetric.key !== 'nothing' &&
                             <div className='example-fill' style={{background: '#8884d8'}}/>}
                         </div>
 
                         <div className="col metrics-name">
-                            <span className='selected-metric'>{firstMetric.title}</span>
+                            {firstMetric.key !== 'nothing' && <span className='selected-metric'>{firstMetric.title}</span>}
+
 
                             {secondMetric.key !== 'nothing' &&
                             <span className='selected-metric'>{secondMetric.title}</span>}
                         </div>
 
                         <div className="col values">
-                            <div className="value" style={{color: '#82ca9d'}}>
+                            {firstMetric.key !== 'nothing' && <div className="value" style={{color: '#82ca9d'}}>
                                 {firstMetric.type === 'currency' ? `$${numberMask(payload[0].payload[firstMetric.key], 2)}` : (firstMetric.type === 'percent' ? `${round(payload[0].payload[firstMetric.key], 3)} %` : round(payload[0].payload[firstMetric.key], 2))}
-                            </div>
+                            </div>}
 
                             {secondMetric.key !== 'nothing' && <div className="value" style={{color: '#8884d8'}}>
                                 {secondMetric.type === 'currency' ? `$${numberMask(payload[0].payload[secondMetric.key], 2)}` : (secondMetric.type === 'percent' ? `${round(payload[0].payload[secondMetric.key], 3)} %` : round(payload[0].payload[secondMetric.key], 2))}
