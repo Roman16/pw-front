@@ -45,6 +45,10 @@
     overflow-y: auto;
     overflow-x: hidden;
 
+    .disabled-link {
+      pointer-events: none;
+    }
+
     .country-nav {
       .country-active {
         display: grid;
@@ -558,6 +562,28 @@ a:focus {
           position: absolute;
           top: -0.7143em;
           right: 2.5em;
+        }
+
+        .new-fiches {
+          height: 14px;
+          position: absolute;
+          padding: 0 5px;
+          top: -0.7143em;
+          left: 68px;
+          background: green;
+          color: #fff;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+            height: 12px;
+            font-size: 10px;
+            left: 55px;
+            padding: 1px 5px 0 5px;
+          }
         }
       }
     }

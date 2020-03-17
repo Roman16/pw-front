@@ -174,7 +174,7 @@ const Sidebar = () => {
                             <li className="top-nav-item ppc-automate-link">
                                     <span onClick={toggleAutomate}>
                                       <NavLink
-                                          className="top-nav-link"
+                                          className="top-nav-link disabled-link"
                                           activeClassName="top-nav-link-active"
                                           to="/ppc"
                                           replace
@@ -200,7 +200,7 @@ const Sidebar = () => {
                                                     }}
                                                 >
                                                     {item.title}
-                                                    {item.soon && <img className="soon" src={soon} alt="soon"/>}
+                                                    {item.new && <div className="new-fiches">New</div>}
                                                 </NavLink>
                                             </li>
                                         ))}

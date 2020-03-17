@@ -230,7 +230,8 @@ const PlacementsStatistics = ({date}) => {
     }, [date, campaignId]);
 
     return (
-        <section className={`${(processing || fetchingCampaignList) ? 'placements-statistics disabled' : 'placements-statistics'}`}>
+        <section
+            className={`${(processing || fetchingCampaignList) ? 'placements-statistics disabled' : 'placements-statistics'}`}>
             <div className="section-header">
                 <h2>Placements</h2>
             </div>
@@ -342,11 +343,18 @@ const PlacementsStatistics = ({date}) => {
                                     {item.title}
                                 </div>
 
-                                {metricValues && <Fragment>
-                                    {statisticMetrics.map(item => (
-                                        <MetricValue key={item.key} metric={metricValues[item.key]} type={item.key}/>
-                                    ))}
-                                </Fragment>}
+                                {metricValues ? <Fragment>
+                                        {statisticMetrics.map(item => (
+                                            <MetricValue key={item.key} metric={metricValues[item.key]} type={item.key}/>
+                                        ))}
+                                    </Fragment>
+                                    :
+                                    <Fragment>
+                                        {statisticMetrics.map(item => (
+                                            <MetricValue key={item.key} metric={{diff: null, value: 0}}
+                                                         type={item.key}/>
+                                        ))}
+                                    </Fragment>}
                             </div>
                         )
                     })}

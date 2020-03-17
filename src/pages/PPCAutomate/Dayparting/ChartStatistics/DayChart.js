@@ -36,7 +36,7 @@ const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
         return (
             <div className='chart-tooltip twice-metrics'>
                 <div className='ant-popover-inner-content'>
-                    <h3>{`${weakDays[moment(payload[0].payload.date).day()].date}, ${moment(payload[0].payload.date).format('MMMM DD')}`}</h3>
+                    <h3 className='border-title'>{`${weakDays[moment(payload[0].payload.date).day()].date}, ${moment(payload[0].payload.date).format('MMMM DD')}`}</h3>
 
                     <div className="row">
                         <div className="col fills">

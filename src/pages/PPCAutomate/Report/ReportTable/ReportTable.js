@@ -182,6 +182,7 @@ class ReportTable extends Component {
 
     handleChangeFilter = (key, value, type) => {
         let newFilteredColumns = {...this.state.filteredColumns};
+
         if (value.length > 0 || value.type) {
             if (type === 'number') {
                 this.setState({
@@ -191,10 +192,11 @@ class ReportTable extends Component {
                     }
                 }, () => {
                     if (JSON.stringify(newFilteredColumns) !== JSON.stringify(this.state.filteredColumns)) {
-                        this.fetchReports()
+                        this.setState({
+                            page: 1
+                        }, this.fetchReports)
                     }
                 });
-
             } else {
                 this.setState({
                     filteredColumns: {
@@ -203,13 +205,16 @@ class ReportTable extends Component {
                     }
                 }, () => {
                     if (JSON.stringify(newFilteredColumns) !== JSON.stringify(this.state.filteredColumns)) {
-                        this.fetchReports()
+                        this.setState({
+                            page: 1
+                        }, this.fetchReports)
                     }
                 });
             }
         } else {
             delete newFilteredColumns[key];
             this.setState({
+                page: 1,
                 filteredColumns: newFilteredColumns
             }, this.fetchReports)
         }

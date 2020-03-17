@@ -132,11 +132,11 @@ const OutBudget = ({date}) => {
     const TooltipDescription = ({value, timeIndex, date, outBudget}) => {
         return (
             <Fragment>
-                <h3 className="date">{moment(date).format('MMMM DD')}</h3>
+                <h3 className="date">{`${days[Math.floor(timeIndex / 24)]}`}</h3>
                 <div className="row">
                     <div className="col">
                         <h3>
-                            {`${days[Math.floor(timeIndex / 24)]}`}
+                            {moment(date).format('MMMM DD')}
                         </h3>
 
                         <span className='selected-metric'>Sales</span>

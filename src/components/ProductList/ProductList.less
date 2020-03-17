@@ -5,7 +5,8 @@
   min-width: 365px;
   display: flex;
   flex-direction: column;
-  padding: 1.714285714285714em 1.4285714285714286rem 1.714285714285714em 1.4285714285714286rem;
+  padding: 1.714285714285714em 25px 1.714285714285714em 1.4285714285714286rem;
+  //padding: 1.714285714285714em 1.4285714285714286rem 1.714285714285714em 1.4285714285714286rem;
   //border-right: 1px solid rgba(201, 203, 212, 0.2);
   font-family: ir;
   position: relative;
@@ -102,7 +103,7 @@
   .campaigns-list,
   .portfolios-list {
     overflow-y: auto;
-    padding: 0 0 5px;
+    margin: 0 0 20px;
     position: relative;
 
     .ant-popover-inner-content {
@@ -354,18 +355,26 @@
     }
 
     .page-size-select {
-      width: 60%;
+      width: 55%;
       border-right: 1px solid rgba(212, 218, 222, 0.32);
       font-size: 1rem;
       letter-spacing: 0.16px;
       color: #656A84;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
 
       .custom-select {
         margin: 0 0 0 15px;
         height: 20px;
         width: 50px;
+
+        @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+          width: 40px;
+
+          .ant-select-selection__rendered {
+            margin-right: 15px;
+          }
+        }
 
         .ant-select-selection {
           border: 0;
@@ -373,6 +382,7 @@
 
           .ant-select-selection-selected-value {
             font-weight: bold;
+            align-items: center;
           }
         }
 
@@ -811,6 +821,11 @@
       div {
         cursor: pointer;
 
+        &.disabled {
+          cursor: not-allowed;
+          opacity: .3;
+        }
+
         img {
           width: 1rem;
           height: 1rem;
@@ -830,38 +845,34 @@
       align-items: center;
       justify-content: flex-end;
 
-      .ant-input-number {
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+
+
+      input {
+        background: inherit;
+        border: 0;
+        border-bottom: 1px solid #C9CBD4;
+        border-radius: 0;
+        padding-left: 0;
+        font-size: 1rem;
+
         width: 50px;
         height: 25px;
         margin: 0 0 0 15px;
-        background: inherit;
-        border: 0;
 
-        &.ant-input-number-focused {
+        &:focus {
+          outline: none;
           box-shadow: none;
-        }
-
-        .ant-input-number-input-wrap {
-          height: 100%;
-        }
-
-        .ant-input-number-handler-wrap {
-          background: inherit;
-        }
-
-        input {
-          height: 100%;
-          background: inherit;
-          border: 0;
-          border-bottom: 1px solid #C9CBD4;
-          border-radius: 0;
-          padding-left: 0;
-          font-size: 1rem;
-
-          &:focus {
-            outline: none;
-            box-shadow: none;
-          }
         }
       }
     }

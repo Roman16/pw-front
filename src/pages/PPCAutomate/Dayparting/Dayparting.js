@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './Dayparting.less';
 import OutBudget from "./OutBudget/OutBudget";
 import ChartStatistics from "./ChartStatistics/ChartStatistics";
@@ -13,12 +13,8 @@ import moment from "moment";
 import tz from 'moment-timezone';
 import SubscriptionNotificationWindow
     from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
-import {useSelector} from "react-redux";
-import {Redirect} from 'react-router-dom';
 
 const Option = Select.Option;
-
-const developer = process.env.REACT_APP_ENV === "developer";
 
 
 // eslint-disable-next-line no-unused-vars
@@ -31,87 +27,75 @@ const Dayparting = () => {
         })
     });
 
-    const {userId} = useSelector(state => ({
-        userId: state.user.user.id,
-    }));
-
-
     const [selectedDate, setSelectedDate] = useState(weeks[0]);
 
     function changeDateHandler(dateIndex) {
         setSelectedDate(weeks[dateIndex]);
     }
 
+    return (
+        <div className='dayparting-page'>
+            <div className='last-synced'>
+                <div className="date-stamp">
+                    Day-parting is operating in PST (Pacific Standard Time)
+                </div>
 
-    if (developer || userId === 714) {
-        return (
-            <div className='dayparting-page'>
-                <div className='last-synced'>
-                    <div className="date-stamp">
-                        Day-parting is operating in PST (Pacific Standard Time)
-                    </div>
+                <div className="week-select">
+                    <label htmlFor="">Select Week:</label>
 
-                    <div className="week-select">
-                        <label htmlFor="">Select Week:</label>
-
-                        <CustomSelect
-                            getPopupContainer={trigger => trigger.parentNode}
-                            defaultValue={0}
-                            dropdownClassName={'full-width-menu'}
-                            onChange={changeDateHandler}
-                        >
-                            {weeks.map((item, index) => (
-                                <Option
-                                    key={item}
-                                    value={item.id}
-                                >
-                                    {`${moment(item.startDate).format('MMM DD')} - ${moment(item.endDate).format('MMM DD')}`}
-                                </Option>
-                            ))}
-                        </CustomSelect>
-                    </div>
-
-                    <div className="color-gradation">
-                        Min
-                        {colorList.map(item => (
-                            <InformationTooltip
-                                type={'custom'}
-                                description={<span>Min: {item.min} % <br/> Max: {item.max} %</span>}
-                                key={shortid.generate()}
+                    <CustomSelect
+                        getPopupContainer={trigger => trigger.parentNode}
+                        defaultValue={0}
+                        dropdownClassName={'full-width-menu'}
+                        onChange={changeDateHandler}
+                    >
+                        {weeks.map((item, index) => (
+                            <Option
+                                key={item}
+                                value={item.id}
                             >
-                                <div key={item.color} style={{background: item.color}}/>
-                            </InformationTooltip>
+                                {`${moment(item.startDate).format('MMM DD')} - ${moment(item.endDate).format('MMM DD')}`}
+                            </Option>
                         ))}
-                        Max
-                    </div>
+                    </CustomSelect>
                 </div>
 
-                <div className="row">
-                    <OutBudget
-                        date={selectedDate}
-                    />
-
-                    <ChartStatistics
-                        date={selectedDate}
-                    />
+                <div className="color-gradation">
+                    Min
+                    {colorList.map(item => (
+                        <InformationTooltip
+                            type={'custom'}
+                            description={<span>Min: {item.min} % <br/> Max: {item.max} %</span>}
+                            key={shortid.generate()}
+                        >
+                            <div key={item.color} style={{background: item.color}}/>
+                        </InformationTooltip>
+                    ))}
+                    Max
                 </div>
+            </div>
 
-                <DaySwitches
-
-                />
-
-                <PlacementsStatistics
+            <div className="row">
+                <OutBudget
                     date={selectedDate}
                 />
 
-                <SubscriptionNotificationWindow product={'ppc'} page={'dayparting'}/>
+                <ChartStatistics
+                    date={selectedDate}
+                />
             </div>
-        )
-    } else {
-        return (<Redirect to={'/ppc/optimization'}/>)
-    }
 
+            <DaySwitches
 
+            />
+
+            <PlacementsStatistics
+                date={selectedDate}
+            />
+
+            <SubscriptionNotificationWindow product={'ppc'} page={'dayparting'}/>
+        </div>
+    )
 };
 
 export default React.memo(Dayparting);
