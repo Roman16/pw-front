@@ -942,6 +942,10 @@
       .campaigns-list,
       .products {
         min-width: 275px;
+
+        @media (max-width: 350px) {
+          min-width: 200px;
+        }
       }
     }
   }
@@ -959,10 +963,9 @@
   align-items: center;
   z-index: 100;
   border-right: 1px solid rgba(201, 203, 212, 0.2);
-
   position: absolute;
-  right: 0;
 
+  z-index: 0;
 
   .image {
     height: 30px;
