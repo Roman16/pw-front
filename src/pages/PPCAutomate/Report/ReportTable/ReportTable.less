@@ -652,9 +652,18 @@ div.ReportTable {
 
     .ant-checkbox-group-item {
       margin: 0 0 5px 0;
+      align-items: flex-end;
+
+      span {
+        font-size: 1rem;
+      }
 
       & > span {
         line-height: initial;
+      }
+
+      & > span:last-child {
+        margin: 0 0 1px 0;
       }
 
       .ant-checkbox {
@@ -669,8 +678,8 @@ div.ReportTable {
       }
 
       .ant-checkbox-inner::after {
-        width: 7px;
-        height: 12px;
+        width: 0.5rem;
+        height: 0.8571428571428571rem;
       }
     }
   }
