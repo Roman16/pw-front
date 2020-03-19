@@ -195,14 +195,12 @@ const Sidebar = () => {
                                                 <NavLink
                                                     className="automate-link"
                                                     activeClassName="automate-link-active"
-                                                    {...item.link === '/product-settings' && {"data-intercom-target": "settings-link"}}
-                                                    {...item.link === '/optimization' && {"data-intercom-target": "optimization-link"}}
-                                                    {...item.link === '/dashboard' && {"data-intercom-target": "dashboard-link"}}
+                                                    data-intercom-target={`${item.link}-link`}
                                                     exact
                                                     to={item.soon && (production && user.user.id !== 714) ?
                                                         '/'
                                                         :
-                                                        item.link === '/optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc${item.link}`}
+                                                        item.link === '/optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc/${item.link}`}
                                                     onClick={e => {
                                                         if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
                                                     }}
@@ -231,9 +229,7 @@ const Sidebar = () => {
                                                     <NavLink
                                                         className="automate-link"
                                                         activeClassName="automate-link-active"
-                                                        {...item.link === '/product-settings' && {"data-intercom-target": "settings-link"}}
-                                                        {...item.link === '/optimization' && {"data-intercom-target": "optimization-link"}}
-                                                        {...item.link === '/dashboard' && {"data-intercom-target": "dashboard-link"}}
+                                                        data-intercom-target={`${item.link}-link`}
                                                         exact
                                                         to={(item.soon && (production && user.user.id !== 714)) ? '/' : `/ppc${item.link}`}
                                                         onClick={e => {
