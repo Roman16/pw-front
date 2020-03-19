@@ -57,9 +57,10 @@ const ConnectedAmazonRoute = props => {
 const AuthorizedUser = (props) => {
     const dispatch = useDispatch();
     const pathname = props.location.pathname;
-    const {lastStatusAction, userId} = useSelector(state => ({
+    const {lastStatusAction, userId, bootstrapInProgress} = useSelector(state => ({
         lastStatusAction: state.user.lastUserStatusAction,
         userId: state.user.user.id,
+        bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
     }));
 
     function getUserStatus() {
@@ -91,6 +92,7 @@ const AuthorizedUser = (props) => {
                 {(pathname === '/ppc/optimization' ||
                     pathname === '/ppc/report' ||
                     pathname === '/ppc/scanner' ||
+                    pathname === '/ppc/optimization/loading' ||
                     pathname === '/ppc/dayparting'
                 ) &&
                 <ProductList
@@ -104,7 +106,25 @@ const AuthorizedUser = (props) => {
                         <ConnectedAmazonRoute
                             exact
                             path="/ppc/optimization"
-                            component={Optimization}
+                            render={() => {
+                                if (bootstrapInProgress) {
+                                    return (<Redirect to={'/ppc/optimization/loading'}/>)
+                                } else {
+                                    return (<Optimization/>)
+                                }
+                            }}
+                        />
+
+                        <ConnectedAmazonRoute
+                            exact
+                            path="/ppc/optimization/loading"
+                            render={() => {
+                                if (bootstrapInProgress) {
+                                    return (<Optimization/>)
+                                } else {
+                                    return (<Redirect to={'/ppc/optimization'}/>)
+                                }
+                            }}
                         />
 
                         <ConnectedAmazonRoute
@@ -140,7 +160,7 @@ const AuthorizedUser = (props) => {
                         <Route exact path="/account-billing" component={Billing}/>
                         <Route exact path="/account-subscription" component={Subscription}/>
 
-                       <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
+                        <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
                     </Switch>
                 </div>
             </div>

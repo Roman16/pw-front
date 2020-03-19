@@ -14,6 +14,7 @@ import {numberMask} from "../../../../utils/numberMask";
 import {productsActions} from "../../../../actions/products.actions";
 import successImage from '../../../../assets/img/landing-contact-us/checked.svg';
 import {Spin} from "antd";
+import {NavLink} from "react-router-dom";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -181,6 +182,7 @@ const OutBudget = ({date}) => {
                         className='btn default'
                         onClick={() => setModal(true)}
                         disabled={!campaignId}
+                        data-intercom-target='add-budget-button'
                     >
                         <img src={plusIconWhite} alt=""/>
                         Add budget

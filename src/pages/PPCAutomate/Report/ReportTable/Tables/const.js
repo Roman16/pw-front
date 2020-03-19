@@ -75,8 +75,11 @@ export const dateField = {
     dataIndex: 'eventDateTime',
     key: 'eventDateTime',
     width: '120px',
-    render: date => <span>{moment.utc(date).local().format('MMM DD, YYYY')}
-        <br/> {moment.utc(date).local().format('H:mm:ss')}</span>,
+    render: date => <span>
+        {moment.utc(date).tz('America/Los_Angeles').format('MMM DD, YYYY')}
+        <br/>
+        {moment.utc(date).tz('America/Los_Angeles').format('hh:mm:ss A')}
+    </span>,
     sorter: true,
 };
 

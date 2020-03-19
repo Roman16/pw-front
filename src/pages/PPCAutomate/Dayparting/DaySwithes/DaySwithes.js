@@ -13,6 +13,7 @@ import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
 import {connect} from "react-redux";
 import axios from "axios";
 import {productsActions} from '../../../../actions/products.actions'
+import {NavLink} from "react-router-dom";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -348,9 +349,11 @@ class DaySwitches extends Component {
 
         return (
             <Fragment>
-                <section className={`${(fetchingData || this.props.fetchingCampaignList) ? 'day-switches in-processing' : 'day-switches'}  ${activeDayparting ? 'enabled' : 'disabled'}`}>
+                <section
+                    className={`${(fetchingData || this.props.fetchingCampaignList) ? 'day-switches in-processing' : 'day-switches'}  ${activeDayparting ? 'enabled' : 'disabled'}`}>
                     <div className="section-header">
                         <button
+                            data-intercom-target='switch-dayparting'
                             className='btn default switch-day-parting'
                             onClick={this.switchDayPartingHandler}
                             disabled={processing || !this.props.campaignId}
@@ -394,7 +397,11 @@ class DaySwitches extends Component {
                         <div className="row">
                             <div className="col day-axis">
                                 {days.map((day, dayIndex) => (
-                                    <div className='day-name' key={shortid.generate()}>
+                                    <div
+                                        {...dayIndex === 0 && {'data-intercom-target': 'dayparting-switches'}}
+                                        className='day-name'
+                                        key={shortid.generate()}
+                                    >
                                         <Switch
                                             disabled={!activeDayparting}
                                             checked={hoursStatus.slice(24 * dayIndex, 24 * (dayIndex + 1)).every(item => item === '1')}

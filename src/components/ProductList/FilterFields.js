@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import filterIcon from "../../assets/img/icons/products-filter-icon.svg";
 import {Input, Select, Switch} from "antd";
 import CustomSelect from "../Select/Select";
+import {NavLink} from "react-router-dom";
 
 const {Search} = Input;
 const Option = Select.Option;
@@ -36,9 +37,12 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                     className="search-field"
                     placeholder={'Search by campaign name, ASIN or SKU'}
                     onChange={e => onSearch(e.target.value)}
+                    data-intercom-target='search-field'
                 />
 
-                <div className='filter-btn' onClick={() => switchWindow(!openedWindow)}>
+                <div className='filter-btn' onClick={() => switchWindow(!openedWindow)}
+                     data-intercom-target='open-filters-button'
+                >
                     <img src={filterIcon} alt=""/>
                 </div>
 
@@ -48,7 +52,9 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                         <CustomSelect
                             getPopupContainer={trigger => trigger.parentNode}
                             dropdownClassName={'full-width-menu'}
-                            onChange={(e) => {onChangeSelect({name: 'campaign_type', value: e})}}
+                            onChange={(e) => {
+                                onChangeSelect({name: 'campaign_type', value: e})
+                            }}
                             defaultValue={'all'}
                         >
                             <Option value={'all'}>
@@ -68,7 +74,9 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                         <CustomSelect
                             getPopupContainer={trigger => trigger.parentNode}
                             dropdownClassName={'full-width-menu'}
-                            onChange={(e) => {onChangeSelect({name: 'campaign_status', value: e})}}
+                            onChange={(e) => {
+                                onChangeSelect({name: 'campaign_status', value: e})
+                            }}
                             defaultValue={'all'}
                         >
                             <Option value={'all'}>
@@ -83,7 +91,7 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                         </CustomSelect>
                     </div>
 
-                    <div className="active-only">
+                    <div className="active-only" data-intercom-target='only-on-dayparting-switch'>
                         <label htmlFor="">On day-parting only</label>
 
                         <Switch

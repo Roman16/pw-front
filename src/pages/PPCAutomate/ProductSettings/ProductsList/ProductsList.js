@@ -339,6 +339,7 @@ class ProductsList extends Component {
                         <InputCurrency
                             value={item[NET_MARGIN]}
                             typeIcon='margin'
+                            data-intercom-target="net-margin-field"
                             onChange={event =>
                                 this.onChangeRow(event, NET_MARGIN, indexRow)
                             }
@@ -359,6 +360,7 @@ class ProductsList extends Component {
                             min={0}
                             max={item[MAX_BID_MANUAL_CAMPING] || 999999999}
                             step={0.01}
+                            data-intercom-target="min-bid-field"
                             onChange={event =>
                                 this.onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)
                             }

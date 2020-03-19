@@ -11,8 +11,6 @@ const baseUrl =
 
 let lastError = null;
 
-const CancelToken = axios.CancelToken;
-let cancel;
 
 function handlerErrors(error) {
     if (lastError !== error) {
@@ -38,6 +36,7 @@ const api = (method, url, data, type, abortToken) => {
         axios({
             method: method,
             url: `${baseUrl}/api/${url}`,
+            // timeout: 30000,
             data: data,
             headers: {
                 'Content-Type': type || 'application/json',
@@ -54,6 +53,7 @@ const api = (method, url, data, type, abortToken) => {
                 }
             })
             .catch(error => {
+
                 if (error.response && error.response.status === 401) {
                     history.push('/login');
                     localStorage.clear();
@@ -69,18 +69,15 @@ const api = (method, url, data, type, abortToken) => {
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
                             }
-                        } else if (error.response.status === 429) {
-
-                        } else if (error.response.status === 402 && error.response.statusText === "Payment Required") {
-
-                        } else if (error.response.status === 403 && error.response.statusText === "Forbidden") {
-
+                        } else if (error.response.status === 429 || (error.response.status === 402 && error.response.statusText === "Payment Required") || (error.response.status === 403 && error.response.statusText === "Forbidden")) {
                         } else if (error.response.data.message !== 'Product not found') {
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
                             }
                         }
                     }
+                } else {
+                    reject(error);
                 }
             });
     });

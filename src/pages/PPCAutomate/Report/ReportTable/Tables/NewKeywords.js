@@ -84,7 +84,7 @@ export const newKeywords = ({
                     dataIndex: 'd_startDate',
                     key: 'd_startDate',
                     width: '13em',
-                    render: text => moment(text).format('YYYY-MM-DD'),
+                    render: date => moment.utc(date).tz('America/Los_Angeles').format('YYYY-MM-DD'),
                     sorter: true,
                 },
                 {

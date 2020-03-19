@@ -55,28 +55,28 @@ export const regionsMenu = [
 export const ppcAutomateMenu = [
     {
         title: 'Dashboard',
-        link: '/dashboard'
+        link: 'dashboard'
     },
     {
         title: 'Optimization Setup',
-        link: '/optimization'
+        link: 'optimization'
     },
     {
         title: 'Optimization Reports',
-        link: '/report'
+        link: 'report'
     },
     {
         title: 'Product Settings',
-        link: '/product-settings'
+        link: 'product-settings'
     },
     {
         title: 'PPC Scanner',
-        link: '/scanner',
+        link: 'scanner',
         className: 'ppcScaner'
     },
     {
         title: 'Dayparting',
-        link: '/dayparting',
+        link: 'dayparting',
         new: true
     }
 ];

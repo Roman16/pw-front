@@ -59,9 +59,10 @@ const Sidebar = () => {
         [regions] = useState(regionsMenu),
         // [display, setDisplay] = useState("none"),
         dispatch = useDispatch(),
-        {user, notFirstEntry} = useSelector(state => ({
+        {user, notFirstEntry, bootstrapInProgress} = useSelector(state => ({
             user: state.user,
             notFirstEntry: state.user.notFirstEntry,
+            bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
         }));
 
 
@@ -194,8 +195,12 @@ const Sidebar = () => {
                                                 <NavLink
                                                     className="automate-link"
                                                     activeClassName="automate-link-active"
+                                                    data-intercom-target={`${item.link}-link`}
                                                     exact
-                                                    to={item.soon && (production && user.user.id !== 714) ? '/' : `/ppc${item.link}`}
+                                                    to={item.soon && (production && user.user.id !== 714) ?
+                                                        '/'
+                                                        :
+                                                        item.link === '/optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc/${item.link}`}
                                                     onClick={e => {
                                                         if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
                                                     }}
@@ -224,6 +229,7 @@ const Sidebar = () => {
                                                     <NavLink
                                                         className="automate-link"
                                                         activeClassName="automate-link-active"
+                                                        data-intercom-target={`${item.link}-link`}
                                                         exact
                                                         to={(item.soon && (production && user.user.id !== 714)) ? '/' : `/ppc${item.link}`}
                                                         onClick={e => {

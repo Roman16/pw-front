@@ -47,17 +47,17 @@ const weakDays = [
 
 const statisticParams = [
     {
-        title: 'Rest of search',
-        key: 'Other on-Amazon'
+        title: 'Top of search',
+        key: 'Top of Search on-Amazon'
     },
     {
         title: 'Product pages',
         key: 'Detail Page on-Amazon'
     },
     {
-        title: 'Top of search',
-        key: 'Top of Search on-Amazon'
-    }
+        title: 'Rest of search',
+        key: 'Other on-Amazon'
+    },
 ];
 
 const statisticMetrics = [
@@ -291,7 +291,7 @@ const PlacementsStatistics = ({date}) => {
 
                             <Area
                                 type="linear"
-                                dataKey="top_search"
+                                dataKey="rest_search"
                                 stackId="1"
                                 stroke={chartColors[2].stroke}
                                 fill="url(#colorUv)"
@@ -313,7 +313,7 @@ const PlacementsStatistics = ({date}) => {
 
                             <Area
                                 type="linear"
-                                dataKey="rest_search"
+                                dataKey="top_search"
                                 stackId="1"
                                 stroke={chartColors[0].stroke}
                                 fill="url(#colorAmt)"

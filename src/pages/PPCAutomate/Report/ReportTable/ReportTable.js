@@ -20,6 +20,7 @@ import "./ReportTable.less";
 import {mainChangesCount, mainHasNewReport, subChangesCount} from "./Tables/changesCount";
 import CustomTable from "../../../../components/Table/CustomTable";
 import TableButton from "./TableButton/TableButton";
+import tz from 'moment-timezone';
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -274,7 +275,7 @@ class ReportTable extends Component {
 
         const TabName = ({name = null, type}) => {
             return (
-                <div className="TabName">
+                <div className="TabName" data-intercom-target={`${type}-category`}>
                     <span>{name}</span>
 
                     <div className="tab-name-count">
@@ -420,6 +421,7 @@ class ReportTable extends Component {
                     <div className="report-item-table-btn">
                         {mainTabs[activeTab].subTabs.map(item => (
                             <TableButton
+                                dataIntercomTarget={`${item.key}-sub-category`}
                                 totalSize={totalSize}
                                 loading={loading}
                                 active={item.key === activeSubTab}
