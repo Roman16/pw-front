@@ -29,6 +29,8 @@ const MainChart = () => {
         onlyOptimization: state.products.onlyOptimization,
     }));
 
+    let localFetch = false;
+
     const timeRange = (start, end) => {
         if (start) {
             dispatch(dashboardActions.selectDateRange({
@@ -49,6 +51,8 @@ const MainChart = () => {
 
     const getChartData = () => {
         if (activeMetrics[0].key || activeMetrics[1].key) {
+            localFetch = true;
+
             switchFetch(true);
             setFetchingError(false);
             source = CancelToken.source();
@@ -65,10 +69,13 @@ const MainChart = () => {
                 .then(res => {
                     updateChartData(res);
                     switchFetch(false);
+                    setFetchingError(false);
+                    localFetch= false;
                 })
-                .catch(error => {
-                    setFetchingError(true);
-                    switchFetch(false);
+                .catch(() => {
+                    !localFetch && setFetchingError(true);
+                    !localFetch && switchFetch(false);
+                    localFetch = false;
                 })
         } else {
             updateChartData([])

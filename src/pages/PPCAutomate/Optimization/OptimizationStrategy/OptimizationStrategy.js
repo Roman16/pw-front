@@ -177,7 +177,7 @@ function StrategyItem({
                         :
                         <button disabled={processing || productId == null} className='btn default'
                                 onClick={() => onStart(targetAcos)}
-                                data-intercom-target="start-button"
+                                {... index === 1 && {"data-intercom-target": "start-button"}}
                         >
                             {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
                             start
@@ -316,6 +316,7 @@ const OptimizationStrategy = ({product: {desired_target_acos, optimization_strat
                         {strategies.map((item, index) => (
                             <div
                                 key={item.key}
+                                data-intercom-target={`${item.key}-strategy`}
                                 className={`strategy-name ${index === selectedSlide && 'selected-strategy'} ${optimization_strategy === item.key && status === RUNNING && 'running-strategy'}`}
                                 onClick={() => goToSlideHandler(index)}>
                                 {item.name}

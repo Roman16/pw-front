@@ -26,7 +26,9 @@ const NotFound = () => (
                             Back to site
                         </Link>
                         :
-                        <a href="https://profitwhales.com/">Back to site</a>
+                        <Link to='/'>
+                            Back to site
+                        </Link>
                 }
             </button>
         </div>

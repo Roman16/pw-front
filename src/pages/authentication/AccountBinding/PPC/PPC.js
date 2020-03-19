@@ -6,10 +6,11 @@ import logo from '../../../../assets/img/zth.svg';
 import './PPC.less';
 import {history} from "../../../../utils/history";
 import {userActions} from "../../../../actions/user.actions";
+import {notification} from "../../../../components/Notification";
 
 let intervalId = null;
 
-const PPC = () => {
+const PPC = (props) => {
     const {ppcLink, mwsConnected, ppcConnected} = useSelector(state => ({
             ppcLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.connect_link : '',
             mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
@@ -45,6 +46,8 @@ const PPC = () => {
             history.push('/mws')
         } else if (ppcConnected) {
             history.push('/ppc/dashboard')
+        } else if (props.location.search && props.location.search.indexOf('?error_message=') !== -1) {
+            notification.error({title: props.location.search.split('?error_message=')[1].split('+').join(' ')})
         } else {
             getStatus();
         }
