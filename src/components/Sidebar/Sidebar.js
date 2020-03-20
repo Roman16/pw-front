@@ -5,6 +5,7 @@ import {Icon, Avatar} from "antd";
 import shortid from "shortid";
 import referIcon from '../../assets/img/icons/refer-icon.svg';
 import facebookIcon from '../../assets/img/icons/facebook-icon-white.svg';
+import expertServiceIcon from '../../assets/img/icons/expert-service.svg';
 import {regionsMenu, ppcAutomateMenu} from "./menu";
 import {getClassNames} from "../../utils";
 import {userActions} from "../../actions/user.actions";
@@ -109,6 +110,8 @@ const Sidebar = () => {
         return ('');
     }
 
+    console.log(bootstrapInProgress);
+
 
     return (
         <div
@@ -200,7 +203,7 @@ const Sidebar = () => {
                                                     to={item.soon && (production && user.user.id !== 714) ?
                                                         '/'
                                                         :
-                                                        item.link === '/optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc/${item.link}`}
+                                                        item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc/${item.link}`}
                                                     onClick={e => {
                                                         if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
                                                     }}
@@ -295,6 +298,16 @@ const Sidebar = () => {
                                 <span className="bottom-span">Account</span>
                             </NavLink>
                         </li>
+
+                        {/*<li className="bottom-nav-item">*/}
+                        {/*    <a*/}
+                        {/*        href="#"*/}
+                        {/*        onClick={() => window.Intercom('show')}*/}
+                        {/*    >*/}
+                        {/*        <img src={expertServiceIcon} alt=""/>*/}
+                        {/*        <span className="bottom-span">Expert Service</span>*/}
+                        {/*    </a>*/}
+                        {/*</li>*/}
 
                         <li className="bottom-nav-item">
                             <a

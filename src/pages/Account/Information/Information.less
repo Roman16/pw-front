@@ -147,6 +147,8 @@
         align-items: flex-end;
         flex-wrap: wrap;
 
+
+
         .form-group {
           font-size: 0.9286rem; // 13px
           width: 18.4615em;
@@ -154,9 +156,10 @@
           display: flex;
           flex-flow: column;
           justify-content: space-between;
-          margin: 0 10px 0 0;
+          margin: 0 0 0 10px;
           border: none;
           color: @second-account-color;
+
 
           .form-control {
             width: 100%;
@@ -164,12 +167,15 @@
             border-radius: 0.615em;
             border: 0.0769em solid @border-solid;
             font-size: 1rem;
-
           }
 
           .form-control::placeholder {
             color: @third-account-color;
           }
+        }
+
+        & > div:first-child {
+          margin: 0;
         }
 
         .btn-save {
@@ -187,6 +193,7 @@
 
     @media (max-width: 700px) {
       & {
+        padding: 20px;
         justify-content: center;
         text-align: center;
 
@@ -206,10 +213,11 @@
 
             .form-group {
               width: 100%;
+              margin: 0 0 20px 0 !important;
             }
 
             .btn-save {
-              margin: 20px auto !important;
+              margin: 0 auto !important;
             }
           }
         }
@@ -278,7 +286,7 @@
           display: flex;
           flex-flow: column;
           justify-content: space-between;
-          margin: 0 10px 0 0;
+          margin: 0 0 0 10px;
           border: none;
           color: @second-account-color;
           position: relative;
@@ -320,8 +328,12 @@
           .input-error {
             color: red;
             position: absolute;
-            bottom: -20px;
+            bottom: -15px;
           }
+        }
+
+        & > div:first-child {
+          margin: 0;
         }
 
         .btn-change {
@@ -339,6 +351,7 @@
 
     @media (max-width: 700px) {
       & {
+        padding: 20px;
         justify-content: center;
         flex-wrap: wrap;
         flex-direction: column;
@@ -346,6 +359,10 @@
         .change-password {
           width: 100%;
           flex-direction: column;
+
+          .description {
+            text-align: center;
+          }
 
           h3 {
             text-align: center;
@@ -357,11 +374,13 @@
 
             .form-group {
               width: 100%;
+              margin: 0 0 20px 0 !important;
+
             }
           }
 
           .btn-change {
-            margin: 20px auto !important;
+            margin: 0 auto !important;
           }
         }
       }
