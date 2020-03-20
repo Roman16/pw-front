@@ -183,7 +183,7 @@ const Billing = () => {
 
     return (
         <div className="user-cabinet billing-page">
-            <Navigation/>
+            {/*<Navigation/>*/}
 
             <AccountBilling
                 onOpenWindow={handleOpenWindow}

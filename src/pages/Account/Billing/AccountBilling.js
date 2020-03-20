@@ -106,7 +106,7 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
 
     return (
         <Fragment>
-            <section className='account-billing-block'>
+            <section className='account-billing-block' id={'user-cards'}>
                 <div className='block-description'>
                     <h3>
                         Account billing

@@ -6,6 +6,7 @@ import shortid from "shortid";
 import referIcon from '../../assets/img/icons/refer-icon.svg';
 import facebookIcon from '../../assets/img/icons/facebook-icon-white.svg';
 import expertServiceIcon from '../../assets/img/icons/expert-service.svg';
+import howItWorksIcon from '../../assets/img/icons/how-it-work.png';
 import {regionsMenu, ppcAutomateMenu} from "./menu";
 import {getClassNames} from "../../utils";
 import {userActions} from "../../actions/user.actions";
@@ -93,7 +94,7 @@ const Sidebar = () => {
 
         document.querySelector('body').classList.add('visible-intercom');
 
-        return(() => {
+        return (() => {
             document.querySelector('body').classList.remove('visible-intercom')
         })
     }, []);
@@ -109,9 +110,6 @@ const Sidebar = () => {
         // localStorage.removeItem('token');
         return ('');
     }
-
-    console.log(bootstrapInProgress);
-
 
     return (
         <div
@@ -209,8 +207,8 @@ const Sidebar = () => {
                                                     }}
                                                 >
                                                     {item.title}
-                                                    {item.new && <img className="new-fiches" src={newLabel} />}
-                                                    {item.soon && <img className="soon" src={soon} />}
+                                                    {item.new && <img className="new-fiches" src={newLabel}/>}
+                                                    {item.soon && <img className="soon" src={soon}/>}
                                                 </NavLink>
                                             </li>
                                         ))}
@@ -241,7 +239,7 @@ const Sidebar = () => {
                                                     >
                                                         {item.title}
                                                         {item.soon && <img className="soon" src={soon} alt="soon"/>}
-                                                        {item.new && <img className="new-fiches" src={newLabel} />}
+                                                        {item.new && <img className="new-fiches" src={newLabel}/>}
                                                     </NavLink>
                                                 </li>
                                             ))}
@@ -277,6 +275,15 @@ const Sidebar = () => {
 
                 <nav className="bottom-nav">
                     <ul className="bottom-nav-list">
+                        <li className="bottom-nav-item">
+                            <a
+                                href="https://profitwhales.com/ppc/optimization?product_tour_id=108046"
+                            >
+                                <img src={howItWorksIcon} alt=""/>
+                                <span className="bottom-span">How it works?</span>
+                            </a>
+                        </li>
+
                         <li className="bottom-nav-item">
                             <NavLink
                                 className="automate-link"

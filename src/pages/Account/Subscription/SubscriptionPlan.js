@@ -106,7 +106,7 @@ const SubscriptionPlan = ({
 
     useEffect(() => {
         if (disableButton) {
-            timeout = setTimeout(() => history.push('/account-billing'), 10000)
+            timeout = setTimeout(() => history.push('/account-subscription'), 10000)
         }
 
         return () => {
@@ -151,9 +151,9 @@ const SubscriptionPlan = ({
                     </p>
                     <p className="ppc-link-wrap">
                         To view your invoices, see&nbsp;
-                        <Link className="ppc-link" to="/account-billing">
+                        <a href={'#billing-history'} className="ppc-link">
                             billing info
-                        </Link>
+                        </a>
                     </p>
 
                     <Link to={'/pricing'} className={'learn-more'} target={'blank'}>Learn more</Link>
@@ -201,7 +201,7 @@ const SubscriptionPlan = ({
 
                             <button className="btn green-btn"
                                     onClick={() => {
-                                        (!product.has_access && stripeId) ? getCouponStatus(coupon) : applyCoupon(product.productId, coupon, product.planId)
+                                        (!product.has_access && stripeId) ? getCouponStatus(coupon) : applyCoupon(product.productId, coupon, product.plan_id)
                                     }}>apply
                             </button>
                         </div>

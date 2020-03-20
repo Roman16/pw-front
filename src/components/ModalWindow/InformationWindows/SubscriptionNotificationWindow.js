@@ -4,7 +4,6 @@ import {history} from "../../../utils/history";
 import {useSelector, useDispatch} from "react-redux";
 import {Result} from 'antd';
 import '../ModalWindow.less';
-import {subscriptionProducts} from '../../../constans/subscription.products.name';
 import {userActions} from "../../../actions/user.actions";
 
 
@@ -13,7 +12,7 @@ const SubscriptionNotificationWindow = ({product, page}) => {
 
     const [visibleWindow, setWindow] = useState(true);
     const {subscribedProduct, bootstrapInProgress} = useSelector(state => ({
-        subscribedProduct: state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId],
+        subscribedProduct: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]],
         bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
     }));
 
@@ -46,7 +45,7 @@ const SubscriptionNotificationWindow = ({product, page}) => {
                 />
                 <div className='buttons-block'>
                     {subscribedProduct.incomplete_payment.has_incomplete_payment || (subscribedProduct.pending_payment && subscribedProduct.pending_payment.has_pending_payment) ?
-                        <button onClick={() => history.push('/account-billing')} className='btn green-btn'>
+                        <button onClick={() => history.push('/account-subscription')} className='btn green-btn'>
                             Upgrade Now
                         </button>
                         :

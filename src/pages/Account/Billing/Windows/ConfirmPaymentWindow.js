@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
 import {injectStripe} from "react-stripe-elements";
 import {Spin} from "antd";
 import {userService} from "../../../../services/user.services";
@@ -63,13 +63,19 @@ class ConfirmPaymentWindow extends Component {
                 <h2>Please update your payment method or try again.</h2>
 
                 <div className='buttons-block'>
-                    <button className="btn default" onClick={() => window.open('https://profit-whales.kayako.com/')}>
-                        I need help
-                    </button>
+                    {clickedBtn ?
+                        <Spin/> :
+                        <Fragment>
+                            <button className="btn default"
+                                    onClick={() => window.open('https://profit-whales.kayako.com/')}>
+                                I need help
+                            </button>
 
-                    <button className="btn green-btn" onClick={this.handleConfirm} disabled={clickedBtn}>
-                        {clickedBtn ? <Spin/> : 'Confirm'}
-                    </button>
+                            <button className="btn green-btn" onClick={this.handleConfirm} disabled={clickedBtn}>
+                                Confirm
+                            </button>
+                        </Fragment>
+                    }
                 </div>
             </div>
         )

@@ -34,7 +34,7 @@ let problemList = [
 
 let processingTimeout = null;
 
-const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, successFetch, onDownloadFile}) => {
+const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, successFetch, onDownloadFile, totalSize}) => {
     const devicePixelRatio = window.devicePixelRatio;
 
     const [problems, setProblems] = useState(problemList),
@@ -194,7 +194,7 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                 </button>
             }
 
-            {successFetch && !fetching && <button
+            {successFetch && !fetching && totalSize > 0 && <button
                 className='btn white download'
                 onClick={onDownloadFile}
             >
