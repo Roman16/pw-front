@@ -1,13 +1,10 @@
-import React, {Component, Fragment} from "react";
+import React, {Component} from "react";
 import {injectStripe} from "react-stripe-elements";
 import {Spin} from "antd";
-import {userService} from "../../../../services/user.services";
-import {numberMask} from "../../../../utils/numberMask";
 import {notification} from "../../../../components/Notification";
 
 class ConfirmPaymentWindow extends Component {
     state = {
-        amount: 0,
         clickedBtn: false
     };
 
@@ -16,65 +13,56 @@ class ConfirmPaymentWindow extends Component {
             clickedBtn: true
         });
 
-        const defaultCard = this.props.paymentCards.find(card => card.default);
-        this.props.stripe.confirmCardPayment(
-            this.props.userSecretKey,
-            {
-                payment_method: defaultCard.id
-            }
-        )
-            .then((res) => {
-                if (res.error) {
-                    notification.error({title: res.error.message})
-                } else {
-                    this.props.onUpdateInformation()
-                }
-                this.props.onClose();
-            })
-            .catch(e => {
-                this.props.onClose();
-            })
+        const defaultCard = this.props.paymentCards ? this.props.paymentCards.find(card => card.default) : null;
 
+        if(defaultCard && this.props.paymentCards.length > 0) {
+            this.props.stripe.confirmCardPayment(
+                this.props.userSecretKey,
+                {
+                    payment_method: defaultCard.id
+                }
+            )
+                .then((res) => {
+                    if (res.error) {
+                        notification.error({title: res.error.message})
+                    } else {
+                        this.props.onUpdateInformation()
+                    }
+                    this.props.onClose();
+                    this.setState({
+                        clickedBtn: false
+                    });
+                })
+                .catch(e => {
+                    console.log(e);
+                    this.props.onClose();
+                    this.setState({
+                        clickedBtn: false
+                    });
+                })
+        } else {
+            this.props.onClose();
+            notification.error({title: 'Add card first'});
+            this.props.onOpenAddCardWindow('updateCard');
+        }
     };
 
-    componentDidMount() {
-        try {
-            this.props.stripe.retrievePaymentIntent(
-                this.props.userSecretKey
-            ).then(res => {
-                this.setState({
-                    amount: res.paymentIntent.amount
-                });
-            })
-        } catch (e) {
-            console.log(e);
-        }
-    }
 
     render() {
-        const {amount, clickedBtn} = this.state;
+        const {clickedBtn} = this.state;
 
         return (
             <div>
-                <h2>There was an issue with your payment in the amount of</h2>
-
-                {amount ? (<h2><b>$ {numberMask(amount / 100, 2) || 0}</b></h2>) : ''}
-
-                <h2>Please update your payment method or try again.</h2>
+                <h2>We had a problem processing your payment.
+                    <br/>
+                    Please press «Confirm» so we can turn on your subscription.</h2>
 
                 <div className='buttons-block'>
                     {clickedBtn ?
                         <Spin/> :
-                        <Fragment>
-                            <button className="btn default"
-                                    onClick={() => window.open('https://profit-whales.kayako.com/')}>
-                                I need help
-                            </button>
-
-                            <button className="btn green-btn" onClick={this.handleConfirm} disabled={clickedBtn}>
-                                Confirm
-                            </button>
-                        </Fragment>
+                        <button className="btn green-btn" onClick={this.handleConfirm} disabled={clickedBtn}>
+                            Confirm
+                        </button>
                     }
                 </div>
             </div>

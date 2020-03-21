@@ -7,7 +7,7 @@ import mastercardLogo from '../../../../assets/img/mastercard.svg';
 import discoverLogo from '../../../../assets/img/discover.svg';
 import americanExpressLogo from '../../../../assets/img/american-express.svg';
 import stripeLogo from '../../../../assets/img/stripe-logo.svg';
-import {Input, Select, InputNumber} from "antd";
+import {Input, Select, InputNumber, Popover} from "antd";
 import {userService} from "../../../../services/user.services";
 import {allCountries, countries} from "../../../../utils/countries";
 import {states} from "../../../../utils/states";
@@ -154,6 +154,7 @@ const StripeForm = (props) => {
                             placeholder='Country'
                             showSearch
                             optionFilterProp="children"
+                            getPopupContainer={trigger => trigger.parentNode}
                             filterOption={(input, option) =>
                                 option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                             }

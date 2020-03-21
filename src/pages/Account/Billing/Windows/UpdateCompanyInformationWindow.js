@@ -120,6 +120,7 @@ const UpdateCompanyInformationWindow = ({onClose, company, onSubmit}) => {
 
                         <Select onChange={handleChangeSelect} placeholder='Country'
                                 showSearch
+                                getPopupContainer={trigger => trigger.parentNode}
                                 optionFilterProp="children"
                                 filterOption={(input, option) =>
                                     option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0

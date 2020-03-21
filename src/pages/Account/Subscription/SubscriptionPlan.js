@@ -96,7 +96,7 @@ const SubscriptionPlan = ({
         } else if (!product.has_access && stripeId) {
             return (
                 <div className="subscribe-btn">
-                    <button className="btn green-btn" onClick={handleSubscribe} disabled={disableButton}>
+                    <button className="btn green-btn on-subscribe" onClick={handleSubscribe} disabled={disableButton}>
                         {disableButton ? <Spin/> : 'Subscribe'}
                     </button>
                 </div>
@@ -147,7 +147,7 @@ const SubscriptionPlan = ({
                         <h2 className="ppc-title">{product.productName}</h2>
                     </div>
                     <p className="ppc-text">
-                        Access and edit your account's <br/> Profit Whales subscription
+                        This is a prepaid plan, and you are paying <br/> for the next 30 days of using it.
                     </p>
                     <p className="ppc-link-wrap">
                         To view your invoices, see&nbsp;
