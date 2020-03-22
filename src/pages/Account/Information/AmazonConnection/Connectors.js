@@ -9,9 +9,9 @@ const Connectors = ({amazonTokens}) => {
     return (
         <div className="connectors-box">
             <div className='short-connect-information'>
-                <div className="column">
-                    <img src={amazonTokens && selectedIcon} alt=""/>
-                </div>
+               {amazonTokens && <div className="column">
+                    <img src={selectedIcon} alt=""/>
+                </div>}
 
                 <div className="column">
                     <div className="title">

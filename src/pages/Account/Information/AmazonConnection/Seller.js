@@ -18,7 +18,10 @@ const Seller = () => {
     return (
         <Fragment>
             <div className="seller-box">
-                <img src={whales} alt="whales"/>
+                <div className="whales-image">
+                    <img src={whales} alt="whales"/>
+                </div>
+
                 <div className="seller-wrap">
                     <h2 className="seller-title">Seller Central Account Connection</h2>
                     <p className="seller-text">

@@ -149,6 +149,9 @@ const SubscriptionPlan = ({
                     <p className="ppc-text">
                         This is a prepaid plan, and you are paying <br/> for the next 30 days of using it.
                     </p>
+
+                    <Link to={'/pricing'} className={'learn-more'} target={'blank'}>How it’s calculated?</Link>
+
                     <p className="ppc-link-wrap">
                         To view your invoices, see&nbsp;
                         <a href={'#billing-history'} className="ppc-link">
@@ -156,7 +159,6 @@ const SubscriptionPlan = ({
                         </a>
                     </p>
 
-                    <Link to={'/pricing'} className={'learn-more'} target={'blank'}>Learn more</Link>
                 </div>
 
 

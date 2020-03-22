@@ -99,6 +99,7 @@
         .ppc-link-wrap {
           font-size: 1rem; // 14px
           color: @second-account-color;
+          margin: 0;
         }
 
         .ppc-link {
@@ -108,6 +109,7 @@
 
         .learn-more {
           font-size: 1rem;
+          margin: 0 0 15px 0;
         }
       }
 
@@ -304,10 +306,11 @@
       }
 
       .coupon {
+        width: max-content;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        margin: 0 0 20px 0;
+        margin: 0 0 20px auto;
 
         h4 {
           font-size: 0.8571428571428571rem;
@@ -318,7 +321,7 @@
         .row {
           width: 100%;
           display: flex;
-          justify-content: space-between;
+          justify-content: flex-end;
 
           .input-block {
             width: 50%;
@@ -352,10 +355,11 @@
           }
 
           .btn {
-            width: 40%;
+            width: 46%;
             height: 2.2857142857142856rem;
             text-transform: capitalize;
             font-size: 1.1428571428571428rem;
+            margin: 0 0 0 10px;
           }
         }
 
