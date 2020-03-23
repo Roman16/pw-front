@@ -200,6 +200,10 @@
         .ant-checkbox-inner::after {
           width: 0.5rem;
           height: 0.8571428571428571rem;
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+            height: 11px;
+          }
         }
 
         .ant-checkbox {
