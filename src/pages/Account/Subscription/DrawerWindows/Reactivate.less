@@ -1,5 +1,9 @@
 @import '../../../../style/variables.less';
 
+.ant-modal-wrap {
+  z-index: 100000;
+}
+
 .reactivate-account {
   font-size: 0.714286rem; // 10px
   width: fit-content !important;
@@ -9,6 +13,17 @@
   top: 0;
   bottom: 0;
   margin: auto;
+  z-index: 1000000;
+  flex: initial !important;
+
+  @media (max-width: 450px) {
+
+    .ant-modal-content {
+      width: 100% !important;
+      height: max-content !important;
+
+    }
+  }
 
   .ant-modal-content {
     width: 43.2em;

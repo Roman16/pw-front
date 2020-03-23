@@ -21,6 +21,7 @@
       width: 20%;
       min-width: 200px;
       font-family: ir;
+      grid-area: billingDescription;
 
       h3 {
         font-size: 1.7142857142857142rem;
@@ -41,6 +42,7 @@
     .buttons-block {
       display: flex;
       flex-direction: column;
+      grid-area: billingButtons;
 
       .btn {
         height: 40px;
@@ -62,6 +64,7 @@
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
+      grid-area: userCards;
 
       .cards-carousel {
         width: 45%;
@@ -222,7 +225,7 @@
       }
 
       .billing-address {
-        width: 45%;
+        width: 35%;
         display: flex;
         flex-direction: column;
 
@@ -245,10 +248,20 @@
   }
 
   .company-details-block {
+    .block-description {
+      grid-area: companyDescription;
+    }
+
+    .buttons-block {
+      grid-area: companyButtons;
+    }
+
     .company-information {
       width: 55%;
       display: flex;
       justify-content: space-between;
+      margin: 0 10px;
+      grid-area: companyInformation;
 
       .column {
         width: 45%;
@@ -396,6 +409,34 @@
     }
   }
 
+  @media (max-width: 1193px) {
+    & {
+      .account-billing-block {
+        display: grid;
+        grid-template-areas: "billingDescription billingButtons" "userCards userCards";
+
+        .user-cards {
+          width: 100%;
+          margin: 30px 0 0 0;
+
+          .billing-address {
+            width: 45%;
+          }
+        }
+      }
+
+      .company-details-block {
+        display: grid;
+        grid-template-areas: "companyDescription companyButtons" "companyInformation companyInformation";
+
+        .company-information {
+          width: 100%;
+          margin: 20px 0 0 0;
+        }
+      }
+    }
+  }
+
   @media (max-width: 700px) {
     section {
       flex-direction: column;
@@ -410,9 +451,13 @@
 
     & {
       .account-billing-block {
+        grid-template-areas: "billingDescription" "billingButtons" "userCards";
+        grid-template-columns: 1fr;
+
         .user-cards {
           width: 100%;
           flex-direction: column;
+          margin: 30px auto 0 auto;
 
           .cards-carousel {
             width: 100%;
@@ -436,11 +481,18 @@
 
       section .buttons-block {
         height: max-content;
-        margin: 20px 0 0 0;
+        margin: 20px auto 0 auto;
+      }
+
+      section .block-description {
+        height: max-content;
       }
     }
 
     .company-details-block {
+      grid-template-areas: "companyDescription " "companyButtons" "companyInformation";
+      grid-template-columns: 1fr;
+
       .company-information {
         width: 100%;
         justify-content: space-around;
@@ -452,18 +504,32 @@
     }
   }
 
+  @media (max-width: 500px) {
+    & {
+      .company-details-block {
+        .company-information {
+          flex-direction: column;
+
+          .column {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
   @media (max-width: 450px) {
     & {
       .account-billing-block {
         .user-cards {
-         .cards-carousel {
-           min-width: 150px;
+          .cards-carousel {
+            min-width: 150px;
 
-           .carousel-body {
-             width: 100%;
-             min-width: 150px;
-           }
-         }
+            .carousel-body {
+              width: 100%;
+              min-width: 150px;
+            }
+          }
         }
       }
     }

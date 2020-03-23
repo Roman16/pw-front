@@ -268,21 +268,19 @@ class Scanner extends Component {
         return (
             <Fragment>
                 <div className="scanner-page">
-                    <div className="col">
-                        <ProblemList
-                            onScanning={this.handleScan}
-                            problemsCount={problemsCount}
-                            totalSize={totalSize}
-                            fetching={fetching}
-                            successFetch={successFetch}
-                            stopScanning={this.handleStopScanning}
-                            onDownloadFile={this.downloadFile}
-                        />
+                    <ProblemList
+                        onScanning={this.handleScan}
+                        problemsCount={problemsCount}
+                        totalSize={totalSize}
+                        fetching={fetching}
+                        successFetch={successFetch}
+                        stopScanning={this.handleStopScanning}
+                        onDownloadFile={this.downloadFile}
+                    />
 
-                        <ProblemGraph
-                            problemsCount={problemsCount}
-                        />
-                    </div>
+                    <ProblemGraph
+                        problemsCount={problemsCount}
+                    />
 
                     <MistakeTerminal
                         mistakeList={mistakeList}
@@ -308,7 +306,7 @@ class Scanner extends Component {
                     message="Are you sure? The current scanning results will be lost"
                 />
 
-                <LoadingAmazonAccount />
+                <LoadingAmazonAccount/>
             </Fragment>
         )
     }

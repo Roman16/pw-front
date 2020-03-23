@@ -17,12 +17,13 @@
 
     .reactivate {
       width: 100%;
-      height: 4.8em;
+      min-height: 4.8em;
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       border-radius: 0.8em;
-      padding: 0 1.6em 0 2em;
+      padding: 5px 1.6em 5px 2em;
       background-color: rgba(189, 189, 189, 0.2);
       margin: 0 0 20px 0;
 
@@ -72,6 +73,8 @@
         display: flex;
         flex-flow: column;
         justify-content: space-between;
+        grid-area: ppcDescription;
+
 
         .ppc-title-wrap {
           display: flex;
@@ -91,7 +94,7 @@
         }
 
         .ppc-text {
-          font-size: 1.0714285714285714rem; // 14px
+          font-size: 1.1428571428571428rem;
           color: @third-account-color;
           margin: 15px 0;
         }
@@ -118,6 +121,8 @@
         min-width: max-content;
         flex-wrap: nowrap;
         margin: 0 0 0 auto;
+        grid-area: plan;
+
 
         .charged {
           width: 100%;
@@ -306,7 +311,7 @@
       }
 
       .coupon {
-        width: max-content;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -316,12 +321,15 @@
           font-size: 0.8571428571428571rem;
           letter-spacing: 0.2px;
           color: #656A84;
+          grid-area: title;
         }
 
         .row {
           width: 100%;
           display: flex;
           justify-content: flex-end;
+          grid-area: fields;
+
 
           .input-block {
             width: 50%;
@@ -366,6 +374,7 @@
         .applied-coupon {
           width: 100%;
           margin: 10px 0 0 0;
+          grid-area: appliedCoupon;
 
           h4 {
             left: 0;
@@ -401,6 +410,7 @@
         display: flex;
         flex-flow: column;
         margin: 0 0 0 auto;
+        grid-area: cancelBlock;
 
         .plan-text {
           display: flex;
@@ -456,19 +466,13 @@
 
   }
 
-  @media (max-width: 1222px) {
+  @media (max-width: 1514px) {
     & {
       .automate-box {
         .automate {
-          .cancel {
-            width: 50%;
-            margin: 0 auto;
-            align-items: center;
-
-            .coupon,
-            .plan-text {
-              width: 100%;
-            }
+          .plan {
+            margin-right: 0;
+            margin-left: 40px;
           }
         }
       }
@@ -477,17 +481,70 @@
   }
 
 
-  @media (max-width: 1222px) {
+  @media (max-width: 1185px) {
     & {
       .automate-box {
         .automate {
-          .cancel {
-            margin: 20px auto 0 auto;
-            align-items: center;
+          display: grid;
+          grid-template-areas: "ppcDescription cancelBlock" "plan plan";
+
+          .plan {
+            width: 100%;
+            margin: 20px 0 0 0;
           }
+
+          .cancel {
+            width: 100%;
+          }
+
         }
       }
+    }
+  }
 
+  @media (max-width: 860px) {
+    & {
+      .automate-box {
+        .automate {
+          display: flex;
+          flex-direction: column;
+
+          .plan {
+            width: 100%;
+            margin: 20px 0 0 0;
+            min-width: initial;
+
+            .charged {
+              flex-wrap: wrap;
+
+              .subscription-plan {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid #C9CBD4;
+
+                br {
+                  display: none;
+                }
+              }
+            }
+          }
+
+          .cancel {
+            .row {
+              justify-content: space-between;
+
+              .input-block {
+                width: 35%;
+              }
+
+              .btn {
+                width: 30%;
+              }
+            }
+          }
+
+        }
+      }
     }
   }
 
@@ -495,6 +552,15 @@
   @media (max-width: 700px) {
     & {
       .automate-box {
+        .reactivate {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+
+          .reactivate-text {
+            margin: 10px 0;
+          }
+        }
         .automate {
           flex-direction: column;
           align-items: center;
@@ -550,13 +616,16 @@
             align-items: center;
 
             .coupon {
-              flex-direction: column;
-              align-items: center;
+              display: grid;
+              text-align: center;
+              grid-template-areas: "title" "appliedCoupon" "fields";
 
               .row {
                 width: 150px;
                 align-items: center;
                 flex-direction: column;
+                justify-content: center;
+                margin: 0 auto;
 
                 .input-block,
                 .btn {
