@@ -72,7 +72,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
     ];
 
     return (
-        <section className='billing-history-block'>
+        <section className='billing-history-block' id={'billing-history'}>
             <div className='block-description'>
                 <h3>
                     Billing History

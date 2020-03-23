@@ -3,12 +3,11 @@ import {useSelector} from 'react-redux';
 import moment from 'moment';
 
 import './FreeTrial.less';
-import {subscriptionProducts} from "../../constans/subscription.products.name";
 
 const FreeTrial = ({product}) => {
     const {trialEndsDate, onTrial} = useSelector(state => ({
-        trialEndsDate: state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId] && state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId].trial_ends_at,
-        onTrial: state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId] && state.user.subscriptions[subscriptionProducts.find(item => item.key === product).productId].on_trial,
+        trialEndsDate: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]] && state.user.subscriptions[Object.keys(state.user.subscriptions)[0]].trial_ends_at,
+        onTrial: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]] && state.user.subscriptions[Object.keys(state.user.subscriptions)[0]].on_trial,
     }));
 
     const todayDate = moment(new Date());

@@ -14,7 +14,6 @@ import UpdateCard from "./Windows/UpdateCard";
 import {Elements, StripeProvider} from "react-stripe-elements";
 import {userService} from "../../../services/user.services";
 import {useSelector, useDispatch} from "react-redux";
-import {subscriptionProducts} from "../../../constans/subscription.products.name";
 import {userActions} from "../../../actions/user.actions";
 
 const defaultPaginationParams = {
@@ -39,12 +38,13 @@ const Billing = () => {
         [paymentCards, updatePayment] = useState({});
 
     const {subscriptions} = useSelector(state => ({
-        subscriptions: state.user.subscriptions
+        subscriptions: Object.keys(state.user.subscriptions).map(item => state.user.subscriptions[item])
     }));
 
     function handleOpenWindow(window, card) {
         openWindow(window);
-        card ? changeCardType(false) : changeCardType(true)
+        card ? changeCardType(false) : changeCardType(true);
+        openConfirmWindow(false)
     }
 
     function handleCloseWindow() {
@@ -134,7 +134,7 @@ const Billing = () => {
         dispatch(userActions.getPersonalUserInfo());
         getPaymentMethodList();
         getPaymentHistory();
-
+        openConfirmWindow(false);
     }
 
     function renderDrawer() {
@@ -164,17 +164,15 @@ const Billing = () => {
     useEffect(() => {
         getPaymentMethodList();
 
-        subscriptionProducts.forEach(item => {
-            if (subscriptions[item.productId]) {
-                if (subscriptions[item.productId].incomplete_payment.has_incomplete_payment) {
-                    setKey(subscriptions[item.productId].incomplete_payment.payment_intent_id);
-                    openConfirmWindow(true);
-                } else if(subscriptions[item.productId].pending_payment && subscriptions[item.productId].pending_payment.has_pending_payment) {
-                    setKey(subscriptions[item.productId].pending_payment.payment_intent_id);
-                    openConfirmWindow(true);
-                }
+        if (subscriptions[0]) {
+            if (subscriptions[0].incomplete_payment.has_incomplete_payment) {
+                setKey(subscriptions[0].incomplete_payment.payment_intent_id);
+                openConfirmWindow(true);
+            } else if (subscriptions[0].pending_payment && subscriptions[0].pending_payment.has_pending_payment) {
+                setKey(subscriptions[0].pending_payment.payment_intent_id);
+                openConfirmWindow(true);
             }
-        })
+        }
     }, []);
 
     useEffect(() => {
@@ -183,7 +181,7 @@ const Billing = () => {
 
     return (
         <div className="user-cabinet billing-page">
-            <Navigation/>
+            {/*<Navigation/>*/}
 
             <AccountBilling
                 onOpenWindow={handleOpenWindow}
@@ -229,6 +227,7 @@ const Billing = () => {
                             onClose={() => openConfirmWindow(false)}
                             onUpdateInformation={handleUpdateInformation}
                             paymentCards={paymentCards}
+                            onOpenAddCardWindow={handleOpenWindow}
                         />
                     </Elements>
                 </StripeProvider>

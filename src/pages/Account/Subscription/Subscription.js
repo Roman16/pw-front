@@ -14,7 +14,7 @@ import {userActions} from "../../../actions/user.actions";
 import {subscriptionProducts} from "../../../constans/subscription.products.name";
 import {notification} from "../../../components/Notification";
 import {history} from "../../../utils/history";
-
+import Billing from "../Billing/Billing";
 
 const Subscription = () => {
     let interval = null;
@@ -22,7 +22,7 @@ const Subscription = () => {
     const [openedReactivateWindow, openReactivateWindow] = useState(false);
     const [openedAccountWindow, openAccountWindow] = useState(false);
     const [selectedPlan, selectPlan] = useState();
-    const [subscriptions, setSubscriptions] = useState({});
+    const [subscriptions, setSubscriptions] = useState([]);
     const [fetching, switchFetching] = useState(false);
     const [cardsList, setCardsList] = useState(null);
 
@@ -49,7 +49,10 @@ const Subscription = () => {
             .then(res => {
                 switchFetching(false);
 
-                setSubscriptions({...res})
+                setSubscriptions(Object.keys(res).map(productId => ({
+                    productId,
+                    ...res[productId]
+                })))
             })
     }
 
@@ -69,19 +72,19 @@ const Subscription = () => {
             })
     }
 
-    async function handleSubscribe({planId, productId, coupon}) {
+    async function handleSubscribe({plan_id, productId, coupon}) {
         if (cardsList && cardsList.length) {
             try {
                 if (coupon) {
                     await userService.subscribe({
-                        subscription_plan_id: planId,
+                        subscription_plan_id: plan_id,
                         subscription_id: productId,
                         marketplace_id: 'ATVPDKIKX0DER',
                         coupon_code: coupon
                     });
                 } else {
                     await userService.subscribe({
-                        subscription_plan_id: planId,
+                        subscription_plan_id: plan_id,
                         subscription_id: productId,
                         marketplace_id: 'ATVPDKIKX0DER',
                     });
@@ -95,14 +98,15 @@ const Subscription = () => {
                 console.log(e);
             }
         } else {
-            history.push('/account-billing')
+            history.push('/account-subscription#user-cards');
+            notification.error({title: 'Add card!'})
         }
     }
 
     async function handleReactivateSubscription() {
         try {
             await userService.reactivateSubscription({
-                subscription_plan_id: selectedPlan.planId,
+                subscription_plan_id: selectedPlan.plan_id,
                 subscription_id: selectedPlan.productId,
             });
 
@@ -118,7 +122,7 @@ const Subscription = () => {
     async function handleCancelSubscription() {
         try {
             await userService.cancelSubscription({
-                subscription_plan_id: selectedPlan.planId,
+                subscription_plan_id: selectedPlan.plan_id,
                 subscription_id: selectedPlan.productId,
             });
 
@@ -132,8 +136,8 @@ const Subscription = () => {
     }
 
     async function handleUpdateSubscriptionStatus() {
-        if (subscriptions[subscriptionProducts[0].productId]) {
-            if (subscriptions[subscriptionProducts[0].productId].next_charge_value !== null || subscriptions[subscriptionProducts[0].productId].flat_amount !== null || subscriptions[subscriptionProducts[0].productId].quantity !== null) {
+        if (subscriptions[0]) {
+            if (subscriptions[0].next_charge_value !== null || subscriptions[0].flat_amount !== null || subscriptions[0].quantity !== null) {
                 clearInterval(interval);
                 return
             }
@@ -170,10 +174,10 @@ const Subscription = () => {
 
             {subscriptionProducts.map((product) => (
                 <SubscriptionPlan
-                    key={product.productId}
+                    key={product.key}
                     onOpenAccountWindow={handleOpenAccountWindow}
                     onOpenReactivateWindow={handleOpenReactivateWindow}
-                    product={{...subscriptions[product.productId], ...product}}
+                    product={{...subscriptions[0], ...product}}
                     onSubscribe={handleSubscribe}
                     reloadData={handleUpdateSubscriptionStatus}
                     stripeId={stripeId}
@@ -182,6 +186,8 @@ const Subscription = () => {
                     fetching={fetching}
                 />
             ))}
+
+            <Billing />
 
             <Drawer
                 className="cancel-account"

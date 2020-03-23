@@ -1,11 +1,12 @@
 .scanner-page {
   height: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
   overflow: auto;
-  font-family: ir;
   overflow: auto;
+
+  display: grid;
+  grid-template-areas: "problemsListCard mistakeTerminal" "problemGraphBlock mistakeTerminal";
+  grid-template-columns: minmax(250px, 32.142857142857146rem) minmax(250px, 1fr);
+  grid-gap: 1.4285714285714286rem;
 
   .col {
     flex: 1;
@@ -45,8 +46,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-
-    margin-bottom: 1.4285714285714286rem;
+    grid-area: problemsListCard;
 
     .header-block {
       .net-margin {
@@ -55,6 +55,7 @@
 
         label {
           font-size: 0.8571428571428571rem;
+          margin: 0 0 3px 0;
         }
 
         .input-block {
@@ -113,7 +114,7 @@
           box-sizing: border-box;
           border-radius: 8px;
           margin: 0 0 5px 0;
-          padding: 0.7142857142857143rem;
+          padding: 5px 10px;
           font-size: 1rem;
 
           .loader {
@@ -126,6 +127,8 @@
 
           .ant-progress {
             margin: 0 1.0714285714285714rem 0 0;
+            display: flex;
+            align-items: center;
 
             .ant-progress-circle-trail {
               stroke: #E0E3F3 !important;
@@ -174,15 +177,29 @@
         border: 1px solid #F5F5FF;
         box-sizing: border-box;
         border-radius: 8px;
-        margin: 0 0 5px 0;
-        padding: 10px;
+        margin: 10px 0;
+        padding: 5px 10px;
+
+        .ant-checkbox {
+          margin-bottom: -2px !important;
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+            margin-bottom: -2px !important;
+          }
+        }
+
 
         .ant-checkbox,
         .ant-checkbox-input,
         .ant-checkbox-inner {
           width: 1.4285714285714286rem;
           height: 1.4285714285714286rem;
-          margin-bottom: -1px;
+
+        }
+
+        .ant-checkbox-inner::after {
+          width: 0.5rem;
+          height: 0.8571428571428571rem;
         }
 
         .ant-checkbox {
@@ -275,18 +292,24 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    grid-area: problemGraphBlock;
 
     .graph {
       display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
+      flex-direction: column;
 
       .legend {
-        margin: auto 0;
+        height: 10vh;
+        margin: 20px 0 0 0;
+        overflow: auto;
 
         & > div {
           display: flex;
           margin: 0 0 10px 0;
+
+          .mistake {
+            margin: 0 10px;
+          }
 
           .color {
             width: 12px;
@@ -318,11 +341,11 @@
 
   .mistake-terminal {
     min-width: 200px;
-    width: max-content;
-    flex: 1;
+    width: 100%;
     display: flex;
     flex-direction: column;
     overflow-x: auto;
+    grid-area: mistakeTerminal;
 
     .header-block {
       align-items: center;
@@ -410,8 +433,14 @@
       justify-content: flex-end;
       margin: 10px 70px 0 0;
 
+      .ant-pagination {
+        margin: 0 !important;
+      }
+
       .ant-select {
         margin: 0 0 0 10px;
+        display: flex;
+        align-items: center;
 
         .ant-select-selection--single {
           width: 70px;
@@ -423,28 +452,29 @@
     }
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 1100px) {
     & {
+      grid-template-areas: "problemsListCard" "problemGraphBlock" "mistakeTerminal";
+      grid-template-columns: 1fr;
       height: max-content;
-      display: flex;
-      flex-direction: column;
-      flex-wrap: initial;
-
-      .col {
-        width: 100%;
-        max-width: 100%;
-      }
 
       .mistake-terminal {
-        margin: 1.42857143rem 0 0 0;
+        max-height: 95vh;
+
+        .not-data {
+          display: flex;
+          align-items: center;
+
+          img {
+            width: 50%;
+          }
+        }
       }
     }
   }
 }
 
 .scanner-window {
-  font-family: ir;
-
   .ant-modal-body {
     display: flex;
     flex-direction: column;

@@ -1,11 +1,13 @@
 .Toastify__toast-container {
   width: 432px;
+  z-index: 1000000;
 }
 
 .Toastify__toast {
   border-radius: 8px;
   padding: 0 22px;
   min-height: 48px;
+  font-family: Eina;
 
   .Toastify__toast-body {
     margin: 14px 0 14px 0;
@@ -16,7 +18,6 @@
     }
 
     .notification__title {
-      font-family: ir;
       font-size: 16px;
       display: flex;
     }
@@ -24,7 +25,6 @@
     .notification__description {
       display: block;
       margin: 10px 0 0 0;
-      font-family: ir;
       font-size: 14px;
     }
   }

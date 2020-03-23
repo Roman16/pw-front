@@ -96,7 +96,7 @@ const SubscriptionPlan = ({
         } else if (!product.has_access && stripeId) {
             return (
                 <div className="subscribe-btn">
-                    <button className="btn green-btn" onClick={handleSubscribe} disabled={disableButton}>
+                    <button className="btn green-btn on-subscribe" onClick={handleSubscribe} disabled={disableButton}>
                         {disableButton ? <Spin/> : 'Subscribe'}
                     </button>
                 </div>
@@ -106,7 +106,7 @@ const SubscriptionPlan = ({
 
     useEffect(() => {
         if (disableButton) {
-            timeout = setTimeout(() => history.push('/account-billing'), 10000)
+            timeout = setTimeout(() => history.push('/account-subscription'), 10000)
         }
 
         return () => {
@@ -147,16 +147,18 @@ const SubscriptionPlan = ({
                         <h2 className="ppc-title">{product.productName}</h2>
                     </div>
                     <p className="ppc-text">
-                        Access and edit your account's <br/> Profit Whales subscription
-                    </p>
-                    <p className="ppc-link-wrap">
-                        To view your invoices, see&nbsp;
-                        <Link className="ppc-link" to="/account-billing">
-                            billing info
-                        </Link>
+                        This is a prepaid plan, and you are paying <br/> for the next 30 days of using it.
                     </p>
 
-                    <Link to={'/pricing'} className={'learn-more'} target={'blank'}>Learn more</Link>
+                    <Link to={'/pricing'} className={'learn-more'} target={'blank'}>How it’s calculated?</Link>
+
+                    <p className="ppc-link-wrap">
+                        To view your invoices, see&nbsp;
+                        <a href={'#billing-history'} className="ppc-link">
+                            billing info
+                        </a>
+                    </p>
+
                 </div>
 
 
@@ -201,7 +203,7 @@ const SubscriptionPlan = ({
 
                             <button className="btn green-btn"
                                     onClick={() => {
-                                        (!product.has_access && stripeId) ? getCouponStatus(coupon) : applyCoupon(product.productId, coupon, product.planId)
+                                        (!product.has_access && stripeId) ? getCouponStatus(coupon) : applyCoupon(product.productId, coupon, product.plan_id)
                                     }}>apply
                             </button>
                         </div>

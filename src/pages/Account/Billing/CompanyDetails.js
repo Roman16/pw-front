@@ -10,7 +10,7 @@ const CompanyDetails = ({onOpenWindow, company}) => {
                 </h3>
 
                 <span>
-                    Your company details will be reflected on <br/> your invoices
+                    Your company details will be reflected on your invoices
                 </span>
             </div>
 

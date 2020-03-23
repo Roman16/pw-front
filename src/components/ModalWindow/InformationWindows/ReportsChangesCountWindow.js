@@ -4,7 +4,6 @@ import ModalWindow from "../ModalWindow";
 import {history} from "../../../utils/history";
 import {userActions} from "../../../actions/user.actions";
 import unicornEmoji from '../../../assets/img/unicorn-emoji.png';
-import {subscriptionProducts} from "../../../constans/subscription.products.name";
 
 const ReportsChangesCountWindow = () => {
     const [visibleWindow, switchWindow] = useState(false);
@@ -13,7 +12,7 @@ const ReportsChangesCountWindow = () => {
     const dispatch = useDispatch();
     const {ppcNotification, subscribedProduct} = useSelector(state => ({
         ppcNotification: state.user.notifications ? state.user.notifications.ppc_optimization : {},
-        subscribedProduct: state.user.subscriptions ? state.user.subscriptions[subscriptionProducts.find(item => item.key === 'ppc').productId] : null,
+        subscribedProduct: state.user.subscriptions ? state.user.subscriptions[Object.keys(state.user.subscriptions)[0]] : null,
     }));
 
     function handleOk() {

@@ -34,7 +34,7 @@ let problemList = [
 
 let processingTimeout = null;
 
-const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, successFetch, onDownloadFile}) => {
+const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, successFetch, onDownloadFile, totalSize}) => {
     const devicePixelRatio = window.devicePixelRatio;
 
     const [problems, setProblems] = useState(problemList),

@@ -70,32 +70,34 @@ const Amazon = ({amazonTokens}) => {
                     </Fragment>}
                 </div>
 
-                <div className="mws-wrap">
-                    {mwsConnected && <Fragment>
-                        <h3>
-                            MWS Authorization
-                            <img src={checked} alt="checked"/>
-                        </h3>
+                <div className="tokens">
+                    <div className="mws-wrap">
+                        {mwsConnected && <Fragment>
+                            <h3>
+                                MWS Authorization
+                                <img src={checked} alt="checked"/>
+                            </h3>
 
-                        <button className="mws-btn" type="button" onClick={() => onUnsetAccount('MWS')}>
-                            <img src={closeIcon} alt=""/>
-                            <span>Remove</span>
-                        </button>
-                    </Fragment>}
-                </div>
+                            <button className="mws-btn" type="button" onClick={() => onUnsetAccount('MWS')}>
+                                <img src={closeIcon} alt=""/>
+                                <span>Remove</span>
+                            </button>
+                        </Fragment>}
+                    </div>
 
-                <div className="login-wrap">
-                    {ppcConnected && <Fragment>
-                        <h3>
-                            PPC Authorization
-                            <img src={checked} alt="checked"/>
-                        </h3>
+                    <div className="login-wrap">
+                        {ppcConnected && <Fragment>
+                            <h3>
+                                PPC Authorization
+                                <img src={checked} alt="checked"/>
+                            </h3>
 
-                        <button className="mws-btn" type="button" onClick={() => onUnsetAccount('PPC')}>
-                            <img src={closeIcon} alt=""/>
-                            <span>Remove</span>
-                        </button>
-                    </Fragment>}
+                            <button className="mws-btn" type="button" onClick={() => onUnsetAccount('PPC')}>
+                                <img src={closeIcon} alt=""/>
+                                <span>Remove</span>
+                            </button>
+                        </Fragment>}
+                    </div>
                 </div>
 
                 <div className="approved-text">{mwsConnected && ppcConnected && 'Approved'}</div>

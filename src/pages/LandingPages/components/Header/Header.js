@@ -56,7 +56,7 @@ const Header = ({type = 'light'}) => {
                             </li>
                             <li><Link to={'/pricing'}>Pricing</Link></li>
                             <li><Link to={'/affiliates'}>Affiliate Program</Link></li>
-                            <li><a href="https://profitwhales.com/blog">Blog</a></li>
+                            <li><a href="/blog">Blog</a></li>
                             <li><Link to="/contact-us">Contact us</Link></li>
                         </ul>
                     </nav>

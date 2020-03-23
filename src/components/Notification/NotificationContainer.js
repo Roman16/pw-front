@@ -6,7 +6,7 @@ import './Notification.less';
 const NotificationContainer = () => (
     <ToastContainer
         position="bottom-right"
-        autoClose={3000}
+        autoClose={4000}
         hideProgressBar={true}
         newestOnTop={false}
         closeOnClick

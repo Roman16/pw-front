@@ -72,6 +72,7 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                     <div className="select-block">
                         <label htmlFor="">Campaign Status</label>
                         <CustomSelect
+                            data-intercom-target='campaign-status-select'
                             getPopupContainer={trigger => trigger.parentNode}
                             dropdownClassName={'full-width-menu'}
                             onChange={(e) => {
@@ -91,10 +92,11 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                         </CustomSelect>
                     </div>
 
-                    <div className="active-only" data-intercom-target='only-on-dayparting-switch'>
+                    <div className="active-only" >
                         <label htmlFor="">On day-parting only</label>
 
                         <Switch
+                            data-intercom-target='only-on-dayparting-switch'
                             checked={onlyOndayparting}
                             onChange={e => onChangeSwitch(e, 'onlyOndayparting')}
                         />

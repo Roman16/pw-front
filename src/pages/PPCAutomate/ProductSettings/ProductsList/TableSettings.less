@@ -21,6 +21,7 @@
     padding-bottom: 0;
     padding-top: 0;
     vertical-align: sub;
+    font-weight: 400;
   }
 
   .ant-table-thead > tr > th .ant-table-column-sorter {
@@ -139,6 +140,10 @@
     .ant-table-thead > tr > th .ant-table-header-column {
       width: 100%;
 
+      & > div {
+        display: flex;
+      }
+
       span {
         font-size: 1rem; // 14px
       }
@@ -152,7 +157,6 @@
       align-items: center;
       justify-content: center;
       border-radius: 0.2857143em;
-      font-family: ir;
       letter-spacing: -0.4375px;
       color: #6d6df6 !important;
       padding: 0 0.3571429em;

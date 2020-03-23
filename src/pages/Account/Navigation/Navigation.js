@@ -16,16 +16,16 @@ const Navigation = () => {
                         Account information
                     </NavLink>
                 </li>
-                <li className="current-page">
-                    <NavLink
-                        className="current-page-link"
-                        activeClassName="current-page-link-active"
-                        exact
-                        to="/account-billing"
-                    >
-                        Billing information
-                    </NavLink>
-                </li>
+                {/*<li className="current-page">*/}
+                {/*    <NavLink*/}
+                {/*        className="current-page-link"*/}
+                {/*        activeClassName="current-page-link-active"*/}
+                {/*        exact*/}
+                {/*        to="/account-billing"*/}
+                {/*    >*/}
+                {/*        Billing information*/}
+                {/*    </NavLink>*/}
+                {/*</li>*/}
                 <li className="current-page">
                     <NavLink
                         className="current-page-link"

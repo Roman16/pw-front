@@ -106,7 +106,7 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
 
     return (
         <Fragment>
-            <section className='account-billing-block'>
+            <section className='account-billing-block' id={'user-cards'}>
                 <div className='block-description'>
                     <h3>
                         Account billing
@@ -160,12 +160,19 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                     </div>
 
                     <div className='billing-address'>
-                        <h3>Billing address</h3>
-                        <span className='street'>{paymentCards[selectedCardIndex].address.address.line1}</span>
-                        <span className='city'>{paymentCards[selectedCardIndex].address.address.city}</span>
-                        <span className='zip'>{paymentCards[selectedCardIndex].address.address.postal_code}</span>
-                        <span
-                            className='country'>{allCountries[paymentCards[selectedCardIndex].address.address.country]}</span>
+                        {(paymentCards[selectedCardIndex].address.address.line1 ||
+                            paymentCards[selectedCardIndex].address.address.city ||
+                            paymentCards[selectedCardIndex].address.address.postal_code ||
+                            allCountries[paymentCards[selectedCardIndex].address.address.country])
+                        && <Fragment>
+                            <h3>Billing address</h3>
+                            <span className='street'>{paymentCards[selectedCardIndex].address.address.line1}</span>
+                            <span className='city'>{paymentCards[selectedCardIndex].address.address.city}</span>
+                            <span className='zip'>{paymentCards[selectedCardIndex].address.address.postal_code}</span>
+                            <span className='country'>{allCountries[paymentCards[selectedCardIndex].address.address.country]}</span>
+                        </Fragment>
+                        }
+
                     </div>
                 </div>}
 

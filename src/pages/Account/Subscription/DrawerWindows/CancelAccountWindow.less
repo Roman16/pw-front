@@ -3,7 +3,13 @@
 .cancel-account {
   .ant-drawer-content-wrapper {
     width: 29vw !important;
+    min-width: 500px;
     font-size: 0.714286rem; // 10px
+
+    @media (max-width: 500px) {
+      width: 100%;
+      min-width: 100%;
+    }
 
     @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1299px),
       only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1299px),
@@ -135,7 +141,7 @@
                 justify-content: space-between;
 
                 .keep {
-                  font-size: 1rem; // 14px
+                  font-size: 1.1428571428571428rem;
                   width: 15em;
                   height: 3.3334em;
                   border-radius: 0.6666em;
@@ -145,7 +151,7 @@
                 }
 
                 .pause-btn {
-                  font-size: 1rem; // 14px
+                  font-size: 1.1428571428571428rem;
                   width: 15em;
                   height: 3.3334em;
                   border: 1px solid @border-solid;
