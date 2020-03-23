@@ -271,7 +271,7 @@ class Scanner extends Component {
                     <ProblemList
                         onScanning={this.handleScan}
                         problemsCount={problemsCount}
-                        totalSize={totalSize}
+                        totalSize={mistakeList.length}
                         fetching={fetching}
                         successFetch={successFetch}
                         stopScanning={this.handleStopScanning}
