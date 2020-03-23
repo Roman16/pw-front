@@ -277,7 +277,7 @@ const Sidebar = () => {
                     <ul className="bottom-nav-list">
                         <li className="bottom-nav-item">
                             <a
-                                href="https://profitwhales.com/ppc/optimization?product_tour_id=108046"
+                                href="/ppc/optimization?product_tour_id=108046"
                             >
                                 <img src={howItWorksIcon} alt=""/>
                                 <span className="bottom-span">How it works?</span>

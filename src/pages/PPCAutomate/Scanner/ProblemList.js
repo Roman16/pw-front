@@ -194,7 +194,7 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                 </button>
             }
 
-            {successFetch && !fetching && totalSize > 0 && <button
+            {successFetch && !fetching && <button
                 className='btn white download'
                 onClick={onDownloadFile}
             >
