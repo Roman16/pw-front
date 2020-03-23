@@ -182,7 +182,7 @@
         padding: 5px 10px;
 
         .ant-checkbox {
-          margin-bottom: -3px !important;
+          margin-bottom: -2px !important;
 
           @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
             margin-bottom: -2px !important;
@@ -432,8 +432,14 @@
       justify-content: flex-end;
       margin: 10px 70px 0 0;
 
+      .ant-pagination {
+        margin: 0 !important;
+      }
+
       .ant-select {
         margin: 0 0 0 10px;
+        display: flex;
+        align-items: center;
 
         .ant-select-selection--single {
           width: 70px;
