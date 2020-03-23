@@ -92,14 +92,11 @@ const ProblemGraph = ({problemsCount = {}}) => {
                                     onMouseLeave={() => setSector(null)}
                                 >
                                     {
-                                        data.map((entry, index) => {
-                                            console.log(entry);
-                                            return (
-                                                <Cell
-                                                    key={`cell-${index}`}
-                                                    fill={COLORS[index % COLORS.length]}
-                                                />)
-                                        })
+                                        data.map((entry, index) => (
+                                            <Cell
+                                                key={`cell-${index}`}
+                                                fill={COLORS[index % COLORS.length]}
+                                            />))
                                     }
                                 </Pie>
 
@@ -136,15 +133,14 @@ const ProblemGraph = ({problemsCount = {}}) => {
                         {data.map((item, index) => (
                             <div key={item.name}>
                                 <div className="color" style={{backgroundColor: COLORS[index]}}/>
-                                <div>
-                                    <div className="percent">
-                                        {round((100 / Object.values(problemsCount).reduce((a, b) => a + b)) * item.value, 0) >= 0 ?
-                                            round((100 / Object.values(problemsCount).reduce((a, b) => a + b)) * item.value, 0)
-                                            :
-                                            0
-                                        }%
-                                    </div>
-                                    <div className='mistake'>mistake #{index + 1}</div>
+                                <div className='mistake'>{item.name}</div>
+
+                                <div className="percent">
+                                    {round((100 / Object.values(problemsCount).reduce((a, b) => a + b)) * item.value, 0) >= 0 ?
+                                        round((100 / Object.values(problemsCount).reduce((a, b) => a + b)) * item.value, 0)
+                                        :
+                                        0
+                                    }%
                                 </div>
                             </div>
                         ))}
