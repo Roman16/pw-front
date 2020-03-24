@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, NavLink} from "react-router-dom";
 import {Icon, Avatar} from "antd";
 import shortid from "shortid";
-import referIcon from '../../assets/img/icons/refer-icon.svg';
-import facebookIcon from '../../assets/img/icons/facebook-icon-white.svg';
+import referIcon from '../../assets/img/icons/sidebar-icons/refer-icon.svg';
+import facebookIcon from '../../assets/img/icons/sidebar-icons/facebook-icon-white.svg';
 import expertServiceIcon from '../../assets/img/icons/expert-service.svg';
 import howItWorksIcon from '../../assets/img/icons/how-it-work.png';
 import {regionsMenu, ppcAutomateMenu} from "./menu";
@@ -107,17 +107,16 @@ const Sidebar = () => {
 
     if (!notFirstEntry) {
         history.push('/login');
-        // localStorage.removeItem('token');
         return ('');
     }
 
     return (
         <div
             className={`sidebar ${className}`}
-            // style={{ height: `${height}px` }}
         >
             <div className="sidebar-header">
                 <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed}/>
+
                 <Link to="/" className="sidebar-logo">
                     <img className="logo" src={logo} alt="logo"/>
                 </Link>
@@ -133,6 +132,7 @@ const Sidebar = () => {
                             />
                             <h5>{activeCountry.name}</h5>
                         </div>
+
                         <div className="country-active__description">
                             {user.default_accounts
                                 ? user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id

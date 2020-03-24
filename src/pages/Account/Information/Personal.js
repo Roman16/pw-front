@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Avatar, Input, Switch, Icon} from 'antd';
+import {Avatar, Input, Icon} from 'antd';
 import {userActions} from '../../../actions/user.actions';
-import ItemIcon from '../../../components/ItemIcon/ItemIcon';
-
+import defaultAvatar from '../../../assets/img/default-account-avatar.svg';
 const domainName =
     (window.location.hostname === 'localhost') ? 'https://front1.profitwhales.com' : '';
 
@@ -19,14 +18,14 @@ const Personal = () => {
         dispatch(userActions.updateUserInformation(userInformation));
     };
 
-    const handleChangeSwitch = e => {
-        dispatch(
-            userActions.updateUserInformation({
-                ...userInformation,
-                private_label_seller: e
-            })
-        );
-    };
+    // const handleChangeSwitch = e => {
+    //     dispatch(
+    //         userActions.updateUserInformation({
+    //             ...userInformation,
+    //             private_label_seller: e
+    //         })
+    //     );
+    // };
 
     const handleChangeInput = ({target: {name, value}}) => {
         changeUserInformation({
@@ -55,7 +54,7 @@ const Personal = () => {
                         size={119}
                     />
                 ) : (
-                    <ItemIcon icon="account"/>
+                    <img src={defaultAvatar} alt=""/>
                 )}
 
                 <div className="change-photo-block">
