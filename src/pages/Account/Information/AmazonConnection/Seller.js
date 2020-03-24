@@ -1,9 +1,8 @@
 import React, {Fragment, useState} from 'react';
 import {useSelector} from "react-redux";
 
-import whales from '../../../../assets/img/whales.svg';
+import whales from '../../../../assets/img/seller-central-image.svg';
 import plus from '../../../../assets/img/icons/plus-white.svg';
-import Amazon from './Amazon';
 import Connectors from './Connectors';
 
 const Seller = () => {

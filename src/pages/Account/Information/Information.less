@@ -40,36 +40,41 @@
     align-items: center;
     border-radius: 0 0 0.8em 0.8em;
     background-color: @white;
-    padding: 3em 4em 3em 3em;
+    padding: 3em 4em 3em 2.5rem;
     margin-bottom: 0.4em;
     flex-wrap: wrap;
 
 
     .avatar-box {
-      width: 200px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
+      margin: 0 3.2142857142857144rem 0 0;
+
+      img {
+        width: 11.214285714285714rem;
+        height: 11.214285714285714rem;
+      }
 
       .avatar {
         vertical-align: middle;
-        width: 11.9em;
-        height: 11.9em;
+        width: 11.214285714285714rem;
+        height: 11.214285714285714rem;
         border-radius: 50%;
       }
 
       .anticon {
-        width: 11.9em;
-        height: 11.9em;
+        width: 11.214285714285714rem;
+        height: 11.214285714285714rem;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
 
         svg {
-          width: 90%;
-          height: 90%;
+          width: 30%;
+          height: 30%;
         }
       }
 
@@ -79,8 +84,8 @@
 
       .change-photo-block {
         position: absolute;
-        width: 119px;
-        height: 119px;
+        width: 11.214285714285714rem;
+        height: 11.214285714285714rem;
         border-radius: 50%;
         opacity: 0;
         transition: all 0.3s ease-in;
@@ -203,18 +208,18 @@
     align-items: center;
     background-color: @white;
     border-radius: 0.8em;
-    padding: 3em 4em 3em 3em;
+    padding: 3em 4em 3em 2.5rem;
     margin-bottom: 0.4em;
 
     .icon-block {
-      width: 200px;
       display: flex;
       justify-content: center;
       align-items: center;
+      margin: 0 3.2142857142857144rem 0 0;
 
       .lock {
-        width: 11.9em;
-        height: 11.9em;
+        width: 11.214285714285714rem;
+        height: 11.214285714285714rem;
       }
     }
 
@@ -314,14 +319,19 @@
     flex-wrap: wrap;
     background-color: @white;
     border-radius: 0.8em;
-    padding: 3em 4em 3em 3em;
+    padding: 3em 4em 3em 2.5rem;
     margin-bottom: 0.4em;
 
     .whales-image {
-      width: 200px;
       display: flex;
       justify-content: center;
       align-items: center;
+      margin: 0 3.2142857142857144rem 0 0;
+
+      img {
+        width: 11.214285714285714rem;
+        height: 11.214285714285714rem;
+      }
     }
 
     .seller-wrap {
@@ -1110,7 +1120,8 @@
         align-items: center;
 
         .avatar-box,
-        .icon-block {
+        .icon-block,
+        .whales-image{
           margin: 0 0 15px 0;
         }
 

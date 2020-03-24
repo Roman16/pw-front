@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Input} from 'antd';
 import {userService} from "../../../services/user.services";
-import lock from '../../../assets/img/lock.svg';
+import lock from '../../../assets/img/account-password-image.svg';
 import OpenedEye from '../../../assets/img/opened-eye.svg';
 import ClosedEye from '../../../assets/img/closed-eye.svg';
 import {notification} from "../../../components/Notification";
