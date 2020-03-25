@@ -242,7 +242,7 @@ const Sidebar = () => {
                                                     activeClassName="automate-link-active"
                                                     data-intercom-target={`${item.link}-link`}
                                                     exact
-                                                    to={(item.soon && (production && user.user.id !== 714)) ? '/' : `/ppc${item.link}`}
+                                                    to={(item.soon && (production && user.user.id !== 714)) ? '/' : `/ppc/${item.link}`}
                                                     onClick={e => {
                                                         if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
                                                     }}
