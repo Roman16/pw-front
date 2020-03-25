@@ -5,6 +5,11 @@ import {Icon, Avatar} from "antd";
 import shortid from "shortid";
 import referIcon from '../../assets/img/icons/sidebar-icons/refer-icon.svg';
 import facebookIcon from '../../assets/img/icons/sidebar-icons/facebook-icon-white.svg';
+import zthIcon from '../../assets/img/icons/sidebar-icons/zth-icon.svg';
+import logOutIcon from '../../assets/img/icons/sidebar-icons/log-out.svg';
+import helpCenterIcon from '../../assets/img/icons/sidebar-icons/help-center.svg';
+import ppcIcon from '../../assets/img/icons/sidebar-icons/ppc-automate-icon.svg';
+import userDefaultAvatar from '../../assets/img/icons/sidebar-icons/account.svg';
 import expertServiceIcon from '../../assets/img/icons/expert-service.svg';
 import howItWorksIcon from '../../assets/img/icons/how-it-work.png';
 import {regionsMenu, ppcAutomateMenu} from "./menu";
@@ -123,133 +128,137 @@ const Sidebar = () => {
             </div>
 
             <div className="sidebar-menu">
-                <div className="country-nav">
-                    <div className="country-active">
-                        <div className="country-active__title">
-                            <img
-                                src={`/assets/img/${activeCountry.flag}`}
-                                alt="active-country-flag"
-                            />
-                            <h5>{activeCountry.name}</h5>
-                        </div>
-
-                        <div className="country-active__description">
-                            {user.default_accounts
-                                ? user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
-                                : ""}
-                        </div>
+                <div className="country-active">
+                    <div className="country-active__title">
+                        <img
+                            src={`/assets/img/${activeCountry.flag}`}
+                            alt="active-country-flag"
+                        />
+                        <h5>{activeCountry.name}</h5>
                     </div>
 
-                    <nav className="top-nav">
-                        <ul className="top-nav-list">
-                            <li className="top-nav-item">
-                                <NavLink
-                                    className="top-nav-link"
-                                    activeClassName="top-nav-link-active"
-                                    exact
-                                    to="/"
-                                    disabled
-                                >
-                                    <ItemIcon icon="zeroToHero"/>
-                                    <span className="top-span">
+                    <div className="country-active__description">
+                        {user.default_accounts
+                            ? user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
+                            : ""}
+                    </div>
+                </div>
+
+                <nav className="top-nav">
+                    <ul className="top-nav-list">
+                        <li className="top-nav-item disabled-link">
+                            <NavLink
+                                className="top-nav-link"
+                                activeClassName="top-nav-link-active"
+                                exact
+                                to="/"
+                                disabled
+                            >
+                                <div className="link-icon">
+                                    <img src={zthIcon} alt=""/>
+                                </div>
+                                <span className="top-span">
                                         Zero to Hero
                                         <img className="soon" src={soon} alt="soon"/>
                                     </span>
+                            </NavLink>
+                        </li>
+
+                        {/*<li className="top-nav-item">*/}
+                        {/*    <NavLink*/}
+                        {/*        className="top-nav-link"*/}
+                        {/*        activeClassName="top-nav-link-active"*/}
+                        {/*        exact*/}
+                        {/*        to="/"*/}
+                        {/*        disabled*/}
+                        {/*    >*/}
+                        {/*        <ItemIcon icon="analytics"/>*/}
+                        {/*        <span className="top-span">*/}
+                        {/*            Analytics*/}
+                        {/*            <img className="soon" src={soon} alt="soon"/>*/}
+                        {/*        </span>*/}
+                        {/*    </NavLink>*/}
+                        {/*</li>*/}
+
+                        <li className="top-nav-item ppc-automate-link">
+                            <div onClick={toggleAutomate}>
+                                <NavLink
+                                    className="top-nav-link"
+                                    activeClassName="top-nav-link-active"
+                                    to="/ppc"
+                                    replace
+                                    disabled
+                                >
+                                    <div className="link-icon">
+                                        <img src={ppcIcon} alt=""/>
+                                    </div>
+
+                                    <span className="top-span">PPC Automate</span>
                                 </NavLink>
-                            </li>
+                            </div>
 
-                            {/*<li className="top-nav-item">*/}
-                            {/*    <NavLink*/}
-                            {/*        className="top-nav-link"*/}
-                            {/*        activeClassName="top-nav-link-active"*/}
-                            {/*        exact*/}
-                            {/*        to="/"*/}
-                            {/*        disabled*/}
-                            {/*    >*/}
-                            {/*        <ItemIcon icon="analytics"/>*/}
-                            {/*        <span className="top-span">*/}
-                            {/*            Analytics*/}
-                            {/*            <img className="soon" src={soon} alt="soon"/>*/}
-                            {/*        </span>*/}
-                            {/*    </NavLink>*/}
-                            {/*</li>*/}
+                            {collapsed && (
+                                <ul
+                                    className={`automate-list ${automate ? "open" : "closed"}`}
+                                >
+                                    {ppcAutomateMenu.map(item => (
+                                        <li className="automate-item" key={shortid.generate()}>
+                                            <NavLink
+                                                className="automate-link"
+                                                activeClassName="automate-link-active"
+                                                data-intercom-target={`${item.link}-link`}
+                                                exact
+                                                to={item.soon && (production && user.user.id !== 714) ?
+                                                    '/'
+                                                    :
+                                                    item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc/${item.link}`}
+                                                onClick={e => {
+                                                    if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
+                                                }}
+                                            >
+                                                {item.title}
+                                                {item.new && <img className="new-fiches" src={newLabel}/>}
+                                                {item.soon && <img className="soon" src={soon}/>}
+                                            </NavLink>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
 
-                            <li className="top-nav-item ppc-automate-link">
-                                    <span onClick={toggleAutomate}>
-                                      <NavLink
-                                          className="top-nav-link disabled-link"
-                                          activeClassName="top-nav-link-active"
-                                          to="/ppc"
-                                          replace
-                                      >
-                                            <ItemIcon icon="ppcAutomate"/>
-                                            <span className="top-span">PPC Automate</span>
-                                      </NavLink>
-                                    </span>
-
-                                {collapsed && (
-                                    <ul
-                                        className={`automate-list ${automate ? "open" : "closed"}`}
-                                    >
+                            {!collapsed && (
+                                <div
+                                    className={`collapsed-automate`}
+                                    // style={{ display: `${display}` }}
+                                >
+                                    <ul className="collapsed-automate-list">
                                         {ppcAutomateMenu.map(item => (
-                                            <li className="automate-item" key={shortid.generate()}>
+                                            <li
+                                                className="automate-item"
+                                                key={shortid.generate()}
+                                                // onClick={displayNone}
+                                            >
                                                 <NavLink
                                                     className="automate-link"
                                                     activeClassName="automate-link-active"
                                                     data-intercom-target={`${item.link}-link`}
                                                     exact
-                                                    to={item.soon && (production && user.user.id !== 714) ?
-                                                        '/'
-                                                        :
-                                                        item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc/${item.link}`}
+                                                    to={(item.soon && (production && user.user.id !== 714)) ? '/' : `/ppc${item.link}`}
                                                     onClick={e => {
                                                         if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
                                                     }}
                                                 >
                                                     {item.title}
+                                                    {item.soon && <img className="soon" src={soon} alt="soon"/>}
                                                     {item.new && <img className="new-fiches" src={newLabel}/>}
-                                                    {item.soon && <img className="soon" src={soon}/>}
                                                 </NavLink>
                                             </li>
                                         ))}
                                     </ul>
-                                )}
-
-                                {!collapsed && (
-                                    <div
-                                        className={`collapsed-automate`}
-                                        // style={{ display: `${display}` }}
-                                    >
-                                        <ul className="collapsed-automate-list">
-                                            {ppcAutomateMenu.map(item => (
-                                                <li
-                                                    className="automate-item"
-                                                    key={shortid.generate()}
-                                                    // onClick={displayNone}
-                                                >
-                                                    <NavLink
-                                                        className="automate-link"
-                                                        activeClassName="automate-link-active"
-                                                        data-intercom-target={`${item.link}-link`}
-                                                        exact
-                                                        to={(item.soon && (production && user.user.id !== 714)) ? '/' : `/ppc${item.link}`}
-                                                        onClick={e => {
-                                                            if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
-                                                        }}
-                                                    >
-                                                        {item.title}
-                                                        {item.soon && <img className="soon" src={soon} alt="soon"/>}
-                                                        {item.new && <img className="new-fiches" src={newLabel}/>}
-                                                    </NavLink>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                                </div>
+                            )}
+                        </li>
+                    </ul>
+                </nav>
 
                 <div className="facebook-link">
                     <a href='https://www.facebook.com/groups/profitwhales.software/' target="_blank">
@@ -279,7 +288,10 @@ const Sidebar = () => {
                             <a
                                 href="/ppc/optimization?product_tour_id=108046"
                             >
-                                <img src={howItWorksIcon} alt=""/>
+                                <div className="link-icon">
+                                    <img src={howItWorksIcon} alt=""/>
+                                </div>
+
                                 <span className="bottom-span">How it works?</span>
                             </a>
                         </li>
@@ -291,16 +303,18 @@ const Sidebar = () => {
                                 exact
                                 to={`/account-settings`}
                             >
-                                {user.user.avatar ? (
-                                    <i className="anticon">
-                                        <Avatar
-                                            className="avatar"
-                                            src={domainName + user.user.avatar}
-                                        />
-                                    </i>
-                                ) : (
-                                    <ItemIcon icon="account"/>
-                                )}
+                                <div className="link-icon">
+                                    {user.user.avatar ? (
+                                        <i className="anticon">
+                                            <Avatar
+                                                className="avatar"
+                                                src={domainName + user.user.avatar}
+                                            />
+                                        </i>
+                                    ) : (
+                                        <img src={userDefaultAvatar} alt=""/>
+                                    )}
+                                </div>
 
                                 <span className="bottom-span">Account</span>
                             </NavLink>
@@ -322,14 +336,20 @@ const Sidebar = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <ItemIcon icon="helpCenter"/>
+                                <div className="link-icon">
+                                    <img src={helpCenterIcon} alt=""/>
+                                </div>
+
                                 <span className="bottom-span">Help Center</span>
                             </a>
                         </li>
 
                         <li className="bottom-nav-item" onClick={handleLogout}>
                             <button type="button">
-                                <ItemIcon icon={"logOut"}/>
+                                <div className="link-icon">
+                                    <img src={logOutIcon} alt=""/>
+                                </div>
+
                                 <span className="bottom-span">Log Out</span>
                             </button>
                         </li>
