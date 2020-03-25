@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, NavLink} from "react-router-dom";
-import {Icon, Avatar} from "antd";
+import {Icon} from "antd";
 import shortid from "shortid";
 import referIcon from '../../assets/img/icons/sidebar-icons/refer-icon.svg';
 import facebookIcon from '../../assets/img/icons/sidebar-icons/facebook-icon-white.svg';
@@ -10,58 +10,21 @@ import logOutIcon from '../../assets/img/icons/sidebar-icons/log-out.svg';
 import helpCenterIcon from '../../assets/img/icons/sidebar-icons/help-center.svg';
 import ppcIcon from '../../assets/img/icons/sidebar-icons/ppc-automate-icon.svg';
 import userDefaultAvatar from '../../assets/img/icons/sidebar-icons/account.svg';
-import expertServiceIcon from '../../assets/img/icons/expert-service.svg';
-import howItWorksIcon from '../../assets/img/icons/how-it-work.png';
+import howItWorksIcon from '../../assets/img/icons/sidebar-icons/how-it-works.svg';
 import {regionsMenu, ppcAutomateMenu} from "./menu";
 import {getClassNames} from "../../utils";
 import {userActions} from "../../actions/user.actions";
-import ItemIcon from "../ItemIcon/ItemIcon";
 import logo from "../../assets/img/ProfitWhales-logo-white.svg";
 import soon from "../../assets/img/soon-label.svg";
 import newLabel from "../../assets/img/new-label.svg";
 import "./Sidebar.less";
 import {history} from "../../utils/history";
 
-const domainName =
-    window.location.hostname === "localhost"
-        ? "https://front1.profitwhales.com"
-        : "";
-
-
 const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
 
-function useWindowSize() {
-    const isClient = typeof window === "object";
-
-    function getSize() {
-        return {
-            width: isClient ? window.innerWidth : undefined,
-            height: isClient ? window.innerHeight : undefined
-        };
-    }
-
-    const [windowSize, setWindowSize] = useState(getSize);
-
-    useEffect(() => {
-        if (!isClient) {
-            return false;
-        }
-
-        function handleResize() {
-            setWindowSize(getSize());
-        }
-
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount and unmount
-
-    return windowSize;
-}
-
 const Sidebar = () => {
-    const {width, height} = useWindowSize(),
-        [collapsed, setCollapsed] = useState(true),
+    const [collapsed, setCollapsed] = useState(true),
         [automate, setAutomate] = useState(true),
         [regions] = useState(regionsMenu),
         // [display, setDisplay] = useState("none"),
@@ -105,10 +68,9 @@ const Sidebar = () => {
     }, []);
 
 
-    useEffect(() => {
-        window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
-    }, [width]);
-
+    // useEffect(() => {
+    //     window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
+    // }, [width]);
 
     if (!notFirstEntry) {
         history.push('/login');
@@ -304,16 +266,7 @@ const Sidebar = () => {
                                 to={`/account-settings`}
                             >
                                 <div className="link-icon">
-                                    {user.user.avatar ? (
-                                        <i className="anticon">
-                                            <Avatar
-                                                className="avatar"
-                                                src={domainName + user.user.avatar}
-                                            />
-                                        </i>
-                                    ) : (
-                                        <img src={userDefaultAvatar} alt=""/>
-                                    )}
+                                    <img src={userDefaultAvatar} alt=""/>
                                 </div>
 
                                 <span className="bottom-span">Account</span>
@@ -360,4 +313,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);
