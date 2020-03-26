@@ -15,7 +15,6 @@ export const userActions = {
     setInformation,
     getAuthorizedUserInfo,
     updateUserInformation,
-    changeUserAvatar,
     reSetState,
     getPersonalUserInfo,
     unsetAccount,
@@ -197,18 +196,6 @@ function updateUserInformation(user) {
                 });
 
                 notification.success({title: 'Completed'})
-            });
-    };
-}
-
-function changeUserAvatar(formData) {
-    return dispatch => {
-        userService.updatePhoto(formData)
-            .then(res => {
-                dispatch({
-                    type: userConstants.UPDATE_USER,
-                    payload: res.user
-                });
             });
     };
 }

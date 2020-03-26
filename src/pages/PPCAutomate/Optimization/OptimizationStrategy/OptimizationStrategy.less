@@ -35,6 +35,7 @@
         border-right: 1px solid rgba(208, 208, 208, 0.4);
         position: relative;
         font-weight: 500;
+        padding: 0 5px;
 
         &:nth-child(3) {
           width: 230px;
@@ -72,11 +73,13 @@
 
         &:first-child {
           justify-content: flex-start;
+          padding: 0 5px 0 0;
         }
 
         &:last-child {
           justify-content: flex-end;
           border: 0;
+          padding: 0 0 0 5px;
         }
       }
     }
@@ -100,6 +103,7 @@
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+          margin: 0 20px 0 0;
 
           h4 {
             font-weight: bold;
@@ -221,9 +225,8 @@
           }
 
           img {
-            //width: 95%;
-            height: 30vh;
-            margin: 0 0 0 auto;
+            //max-height: 80%;
+            margin: 10px 0 0 auto;
           }
         }
       }
@@ -334,7 +337,7 @@
     }
   }
 
-  @media (max-width: 1300px) {
+  @media (max-width: 1400px) {
     & {
       .strategies {
         .all-strategies {

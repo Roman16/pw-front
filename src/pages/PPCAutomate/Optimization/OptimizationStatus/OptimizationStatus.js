@@ -11,7 +11,7 @@ const strategies = {
     'BoostPPCProfit': 'Profitable PPC'
 };
 
-const StatusInfo = ({caption, value = '-----', statusColor = ''}) => (
+const StatusInfo = ({caption, value = '', statusColor = ''}) => (
     <div className="status-info">
         <div className="caption">{caption}</div>
         <div className={statusColor}>{value}</div>
@@ -48,12 +48,12 @@ const OptimizationStatus = ({product: {status, created_at, total_changes, today_
 
                 <StatusInfo
                     caption="Total Changes"
-                    value={total_changes}
+                    value={status === 'RUNNING' && total_changes}
                 />
 
                 <StatusInfo
                     caption="Today Changes"
-                    value={today_changes}
+                    value={status === 'RUNNING' && today_changes}
                 />
 
                 <StatusInfo

@@ -29,19 +29,18 @@
     align-items: flex-start;
 
     .status-info {
-      flex: 1;
-      min-width: 8.214285714285714rem;
+      margin: 0 0 10px;
+      min-width: 110px;
 
-      &:nth-child(1),
-      &:nth-child(2) {
-        min-width: 6rem;
+      &:last-child {
+       min-width: max-content;
       }
 
       .caption {
         font-weight: 600;
         font-size: 1rem;
         color: #343C5A;
-        margin: 0 0 20px 0;
+        margin-bottom: 20px;
       }
 
       .inactive {
@@ -60,25 +59,20 @@
     }
   }
 
-  @media (max-width: 1160px){
+  @media (max-width: 1160px) {
     & {
       .row {
         flex-wrap: wrap;
 
         .status-info {
-          min-width: max-content;
           margin-bottom: 20px;
-
-          .caption {
-            margin: 0 0 10px 0;
-          }
         }
       }
     }
   }
 
 
-  @media (max-width: 910px) {
+  @media (max-width: 917px) {
     & {
       .section-header {
         margin-bottom: 20px;
@@ -86,12 +80,26 @@
     }
   }
 
-  @media only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1350px),
-  only screen and (   min--moz-device-pixel-ratio: 2) and (min-width: 1350px),
-  only screen and (     -o-min-device-pixel-ratio: 2/1) and (min-width: 1350px),
-  only screen and (        min-device-pixel-ratio: 2) and (min-width: 1350px),
-  only screen and (                min-resolution: 192dpi) and (min-width: 1350px),
-  only screen and (                min-resolution: 2dppx) and (min-width: 1350px) {
+  @media (max-width: 430px) {
+    & {
+      .section-header {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .row {
+        flex-direction: column;
+        align-items: center;
+
+        .status-info {
+          min-width:auto;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1350px), only screen and (   min--moz-device-pixel-ratio: 2) and (min-width: 1350px), only screen and (     -o-min-device-pixel-ratio: 2/1) and (min-width: 1350px), only screen and (        min-device-pixel-ratio: 2) and (min-width: 1350px), only screen and (                min-resolution: 192dpi) and (min-width: 1350px), only screen and (                min-resolution: 2dppx) and (min-width: 1350px) {
     & {
       flex: 1;
       margin-left: 20px;

@@ -156,6 +156,7 @@ div.ReportTable {
         font-size: 50px;
         color: #c9cbd4;
         top: 20px;
+        z-index: 1000;
 
         &:hover {
           color: #6d6df6;
@@ -584,7 +585,7 @@ div.ReportTable {
   }
 
 
-  @media (max-width: 600px) {
+  @media (max-width: 850px) {
    .tabs {
      &.desc {
        display: none;
@@ -607,6 +608,11 @@ div.ReportTable {
              .TabName {
                display: flex;
                align-items: center;
+
+               .tab-name-count {
+                 padding: 1px 5px;
+
+               }
              }
            }
          }
@@ -641,7 +647,7 @@ div.ReportTable {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .reports-page {
     height: max-content;
 
@@ -787,6 +793,7 @@ div.ReportTable {
 .ant-select-dropdown-menu-item {
   .TabName {
     display: flex;
+    align-items: center;
 
     .tab-name-count {
       font-size: 1rem;
@@ -801,6 +808,7 @@ div.ReportTable {
       border-radius: 1em;
       margin: 0 0 0 0.8333333em;
       position: relative;
+      padding: 1px 5px;
     }
   }
 }
