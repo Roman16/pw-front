@@ -55,13 +55,14 @@
 
 
 div.ReportTable {
-  flex: 1;
   width: 100%;
-  min-width: 570px;
+  max-height: 100%;
   //display: flex;
   //flex-direction: column;
   margin: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   //.table-head {
   //  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.4);
@@ -137,6 +138,10 @@ div.ReportTable {
   }
 
   .tabs {
+    &.mob {
+      display: none;
+    }
+
     .slick-slider {
       align-items: flex-start;
 
@@ -267,8 +272,9 @@ div.ReportTable {
 
 
   .content {
-    height: calc(100% - 90px);
-    //flex: 1;
+    //height: calc(100% - 90px);
+    flex: 1;
+    overflow: auto;
     display: flex;
     flex-direction: column;
     background: #fff;
@@ -278,6 +284,7 @@ div.ReportTable {
     .custom-table {
       flex: 1;
       height: -webkit-fill-available;
+
 
       .table-overflow {
         flex: 1;
@@ -297,46 +304,12 @@ div.ReportTable {
     margin: 0 0 0.8571429em 0;
 
 
-    @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1629px), only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1629px), only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1629px), only screen and (max-device-pixel-ratio: 1) and (max-width: 1629px) {
-      & > div.changes-calendar-download {
-        order: 2;
-        margin: 1em 0 0 auto;
-      }
-    }
-
-    @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1206px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1206px), only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1206px), only screen and (min-device-pixel-ratio: 2) and (max-width: 1206px) {
-      flex-flow: wrap;
-
-      & > div.changes-calendar-download {
-        order: 2;
-        margin: 1em 0 0 auto;
-      }
-    }
-
     @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 1059px), only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 1059px), only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 1059px), only screen and (max-device-pixel-ratio: 1) and (max-width: 1059px) {
       flex-flow: column;
 
       & > h3.main-title {
         order: 1;
         margin: 0.7em 0 0;
-      }
-
-      & > div.changes-calendar-download {
-        flex-flow: column;
-        justify-content: center;
-        margin: 1em 0 0;
-
-        .total-count {
-          margin: 0 0 1em;
-        }
-
-        .DatePicker {
-          margin: 0 0 1em;
-        }
-
-        .download-btn {
-          margin: 0;
-        }
       }
 
       & > div.additional {
@@ -421,7 +394,7 @@ div.ReportTable {
       font-size: 1rem;
       display: flex;
       align-items: center;
-      margin: 0 8px;
+      margin: 0 8px 0 0;
       border-radius: 1em;
 
       span {
@@ -449,7 +422,7 @@ div.ReportTable {
 
     .download-btn {
       font-size: 1rem;
-      width: 10.75em;
+      width: 9em;
       height: 2.2857142857142856rem;
       display: flex;
       justify-content: space-around;
@@ -459,10 +432,8 @@ div.ReportTable {
       font-weight: bold;
       color: #fff;
       border-radius: 0.6666667em;
+      padding: 0 0.8333333em;
 
-      @media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: @retina-desktop), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: @retina-desktop), only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: @retina-desktop), only screen and (min-device-pixel-ratio: 2) and (max-width: @retina-desktop) {
-        padding: 0 0.8333333em;
-      }
 
       .download-icon {
         font-size: inherit; // 12px
@@ -582,6 +553,108 @@ div.ReportTable {
 
   .ant-tabs-bar {
     border: none;
+  }
+
+  @media (max-width: 1284px) {
+    .report-table {
+      display: grid;
+      grid-template-areas: "title trial" "calendar calendar";
+      grid-row-gap: 10px;
+
+      .main-title {
+        grid-area: title;
+        margin: 0 !important;
+      }
+
+      .changes-calendar-download {
+        width: 100%;
+        display: flex !important;
+        flex-wrap: wrap;
+        grid-area: calendar;
+
+        .total-count, .DatePicker, .btn {
+          margin: 0 10px 10px 0;
+        }
+      }
+
+      .additional {
+        grid-area: trial;
+      }
+    }
+  }
+
+
+  @media (max-width: 600px) {
+   .tabs {
+     &.desc {
+       display: none;
+     }
+     &.mob{
+       width: 100%;
+       display: block;
+       margin: 0 0 10px 0;
+
+       .custom-select{
+         width: 100%;
+         border-bottom: 2px solid #656a84;
+         padding-bottom: 5px;
+
+         .ant-select-selection{
+           border: 0;
+           background: inherit;
+
+           .ant-select-selection__rendered {
+             .TabName {
+               display: flex;
+               align-items: center;
+             }
+           }
+         }
+       }
+     }
+   }
+  }
+
+  @media (max-width: 515px) {
+    .report-table {
+      display: grid;
+      grid-template-areas: "title" "trial" "calendar";
+      grid-row-gap: 10px;
+      grid-template-columns: 1fr;
+
+      .main-title {
+        text-align: center;
+      }
+
+      .changes-calendar-download {
+        flex-direction: column;
+
+        .total-count, .DatePicker, .btn {
+          margin: 0 10px 10px 0;
+        }
+      }
+
+      .additional {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .reports-page {
+    height: max-content;
+
+    .ReportTable {
+      max-height: max-content;
+      .content {
+        height: 90vh;
+
+        .custom-table {
+          height: auto;
+        }
+      }
+    }
   }
 }
 
@@ -708,5 +781,26 @@ div.ReportTable {
   .ant-checkbox-group-item {
     display: flex;
     align-items: center;
+  }
+}
+
+.ant-select-dropdown-menu-item {
+  .TabName {
+    display: flex;
+
+    .tab-name-count {
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: inherit;
+      border: 1px solid #c9cbd4;
+      color: #000000;
+      min-width: 3em;
+      height: 1.3333333em !important;
+      border-radius: 1em;
+      margin: 0 0 0 0.8333333em;
+      position: relative;
+    }
   }
 }

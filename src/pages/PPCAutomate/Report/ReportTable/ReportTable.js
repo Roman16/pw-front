@@ -21,7 +21,10 @@ import {mainChangesCount, mainHasNewReport, subChangesCount} from "./Tables/chan
 import CustomTable from "../../../../components/Table/CustomTable";
 import TableButton from "./TableButton/TableButton";
 import tz from 'moment-timezone';
+import {Select} from "antd";
+import CustomSelect from "../../../../components/Select/Select";
 
+const Option = Select.Option;
 const CancelToken = axios.CancelToken;
 let source = null;
 
@@ -61,6 +64,7 @@ class ReportTable extends Component {
             "new-negative-pats": 0
         }
     };
+
 
     downloadFile = () => {
         const {startDate, endDate} = this.state,
@@ -361,7 +365,7 @@ class ReportTable extends Component {
                     <FreeTrial product={'ppc'}/>
                 </div>
 
-                <div className="tabs">
+                <div className="tabs desc">
                     <Slider
                         dots={false}
                         infinite={false}
@@ -415,6 +419,18 @@ class ReportTable extends Component {
                             </div>
                         ))}
                     </Slider>
+                </div>
+
+                <div className="tabs mob">
+                    <CustomSelect value={activeTab} onChange={(e) => {
+                        console.log(e);
+                        this.handleChangeTab(e)}}>
+                        {Object.keys(mainTabs).map((item) => (
+                            <Option value={item}>
+                                {mainTabs[item].tabName(item, counts, countsWithNew)}
+                            </Option>
+                        ))}
+                    </CustomSelect>
                 </div>
 
                 <div className="content">
