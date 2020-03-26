@@ -459,11 +459,9 @@ const LandingAutomation = () => {
         //----------------------------------------------------------------------
         //----------------------------------------------------------------------
 
-        const s = document.createElement('script'),
-            mailchimpScript = document.createElement('script');
+        const s = document.createElement('script');
 
         s.type = 'text/javascript';
-        mailchimpScript.type = 'text/javascript';
 
         s.async = true;
         s.innerHTML = `!function (f, b, e, v, n, t, s) {
@@ -487,17 +485,14 @@ const LandingAutomation = () => {
     fbq('init', '2628499780566506');
     fbq('track', 'PageView');`;
 
-        mailchimpScript.innerHTML = `window.dojoRequire(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us20.list-manage.com","uuid":"ded622a105926b256014e2410","lid":"74874aa336","uniqueMethods":true}) })`;
 
         document.head.appendChild(s);
-        document.head.appendChild(mailchimpScript);
 
         return () => {
             document.querySelector('html').classList.remove('not-retina');
             document.querySelector('body').classList.add('hide-mc-modal');
 
             document.head.removeChild(s);
-            document.head.removeChild(mailchimpScript);
 
         }
     }, []);
