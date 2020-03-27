@@ -276,6 +276,7 @@ class Scanner extends Component {
                         successFetch={successFetch}
                         stopScanning={this.handleStopScanning}
                         onDownloadFile={this.downloadFile}
+                        mistakeList={mistakeList}
                     />
 
                     <ProblemGraph
