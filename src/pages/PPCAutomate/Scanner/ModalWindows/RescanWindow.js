@@ -11,13 +11,14 @@ const RescanWindow = ({onClose, onConfirm}) => (
         <span>The current scanning results will be lost</span>
 
         <div className='actions'>
-            <button className='btn white' onClick={onClose}>
+            <button className='btn white' onClick={onConfirm}>
+                Yes, I’m sure
+            </button>
+
+            <button className='btn default' onClick={onClose}>
                 Cancel
             </button>
 
-            <button className='btn default' onClick={onConfirm}>
-                Yes, I’m sure
-            </button>
         </div>
     </Fragment>
 );
