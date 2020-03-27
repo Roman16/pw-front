@@ -10,7 +10,7 @@ const SuccessWindow = ({onClose}) => (
         <span>You can check the report now</span>
 
         <div className='actions'>
-            <button className='btn white' onClick={onClose}>
+            <button className='btn default' onClick={onClose}>
                 OK
             </button>
         </div>
