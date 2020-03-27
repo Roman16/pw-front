@@ -121,7 +121,7 @@ const Sidebar = () => {
                                 </div>
                                 <span className="top-span">
                                         Zero to Hero
-                                        <img className="soon" src={soon} alt="soon"/>
+                                    <span className="soon">soon</span>
                                     </span>
                             </NavLink>
                         </li>
@@ -179,8 +179,9 @@ const Sidebar = () => {
                                                 }}
                                             >
                                                 {item.title}
-                                                {item.new && <img className="new-fiches" src={newLabel}/>}
+                                                {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
                                                 {item.soon && <img className="soon" src={soon}/>}
+                                                {item.new && <span className="new-fiches">new</span>}
                                             </NavLink>
                                         </li>
                                     ))}
@@ -211,7 +212,8 @@ const Sidebar = () => {
                                                 >
                                                     {item.title}
                                                     {item.soon && <img className="soon" src={soon} alt="soon"/>}
-                                                    {item.new && <img className="new-fiches" src={newLabel}/>}
+                                                    {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
+                                                    {item.new && <span className="new-fiches">new</span>}
                                                 </NavLink>
                                             </li>
                                         ))}

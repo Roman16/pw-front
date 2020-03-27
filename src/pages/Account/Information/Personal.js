@@ -44,8 +44,8 @@ const Personal = () => {
 
             <div className="personal-information">
                 <div className="description">
-                    <h3>General Information</h3>
-                    <p>Change your avatar and keep your personal information up-to-date</p>
+                    <h3>Personal Information</h3>
+                    <p>You can change your email and password here</p>
                 </div>
 
                 {/*<div className="active-only">*/}
