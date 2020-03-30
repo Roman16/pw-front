@@ -23,6 +23,7 @@ import {notification} from "../../../components/Notification";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {SVG} from "../../../utils/icons";
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY,
     tapfiliateRegistrationPage = 'https://profitwhales.tapfiliate.com/programs/subscription-link/signup/',
@@ -223,10 +224,10 @@ const LandingAffiliates = () => {
                             <h4>Benefits</h4>
 
                             <div className='custom-list'>
-                                <div><img src={checkedIcon} alt=""/>High conversion rates (20–30%)</div>
-                                <div><img src={checkedIcon} alt=""/>10% Lifetime Commissions</div>
-                                <div><img src={checkedIcon} alt=""/>Real-Time Statistics And Reporting</div>
-                                <div><img src={checkedIcon} alt=""/>Perks for super-affiliates and influencers</div>
+                                <div><SVG id='mark'/>High conversion rates (20–30%)</div>
+                                <div><SVG id='mark'/>10% Lifetime Commissions</div>
+                                <div><SVG id='mark'/>Real-Time Statistics And Reporting</div>
+                                <div><SVG id='mark'/>Perks for super-affiliates and influencers</div>
                             </div>
                         </div>
 
@@ -236,9 +237,9 @@ const LandingAffiliates = () => {
                             <h4>Perks for Top Performers</h4>
 
                             <div className='custom-list'>
-                                <div><img src={checkedIcon} alt=""/>Exclusive discounts</div>
-                                <div><img src={checkedIcon} alt=""/>Increased payouts</div>
-                                <div><img src={checkedIcon} alt=""/>Premium Support</div>
+                                <div><SVG id='mark'/>Exclusive discounts</div>
+                                <div><SVG id='mark'/>Increased payouts</div>
+                                <div><SVG id='mark'/>Premium Support</div>
                             </div>
                         </div>
 
@@ -248,9 +249,9 @@ const LandingAffiliates = () => {
                             <h4>Support</h4>
 
                             <div className='custom-list'>
-                                <div><img src={checkedIcon} alt=""/>We'll help you get the word out</div>
-                                <div><img src={checkedIcon} alt=""/>Expert Support</div>
-                                <div><img src={checkedIcon} alt=""/>Receive a dedicated referral link</div>
+                                <div><SVG id='mark'/>We'll help you get the word out</div>
+                                <div><SVG id='mark'/>Expert Support</div>
+                                <div><SVG id='mark'/>Receive a dedicated referral link</div>
                             </div>
                         </div>
                     </div>

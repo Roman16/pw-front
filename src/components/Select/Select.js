@@ -1,7 +1,7 @@
 import React from "react";
-import {Popover, Select} from "antd";
-import selectIcon from "../../assets/img/icons/select-icon.svg";
+import {Select} from "antd";
 import './Select.less';
+import {SVG} from "../../utils/icons";
 
 const CustomSelect = (props) => {
     const {
@@ -15,7 +15,7 @@ const CustomSelect = (props) => {
             {...props}
             onChange={onChange}
             defaultValue={defaultValue}
-            suffixIcon={<img src={selectIcon} alt=""/>}
+            suffixIcon={<SVG id='select-icon'/>}
             className="custom-select"
             dropdownClassName={dropdownClassName}
         >

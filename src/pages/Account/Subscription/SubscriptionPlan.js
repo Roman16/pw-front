@@ -1,14 +1,13 @@
 import React, {Fragment, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import {Spin} from "antd";
-import reload from "../../../assets/img/icons/reload.svg";
 import ppcIcon from "../../../assets/img/icons/ppc-automate-icon.svg";
 import moment from "moment";
 import {numberMask} from "../../../utils/numberMask";
 import {history} from "../../../utils/history";
 import {useSelector} from "react-redux";
-import couponIcon from '../../../assets/img/icons/coupon-icon.svg';
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
+import {SVG} from "../../../utils/icons";
 
 const SubscriptionPlan = ({
                               onOpenAccountWindow,
@@ -136,14 +135,16 @@ const SubscriptionPlan = ({
                     onClick={() => onOpenReactivateWindow(product)}
                 >
                     Reactivate
-                    <img className="reactivate-img" src={reload} alt="reload"/>
+                    <span className="reactivate-img">
+                        <SVG id='reload'/>
+                    </span>
                 </button>
             </div>}
 
             <div className="automate">
                 <div className="ppc">
                     <div className="ppc-title-wrap">
-                        <img className="ppc-icon" src={ppcIcon} alt="icon"/>
+                        <img  src={ppcIcon} alt="icon" className='ppc-icon'/>
                         <h2 className="ppc-title">{product.productName}</h2>
                     </div>
                     <p className="ppc-text">
@@ -193,7 +194,7 @@ const SubscriptionPlan = ({
                         <h4>Do you have a coupon?</h4>
                         <div className="row">
                             <div className="input-block">
-                                <img src={couponIcon} alt=""/>
+                                <SVG id='coupon-icon'/>
                                 <input
                                     type="text"
                                     value={coupon}

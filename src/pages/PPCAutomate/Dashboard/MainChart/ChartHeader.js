@@ -1,10 +1,8 @@
 import React from "react";
 import {Switch} from "antd";
 import moment from "moment";
-import dailyLineIcon from '../../../../assets/img/icons/daily-line.svg';
 import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
-import greenLineIcon from "../../../../assets/img/icons/green-line.svg";
-import violetLineIcon from "../../../../assets/img/icons/violet-line.svg";
+import {SVG} from "../../../../utils/icons";
 
 const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveMetricTitle, secondActiveMetricTitle, showWeekChart, showDailyChart}) => {
     return (
@@ -18,8 +16,12 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
                 <span>7-day average</span>
 
                 <div className='line-fill'>
-                    <img src={greenLineIcon} alt="" className="green-line"/>
-                    <img src={violetLineIcon} alt="" className="violet-line"/>
+                    <span className="green-line">
+                        <SVG id='green-line'/>
+                    </span>
+                    <span className="violet-line">
+                         <SVG id='violet-line'/>
+                    </span>
                 </div>
             </div>
 
@@ -31,18 +33,26 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
                 />
                 <span>Daily</span>
 
-                <img src={dailyLineIcon} alt="" className='daily-icon'/>
+                <span className='daily-icon'>
+                     <SVG id='daily-line'/>
+                </span>
             </div>
 
 
             <div className='chart-legend'>
                 {firstActiveMetricTitle && <div className="first-line">
-                    <img src={greenLineIcon} alt="" className="green-line"/>
+                    <span className="green-line">
+                        <SVG id='green-line'/>
+                    </span>
+
                     {firstActiveMetricTitle}
                 </div>}
 
                 {secondActiveMetricTitle && <div className="second-line">
-                    <img src={violetLineIcon} alt="" className="violet-line"/>
+                    <span className="violet-line">
+                         <SVG id='violet-line'/>
+                    </span>
+
                     {secondActiveMetricTitle}
                 </div>}
             </div>

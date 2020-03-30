@@ -51,16 +51,21 @@
   .link-icon {
     margin-right: 1.7142857142857142rem;
     text-align: center;
+    height: 20px;
 
-    img, .anticon, .ant-avatar {
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      height: 18px;
+    }
+
+    img,svg, .anticon, .ant-avatar {
       width: 20px !important;
       min-width: 20px !important;
       height: 20px !important;
 
       @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-        width: 18px;
-        min-width: 18px;
-        height: 18px;
+        width: 18px !important;
+        min-width: 18px !important;
+        height: 18px !important;
       }
     }
   }
@@ -306,8 +311,9 @@
           }
         }
 
-        img {
+        svg {
           width: 1.4285714285714286rem;
+          height: 1.5rem;
         }
 
         span {
@@ -350,8 +356,9 @@
           }
         }
 
-        img {
+        svg {
           width: 0.7142857142857143rem;
+          height: 1.5rem;
         }
 
         span {

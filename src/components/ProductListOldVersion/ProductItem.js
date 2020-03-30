@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {func, bool, string} from 'prop-types';
 import {Spin, Icon} from 'antd';
 import optimizationLabel from '../../assets/img/optimization-label.svg';
-import loaderBg from '../../assets/img/icons/loader-background.svg';
 
 const maxText = text => {
     if (text && text.length > 40) {
@@ -72,8 +71,6 @@ const ProductItem = ({
                 </div>}
 
                 {under_optimization && !has_optimization_results && <div className='optimization-waiting'>
-                    <img src={loaderBg} alt=""/>
-
                     <Spin/>
                 </div>}
             </div>
@@ -104,7 +101,6 @@ const ProductItem = ({
                         </div>}
 
                         {under_optimization && !has_optimization_results && <div className='optimization-waiting'>
-                            <img src={loaderBg} alt=""/>
                             <Spin/>
                         </div>}
                     </div>

@@ -1,12 +1,11 @@
 import React from "react";
 import Tooltip from '../../../../../components/Tooltip/Tooltip';
 import {ProfitTooltipDescription} from "../../ProductBreakdown/ProductsList";
-import plusIcon from "../../../../../assets/img/icons/plus-green.svg";
-import minusIcon from "../../../../../assets/img/icons/minus.svg";
 import {round} from "../../../../../utils/round";
 import {metricsListArray} from "../metricsList";
 import {useSelector} from "react-redux";
 import {numberMask} from "../../../../../utils/numberMask";
+import {SVG} from "../../../../../utils/icons";
 
 const RenderMetricValue = ({value, type}) => {
     if (value != null) {
@@ -43,11 +42,11 @@ const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, i
                 }
 
                 {listType === 'hidden' && <div className="add-item">
-                    <img src={plusIcon} alt=""/>
+                    <SVG id='plus-green'/>
                 </div>}
 
                 {listType === 'visible' && <div className="remove-item">
-                    <img src={minusIcon} alt=""/>
+                    <SVG id='minus'/>
                 </div>}
             </div>
 

@@ -2,8 +2,8 @@ import React, {Fragment, useState} from 'react';
 import {useSelector} from "react-redux";
 
 import whales from '../../../../assets/img/seller-central-image.svg';
-import plus from '../../../../assets/img/icons/plus-white.svg';
 import Connectors from './Connectors';
+import {SVG} from "../../../../utils/icons";
 
 const Seller = () => {
     const [openedNewConnectorBlock, handleOpenBlock] = useState(false);
@@ -30,7 +30,7 @@ const Seller = () => {
 
                 {(!ppcConnected && !mwsConnected) &&
                 <button className="btn green-btn seller-btn" type="button" onClick={() => handleOpenBlock(true)}>
-                    <img src={plus} alt="plus"/>
+                    <SVG id='plus-white'/>
                     Add New Account
                 </button>}
             </div>

@@ -1,9 +1,9 @@
 import React, {useState, useRef, useEffect} from "react";
 import {useSelector} from "react-redux";
-import filterIcon from "../../assets/img/icons/products-filter-icon.svg";
 import {Input, Select, Switch} from "antd";
 import CustomSelect from "../Select/Select";
 import {NavLink} from "react-router-dom";
+import {SVG} from "../../utils/icons";
 
 const {Search} = Input;
 const Option = Select.Option;
@@ -43,7 +43,7 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                 <div className='filter-btn' onClick={() => switchWindow(!openedWindow)}
                      data-intercom-target='open-filters-button'
                 >
-                    <img src={filterIcon} alt=""/>
+                    <SVG id='products-filter-icon'/>
                 </div>
 
                 <div className={`${openedWindow ? 'filters-list opened' : 'filters-list closed'}`}>
@@ -115,7 +115,7 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                 />
 
                 {pathname !== '/ppc/scanner' && <div className='filter-btn' onClick={() => switchWindow(!openedWindow)}>
-                    <img src={filterIcon} alt=""/>
+                    <SVG id='products-filter-icon'/>
                 </div>}
 
                 {pathname !== '/ppc/scanner' &&

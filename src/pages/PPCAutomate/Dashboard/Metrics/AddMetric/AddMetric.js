@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import plusIcon from '../../../../../assets/img/icons/plus-blue.svg';
-import plusIconWhite from '../../../../../assets/img/icons/plus-white.svg';
 import AddMetricModal from "./AddMetricModal";
 import {dashboardActions} from '../../../../../actions/dashboard.actions';
 
 import './AddMetric.less';
+import {SVG} from "../../../../../utils/icons";
 
 const AddMetric = () => {
     const [visibleModal, switchModal] = useState(false);
@@ -50,8 +49,8 @@ const AddMetric = () => {
     return (
         <div className='add-metric'>
             <div className="add-metric__button" onClick={openModal}>
-                <img src={plusIcon} alt="" className='blue'/>
-                <img src={plusIconWhite} alt="" className='white'/>
+                <span className='white'><SVG id='plus-white'/></span>
+                <span className='blue'><SVG id='plus-blue'/></span>
 
                 Add Metric
             </div>

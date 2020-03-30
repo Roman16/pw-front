@@ -73,9 +73,10 @@ const MainChart = () => {
                     localFetch= false;
                 })
                 .catch(() => {
+                    localFetch = false;
+
                     !localFetch && setFetchingError(true);
                     !localFetch && switchFetch(false);
-                    localFetch = false;
                 })
         } else {
             updateChartData([])

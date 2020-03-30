@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Input, Checkbox, Select, Popover} from "antd";
-import icon from '../../../../../assets/img/icons/filter-icon.svg';
-import iconHover from '../../../../../assets/img/icons/filter-icon-black.svg';
-import iconActive from '../../../../../assets/img/icons/filter-icon-blue.svg';
+import {SVG} from "../../../../../utils/icons";
 
 const Option = Select.Option;
 const CheckboxGroup = Checkbox.Group;
@@ -55,8 +53,13 @@ export const ColumnTextFilter = ({onChangeFilter, filteredColumns, dataIndex}) =
         >
             <a className="ant-dropdown-link" href="#">
                 <div className='filter-icon'>
-                    <img src={filteredColumns[dataIndex] !== undefined ? iconActive : icon} alt="" className='default'/>
-                    <img src={iconHover} alt="" className='hover'/>
+                    <span className='default'>
+                        <SVG id={filteredColumns[dataIndex] !== undefined ? 'filter-icon-blue' : 'filter-icon'}/>
+                    </span>
+
+                    <span className='hover'>
+                       <SVG id='filter-icon-black'/>
+                    </span>
                 </div>
             </a>
         </Popover>
@@ -111,8 +114,13 @@ export const ColumnMenuFilter = ({onChangeFilter, filteredColumns, menu, dataInd
         >
             <a className="ant-dropdown-link" href="#">
                 <div className='filter-icon'>
-                    <img src={filteredColumns[dataIndex] !== undefined ? iconActive : icon} alt="" className='default'/>
-                    <img src={iconHover} alt="" className='hover'/>
+                    <span className='default'>
+                        <SVG id={filteredColumns[dataIndex] !== undefined ? 'filter-icon-blue' : 'filter-icon'}/>
+                    </span>
+
+                    <span className='hover'>
+                       <SVG id='filter-icon-black'/>
+                    </span>
                 </div>
             </a>
         </Popover>
@@ -184,8 +192,13 @@ export const ColumnNumberFilter = ({onChangeFilter, filteredColumns, dataIndex, 
         >
             <a className="ant-dropdown-link" href="#">
                 <div className='filter-icon'>
-                    <img src={filteredColumns[dataIndex] !== undefined ? iconActive : icon} alt="" className='default'/>
-                    <img src={iconHover} alt="" className='hover'/>
+                    <span className='default'>
+                        <SVG id={filteredColumns[dataIndex] !== undefined ? 'filter-icon-blue' : 'filter-icon'}/>
+                    </span>
+
+                    <span className='hover'>
+                       <SVG id='filter-icon-black'/>
+                    </span>
                 </div>
             </a>
         </Popover>

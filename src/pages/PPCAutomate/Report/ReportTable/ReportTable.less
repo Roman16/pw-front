@@ -436,13 +436,10 @@ div.ReportTable {
       padding: 0 0.8333333em;
 
 
-      .download-icon {
-        font-size: inherit; // 12px
-        background: url("../../../../assets/img/icons/download.svg");
-        background-size: cover;
+      svg {
         width: 2em;
         height: 2em;
-        margin-top: -0.25em;
+        margin: 0 0 2px 3px;
       }
     }
   }
@@ -586,39 +583,40 @@ div.ReportTable {
 
 
   @media (max-width: 850px) {
-   .tabs {
-     &.desc {
-       display: none;
-     }
-     &.mob{
-       width: 100%;
-       display: block;
-       margin: 0 0 10px 0;
+    .tabs {
+      &.desc {
+        display: none;
+      }
 
-       .custom-select{
-         width: 100%;
-         border-bottom: 2px solid #656a84;
-         padding-bottom: 5px;
+      &.mob {
+        width: 100%;
+        display: block;
+        margin: 0 0 10px 0;
 
-         .ant-select-selection{
-           border: 0;
-           background: inherit;
+        .custom-select {
+          width: 100%;
+          border-bottom: 2px solid #656a84;
+          padding-bottom: 5px;
 
-           .ant-select-selection__rendered {
-             .TabName {
-               display: flex;
-               align-items: center;
+          .ant-select-selection {
+            border: 0;
+            background: inherit;
 
-               .tab-name-count {
-                 padding: 1px 5px;
+            .ant-select-selection__rendered {
+              .TabName {
+                display: flex;
+                align-items: center;
 
-               }
-             }
-           }
-         }
-       }
-     }
-   }
+                .tab-name-count {
+                  padding: 1px 5px;
+
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   @media (max-width: 515px) {
@@ -668,6 +666,7 @@ div.ReportTable {
 
     .ReportTable {
       max-height: max-content;
+
       .content {
         height: 90vh;
 

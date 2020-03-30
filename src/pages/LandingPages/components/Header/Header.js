@@ -2,10 +2,10 @@ import React, {Fragment, useEffect, useState} from 'react';
 import logoDark from '../../../../assets/img/ProfitWhales-logo-dark.svg';
 import logoWhite from '../../../../assets/img/ProfitWhales-logo-white.svg';
 import {Link} from "react-router-dom";
-import topArrow from '../../../../assets/img/icons/menu-arrow.svg';
 
 import './Header.less';
 import {history} from "../../../../utils/history";
+import {SVG} from "../../../../utils/icons";
 
 
 const Header = ({type = 'light'}) => {
@@ -47,7 +47,7 @@ const Header = ({type = 'light'}) => {
                             <li>
                                 <Link to={'/about-us'}>About us</Link>
                             </li>
-                            <li className="has-child"><a href="#">Services <img src={topArrow} alt=""/></a>
+                            <li className="has-child"><a href="#">Services <SVG id='menu-arrow'/></a>
                                 <ul className="sub-menu">
                                     <li><Link to='/'>PPC Optimization</Link></li>
                                     <li><Link to='/scanner'>PPC Scanner</Link></li>

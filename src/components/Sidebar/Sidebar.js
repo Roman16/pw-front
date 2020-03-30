@@ -3,22 +3,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, NavLink} from "react-router-dom";
 import {Icon} from "antd";
 import shortid from "shortid";
-import referIcon from '../../assets/img/icons/sidebar-icons/refer-icon.svg';
-import facebookIcon from '../../assets/img/icons/sidebar-icons/facebook-icon-white.svg';
-import zthIcon from '../../assets/img/icons/sidebar-icons/zth-icon.svg';
-import logOutIcon from '../../assets/img/icons/sidebar-icons/log-out.svg';
-import helpCenterIcon from '../../assets/img/icons/sidebar-icons/help-center.svg';
-import ppcIcon from '../../assets/img/icons/sidebar-icons/ppc-automate-icon.svg';
-import userDefaultAvatar from '../../assets/img/icons/sidebar-icons/account.svg';
-import howItWorksIcon from '../../assets/img/icons/sidebar-icons/how-it-works.svg';
 import {regionsMenu, ppcAutomateMenu} from "./menu";
 import {getClassNames} from "../../utils";
 import {userActions} from "../../actions/user.actions";
 import logo from "../../assets/img/ProfitWhales-logo-white.svg";
-import soon from "../../assets/img/soon-label.svg";
-import newLabel from "../../assets/img/new-label.svg";
 import "./Sidebar.less";
 import {history} from "../../utils/history";
+import {SVG} from "../../utils/icons";
 
 const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
@@ -117,8 +108,9 @@ const Sidebar = () => {
                                 disabled
                             >
                                 <div className="link-icon">
-                                    <img src={zthIcon} alt=""/>
+                                    <SVG id='zth-icon'/>
                                 </div>
+
                                 <span className="top-span">
                                         Zero to Hero
                                     <span className="soon">soon</span>
@@ -137,7 +129,6 @@ const Sidebar = () => {
                         {/*        <ItemIcon icon="analytics"/>*/}
                         {/*        <span className="top-span">*/}
                         {/*            Analytics*/}
-                        {/*            <img className="soon" src={soon} alt="soon"/>*/}
                         {/*        </span>*/}
                         {/*    </NavLink>*/}
                         {/*</li>*/}
@@ -152,7 +143,7 @@ const Sidebar = () => {
                                     disabled
                                 >
                                     <div className="link-icon">
-                                        <img src={ppcIcon} alt=""/>
+                                        <SVG id='ppc-automate-icon'/>
                                     </div>
 
                                     <span className="top-span">PPC Automate</span>
@@ -180,7 +171,6 @@ const Sidebar = () => {
                                             >
                                                 {item.title}
                                                 {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
-                                                {item.soon && <img className="soon" src={soon}/>}
                                                 {item.new && <span className="new-fiches">new</span>}
                                             </NavLink>
                                         </li>
@@ -211,8 +201,6 @@ const Sidebar = () => {
                                                     }}
                                                 >
                                                     {item.title}
-                                                    {item.soon && <img className="soon" src={soon} alt="soon"/>}
-                                                    {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
                                                     {item.new && <span className="new-fiches">new</span>}
                                                 </NavLink>
                                             </li>
@@ -227,7 +215,7 @@ const Sidebar = () => {
                 <div className="facebook-link">
                     <a href='https://www.facebook.com/groups/profitwhales.software/' target="_blank">
                         <div className="icon">
-                            <img src={facebookIcon} alt=""/>
+                            <SVG id='facebook-icon-white'/>
                         </div>
 
                         <span className="bottom-span">Join us on Facebook</span>
@@ -237,7 +225,7 @@ const Sidebar = () => {
                 <div className="refer-link">
                     <Link to={'/affiliates'} target="_blank">
                         <div className="icon">
-                            <img src={referIcon} alt=""/>
+                            <SVG id='refer-icon'/>
                         </div>
 
                         {devicePixelRatio === 2 ? <span className="bottom-span">Refer sellers! <br/> Get Cash</span>
@@ -253,7 +241,7 @@ const Sidebar = () => {
                                 href="/ppc/optimization?product_tour_id=108046"
                             >
                                 <div className="link-icon">
-                                    <img src={howItWorksIcon} alt=""/>
+                                    <SVG id='how-it-works'/>
                                 </div>
 
                                 <span className="bottom-span">How it works?</span>
@@ -268,7 +256,7 @@ const Sidebar = () => {
                                 to={`/account-settings`}
                             >
                                 <div className="link-icon">
-                                    <img src={userDefaultAvatar} alt=""/>
+                                    <SVG id='account'/>
                                 </div>
 
                                 <span className="bottom-span">Account</span>
@@ -292,7 +280,7 @@ const Sidebar = () => {
                                 rel="noopener noreferrer"
                             >
                                 <div className="link-icon">
-                                    <img src={helpCenterIcon} alt=""/>
+                                    <SVG id='help-center'/>
                                 </div>
 
                                 <span className="bottom-span">Help Center</span>
@@ -302,7 +290,7 @@ const Sidebar = () => {
                         <li className="bottom-nav-item" onClick={handleLogout}>
                             <button type="button">
                                 <div className="link-icon">
-                                    <img src={logOutIcon} alt=""/>
+                                    <SVG id='log-out'/>
                                 </div>
 
                                 <span className="bottom-span">Log Out</span>

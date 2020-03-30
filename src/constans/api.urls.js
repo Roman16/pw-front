@@ -2,6 +2,8 @@ export const userUrls = {
     login: 'user/login',
     loginAmazon: 'user/login/amazon/callback',
     regist: 'user/register',
+    resendEmail: 'user/email/resend',
+    confirmEmail: 'user/email/verify',
     mws: 'user/account/auth/mws/tokens',
     deleteMws: 'user/account/auth/mws/delete',
     deleteLwa: 'user/account/auth/lwa/delete',

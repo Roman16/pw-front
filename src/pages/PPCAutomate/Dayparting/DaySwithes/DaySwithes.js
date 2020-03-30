@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from 'react';
-import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
 import {Spin, Switch} from "antd";
 import moment from "moment";
 import tz from 'moment-timezone';
@@ -14,6 +13,7 @@ import {connect} from "react-redux";
 import axios from "axios";
 import {productsActions} from '../../../../actions/products.actions'
 import {NavLink} from "react-router-dom";
+import {SVG} from "../../../../utils/icons";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -373,7 +373,7 @@ class DaySwitches extends Component {
                             </div>
 
                             <button className='btn' onClick={this.handleReset} disabled={!activeDayparting}>
-                                <img src={reloadIcon} alt=""/>
+                                <SVG id='reload-icon'/>
                                 Reset
                             </button>
                         </div>

@@ -1,7 +1,6 @@
 import React, {useState} from "react";
-import leftIcon from "../../assets/img/icons/left-icon.svg";
-import rightIcon from "../../assets/img/icons/right-icon.svg";
 import {Input} from "antd";
+import {SVG} from "../../utils/icons";
 
 const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
     const [pageNumber, setPageNumber] = useState(null);
@@ -33,13 +32,14 @@ const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
 
             <div className='custom-pagination'>
                 <div className={page > 1 ? 'prev' : 'prev disabled'} onClick={goPrevPage}>
-                    <img src={leftIcon} alt=""/>
+                    <SVG id='left-icon'/>
                 </div>
 
                 <div className="line"/>
 
-                <div className={totalSize > 0 && page < Math.ceil(totalSize / size) ? 'next' : 'next disabled'} onClick={goNextPage}>
-                    <img src={rightIcon} alt=""/>
+                <div className={totalSize > 0 && page < Math.ceil(totalSize / size) ? 'next' : 'next disabled'}
+                     onClick={goNextPage}>
+                    <SVG id='right-icon'/>
                 </div>
             </div>
 
@@ -51,7 +51,7 @@ const ProductPagination = ({page, totalSize, size, onChangePagination}) => {
                     min={1}
                     value={pageNumber}
                     onBlur={e => {
-                        if(e.target.value >  Math.ceil(totalSize / size)) {
+                        if (e.target.value > Math.ceil(totalSize / size)) {
                             setPageNumber(null)
                         }
 

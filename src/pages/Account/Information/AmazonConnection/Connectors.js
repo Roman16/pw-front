@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import selectedIcon from '../../../../assets/img/icons/selected-icon.svg';
-import down from "../../../../assets/img/icons/Down.svg";
 import Amazon from './Amazon';
+import {SVG} from "../../../../utils/icons";
 
 const Connectors = ({amazonTokens}) => {
     const [openedDopInformation, targetDopInformation] = useState(false);
@@ -9,13 +8,14 @@ const Connectors = ({amazonTokens}) => {
     return (
         <div className="connectors-box">
             <div className='short-connect-information'>
-               {amazonTokens && <div className="column">
-                    <img src={selectedIcon} alt=""/>
+                {amazonTokens && <div className="column">
+                    <SVG id='selected-icon'/>
                 </div>}
 
                 <div className="column">
                     <div className="title">
-                        Amazon Seller Central Connection {amazonTokens && `- SELLER ID: ${amazonTokens.amazon_mws.seller_id || 'not connected'}`}
+                        Amazon Seller Central
+                        Connection {amazonTokens && `- SELLER ID: ${amazonTokens.amazon_mws.seller_id || 'not connected'}`}
                     </div>
 
                     <a
@@ -35,7 +35,9 @@ const Connectors = ({amazonTokens}) => {
                             type="button"
                             onClick={() => targetDopInformation(!openedDopInformation)}
                         >
-                            <img src={down} alt="" className={openedDopInformation ? 'opened-block' : ''}/>
+                            <span className={openedDopInformation ? 'opened-block' : ''}>
+                                <SVG id='down'/>
+                            </span>
                         </button>
                         :
                         <button className="token-btn" type="button" onClick={() => targetDopInformation(true)}>

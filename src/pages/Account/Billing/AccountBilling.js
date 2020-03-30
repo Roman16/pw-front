@@ -1,11 +1,11 @@
 import React, {useState, useEffect, Fragment} from "react";
 import visaLogo from '../../../assets/img/visa-logo-white.svg';
 import masterLogo from '../../../assets/img/master-logo-white.svg';
-import selectedIcon from '../../../assets/img/icons/selected.svg';
 import ConfirmActionPopup from '../../../components/ModalWindow/ConfirmActionPopup';
 import {Menu, Dropdown, Icon} from 'antd';
 import moment from "moment";
 import {allCountries} from '../../../utils/countries';
+import {SVG} from "../../../utils/icons";
 
 const UserCard = ({card: {last4, brand, exp_month, exp_year}, card, onUpdateCardInformation, deleteCard, onSet}) => {
     const menu = (
@@ -49,7 +49,7 @@ const UserCard = ({card: {last4, brand, exp_month, exp_year}, card, onUpdateCard
                 {card.default && <div className='default-card-block'>
                     Default Card
                     <div>
-                        <img src={selectedIcon} alt=""/>
+                        <SVG id='selected-icon'/>
                     </div>
                 </div>}
             </div>

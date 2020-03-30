@@ -1,12 +1,12 @@
 import React from "react";
 import {toast} from 'react-toastify';
-import infoIcon from '../../assets/img/icons/info.svg';
+import {SVG} from "../../utils/icons";
 
 const WarningNotification = ({title, description}) => (
     toast.warn(
         <div>
             <div className='notification__title'>
-                <img src={infoIcon} alt=""/>
+                <SVG id='info'/>
                 {title}
             </div>
 

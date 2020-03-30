@@ -1,12 +1,12 @@
 import React from "react";
 import {toast} from 'react-toastify';
-import stopIcon from '../../assets/img/icons/stop.svg';
+import {SVG} from "../../utils/icons";
 
 const ErrorNotification = ({title, description}) => (
     toast.error(
         <div>
             <div className='notification__title'>
-                <img src={stopIcon} alt=""/>
+                <SVG id='stop'/>
                 {title}
             </div>
 

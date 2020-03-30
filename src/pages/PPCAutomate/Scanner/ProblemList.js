@@ -3,7 +3,7 @@ import {Checkbox, Progress, Icon} from "antd";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import InputCurrency from "../../../components/Inputs/InputCurrency";
 import moment from "moment";
-import checked from '../../../assets/img/icons/checked-white-icon.svg';
+import {SVG} from "../../../utils/icons";
 
 let problemList = [
     {
@@ -153,7 +153,7 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                         <div key={item.key}>
                             <Progress
                                 type="circle"
-                                format={percent => percent === 100 && <div className='completed'><img src={checked} alt=""/></div>}
+                                format={percent => percent === 100 && <div className='completed'><SVG id='checked-white-icon'/></div>}
                                 percent={item.percent}
                                 width={devicePixelRatio === 2 ? 18 : 24}
                                 strokeWidth={10}

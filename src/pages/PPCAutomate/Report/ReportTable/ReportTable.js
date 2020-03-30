@@ -23,6 +23,7 @@ import TableButton from "./TableButton/TableButton";
 import tz from 'moment-timezone';
 import {Select} from "antd";
 import CustomSelect from "../../../../components/Select/Select";
+import {SVG} from "../../../../utils/icons";
 
 const Option = Select.Option;
 const CancelToken = axios.CancelToken;
@@ -359,7 +360,8 @@ class ReportTable extends Component {
 
                         <button className="btn default download-btn" onClick={this.downloadFile}>
                             <span> Download </span>
-                            <i className="download-icon"/>
+
+                            <SVG id='download'/>
                         </button>
                     </div>
 

@@ -23,6 +23,7 @@ import LoginPage from '../pages/authentication/LoginPage/LoginPage';
 import RegistrationPage from '../pages/authentication/RegistrationPage/RegistrationPage';
 import ResetPassword from '../pages/authentication/ResetPassword/ResetPassword';
 import LoginWithAmazon from '../pages/authentication/LoginWithAmazon/LoginWithAmazon';
+import ConfirmEmailPage from "../pages/authentication/RegistrationPage/ConfirmEmailPage/ConfirmEmailPage";
 
 // const LandingAutomation = React.lazy(() => import('../pages/LandingPages/Automation/LandingAutomation'));
 // const LandingAffiliates = React.lazy(() => import('../pages/LandingPages/Affiliates/LandingAffiliates'));
@@ -63,6 +64,7 @@ const routers = () => {
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/registration" component={RegistrationPage}/>
                 <Route exact path="/reset-password" component={ResetPassword}/>
+                <Route exact path="/confirm-email" component={ConfirmEmailPage}/>
                 <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                 {/*-----------------------------------------------------------*/}
 
