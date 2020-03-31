@@ -91,7 +91,6 @@ const ProblemGraph = ({problemsCount = {}}) => {
                                     // onMouseLeave={() => setSector(null)}
                                 >
                                     {data.map((entry, index) => {
-                                        console.log(index);
                                         return(
                                             <Cell
                                                 key={`cell-${index}`}

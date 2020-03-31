@@ -105,7 +105,7 @@ const Optimization = () => {
 
 
                 dispatch(productsActions.updateProduct({
-                    id: selectedAll ? 'all' : selectedProduct.product_id,
+                    id: selectedAll ? 'all' : productId,
                     status: 'RUNNING',
                     optimization_strategy
                 }));
