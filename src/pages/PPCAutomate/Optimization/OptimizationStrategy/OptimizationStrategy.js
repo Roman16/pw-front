@@ -17,6 +17,7 @@ import NetMarginWindow from "../NetMarginWindow/NetMarginWindow";
 import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup";
 import {productsActions} from "../../../../actions/products.actions";
 import CustomSelect from "../../../../components/Select/Select";
+import {notification} from "../../../../components/Notification";
 
 const Option = Select.Option;
 
@@ -112,7 +113,8 @@ function StrategyItem({
                           onSaveTargetAcos,
                           status
                       }) {
-    const [targetAcos, setTargetAcos] = useState(desired_target_acos);
+    const [targetAcos, setTargetAcos] = useState(desired_target_acos),
+        [fieldHasError, setError] = useState(false);
 
     useEffect(() => {
         setTargetAcos(desired_target_acos)
@@ -121,7 +123,13 @@ function StrategyItem({
     return (
         <form className={`strategy-item  slide-${index + 1} ${visible && 'visible'}`} onSubmit={(e) => {
             e.preventDefault();
-            onStart(targetAcos)
+
+            if (targetAcos > 0) {
+                onStart(targetAcos);
+            } else {
+                setError(true);
+                notification.error({title: 'Enter your target ACoS first'})
+            }
         }}>
             <div className="description-block">
                 <div className="col">
@@ -143,7 +151,18 @@ function StrategyItem({
                 <div className="image">
                     {index === 0 && <div className="target-acos">
                         <span>Enter your target ACoS</span>
-                        <InputCurrency required typeIcon={'margin'} value={targetAcos} onChange={value => setTargetAcos(value)}/>
+                        <InputCurrency
+                            className={`${fieldHasError && 'empty-field'}`}
+                            typeIcon={'margin'}
+                            value={targetAcos}
+                            onFocus={() => {
+                                setError(false)
+                            }}
+                            onChange={value => {
+                                setTargetAcos(value);
+                                setError(false)
+                            }}
+                        />
                         <button className='btn green-btn' onClick={() => onSaveTargetAcos(targetAcos)}
                                 disabled={processing || productId == null}>save
                         </button>
