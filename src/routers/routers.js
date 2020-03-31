@@ -1,10 +1,7 @@
-import React, {Suspense, Fragment} from 'react';
+import React, {Suspense} from 'react';
 import {Router, Route, Switch, Redirect} from 'react-router-dom';
 import {history} from '../utils/history';
 import RouteLoader from "../components/RouteLoader/RouteLoader";
-import Sidebar from "../components/Sidebar/Sidebar";
-//
-
 // import LandingAutomation from '../pages/LandingPages/Automation/LandingAutomation';
 // import LandingAffiliates from '../pages/LandingPages/Affiliates/LandingAffiliates';
 // import Ebook from '../pages/LandingPages/Ebook/Ebook';

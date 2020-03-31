@@ -54,11 +54,6 @@ const Sidebar = () => {
         })
     }, []);
 
-    useEffect(() => {
-     console.log('update')
-    })
-
-
     // useEffect(() => {
     //     window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
     // }, [width]);

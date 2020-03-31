@@ -1,16 +1,19 @@
 @import "../../style/variables.less";
 
 .product-list {
-  width: 20%;
-  min-width: 365px;
+  width: 380px;
+  min-width: 380px;
   display: flex;
   flex-direction: column;
   padding: 1.714285714285714em 25px 1.714285714285714em 1.4285714285714286rem;
-  //padding: 1.714285714285714em 1.4285714285714286rem 1.714285714285714em 1.4285714285714286rem;
-  //border-right: 1px solid rgba(201, 203, 212, 0.2);
   position: relative;
   transition: all 0.2s ease-in;
   overflow: hidden;
+
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    width: 305px;
+    min-width: 305px;
+  }
 
   &.daypartin-list {
     padding-top: 80px;
@@ -45,7 +48,7 @@
   .page-items-block,
   .campaigns-list,
   .products {
-    min-width: 325px;
+    min-width: 340px;
     visibility: visible;
     transition: .1s;
   }
@@ -215,7 +218,6 @@
     display: flex;
     align-items: center;
     position: relative;
-    min-width: 325px;
 
     .search-field {
       z-index: 100;
