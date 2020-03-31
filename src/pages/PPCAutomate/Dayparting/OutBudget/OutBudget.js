@@ -34,6 +34,8 @@ const hours = Array.from({length: 24}, (item, index) => index);
 
 
 const OutBudget = ({date}) => {
+    let localFetching = false;
+
     const defaultData = Array.from({length: 168}, (item, index) => moment(`${moment(date.startDate).add(Math.floor(index / 24), 'days').format('DD.MM.YYYY')} ${index - 24 * Math.floor(index / 24)}`, 'DD.MM.YYYY HH').format('YYYY-MM-DD HH:mm:ss'));
 
     const [data, setData] = useState(defaultData),
@@ -73,6 +75,8 @@ const OutBudget = ({date}) => {
 
             if (!fetchingCampaignList) {
                 setFetchingData(true);
+                localFetching = true;
+
                 try {
                     const res = await daypartingServices.getOutBudgetStatistic({
                         campaignId,
@@ -94,8 +98,10 @@ const OutBudget = ({date}) => {
                         return res.response.find(dataDot => dataDot.date === item) ? res.response.find(dataDot => dataDot.date === item) : {}
                     }));
                     setFetchingData(false);
+                    localFetching = false;
                 } catch (e) {
-                    setFetchingData(false);
+                    !localFetching && setFetchingData(false);
+                    localFetching = false;
                 }
             }
         }

@@ -1,7 +1,8 @@
-import React, {Suspense } from 'react';
+import React, {Suspense, Fragment} from 'react';
 import {Router, Route, Switch, Redirect} from 'react-router-dom';
 import {history} from '../utils/history';
 import RouteLoader from "../components/RouteLoader/RouteLoader";
+import Sidebar from "../components/Sidebar/Sidebar";
 //
 
 // import LandingAutomation from '../pages/LandingPages/Automation/LandingAutomation';
@@ -80,7 +81,8 @@ const routers = () => {
         //     </Switch>
         // </Router>
 
-        <Suspense fallback={<RouteLoader />}>
+
+        <Suspense fallback={<RouteLoader/>}>
             <Router history={history}>
                 <Switch>
                     <Route exact path="/" component={LandingAutomation}/>
@@ -113,8 +115,7 @@ const routers = () => {
                 </Switch>
             </Router>
         </Suspense>
-
     );
 };
 
-export default routers;
+export default React.memo(routers);

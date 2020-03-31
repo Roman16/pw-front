@@ -1,5 +1,12 @@
 @import "../../style/variables.less";
 
+@font-face {
+  src: url('../../style/fonts/Eina02/Eina02-Regular/font.eot');
+  font-family: 'Eina';
+  src: url('../../style/fonts/Eina02/Eina02-Regular/font.woff2') format('woff2'), url('../../style/fonts/Eina02/Eina02-Regular/font.woff') format('woff'), url('../../style/fonts/Eina02/Eina02-Regular/font.eot?#iefix') format('embedded-opentype'), url('../../style/fonts/Eina02/Eina02-Regular/font.ttf') format('truetype');
+  font-weight: 400;
+}
+
 .visibleAnimation {
   transition: opacity 0.3s ease-in 0.3s;
   transform: scaleX(1);
@@ -25,6 +32,9 @@
   position: relative;
   background-color: @third-default-dark;
   z-index: 10000;
+
+  //font-family: 'Open Sans';
+  font-family: Eina;
 
   .sidebar-header {
     height: 5.285714285714286rem;
@@ -57,7 +67,7 @@
       height: 18px;
     }
 
-    img,svg, .anticon, .ant-avatar {
+    img, svg, .anticon, .ant-avatar {
       width: 20px !important;
       min-width: 20px !important;
       height: 20px !important;
@@ -95,7 +105,7 @@
         display: flex;
         flex-wrap: wrap;
 
-        img {
+        svg {
           width: 2.7em;
           height: 1.6em;
           margin: 0 5px 0 0;
@@ -125,7 +135,6 @@
     }
 
     .top-nav {
-      padding: 0 2.4em;
 
       .top-nav-list {
         list-style: none;
@@ -133,6 +142,7 @@
 
         .top-nav-item {
           margin: 1.5em 0 3em 0;
+          padding: 0 2.4em;
 
           .top-nav-link {
             font-size: 1rem;
@@ -157,27 +167,13 @@
 
           .automate-list {
             list-style: none;
+            cursor: default;
+            opacity: 1;
+            transition: opacity 0.3s ease-in 0.3s;
 
-            &.open {
-              transform: scaleY(1);
-              transform-origin: top;
-              max-height: 350px;
-              transition: all 0.2s ease-in;
-
-            }
-
-            &.closed {
-              max-height: 0;
-              transform: scaleY(0);
-              transform-origin: top;
-              overflow: hidden;
-              transition: all 0.2s ease-in;
-
-            }
 
             .automate-item {
               margin: 2.2em 0;
-              cursor: pointer;
 
               .automate-link {
                 font-size: 1rem;
@@ -188,6 +184,19 @@
                 color: @sidebar-text-color;
                 white-space: nowrap;
                 opacity: 1;
+                cursor: pointer;
+
+                &.visible {
+                  transition: opacity 0.1s ease-in 0.1s;
+                  opacity: 1;
+                }
+
+                &.hidden {
+                  transition: .1s;
+                  cursor: default;
+                  visibility: hidden;
+                  opacity: 0;
+                }
               }
 
               .automate-link-active {
@@ -214,7 +223,9 @@
         }
 
         .top-nav-item:last-child {
-          cursor: pointer;
+          & > div:first-child {
+            cursor: pointer;
+          }
 
           &:hover {
             .collapsed-automate {
@@ -229,14 +240,6 @@
             top: 21em;
             padding: 0 0 0 30px;
             left: 4.5em;
-            // opacity: 0;
-            // transition: opacity 1s ease-in, left 0s ease-in 1s;
-
-            // &:active {
-            //   // display: none;
-            //   // background-color: #f00;
-            // }
-
 
             .collapsed-automate-list {
               width: 200px;
@@ -486,6 +489,28 @@
     .top-nav {
       .top-nav-list {
         .top-nav-item {
+          .automate-list {
+            //transition: opacity 0.1s;
+            opacity: 0;
+            visibility: hidden;
+            max-height: 0;
+
+            animation: .2s fadeOut;
+          }
+
+          @keyframes fadeOut {
+            99% {
+              visibility: visible;
+              opacity: 0;
+              max-height: 0;
+            }
+            100% {
+              opacity: 0;
+              max-height: 0;
+              visibility: hidden;
+            }
+          }
+
           .top-nav-link {
             .top-span {
               .hideAnimation();
@@ -558,7 +583,7 @@ a:focus {
     //
     .soon {
       background: #B6B6FB;
-      height: 1.1429em;
+      height: 1.14285714rem;
       position: absolute;
       padding: 0 3px 2px 3px;
       top: -0.7143em;
@@ -567,16 +592,18 @@ a:focus {
       color: #343C5A;
       display: flex;
       align-items: center;
+      font-size: 0.8571428571428571rem;
 
       @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
         left: 60px;
+        padding: 0 3px 1px 3px;
       }
     }
   }
 
   .new-fiches {
     background: #8FD39D;
-    height: 1.1429em;
+    height: 1.14285714rem;
     position: absolute;
     padding: 0 5px 2px 5px;
     top: -0.7143em;
@@ -585,9 +612,12 @@ a:focus {
     color: #343C5A;
     display: flex;
     align-items: center;
+    font-size: 0.8571428571428571rem;
+
 
     @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
       left: 54px;
+      padding: 0 5px 1px 5px;
     }
   }
 
@@ -597,7 +627,7 @@ a:focus {
         position: relative;
 
         .soon {
-          height: 1.1429em;
+          height: 1.14285714rem;
           position: absolute;
           top: -0.7143em;
           right: 2.5em;

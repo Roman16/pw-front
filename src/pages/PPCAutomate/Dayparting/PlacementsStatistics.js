@@ -183,6 +183,8 @@ const getPercent = (value, total) => {
 const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
 
 const PlacementsStatistics = ({date}) => {
+    let localFetching = false;
+
     const [chartData, setChartData] = useState([]),
         [statisticData, setStatisticData] = useState({}),
         [processing, setProcessing] = useState(false);
@@ -199,6 +201,7 @@ const PlacementsStatistics = ({date}) => {
 
             if (!fetchingCampaignList) {
                 setProcessing(true);
+                localFetching = true;
 
                 try {
                     const res = await daypartingServices.getPlacementsStatistic({
@@ -217,9 +220,10 @@ const PlacementsStatistics = ({date}) => {
                     setStatisticData(res.response.statistics);
                     setChartData(chartData);
                     setProcessing(false);
+                    localFetching = false;
                 } catch (e) {
-                    setProcessing(false);
-                    console.log(e);
+                   !localFetching && setProcessing(false);
+                    localFetching = false;
                 }
             }
         }

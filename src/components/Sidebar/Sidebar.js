@@ -10,6 +10,7 @@ import logo from "../../assets/img/ProfitWhales-logo-white.svg";
 import "./Sidebar.less";
 import {history} from "../../utils/history";
 import {SVG} from "../../utils/icons";
+import '../../style/variables.less';
 
 const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
@@ -18,7 +19,6 @@ const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(true),
         [automate, setAutomate] = useState(true),
         [regions] = useState(regionsMenu),
-        // [display, setDisplay] = useState("none"),
         dispatch = useDispatch(),
         {user, notFirstEntry, bootstrapInProgress} = useSelector(state => ({
             user: state.user,
@@ -28,11 +28,7 @@ const Sidebar = () => {
 
 
     const toggleCollapsed = () => {
-        setCollapsed(!collapsed);
-
-        collapsed
-            ? setAutomate(!collapsed)
-            : setTimeout(() => setAutomate(!collapsed), 500);
+        setCollapsed((prevState) => !prevState);
     };
 
     const className = getClassNames(collapsed ? "open" : "closed");
@@ -45,7 +41,7 @@ const Sidebar = () => {
         dispatch(userActions.logOut());
     };
 
-    const toggleAutomate = () => setAutomate(!automate);
+    const toggleSubMenu = () => setAutomate(prevState => !prevState);
 
     useEffect(() => {
         dispatch(userActions.getPersonalUserInfo());
@@ -57,6 +53,10 @@ const Sidebar = () => {
             document.querySelector('body').classList.remove('visible-intercom')
         })
     }, []);
+
+    useEffect(() => {
+     console.log('update')
+    })
 
 
     // useEffect(() => {
@@ -83,10 +83,7 @@ const Sidebar = () => {
             <div className="sidebar-menu">
                 <div className="country-active">
                     <div className="country-active__title">
-                        <img
-                            src={`/assets/img/${activeCountry.flag}`}
-                            alt="active-country-flag"
-                        />
+                        <SVG id='us-flag'/>
                         <h5>{activeCountry.name}</h5>
                     </div>
 
@@ -134,7 +131,7 @@ const Sidebar = () => {
                         {/*</li>*/}
 
                         <li className="top-nav-item ppc-automate-link">
-                            <div onClick={toggleAutomate}>
+                            <div onClick={toggleSubMenu}>
                                 <NavLink
                                     className="top-nav-link"
                                     activeClassName="top-nav-link-active"
@@ -150,39 +147,32 @@ const Sidebar = () => {
                                 </NavLink>
                             </div>
 
-                            {collapsed && (
-                                <ul
-                                    className={`automate-list ${automate ? "open" : "closed"}`}
-                                >
-                                    {ppcAutomateMenu.map(item => (
-                                        <li className="automate-item" key={shortid.generate()}>
-                                            <NavLink
-                                                className="automate-link"
-                                                activeClassName="automate-link-active"
-                                                data-intercom-target={`${item.link}-link`}
-                                                exact
-                                                to={item.soon && (production && user.user.id !== 714) ?
-                                                    '/'
-                                                    :
-                                                    item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc/${item.link}`}
-                                                onClick={e => {
-                                                    if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
-                                                }}
-                                            >
-                                                {item.title}
-                                                {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
-                                                {item.new && <span className="new-fiches">new</span>}
-                                            </NavLink>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
+                            <ul className={`automate-list`}>
+                                {ppcAutomateMenu.map(item => (
+                                    <li className="automate-item" key={item.link}>
+                                        <NavLink
+                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                            activeClassName="automate-link-active"
+                                            data-intercom-target={`${item.link}-link`}
+                                            exact
+                                            to={item.soon && (production && user.user.id !== 714) ?
+                                                '/'
+                                                :
+                                                item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc/${item.link}`}
+                                            onClick={e => {
+                                                if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
+                                            }}
+                                        >
+                                            {item.title}
+                                            {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
+                                            {item.new && <span className="new-fiches">new</span>}
+                                        </NavLink>
+                                    </li>
+                                ))}
+                            </ul>
 
                             {!collapsed && (
-                                <div
-                                    className={`collapsed-automate`}
-                                    // style={{ display: `${display}` }}
-                                >
+                                <div className={`collapsed-automate`}>
                                     <ul className="collapsed-automate-list">
                                         {ppcAutomateMenu.map(item => (
                                             <li

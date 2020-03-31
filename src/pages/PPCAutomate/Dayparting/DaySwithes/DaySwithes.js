@@ -59,6 +59,8 @@ class DaySwitches extends Component {
         fetchingData: false
     };
 
+    localFetching = false;
+
 
     deactivateDaypartingHandler = async () => {
         this.setState({
@@ -146,10 +148,13 @@ class DaySwitches extends Component {
                 source && source.cancel();
                 source = CancelToken.source();
 
+                this.localFetching = true;
+
                 const res = await daypartingServices.getDayPartingParams({
                     campaignId: this.props.campaignId || '',
                     cancelToken: source.token
                 });
+
 
                 if (res.response[0]) {
                     this.setState({
@@ -169,11 +174,15 @@ class DaySwitches extends Component {
                         fetchingData: false
                     });
                 }
+
+                this.localFetching = false;
             } catch (e) {
-                this.setState({
+                !this.localFetching && this.setState({
                     processing: false,
                     fetchingData: false
                 });
+
+                this.localFetching = false;
             }
         }
     };

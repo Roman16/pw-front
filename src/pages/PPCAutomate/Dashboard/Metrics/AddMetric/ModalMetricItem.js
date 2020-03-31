@@ -37,7 +37,7 @@ const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, i
                     !hasMargin && <Tooltip getPopupContainer={trigger => trigger.parentNode}
                                            type='warning' description={<ProfitTooltipDescription/>}/>
                     :
-                    metricInformation.info && <Tooltip getPopupContainer={trigger => trigger.parentNode}
+                    metricInformation.info && <Tooltip {...key === 'total_sales' && {'className': 'big-window'}} getPopupContainer={trigger => trigger.parentNode}
                                                        description={metricInformation.info}/>
                 }
 
