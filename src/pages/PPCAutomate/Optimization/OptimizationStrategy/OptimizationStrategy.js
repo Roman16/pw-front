@@ -124,7 +124,7 @@ function StrategyItem({
         <form className={`strategy-item  slide-${index + 1} ${visible && 'visible'}`} onSubmit={(e) => {
             e.preventDefault();
 
-            if (targetAcos > 0) {
+            if (targetAcos > 0 || key !== 'AchieveTargetACoS') {
                 onStart(targetAcos);
             } else {
                 setError(true);
