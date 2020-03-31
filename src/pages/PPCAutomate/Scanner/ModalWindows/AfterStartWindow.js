@@ -12,7 +12,7 @@ const AfterStartWindow = ({onClose}) => (
         Please don’t close this page until it finished.</span>
 
         <div className='actions'>
-            <button className='btn white' onClick={onClose}>
+            <button className='btn default' onClick={onClose}>
                 OK
             </button>
         </div>

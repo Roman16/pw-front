@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from 'react';
-import reloadIcon from '../../../../assets/img/icons/reload-icon.svg';
 import {Spin, Switch} from "antd";
 import moment from "moment";
 import tz from 'moment-timezone';
@@ -14,6 +13,7 @@ import {connect} from "react-redux";
 import axios from "axios";
 import {productsActions} from '../../../../actions/products.actions'
 import {NavLink} from "react-router-dom";
+import {SVG} from "../../../../utils/icons";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -58,6 +58,8 @@ class DaySwitches extends Component {
         initialState: '',
         fetchingData: false
     };
+
+    localFetching = false;
 
 
     deactivateDaypartingHandler = async () => {
@@ -146,10 +148,13 @@ class DaySwitches extends Component {
                 source && source.cancel();
                 source = CancelToken.source();
 
+                this.localFetching = true;
+
                 const res = await daypartingServices.getDayPartingParams({
                     campaignId: this.props.campaignId || '',
                     cancelToken: source.token
                 });
+
 
                 if (res.response[0]) {
                     this.setState({
@@ -169,11 +174,15 @@ class DaySwitches extends Component {
                         fetchingData: false
                     });
                 }
+
+                this.localFetching = false;
             } catch (e) {
-                this.setState({
+                !this.localFetching && this.setState({
                     processing: false,
                     fetchingData: false
                 });
+
+                this.localFetching = false;
             }
         }
     };
@@ -373,7 +382,7 @@ class DaySwitches extends Component {
                             </div>
 
                             <button className='btn' onClick={this.handleReset} disabled={!activeDayparting}>
-                                <img src={reloadIcon} alt=""/>
+                                <SVG id='reload-icon'/>
                                 Reset
                             </button>
                         </div>

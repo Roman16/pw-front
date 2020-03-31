@@ -1,12 +1,11 @@
 import React, {Fragment, useState} from 'react';
 import {Input, Cascader} from 'antd';
 
-import checked from '../../../../assets/img/icons/checked.svg';
 import amazon from '../../../../assets/img/amazon.png';
-import closeIcon from '../../../../assets/img/icons/close-icon.svg';
 import {useSelector, useDispatch} from 'react-redux';
 import {userService} from "../../../../services/user.services";
 import {userActions} from "../../../../actions/user.actions";
+import {SVG} from "../../../../utils/icons";
 
 const options = [
     {
@@ -75,11 +74,11 @@ const Amazon = ({amazonTokens}) => {
                         {mwsConnected && <Fragment>
                             <h3>
                                 MWS Authorization
-                                <img src={checked} alt="checked"/>
+                                <SVG id='checked'/>
                             </h3>
 
                             <button className="mws-btn" type="button" onClick={() => onUnsetAccount('MWS')}>
-                                <img src={closeIcon} alt=""/>
+                                <SVG id='close-icon'/>
                                 <span>Remove</span>
                             </button>
                         </Fragment>}
@@ -89,11 +88,11 @@ const Amazon = ({amazonTokens}) => {
                         {ppcConnected && <Fragment>
                             <h3>
                                 PPC Authorization
-                                <img src={checked} alt="checked"/>
+                                <SVG id='checked'/>
                             </h3>
 
                             <button className="mws-btn" type="button" onClick={() => onUnsetAccount('PPC')}>
-                                <img src={closeIcon} alt=""/>
+                                <SVG id='close-icon'/>
                                 <span>Remove</span>
                             </button>
                         </Fragment>}

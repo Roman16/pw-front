@@ -2,8 +2,6 @@ import React, {useEffect, useState, Fragment} from 'react';
 import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
-import upGreenIcon from '../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
-import downRedIcon from '../../../assets/img/icons/metric-arrows/down-red-arrow.svg';
 import moment from "moment";
 import {daypartingServices} from "../../../services/dayparting.services";
 import {useSelector} from "react-redux";
@@ -11,6 +9,7 @@ import {numberMask} from "../../../utils/numberMask";
 import axios from "axios";
 import {round} from "../../../utils/round";
 import {Spin} from "antd";
+import {SVG} from "../../../utils/icons";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -162,7 +161,7 @@ const MetricValue = ({metric = {}, type}) => {
     if (metric.diff) {
         return (
             <div className="value">
-                {+metric.diff === 0 ? <div/> : <img src={metric.diff > 0 ? upGreenIcon : downRedIcon} alt=""/>}
+                {+metric.diff === 0 ? <div/> : <SVG id={metric.diff > 0 ? 'up-green-arrow' : 'down-red-arrow'}/>}
                 {metric.value == null ? 'NaN' : type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${round(metric.value, 2)}` : metric.value)}
             </div>
         )
@@ -184,6 +183,8 @@ const getPercent = (value, total) => {
 const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
 
 const PlacementsStatistics = ({date}) => {
+    let localFetching = false;
+
     const [chartData, setChartData] = useState([]),
         [statisticData, setStatisticData] = useState({}),
         [processing, setProcessing] = useState(false);
@@ -200,6 +201,7 @@ const PlacementsStatistics = ({date}) => {
 
             if (!fetchingCampaignList) {
                 setProcessing(true);
+                localFetching = true;
 
                 try {
                     const res = await daypartingServices.getPlacementsStatistic({
@@ -218,9 +220,10 @@ const PlacementsStatistics = ({date}) => {
                     setStatisticData(res.response.statistics);
                     setChartData(chartData);
                     setProcessing(false);
+                    localFetching = false;
                 } catch (e) {
-                    setProcessing(false);
-                    console.log(e);
+                   !localFetching && setProcessing(false);
+                    localFetching = false;
                 }
             }
         }

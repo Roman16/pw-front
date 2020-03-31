@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Avatar, Input, Icon} from 'antd';
+import { Input} from 'antd';
 import {userActions} from '../../../actions/user.actions';
 import defaultAvatar from '../../../assets/img/default-account-avatar.svg';
-const domainName =
-    (window.location.hostname === 'localhost') ? 'https://front1.profitwhales.com' : '';
 
 const Personal = () => {
     const dispatch = useDispatch();
@@ -34,12 +32,6 @@ const Personal = () => {
         });
     };
 
-    const handleChangeImage = e => {
-        let formData = new FormData();
-        formData.append('avatar_file', e.target.files[0]);
-        dispatch(userActions.changeUserAvatar(formData));
-    };
-
     useEffect(() => {
         changeUserInformation(user);
     }, [user]);
@@ -47,35 +39,13 @@ const Personal = () => {
     return (
         <div className="personal-box">
             <div className="avatar-box">
-                {userInformation.avatar ? (
-                    <Avatar
-                        className="avatar"
-                        src={domainName + userInformation.avatar}
-                        size={119}
-                    />
-                ) : (
-                    <img src={defaultAvatar} alt=""/>
-                )}
-
-                <div className="change-photo-block">
-                    <input
-                        id="file-input"
-                        type="file"
-                        onChange={handleChangeImage}
-                        accept="image/*"
-                        placeholder=""
-                    />
-
-                    <label htmlFor="file-input">
-                        <Icon type="camera"/>
-                    </label>
-                </div>
+                <img src={defaultAvatar} alt=""/>
             </div>
 
             <div className="personal-information">
                 <div className="description">
-                    <h3>General Information</h3>
-                    <p>Change your avatar and keep your personal information up-to-date</p>
+                    <h3>Personal Information</h3>
+                    <p>You can change your email and password here</p>
                 </div>
 
                 {/*<div className="active-only">*/}

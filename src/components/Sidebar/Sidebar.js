@@ -1,65 +1,24 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, NavLink} from "react-router-dom";
-import {Icon, Avatar} from "antd";
+import {Icon} from "antd";
 import shortid from "shortid";
-import referIcon from '../../assets/img/icons/sidebar-icons/refer-icon.svg';
-import facebookIcon from '../../assets/img/icons/sidebar-icons/facebook-icon-white.svg';
-import expertServiceIcon from '../../assets/img/icons/expert-service.svg';
-import howItWorksIcon from '../../assets/img/icons/how-it-work.png';
 import {regionsMenu, ppcAutomateMenu} from "./menu";
 import {getClassNames} from "../../utils";
 import {userActions} from "../../actions/user.actions";
-import ItemIcon from "../ItemIcon/ItemIcon";
 import logo from "../../assets/img/ProfitWhales-logo-white.svg";
-import soon from "../../assets/img/soon-label.svg";
-import newLabel from "../../assets/img/new-label.svg";
 import "./Sidebar.less";
 import {history} from "../../utils/history";
-
-const domainName =
-    window.location.hostname === "localhost"
-        ? "https://front1.profitwhales.com"
-        : "";
-
+import {SVG} from "../../utils/icons";
+import '../../style/variables.less';
 
 const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
 
-function useWindowSize() {
-    const isClient = typeof window === "object";
-
-    function getSize() {
-        return {
-            width: isClient ? window.innerWidth : undefined,
-            height: isClient ? window.innerHeight : undefined
-        };
-    }
-
-    const [windowSize, setWindowSize] = useState(getSize);
-
-    useEffect(() => {
-        if (!isClient) {
-            return false;
-        }
-
-        function handleResize() {
-            setWindowSize(getSize());
-        }
-
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount and unmount
-
-    return windowSize;
-}
-
 const Sidebar = () => {
-    const {width, height} = useWindowSize(),
-        [collapsed, setCollapsed] = useState(true),
+    const [collapsed, setCollapsed] = useState(true),
         [automate, setAutomate] = useState(true),
         [regions] = useState(regionsMenu),
-        // [display, setDisplay] = useState("none"),
         dispatch = useDispatch(),
         {user, notFirstEntry, bootstrapInProgress} = useSelector(state => ({
             user: state.user,
@@ -69,11 +28,7 @@ const Sidebar = () => {
 
 
     const toggleCollapsed = () => {
-        setCollapsed(!collapsed);
-
-        collapsed
-            ? setAutomate(!collapsed)
-            : setTimeout(() => setAutomate(!collapsed), 500);
+        setCollapsed((prevState) => !prevState);
     };
 
     const className = getClassNames(collapsed ? "open" : "closed");
@@ -86,7 +41,7 @@ const Sidebar = () => {
         dispatch(userActions.logOut());
     };
 
-    const toggleAutomate = () => setAutomate(!automate);
+    const toggleSubMenu = () => setAutomate(prevState => !prevState);
 
     useEffect(() => {
         dispatch(userActions.getPersonalUserInfo());
@@ -99,11 +54,9 @@ const Sidebar = () => {
         })
     }, []);
 
-
-    useEffect(() => {
-        window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
-    }, [width]);
-
+    // useEffect(() => {
+    //     window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
+    // }, [width]);
 
     if (!notFirstEntry) {
         history.push('/login');
@@ -123,138 +76,131 @@ const Sidebar = () => {
             </div>
 
             <div className="sidebar-menu">
-                <div className="country-nav">
-                    <div className="country-active">
-                        <div className="country-active__title">
-                            <img
-                                src={`/assets/img/${activeCountry.flag}`}
-                                alt="active-country-flag"
-                            />
-                            <h5>{activeCountry.name}</h5>
-                        </div>
-
-                        <div className="country-active__description">
-                            {user.default_accounts
-                                ? user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
-                                : ""}
-                        </div>
+                <div className="country-active">
+                    <div className="country-active__title">
+                        <SVG id='us-flag'/>
+                        <h5>{activeCountry.name}</h5>
                     </div>
 
-                    <nav className="top-nav">
-                        <ul className="top-nav-list">
-                            <li className="top-nav-item">
+                    <div className="country-active__description">
+                        {user.default_accounts
+                            ? user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
+                            : ""}
+                    </div>
+                </div>
+
+                <nav className="top-nav">
+                    <ul className="top-nav-list">
+                        <li className="top-nav-item disabled-link">
+                            <NavLink
+                                className="top-nav-link"
+                                activeClassName="top-nav-link-active"
+                                exact
+                                to="/"
+                                disabled
+                            >
+                                <div className="link-icon">
+                                    <SVG id='zth-icon'/>
+                                </div>
+
+                                <span className="top-span">
+                                        Zero to Hero
+                                    <span className="soon">soon</span>
+                                    </span>
+                            </NavLink>
+                        </li>
+
+                        {/*<li className="top-nav-item">*/}
+                        {/*    <NavLink*/}
+                        {/*        className="top-nav-link"*/}
+                        {/*        activeClassName="top-nav-link-active"*/}
+                        {/*        exact*/}
+                        {/*        to="/"*/}
+                        {/*        disabled*/}
+                        {/*    >*/}
+                        {/*        <ItemIcon icon="analytics"/>*/}
+                        {/*        <span className="top-span">*/}
+                        {/*            Analytics*/}
+                        {/*        </span>*/}
+                        {/*    </NavLink>*/}
+                        {/*</li>*/}
+
+                        <li className="top-nav-item ppc-automate-link">
+                            <div onClick={toggleSubMenu}>
                                 <NavLink
                                     className="top-nav-link"
                                     activeClassName="top-nav-link-active"
-                                    exact
-                                    to="/"
+                                    to="/ppc"
+                                    replace
                                     disabled
                                 >
-                                    <ItemIcon icon="zeroToHero"/>
-                                    <span className="top-span">
-                                        Zero to Hero
-                                        <img className="soon" src={soon} alt="soon"/>
-                                    </span>
+                                    <div className="link-icon">
+                                        <SVG id='ppc-automate-icon'/>
+                                    </div>
+
+                                    <span className="top-span">PPC Automate</span>
                                 </NavLink>
-                            </li>
+                            </div>
 
-                            {/*<li className="top-nav-item">*/}
-                            {/*    <NavLink*/}
-                            {/*        className="top-nav-link"*/}
-                            {/*        activeClassName="top-nav-link-active"*/}
-                            {/*        exact*/}
-                            {/*        to="/"*/}
-                            {/*        disabled*/}
-                            {/*    >*/}
-                            {/*        <ItemIcon icon="analytics"/>*/}
-                            {/*        <span className="top-span">*/}
-                            {/*            Analytics*/}
-                            {/*            <img className="soon" src={soon} alt="soon"/>*/}
-                            {/*        </span>*/}
-                            {/*    </NavLink>*/}
-                            {/*</li>*/}
+                            <ul className={`automate-list`}>
+                                {ppcAutomateMenu.map(item => (
+                                    <li className="automate-item" key={item.link}>
+                                        <NavLink
+                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                            activeClassName="automate-link-active"
+                                            data-intercom-target={`${item.link}-link`}
+                                            exact
+                                            to={item.soon && (production && user.user.id !== 714) ?
+                                                '/'
+                                                :
+                                                item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc/${item.link}`}
+                                            onClick={e => {
+                                                if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
+                                            }}
+                                        >
+                                            {item.title}
+                                            {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
+                                            {item.new && <span className="new-fiches">new</span>}
+                                        </NavLink>
+                                    </li>
+                                ))}
+                            </ul>
 
-                            <li className="top-nav-item ppc-automate-link">
-                                    <span onClick={toggleAutomate}>
-                                      <NavLink
-                                          className="top-nav-link disabled-link"
-                                          activeClassName="top-nav-link-active"
-                                          to="/ppc"
-                                          replace
-                                      >
-                                            <ItemIcon icon="ppcAutomate"/>
-                                            <span className="top-span">PPC Automate</span>
-                                      </NavLink>
-                                    </span>
-
-                                {collapsed && (
-                                    <ul
-                                        className={`automate-list ${automate ? "open" : "closed"}`}
-                                    >
+                            {!collapsed && (
+                                <div className={`collapsed-automate`}>
+                                    <ul className="collapsed-automate-list">
                                         {ppcAutomateMenu.map(item => (
-                                            <li className="automate-item" key={shortid.generate()}>
+                                            <li
+                                                className="automate-item"
+                                                key={shortid.generate()}
+                                                // onClick={displayNone}
+                                            >
                                                 <NavLink
                                                     className="automate-link"
                                                     activeClassName="automate-link-active"
                                                     data-intercom-target={`${item.link}-link`}
                                                     exact
-                                                    to={item.soon && (production && user.user.id !== 714) ?
-                                                        '/'
-                                                        :
-                                                        item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc/${item.link}`}
+                                                    to={(item.soon && (production && user.user.id !== 714)) ? '/' : `/ppc/${item.link}`}
                                                     onClick={e => {
                                                         if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
                                                     }}
                                                 >
                                                     {item.title}
-                                                    {item.new && <img className="new-fiches" src={newLabel}/>}
-                                                    {item.soon && <img className="soon" src={soon}/>}
+                                                    {item.new && <span className="new-fiches">new</span>}
                                                 </NavLink>
                                             </li>
                                         ))}
                                     </ul>
-                                )}
-
-                                {!collapsed && (
-                                    <div
-                                        className={`collapsed-automate`}
-                                        // style={{ display: `${display}` }}
-                                    >
-                                        <ul className="collapsed-automate-list">
-                                            {ppcAutomateMenu.map(item => (
-                                                <li
-                                                    className="automate-item"
-                                                    key={shortid.generate()}
-                                                    // onClick={displayNone}
-                                                >
-                                                    <NavLink
-                                                        className="automate-link"
-                                                        activeClassName="automate-link-active"
-                                                        data-intercom-target={`${item.link}-link`}
-                                                        exact
-                                                        to={(item.soon && (production && user.user.id !== 714)) ? '/' : `/ppc${item.link}`}
-                                                        onClick={e => {
-                                                            if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
-                                                        }}
-                                                    >
-                                                        {item.title}
-                                                        {item.soon && <img className="soon" src={soon} alt="soon"/>}
-                                                        {item.new && <img className="new-fiches" src={newLabel}/>}
-                                                    </NavLink>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                                </div>
+                            )}
+                        </li>
+                    </ul>
+                </nav>
 
                 <div className="facebook-link">
                     <a href='https://www.facebook.com/groups/profitwhales.software/' target="_blank">
                         <div className="icon">
-                            <img src={facebookIcon} alt=""/>
+                            <SVG id='facebook-icon-white'/>
                         </div>
 
                         <span className="bottom-span">Join us on Facebook</span>
@@ -264,7 +210,7 @@ const Sidebar = () => {
                 <div className="refer-link">
                     <Link to={'/affiliates'} target="_blank">
                         <div className="icon">
-                            <img src={referIcon} alt=""/>
+                            <SVG id='refer-icon'/>
                         </div>
 
                         {devicePixelRatio === 2 ? <span className="bottom-span">Refer sellers! <br/> Get Cash</span>
@@ -279,7 +225,10 @@ const Sidebar = () => {
                             <a
                                 href="/ppc/optimization?product_tour_id=108046"
                             >
-                                <img src={howItWorksIcon} alt=""/>
+                                <div className="link-icon">
+                                    <SVG id='how-it-works'/>
+                                </div>
+
                                 <span className="bottom-span">How it works?</span>
                             </a>
                         </li>
@@ -291,16 +240,9 @@ const Sidebar = () => {
                                 exact
                                 to={`/account-settings`}
                             >
-                                {user.user.avatar ? (
-                                    <i className="anticon">
-                                        <Avatar
-                                            className="avatar"
-                                            src={domainName + user.user.avatar}
-                                        />
-                                    </i>
-                                ) : (
-                                    <ItemIcon icon="account"/>
-                                )}
+                                <div className="link-icon">
+                                    <SVG id='account'/>
+                                </div>
 
                                 <span className="bottom-span">Account</span>
                             </NavLink>
@@ -322,14 +264,20 @@ const Sidebar = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <ItemIcon icon="helpCenter"/>
+                                <div className="link-icon">
+                                    <SVG id='help-center'/>
+                                </div>
+
                                 <span className="bottom-span">Help Center</span>
                             </a>
                         </li>
 
                         <li className="bottom-nav-item" onClick={handleLogout}>
                             <button type="button">
-                                <ItemIcon icon={"logOut"}/>
+                                <div className="link-icon">
+                                    <SVG id='log-out'/>
+                                </div>
+
                                 <span className="bottom-span">Log Out</span>
                             </button>
                         </li>
@@ -340,4 +288,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);

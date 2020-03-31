@@ -21,7 +21,11 @@ import {mainChangesCount, mainHasNewReport, subChangesCount} from "./Tables/chan
 import CustomTable from "../../../../components/Table/CustomTable";
 import TableButton from "./TableButton/TableButton";
 import tz from 'moment-timezone';
+import {Select} from "antd";
+import CustomSelect from "../../../../components/Select/Select";
+import {SVG} from "../../../../utils/icons";
 
+const Option = Select.Option;
 const CancelToken = axios.CancelToken;
 let source = null;
 
@@ -36,6 +40,7 @@ const subTables = {
 };
 
 const device = window.devicePixelRatio === 2;
+console.log(device);
 
 class ReportTable extends Component {
     state = {
@@ -61,6 +66,7 @@ class ReportTable extends Component {
             "new-negative-pats": 0
         }
     };
+
 
     downloadFile = () => {
         const {startDate, endDate} = this.state,
@@ -279,7 +285,7 @@ class ReportTable extends Component {
                     <span>{name}</span>
 
                     <div className="tab-name-count">
-                        {mainChangesCount(counts, type) > 10000 ? '9999+' : mainChangesCount(counts, type)}
+                        {mainChangesCount(counts, type) > 1000 ? '999+' : mainChangesCount(counts, type)}
 
                         {mainHasNewReport(countsWithNew, type) > 0 &&
                         <div className='new-count'>New {mainHasNewReport(countsWithNew, type)}</div>}
@@ -354,14 +360,15 @@ class ReportTable extends Component {
 
                         <button className="btn default download-btn" onClick={this.downloadFile}>
                             <span> Download </span>
-                            <i className="download-icon"/>
+
+                            <SVG id='download'/>
                         </button>
                     </div>
 
                     <FreeTrial product={'ppc'}/>
                 </div>
 
-                <div className="tabs">
+                <div className="tabs desc">
                     <Slider
                         dots={false}
                         infinite={false}
@@ -379,33 +386,40 @@ class ReportTable extends Component {
                                 }
                             },
                             {
-                                breakpoint: device ? 1400 : 1700,
+                                breakpoint: device ? 1400 : 1840,
                                 settings: {
                                     slidesToShow: 5,
                                     slidesToScroll: 1,
                                 }
                             },
                             {
-                                breakpoint: device ? 1250 : 1600,
+                                breakpoint: device ? 1350 : 1700,
                                 settings: {
                                     slidesToShow: 4,
                                     slidesToScroll: 1
                                 }
                             },
                             {
-                                breakpoint: device ? 1100 : 1350,
+                                breakpoint: device ? 1100 : 1430,
                                 settings: {
                                     slidesToShow: 3,
                                     slidesToScroll: 1
                                 }
                             },
                             {
-                                breakpoint: device ? 2400 : 1150,
+                                breakpoint: device ? 950 : 1220,
                                 settings: {
                                     slidesToShow: 2,
                                     slidesToScroll: 1
                                 }
-                            }
+                            },
+                            {
+                                breakpoint: device ? 2400 : 1060,
+                                settings: {
+                                    slidesToShow: 1,
+                                    slidesToScroll: 1
+                                }
+                            },
                         ]}
                     >
                         {Object.keys(mainTabs).map((item) => (
@@ -415,6 +429,17 @@ class ReportTable extends Component {
                             </div>
                         ))}
                     </Slider>
+                </div>
+
+                <div className="tabs mob">
+                    <CustomSelect value={activeTab} onChange={(e) => {
+                        this.handleChangeTab(e)}}>
+                        {Object.keys(mainTabs).map((item) => (
+                            <Option value={item}>
+                                {mainTabs[item].tabName(item, counts, countsWithNew)}
+                            </Option>
+                        ))}
+                    </CustomSelect>
                 </div>
 
                 <div className="content">

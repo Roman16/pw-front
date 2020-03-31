@@ -754,7 +754,8 @@ const LandingAutomation = () => {
 
                     <div className="col">
                         <button className="btn default" onClick={goToRegistrationPage}>start free trial</button>
-                        <p>Or <Link to={'/demo-call'} target={'_blank'}>Book a Demo</Link> No credit card <br/> required. 60-second sign up.</p>
+                        <p>Or <Link to={'/demo-call'} target={'_blank'}>Book a Demo</Link> No credit
+                            card <br/> required. 60-second sign up.</p>
                     </div>
 
                 </div>

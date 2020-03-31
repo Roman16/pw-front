@@ -3,7 +3,7 @@ import './Pricing.less'
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 
-import zthImage from '../../../assets/img/landing-pricing/zth.png';
+import zthImage from '../../../assets/img/landing-pricing/zth.svg';
 import ppcImage from '../../../assets/img/landing-pricing/ppc.svg';
 import analyticImage from '../../../assets/img/landing-pricing/analytic.svg';
 import peopleImage from '../../../assets/img/landing-pricing/people-icon.svg';

@@ -3,6 +3,7 @@ import {Checkbox, Progress, Icon} from "antd";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import InputCurrency from "../../../components/Inputs/InputCurrency";
 import moment from "moment";
+import {SVG} from "../../../utils/icons";
 
 let problemList = [
     {
@@ -34,7 +35,7 @@ let problemList = [
 
 let processingTimeout = null;
 
-const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, successFetch, onDownloadFile, totalSize}) => {
+const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, successFetch, onDownloadFile, totalSize, mistakeList}) => {
     const devicePixelRatio = window.devicePixelRatio;
 
     const [problems, setProblems] = useState(problemList),
@@ -152,7 +153,7 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                         <div key={item.key}>
                             <Progress
                                 type="circle"
-                                format={percent => percent === 100 && <div className='completed'>&#10004;</div>}
+                                format={percent => percent === 100 && <div className='completed'><SVG id='checked-white-icon'/></div>}
                                 percent={item.percent}
                                 width={devicePixelRatio === 2 ? 18 : 24}
                                 strokeWidth={10}
@@ -194,7 +195,7 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                 </button>
             }
 
-            {successFetch && !fetching && <button
+            {(!fetching && mistakeList.length > 0) && <button
                 className='btn white download'
                 onClick={onDownloadFile}
             >

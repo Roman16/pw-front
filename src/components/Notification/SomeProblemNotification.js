@@ -1,12 +1,12 @@
 import React from "react";
 import {toast} from 'react-toastify';
-import childIcon from '../../assets/img/icons/child.svg';
+import {SVG} from "../../utils/icons";
 
 const SomeProblemNotification = ({title, description}) => (
     toast.success(
         <div>
             <div className='notification__title'>
-                <img src={childIcon} alt=""/>
+                <SVG id='child'/>
                 {title}
             </div>
 

@@ -4,7 +4,7 @@ import cancel from '../../../../assets/img/cancel.svg';
 import safe from '../../../../assets/img/safe.svg';
 import bag from '../../../../assets/img/bag.svg';
 import restart from '../../../../assets/img/restart.svg';
-import square from '../../../../assets/img/icons/green-square.svg';
+import {SVG} from "../../../../utils/icons";
 
 const CancelAccountWindow = ({onCancel, onClose}) => {
     return (
@@ -53,8 +53,10 @@ const CancelAccountWindow = ({onCancel, onClose}) => {
                         Keep my account
                     </button>
 
-                    <button className="pause-btn" type="button" >
-                        <img className="pause-img" src={square} alt="square" />
+                    <button className="pause-btn" type="button">
+                        <span className="pause-img">
+                            <SVG id='green-square'/>
+                        </span>
                         Yes, pause my subscription
                     </button>
                 </div>

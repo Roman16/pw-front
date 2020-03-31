@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, Suspense} from 'react';
 import {Router, Route, Switch, Redirect} from 'react-router-dom';
 
 import Sidebar from '../components/Sidebar/Sidebar';
@@ -8,18 +8,34 @@ import {userActions} from "../actions/user.actions";
 import moment from "moment";
 import {useSelector, useDispatch} from "react-redux";
 import LoadingAmazonAccount from "../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
-import Optimization from "./PPCAutomate/Optimization/Optimization";
-import Report from "./PPCAutomate/Report/Report";
-import ProductSettings from "./PPCAutomate/ProductSettings/ProductSettings";
-import MWS from "./authentication/AccountBinding/MWS/MWS";
-import PPC from "./authentication/AccountBinding/PPC/PPC";
-import Dashboard from "./PPCAutomate/Dashboard/Dashboard";
-import Information from "./Account/Information/Information";
-import Billing from "./Account/Billing/Billing";
-import Subscription from "./Account/Subscription/Subscription";
-import Home from "./Home/Home";
-import Scanner from "./PPCAutomate/Scanner/Scanner";
-import Dayparting from "./PPCAutomate/Dayparting/Dayparting";
+import RouteLoader from "../components/RouteLoader/RouteLoader";
+
+// import Optimization from "./PPCAutomate/Optimization/Optimization";
+// import Report from "./PPCAutomate/Report/Report";
+// import ProductSettings from "./PPCAutomate/ProductSettings/ProductSettings";
+// import MWS from "./authentication/AccountBinding/MWS/MWS";
+// import PPC from "./authentication/AccountBinding/PPC/PPC";
+// import Dashboard from "./PPCAutomate/Dashboard/Dashboard";
+// import Information from "./Account/Information/Information";
+// import Billing from "./Account/Billing/Billing";
+// import Subscription from "./Account/Subscription/Subscription";
+// import Home from "./Home/Home";
+// import Scanner from "./PPCAutomate/Scanner/Scanner";
+// import Dayparting from "./PPCAutomate/Dayparting/Dayparting";
+
+
+const Optimization = React.lazy(() => import('./PPCAutomate/Optimization/Optimization'));
+const Report = React.lazy(() => import('./PPCAutomate/Report/Report'));
+const ProductSettings = React.lazy(() => import('./PPCAutomate/ProductSettings/ProductSettings'));
+const MWS = React.lazy(() => import('./authentication/AccountBinding/MWS/MWS'));
+const PPC = React.lazy(() => import('./authentication/AccountBinding/PPC/PPC'));
+const Dashboard = React.lazy(() => import('./PPCAutomate/Dashboard/Dashboard'));
+const Information = React.lazy(() => import('./Account/Information/Information'));
+const Billing = React.lazy(() => import('./Account/Billing/Billing'));
+const Subscription = React.lazy(() => import('./Account/Subscription/Subscription'));
+const Home = React.lazy(() => import('./Home/Home'));
+const Scanner = React.lazy(() => import('./PPCAutomate/Scanner/Scanner'));
+const Dayparting = React.lazy(() => import('./PPCAutomate/Dayparting/Dayparting'));
 
 let timerId = null;
 
@@ -54,12 +70,12 @@ const ConnectedAmazonRoute = props => {
     }
 };
 
+
 const AuthorizedUser = (props) => {
     const dispatch = useDispatch();
     const pathname = props.location.pathname;
-    const {lastStatusAction, userId, bootstrapInProgress} = useSelector(state => ({
+    const {lastStatusAction, bootstrapInProgress} = useSelector(state => ({
         lastStatusAction: state.user.lastUserStatusAction,
-        userId: state.user.user.id,
         bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
     }));
 
@@ -83,11 +99,11 @@ const AuthorizedUser = (props) => {
         }, 1000 * 60)
     );
 
-
     return (
         <Fragment>
             <div className="main-pages">
                 <Sidebar/>
+
 
                 {(pathname === '/ppc/optimization' ||
                     pathname === '/ppc/report' ||
@@ -97,71 +113,135 @@ const AuthorizedUser = (props) => {
                 ) &&
                 <ProductList
                     pathname={props.location.pathname}
-                />}
+                />
+                }
 
-                {/*<div className="main-container">{props.children}</div>*/}
+                {/*<div className="main-container">*/}
+                {/*    <Switch>*/}
+                {/*        <ConnectedAmazonRoute*/}
+                {/*            exact*/}
+                {/*            path="/ppc/optimization"*/}
+                {/*            render={() => {*/}
+                {/*                if (bootstrapInProgress) {*/}
+                {/*                    return (<Redirect to={'/ppc/optimization/loading'}/>)*/}
+                {/*                } else {*/}
+                {/*                    return (<Optimization/>)*/}
+                {/*                }*/}
+                {/*            }}*/}
+                {/*        />*/}
+
+                {/*        <ConnectedAmazonRoute*/}
+                {/*            exact*/}
+                {/*            path="/ppc/optimization/loading"*/}
+                {/*            render={() => {*/}
+                {/*                if (bootstrapInProgress) {*/}
+                {/*                    return (<Optimization/>)*/}
+                {/*                } else {*/}
+                {/*                    return (<Redirect to={'/ppc/optimization'}/>)*/}
+                {/*                }*/}
+                {/*            }}*/}
+                {/*        />*/}
+
+                {/*        <ConnectedAmazonRoute*/}
+                {/*            exact*/}
+                {/*            path="/ppc/dashboard"*/}
+                {/*            component={Dashboard}*/}
+                {/*        />*/}
+
+                {/*        <ConnectedAmazonRoute*/}
+                {/*            path="/ppc/report"*/}
+                {/*            component={Report}*/}
+                {/*        />*/}
+
+                {/*        <ConnectedAmazonRoute*/}
+                {/*            exact*/}
+                {/*            path="/ppc/product-settings"*/}
+                {/*            component={ProductSettings}*/}
+                {/*        />*/}
+
+                {/*        <ConnectedAmazonRoute*/}
+                {/*            exact*/}
+                {/*            path="/ppc/scanner"*/}
+                {/*            component={Scanner}*/}
+                {/*        />*/}
+
+                {/*        <Route exact path="/mws" component={MWS}/>*/}
+                {/*        <Route exact path="/ppc" component={PPC}/>*/}
+
+                {/*        {developer && <Route exact path="/home" component={Home}/>}*/}
+
+                {/*        /!* ACCOUNT *!/*/}
+                {/*        <Route exact path="/account-settings" component={Information}/>*/}
+                {/*        <Route exact path="/account-billing" component={Billing}/>*/}
+                {/*        <Route exact path="/account-subscription" component={Subscription}/>*/}
+
+                {/*        <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>*/}
+                {/*    </Switch>*/}
+                {/*</div>*/}
+
                 <div className="main-container">
-                    <Switch>
+                    <Suspense fallback={<RouteLoader/>}>
+                        <Switch>
+                            <ConnectedAmazonRoute
+                                exact
+                                path="/ppc/optimization"
+                                render={() => {
+                                    if (bootstrapInProgress) {
+                                        return (<Redirect to={'/ppc/optimization/loading'}/>)
+                                    } else {
+                                        return (<Optimization/>)
+                                    }
+                                }}
+                            />
 
-                        <ConnectedAmazonRoute
-                            exact
-                            path="/ppc/optimization"
-                            render={() => {
-                                if (bootstrapInProgress) {
-                                    return (<Redirect to={'/ppc/optimization/loading'}/>)
-                                } else {
-                                    return (<Optimization/>)
-                                }
-                            }}
-                        />
+                            <ConnectedAmazonRoute
+                                exact
+                                path="/ppc/optimization/loading"
+                                render={() => {
+                                    if (bootstrapInProgress) {
+                                        return (<Optimization/>)
+                                    } else {
+                                        return (<Redirect to={'/ppc/optimization'}/>)
+                                    }
+                                }}
+                            />
 
-                        <ConnectedAmazonRoute
-                            exact
-                            path="/ppc/optimization/loading"
-                            render={() => {
-                                if (bootstrapInProgress) {
-                                    return (<Optimization/>)
-                                } else {
-                                    return (<Redirect to={'/ppc/optimization'}/>)
-                                }
-                            }}
-                        />
+                            <ConnectedAmazonRoute
+                                exact
+                                path="/ppc/dashboard"
+                                component={Dashboard}
+                            />
 
-                        <ConnectedAmazonRoute
-                            exact
-                            path="/ppc/dashboard"
-                            component={Dashboard}
-                        />
+                            <ConnectedAmazonRoute
+                                path="/ppc/report"
+                                component={Report}
+                            />
 
-                        <ConnectedAmazonRoute
-                            path="/ppc/report"
-                            component={Report}
-                        />
+                            <ConnectedAmazonRoute
+                                exact
+                                path="/ppc/product-settings"
+                                component={ProductSettings}
+                            />
 
-                        <ConnectedAmazonRoute
-                            exact
-                            path="/ppc/product-settings"
-                            component={ProductSettings}
-                        />
+                            <ConnectedAmazonRoute
+                                exact
+                                path="/ppc/scanner"
+                                component={Scanner}
+                            />
 
-                        <ConnectedAmazonRoute
-                            exact
-                            path="/ppc/scanner"
-                            component={Scanner}
-                        />
+                            <Route exact path="/mws" component={MWS}/>
+                            <Route exact path="/ppc" component={PPC}/>
 
-                        <Route exact path="/mws" component={MWS}/>
-                        <Route exact path="/ppc" component={PPC}/>
+                            {developer && <Route exact path="/home" component={Home}/>}
 
-                        {developer && <Route exact path="/home" component={Home}/>}
+                            {/* ACCOUNT */}
+                            <Route exact path="/account-settings" component={Information}/>
+                            <Route exact path="/account-billing" component={Billing}/>
+                            <Route exact path="/account-subscription" component={Subscription}/>
 
-                        {/* ACCOUNT */}
-                        <Route exact path="/account-settings" component={Information}/>
-                        <Route exact path="/account-billing" component={Billing}/>
-                        <Route exact path="/account-subscription" component={Subscription}/>
-
-                        <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
-                    </Switch>
+                            <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
+                        </Switch>
+                    </Suspense>
                 </div>
             </div>
 

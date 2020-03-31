@@ -2,9 +2,8 @@ import React from 'react';
 import {Popover} from 'antd';
 import {string} from 'prop-types';
 
-import informationIcon from '../../assets/img/icons/information.svg';
-import warningIcon from '../../assets/img/icons/warningSmall.svg';
 import './Tooltips.less';
+import {SVG} from "../../utils/icons";
 
 const InformationTooltip = (props) => {
     const {title, description, position, type, className} = props;
@@ -19,10 +18,14 @@ const InformationTooltip = (props) => {
                 placement={position}
             >
                 {type === 'info' && (
-                    <img src={informationIcon} alt="info-icon" className="info-icon"/>
+                    <span className="info-icon">
+                        <SVG id='information'/>
+                    </span>
                 )}
                 {type === 'warning' && (
-                    <img src={warningIcon} alt="warning-icon" className="warning-icon"/>
+                    <span className="warning-icon">
+                        <SVG id='warningsmall'/>
+                    </span>
                 )}
                 {type === 'custom' && (
                     React.cloneElement(props.children)

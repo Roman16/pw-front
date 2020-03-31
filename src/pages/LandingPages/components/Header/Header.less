@@ -68,6 +68,18 @@
           vertical-align: middle;
           position: relative;
 
+          &.has-child {
+            a {
+              display: flex;
+              align-items: center;
+
+              svg {
+                width: 10px;
+                margin: 0 0 0 10px;
+              }
+            }
+          }
+
           &.has-child .sub-menu {
             position: absolute;
             top: 100%;
@@ -119,7 +131,7 @@
             font-size: 14px;
 
             &:hover {
-             opacity: .9;
+              opacity: .9;
             }
           }
         }
@@ -232,7 +244,7 @@
         height: calc(100vh - 96px);
 
         .sub-menu {
-          max-width: 185px!important;
+          max-width: 185px !important;
           box-shadow: none !important;
         }
 
@@ -249,7 +261,6 @@
           }
 
           li.has-child {
-
             &:hover {
               box-shadow: none;
 

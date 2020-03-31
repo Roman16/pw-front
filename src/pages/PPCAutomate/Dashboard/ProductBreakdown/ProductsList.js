@@ -3,14 +3,11 @@ import {Input} from "antd";
 import Tooltip from '../../../../components/Tooltip/Tooltip';
 import Table from "../../../../components/Table/Table";
 import ProductItem from "../../../../components/ProductList/ProductItem";
-import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
-import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
 import {round} from "../../../../utils/round";
 
-import upWhiteIcon from "../../../../assets/img/icons/metric-arrows/up-white-arrow.svg";
-import downWhiteIcon from "../../../../assets/img/icons/metric-arrows/down-white-arrow.svg";
 import {history} from "../../../../utils/history";
 import {numberMask} from "../../../../utils/numberMask";
+import {SVG} from "../../../../utils/icons";
 
 const RenderPramsChanges = ({type, product}) => {
     const value = product[type];
@@ -30,20 +27,19 @@ const RenderPramsChanges = ({type, product}) => {
                 <div className='product-metric-changes up'>
                     {value >= 25 && <div className='downward-changes'>
                         {round(+value, 2)}%
-                        <img style={{transform: 'rotate(180deg)'}} src={downWhiteIcon} alt=""/>
-
+                        <SVG style={{transform: 'rotate(180deg)'}} id='down-white-arrow'/>
                     </div>}
                     {(value > 0 && value < 25) && <div className='down-changes'>
                         {round(+value, 2)}%
-                        <img style={{transform: 'rotate(180deg)'}} src={downBlackIcon} alt=""/>
+                        <SVG style={{transform: 'rotate(180deg)'}} id='down-black-arrow'/>
                     </div>}
                     {(value <= 0 && value > -25) && <div className='up-changes'>
                         {round(+value, 2)}%
-                        <img style={{transform: 'rotate(180deg)'}} src={upGreenIcon} alt=""/>
+                        <SVG style={{transform: 'rotate(180deg)'}} id='up-green-arrow'/>
                     </div>}
                     {(value <= -25) && <div className='upward-changes'>
                         {round(+value, 2)}%
-                        <img style={{transform: 'rotate(180deg)'}} src={upWhiteIcon} alt=""/>
+                        <SVG style={{transform: 'rotate(180deg)'}} id='up-white-arrow'/>
                     </div>}
                 </div>
             )
@@ -52,19 +48,19 @@ const RenderPramsChanges = ({type, product}) => {
                 <div className='product-metric-changes up'>
                     {value >= 25 && <div className='upward-changes'>
                         {round(+value, 2)}%
-                        <img src={upWhiteIcon} alt=""/>
+                        <SVG id='up-white-arrow'/>
                     </div>}
                     {(value > 0 && value < 25) && <div className='up-changes'>
                         {round(+value, 2)}%
-                        <img src={upGreenIcon} alt=""/>
+                        <SVG id='up-green-arrow'/>
                     </div>}
                     {(value <= 0 && value > -25) && <div className='down-changes'>
                         {round(+value, 2)}%
-                        <img src={downBlackIcon} alt=""/>
+                        <SVG id='down-black-arrow'/>
                     </div>}
                     {(value <= -25) && <div className='downward-changes'>
                         {round(+value, 2)}%
-                        <img src={downWhiteIcon} alt=""/>
+                        <SVG id='down-white-arrow'/>
                     </div>}
                 </div>
             )

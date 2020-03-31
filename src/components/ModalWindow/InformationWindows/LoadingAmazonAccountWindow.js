@@ -2,10 +2,9 @@ import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import ModalWindow from "../ModalWindow";
 import whales from '../../../assets/img/whales-loading-window.svg';
-import facebookIcon from '../../../assets/img/icons/facebook-icon-grey.svg';
-import emailIcon from '../../../assets/img/icons/email-icon-grey.svg';
 import {userActions} from "../../../actions/user.actions";
 import {productsActions} from "../../../actions/products.actions";
+import {SVG} from "../../../utils/icons";
 
 let intervalId = null;
 
@@ -60,8 +59,8 @@ const LoadingAmazonAccount = () => {
             </span>
 
             <div className='social-icons'>
-                <a href="https://www.facebook.com/profitwhales/" target='_blank'><img src={facebookIcon} alt=""/></a>
-                <a href="mailto: support@profitwhales.agency"><img src={emailIcon} alt=""/></a>
+                <a href="https://www.facebook.com/profitwhales/" target='_blank'><SVG id='facebook-icon-grey'/></a>
+                <a href="mailto: support@profitwhales.agency"><SVG id='email-icon-grey'/></a>
             </div>
         </ModalWindow>
     )

@@ -8,9 +8,9 @@ import {debounce} from 'throttle-debounce';
 import FilterFields from "./FilterFields";
 import CustomSelect from "../Select/Select";
 import ProductPagination from "./ProductPagination";
-import selectIcon from "../../assets/img/icons/select-icon.svg";
 import axios from "axios";
 import InformationTooltip from "../Tooltip/Tooltip";
+import {SVG} from "../../utils/icons";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -331,7 +331,7 @@ class ProductList extends Component {
 
                     <div className={`switch-list ${closedList ? 'closed' : 'opened'}`}>
                         <div className="image" onClick={() => this.setState({closedList: !closedList})}>
-                            <img src={selectIcon} alt=""/>
+                            <SVG id='select-icon'/>
                         </div>
                     </div>
                 </div>

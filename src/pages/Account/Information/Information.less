@@ -485,7 +485,7 @@
           color: @third-default-dark;
           margin: 0 0 0.25em;
 
-          img {
+          svg {
             width: 1em;
             height: 1em;
             margin: 0 0 0 10px;
@@ -496,6 +496,8 @@
           font-size: 1rem; //14px
           color: @third-account-color;
           padding-left: 0.2143em;
+          display: flex;
+          align-items: center;
 
           span {
             text-decoration: underline;
@@ -698,7 +700,10 @@
       padding: 0 4em 0 0;
 
       .opened-block {
-        transform: rotate(180deg);
+
+        svg {
+          transform: rotate(180deg);
+        }
       }
 
       .token-btn {

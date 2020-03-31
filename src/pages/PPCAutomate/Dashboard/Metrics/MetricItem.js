@@ -3,14 +3,9 @@ import Tooltip from '../../../../components/Tooltip/Tooltip'
 import {ProfitTooltipDescription} from "../ProductBreakdown/ProductsList";
 import {metricsListArray} from "./metricsList";
 import {useSelector} from "react-redux";
-import closeIcon from '../../../../assets/img/icons/close.svg';
-import upWhiteIcon from '../../../../assets/img/icons/metric-arrows/up-white-arrow.svg';
-import upGreenIcon from '../../../../assets/img/icons/metric-arrows/up-green-arrow.svg';
-import downBlackIcon from '../../../../assets/img/icons/metric-arrows/down-black-arrow.svg';
-import downWhiteIcon from '../../../../assets/img/icons/metric-arrows/down-white-arrow.svg';
 import {round} from "../../../../utils/round";
 import {numberMask} from "../../../../utils/numberMask";
-import {SVG, SVGSource} from "../../../../utils/icons";
+import {SVG} from "../../../../utils/icons";
 
 const RenderMetricChanges = ({value, name}) => {
     if (value != null) {
@@ -28,20 +23,19 @@ const RenderMetricChanges = ({value, name}) => {
                 <div className='metric-item__changes'>
                     {value >= 25 && <div className='downward-changes'>
                         {round(+value, 2)}%
-                        <img style={{transform: 'rotate(180deg)'}} src={downWhiteIcon} alt=""/>
-
+                        <SVG style={{transform: 'rotate(180deg)'}} id='down-white-arrow'/>
                     </div>}
                     {(value > 0 && value < 25) && <div className='down-changes'>
                         {round(+value, 2)}%
-                        <img style={{transform: 'rotate(180deg)'}} src={downBlackIcon} alt=""/>
+                        <SVG style={{transform: 'rotate(180deg)'}} id='down-black-arrow'/>
                     </div>}
                     {(value <= 0 && value > -25) && <div className='up-changes'>
                         {round(+value, 2)}%
-                        <img style={{transform: 'rotate(180deg)'}} src={upGreenIcon} alt=""/>
+                        <SVG style={{transform: 'rotate(180deg)'}} id='up-green-arrow'/>
                     </div>}
                     {(value <= -25) && <div className='upward-changes'>
                         {round(+value, 2)}%
-                        <img style={{transform: 'rotate(180deg)'}} src={upWhiteIcon} alt=""/>
+                        <SVG style={{transform: 'rotate(180deg)'}} id='up-white-arrow'/>
                     </div>}
                 </div>
             )
@@ -50,19 +44,19 @@ const RenderMetricChanges = ({value, name}) => {
                 <div className='metric-item__changes'>
                     {value >= 25 && <div className='upward-changes'>
                         {round(+value, 2)}%
-                        <img src={upWhiteIcon} alt=""/>
+                        <SVG id='up-white-arrow'/>
                     </div>}
                     {(value > 0 && value < 25) && <div className='up-changes'>
                         {round(+value, 2)}%
-                        <img src={upGreenIcon} alt=""/>
+                        <SVG id='up-green-arrow'/>
                     </div>}
                     {(value <= 0 && value > -25) && <div className='down-changes'>
                         {round(+value, 2)}%
-                        <img src={downBlackIcon} alt=""/>
+                        <SVG id='down-black-arrow'/>
                     </div>}
                     {(value <= -25) && <div className='downward-changes'>
                         {round(+value, 2)}%
-                        <img src={downWhiteIcon} alt=""/>
+                        <SVG id='down-white-arrow'/>
                     </div>}
                 </div>
             )
@@ -135,8 +129,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
                 }
 
                 <div className="close" onClick={handleRemoveItem}>
-                    <img src={closeIcon} alt=""/>
-                    {/*<SVG id='close'/>*/}
+                    <SVG id='close'/>
                 </div>
             </div>
 

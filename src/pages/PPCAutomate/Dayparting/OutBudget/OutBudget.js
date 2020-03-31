@@ -4,7 +4,6 @@ import moment from "moment";
 import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 import {colorList} from "../colorList";
 import shortid from "shortid";
-import plusIconWhite from '../../../../assets/img/icons/plus-white.svg';
 import {daypartingServices} from "../../../../services/dayparting.services";
 import BudgetDrawer from "./BudgetDrawer";
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
@@ -15,6 +14,7 @@ import {productsActions} from "../../../../actions/products.actions";
 import successImage from '../../../../assets/img/landing-contact-us/checked.svg';
 import {Spin} from "antd";
 import {NavLink} from "react-router-dom";
+import {SVG} from "../../../../utils/icons";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -34,7 +34,9 @@ const hours = Array.from({length: 24}, (item, index) => index);
 
 
 const OutBudget = ({date}) => {
-    const defaultData = Array.from({length: 168}, (item, index) => moment(`${moment(date.startDate).add( Math.floor(index / 24), 'days').format('DD.MM.YYYY')} ${index - 24 * Math.floor(index / 24)}`, 'DD.MM.YYYY HH').format('YYYY-MM-DD HH:mm:ss'));
+    let localFetching = false;
+
+    const defaultData = Array.from({length: 168}, (item, index) => moment(`${moment(date.startDate).add(Math.floor(index / 24), 'days').format('DD.MM.YYYY')} ${index - 24 * Math.floor(index / 24)}`, 'DD.MM.YYYY HH').format('YYYY-MM-DD HH:mm:ss'));
 
     const [data, setData] = useState(defaultData),
         [percentParams, setParams] = useState({min: 0, max: 1}),
@@ -73,6 +75,8 @@ const OutBudget = ({date}) => {
 
             if (!fetchingCampaignList) {
                 setFetchingData(true);
+                localFetching = true;
+
                 try {
                     const res = await daypartingServices.getOutBudgetStatistic({
                         campaignId,
@@ -91,11 +95,13 @@ const OutBudget = ({date}) => {
 
                     // setData(res.response);
                     setData(defaultData.map(item => {
-                      return res.response.find(dataDot => dataDot.date === item) ? res.response.find(dataDot => dataDot.date === item) : {}
+                        return res.response.find(dataDot => dataDot.date === item) ? res.response.find(dataDot => dataDot.date === item) : {}
                     }));
                     setFetchingData(false);
+                    localFetching = false;
                 } catch (e) {
-                    setFetchingData(false);
+                    !localFetching && setFetchingData(false);
+                    localFetching = false;
                 }
             }
         }
@@ -162,7 +168,8 @@ const OutBudget = ({date}) => {
 
     return (
         <Fragment>
-            <section className={` ${(fetchingData || fetchingCampaignList) ? 'spend-statistics disabled' : 'spend-statistics'}`}>
+            <section
+                className={` ${(fetchingData || fetchingCampaignList) ? 'spend-statistics disabled' : 'spend-statistics'}`}>
                 <div className="section-header">
                     <h2>
                         Sales / Out of Budget
@@ -184,7 +191,7 @@ const OutBudget = ({date}) => {
                         disabled={!campaignId}
                         data-intercom-target='add-budget-button'
                     >
-                        <img src={plusIconWhite} alt=""/>
+                        <SVG id='plus-white'/>
                         Add budget
                     </button>
                 </div>

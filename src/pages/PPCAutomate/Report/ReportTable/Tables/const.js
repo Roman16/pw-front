@@ -1,13 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 
-import up from '../../../../../assets/img/icons/up-row.svg';
-import down from '../../../../../assets/img/icons/down-row.svg';
-import right from '../../../../../assets/img/icons/right-row.svg';
-import pause from '../../../../../assets/img/icons/pause.svg';
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {ColumnMenuFilter, ColumnNumberFilter} from "./columnFilter";
 import {round} from "../../../../../utils/round";
+import {SVG} from "../../../../../utils/icons";
 
 function getIndexColumnWidth(count) {
     return `${25 + count.toString().length * 7}px`;
@@ -107,14 +104,14 @@ export const bidActionField = {
                 <div className="action-field">
                     {data && data.current_state > data.previous_state ? (
                         <span>
-                    <img src={up} alt=""/> bid up (${data.previous_state}{' '}
-                            <img src={right} alt=""/> <b>${data.current_state}</b>)
-                </span>
+                            <SVG id='up-row'/> bid up (${data.previous_state}{' '}
+                            <SVG id='right-row'/> <b>${data.current_state}</b>)
+                        </span>
                     ) : (
                         <span>
-                    <img src={down} alt=""/> bid down (<b>${data.previous_state}</b>{' '}
-                            <img src={right} alt=""/> ${data.current_state})
-                </span>
+                            <SVG id='down-row'/> bid down (<b>${data.previous_state}</b>{' '}
+                            <SVG id='right-row'/> ${data.current_state})
+                        </span>
                     )}
                 </div>
             )
@@ -130,7 +127,7 @@ export const pauseKeywordsActionField = {
     className: 'left-border',
     render: () => (
         <div className="action-field">
-            <img src={pause} alt=""/> Paused Keyword
+            <SVG id='pause'/> Paused Keyword
         </div>
     )
 };
@@ -152,7 +149,7 @@ export const pausePatActionField = {
     className: 'left-border',
     render: () => (
         <div className="action-field">
-            <img src={pause} alt=""/> Paused Keyword
+            <SVG id='pause'/> Paused Keyword
         </div>
     )
 };

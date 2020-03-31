@@ -2,10 +2,9 @@ import React from 'react';
 import { func, bool } from 'prop-types';
 import { Modal, Button } from 'antd';
 
-import Warning from '../../../../../assets/img/icons/warning.svg';
-
 import './AttentionStop.less';
 import { useSelector } from 'react-redux';
+import {SVG} from "../../../../../utils/icons";
 
 const AttentionStop = ({
     isShowModal = false,
@@ -40,7 +39,8 @@ const AttentionStop = ({
             <div className="net-margin">
                 <div className="net-margin-content">
                     <div className="net-margin-header">
-                        <img src={Warning} alt="warning" />
+                        <SVG id='warning'/>
+
                         <h2>Attention!</h2>
                         <p>
                             We need your Product Net Margin to start the

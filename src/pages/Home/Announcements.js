@@ -1,13 +1,13 @@
 import React from "react";
-import announcementsIcon from '../../assets/img/icons/announcements-icon.svg';
 import image from '../../assets/img/image.png';
+import {SVG} from "../../utils/icons";
 
 const Announcements = () => {
 
     return (
         <section className='announcements'>
             <div className='section-title'>
-                <img src={announcementsIcon} alt=""/>
+                <SVG id='announcements-icon'/>
                 announcements
             </div>
 

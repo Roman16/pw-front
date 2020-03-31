@@ -37,8 +37,9 @@ const MistakeTerminal = ({mistakeList, totalSize, page, pageSize, onChangePagina
                     ))}
                 </div>
                 :
-                <div className="not-data">
+                <div className='not-data'>
                     <img src={notDataImage} alt=""/>
+                    <p>No data to show</p>
                 </div>
             }
 

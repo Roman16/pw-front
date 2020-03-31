@@ -10,6 +10,8 @@ export const userService = {
     login,
     loginWithAmazon,
     regist,
+    resendConfirmEmail,
+    confirmEmail,
     getUserInfo,
     setMWS,
     unsetMWS,
@@ -49,6 +51,14 @@ function loginWithAmazon(user) {
 
 function regist(user) {
     return api('post', userUrls.regist, user);
+}
+
+function resendConfirmEmail() {
+    return api('post', userUrls.resendEmail);
+}
+
+function confirmEmail() {
+    return api('post', userUrls.confirmEmail);
 }
 
 function getUserInfo() {

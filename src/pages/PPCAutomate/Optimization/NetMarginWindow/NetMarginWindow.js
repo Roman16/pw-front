@@ -2,21 +2,19 @@ import React, {useState, Fragment} from 'react';
 import {func, bool} from 'prop-types';
 import {Button} from 'antd';
 import {Link} from 'react-router-dom';
-import Warning from '../../../../assets/img/icons/warning.svg';
 
 import './NetMarginWindow.less';
-import {useDispatch, useSelector} from "react-redux";
-import {productsActions} from "../../../../actions/products.actions";
+import {useSelector} from "react-redux";
 import {productsServices} from "../../../../services/products.services";
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
 import InputCurrency from "../../../../components/Inputs/InputCurrency";
+import {SVG} from "../../../../utils/icons";
 
 
 const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handleOk}) => {
     const [value, setValue] = useState(0);
     const [isError, setError] = useState(false);
 
-    const dispatch = useDispatch();
     const {product, options} = useSelector(state => ({
         product: state.products.selectedProduct,
         options: state.products.defaultOptimizationOptions
@@ -53,7 +51,7 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
             <div className="net-margin">
                 <div className="net-margin-content">
                     <div className="net-margin-header">
-                        <img src={Warning} alt="warning"/>
+                        <SVG id='warning'/>
                         <h2>Attention!</h2>
                         <p>We need your Product Net Margin to start the optimization.</p>
                     </div>

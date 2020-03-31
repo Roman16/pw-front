@@ -12,6 +12,8 @@ let source = null;
 const Option = Select.Option;
 
 const ChartStatistics = ({date}) => {
+    let localFetching = false;
+
     const [data, setData] = useState([]),
         [firstMetric, setFirstMetric] = useState(metricsList[1]),
         [secondMetric, setSecondMetric] = useState(metricsList[0]),
@@ -29,6 +31,8 @@ const ChartStatistics = ({date}) => {
 
             if (!fetchingCampaignList) {
                 setProcessing(true);
+                localFetching = true;
+
                 try {
                     const res = await daypartingServices.getDailyStatistic({
                         campaignId,
@@ -51,9 +55,10 @@ const ChartStatistics = ({date}) => {
                     })]);
 
                     setProcessing(false);
+                    localFetching = false;
                 } catch (e) {
-                    setProcessing(false);
-                    console.log(e);
+                   !localFetching && setProcessing(false);
+                    localFetching = false;
                 }
             }
         }

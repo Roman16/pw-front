@@ -1,7 +1,6 @@
 import React, {Component, useState} from "react";
 import {CardNumberElement, CardExpiryElement, CardCvcElement} from 'react-stripe-elements';
 import {injectStripe} from "react-stripe-elements";
-import lockIcon from '../../../../assets/img/icons/lock.svg';
 import visaLogo from '../../../../assets/img/visa-logo.svg';
 import mastercardLogo from '../../../../assets/img/mastercard.svg';
 import discoverLogo from '../../../../assets/img/discover.svg';
@@ -12,6 +11,7 @@ import {userService} from "../../../../services/user.services";
 import {allCountries, countries} from "../../../../utils/countries";
 import {states} from "../../../../utils/states";
 import moment from "moment";
+import {SVG} from "../../../../utils/icons";
 
 const {Option} = Select;
 
@@ -73,7 +73,7 @@ const StripeForm = (props) => {
                         </div>}
                     </div>
 
-                    <img src={lockIcon} alt=""/>
+                    <SVG id='lock'/>
 
                     <p>
                         this is a secure 128-bit ssl encrypted <br/> payment

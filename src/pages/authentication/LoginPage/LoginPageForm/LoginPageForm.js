@@ -4,9 +4,8 @@ import {connect} from "react-redux";
 import {Link, Redirect} from "react-router-dom";
 import {notification} from "../../../../components/Notification";
 import {userActions} from "../../../../actions/user.actions";
-import eyeClosed from "../../../../assets/img/icons/eye-closed.svg";
-import eyeOpened from "../../../../assets/img/icons/eye-opened.svg";
 import amazonImage from '../../../../assets/img/amazon.png';
+import {SVG} from "../../../../utils/icons";
 
 class LoginPageForm extends React.Component {
     state = {
@@ -124,11 +123,7 @@ class LoginPageForm extends React.Component {
                         autoComplete="off"
                         value={password}
                         onChange={this.onChange}
-                        suffix={<img
-                            src={passwordType ? eyeClosed : eyeOpened}
-                            alt=""
-                            onClick={this.switchPasswordType}
-                        />}
+                        suffix={<span onClick={this.switchPasswordType}><SVG id={passwordType ? 'eye-closed' : 'eye-opened'}/></span>}
                     />
                 </Form.Item>
 

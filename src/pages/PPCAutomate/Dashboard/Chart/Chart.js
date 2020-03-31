@@ -1,16 +1,13 @@
 import React, {useState, useEffect, Fragment} from "react";
 import FirstPieChart from "./PieChart";
 import SecondBarChart from "./BarChart";
-import pieDefaultIcon from '../../../../assets/img/icons/pie-chart-default.svg';
-import pieActiveIcon from '../../../../assets/img/icons/pie-chart-active.svg';
-import barActiveIcon from '../../../../assets/img/icons/bar-chart-active.svg';
-import barDefaultIcon from '../../../../assets/img/icons/bar-chart-default.svg';
 import Tooltip from "../../../../components/Tooltip/Tooltip";
 import {dashboardServices} from '../../../../services/dashboard.services'
 import './Chart.less';
 import {useSelector} from "react-redux";
 import moment from "moment";
 import {Spin} from "antd";
+import {SVG} from "../../../../utils/icons";
 
 const Chart = () => {
 
@@ -83,11 +80,13 @@ const Chart = () => {
                     description={`Organic to PPC Sales Ratio shows the percentage of sales that are coming from organic versus pay-per-click — seeing this information can reveal whether or not you may be spending too aggressively on PPC.`}/>}
 
                 <div className='chart-selector'>
-                    <img src={defaultChart === 'pie' ? pieActiveIcon : pieDefaultIcon} alt=""
-                         onClick={() => changeChart('pie')}/>
+                    <span onClick={() => changeChart('pie')}>
+                         <SVG id={defaultChart === 'pie' ? 'pie-chart-active' : 'pie-chart-default'}/>
+                    </span>
 
-                    <img src={defaultChart === 'bar' ? barActiveIcon : barDefaultIcon} alt=""
-                         onClick={() => changeChart('bar')}/>
+                    <span onClick={() => changeChart('bar')}>
+                        <SVG id={defaultChart === 'bar' ? 'bar-chart-active' : 'bar-chart-default'}/>
+                    </span>
                 </div>
             </div>
 

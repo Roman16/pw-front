@@ -1,12 +1,9 @@
 import React from "react";
-import greenLineIcon from "../../../../assets/img/icons/green-line.svg";
-import violetLineIcon from "../../../../assets/img/icons/violet-line.svg";
-import greenDailyIcon from "../../../../assets/img/icons/green-daily.svg";
-import violetDailyIcon from "../../../../assets/img/icons/violet-daily.svg";
 import {metricsListArray} from "../Metrics/metricsList";
 import moment from "moment";
 import {round} from "../../../../utils/round";
 import {numberMask} from "../../../../utils/numberMask";
+import {SVG} from "../../../../utils/icons";
 
 const days = [
     'Sunday',
@@ -40,7 +37,8 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
         return (
             <div className='custom-line-chart-tooltip'>
                 <div className='label'>
-                    <div className='date title'>{days[moment(label).weekday()] + ', ' + moment(label).format('DD MMM YY')}</div>
+                    <div
+                        className='date title'>{days[moment(label).weekday()] + ', ' + moment(label).format('DD MMM YY')}</div>
 
                     {activeMetrics[0].key && <div className='name'>
                         {activeMetrics[0].title}
@@ -55,12 +53,12 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                     <div className='week-title title'>7-day average</div>
 
                     {activeMetrics[0].key && <div className="week-value">
-                        <img src={greenLineIcon} alt=""/>
+                        <SVG id='green-line'/>
                         {getChartValue('seven_days_first_metric_value', activeMetrics[0].key)}
                     </div>}
 
                     {activeMetrics[1].key && <div className="week-value">
-                        <img src={violetLineIcon} alt=""/>
+                        <SVG id='violet-line'/>
                         {getChartValue('seven_days_second_metric_value', activeMetrics[1].key)}
                     </div>}
                 </div>}
@@ -69,12 +67,12 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                     <div className='daily-title title'>Daily</div>
 
                     {activeMetrics[0].key && <div className="daily-value">
-                        <img src={greenDailyIcon} alt=""/>
+                        <SVG id='green-daily'/>
                         {getChartValue('daily_first_metric_value', activeMetrics[0].key)}
                     </div>}
 
                     {activeMetrics[1].key && <div className="daily-value">
-                        <img src={violetDailyIcon} alt=""/>
+                        <SVG id='violet-daily'/>
                         {getChartValue('daily_second_metric_value', activeMetrics[1].key)}
                     </div>}
                 </div>}

@@ -126,6 +126,7 @@ const ProblemGraph = ({problemsCount = {}}) => {
                 :
                 <div className='not-data'>
                     <img src={notDataImage} alt=""/>
+                    <p>No data to show</p>
                 </div>
             }
         </section>

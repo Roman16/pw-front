@@ -13,7 +13,7 @@ const ErrorWindow = ({onClose}) => (
         </span>
 
         <div className='actions'>
-            <button className='btn white' onClick={onClose}>
+            <button className='btn default' onClick={onClose}>
                 OK
             </button>
         </div>

@@ -1,7 +1,6 @@
 .scanner-page {
   height: 100%;
   overflow: auto;
-  overflow: auto;
 
   display: grid;
   grid-template-areas: "problemsListCard mistakeTerminal" "problemGraphBlock mistakeTerminal";
@@ -146,6 +145,11 @@
                 background: #8FD39D;
                 color: #fff;
                 font-size: 1.1428571428571428rem;
+
+                svg {
+                  width: 80%;
+                  height: 80%;
+                }
               }
             }
           }
@@ -175,7 +179,7 @@
         border: 1px solid #F5F5FF;
         box-sizing: border-box;
         border-radius: 8px;
-        margin: 10px 0;
+        margin: 15px 0;
         padding: 5px 10px;
 
         .ant-checkbox {
@@ -276,6 +280,10 @@
       margin: 5px 0 0 0;
       padding: 0 10px;
 
+      box-shadow: none;
+      border: 1px solid #f5f5ff;
+      color: #94A3AD;
+
       div {
         display: flex;
         align-items: center;
@@ -286,6 +294,28 @@
           margin: 0 0 0 10px;
         }
       }
+    }
+  }
+
+  .not-data {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 30%;
+      min-width: 200px;
+      margin: 0 0 10px 0;
+    }
+
+    p {
+      text-align: center;
+      font-size: 1.5rem;
+      line-height: 32px;
+      color: #656A84;
+      font-weight: 500;
     }
   }
 
@@ -325,17 +355,6 @@
         max-width: 280px;
         flex: 1;
         margin: 0 auto;
-      }
-    }
-
-    .not-data {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      img {
-        width: 50%;
       }
     }
   }
@@ -419,12 +438,6 @@
       }
     }
 
-    .not-data {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
 
     .pagination {
       display: flex;
@@ -507,6 +520,13 @@
         width: 120px;
         height: 48px;
         font-size: 1.1428571428571428rem;
+        cursor: pointer;
+
+        &.white {
+          box-shadow: none;
+          border: 0.5px solid rgba(148, 163, 173, 0.4);
+          color: #94A3AD;
+        }
       }
     }
   }
