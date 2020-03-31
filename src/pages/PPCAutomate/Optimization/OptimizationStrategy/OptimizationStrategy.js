@@ -119,7 +119,7 @@ function StrategyItem({
     }, [desired_target_acos]);
 
     return (
-        <div className={`strategy-item  slide-${index + 1} ${visible && 'visible'}`}>
+        <form className={`strategy-item  slide-${index + 1} ${visible && 'visible'}`}>
             <div className="description-block">
                 <div className="col">
                     <div>
@@ -139,7 +139,7 @@ function StrategyItem({
 
                 <div className="image">
                     {index === 0 && <div className="target-acos">
-                        <span>Enter yor target ACoS</span>
+                        <span>Enter your target ACoS</span>
                         <InputCurrency typeIcon={'margin'} value={targetAcos} onChange={value => setTargetAcos(value)}/>
                         <button className='btn green-btn' onClick={() => onSaveTargetAcos(targetAcos)} disabled={processing || productId == null}>save</button>
                     </div>}
@@ -185,7 +185,7 @@ function StrategyItem({
                     }
                 </div>
             </div>
-        </div>
+        </form>
     )
 }
 
