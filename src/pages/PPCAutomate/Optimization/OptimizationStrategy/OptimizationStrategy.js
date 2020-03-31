@@ -119,7 +119,10 @@ function StrategyItem({
     }, [desired_target_acos]);
 
     return (
-        <div className={`strategy-item  slide-${index + 1} ${visible && 'visible'}`}>
+        <form className={`strategy-item  slide-${index + 1} ${visible && 'visible'}`} onSubmit={(e) => {
+            e.preventDefault();
+            onStart(targetAcos)
+        }}>
             <div className="description-block">
                 <div className="col">
                     <div>
@@ -139,9 +142,11 @@ function StrategyItem({
 
                 <div className="image">
                     {index === 0 && <div className="target-acos">
-                        <span>Enter yor target ACoS</span>
-                        <InputCurrency typeIcon={'margin'} value={targetAcos} onChange={value => setTargetAcos(value)}/>
-                        <button className='btn green-btn' onClick={() => onSaveTargetAcos(targetAcos)} disabled={processing || productId == null}>save</button>
+                        <span>Enter your target ACoS</span>
+                        <InputCurrency required typeIcon={'margin'} value={targetAcos} onChange={value => setTargetAcos(value)}/>
+                        <button className='btn green-btn' onClick={() => onSaveTargetAcos(targetAcos)}
+                                disabled={processing || productId == null}>save
+                        </button>
                     </div>}
 
                     <img src={img} alt=""/>
@@ -176,8 +181,7 @@ function StrategyItem({
                         )
                         :
                         <button disabled={processing || productId == null} className='btn default'
-                                onClick={() => onStart(targetAcos)}
-                                {... index === 1 && {"data-intercom-target": "start-button"}}
+                                {...index === 1 && {"data-intercom-target": "start-button"}}
                         >
                             {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
                             start
@@ -185,7 +189,7 @@ function StrategyItem({
                     }
                 </div>
             </div>
-        </div>
+        </form>
     )
 }
 
