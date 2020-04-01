@@ -14,7 +14,8 @@ class LoginPageForm extends React.Component {
         remember_me: false,
         isLoading: false,
         loginSuccess: false,
-        passwordType: true
+        passwordType: true,
+        processing: false
     };
 
     onChange = ({target}) => {
@@ -84,7 +85,7 @@ class LoginPageForm extends React.Component {
 
 
     render() {
-        const {email, password, isLoading, loginSuccess, passwordType} = this.state;
+        const {email, password, isLoading, loginSuccess, passwordType, processing} = this.state;
 
         if (isLoading) {
             return (
@@ -123,7 +124,8 @@ class LoginPageForm extends React.Component {
                         autoComplete="off"
                         value={password}
                         onChange={this.onChange}
-                        suffix={<span onClick={this.switchPasswordType}><SVG id={passwordType ? 'eye-closed' : 'eye-opened'}/></span>}
+                        suffix={<span onClick={this.switchPasswordType}><SVG
+                            id={passwordType ? 'eye-closed' : 'eye-opened'}/></span>}
                     />
                 </Form.Item>
 
@@ -134,12 +136,12 @@ class LoginPageForm extends React.Component {
                         Remember me
                     </Checkbox>
 
-                    <a
+                    <Link
                         className="login-form-forgot forget"
-                        href="https://profitwhales.com/password/reset"
+                        to="/password/reset"
                     >
                         Forgot password?
-                    </a>
+                    </Link>
                 </Row>
 
                 <div className='terms-and-privacy'>
@@ -154,6 +156,8 @@ class LoginPageForm extends React.Component {
 
                 <button className="btn default">
                     sign in
+
+                    {processing && <Spin/>}
                 </button>
 
                 {/*<div className="login-with-amazon">*/}

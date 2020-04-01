@@ -1,8 +1,10 @@
 import React, {useEffect, useState, Fragment} from 'react';
+import {useSelector} from "react-redux";
 import {history} from "../../../../utils/history";
 import logo from "../../../../assets/img/ProfitWhales-logo-white.svg";
 import {Link} from "react-router-dom";
 import './ConfirmEmailPage.less';
+import '../../LoginPage/LoginPage.less';
 import {userService} from "../../../../services/user.services";
 import {notification} from "../../../../components/Notification";
 import {Spin} from "antd";
@@ -15,6 +17,9 @@ const ConfirmEmailPage = (props) => {
         [disableResend, setDisableResend] = useState(false),
         [disabledTimer, setDisabledTimer] = useState(60);
 
+    const {email} = useSelector(state => ({
+        email: state.user.user.email
+    }));
 
     const onResend = async () => {
         setDisableResend(true);
@@ -45,10 +50,13 @@ const ConfirmEmailPage = (props) => {
     }, [disabledTimer]);
 
     useEffect(() => {
-        if (props.location.search && props.location.search.indexOf('?verify_token=') !== -1) {
-            notification.error({title: props.location.search.split('?verify_token=')[1]});
+        console.log(props.match);
+        if (props.match.params && props.match.params.token) {
+            notification.error({title: props.match.params.token});
 
-            userService.confirmEmail()
+            userService.confirmEmail({
+                token: props.match.params.token
+            })
                 .then(() => {
                     setConfirmStatus('success')
                 })
@@ -77,12 +85,16 @@ const ConfirmEmailPage = (props) => {
 
                         {confirmStatus === 'dont-confirm' && <Fragment>
                             <h4>
-                                We sent the email with a confirmation link.
-                                <br/>
-                                If you didn't receive the email, click resend.
+                                Check your email
                             </h4>
 
-                            {disableResend && <span>{disabledTimer}</span>}
+                            <p>
+                                We’ve sent you an email to confirm your email address, simply tap the ‘Confirm’ button
+                                in the email sent to
+                                <a href={`mailto: ${email}`}>{email}</a>.
+                            </p>
+
+                            {/*{disableResend && <span>{disabledTimer}</span>}*/}
 
                             <button
                                 className='btn default'

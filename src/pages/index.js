@@ -76,7 +76,7 @@ const AuthorizedUser = (props) => {
     const pathname = props.location.pathname;
     const {lastStatusAction, bootstrapInProgress} = useSelector(state => ({
         lastStatusAction: state.user.lastUserStatusAction,
-        bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
+        bootstrapInProgress: state.user.notifications && state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
     }));
 
     function getUserStatus() {

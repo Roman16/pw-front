@@ -40,6 +40,7 @@ const AuthorizedUser = React.lazy(() => import('../pages'));
 
 const LoginPage = React.lazy(() => import('../pages/authentication/LoginPage/LoginPage'));
 const RegistrationPage = React.lazy(() => import('../pages/authentication/RegistrationPage/RegistrationPage'));
+const ConfirmEmailPage = React.lazy(() => import('../pages/authentication/RegistrationPage/ConfirmEmailPage/ConfirmEmailPage'));
 const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPassword/ResetPassword'));
 const LoginWithAmazon = React.lazy(() => import('../pages/authentication/LoginWithAmazon/LoginWithAmazon'));
 
@@ -96,6 +97,7 @@ const routers = () => {
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login" component={LoginPage}/>
                     <Route exact path="/registration" component={RegistrationPage}/>
+                    <Route exact path="/confirm-email/:token?" component={ConfirmEmailPage}/>
                     <Route exact path="/reset-password" component={ResetPassword}/>
                     <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                     {/*-----------------------------------------------------------*/}

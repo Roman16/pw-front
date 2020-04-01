@@ -27,6 +27,12 @@ function login(user) {
             .then(res => {
                 localStorage.setItem('token', res.access_token);
 
+                dispatch(setInformation({
+                    user: {
+                        email: user.email
+                    }
+                }));
+
                 dispatch(getUserInfo());
             });
     };
@@ -64,15 +70,19 @@ function regist(user) {
     return dispatch => {
         userService.regist(user)
             .then(res => {
-                dispatch(setInformation(res.data));
+                dispatch(setInformation({
+                    user: {
+                        email: user.email
+                    }
+                }));
+
+                localStorage.setItem('token', res.access_token);
 
                 window.dataLayer.push({
                     'event': 'Registration',
                 });
 
-                localStorage.setItem('token', res.access_token);
-
-                dispatch(getUserInfo());
+                history.push('/confirm-email')
             });
     };
 }
@@ -107,7 +117,7 @@ function getUserInfo() {
         userService.getUserInfo().then(res => {
             const user = store.getState().user.user || null;
 
-            if(user && (user.id !== res.user.id)) {
+            if (user && (user.id !== res.user.id)) {
                 dispatch({
                     type: productsConstants.SET_PRODUCT_LIST,
                     payload: {
@@ -161,14 +171,14 @@ function getAuthorizedUserInfo() {
     return dispatch => {
         userService.getUserInfo()
             .then(res => {
-            dispatch(setInformation(res));
+                dispatch(setInformation(res));
 
-            if (!res.account_links[0].amazon_mws.is_connected) {
-                history.push('/mws');
-            } else if (!res.account_links[0].amazon_ppc.is_connected) {
-                history.push('/ppc');
-            }
-        });
+                if (!res.account_links[0].amazon_mws.is_connected) {
+                    history.push('/mws');
+                } else if (!res.account_links[0].amazon_ppc.is_connected) {
+                    history.push('/ppc');
+                }
+            });
     };
 }
 

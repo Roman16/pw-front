@@ -57,8 +57,8 @@ function resendConfirmEmail() {
     return api('post', userUrls.resendEmail);
 }
 
-function confirmEmail() {
-    return api('post', userUrls.confirmEmail);
+function confirmEmail({token}) {
+    return api('post', `${userUrls.confirmEmail}/${token}`);
 }
 
 function getUserInfo() {

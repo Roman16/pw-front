@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import logoDark from '../../../../assets/img/ProfitWhales-logo-dark.svg';
 import logoWhite from '../../../../assets/img/ProfitWhales-logo-white.svg';
 import {Link} from "react-router-dom";
-
+import {useSelector} from "react-redux";
 import './Header.less';
 import {history} from "../../../../utils/history";
 import {SVG} from "../../../../utils/icons";
@@ -10,6 +10,9 @@ import {SVG} from "../../../../utils/icons";
 
 const Header = ({type = 'light'}) => {
     const [openedMenu, switchMenu] = useState(false);
+    const {userId} = useSelector(state => ({
+        userId: state.user.user.id
+    }));
 
     useEffect(() => {
         document.querySelector('.header-menu').addEventListener('click', () => {
@@ -25,8 +28,7 @@ const Header = ({type = 'light'}) => {
         }
     }, [openedMenu]);
 
-    const authorized = localStorage.getItem('token');
-
+    const authorized = !!userId;
 
     return (
         <header className={`not-found-page__header ${type}`} id={'header'}>

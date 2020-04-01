@@ -23,7 +23,7 @@ const Sidebar = () => {
         {user, notFirstEntry, bootstrapInProgress} = useSelector(state => ({
             user: state.user,
             notFirstEntry: state.user.notFirstEntry,
-            bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
+            bootstrapInProgress: state.user.notifications && state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
         }));
 
 
