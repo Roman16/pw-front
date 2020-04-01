@@ -35,7 +35,7 @@
         border-right: 1px solid rgba(208, 208, 208, 0.4);
         position: relative;
         font-weight: 500;
-        padding: 0 5px;
+        padding: 0 10px;
 
         &:nth-child(3) {
           width: 230px;
@@ -265,6 +265,7 @@
           display: flex;
           justify-content: center;
           margin: 0 auto;
+          flex-wrap: wrap;
         }
 
         .btn {
@@ -427,7 +428,12 @@
     }
   }
 
-  @media only screen and (min--moz-device-pixel-ratio: 1) and (max-width: 950px), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-width: 950px), only screen and (min-device-pixel-ratio: 1) and (max-width: 950px), only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 510px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 510px), only screen and (min-device-pixel-ratio: 2) and (max-width: 510px) {
+  @media only screen and (min--moz-device-pixel-ratio: 1) and (max-width: 1132px),
+  only screen and (-webkit-min-device-pixel-ratio: 1) and (max-width: 1132px),
+  only screen and (min-device-pixel-ratio: 1) and (max-width: 1132px),
+  only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 510px),
+  only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 510px),
+  only screen and (min-device-pixel-ratio: 2) and (max-width: 510px) {
     & {
       height: max-content !important;
 

@@ -78,6 +78,10 @@ img {
     overflow-y: hidden;
   }
 
+  @media (max-width: 1132px) {
+    padding-left: 5.14285714em;
+  }
+
   .sidebar {
     @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 800px), only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 800px), only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 800px), only screen and (max-device-pixel-ratio: 1) and (max-width: 800px) {
       position: fixed;
@@ -85,7 +89,7 @@ img {
       left: 0;
     }
 
-    @media (max-width: 799px) {
+    @media (max-width: 1132px) {
       position: fixed;
       top: 0;
       left: 0;
@@ -96,7 +100,6 @@ img {
   .main-container {
     @media (max-width: 800px) {
       overflow-y: auto;
-      padding-left: 5.142857142857143em;
     }
 
     //@media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
@@ -143,9 +146,9 @@ img {
     & > div {
       padding: 1.7142857em 1.4285714285714286rem;
 
-      @media (max-width: @big-desktop) {
-        padding: 1.7142857em 1.1428571em;
-      }
+      //@media (max-width: @big-desktop) {
+      //  padding: 1.7142857em 1.1428571em;
+      //}
     }
   }
 
@@ -718,7 +721,7 @@ body {
   }
 }
 
-.event-blocker div:last-child{
- height: inherit !important;
+.event-blocker div:last-child {
+  height: inherit !important;
 }
 

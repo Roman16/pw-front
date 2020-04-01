@@ -434,7 +434,7 @@
         }
 
         .check-btn {
-          img {
+          svg {
             width: 2.4em;
             height: 2.4em;
           }
@@ -740,10 +740,12 @@
       margin: 0 0 0 auto;
 
       button {
-        width: max-content;
-
-        img {
-          width: 20px;
+        span {
+          width: 30px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       }
     }
@@ -950,9 +952,10 @@
               .choice-wrap {
                 .connect-group {
                   flex-direction: column;
-                 .ant-cascader-picker, a {
+
+                  .ant-cascader-picker, a {
                     width: 100%;
-                   margin: 0 0 20px 0;
+                    margin: 0 0 20px 0;
                   }
                 }
 
@@ -1126,7 +1129,7 @@
 
         .avatar-box,
         .icon-block,
-        .whales-image{
+        .whales-image {
           margin: 0 0 15px 0;
         }
 

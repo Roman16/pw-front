@@ -45,7 +45,7 @@ const Sidebar = () => {
 
     useEffect(() => {
         dispatch(userActions.getPersonalUserInfo());
-        window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
+        window.innerWidth < 1132 ? setCollapsed(false) : setCollapsed(true);
 
         document.querySelector('body').classList.add('visible-intercom');
 

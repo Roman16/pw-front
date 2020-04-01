@@ -269,6 +269,12 @@
         border-radius: 8px;
         font-size: 1.7142857142857142rem;
         color: #6D6DF6;
+
+        @media (max-width: 800px) {
+          & {
+            min-width: 100%;
+          }
+        }
       }
 
       .product-params {
@@ -382,7 +388,7 @@
       table {
         .ant-table-tbody {
           td {
-            max-width: 40px;
+            max-width: 90px;
 
             &:first-child {
               min-width: 240px;

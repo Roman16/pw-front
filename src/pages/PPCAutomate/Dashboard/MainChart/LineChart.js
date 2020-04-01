@@ -1,9 +1,21 @@
-import React, {useEffect} from 'react';
+import React, {PureComponent} from 'react';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 import ChartTooltip from "./ChartTooltip";
 import moment from "moment";
+
+const CustomizedAxisTick = (props) => {
+    const {
+        x, y, stroke, payload,
+    } = props;
+
+    return (
+        <g transform={`translate(${x},${y})`}>
+            <text x={0} y={0} dy={20}>{moment(payload.value).format('MMM DD')}</text>
+        </g>
+    );
+};
 
 const Chart = ({
                    data,
@@ -69,7 +81,7 @@ const Chart = ({
             <ResponsiveContainer height='100%' width='100%'>
                 <LineChart
                     data={Array.isArray(data) ? data : []}
-                    margin={{top: 10, bottom: 10}}
+                    margin={{top: 10, bottom: 30}}
                 >
                     <CartesianGrid
                         vertical={false}
@@ -81,11 +93,12 @@ const Chart = ({
                     <XAxis
                         dataKey="date"
                         axisLine={false}
-                        // interval={0}
+                        // interval={2}
                         // angle={50}
                         // dx={15}
-                        // dy={2}
-
+                        dy={15}
+                        // height={60}
+                        // tick={<CustomizedAxisTick/>}
                         tickFormatter={(date) => moment(date).format('MMM DD')}
                     />
 

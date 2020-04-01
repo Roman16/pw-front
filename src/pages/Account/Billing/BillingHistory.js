@@ -35,7 +35,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             render: (text, item) => (<span className='card-number'>
                 {item.card_type === 'visa' && <img src={visaLogo} alt=""/>}
                 {item.card_type === 'mastercard' && <img src={masterLogo} alt=""/>}
-                {item.card_number && `**** **** **** ${item.card_number}`}
+                {item.card_number && <span>{item.card_number}</span>}
             </span>)
         },
         {
@@ -57,6 +57,7 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             title: 'Actions',
             dataIndex: 'status',
             key: 'status',
+            width: '100px',
             render: (invoiceNumber, item) => {
                 if (item.invoice_link_id) return (
                     <div className='invoice-actions'>

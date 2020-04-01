@@ -304,6 +304,7 @@
 
     .block-description {
       width: 100%;
+      margin: 0 0 10px 0;
     }
 
     .history-list {
@@ -324,7 +325,7 @@
       }
 
       .custom-table {
-        min-width: 550px;
+        min-width: 840px;
 
         .table-head {
           border: 0;
@@ -430,6 +431,16 @@
         .company-information {
           width: 100%;
           margin: 20px 0 0 0;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1100px) {
+    & {
+      .billing-history-block .history-list .custom-table .table-body .table-body__row .table-body__field .card-number {
+        i {
+          display: none;
         }
       }
     }
