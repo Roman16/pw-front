@@ -36,7 +36,7 @@ export const newPats = ({
                     title: 'Ad Group',
                     dataIndex: 'd_adGroupName',
                     key: 'd_adGroupName',
-                    width: '9em',
+                    width: '10em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnTextFilter
                         onChangeFilter={onChangeFilter}
@@ -54,7 +54,7 @@ export const newPats = ({
                     ),
                     dataIndex: 'd_patType',
                     key: 'd_patType',
-                    width: '10.5em',
+                    width: '11.5em',
                     render: str => <span className="capitalize-field">{str}</span>,
                     sorter: true,
                     filter: (dataIndex) => <ColumnMenuFilter
@@ -69,7 +69,7 @@ export const newPats = ({
                 },
                 {
                     ...patIntentField(onChangeFilter, filteredColumns),
-                    width: '13.5em',
+                    width: '14.5em',
                 },
                 {
                     title: (
@@ -131,7 +131,7 @@ export const newPats = ({
                     ),
                     dataIndex: 'd_patType',
                     key: 'd_patType',
-                    width: '10em',
+                    width: '12em',
                     render: str => <span className="capitalize-field">{str}</span>,
                     sorter: true,
                     filter: (dataIndex) => <ColumnMenuFilter
@@ -146,7 +146,7 @@ export const newPats = ({
                 },
                 {
                     ...patIntentField(onChangeFilter, filteredColumns),
-                    width: '13em',
+                    width: '15em',
                 },
                 {
                     title: (
@@ -170,7 +170,7 @@ export const newPats = ({
                     title: 'Bid',
                     dataIndex: 'd_bid',
                     key: 'd_bid',
-                    width: '6em',
+                    width: '7em',
                     render: text => (text != null && <span>${numberMask(text, 2)}</span>),
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
@@ -189,7 +189,7 @@ export const newPats = ({
                     ),
                     dataIndex: 'd_customerSearchTermClicks',
                     key: 'd_customerSearchTermClicks',
-                    width: '11em',
+                    width: '13em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -201,7 +201,7 @@ export const newPats = ({
                     title: 'CST Spend',
                     dataIndex: 'd_customerSearchTermSpend',
                     key: 'd_customerSearchTermSpend',
-                    width: '9.5em',
+                    width: '10.5em',
                     render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
@@ -214,7 +214,7 @@ export const newPats = ({
                     title: 'CST Sales',
                     dataIndex: 'd_customerSearchTermSales',
                     key: 'd_customerSearchTermSales',
-                    width: '9em',
+                    width: '10em',
                     render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
@@ -234,7 +234,7 @@ export const newPats = ({
                     dataIndex: 'd_customerSearchTermACoS',
                     key: 'd_customerSearchTermACoS',
                     render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
-                    width: '10.5em',
+                    width: '12.5em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -254,7 +254,7 @@ export const newPats = ({
                     dataIndex: 'd_customerSearchTermCPC',
                     key: 'd_customerSearchTermCPC',
                     render: text => (text != null && <span>${numberMask(text, 2)}</span>),
-                    width: '10em',
+                    width: '12em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -273,7 +273,7 @@ export const newPats = ({
                     dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                     key: 'd_targetACoSCalculation_d_targetACoS',
                     render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
-                    width: '12em',
+                    width: '13em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}

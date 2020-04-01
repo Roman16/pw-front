@@ -40,7 +40,7 @@ const CustomTable = ({
                             <div
                                 className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''}`}
                                 key={`${item.dataIndex}_${index}`}
-                                style={fieldWidth}
+                                style={{...fieldWidth, minWidth: item.minWidth || '0'}}
                                 onClick={() => item.sorter && onChangeSorter(item.key)}
                             >
                                 <div className='title'>
@@ -80,7 +80,7 @@ const CustomTable = ({
                                     return (
                                         <div
                                             className="table-body__field"
-                                            style={fieldWidth}
+                                            style={{...fieldWidth, minWidth: item.minWidth || '0'}}
                                             key={shortid.generate()}
                                         >
                                             {item.render

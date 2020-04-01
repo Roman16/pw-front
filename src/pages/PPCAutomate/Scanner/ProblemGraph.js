@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {
-    PieChart, Pie, Tooltip, Sector, Cell, ResponsiveContainer
+    PieChart, Pie, Tooltip, Sector, Cell, ResponsiveContainer, Label, Text
 } from 'recharts';
 import notDataImage from '../../../assets/img/not-data-image.svg';
 import {round} from "../../../utils/round";
@@ -96,6 +96,25 @@ const ProblemGraph = ({problemsCount = {}}) => {
                                                 key={`cell-${index}`}
                                                 fill={COLORS[index % COLORS.length]}
                                             />)})}
+
+                                    <Label content={({viewBox: {cx, cy}}) => {
+                                            const positioningProps = {
+                                                    x: cx,
+                                                    y: cy,
+                                                    textAnchor: 'middle',
+                                                    verticalAnchor: 'middle',
+                                                },
+                                                stylingProps = {
+                                                    fontSize: '32px',
+                                                    fontFamily: 'ir',
+                                                    color: '#363694'
+                                                };
+
+                                            return (
+                                                <Text {...positioningProps}
+                                                      style={stylingProps}>{data && data.length}</Text>
+                                            )
+                                        }}/>
                                 </Pie>
 
                                 <Tooltip
