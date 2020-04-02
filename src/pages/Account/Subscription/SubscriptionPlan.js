@@ -144,7 +144,7 @@ const SubscriptionPlan = ({
             <div className="automate">
                 <div className="ppc">
                     <div className="ppc-title-wrap">
-                        <img  src={ppcIcon} alt="icon" className='ppc-icon'/>
+                        <SVG id={'ppc-automate-subscription-logo'}/>
                         <h2 className="ppc-title">{product.productName}</h2>
                     </div>
                     <p className="ppc-text">

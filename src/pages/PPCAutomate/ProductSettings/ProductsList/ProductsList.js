@@ -12,6 +12,7 @@ import {productsActions} from "../../../../actions/products.actions";
 import {connect} from "react-redux";
 import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 import axios from "axios";
+import {SVG} from "../../../../utils/icons";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -306,6 +307,7 @@ class ProductsList extends Component {
                             <Input.Search
                                 onChange={this.onSearchChange}
                                 // onBlur={onSearchBlur}
+                                suffix={<SVG id={'search'}/>}
                             />
 
                             <div className='switch-block'>

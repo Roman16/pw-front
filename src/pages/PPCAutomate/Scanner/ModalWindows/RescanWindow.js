@@ -1,14 +1,14 @@
 import React, {Fragment} from "react";
-import warningImage from '../../../../assets/img/warning-image.svg';
+import {SVG} from "../../../../utils/icons";
 
 
 const RescanWindow = ({onClose, onConfirm}) => (
     <Fragment>
-        <img src={warningImage} alt=""/>
+        <SVG id={'scanner-warning'}/>
 
         <h2>Are you sure?</h2>
 
-        <span>The current scanning results will be lost</span>
+        <p>The current scanning results will be lost</p>
 
         <div className='actions'>
             <button className='btn white' onClick={onConfirm}>

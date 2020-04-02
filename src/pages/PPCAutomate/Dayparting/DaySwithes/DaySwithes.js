@@ -455,20 +455,20 @@ class DaySwitches extends Component {
                         <p>
                             This will result in pausing the day-parting feature for this particular campaign. Your
                             settings will be saved. <br/> Please note, that this campaign will be set to its initial
-                            state: <br/>
+                            state:
                             <b>{initialState}</b>
                         </p>
 
                         <div className="action">
                             {processing ? <Spin/> : <Fragment>
                                 <button
-                                    className='btn default'
+                                    className='btn white'
                                     onClick={this.deactivateDaypartingHandler}>
                                     Yes
                                 </button>
 
                                 <button
-                                    className='btn green-btn'
+                                    className='btn default'
                                     onClick={() => this.setState({visibleWindow: false})}>
                                     No
                                 </button>

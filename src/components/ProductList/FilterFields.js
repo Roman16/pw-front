@@ -38,12 +38,13 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                     placeholder={'Search by campaign name, ASIN or SKU'}
                     onChange={e => onSearch(e.target.value)}
                     data-intercom-target='search-field'
+                    suffix={<SVG id={'search'}/>}
                 />
 
                 <div className='filter-btn' onClick={() => switchWindow(!openedWindow)}
                      data-intercom-target='open-filters-button'
                 >
-                    <SVG id='products-filter-icon'/>
+                    <SVG id='product-filters'/>
                 </div>
 
                 <div className={`${openedWindow ? 'filters-list opened' : 'filters-list closed'}`}>
@@ -112,10 +113,11 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                     className="search-field"
                     placeholder={"Search by product name, ASIN or SKU"}
                     onChange={e => onSearch(e.target.value)}
+                    suffix={<SVG id={'search'}/>}
                 />
 
                 {pathname !== '/ppc/scanner' && <div className='filter-btn' onClick={() => switchWindow(!openedWindow)}>
-                    <SVG id='products-filter-icon'/>
+                    <SVG id='product-filters'/>
                 </div>}
 
                 {pathname !== '/ppc/scanner' &&

@@ -153,7 +153,7 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                         <div key={item.key}>
                             <Progress
                                 type="circle"
-                                format={percent => percent === 100 && <div className='completed'><SVG id='checked-white-icon'/></div>}
+                                format={percent => percent === 100 && <div className='completed'><SVG id='scanner-success'/></div>}
                                 percent={item.percent}
                                 width={devicePixelRatio === 2 ? 18 : 24}
                                 strokeWidth={10}
@@ -203,7 +203,7 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                     {moment(new Date()).format('DD MMM, HH:mm')}
                     <b>Problems Report</b>
                 </div>
-                <Icon type="download"/>
+                <SVG id={'download-blue'}/>
             </button>}
         </section>
     )

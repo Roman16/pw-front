@@ -1,20 +1,20 @@
 import React, {Fragment} from "react";
-import warningImage from '../../../../assets/img/warning-image.svg';
+import {SVG} from "../../../../utils/icons";
 
 const ErrorWindow = ({onClose}) => (
     <Fragment>
-        <img src={warningImage} alt=""/>
+        <SVG id={'scanner-warning'}/>
 
         <h2>Warning</h2>
 
-        <span>
+        <p>
             We can not find any ads data for the selected product :( <br/>
             Please, select another product or try again later.
-        </span>
+        </p>
 
         <div className='actions'>
             <button className='btn default' onClick={onClose}>
-                OK
+                Ok
             </button>
         </div>
     </Fragment>
