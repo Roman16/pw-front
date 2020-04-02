@@ -64,6 +64,8 @@ const ConfirmEmailPage = (props) => {
                 .then((res) => {
                     setConfirmStatus('success');
 
+                    localStorage.setItem('token', res.access_token);
+
                     setTimeout(() => {
                         history.push('/account-settings')
                     }, 2000)
