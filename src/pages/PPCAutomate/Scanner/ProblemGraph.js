@@ -91,30 +91,31 @@ const ProblemGraph = ({problemsCount = {}}) => {
                                     // onMouseLeave={() => setSector(null)}
                                 >
                                     {data.map((entry, index) => {
-                                        return(
+                                        return (
                                             <Cell
                                                 key={`cell-${index}`}
                                                 fill={COLORS[index % COLORS.length]}
-                                            />)})}
+                                            />)
+                                    })}
 
                                     <Label content={({viewBox: {cx, cy}}) => {
-                                            const positioningProps = {
-                                                    x: cx,
-                                                    y: cy,
-                                                    textAnchor: 'middle',
-                                                    verticalAnchor: 'middle',
-                                                },
-                                                stylingProps = {
-                                                    fontSize: '32px',
-                                                    fontFamily: 'ir',
-                                                    color: '#363694'
-                                                };
+                                        const positioningProps = {
+                                                x: cx,
+                                                y: cy,
+                                                textAnchor: 'middle',
+                                                verticalAnchor: 'middle',
+                                            },
+                                            stylingProps = {
+                                                fontSize: '32px',
+                                                fontFamily: 'ir',
+                                                color: '#363694'
+                                            };
 
-                                            return (
-                                                <Text {...positioningProps}
-                                                      style={stylingProps}>{data && data.length}</Text>
-                                            )
-                                        }}/>
+                                        return (
+                                            <Text {...positioningProps}
+                                                  style={stylingProps}>{data && data.length}</Text>
+                                        )
+                                    }}/>
                                 </Pie>
 
                                 <Tooltip
@@ -128,6 +129,10 @@ const ProblemGraph = ({problemsCount = {}}) => {
                             <div key={item.name}>
                                 <div className="color" style={{backgroundColor: COLORS[index]}}/>
                                 <div className='mistake'>{item.name}</div>
+
+                                <div className="value">
+                                    {item.value}
+                                </div>
 
                                 <div className="percent">
                                     {round((100 / Object.values(problemsCount).reduce((a, b) => a + b)) * item.value, 0) >= 0 ?

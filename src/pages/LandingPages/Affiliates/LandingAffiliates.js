@@ -8,7 +8,6 @@ import performersImg from '../../../assets/img/performers-icon.svg'
 import supportImg from '../../../assets/img/support-icon.svg'
 import greenLine from '../../../assets/img/green-line.svg';
 import contactUsImage from '../../../assets/img/landing-affiliate/undraw_contact_us.png';
-import checkedIcon from '../../../assets/img/icons/mark.svg';
 import registrImage from '../../../assets/img/landing-affiliate/register-step.png';
 import getLinkImage from '../../../assets/img/landing-affiliate/get-link-step.svg';
 import shareLinkImage from '../../../assets/img/landing-affiliate/share-link-step.png';

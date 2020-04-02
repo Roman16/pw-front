@@ -29,7 +29,6 @@ const ConfirmEmailPage = (props) => {
 
             intervalId = setInterval(() => {
                 setDisabledTimer((prevCount) => {
-                    console.log(prevCount);
                     return prevCount - 1
                 })
             }, 1000);
@@ -52,8 +51,6 @@ const ConfirmEmailPage = (props) => {
     useEffect(() => {
         console.log(props.match);
         if (props.match.params && props.match.params.token) {
-            notification.error({title: props.match.params.token});
-
             userService.confirmEmail({
                 token: props.match.params.token
             })
@@ -61,7 +58,7 @@ const ConfirmEmailPage = (props) => {
                     setConfirmStatus('success')
                 })
                 .catch(() => {
-                    setConfirmStatus('dont-confirm');
+                    setConfirmStatus('error');
                 })
         } else {
             setConfirmStatus('dont-confirm');
@@ -82,6 +79,9 @@ const ConfirmEmailPage = (props) => {
 
                     <div className="confirm-status">
                         {!confirmStatus && <Spin size={'large'}/>}
+                        {/*--------------------------------------*/}
+                        {/*--------------------------------------*/}
+                        {/*--------------------------------------*/}
 
                         {confirmStatus === 'dont-confirm' && <Fragment>
                             <h4>
@@ -104,8 +104,34 @@ const ConfirmEmailPage = (props) => {
                                 resend
                             </button>
                         </Fragment>}
+                        {/*--------------------------------------*/}
+                        {/*--------------------------------------*/}
+                        {/*--------------------------------------*/}
+
+                        {confirmStatus === 'error' &&
+                        <Fragment>
+                            <h3>
+                                Oops
+                            </h3>
+
+                            <p>
+                                Something went wrong with your account confirmation, and please click resend and check
+                                your email to confirm it.
+                            </p>
+
+                            <button
+                                className='btn default'
+                                onClick={onResend}
+                                disabled={disableResend}
+                            >
+                                resend
+                            </button>
+                        </Fragment>}
 
 
+                        {/*--------------------------------------*/}
+                        {/*--------------------------------------*/}
+                        {/*--------------------------------------*/}
                         {confirmStatus === 'success' &&
                         <h4>
                             Thank you for confirming email

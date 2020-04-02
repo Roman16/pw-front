@@ -2,6 +2,7 @@ import React from "react";
 import notDataImage from '../../../assets/img/not-data-image.svg';
 import {history} from "../../../utils/history";
 import {Pagination, Select} from "antd";
+import CustomSelect from "../../../components/Select/Select";
 
 const pageSizeOptions = ['50', '100', '200'];
 const Option = Select.Option;
@@ -55,11 +56,11 @@ const MistakeTerminal = ({mistakeList, totalSize, page, pageSize, onChangePagina
                 )}
 
                 {totalSize > 50 &&
-                <Select onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
+                <CustomSelect onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
                     {pageSizeOptions.map(size => (
                         <Option value={size} key={size}>{size}</Option>
                     ))}
-                </Select>
+                </CustomSelect>
                 }
             </div>
 

@@ -312,7 +312,7 @@
 
     p {
       text-align: center;
-      font-size: 1.5rem;
+      font-size: 1.4285714285714286rem;
       line-height: 32px;
       color: #656A84;
       font-weight: 500;
@@ -336,10 +336,11 @@
 
         & > div {
           display: flex;
-          margin: 0 0 10px 0;
+          padding: 10px 0;
+          border-bottom: 1px solid rgba(201, 203, 212, .5);
 
-          .mistake {
-            margin: 0 10px;
+          &:last-child {
+            border: 0;
           }
 
           .color {
@@ -347,6 +348,19 @@
             height: 12px;
             margin: 5px 10px 0 0;
             border-radius: 2px;
+          }
+
+          .mistake {
+            margin: 0 10px;
+          }
+
+          .value {
+            margin: 0 0 0 auto;
+          }
+
+          .percent {
+            width: 30px;
+            margin: 0 0 0 20px;
           }
         }
       }
@@ -448,16 +462,18 @@
         margin: 0 !important;
       }
 
-      .ant-select {
+      .custom-select {
         margin: 0 0 0 10px;
-        display: flex;
-        align-items: center;
 
-        .ant-select-selection--single {
-          width: 70px;
-          border: 0;
-          box-shadow: 0px 16px 16px rgba(44, 48, 58, 0.08), 0px 6px 40px rgba(44, 48, 58, 0.09), 0px 0px 16px rgba(44, 48, 58, 0.09);
+        .ant-select {
+          border-bottom: 1px solid #000;
+          padding: 0 0 3px;
+          display: flex;
+          align-items: center;
 
+          .ant-select-selection--single {
+            width: 55px;
+          }
         }
       }
     }
@@ -468,6 +484,12 @@
       grid-template-areas: "problemsListCard" "problemGraphBlock" "mistakeTerminal";
       grid-template-columns: 1fr;
       height: max-content;
+
+      .graph {
+        .legend {
+          height: max-content;
+        }
+      }
 
       .mistake-terminal {
         max-height: 95vh;

@@ -55,6 +55,10 @@ function logOut() {
     return dispatch => {
         history.push('/login');
         localStorage.removeItem('token');
+
+        dispatch(setInformation({
+            user: {}
+        }));
     };
 }
 
