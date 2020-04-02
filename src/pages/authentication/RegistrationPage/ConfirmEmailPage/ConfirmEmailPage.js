@@ -32,7 +32,7 @@ const ConfirmEmailPage = (props) => {
 
                 setTimeout(() => {
                     history.push('/account-settings')
-                }, 1000)
+                }, 2000)
             }
 
             intervalId = setInterval(() => {
@@ -68,7 +68,7 @@ const ConfirmEmailPage = (props) => {
 
                     setTimeout(() => {
                         history.push('/account-settings')
-                    }, 2000)
+                    }, 3000)
                 })
                 .catch(() => {
                     setConfirmStatus('error');
