@@ -113,9 +113,9 @@ const SubscriptionPlan = ({
         }
     }, [disableButton]);
 
-    useEffect(() => {
-        setCoupon('');
-    }, [product])
+    // useEffect(() => {
+    //     setCoupon('');
+    // }, [product])
 
     return (
         <div className="automate-box">
