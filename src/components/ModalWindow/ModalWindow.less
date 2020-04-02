@@ -224,20 +224,21 @@
 }
 
 .reports-changes-window {
-  max-width: 15vw;
+  max-width: 25rem;
   min-width: 280px;
-  width: max-content !important;
+  width: 25rem !important;
   text-align: center;
 
   .ant-modal-content {
     width: 100%;
     min-width: max-content;
+    padding: 2.5rem 3.2142857142857144rem 3.2142857142857144rem;
   }
 
   .ant-modal-body {
     width: 100%;
     min-width: max-content;
-    padding: 30px 30px;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -252,24 +253,26 @@
 
     b {
       width: max-content;
-      color: @success-color;
-      font-size: 5rem;
+      color: #7DD4A1;
+      font-size: 4.285714285714286rem;
     }
 
     span {
       font-size: 1.4285714285714286rem;
       font-weight: bold;
-      margin: -5px 0 0 0;
+      margin: -15px 0 0 0;
+      color: #7DD4A1;
     }
   }
 
   .ant-modal-footer {
     padding: 0;
+    margin: 3.2142857142857144rem 0 0 0;
 
     div {
       display: flex;
       justify-content: center;
-      margin: 0 0 20px 0;
+      margin: 0;
 
       button {
         margin: 0;
