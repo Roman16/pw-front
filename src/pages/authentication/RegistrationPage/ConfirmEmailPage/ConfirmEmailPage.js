@@ -68,7 +68,7 @@ const ConfirmEmailPage = (props) => {
 
                     setTimeout(() => {
                         history.push('/account-settings')
-                    }, 3000)
+                    }, 1)
                 })
                 .catch(() => {
                     setConfirmStatus('error');
@@ -145,19 +145,19 @@ const ConfirmEmailPage = (props) => {
                         {/*--------------------------------------*/}
                         {/*--------------------------------------*/}
                         {/*--------------------------------------*/}
-                        {confirmStatus === 'success' &&
-                        <Fragment>
-                            <h3>
-                                Thank you for confirming email
-                            </h3>
+                        {/*{confirmStatus === 'success' &&*/}
+                        {/*<Fragment>*/}
+                        {/*    <h3>*/}
+                        {/*        Thank you for confirming email*/}
+                        {/*    </h3>*/}
 
-                            <button
-                                className='btn default'
-                                onClick={() => history.push('/account-settings')}
-                            >
-                                sign in
-                            </button>
-                        </Fragment>}
+                        {/*    <button*/}
+                        {/*        className='btn default'*/}
+                        {/*        onClick={() => history.push('/account-settings')}*/}
+                        {/*    >*/}
+                        {/*        sign in*/}
+                        {/*    </button>*/}
+                        {/*</Fragment>}*/}
                     </div>
                 </div>
             </div>
