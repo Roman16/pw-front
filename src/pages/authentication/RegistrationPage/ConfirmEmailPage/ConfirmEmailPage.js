@@ -62,7 +62,7 @@ const ConfirmEmailPage = (props) => {
                 token: props.match.params.token
             })
                 .then((res) => {
-                    setConfirmStatus('success');
+                    // setConfirmStatus('success');
 
                     localStorage.setItem('token', res.access_token);
 
