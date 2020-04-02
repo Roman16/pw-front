@@ -155,7 +155,7 @@ const ConfirmEmailPage = (props) => {
                                 className='btn default'
                                 onClick={() => history.push('/account-settings')}
                             >
-                                Log in
+                                sign in
                             </button>
                         </Fragment>}
                     </div>
