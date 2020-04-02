@@ -25,7 +25,15 @@ const ConfirmEmailPage = (props) => {
         setDisableResend(true);
 
         try {
-            await userService.resendConfirmEmail();
+            const res = await userService.resendConfirmEmail();
+
+            if (res.status === 'already') {
+                notification.success({title: 'Email already confirmed'});
+
+                setTimeout(() => {
+                    history.push('/account-settings')
+                }, 1000)
+            }
 
             intervalId = setInterval(() => {
                 setDisabledTimer((prevCount) => {
@@ -49,13 +57,16 @@ const ConfirmEmailPage = (props) => {
     }, [disabledTimer]);
 
     useEffect(() => {
-        console.log(props.match);
         if (props.match.params && props.match.params.token) {
             userService.confirmEmail({
                 token: props.match.params.token
             })
-                .then(() => {
-                    setConfirmStatus('success')
+                .then((res) => {
+                    setConfirmStatus('success');
+
+                    setTimeout(() => {
+                        history.push('/account-settings')
+                    }, 2000)
                 })
                 .catch(() => {
                     setConfirmStatus('error');
@@ -133,9 +144,18 @@ const ConfirmEmailPage = (props) => {
                         {/*--------------------------------------*/}
                         {/*--------------------------------------*/}
                         {confirmStatus === 'success' &&
-                        <h4>
-                            Thank you for confirming email
-                        </h4>}
+                        <Fragment>
+                            <h3>
+                                Thank you for confirming email
+                            </h3>
+
+                            <button
+                                className='btn default'
+                                onClick={() => history.push('/account-settings')}
+                            >
+                                Log in
+                            </button>
+                        </Fragment>}
                     </div>
                 </div>
             </div>

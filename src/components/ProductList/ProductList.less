@@ -231,22 +231,33 @@
 
     &.active {
       .ant-input-search {
-        border-color: #C9CBD4;
         border-radius: 0;
 
-        .ant-input:focus {
-          box-shadow: none;
+        .ant-input {
+          border-radius: 0;
+          border-bottom: 1px solid #C9CBD4;
         }
       }
     }
 
     .ant-input-search {
-      border-bottom: 1px solid #ffffff;
       border-radius: 8px;
 
       .ant-input {
-        border: none;
         border-radius: 0.571428571em;
+      }
+
+      input {
+        transition: 0s !important;
+        border: 1px solid #fff;
+
+        &:focus {
+          transition: 0s !important;
+
+          -webkit-box-shadow: none;
+          box-shadow: none;
+          border: 1px solid rgba(24, 144, 255, 0.2);
+        }
       }
 
       .ant-input::placeholder {

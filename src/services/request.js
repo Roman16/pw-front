@@ -47,7 +47,11 @@ const api = (method, url, data, type, abortToken) => {
 
         })
             .then(result => {
-                if (result.status === 200 || result.status === 207) {
+                if(result.status === 208) {
+                    resolve({
+                        status: 'already'
+                    });
+                }else if (result.status === 200 || result.status === 207) {
                     resolve(result.data);
                 } else {
                     reject(null);

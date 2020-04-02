@@ -103,6 +103,16 @@
         height: 2.2857143em;
         border: 0;
         border-radius: 0.5714286em;
+
+        transition: 0s !important;
+
+        &:focus {
+          transition: 0s !important;
+
+          -webkit-box-shadow: none;
+          box-shadow: none;
+          border: 1px solid rgba(24, 144, 255, 0.2);
+        }
       }
 
       i {
