@@ -60,7 +60,10 @@ const Subscription = () => {
         if (coupon) {
             userService.applyCoupon(productId, planId, coupon)
                 .then((res) => {
-                    setSubscriptions({...res})
+                    setSubscriptions(Object.keys(res).map(productId => ({
+                        productId,
+                        ...res[productId]
+                    })))
                 })
         }
     }
@@ -68,7 +71,10 @@ const Subscription = () => {
     function getCouponStatus(coupon) {
         userService.getCouponStatus(coupon)
             .then((res) => {
-                setSubscriptions({...res})
+                setSubscriptions(Object.keys(res).map(productId => ({
+                    productId,
+                    ...res[productId]
+                })))
             })
     }
 
