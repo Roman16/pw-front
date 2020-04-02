@@ -55,6 +55,7 @@ function logOut() {
     return dispatch => {
         history.push('/login');
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
 
         dispatch(setInformation({
             user: {}
@@ -142,6 +143,8 @@ function getUserInfo() {
                 });
             }
 
+            localStorage.setItem('userId', res.user.id);
+
             dispatch(setInformation(res));
             window.Intercom("boot", {
                 app_id: "hkyfju3m",
@@ -187,6 +190,9 @@ function getAuthorizedUserInfo() {
 }
 
 function setInformation(user) {
+
+    localStorage.setItem('userId', user.user.id);
+
     return {
         type: userConstants.SET_INFORMATION,
         payload: user

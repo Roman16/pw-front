@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {notification} from '../../../../components/Notification';
 
 import {userActions} from '../../../../actions/user.actions';
+import Cookies from 'js-cookie';
 
 class RegistrationPage extends Component {
     state = {
@@ -70,6 +71,7 @@ class RegistrationPage extends Component {
                 last_name,
                 email,
                 password,
+                ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
             });
         }
     };

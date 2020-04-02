@@ -6,6 +6,7 @@ import {notification} from "../../../../components/Notification";
 import {userActions} from "../../../../actions/user.actions";
 import amazonImage from '../../../../assets/img/amazon.png';
 import {SVG} from "../../../../utils/icons";
+import Cookies from 'js-cookie';
 
 class LoginPageForm extends React.Component {
     state = {
@@ -66,6 +67,7 @@ class LoginPageForm extends React.Component {
             email,
             password,
             remember_me,
+            ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
         });
 
         this.setState({
