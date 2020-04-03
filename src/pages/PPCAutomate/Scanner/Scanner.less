@@ -362,6 +362,15 @@
         justify-content: center;
         align-items: center;
 
+        .recharts-responsive-container {
+          width: 100%;
+          height: 100%;
+        }
+
+        .recharts-wrapper {
+          margin: 0 auto;
+        }
+
         svg {
           width: 100%;
           height: 100%;
@@ -531,7 +540,10 @@
       .graph {
         .graph-block {
           max-height: 240px;
+          min-height: auto;
+          height: auto;
         }
+
         .legend {
           height: max-content;
         }
