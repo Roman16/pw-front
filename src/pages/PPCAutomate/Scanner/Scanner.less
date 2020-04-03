@@ -1,11 +1,12 @@
 .scanner-page {
-  height: 100%;
+  height: 100vh;
   overflow: auto;
 
   display: grid;
   grid-template-areas: "problemsListCard mistakeTerminal" "problemGraphBlock mistakeTerminal";
   grid-template-columns: minmax(250px, 32.142857142857146rem) minmax(350px, 1fr);
   grid-gap: 1.4285714285714286rem;
+  grid-template-rows: 60% 39%;
 
   .col {
     flex: 1;
@@ -36,7 +37,7 @@
       font-size: 1.4285714285714286rem;
       color: #363694;
       font-weight: 600;
-      margin-bottom: 0;
+      margin: 0 5px 0 0;
     }
   }
 
@@ -325,19 +326,19 @@
   }
 
   .problem-graph-block {
-    flex: 1;
+    height: 100%;
     display: flex;
     flex-direction: column;
     grid-area: problemGraphBlock;
 
     .graph {
+      flex: 1;
       display: flex;
       flex-direction: column;
+      overflow: auto;
 
       .legend {
-        height: 10vh;
         margin: 20px 0 0 0;
-        overflow: auto;
 
         & > div {
           display: flex;
@@ -397,6 +398,7 @@
         margin: 0 20px 0 0;
         width: 100px;
         position: relative;
+        font-size: 1rem;
 
       }
 
@@ -489,6 +491,7 @@
       grid-template-areas: "problemsListCard" "problemGraphBlock" "mistakeTerminal";
       grid-template-columns: 1fr;
       height: max-content;
+      grid-template-rows: auto;
 
       .graph {
         .legend {

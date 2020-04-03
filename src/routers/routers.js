@@ -34,6 +34,7 @@ const DemoCall = React.lazy(() => import('../pages/LandingPages/DemoCall/DemoCal
 const ContactUs = React.lazy(() => import('../pages/LandingPages/ContactUs/ContactUs'));
 const PrivacyPolicy = React.lazy(() => import('../pages/LandingPages/PrivacyPolicy/PrivacyPolicy'));
 const TermsOfUse = React.lazy(() => import('../pages/LandingPages/TermsOfUse/TermsOfUse'));
+const Video = React.lazy(() => import('../pages/LandingPages/Video/Video'));
 const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFound'));
 
 const AuthorizedUser = React.lazy(() => import('../pages'));
@@ -94,6 +95,7 @@ const routers = () => {
                     <Route exact path="/contact-us" component={ContactUs}/>
                     <Route exact path="/policy" component={PrivacyPolicy}/>
                     <Route exact path="/terms-and-conditions" component={TermsOfUse}/>
+                    <Route exact path="/video" component={Video}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login" component={LoginPage}/>
                     <Route exact path="/registration" component={RegistrationPage}/>

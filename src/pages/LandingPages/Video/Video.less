@@ -1,0 +1,241 @@
+.landing-video {
+  section {
+    .container {
+      width: 100%;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+  }
+
+  .welcome {
+    height: calc(100vh - 96px);
+    background: url(../../../assets/img/landing-video/bg.png) center no-repeat;
+    display: flex;
+    align-items: center;
+
+    .container {
+      width: max-content;
+      position: relative;
+
+      img {
+        height: 63vh;
+      }
+
+      h1 {
+        width: max-content;
+        font-family: e2sb;
+        font-size: 100px;
+        line-height: 90px;
+        //font-size: 10vh;
+        //line-height: 9vh;
+        letter-spacing: 0.477886px;
+        color: #FFFFFF;
+
+        position: absolute;
+
+        left: 65%;
+        top: 5%;
+      }
+    }
+
+    @media (max-width: 1250px) {
+      & {
+        .container {
+          width: 100%;
+
+          h1 {
+            right: 5%;
+            left: auto;
+          }
+        }
+
+      }
+    }
+
+    @media (max-width: 900px) {
+      & {
+        height: max-content;
+
+        .container {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          img {
+            width: 60%;
+            height: auto;
+            margin: 50px 0;
+          }
+
+          h1 {
+            position: initial;
+            margin: 10px 0 40px 0;
+            font-size: 80px;
+            line-height: 75px;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 600px) {
+      & {
+        .container {
+          img {
+            width: 80%;
+            height: auto;
+            margin: 50px 0;
+          }
+
+          h1 {
+            font-size: 60px;
+            line-height: 55px;
+          }
+        }
+      }
+    }
+  }
+
+  .video-list {
+    margin: 200px 0 0 0;
+
+    .video-item {
+      margin: 0 0 145px 0;
+
+      h2 {
+        font-family: e2sb;
+        font-size: 40px;
+        letter-spacing: 0.4px;
+        color: #17175A;
+        margin-bottom: 40px;
+      }
+
+      p {
+        font-family: e2r;
+        font-size: 25px;
+        line-height: 30px;
+        letter-spacing: 0.4px;
+        color: #17175A;
+        margin-bottom: 40px;
+      }
+
+      iframe {
+        width: 100%;
+        max-width: 724px;
+        height: 407px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      & {
+        margin: 100px 0 0 0;
+
+        .video-item {
+          margin: 0 0 80px 0;
+        }
+      }
+    }
+
+    @media (max-width: 600px) {
+      & {
+        margin: 80px 0 0 0;
+
+        .video-item {
+          margin: 0 0 50px 0;
+
+          iframe {
+            height: 30vh;
+          }
+        }
+      }
+    }
+  }
+
+  .support {
+    min-height: 392px;
+    background: url(../../../assets/img/landing-video/bg2.png);
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .form {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px 0 0 0;
+
+
+        h3 {
+          font-family: e2sb;
+          font-size: 35px;
+          line-height: 55px;
+          text-align: center;
+          letter-spacing: 0.4px;
+          color: #FFFFFF;
+          margin-bottom: 20px;
+        }
+
+        p {
+          font-family: e2r;
+          font-size: 14px;
+          line-height: 18px;
+          text-align: center;
+          letter-spacing: 0.4px;
+          color: #FFFFFF;
+          margin-bottom: 50px;
+        }
+
+        button {
+          width: 200px;
+          height: 40px;
+          font-size: 12px;
+          text-transform: uppercase;
+        }
+      }
+    }
+
+    @media (max-width: 800px) {
+      & {
+        background: #6D6DF6;
+        min-height: max-content;
+        height: max-content;
+        padding: 40px 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      & {
+        .container {
+          .form {
+            h3 {
+              margin: 0 0 20px 0;
+            }
+
+            p {
+              margin: 0 0 20px 0;
+            }
+          }
+        }
+      }
+    }
+
+    @media (max-width: 450px) {
+      & {
+        .container {
+          img {
+            display: none;
+          }
+
+          .form {
+            position: initial;
+          }
+        }
+      }
+    }
+  }
+}
