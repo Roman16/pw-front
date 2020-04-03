@@ -14,18 +14,19 @@ const MistakeTerminal = ({mistakeList, totalSize, page, pageSize, onChangePagina
             <div className="header-block">
                 <h3>Mistakes Terminal</h3>
 
-                {mistakeList.length > 0 &&
-                <button className='btn default' onClick={() => {history.push('/ppc/optimization')}}>
-                    Fix It
-                </button>}
+                <div className="actions">
+                    {mistakeList.length > 0 &&
+                    <button className='btn default' onClick={() => {history.push('/ppc/optimization')}}>
+                        Fix It
+                    </button>}
 
-                {mistakeList.length > 0 && <div className="total-count">
-                    Total Mistakes
-                    <div>
-                        {totalSize}
-                    </div>
+                    {mistakeList.length > 0 && <div className="total-count">
+                        Total Mistakes
+                        <div>
+                            {totalSize}
+                        </div>
+                    </div>}
                 </div>
-                }
             </div>
 
             {mistakeList.length > 0 ?
