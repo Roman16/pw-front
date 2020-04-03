@@ -155,7 +155,6 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                                 type="circle"
                                 format={percent => percent === 100 && <div className='completed'><SVG id='scanner-success'/></div>}
                                 percent={item.percent}
-                                width={devicePixelRatio === 2 ? 18 : 24}
                                 strokeWidth={10}
                                 strokeColor={'#8FD39D'}
                             />
