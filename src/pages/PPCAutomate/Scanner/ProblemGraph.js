@@ -72,8 +72,8 @@ const ProblemGraph = ({problemsCount = {}}) => {
             {problemsCount.DuplicateKeywords >= 0 ?
                 <div className='graph'>
                     <div className='graph-block'>
-                        <ResponsiveContainer height={240} width={240}>
-                            <PieChart width={240} height={240}>
+                        <ResponsiveContainer height={'100%'} width={240}>
+                            <PieChart width={240} height={'100%'}>
                                 <Pie
                                     data={data}
                                     labelLine={false}

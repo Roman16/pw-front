@@ -20,6 +20,7 @@ const pausedKeywordNoSales = 'paused-keyword-no-sales';
 const pausedKeywordDuplicate = 'paused-keyword-duplicate';
 const pausedKeywordDuplicateOfPAT = 'paused-keyword-duplicate-of-pat';
 const pausedKeywordDuplicateFromCustomerSearchTerm = 'paused-keyword-duplicate-from-customer-search-term';
+const revertLastChangeKeywordNoSales = 'revert-last-change-keyword-no-sales';
 
 export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
 
@@ -575,6 +576,43 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     ...infoField
                 }
             ],
+            [revertLastChangeKeywordNoSales]: [
+                ...defaultKeys,
+                {
+                    ...averageCVRField(onChangeFilter, filteredColumns)
+                },
+                {
+                    title: 'Clicks',
+                    dataIndex: 'd_keywordClicks',
+                    key: 'd_keywordClicks',
+                    width: '8.5em',
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
+                    />
+                },
+                {
+                    title: 'Spend',
+                    dataIndex: 'd_keywordSpend',
+                    key: 'd_keywordSpend',
+                    width: '8em',
+                    render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
+                    />
+                },
+                {
+                    ...bidActionField
+                },
+                {
+                    ...infoField
+                }
+            ],
         },
         subTabs: [
             {title: <>Changed Keyword Bid (<span className='underline'>ACoS</span>)</>, key: changedKeywordBidAcos},
@@ -584,6 +622,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
             {title: <>Paused Keyword Duplicate</>, key: pausedKeywordDuplicate},
             {title: <>Paused Keyword Duplicate of PAT</>, key: pausedKeywordDuplicateOfPAT},
             {title: <>Paused Keyword Duplicate From CST</>, key: pausedKeywordDuplicateFromCustomerSearchTerm},
+            {title: <>RevertLastChangeKeyword (<span className='underline'>No Sales</span>)</>, key: revertLastChangeKeywordNoSales},
         ]
     });
 };

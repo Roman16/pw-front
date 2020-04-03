@@ -17,6 +17,7 @@ const changedPATBidImpressions = 'changed-pat-bid-impressions';
 const pausedManualPATHighACoS = 'paused-pat-high-acos';
 const pausedManualPatNoSales = 'paused-pat-no-sales';
 const pausedPATDuplicate = 'paused-pat-duplicate';
+const revertLastChangePATNoSales = 'revert-last-change-pat-no-sales';
 
 export const patsOptimization = ({
                                      onChangeFilter,
@@ -438,6 +439,43 @@ export const patsOptimization = ({
                     ...infoField
                 }
             ],
+            [revertLastChangePATNoSales]: [
+                ...defaultKeys,
+                {
+                    ...averageCVRField(onChangeFilter, filteredColumns)
+                },
+                {
+                    title: 'Clicks',
+                    dataIndex: 'd_patClicks',
+                    key: 'd_patClicks',
+                    width: '8.5em',
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
+                    />
+                },
+                {
+                    title: 'Spend',
+                    dataIndex: 'd_patSpend',
+                    key: 'd_patSpend',
+                    width: '8em',
+                    render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
+                    />
+                },
+                {
+                    ...bidActionField
+                },
+                {
+                    ...infoField
+                }
+            ],
         },
         subTabs: [
             {title: <>Changed PAT Bid (<span className='underline'>ACoS</span>)</>, key: changedPATBidACoS},
@@ -448,6 +486,7 @@ export const patsOptimization = ({
             {title: <>PAUSED PAT (<span className='underline'>HIGH ACOS</span>)</>, key: pausedManualPATHighACoS},
             {title: <>PAUSED PAT (<span className='underline'>NO SALES</span>)</>, key: pausedManualPatNoSales},
             {title: <>Paused PAT Duplicate</>, key: pausedPATDuplicate},
+            {title: <>revertLastChangePAT (<span className='underline'>NO SALES</span>)</>, key: revertLastChangePATNoSales},
         ]
     });
 };
