@@ -52,6 +52,7 @@ const MistakeTerminal = ({mistakeList, totalSize, page, pageSize, onChangePagina
                         pageSize={50}
                         current={page}
                         total={+totalSize}
+                        responsive={true}
                         onChange={(page) => onChangePagination({page})}
                     />
                 )}

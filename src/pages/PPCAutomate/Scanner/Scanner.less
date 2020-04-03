@@ -6,7 +6,7 @@
   grid-template-areas: "problemsListCard mistakeTerminal" "problemGraphBlock mistakeTerminal";
   grid-template-columns: minmax(250px, 32.142857142857146rem) minmax(350px, 1fr);
   grid-gap: 1.4285714285714286rem;
-  grid-template-rows: minmax(max-content, 60%) minmax(300px, 39%);
+  grid-template-rows: minmax(460px, 60%) minmax(300px, 39%);
 
   .col {
     flex: 1;
@@ -166,7 +166,6 @@
             border: 1px solid #DDE3E7;
             box-sizing: border-box;
             border-radius: 8px;
-
             font-size: 0.8571428571428571rem;
             color: #343C5A;
           }
@@ -345,7 +344,6 @@
       }
 
 
-
       .legend {
         margin: 30px 0 0 0;
 
@@ -396,11 +394,11 @@
 
       h3 {
         margin: 0 auto 0 0;
+        padding: 0 10px 0 0;
       }
 
       .actions {
         display: flex;
-        margin: 0 0 0 10px;
 
         .btn {
           margin: 0 20px 0 0;
@@ -481,17 +479,17 @@
       }
 
       .custom-select {
+        width: 55px;
+        height: max-content;
         margin: 0 0 0 10px;
+        border-bottom: 1px solid #000;
+        padding: 0 0 3px;
+        display: flex;
+        align-items: center;
 
-        .ant-select {
-          border-bottom: 1px solid #000;
-          padding: 0 0 3px;
-          display: flex;
-          align-items: center;
-
-          .ant-select-selection--single {
-            width: 55px;
-          }
+        .ant-select-selection--single {
+          width: 55px;
+          border: 0;
         }
       }
     }
@@ -554,7 +552,7 @@
 
     p {
       font-size: 1rem;
-      line-height:  1.2857142857142858rem;
+      line-height: 1.2857142857142858rem;
       text-align: center;
       letter-spacing: -0.4375px;
       color: #343C5A;
