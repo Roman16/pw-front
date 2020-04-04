@@ -220,14 +220,30 @@ img {
     opacity: 0.8;
     background: none;
     border-radius: 4px;
-    margin: 0 5px 0 0;
+    margin: 0;
 
     &:last-child {
       margin: 0;
     }
 
+    a {
+      color: #363694;
+
+      i {
+        color: #363694 !important;
+      }
+    }
+
     &:hover {
-      background: rgba(109, 109, 246, 0.3);
+      //background: rgba(109, 109, 246, 0.3);
+      a {
+        color: #5252ff;
+        background: none !important;
+
+        i {
+          color: #5252ff !important;
+        }
+      }
     }
 
     &[title] > a {
@@ -235,7 +251,6 @@ img {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #363694;
       font-weight: bold;
       padding: 0;
       height: 100%;

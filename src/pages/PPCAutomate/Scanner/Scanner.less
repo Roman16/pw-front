@@ -369,11 +369,18 @@
 
         .recharts-wrapper {
           margin: 0 auto;
+          display: flex;
+          align-items: center;
         }
 
         svg {
           width: 100%;
           height: 100%;
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+            overflow: initial;
+            height: 85%;
+          }
         }
       }
 
@@ -509,6 +516,14 @@
       justify-content: flex-end;
       margin: 10px 70px 0 0;
 
+      .desk {
+        display: block;
+      }
+
+      .mob {
+        display: none;
+      }
+
       .ant-pagination {
         margin: 0 !important;
       }
@@ -525,6 +540,16 @@
         .ant-select-selection--single {
           width: 55px;
           border: 0;
+        }
+      }
+
+      @media (max-width: 1500px) {
+        .desk {
+          display: none;
+        }
+
+        .mob {
+          display: block;
         }
       }
     }

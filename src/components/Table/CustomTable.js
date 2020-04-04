@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Pagination, Spin, Select, Icon} from 'antd';
 import shortid from 'shortid';
 
@@ -101,14 +101,30 @@ const CustomTable = ({
 
             <div className='table-pagination'>
                 {(totalSize > +pageSize) && (
-                    <Pagination
-                        defaultCurrent={1}
-                        pageSize={+pageSize || 10}
-                        current={currentPage}
-                        total={+totalSize}
-                        responsive={true}
-                        onChange={(page) => onChangePagination({page})}
-                    />
+                    <Fragment>
+                        <div className='desk'>
+                            <Pagination
+                                defaultCurrent={1}
+                                pageSize={+pageSize || 10}
+                                current={currentPage}
+                                total={+totalSize}
+                                responsive={true}
+                                onChange={(page) => onChangePagination({page})}
+                            />
+                        </div>
+
+                        <div className='mob'>
+                            <Pagination
+                                defaultCurrent={1}
+                                pageSize={+pageSize || 10}
+                                current={currentPage}
+                                total={+totalSize}
+                                responsive={true}
+                                showLessItems={true}
+                                onChange={(page) => onChangePagination({page})}
+                            />
+                        </div>
+                    </Fragment>
                 )}
 
                 {(showSizeChanger && (totalSize > 10)) &&

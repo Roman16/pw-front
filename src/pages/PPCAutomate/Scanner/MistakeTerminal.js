@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import notDataImage from '../../../assets/img/not-data-image.svg';
 import {history} from "../../../utils/history";
 import {Pagination, Select} from "antd";
@@ -16,7 +16,9 @@ const MistakeTerminal = ({mistakeList, totalSize, page, pageSize, onChangePagina
 
                 <div className="actions">
                     {mistakeList.length > 0 &&
-                    <button className='btn default' onClick={() => {history.push('/ppc/optimization')}}>
+                    <button className='btn default' onClick={() => {
+                        history.push('/ppc/optimization')
+                    }}>
                         Fix It
                     </button>}
 
@@ -47,15 +49,31 @@ const MistakeTerminal = ({mistakeList, totalSize, page, pageSize, onChangePagina
 
             <div className='pagination'>
                 {totalSize > 50 && (
-                    <Pagination
-                        defaultCurrent={1}
-                        pageSize={pageSize}
-                        showLessItems={true}
-                        current={page}
-                        total={+totalSize}
-                        responsive={true}
-                        onChange={(page) => onChangePagination({page})}
-                    />
+                    <Fragment>
+                        <div className="desk">
+                            <Pagination
+                                defaultCurrent={1}
+                                pageSize={pageSize}
+                                showLessItems={false}
+                                current={page}
+                                total={+totalSize}
+                                responsive={true}
+                                onChange={(page) => onChangePagination({page})}
+                            />
+                        </div>
+
+                        <div className="mob">
+                            <Pagination
+                                defaultCurrent={1}
+                                pageSize={pageSize}
+                                showLessItems={true}
+                                current={page}
+                                total={+totalSize}
+                                responsive={true}
+                                onChange={(page) => onChangePagination({page})}
+                            />
+                        </div>
+                    </Fragment>
                 )}
 
                 {totalSize > 50 &&

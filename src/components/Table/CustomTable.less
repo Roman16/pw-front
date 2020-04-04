@@ -206,6 +206,14 @@
     justify-content: flex-end;
     align-items: center;
 
+    .desk {
+      display: block;
+    }
+
+    .mob {
+      display: none;
+    }
+
     .ant-select {
       margin: 1.4285714em 2em 1.4285714em 0;
       border-bottom: 1px solid #000000;
@@ -215,6 +223,16 @@
         width: 70px;
         border: 0;
         border-radius: 0 !important;
+      }
+    }
+
+    @media (max-width: 1400px) {
+      .desk {
+        display: none;
+      }
+
+      .mob {
+        display: block;
       }
     }
   }
