@@ -21,10 +21,10 @@ import {mainChangesCount, mainHasNewReport, subChangesCount} from "./Tables/chan
 import CustomTable from "../../../../components/Table/CustomTable";
 import TableButton from "./TableButton/TableButton";
 import tz from 'moment-timezone';
+
 import {Select} from "antd";
 import CustomSelect from "../../../../components/Select/Select";
 import {SVG} from "../../../../utils/icons";
-
 const Option = Select.Option;
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -135,10 +135,14 @@ class ReportTable extends Component {
     };
 
     timeRange = (startDate, endDate) => {
+        console.log(moment(startDate, 'DD-MM-YY').format());
+        console.log(moment(new Date(startDate)).tz('America/Los_Angeles').format("YYYY-MM-DD"));
+
         this.setState(
             {
                 startDate: startDate
                     ? moment(startDate, "DD-MM-YYYY").format("YYYY-MM-DD")
+                    // ? moment(startDate, "DD-MM-YYYY").tz('America/Los_Angeles').format("YYYY-MM-DD")
                     : null,
                 endDate: endDate
                     ? moment(endDate, "DD-MM-YYYY").format("YYYY-MM-DD")
@@ -356,7 +360,8 @@ class ReportTable extends Component {
                             <span>{todayChanges}</span>
                         </div>
 
-                        <DatePicker timeRange={this.timeRange}/>
+                        <DatePicker
+                            timeRange={this.timeRange}/>
 
                         <button className="btn default download-btn" onClick={this.downloadFile}>
                             <span> Download </span>

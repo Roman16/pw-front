@@ -10,12 +10,14 @@ export const allReports = () => {
         'paused-keyword-duplicate': 'Paused Keyword Duplicate',
         'paused-keyword-duplicate-of-pat': 'Paused Keyword Duplicate of PAT',
         'paused-keyword-duplicate-from-customer-search-term': 'Paused Keyword Duplicate From CST',
+        'revert-last-change-keyword-no-sales': 'revert-last-change-keyword-no-sales',
 
         'changed-pat-bid-acos': 'Changed PAT Bid (ACoS)',
         'changed-pat-bid-impressions': 'Changed PAT Bid (Impressions)',
         'paused-pat-high-acos': 'Paused PAT (High ACoS)',
         'paused-pat-no-sales': 'Paused PAT (No Sales)',
         'paused-pat-duplicate': 'Paused PAT Duplicate',
+        'revert-last-change-pat-no-sales': 'revert-last-change-pat-no-sales',
 
         'created-campaign': 'Created Campaign',
         'created-ad-group': 'Created Ad Group',

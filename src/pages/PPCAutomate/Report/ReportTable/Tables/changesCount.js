@@ -7,14 +7,16 @@ const mainTypeList = {
         'paused-keyword-no-sales',
         'paused-keyword-duplicate',
         'paused-keyword-duplicate-of-pat',
-        'paused-keyword-duplicate-from-customer-search-term'
+        'paused-keyword-duplicate-from-customer-search-term',
+        'revert-last-change-keyword-no-sales'
     ],
     "pats-optimization": [
         'changed-pat-bid-acos',
         'changed-pat-bid-impressions',
         'paused-pat-high-acos',
         'paused-pat-no-sales',
-        'paused-pat-duplicate'
+        'paused-pat-duplicate',
+        'revert-last-change-pat-no-sales'
     ],
     "new-keywords": [
         'created-campaign',
