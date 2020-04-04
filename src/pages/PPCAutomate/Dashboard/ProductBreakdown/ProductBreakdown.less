@@ -59,7 +59,11 @@
   .products-table {
     height: calc(100% - 38px);
 
-    & > div {
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      height: calc(100% - 35px);
+    }
+
+      & > div {
       height: 100%;
 
       .Table,
