@@ -6,6 +6,7 @@ import johnImage from '../../../assets/img/landing-video/john.svg';
 import aircraftImage from '../../../assets/img/landing-video/aircraft.svg';
 
 import './Video.less';
+import {history} from "../../../utils/history";
 
 const Video = () => {
     return (
@@ -75,9 +76,8 @@ const Video = () => {
                     <div className="form">
                         <h3>Still have any questions?</h3>
                         <p>Our support team is here to help you.</p>
-                        <button className='btn green-btn'>chat with us</button>
+                        <button className='btn green-btn' onClick={() => history.push('/contact-us')}>chat with us</button>
                     </div>
-
                 </div>
             </section>
 

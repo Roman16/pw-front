@@ -49,7 +49,7 @@ const UserCard = ({card: {last4, brand, exp_month, exp_year}, card, onUpdateCard
                 {card.default && <div className='default-card-block'>
                     Default Card
                     <div>
-                        <SVG id='selected-icon'/>
+                        <SVG id='default-card-icon'/>
                     </div>
                 </div>}
             </div>

@@ -37,6 +37,7 @@
         font-size: 1.0714285714285714rem; // 15px
         color: @third-default-dark;
         margin: 0;
+        padding: 0 10px;
 
         .reactivate-data {
           font-weight: 600;
@@ -70,6 +71,7 @@
       .ppc {
         min-width: 150px;
         height: 100%;
+        width: 20%;
         display: flex;
         flex-flow: column;
         justify-content: space-between;
@@ -432,11 +434,12 @@
         margin: auto 0 auto auto;
 
         .on-subscribe {
-          margin: auto 0 0 0;
+          margin: auto 0 0 auto;
         }
 
         .btn {
           width: 100%;
+          max-width: 14.85714286rem;
           height: 40px;
           font-size: 1.1428571428571428rem;
 
@@ -462,7 +465,6 @@
         .automate {
           .plan {
             margin-right: 0;
-            margin-left: 40px;
           }
         }
       }
@@ -477,6 +479,10 @@
         .automate {
           display: grid;
           grid-template-areas: "ppcDescription cancelBlock" "plan plan";
+
+          .ppc {
+            width: 100%;
+          }
 
           .plan {
             width: 100%;
