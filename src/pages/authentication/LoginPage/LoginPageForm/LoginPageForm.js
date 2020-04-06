@@ -140,7 +140,7 @@ class LoginPageForm extends React.Component {
 
                     <Link
                         className="login-form-forgot forget"
-                        to="/password/reset"
+                        to="/reset-password"
                     >
                         Forgot password?
                     </Link>

@@ -17,6 +17,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";
 import emojiImage from "../../../assets/img/landing-automation/emoji.png";
 import supportImage from "../../../assets/img/landing-automation/Vitalik-help.png";
+import {numberMask} from "../../../utils/numberMask";
 
 
 const commentsList = [

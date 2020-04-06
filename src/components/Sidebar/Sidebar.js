@@ -221,9 +221,9 @@ const Sidebar = () => {
 
                 <nav className="bottom-nav">
                     <ul className="bottom-nav-list">
-                        <li className="bottom-nav-item">
+                        <li className={`bottom-nav-item ${bootstrapInProgress && 'disabled-link'} `}>
                             <a
-                                href="/ppc/optimization?product_tour_id=108046"
+                                href={bootstrapInProgress ? '#' : "/ppc/optimization?product_tour_id=108046"}
                             >
                                 <div className="link-icon">
                                     <SVG id='how-it-works'/>
