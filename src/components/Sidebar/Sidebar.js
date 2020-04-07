@@ -11,6 +11,7 @@ import "./Sidebar.less";
 import {history} from "../../utils/history";
 import {SVG} from "../../utils/icons";
 import '../../style/variables.less';
+import InformationTooltip from "../Tooltip/Tooltip";
 
 const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
@@ -244,7 +245,10 @@ const Sidebar = () => {
                                     <SVG id='account'/>
                                 </div>
 
-                                <span className="bottom-span">Account</span>
+                                <span className="bottom-span">
+                                    Account
+                                    {/*<InformationTooltip type={'warning'} description={'test test test test test test test test  test test test test test test test test test '}/>*/}
+                                </span>
                             </NavLink>
                         </li>
 

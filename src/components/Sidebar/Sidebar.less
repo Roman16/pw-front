@@ -176,10 +176,12 @@
           .top-nav-link-active {
             color: @white;
 
-            use {
-              fill: #fff;
-              stroke: #fff;
-              transition: 0.3s;
+            .link-icon {
+              use {
+                fill: #fff;
+                stroke: #fff;
+                transition: 0.3s;
+              }
             }
           }
 
@@ -220,10 +222,12 @@
               .automate-link-active {
                 color: @white;
 
-                use {
-                  fill: #fff;
-                  stroke: #fff;
-                  transition: 0.3s;
+                .link-icon {
+                  use {
+                    fill: #fff;
+                    stroke: #fff;
+                    transition: 0.3s;
+                  }
                 }
               }
             }
@@ -237,10 +241,12 @@
         .top-nav-item > div:hover > .top-nav-link {
           color: @white;
 
-          use {
-            fill: #fff;
-            stroke: #fff;
-            transition: 0.3s;
+          .link-icon {
+            use {
+              fill: #fff;
+              stroke: #fff;
+              transition: 0.3s;
+            }
           }
         }
 
@@ -299,10 +305,12 @@
                 .automate-link-active {
                   color: @white;
 
-                  use {
-                    fill: #fff;
-                    stroke: #fff;
-                    transition: 0.3s;
+                  .link-icon {
+                    use {
+                      fill: #fff;
+                      stroke: #fff;
+                      transition: 0.3s;
+                    }
                   }
                 }
               }
@@ -436,10 +444,12 @@
           .automate-link-active {
             color: @white;
 
-            use {
-              fill: #fff;
-              stroke: #fff;
-              transition: 0.3s;
+            .link-icon {
+              use {
+                fill: #fff;
+                stroke: #fff;
+                transition: 0.3s;
+              }
             }
           }
         }
@@ -448,10 +458,12 @@
         .bottom-nav-item:hover > a {
           color: @white;
 
-          use {
-            fill: #fff;
-            stroke: #fff;
-            transition: 0.3s;
+          .link-icon {
+            use {
+              fill: #fff;
+              stroke: #fff;
+              transition: 0.3s;
+            }
           }
         }
       }
@@ -507,6 +519,9 @@
           .bottom-nav-item {
             button > .bottom-span,
             a > .bottom-span {
+              display: flex;
+              align-items: center;
+
               .visibleAnimation();
             }
           }
