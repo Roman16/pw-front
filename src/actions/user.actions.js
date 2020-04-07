@@ -100,7 +100,7 @@ function setMWS(data) {
             if (!data.account_links[0].amazon_ppc.is_connected) {
                 history.push('/ppc');
             } else {
-                history.push((data.notifications.account_bootstrap && (data.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization/loading' : '/ppc/optimization');
+                history.push((data.notifications.account_bootstrap && (data.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization-loading' : '/ppc/optimization');
             }
         }
     };
@@ -158,7 +158,7 @@ function getUserInfo() {
             } else if (!res.account_links[0].amazon_ppc.is_connected) {
                 history.push('/ppc');
             } else {
-                history.push((res.notifications.account_bootstrap && (res.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization/loading' : '/ppc/optimization');
+                history.push((res.notifications.account_bootstrap && (res.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization-loading' : '/ppc/optimization');
             }
         });
     };

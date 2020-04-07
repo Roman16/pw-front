@@ -153,7 +153,7 @@ const Sidebar = () => {
                                             to={item.soon && (production && user.user.id !== 714) ?
                                                 '/'
                                                 :
-                                                item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc/${item.link}`}
+                                                item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization-loading' : `/ppc/${item.link}`}
                                             onClick={e => {
                                                 if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
                                             }}
