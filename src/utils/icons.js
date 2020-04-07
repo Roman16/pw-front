@@ -345,7 +345,7 @@ const files = {
             width: 16,
             height: 19,
             viewBox: [0, 0, 16, 19],
-            data: '<path xmlns="http://www.w3.org/2000/svg" stroke="white" fill="noneppc-automate-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 11C1 14.866 4.13401 18 8 18C11.866 18 15 14.866 15 11C15 7.13401 11.866 4 8 4H5M5 4L8 1M5 4L8 7"/>'
+            data: '<path xmlns="http://www.w3.org/2000/svg" stroke="white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 11C1 14.866 4.13401 18 8 18C11.866 18 15 14.866 15 11C15 7.13401 11.866 4 8 4H5M5 4L8 1M5 4L8 7"/>'
         },
         'remove': {
             width: 24,

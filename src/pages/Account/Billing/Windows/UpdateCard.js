@@ -137,7 +137,6 @@ const StripeForm = (props) => {
                         <label>Zip</label>
                         <Input
                             className="form-control"
-                            type="number"
                             name="postal_code"
                             placeholder="Zip"
                             value={paymentDetails.postal_code}

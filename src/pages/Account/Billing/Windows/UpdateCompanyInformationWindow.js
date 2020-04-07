@@ -107,7 +107,6 @@ const UpdateCompanyInformationWindow = ({onClose, company, onSubmit}) => {
                         <label>Zip</label>
                         <Input
                             className="form-control"
-                            type="number"
                             name="zip"
                             value={companyInformation.zip}
                             // placeholder="Type first name"
