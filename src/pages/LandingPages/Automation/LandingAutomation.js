@@ -311,6 +311,11 @@ const commentsList = [
     },
 ];
 
+const numberMask = (value, n, x) => {
+    let re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+    return (+value).toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,').replace('.00', '');
+};
+
 const LandingAutomation = () => {
     const [currentStepSlide, setStepSlide] = useState(0),
         [currentCaseSlide, setCaseSlide] = useState(0),
@@ -424,7 +429,10 @@ const LandingAutomation = () => {
             max_postfix: "+",
             postfix: "  / month",
             onStart: function () {
-                $('.slider-container .slider .irs .irs-bar').html('$ 35');
+                $('.slider-container .slider .irs .irs-bar').html('$ 69');
+                setTimeout(() => {
+                    $('.irs-single').html('< $ 1,000 / month');
+                }, 1)
             },
             onChange: function (data) {
                 let value = data.from_value,
@@ -435,24 +443,24 @@ const LandingAutomation = () => {
 
 
                 if (value <= 1000) {
-                    sumElement.text('$ 35');
-                    barLabel.html('$ 35');
-                    barTooltip.html('< $ 1000 / month');
+                    sumElement.text('$ 69');
+                    barLabel.html('$ 69');
+                    barTooltip.html('< $ 1,000 / month');
                 } else {
-                    barTooltip.html(`$ ${value} / month`);
+                    barTooltip.html(`$ ${numberMask(value, 2)} / month`);
 
                     if (value >= 50000) {
-                        result = ((1.5 / 100) * value) + 500;
-                        barLabel.html('$500 + 1,5% <small>ad spend</small>');
+                        result = ((2 / 100) * value) + 500;
+                        barLabel.html('$500 + 2% <small>ad spend</small>');
                     } else if (value >= 20000) {
-                        result = ((2 / 100) * value) + 250;
-                        barLabel.html('$250 + 2% <small>ad spend</small>');
+                        result = ((2.5 / 100) * value) + 200;
+                        barLabel.html('$200 + 2,5% <small>ad spend</small>');
                     } else {
-                        result = ((2.5 / 100) * value) + 100;
-                        barLabel.html('$100 + 2,5% <small>ad spend</small>');
+                        result = ((3 / 100) * value) + 100;
+                        barLabel.html('$100 + 3% <small>ad spend</small>');
                     }
 
-                    sumElement.text('$ ' + result);
+                    sumElement.text('$ ' + numberMask(result));
                 }
             }
         });
@@ -493,7 +501,6 @@ const LandingAutomation = () => {
             document.querySelector('body').classList.add('hide-mc-modal');
 
             document.head.removeChild(s);
-
         }
     }, []);
 
@@ -1029,7 +1036,7 @@ const LandingAutomation = () => {
 
                             <div className="col">
                                 <div className="sum">
-                                    <span className="result-sum">$ 35</span>
+                                    <span className="result-sum">$ 69</span>
                                     <span className='description'>
                                        Estimated price per month based on your 30-day Amazon ad spending
                                     </span>
