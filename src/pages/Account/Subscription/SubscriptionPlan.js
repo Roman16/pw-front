@@ -130,7 +130,7 @@ const SubscriptionPlan = ({
                     className="reactivate-data">{moment(product.grace_period.on_grace_period_until).format('MMMM DD, YYYY')}</span>)}
                 </p>
                 <button
-                    className="reactivate-btn"
+                    className="btn green-btn reactivate-btn"
                     type="button"
                     onClick={() => onOpenReactivateWindow(product)}
                 >
