@@ -2,6 +2,8 @@ import React, {useEffect} from 'react';
 import './Pricing.less'
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import zthImage from '../../../assets/img/landing-pricing/zth.svg';
 import ppcImage from '../../../assets/img/landing-pricing/ppc.svg';
@@ -17,7 +19,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";
 import emojiImage from "../../../assets/img/landing-automation/emoji.png";
 import supportImage from "../../../assets/img/landing-automation/Vitalik-help.png";
-import {numberMask} from "../../../utils/numberMask";
+
+const numberMask = (value, n, x) => {
+    let re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+    return (+value).toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,').replace('.00', '');
+};
 
 
 const commentsList = [
@@ -96,6 +102,9 @@ const Pricing = () => {
             postfix: "  / month",
             onStart: function () {
                 $('.slider-container .slider .irs .irs-bar').html('$ 35');
+                setTimeout(() => {
+                    $('.irs-single').html('< $ 1,000 / month');
+                }, 1)
             },
             onChange: function (data) {
                 let value = data.from_value,
@@ -108,9 +117,9 @@ const Pricing = () => {
                 if (value <= 1000) {
                     sumElement.text('$ 35');
                     barLabel.html('$ 35');
-                    barTooltip.html('< $ 1000 / month');
+                    barTooltip.html('< $ 1,000 / month');
                 } else {
-                    barTooltip.html(`$ ${value} / month`);
+                    barTooltip.html(`$ ${numberMask(value, 2)} / month`);
 
                     if (value >= 50000) {
                         result = ((1.5 / 100) * value) + 500;
@@ -123,7 +132,7 @@ const Pricing = () => {
                         barLabel.html('$100 + 2,5% <small>ad spend</small>');
                     }
 
-                    sumElement.text('$ ' + result);
+                    sumElement.text('$ ' + numberMask(result));
                 }
             }
         });
@@ -188,6 +197,7 @@ const Pricing = () => {
                                             <div className="title">What&rsquo;s your monthly Amazon Advertising
                                                 Spend?
                                             </div>
+
                                             <div className="slider">
                                                 <input className="js-range-slider" type="text"/>
                                             </div>
