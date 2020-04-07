@@ -83,7 +83,7 @@ function regist(user) {
 
                 localStorage.setItem('token', res.access_token);
 
-                window.dataLayer.push({
+                window.dataLayer && window.dataLayer.push({
                     'event': 'Registration',
                 });
 

@@ -6,6 +6,7 @@ import './ResetPassword.less';
 import {userService} from "../../../services/user.services";
 import {history} from "../../../utils/history";
 import '../LoginPage/LoginPage.less';
+import {notification} from "../../../components/Notification";
 
 const ResetPassword = (props) => {
     const [userParams, setParams] = useState({}),
@@ -13,37 +14,72 @@ const ResetPassword = (props) => {
         [processing, setProcessing] = useState(false);
 
     const handleChange = (e) => {
-        setParams({email: e.target.value})
+        setParams({
+            ...userParams,
+            [e.target.name]: e.target.value
+        })
     };
 
-    const sendEmailHandler = () => {
-        userService.resetUserPassword(userParams)
-            .then(res => {
-                console.log(res);
-            })
+    const sendEmailHandler = async (e) => {
+        e.preventDefault();
+        setProcessing(true);
+
+        try {
+            await userService.sendEmailForResetPassword({email: userParams.email});
+            setResetStatus('sent')
+        } catch (e) {
+            console.log(e);
+        }
+
+        setProcessing(false);
     };
 
-    const changePasswordHandler = () => {
-        userService.resetUserPassword(userParams)
-            .then(res => {
-                console.log(res);
-            })
+    const changePasswordHandler = async (e) => {
+        e.preventDefault();
+        setProcessing(true);
+
+        if (userParams.password === userParams.confirmPassword) {
+            try {
+                const res = await userService.changeUserPassword({
+                    token: props.match.params.token,
+                    userId: props.match.params.userId,
+                    newPassword: {
+                        password: userParams.password,
+                        password_confirmation: userParams.confirmPassword
+                    }
+                });
+
+                notification.success({title: 'Success'});
+
+                localStorage.setItem('token', res.access_token);
+
+                setTimeout(() => {
+                    history.push('/account-settings')
+                }, 1)
+            } catch (e) {
+                console.log(e);
+            }
+        } else {
+            notification.error({title: 'The password confirmation does not match'})
+        }
+
+        setProcessing(false);
     };
 
     useEffect(() => {
         if (props.match.params && props.match.params.userId && props.match.params.token) {
-            userService.resetUserPassword({
+            userService.checkResetToken({
                 token: props.match.params.token,
-                user_id: props.match.params.userId,
+                userId: props.match.params.userId,
             })
                 .then((res) => {
-                    console.log(res);
+                    setResetStatus('changePass');
                 })
                 .catch(() => {
-                    setResetStatus(null);
+                    setResetStatus('sendEmail');
                 })
         } else {
-            setResetStatus(null);
+            setResetStatus('sendEmail');
         }
     }, []);
 
@@ -59,12 +95,14 @@ const ResetPassword = (props) => {
                     <div className="title-block">
                         <h3>Reset Password</h3>
                         <h4>
-                            {!resetStatus && 'Request an e-mail reset link'}
+                            {resetStatus === 'sendEmail' && 'Request an e-mail reset link'}
                             {resetStatus === 'changePass' && 'Change your password'}
                         </h4>
                     </div>
 
-                    {!resetStatus &&
+                    {!resetStatus && <Spin size={'large'}/>}
+
+                    {resetStatus === 'sendEmail' &&
                     <Form className="login-form" onSubmit={sendEmailHandler}>
                         <Form.Item className="input-form-group">
                             <Input
@@ -72,6 +110,7 @@ const ResetPassword = (props) => {
                                 type="email"
                                 name="email"
                                 id="email"
+                                required={true}
                                 // autoComplete="off"
                                 placeholder="E-mail"
                                 onChange={handleChange}
@@ -81,17 +120,18 @@ const ResetPassword = (props) => {
                         <Button
                             className="btn default"
                             disabled={processing}
+                            htmlType={'submit'}
                         >
                             Send
                             {/*<Spin/>*/}
                         </Button>
                     </Form>}
 
-                    {resetStatus === 'send' &&
-                    <span>
+                    {resetStatus === 'sent' &&
+                    <p>
                         An email been sent to email address.
                         Follow the directions in the email to reset your password
-                    </span>}
+                    </p>}
 
                     {resetStatus === 'changePass' &&
                     <Form className="login-form" onSubmit={changePasswordHandler}>
@@ -111,7 +151,7 @@ const ResetPassword = (props) => {
                         <Form.Item className="input-form-group">
                             <Input
                                 className="email-input"
-                                type="confirmPassword"
+                                type="password"
                                 name="confirmPassword"
                                 id="confirmPassword"
                                 required={true}
@@ -124,6 +164,7 @@ const ResetPassword = (props) => {
                         <Button
                             className="btn default"
                             disabled={processing}
+                            htmlType={'submit'}
                         >
                             Update password
 
