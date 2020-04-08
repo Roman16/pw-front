@@ -40,7 +40,6 @@ const subTables = {
 };
 
 const device = window.devicePixelRatio === 2;
-console.log(device);
 
 class ReportTable extends Component {
     state = {
@@ -135,8 +134,7 @@ class ReportTable extends Component {
     };
 
     timeRange = (startDate, endDate) => {
-        console.log(moment(startDate, 'DD-MM-YY').format());
-        console.log(moment(new Date(startDate)).tz('America/Los_Angeles').format("YYYY-MM-DD"));
+        console.log(new Date(startDate).toISOString());
 
         this.setState(
             {

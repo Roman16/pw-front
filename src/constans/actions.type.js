@@ -8,6 +8,7 @@ export const userConstants = {
     UNSET_AMAZON_MWS:'UNSET_AMAZON_MWS',
     UNSET_AMAZON_PPC:'UNSET_AMAZON_PPC',
     RESET_CHANGES_COUNT:'RESET_CHANGES_COUNT',
+    SET_PPC_STATUS:'SET_PPC_STATUS',
 };
 
 //--------------------------------------------

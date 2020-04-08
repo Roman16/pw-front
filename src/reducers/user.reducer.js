@@ -44,6 +44,18 @@ export function user(state = initialState, action) {
                 }
             };
 
+        // case userConstants.SET_PPC_STATUS:
+        //     return {
+        //         ...state,
+        //         account_links: [{
+        //             ...state.account_links[0],
+        //             amazon_mws: {
+        //                 ...state.account_links[0].amazon_mws,
+        //                 is_connected: false
+        //             }
+        //         }]
+        //     };
+
         case userConstants.UNSET_AMAZON_MWS:
             return {
                 ...state,

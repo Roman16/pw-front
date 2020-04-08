@@ -18,7 +18,8 @@ export const userActions = {
     reSetState,
     getPersonalUserInfo,
     unsetAccount,
-    resetChangesCount
+    resetChangesCount,
+    setPpcStatus
 };
 
 function login(user) {
@@ -218,4 +219,11 @@ function updateUserInformation(user) {
                 notification.success({title: 'Completed'})
             });
     };
+}
+
+function setPpcStatus(status) {
+    return {
+        type: userConstants.SET_PPC_STATUS,
+        payload: status
+    }
 }
