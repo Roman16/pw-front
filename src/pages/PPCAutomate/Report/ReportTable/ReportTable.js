@@ -25,6 +25,7 @@ import tz from 'moment-timezone';
 import {Select} from "antd";
 import CustomSelect from "../../../../components/Select/Select";
 import {SVG} from "../../../../utils/icons";
+
 const Option = Select.Option;
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -94,6 +95,10 @@ class ReportTable extends Component {
 
         source = CancelToken.source();
 
+        console.log(startDate);
+        console.log(endDate);
+
+
         if (selectedAll || selectedProductId) {
             this.props.getReports({
                 id: selectedAll ? "all" : selectedProductId,
@@ -134,16 +139,13 @@ class ReportTable extends Component {
     };
 
     timeRange = (startDate, endDate) => {
-        console.log(new Date(startDate).toISOString());
-
         this.setState(
             {
                 startDate: startDate
-                    ? moment(startDate, "DD-MM-YYYY").format("YYYY-MM-DD")
-                    // ? moment(startDate, "DD-MM-YYYY").tz('America/Los_Angeles').format("YYYY-MM-DD")
+                    ? moment.tz(moment(startDate, 'DD-MM-YY').format('YYYY-MM-DD'), 'America/Los_Angeles').toISOString()
                     : null,
                 endDate: endDate
-                    ? moment(endDate, "DD-MM-YYYY").format("YYYY-MM-DD")
+                    ? moment.tz(moment(endDate, 'DD-MM-YY').format('YYYY-MM-DD'), 'America/Los_Angeles').toISOString()
                     : null
             },
             this.fetchReports
@@ -436,7 +438,8 @@ class ReportTable extends Component {
 
                 <div className="tabs mob">
                     <CustomSelect value={activeTab} onChange={(e) => {
-                        this.handleChangeTab(e)}}>
+                        this.handleChangeTab(e)
+                    }}>
                         {Object.keys(mainTabs).map((item) => (
                             <Option value={item}>
                                 {mainTabs[item].tabName(item, counts, countsWithNew)}
