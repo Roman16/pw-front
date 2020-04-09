@@ -35,7 +35,7 @@ const Amazon = ({amazonTokens}) => {
             ppcConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.is_connected,
             ppcId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.id,
             mwsConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.is_connected,
-            mwsId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.id
+            mwsId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.id || null
         })),
         token = localStorage.getItem('token');
 
@@ -54,7 +54,10 @@ const Amazon = ({amazonTokens}) => {
 
     async function handleSetMws() {
         try {
-            await userService.setMWS(amazonTokensValue);
+            await userService.setMWS({
+                ...amazonTokensValue,
+                ...mwsId && {id: mwsId}
+            });
             dispatch(userActions.getPersonalUserInfo());
         } catch (e) {
             console.log(e);
