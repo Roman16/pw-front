@@ -35,7 +35,7 @@ const Amazon = ({amazonTokens}) => {
             ppcConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.is_connected,
             ppcId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.id,
             mwsConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.is_connected,
-            mwsId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.id
+            mwsId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.id || null
         })),
         token = localStorage.getItem('token');
 
