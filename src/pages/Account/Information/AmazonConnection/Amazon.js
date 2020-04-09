@@ -49,7 +49,7 @@ const Amazon = ({amazonTokens}) => {
     }
 
     function onUnsetAccount(type, id) {
-        dispatch(userActions.unsetAccount(type, id))
+        dispatch(userActions.unsetAccount(type, {id}))
     }
 
     async function handleSetMws() {
