@@ -106,7 +106,7 @@ const ConfirmEmailPage = (props) => {
                             <p>
                                 We’ve sent you an email to confirm your email address, simply tap the ‘Confirm’ button
                                 in the email sent to <br/>
-                                <a href={`mailto: ${email}`}>{email}</a>.
+                                <a href={`mailto: ${email}`}>{email}</a>
                             </p>
 
                             {/*{disableResend && <span>{disabledTimer}</span>}*/}

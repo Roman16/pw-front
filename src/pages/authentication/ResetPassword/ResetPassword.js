@@ -129,8 +129,8 @@ const ResetPassword = (props) => {
 
                     {resetStatus === 'sent' &&
                     <p>
-                        An email been sent to email address.
-                        Follow the directions in the email to reset your password
+                        The email has been sent to you.
+                        Check your email box and follow the instructions to reset the password.
                     </p>}
 
                     {resetStatus === 'changePass' &&

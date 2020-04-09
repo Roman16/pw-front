@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from 'react';
+import React, {Component} from 'react';
 import {Icon} from 'antd';
 import logo from '../../../../assets/img/zth.svg';
 import './MWS.less';

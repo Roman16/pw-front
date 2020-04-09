@@ -622,7 +622,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
             {title: <>Paused Keyword Duplicate</>, key: pausedKeywordDuplicate},
             {title: <>Paused Keyword Duplicate of PAT</>, key: pausedKeywordDuplicateOfPAT},
             {title: <>Paused Keyword Duplicate From CST</>, key: pausedKeywordDuplicateFromCustomerSearchTerm},
-            {title: <>RevertLastChangeKeyword (<span className='underline'>No Sales</span>)</>, key: revertLastChangeKeywordNoSales},
+            // {title: <>RevertLastChangeKeyword (<span className='underline'>No Sales</span>)</>, key: revertLastChangeKeywordNoSales},
         ]
     });
 };

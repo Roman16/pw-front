@@ -486,7 +486,7 @@ export const patsOptimization = ({
             {title: <>PAUSED PAT (<span className='underline'>HIGH ACOS</span>)</>, key: pausedManualPATHighACoS},
             {title: <>PAUSED PAT (<span className='underline'>NO SALES</span>)</>, key: pausedManualPatNoSales},
             {title: <>Paused PAT Duplicate</>, key: pausedPATDuplicate},
-            {title: <>revertLastChangePAT (<span className='underline'>NO SALES</span>)</>, key: revertLastChangePATNoSales},
+            // {title: <>revertLastChangePAT (<span className='underline'>NO SALES</span>)</>, key: revertLastChangePATNoSales},
         ]
     });
 };
