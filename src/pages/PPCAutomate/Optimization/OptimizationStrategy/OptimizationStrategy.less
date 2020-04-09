@@ -35,7 +35,7 @@
         border-right: 1px solid rgba(208, 208, 208, 0.4);
         position: relative;
         font-weight: 500;
-        padding: 0 5px;
+        padding: 0 10px;
 
         &:nth-child(3) {
           width: 230px;
@@ -51,7 +51,7 @@
         }
 
         &.selected-strategy {
-          font-size: 18px;
+          font-size: 1.2857142857142858rem;
           color: #6D6DF6;
           cursor: auto;
           transition: .1s;
@@ -107,11 +107,12 @@
 
           h4 {
             font-weight: bold;
-            font-size: 1.2857142857142858rem;
+            font-size: 1.1428571428571428rem;
+            color: #343C5A;
           }
 
           p {
-            font-size: 1.1428571428571428rem;
+            font-size: 1rem;
             line-height: 1.4285714285714286rem;
             color: #343C5A;
             letter-spacing: 0.2px;
@@ -137,19 +138,11 @@
               }
 
               .metric-value {
-                width: 35px;
+                width: max-content;
                 font-size: 1rem;
-                color: #656A84;
-                text-align: left;
+                color: #6D6DF6;
+                text-align: right;
                 font-weight: 500;
-
-                &.Mid {
-                  color: #47B881;
-                }
-
-                &.High {
-                  color: #6D6DF6;
-                }
               }
             }
           }
@@ -173,12 +166,8 @@
             margin: 0 0 auto auto;
 
             font-size: 1.2857142857142858rem;
-
-            color: #283E70;
-
-            //position: absolute;
-            //right: 0;
-            //top: 0;
+            font-weight: 500;
+            color: #343C5A;
 
             .InputCurrency {
               width: 6.428571428571429rem;
@@ -265,6 +254,7 @@
           display: flex;
           justify-content: center;
           margin: 0 auto;
+          flex-wrap: wrap;
         }
 
         .btn {
@@ -427,7 +417,7 @@
     }
   }
 
-  @media only screen and (min--moz-device-pixel-ratio: 1) and (max-width: 950px), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-width: 950px), only screen and (min-device-pixel-ratio: 1) and (max-width: 950px), only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 510px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 510px), only screen and (min-device-pixel-ratio: 2) and (max-width: 510px) {
+  @media only screen and (min--moz-device-pixel-ratio: 1) and (max-width: 1132px), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-width: 1132px), only screen and (min-device-pixel-ratio: 1) and (max-width: 1132px), only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 510px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 510px), only screen and (min-device-pixel-ratio: 2) and (max-width: 510px) {
     & {
       height: max-content !important;
 

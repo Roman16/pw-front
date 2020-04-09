@@ -76,7 +76,7 @@ const AuthorizedUser = (props) => {
     const pathname = props.location.pathname;
     const {lastStatusAction, bootstrapInProgress} = useSelector(state => ({
         lastStatusAction: state.user.lastUserStatusAction,
-        bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
+        bootstrapInProgress: state.user.notifications && state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
     }));
 
     function getUserStatus() {
@@ -108,7 +108,7 @@ const AuthorizedUser = (props) => {
                 {(pathname === '/ppc/optimization' ||
                     pathname === '/ppc/report' ||
                     pathname === '/ppc/scanner' ||
-                    pathname === '/ppc/optimization/loading' ||
+                    pathname === '/ppc/optimization-loading' ||
                     pathname === '/ppc/dayparting'
                 ) &&
                 <ProductList
@@ -187,7 +187,7 @@ const AuthorizedUser = (props) => {
                                 path="/ppc/optimization"
                                 render={() => {
                                     if (bootstrapInProgress) {
-                                        return (<Redirect to={'/ppc/optimization/loading'}/>)
+                                        return (<Redirect to={'/ppc/optimization-loading'}/>)
                                     } else {
                                         return (<Optimization/>)
                                     }
@@ -196,7 +196,7 @@ const AuthorizedUser = (props) => {
 
                             <ConnectedAmazonRoute
                                 exact
-                                path="/ppc/optimization/loading"
+                                path="/ppc/optimization-loading"
                                 render={() => {
                                     if (bootstrapInProgress) {
                                         return (<Optimization/>)

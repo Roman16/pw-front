@@ -18,6 +18,7 @@
       font-size: 1.4285714285714286rem;
       line-height: 2rem;
       color: #363694;
+      font-weight: 500;
     }
 
     .switch-block {
@@ -58,7 +59,11 @@
   .products-table {
     height: calc(100% - 38px);
 
-    & > div {
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      height: calc(100% - 35px);
+    }
+
+      & > div {
       height: 100%;
 
       .Table,
@@ -131,6 +136,16 @@
         height: 32px;
         border: 0;
         border-radius: 8px;
+        box-shadow: none;
+        transition: 0s !important;
+
+        &:focus {
+          transition: 0s !important;
+
+          -webkit-box-shadow: none;
+          box-shadow: none;
+          border: 1px solid rgba(24, 144, 255, 0.2);
+        }
       }
 
       i {
@@ -178,6 +193,10 @@
 
             .product-metric-changes {
               opacity: .5;
+
+              svg {
+                margin: 0 0 0 3px;
+              }
             }
           }
         }
@@ -269,6 +288,12 @@
         border-radius: 8px;
         font-size: 1.7142857142857142rem;
         color: #6D6DF6;
+
+        @media (max-width: 800px) {
+          & {
+            min-width: 100%;
+          }
+        }
       }
 
       .product-params {
@@ -289,7 +314,7 @@
             font-size: 0.8571428571428571rem; //12px
             text-transform: uppercase;
 
-            img {
+            svg {
               margin: 0 0 0 5px;
             }
 
@@ -358,6 +383,7 @@
   }
 
   .ant-table-pagination.ant-pagination {
+    margin-top: auto;
     margin-bottom: 0;
   }
 
@@ -382,7 +408,7 @@
       table {
         .ant-table-tbody {
           td {
-            max-width: 40px;
+            max-width: 90px;
 
             &:first-child {
               min-width: 240px;

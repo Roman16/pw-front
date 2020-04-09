@@ -92,7 +92,12 @@ class Scanner extends Component {
                 problemsCount: {},
                 mistakeList: [],
                 visibleStartWindow: true,
-                fetching: true
+                fetching: true,
+                paginationParams: {
+                    totalSize: 0,
+                    page: 1,
+                    pageSize: 50
+                }
             });
 
             this.getScanStatus();

@@ -30,7 +30,7 @@ const OptimizationStatus = ({product: {status, created_at, total_changes, today_
                     onClick={() => history.push('/ppc/report')}
                     data-intercom-target='redirect-reports-page-button'
                 >
-                    VIEW REPORT
+                    Check Changes
                 </button>
             </div>
 

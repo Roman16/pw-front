@@ -72,6 +72,12 @@
       min-width: 20px !important;
       height: 20px !important;
 
+      use {
+        fill: #B6B6FB;
+        stroke: #B6B6FB;
+        transition: 0.3s;
+      }
+
       @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
         width: 18px !important;
         min-width: 18px !important;
@@ -79,6 +85,7 @@
       }
     }
   }
+
 
   .sidebar-menu {
     height: calc(100vh - 7.4em);
@@ -90,6 +97,10 @@
 
     .disabled-link {
       pointer-events: none;
+
+      &:hover {
+        color: initial;
+      }
     }
 
     .country-active {
@@ -116,8 +127,9 @@
           justify-self: center;
           color: #fff;
           align-self: flex-start;
-          line-height: 1.1429em;
+          line-height: 0.9285714285714286rem;
           margin: 0 0 0 3px;
+
         }
       }
 
@@ -144,6 +156,7 @@
           margin: 1.5em 0 3em 0;
           padding: 0 2.4em;
 
+
           .top-nav-link {
             font-size: 1rem;
             height: 100%;
@@ -163,6 +176,14 @@
 
           .top-nav-link-active {
             color: @white;
+
+            .link-icon {
+              use {
+                fill: #fff;
+                stroke: #fff;
+                transition: 0.3s;
+              }
+            }
           }
 
           .automate-list {
@@ -201,6 +222,14 @@
 
               .automate-link-active {
                 color: @white;
+
+                .link-icon {
+                  use {
+                    fill: #fff;
+                    stroke: #fff;
+                    transition: 0.3s;
+                  }
+                }
               }
             }
 
@@ -212,6 +241,14 @@
 
         .top-nav-item > div:hover > .top-nav-link {
           color: @white;
+
+          .link-icon {
+            use {
+              fill: #fff;
+              stroke: #fff;
+              transition: 0.3s;
+            }
+          }
         }
 
         .top-nav-link:hover .top-span {
@@ -268,6 +305,14 @@
 
                 .automate-link-active {
                   color: @white;
+
+                  .link-icon {
+                    use {
+                      fill: #fff;
+                      stroke: #fff;
+                      transition: 0.3s;
+                    }
+                  }
                 }
               }
 
@@ -390,6 +435,7 @@
             align-items: center;
             color: @sidebar-text-color;
             white-space: nowrap;
+            transition: .3s;
 
             .anticon {
               font-size: 1.7143em; // 24px
@@ -398,12 +444,28 @@
 
           .automate-link-active {
             color: @white;
+
+            .link-icon {
+              use {
+                fill: #fff;
+                stroke: #fff;
+                transition: 0.3s;
+              }
+            }
           }
         }
 
         .bottom-nav-item:hover > button,
         .bottom-nav-item:hover > a {
           color: @white;
+
+          .link-icon {
+            use {
+              fill: #fff;
+              stroke: #fff;
+              transition: 0.3s;
+            }
+          }
         }
       }
 
@@ -458,6 +520,9 @@
           .bottom-nav-item {
             button > .bottom-span,
             a > .bottom-span {
+              display: flex;
+              align-items: center;
+
               .visibleAnimation();
             }
           }

@@ -78,7 +78,7 @@ const BudgetDrawer = ({onClose, onSave, processing}) => {
                 {processing ? <Spin/> : <Fragment>
                     <button className='btn white' onClick={onClose}>Cancel</button>
 
-                    <button className='btn green-btn' onClick={saveHandler}>Apply</button>
+                    <button className='btn default' onClick={saveHandler}>Apply</button>
                 </Fragment>}
             </div>
         </Fragment>

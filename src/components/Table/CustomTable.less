@@ -206,6 +206,14 @@
     justify-content: flex-end;
     align-items: center;
 
+    .desk {
+      display: block;
+    }
+
+    .mob {
+      display: none;
+    }
+
     .ant-select {
       margin: 1.4285714em 2em 1.4285714em 0;
       border-bottom: 1px solid #000000;
@@ -217,22 +225,21 @@
         border-radius: 0 !important;
       }
     }
+
+    @media (max-width: 1400px) {
+      .desk {
+        display: none;
+      }
+
+      .mob {
+        display: block;
+      }
+    }
   }
 
   .ant-pagination {
     font-size: 1rem; // 14px
     margin: 1.4285714em 2em;
-  }
-
-  //-------------------------------------
-  /*Retina CSS */
-  //-------------------------------------
-  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
-    & {
-      .ant-pagination {
-        margin: 1.4285714em 5em;
-      }
-    }
   }
 }
 

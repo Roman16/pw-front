@@ -27,7 +27,7 @@
         //font-size: 20px;
         line-height: 2.142857142857143rem;
         letter-spacing: 0.4px;
-        color: #38454F;
+        color: #343C5A;
       }
 
       span {
@@ -39,9 +39,13 @@
     }
 
     .buttons-block {
+      width: 20%;
       display: flex;
       flex-direction: column;
+      align-items: flex-end;
       grid-area: billingButtons;
+      margin: 0 0 0 auto;
+      padding: 0 0 0 20px;
 
       .btn {
         height: 40px;
@@ -56,18 +60,20 @@
 
   .account-billing-block {
     border-radius: 0 0 0.8em 0.8em;
+    justify-content: flex-start;
 
     .user-cards {
       width: 55%;
       display: flex;
-      justify-content: space-between;
       flex-wrap: wrap;
       grid-area: userCards;
+      margin: 0 0 0 auto;
+      padding: 0 0 0 20px;
 
       .cards-carousel {
         width: 45%;
         min-width: 300px;
-        margin: 0 20px 0 0;
+        margin: 0 30px 0 0;
 
         .carousel-body {
           width: 300px;
@@ -201,10 +207,12 @@
 
               div {
                 width: 4em;
+                height: 1.4285714285714286rem;
+
 
                 svg {
-                  width: 2rem;
-                  height: 2rem;
+                  width: 1.4285714285714286rem;
+                  height: 1.4285714285714286rem;
                   margin: 0 0 0 10px;
                 }
               }
@@ -260,12 +268,13 @@
     .company-information {
       width: 55%;
       display: flex;
-      justify-content: space-between;
-      margin: 0 10px;
       grid-area: companyInformation;
 
+      margin: 0 0 0 auto;
+      padding: 0 0 0 20px;
+
       .column {
-        width: 45%;
+        width: 48%;
         display: flex;
         flex-direction: column;
 
@@ -304,6 +313,7 @@
 
     .block-description {
       width: 100%;
+      margin: 0 0 10px 0;
     }
 
     .history-list {
@@ -324,7 +334,7 @@
       }
 
       .custom-table {
-        min-width: 550px;
+        min-width: 840px;
 
         .table-head {
           border: 0;
@@ -407,18 +417,20 @@
     }
   }
 
-  @media (max-width: 1193px) {
+  @media (max-width: 1245px) {
     & {
       .account-billing-block {
         display: grid;
+        grid-template-columns: 1fr 1fr;
         grid-template-areas: "billingDescription billingButtons" "userCards userCards";
 
         .user-cards {
           width: 100%;
           margin: 30px 0 0 0;
+          justify-content: center;
 
           .billing-address {
-            width: 45%;
+            width: max-content;
           }
         }
       }
@@ -430,6 +442,21 @@
         .company-information {
           width: 100%;
           margin: 20px 0 0 0;
+          justify-content: center;
+
+          .column {
+            width: 28%;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1100px) {
+    & {
+      .billing-history-block .history-list .custom-table .table-body .table-body__row .table-body__field .card-number {
+        i {
+          display: none;
         }
       }
     }
@@ -445,7 +472,13 @@
         text-align: center;
         height: 150px;
       }
+
+      .buttons-block {
+        width: max-content;
+        padding: 0;
+      }
     }
+
 
     & {
       .account-billing-block {
@@ -456,9 +489,11 @@
           width: 100%;
           flex-direction: column;
           margin: 30px auto 0 auto;
+          padding: 0;
 
           .cards-carousel {
             width: 100%;
+            margin: 0;
 
             .carousel-body {
               height: 180px;
@@ -488,12 +523,13 @@
     }
 
     .company-details-block {
-      grid-template-areas: "companyDescription " "companyButtons" "companyInformation";
+      grid-template-areas: "companyDescription" "companyButtons" "companyInformation";
       grid-template-columns: 1fr;
 
       .company-information {
         width: 100%;
         justify-content: space-around;
+        padding: 0;
 
         .column {
           width: 30%;

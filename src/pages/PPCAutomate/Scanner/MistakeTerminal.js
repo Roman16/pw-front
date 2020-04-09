@@ -1,7 +1,8 @@
-import React from "react";
+import React, {Fragment} from "react";
 import notDataImage from '../../../assets/img/not-data-image.svg';
 import {history} from "../../../utils/history";
 import {Pagination, Select} from "antd";
+import CustomSelect from "../../../components/Select/Select";
 
 const pageSizeOptions = ['50', '100', '200'];
 const Option = Select.Option;
@@ -13,18 +14,21 @@ const MistakeTerminal = ({mistakeList, totalSize, page, pageSize, onChangePagina
             <div className="header-block">
                 <h3>Mistakes Terminal</h3>
 
-                {mistakeList.length > 0 &&
-                <button className='btn default' onClick={() => {history.push('/ppc/optimization')}}>
-                    Fix It
-                </button>}
+                <div className="actions">
+                    {mistakeList.length > 0 &&
+                    <button className='btn default' onClick={() => {
+                        history.push('/ppc/optimization')
+                    }}>
+                        Fix It
+                    </button>}
 
-                {mistakeList.length > 0 && <div className="total-count">
-                    Total Mistakes
-                    <div>
-                        {totalSize}
-                    </div>
+                    {mistakeList.length > 0 && <div className="total-count">
+                        Total Mistakes
+                        <div>
+                            {totalSize}
+                        </div>
+                    </div>}
                 </div>
-                }
             </div>
 
             {mistakeList.length > 0 ?
@@ -45,21 +49,39 @@ const MistakeTerminal = ({mistakeList, totalSize, page, pageSize, onChangePagina
 
             <div className='pagination'>
                 {totalSize > 50 && (
-                    <Pagination
-                        defaultCurrent={1}
-                        pageSize={50}
-                        current={page}
-                        total={+totalSize}
-                        onChange={(page) => onChangePagination({page})}
-                    />
+                    <Fragment>
+                        <div className="desk">
+                            <Pagination
+                                defaultCurrent={1}
+                                pageSize={pageSize}
+                                showLessItems={false}
+                                current={page}
+                                total={+totalSize}
+                                responsive={true}
+                                onChange={(page) => onChangePagination({page})}
+                            />
+                        </div>
+
+                        <div className="mob">
+                            <Pagination
+                                defaultCurrent={1}
+                                pageSize={pageSize}
+                                showLessItems={true}
+                                current={page}
+                                total={+totalSize}
+                                responsive={true}
+                                onChange={(page) => onChangePagination({page})}
+                            />
+                        </div>
+                    </Fragment>
                 )}
 
                 {totalSize > 50 &&
-                <Select onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
+                <CustomSelect onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
                     {pageSizeOptions.map(size => (
                         <Option value={size} key={size}>{size}</Option>
                     ))}
-                </Select>
+                </CustomSelect>
                 }
             </div>
 

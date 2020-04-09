@@ -26,24 +26,30 @@
   }
 
   .ant-modal-content {
-    width: 43.2em;
-    height: 16.7em;
     border-radius: 0.9em;
+    padding: 2.5rem 3.2142857142857144rem 3.2142857142857144rem;
+
+    .ant-modal-close {
+      display: none;
+    }
 
     .ant-modal-body {
       font-size: inherit; // 10px
-      padding-bottom: 1.6em;
+      padding: 0;
 
       .reactivate-title {
-        font-size: 1.1429rem; // 16px
-        color: #17175a;
-        font-weight: 600;
+        font-size: 1.4285714285714286rem;
+        letter-spacing: -0.06px;
+        color: #343C5A;
+        font-weight: 500;
+        text-align: center;
       }
 
       .reactivate-text {
-        font-size: 1rem; // 14px
-        color: @third-account-color;
-        margin: 0;
+        font-size: 1rem;
+        color: #343C5A;
+        margin-bottom: 2.142857142857143rem;
+        text-align: center;
 
         .reactivate-data {
           color: #17175a;
@@ -54,31 +60,59 @@
 
     .ant-modal-footer {
       border: none;
-      padding: 0 2.4em;
+      padding: 0;
       // margin-bottom: 2.4em;
 
       div {
         display: flex;
-        flex-flow: row-reverse;
-        justify-content: space-between;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        [ant-click-animating-without-extra-node]:after {
+          -webkit-animation: none !important;
+          -moz-animation: none !important;
+          -o-animation: none !important;
+          -ms-animation: none !important;
+          animation: none !important;
+        }
 
         button {
           font-size: 1rem; // 14px
-          width: 13.4286em;
-          height: 2.2857em;
+          min-width: 8.571428571428571rem;
+          height: 2.2857142857142856rem;
           border: none;
-          border-radius: 0.5714em;
-          margin: 0;
+          border-radius: 8px;
+          margin: 10px 15px !important;
+          padding: 0 15px;
+          animation-duration: 0s !important;
+
+          &:active {
+            box-shadow: none;
+          }
         }
 
         .ant-btn {
-          background-color: #f3f7fd;
-          color: @third-account-color;
+          background: rgba(109, 109, 246, 0.1);
+          color: #363694;
+          box-shadow: none;
+          margin: 0 15px 0 0;
+
+          &:hover {
+            background: rgba(109, 109, 246, 0.3);
+            box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
+          }
         }
 
         .ant-btn.ant-btn-primary {
-          background-color: #ec7f5c !important;
+          width: max-content;
+          background: #7DD4A1 !important;
           color: @white;
+
+          &:hover {
+            background: #5e9168 !important;
+            box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
+            0px 0px 20px rgba(142, 147, 192, 0.08);
+          }
         }
       }
     }

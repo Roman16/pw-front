@@ -167,7 +167,7 @@ export const averageCVRField = (onChangeFilter, filteredColumns) => ({
     ),
     dataIndex: 'd_averageConversionRate',
     key: 'd_averageConversionRate',
-    width: '14em',
+    width: '15em',
     render: (text) => (text && <span>{round(+text * 100, 2)}%</span>),
     sorter: true,
     filter: (dataIndex) => <ColumnNumberFilter

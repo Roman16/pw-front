@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Icon} from 'antd';
+import {Icon, Spin} from 'antd';
 import {useSelector, useDispatch} from 'react-redux';
 
 import logo from '../../../../assets/img/zth.svg';
@@ -9,18 +9,17 @@ import {userActions} from "../../../../actions/user.actions";
 import {notification} from "../../../../components/Notification";
 
 let intervalId = null;
+let intervalIdLink = null;
 
 const PPC = (props) => {
     const {ppcLink, mwsConnected, ppcConnected} = useSelector(state => ({
-            ppcLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.connect_link : '',
-            mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
-            ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
-        })),
-        token = localStorage.getItem('token');
+        ppcLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.connect_link : null,
+        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
+        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
+    }));
 
     const dispatch = useDispatch();
 
-    const redirectLink = `${ppcLink}&state=${token}`;
 
     function getStatus() {
         if (!ppcConnected) {
@@ -42,11 +41,24 @@ const PPC = (props) => {
     }, [ppcConnected]);
 
     useEffect(() => {
+        intervalIdLink = setInterval(() => {
+            if (ppcLink == null || ppcLink === false) {
+                dispatch(userActions.getPersonalUserInfo());
+            } else {
+                clearInterval(intervalIdLink);
+            }
+        }, 3000);
+
+
         if (!mwsConnected) {
             history.push('/mws')
         } else if (ppcConnected) {
             history.push('/ppc/dashboard')
-        } else if (props.location.search && props.location.search.indexOf('?error_message=') !== -1) {
+        }
+        else if (props.location.search && props.location.search.indexOf('?status=') !== -1) {
+        userActions.setPpcStatus({status: props.location.search.split('?status=')[1]})
+        }
+        else if (props.location.search && props.location.search.indexOf('?error_message=') !== -1) {
             notification.error({title: props.location.search.split('?error_message=')[1].split('+').join(' ')})
         } else {
             getStatus();
@@ -54,6 +66,7 @@ const PPC = (props) => {
 
         return (() => {
             clearTimeout(intervalId);
+            clearInterval(intervalIdLink);
         })
     }, []);
 
@@ -73,12 +86,14 @@ const PPC = (props) => {
             />
 
             <a
-                className="link"
-                href={redirectLink}
+                className={`link ${(ppcLink == null || ppcLink === false) && 'disabled'}`}
+                href={ppcLink || '#'}
                 rel="noopener noreferrer"
             >
                 Link with Amazon PPC
-                <Icon type="arrow-right"/>
+
+                {(ppcLink == null || ppcLink === false) ? <Spin size={'small'}/> : <Icon type="arrow-right"/>}
+
             </a>
         </div>
     );

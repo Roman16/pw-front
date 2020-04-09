@@ -138,6 +138,9 @@
 
   @media (max-width: 905px) {
     & {
+      padding-left: 0;
+      padding-right: 0;
+
       .chart-header {
         grid-template-areas: "weekSwitchBlock dailySwitchBlock" "chartLegend chartLegend" "datePiker datePiker";
 
@@ -154,53 +157,53 @@
     }
   }
 
-  @media (max-width: 550px) {
-    & {
-      padding-left: 10px;
-      padding-right: 10px;
+  //@media (max-width: 550px) {
+  //  & {
+  //    padding-left: 10px;
+  //    padding-right: 10px;
+  //
+  //    .chart-header {
+  //      .week-switch .line-fill,
+  //      .daily-switch img {
+  //        display: none;
+  //      }
+  //
+  //    }
+  //  }
+  //}
 
-      .chart-header {
-        .week-switch .line-fill,
-        .daily-switch img {
-          display: none;
-        }
 
-      }
-    }
-  }
-
-
-  @media (max-width: 450px) {
-    & {
-      .chart-header {
-        justify-content: center;
-        grid-template-areas: "weekSwitchBlock " "dailySwitchBlock" "chartLegend" "datePiker";
-
-        .switch-block {
-          width: 100%;
-          flex-direction: row-reverse;
-          justify-content: space-between;
-          margin: 0;
-
-          button {
-            margin: 0;
-          }
-        }
-
-        .chart-legend {
-          justify-content: space-around;
-          div {
-            flex-direction: column-reverse;
-
-            img {
-              width: 100%;
-              height: 3px;
-            }
-          }
-        }
-      }
-    }
-  }
+  //@media (max-width: 450px) {
+  //  & {
+  //    .chart-header {
+  //      justify-content: center;
+  //      grid-template-areas: "weekSwitchBlock " "dailySwitchBlock" "chartLegend" "datePiker";
+  //
+  //      .switch-block {
+  //        width: 100%;
+  //        flex-direction: row-reverse;
+  //        justify-content: space-between;
+  //        margin: 0;
+  //
+  //        button {
+  //          margin: 0;
+  //        }
+  //      }
+  //
+  //      .chart-legend {
+  //        justify-content: space-around;
+  //        div {
+  //          flex-direction: column-reverse;
+  //
+  //          img {
+  //            width: 100%;
+  //            height: 3px;
+  //          }
+  //        }
+  //      }
+  //    }
+  //  }
+  //}
 }
 
 .custom-line-chart-tooltip {
@@ -255,19 +258,36 @@
   .week-value,
   .daily-value {
     margin: 0 0 10px 0;
+
   }
 
   .week-value {
     text-align: left;
 
     div {
+      display: flex;
+      align-items: center;
       padding-left: 20px;
-      padding-right: 20px;
+
+      svg {
+        margin: 0 10px 0 0;
+      }
     }
   }
 
   .daily-value {
     text-align: left;
+
+    div {
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+
+
+      svg {
+        margin: 0 10px 0 0;
+      }
+    }
   }
 
   //retina

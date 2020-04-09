@@ -21,6 +21,7 @@ import {mainChangesCount, mainHasNewReport, subChangesCount} from "./Tables/chan
 import CustomTable from "../../../../components/Table/CustomTable";
 import TableButton from "./TableButton/TableButton";
 import tz from 'moment-timezone';
+
 import {Select} from "antd";
 import CustomSelect from "../../../../components/Select/Select";
 import {SVG} from "../../../../utils/icons";
@@ -40,7 +41,6 @@ const subTables = {
 };
 
 const device = window.devicePixelRatio === 2;
-console.log(device);
 
 class ReportTable extends Component {
     state = {
@@ -95,6 +95,10 @@ class ReportTable extends Component {
 
         source = CancelToken.source();
 
+        console.log(startDate);
+        console.log(endDate);
+
+
         if (selectedAll || selectedProductId) {
             this.props.getReports({
                 id: selectedAll ? "all" : selectedProductId,
@@ -138,10 +142,10 @@ class ReportTable extends Component {
         this.setState(
             {
                 startDate: startDate
-                    ? moment(startDate, "DD-MM-YYYY").format("YYYY-MM-DD")
+                    ? moment.tz(moment(startDate, 'DD-MM-YY').format('YYYY-MM-DD'), 'America/Los_Angeles').toISOString()
                     : null,
                 endDate: endDate
-                    ? moment(endDate, "DD-MM-YYYY").format("YYYY-MM-DD")
+                    ? moment.tz(moment(endDate, 'DD-MM-YY').format('YYYY-MM-DD'), 'America/Los_Angeles').toISOString()
                     : null
             },
             this.fetchReports
@@ -356,7 +360,8 @@ class ReportTable extends Component {
                             <span>{todayChanges}</span>
                         </div>
 
-                        <DatePicker timeRange={this.timeRange}/>
+                        <DatePicker
+                            timeRange={this.timeRange}/>
 
                         <button className="btn default download-btn" onClick={this.downloadFile}>
                             <span> Download </span>
@@ -433,7 +438,8 @@ class ReportTable extends Component {
 
                 <div className="tabs mob">
                     <CustomSelect value={activeTab} onChange={(e) => {
-                        this.handleChangeTab(e)}}>
+                        this.handleChangeTab(e)
+                    }}>
                         {Object.keys(mainTabs).map((item) => (
                             <Option value={item}>
                                 {mainTabs[item].tabName(item, counts, countsWithNew)}

@@ -30,10 +30,10 @@ const strategies = [
         description: `This strategy designed for sellers who know what ACoS they are targeting. Make sure you've correctly calculated your Target ACoS. <br/>Press start and see how the algorithm is making changes to get the results you want.`,
         descriptionTitle: 'Get the desired ACoS!',
         value: {
-            Spend: "Mid",
-            Profit: "Low",
-            ACOS: "Mid",
-            Traffic: "Mid"
+           'Spend/Rev.': "91%",
+            'Profit/Rev.': "18%",
+            'ACoS': "36%",
+            'Daily Traffic': "~ 250 clicks"
         }
     },
     {
@@ -44,10 +44,10 @@ const strategies = [
         description: `Strategy designed for sellers who wants to launch or relaunch the product. The algorithm will be more aggressive with the bids, so you will get your first sales, reviews, and increase your brand awareness. It works fantastic with other launch activities like giveaways and promotions.`,
         descriptionTitle: 'Launch my product!',
         value: {
-            Spend: "High",
-            Profit: "Low",
-            ACOS: "High",
-            Traffic: "High"
+            'Spend/Rev.': "18%",
+            'Profit/Rev.': "< 5%",
+            'ACoS': "62%",
+            'Daily Traffic': "~ 250 clicks"
         }
     },
     {
@@ -58,10 +58,10 @@ const strategies = [
         description: `This strategy designed for sellers who want to keep their organic ranking positions with PPC efforts. So they can make more profit from Organic Sales. It will achieve your break-even ACoS to keep higher sales from ads that will lead to growing your organic sales.`,
         descriptionTitle: 'Leverage organic sales!',
         value: {
-            Spend: "Mid",
-            Profit: "High",
-            ACOS: "Mid",
-            Traffic: "High"
+            'Spend/Rev.': "12%",
+            'Profit/Rev.': "26%",
+            'ACoS': "32%",
+            'Daily Traffic': "~ 240 clicks"
         }
     },
     {
@@ -72,10 +72,10 @@ const strategies = [
         description: `This strategy designed for sellers who want to boost their overall sales, so to rank for more keywords. It requires increasing your advertising budget and keeping the ACoS higher than your break-even ACoS.`,
         descriptionTitle: 'Let’s grow your numbers!',
         value: {
-            Spend: "High",
-            Profit: "Mid",
-            ACOS: "High",
-            Traffic: "High"
+            'Spend/Rev.': "18%",
+            'Profit/Rev.': "14%",
+            'ACoS': "38%",
+            'Daily Traffic': "~ 390 clicks"
         }
     },
     {
@@ -86,10 +86,10 @@ const strategies = [
         description: `This strategy designed for sellers who want to increase their PPC profit. The Software will optimize all the bleeding and unprofitable keywords with proper bid management to get the best converting ad position possible.`,
         descriptionTitle: 'Maximize my PPC Profit!',
         value: {
-            Spend: "Low",
-            Profit: "High",
-            ACOS: "Low",
-            Traffic: "Mid"
+            'Spend/Rev.': "7%",
+            'Profit/Rev.': "22%",
+            'ACoS': "24%",
+            'Daily Traffic': "~ 100 clicks"
         }
     },
 ];

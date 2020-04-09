@@ -16,7 +16,7 @@ const ConfirmActionPopup = ({title, description, visible, handleOk, handleCancel
                 'data-intercom-target': 'confirm-action-button'
             }}
         >
-            {description}
+            <p>{description}</p>
             {checkboxText && visible && <div>
                 <Checkbox onChange={handleChangeCheckbox}>{checkboxText}</Checkbox>
             </div>}

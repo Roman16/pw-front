@@ -6,7 +6,6 @@ import SubscriptionPlan from './SubscriptionPlan';
 import CancelAccountWindow from './DrawerWindows/CancelAccountWindow';
 import Reactivate from './DrawerWindows/Reactivate';
 import './Subscription.less';
-import './DrawerWindows/CancelAccountWindow.less';
 import './DrawerWindows/Reactivate.less';
 import {useSelector, useDispatch} from "react-redux";
 import {userService} from "../../../services/user.services";
@@ -193,27 +192,32 @@ const Subscription = () => {
                 />
             ))}
 
-            <Billing />
+            <Billing/>
 
-            <Drawer
-                className="cancel-account"
+            <Modal
+                className="cancel-account reactivate-account"
                 placement="right"
                 closable
                 onClose={() => openAccountWindow(false)}
+
                 visible={openedAccountWindow}
+
+                onCancel={handleCancelSubscription}
+                onOk={() => openAccountWindow(false)}
+
+                okText="Keep my account active"
+                cancelText="I want to cancel"
             >
                 <CancelAccountWindow
-                    onCancel={handleCancelSubscription}
-                    onClose={() => openAccountWindow(false)}
                 />
-            </Drawer>
+            </Modal>
 
             <Modal
                 className="reactivate-account"
                 closable
                 centered
-                okText="Reactivate my account"
                 onOk={handleReactivateSubscription}
+                okText="Reactivate my account"
                 cancelText="Cancel"
                 onCancel={() => openReactivateWindow(false)}
                 visible={openedReactivateWindow}

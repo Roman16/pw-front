@@ -3,6 +3,7 @@ import {loadProgressBar} from 'axios-progress-bar';
 import {notification} from '../components/Notification';
 
 import {history} from '../utils/history';
+import {userService} from "./user.services";
 
 const baseUrl =
     process.env.REACT_APP_ENV === 'production'
@@ -46,7 +47,11 @@ const api = (method, url, data, type, abortToken) => {
 
         })
             .then(result => {
-                if (result.status === 200 || result.status === 207) {
+                if(result.status === 208) {
+                    resolve({
+                        status: 'already'
+                    });
+                }else if (result.status === 200 || result.status === 207) {
                     resolve(result.data);
                 } else {
                     reject(null);
@@ -57,9 +62,12 @@ const api = (method, url, data, type, abortToken) => {
                 if (error.response && error.response.status === 401) {
                     history.push('/login');
                     localStorage.clear();
-                }
-
-                if (error.response) {
+                } else if (error.response && error.response.status === 412) {
+                    userService.resendConfirmEmail()
+                        .then(() => {
+                            history.push('/confirm-email');
+                        })
+                } else if (error.response) {
                     if (error.response.status === 500 && (!error.response.data || !error.response.data.message)) {
                         handlerErrors('Something wrong!');
                         reject(error);

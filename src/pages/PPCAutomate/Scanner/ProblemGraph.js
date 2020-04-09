@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {
-    PieChart, Pie, Tooltip, Sector, Cell, ResponsiveContainer
+    PieChart, Pie, Tooltip, Sector, Cell, ResponsiveContainer, Label, Text
 } from 'recharts';
 import notDataImage from '../../../assets/img/not-data-image.svg';
 import {round} from "../../../utils/round";
@@ -72,8 +72,8 @@ const ProblemGraph = ({problemsCount = {}}) => {
             {problemsCount.DuplicateKeywords >= 0 ?
                 <div className='graph'>
                     <div className='graph-block'>
-                        <ResponsiveContainer height={240} width={240}>
-                            <PieChart width={240} height={240}>
+                        <ResponsiveContainer height={'100%'} width={240}>
+                            <PieChart width={240} height={'100%'}>
                                 <Pie
                                     data={data}
                                     labelLine={false}
@@ -91,11 +91,31 @@ const ProblemGraph = ({problemsCount = {}}) => {
                                     // onMouseLeave={() => setSector(null)}
                                 >
                                     {data.map((entry, index) => {
-                                        return(
+                                        return (
                                             <Cell
                                                 key={`cell-${index}`}
                                                 fill={COLORS[index % COLORS.length]}
-                                            />)})}
+                                            />)
+                                    })}
+
+                                    <Label content={({viewBox: {cx, cy}}) => {
+                                        const positioningProps = {
+                                                x: cx,
+                                                y: cy,
+                                                textAnchor: 'middle',
+                                                verticalAnchor: 'middle',
+                                            },
+                                            stylingProps = {
+                                                fontSize: '32px',
+                                                fontFamily: 'ir',
+                                                color: '#363694'
+                                            };
+
+                                        return (
+                                            <Text {...positioningProps}
+                                                  style={stylingProps}>{data && data.length}</Text>
+                                        )
+                                    }}/>
                                 </Pie>
 
                                 <Tooltip
@@ -109,6 +129,10 @@ const ProblemGraph = ({problemsCount = {}}) => {
                             <div key={item.name}>
                                 <div className="color" style={{backgroundColor: COLORS[index]}}/>
                                 <div className='mistake'>{item.name}</div>
+
+                                <div className="value">
+                                    {item.value}
+                                </div>
 
                                 <div className="percent">
                                     {round((100 / Object.values(problemsCount).reduce((a, b) => a + b)) * item.value, 0) >= 0 ?

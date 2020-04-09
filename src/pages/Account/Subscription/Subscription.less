@@ -29,7 +29,7 @@
 
       .reactivate-title {
         font-size: 1.1429rem; // 16px
-        color: @third-default-dark;
+        color: #343C5A;
         margin: 0;
       }
 
@@ -37,6 +37,7 @@
         font-size: 1.0714285714285714rem; // 15px
         color: @third-default-dark;
         margin: 0;
+        padding: 0 10px;
 
         .reactivate-data {
           font-weight: 600;
@@ -48,15 +49,20 @@
         width: 13em;
         height: 2em;
         position: relative;
-        border-radius: 0.6667em;
         color: @white;
-        background-color: #8fd39d;
 
         .reactivate-img {
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
           right: 1em;
+
+          display: flex;
+          align-items: center;
+
+          svg {
+            width: 1.2857142857142858rem;
+          }
         }
       }
     }
@@ -70,6 +76,7 @@
       .ppc {
         min-width: 150px;
         height: 100%;
+        width: 20%;
         display: flex;
         flex-flow: column;
         justify-content: space-between;
@@ -88,7 +95,7 @@
 
           .ppc-title {
             font-size: 1.7142857142857142rem; // 24px
-            color: @second-account-color;
+            color: #343C5A;
             margin: 0;
           }
         }
@@ -135,12 +142,13 @@
           border-radius: 0.8em;
           background-color: #f3f7fd;
           margin-bottom: 1em;
+          letter-spacing: .2px;
 
           .subscription-plan {
             width: max-content;
             font-size: 1.1429rem; // 16px
             font-weight: 600;
-            color: #38454F;
+            color: #343C5A;
             margin: 3px 25px 0 0;
           }
 
@@ -205,6 +213,7 @@
               flex-direction: column;
               align-items: center;
               color: #7DD4A1;
+              padding: 0 0 0 5px;
 
               div {
                 font-size: 0.8571428571428571rem; // 12px
@@ -432,13 +441,15 @@
         margin: auto 0 auto auto;
 
         .on-subscribe {
-          margin: auto 0 0 0;
+          margin: auto 0 0 auto;
         }
 
         .btn {
           width: 100%;
-          height: 4em;
+          max-width: 14.85714286rem;
+          height: 40px;
           font-size: 1.1428571428571428rem;
+          margin: 0 0 0 auto;
 
           a {
             font-size: 1.1428571428571428rem;
@@ -462,7 +473,6 @@
         .automate {
           .plan {
             margin-right: 0;
-            margin-left: 40px;
           }
         }
       }
@@ -477,6 +487,10 @@
         .automate {
           display: grid;
           grid-template-areas: "ppcDescription cancelBlock" "plan plan";
+
+          .ppc {
+            width: 100%;
+          }
 
           .plan {
             width: 100%;

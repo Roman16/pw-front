@@ -31,16 +31,14 @@
   .custom-table {
     .table-overflow {
       &::-webkit-scrollbar {
-        height: 10px;
+        height: 7px;
       }
     }
 
     .table-pagination {
-      margin-right: 7em;
+      margin-right: 60px;
 
       @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
-        margin-right: 9em;
-
         .ant-select-selection-selected-value {
           align-items: center;
         }
@@ -397,6 +395,7 @@ div.ReportTable {
       align-items: center;
       margin: 0 8px 0 0;
       border-radius: 1em;
+      color: #343C5A;
 
       span {
         text-align: center;
@@ -423,7 +422,6 @@ div.ReportTable {
 
     .download-btn {
       font-size: 1rem;
-      width: 9em;
       height: 2.2857142857142856rem;
       display: flex;
       justify-content: space-around;
@@ -437,8 +435,8 @@ div.ReportTable {
 
 
       svg {
-        width: 2em;
-        height: 2em;
+        width: 1.5rem;
+        height: 1.5rem;
         margin: 0 0 2px 3px;
       }
     }
@@ -582,7 +580,7 @@ div.ReportTable {
   }
 
 
-  @media (max-width: 850px) {
+  @media (max-width: 1000px) {
     .tabs {
       &.desc {
         display: none;

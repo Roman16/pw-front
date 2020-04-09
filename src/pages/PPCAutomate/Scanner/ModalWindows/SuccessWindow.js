@@ -1,17 +1,17 @@
 import React, {Fragment} from "react";
-import successImage from "../../../../assets/img/checked-image.svg";
+import {SVG} from "../../../../utils/icons";
 
 const SuccessWindow = ({onClose}) => (
     <Fragment>
-        <img src={successImage} alt=""/>
+        <SVG id={'scanner-success'}/>
 
         <h2>Success</h2>
 
-        <span>You can check the report now</span>
+        <p>You can check the report now</p>
 
         <div className='actions'>
             <button className='btn default' onClick={onClose}>
-                OK
+                Ok
             </button>
         </div>
     </Fragment>

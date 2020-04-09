@@ -1,7 +1,7 @@
 import React, {Fragment, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import {Spin} from "antd";
-import ppcIcon from "../../../assets/img/icons/ppc-automate-icon.svg";
+import ppcIcon from "../../../assets/img/icons/ppc-automate-subscription-logo.svg";
 import moment from "moment";
 import {numberMask} from "../../../utils/numberMask";
 import {history} from "../../../utils/history";
@@ -130,7 +130,7 @@ const SubscriptionPlan = ({
                     className="reactivate-data">{moment(product.grace_period.on_grace_period_until).format('MMMM DD, YYYY')}</span>)}
                 </p>
                 <button
-                    className="reactivate-btn"
+                    className="btn green-btn reactivate-btn"
                     type="button"
                     onClick={() => onOpenReactivateWindow(product)}
                 >
@@ -144,7 +144,8 @@ const SubscriptionPlan = ({
             <div className="automate">
                 <div className="ppc">
                     <div className="ppc-title-wrap">
-                        <img  src={ppcIcon} alt="icon" className='ppc-icon'/>
+                        {/*<SVG id={'ppc-automate-subscription-logo'}/>*/}
+                        <img className='ppc-icon' src={ppcIcon} alt=""/>
                         <h2 className="ppc-title">{product.productName}</h2>
                     </div>
                     <p className="ppc-text">

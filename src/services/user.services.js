@@ -9,6 +9,9 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
 export const userService = {
     login,
     loginWithAmazon,
+    sendEmailForResetPassword,
+    checkResetToken,
+    changeUserPassword,
     regist,
     resendConfirmEmail,
     confirmEmail,
@@ -53,12 +56,25 @@ function regist(user) {
     return api('post', userUrls.regist, user);
 }
 
+
+function sendEmailForResetPassword(email) {
+    return api('post', userUrls.resetEmail, email);
+}
+
+function checkResetToken({userId, token}) {
+    return api('get', `${userUrls.checkToken}/${userId}/${token}`);
+}
+
+function changeUserPassword({userId, token, newPassword}) {
+    return api('post', `${userUrls.resetPassword}/${userId}/${token}`, newPassword);
+}
+
 function resendConfirmEmail() {
     return api('post', userUrls.resendEmail);
 }
 
-function confirmEmail() {
-    return api('post', userUrls.confirmEmail);
+function confirmEmail({token}) {
+    return api('post', `${userUrls.confirmEmail}/${token}`, {token});
 }
 
 function getUserInfo() {

@@ -90,10 +90,26 @@
   .ant-modal-content {
     display: flex;
     flex-direction: column;
+    position: relative;
+
   }
 
   .ant-modal-body {
     margin: 0 0 auto 0;
+    flex: 1;
+    overflow: auto;
+    padding-top: 90px;
+    padding-bottom: 20px;
+
+    .modal-title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: #fff;
+      padding: 20px 0;
+    }
 
     .visible-list {
       display: grid;
@@ -166,7 +182,9 @@
   }
 
   .ant-modal-footer {
-    padding-bottom: 20px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #f5f5ff;
 
     @media (max-width: 600px) {
       padding-left: 50px;

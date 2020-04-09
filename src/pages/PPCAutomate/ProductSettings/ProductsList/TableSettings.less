@@ -59,7 +59,6 @@
 
         .Dollar {
           font-size: 1.142857142857143rem; // 16px
-          width: 1em;
         }
 
         .ant-input-number {
@@ -99,10 +98,31 @@
         }
       }
 
+      .ant-input-suffix {
+        i {
+          display: none;
+        }
+
+        svg {
+          width: 1.2857142857142858rem;
+          height: 1.2857142857142858rem;
+        }
+      }
+
       input {
         height: 2.2857143em;
         border: 0;
         border-radius: 0.5714286em;
+
+        transition: 0s !important;
+
+        &:focus {
+          transition: 0s !important;
+
+          -webkit-box-shadow: none;
+          box-shadow: none;
+          border: 1px solid rgba(24, 144, 255, 0.2);
+        }
       }
 
       i {
@@ -146,6 +166,7 @@
 
       span {
         font-size: 1rem; // 14px
+        color: #343C5A;
       }
     }
 

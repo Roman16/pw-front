@@ -18,7 +18,8 @@ export const userActions = {
     reSetState,
     getPersonalUserInfo,
     unsetAccount,
-    resetChangesCount
+    resetChangesCount,
+    setPpcStatus
 };
 
 function login(user) {
@@ -26,6 +27,12 @@ function login(user) {
         userService.login(user)
             .then(res => {
                 localStorage.setItem('token', res.access_token);
+
+                dispatch(setInformation({
+                    user: {
+                        email: user.email
+                    }
+                }));
 
                 dispatch(getUserInfo());
             });
@@ -49,6 +56,11 @@ function logOut() {
     return dispatch => {
         history.push('/login');
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+
+        dispatch(setInformation({
+            user: {}
+        }));
     };
 }
 
@@ -64,15 +76,19 @@ function regist(user) {
     return dispatch => {
         userService.regist(user)
             .then(res => {
-                dispatch(setInformation(res.data));
-
-                window.dataLayer.push({
-                    'event': 'Registration',
-                });
+                dispatch(setInformation({
+                    user: {
+                        email: user.email
+                    }
+                }));
 
                 localStorage.setItem('token', res.access_token);
 
-                dispatch(getUserInfo());
+                window.dataLayer && window.dataLayer.push && window.dataLayer.push({
+                    'event': 'Registration',
+                });
+
+                history.push('/confirm-email')
             });
     };
 }
@@ -85,7 +101,7 @@ function setMWS(data) {
             if (!data.account_links[0].amazon_ppc.is_connected) {
                 history.push('/ppc');
             } else {
-                history.push((data.notifications.account_bootstrap && (data.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization/loading' : '/ppc/optimization');
+                history.push((data.notifications.account_bootstrap && (data.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization-loading' : '/ppc/optimization');
             }
         }
     };
@@ -107,7 +123,7 @@ function getUserInfo() {
         userService.getUserInfo().then(res => {
             const user = store.getState().user.user || null;
 
-            if(user && (user.id !== res.user.id)) {
+            if (user && (user.id !== res.user.id)) {
                 dispatch({
                     type: productsConstants.SET_PRODUCT_LIST,
                     payload: {
@@ -128,6 +144,8 @@ function getUserInfo() {
                 });
             }
 
+            localStorage.setItem('userId', res.user.id);
+
             dispatch(setInformation(res));
             window.Intercom("boot", {
                 app_id: "hkyfju3m",
@@ -141,7 +159,7 @@ function getUserInfo() {
             } else if (!res.account_links[0].amazon_ppc.is_connected) {
                 history.push('/ppc');
             } else {
-                history.push((res.notifications.account_bootstrap && (res.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization/loading' : '/ppc/optimization');
+                history.push((res.notifications.account_bootstrap && (res.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization-loading' : '/ppc/optimization');
             }
         });
     };
@@ -161,18 +179,21 @@ function getAuthorizedUserInfo() {
     return dispatch => {
         userService.getUserInfo()
             .then(res => {
-            dispatch(setInformation(res));
+                dispatch(setInformation(res));
 
-            if (!res.account_links[0].amazon_mws.is_connected) {
-                history.push('/mws');
-            } else if (!res.account_links[0].amazon_ppc.is_connected) {
-                history.push('/ppc');
-            }
-        });
+                if (!res.account_links[0].amazon_mws.is_connected) {
+                    history.push('/mws');
+                } else if (!res.account_links[0].amazon_ppc.is_connected) {
+                    history.push('/ppc');
+                }
+            });
     };
 }
 
 function setInformation(user) {
+
+    localStorage.setItem('userId', user.user.id);
+
     return {
         type: userConstants.SET_INFORMATION,
         payload: user
@@ -198,4 +219,11 @@ function updateUserInformation(user) {
                 notification.success({title: 'Completed'})
             });
     };
+}
+
+function setPpcStatus(status) {
+    return {
+        type: userConstants.SET_PPC_STATUS,
+        payload: status
+    }
 }

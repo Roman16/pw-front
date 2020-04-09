@@ -6,6 +6,7 @@ import {notification} from "../../../../components/Notification";
 import {userActions} from "../../../../actions/user.actions";
 import amazonImage from '../../../../assets/img/amazon.png';
 import {SVG} from "../../../../utils/icons";
+import Cookies from 'js-cookie';
 
 class LoginPageForm extends React.Component {
     state = {
@@ -14,7 +15,8 @@ class LoginPageForm extends React.Component {
         remember_me: false,
         isLoading: false,
         loginSuccess: false,
-        passwordType: true
+        passwordType: true,
+        processing: false
     };
 
     onChange = ({target}) => {
@@ -65,6 +67,7 @@ class LoginPageForm extends React.Component {
             email,
             password,
             remember_me,
+            ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
         });
 
         this.setState({
@@ -84,7 +87,7 @@ class LoginPageForm extends React.Component {
 
 
     render() {
-        const {email, password, isLoading, loginSuccess, passwordType} = this.state;
+        const {email, password, isLoading, loginSuccess, passwordType, processing} = this.state;
 
         if (isLoading) {
             return (
@@ -123,7 +126,8 @@ class LoginPageForm extends React.Component {
                         autoComplete="off"
                         value={password}
                         onChange={this.onChange}
-                        suffix={<span onClick={this.switchPasswordType}><SVG id={passwordType ? 'eye-closed' : 'eye-opened'}/></span>}
+                        suffix={<span onClick={this.switchPasswordType}><SVG
+                            id={passwordType ? 'eye-closed' : 'eye-opened'}/></span>}
                     />
                 </Form.Item>
 
@@ -134,12 +138,12 @@ class LoginPageForm extends React.Component {
                         Remember me
                     </Checkbox>
 
-                    <a
+                    <Link
                         className="login-form-forgot forget"
-                        href="https://profitwhales.com/password/reset"
+                        to="/reset-password"
                     >
                         Forgot password?
-                    </a>
+                    </Link>
                 </Row>
 
                 <div className='terms-and-privacy'>
@@ -154,6 +158,8 @@ class LoginPageForm extends React.Component {
 
                 <button className="btn default">
                     sign in
+
+                    {processing && <Spin/>}
                 </button>
 
                 {/*<div className="login-with-amazon">*/}

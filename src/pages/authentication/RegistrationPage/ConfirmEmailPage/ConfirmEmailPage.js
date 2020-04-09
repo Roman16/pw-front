@@ -1,8 +1,10 @@
 import React, {useEffect, useState, Fragment} from 'react';
+import {useSelector} from "react-redux";
 import {history} from "../../../../utils/history";
 import logo from "../../../../assets/img/ProfitWhales-logo-white.svg";
 import {Link} from "react-router-dom";
 import './ConfirmEmailPage.less';
+import '../../LoginPage/LoginPage.less';
 import {userService} from "../../../../services/user.services";
 import {notification} from "../../../../components/Notification";
 import {Spin} from "antd";
@@ -15,16 +17,28 @@ const ConfirmEmailPage = (props) => {
         [disableResend, setDisableResend] = useState(false),
         [disabledTimer, setDisabledTimer] = useState(60);
 
+    const {email} = useSelector(state => ({
+        email: state.user.user.email
+    }));
 
     const onResend = async () => {
         setDisableResend(true);
 
         try {
-            await userService.resendConfirmEmail();
+            const res = await userService.resendConfirmEmail();
+
+            if (res.status === 'already') {
+                notification.success({title: 'Email already confirmed'});
+
+                setTimeout(() => {
+                    history.push('/account-settings')
+                }, 2000)
+            } else {
+                setConfirmStatus('dont-confirm');
+            }
 
             intervalId = setInterval(() => {
                 setDisabledTimer((prevCount) => {
-                    console.log(prevCount);
                     return prevCount - 1
                 })
             }, 1000);
@@ -45,15 +59,21 @@ const ConfirmEmailPage = (props) => {
     }, [disabledTimer]);
 
     useEffect(() => {
-        if (props.location.search && props.location.search.indexOf('?verify_token=') !== -1) {
-            notification.error({title: props.location.search.split('?verify_token=')[1]});
+        if (props.match.params && props.match.params.token) {
+            userService.confirmEmail({
+                token: props.match.params.token
+            })
+                .then((res) => {
+                    // setConfirmStatus('success');
 
-            userService.confirmEmail()
-                .then(() => {
-                    setConfirmStatus('success')
+                    localStorage.setItem('token', res.access_token);
+
+                    setTimeout(() => {
+                        history.push('/account-settings')
+                    }, 1)
                 })
                 .catch(() => {
-                    setConfirmStatus('dont-confirm');
+                    setConfirmStatus('error');
                 })
         } else {
             setConfirmStatus('dont-confirm');
@@ -74,15 +94,45 @@ const ConfirmEmailPage = (props) => {
 
                     <div className="confirm-status">
                         {!confirmStatus && <Spin size={'large'}/>}
+                        {/*--------------------------------------*/}
+                        {/*--------------------------------------*/}
+                        {/*--------------------------------------*/}
 
                         {confirmStatus === 'dont-confirm' && <Fragment>
                             <h4>
-                                We sent the email with a confirmation link.
-                                <br/>
-                                If you didn't receive the email, click resend.
+                                Check your email
                             </h4>
 
-                            {disableResend && <span>{disabledTimer}</span>}
+                            <p>
+                                We’ve sent you an email to confirm your email address, simply tap the ‘Confirm’ button
+                                in the email sent to <br/>
+                                <a href={`mailto: ${email}`}>{email}</a>
+                            </p>
+
+                            {/*{disableResend && <span>{disabledTimer}</span>}*/}
+
+                            <button
+                                className='btn default'
+                                onClick={onResend}
+                                disabled={disableResend}
+                            >
+                                resend
+                            </button>
+                        </Fragment>}
+                        {/*--------------------------------------*/}
+                        {/*--------------------------------------*/}
+                        {/*--------------------------------------*/}
+
+                        {confirmStatus === 'error' &&
+                        <Fragment>
+                            <h3>
+                                Oops
+                            </h3>
+
+                            <p>
+                                Something went wrong with your account confirmation, and please click resend and check
+                                your email to confirm it.
+                            </p>
 
                             <button
                                 className='btn default'
@@ -94,10 +144,22 @@ const ConfirmEmailPage = (props) => {
                         </Fragment>}
 
 
-                        {confirmStatus === 'success' &&
-                        <h4>
-                            Thank you for confirming email
-                        </h4>}
+                        {/*--------------------------------------*/}
+                        {/*--------------------------------------*/}
+                        {/*--------------------------------------*/}
+                        {/*{confirmStatus === 'success' &&*/}
+                        {/*<Fragment>*/}
+                        {/*    <h3>*/}
+                        {/*        Thank you for confirming email*/}
+                        {/*    </h3>*/}
+
+                        {/*    <button*/}
+                        {/*        className='btn default'*/}
+                        {/*        onClick={() => history.push('/account-settings')}*/}
+                        {/*    >*/}
+                        {/*        sign in*/}
+                        {/*    </button>*/}
+                        {/*</Fragment>}*/}
                     </div>
                 </div>
             </div>

@@ -11,6 +11,7 @@ import "./Sidebar.less";
 import {history} from "../../utils/history";
 import {SVG} from "../../utils/icons";
 import '../../style/variables.less';
+import InformationTooltip from "../Tooltip/Tooltip";
 
 const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
@@ -23,7 +24,7 @@ const Sidebar = () => {
         {user, notFirstEntry, bootstrapInProgress} = useSelector(state => ({
             user: state.user,
             notFirstEntry: state.user.notFirstEntry,
-            bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
+            bootstrapInProgress: state.user.notifications && state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
         }));
 
 
@@ -45,7 +46,7 @@ const Sidebar = () => {
 
     useEffect(() => {
         dispatch(userActions.getPersonalUserInfo());
-        window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
+        window.innerWidth < 1132 ? setCollapsed(false) : setCollapsed(true);
 
         document.querySelector('body').classList.add('visible-intercom');
 
@@ -82,11 +83,11 @@ const Sidebar = () => {
                         <h5>{activeCountry.name}</h5>
                     </div>
 
-                    <div className="country-active__description">
-                        {user.default_accounts
-                            ? user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
-                            : ""}
-                    </div>
+                    {user.default_accounts && user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
+                        ? <div className="country-active__description">
+                            {user.default_accounts.amazon_mws.seller_id}
+                        </div>
+                        : ""}
                 </div>
 
                 <nav className="top-nav">
@@ -153,7 +154,7 @@ const Sidebar = () => {
                                             to={item.soon && (production && user.user.id !== 714) ?
                                                 '/'
                                                 :
-                                                item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization/loading' : `/ppc/${item.link}`}
+                                                item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization-loading' : `/ppc/${item.link}`}
                                             onClick={e => {
                                                 if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
                                             }}
@@ -221,9 +222,9 @@ const Sidebar = () => {
 
                 <nav className="bottom-nav">
                     <ul className="bottom-nav-list">
-                        <li className="bottom-nav-item">
+                        <li className={`bottom-nav-item ${bootstrapInProgress && 'disabled-link'} `}>
                             <a
-                                href="/ppc/optimization?product_tour_id=108046"
+                                href={bootstrapInProgress ? '#' : "/ppc/optimization?product_tour_id=108046"}
                             >
                                 <div className="link-icon">
                                     <SVG id='how-it-works'/>
@@ -244,7 +245,10 @@ const Sidebar = () => {
                                     <SVG id='account'/>
                                 </div>
 
-                                <span className="bottom-span">Account</span>
+                                <span className="bottom-span">
+                                    Account
+                                    {/*<InformationTooltip type={'warning'} description={'test test test test test test test test  test test test test test test test test test '}/>*/}
+                                </span>
                             </NavLink>
                         </li>
 

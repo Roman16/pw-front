@@ -70,7 +70,7 @@ export const newKeywords = ({
                     title: 'Daily Budget',
                     dataIndex: 'd_dailyBudget',
                     key: 'd_dailyBudget',
-                    width: '11em',
+                    width: '12em',
                     render: text => (text != null && <span>{`$${numberMask(text)}`}</span>),
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
@@ -99,6 +99,7 @@ export const newKeywords = ({
                     title: 'Campaign',
                     dataIndex: 'd_campaignName',
                     key: 'd_campaignName',
+                    minWidth: '10em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnTextFilter
                         onChangeFilter={onChangeFilter}
@@ -110,6 +111,7 @@ export const newKeywords = ({
                     title: 'Ad Group',
                     dataIndex: 'd_adGroupName',
                     key: 'd_adGroupName',
+                    minWidth: '10em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnTextFilter
                         onChangeFilter={onChangeFilter}
@@ -301,7 +303,7 @@ export const newKeywords = ({
                     title: 'Match Type',
                     dataIndex: 'd_keywordMatchType',
                     key: 'd_keywordMatchType',
-                    width: '9.5em',
+                    width: '11em',
                     render: (str) => (<span className="capitalize-field">{str}</span>),
                     sorter: true,
                     filter: (dataIndex) => <ColumnMenuFilter
@@ -319,7 +321,7 @@ export const newKeywords = ({
                     title: 'Bid',
                     dataIndex: 'd_bid',
                     key: 'd_bid',
-                    width: '6em',
+                    width: '7em',
                     render: text => (text != null && <span>${numberMask(text, 2)}</span>),
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
@@ -339,7 +341,7 @@ export const newKeywords = ({
                     ),
                     dataIndex: 'd_customerSearchTermClicks',
                     key: 'd_customerSearchTermClicks',
-                    width: '11em',
+                    width: '13em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -351,7 +353,7 @@ export const newKeywords = ({
                     title: 'CST Spend',
                     dataIndex: 'd_customerSearchTermSpend',
                     key: 'd_customerSearchTermSpend',
-                    width: '9.5em',
+                    width: '10.5em',
                     render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
@@ -364,7 +366,7 @@ export const newKeywords = ({
                     title: 'CST Sales',
                     dataIndex: 'd_customerSearchTermSales',
                     key: 'd_customerSearchTermSales',
-                    width: '9em',
+                    width: '10em',
                     render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
@@ -384,7 +386,7 @@ export const newKeywords = ({
                     dataIndex: 'd_customerSearchTermACoS',
                     key: 'd_customerSearchTermACoS',
                     render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
-                    width: '10.5em',
+                    width: '12.5em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -404,7 +406,7 @@ export const newKeywords = ({
                     dataIndex: 'd_customerSearchTermCPC',
                     key: 'd_customerSearchTermCPC',
                     render: text => (text != null && <span>${numberMask(text, 2)}</span>),
-                    width: '10em',
+                    width: '12em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -423,7 +425,7 @@ export const newKeywords = ({
                     dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                     key: 'd_targetACoSCalculation_d_targetACoS',
                     render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
-                    width: '12em',
+                    width: '13em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}

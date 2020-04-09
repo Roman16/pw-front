@@ -20,6 +20,7 @@ const pausedKeywordNoSales = 'paused-keyword-no-sales';
 const pausedKeywordDuplicate = 'paused-keyword-duplicate';
 const pausedKeywordDuplicateOfPAT = 'paused-keyword-duplicate-of-pat';
 const pausedKeywordDuplicateFromCustomerSearchTerm = 'paused-keyword-duplicate-from-customer-search-term';
+const revertLastChangeKeywordNoSales = 'revert-last-change-keyword-no-sales';
 
 export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
 
@@ -65,7 +66,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
             title: 'Match Type',
             dataIndex: 'd_keywordMatchType',
             key: 'd_keywordMatchType',
-            width: '10em',
+            width: '11em',
             render: (str) => (<span className="capitalize-field"> {str}</span>),
             sorter: true,
             filter: (dataIndex) => <ColumnMenuFilter
@@ -110,7 +111,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     ),
                     dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                     key: 'd_targetACoSCalculation_d_targetACoS',
-                    width: '12em',
+                    width: '13em',
                     sorter: true,
                     render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
                     filter: (dataIndex) => <ColumnNumberFilter
@@ -124,7 +125,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     title: 'Clicks',
                     dataIndex: 'd_keywordClicks',
                     key: 'd_keywordClicks',
-                    width: '6.5em',
+                    width: '8em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -137,7 +138,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     dataIndex: 'd_keywordSpend',
                     key: 'd_keywordSpend',
                     render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
-                    width: '7em',
+                    width: '8em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -150,7 +151,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     dataIndex: 'd_keywordSales',
                     key: 'd_keywordSales',
                     render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
-                    width: '6.5em',
+                    width: '7.5em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -174,7 +175,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     title: 'Impressions',
                     dataIndex: 'd_keywordImpressions',
                     key: 'd_keywordImpressions',
-                    width: '10em',
+                    width: '11em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -192,7 +193,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     ),
                     dataIndex: 'd_targetImpressions',
                     key: 'd_targetImpressions',
-                    width: '15em',
+                    width: '16em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -233,7 +234,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     ),
                     dataIndex: 'd_targetACoSCalculation_d_targetACoS',
                     key: 'd_targetACoSCalculation_d_targetACoS',
-                    width: '12em',
+                    width: '13em',
                     render: text => <span>{text && `${round(+text * 100, 2)}%`}</span>,
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
@@ -247,7 +248,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     title: 'Clicks',
                     dataIndex: 'd_keywordClicks',
                     key: 'd_keywordClicks',
-                    width: '6.5em',
+                    width: '8.5em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -259,7 +260,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     title: 'Spend',
                     dataIndex: 'd_keywordSpend',
                     key: 'd_keywordSpend',
-                    width: '7em',
+                    width: '8em',
                     render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
@@ -272,7 +273,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     title: 'Sales',
                     dataIndex: 'd_keywordSales',
                     key: 'd_keywordSales',
-                    width: '6.5em',
+                    width: '7.5em',
                     render: (sales) => (sales && <span>${numberMask(sales, 2)}</span>),
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
@@ -300,7 +301,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     title: 'Clicks',
                     dataIndex: 'd_keywordClicks',
                     key: 'd_keywordClicks',
-                    width: '6.5em',
+                    width: '8.5em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -312,7 +313,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     title: 'Spend',
                     dataIndex: 'd_keywordSpend',
                     key: 'd_keywordSpend',
-                    width: '7em',
+                    width: '8em',
                     render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
@@ -334,7 +335,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     title: 'Origin Campaign',
                     dataIndex: 'd_originCampaignName',
                     key: 'd_originCampaignName',
-                    width: '13em',
+                    width: '14em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnTextFilter
                         onChangeFilter={onChangeFilter}
@@ -371,7 +372,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     dataIndex: 'd_originKeywordMatchType',
                     key: 'd_originKeywordMatchType',
                     render: (str) => (<span className="capitalize-field">{str}</span>),
-                    width: '13.5em',
+                    width: '14.5em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnMenuFilter
                         onChangeFilter={onChangeFilter}
@@ -409,7 +410,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     title: 'Origin Campaign',
                     dataIndex: 'd_originCampaignName',
                     key: 'd_originCampaignName',
-                    width: '13em',
+                    width: '14em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnTextFilter
                         onChangeFilter={onChangeFilter}
@@ -440,7 +441,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     dataIndex: 'd_originPATType',
                     key: 'd_originPATType',
                     render: str => <span className="capitalize-field">{str}</span>,
-                    width: '13.5em',
+                    width: '14.5em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnMenuFilter
                         onChangeFilter={onChangeFilter}
@@ -463,7 +464,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     dataIndex: 'd_originPATIntentType',
                     key: 'd_originPATIntentType',
                     render: text => <span>{patIntentValues[text]}</span>,
-                    width: '16.5em',
+                    width: '17.5em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnMenuFilter
                         onChangeFilter={onChangeFilter}
@@ -485,7 +486,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     ),
                     dataIndex: 'd_originPATValue',
                     key: 'd_originPATValue',
-                    width: '14em',
+                    width: '15em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnTextFilter
                         onChangeFilter={onChangeFilter}
@@ -506,7 +507,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     title: 'Origin Campaign',
                     dataIndex: 'd_originCampaignName',
                     key: 'd_originCampaignName',
-                    width: '13em',
+                    width: '14em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnTextFilter
                         onChangeFilter={onChangeFilter}
@@ -530,7 +531,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     title: 'Origin Keyword',
                     dataIndex: 'd_originKeywordText',
                     key: 'd_originKeywordText',
-                    width: '12em',
+                    width: '13em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnTextFilter
                         onChangeFilter={onChangeFilter}
@@ -543,7 +544,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     dataIndex: 'd_originKeywordMatchType',
                     key: 'd_originKeywordMatchType',
                     render: (str) => (<span className="capitalize-field">{str}</span>),
-                    width: '13em',
+                    width: '14em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnMenuFilter
                         onChangeFilter={onChangeFilter}
@@ -575,6 +576,43 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     ...infoField
                 }
             ],
+            [revertLastChangeKeywordNoSales]: [
+                ...defaultKeys,
+                {
+                    ...averageCVRField(onChangeFilter, filteredColumns)
+                },
+                {
+                    title: 'Clicks',
+                    dataIndex: 'd_keywordClicks',
+                    key: 'd_keywordClicks',
+                    width: '8.5em',
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
+                    />
+                },
+                {
+                    title: 'Spend',
+                    dataIndex: 'd_keywordSpend',
+                    key: 'd_keywordSpend',
+                    width: '8em',
+                    render: (spend) => (spend && <span>${numberMask(spend, 2)}</span>),
+                    sorter: true,
+                    filter: (dataIndex) => <ColumnNumberFilter
+                        onChangeFilter={onChangeFilter}
+                        filteredColumns={filteredColumns}
+                        dataIndex={dataIndex}
+                    />
+                },
+                {
+                    ...bidActionField
+                },
+                {
+                    ...infoField
+                }
+            ],
         },
         subTabs: [
             {title: <>Changed Keyword Bid (<span className='underline'>ACoS</span>)</>, key: changedKeywordBidAcos},
@@ -584,6 +622,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
             {title: <>Paused Keyword Duplicate</>, key: pausedKeywordDuplicate},
             {title: <>Paused Keyword Duplicate of PAT</>, key: pausedKeywordDuplicateOfPAT},
             {title: <>Paused Keyword Duplicate From CST</>, key: pausedKeywordDuplicateFromCustomerSearchTerm},
+            // {title: <>RevertLastChangeKeyword (<span className='underline'>No Sales</span>)</>, key: revertLastChangeKeywordNoSales},
         ]
     });
 };

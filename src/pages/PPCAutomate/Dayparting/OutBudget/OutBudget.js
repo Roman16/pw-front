@@ -84,7 +84,7 @@ const OutBudget = ({date}) => {
                         cancelToken: source.token
                     });
 
-                    const minValue = Math.min(...res.response.map(item => item.sales).filter(item => item != null)),
+                    const minValue = Math.min(...res.response.map(item => item.sales).filter(item => (item != null && item !== 0))),
                         maxValue = Math.max(...res.response.map(item => item.sales));
 
                     setParams({
@@ -154,7 +154,7 @@ const OutBudget = ({date}) => {
                         </h3>
 
                         <div className="value">
-                            {value != null ? `$${numberMask(value, 2)}` : <div className='no-value'/>}
+                            {(value != null && value !== 0) ? `$${numberMask(value, 2)}` : <div className='no-value'/>}
                         </div>
                     </div>
                 </div>

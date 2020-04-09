@@ -598,9 +598,8 @@ const LandingAutomation = () => {
                         <h1>Engage in Amazon <br/> business <span>not in ads</span></h1>
 
                         <div className='description'>
-                            Imagine that software could save you a ton of time and money while increasing return on your
-                            Amazon ad spending. With the help of our data-driven algorithms and PPC automation software,
-                            it's more than possible.
+                            Profit Whales fully automates Amazon Advertising management for Third-party Sellers and
+                            Brands on Amazon Marketplace in One Click. And no PPC knowledge required!
                         </div>
 
                         <div className="col">
@@ -651,21 +650,21 @@ const LandingAutomation = () => {
 
                         <div className='list'>
                             <div>
-                                He spends up to 40 hours per week on Amazon PPC.
+                                Jeff spends up to 40 hours per week on Amazon Advertising and can’t scale it.
                             </div>
 
                             <div>
-                                He is wasting a ton of money on bleeding keywords and losing money from the ones he
-                                isn’t bidding on.
+                                He is wasting a ton of money on unprofitable keywords and not utilizing the search terms
+                                that can maximize his sales.
                             </div>
 
                             <div>
-                                Jeff is always looking into unfriendly Amazon Advertising Reports.
+                                Jeff is always dealing with unfriendly and complicated Amazon Advertising Reports.
                             </div>
 
                             <div>
-                                He is dealing with industry PPC “experts” and losing a lot of business opportunities
-                                while his competitors are stealing the market share.
+                                He doesn’t manage his keywords bids in the way to stay competitive and win more sales,
+                                because it takes too much time and knowledge.
                             </div>
                         </div>
                     </div>
@@ -760,7 +759,7 @@ const LandingAutomation = () => {
                     </div>
 
                     <div className="col">
-                        <button className="btn default" onClick={goToRegistrationPage}>start free trial</button>
+                        <button className="btn default" onClick={goToRegistrationPage}>Try Now</button>
                         <p>Or <Link to={'/demo-call'} target={'_blank'}>Book a Demo</Link> No credit
                             card <br/> required. 60-second sign up.</p>
                     </div>
@@ -771,23 +770,23 @@ const LandingAutomation = () => {
             <section className='achievements'>
                 <div className="container">
                     <div>
-                        <div className="value">$2,5M</div>
+                        <div className="value">$8M</div>
                         <div className="description">Total Amazon Ad Spend Managed</div>
                     </div>
                     <div>
-                        <div className="value">14%</div>
+                        <div className="value">13%</div>
                         <div className="description">Average Decrease <br/> in ACoS</div>
                     </div>
                     <div>
-                        <div className="value">$40M</div>
+                        <div className="value">$120M</div>
                         <div className="description">Total Amazon Revenue Optimized</div>
                     </div>
                     <div>
-                        <div className="value">19%</div>
+                        <div className="value">24%</div>
                         <div className="description">Average Increase in <br/>Revenue</div>
                     </div>
                     <div>
-                        <div className="value">25%</div>
+                        <div className="value">32%</div>
                         <div className="description">Higher CTR</div>
                     </div>
                 </div>

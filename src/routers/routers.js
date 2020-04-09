@@ -34,12 +34,14 @@ const DemoCall = React.lazy(() => import('../pages/LandingPages/DemoCall/DemoCal
 const ContactUs = React.lazy(() => import('../pages/LandingPages/ContactUs/ContactUs'));
 const PrivacyPolicy = React.lazy(() => import('../pages/LandingPages/PrivacyPolicy/PrivacyPolicy'));
 const TermsOfUse = React.lazy(() => import('../pages/LandingPages/TermsOfUse/TermsOfUse'));
+const Video = React.lazy(() => import('../pages/LandingPages/Video/Video'));
 const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFound'));
 
 const AuthorizedUser = React.lazy(() => import('../pages'));
 
 const LoginPage = React.lazy(() => import('../pages/authentication/LoginPage/LoginPage'));
 const RegistrationPage = React.lazy(() => import('../pages/authentication/RegistrationPage/RegistrationPage'));
+const ConfirmEmailPage = React.lazy(() => import('../pages/authentication/RegistrationPage/ConfirmEmailPage/ConfirmEmailPage'));
 const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPassword/ResetPassword'));
 const LoginWithAmazon = React.lazy(() => import('../pages/authentication/LoginWithAmazon/LoginWithAmazon'));
 
@@ -93,10 +95,12 @@ const routers = () => {
                     <Route exact path="/contact-us" component={ContactUs}/>
                     <Route exact path="/policy" component={PrivacyPolicy}/>
                     <Route exact path="/terms-and-conditions" component={TermsOfUse}/>
+                    {/*<Route exact path="/videos" component={Video}/>*/}
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login" component={LoginPage}/>
                     <Route exact path="/registration" component={RegistrationPage}/>
-                    <Route exact path="/reset-password" component={ResetPassword}/>
+                    <Route exact path="/confirm-email/:token?" component={ConfirmEmailPage}/>
+                    <Route exact path="/reset-password/:userId?/:token?" component={ResetPassword}/>
                     <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                     {/*-----------------------------------------------------------*/}
 

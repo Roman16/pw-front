@@ -264,11 +264,10 @@
 }
 
 .budget-window {
-  width: 350px !important;
+  max-width: 26.428571428571427rem !important;
 
   .ant-modal-body {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding: 2.5rem 3.2142857142857144rem 2.857142857142857rem;
   }
 
   h2 {
@@ -281,10 +280,18 @@
 
   .ant-radio-wrapper {
     width: max-content;
+    display: flex;
+    align-items: center;
+
+    span:last-child {
+      font-size: 1rem;
+      letter-spacing: -0.05px;
+      color: #343C5A;
+    }
 
     .ant-radio-inner {
       &::after {
-        background-color: #8FD39D;
+        background-color: #6D6DF6;
         width: 10px;
         height: 10px;
         top: 2px;
@@ -294,10 +301,10 @@
 
     &.ant-radio-wrapper-checked {
       .ant-radio-inner {
-        border-color: #8FD39D;
+        border-color: #6D6DF6;
 
         &::after {
-          background-color: #8FD39D;
+          background-color: #6D6DF6;
           width: 10px;
           height: 10px;
           top: 2px;
@@ -307,40 +314,51 @@
     }
   }
 
+
+
   .current-budget {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+    font-size: 1rem;
+    letter-spacing: -0.05px;
+    color: #343C5A;
+
     .value {
-      height: 30px;
-      padding: 0 10px;
+      padding: 0 0 0 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 4px;
       color: #EC7F5C;
+      font-weight: 500;
+      font-size: 1rem;
     }
   }
 
   .recommend-budget {
-    margin: 10px 0;
+    margin: 1.4285714285714286rem 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 
     .value {
-      height: 30px;
-      padding: 0 10px;
+      padding: 0 0 0 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 4px;
       color: #8fd39d;
+      font-weight: 500;
+      font-size: 1rem;
     }
 
     .ant-spin-spinning {
-      margin: 5px 0 0 0;
+      margin: 0.35714285714285715rem 0 0 0;
+      position: absolute;
+      right: 0;
     }
   }
 
@@ -352,31 +370,52 @@
     .ant-input-number, input {
       border-radius: 8px;
     }
+
+    .ant-input-number-handler-wrap {
+      display: none;
+    }
+
+    .InputCurrency {
+      width: 6.428571428571429rem;
+      height: 2.2857142857142856rem;
+
+      .Dollar {
+        font-size: 1.1428571428571428rem;
+        top: 3px;
+        bottom: 3px;
+      }
+
+      .ant-input-number, .ant-input-number-input-wrap, input  {
+        width: 100%;
+        height: 100%;
+        font-size: 1rem;
+      }
+    }
   }
 
   .actions {
     display: flex;
     justify-content: space-between;
-    margin: 20px 0 20px 0;
+    margin: 2.5rem 0 0 0;
     height: 32px;
 
 
     .btn {
-      width: 45%;
+      width: 8.571428571428571rem;
       height: 32px;
       padding: 0 10px;
       border-radius: 4px;
+      font-weight: 500;
 
       &.white {
-        background: #FFFFFF;
-        border: 0.5px solid rgba(148, 163, 173, 0.4);
-        box-sizing: border-box;
-        box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
-        border-radius: 4px;
-        color: #94A3AD;
+        background: rgba(109, 109, 246, 0.1);
+        color: #363694;
+        box-shadow: none;
+        margin: 0 15px 0 0;
 
         &:hover {
-          background: #f0f0f0;
+          background: rgba(109, 109, 246, 0.3);
+          box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
         }
       }
     }
