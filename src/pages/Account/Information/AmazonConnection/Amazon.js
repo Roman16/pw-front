@@ -54,7 +54,10 @@ const Amazon = ({amazonTokens}) => {
 
     async function handleSetMws() {
         try {
-            await userService.setMWS(amazonTokensValue);
+            await userService.setMWS({
+                ...amazonTokensValue,
+                ...mwsId && {id: mwsId}
+            });
             dispatch(userActions.getPersonalUserInfo());
         } catch (e) {
             console.log(e);
