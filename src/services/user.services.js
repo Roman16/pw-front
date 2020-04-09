@@ -85,12 +85,12 @@ function setMWS(data) {
     return api('post', userUrls.mws, data);
 }
 
-function unsetMWS() {
-    return api('post', userUrls.deleteMws);
+function unsetMWS(id) {
+    return api('post', userUrls.deleteMws, id);
 }
 
-function unsetPPC() {
-    return api('post', userUrls.deleteLwa);
+function unsetPPC(id) {
+    return api('post', userUrls.deleteLwa, id);
 }
 
 function updateInformation({name, last_name, email, private_label_seller}) {
