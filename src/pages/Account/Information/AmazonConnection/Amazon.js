@@ -25,7 +25,7 @@ const Amazon = ({amazonTokens}) => {
         mws_auth_token: '',
         merchant_id: ''
     });
-    const {ppcLink, mwsLink, ppcConnected, mwsConnected} = useSelector(state => ({
+    const {ppcLink, mwsLink, ppcConnected, mwsConnected, ppcId, mwsId} = useSelector(state => ({
             ppcLink: state.user.account_links.length > 0
                 ? state.user.account_links[0].amazon_ppc.connect_link
                 : '',
@@ -33,7 +33,9 @@ const Amazon = ({amazonTokens}) => {
                 ? state.user.account_links[0].amazon_mws.connect_link
                 : '',
             ppcConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.is_connected,
-            mwsConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.is_connected
+            ppcId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.id,
+            mwsConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.is_connected,
+            mwsId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.id
         })),
         token = localStorage.getItem('token');
 
@@ -46,8 +48,8 @@ const Amazon = ({amazonTokens}) => {
         })
     }
 
-    function onUnsetAccount(type) {
-        dispatch(userActions.unsetAccount(type))
+    function onUnsetAccount(type, id) {
+        dispatch(userActions.unsetAccount(type, {id}))
     }
 
     async function handleSetMws() {
@@ -77,7 +79,7 @@ const Amazon = ({amazonTokens}) => {
                                 <SVG id='checked'/>
                             </h3>
 
-                            <button className="mws-btn" type="button" onClick={() => onUnsetAccount('MWS')}>
+                            <button className="mws-btn" type="button" onClick={() => onUnsetAccount('MWS', mwsId)}>
                                 <SVG id='close-icon'/>
                                 <span>Remove</span>
                             </button>
@@ -91,7 +93,7 @@ const Amazon = ({amazonTokens}) => {
                                 <SVG id='checked'/>
                             </h3>
 
-                            <button className="mws-btn" type="button" onClick={() => onUnsetAccount('PPC')}>
+                            <button className="mws-btn" type="button" onClick={() => onUnsetAccount('PPC', ppcId)}>
                                 <SVG id='close-icon'/>
                                 <span>Remove</span>
                             </button>
