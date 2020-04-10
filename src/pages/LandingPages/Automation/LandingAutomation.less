@@ -580,7 +580,14 @@
 
     h2 {
       font-size: 55px;
-      margin: 0 0 85px 0;
+      margin: 0 0 20px 0;
+    }
+
+    & > h3 {
+      margin: 0 0 60px 0;
+      text-align: center;
+      font-size: 20px;
+      color: #17175A;
     }
 
     .row {
@@ -1512,16 +1519,19 @@
         }
 
         .list {
-          -webkit-column-count: 3;
-          -moz-column-count: 3;
-          column-count: 3;
           margin: 50px 0 0 0;
+
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-row-gap: 30px;
+          grid-column-gap: 20px;
+
 
           div {
             display: flex;
             align-items: center;
-            margin: 0 0 1.7857142857142858rem 0;
             font-family: er;
+            text-align: left;
 
             font-size: 1rem;
             letter-spacing: 0.4px;
@@ -1545,6 +1555,16 @@
         }
       }
 
+      @media (max-width: 800px) {
+        & {
+          .price-list {
+            padding: 20px;
+            .list {
+              grid-template-columns: 1fr 1fr;
+            }
+          }
+        }
+      }
       @media (max-width: 600px) {
         & {
           .price-list {

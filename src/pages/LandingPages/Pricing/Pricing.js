@@ -19,6 +19,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";
 import emojiImage from "../../../assets/img/landing-automation/emoji.png";
 import supportImage from "../../../assets/img/landing-automation/Vitalik-help.png";
+import listIcon from "../../../assets/img/landing-automation/yes_green.svg";
 
 const numberMask = (value, n, x) => {
     let re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
@@ -205,7 +206,7 @@ const Pricing = () => {
                                         <div className="col">
                                             <div className="sum">
                                                 <span id="result-sum">$ 69</span>
-                                                <span>Estimated price per month.</span>
+                                                <span>Estimated price per month based on your 30-day Amazon Ad Spend.</span>
                                                 <a href="#plans">How is this calculated?</a>
                                                 <button className="btn green-btn"
                                                         onClick={() => history.push('/registration')}>
@@ -215,43 +216,33 @@ const Pricing = () => {
                                         </div>
                                     </div>
 
-                                    <ul>
-                                        <li>
-                                            <img src={yesGreenIcon} alt="yes"/>
-                                            Efficient Budget Management
-                                        </li>
-                                        <li>
-                                            <img src={yesGreenIcon} alt="yes"/>
-                                            You'll get Money Making System
-                                        </li>
-                                        <li>
-                                            <img src={yesGreenIcon} alt="yes"/>
-                                            You'll Save a Lot of Time
-                                        </li>
-                                        <li>
-                                            <img src={yesGreenIcon} alt="yes"/>
-                                            Business Goal Aware Optimization
-                                        </li>
-                                        <li>
-                                            <img src={yesGreenIcon} alt="yes"/>
-                                            Keywords Optimization
-                                        </li>
-                                        <li>
-                                            <img src={yesGreenIcon} alt="yes"/>
-                                            Dashboard View
-                                        </li>
-                                        <li>
-                                            <img src={yesGreenIcon} alt="yes"/>
-                                            Unlimited Products & Campaigns
-                                        </li>
-                                        <li><img src={yesGreenIcon} alt="yes"/>
-                                            Data-Driven Bid Optimization
-                                        </li>
-                                        <li>
-                                            <img src={yesGreenIcon} alt="yes"/>
-                                            Expert Chat Support
-                                        </li>
-                                    </ul>
+                                        <div className="list">
+                                            <div>
+                                                <img src={yesGreenIcon} alt="yes"/>
+                                                Fully Automated Amazon Advertising Optimization in 1 Click
+                                            </div>
+                                            <div>
+                                                <img src={yesGreenIcon} alt="yes"/>
+                                                Automated Harvesting of Search-Terms and Negative Keywords
+                                            </div>
+                                            <div>
+                                                <img src={yesGreenIcon} alt="yes"/>
+                                                Amazon Analytics Tool
+                                            </div>
+
+                                            <div>
+                                                <img src={yesGreenIcon} alt="yes"/>
+                                                Weekly Reports with Useful Information
+                                            </div>
+                                            <div>
+                                                <img src={yesGreenIcon} alt="yes"/>
+                                                The only Amazon Seller Tool you need for your business.
+                                            </div>
+                                            <div>
+                                                <img src={yesGreenIcon} alt="yes"/>
+                                                Friendly Support 24/7
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
