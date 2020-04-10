@@ -36,10 +36,8 @@ const Amazon = ({amazonTokens}) => {
             ppcId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.id,
             mwsConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.is_connected,
             mwsId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.id || null
-        })),
-        token = localStorage.getItem('token');
+        }));
 
-    const redirectLink = `${ppcLink}&state=${token}`;
 
     function handleChangeInput({target: {name, value}}) {
         onChange({
@@ -172,7 +170,7 @@ const Amazon = ({amazonTokens}) => {
                             Click to authorize Amazon MWS Access and paste the results below:
                         </span>
 
-                        <a className="login-amazon-btn" href={redirectLink}>
+                        <a className="login-amazon-btn" href={ppcLink}>
                             <img className="login-amazon-img" src={amazon} alt="LWA-GOld"/>
                         </a>
                         {/*<button className="connect-another-btn" type="button">*/}

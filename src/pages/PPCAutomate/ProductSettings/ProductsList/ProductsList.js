@@ -340,7 +340,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[NET_MARGIN]}
-                            typeIcon='margin'
+                            typeIcon='percent'
                             data-intercom-target="net-margin-field"
                             onChange={event =>
                                 this.onChangeRow(event, NET_MARGIN, indexRow)

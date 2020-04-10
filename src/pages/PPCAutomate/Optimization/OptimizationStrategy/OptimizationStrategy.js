@@ -153,7 +153,7 @@ function StrategyItem({
                         <span>Enter your target ACoS</span>
                         <InputCurrency
                             className={`${fieldHasError && 'empty-field'}`}
-                            typeIcon={'margin'}
+                            typeIcon={'percent'}
                             value={targetAcos}
                             onFocus={() => {
                                 setError(false)
