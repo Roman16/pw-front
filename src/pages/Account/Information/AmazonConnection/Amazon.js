@@ -26,17 +26,17 @@ const Amazon = ({amazonTokens}) => {
         merchant_id: ''
     });
     const {ppcLink, mwsLink, ppcConnected, mwsConnected, ppcId, mwsId} = useSelector(state => ({
-            ppcLink: state.user.account_links.length > 0
-                ? state.user.account_links[0].amazon_ppc.connect_link
-                : '',
-            mwsLink: state.user.account_links.length > 0
-                ? state.user.account_links[0].amazon_mws.connect_link
-                : '',
-            ppcConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.is_connected,
-            ppcId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.id,
-            mwsConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.is_connected,
-            mwsId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.id || null
-        }));
+        ppcLink: state.user.account_links.length > 0
+            ? state.user.account_links[0].amazon_ppc.connect_link
+            : '',
+        mwsLink: state.user.account_links.length > 0
+            ? state.user.account_links[0].amazon_mws.connect_link
+            : '',
+        ppcConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.is_connected,
+        ppcId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.id,
+        mwsConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.is_connected,
+        mwsId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.id || null
+    }));
 
 
     function handleChangeInput({target: {name, value}}) {
@@ -159,7 +159,7 @@ const Amazon = ({amazonTokens}) => {
                     </div>
 
                     <span className="add-amazon-text">
-                        Click to authorize Amazon MWS Access and paste the results below
+                       Click to authorize Amazon MWS access and paste the results in the fields on the left.
                     </span>
                 </div>
                 }
@@ -167,7 +167,7 @@ const Amazon = ({amazonTokens}) => {
                     <h2 className="login-amazon-title">ADD ADVERTISING ACCESS</h2>
                     <div className="connect-amazon">
                         <span className="connect-amazon-text">
-                            Click to authorize Amazon MWS Access and paste the results below:
+                              Click to authorize Amazon Advertising Access:
                         </span>
 
                         <a className="login-amazon-btn" href={ppcLink}>
