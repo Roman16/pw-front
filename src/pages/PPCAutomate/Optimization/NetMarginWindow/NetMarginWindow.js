@@ -68,7 +68,7 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
                                     value={value}
                                     max={100}
                                     min={0}
-                                    typeIcon='margin'
+                                    typeIcon='percent'
                                     onChange={onChange}
                                 />
                             </div>

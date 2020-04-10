@@ -35,7 +35,8 @@ class MWS extends Component {
         userService
             .setMWS({
                 merchant_id: this.state.sellerId,
-                mws_auth_token: this.state.MWSToken
+                mws_auth_token: this.state.MWSToken,
+                ...this.props.mwsId && {id: this.props.mwsId}
             })
             .then(res => {
                 this.setState({
@@ -141,7 +142,8 @@ const mapStateToProps = state => ({
     mwsLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.connect_link : '',
     mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
     ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
-    stripeId: state.user.user.stripe_id
+    stripeId: state.user.user.stripe_id,
+    mwsId: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.id || null
 });
 
 const mapDispatchToProps = dispatch => ({

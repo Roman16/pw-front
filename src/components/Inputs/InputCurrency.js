@@ -1,10 +1,10 @@
 import React from 'react';
 import {InputNumber} from 'antd';
-
 import './InputCurrency.less';
+import {SVG} from "../../utils/icons";
 
 const Dollar = ({typeIcon}) => (
-    <span className="Dollar">{typeIcon === 'margin' ? '%' : '$'}</span>
+    <span className={`Dollar ${typeIcon}`}>{typeIcon === 'percent' ? <SVG id={'percent-icon'}/> : <SVG id={'dollar-icon'}/>}</span>
 );
 
 const InputCurrency = ({
@@ -28,7 +28,7 @@ const InputCurrency = ({
 );
 
 //typeIcon:
-//margin -> %
+//percent -> %
 //other -> $
 
 export default InputCurrency;

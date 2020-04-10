@@ -54,6 +54,7 @@
 
     .ant-table-tbody {
       .InputCurrency {
+        width: max-content;
         font-size: 1rem; // 14px
         max-width: 17.85714285714286em;
 
@@ -362,6 +363,7 @@
       .value {
         font-size: 0.7857143rem; // 11px
         display: flex;
+        flex-direction: row-reverse;
         align-items: center;
         width: 8.4285714em;
         height: 2.1428571em;
@@ -371,16 +373,16 @@
         background: rgba(232, 237, 241, 0.58);
         box-sizing: border-box;
         cursor: not-allowed;
+        position: relative;
 
-        span {
-          font-size: 1.1428571428571428rem; // 16px
-          color: #8fd39d;
-          width: 1em;
-          text-align: center;
-          background: rgba(143, 211, 157, 0.2);
-          border-radius: 0.25em;
-          margin: 0 0.3125em 0 0;
-        }
+       svg {
+         position: absolute;
+         top: 0;
+         bottom: 0;
+         margin: auto 0;
+         width: 1.1428571428571428rem;
+         height: 1.1428571428571428rem;
+       }
       }
     }
   }

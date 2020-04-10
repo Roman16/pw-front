@@ -133,6 +133,7 @@ const ProblemList = ({onScanning, problemsCount, fetching, stopScanning, success
                         />
 
                         <InputCurrency
+                            typeIcon={'percent'}
                             value={netMargin}
                             onChange={value => setMargin(value)}
                             min={0}

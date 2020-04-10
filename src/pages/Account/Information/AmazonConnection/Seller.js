@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {useSelector} from "react-redux";
 
 import whales from '../../../../assets/img/seller-central-image.svg';
@@ -13,6 +13,13 @@ const Seller = () => {
         ppcConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_ppc.is_connected,
         mwsConnected: state.user.account_links.length > 0 && state.user.account_links[0].amazon_mws.is_connected
     }));
+
+    useEffect(() => {
+        if(mwsConnected) {
+            handleOpenBlock(false)
+        }
+
+    }, [mwsConnected])
 
     return (
         <Fragment>

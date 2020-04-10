@@ -221,7 +221,7 @@ class ProductsList extends Component {
         const columns = [
             {
                 title: '',
-                width: '293px',
+                width: '300px',
                 render: (title, item) => {
                     return (<ProductItem
                             product={item}
@@ -232,31 +232,31 @@ class ProductsList extends Component {
             {
                 title: '',
                 width: 150,
-                render: () => (<span className='value'><span className="icon">%</span> {props[NET_MARGIN]}</span>)
+                render: () => (<span className='value'><SVG id={'percent-icon'}/> {props[NET_MARGIN]}</span>)
             },
             {
                 title: '',
                 width: 150,
                 render: () => (
-                    <span className='value'><span className="icon">$</span> {props[MIN_BID_MANUAL_CAMPING]}</span>)
+                    <span className='value'><SVG id={'dollar-icon'}/> {props[MIN_BID_MANUAL_CAMPING]}</span>)
             },
             {
                 title: '',
                 width: 150,
                 render: () => (
-                    <span className='value'><span className="icon">$</span> {props[MAX_BID_MANUAL_CAMPING]}</span>)
+                    <span className='value'><SVG id={'dollar-icon'}/> {props[MAX_BID_MANUAL_CAMPING]}</span>)
             },
             {
                 title: '',
                 width: 150,
                 render: () => (
-                    <span className='value'><span className="icon">$</span> {props[MIN_BID_AUTO_CAMPING]}</span>)
+                    <span className='value'><SVG id={'dollar-icon'}/> {props[MIN_BID_AUTO_CAMPING]}</span>)
             },
             {
                 title: '',
                 width: 150,
                 render: () => (
-                    <span className='value'><span className="icon">$</span> {props[MAX_BID_AUTO_CAMPING]}</span>)
+                    <span className='value'><SVG id={'dollar-icon'}/> {props[MAX_BID_AUTO_CAMPING]}</span>)
             },
             {
                 title: '',
@@ -264,7 +264,7 @@ class ProductsList extends Component {
             },
             {
                 title: '',
-                width: 150,
+                width: '120px',
                 render: () => (<span> {props[OPTIMIZATION_STATUS] === ACTIVE ?
                     <span style={{color: '#8fd39d'}}>Active</span> : 'Paused'}</span>)
             },
@@ -340,7 +340,7 @@ class ProductsList extends Component {
                     render: (index, item, indexRow) => (
                         <InputCurrency
                             value={item[NET_MARGIN]}
-                            typeIcon='margin'
+                            typeIcon='percent'
                             data-intercom-target="net-margin-field"
                             onChange={event =>
                                 this.onChangeRow(event, NET_MARGIN, indexRow)
@@ -443,7 +443,7 @@ class ProductsList extends Component {
                     title: 'Optimization Status',
                     dataIndex: OPTIMIZATION_STATUS,
                     key: OPTIMIZATION_STATUS,
-                    width: 100,
+                    width: '100px',
                     render: (index, item) => (
                         <div
                             className={`settings-status ${

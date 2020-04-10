@@ -11,6 +11,7 @@ import {notification} from "../../../../components/Notification";
 let intervalId = null;
 let intervalIdLink = null;
 
+
 const PPC = (props) => {
     const {ppcLink, mwsConnected, ppcConnected} = useSelector(state => ({
         ppcLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.connect_link : null,
@@ -55,11 +56,11 @@ const PPC = (props) => {
         } else if (ppcConnected) {
             history.push('/ppc/dashboard')
         }
-        else if (props.location.search && props.location.search.indexOf('?status=') !== -1) {
-        userActions.setPpcStatus({status: props.location.search.split('?status=')[1]})
-        }
+            // else if (props.location.search && props.location.search.indexOf('?status=') !== -1) {
+            // userActions.setPpcStatus({status: props.location.search.split('?status=')[1]})
+        // }
         else if (props.location.search && props.location.search.indexOf('?error_message=') !== -1) {
-            notification.error({title: props.location.search.split('?error_message=')[1].split('+').join(' ')})
+            notification.error({title: decodeURIComponent(props.location.search.split('?error_message=')[1].split('+').join(' '))})
         } else {
             getStatus();
         }

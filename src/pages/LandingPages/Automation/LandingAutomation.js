@@ -598,8 +598,9 @@ const LandingAutomation = () => {
                         <h1>Engage in Amazon <br/> business <span>not in ads</span></h1>
 
                         <div className='description'>
-                            Profit Whales fully automates Amazon Advertising management for Third-party Sellers and
-                            Brands on Amazon Marketplace in One Click. And no PPC knowledge required!
+                            Profit Whales fully automates Amazon PPC Software for Third-party Sellers and Brands on
+                            Amazon Marketplace in One Click with the help of custom-built algorithms and Data Science.
+                            And no PPC knowledge required!
                         </div>
 
                         <div className="col">
@@ -644,27 +645,29 @@ const LandingAutomation = () => {
                         </div>
 
                         <div className="description">
-                            every day, he is dealing with a lot of routine tasks regarding
-                            Amazon PPC instead of launching new products and improving existing ones.
+                            every day, he is dealing with a lot of routine tasks regarding Amazon Pay Per Click
+                            campaigns instead of launching new products and improving existing ones.
                         </div>
 
                         <div className='list'>
                             <div>
-                                Jeff spends up to 40 hours per week on Amazon Advertising and can’t scale it.
+                                Jeff spends up to 40 hours per week on Amazon Advertising and can’t scale it because of
+                                the amount of data, and it’s complexity.
                             </div>
 
                             <div>
                                 He is wasting a ton of money on unprofitable keywords and not utilizing the search terms
-                                that can maximize his sales.
+                                that can maximize his Amazon sales.
                             </div>
 
                             <div>
-                                Jeff is always dealing with unfriendly and complicated Amazon Advertising Reports.
+                                Jeff is always dealing with unfriendly and complicated Amazon Advertising Reports and
+                                rule-based software’s that make things harder.
                             </div>
 
                             <div>
-                                He doesn’t manage his keywords bids in the way to stay competitive and win more sales,
-                                because it takes too much time and knowledge.
+                                He doesn’t manage his Amazon pay per click campaigns and keywords bids in the way to
+                                stay competitive and win more sales, because it takes too much time and knowledge.
                             </div>
                         </div>
                     </div>
@@ -676,6 +679,7 @@ const LandingAutomation = () => {
             <section className='steps'>
                 <div className='container'>
                     <h2>How can we help?</h2>
+                    <h3>We developed all about ONE Sponsored Ads Software for Amazon FBA Seller like you.</h3>
 
                     <div className="row">
                         <Slider
@@ -704,10 +708,10 @@ const LandingAutomation = () => {
                         <div className="content">
                             <h3>Strategy based algorithm</h3>
                             <p>
-                                We designed five business and advertising goals that you can choose. Every strategy will
-                                adjust the algorithm to reach your desired results. You can change the goals as your
-                                business situation changes. Just select the right strategy and press START. That’s all
-                                you need to automate your whole PPC management.
+                                We designed five Amazon FBA advertising goals that you can choose. Every strategy will
+                                adjust the algorithm to reach your desired results. You can change the goal as your
+                                business evolves. Just select the right strategy and press START. That’s all you need to
+                                automate your whole Pay Per Click Advertising on Amazon.
                             </p>
                         </div>
 
@@ -718,8 +722,9 @@ const LandingAutomation = () => {
                             <h3>See the changes it performs</h3>
                             <p>
                                 You have to make yourself comfortable, sit, and enjoy changes that the software
-                                performed. We created the reporting tool that shows you everything that was made by the
-                                algorithm and why it did it. You see, for what you pay, it’s soothing, right?
+                                performed. We created the Amazon Ads Changes Reporting tool that shows you everything
+                                that was made by the algorithm and why it did it. You see, for what you pay, it’s
+                                soothing, right?
                             </p>
                         </div>
 
@@ -736,20 +741,23 @@ const LandingAutomation = () => {
                         <div className="content">
                             <h3>Access a lot more data</h3>
                             <p>
-                                We’re obsessed with data, and we guess you too, so we developed a dashboard, so you can
-                                see your business metrics at a glance and make more profitable decisions. Twenty-one
-                                metrics will help you understand your business from a different perspective.
+                                We’re obsessed with data, and we guess you too, so we developed the Amazon Analytics
+                                Tool, so you can see your business metrics at a glance and make more profitable
+                                decisions. Twenty-three metrics will help you understand your business from a different
+                                perspective of view.
                             </p>
                         </div>
                     </div>
 
                     <div className="row">
                         <div className="content">
-                            <h3>Day-parting</h3>
+                            <h3>Find the best hours for your Ads</h3>
                             <p>
                                 Day-parting tool will allow you to see what time of the day your campaigns is out of
-                                budget, what hours drives most of the daily sales so that you can set up days and hours
-                                for your PPC campaigns. ”70% of the sales happened from 7 am to 8 pm” Let’s test it!
+                                budget, what hours and days drive most of the daily sales so that you can set up your
+                                PPC campaigns to catch up more eyeballs during peak hours.” Fact! 70% of the sales on
+                                Amazon happened from 7 am to 8 pm.” <br/>
+                                Let’s test it!
                             </p>
                         </div>
 
@@ -973,8 +981,9 @@ const LandingAutomation = () => {
                                 <div className='title'>Keywords Optimization</div>
                             </div>
                             <div className="description">
-                                The algorithm optimizes your keywords based on your product profitability and
-                                conversion rate and makes bid adjustments to get the best Ad position for your product.
+                                The algorithm optimizes your keywords based on a lot of metrics like your product
+                                profitability and conversion rate. It makes bid adjustments to get the best Ad position
+                                for your product that will lead to a sale.
                             </div>
                         </div>
 
@@ -984,21 +993,21 @@ const LandingAutomation = () => {
                                 <div className='title'>Negative Pat Creation</div>
                             </div>
                             <div className="description">
-                                User search terms, which are ASINs that either has large ACoS, or a large number of
+                                User search terms, which are ASINs that either have large ACoS, or a large number of
                                 clicks and lack of sales are added as negative ASIN PATs to ensure your product is
-                                showing only on competitors pages that convert into sales.
+                                showing only on competitors pages that have higher chance to convert into a sale
                             </div>
                         </div>
 
                         <div>
                             <div className='col'>
                                 <div className="image"><img src={underHoodImages.icon5} alt=""/></div>
-                                <div className='title'>Mining New Product Targetings</div>
+                                <div className='title'>Harvesting New Product Targetings</div>
                             </div>
                             <div className="description">
-                                The algorithm will search through your advertising reports to find profitable and
-                                relevant ASIN's and add them to your PPC campaign so you can steal traffic from your
-                                competitors.
+                                Our Amazon PPC Tool will search through your advertising reports to find profitable and
+                                relevant ASIN’s and add them to your Amazon PPC campaign to maximize your sales with
+                                lower ACoS.
                             </div>
                         </div>
 
@@ -1037,7 +1046,7 @@ const LandingAutomation = () => {
                                 <div className="sum">
                                     <span className="result-sum">$ 69</span>
                                     <span className='description'>
-                                       Estimated price per month based on your 30-day Amazon ad spending
+                                       Estimated price per month based on your 30-day Amazon Ad Spend
                                     </span>
 
                                     <a href="https://profitwhales.com/pricing">
@@ -1054,41 +1063,28 @@ const LandingAutomation = () => {
                         <div className="list">
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                Efficient Budget Management
+                                Fully Automated Amazon Advertising Optimization in 1 Click
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                You'll get Money Making System
+                                Automated Harvesting of Search-Terms and Negative Keywords
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                You'll Save a Lot of Time
-                            </div>
-
-                            <div>
-                                <img src={listIcon} alt="yes"/>
-                                Business Goal Aware Optimization
-                            </div>
-                            <div>
-                                <img src={listIcon} alt="yes"/>
-                                Keywords Optimization
-                            </div>
-                            <div>
-                                <img src={listIcon} alt="yes"/>
-                                Dashboard View
+                                Amazon Analytics Tool
                             </div>
 
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                Unlimited Products & Campaigns
+                                Weekly Reports with Useful Information
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                Data-Driven Bid Optimization
+                                The only Amazon Seller Tool you need for your business.
                             </div>
                             <div>
                                 <img src={listIcon} alt="yes"/>
-                                Expert Chat Support
+                                Friendly Support 24/7
                             </div>
                         </div>
 
@@ -1104,10 +1100,9 @@ const LandingAutomation = () => {
                     <h2><span>Safe</span> and secure</h2>
                     <p>
                         Want to try Profit Whales but worried about the risk of a program
-                        <br/>
-                        handling your PPC management? Don’t worry. <br/> Profit Whales and
-                        Amazon have safeguards in place to ensure <br/> every decision we make
-                        is not risky for your account.
+                        handling your whole Amazon PPC optimization? Don’t worry.
+                        Profit Whales and Amazon have safeguards in place to ensure
+                        every decision we make is not risky for your account.
                     </p>
 
                     <div className="list">
