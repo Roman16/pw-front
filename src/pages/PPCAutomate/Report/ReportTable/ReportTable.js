@@ -95,10 +95,6 @@ class ReportTable extends Component {
 
         source = CancelToken.source();
 
-        console.log(startDate);
-        console.log(endDate);
-
-
         if (selectedAll || selectedProductId) {
             this.props.getReports({
                 id: selectedAll ? "all" : selectedProductId,
@@ -142,10 +138,10 @@ class ReportTable extends Component {
         this.setState(
             {
                 startDate: startDate
-                    ? moment.tz(moment(startDate, 'DD-MM-YY').format('YYYY-MM-DD'), 'America/Los_Angeles').toISOString()
+                    ? moment.tz(`${moment(startDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
                     : null,
                 endDate: endDate
-                    ? moment.tz(moment(endDate, 'DD-MM-YY').format('YYYY-MM-DD'), 'America/Los_Angeles').toISOString()
+                    ? moment.tz(`${moment(endDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
                     : null
             },
             this.fetchReports
