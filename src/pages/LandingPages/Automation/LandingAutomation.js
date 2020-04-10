@@ -598,7 +598,7 @@ const LandingAutomation = () => {
                         <h1>Engage in Amazon <br/> business <span>not in ads</span></h1>
 
                         <div className='description'>
-                            Profit Whales fully automates Amazon PPC Software for Third-party Sellers and Brands on
+                            Profit Whales fully automates Amazon PPC management for Third-party Sellers and Brands on
                             Amazon Marketplace in One Click with the help of custom-built algorithms and Data Science.
                             And no PPC knowledge required!
                         </div>
