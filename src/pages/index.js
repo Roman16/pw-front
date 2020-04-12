@@ -9,6 +9,7 @@ import moment from "moment";
 import {useSelector, useDispatch} from "react-redux";
 import LoadingAmazonAccount from "../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 import RouteLoader from "../components/RouteLoader/RouteLoader";
+import ErrorBar from "../components/ErrorBar/ErrorBar";
 
 // import Optimization from "./PPCAutomate/Optimization/Optimization";
 // import Report from "./PPCAutomate/Report/Report";
@@ -242,12 +243,15 @@ const AuthorizedUser = (props) => {
                             <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
                         </Switch>
                     </Suspense>
+
                 </div>
             </div>
 
             <ReportsChangesCountWindow/>
 
             {/*<LoadingAmazonAccount/>*/}
+            <ErrorBar/>
+
         </Fragment>
     );
 };

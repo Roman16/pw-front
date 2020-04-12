@@ -1,0 +1,40 @@
+.errors-bar {
+  position: fixed;
+  top: 0;
+  z-index: 10000;
+  width: 100vw;
+  color: #fff;
+
+  div {
+    padding: 3px 20px;
+    display: flex;
+    justify-content: center;
+    margin: 0 0 2px 0;
+
+    svg {
+
+    }
+
+    a {
+      width: 150px;
+      display: block;
+      text-align: right;
+      text-decoration: underline;
+      color: #fff;
+    }
+  }
+
+  .error {
+    background: #EC7F5C;
+    text-align: left;
+    justify-content: flex-start;
+  }
+
+  .unauthorized {
+    background: #FBB13C;
+  }
+
+  .in-progress {
+    background: #FBB13C;
+  }
+}
