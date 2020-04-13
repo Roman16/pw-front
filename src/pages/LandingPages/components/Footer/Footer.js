@@ -1,6 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Icon} from "antd";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faPlay} from "@fortawesome/free-solid-svg-icons";
+import {faFacebook, faFacebookSquare, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons";
 
 import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
 import aLogo from '../../../../assets/img/amazon_logo.png';
@@ -64,7 +67,7 @@ const Footer = () => (
                         </Link>
                     </li>
                     <li>
-                        <Link to='policy'>
+                        <Link to='/policy'>
                             Privacy policy
                         </Link>
                     </li>
@@ -92,27 +95,27 @@ const Footer = () => (
                             <li>
                                 <a href="https://twitter.com/ProfitWhales" className="i-tw" target="_blank"
                                    title="Twitter">
-                                    <Icon type="twitter"/>
+                                    <FontAwesomeIcon icon={faTwitter}/>
                                 </a>
                             </li>
                             <li>
                                 <a href="https://www.facebook.com/profitwhales/" className="i-fb" target="_blank"
                                    title="Facebook">
-                                    <Icon type="facebook" theme="filled"/>
+                                    <FontAwesomeIcon icon={faFacebookSquare}/>
                                 </a>
                             </li>
                             <li>
                                 <a href="https://www.linkedin.com/company/profitwhales/" className="i-in"
                                    target="_blank"
                                    title="LinkedIn">
-                                    <Icon type="linkedin"/>
+                                    <FontAwesomeIcon icon={faLinkedin}/>
                                 </a>
                             </li>
                             <li>
                                 <a href="https://www.youtube.com/channel/UCtUreqMG_C_P8Ymqa-LJ2Yg" className="you"
                                    target="_blank"
                                    title="Youtube">
-                                    <Icon type="youtube"/>
+                                    <FontAwesomeIcon icon={faYoutube}/>
                                 </a>
                             </li>
                         </ul>

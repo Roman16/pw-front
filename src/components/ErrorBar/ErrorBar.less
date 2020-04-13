@@ -6,21 +6,31 @@
   color: #fff;
 
   div {
-    padding: 3px 20px;
+    padding: 10px 30px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
     margin: 0 0 2px 0;
+    font-size: 1rem;
 
     svg {
-
+      width: 15px;
+      min-width: 15px;
+      height: 15px;
+      min-height: 15px;
+      margin: 0 30px 0 0;
     }
 
     a {
-      width: 150px;
-      display: block;
-      text-align: right;
-      text-decoration: underline;
-      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #EC7F5C;
+      background: #fff;
+      border-radius: 4px;
+      height: 32px;
+      width: 170px;
+      margin: 0 0 0 30px;
     }
   }
 
@@ -28,13 +38,17 @@
     background: #EC7F5C;
     text-align: left;
     justify-content: flex-start;
+
+    strong {
+      font-size: 1.2857142857142858rem;
+    }
   }
 
   .unauthorized {
-    background: #FBB13C;
+    background: #F0B849;
   }
 
   .in-progress {
-    background: #FBB13C;
+    background: #F0B849;
   }
 }
