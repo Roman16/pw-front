@@ -102,6 +102,8 @@ const AuthorizedUser = (props) => {
 
     return (
         <Fragment>
+            <ErrorBar/>
+
             <div className="main-pages">
                 <Sidebar props={props}/>
 
@@ -250,7 +252,6 @@ const AuthorizedUser = (props) => {
             <ReportsChangesCountWindow/>
 
             {/*<LoadingAmazonAccount/>*/}
-            <ErrorBar/>
 
         </Fragment>
     );
