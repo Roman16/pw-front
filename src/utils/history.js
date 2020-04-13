@@ -40,15 +40,21 @@ history.listen(location => {
     const userId = localStorage.getItem('userId');
 
     if (pathChanged || hashChanged) {
-        if (userId) {
-            window.dataLayer.push = ({
-                'uid': userId
-            });
-        }
-
         window.Intercom("update");
         window.scrollTo(0, 0);
         prevLocation = location;
+
+        // try {
+        //     if (userId) {
+        //         window.dataLayer.push = ({
+        //             'uid': userId
+        //         });
+        //     }
+        // } catch (e) {
+        //     console.log(e);
+        // }
+
+
     }
 
 });

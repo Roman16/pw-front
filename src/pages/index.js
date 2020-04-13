@@ -103,7 +103,7 @@ const AuthorizedUser = (props) => {
     return (
         <Fragment>
             <div className="main-pages">
-                <Sidebar/>
+                <Sidebar props={props}/>
 
 
                 {(pathname === '/ppc/optimization' ||
