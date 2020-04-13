@@ -59,7 +59,7 @@ const Video = () => {
                         </p>
 
                         <p>
-                            Need any help with the registration procedure? - Here is our<a target={'_blank'}
+                            Need any help with the registration procedure? - Here is our <a target={'_blank'}
                             href="https://intercom.help/profitwhales/en/articles/3763624-registration-procedure">Help
                             Center</a> or contact us using
                             the chat button in the right corner inside the software.
@@ -74,7 +74,7 @@ const Video = () => {
                     <div className="video-item">
                         <h2>Where is the START button? - Optimization Setup Tutorial</h2>
                         <p>
-                            Be careful setting up your first optimization.<a target={'_blank'}
+                            Be careful setting up your first optimization. <a target={'_blank'}
                             href="https://intercom.help/profitwhales/en/articles/3763871-what-can-you-do-with-profit-whales">Learn
                             more in the Help Center!</a>
                         </p>
@@ -88,7 +88,7 @@ const Video = () => {
                     <div className="video-item">
                         <h2>Where are any changes? - Analyze Amazon Sponsored Ads with Profit Whales REPORT</h2>
                         <p>
-                            No changes after 24 hours? -<a target={'_blank'}
+                            No changes after 24 hours? - <a target={'_blank'}
                             href="https://intercom.help/profitwhales/en/articles/3763947-how-do-i-use-profit-whales">We
                             are here to help!</a>
                         </p>
@@ -103,7 +103,7 @@ const Video = () => {
                     <div className="video-item">
                         <h2>You’ve got DATA? - Analyze it using Dashboard Tutorial</h2>
                         <p>
-                            Do you want to get to know your business? -<a target={'_blank'}
+                            Do you want to get to know your business? - <a target={'_blank'}
                             href="https://intercom.help/profitwhales/en/articles/3763635-how-does-profit-whales-software-work">Learn
                             how We can help!</a>
                         </p>
@@ -125,7 +125,6 @@ const Video = () => {
                         </p>
 
                         <p>
-                            CTA - Contact the Support Team <br/>
                            <a target={'_blank'} href="https://intercom.help/profitwhales/en/collections/2185686-faq">FAQ Section</a>
                         </p>
 
@@ -139,14 +138,10 @@ const Video = () => {
                             CEO
                         </p>
 
-                        <iframe
-                            className="video"
-                            src="https://www.youtube.com/embed/SRhhgDVB0jk"
-                            frameBorder="0"
-                            title="video"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                        />
+                        <iframe src="https://www.youtube.com/embed/ItxLAKN8Zno"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen/>
                     </div>
 
                 </div>
