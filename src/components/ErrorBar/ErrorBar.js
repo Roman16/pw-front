@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './ErrorBar.less';
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
 import {SVG} from "../../utils/icons";
+import {userActions} from "../../actions/user.actions";
 //
 // const accountLinks = {
 //     amazon_mws: {
@@ -13,10 +14,29 @@ import {SVG} from "../../utils/icons";
 //     }
 // };
 
+let intervalId = null;
+
 const ErrorBar = () => {
+    const dispatch = useDispatch();
+
     const {accountLinks} = useSelector(state => ({
         accountLinks: state.user.account_links[0]
     }));
+
+    useEffect(() => {
+        intervalId = setInterval(() => {
+            if (accountLinks.amazon_mws.status === 'SUCCESS' || accountLinks.amazon_ppc.status === 'SUCCESS') {
+                dispatch(userActions.getPersonalUserInfo());
+            } else {
+                clearInterval(intervalId);
+            }
+        }, 60000)
+
+
+        return (() => {
+            clearInterval(intervalId);
+        })
+    }, []);
 
     return (
         <div className='errors-bar'>
