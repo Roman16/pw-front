@@ -44,6 +44,7 @@ history.listen(location => {
         window.scrollTo(0, 0);
         prevLocation = location;
 
+        console.log(window.dataLayer);
         // try {
         //     if (userId) {
         //         window.dataLayer.push = ({
