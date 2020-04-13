@@ -97,8 +97,28 @@
     }
   }
 
+  .description {
+    margin: 0 0 100px 0;
+    font-size: 1.2857142857142858rem;
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      margin: 0 0 0 40px;
+
+      &::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        background: #000;
+        border-radius: 50%;
+        margin: 0 10px 0 0;
+      }
+    }
+  }
+
   .video-list {
-    margin: 200px 0 0 0;
+    margin: 100px 0 0 0;
 
     .video-item {
       margin: 0 0 145px 0;
