@@ -244,7 +244,6 @@ const OptimizationStrategy = ({product: {desired_target_acos, optimization_strat
         if (dontShowStartWindowAgain && !selectedAll) {
             onStartProductOptimization();
         } else {
-            console.log('rfgjerjfjlnrlkf')
             setConfirmWindows({
                 ...visibleConfirmWindows,
                 [selectedAll ? 'confirmStartAllProducts' : 'confirmStartProduct']: true
