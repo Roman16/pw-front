@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Amazon from './Amazon';
 import {SVG} from "../../../../utils/icons";
 
@@ -56,4 +56,4 @@ const Connectors = ({amazonTokens}) => {
     );
 };
 
-export default Connectors;
+export default  React.memo(Connectors);

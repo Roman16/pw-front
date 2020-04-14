@@ -104,7 +104,7 @@ const AuthorizedUser = (props) => {
         <Fragment>
 
             <div className="main-pages">
-                <ErrorBar/>
+                {/*<ErrorBar/>*/}
 
                 <Sidebar props={props}/>
 

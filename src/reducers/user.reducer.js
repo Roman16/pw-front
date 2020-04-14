@@ -66,7 +66,13 @@ export function user(state = initialState, action) {
                         ...state.account_links[0].amazon_mws,
                         is_connected: false
                     }
-                }]
+                }],
+                default_accounts: {
+                    ...state.default_accounts,
+                    amazon_mws: {
+                        seller_id: null
+                    }
+                }
             };
 
         case userConstants.UNSET_AMAZON_PPC:
@@ -78,7 +84,13 @@ export function user(state = initialState, action) {
                         ...state.account_links[0].amazon_ppc,
                         is_connected: false
                     }
-                }]
+                }],
+                default_accounts: {
+                    ...state.default_accounts,
+                    amazon_ppc: {
+                        seller_id: null
+                    }
+                }
             };
 
         default:

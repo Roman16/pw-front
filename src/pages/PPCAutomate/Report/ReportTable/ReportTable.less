@@ -119,10 +119,27 @@ div.ReportTable {
     }
 
     .action-field {
-      span {
-        width: max-content;
-        display: flex;
-        align-items: center;
+      .previous {
+        margin: 0 5px 0 0;
+      }
+
+      .current {
+        margin: 0 0 0 5px;
+        font-weight: bolder;
+      }
+
+      i {
+        &.up {
+          svg {
+            transform: rotate(-90deg);
+          }
+        }
+
+        &.down {
+          svg {
+            transform: rotate(90deg);
+          }
+        }
       }
     }
   }

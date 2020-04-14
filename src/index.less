@@ -8,7 +8,7 @@ html {
 
 #root {
   font-size: 1rem;
-  height: 100vh;
+  height: 100%;
 }
 
 body {
@@ -101,6 +101,14 @@ img {
     @media (max-width: 800px) {
       overflow-y: auto;
     }
+
+    //@media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
+    //only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
+    //only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
+    //only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
+    //  overflow-y: auto;
+    //  padding-left: 5.142857142857143em;
+    //}
   }
 }
 
@@ -109,39 +117,14 @@ img {
 */
 
 .main-pages {
-  background: #f5f5ff;
+  min-height: -webkit-fill-available;
   height: 100vh;
+  max-height: 100%;
+  display: flex;
+  background: #f5f5ff;
+
   font-family: Eina;
 
-  display: grid;
-  grid-template-areas: 'errorsBar errorsBar errorsBar' 'sidebar productList mainContainer';
-  grid-template-rows: min-content 1fr;
-  grid-template-columns: min-content min-content 1fr;
-
-  @media (max-width: 800px) {
-
-    grid-template-areas: 'sidebar errorsBar' 'sidebar productList' 'sidebar mainContainer';
-    grid-template-rows: min-content min-content 1fr;
-    grid-template-columns: min-content 1fr;
-  }
-
-  //overflow: hidden;
-
-  .errors-bar {
-    grid-area: errorsBar;
-  }
-
-  .sidebar {
-    grid-area: sidebar;
-  }
-
-  .product-list {
-    grid-area: productList;
-  }
-
-  .main-container {
-    grid-area: mainContainer;
-  }
 
   .product-list-container {
     display: flex;
@@ -152,7 +135,7 @@ img {
     position: relative;
     flex: 1;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     overflow: auto;
     background: #f5f5ff;
 

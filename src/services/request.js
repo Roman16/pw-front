@@ -6,6 +6,7 @@ import {history} from '../utils/history';
 import {userService} from "./user.services";
 
 const baseUrl =
+    // 'http://staging.profitwhales.com';
     process.env.REACT_APP_ENV === 'production'
         ? process.env.REACT_APP_API_PROD || ''
         : process.env.REACT_APP_API_URL || '';
