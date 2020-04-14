@@ -102,11 +102,11 @@ const AuthorizedUser = (props) => {
 
     return (
         <Fragment>
-            <ErrorBar/>
 
             <div className="main-pages">
-                <Sidebar props={props}/>
+                <ErrorBar/>
 
+                <Sidebar props={props}/>
 
                 {(pathname === '/ppc/optimization' ||
                     pathname === '/ppc/report' ||
@@ -243,11 +243,16 @@ const AuthorizedUser = (props) => {
                             <Route exact path="/account-subscription" component={Subscription}/>
 
                             <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
+
+                            <Route path={'*'} render={() => (
+                                <Redirect to={'/404'}/>
+                            )}/>
                         </Switch>
                     </Suspense>
 
                 </div>
             </div>
+
 
             <ReportsChangesCountWindow/>
 

@@ -60,7 +60,7 @@ const Video = () => {
 
                         <p>
                             Need any help with the registration procedure? - Here is our <a target={'_blank'}
-                            href="https://intercom.help/profitwhales/en/articles/3763624-registration-procedure">Help
+                                                                                            href="https://intercom.help/profitwhales/en/articles/3763624-registration-procedure">Help
                             Center</a> or contact us using
                             the chat button in the right corner inside the software.
                         </p>
@@ -75,7 +75,7 @@ const Video = () => {
                         <h2>Where is the START button? - Optimization Setup Tutorial</h2>
                         <p>
                             Be careful setting up your first optimization. <a target={'_blank'}
-                            href="https://intercom.help/profitwhales/en/articles/3763871-what-can-you-do-with-profit-whales">Learn
+                                                                              href="https://intercom.help/profitwhales/en/articles/3763871-what-can-you-do-with-profit-whales">Learn
                             more in the Help Center!</a>
                         </p>
 
@@ -89,7 +89,7 @@ const Video = () => {
                         <h2>Where are any changes? - Analyze Amazon Sponsored Ads with Profit Whales REPORT</h2>
                         <p>
                             No changes after 24 hours? - <a target={'_blank'}
-                            href="https://intercom.help/profitwhales/en/articles/3763947-how-do-i-use-profit-whales">We
+                                                            href="https://intercom.help/profitwhales/en/articles/3763947-how-do-i-use-profit-whales">We
                             are here to help!</a>
                         </p>
 
@@ -104,7 +104,7 @@ const Video = () => {
                         <h2>You’ve got DATA? - Analyze it using Dashboard Tutorial</h2>
                         <p>
                             Do you want to get to know your business? - <a target={'_blank'}
-                            href="https://intercom.help/profitwhales/en/articles/3763635-how-does-profit-whales-software-work">Learn
+                                                                           href="https://intercom.help/profitwhales/en/articles/3763635-how-does-profit-whales-software-work">Learn
                             how We can help!</a>
                         </p>
 
@@ -116,6 +116,13 @@ const Video = () => {
 
                     <div className="video-item">
                         <h2>I need more features! - Amazon PPC Dayparting Tool</h2>
+
+                        <iframe src="https://www.youtube.com/embed/ItxLAKN8Zno"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen/>
+                        <p></p>
+
                         <p><a
                             href="https://intercom.help/profitwhales/en/articles/3815260-new-release-what-is-profit-whales-amazon-ppc-dayparting">What
                             is that and why would You want it?</a></p>
@@ -125,7 +132,8 @@ const Video = () => {
                         </p>
 
                         <p>
-                           <a target={'_blank'} href="https://intercom.help/profitwhales/en/collections/2185686-faq">FAQ Section</a>
+                            <a target={'_blank'} href="https://intercom.help/profitwhales/en/collections/2185686-faq">FAQ
+                                Section</a>
                         </p>
 
                         <p>
@@ -134,14 +142,11 @@ const Video = () => {
                         </p>
 
                         <p>
-                           <a target={'_blank'} href="https://www.linkedin.com/in/ihor-dubovetskyi-6bb878178/">Ihor Dubovetskyi</a><br/>
+                            <a target={'_blank'} href="https://www.linkedin.com/in/ihor-dubovetskyi-6bb878178/">Ihor
+                                Dubovetskyi</a><br/>
                             CEO
                         </p>
 
-                        <iframe src="https://www.youtube.com/embed/ItxLAKN8Zno"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen/>
                     </div>
 
                 </div>

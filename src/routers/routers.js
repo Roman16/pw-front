@@ -104,6 +104,8 @@ const routers = () => {
                     <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                     {/*-----------------------------------------------------------*/}
 
+                    <Route exact path={'/404'} component={NotFound}/>
+
                     <Route path={'/'} render={() =>
                         localStorage.getItem('token') ? (
                             <AuthorizedUser {...history}/>
@@ -111,8 +113,6 @@ const routers = () => {
                             <Redirect to="/login"/>
                         )
                     }/>
-
-                    <Route component={NotFound}/>
                 </Switch>
             </Router>
         </Suspense>
