@@ -30,7 +30,7 @@ const strategies = [
         description: `This strategy designed for sellers who know what ACoS they are targeting. Make sure you've correctly calculated your Target ACoS. <br/>Press start and see how the algorithm is making changes to get the results you want.`,
         descriptionTitle: 'Get the desired ACoS!',
         value: {
-           'Spend/Rev.': "91%",
+            'Spend/Rev.': "9%",
             'Profit/Rev.': "18%",
             'ACoS': "36%",
             'Daily Traffic': "~ 250 clicks"
@@ -178,7 +178,8 @@ function StrategyItem({
                 <div className="actions">
                     {isActivated ? (
                             activeStrategy === key ?
-                                <button disabled={processing || productId == null} className='btn default stop-btn'
+                                <button type="button" disabled={processing || productId == null}
+                                        className='btn default stop-btn'
                                         onClick={onStop}>
                                     {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
                                     stop
@@ -191,7 +192,8 @@ function StrategyItem({
                                         update
                                     </button>
 
-                                    <button disabled={processing || productId == null} className='btn default stop-btn'
+                                    <button type="button" disabled={processing || productId == null}
+                                            className='btn default stop-btn'
                                             onClick={onStop}>
                                         {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
                                         stop
