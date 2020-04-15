@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import ProductItem from './ProductItem';
 import {connect} from 'react-redux';
-import {Select, Spin} from 'antd';
+import {Select, Spin, Switch} from 'antd';
 import {productsActions} from '../../actions/products.actions';
 import './ProductList.less';
 import {debounce} from 'throttle-debounce';
@@ -256,6 +256,26 @@ class ProductList extends Component {
                         onlyHasNew={onlyHasNew}
                         disabled={!products || (products && products.length === 0) || this.props.pathname === '/ppc/scanner'}
                     />
+
+                    {pathname === '/ppc/dayparting' ? <div className="active-only">
+                            <label htmlFor="">On day-parting only</label>
+
+                            <Switch
+                                data-intercom-target='only-on-dayparting-switch'
+                                checked={onlyOndayparting}
+                                onChange={e => this.handleChangeSwitch(e, 'onlyOndayparting')}
+                            />
+                        </div>
+                        :
+
+                        <div className="active-only">
+                            <label htmlFor="">On optimization only</label>
+                            <Switch
+                                checked={onlyOptimization}
+                                onChange={e => this.handleChangeSwitch(e, 'onlyOptimization')}
+                            />
+                        </div>
+                    }
 
                     <div className='page-items-block'>
                         <div className='page-size-select'>

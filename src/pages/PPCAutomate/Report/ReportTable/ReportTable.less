@@ -68,21 +68,6 @@ div.ReportTable {
   //  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.4);
   //}
 
-  .tab-name-count {
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: inherit;
-    border: 1px solid #c9cbd4;
-    color: #000000;
-    min-width: 3em;
-    height: 1.3333333em !important;
-    border-radius: 1em;
-    margin: 0 0 0 0.8333333em;
-    position: relative;
-  }
-
   .new-report {
     background: rgba(143, 211, 157, 0.1);
 
@@ -118,37 +103,33 @@ div.ReportTable {
       }
     }
 
-    .action-field {
-      .previous {
-        margin: 0 5px 0 0;
-      }
 
-      .current {
-        margin: 0 0 0 5px;
-        font-weight: bolder;
-      }
-
-      i {
-        &.up {
-          svg {
-            transform: rotate(-90deg);
-          }
-        }
-
-        &.down {
-          svg {
-            transform: rotate(90deg);
-          }
-        }
-      }
-    }
   }
 
   .action-field {
-    span {
-      width: max-content;
-      display: flex;
-      align-items: center;
+    display: flex;
+
+    .previous {
+      margin: 0 5px 0 0;
+    }
+
+    .current {
+      margin: 0 0 0 5px;
+      font-weight: bolder;
+    }
+
+    i {
+      &.up {
+        svg {
+          transform: rotate(-90deg);
+        }
+      }
+
+      &.down {
+        svg {
+          transform: rotate(90deg);
+        }
+      }
     }
   }
 
@@ -218,6 +199,14 @@ div.ReportTable {
         span {
           color: #6d6df6;
         }
+
+        .TabName {
+          .tab-name-count {
+            background: #6D6DF6;
+            color: #fff;
+          }
+        }
+
       }
 
       .TabName {
@@ -231,14 +220,17 @@ div.ReportTable {
         }
 
         .tab-name-count {
-          font-size: 0.8571429rem; // 12px
+          font-size: 0.7142857142857143rem; // 10px
           margin-left: 1.25em;
-          min-width: 2.3333333em;
-          padding: 0 0.5em;
-          height: 1.5em;
-          border-radius: 1em;
-          border: 1px solid #c9cbd4;
+          padding: 0 0.5714285714285714rem;
+          height: 1.1428571428571428rem;
+          line-height: 1.1428571428571428rem;
           text-align: center;
+          color: #343C5A;
+          font-weight: 500;
+          background: #FFFFFF;
+          box-sizing: border-box;
+          border-radius: 1.1428571428571428rem;
         }
 
         .new-count {
@@ -833,7 +825,7 @@ div.ReportTable {
       border: 1px solid #c9cbd4;
       color: #000000;
       min-width: 3em;
-      height: 1.3333333em !important;
+      height: 1.1428571428571428rem !important;
       border-radius: 1em;
       margin: 0 0 0 0.8333333em;
       position: relative;

@@ -69,20 +69,25 @@ const OutBudget = ({date}) => {
     }
 
     useEffect(() => {
+
         async function fetchData() {
             source && source.cancel();
             source = CancelToken.source();
+
+            if(campaignId == null) {
+                setData(defaultData)
+            }
 
             if (!fetchingCampaignList) {
                 setFetchingData(true);
                 localFetching = true;
 
                 try {
-                    const res = await daypartingServices.getOutBudgetStatistic({
-                        campaignId,
-                        date,
-                        cancelToken: source.token
-                    });
+                    const res =  await daypartingServices.getOutBudgetStatistic({
+                            campaignId,
+                            date,
+                            cancelToken: source.token
+                        })
 
                     const minValue = Math.min(...res.response.map(item => item.sales).filter(item => (item != null && item !== 0))),
                         maxValue = Math.max(...res.response.map(item => item.sales));

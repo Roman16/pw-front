@@ -96,7 +96,7 @@ export const bidActionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    width: '7em',
+    width: '10em',
     className: 'left-border',
     render: ({data}) => {
         if (data) {

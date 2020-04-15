@@ -23,6 +23,13 @@
     transition: initial;
   }
 
+  .active-only {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0 0 0;
+  }
+
   &.closed {
     width: 20px;
     min-width: 20px;
@@ -44,6 +51,7 @@
   }
 
   .search-product,
+  .active-only,
   .product-pagination,
   .page-items-block,
   .campaigns-list,
@@ -957,6 +965,7 @@
       .search-product,
       .product-pagination,
       .page-items-block,
+      .active-only,
       .campaigns-list,
       .products {
         min-width: 275px;

@@ -78,10 +78,6 @@ img {
     overflow-y: hidden;
   }
 
-  @media (max-width: 1132px) {
-    padding-left: 5.14285714em;
-  }
-
   .sidebar {
     @media only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 800px), only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 800px), only screen and (-o-max-device-pixel-ratio: 1) and (max-width: 800px), only screen and (max-device-pixel-ratio: 1) and (max-width: 800px) {
       position: fixed;
@@ -94,21 +90,6 @@ img {
       top: 0;
       left: 0;
     }
-  }
-
-
-  .main-container {
-    @media (max-width: 800px) {
-      overflow-y: auto;
-    }
-
-    //@media only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 679px),
-    //only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 679px),
-    //only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 679px),
-    //only screen and (min-device-pixel-ratio: 2) and (max-width: 679px) {
-    //  overflow-y: auto;
-    //  padding-left: 5.142857142857143em;
-    //}
   }
 }
 
@@ -132,23 +113,47 @@ img {
   }
 
   .main-container {
-    position: relative;
     flex: 1;
-    width: 100%;
+    position: relative;
     height: 100vh;
-    overflow: auto;
     background: #f5f5ff;
 
-    @media (max-width: 799px) {
-      height: max-content;
+    display: grid;
+    grid-template-areas: 'errorsBar errorsBar' 'productList mainPage';
+    grid-template-columns: max-content 1fr;
+    grid-template-rows: max-content 1fr;
+
+    z-index: 10;
+
+    @media (max-width: 1132px) {
+      margin-left: 5.142857142857143rem;
     }
 
-    & > div {
-      padding: 1.7142857em 1.4285714285714286rem;
+    .page {
+      flex: 1;
+      overflow: auto;
+      grid-area: mainPage;
 
-      //@media (max-width: @big-desktop) {
-      //  padding: 1.7142857em 1.1428571em;
-      //}
+      & > div {
+        padding: 1.7142857em 1.42857143rem;
+      }
+    }
+
+    .errors-bar {
+      grid-area: errorsBar;
+    }
+
+    .product-list {
+      grid-area: productList;
+    }
+
+    @media (max-width: 800px) {
+      height: max-content;
+
+      grid-template-areas: 'errorsBar' 'productList' 'mainPage';
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+
     }
   }
 

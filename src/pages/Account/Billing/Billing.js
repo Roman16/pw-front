@@ -19,7 +19,7 @@ import {userActions} from "../../../actions/user.actions";
 const defaultPaginationParams = {
     page: 1,
     pageSize: 10,
-    totalSize: 50
+    totalSize: 0
 };
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'

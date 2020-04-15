@@ -104,154 +104,97 @@ const AuthorizedUser = (props) => {
         <Fragment>
 
             <div className="main-pages">
-                {/*<ErrorBar/>*/}
 
                 <Sidebar props={props}/>
 
-                {(pathname === '/ppc/optimization' ||
-                    pathname === '/ppc/report' ||
-                    pathname === '/ppc/scanner' ||
-                    pathname === '/ppc/optimization-loading' ||
-                    pathname === '/ppc/dayparting'
-                ) &&
-                <ProductList
-                    pathname={props.location.pathname}
-                />
-                }
-
-                {/*<div className="main-container">*/}
-                {/*    <Switch>*/}
-                {/*        <ConnectedAmazonRoute*/}
-                {/*            exact*/}
-                {/*            path="/ppc/optimization"*/}
-                {/*            render={() => {*/}
-                {/*                if (bootstrapInProgress) {*/}
-                {/*                    return (<Redirect to={'/ppc/optimization/loading'}/>)*/}
-                {/*                } else {*/}
-                {/*                    return (<Optimization/>)*/}
-                {/*                }*/}
-                {/*            }}*/}
-                {/*        />*/}
-
-                {/*        <ConnectedAmazonRoute*/}
-                {/*            exact*/}
-                {/*            path="/ppc/optimization/loading"*/}
-                {/*            render={() => {*/}
-                {/*                if (bootstrapInProgress) {*/}
-                {/*                    return (<Optimization/>)*/}
-                {/*                } else {*/}
-                {/*                    return (<Redirect to={'/ppc/optimization'}/>)*/}
-                {/*                }*/}
-                {/*            }}*/}
-                {/*        />*/}
-
-                {/*        <ConnectedAmazonRoute*/}
-                {/*            exact*/}
-                {/*            path="/ppc/dashboard"*/}
-                {/*            component={Dashboard}*/}
-                {/*        />*/}
-
-                {/*        <ConnectedAmazonRoute*/}
-                {/*            path="/ppc/report"*/}
-                {/*            component={Report}*/}
-                {/*        />*/}
-
-                {/*        <ConnectedAmazonRoute*/}
-                {/*            exact*/}
-                {/*            path="/ppc/product-settings"*/}
-                {/*            component={ProductSettings}*/}
-                {/*        />*/}
-
-                {/*        <ConnectedAmazonRoute*/}
-                {/*            exact*/}
-                {/*            path="/ppc/scanner"*/}
-                {/*            component={Scanner}*/}
-                {/*        />*/}
-
-                {/*        <Route exact path="/mws" component={MWS}/>*/}
-                {/*        <Route exact path="/ppc" component={PPC}/>*/}
-
-                {/*        {developer && <Route exact path="/home" component={Home}/>}*/}
-
-                {/*        /!* ACCOUNT *!/*/}
-                {/*        <Route exact path="/account-settings" component={Information}/>*/}
-                {/*        <Route exact path="/account-billing" component={Billing}/>*/}
-                {/*        <Route exact path="/account-subscription" component={Subscription}/>*/}
-
-                {/*        <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>*/}
-                {/*    </Switch>*/}
-                {/*</div>*/}
 
                 <div className="main-container">
-                    <Suspense fallback={<RouteLoader/>}>
-                        <Switch>
-                            <ConnectedAmazonRoute
-                                exact
-                                path="/ppc/optimization"
-                                render={() => {
-                                    if (bootstrapInProgress) {
-                                        return (<Redirect to={'/ppc/optimization-loading'}/>)
-                                    } else {
-                                        return (<Optimization/>)
-                                    }
-                                }}
-                            />
+                    <ErrorBar/>
 
-                            <ConnectedAmazonRoute
-                                exact
-                                path="/ppc/optimization-loading"
-                                render={() => {
-                                    if (bootstrapInProgress) {
-                                        return (<Optimization/>)
-                                    } else {
-                                        return (<Redirect to={'/ppc/optimization'}/>)
-                                    }
-                                }}
-                            />
+                    {/*<div className="pages-row">*/}
 
-                            <ConnectedAmazonRoute
-                                exact
-                                path="/ppc/dashboard"
-                                component={Dashboard}
-                            />
+                        {(pathname === '/ppc/optimization' ||
+                            pathname === '/ppc/report' ||
+                            pathname === '/ppc/scanner' ||
+                            pathname === '/ppc/optimization-loading' ||
+                            pathname === '/ppc/dayparting'
+                        ) &&
+                        <ProductList
+                            pathname={props.location.pathname}
+                        />}
 
-                            <ConnectedAmazonRoute
-                                path="/ppc/report"
-                                component={Report}
-                            />
+                        <div className="page">
+                            <Suspense fallback={<RouteLoader/>}>
+                                <Switch>
+                                    <ConnectedAmazonRoute
+                                        exact
+                                        path="/ppc/optimization"
+                                        render={() => {
+                                            if (bootstrapInProgress) {
+                                                return (<Redirect to={'/ppc/optimization-loading'}/>)
+                                            } else {
+                                                return (<Optimization/>)
+                                            }
+                                        }}
+                                    />
 
-                            <ConnectedAmazonRoute
-                                exact
-                                path="/ppc/product-settings"
-                                component={ProductSettings}
-                            />
+                                    <ConnectedAmazonRoute
+                                        exact
+                                        path="/ppc/optimization-loading"
+                                        render={() => {
+                                            if (bootstrapInProgress) {
+                                                return (<Optimization/>)
+                                            } else {
+                                                return (<Redirect to={'/ppc/optimization'}/>)
+                                            }
+                                        }}
+                                    />
 
-                            <ConnectedAmazonRoute
-                                exact
-                                path="/ppc/scanner"
-                                component={Scanner}
-                            />
+                                    <ConnectedAmazonRoute
+                                        exact
+                                        path="/ppc/dashboard"
+                                        component={Dashboard}
+                                    />
 
-                            <Route exact path="/mws" component={MWS}/>
-                            <Route exact path="/ppc" component={PPC}/>
+                                    <ConnectedAmazonRoute
+                                        path="/ppc/report"
+                                        component={Report}
+                                    />
 
-                            {developer && <Route exact path="/home" component={Home}/>}
+                                    <ConnectedAmazonRoute
+                                        exact
+                                        path="/ppc/product-settings"
+                                        component={ProductSettings}
+                                    />
 
-                            {/* ACCOUNT */}
-                            <Route exact path="/account-settings" component={Information}/>
-                            <Route exact path="/account-billing" component={Billing}/>
-                            <Route exact path="/account-subscription" component={Subscription}/>
+                                    <ConnectedAmazonRoute
+                                        exact
+                                        path="/ppc/scanner"
+                                        component={Scanner}
+                                    />
 
-                            <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
+                                    <Route exact path="/mws" component={MWS}/>
+                                    <Route exact path="/ppc" component={PPC}/>
 
-                            <Route path={'*'} render={() => (
-                                <Redirect to={'/404'}/>
-                            )}/>
-                        </Switch>
-                    </Suspense>
+                                    {developer && <Route exact path="/home" component={Home}/>}
 
+                                    {/* ACCOUNT */}
+                                    <Route exact path="/account-settings" component={Information}/>
+                                    <Route exact path="/account-billing" component={Billing}/>
+                                    <Route exact path="/account-subscription" component={Subscription}/>
+
+                                    <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
+
+                                    <Route path={'*'} render={() => (
+                                        <Redirect to={'/404'}/>
+                                    )}/>
+                                </Switch>
+                            </Suspense>
+
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {/*</div>*/}
 
 
             <ReportsChangesCountWindow/>

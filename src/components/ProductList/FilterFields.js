@@ -93,15 +93,15 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                         </CustomSelect>
                     </div>
 
-                    <div className="active-only" >
-                        <label htmlFor="">On day-parting only</label>
+                    {/*<div className="active-only" >*/}
+                    {/*    <label htmlFor="">On day-parting only</label>*/}
 
-                        <Switch
-                            data-intercom-target='only-on-dayparting-switch'
-                            checked={onlyOndayparting}
-                            onChange={e => onChangeSwitch(e, 'onlyOndayparting')}
-                        />
-                    </div>
+                    {/*    <Switch*/}
+                    {/*        data-intercom-target='only-on-dayparting-switch'*/}
+                    {/*        checked={onlyOndayparting}*/}
+                    {/*        onChange={e => onChangeSwitch(e, 'onlyOndayparting')}*/}
+                    {/*    />*/}
+                    {/*</div>*/}
 
                 </div>
             </div>
@@ -132,13 +132,13 @@ const FilterFields = ({onSearch, pathname, onSelectAll, onChangeSwitch, onlyHasN
                     </button>
 
 
-                    <div className="active-only">
-                        <label htmlFor="">On optimization only</label>
-                        <Switch
-                            checked={onlyOptimization}
-                            onChange={e => onChangeSwitch(e, 'onlyOptimization')}
-                        />
-                    </div>
+                    {/*<div className="active-only">*/}
+                    {/*    <label htmlFor="">On optimization only</label>*/}
+                    {/*    <Switch*/}
+                    {/*        checked={onlyOptimization}*/}
+                    {/*        onChange={e => onChangeSwitch(e, 'onlyOptimization')}*/}
+                    {/*    />*/}
+                    {/*</div>*/}
 
                     {/*{pathname === '/ppc/report' && <div className='has-new-reports-only'>*/}
                     {/*    <label htmlFor="">Has new reports only</label>*/}

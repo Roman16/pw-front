@@ -4,7 +4,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
 import {SVG} from "../../utils/icons";
 import {userActions} from "../../actions/user.actions";
-//
+
 // const accountLinks = {
 //     amazon_mws: {
 //         status: 'FAILED'
