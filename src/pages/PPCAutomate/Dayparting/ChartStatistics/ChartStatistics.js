@@ -71,6 +71,14 @@ const ChartStatistics = ({date}) => {
 
     }, [campaignId, date, firstMetric, secondMetric]);
 
+    useEffect(() => {
+        if (campaignId == null && !fetchingCampaignList) {
+            localFetching = false;
+            setProcessing(false);
+        }
+    }, [fetchingCampaignList]);
+
+
     return (
         <section
             className={`${(processing || fetchingCampaignList) ? 'chart-statistics disabled' : 'chart-statistics'}`}>

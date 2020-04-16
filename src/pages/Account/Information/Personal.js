@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { Input} from 'antd';
+import {Input} from 'antd';
 import {userActions} from '../../../actions/user.actions';
 import defaultAvatar from '../../../assets/img/default-account-avatar.svg';
 
@@ -100,7 +100,7 @@ const Personal = () => {
                     </div>
 
                     <button
-                        className="btn-save"
+                        className="btn-save btn default"
                         disabled={JSON.stringify(userInformation) === JSON.stringify(user)}
                     >
                         save changes
@@ -111,4 +111,4 @@ const Personal = () => {
     );
 };
 
-export default Personal;
+export default React.memo(Personal);

@@ -15,7 +15,8 @@ export const productsActions = {
     dontShowWindowAgain,
     updateCampaignBudget,
     activatedDayparing,
-    deactivatedDayparing
+    deactivatedDayparing,
+    showOnlyOnDayparting
 };
 
 function fetchProducts(paginationParams) {
@@ -158,6 +159,15 @@ function showOnlyOptimized(data) {
     return dispatch => {
         dispatch({
             type: productsConstants.SHOW_ONLY_OPTIMIZED,
+            payload: data
+        });
+    };
+}
+
+function showOnlyOnDayparting(data) {
+    return dispatch => {
+        dispatch({
+            type: productsConstants.SHOW_ONLY_ON_DAYPARTING,
             payload: data
         });
     };

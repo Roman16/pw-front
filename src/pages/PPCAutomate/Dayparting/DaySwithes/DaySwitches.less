@@ -19,7 +19,6 @@
 
     .switch-day-parting {
       height: 2.28571429rem;
-      width: 13%;
       font-size: 1rem;
     }
 
@@ -51,27 +50,26 @@
       }
 
       button {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
         font-size: 0.8571428571428571rem;
         height: 2.2857142857142856rem;
-        width: 6.642857142857143rem;
-        border: 1px solid #C9CBD4;
-        box-sizing: border-box;
-        border-radius: 4px;
-        padding: 0 10px;
         font-weight: 600;
-        color: #343C5A;
 
         svg {
           width: 1.1428571428571428rem;
           height: 1.1428571428571428rem;
-          //margin: 0 10px 0 0;
+          margin: 0 0.7142857142857143rem 0 0;
+
+          use {
+            stroke: #343C5A;
+          }
         }
 
-        &:hover {
-          background: #f0f0f0;
+        &[disabled] {
+          svg {
+            use {
+              stroke: #fff;
+            }
+          }
         }
       }
     }
@@ -280,20 +278,11 @@
       }
 
       .btn {
-        width: 8.571428571428571rem;
         font-size: 0.8571428571428571rem;
         font-weight: 500;
 
         &.white {
-          background: rgba(109, 109, 246, 0.1);
-          color: #363694;
-          box-shadow: none;
-          margin: 0 15px 0 0;
-
-          &:hover {
-            background: rgba(109, 109, 246, 0.3);
-            box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
-          }
+          margin: 0 1.0714285714285714rem 0 0;
         }
       }
     }

@@ -74,7 +74,7 @@ const OutBudget = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
-            if(campaignId == null) {
+            if (campaignId == null) {
                 setData(defaultData)
             }
 
@@ -83,11 +83,11 @@ const OutBudget = ({date}) => {
                 localFetching = true;
 
                 try {
-                    const res =  await daypartingServices.getOutBudgetStatistic({
-                            campaignId,
-                            date,
-                            cancelToken: source.token
-                        })
+                    const res = await daypartingServices.getOutBudgetStatistic({
+                        campaignId,
+                        date,
+                        cancelToken: source.token
+                    });
 
                     const minValue = Math.min(...res.response.map(item => item.sales).filter(item => (item != null && item !== 0))),
                         maxValue = Math.max(...res.response.map(item => item.sales));
@@ -114,6 +114,13 @@ const OutBudget = ({date}) => {
         fetchData();
 
     }, [campaignId, date]);
+
+    useEffect(() => {
+        if (campaignId == null && !fetchingCampaignList) {
+            localFetching = false;
+            setFetchingData(false);
+        }
+    }, [fetchingCampaignList]);
 
     const StatisticItem = ({value, index, outBudget}) => {
         let color;

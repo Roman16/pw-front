@@ -20,13 +20,13 @@ class ProductList extends Component {
     state = {
         isSelectedAll: false,
         prevProductId: '',
-        onlyOptimization: this.props.onlyOptimization || false,
         onlyHasNew: false,
-        onlyOndayparting: false,
         closedList: false,
         campaign_type: 'all',
         campaign_status: 'all',
         openedProduct: '',
+        onlyOptimization: this.props.onlyOptimization || false,
+        onlyOnDayparting: this.props.onlyOnDayparting || false,
         ungroupVariations: this.props.pathname === '/ppc/scanner' ? 1 : 0,
         paginationParams: {
             size: 10,
@@ -50,7 +50,7 @@ class ProductList extends Component {
             type: this.props.pathname === '/ppc/dayparting' ? 'campaigns' : 'products',
             campaign_type: this.state.campaign_type,
             campaign_status: this.state.campaign_status,
-            onlyOndayparting: this.state.onlyOndayparting,
+            onlyOndayparting:  this.state.onlyOnDayparting,
             cancelToken: source.token
         });
     };
@@ -102,6 +102,7 @@ class ProductList extends Component {
 
     handleChangeSwitch = (event, type) => {
         type === 'onlyOptimization' && this.props.showOnlyOptimized(event);
+        type === 'onlyOnDayparting' && this.props.showOnlyOnDayparting(event);
 
         this.setState(
             {
@@ -234,10 +235,11 @@ class ProductList extends Component {
                 openedProduct,
                 onlyHasNew,
                 closedList,
-                onlyOndayparting,
+                onlyOnDayparting,
+                onlyOptimization,
                 paginationParams: {size, page}
             } = this.state,
-            {products, selectedProduct, totalSize, onlyOptimization, pathname, fetching} = this.props;
+            {products, selectedProduct, totalSize, pathname, fetching} = this.props;
 
         return (
             <Fragment>
@@ -249,7 +251,7 @@ class ProductList extends Component {
                         onSelectAll={this.selectAll}
                         onChangeSwitch={this.handleChangeSwitch}
                         onChangeSelect={this.selectChangeHandler}
-                        onlyOndayparting={onlyOndayparting}
+                        onlyOndayparting={onlyOnDayparting}
                         pathname={pathname}
                         selectedSize={selectedSize}
                         isSelectedAll={isSelectedAll}
@@ -262,8 +264,8 @@ class ProductList extends Component {
 
                             <Switch
                                 data-intercom-target='only-on-dayparting-switch'
-                                checked={onlyOndayparting}
-                                onChange={e => this.handleChangeSwitch(e, 'onlyOndayparting')}
+                                checked={onlyOnDayparting}
+                                onChange={e => this.handleChangeSwitch(e, 'onlyOnDayparting')}
                             />
                         </div>
                         :
@@ -365,6 +367,7 @@ const mapStateToProps = state => ({
     totalSize: state.products.totalSize,
     selectedProduct: state.products.selectedProduct,
     onlyOptimization: state.products.onlyOptimization,
+    onlyOnDayparting: state.products.onlyOnDayparting,
     fetching: state.products.fetching
 });
 
@@ -377,7 +380,10 @@ const mapDispatchToProps = dispatch => ({
     },
     showOnlyOptimized: (data) => {
         dispatch(productsActions.showOnlyOptimized(data));
-    }
+    },
+    showOnlyOnDayparting: (data) => {
+        dispatch(productsActions.showOnlyOnDayparting(data));
+    },
 });
 
 export default connect(

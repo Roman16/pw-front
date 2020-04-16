@@ -236,6 +236,13 @@ const PlacementsStatistics = ({date}) => {
 
     }, [date, campaignId]);
 
+    useEffect(() => {
+        if (campaignId == null && !fetchingCampaignList) {
+            localFetching = false;
+            setProcessing(false);
+        }
+    }, [fetchingCampaignList]);
+
     return (
         <section
             className={`${(processing || fetchingCampaignList) ? 'placements-statistics disabled' : 'placements-statistics'}`}>

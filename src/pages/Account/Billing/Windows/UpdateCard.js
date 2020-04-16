@@ -179,7 +179,7 @@ const StripeForm = (props) => {
             </div>
 
             <div className='button-block'>
-                <button className='btn cancel' type='button' onClick={onClose}>Cancel</button>
+                <button className='btn white' type='button' onClick={onClose}>Cancel</button>
                 <button className='btn green-btn'>Save</button>
             </div>
         </form>
