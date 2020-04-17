@@ -37,6 +37,8 @@ const Subscription = React.lazy(() => import('./Account/Subscription/Subscriptio
 const Home = React.lazy(() => import('./Home/Home'));
 const Scanner = React.lazy(() => import('./PPCAutomate/Scanner/Scanner'));
 const Dayparting = React.lazy(() => import('./PPCAutomate/Dayparting/Dayparting'));
+const AdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'));
+
 
 let timerId = null;
 
@@ -55,6 +57,18 @@ function throttle(func, delay) {
 
 const developer = process.env.REACT_APP_ENV === "developer";
 
+
+const AdminRoute = (props) => {
+    const {userId} = useSelector(state => ({
+        userId: state.user.user.id,
+    }));
+
+    if (userId === 777) {
+        return <Route {...props} />
+    } else {
+        return <Redirect to={'/404'}/>
+    }
+};
 
 const ConnectedAmazonRoute = props => {
     const {mwsConnected, ppcConnected} = useSelector(state => ({
@@ -102,7 +116,6 @@ const AuthorizedUser = (props) => {
 
     return (
         <Fragment>
-
             <div className="main-pages">
 
                 <Sidebar props={props}/>
@@ -184,6 +197,10 @@ const AuthorizedUser = (props) => {
                                     <Route exact path="/account-subscription" component={Subscription}/>
 
                                     <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
+
+                                    {/*-------------------------------------------*/}
+                                    <AdminRoute exact path="/admin-panel" component={AdminPanel}/>
+                                    {/*-------------------------------------------*/}
 
                                     <Route path={'*'} render={() => (
                                         <Redirect to={'/404'}/>
