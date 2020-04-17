@@ -58,24 +58,6 @@ const Chart = ({
     //---------------------------
     //second way
 
-    // const svg = document.querySelector('svg.recharts-surface');
-    // const line = document.querySelectorAll('.recharts-line-curve');
-    //
-    // const defs = document.createElementNS('http://www.w3.org/2000/svg', "defs");
-    //
-    // defs.innerHTML = '<filter id="f2" x="0" y="0" width="200%" height="200%">\n' +
-    //     '      <feOffset result="offOut" in="SourceGraphic" dx="0" dy="20" />\n' +
-    //     '      <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />\n' +
-    //     '      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />\n' +
-    //     '    </filter>';
-    //
-    //
-    // svg && svg.appendChild(defs);
-    //
-    // line.forEach(item => {
-    //     item.setAttribute('filter', 'url(#f2)');
-    // });
-
     return (
         <div className='main-chart-container'>
             <ResponsiveContainer height='100%' width='100%'>
@@ -83,12 +65,29 @@ const Chart = ({
                     data={Array.isArray(data) ? data : []}
                     margin={{top: 10, bottom: 30}}
                 >
+                    {/*----------------------------------------------------------------*/}
+                    {/*filters*/}
+
+                    <filter id="dropshadow" height="130%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="5"/>
+                        <feOffset dx="2" dy="15" result="offsetblur"/>
+                        <feComponentTransfer>
+                            <feFuncA type="linear" slope="0.3"/>
+                        </feComponentTransfer>
+                        <feMerge>
+                            <feMergeNode/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+
+                        <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+
+                    </filter>
+
+                    {/*----------------------------------------------------------------*/}
                     <CartesianGrid
-                        vertical={false}
-                        stroke="#DBDCE2"
+                        stroke="rgba(219, 220, 226, 0.3)"
                     />
 
-                    {/*<Customized component={(props) => console.log(props)} />*/}
 
                     <XAxis
                         dataKey="date"
@@ -132,6 +131,7 @@ const Chart = ({
                         stroke="#82ca9d"
                         strokeWidth={3}
                         dot={false}
+                        filter={'url(#dropshadow)'}
                         // isAnimationActive={false}
                     />}
 
@@ -166,6 +166,7 @@ const Chart = ({
                         stroke="#8884d8"
                         strokeWidth={3}
                         dot={false}
+                        filter={'url(#dropshadow)'}
                         // isAnimationActive={false}
                     />}
 

@@ -16,6 +16,23 @@
     flex: 1;
     height: 500px;
 
+    .recharts-cartesian-grid-vertical {
+      line {
+        stroke-dasharray: 5;
+      }
+    }
+
+    .recharts-cartesian-grid {
+      line {
+        stroke-width: 2
+      }
+    }
+
+    .recharts-line {
+      -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+      filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+    }
+
     @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
       & {
         height: 420px;

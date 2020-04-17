@@ -150,7 +150,7 @@ const Amazon = ({amazonTokens}) => {
                             </div>
 
                             <button
-                                className="btn green-btn confirm-btn"
+                                className="btn default confirm-btn"
                                 type="button"
                                 onClick={handleSetMws}
                                 disabled={amazonTokensValue.mws_auth_token.length < 5 || amazonTokensValue.merchant_id.length < 5}
