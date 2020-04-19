@@ -30,6 +30,7 @@ const Video = () => {
                         <br/>
                         <p>Follow the directions below on how to setup Profit Whales Automation Software for optimizing
                             your Amazon PPC Campaigns.</p>
+                        <br/>
                         <p><strong>Take action to get closer to your business goals!</strong></p>
                         <br/>
                         <p>This guide will help set you up and show you how to take all these actions for your
@@ -121,8 +122,9 @@ const Video = () => {
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen/>
-                        <p></p>
+                    </div>
 
+                    <div className="video-item">
                         <p><a
                             href="https://intercom.help/profitwhales/en/articles/3815260-new-release-what-is-profit-whales-amazon-ppc-dayparting">What
                             is that and why would You want it?</a></p>

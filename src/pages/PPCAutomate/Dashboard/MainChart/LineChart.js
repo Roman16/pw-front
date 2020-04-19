@@ -70,9 +70,9 @@ const Chart = ({
 
                     <filter id="dropshadow" height="130%">
                         <feGaussianBlur in="SourceGraphic" stdDeviation="5"/>
-                        <feOffset dx="2" dy="15" result="offsetblur"/>
+                        <feOffset dx="2" dy="10" result="offsetblur"/>
                         <feComponentTransfer>
-                            <feFuncA type="linear" slope="0.4"/>
+                            <feFuncA type="linear" slope="0.5"/>
                         </feComponentTransfer>
                         <feMerge>
                             <feMergeNode/>
