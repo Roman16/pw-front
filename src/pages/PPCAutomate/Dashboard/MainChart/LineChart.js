@@ -169,7 +169,6 @@ const Chart = ({
                         strokeWidth={3}
                         dot={false}
                         filter={'url(#dropshadow)'}
-                        strokeDasharray="1000 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8"
                         // isAnimationActive={false}
                     />}
 
