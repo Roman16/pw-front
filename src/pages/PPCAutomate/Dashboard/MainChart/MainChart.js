@@ -17,6 +17,7 @@ const MainChart = () => {
     const [chartData, updateChartData] = useState([]);
     const [fetching, switchFetch] = useState(false);
     const [fetchingError, setFetchingError] = useState(false);
+    const [productOptimizationDateList, setProductOptimizationDateList] = useState([]);
 
     const dispatch = useDispatch();
 
@@ -70,7 +71,7 @@ const MainChart = () => {
                     updateChartData(res);
                     switchFetch(false);
                     setFetchingError(false);
-                    localFetch= false;
+                    localFetch = false;
                 })
                 .catch(() => {
                     localFetch = false;
@@ -82,6 +83,27 @@ const MainChart = () => {
             updateChartData([])
         }
     };
+
+    const getProductOptimizationDetails = (productId) => {
+        if(productId || productId != null) {
+            dashboardServices.fetchProductOptimizationDetails({
+                productId: productId,
+                startDate: selectedRangeDate.startDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.startDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
+                endDate: selectedRangeDate.endDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.endDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
+            })
+                .then(res => {
+                    console.log(res);
+
+                    // setProductOptimizationDateList();
+                })
+        } else {
+            setProductOptimizationDateList([]);
+        }
+    };
+
+    useEffect(() => {
+        getProductOptimizationDetails(selectedProduct);
+    }, [selectedProduct, selectedRangeDate]);
 
     useEffect(() => {
         source && source.cancel();
@@ -113,7 +135,7 @@ const MainChart = () => {
             </div>}
 
             {fetchingError && <div className="loading">
-               <button className='btn default' onClick={getChartData}>reload</button>
+                <button className='btn default' onClick={getChartData}>reload</button>
             </div>}
         </div>
     )

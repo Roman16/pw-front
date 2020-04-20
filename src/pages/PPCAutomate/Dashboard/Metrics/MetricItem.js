@@ -17,10 +17,10 @@ const DiffTooltip = ({currentValue, diff, type}) => {
         <Fragment>
             <p>
                 {`from  `}
-                <RenderMetricValue
+                {+currentValue === 0 ? '0' : <RenderMetricValue
                     value={prevValue}
                     type={type}
-                />
+                />}
                 {`  to  `}
                 <b><RenderMetricValue
                     value={currentValue}
@@ -29,7 +29,7 @@ const DiffTooltip = ({currentValue, diff, type}) => {
             </p>
 
 
-            <p>
+            {(type !== 'percent' && +currentValue !== 0) && <p>
                 ({diff < 0 ? 'down  ' : 'up  '}
 
                 <RenderMetricValue
@@ -43,7 +43,7 @@ const DiffTooltip = ({currentValue, diff, type}) => {
                     value={Math.abs(diff)}
                     type={'percent'}
                 />)
-            </p>
+            </p>}
         </Fragment>
     )
 };
@@ -82,6 +82,21 @@ const RenderMetricChanges = ({value, diff, type, name}) => {
                 </InformationTooltip>
 
             )
+        } else if (name === 'profit' || name === 'ad_profit' || name === 'organic_sales') {
+            const prevValue = value / ((100 + +diff) / 100),
+                diffValue = Math.abs(round(value, 2) - round(prevValue, 2));
+
+            return (<div className='metric-item__changes'>
+                {(diff > 0) && <div className='upward-changes'>
+                    ${round(diffValue, 2)}
+                    <SVG id='up-white-arrow'/>
+                </div>}
+
+                {(diff <= 0) && <div className='downward-changes'>
+                    ${round(diffValue, 2)}
+                    <SVG id='down-white-arrow'/>
+                </div>}
+            </div>)
         } else {
             return (
                 <InformationTooltip

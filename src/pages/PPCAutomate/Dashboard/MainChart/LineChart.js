@@ -1,9 +1,10 @@
-import React, {PureComponent} from 'react';
+import React, {PureComponent, Fragment} from 'react';
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Text
 } from 'recharts';
 import ChartTooltip from "./ChartTooltip";
 import moment from "moment";
+import TextArea from "antd/es/input/TextArea";
 
 const CustomizedAxisTick = (props) => {
     const {
@@ -15,6 +16,19 @@ const CustomizedAxisTick = (props) => {
             <text x={0} y={0} dy={20}>{moment(payload.value).format('MMM DD')}</text>
         </g>
     );
+};
+
+const ReferenceCustomLabel = props => {
+    return (
+        <Fragment>
+            <text x={props.viewBox.x} y={20} className={'start-optimization'}>
+                Optimisation
+            </text>
+            <text x={props.viewBox.x} y={35} className={'start-optimization'}>
+                started
+            </text>
+        </Fragment>
+    )
 };
 
 const Chart = ({
@@ -58,12 +72,14 @@ const Chart = ({
     //---------------------------
     //second way
 
+    console.log(data);
+
     return (
         <div className='main-chart-container'>
             <ResponsiveContainer height='100%' width='100%'>
                 <LineChart
                     data={Array.isArray(data) ? data : []}
-                    margin={{top: 10, bottom: 30}}
+                    margin={{top: 50, bottom: 30}}
                 >
                     {/*----------------------------------------------------------------*/}
                     {/*filters*/}
@@ -79,10 +95,18 @@ const Chart = ({
                             <feMergeNode in="SourceGraphic"/>
                         </feMerge>
 
-                        <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+                        <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
 
                     </filter>
 
+                    {/*----------------------------------------------------------------*/}
+                    {document.querySelector('.recharts-reference-line-line') && <rect
+                        x={document.querySelector('.recharts-reference-line-line').getAttribute('x1')}
+                        y="50"
+                        width={1565 - +document.querySelector('.recharts-reference-line-line').getAttribute('x1')}
+                        height={440 - 50}
+                        className={'start-rect'}
+                    />}
                     {/*----------------------------------------------------------------*/}
                     <CartesianGrid
                         stroke="rgba(219, 220, 226, 0.3)"
@@ -100,6 +124,7 @@ const Chart = ({
                         // tick={<CustomizedAxisTick/>}
                         tickFormatter={(date) => moment(date).format('MMM DD')}
                     />
+
 
                     <YAxis
                         yAxisId="left"
@@ -124,6 +149,18 @@ const Chart = ({
                             />
                         }/>
 
+
+                    <ReferenceLine
+                        yAxisId={'left'}
+                        x={'2020-04-13T00:00:00.000Z'}
+                        stroke="#CDFFE2"
+                        label={<ReferenceCustomLabel/>}
+                        // label={'Test'}
+                        strokeWidth={4}
+                        strokeDasharray="7"
+                    />
+
+
                     {(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line
                         yAxisId="left"
                         type="monotone"
@@ -132,6 +169,7 @@ const Chart = ({
                         strokeWidth={3}
                         dot={false}
                         filter={'url(#dropshadow)'}
+                        strokeDasharray="1000 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8"
                         // isAnimationActive={false}
                     />}
 
@@ -144,6 +182,7 @@ const Chart = ({
                         strokeWidth={2}
                         activeDot={{r: 5}}
                         dot={{r: 3}}
+                        // filter={'url(#dropshadow)'}
                         // isAnimationActive={false}
                     />}
 
@@ -179,8 +218,10 @@ const Chart = ({
                         strokeWidth={2}
                         activeDot={{r: 5}}
                         dot={{r: 3}}
+                        // filter={'url(#dropshadow)'}
                         // isAnimationActive={false}
                     />}
+
 
                     {/*{(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line*/}
                     {/*    yAxisId='right'*/}
@@ -192,6 +233,7 @@ const Chart = ({
                     {/*    dot={false}*/}
                     {/*    activeDot={{r: 0}}*/}
                     {/*/>}*/}
+
 
                 </LineChart>
             </ResponsiveContainer>

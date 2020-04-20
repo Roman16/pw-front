@@ -57,6 +57,7 @@ export const dashboardUrls = {
     products: 'ppc-automation/dashboard/products/list',
     barChartData: 'ppc-automation/dashboard/charts/bar-data',
     pieChartData: 'ppc-automation/dashboard/charts/pie-data',
+    productOptimizationDetails: 'ppc-automation/dashboard/products/optimization-jobs-log/list',
 };
 
 export const scannerUrls = {
