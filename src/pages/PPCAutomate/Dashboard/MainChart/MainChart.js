@@ -85,16 +85,23 @@ const MainChart = () => {
     };
 
     const getProductOptimizationDetails = (productId) => {
-        if(productId || productId != null) {
+        if (productId || productId != null) {
             dashboardServices.fetchProductOptimizationDetails({
                 productId: productId,
                 startDate: selectedRangeDate.startDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.startDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
                 endDate: selectedRangeDate.endDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.endDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
             })
                 .then(res => {
-                    console.log(res);
+                    console.log(Object.keys(res.status).map(key => ({
+                        date: key,
+                        ...res.status[key][res.status[key].length - 1]
+                    })));
 
-                    // setProductOptimizationDateList();
+
+                    setProductOptimizationDateList(Object.keys(res.status).map(key => ({
+                        date: key,
+                        ...res.status[key][res.status[key].length - 1]
+                    })));
                 })
         } else {
             setProductOptimizationDateList([]);
@@ -128,6 +135,7 @@ const MainChart = () => {
                 activeMetrics={activeMetrics}
                 data={chartData}
                 selectedRangeDate={selectedRangeDate}
+                productOptimizationDateList={productOptimizationDateList}
             />
 
             {fetching && <div className="loading">

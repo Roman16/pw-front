@@ -1,10 +1,16 @@
-import React, {PureComponent, Fragment} from 'react';
+import React, {Fragment} from 'react';
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Text
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+    ReferenceLine
 } from 'recharts';
 import ChartTooltip from "./ChartTooltip";
 import moment from "moment";
-import TextArea from "antd/es/input/TextArea";
 
 const CustomizedAxisTick = (props) => {
     const {
@@ -19,13 +25,15 @@ const CustomizedAxisTick = (props) => {
 };
 
 const ReferenceCustomLabel = props => {
+    const textClass = props.text === 'started' ? 'started-optimization' : 'paused-optimization';
+
     return (
         <Fragment>
-            <text x={props.viewBox.x} y={20} className={'start-optimization'}>
+            <text x={props.viewBox.x} y={20} className={textClass}>
                 Optimisation
             </text>
-            <text x={props.viewBox.x} y={35} className={'start-optimization'}>
-                started
+            <text x={props.viewBox.x} y={35} className={textClass}>
+                {props.text}
             </text>
         </Fragment>
     )
@@ -37,6 +45,7 @@ const Chart = ({
                    showWeekChart,
                    showDailyChart,
                    selectedRangeDate,
+                   productOptimizationDateList
                }) => {
     //first way
     // const dataWithShadow = data.map(item => ({
@@ -72,7 +81,8 @@ const Chart = ({
     //---------------------------
     //second way
 
-    console.log(data);
+    const runningLine = document.querySelectorAll('.recharts-reference-line-line[stroke="#CDFFE2"]'),
+        pausedLine = document.querySelectorAll('.recharts-reference-line-line[stroke="#C9CBD4"]');
 
     return (
         <div className='main-chart-container'>
@@ -100,13 +110,16 @@ const Chart = ({
                     </filter>
 
                     {/*----------------------------------------------------------------*/}
-                    {document.querySelector('.recharts-reference-line-line') && <rect
-                        x={document.querySelector('.recharts-reference-line-line').getAttribute('x1')}
-                        y="50"
-                        width={1565 - +document.querySelector('.recharts-reference-line-line').getAttribute('x1')}
-                        height={440 - 50}
-                        className={'start-rect'}
-                    />}
+                    {runningLine.length > 0 && [...runningLine].map((item, index) => (
+                        <rect
+                            key={`rect_${index}`}
+                            x={item.getAttribute('x1')}
+                            y="50"
+                            width={(pausedLine[index] ? +pausedLine[index].getAttribute('x1') : +document.querySelector('.recharts-cartesian-grid-vertical line:last-child').getAttribute('x1')) - +item.getAttribute('x1')}
+                            height={+document.querySelector('.recharts-cartesian-grid-horizontal line:first-child').getAttribute('y1') - 50}
+                            className={'start-rect'}
+                        />
+                    ))}
                     {/*----------------------------------------------------------------*/}
                     <CartesianGrid
                         stroke="rgba(219, 220, 226, 0.3)"
@@ -149,16 +162,37 @@ const Chart = ({
                             />
                         }/>
 
+                    {productOptimizationDateList.map(item => (
+                        <ReferenceLine
+                            key={item.created_at}
+                            yAxisId={'left'}
+                            x={`${item.date}T00:00:00.000Z`}
+                            stroke={item.new_value === 'RUNNING' ? "#CDFFE2" : '#C9CBD4'}
+                            label={<ReferenceCustomLabel text={item.new_value === 'RUNNING' ? 'started' : 'paused'}/>}
+                            strokeWidth={4}
+                            strokeDasharray="7"
+                        />
+                    ))}
 
-                    <ReferenceLine
-                        yAxisId={'left'}
-                        x={'2020-04-13T00:00:00.000Z'}
-                        stroke="#CDFFE2"
-                        label={<ReferenceCustomLabel/>}
-                        // label={'Test'}
-                        strokeWidth={4}
-                        strokeDasharray="7"
-                    />
+                    {/*<ReferenceLine*/}
+                    {/*    yAxisId={'left'}*/}
+                    {/*    x={'2020-04-16T00:00:00.000Z'}*/}
+                    {/*    // x={'2020-04-09T00:00:00.000Z'}*/}
+                    {/*    stroke="#CDFFE2"*/}
+                    {/*    label={<ReferenceCustomLabel text={'tttt'}/>}*/}
+                    {/*    strokeWidth={4}*/}
+                    {/*    strokeDasharray="7"*/}
+                    {/*/>*/}
+
+                    {/*<ReferenceLine*/}
+                    {/*    yAxisId={'left'}*/}
+                    {/*    x={'2020-04-13T00:00:00.000Z'}*/}
+                    {/*    stroke="#CDFFE2"*/}
+                    {/*    label={<ReferenceCustomLabel/>}*/}
+                    {/*    // label={'Test'}*/}
+                    {/*    strokeWidth={4}*/}
+                    {/*    strokeDasharray="7"*/}
+                    {/*/>*/}
 
 
                     {(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line

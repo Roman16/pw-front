@@ -36,7 +36,7 @@ const ErrorBar = () => {
         return (() => {
             clearInterval(intervalId);
         })
-    }, []);
+    }, [accountLinks]);
 
     return (
         <div className='errors-bar'>

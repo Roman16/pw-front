@@ -4,6 +4,7 @@
 .ant-modal-wrap {
   display: flex;
   align-items: center;
+  z-index: 100000;
 }
 
 .over-modal-wrap {
@@ -405,4 +406,8 @@
   @media (max-width: 500px) {
     max-width: 95vw !important;
   }
+}
+
+.ant-modal-mask {
+  z-index: 10000;
 }
