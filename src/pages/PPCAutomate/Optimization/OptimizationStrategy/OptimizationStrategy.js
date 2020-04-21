@@ -181,22 +181,22 @@ function StrategyItem({
                                 <button type="button" disabled={processing || productId == null}
                                         className='btn default stop-btn'
                                         onClick={onStop}>
-                                    {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
                                     stop
+                                    {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faStop}/>}
                                 </button>
                                 :
                                 <>
                                     <button disabled={processing || productId == null} className='btn default'
                                             onClick={() => onStart(targetAcos)}>
-                                        {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
                                         update
+                                        {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faPlay}/>}
                                     </button>
 
                                     <button type="button" disabled={processing || productId == null}
                                             className='btn default stop-btn'
                                             onClick={onStop}>
-                                        {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
                                         stop
+                                        {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faStop}/>}
                                     </button>
                                 </>
                         )
@@ -204,8 +204,8 @@ function StrategyItem({
                         <button disabled={processing || productId == null} className='btn default'
                                 {...index === 1 && {"data-intercom-target": "start-button"}}
                         >
-                            {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
                             start
+                            {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faPlay}/>}
                         </button>
                     }
                 </div>
