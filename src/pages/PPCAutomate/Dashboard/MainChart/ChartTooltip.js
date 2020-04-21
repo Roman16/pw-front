@@ -54,12 +54,12 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
 
                     {activeMetrics[0].key && <div className="week-value">
                         <SVG id='green-line'/>
-                        {getChartValue('seven_days_first_metric_value', activeMetrics[0].key)}
+                        {payload[0] && payload[0].payload.dashed_seven_days_first_metric_value ? getChartValue('dashed_seven_days_first_metric_value', activeMetrics[0].key) : getChartValue('seven_days_first_metric_value', activeMetrics[0].key)}
                     </div>}
 
                     {activeMetrics[1].key && <div className="week-value">
                         <SVG id='violet-line'/>
-                        {getChartValue('seven_days_second_metric_value', activeMetrics[1].key)}
+                        {payload[0] && payload[0].payload.dashed_seven_days_second_metric_value ? getChartValue('dashed_seven_days_second_metric_value', activeMetrics[1].key) : getChartValue('seven_days_second_metric_value', activeMetrics[1].key)}
                     </div>}
                 </div>}
 
@@ -68,12 +68,12 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
 
                     {activeMetrics[0].key && <div className="daily-value">
                         <SVG id='green-daily'/>
-                        {getChartValue('daily_first_metric_value', activeMetrics[0].key)}
+                        {payload[0] && payload[0].payload.dashed_daily_first_metric_value ? getChartValue('dashed_daily_first_metric_value', activeMetrics[0].key) : getChartValue('daily_first_metric_value', activeMetrics[0].key)}
                     </div>}
 
                     {activeMetrics[1].key && <div className="daily-value">
                         <SVG id='violet-daily'/>
-                        {getChartValue('daily_second_metric_value', activeMetrics[1].key)}
+                        {payload[0] && payload[0].payload.dashed_daily_second_metric_value ? getChartValue('dashed_daily_second_metric_value', activeMetrics[1].key) : getChartValue('daily_second_metric_value', activeMetrics[1].key)}
                     </div>}
                 </div>}
             </div>

@@ -121,7 +121,7 @@ const Chart = ({
                             x={item.getAttribute('x1')}
                             y="50"
                             width={(pausedLine[index] ? +pausedLine[index].getAttribute('x1') : +document.querySelector('.recharts-cartesian-grid-vertical line:last-child').getAttribute('x1')) - +item.getAttribute('x1')}
-                            height={+document.querySelector('.recharts-cartesian-grid-horizontal line:first-child').getAttribute('y1') - 50}
+                            height={+document.querySelector('.recharts-cartesian-grid-vertical line:first-child').getAttribute('height')}
                             className={'start-rect'}
                         />
                     ))}
