@@ -86,12 +86,12 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
             const diffValue = Math.abs(value - prevValue);
 
             return (<div className='metric-item__changes'>
-                {(diff > 0) && <div className='upward-changes'>
+                {(value > prevValue) && <div className='upward-changes'>
                     ${round(diffValue, 2)}
                     <SVG id='up-white-arrow'/>
                 </div>}
 
-                {(diff <= 0) && <div className='downward-changes'>
+                {(value <= prevValue) && <div className='downward-changes'>
                     ${round(diffValue, 2)}
                     <SVG id='down-white-arrow'/>
                 </div>}
