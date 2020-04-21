@@ -19,7 +19,7 @@ class DatePicker extends Component {
     };
 
     disabledDate = current => {
-        return current && current > moment().tz('America/Los_Angeles').endOf('day');
+        return current && current > moment().tz('America/Los_Angeles');
     };
 
     render() {

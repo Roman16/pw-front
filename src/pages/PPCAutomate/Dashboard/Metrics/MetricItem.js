@@ -48,7 +48,7 @@ const DiffTooltip = ({currentValue, diff, type}) => {
     )
 };
 
-const RenderMetricChanges = ({value, diff, type, name}) => {
+const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
     if (diff != null) {
         if (diff === 0) {
             return (
@@ -83,8 +83,7 @@ const RenderMetricChanges = ({value, diff, type, name}) => {
 
             )
         } else if (name === 'profit' || name === 'ad_profit' || name === 'organic_sales') {
-            const prevValue = value / ((100 + +diff) / 100),
-                diffValue = Math.abs(round(value, 2) - round(prevValue, 2));
+            const diffValue = Math.abs(value - prevValue);
 
             return (<div className='metric-item__changes'>
                 {(diff > 0) && <div className='upward-changes'>
@@ -149,7 +148,7 @@ const RenderMetricValue = ({value, type}) => {
 };
 
 
-const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, metric_value}, metric, removeSelectedMetric, activeMetrics, onActivateMetric, onDeactivateMetric}) => {
+const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, metric_value, metric_prev_value}, metric, removeSelectedMetric, activeMetrics, onActivateMetric, onDeactivateMetric}) => {
     const {hasMargin} = useSelector(state => ({
         hasMargin: state.dashboard.hasMargin || false
     }));
@@ -200,6 +199,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
                 diff={metric_diff}
                 type={type}
                 name={key}
+                prevValue={metric_prev_value}
             />
 
             <div className='metric-item__description'>

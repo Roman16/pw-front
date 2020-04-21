@@ -92,12 +92,6 @@ const MainChart = () => {
                 endDate: selectedRangeDate.endDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.endDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
             })
                 .then(res => {
-                    console.log(Object.keys(res.status).map(key => ({
-                        date: key,
-                        ...res.status[key][res.status[key].length - 1]
-                    })));
-
-
                     setProductOptimizationDateList(Object.keys(res.status).map(key => ({
                         date: key,
                         ...res.status[key][res.status[key].length - 1]

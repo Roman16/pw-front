@@ -40,6 +40,14 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
 
 
             <div className='chart-legend'>
+                {(firstActiveMetricTitle || secondActiveMetricTitle) && <div className="first-line">
+                    <span className="dashed-line">
+                        <SVG id='dashed-lines'/>
+                    </span>
+
+                    Gathering data
+                </div>}
+
                 {firstActiveMetricTitle && <div className="first-line">
                     <span className="green-line">
                         <SVG id='green-line'/>

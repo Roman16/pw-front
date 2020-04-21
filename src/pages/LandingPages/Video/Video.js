@@ -139,14 +139,12 @@ const Video = () => {
                         </p>
 
                         <p>
-                            If anything goes wrong during the setting up process, or just for peace of mind, you can
-                            contact our Support Team or shoot a message directly to me!
+                            We’ll keep you informed of the latest updates, changes behind Profit Whales.
                         </p>
 
                         <p>
-                            <a target={'_blank'} href="https://www.linkedin.com/in/ihor-dubovetskyi-6bb878178/">Ihor
-                                Dubovetskyi</a><br/>
-                            CEO
+                            Warmly,<br/>
+                            Profit Whales Team
                         </p>
 
                     </div>
