@@ -45,7 +45,7 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
                 />
                 <span>Optimization status</span>
 
-                <SVG id='daily-line'/>
+                <SVG id='optimization-status'/>
             </div>
 
 

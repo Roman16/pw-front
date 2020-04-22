@@ -536,19 +536,26 @@ const files = {
             width: 16,
             height: 4,
             viewBox: [0,0,16,4],
-            data: '<path xmlns="http://www.w3.org/2000/svg" stroke="#C9CBD4" stroke-dasharray="4 4" stroke-width="4" d="M0 2L16 2"/>'
+            data: '<path xmlns="http://www.w3.org/2000/svg" fill="#C9CBD4" fill-rule="evenodd" d="M2 4H0L0 0H2L2 4ZM10 4L6 4V0H10V4ZM16 4H14V0H16V4Z" clip-rule="evenodd"/>'
         },
         'optimization-started': {
             width: 16,
             height: 4,
             viewBox: [0,0,16,4],
-            data: '<path xmlns="http://www.w3.org/2000/svg" stroke="#CDFFE2" stroke-dasharray="4 4" stroke-width="4" d="M0 2L16 2"/>'
+            data: '<path xmlns="http://www.w3.org/2000/svg" fill="#CDFFE2" fill-rule="evenodd" d="M2 4H0L0 0H2L2 4ZM10 4L6 4V0H10V4ZM16 4H14V0H16V4Z" clip-rule="evenodd"/>'
+        },
+        'optimization-status': {
+            width: 16,
+            height: 11,
+            viewBox: [0,0,16,11],
+            data: '<path xmlns="http://www.w3.org/2000/svg" fill="#CDFFE2" fill-rule="evenodd" d="M2 4H0L0 0H2L2 4ZM10 4L6 4V0H10V4ZM16 4H14V0H16V4Z" clip-rule="evenodd"/><path xmlns="http://www.w3.org/2000/svg" fill="#C9CBD4" fill-rule="evenodd" d="M2 11H0L0 7H2L2 11ZM10 11H6V7H10V11ZM16 11L14 11V7H16V11Z" clip-rule="evenodd"/>'
         }
 
     },
     allIds: [
         'optimization-paused',
         'optimization-started',
+        'optimization-status',
         'dashed-lines',
         'attention-bar-icon',
         'error-bar-icon',
