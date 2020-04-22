@@ -1,4 +1,21 @@
 .admin-panel {
+  section {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    border-radius:  8px;
+    background-color: #fff;
+    padding: 2em 4em;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+
+    .ant-table-title {
+      font-weight: bolder;
+      font-size: 1.4285714285714286rem;
+    }
+  }
+
   .form-group {
     display: flex;
 
@@ -12,6 +29,17 @@
       height: 32px;
       font-weight: 500;
       font-size: 1rem;
+    }
+  }
+
+
+  .user-information-section {
+    .ant-table-wrapper {
+      margin: 20px 0 0 0;
+    }
+
+    h2 {
+      margin: 50px 0 0 0;
     }
   }
 }

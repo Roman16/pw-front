@@ -1,0 +1,21 @@
+import api from './request';
+import {adminUrls} from '../constans/api.urls';
+
+export const adminServices = {
+    checkUserEmail,
+    checkAccountLinks,
+    checkOptimizationJobs
+};
+
+function checkUserEmail(email) {
+    return api('get', `${adminUrls.userEmail}?email=${email}`)
+}
+
+function checkAccountLinks(userId) {
+    return api('get', `${adminUrls.accountLinks}?user_id=${userId}`)
+}
+
+function checkOptimizationJobs(userId) {
+    return api('get', `${adminUrls.optimizationJobs}?user_id=${userId}`)
+}
+

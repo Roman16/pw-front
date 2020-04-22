@@ -10,6 +10,7 @@ import {useSelector, useDispatch} from "react-redux";
 import LoadingAmazonAccount from "../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 import RouteLoader from "../components/RouteLoader/RouteLoader";
 import ErrorBar from "../components/ErrorBar/ErrorBar";
+import WelcomePage from "./authentication/AccountBinding/WelcomePage/WelcomePage";
 
 // import Optimization from "./PPCAutomate/Optimization/Optimization";
 // import Report from "./PPCAutomate/Report/Report";
@@ -188,6 +189,8 @@ const AuthorizedUser = (props) => {
 
                                     <Route exact path="/mws" component={MWS}/>
                                     <Route exact path="/ppc" component={PPC}/>
+
+                                    <Route exact path="/welcome" component={WelcomePage}/>
 
                                     {developer && <Route exact path="/home" component={Home}/>}
 

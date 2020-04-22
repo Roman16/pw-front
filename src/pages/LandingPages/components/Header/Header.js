@@ -58,7 +58,6 @@ const Header = ({type = 'light'}) => {
                                 </ul>
                             </li>
                             <li><Link to={'/pricing'}>Pricing</Link></li>
-                            <li><Link to={'/affiliates'}>Affiliate Program</Link></li>
                             <li><Link to="/contact-us">Contact us</Link></li>
                             <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
                                 <ul className="sub-menu">

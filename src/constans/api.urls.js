@@ -65,6 +65,11 @@ export const scannerUrls = {
     getChanges: 'ppc-scanner/get-changes-table',
     getScanning: 'ppc-scanner/scan-sp-campaigns',
 };
+export const adminUrls = {
+    userEmail: 'admin/support-manager/user',
+    accountLinks: 'admin/support-manager/linked-accounts/list',
+    optimizationJobs: 'admin/support-manager/optimization-jobs/list',
+};
 
 export const daypartingUrls = {
     campaigns: 'ppc-automation/dayparting/campaigns',

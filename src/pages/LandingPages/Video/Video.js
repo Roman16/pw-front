@@ -30,18 +30,18 @@ const Video = () => {
                         <br/>
                         <p>Follow the directions below on how to setup Profit Whales Automation Software for optimizing
                             your Amazon PPC Campaigns.</p>
-                        <br/>
-                        <p><strong>Take action to get closer to your business goals!</strong></p>
-                        <br/>
-                        <p>This guide will help set you up and show you how to take all these actions for your
-                            business.</p>
-                        <br/>
-                        <p><strong> Let’s take off!</strong></p>
-                        <br/>
-                        <p><strong>P.S.</strong> Сheck the requirements for the Amazon PPC Automation:</p>
-                        <div className="list-item">Available for US Amazon Sellers only;</div>
-                        <div className="list-item">one active product per Ad Group or a product with its variations;
-                        </div>
+                    {/*    <br/>*/}
+                    {/*    <p><strong>Take action to get closer to your business goals!</strong></p>*/}
+                    {/*    <br/>*/}
+                    {/*    <p>This guide will help set you up and show you how to take all these actions for your*/}
+                    {/*        business.</p>*/}
+                    {/*    <br/>*/}
+                    {/*    <p><strong> Let’s take off!</strong></p>*/}
+                    {/*    <br/>*/}
+                    {/*    <p><strong>P.S.</strong> Сheck the requirements for the Amazon PPC Automation:</p>*/}
+                    {/*    <div className="list-item">Available for US Amazon Sellers only;</div>*/}
+                    {/*    <div className="list-item">one active product per Ad Group or a product with its variations;*/}
+                    {/*    </div>*/}
                     </div>
 
                     <div className="video-item">

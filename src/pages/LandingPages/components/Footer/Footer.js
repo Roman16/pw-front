@@ -2,13 +2,14 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {Icon} from "antd";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlay} from "@fortawesome/free-solid-svg-icons";
+import {faPlay, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {faFacebook, faFacebookSquare, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons";
 
 import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
 import aLogo from '../../../../assets/img/amazon_logo.png';
 
 import './Footer.less';
+import {SVG} from "../../../../utils/icons";
 
 const Footer = () => (
     <footer className='not-found-page__footer'>
@@ -28,26 +29,28 @@ const Footer = () => (
                     <label>
                         <input type="email" name="email" placeholder="Your email address"/>
                     </label>
-                    <button className="btn ripple legitRipple">subscribe</button>
+                    <button className="btn ripple legitRipple">
+                        <FontAwesomeIcon icon={faArrowRight}/>
+                    </button>
                 </form>
             </div>
 
             <div className="col products">
-                <h4>Products</h4>
+                <h4>Partners</h4>
                 <ul>
                     <li>
-                        <Link to="#">
-                            Zero to hero PPC
-                        </Link>
+                        <a href="https://blog.profitwhales.com/partners">
+                            Partners
+                        </a>
                     </li>
                     <li>
-                        <Link to="#">
-                            Analyze and Optimize
-                        </Link>
+                        <a href="https://blog.profitwhales.com/coupons">
+                            Coupons
+                        </a>
                     </li>
                     <li>
-                        <Link to="#">
-                            Automate your PPC
+                        <Link to={'/affiliates'}>
+                            Affiliate Program
                         </Link>
                     </li>
                 </ul>
