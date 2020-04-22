@@ -69,6 +69,7 @@ export const adminUrls = {
     userEmail: 'admin/support-manager/user',
     accountLinks: 'admin/support-manager/linked-accounts/list',
     optimizationJobs: 'admin/support-manager/optimization-jobs/list',
+    productInfo: 'admin/support-manager/optimization-jobs',
 };
 
 export const daypartingUrls = {

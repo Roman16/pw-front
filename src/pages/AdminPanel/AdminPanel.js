@@ -8,6 +8,7 @@ const AdminPanel = () => {
     const [userInformation, setUserInformation] = useState(undefined);
     const [accountLinks, setAccountLinks] = useState(undefined);
     const [optimizationJobs, setOptimizationJobs] = useState(undefined);
+    // const [productInformation, setProductInformation] = useState(undefined);
 
     const checkUserEmail = (e) => {
         e.preventDefault();
@@ -50,6 +51,23 @@ const AdminPanel = () => {
                 }
             })
     };
+
+    // const checkProductByAsin = (asin) => {
+    //     adminServices.checkProductByAsin({
+    //         asin,
+    //         user_id: userInformation[0].id,
+    //         marketplace_id: accountLinks[0].marketplace_id
+    //     })
+    //         .then(res => {
+    //             setProductInformation(res.data);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //             if (error.response && error.response.data) {
+    //                 setProductInformation(error.response.data.message);
+    //             }
+    //         })
+    // };
 
     const userInformationColumns = [
         {
@@ -170,6 +188,12 @@ const AdminPanel = () => {
             render: (margin, item) => (item.product.item_price)
         },
         // {
+        //     title: '',
+        //     dataIndex: 'action',
+        //     key: 'action',
+        //     render: (event, item) => (<button className={'btn default'} onClick={() => checkProductByAsin(item.product.asin)}>check product</button>)
+        // },
+        // {
         //     title: 'PPC Expires',
         //     dataIndex: 'lwa_expires_at',
         //     key: 'lwa_expires_at',
@@ -215,6 +239,16 @@ const AdminPanel = () => {
                     title={() => 'Optimization Jobs'}
                 />}
             </section>}
+
+            {/*{productInformation !== undefined && <section className="optimization-jobs-section">*/}
+            {/*    {typeof productInformation === 'string' && <h2>{productInformation}</h2>}*/}
+            {/*    {typeof productInformation === 'object' && <Table*/}
+            {/*        dataSource={optimizationJobs}*/}
+            {/*        columns={optimizationJobsColumns}*/}
+            {/*        pagination={false}*/}
+            {/*        title={() => 'Optimization Jobs'}*/}
+            {/*    />}*/}
+            {/*</section>}*/}
         </div>
     )
 };
