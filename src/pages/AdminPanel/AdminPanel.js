@@ -9,12 +9,21 @@ const AdminPanel = () => {
     const [accountLinks, setAccountLinks] = useState(undefined);
     const [optimizationJobs, setOptimizationJobs] = useState(undefined);
     // const [productInformation, setProductInformation] = useState(undefined);
+    const [fields, setFields] = useState({});
+
+    const changeFieldHandler = (e) => {
+        setFields({
+            ...fields,
+            [e.target.name]: e.target.value
+        })
+    };
 
     const checkUserEmail = (e) => {
         e.preventDefault();
-        adminServices.checkUserEmail(e.target.children[0].value)
+
+        adminServices.checkUserEmail(fields.email)
             .then(res => {
-                setUserInformation([res.data.user]);
+                setUserInformation(res.data.user);
                 checkAccountLinks(res.data.user.id);
                 checkOptimizationJobs(res.data.user.id);
             })
@@ -206,13 +215,18 @@ const AdminPanel = () => {
         <div className="admin-panel">
             <section className="user-information-section">
                 <form className="form-group" onSubmit={checkUserEmail}>
-                    <Input required type="email" placeholder={'User E-mail'}/>
+                    <Input required
+                           type="email"
+                           placeholder={'User E-mail'}
+                           name={'email'}
+                           onChange={changeFieldHandler}
+                    />
                     <button className={'btn default'}>Check</button>
                 </form>
 
                 {typeof userInformation === 'string' && <h2>{userInformation}</h2>}
                 {typeof userInformation === 'object' && <Table
-                    dataSource={userInformation}
+                    dataSource={[userInformation]}
                     columns={userInformationColumns}
                     pagination={false}
                     title={() => 'General User Information'}
@@ -221,6 +235,21 @@ const AdminPanel = () => {
 
 
             {typeof userInformation === 'object' && <section className="account-links-section">
+                <form className="form-group" onSubmit={e => {
+                    e.preventDefault();
+                    checkAccountLinks(fields.user_id);
+                }}>
+                    <Input
+                        required
+                        type="text"
+                        placeholder={`User id: ${userInformation.id}`}
+                        name={'user_id'}
+                        onChange={changeFieldHandler}
+                    />
+                    <button className={'btn default'}>Check</button>
+                </form>
+
+
                 {typeof accountLinks === 'string' && <h2>{accountLinks}</h2>}
                 {typeof accountLinks === 'object' && <Table
                     dataSource={accountLinks}
@@ -231,6 +260,22 @@ const AdminPanel = () => {
             </section>}
 
             {typeof userInformation === 'object' && <section className="optimization-jobs-section">
+                <form className="form-group" onSubmit={e => {
+                    e.preventDefault();
+                    checkOptimizationJobs(fields.user_id);
+                }}>
+                    <Input
+                        required
+                        type="text"
+                        placeholder={`User id: ${userInformation.id}`}
+                        name={'user_id'}
+                        onChange={changeFieldHandler}
+                    />
+
+                    <button className={'btn default'}>Check</button>
+                </form>
+
+
                 {typeof optimizationJobs === 'string' && <h2>{optimizationJobs}</h2>}
                 {typeof optimizationJobs === 'object' && <Table
                     dataSource={optimizationJobs}
