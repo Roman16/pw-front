@@ -618,6 +618,9 @@ button.btn {
   background-position: center;
   transition: background 0.8s;
 
+  overflow: hidden;
+
+
   a {
     color: #fff;
     width: 100%;
@@ -660,11 +663,11 @@ button.btn {
     }
   }
 
-
+  //ripple effect
   & {
     position: relative;
     overflow: hidden;
-    //transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 
   &:after {
@@ -681,7 +684,7 @@ button.btn {
     background-position: 50%;
     transform: scale(10, 10);
     opacity: 0;
-    transition: transform .5s, opacity 1s;
+    transition: transform .5s, opacity .5s;
   }
 
   &:active:after {
@@ -689,7 +692,35 @@ button.btn {
     opacity: .3;
     transition: 0s;
   }
+
+  //& {
+  //  position: relative;
+  //  overflow: hidden;
+  //}
+  //
+  //span.ripple {
+  //  position: absolute;
+  //  background: #fff;
+  //  transform: translate(-50%, -50%);
+  //  pointer-events: none;
+  //  border-radius: 50%;
+  //  animation: animate .5s linear infinite;
+  //}
+  //
+  //@keyframes animate {
+  //  0% {
+  //    width: 0px;
+  //    height: 0px;
+  //    opacity: .5;
+  //  }
+  //  100% {
+  //    width: 500px;
+  //    height: 500px;
+  //    opacity: 0;
+  //  }
+  //}
 }
+
 
 button.default[disabled],
 button.cancel[disabled],

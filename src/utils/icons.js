@@ -531,10 +531,24 @@ const files = {
             height: 9,
             viewBox: [0,0,16,9],
             data: '<rect xmlns="http://www.w3.org/2000/svg" width="7" height="3" y="6" fill="#7DD4A1" rx="1.5"/><rect xmlns="http://www.w3.org/2000/svg" width="7" height="3" x="9" y="6" fill="#7DD4A1" rx="1.5"/><rect xmlns="http://www.w3.org/2000/svg" width="7" height="3" fill="#6D6DF6" rx="1.5"/><rect xmlns="http://www.w3.org/2000/svg" width="7" height="3" x="9" fill="#6D6DF6" rx="1.5"/>'
+        },
+        'optimization-paused': {
+            width: 16,
+            height: 4,
+            viewBox: [0,0,16,4],
+            data: '<path xmlns="http://www.w3.org/2000/svg" stroke="#C9CBD4" stroke-dasharray="4 4" stroke-width="4" d="M0 2L16 2"/>'
+        },
+        'optimization-started': {
+            width: 16,
+            height: 4,
+            viewBox: [0,0,16,4],
+            data: '<path xmlns="http://www.w3.org/2000/svg" stroke="#CDFFE2" stroke-dasharray="4 4" stroke-width="4" d="M0 2L16 2"/>'
         }
 
     },
     allIds: [
+        'optimization-paused',
+        'optimization-started',
         'dashed-lines',
         'attention-bar-icon',
         'error-bar-icon',

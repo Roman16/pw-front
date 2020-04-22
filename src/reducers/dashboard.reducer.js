@@ -7,6 +7,7 @@ let metricClickCount = 0;
 const initialState = {
     showWeekChart: true,
     showDailyChart: true,
+    showOptimizationChart: true,
     selectedProduct: '',
     selectedRangeDate: {
         startDate: moment(new Date()).subtract(30, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
@@ -22,14 +23,21 @@ export function dashboard(state = initialState, action) {
         case dashboardConstants.SWITCH_WEEK_CHART:
             return {
                 ...state,
-                showWeekChart: !state.showWeekChart,
+                showWeekChart: action.payload,
                 // showDailyChart: (state.showWeekChart && !state.showDailyChart) ? true : state.showDailyChart
             };
 
         case dashboardConstants.SWITCH_DAILY_CHART:
             return {
                 ...state,
-                showDailyChart: !state.showDailyChart,
+                showDailyChart: action.payload,
+                // showWeekChart: (state.showDailyChart && !state.showWeekChart) ? true : state.showWeekChart
+            };
+
+        case dashboardConstants.SWITCH_OPTIMIZATION_CHART:
+            return {
+                ...state,
+                showOptimizationChart: action.payload,
                 // showWeekChart: (state.showDailyChart && !state.showWeekChart) ? true : state.showWeekChart
             };
 

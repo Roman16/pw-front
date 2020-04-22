@@ -4,13 +4,13 @@ import moment from "moment";
 import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
 import {SVG} from "../../../../utils/icons";
 
-const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveMetricTitle, secondActiveMetricTitle, showWeekChart, showDailyChart}) => {
+const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveMetricTitle, secondActiveMetricTitle, showWeekChart, showDailyChart, showOptimizationChart}) => {
     return (
         <div className="chart-header">
             <div className='switch-block week-switch'>
                 <Switch
                     checked={showWeekChart}
-                    onChange={onChangeSwitch('week')}
+                    onChange={e => onChangeSwitch('week', e)}
                 />
 
                 <span>7-day average</span>
@@ -29,13 +29,23 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
             <div className='switch-block daily-switch'>
                 <Switch
                     checked={showDailyChart}
-                    onChange={onChangeSwitch('daily')}
+                    onChange={e => onChangeSwitch('daily', e)}
                 />
                 <span>Daily</span>
 
                 <span className='daily-icon'>
                      <SVG id='daily-line'/>
                 </span>
+            </div>
+
+            <div className='switch-block optimization-switch'>
+                <Switch
+                    checked={showOptimizationChart}
+                    onChange={e => onChangeSwitch('optimization', e)}
+                />
+                <span>Optimization status</span>
+
+                <SVG id='daily-line'/>
             </div>
 
 
@@ -63,6 +73,16 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
 
                     {secondActiveMetricTitle}
                 </div>}
+
+                <div className="optimization-line started">
+                    <SVG id='optimization-started'/>
+                    Optimization started
+                </div>
+
+                <div className="optimization-line paused">
+                    <SVG id='optimization-paused'/>
+                    Optimization paused
+                </div>
             </div>
 
             <DatePicker

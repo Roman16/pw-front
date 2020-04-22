@@ -21,9 +21,10 @@ const MainChart = () => {
 
     const dispatch = useDispatch();
 
-    const {showWeekChart, showDailyChart, selectedRangeDate, activeMetrics, selectedProduct, onlyOptimization} = useSelector(state => ({
-        showWeekChart: state.dashboard.showWeekChart,
-        showDailyChart: state.dashboard.showDailyChart,
+    const {showWeekChart, showDailyChart, selectedRangeDate, activeMetrics, selectedProduct, onlyOptimization, showOptimizationChart} = useSelector(state => ({
+        showWeekChart: state.dashboard.showWeekChart == null ? true : state.dashboard.showWeekChart,
+        showDailyChart: state.dashboard.showDailyChart == null ? true : state.dashboard.showDailyChart,
+        showOptimizationChart: state.dashboard.showOptimizationChart == null ? true : state.dashboard.showOptimizationChart,
         selectedRangeDate: state.dashboard.selectedRangeDate,
         activeMetrics: state.dashboard.activeMetrics,
         selectedProduct: state.dashboard.selectedProduct,
@@ -48,7 +49,7 @@ const MainChart = () => {
         }
     };
 
-    const handleChangeSwitch = (type) => () => dispatch(dashboardActions.switchChart(type));
+    const handleChangeSwitch = (type, value) => dispatch(dashboardActions.switchChart(type, value));
 
     const getChartData = () => {
         if (activeMetrics[0].key || activeMetrics[1].key) {
@@ -121,11 +122,13 @@ const MainChart = () => {
                 secondActiveMetricTitle={activeMetrics[0] && activeMetrics[1].title}
                 showWeekChart={showWeekChart}
                 showDailyChart={showDailyChart}
+                showOptimizationChart={showOptimizationChart}
             />
 
             <Chart
                 showWeekChart={showWeekChart}
                 showDailyChart={showDailyChart}
+                showOptimizationChart={showOptimizationChart}
                 activeMetrics={activeMetrics}
                 data={chartData}
                 selectedRangeDate={selectedRangeDate}

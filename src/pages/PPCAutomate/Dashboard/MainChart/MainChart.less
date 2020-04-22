@@ -53,7 +53,9 @@
     }
 
     .start-rect {
-      fill: rgba(205, 255, 226, 0.2);
+      path {
+        fill: rgba(205, 255, 226, 0.2);
+      }
     }
 
     @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
@@ -69,7 +71,6 @@
     justify-content: space-between;
     align-items: center;
     margin: 0 0 20px 0;
-    padding: 0 20px;
 
     .pair-name {
       font-size: 1.4285714285714286rem;
@@ -105,6 +106,12 @@
       .daily-icon {
         margin: 0 0 0 20px;
         grid-area: dailyIcon;
+      }
+    }
+
+    .optimization-switch {
+      svg {
+        margin: 0 0 0 20px;
       }
     }
 

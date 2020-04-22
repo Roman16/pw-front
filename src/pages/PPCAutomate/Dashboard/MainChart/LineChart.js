@@ -1,6 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {
     LineChart,
+    ComposedChart,
     Line,
     XAxis,
     YAxis,
@@ -8,6 +9,8 @@ import {
     Tooltip,
     ResponsiveContainer,
     ReferenceLine,
+
+    ReferenceArea,
 } from 'recharts';
 import ChartTooltip from "./ChartTooltip";
 import moment from "moment";
@@ -50,6 +53,7 @@ const Chart = ({
                    activeMetrics,
                    showWeekChart,
                    showDailyChart,
+                   showOptimizationChart,
                    selectedRangeDate,
                    productOptimizationDateList
                }) => {
@@ -86,9 +90,6 @@ const Chart = ({
         }));
     }, [data]);
 
-    const runningLine = document.querySelectorAll('.recharts-reference-line-line[stroke="#CDFFE2"]'),
-        pausedLine = document.querySelectorAll('.recharts-reference-line-line[stroke="#C9CBD4"]');
-
     return (
         <div className='main-chart-container'>
             <ResponsiveContainer height='100%' width='100%'>
@@ -114,18 +115,6 @@ const Chart = ({
 
                     </filter>
 
-                    {/*----------------------------------------------------------------*/}
-                    {runningLine.length > 0 && [...runningLine].map((item, index) => (
-                        <rect
-                            key={`rect_${index}`}
-                            x={item.getAttribute('x1')}
-                            y="50"
-                            width={(pausedLine[index] ? +pausedLine[index].getAttribute('x1') : +document.querySelector('.recharts-cartesian-grid-vertical line:last-child').getAttribute('x1')) - +item.getAttribute('x1')}
-                            height={+document.querySelector('.recharts-cartesian-grid-vertical line:first-child').getAttribute('height')}
-                            className={'start-rect'}
-                        />
-                    ))}
-                    {/*----------------------------------------------------------------*/}
                     <CartesianGrid
                         stroke="rgba(219, 220, 226, 0.3)"
                     />
@@ -168,16 +157,26 @@ const Chart = ({
 
 
                     {/* Optimization line*/}
-                    {productOptimizationDateList.map(item => (
-                        <ReferenceLine
-                            key={item.created_at}
-                            yAxisId={'left'}
-                            x={`${item.date}T00:00:00.000Z`}
-                            stroke={item.new_value === 'RUNNING' ? "#CDFFE2" : '#C9CBD4'}
-                            label={<ReferenceCustomLabel text={item.new_value === 'RUNNING' ? 'started' : 'paused'}/>}
-                            strokeWidth={4}
-                            strokeDasharray="7"
-                        />
+                    {showOptimizationChart && productOptimizationDateList.map(item => (
+                        <Fragment>
+                            <ReferenceLine
+                                key={item.created_at}
+                                yAxisId={'left'}
+                                x={`${item.date}T00:00:00.000Z`}
+                                stroke={item.new_value === 'RUNNING' ? "#CDFFE2" : '#C9CBD4'}
+                                label={null}
+                                strokeWidth={4}
+                                strokeDasharray="7"
+                            />
+
+                            <ReferenceArea
+                                className={'start-rect'}
+                                yAxisId="left"
+                                x1={'2020-04-07T00:00:00.000Z'}
+                                x2={'2020-04-09T00:00:00.000Z'}
+                                fillOpacity={1}
+                            />
+                        </Fragment>
                     ))}
                     {/*-----------------------------------*/}
 
