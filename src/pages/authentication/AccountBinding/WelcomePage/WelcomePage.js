@@ -15,6 +15,7 @@ const WelcomePage = () => {
                 <img src="" alt=""/>
 
                 <h2>Welcome Human!</h2>
+                {/*------------*/}
                 <p>Let’s get you started by connecting your Seller <br/> Central Account</p>
 
                 <button className='btn default'>
