@@ -48,11 +48,11 @@ const api = (method, url, data, type, abortToken) => {
 
         })
             .then(result => {
-                if(result.status === 208) {
+                if (result.status === 208) {
                     resolve({
                         status: 'already'
                     });
-                }else if (result.status === 200 || result.status === 207) {
+                } else if (result.status === 200 || result.status === 207) {
                     resolve(result.data);
                 } else {
                     reject(null);
@@ -61,8 +61,12 @@ const api = (method, url, data, type, abortToken) => {
             .catch(error => {
 
                 if (error.response && error.response.status === 401) {
-                    history.push('/login');
-                    localStorage.clear();
+                    if (error.response.data.message === 'Incorrect login or password') {
+                        handlerErrors(error.response.data.message)
+                    } else {
+                        history.push('/login');
+                        localStorage.clear();
+                    }
                 } else if (error.response && error.response.status === 412) {
                     userService.resendConfirmEmail()
                         .then(() => {
