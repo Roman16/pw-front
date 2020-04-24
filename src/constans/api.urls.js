@@ -57,7 +57,7 @@ export const dashboardUrls = {
     products: 'ppc-automation/dashboard/products/list',
     barChartData: 'ppc-automation/dashboard/charts/bar-data',
     pieChartData: 'ppc-automation/dashboard/charts/pie-data',
-    productOptimizationDetails: 'ppc-automation/dashboard/products/optimization-jobs-log/list',
+    productOptimizationDetails: 'ppc-automation/dashboard/products/optimization-jobs-log/periods',
 };
 
 export const scannerUrls = {
@@ -68,8 +68,11 @@ export const scannerUrls = {
 export const adminUrls = {
     userEmail: 'admin/support-manager/user',
     accountLinks: 'admin/support-manager/linked-accounts/list',
+    accountLinksBySellerId: 'admin/support-manager/linked-accounts',
     optimizationJobs: 'admin/support-manager/optimization-jobs/list',
-    productInfo: 'admin/support-manager/optimization-jobs',
+    optimizationJobsByMarketplace: 'admin/support-manager/optimization-jobs',
+    productOptimizationChanges: 'admin/support-manager/optimization-changes',
+    productOptimizationConditions: 'admin/support-manager/optimization-conditions-check/enabled-ad-groups',
 };
 
 export const daypartingUrls = {

@@ -157,27 +157,44 @@ const Chart = ({
 
 
                     {/* Optimization line*/}
-                    {showOptimizationChart && productOptimizationDateList.map(item => (
-                        <Fragment>
+                    {showOptimizationChart && productOptimizationDateList.map(item => {
+                        return (
                             <ReferenceLine
-                                key={item.created_at}
                                 yAxisId={'left'}
-                                x={`${item.date}T00:00:00.000Z`}
-                                stroke={item.new_value === 'RUNNING' ? "#CDFFE2" : '#C9CBD4'}
+                                x={`${moment(item.started).format('YYYY-MM-DD')}T00:00:00.000Z`}
+                                stroke={"#CDFFE2"}
                                 label={null}
                                 strokeWidth={4}
                                 strokeDasharray="7"
                             />
 
+                        )
+                    })}
+
+                    {showOptimizationChart && productOptimizationDateList.map(item => {
+                        return (item.stopped !== null && <ReferenceLine
+                                key={item.stooped}
+                                yAxisId={'left'}
+                                x={`${moment(item.stopped).format('YYYY-MM-DD')}T00:00:00.000Z`}
+                                stroke={"#C9CBD4"}
+                                label={null}
+                                strokeWidth={4}
+                                strokeDasharray="7"
+                            />
+                        )
+                    })}
+
+                    {showOptimizationChart && productOptimizationDateList.map(item => {
+                        return (
                             <ReferenceArea
                                 className={'start-rect'}
                                 yAxisId="left"
-                                x1={'2020-04-07T00:00:00.000Z'}
-                                x2={'2020-04-09T00:00:00.000Z'}
+                                x1={`${moment(item.started).format('YYYY-MM-DD')}T00:00:00.000Z`}
+                                x2={item.stopped !== null && `${moment(item.stopped).format('YYYY-MM-DD')}T00:00:00.000Z`}
                                 fillOpacity={1}
                             />
-                        </Fragment>
-                    ))}
+                        )
+                    })}
                     {/*-----------------------------------*/}
 
                     {(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line

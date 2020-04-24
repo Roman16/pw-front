@@ -66,6 +66,6 @@ function fetchProductOptimizationDetails({productId, startDate, endDate,}) {
         startDate ? `&start_date=${startDate}` : '',
         endDate ? `&end_date=${endDate}` : '',
     ];
-    return api('get', `${dashboardUrls.productOptimizationDetails}?product_id=${productId}&group_by=days&key=status${parameters.join('')}`)
+    return api('get', `${dashboardUrls.productOptimizationDetails}?product_id=${productId}${parameters.join('')}`)
 }
 
