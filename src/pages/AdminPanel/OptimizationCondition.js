@@ -7,7 +7,7 @@ const OptimizationCondition = ({data}) => {
             title: 'SKU',
             dataIndex: 'sku',
             key: 'sku',
-            render: (sku, item) => (item.data.length > 0 && item.data[0])
+            render: (sku, item) => (item.data && item.data[0])
         },
         {
             title: 'Status',
