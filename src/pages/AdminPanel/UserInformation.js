@@ -60,6 +60,8 @@ const GeneralUserInformation = ({data, onCheck}) => {
 
     return(
         <section className="user-information-section">
+            <h2>General User Information</h2>
+
             <form className="form-group" onSubmit={checkUserEmail}>
                 <Input required
                        type="email"
@@ -75,7 +77,6 @@ const GeneralUserInformation = ({data, onCheck}) => {
                 dataSource={[data]}
                 columns={userInformationColumns}
                 pagination={false}
-                title={() => 'General User Information'}
             />}
         </section>
 

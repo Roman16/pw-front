@@ -12,15 +12,14 @@ const AccountLinks = ({data, onCheck, userId}) => {
         })
     };
 
-    const checkAccountLinksByUserId = (e) => {
+    const checkAccountLinks = (e) => {
         e.preventDefault();
 
-        onCheck({id: fields.user_id, type: 'user_id'})
-    };
-    const checkAccountLinksBySellerId = (e) => {
-        e.preventDefault();
-
-        onCheck({id: fields.seller_id, type: 'seller_id'})
+        onCheck({
+            type: fields.seller_id ? 'seller_id' :'user_id',
+            id: fields.user_id || userId,
+            sellerId: fields.seller_id
+        })
     };
 
     const accountLinksColumns = [
@@ -52,7 +51,7 @@ const AccountLinks = ({data, onCheck, userId}) => {
                 <span> {moment(date).format('MMM DD, YYYY')}<br/>{moment(date).format('HH:mm:ss')}</span>)
         },
         {
-            title: 'MWS Last Status',
+            title: 'MWS Last Status Streak',
             dataIndex: 'mws_last_status_streak',
             key: 'mws_last_status_streak',
         },
@@ -74,7 +73,7 @@ const AccountLinks = ({data, onCheck, userId}) => {
                 <span> {moment(date).format('MMM DD, YYYY')}<br/>{moment(date).format('HH:mm:ss')}</span>)
         },
         {
-            title: 'PPC Last Status',
+            title: 'PPC Last Status Streak',
             dataIndex: 'lwa_last_status_streak',
             key: 'lwa_last_status_streak',
         },
@@ -82,23 +81,17 @@ const AccountLinks = ({data, onCheck, userId}) => {
 
     return (
         <section className="account-links-section">
+            <h2>Account Links</h2>
             <div className="fields">
-                <form className={'form-group'} onSubmit={checkAccountLinksByUserId}>
-
+                <form className={'form-group'} onSubmit={checkAccountLinks}>
                     <Input
-                        required
                         type="text"
-                        placeholder={`User id`}
+                        placeholder={userId ? `User id: ${userId}` :`User id`}
                         name={'user_id'}
                         onChange={changeFieldHandler}
                     />
 
-                    <button className={'btn default'}>Check</button>
-                </form>
-
-                <form className={'form-group'} onSubmit={checkAccountLinksBySellerId}>
                     <Input
-                        required
                         type="text"
                         placeholder={`Seller id`}
                         name={'seller_id'}
@@ -114,7 +107,6 @@ const AccountLinks = ({data, onCheck, userId}) => {
                 dataSource={data}
                 columns={accountLinksColumns}
                 pagination={false}
-                title={() => 'Account Links'}
                 scroll={{x: true}}
             />}
         </section>

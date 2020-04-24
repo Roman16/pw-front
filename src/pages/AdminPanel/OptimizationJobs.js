@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Input, Table} from "antd";
 
-const OptimizationJobs = ({data, onCheck, onCheckChanges, onCheckConditions}) => {
+const OptimizationJobs = ({data, onCheck, onCheckChanges, onCheckConditions, userId}) => {
     const [fields, setFields] = useState({});
 
 
@@ -98,14 +98,15 @@ const OptimizationJobs = ({data, onCheck, onCheckChanges, onCheckConditions}) =>
 
     return (
         <section className="optimization-jobs-section">
+            <h2>Optimization Jobs</h2>
             <div className="fields">
                 <form className="form-group" onSubmit={checkOptimizationJobsByUserId}>
                     <Input
                         required
                         type="text"
-                        placeholder={`User id`}
                         name={'user_id'}
                         onChange={changeFieldHandler}
+                        placeholder={userId ? `User id: ${userId}` :`User id`}
                     />
                     <button className={'btn default'}>Check</button>
                 </form>
@@ -142,7 +143,6 @@ const OptimizationJobs = ({data, onCheck, onCheckChanges, onCheckConditions}) =>
                 dataSource={data}
                 columns={optimizationJobsColumns}
                 pagination={false}
-                title={() => 'Optimization Jobs'}
                 scroll={{x: true}}
             />}
         </section>

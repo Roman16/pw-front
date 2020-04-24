@@ -13,21 +13,26 @@ function checkUserEmail(email) {
     return api('get', `${adminUrls.userEmail}?email=${email}`)
 }
 
-function checkAccountLinks({id, type='user_id'}) {
-    if(type === 'user_id') {
+function checkAccountLinks({id, sellerId, type = 'user_id'}) {
+    if (type === 'user_id') {
         return api('get', `${adminUrls.accountLinks}?user_id=${id}`)
-    } else if(type === 'seller_id') {
-        return api('get', `${adminUrls.accountLinksBySellerId}?seller_id=${id}`)
+    } else if (type === 'seller_id') {
+        return api('get', `${adminUrls.accountLinksBySellerId}?user_id=${id}&seller_id=${sellerId}`)
+            .then(res => ({
+                data: {
+                    'linked-accounts': [res.data]
+                }
+            }))
     }
 }
 
-function checkOptimizationJobs({userId,marketplaceId, type, asin, sku}) {
+function checkOptimizationJobs({userId, marketplaceId, type, asin, sku}) {
     const parameters = [
         asin ? `&asin=${asin}` : '',
         sku ? `&sku=${sku}` : '',
     ];
 
-    if(type === 'marketplace') {
+    if (type === 'marketplace') {
         return api('get', `${adminUrls.optimizationJobsByMarketplace}?user_id=${userId}&marketplace_id=${marketplaceId}${parameters.join('')}`)
     } else {
         return api('get', `${adminUrls.optimizationJobs}?user_id=${userId}`)
@@ -37,7 +42,7 @@ function checkOptimizationJobs({userId,marketplaceId, type, asin, sku}) {
 function checkOptimizationChanges({userId, productId, asin, marketplace_id}) {
     return api('get', `${adminUrls.productOptimizationChanges}?user_id=${userId}&product_id=${productId}&asin=${asin}&marketplace_id=${marketplace_id}`)
         .then(res => {
-            return(res.data.map(item => ({
+            return (res.data.map(item => ({
                 ...item,
                 product_id: productId
             })))

@@ -24,12 +24,12 @@ const OptimizationChanges = ({data}) => {
 
     return(
         <section>
+            <h2>Optimization Changes</h2>
             {typeof data === 'string' && <h2>{data}</h2>}
             {typeof data === 'object' && <Table
                 dataSource={data}
                 columns={columns}
                 pagination={false}
-                title={() => 'Optimization Changes'}
             />}
         </section>
     )

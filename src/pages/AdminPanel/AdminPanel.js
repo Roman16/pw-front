@@ -93,28 +93,27 @@ const AdminPanel = () => {
                 onCheck={checkUserEmail}
             />
 
-            {typeof userInformation === 'object' &&
-            <Fragment>
-                <AccountLinks
-                    data={accountLinks}
-                    onCheck={checkAccountLinks}
-                />
+            <AccountLinks
+                data={accountLinks}
+                onCheck={checkAccountLinks}
+                userId={userInformation && userInformation.id}
+            />
 
-                <OptimizationJobs
-                    data={optimizationJobs}
-                    onCheck={checkOptimizationJobs}
-                    onCheckChanges={checkOptimizationChanges}
-                    onCheckConditions={checkOptimizationConditions}
-                />
+            <OptimizationJobs
+                data={optimizationJobs}
+                onCheck={checkOptimizationJobs}
+                onCheckChanges={checkOptimizationChanges}
+                onCheckConditions={checkOptimizationConditions}
+                userId={userInformation && userInformation.id}
+            />
 
-                {optimizationChanges && <OptimizationChanges
-                    data={optimizationChanges}
-                />}
+            {optimizationChanges && <OptimizationChanges
+                data={optimizationChanges}
+            />}
 
-                {optimizationConditions && <OptimizationCondition
-                    data={optimizationConditions}
-                />}
-            </Fragment>}
+            <OptimizationCondition
+                data={optimizationConditions}
+            />
         </div>
     )
 };
