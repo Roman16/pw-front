@@ -69,11 +69,11 @@ const AdminPanel = () => {
             })
     };
 
-    const checkOptimizationConditions = (sku) => {
+    const checkOptimizationConditions = (data) => {
         adminServices.checkOptimizationConditions({
-            userId: userInformation.id,
-            profile_id: accountLinks[0].lwa_profile_id,
-            sku,
+            userId: data.userId || userInformation.id,
+            profile_id: data.profileId || accountLinks[0].lwa_profile_id,
+            sku: data.sku
         })
             .then(res => {
                 setOptimizationConditions([res]);
@@ -113,6 +113,10 @@ const AdminPanel = () => {
 
             <OptimizationCondition
                 data={optimizationConditions}
+                userId={userInformation && userInformation.id}
+                profileId={accountLinks && accountLinks[0] && accountLinks[0].lwa_profile_id}
+
+                onCheck={checkOptimizationConditions}
             />
         </div>
     )

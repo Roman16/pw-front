@@ -1,9 +1,19 @@
-import React, {useState} from "react";
+import React, {Fragment, useState} from "react";
 import {Input, Table} from "antd";
+
+
+const expandedRowRender = (record) => {
+    const columns = [
+        {title: 'Date', dataIndex: 'date', key: 'date'},
+        {title: 'Name', dataIndex: 'name', key: 'name'},
+        {title: 'Upgrade Status', dataIndex: 'upgradeNum', key: 'upgradeNum'},
+    ];
+
+    return <Table columns={columns} dataSource={record} pagination={false}/>;
+};
 
 const OptimizationJobs = ({data, onCheck, onCheckChanges, onCheckConditions, userId}) => {
     const [fields, setFields] = useState({});
-
 
     const changeFieldHandler = (e) => {
         setFields({
@@ -12,18 +22,12 @@ const OptimizationJobs = ({data, onCheck, onCheckChanges, onCheckConditions, use
         })
     };
 
-    const checkOptimizationJobsByUserId = (e) => {
-        e.preventDefault();
-
-        onCheck({userId: fields.user_id})
-    };
-
-    const checkOptimizationJobsByMarketplaceId = (e) => {
+    const checkOptimizationJobs = (e) => {
         e.preventDefault();
 
         onCheck({
-            type: 'marketplace',
-            userId: fields.user_id,
+            type: fields.marketplace_id && 'marketplace',
+            userId: fields.user_id || userId,
             marketplaceId: fields.marketplace_id,
             asin: fields.asin,
             sku: fields.sku
@@ -31,6 +35,16 @@ const OptimizationJobs = ({data, onCheck, onCheckChanges, onCheckConditions, use
     };
 
     const optimizationJobsColumns = [
+        {
+            title: 'Product',
+            dataIndex: 'product',
+            key: 'product',
+            width: '350px',
+            render: (product, item) => (<div className={'product'}>
+                <img src={item.product.product_image} alt=""/>
+                <span>{item.product.product_name}</span>
+            </div>)
+        },
         {
             title: 'Product ID',
             dataIndex: 'product_id',
@@ -80,40 +94,81 @@ const OptimizationJobs = ({data, onCheck, onCheckChanges, onCheckConditions, use
             title: '',
             dataIndex: 'action',
             key: 'action',
-            render: (action, item) => (<button className={'btn default'}
-                                               onClick={() => onCheckChanges(item.product.id, item.product.asin, item.product.marketplace_id)}>
-                Check changes
-            </button>)
-        },
-        {
-            title: '',
-            dataIndex: 'action2',
-            key: 'action2',
+            width: '175px',
             render: (action, item) => (
-                <button className={'btn default'} onClick={() => onCheckConditions(item.product.sku)}>
-                    Check conditions
-                </button>)
-        },
+                <div className={'actions'}>
+                    <button
+                        className={'btn default'}
+                        onClick={() => onCheckChanges(item.product.id, item.product.asin, item.product.marketplace_id)}
+                    >
+                        Check changes
+                    </button>
+                    <button
+                        className={'btn default'}
+                        onClick={() => onCheckConditions({sku: item.product.sku})}
+                    >
+                        Check conditions
+                    </button>
+                </div>)
+        }
     ];
+
+    const variationsRender = (variations) => {
+
+        const columns = [
+            {
+                title: 'Product',
+                dataIndex: 'product',
+                key: 'product',
+                width: '350px',
+                render: (product, item) => (<div className={'product'}>
+                    <img src={item.product_image} alt=""/>
+                    <span>{item.product_name}</span>
+                </div>)
+            },
+            {
+                title: 'Product ID',
+                dataIndex: 'id',
+                key: 'id',
+            },
+            {
+                title: 'ASIN',
+                dataIndex: 'asin',
+                key: 'asin',
+            },
+            {
+                title: 'SKU',
+                dataIndex: 'sku',
+                key: 'sku',
+            },
+            {
+                title: 'Status on Amazon',
+                dataIndex: 'status_on_amazon',
+                key: 'status_on_amazon',
+            },
+        ];
+
+        return (<Table
+            dataSource={variations}
+            columns={columns}
+            pagination={false}
+            scroll={{x: true}}
+        />)
+    }
 
     return (
         <section className="optimization-jobs-section">
             <h2>Optimization Jobs</h2>
             <div className="fields">
-                <form className="form-group" onSubmit={checkOptimizationJobsByUserId}>
+                <form className="form-group" onSubmit={checkOptimizationJobs}>
                     <Input
-                        required
                         type="text"
                         name={'user_id'}
                         onChange={changeFieldHandler}
-                        placeholder={userId ? `User id: ${userId}` :`User id`}
+                        placeholder={userId ? `User id: ${userId}` : `User id`}
                     />
-                    <button className={'btn default'}>Check</button>
-                </form>
 
-                <form className="form-group" onSubmit={checkOptimizationJobsByMarketplaceId}>
                     <Input
-                        required
                         type="text"
                         placeholder={`Marketplace id`}
                         name={'marketplace_id'}
@@ -144,6 +199,9 @@ const OptimizationJobs = ({data, onCheck, onCheckChanges, onCheckConditions, use
                 columns={optimizationJobsColumns}
                 pagination={false}
                 scroll={{x: true}}
+                className="components-table-demo-nested"
+                rowClassName={record => record.product.variations.length === 0 && 'hide-button'}
+                expandedRowRender={record => variationsRender(record.product.variations)}
             />}
         </section>
     )

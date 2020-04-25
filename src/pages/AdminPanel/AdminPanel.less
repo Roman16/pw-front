@@ -4,12 +4,12 @@
     height: max-content;
     display: flex;
     flex-direction: column;
-    border-radius:  8px;
+    border-radius: 8px;
     background-color: #fff;
     padding: 2em 4em;
     margin-bottom: 10px;
     flex-wrap: wrap;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 
     .ant-table-title {
       font-weight: bolder;
@@ -19,6 +19,10 @@
     .ant-table-wrapper {
       max-width: 100%;
       margin: 20px 0 0 0;
+    }
+
+    .btn {
+      padding: 0 20px;
     }
   }
 
@@ -52,6 +56,36 @@
       height: 32px;
       font-weight: 500;
       font-size: 1rem;
+    }
+  }
+
+  .optimization-jobs-section {
+    .product {
+      display: flex;
+      align-items: center;
+
+      img {
+        margin: 0 10px 0 0;
+      }
+    }
+
+    .hide-button {
+      .ant-table-row-expand-icon-cell {
+        .ant-table-row-expand-icon {
+          display: none;
+        }
+      }
+    }
+
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+
+      .btn {
+        width: 100%;
+        margin: 0 0 10px 0;
+      }
     }
   }
 }
