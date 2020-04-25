@@ -1,17 +1,6 @@
 import React, {Fragment, useState} from "react";
 import {Input, Table} from "antd";
 
-
-const expandedRowRender = (record) => {
-    const columns = [
-        {title: 'Date', dataIndex: 'date', key: 'date'},
-        {title: 'Name', dataIndex: 'name', key: 'name'},
-        {title: 'Upgrade Status', dataIndex: 'upgradeNum', key: 'upgradeNum'},
-    ];
-
-    return <Table columns={columns} dataSource={record} pagination={false}/>;
-};
-
 const OptimizationJobs = ({data, onCheck, onCheckChanges, onCheckConditions, userId}) => {
     const [fields, setFields] = useState({});
 
@@ -39,7 +28,6 @@ const OptimizationJobs = ({data, onCheck, onCheckChanges, onCheckConditions, use
             title: 'Product',
             dataIndex: 'product',
             key: 'product',
-            width: '350px',
             render: (product, item) => (<div className={'product'}>
                 <img src={item.product.product_image} alt=""/>
                 <span>{item.product.product_name}</span>
