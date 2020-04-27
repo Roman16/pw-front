@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import './ConnectPpc.less';
 import {Link} from "react-router-dom";
 import {SVG} from "../../../../../utils/icons";
@@ -48,6 +48,12 @@ const ConnectPpc = ({onGoNextStep}) => {
 
         setPageStatus('processing');
     }
+
+    useEffect(() => {
+        return(() => {
+            window.removeEventListener('message', () => {})
+        })
+    }, [])
 
     if (pageStatus === 'connect') {
         return (

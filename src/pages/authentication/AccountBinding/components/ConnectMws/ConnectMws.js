@@ -13,7 +13,7 @@ const Option = Select.Option;
 const ConnectMws = ({onGoBackStep}) => {
     const [pageStatus, setPageStatus] = useState('connect');
 
-    const [mwsLink] = useSelector(state => ({
+    const {mwsLink} = useSelector(state => ({
         mwsLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.connect_link : '',
     }))
 
