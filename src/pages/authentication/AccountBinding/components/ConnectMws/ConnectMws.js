@@ -10,7 +10,7 @@ import {useSelector} from "react-redux";
 
 const Option = Select.Option;
 
-const ConnectMws = ({onGoBackStep}) => {
+const ConnectMws = ({onGoBackStep, onGoNextStep}) => {
     const [pageStatus, setPageStatus] = useState('connect');
 
     const {mwsLink} = useSelector(state => ({
@@ -61,7 +61,7 @@ const ConnectMws = ({onGoBackStep}) => {
                         <SVG id={'left-grey-arrow'}/>
                         Back
                     </button>
-                    <button className="btn default">
+                    <button className="btn default" onClick={onGoNextStep}>
                         Next
                         <SVG id={'right-white-arrow'}/>
                     </button>
