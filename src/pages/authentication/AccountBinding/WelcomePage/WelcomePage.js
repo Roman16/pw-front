@@ -2,6 +2,7 @@ import React from "react";
 import './WelcomePage.less';
 
 import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
+import welcomeImage from '../../../../assets/img/welcome-image.svg';
 
 const WelcomePage = () => {
 
@@ -12,9 +13,10 @@ const WelcomePage = () => {
             </div>
 
             <div className="container">
-                <img src="" alt=""/>
+                <img src={welcomeImage} alt=""/>
 
                 <h2>Welcome Human!</h2>
+
                 <p>Let’s get you started by connecting your Seller <br/> Central Account</p>
 
                 <button className='btn default'>

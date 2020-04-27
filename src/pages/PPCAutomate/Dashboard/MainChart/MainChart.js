@@ -8,6 +8,7 @@ import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {Spin} from "antd";
 import axios from "axios";
+import {SVG} from "../../../../utils/icons";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -131,6 +132,20 @@ const MainChart = () => {
                 selectedRangeDate={selectedRangeDate}
                 productOptimizationDateList={productOptimizationDateList}
             />
+
+            <div className="main-legend">
+                {activeMetrics[0] && activeMetrics[0].title && <div className="first-line">
+                    <div className="green-line"/>
+
+                    {activeMetrics[0] && activeMetrics[0].title}
+                </div>}
+
+                {activeMetrics[0] && activeMetrics[1].title && <div className="second-line">
+                    <div className="violet-line"/>
+
+                    {activeMetrics[0] && activeMetrics[1].title}
+                </div>}
+            </div>
 
             {fetching && <div className="loading">
                 <Spin size="large"/>

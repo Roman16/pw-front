@@ -1,0 +1,72 @@
+@import '../../../../../style/variables';
+
+.amazon-connect .choose-account {
+  .accounts-type-list {
+    display: flex;
+
+    .account-type {
+      min-width: 15.5rem;
+      margin: 0 1.7857142857142858rem 0 0;
+      box-shadow: @default-section-shadow;
+      padding: 1.7857142857142858rem 1.4285714285714286rem;
+      position: relative;
+
+      &:last-child {
+        margin: 0;
+      }
+
+      h3 {
+        font-size: 1.4285714285714286rem;
+        line-height: 1.7142857142857142rem;
+        color: #343C5A;
+      }
+
+      p {
+        margin: 0;
+        font-size: 1.1428571428571428rem;
+        line-height: 1.3571428571428572rem;
+        color: #343C5A;
+      }
+
+      &.active {
+        &::after {
+          content: '';
+          position: absolute;
+          top: -0.7142857142857143rem;
+          right: -0.7142857142857143rem;
+          width: 1.4285714285714286rem;
+          height: 1.4285714285714286rem;
+          border-radius: 50%;
+          background: #6D6DF6 url(../../../../../assets/img/icons/check-small-icon.png) no-repeat center center;
+          background-size: 0.7142857142857143rem;
+        }
+      }
+
+      &.soon {
+        p, h3 {
+          color: #C9CBD4;
+        }
+
+        h3 {
+          width: max-content;
+          position: relative;
+          span {
+            display: block;
+            position: absolute;
+            right: -2.5714285714285716rem;
+            top: -0.7142857142857143rem;
+            background: #B6B6FB;
+            border-radius: 4px;
+            width: 2.5714285714285716rem;
+            height: 1.1428571428571428rem;
+            line-height: 1.1428571428571428rem;
+            font-size: 0.8571428571428571rem;
+            font-weight: 400;
+            color: #343C5A;
+            padding: 0 3px;
+          }
+        }
+      }
+    }
+  }
+}
