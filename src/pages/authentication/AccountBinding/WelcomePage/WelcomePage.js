@@ -3,8 +3,11 @@ import './WelcomePage.less';
 
 import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
 import welcomeImage from '../../../../assets/img/welcome-image.svg';
+import {history} from "../../../../utils/history";
 
 const WelcomePage = () => {
+
+    const goConnectPage = () => history.push('/connect-amazon-account')
 
     return(
         <div className="welcome-page">
@@ -19,7 +22,7 @@ const WelcomePage = () => {
 
                 <p>Let’s get you started by connecting your Seller <br/> Central Account</p>
 
-                <button className='btn default'>
+                <button className='btn default' onClick={goConnectPage}>
                     Connect Account
                 </button>
             </div>

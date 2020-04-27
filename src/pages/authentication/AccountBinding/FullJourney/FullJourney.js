@@ -8,6 +8,7 @@ import ConnectPpc from "../components/ConnectPpc/ConnectPpc";
 import SelectRegion from "../components/SelectRegion/SelectRegion";
 import ConnectMws from "../components/ConnectMws/ConnectMws";
 import SuccessPage from "../components/SuccessPage/SuccessPage";
+import {history} from "../../../../utils/history";
 
 const {Step} = Steps;
 
@@ -18,20 +19,20 @@ const customDot = (dot) => (
 );
 
 const FullJourney = () => {
-    const [currentStep, setCurrentStep] = useState(2);
+    const [currentStep, setCurrentStep] = useState(0);
 
     const goNextStep = () => setCurrentStep(prevState => prevState + 1)
 
     const goBackStep = () => setCurrentStep(prevState => prevState - 1)
 
-    useEffect(() => {
-        console.log(currentStep);
-    }, [currentStep])
+    const closeJourney = () => {
+        history.push('./welcome')
+    }
 
     return (
         <div className="amazon-connect full-journey">
             <div className="container">
-                <button className={'close-connect'}>
+                <button className={'close-connect'} onClick={closeJourney}>
                     <SVG id='close-page'/>
                 </button>
 

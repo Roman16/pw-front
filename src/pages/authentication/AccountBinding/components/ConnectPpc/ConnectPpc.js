@@ -38,14 +38,15 @@ const ConnectPpc = ({onGoNextStep}) => {
     const openConnectLink = () => {
         const win = popupCenter({url: ppcLink, title: 'xtf', w: 520, h: 570});
 
-        setPageStatus('processing');
-
         window.addEventListener('message', event => {
+            console.log(event);
             if (event.origin === 'https://front1.profitwhales.com' || event.origin === 'https://profitwhales.com') {
                 win.close();
                 setPageStatus('success');
             }
         })
+
+        setPageStatus('processing');
     }
 
     if (pageStatus === 'connect') {
