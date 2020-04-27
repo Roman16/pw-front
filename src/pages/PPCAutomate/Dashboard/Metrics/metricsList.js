@@ -35,7 +35,7 @@ export const metricsListArray = [
         type: 'currency',
     },
     {
-        title: 'Orders',
+        title: 'Total Orders',
         key: 'total_orders',
         info: 'This metric shows the total amount of orders from organic and paid traffic.',
         label: 'Total',

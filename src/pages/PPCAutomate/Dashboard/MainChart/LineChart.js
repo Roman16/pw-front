@@ -185,11 +185,12 @@ const Chart = ({
                     })}
 
                     {showOptimizationChart && productOptimizationDateList.map(item => {
+                        console.log(moment(item.started) > moment(selectedRangeDate.startDate))
                         return (
                             <ReferenceArea
                                 className={'start-rect'}
                                 yAxisId="left"
-                                x1={`${moment(item.started).format('YYYY-MM-DD')}T00:00:00.000Z`}
+                                x1={(moment(item.started) > moment(selectedRangeDate.startDate)) ? `${moment(item.started).format('YYYY-MM-DD')}T00:00:00.000Z` : `${moment(selectedRangeDate.startDate).format('YYYY-MM-DD')}T00:00:00.000Z`}
                                 x2={item.stopped !== null && `${moment(item.stopped).format('YYYY-MM-DD')}T00:00:00.000Z`}
                                 fillOpacity={1}
                             />

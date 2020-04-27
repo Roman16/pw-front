@@ -39,12 +39,14 @@ const Footer = () => (
                 <h4>Partners</h4>
                 <ul>
                     <li>
-                        <a href="https://blog.profitwhales.com/partners">
+                        {/*<a href="https://blog.profitwhales.com/partners">*/}
+                        <a href="#" style={{pointerEvents: 'none'}}>
                             Partners
                         </a>
                     </li>
                     <li>
-                        <a href="https://blog.profitwhales.com/coupons">
+                        {/*<a href="https://blog.profitwhales.com/coupons">*/}
+                        <a href="#" style={{pointerEvents: 'none'}}>
                             Coupons
                         </a>
                     </li>

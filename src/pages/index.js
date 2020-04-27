@@ -65,7 +65,7 @@ const AdminRoute = (props) => {
         userId: state.user.user.id,
     }));
 
-    if (userId === 777) {
+    if ((!developer && userId === 714) || (developer && userId === 777)) {
         return <Route {...props} />
     } else {
         return <Redirect to={'/404'}/>

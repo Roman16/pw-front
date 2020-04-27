@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {Switch} from "antd";
 import moment from "moment";
 import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
@@ -12,58 +12,44 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
                 defaultValue={selectedRangeDate.startDate === 'lifetime' ? null : [moment(selectedRangeDate.startDate), moment(selectedRangeDate.endDate)]}
             />
 
-            <div className="row">
-                <div className="switches">
-                    <div className='switch-block week-switch'>
-                        <Switch
-                            checked={showWeekChart}
-                            onChange={e => onChangeSwitch('week', e)}
-                        />
+            <div className="switches">
+                <div className='switch-block week-switch'>
+                    <Switch
+                        checked={showWeekChart}
+                        onChange={e => onChangeSwitch('week', e)}
+                    />
 
-                        <span>7-day average</span>
-
-                        {/*<div className='line-fill'>*/}
-                    {/*<span className="green-line">*/}
-                    {/*    <SVG id='green-line'/>*/}
-                    {/*</span>*/}
-                    {/*        <span className="violet-line">*/}
-                    {/*     <SVG id='violet-line'/>*/}
-                    {/*</span>*/}
-                    {/*    </div>*/}
-                    </div>
-
-                    <div className='switch-block daily-switch'>
-                        <Switch
-                            checked={showDailyChart}
-                            onChange={e => onChangeSwitch('daily', e)}
-                        />
-                        <span>Daily</span>
-
-                        {/*<span className='daily-icon'>*/}
-                     {/*<SVG id='daily-line'/>*/}
-                {/*</span>*/}
-                    </div>
-
-                    <div className='switch-block optimization-switch'>
-                        <Switch
-                            checked={showOptimizationChart}
-                            onChange={e => onChangeSwitch('optimization', e)}
-                        />
-                        <span>Optimization status</span>
-
-                        {/*<SVG id='optimization-status'/>*/}
-                    </div>
+                    <span>7-day average</span>
                 </div>
 
-                <div className='chart-legend'>
-                    {(firstActiveMetricTitle || secondActiveMetricTitle) && <div className="first-line">
+                <div className='switch-block daily-switch'>
+                    <Switch
+                        checked={showDailyChart}
+                        onChange={e => onChangeSwitch('daily', e)}
+                    />
+                    <span>Daily</span>
+                </div>
+
+                <div className='switch-block optimization-switch'>
+                    <Switch
+                        checked={showOptimizationChart}
+                        onChange={e => onChangeSwitch('optimization', e)}
+                    />
+                    <span>Optimization status</span>
+                </div>
+            </div>
+
+            <div className='chart-legend'>
+                {moment().tz('America/Los_Angeles').subtract(3, "days") < moment(selectedRangeDate.endDate) &&
+                <div className="first-line">
                     <span className="dashed-line">
                         <SVG id='dashed-lines'/>
                     </span>
 
-                        Gathering data
-                    </div>}
+                    Gathering data
+                </div>}
 
+                {showOptimizationChart && <Fragment>
                     <div className="optimization-line started">
                         <SVG id='optimization-started'/>
                         Optimization started
@@ -73,7 +59,7 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
                         <SVG id='optimization-paused'/>
                         Optimization paused
                     </div>
-                </div>
+                </Fragment>}
             </div>
         </div>
     )
