@@ -39,6 +39,7 @@ const Home = React.lazy(() => import('./Home/Home'));
 const Scanner = React.lazy(() => import('./PPCAutomate/Scanner/Scanner'));
 const Dayparting = React.lazy(() => import('./PPCAutomate/Dayparting/Dayparting'));
 const AdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'));
+const FullJourney = React.lazy(() => import('./authentication/AccountBinding/FullJourney/FullJourney'));
 
 
 let timerId = null;
@@ -189,6 +190,7 @@ const AuthorizedUser = (props) => {
 
                                     <Route exact path="/mws" component={MWS}/>
                                     <Route exact path="/ppc" component={PPC}/>
+                                    <Route exact path="/connect-amazon-account" component={FullJourney}/>
 
                                     <Route exact path="/welcome" component={WelcomePage}/>
 

@@ -549,10 +549,31 @@ const files = {
             height: 11,
             viewBox: [0,0,16,11],
             data: '<path xmlns="http://www.w3.org/2000/svg" fill="#CDFFE2" fill-rule="evenodd" d="M2 4H0L0 0H2L2 4ZM10 4L6 4V0H10V4ZM16 4H14V0H16V4Z" clip-rule="evenodd"/><path xmlns="http://www.w3.org/2000/svg" fill="#C9CBD4" fill-rule="evenodd" d="M2 11H0L0 7H2L2 11ZM10 11H6V7H10V11ZM16 11L14 11V7H16V11Z" clip-rule="evenodd"/>'
+        },
+        'close-page': {
+            width: 20,
+            height: 20,
+            viewBox: [0,0,20,20],
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse"><path fill="#C4C4C4" d="M0 0H20V20H0z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="#656A84" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1L9.96875 9.96875M9.96875 9.96875L18.9375 1M9.96875 9.96875L1 18.9375M9.96875 9.96875L18.9375 18.9375"/></g>'
+        },
+        'right-white-arrow': {
+            width: 14,
+            height: 10,
+            viewBox: [0,0,14,10],
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="14" height="10" x="0" y="0" maskUnits="userSpaceOnUse"><path fill="#C4C4C4" d="M0 0H14V10H0z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.25 1L13 5M13 5L9.25 9M13 5L1 5"/></g>'
+        },
+        'left-grey-arrow': {
+            width: 14,
+            height: 10,
+            viewBox: [0,0,14,10],
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="14" height="10" x="0" y="0" maskUnits="userSpaceOnUse"><path fill="#C4C4C4" d="M0 0H14V10H0z" transform="matrix(-1 0 0 1 14 0)"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="#343C5A" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.75 1L1 5M1 5L4.75 9M1 5L13 5"/></g>'
         }
 
     },
     allIds: [
+        'left-grey-arrow',
+        'right-white-arrow',
+        'close-page',
         'optimization-paused',
         'optimization-started',
         'optimization-status',
