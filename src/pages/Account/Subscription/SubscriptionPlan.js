@@ -18,6 +18,7 @@ const SubscriptionPlan = ({
                               applyCoupon,
                               fetching,
                               getCouponStatus,
+                              disableButton
                           }) => {
 
     const {mwsConnected, ppcConnected} = useSelector(state => ({
@@ -25,14 +26,12 @@ const SubscriptionPlan = ({
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false
     }));
 
-    const [disableButton, changeButton] = useState(false);
     const [coupon, setCoupon] = useState('');
 
     let timeout = null;
 
     function handleSubscribe() {
         onSubscribe({coupon, ...product});
-        changeButton(true);
     }
 
     function renderPlanContent() {

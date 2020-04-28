@@ -24,6 +24,7 @@ const Subscription = () => {
     const [subscriptions, setSubscriptions] = useState([]);
     const [fetching, switchFetching] = useState(false);
     const [cardsList, setCardsList] = useState(null);
+    const [disableButton, changeButton] = useState(false);
 
     const {mwsConnected, ppcConnected, stripeId} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
@@ -78,6 +79,8 @@ const Subscription = () => {
     }
 
     async function handleSubscribe({plan_id, productId, coupon}) {
+        changeButton(true);
+
         if (cardsList && cardsList.length) {
             try {
                 if (coupon) {
@@ -96,6 +99,7 @@ const Subscription = () => {
                 }
 
                 notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'});
+                changeButton(false);
 
                 dispatch(userActions.getPersonalUserInfo());
                 fetchSubscriptions();
@@ -189,6 +193,7 @@ const Subscription = () => {
                     applyCoupon={applyCoupon}
                     getCouponStatus={getCouponStatus}
                     fetching={fetching}
+                    disableButton={disableButton}
                 />
             ))}
 

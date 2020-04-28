@@ -7,6 +7,7 @@ export const productsActions = {
     fetchProducts,
     updateProduct,
     fetchProductDetails,
+    selectAll,
     onSwitchOptimization,
     setNetMargin,
     updateOptions,
@@ -101,6 +102,7 @@ function fetchProductDetails(product, pathname) {
         } else {
             dispatch({
                 type: productsConstants.SELECT_ALL_PRODUCT,
+                payload: true
             });
         }
     };
@@ -153,6 +155,14 @@ function setNetMargin(product) {
                 });
             });
     };
+}
+
+function selectAll(data) {
+    return({
+        type: productsConstants.SELECT_ALL_PRODUCT,
+        payload: data
+    })
+
 }
 
 function showOnlyOptimized(data) {

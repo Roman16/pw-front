@@ -246,7 +246,7 @@ const OutBudget = ({date}) => {
                                     >
                                         <StatisticItem
                                             value={item.sales}
-                                            outBudget={item.out_of_budget}
+                                            outBudget={item.out_of_budget || item.out_of_budget_account || item.out_of_budget_portfolio}
                                             index={index}
                                         />
                                     </InformationTooltip>

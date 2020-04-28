@@ -6,7 +6,10 @@ export const adminServices = {
     checkAccountLinks,
     checkOptimizationJobs,
     checkOptimizationChanges,
-    checkOptimizationConditions
+
+    checkAdGroupsList,
+    checkAdGroupsCanBeOptimized,
+    checkPatsList,
 };
 
 function checkUserEmail(email) {
@@ -49,7 +52,14 @@ function checkOptimizationChanges({userId, productId, asin, marketplace_id}) {
         })
 }
 
-function checkOptimizationConditions({userId, profile_id, sku}) {
-    return api('get', `${adminUrls.productOptimizationConditions}?user_id=${userId}&profile_id=${profile_id}&sku=${sku}`)
+function checkAdGroupsList({userId, profile_id, sku}) {
+    return api('get', `${adminUrls.adGroupsList}?user_id=${userId}&profile_id=${profile_id}&sku=${sku}`)
+}
+
+function checkAdGroupsCanBeOptimized({userId, profile_id, sku}) {
+    return api('get', `${adminUrls.adGroupsCanBeOptimized}?user_id=${userId}&profile_id=${profile_id}&sku=${sku}`)
+}
+function checkPatsList({userId, profile_id, ad_groups_ids}) {
+    return api('get', `${adminUrls.patsList}?user_id=${userId}&profile_id=${profile_id}&ad_groups_ids=${ad_groups_ids}`)
 }
 

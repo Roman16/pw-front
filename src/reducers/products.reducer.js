@@ -100,7 +100,7 @@ export function products(state = initialState, action) {
         case productsConstants.SELECT_ALL_PRODUCT:
             return {
                 ...state,
-                selectedAll: !state.selectedAll,
+                selectedAll: action.payload,
             };
 
         case productsConstants.SHOW_ONLY_OPTIMIZED:

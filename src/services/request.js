@@ -82,7 +82,7 @@ const api = (method, url, data, type, abortToken) => {
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
                             }
-                        } else if (error.response.status === 429 || (error.response.status === 402 && error.response.statusText === "Payment Required") || (error.response.status === 403 && error.response.statusText === "Forbidden")) {
+                        } else if (error.response.status === 429 || error.response.data.message === 'Retry with' || (error.response.status === 402 && error.response.statusText === "Payment Required") || (error.response.status === 403 && error.response.statusText === "Forbidden")) {
                         } else if (error.response.data.message !== 'Product not found') {
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)

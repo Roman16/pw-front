@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from "react";
+import React, {useState} from "react";
 import './AdminPanel.less';
 import {adminServices} from "../../services/admin.services";
 import GeneralUserInformation from "./UserInformation";
@@ -12,7 +12,10 @@ const AdminPanel = () => {
     const [accountLinks, setAccountLinks] = useState(undefined);
     const [optimizationJobs, setOptimizationJobs] = useState(undefined);
     const [optimizationChanges, setOptimizationChanges] = useState(undefined);
-    const [optimizationConditions, setOptimizationConditions] = useState(undefined);
+
+    const [adGroupsList, setAdGroupsList] = useState(undefined);
+    const [adGroupsCanBeOptimized, setAdGroupsCanBeOptimized] = useState(undefined);
+    const [patsList, setPatsList] = useState(undefined);
 
     const checkUserEmail = (email) => {
         adminServices.checkUserEmail(email)
@@ -70,21 +73,36 @@ const AdminPanel = () => {
     };
 
     const checkOptimizationConditions = (data) => {
-        adminServices.checkOptimizationConditions({
+        adminServices.checkAdGroupsList({
             userId: data.userId || userInformation.id,
             profile_id: data.profileId || accountLinks[0].lwa_profile_id,
             sku: data.sku
         })
             .then(res => {
-                setOptimizationConditions([res]);
+                setAdGroupsList(res.data);
+
+                if (res.status === 'SUCCESS') {
+                    adminServices.checkAdGroupsCanBeOptimized({
+                        userId: data.userId || userInformation.id,
+                        profile_id: data.profileId || accountLinks[0].lwa_profile_id,
+                        sku: data.sku
+                    })
+                        .then(res => {
+                            setAdGroupsCanBeOptimized(res.data && res.data.result);
+                        })
+                        .catch(error => {
+                            if (error.response && error.response.data) {
+                                setAdGroupsCanBeOptimized(error.response.data.message);
+                            }
+                        })
+                }
             })
             .catch(error => {
                 if (error.response && error.response.data) {
-                    setOptimizationConditions(error.response.data.message);
+                    setAdGroupsList(error.response.data.message);
                 }
             })
     };
-
 
     return (
         <div className="admin-panel">
@@ -112,7 +130,9 @@ const AdminPanel = () => {
             />}
 
             <OptimizationCondition
-                data={optimizationConditions}
+                adGroupsList={adGroupsList}
+                adGroupsCanBeOptimized={adGroupsCanBeOptimized}
+                patsList={patsList}
                 userId={userInformation && userInformation.id}
                 profileId={accountLinks && accountLinks[0] && accountLinks[0].lwa_profile_id}
 

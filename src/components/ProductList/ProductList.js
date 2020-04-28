@@ -203,12 +203,17 @@ class ProductList extends Component {
             }
 
             if (this.props.pathname === '/ppc/dayparting') {
+                this.props.selectAllProducts(false);
+                this.props.showOnlyOptimized(false);
+
                 this.setState({
                     paginationParams: {
                         ...this.state.paginationParams,
                         page: 1,
                         searchStr: ''
-                    }
+                    },
+                    isSelectedAll: false,
+                    onlyOptimization: false,
                 }, this.getProducts);
 
             } else if (prevProps.pathname === '/ppc/dayparting' && this.props.pathname !== '/ppc/dayparting') {
@@ -383,6 +388,9 @@ const mapDispatchToProps = dispatch => ({
     },
     showOnlyOnDayparting: (data) => {
         dispatch(productsActions.showOnlyOnDayparting(data));
+    },
+    selectAllProducts: (data) => {
+        dispatch(productsActions.selectAll(data));
     },
 });
 

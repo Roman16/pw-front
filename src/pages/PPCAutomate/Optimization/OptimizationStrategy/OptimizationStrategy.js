@@ -163,7 +163,7 @@ function StrategyItem({
                                 setError(false)
                             }}
                         />
-                        <button className='btn default' onClick={() => onSaveTargetAcos(targetAcos)}
+                        <button type={'button'} className='btn default' onClick={() => onSaveTargetAcos(targetAcos)}
                                 disabled={processing || productId == null}>save
                         </button>
                     </div>}

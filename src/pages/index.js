@@ -190,9 +190,9 @@ const AuthorizedUser = (props) => {
 
                                     <Route exact path="/mws" component={MWS}/>
                                     <Route exact path="/ppc" component={PPC}/>
-                                    <Route exact path="/connect-amazon-account" component={FullJourney}/>
 
-                                    <Route exact path="/welcome" component={WelcomePage}/>
+                                    {/*<Route exact path="/connect-amazon-account" component={FullJourney}/>*/}
+                                    {/*<Route exact path="/welcome" component={WelcomePage}/>*/}
 
                                     {developer && <Route exact path="/home" component={Home}/>}
 

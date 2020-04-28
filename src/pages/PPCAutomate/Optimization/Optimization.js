@@ -80,7 +80,7 @@ const Optimization = () => {
 
         if (optimization_strategy === 'AchieveTargetACoS' && (!targetAcosValue || targetAcosValue === 0 || targetAcosValue < 0)) {
             notification.error({
-                title: 'Enter yor target ACoS'
+                title: 'Enter your target ACoS first'
             })
         } else {
             try {
@@ -123,7 +123,7 @@ const Optimization = () => {
     async function onSaveTargetAcos(targetAcos) {
         if (!targetAcos || targetAcos === 0 || targetAcos < 0) {
             notification.error({
-                title: 'Enter yor target ACoS'
+                title: 'Enter your target ACoS first'
             })
         } else {
             try {

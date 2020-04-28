@@ -85,17 +85,33 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
         } else if (name === 'profit' || name === 'ad_profit' || name === 'organic_sales') {
             const diffValue = Math.abs(value - prevValue);
 
-            return (<div className='metric-item__changes'>
-                {(value > prevValue) && <div className='upward-changes'>
-                    ${round(diffValue, 2)}
-                    <SVG id='up-white-arrow'/>
-                </div>}
+            return (<InformationTooltip
+                type='custom'
+                overlayClassName={'diff-tooltip'}
+                description={<p>
+                    {`from  `}
+                    {+prevValue === 0 ? '0' : <RenderMetricValue
+                        value={prevValue}
+                        type={'currency'}
+                    />}
+                    {`  to  `}
+                    <b><RenderMetricValue
+                        value={value}
+                        type={'currency'}
+                    /></b>
+                </p>}>
+                <div className='metric-item__changes'>
+                    {(value > prevValue) && <div className='upward-changes'>
+                        ${round(diffValue, 2)}
+                        <SVG id='up-white-arrow'/>
+                    </div>}
 
-                {(value <= prevValue) && <div className='downward-changes'>
-                    ${round(diffValue, 2)}
-                    <SVG id='down-white-arrow'/>
-                </div>}
-            </div>)
+                    {(value <= prevValue) && <div className='downward-changes'>
+                        ${round(diffValue, 2)}
+                        <SVG id='down-white-arrow'/>
+                    </div>}
+                </div>
+            </InformationTooltip>)
         } else {
             return (
                 <InformationTooltip

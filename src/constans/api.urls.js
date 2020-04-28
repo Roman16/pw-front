@@ -72,7 +72,9 @@ export const adminUrls = {
     optimizationJobs: 'admin/support-manager/optimization-jobs/list',
     optimizationJobsByMarketplace: 'admin/support-manager/optimization-jobs',
     productOptimizationChanges: 'admin/support-manager/optimization-changes',
-    productOptimizationConditions: 'admin/support-manager/optimization-conditions-check/enabled-ad-groups',
+    adGroupsList: 'admin/support-manager/optimization-conditions-check/enabled-ad-groups',
+    adGroupsCanBeOptimized: 'admin/support-manager/optimization-conditions-check/ad-groups-can-be-optimized',
+    patsList: 'admin/support-manager/optimization-conditions-check/keywords-and-pats',
 };
 
 export const daypartingUrls = {
