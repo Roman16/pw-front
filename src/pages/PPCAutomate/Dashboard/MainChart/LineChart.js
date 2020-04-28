@@ -185,7 +185,6 @@ const Chart = ({
                     })}
 
                     {showOptimizationChart && productOptimizationDateList.map(item => {
-                        console.log(moment(item.started) > moment(selectedRangeDate.startDate))
                         return (
                             <ReferenceArea
                                 className={'start-rect'}

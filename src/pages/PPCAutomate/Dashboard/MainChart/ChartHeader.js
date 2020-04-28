@@ -40,7 +40,7 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
             </div>
 
             <div className='chart-legend'>
-                {moment().tz('America/Los_Angeles').subtract(3, "days") < moment(selectedRangeDate.endDate) &&
+                {(moment().tz('America/Los_Angeles').subtract(3, "days") < moment(selectedRangeDate.endDate) || selectedRangeDate.endDate === 'lifetime') &&
                 <div className="first-line">
                     <span className="dashed-line">
                         <SVG id='dashed-lines'/>
