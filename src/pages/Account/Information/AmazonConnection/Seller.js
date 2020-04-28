@@ -18,8 +18,7 @@ const Seller = () => {
         if(mwsConnected) {
             handleOpenBlock(false)
         }
-
-    }, [mwsConnected])
+    }, [mwsConnected]);
 
     return (
         <Fragment>
@@ -42,9 +41,9 @@ const Seller = () => {
                 </button>}
             </div>
 
-            {openedNewConnectorBlock && <Connectors/>}
+            {/*{openedNewConnectorBlock && <Connectors/>}*/}
 
-            {(ppcConnected || mwsConnected) && amazonAccounts.map((item, index) => (
+            {(ppcConnected || mwsConnected || openedNewConnectorBlock) && amazonAccounts.map((item, index) => (
                 <Connectors
                     key={`amazon_${index}`}
                     amazonTokens={item}

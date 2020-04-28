@@ -69,9 +69,14 @@ const OutBudget = ({date}) => {
     }
 
     useEffect(() => {
+
         async function fetchData() {
             source && source.cancel();
             source = CancelToken.source();
+
+            if (campaignId == null) {
+                setData(defaultData)
+            }
 
             if (!fetchingCampaignList) {
                 setFetchingData(true);
@@ -109,6 +114,13 @@ const OutBudget = ({date}) => {
         fetchData();
 
     }, [campaignId, date]);
+
+    useEffect(() => {
+        if (campaignId == null && !fetchingCampaignList) {
+            localFetching = false;
+            setFetchingData(false);
+        }
+    }, [fetchingCampaignList]);
 
     const StatisticItem = ({value, index, outBudget}) => {
         let color;
@@ -234,7 +246,7 @@ const OutBudget = ({date}) => {
                                     >
                                         <StatisticItem
                                             value={item.sales}
-                                            outBudget={item.out_of_budget}
+                                            outBudget={item.out_of_budget || item.out_of_budget_account || item.out_of_budget_portfolio}
                                             index={index}
                                         />
                                     </InformationTooltip>

@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import ProductItem from './ProductItem';
 import {connect} from 'react-redux';
-import {Select, Spin} from 'antd';
+import {Select, Spin, Switch} from 'antd';
 import {productsActions} from '../../actions/products.actions';
 import './ProductList.less';
 import {debounce} from 'throttle-debounce';
@@ -20,13 +20,13 @@ class ProductList extends Component {
     state = {
         isSelectedAll: false,
         prevProductId: '',
-        onlyOptimization: this.props.onlyOptimization || false,
         onlyHasNew: false,
-        onlyOndayparting: false,
         closedList: false,
         campaign_type: 'all',
         campaign_status: 'all',
         openedProduct: '',
+        onlyOptimization: this.props.onlyOptimization || false,
+        onlyOnDayparting: this.props.onlyOnDayparting || false,
         ungroupVariations: this.props.pathname === '/ppc/scanner' ? 1 : 0,
         paginationParams: {
             size: 10,
@@ -50,7 +50,7 @@ class ProductList extends Component {
             type: this.props.pathname === '/ppc/dayparting' ? 'campaigns' : 'products',
             campaign_type: this.state.campaign_type,
             campaign_status: this.state.campaign_status,
-            onlyOndayparting: this.state.onlyOndayparting,
+            onlyOndayparting:  this.state.onlyOnDayparting,
             cancelToken: source.token
         });
     };
@@ -102,6 +102,7 @@ class ProductList extends Component {
 
     handleChangeSwitch = (event, type) => {
         type === 'onlyOptimization' && this.props.showOnlyOptimized(event);
+        type === 'onlyOnDayparting' && this.props.showOnlyOnDayparting(event);
 
         this.setState(
             {
@@ -202,12 +203,17 @@ class ProductList extends Component {
             }
 
             if (this.props.pathname === '/ppc/dayparting') {
+                this.props.selectAllProducts(false);
+                this.props.showOnlyOptimized(false);
+
                 this.setState({
                     paginationParams: {
                         ...this.state.paginationParams,
                         page: 1,
                         searchStr: ''
-                    }
+                    },
+                    isSelectedAll: false,
+                    onlyOptimization: false,
                 }, this.getProducts);
 
             } else if (prevProps.pathname === '/ppc/dayparting' && this.props.pathname !== '/ppc/dayparting') {
@@ -234,10 +240,11 @@ class ProductList extends Component {
                 openedProduct,
                 onlyHasNew,
                 closedList,
-                onlyOndayparting,
+                onlyOnDayparting,
+                onlyOptimization,
                 paginationParams: {size, page}
             } = this.state,
-            {products, selectedProduct, totalSize, onlyOptimization, pathname, fetching} = this.props;
+            {products, selectedProduct, totalSize, pathname, fetching} = this.props;
 
         return (
             <Fragment>
@@ -249,13 +256,33 @@ class ProductList extends Component {
                         onSelectAll={this.selectAll}
                         onChangeSwitch={this.handleChangeSwitch}
                         onChangeSelect={this.selectChangeHandler}
-                        onlyOndayparting={onlyOndayparting}
+                        onlyOndayparting={onlyOnDayparting}
                         pathname={pathname}
                         selectedSize={selectedSize}
                         isSelectedAll={isSelectedAll}
                         onlyHasNew={onlyHasNew}
                         disabled={!products || (products && products.length === 0) || this.props.pathname === '/ppc/scanner'}
                     />
+
+                    {pathname === '/ppc/dayparting' ? <div className="active-only">
+                            <label htmlFor="">On day-parting only</label>
+
+                            <Switch
+                                data-intercom-target='only-on-dayparting-switch'
+                                checked={onlyOnDayparting}
+                                onChange={e => this.handleChangeSwitch(e, 'onlyOnDayparting')}
+                            />
+                        </div>
+                        :
+
+                        <div className="active-only">
+                            <label htmlFor="">On optimization only</label>
+                            <Switch
+                                checked={onlyOptimization}
+                                onChange={e => this.handleChangeSwitch(e, 'onlyOptimization')}
+                            />
+                        </div>
+                    }
 
                     <div className='page-items-block'>
                         <div className='page-size-select'>
@@ -345,6 +372,7 @@ const mapStateToProps = state => ({
     totalSize: state.products.totalSize,
     selectedProduct: state.products.selectedProduct,
     onlyOptimization: state.products.onlyOptimization,
+    onlyOnDayparting: state.products.onlyOnDayparting,
     fetching: state.products.fetching
 });
 
@@ -357,7 +385,13 @@ const mapDispatchToProps = dispatch => ({
     },
     showOnlyOptimized: (data) => {
         dispatch(productsActions.showOnlyOptimized(data));
-    }
+    },
+    showOnlyOnDayparting: (data) => {
+        dispatch(productsActions.showOnlyOnDayparting(data));
+    },
+    selectAllProducts: (data) => {
+        dispatch(productsActions.selectAll(data));
+    },
 });
 
 export default connect(

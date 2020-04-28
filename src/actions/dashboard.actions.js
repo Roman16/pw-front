@@ -27,12 +27,13 @@ function getMetricsStatistics(parameters) {
 
 }
 
-function switchChart(type) {
+function switchChart(type, value) {
     const switchType = `SWITCH_${type.toUpperCase()}_CHART`;
 
     return dispatch => {
         dispatch({
-            type: dashboardConstants[switchType]
+            type: dashboardConstants[switchType],
+            payload: value
         });
     };
 }

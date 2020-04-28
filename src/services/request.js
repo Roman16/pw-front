@@ -6,6 +6,7 @@ import {history} from '../utils/history';
 import {userService} from "./user.services";
 
 const baseUrl =
+    // 'http://staging.profitwhales.com';
     process.env.REACT_APP_ENV === 'production'
         ? process.env.REACT_APP_API_PROD || ''
         : process.env.REACT_APP_API_URL || '';
@@ -47,11 +48,11 @@ const api = (method, url, data, type, abortToken) => {
 
         })
             .then(result => {
-                if(result.status === 208) {
+                if (result.status === 208) {
                     resolve({
                         status: 'already'
                     });
-                }else if (result.status === 200 || result.status === 207) {
+                } else if (result.status === 200 || result.status === 207) {
                     resolve(result.data);
                 } else {
                     reject(null);
@@ -60,8 +61,12 @@ const api = (method, url, data, type, abortToken) => {
             .catch(error => {
 
                 if (error.response && error.response.status === 401) {
-                    history.push('/login');
-                    localStorage.clear();
+                    if (error.response.data.message === 'Incorrect login or password') {
+                        handlerErrors(error.response.data.message)
+                    } else {
+                        history.push('/login');
+                        localStorage.clear();
+                    }
                 } else if (error.response && error.response.status === 412) {
                     userService.resendConfirmEmail()
                         .then(() => {
@@ -77,7 +82,7 @@ const api = (method, url, data, type, abortToken) => {
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
                             }
-                        } else if (error.response.status === 429 || (error.response.status === 402 && error.response.statusText === "Payment Required") || (error.response.status === 403 && error.response.statusText === "Forbidden")) {
+                        } else if (error.response.status === 429 || error.response.data.message === 'Retry with' || (error.response.status === 402 && error.response.statusText === "Payment Required") || (error.response.status === 403 && error.response.statusText === "Forbidden")) {
                         } else if (error.response.data.message !== 'Product not found') {
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)

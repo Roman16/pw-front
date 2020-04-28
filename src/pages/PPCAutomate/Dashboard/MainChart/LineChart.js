@@ -1,6 +1,16 @@
-import React, {PureComponent} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+    LineChart,
+    ComposedChart,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+    ReferenceLine,
+
+    ReferenceArea,
 } from 'recharts';
 import ChartTooltip from "./ChartTooltip";
 import moment from "moment";
@@ -17,78 +27,97 @@ const CustomizedAxisTick = (props) => {
     );
 };
 
+const ReferenceCustomLabel = props => {
+    const textClass = props.text === 'started' ? 'started-optimization' : 'paused-optimization';
+
+    return (
+        <Fragment>
+            <text x={props.viewBox.x} y={20} className={textClass}>
+                Optimisation
+            </text>
+            <text x={props.viewBox.x} y={35} className={textClass}>
+                {props.text}
+            </text>
+        </Fragment>
+    )
+};
+
+const animationDuration = 1000,
+    dashedLineAnimationDuration = 1000,
+    animationBegin = 1000,
+    animationEasing = 'linear',
+    isAnimationActive = false;
+
 const Chart = ({
                    data,
                    activeMetrics,
                    showWeekChart,
                    showDailyChart,
+                   showOptimizationChart,
                    selectedRangeDate,
+                   productOptimizationDateList
                }) => {
-    //first way
-    // const dataWithShadow = data.map(item => ({
-    //     ...item,
-    //     week_first_metric_shadow: item.week_first_metric - 200,
-    //     week_second_metric_shadow: item.week_second_metric - 200,
-    // }));
-    //
-    // const startDate = moment(selectedRangeDate.startDate),
-    //     endDate = moment(selectedRangeDate.endDate);
-    //
-    // let countDays = endDate.diff(startDate, 'days');
-    // let allChartValues = [];
-    //
-    // for (let i = 0; i <= countDays; i++) {
-    //     const pickFromApi = data.find(item => moment(item.date).format('YYYY-MM-DD') === moment(startDate).add(i, 'days').format('YYYY-MM-DD'));
-    //
-    //     if (pickFromApi) {
-    //         allChartValues.push({
-    //             date: pickFromApi.date,
-    //             seven_days_first_metric_value: +pickFromApi.seven_days_first_metric_value,
-    //             daily_first_metric_value: +pickFromApi.daily_first_metric_value,
-    //             seven_days_second_metric_value: +pickFromApi.seven_days_second_metric_value,
-    //             daily_second_metric_value: +pickFromApi.daily_second_metric_value,
-    //         })
-    //     } else {
-    //         allChartValues.push({
-    //             date: moment(startDate).add(i, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
-    //         })
-    //     }
-    // }
 
-    //---------------------------
-    //second way
+    const [chartData, setChartData] = useState([]);
 
-    // const svg = document.querySelector('svg.recharts-surface');
-    // const line = document.querySelectorAll('.recharts-line-curve');
-    //
-    // const defs = document.createElementNS('http://www.w3.org/2000/svg', "defs");
-    //
-    // defs.innerHTML = '<filter id="f2" x="0" y="0" width="200%" height="200%">\n' +
-    //     '      <feOffset result="offOut" in="SourceGraphic" dx="0" dy="20" />\n' +
-    //     '      <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />\n' +
-    //     '      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />\n' +
-    //     '    </filter>';
-    //
-    //
-    // svg && svg.appendChild(defs);
-    //
-    // line.forEach(item => {
-    //     item.setAttribute('filter', 'url(#f2)');
-    // });
+    useEffect(() => {
+        setChartData(data.map(item => {
+            if (`${moment().tz('America/Los_Angeles').format('YYYY-MM-DD')}T00:00:00.000Z` === item.date || `${moment().tz('America/Los_Angeles').subtract(1, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === item.date || `${moment().tz('America/Los_Angeles').subtract(2, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === item.date) {
+                return ({
+                    date: item.date,
+                    daily_first_metric_value: null,
+                    seven_days_first_metric_value: null,
+                    daily_second_metric_value: null,
+                    seven_days_second_metric_value: null,
+
+                    dashed_daily_first_metric_value: item.daily_first_metric_value,
+                    dashed_seven_days_first_metric_value: item.seven_days_first_metric_value,
+                    dashed_daily_second_metric_value: item.daily_second_metric_value,
+                    dashed_seven_days_second_metric_value: item.seven_days_second_metric_value,
+                })
+            } else if (`${moment().tz('America/Los_Angeles').subtract(3, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === item.date) {
+                return ({
+                    ...item,
+                    dashed_daily_first_metric_value: item.daily_first_metric_value,
+                    dashed_seven_days_first_metric_value: item.seven_days_first_metric_value,
+                    dashed_daily_second_metric_value: item.daily_second_metric_value,
+                    dashed_seven_days_second_metric_value: item.seven_days_second_metric_value,
+                })
+
+            } else {
+                return item;
+            }
+        }));
+    }, [data]);
 
     return (
         <div className='main-chart-container'>
             <ResponsiveContainer height='100%' width='100%'>
                 <LineChart
-                    data={Array.isArray(data) ? data : []}
-                    margin={{top: 10, bottom: 30}}
+                    data={chartData}
+                    margin={{top: 50, bottom: 30}}
                 >
-                    <CartesianGrid
-                        vertical={false}
-                        stroke="#DBDCE2"
-                    />
+                    {/*----------------------------------------------------------------*/}
+                    {/*filters*/}
 
-                    {/*<Customized component={(props) => console.log(props)} />*/}
+                    <filter id="dropshadow" height="130%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="5"/>
+                        <feOffset dx="2" dy="10" result="offsetblur"/>
+                        <feComponentTransfer>
+                            <feFuncA type="linear" slope="0.5"/>
+                        </feComponentTransfer>
+                        <feMerge>
+                            <feMergeNode/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+
+                        <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
+
+                    </filter>
+
+                    <CartesianGrid
+                        stroke="rgba(219, 220, 226, 0.3)"
+                    />
 
                     <XAxis
                         dataKey="date"
@@ -101,6 +130,7 @@ const Chart = ({
                         // tick={<CustomizedAxisTick/>}
                         tickFormatter={(date) => moment(date).format('MMM DD')}
                     />
+
 
                     <YAxis
                         yAxisId="left"
@@ -125,6 +155,48 @@ const Chart = ({
                             />
                         }/>
 
+
+                    {/* Optimization line*/}
+                    {showOptimizationChart && productOptimizationDateList.map(item => {
+                        return (
+                            <ReferenceLine
+                                yAxisId={'left'}
+                                x={`${moment(item.started).format('YYYY-MM-DD')}T00:00:00.000Z`}
+                                stroke={"#CDFFE2"}
+                                label={null}
+                                strokeWidth={4}
+                                strokeDasharray="7"
+                            />
+
+                        )
+                    })}
+
+                    {showOptimizationChart && productOptimizationDateList.map(item => {
+                        return (item.stopped !== null && <ReferenceLine
+                                key={item.stooped}
+                                yAxisId={'left'}
+                                x={`${moment(item.stopped).format('YYYY-MM-DD')}T00:00:00.000Z`}
+                                stroke={"#C9CBD4"}
+                                label={null}
+                                strokeWidth={4}
+                                strokeDasharray="7"
+                            />
+                        )
+                    })}
+
+                    {showOptimizationChart && productOptimizationDateList.map(item => {
+                        return (
+                            <ReferenceArea
+                                className={'start-rect'}
+                                yAxisId="left"
+                                x1={(moment(item.started) > moment(selectedRangeDate.startDate)) ? `${moment(item.started).format('YYYY-MM-DD')}T00:00:00.000Z` : `${moment(selectedRangeDate.startDate).format('YYYY-MM-DD')}T00:00:00.000Z`}
+                                x2={item.stopped !== null && `${moment(item.stopped).format('YYYY-MM-DD')}T00:00:00.000Z`}
+                                fillOpacity={1}
+                            />
+                        )
+                    })}
+                    {/*-----------------------------------*/}
+
                     {(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line
                         yAxisId="left"
                         type="monotone"
@@ -132,7 +204,25 @@ const Chart = ({
                         stroke="#82ca9d"
                         strokeWidth={3}
                         dot={false}
-                        // isAnimationActive={false}
+                        filter={'url(#dropshadow)'}
+                        animationEasing={animationEasing}
+                        animationDuration={animationDuration}
+                        isAnimationActive={isAnimationActive}
+                    />}
+
+                    {(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line
+                        yAxisId="left"
+                        type="monotone"
+                        dataKey="dashed_seven_days_first_metric_value"
+                        stroke="#82ca9d"
+                        strokeWidth={3}
+                        dot={false}
+                        filter={'url(#dropshadow)'}
+                        strokeDasharray="7 5"
+                        animationBegin={animationBegin}
+                        animationEasing={animationEasing}
+                        animationDuration={dashedLineAnimationDuration}
+                        isAnimationActive={isAnimationActive}
                     />}
 
                     {(activeMetrics && activeMetrics[0].key && showDailyChart) && <Line
@@ -144,20 +234,26 @@ const Chart = ({
                         strokeWidth={2}
                         activeDot={{r: 5}}
                         dot={{r: 3}}
-                        // isAnimationActive={false}
+                        animationEasing={animationEasing}
+                        animationDuration={animationDuration}
+                        isAnimationActive={isAnimationActive}
                     />}
+                    {(activeMetrics && activeMetrics[0].key && showDailyChart) && <Line
+                        yAxisId='left'
+                        type="linear"
+                        strokeOpacity={0.8}
+                        dataKey="dashed_daily_first_metric_value"
+                        stroke="#8FD39D"
+                        strokeWidth={2}
+                        activeDot={{r: 5}}
+                        dot={{r: 3}}
+                        strokeDasharray="7 5"
+                        animationBegin={animationBegin}
+                        animationEasing={animationEasing}
+                        animationDuration={dashedLineAnimationDuration}
+                        isAnimationActive={isAnimationActive}
 
-                    {/*{(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line*/}
-                    {/*    yAxisId="left"*/}
-                    {/*    type="monotone"*/}
-                    {/*    dataKey="week_first_metric_shadow"*/}
-                    {/*    strokeOpacity={0.4}*/}
-                    {/*    stroke="#8FD39D"*/}
-                    {/*    strokeWidth={5}*/}
-                    {/*    dot={false}*/}
-                    {/*    activeDot={{r: 0}}*/}
-                    {/*/>}*/}
-
+                    />}
 
                     {(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line
                         yAxisId="right"
@@ -166,7 +262,25 @@ const Chart = ({
                         stroke="#8884d8"
                         strokeWidth={3}
                         dot={false}
-                        // isAnimationActive={false}
+                        filter={'url(#dropshadow)'}
+                        animationEasing={animationEasing}
+                        animationDuration={animationDuration}
+                        isAnimationActive={isAnimationActive}
+                    />}
+
+                    {(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line
+                        yAxisId="right"
+                        type="monotone"
+                        dataKey="dashed_seven_days_second_metric_value"
+                        stroke="#8884d8"
+                        strokeWidth={3}
+                        dot={false}
+                        filter={'url(#dropshadow)'}
+                        strokeDasharray="7 5"
+                        animationBegin={animationBegin}
+                        animationEasing={animationEasing}
+                        animationDuration={dashedLineAnimationDuration}
+                        isAnimationActive={isAnimationActive}
                     />}
 
                     {(activeMetrics && activeMetrics[1].key && showDailyChart) && <Line
@@ -178,19 +292,26 @@ const Chart = ({
                         strokeWidth={2}
                         activeDot={{r: 5}}
                         dot={{r: 3}}
-                        // isAnimationActive={false}
+                        animationEasing={animationEasing}
+                        animationDuration={animationDuration}
+                        isAnimationActive={isAnimationActive}
                     />}
 
-                    {/*{(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line*/}
-                    {/*    yAxisId='right'*/}
-                    {/*    type="monotone"*/}
-                    {/*    strokeOpacity={0.4}*/}
-                    {/*    dataKey="week_second_metric_shadow"*/}
-                    {/*    strokeWidth={5}*/}
-                    {/*    stroke="#6D6DF6"*/}
-                    {/*    dot={false}*/}
-                    {/*    activeDot={{r: 0}}*/}
-                    {/*/>}*/}
+                    {(activeMetrics && activeMetrics[1].key && showDailyChart) && <Line
+                        yAxisId='right'
+                        type="linear"
+                        strokeOpacity={0.5}
+                        dataKey="dashed_daily_second_metric_value"
+                        stroke="#6D6DF6"
+                        strokeWidth={2}
+                        activeDot={{r: 5}}
+                        dot={{r: 3}}
+                        strokeDasharray="7 5"
+                        animationBegin={animationBegin}
+                        animationEasing={animationEasing}
+                        animationDuration={dashedLineAnimationDuration}
+                        isAnimationActive={isAnimationActive}
+                    />}
 
                 </LineChart>
             </ResponsiveContainer>

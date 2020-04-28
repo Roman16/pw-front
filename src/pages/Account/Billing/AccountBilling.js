@@ -151,7 +151,7 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                         <div className='carousel-pagination'>
                             {paymentCards.map((item, index) => (
                                 <div
-                                    style={{opacity: paymentCards[selectedCardIndex].id != item.id && 0.5}}
+                                    style={{opacity: paymentCards[selectedCardIndex] && paymentCards[selectedCardIndex].id != item.id && 0.5}}
                                     key={`pagination_${index}`}
                                     onClick={() => onChangePagination(index)}
                                 />
@@ -159,7 +159,7 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                         </div>}
                     </div>
 
-                    <div className='billing-address'>
+                    {paymentCards[selectedCardIndex] && <div className='billing-address'>
                         {(paymentCards[selectedCardIndex].address.address.line1 ||
                             paymentCards[selectedCardIndex].address.address.city ||
                             paymentCards[selectedCardIndex].address.address.postal_code ||
@@ -169,12 +169,13 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                             <span className='street'>{paymentCards[selectedCardIndex].address.address.line1}</span>
                             <span className='city'>{paymentCards[selectedCardIndex].address.address.city}</span>
                             <span className='zip'>{paymentCards[selectedCardIndex].address.address.postal_code}</span>
-                            <span className='country'>{allCountries[paymentCards[selectedCardIndex].address.address.country]}</span>
+                            <span
+                                className='country'>{allCountries[paymentCards[selectedCardIndex].address.address.country]}</span>
                         </Fragment>
                         }
 
                     </div>
-                </div>}
+                    }                </div>}
 
                 <div className="buttons-block">
                     {paymentCards.length < 10 &&

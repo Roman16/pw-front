@@ -7,6 +7,7 @@ export const productsActions = {
     fetchProducts,
     updateProduct,
     fetchProductDetails,
+    selectAll,
     onSwitchOptimization,
     setNetMargin,
     updateOptions,
@@ -15,7 +16,8 @@ export const productsActions = {
     dontShowWindowAgain,
     updateCampaignBudget,
     activatedDayparing,
-    deactivatedDayparing
+    deactivatedDayparing,
+    showOnlyOnDayparting
 };
 
 function fetchProducts(paginationParams) {
@@ -100,6 +102,7 @@ function fetchProductDetails(product, pathname) {
         } else {
             dispatch({
                 type: productsConstants.SELECT_ALL_PRODUCT,
+                payload: true
             });
         }
     };
@@ -154,10 +157,27 @@ function setNetMargin(product) {
     };
 }
 
+function selectAll(data) {
+    return({
+        type: productsConstants.SELECT_ALL_PRODUCT,
+        payload: data
+    })
+
+}
+
 function showOnlyOptimized(data) {
     return dispatch => {
         dispatch({
             type: productsConstants.SHOW_ONLY_OPTIMIZED,
+            payload: data
+        });
+    };
+}
+
+function showOnlyOnDayparting(data) {
+    return dispatch => {
+        dispatch({
+            type: productsConstants.SHOW_ONLY_ON_DAYPARTING,
             payload: data
         });
     };

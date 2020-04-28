@@ -11,6 +11,7 @@ const initialState = {
     dontShowStopNotificationAgain: false,
     selectedAll: false,
     onlyOptimization: false,
+    onlyOnDayparting: false,
     onlyActiveOnAmazon: false,
     selectedProduct: {
         optimization_strategy: '',
@@ -99,13 +100,18 @@ export function products(state = initialState, action) {
         case productsConstants.SELECT_ALL_PRODUCT:
             return {
                 ...state,
-                selectedAll: !state.selectedAll,
+                selectedAll: action.payload,
             };
 
         case productsConstants.SHOW_ONLY_OPTIMIZED:
             return {
                 ...state,
                 onlyOptimization: action.payload
+            };
+        case productsConstants.SHOW_ONLY_ON_DAYPARTING:
+            return {
+                ...state,
+                onlyOnDayparting: action.payload
             };
 
         case productsConstants.SHOW_ONLY_ACTIVE:

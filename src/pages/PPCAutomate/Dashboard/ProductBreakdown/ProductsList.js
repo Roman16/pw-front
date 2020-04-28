@@ -25,41 +25,27 @@ const RenderPramsChanges = ({type, product}) => {
         } else if (type === 'acos_diff' || type === 'cpa_diff') {
             return (
                 <div className='product-metric-changes up'>
-                    {value >= 25 && <div className='downward-changes'>
-                        {round(+value, 2)}%
-                        <SVG style={{transform: 'rotate(180deg)'}} id='down-white-arrow'/>
+                    {(value > 0) && <div className='downward-changes'>
+                        {round(Math.abs(+value), 2)}%
+                        <SVG id='up-white-arrow'/>
                     </div>}
-                    {(value > 0 && value < 25) && <div className='down-changes'>
-                        {round(+value, 2)}%
-                        <SVG style={{transform: 'rotate(180deg)'}} id='down-black-arrow'/>
-                    </div>}
-                    {(value <= 0 && value > -25) && <div className='up-changes'>
-                        {round(+value, 2)}%
-                        <SVG style={{transform: 'rotate(180deg)'}} id='up-green-arrow'/>
-                    </div>}
-                    {(value <= -25) && <div className='upward-changes'>
-                        {round(+value, 2)}%
-                        <SVG style={{transform: 'rotate(180deg)'}} id='up-white-arrow'/>
+
+                    {(value <= 0 ) && <div className='upward-changes'>
+                        {round(Math.abs(+value), 2)}%
+                        <SVG id='down-white-arrow'/>
                     </div>}
                 </div>
             )
         } else {
             return (
                 <div className='product-metric-changes up'>
-                    {value >= 25 && <div className='upward-changes'>
-                        {round(+value, 2)}%
+                    {(value > 0) && <div className='upward-changes'>
+                        {round(Math.abs(+value), 2)}%
                         <SVG id='up-white-arrow'/>
                     </div>}
-                    {(value > 0 && value < 25) && <div className='up-changes'>
-                        {round(+value, 2)}%
-                        <SVG id='up-green-arrow'/>
-                    </div>}
-                    {(value <= 0 && value > -25) && <div className='down-changes'>
-                        {round(+value, 2)}%
-                        <SVG id='down-black-arrow'/>
-                    </div>}
-                    {(value <= -25) && <div className='downward-changes'>
-                        {round(+value, 2)}%
+
+                    {(value <= 0) && <div className='downward-changes'>
+                        {round(Math.abs(+value), 2)}%
                         <SVG id='down-white-arrow'/>
                     </div>}
                 </div>

@@ -1,0 +1,55 @@
+.errors-bar {
+  //position: fixed;
+  top: 0;
+  z-index: 10000;
+  width: 100%;
+  color: #fff;
+  padding: 0;
+
+  div {
+    padding: 10px 30px;
+    margin-bottom: 2px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1rem;
+
+    svg {
+      width: 15px;
+      min-width: 15px;
+      height: 15px;
+      min-height: 15px;
+      margin: 0 30px 0 0;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #EC7F5C;
+      background: #fff;
+      border-radius: 4px;
+      height: 32px;
+      min-width: 150px;
+      margin: 0 0 0 30px;
+    }
+  }
+
+  .error {
+    background: #EC7F5C;
+    text-align: left;
+    justify-content: flex-start;
+
+    strong {
+      font-size: 1.2857142857142858rem;
+    }
+  }
+
+  .unauthorized {
+    background: #F0B849;
+  }
+
+  .in-progress {
+    background: #F0B849;
+  }
+}

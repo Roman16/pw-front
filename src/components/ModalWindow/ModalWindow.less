@@ -4,6 +4,7 @@
 .ant-modal-wrap {
   display: flex;
   align-items: center;
+  z-index: 100000;
 }
 
 .over-modal-wrap {
@@ -64,7 +65,7 @@
     button {
       width: 120px;
       height: 40px;
-      border-radius: 8px;
+      border-radius: 4px;
       margin: 0 0 0 24px;
       border: 0;
 
@@ -75,13 +76,42 @@
       &:last-child {
         background: #6D6DF6;
       }
+
+      & {
+        position: relative;
+        overflow: hidden;
+        transform: translate3d(0, 0, 0);
+      }
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+        background-repeat: no-repeat;
+        background-position: 50%;
+        transform: scale(10, 10);
+        opacity: 0;
+        transition: transform .5s, opacity .5s;
+      }
+
+      &:active:after {
+        transform: scale(0, 0);
+        opacity: .3;
+        transition: 0s;
+      }
     }
   }
 
   .ant-modal-content {
     height: 100%;
     overflow: auto;
-    border-radius: 8px;
+    border-radius: 4px;
   }
 
 
@@ -104,7 +134,7 @@
 .confirm-action-modal {
   max-width: 450px;
   width: max-content !important;
-  border-radius: 9px;
+  border-radius: 4px;
   height: max-content;
   padding: 0;
   top: 0;
@@ -170,7 +200,7 @@
   .ant-modal-content,
   .ant-modal-header {
     text-align: center;
-    border-radius: 9px;
+    border-radius: 4px;
   }
 
   .ant-modal-header,
@@ -185,19 +215,20 @@
     & > div {
       width: 100%;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
 
       button {
-        width: 8.571428571428571rem;
         height: 2.2857142857142856rem;
+        padding: 0 2.857142857142857rem;
+        box-shadow: none;
 
         &:last-child {
-          margin: 0 0 0 15px;
+          margin: 0 0 0 1.0714285714285714rem;
         }
 
         &.ant-btn {
           background-color: rgba(109, 109, 246, 0.1) !important;
-          border-radius: 8px;
+          border-radius: 4px;
           font-size: 0.8571428571428571rem;
           text-align: center;
           color: #363694;
@@ -404,4 +435,8 @@
   @media (max-width: 500px) {
     max-width: 95vw !important;
   }
+}
+
+.ant-modal-mask {
+  z-index: 10000;
 }

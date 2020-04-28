@@ -29,6 +29,10 @@ const ChartStatistics = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
+            if (campaignId == null) {
+                setData([])
+            }
+
             if (!fetchingCampaignList) {
                 setProcessing(true);
                 localFetching = true;
@@ -57,7 +61,7 @@ const ChartStatistics = ({date}) => {
                     setProcessing(false);
                     localFetching = false;
                 } catch (e) {
-                   !localFetching && setProcessing(false);
+                    !localFetching && setProcessing(false);
                     localFetching = false;
                 }
             }
@@ -67,8 +71,17 @@ const ChartStatistics = ({date}) => {
 
     }, [campaignId, date, firstMetric, secondMetric]);
 
+    useEffect(() => {
+        if (campaignId == null && !fetchingCampaignList) {
+            localFetching = false;
+            setProcessing(false);
+        }
+    }, [fetchingCampaignList]);
+
+
     return (
-        <section className={`${(processing || fetchingCampaignList) ? 'chart-statistics disabled' : 'chart-statistics'}`}>
+        <section
+            className={`${(processing || fetchingCampaignList) ? 'chart-statistics disabled' : 'chart-statistics'}`}>
             <div className="section-header">
                 <h2>Metrics Comparison</h2>
 

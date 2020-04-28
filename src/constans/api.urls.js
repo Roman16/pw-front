@@ -57,12 +57,24 @@ export const dashboardUrls = {
     products: 'ppc-automation/dashboard/products/list',
     barChartData: 'ppc-automation/dashboard/charts/bar-data',
     pieChartData: 'ppc-automation/dashboard/charts/pie-data',
+    productOptimizationDetails: 'ppc-automation/dashboard/products/optimization-jobs-log/periods',
 };
 
 export const scannerUrls = {
     scanStatus: 'ppc-scanner/get-scan-status',
     getChanges: 'ppc-scanner/get-changes-table',
     getScanning: 'ppc-scanner/scan-sp-campaigns',
+};
+export const adminUrls = {
+    userEmail: 'admin/support-manager/user',
+    accountLinks: 'admin/support-manager/linked-accounts/list',
+    accountLinksBySellerId: 'admin/support-manager/linked-accounts',
+    optimizationJobs: 'admin/support-manager/optimization-jobs/list',
+    optimizationJobsByMarketplace: 'admin/support-manager/optimization-jobs',
+    productOptimizationChanges: 'admin/support-manager/optimization-changes',
+    adGroupsList: 'admin/support-manager/optimization-conditions-check/enabled-ad-groups',
+    adGroupsCanBeOptimized: 'admin/support-manager/optimization-conditions-check/ad-groups-can-be-optimized',
+    patsList: 'admin/support-manager/optimization-conditions-check/keywords-and-pats',
 };
 
 export const daypartingUrls = {

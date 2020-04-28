@@ -25,7 +25,8 @@ const Sidebar = () => {
             user: state.user,
             notFirstEntry: state.user.notFirstEntry,
             bootstrapInProgress: state.user.notifications && state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
-        }));
+        })),
+        accountLinks = user.account_links[0];
 
 
     const toggleCollapsed = () => {
@@ -243,6 +244,12 @@ const Sidebar = () => {
                             >
                                 <div className="link-icon">
                                     <SVG id='account'/>
+
+                                    {(accountLinks.amazon_mws.status === 'FAILED' ||
+                                        accountLinks.amazon_mws.status === 'UNAUTHORIZED' ||
+                                        accountLinks.amazon_ppc.status === 'FAILED' ||
+                                        accountLinks.amazon_ppc.status === 'UNAUTHORIZED') &&
+                                    <i><SVG id={'notification-icon'}/></i>}
                                 </div>
 
                                 <span className="bottom-span">

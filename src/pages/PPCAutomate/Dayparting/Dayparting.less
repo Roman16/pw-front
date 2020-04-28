@@ -1,3 +1,6 @@
+@import "../../../style/variables.less";
+
+
 .selection-area {
   background: rgba(188, 189, 245, 0.4)
 }
@@ -98,7 +101,7 @@
 
   section {
     background: #fff;
-    box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
+    box-shadow: @default-section-shadow;
     border-radius: 4px;
     padding: 1.4285714285714286rem 1.0714285714285714rem 1.0714285714285714rem;
 
@@ -319,7 +322,7 @@
       .tabs {
         display: flex;
         background: #F5F5FF;
-        border-radius: 8px;
+        border-radius: 4px;
         padding: 5px 0;
 
         & > div {
@@ -632,6 +635,7 @@
       width: 49%;
       padding: 0;
       margin: 0;
+      box-shadow: none;
 
       .recharts-active-dot {
         z-index: 10000000 !important;
@@ -733,9 +737,10 @@
             margin: 0 2px 0 0;
           }
 
-          img {
+          svg {
             margin: 0 2px 0 0;
             width: 0.5714285714285714rem;
+            height: 0.8571428571428571rem;
           }
         }
       }

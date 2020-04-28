@@ -5,7 +5,6 @@ import {
 import moment from "moment";
 import {daypartingServices} from "../../../services/dayparting.services";
 import {useSelector} from "react-redux";
-import {numberMask} from "../../../utils/numberMask";
 import axios from "axios";
 import {round} from "../../../utils/round";
 import {Spin} from "antd";
@@ -199,6 +198,11 @@ const PlacementsStatistics = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
+            if (campaignId == null) {
+                setChartData([]);
+                setStatisticData({});
+            }
+
             if (!fetchingCampaignList) {
                 setProcessing(true);
                 localFetching = true;
@@ -222,7 +226,7 @@ const PlacementsStatistics = ({date}) => {
                     setProcessing(false);
                     localFetching = false;
                 } catch (e) {
-                   !localFetching && setProcessing(false);
+                    !localFetching && setProcessing(false);
                     localFetching = false;
                 }
             }
@@ -231,6 +235,13 @@ const PlacementsStatistics = ({date}) => {
         fetchData();
 
     }, [date, campaignId]);
+
+    useEffect(() => {
+        if (campaignId == null && !fetchingCampaignList) {
+            localFetching = false;
+            setProcessing(false);
+        }
+    }, [fetchingCampaignList]);
 
     return (
         <section

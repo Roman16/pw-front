@@ -1,11 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Icon} from "antd";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faPlay, faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {faFacebook, faFacebookSquare, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons";
 
 import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
 import aLogo from '../../../../assets/img/amazon_logo.png';
 
 import './Footer.less';
+import {SVG} from "../../../../utils/icons";
 
 const Footer = () => (
     <footer className='not-found-page__footer'>
@@ -25,26 +29,30 @@ const Footer = () => (
                     <label>
                         <input type="email" name="email" placeholder="Your email address"/>
                     </label>
-                    <button className="btn ripple legitRipple">subscribe</button>
+                    <button className="btn ripple legitRipple">
+                        <FontAwesomeIcon icon={faArrowRight}/>
+                    </button>
                 </form>
             </div>
 
             <div className="col products">
-                <h4>Products</h4>
+                <h4>Partners</h4>
                 <ul>
                     <li>
-                        <Link to="#">
-                            Zero to hero PPC
-                        </Link>
+                        {/*<a href="https://blog.profitwhales.com/partners">*/}
+                        <a href="#" style={{pointerEvents: 'none'}}>
+                            Partners
+                        </a>
                     </li>
                     <li>
-                        <Link to="#">
-                            Analyze and Optimize
-                        </Link>
+                        {/*<a href="https://blog.profitwhales.com/coupons">*/}
+                        <a href="#" style={{pointerEvents: 'none'}}>
+                            Coupons
+                        </a>
                     </li>
                     <li>
-                        <Link to="#">
-                            Automate your PPC
+                        <Link to={'/affiliates'}>
+                            Affiliate Program
                         </Link>
                     </li>
                 </ul>
@@ -64,7 +72,7 @@ const Footer = () => (
                         </Link>
                     </li>
                     <li>
-                        <Link to='policy'>
+                        <Link to='/policy'>
                             Privacy policy
                         </Link>
                     </li>
@@ -92,27 +100,27 @@ const Footer = () => (
                             <li>
                                 <a href="https://twitter.com/ProfitWhales" className="i-tw" target="_blank"
                                    title="Twitter">
-                                    <Icon type="twitter"/>
+                                    <FontAwesomeIcon icon={faTwitter}/>
                                 </a>
                             </li>
                             <li>
                                 <a href="https://www.facebook.com/profitwhales/" className="i-fb" target="_blank"
                                    title="Facebook">
-                                    <Icon type="facebook" theme="filled"/>
+                                    <FontAwesomeIcon icon={faFacebookSquare}/>
                                 </a>
                             </li>
                             <li>
                                 <a href="https://www.linkedin.com/company/profitwhales/" className="i-in"
                                    target="_blank"
                                    title="LinkedIn">
-                                    <Icon type="linkedin"/>
+                                    <FontAwesomeIcon icon={faLinkedin}/>
                                 </a>
                             </li>
                             <li>
                                 <a href="https://www.youtube.com/channel/UCtUreqMG_C_P8Ymqa-LJ2Yg" className="you"
                                    target="_blank"
                                    title="Youtube">
-                                    <Icon type="youtube"/>
+                                    <FontAwesomeIcon icon={faYoutube}/>
                                 </a>
                             </li>
                         </ul>

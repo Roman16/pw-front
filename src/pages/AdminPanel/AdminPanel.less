@@ -1,0 +1,107 @@
+.admin-panel {
+  section {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 2em 4em;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+
+    .ant-table-tbody > tr > td,
+    .ant-table-thead > tr > th {
+      padding: 10px 5px !important;
+    }
+
+    .ant-table-title {
+      font-weight: bolder;
+      font-size: 1.4285714285714286rem;
+    }
+
+    .ant-table-wrapper {
+      max-width: 100%;
+      margin: 20px 0 0 0;
+    }
+
+    .btn {
+      padding: 0 20px;
+    }
+  }
+
+  .fields {
+    display: flex;
+
+    .form-group:last-child {
+      margin: 0;
+    }
+  }
+
+  .or {
+    font-size: 1.4285714285714286rem;
+    margin: 0 20px 0 0;
+  }
+
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin: 0 50px 0 0;
+    width: max-content;
+
+    input {
+      width: 20%;
+      min-width: 250px;
+      height: 32px;
+      margin: 0 20px 0 0;
+    }
+
+    .btn {
+      height: 32px;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+  }
+
+  .ant-select {
+    width: 150px;
+  }
+
+  .optimization-jobs-section {
+    .product {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 3.5714285714285716rem;
+        height: 3.5714285714285716rem;
+        margin: 0 10px 0 0;
+      }
+
+      span {
+        display: block;
+        width: 200px;
+      }
+    }
+
+    .hide-button {
+      .ant-table-row-expand-icon-cell {
+        .ant-table-row-expand-icon {
+          display: none;
+        }
+      }
+    }
+
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+
+      .btn {
+        width: 100%;
+        margin: 0 0 10px 0;
+      }
+    }
+  }
+}

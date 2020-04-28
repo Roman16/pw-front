@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Input, Checkbox, Select, Popover} from "antd";
 import {SVG} from "../../../../../utils/icons";
+import Button from "../../../../../components/Button/Button";
 
 const Option = Select.Option;
 const CheckboxGroup = Checkbox.Group;
@@ -24,12 +25,12 @@ export const ColumnTextFilter = ({onChangeFilter, filteredColumns, dataIndex}) =
             />
 
             <div className="buttons">
-                <button
+                <Button
                     className="btn default"
                     onClick={handleFilteredColumn}
                 >
                     Search
-                </button>
+                </Button>
             </div>
         </div>
     );
@@ -162,12 +163,12 @@ export const ColumnNumberFilter = ({onChangeFilter, filteredColumns, dataIndex, 
             />
 
             <div className="buttons">
-                <button
+                <Button
                     className="btn default"
                     onClick={handleFilteredColumn}
                 >
                     Search
-                </button>
+                </Button>
             </div>
         </div>
     );

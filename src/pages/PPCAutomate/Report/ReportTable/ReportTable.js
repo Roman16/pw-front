@@ -25,6 +25,7 @@ import tz from 'moment-timezone';
 import {Select} from "antd";
 import CustomSelect from "../../../../components/Select/Select";
 import {SVG} from "../../../../utils/icons";
+import Button from "../../../../components/Button/Button";
 
 const Option = Select.Option;
 const CancelToken = axios.CancelToken;
@@ -359,11 +360,11 @@ class ReportTable extends Component {
                         <DatePicker
                             timeRange={this.timeRange}/>
 
-                        <button className="btn default download-btn" onClick={this.downloadFile}>
+                        <Button className="btn default download-btn" onClick={this.downloadFile}>
                             <span> Download </span>
 
                             <SVG id='download'/>
-                        </button>
+                        </Button>
                     </div>
 
                     <FreeTrial product={'ppc'}/>

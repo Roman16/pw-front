@@ -1,12 +1,16 @@
+@import "../../../../style/variables.less";
+
 .main-chart {
   width: 100%;
   padding: 20px 25px 0;
   margin: 25px 0 0 0;
   background: #fff;
-  border-radius: 8px;
+  border-radius: 4px;
   position: relative;
   display: flex;
   flex-direction: column;
+  box-shadow: @default-section-shadow;
+
 
   .recharts-cartesian-axis-tick-line {
     display: none;
@@ -16,6 +20,44 @@
     flex: 1;
     height: 500px;
 
+    .recharts-cartesian-grid-vertical {
+      line {
+        stroke-dasharray: 5;
+      }
+    }
+
+    .recharts-cartesian-grid {
+      line {
+        stroke-width: 2
+      }
+    }
+
+    .recharts-line {
+      -webkit-filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, .7));
+      filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, .7));
+    }
+
+    .started-optimization,
+    .paused-optimization {
+      font-size: 0.8571428571428571rem;
+      font-weight: 500;
+    }
+
+    .started-optimization {
+      fill: #7DD4A1;
+      text-anchor: end;
+    }
+
+    .paused-optimization {
+      fill: #C9CBD4;
+    }
+
+    .start-rect {
+      path {
+        fill: rgba(205, 255, 226, 0.2);
+      }
+    }
+
     @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
       & {
         height: 420px;
@@ -24,12 +66,20 @@
   }
 
   .chart-header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 0 40px 0;
-    padding: 0 20px;
+    display: grid;
+    grid-template-areas: 'datePiker datePiker' 'switches chartLegend';
+    grid-row-gap: 20px;
+    margin: 0;
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0 0 0;
+
+      .switches {
+        display: flex;
+      }
+    }
 
     .pair-name {
       font-size: 1.4285714285714286rem;
@@ -40,7 +90,19 @@
 
     }
 
+    .switches {
+      grid-area: switches;
+
+      display: flex;
+    }
+
+    .chart-legend {
+      grid-area: chartLegend;
+
+    }
+
     .switch-block {
+      width: max-content;
       font-size: 1rem;
       color: #38454F;
 
@@ -53,18 +115,24 @@
     }
 
     .week-switch {
-      margin-right: 20px;
+      margin-right: 25px;
       grid-area: weekSwitchBlock;
 
     }
 
     .daily-switch {
-      margin: 0 20px 0 0;
+      margin: 0 25px 0 0;
       grid-area: dailySwitchBlock;
 
       .daily-icon {
         margin: 0 0 0 20px;
         grid-area: dailyIcon;
+      }
+    }
+
+    .optimization-switch {
+      svg {
+        margin: 0 0 -2px 20px;
       }
     }
 
@@ -77,16 +145,12 @@
       span {
         display: flex;
         align-items: center;
+        margin: 0 5px 0 0;
       }
 
       & > div {
         margin: 0 3px;
       }
-    }
-
-    .green-line,
-    .violet-line {
-      margin: 0 5px 0 0;
     }
 
     .chart-legend {
@@ -105,53 +169,83 @@
           align-items: center;
         }
 
-        &:last-child {
-          margin: 0;
+        svg {
+          min-height: 4px;
+          margin: 0 10px -2px 0;
         }
 
-        & > img {
-          margin: 0 10px 0 0;
+        &:last-child {
+          margin: 0;
         }
       }
     }
 
     .DatePicker {
-      margin: 0 0 0 20px;
       grid-area: datePiker;
     }
   }
 
-  @media (max-width: 1200px) {
+  .main-legend {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 20px 0;
+
+    .green-line,
+    .violet-line {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin: 0 5px 0 0;
+    }
+
+    .green-line {
+      background: #7DD4A1;
+    }
+
+    .violet-line {
+      background: #6D6DF6;
+    }
+
+    .first-line {
+      color: #7DD4A1;
+      margin: 0 10px;
+      display: flex;
+      align-items: center;
+      font-size: 1.1428571428571428rem;
+    }
+
+    .second-line {
+      color: #6D6DF6;
+      margin: 0 10px;
+      display: flex;
+      align-items: center;
+      font-size: 1.1428571428571428rem;
+    }
+  }
+
+  @media (max-width: 1300px) {
     & {
       .chart-header {
-        margin-bottom: 30px;
-        display: grid;
-        grid-row-gap: 20px;
-        grid-template-areas: "weekSwitchBlock dailySwitchBlock  chartLegend" "datePiker datePiker datePiker";
-
-        .DatePicker {
-          margin: 0 auto;
-        }
+        grid-template-areas: 'datePiker chartLegend' 'switches switches';
       }
     }
   }
 
-  @media (max-width: 905px) {
+  @media (max-width: 910px) {
     & {
-      padding-left: 0;
-      padding-right: 0;
-
       .chart-header {
-        grid-template-areas: "weekSwitchBlock dailySwitchBlock" "chartLegend chartLegend" "datePiker datePiker";
+        grid-template-areas: 'datePiker' 'chartLegend' 'switches';
 
-        .daily-switch {
-          margin: 0;
+        .DatePicker {
+          margin: 0 auto;
+        }
+
+        .switches {
+          justify-content: center;
         }
 
         .chart-legend {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
+          margin: 0 auto;
         }
       }
     }
@@ -211,7 +305,7 @@
   width: max-content;
   padding: 15px;
   background: #FFFFFF;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 1rem;
   box-shadow: 0px 5px 20px rgba(40, 62, 112, 0.1);
 

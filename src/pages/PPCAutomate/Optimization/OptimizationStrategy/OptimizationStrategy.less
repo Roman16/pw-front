@@ -73,13 +73,13 @@
 
         &:first-child {
           justify-content: flex-start;
-          padding: 0 5px 0 0;
+          padding: 0 10px 0 0;
         }
 
         &:last-child {
           justify-content: flex-end;
           border: 0;
-          padding: 0 0 0 5px;
+          padding: 0 0 0 10px;
         }
       }
     }
@@ -156,7 +156,7 @@
           position: relative;
 
           @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-            width: 57%;
+            width: 54%;
           }
 
           .target-acos {
@@ -243,24 +243,21 @@
         }
 
         .btn {
-          width: 20%;
-          min-width: 150px;
-          max-width: 300px;
+          min-width: 220px;
           height: 3.4285714285714284rem;
+          line-height: 3.4285714285714284rem;
           font-size: 1.1428571428571428rem;
           margin: 0 20px 10px 20px;
           position: relative;
           text-transform: uppercase;
+          padding: 0 70px;
 
           svg {
-            position: absolute;
-            left: 20px;
+            margin: 2px 0 0 15px;
           }
 
           .ant-spin {
-            position: absolute;
-            left: 20px;
-            margin: 1px 0 0 0;
+            margin: 1px 0 0 15px;
 
             i {
               background-color: #fff;
@@ -269,6 +266,10 @@
 
           &.stop-btn {
             background: #343c5a;
+
+            &:hover {
+              background: #232B46;
+            }
           }
         }
       }
@@ -297,8 +298,8 @@
         }
       }
 
-      .prev, .next {
-        display: none;
+      .prev, .next, .slick-prev, .slick-next {
+        display: none !important;
       }
     }
 

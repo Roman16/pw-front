@@ -90,7 +90,8 @@ const ContactUs = () => {
                                 <p>All answers about our software. Click and go through all knowledge that we collected
                                     for
                                     you.</p>
-                                <button onClick={openWindowHandler} className='btn green-btn'>Get more info</button>
+                                {/*<button onClick={openWindowHandler} className='btn green-btn'>Get more info</button>*/}
+                                <button onClick={() => window.open('https://intercom.help/profitwhales/')} className='btn green-btn'>Get more info</button>
 
                                 <img src={helpDjoImage} alt="" className='djo'/>
                             </div>

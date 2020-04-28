@@ -43,7 +43,7 @@ const OptimizationStatus = ({product: {status, created_at, total_changes, today_
 
                 <StatusInfo
                     caption="Start Date"
-                    value={created_at ? moment(created_at).format('DD/MM/Y') : undefined}
+                    value={status === 'RUNNING' && created_at ? moment(created_at).format('DD/MM/Y') : undefined}
                 />
 
                 <StatusInfo

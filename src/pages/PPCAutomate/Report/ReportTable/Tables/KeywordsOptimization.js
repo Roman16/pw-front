@@ -125,7 +125,7 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
                     title: 'Clicks',
                     dataIndex: 'd_keywordClicks',
                     key: 'd_keywordClicks',
-                    width: '8em',
+                    width: '8.5em',
                     sorter: true,
                     filter: (dataIndex) => <ColumnNumberFilter
                         onChangeFilter={onChangeFilter}
@@ -619,10 +619,10 @@ export const keywordsOptimization = ({onChangeFilter, filteredColumns}) => {
             {title: <>Changed Keyword Bid (<span className='underline'>Impressions</span>)</>, key: changedKeywordBidImpression},
             {title: <>Paused Keyword (<span className='underline'>High ACoS</span>)</>, key: pausedKeywordHighAcos},
             {title: <>Paused Keyword (<span className='underline'>No Sales</span>)</>, key: pausedKeywordNoSales},
+            {title: <>Changed keyword bid (<span className='underline'>No Sales</span>)</>, key: revertLastChangeKeywordNoSales},
             {title: <>Paused Keyword Duplicate</>, key: pausedKeywordDuplicate},
             {title: <>Paused Keyword Duplicate of PAT</>, key: pausedKeywordDuplicateOfPAT},
             {title: <>Paused Keyword Duplicate From CST</>, key: pausedKeywordDuplicateFromCustomerSearchTerm},
-            // {title: <>RevertLastChangeKeyword (<span className='underline'>No Sales</span>)</>, key: revertLastChangeKeywordNoSales},
         ]
     });
 };

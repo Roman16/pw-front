@@ -54,13 +54,12 @@ class ConfirmPaymentWindow extends Component {
         return (
             <div>
                 <h2>We had a problem processing your payment.
-                    <br/>
                     Please press «Confirm» so we can turn on your subscription.</h2>
 
                 <div className='buttons-block'>
                     {clickedBtn ?
                         <Spin/> :
-                        <button className="btn green-btn" onClick={this.handleConfirm} disabled={clickedBtn}>
+                        <button className="btn default" onClick={this.handleConfirm} disabled={clickedBtn}>
                             Confirm
                         </button>
                     }

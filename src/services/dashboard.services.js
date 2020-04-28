@@ -6,7 +6,8 @@ export const dashboardServices = {
     fetchLineChartData,
     fetchProducts,
     fetchBarChartData,
-    fetchPieChartData
+    fetchPieChartData,
+    fetchProductOptimizationDetails
 };
 
 function fetchMetricsStatistics({startDate, endDate, selectedProduct, onlyOptimization}) {
@@ -58,5 +59,13 @@ function fetchPieChartData({startDate, endDate, selectedProduct}) {
         selectedProduct ? `&product_id=${selectedProduct}` : '&product_id=all'
     ];
     return api('get', `${dashboardUrls.pieChartData}${parameters.join('')}`)
+}
+
+function fetchProductOptimizationDetails({productId, startDate, endDate,}) {
+    const parameters = [
+        startDate ? `&start_date=${startDate}` : '',
+        endDate ? `&end_date=${endDate}` : '',
+    ];
+    return api('get', `${dashboardUrls.productOptimizationDetails}?product_id=${productId}${parameters.join('')}`)
 }
 

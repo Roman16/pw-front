@@ -1,5 +1,8 @@
+@import "../../../style/variables.less";
+
 .scanner-page {
-  height: 100vh;
+  min-height: 100%;
+  height: max-content;
   overflow: auto;
 
   display: grid;
@@ -24,6 +27,7 @@
     background: #fff;
     padding: 1.07143em;
     border-radius: 0.57143em;
+    box-shadow: @default-section-shadow;
   }
 
   .header-block {
@@ -117,7 +121,7 @@
           background: #FFFFFF;
           border: 1px solid #F5F5FF;
           box-sizing: border-box;
-          border-radius: 8px;
+          border-radius: 4px;
           margin: 0 0 5px 0;
           padding: 0 10px;
           font-size: 1rem;
@@ -184,7 +188,7 @@
             background: #E8EDF1;
             border: 1px solid #DDE3E7;
             box-sizing: border-box;
-            border-radius: 8px;
+            border-radius: 4px;
             font-size: 0.8571428571428571rem;
             color: #343C5A;
           }
@@ -197,7 +201,7 @@
         align-items: center;
         border: 1px solid #F5F5FF;
         box-sizing: border-box;
-        border-radius: 8px;
+        border-radius: 4px;
         margin: 15px 0;
         padding: 0 10px;
 
@@ -248,7 +252,7 @@
     .processing-line {
       width: 100%;
       background: #F5F5FF;
-      border-radius: 8px;
+      border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -263,7 +267,7 @@
         position: absolute;
         height: 100%;
         background: #66D0AA;
-        border-radius: 8px;
+        border-radius: 4px;
         left: 0;
       }
 
@@ -387,7 +391,7 @@
 
 
       .legend {
-        margin: 30px 0 0 15px;
+        margin: 30px 0 15px 0;
 
         & > div {
           display: flex;
@@ -468,7 +472,7 @@
             background: #E8EDF1;
             border: 1px solid #DDE3E7;
             box-sizing: border-box;
-            border-radius: 8px;
+            border-radius: 4px;
             font-size: 0.85714286rem;
             color: #343C5A;
           }
@@ -634,7 +638,6 @@
       flex-wrap: wrap;
 
       .btn {
-        width: 8.571428571428571rem;
         height: 2.2857142857142856rem;
         font-size: 0.8571428571428571rem;
         cursor: pointer;
@@ -642,7 +645,7 @@
         font-weight: 500;
 
         &:nth-child(2) {
-          margin: 0 0 0 15px;
+          margin: 0 0 0 1.0714285714285714rem;
         }
 
         &.white {

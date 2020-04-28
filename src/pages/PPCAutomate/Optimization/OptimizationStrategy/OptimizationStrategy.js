@@ -163,7 +163,7 @@ function StrategyItem({
                                 setError(false)
                             }}
                         />
-                        <button className='btn default' onClick={() => onSaveTargetAcos(targetAcos)}
+                        <button type={'button'} className='btn default' onClick={() => onSaveTargetAcos(targetAcos)}
                                 disabled={processing || productId == null}>save
                         </button>
                     </div>}
@@ -181,22 +181,22 @@ function StrategyItem({
                                 <button type="button" disabled={processing || productId == null}
                                         className='btn default stop-btn'
                                         onClick={onStop}>
-                                    {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
                                     stop
+                                    {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faStop}/>}
                                 </button>
                                 :
                                 <>
                                     <button disabled={processing || productId == null} className='btn default'
                                             onClick={() => onStart(targetAcos)}>
-                                        {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
                                         update
+                                        {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faPlay}/>}
                                     </button>
 
                                     <button type="button" disabled={processing || productId == null}
                                             className='btn default stop-btn'
                                             onClick={onStop}>
-                                        {processing ? <Spin/> : <FontAwesomeIcon icon={faStop}/>}
                                         stop
+                                        {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faStop}/>}
                                     </button>
                                 </>
                         )
@@ -204,8 +204,8 @@ function StrategyItem({
                         <button disabled={processing || productId == null} className='btn default'
                                 {...index === 1 && {"data-intercom-target": "start-button"}}
                         >
-                            {processing ? <Spin/> : <FontAwesomeIcon icon={faPlay}/>}
                             start
+                            {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faPlay}/>}
                         </button>
                     }
                 </div>
@@ -255,9 +255,14 @@ const OptimizationStrategy = ({product: {desired_target_acos, optimization_strat
         if (dontShowStopWindowAgain && !selectedAll) {
             onStopProductOptimization();
         } else {
-            setConfirmWindows({
-                ...visibleConfirmWindows,
-                confirmStopProduct: true
+            setConfirmWindows((prev) => {
+                return (
+                    {
+                        ...prev,
+                        confirmStopProduct: true
+                    }
+                )
+
             })
         }
     }

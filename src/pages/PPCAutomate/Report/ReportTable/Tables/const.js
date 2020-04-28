@@ -96,23 +96,17 @@ export const bidActionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    width: '13.5em',
+    width: '10em',
     className: 'left-border',
     render: ({data}) => {
         if (data) {
             return (
                 <div className="action-field">
-                    {data && data.current_state > data.previous_state ? (
-                        <span>
-                            <SVG id='up-row'/> bid up (${data.previous_state}{' '}
-                            <SVG id='right-row'/> <b>${data.current_state}</b>)
-                        </span>
-                    ) : (
-                        <span>
-                            <SVG id='down-row'/> bid down (<b>${data.previous_state}</b>{' '}
-                            <SVG id='right-row'/> ${data.current_state})
-                        </span>
-                    )}
+                    {data && <>
+                        <span className="previous">${data.previous_state}</span>
+                        <i className={data.current_state > data.previous_state ? 'up' : 'down'}><SVG id='right-row'/></i>
+                        <span className="current">${data.current_state}</span>
+                    </>}
                 </div>
             )
         }

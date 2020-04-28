@@ -52,11 +52,13 @@ const Amazon = ({amazonTokens}) => {
 
     async function handleSetMws() {
         try {
-            await userService.setMWS({
+          const res =  await userService.setMWS({
                 ...amazonTokensValue,
                 ...mwsId && {id: mwsId}
             });
-            dispatch(userActions.getPersonalUserInfo());
+
+            dispatch(userActions.setInformation(res));
+            // dispatch(userActions.getPersonalUserInfo());
         } catch (e) {
             console.log(e);
         }
@@ -148,7 +150,7 @@ const Amazon = ({amazonTokens}) => {
                             </div>
 
                             <button
-                                className="btn green-btn confirm-btn"
+                                className="btn default confirm-btn"
                                 type="button"
                                 onClick={handleSetMws}
                                 disabled={amazonTokensValue.mws_auth_token.length < 5 || amazonTokensValue.merchant_id.length < 5}
@@ -161,8 +163,9 @@ const Amazon = ({amazonTokens}) => {
                     <span className="add-amazon-text">
                        Click to authorize Amazon MWS access and paste the results in the fields on the left.
                     </span>
-                </div>
-                }
+                </div>}
+
+
                 {!ppcConnected && mwsConnected && <div className="login-amazon-wrap">
                     <h2 className="login-amazon-title">ADD ADVERTISING ACCESS</h2>
                     <div className="connect-amazon">

@@ -479,14 +479,11 @@ export const patsOptimization = ({
         },
         subTabs: [
             {title: <>Changed PAT Bid (<span className='underline'>ACoS</span>)</>, key: changedPATBidACoS},
-            {
-                title: <>Changed PAT Bid (<span className='underline'>Impressions</span>)</>,
-                key: changedPATBidImpressions
-            },
+            {title: <>Changed PAT Bid (<span className='underline'>Impressions</span>)</>, key: changedPATBidImpressions},
             {title: <>PAUSED PAT (<span className='underline'>HIGH ACOS</span>)</>, key: pausedManualPATHighACoS},
             {title: <>PAUSED PAT (<span className='underline'>NO SALES</span>)</>, key: pausedManualPatNoSales},
+            {title: <>Changed PAT bid (<span className='underline'>NO SALES</span>)</>, key: revertLastChangePATNoSales},
             {title: <>Paused PAT Duplicate</>, key: pausedPATDuplicate},
-            // {title: <>revertLastChangePAT (<span className='underline'>NO SALES</span>)</>, key: revertLastChangePATNoSales},
         ]
     });
 };

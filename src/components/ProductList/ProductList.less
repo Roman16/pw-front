@@ -23,6 +23,13 @@
     transition: initial;
   }
 
+  .active-only {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0 0 0;
+  }
+
   &.closed {
     width: 20px;
     min-width: 20px;
@@ -37,13 +44,15 @@
     .product-pagination,
     .page-items-block,
     .campaigns-list,
-    .products {
+    .products,
+    .active-only {
       visibility: hidden;
       transition: .2s;
     }
   }
 
   .search-product,
+  .active-only,
   .product-pagination,
   .page-items-block,
   .campaigns-list,
@@ -133,7 +142,7 @@
       display: flex;
       align-items: center;
       background: #fbfbff;
-      border-radius: 8px;
+      border-radius: 4px;
       font-size: 1rem;
       color: rgba(52, 60, 90, 0.5);
       margin: 5px 0;
@@ -254,20 +263,30 @@
     .ant-input-search {
       border-radius: 8px;
 
+      &:hover {
+        input {
+          border: 0;
+        }
+      }
+
       .ant-input {
         border-radius: 0.571428571em;
       }
 
       input {
         transition: 0s !important;
-        border: 1px solid #fff;
+        border: 0;
+
+        &:hover {
+          border: 0;
+        }
 
         &:focus {
           transition: 0s !important;
 
           -webkit-box-shadow: none;
           box-shadow: none;
-          border: 1px solid rgba(24, 144, 255, 0.2);
+          border: 0;
         }
       }
 
@@ -957,6 +976,7 @@
       .search-product,
       .product-pagination,
       .page-items-block,
+      .active-only,
       .campaigns-list,
       .products {
         min-width: 275px;
