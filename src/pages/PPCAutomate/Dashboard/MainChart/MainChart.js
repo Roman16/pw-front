@@ -94,7 +94,7 @@ const MainChart = () => {
                 endDate: selectedRangeDate.endDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.endDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
             })
                 .then(res => {
-                    setProductOptimizationDateList(res.data);
+                    setProductOptimizationDateList(res.data ? res.data : []);
                 })
         } else {
             setProductOptimizationDateList([]);
