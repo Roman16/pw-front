@@ -207,11 +207,11 @@ const Subscription = () => {
 
                 visible={openedAccountWindow}
 
-                onCancel={handleCancelSubscription}
-                onOk={() => openAccountWindow(false)}
+                onCancel={() => openAccountWindow(false) }
+                onOk={handleCancelSubscription}
 
-                okText="Keep my account active"
-                cancelText="I want to cancel"
+                okText="I want to cancel"
+                cancelText="Keep my account active"
             >
                 <CancelAccountWindow
                 />
