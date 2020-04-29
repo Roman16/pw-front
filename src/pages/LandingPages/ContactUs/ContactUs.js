@@ -13,7 +13,7 @@ import ModalWindow from "../../../components/ModalWindow/ModalWindow";
 import {userService} from "../../../services/user.services";
 import {notification} from "../../../components/Notification";
 
-const ContactUs = () => {
+const ContactUs = (props) => {
     const [visibleWindow, switchWindow] = useState(false),
         [completed, setStatus] = useState(false),
         [formValue, setForm] = useState({});
@@ -42,9 +42,16 @@ const ContactUs = () => {
     }
 
     useEffect(() => {
-       return(() => {
-           document.querySelector('body').classList.remove('visible-intercom');
-       })
+        console.log(props.match.params.status === 'chat');
+
+        if (props.match.params.status === 'chat') {
+            document.querySelector('body').classList.add('visible-intercom');
+            window.Intercom('show')
+        }
+
+        return (() => {
+            document.querySelector('body').classList.remove('visible-intercom');
+        })
     }, []);
 
 
@@ -91,7 +98,9 @@ const ContactUs = () => {
                                     for
                                     you.</p>
                                 {/*<button onClick={openWindowHandler} className='btn green-btn'>Get more info</button>*/}
-                                <button onClick={() => window.open('https://intercom.help/profitwhales/')} className='btn green-btn'>Get more info</button>
+                                <button onClick={() => window.open('https://intercom.help/profitwhales/')}
+                                        className='btn green-btn'>Get more info
+                                </button>
 
                                 <img src={helpDjoImage} alt="" className='djo'/>
                             </div>

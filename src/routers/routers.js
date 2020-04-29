@@ -38,7 +38,7 @@ const routers = () => {
                     <Route exact path="/amazon-ppc-blueprint" component={Ebook}/>
                     <Route exact path="/thank-you" component={ThankYou}/>
                     <Route exact path="/demo-call" component={DemoCall}/>
-                    <Route exact path="/contact-us" component={ContactUs}/>
+                    <Route exact path="/contact-us/:status?" component={ContactUs}/>
                     <Route exact path="/policy" component={PrivacyPolicy}/>
                     <Route exact path="/terms-and-conditions" component={TermsOfUse}/>
                     <Route exact path="/videos" component={Video}/>

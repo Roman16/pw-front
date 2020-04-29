@@ -46,9 +46,6 @@ const Header = ({type = 'light'}) => {
 
                     <nav className={`header-menu ${openedMenu ? 'open' : ''}`}>
                         <ul className="">
-                            <li>
-                                <Link to={'/about-us'}>About us</Link>
-                            </li>
                             <li className="has-child"><a href="#">Services <SVG id='menu-arrow'/></a>
                                 <ul className="sub-menu">
                                     <li><Link to='/'>PPC Optimization</Link></li>
@@ -65,7 +62,7 @@ const Header = ({type = 'light'}) => {
                                     <li><a href='http://learn.profitwhales.com/en/'>Automate <br /> -Help Centre</a></li>
                                 </ul>
                             </li>
-
+                            <li><Link to="/videos">How it works</Link></li>
                         </ul>
                     </nav>
                 </div>
