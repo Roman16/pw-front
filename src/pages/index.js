@@ -11,6 +11,7 @@ import LoadingAmazonAccount from "../components/ModalWindow/InformationWindows/L
 import RouteLoader from "../components/RouteLoader/RouteLoader";
 import ErrorBar from "../components/ErrorBar/ErrorBar";
 import WelcomePage from "./authentication/AccountBinding/WelcomePage/WelcomePage";
+import ConnectPPCJourney from "./authentication/AccountBinding/ConnectPPCJourney/ConnectPPCJourney";
 
 // import Optimization from "./PPCAutomate/Optimization/Optimization";
 // import Report from "./PPCAutomate/Report/Report";
@@ -40,6 +41,8 @@ const Scanner = React.lazy(() => import('./PPCAutomate/Scanner/Scanner'));
 const Dayparting = React.lazy(() => import('./PPCAutomate/Dayparting/Dayparting'));
 const AdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'));
 const FullJourney = React.lazy(() => import('./authentication/AccountBinding/FullJourney/FullJourney'));
+const ConnectMWS = React.lazy(() => import('./authentication/AccountBinding/ConnectMWSJourney/ConnectMWSJourney'));
+const ConnectPPC = React.lazy(() => import('./authentication/AccountBinding/ConnectPPCJourney/ConnectPPCJourney'));
 
 
 let timerId = null;
@@ -192,6 +195,8 @@ const AuthorizedUser = (props) => {
                                     <Route exact path="/ppc" component={PPC}/>
 
                                     {/*<Route exact path="/connect-amazon-account" component={FullJourney}/>*/}
+                                    {/*<Route exact path="/connect-mws-account" component={ConnectMWS}/>*/}
+                                    {/*<Route exact path="/connect-ppc-account" component={ConnectPPC}/>*/}
                                     {/*<Route exact path="/welcome" component={WelcomePage}/>*/}
 
                                     {developer && <Route exact path="/home" component={Home}/>}

@@ -62,9 +62,7 @@ const Footer = () => (
                 <h4>Knowledge</h4>
                 <ul>
                     <li>
-                        <Link to={'/amazon-ppc-blueprint'}>
-                            Amazon PPC Blueprint
-                        </Link>
+                        <Link to={'/about-us'}>About us</Link>
                     </li>
                     <li>
                         <Link to='/terms-and-conditions'>

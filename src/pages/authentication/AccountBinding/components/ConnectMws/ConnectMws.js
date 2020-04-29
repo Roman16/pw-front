@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {Fragment, useState} from "react";
 import {Link} from "react-router-dom";
 import CustomSelect from "../../../../../components/Select/Select";
 import {Select} from "antd";
@@ -10,65 +10,75 @@ import {useSelector} from "react-redux";
 
 const Option = Select.Option;
 
-const ConnectMws = ({onGoBackStep, onGoNextStep}) => {
-    const [pageStatus, setPageStatus] = useState('connect');
+const ConnectMws = ({onGoBackStep, onChangeInput, onConnectMws, connectMwsStatus, onClose, tryAgainMws}) => {
 
     const {mwsLink} = useSelector(state => ({
         mwsLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.connect_link : '',
     }))
 
-    if (pageStatus === 'connect') {
+
+    if (connectMwsStatus === 'connect') {
         return (
             <section className='connect-mws-section'>
-                <h2>Connect MWS</h2>
-                <Link to={'/'}>View Detailed Instructions</Link>
-                <h4>Please note that you need to connect the primary account holder. Click <br/> button below to open
-                    the
-                    Seller Central.</h4>
+                <form onSubmit={onConnectMws}>
+                    <h2>Connect MWS</h2>
+                    <Link to={'/videos'}>View Detailed Instructions</Link>
+                    <h4>Please note that you need to connect the primary account holder. Click <br/> button below to
+                        open
+                        the
+                        Seller Central.</h4>
 
-                <div className="select-marketplace">
-                    <label htmlFor="">Select your Amazon Marketplaces:</label>
+                    <div className="select-marketplace">
+                        <label htmlFor="">Select your Amazon Marketplaces:</label>
 
-                    <CustomSelect value={'USACAMX'}>
-                        <Option value={'USACAMX'}>North America (USA, CA, MX)</Option>
-                        <Option value={'UKDEFRESITINTR'} disabled>Europe (UK, DE, FR, ES, IT, IN, TR)</Option>
-                    </CustomSelect>
+                        <CustomSelect value={'USACAMX'}>
+                            <Option value={'USACAMX'}>North America (USA, CA, MX)</Option>
+                            <Option value={'UKDEFRESITINTR'} disabled>Europe (UK, DE, FR, ES, IT, IN, TR)</Option>
+                        </CustomSelect>
 
-                    <button className='btn default' onClick={() => window.open(mwsLink)}>Get Credentials</button>
-                </div>
-
-                <h4>Then, copy and paste your credentials below:</h4>
-
-                <div className="mws-credentials">
-                    <div className="form-group">
-                        <label htmlFor="">Seller ID</label>
-                        <input
-                            type="text"
-                            placeholder="This will look like A1BCDE23F4GHIJ"
-                        />
+                        <button className='btn default' onClick={() => window.open(mwsLink)}>Get Credentials</button>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="">MWS Authorization Token</label>
-                        <input
-                            type="text"
-                            placeholder="This will look like amzn.mws. 01234567"
-                        />
-                    </div>
-                </div>
 
-                <div className="actions">
-                    <button type={'button'} className="btn white" onClick={onGoBackStep}>
-                        <SVG id={'left-grey-arrow'}/>
-                        Back
-                    </button>
-                    <button className="btn default" onClick={onGoNextStep}>
-                        Next
-                        <SVG id={'right-white-arrow'}/>
-                    </button>
-                </div>
+                    <h4>Then, copy and paste your credentials below:</h4>
+
+                    <div className="mws-credentials">
+                        <div className="form-group">
+                            <label htmlFor="">Seller ID</label>
+                            <input
+                                required
+                                type="text"
+                                placeholder="This will look like A1BCDE23F4GHIJ"
+                                name={'merchant_id'}
+                                onChange={onChangeInput}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="">MWS Authorization Token</label>
+                            <input
+                                required
+                                type="text"
+                                placeholder="This will look like amzn.mws. 01234567"
+                                name={'mws_auth_token'}
+                                onChange={onChangeInput}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="actions">
+                        {onGoBackStep && <button type={'button'} className="btn white" onClick={onGoBackStep}>
+                            <SVG id={'left-grey-arrow'}/>
+                            Back
+                        </button>}
+
+                        <button className="btn default">
+                            Next
+                            <SVG id={'right-white-arrow'}/>
+                        </button>
+                    </div>
+                </form>
             </section>
         )
-    } else if (pageStatus === 'processing') {
+    } else if (connectMwsStatus === 'processing') {
         return (
             <section className='connect-mws-section'>
                 <div className="progress">
@@ -79,6 +89,34 @@ const ConnectMws = ({onGoBackStep, onGoNextStep}) => {
                     <img src={loader} alt=""/>
                 </div>
             </section>
+        )
+    } else if (connectMwsStatus === 'error') {
+        return (
+            <Fragment>
+                <section className='connect-mws-section'>
+                    <div className="error">
+                        <h2>There was an error connecting your <br/> MWS account</h2>
+                        <p>
+                            Please connect our support to help you connect with Profit Whales.
+                        </p>
+                    </div>
+
+                    <div className="actions">
+                        <button type={'button'} className="btn white" onClick={onClose}>
+                            Home
+                        </button>
+
+                        <button className="btn default" onClick={tryAgainMws}>
+                            Try Again
+                        </button>
+                    </div>
+                </section>
+
+                <div className="section-description">
+                    <p>Not the primary account holder?</p>
+                    <p><Link to={'/'}>Click here</Link> to send them instructions to connect.</p>
+                </div>
+            </Fragment>
         )
     }
 };

@@ -24,11 +24,9 @@ const popupCenter = ({url, title, w, h}) => {
       top=${top}, 
       left=${left}
      `)
-
 }
 
-
-const ConnectPpc = ({onGoNextStep}) => {
+const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
     const [pageStatus, setPageStatus] = useState('connect');
 
     const {ppcLink} = useSelector(state => ({
@@ -36,22 +34,33 @@ const ConnectPpc = ({onGoNextStep}) => {
     }));
 
     const openConnectLink = () => {
+        setPageStatus('processing');
+
         const win = popupCenter({url: ppcLink, title: 'xtf', w: 520, h: 570});
 
+        let timer = setInterval(() => {
+            if (win.closed) {
+                clearInterval(timer);
+                setPageStatus('error');
+            }
+        }, 2000);
+
         window.addEventListener('message', event => {
-            console.log(event);
             if (event.origin === 'https://front1.profitwhales.com' || event.origin === 'https://profitwhales.com') {
+                clearInterval(timer);
+
                 win.close();
                 setPageStatus('success');
             }
         })
-
-        setPageStatus('processing');
     }
 
+    const tryAgain = () => setPageStatus('connect');
+
     useEffect(() => {
-        return(() => {
-            window.removeEventListener('message', () => {})
+        return (() => {
+            window.removeEventListener('message', () => {
+            })
         })
     }, [])
 
@@ -65,7 +74,7 @@ const ConnectPpc = ({onGoNextStep}) => {
                     </p>
 
                     <div className="actions">
-                        <button className={'btn white'}>Cancel</button>
+                        <button className={'btn white'} onClick={onGoBackStep}>Cancel</button>
                         <button className={'btn default'} onClick={openConnectLink}>Connect Amazon Advertising</button>
                     </div>
                 </section>
@@ -89,7 +98,31 @@ const ConnectPpc = ({onGoNextStep}) => {
             </section>
         )
     } else if (pageStatus === 'error') {
-        return '';
+        return (<Fragment>
+            <section className='connect-ppc-section'>
+                <div className="error">
+                    <h2>There was an error connecting your <br/> PPC account</h2>
+                    <p>
+                        Please connect our support to help you connect with Profit Whales.
+                    </p>
+                </div>
+
+                <div className="actions">
+                    <button type={'button'} className="btn white" onClick={onClose}>
+                        Home
+                    </button>
+
+                    <button className="btn default" onClick={tryAgain}>
+                        Try Again
+                    </button>
+                </div>
+            </section>
+
+            <div className="section-description">
+                <p>Not the primary account holder?</p>
+                <p><Link to={'/'}>Click here</Link> to send them instructions to connect.</p>
+            </div>
+        </Fragment>)
     } else if (pageStatus === 'success') {
         return (
             <Fragment>

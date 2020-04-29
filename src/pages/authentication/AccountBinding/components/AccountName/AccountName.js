@@ -2,9 +2,10 @@ import React from "react";
 import './AccountName.less';
 import {SVG} from "../../../../../utils/icons";
 
-const AccountName = ({onGoNextStep, onGoBackStep}) => {
+const AccountName = ({onGoNextStep, onGoBackStep, onChangeInput}) => {
     const onSubmit = (e) => {
         e.preventDefault();
+
         onGoNextStep();
     }
 
@@ -18,7 +19,9 @@ const AccountName = ({onGoNextStep, onGoBackStep}) => {
                     <input
                         required
                         type="text"
+                        name={'accountName'}
                         placeholder={'eg. DSG14HAMO23R2'}
+                        onChange={onChangeInput}
                     />
                 </div>
 

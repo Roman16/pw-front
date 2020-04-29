@@ -11,9 +11,9 @@ const WelcomePage = () => {
 
     return(
         <div className="welcome-page">
-            <div className="logo">
-                <img src={logo} alt=""/>
-            </div>
+            {/*<div className="logo">*/}
+            {/*    <img src={logo} alt=""/>*/}
+            {/*</div>*/}
 
             <div className="container">
                 <img src={welcomeImage} alt=""/>

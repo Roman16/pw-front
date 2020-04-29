@@ -1,4 +1,4 @@
-@import '../../../../../style/variables';
+@import '../../../../style/variables';
 
 .amazon-connect {
   position: relative;
@@ -9,17 +9,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 5.714285714285714rem;
+
   }
 
   .close-connect {
     position: absolute;
-    top: 5rem;
+    top: 2.857142857142857rem;
     right: 5rem;
-  }
 
-  .logo {
-    max-width: 9.642857142857142rem;
-    margin: 2.142857142857143rem 0 4.285714285714286rem 0;
+    svg {
+      width: 1.4285714285714286rem;
+      height: 1.4285714285714286rem;
+    }
   }
 
   .ant-steps-item-title {
@@ -89,7 +91,7 @@
           width: 30px;
           height: 30px;
           border-radius: 50%;
-          background: #6D6DF6 url(../../../../../assets/img/icons/check-small-icon.png) no-repeat center center;
+          background: #6D6DF6 url(../../../../assets/img/icons/check-small-icon.png) no-repeat center center;
           background-size: 15px 15px;
           position: absolute;
           left: -11px;
@@ -110,7 +112,7 @@
     background: #FFFFFF;
     border-radius: 15px;
     padding: 4.285714285714286rem 8.571428571428571rem;
-    margin-top: 8.571428571428571rem;
+    margin-top: 5.714285714285714rem;
     box-shadow: @default-section-shadow;
     display: flex;
     flex-direction: column;
@@ -173,7 +175,8 @@
     }
   }
 
-  .progress {
+  .progress,
+  .error {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -195,5 +198,9 @@
     img {
       width: 2.857142857142857rem;
     }
+  }
+
+  .error {
+    align-items: flex-start;
   }
 }
