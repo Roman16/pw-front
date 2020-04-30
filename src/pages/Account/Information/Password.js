@@ -51,9 +51,9 @@ const Password = () => {
         if (name === 'new_password' && value.length >= 6) {
             addNewPasswordError();
 
-            if((inputsValue.password_confirmation !== value) && inputsValue.password_confirmation.length > 1) {
+            if ((inputsValue.password_confirmation !== value) && inputsValue.password_confirmation.length > 1) {
                 addConfirmPasswordError('Please enter the same value again.')
-            } else if(inputsValue.password_confirmation === value) {
+            } else if (inputsValue.password_confirmation === value) {
                 addConfirmPasswordError()
             }
         }
@@ -84,7 +84,7 @@ const Password = () => {
             addNewPasswordError('Minimum 6 characters.')
         }
 
-        if(!inputsValue.current_password) {
+        if (!inputsValue.current_password) {
             addOldPasswordError('This is a required field.')
         }
     }
@@ -113,7 +113,6 @@ const Password = () => {
                     <div className="form-group">
                         <label>Old Password</label>
 
-                        <div className="input-wrap">
                             <Input
                                 className={`form-control ${oldPasswordError && 'error'}`}
                                 type={inputsType.current_password}
@@ -122,14 +121,13 @@ const Password = () => {
                                 value={inputsValue.current_password}
                                 onChange={handleChangeInput}
                                 onBlur={handleBlurOldPasswordInput}
-                                suffix={
-                                    <CustomInputSuffix
-                                        name={'current_password'}
-                                        onChangeType={changePasswordInputType}
-                                        type={inputsType.current_password}/>
-                                }
+                                // suffix={
+                                //     <CustomInputSuffix
+                                //         name={'current_password'}
+                                //         onChangeType={changePasswordInputType}
+                                //         type={inputsType.current_password}/>
+                                // }
                             />
-                        </div>
 
                         <div className='input-error'>
                             {oldPasswordError}
@@ -139,23 +137,21 @@ const Password = () => {
                     <div className="form-group">
                         <label>New Password</label>
 
-                        <div className="input-wrap">
-                            <Input
-                                className={`form-control ${newPasswordError && 'error'}`}
-                                type={inputsType.new_password}
-                                name="new_password"
-                                placeholder="Type new password"
-                                value={inputsValue.new_password}
-                                onChange={handleChangeInput}
-                                onBlur={handleBlurNewPasswordInput}
-                                suffix={
-                                    <CustomInputSuffix
-                                        name={'new_password'}
-                                        onChangeType={changePasswordInputType}
-                                        type={inputsType.new_password}
-                                    />}
-                            />
-                        </div>
+                        <Input
+                            className={`form-control ${newPasswordError && 'error'}`}
+                            type={inputsType.new_password}
+                            name="new_password"
+                            placeholder="Type new password"
+                            value={inputsValue.new_password}
+                            onChange={handleChangeInput}
+                            onBlur={handleBlurNewPasswordInput}
+                            // suffix={
+                            //     <CustomInputSuffix
+                            //         name={'new_password'}
+                            //         onChangeType={changePasswordInputType}
+                            //         type={inputsType.new_password}
+                            //     />}
+                        />
 
                         <div className='input-error'>
                             {newPasswordError}
@@ -165,23 +161,21 @@ const Password = () => {
                     <div className="form-group">
                         <label>Repeat New Password</label>
 
-                        <div className="input-wrap">
-                            <Input
-                                className={`form-control ${confirmPasswordError && 'error'}`}
-                                type={inputsType.password_confirmation}
-                                name="password_confirmation"
-                                placeholder="Type new password"
-                                value={inputsValue.password_confirmation}
-                                onChange={handleChangeInput}
-                                onBlur={handleBlurConfirmPasswordInput}
-                                suffix={
-                                    <CustomInputSuffix
-                                        name={'password_confirmation'}
-                                        onChangeType={changePasswordInputType}
-                                        type={inputsType.password_confirmation}
-                                    />}
-                            />
-                        </div>
+                        <Input
+                            className={`form-control ${confirmPasswordError && 'error'}`}
+                            type={inputsType.password_confirmation}
+                            name="password_confirmation"
+                            placeholder="Type new password"
+                            value={inputsValue.password_confirmation}
+                            onChange={handleChangeInput}
+                            onBlur={handleBlurConfirmPasswordInput}
+                            // suffix={
+                            //     <CustomInputSuffix
+                            //         name={'password_confirmation'}
+                            //         onChangeType={changePasswordInputType}
+                            //         type={inputsType.password_confirmation}
+                            //     />}
+                        />
 
                         <div className='input-error'>
                             {confirmPasswordError}

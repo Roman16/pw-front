@@ -180,7 +180,7 @@ const Subscription = () => {
 
     return (
         <div className="user-cabinet">
-            <Navigation/>
+            <Navigation page={'subscriptions'}/>
 
             {subscriptionProducts.map((product) => (
                 <SubscriptionPlan
