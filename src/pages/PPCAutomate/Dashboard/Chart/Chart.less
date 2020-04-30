@@ -30,15 +30,45 @@
       margin: 0 0 0 auto;
 
       span {
+        width: 3.2857142857142856rem;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 0.42857142857142855rem;
+        border-bottom: 0.2857142857142857rem solid #C9CBD4;
+
+        svg {
+          width: 1.4285714285714286rem;
+          height: 1.4285714285714286rem;
+          cursor: pointer;
+
+          use {
+            stroke: #656A84;
+            fill: #656A84;
+          }
+        }
+
+        &:first-child {
+          border-radius: 0 0 0 0.2857142857142857rem;
+        }
+
+        &:last-child {
+          border-radius: 0 0 0.2857142857142857rem 0;
+        }
+
+        &.active {
+          border-color: #6D6DF6;
+
+          svg {
+            use {
+              stroke: #6D6DF6;
+              fill: #6D6DF6;
+            }
+          }
+        }
       }
 
-      svg {
-        width: 2rem;
-        height: 2rem;
-        cursor: pointer;
-        margin: 0 0 0 20px;
-      }
     }
   }
 

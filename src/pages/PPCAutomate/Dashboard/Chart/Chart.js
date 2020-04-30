@@ -80,12 +80,12 @@ const Chart = () => {
                     description={`Organic to PPC Sales Ratio shows the percentage of sales that are coming from organic versus pay-per-click — seeing this information can reveal whether or not you may be spending too aggressively on PPC.`}/>}
 
                 <div className='chart-selector'>
-                    <span onClick={() => changeChart('pie')}>
-                         <SVG id={defaultChart === 'pie' ? 'pie-chart-active' : 'pie-chart-default'}/>
+                    <span className={defaultChart === 'pie' && 'active'} onClick={() => changeChart('pie')}>
+                         <SVG id={'pie-chart-icon'}/>
                     </span>
 
-                    <span onClick={() => changeChart('bar')}>
-                        <SVG id={defaultChart === 'bar' ? 'bar-chart-active' : 'bar-chart-default'}/>
+                    <span className={defaultChart === 'bar' && 'active'} onClick={() => changeChart('bar')}>
+                        <SVG id={'bar-chart-icon'}/>
                     </span>
                 </div>
             </div>

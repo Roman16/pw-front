@@ -105,6 +105,7 @@ const Subscription = () => {
                 fetchSubscriptions();
             } catch (e) {
                 console.log(e);
+                changeButton(false);
             }
         } else {
             history.push('/account-subscription#user-cards');

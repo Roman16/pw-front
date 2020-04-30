@@ -567,10 +567,30 @@ const files = {
             height: 10,
             viewBox: [0,0,14,10],
             data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="14" height="10" x="0" y="0" maskUnits="userSpaceOnUse"><path fill="#C4C4C4" d="M0 0H14V10H0z" transform="matrix(-1 0 0 1 14 0)"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="#343C5A" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.75 1L1 5M1 5L4.75 9M1 5L13 5"/></g>'
+        },
+        'pie-chart-icon': {
+            width: 20,
+            height: 20,
+            viewBox: [0,0,20,20],
+            data: '<circle xmlns="http://www.w3.org/2000/svg" cx="10" cy="10" r="8.5"  opacity="0.7" fill="none" stroke-width="3"/>' +
+                '<path xmlns="http://www.w3.org/2000/svg"  stroke="none" d="M2.92893 2.92893C4.8043 1.05357 7.34784 0 10 0V3C6.13401 3 3 6.13401 3 10L0 10C0 7.34783 1.05357 4.8043 2.92893 2.92893Z" clip-rule="evenodd"/>' +
+                '<path xmlns="http://www.w3.org/2000/svg"  stroke="none" d="M11.5 1.5C11.5 2.32843 10.8284 3 10 3C9.17157 3 8.5 2.32843 8.5 1.5C8.5 0.671573 9.17157 0 10 0C10.8284 0 11.5 0.671573 11.5 1.5Z"/>' +
+                '<path xmlns="http://www.w3.org/2000/svg"  stroke="none"  d="M3 10C3 10.8284 2.32843 11.5 1.5 11.5C0.671573 11.5 0 10.8284 0 10C0 9.17157 0.671573 8.5 1.5 8.5C2.32843 8.5 3 9.17157 3 10Z"/>'
+        },
+        'bar-chart-icon': {
+            width: 20,
+            height: 20,
+            viewBox: [0,0,20,20],
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse">' +
+                '<path stroke="none" d="M0 0H19.167V20H0z"/>' +
+                '</mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)">' +
+                '<path  stroke="none" fill-rule="evenodd" d="M17.5 0C16.6716 0 16 0.671573 16 1.5V18.5C16 19.3284 16.6716 20 17.5 20C18.3284 20 19 19.3284 19 18.5V1.5C19 0.671573 18.3284 0 17.5 0ZM8 6.5C8 5.67157 8.67157 5 9.5 5C10.3284 5 11 5.67157 11 6.5V18.5C11 19.3284 10.3284 20 9.5 20C8.67157 20 8 19.3284 8 18.5V6.5ZM0 10.5C0 9.67157 0.671573 9 1.5 9C2.32843 9 3 9.67157 3 10.5V18.5C3 19.3284 2.32843 20 1.5 20C0.671573 20 0 19.3284 0 18.5V10.5Z" clip-rule="evenodd"/></g>'
         }
 
     },
     allIds: [
+        'bar-chart-icon',
+        'pie-chart-icon',
         'left-grey-arrow',
         'right-white-arrow',
         'close-page',
@@ -629,7 +649,6 @@ const files = {
         'menu-arrow',
         'minus',
         'pause',
-        'pie-chart-active',
         'pie-chart-default',
         'plus-blue',
         'plus-green',
