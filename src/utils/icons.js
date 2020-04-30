@@ -368,7 +368,7 @@ const files = {
             width: 14,
             height: 8,
             viewBox: [0, 0, 14, 8],
-            data: '<path xmlns="http://www.w3.org/2000/svg" stroke="black" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.1665 1L6.99984 6.83333L12.8332 0.999999"/>'
+            data: '<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.1665 1L6.99984 6.83333L12.8332 0.999999"/>'
         },
         'selected-icon': {
             width: 24,

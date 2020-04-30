@@ -46,6 +46,9 @@ const ChartStatistics = ({date}) => {
                         cancelToken: source.token
                     });
 
+                    setProcessing(false);
+                    localFetching = false;
+
                     setData([...res.response.points.map(item => {
                         const point = {};
                         point.date = item.date;
@@ -58,8 +61,6 @@ const ChartStatistics = ({date}) => {
                         return (point);
                     })]);
 
-                    setProcessing(false);
-                    localFetching = false;
                 } catch (e) {
                     !localFetching && setProcessing(false);
                     localFetching = false;
@@ -91,6 +92,7 @@ const ChartStatistics = ({date}) => {
                             value={firstMetric.key}
                             getPopupContainer={trigger => trigger.parentNode}
                             dropdownClassName={'full-width-menu'}
+                            className={firstMetric.key === 'nothing' && 'default-border'}
                             onChange={(metric) => {
                                 setFirstMetric(metricsList.find(item => item.key === metric));
 
@@ -112,13 +114,14 @@ const ChartStatistics = ({date}) => {
                         </CustomSelect>
                     </div>
 
-                    <span>Compare to</span>
+                    <span>vs</span>
 
                     <div className="select second">
                         <CustomSelect
                             getPopupContainer={trigger => trigger.parentNode}
                             value={secondMetric.key}
                             dropdownClassName={'full-width-menu'}
+                            className={secondMetric.key === 'nothing' && 'default-border'}
                             onChange={(metric) => setSecondMetric(metricsList.find(item => item.key === metric))}
                         >
                             {metricsList.map(item => (

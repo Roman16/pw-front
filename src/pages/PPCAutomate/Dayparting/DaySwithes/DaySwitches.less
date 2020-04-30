@@ -57,7 +57,6 @@
         svg {
           width: 1.1428571428571428rem;
           height: 1.1428571428571428rem;
-          margin: 0 0.7142857142857143rem 0 0;
 
           use {
             stroke: #343C5A;
@@ -99,8 +98,8 @@
         text-align: center;
 
         &:first-child {
-          width: 7%;
-          min-width: 88px;
+          width: 5%;
+          min-width: 75px;
           margin: 0;
         }
 
@@ -119,17 +118,8 @@
           div {
             &:first-child {
               width: 7%;
-              min-width: 50px;
+              min-width: 55px;
               margin: 0;
-            }
-          }
-
-          button {
-            min-width: 20px;
-            width: 30px;
-
-            span {
-              width: 0;
             }
           }
         }
@@ -147,31 +137,18 @@
 
         .day-name {
           display: flex;
-          width: 7%;
-          min-width: 88px;
+          width: 5%;
+          min-width: 75px;
           height: 1.71428571rem;
 
           button {
             margin: 0 5px 0 0;
-
-            @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-              & {
-                min-width: 20px;
-                width: 30px;
-                margin: 0;
-
-                span {
-                  width: 0;
-                }
-              }
-            }
           }
 
           @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
             & {
-              width: 5%;
               text-align: center;
-              min-width: 50px;
+              min-width: 55px;
 
               span {
                 display: flex;

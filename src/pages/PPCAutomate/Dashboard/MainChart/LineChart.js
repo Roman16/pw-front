@@ -66,22 +66,19 @@ const Chart = ({
                 return ({
                     date: item.date,
                     daily_first_metric_value: null,
-                    seven_days_first_metric_value: null,
                     daily_second_metric_value: null,
-                    seven_days_second_metric_value: null,
+                    seven_days_second_metric_value: item.seven_days_second_metric_value,
+                    seven_days_first_metric_value: item.seven_days_first_metric_value,
+
 
                     dashed_daily_first_metric_value: item.daily_first_metric_value,
-                    dashed_seven_days_first_metric_value: item.seven_days_first_metric_value,
                     dashed_daily_second_metric_value: item.daily_second_metric_value,
-                    dashed_seven_days_second_metric_value: item.seven_days_second_metric_value,
                 })
             } else if (`${moment().tz('America/Los_Angeles').subtract(3, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === item.date) {
                 return ({
                     ...item,
                     dashed_daily_first_metric_value: item.daily_first_metric_value,
-                    dashed_seven_days_first_metric_value: item.seven_days_first_metric_value,
                     dashed_daily_second_metric_value: item.daily_second_metric_value,
-                    dashed_seven_days_second_metric_value: item.seven_days_second_metric_value,
                 })
 
             } else {
@@ -210,20 +207,20 @@ const Chart = ({
                         isAnimationActive={isAnimationActive}
                     />}
 
-                    {(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line
-                        yAxisId="left"
-                        type="monotone"
-                        dataKey="dashed_seven_days_first_metric_value"
-                        stroke="#82ca9d"
-                        strokeWidth={3}
-                        dot={false}
-                        filter={'url(#dropshadow)'}
-                        strokeDasharray="7 5"
-                        animationBegin={animationBegin}
-                        animationEasing={animationEasing}
-                        animationDuration={dashedLineAnimationDuration}
-                        isAnimationActive={isAnimationActive}
-                    />}
+                    {/*{(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line*/}
+                    {/*    yAxisId="left"*/}
+                    {/*    type="monotone"*/}
+                    {/*    dataKey="dashed_seven_days_first_metric_value"*/}
+                    {/*    stroke="#82ca9d"*/}
+                    {/*    strokeWidth={3}*/}
+                    {/*    dot={false}*/}
+                    {/*    filter={'url(#dropshadow)'}*/}
+                    {/*    strokeDasharray="7 5"*/}
+                    {/*    animationBegin={animationBegin}*/}
+                    {/*    animationEasing={animationEasing}*/}
+                    {/*    animationDuration={dashedLineAnimationDuration}*/}
+                    {/*    isAnimationActive={isAnimationActive}*/}
+                    {/*/>}*/}
 
                     {(activeMetrics && activeMetrics[0].key && showDailyChart) && <Line
                         yAxisId='left'
@@ -268,20 +265,20 @@ const Chart = ({
                         isAnimationActive={isAnimationActive}
                     />}
 
-                    {(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line
-                        yAxisId="right"
-                        type="monotone"
-                        dataKey="dashed_seven_days_second_metric_value"
-                        stroke="#8884d8"
-                        strokeWidth={3}
-                        dot={false}
-                        filter={'url(#dropshadow)'}
-                        strokeDasharray="7 5"
-                        animationBegin={animationBegin}
-                        animationEasing={animationEasing}
-                        animationDuration={dashedLineAnimationDuration}
-                        isAnimationActive={isAnimationActive}
-                    />}
+                    {/*{(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line*/}
+                    {/*    yAxisId="right"*/}
+                    {/*    type="monotone"*/}
+                    {/*    dataKey="dashed_seven_days_second_metric_value"*/}
+                    {/*    stroke="#8884d8"*/}
+                    {/*    strokeWidth={3}*/}
+                    {/*    dot={false}*/}
+                    {/*    filter={'url(#dropshadow)'}*/}
+                    {/*    strokeDasharray="7 5"*/}
+                    {/*    animationBegin={animationBegin}*/}
+                    {/*    animationEasing={animationEasing}*/}
+                    {/*    animationDuration={dashedLineAnimationDuration}*/}
+                    {/*    isAnimationActive={isAnimationActive}*/}
+                    {/*/>}*/}
 
                     {(activeMetrics && activeMetrics[1].key && showDailyChart) && <Line
                         yAxisId='right'

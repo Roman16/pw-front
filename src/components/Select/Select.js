@@ -8,6 +8,7 @@ const CustomSelect = (props) => {
         onChange,
         defaultValue,
         dropdownClassName,
+        className
     } = props;
 
     return (
@@ -16,7 +17,7 @@ const CustomSelect = (props) => {
             onChange={onChange}
             defaultValue={defaultValue}
             suffixIcon={<SVG id='select-icon'/>}
-            className="custom-select"
+            className={`custom-select ${className}`}
             dropdownClassName={dropdownClassName}
         >
             {props.children}
