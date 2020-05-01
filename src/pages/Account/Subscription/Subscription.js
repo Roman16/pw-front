@@ -190,11 +190,11 @@ const Subscription = () => {
                     product={{...subscriptions[0], ...product}}
                     onSubscribe={handleSubscribe}
                     reloadData={handleUpdateSubscriptionStatus}
-                    stripeId={stripeId}
                     applyCoupon={applyCoupon}
                     getCouponStatus={getCouponStatus}
                     fetching={fetching}
                     disableButton={disableButton}
+                    stripeId={stripeId}
                 />
             ))}
 

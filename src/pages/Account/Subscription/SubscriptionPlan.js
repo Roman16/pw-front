@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
-import {Spin} from "antd";
+import {Spin, Table} from "antd";
 import ppcIcon from "../../../assets/img/icons/ppc-automate-subscription-logo.svg";
 import moment from "moment";
 import {numberMask} from "../../../utils/numberMask";
@@ -102,128 +102,82 @@ const SubscriptionPlan = ({
         }
     }
 
-    useEffect(() => {
-        if (disableButton) {
-            timeout = setTimeout(() => history.push('/account-subscription'), 10000)
-        }
-
-        return () => {
-            clearTimeout(timeout);
-        }
-    }, [disableButton]);
-
     // useEffect(() => {
     //     setCoupon('');
     // }, [product])
 
+    const columns = [
+        {
+            title: 'Product',
+            dataIndex: 'productName',
+            key: 'productName',
+        },
+        {
+            title: 'Status',
+            dataIndex: 'age',
+            key: 'age',
+        },
+        {
+            title: 'Next invoice date',
+            dataIndex: 'next_invoice_at',
+            key: 'next_invoice_at',
+            render: date => moment(date).format('MMM DD, YYYY')
+        },
+        {
+            title: 'Price',
+            dataIndex: 'address',
+            key: 'address',
+        },
+        {
+            title: 'Plan',
+            dataIndex: 'address',
+            key: 'address',
+        },
+        {
+            title: 'Last 30-days Ad Spend',
+            dataIndex: 'address',
+            key: 'address',
+        },
+        {
+            title: 'Coupon',
+            dataIndex: 'address',
+            key: 'address',
+        },
+    ];
+
+    useEffect(() => {
+        // console.log(product);
+
+    }, [product])
+
+
     return (
-        <div className="automate-box">
-            {product.grace_period && product.grace_period.on_grace_period && <div className="reactivate">
-                <h3 className="reactivate-title">
-                    Your Subscription Has Been Cancelled
-                </h3>
-                <p className="reactivate-text">
-                    You will have access to the software until the end of this billing
-                    cycle {product.grace_period.on_grace_period_until &&
-                (<span
-                    className="reactivate-data">{moment(product.grace_period.on_grace_period_until).format('MMMM DD, YYYY')}</span>)}
-                </p>
-                <button
-                    className="btn green-btn reactivate-btn"
-                    type="button"
-                    onClick={() => onOpenReactivateWindow(product)}
-                >
-                    Reactivate
-                    <span className="reactivate-img">
-                        <SVG id='reload'/>
-                    </span>
-                </button>
-            </div>}
+        <div className="subscriptions">
+            <div className="description">
+                <h2>Subscription for Seller ID:</h2>
+                <p>This is a prepaid plan, and you are paying for the next 30 days of using it.</p>
+                <p>To view your invoices, <a href="">see billing info</a></p>
+            </div>
 
-            <div className="automate">
-                <div className="ppc">
-                    <div className="ppc-title-wrap">
-                        {/*<SVG id={'ppc-automate-subscription-logo'}/>*/}
-                        <img className='ppc-icon' src={ppcIcon} alt=""/>
-                        <h2 className="ppc-title">{product.productName}</h2>
-                    </div>
-                    <p className="ppc-text">
-                        This is a prepaid plan, and you are paying <br/> for the next 30 days of using it.
-                    </p>
+            <Table
+                dataSource={product.productId && [product]}
+                columns={columns}
+                pagination={false}
+                loading={!product.productId}
+            />
 
-                    <Link to={'/pricing'} className={'learn-more'} target={'blank'}>How it’s calculated?</Link>
+            <div className="subscription-actions">
+                {product.has_access && !product.cancelled && <>
+                    <button className={'btn white bord'} onClick={() => onOpenAccountWindow(product)}>Cancel
+                        Subscription
+                    </button>
 
-                    <p className="ppc-link-wrap">
-                        To view your invoices, see&nbsp;
-                        <a href={'#billing-history'} className="ppc-link">
-                            billing info
-                        </a>
-                    </p>
+                    <p>You will have access to the software until the end of this billing cycle.</p>
+                </>}
 
-                </div>
-
-
-                <div className="plan">
-                    <div className="charged">
-                        <h3 className="subscription-plan">Subscription <br/> Plan</h3>
-
-                        {renderPlanContent()}
-                    </div>
-
-                    {product.has_access && !product.cancelled && <div className='row'>
-                        <p className="cancel-text">
-                            {product.next_invoice_at && <Fragment> Next Invoice Date: <span
-                                className="cancel-data">{moment(product.next_invoice_at).format('MMM DD, YYYY')}</span>
-                            </Fragment>}
-                        </p>
-
-                        <button
-                            className="cancel-btn"
-                            type="button"
-                            onClick={() => onOpenAccountWindow(product)}
-                        >
-                            Cancel
-                        </button>
-                    </div>}
-
-                </div>
-
-                <div className="cancel">
-                    {!fetching && (product.next_charge_value !== null && product.flat_amount !== null && product.quantity !== null) &&
-                    <div className='coupon'>
-                        <h4>Do you have a coupon?</h4>
-                        <div className="row">
-                            <div className="input-block">
-                                <SVG id='coupon-icon'/>
-                                <input
-                                    type="text"
-                                    value={coupon}
-                                    onChange={e => setCoupon(e.target.value)}
-                                />
-                            </div>
-
-                            <button className="btn green-btn"
-                                    onClick={() => {
-                                        (!product.has_access && stripeId) ? getCouponStatus(coupon) : applyCoupon(product.productId, coupon, product.plan_id)
-                                    }}>apply
-                            </button>
-                        </div>
-
-                        {product.applied_coupon && product.applied_coupon.name && <div className='applied-coupon'>
-                            <div className="col">
-                                <div className="name">
-                                    Coupon
-                                </div>
-                                <div className="discount">
-                                    {product.applied_coupon.amount_off ? `$ ${product.applied_coupon.amount_off}` : `${product.applied_coupon.percent_off} %`} off
-                                </div>
-                            </div>
-                        </div>}
-                    </div>
-                    }
-
-                    {!fetching && renderButtonsBlock()}
-                </div>
+                {product.grace_period && product.grace_period.on_grace_period &&
+                <button className={'btn default'} onClick={() => onOpenReactivateWindow(product)}>Reactivate</button>
+                }
             </div>
         </div>
     )
