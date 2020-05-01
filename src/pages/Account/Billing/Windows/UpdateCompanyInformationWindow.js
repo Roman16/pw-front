@@ -1,6 +1,7 @@
 import React, {useState} from "react";
-import {Input, Select, InputNumber } from "antd";
+import {Input, Select, InputNumber} from "antd";
 import {countries} from "../../../../utils/countries";
+import CustomSelect from "../../../../components/Select/Select";
 
 const Option = Select.Option;
 
@@ -117,18 +118,19 @@ const UpdateCompanyInformationWindow = ({onClose, company, onSubmit}) => {
                     <div className="form-group">
                         <label>Country</label>
 
-                        <Select onChange={handleChangeSelect} placeholder='Country'
-                                showSearch
-                                getPopupContainer={trigger => trigger.parentNode}
-                                optionFilterProp="children"
-                                filterOption={(input, option) =>
-                                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }
-                                value={companyInformation.country}>
+                        <CustomSelect
+                            onChange={handleChangeSelect}
+                            showSearch
+                            getPopupContainer={trigger => trigger.parentNode}
+                            optionFilterProp="children"
+                            filterOption={(input, option) =>
+                                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            }
+                            value={companyInformation.country}>
                             {countries.map(item => (
                                 <Option key={item.code} value={item.code}>{item.name}</Option>
                             ))}
-                        </Select>
+                        </CustomSelect>
 
                     </div>
                 </div>

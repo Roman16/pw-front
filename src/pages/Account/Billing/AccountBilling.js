@@ -113,24 +113,29 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                     </h3>
 
                     <span>
-                        Your bills are paid using your active <br/> payment method
+                        Your bills are paid using your <br/> active payment method
                     </span>
                 </div>
 
                 {haveCard && <div className='user-cards'>
+                    {paymentCards.length < 10 &&
+                    <button className="add-card" onClick={() => onOpenWindow('updateCard')}>
+                        <SVG id={'plus-icon'}/>
+                        Add Card
+                    </button>}
+
                     <div className='cards-carousel'>
                         <div className='carousel-body'>
                             {paymentCards.length > 1 &&
-                            <Icon type="left" onClick={goPrevCard}/>}
+                            <i onClick={goPrevCard}><SVG id={'left-arrow'}/></i>}
 
-                            {(paymentCards.length > 5 ? [0, 1, 2, 3, 4] : paymentCards).map((item, index) => (
+                            {(paymentCards.length > 3 ? [0, 1, 2] : paymentCards).map((item, index) => (
                                 <div
                                     key={`shadow_${paymentCards[index].id}`}
                                     className='card-shadow'
                                     style={{
-                                        top: `${0 - 5 * index}px`,
-                                        opacity: `0.${10 - index}`,
-                                        width: `${290 - index * 10}px`
+                                        top: `${10 * index}px`,
+                                        left: `${20 * index}px`,
                                     }}
                                 >
                                 </div>
@@ -144,14 +149,14 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                             />}
 
                             {paymentCards.length > 1 &&
-                            <Icon type="right" onClick={goNextCard}/>}
+                                <i onClick={goNextCard}><SVG id={'right-arrow'}/></i>}
                         </div>
 
                         {paymentCards.length > 1 &&
                         <div className='carousel-pagination'>
                             {paymentCards.map((item, index) => (
                                 <div
-                                    style={{opacity: paymentCards[selectedCardIndex] && paymentCards[selectedCardIndex].id != item.id && 0.5}}
+                                    style={{background: paymentCards[selectedCardIndex] && paymentCards[selectedCardIndex].id != item.id && '#fff'}}
                                     key={`pagination_${index}`}
                                     onClick={() => onChangePagination(index)}
                                 />
@@ -159,30 +164,7 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                         </div>}
                     </div>
 
-                    {paymentCards[selectedCardIndex] && <div className='billing-address'>
-                        {(paymentCards[selectedCardIndex].address.address.line1 ||
-                            paymentCards[selectedCardIndex].address.address.city ||
-                            paymentCards[selectedCardIndex].address.address.postal_code ||
-                            allCountries[paymentCards[selectedCardIndex].address.address.country])
-                        && <Fragment>
-                            <h3>Billing address</h3>
-                            <span className='street'>{paymentCards[selectedCardIndex].address.address.line1}</span>
-                            <span className='city'>{paymentCards[selectedCardIndex].address.address.city}</span>
-                            <span className='zip'>{paymentCards[selectedCardIndex].address.address.postal_code}</span>
-                            <span
-                                className='country'>{allCountries[paymentCards[selectedCardIndex].address.address.country]}</span>
-                        </Fragment>
-                        }
-
-                    </div>
-                    }                </div>}
-
-                <div className="buttons-block">
-                    {paymentCards.length < 10 &&
-                    <button className='btn green-btn' onClick={() => onOpenWindow('updateCard')}>
-                        Add card
-                    </button>}
-                </div>
+                </div>}
             </section>
 
             <ConfirmActionPopup

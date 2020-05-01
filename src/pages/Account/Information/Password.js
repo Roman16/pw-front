@@ -126,7 +126,7 @@ const Password = () => {
                                 onBlur={handleBlurOldPasswordInput}
                             />
                             <i onClick={() => changePasswordInputType('current_password', inputsType.current_password)}>
-                                <SVG id={inputsType.current_password === 'text' ? 'open-eye' : 'close-eye'}/>
+                                <SVG id={inputsType.current_password === 'text' ? 'eye-opened' : 'eye-closed'}/>
                             </i>
                         </div>
 
@@ -149,7 +149,7 @@ const Password = () => {
                                 onBlur={handleBlurNewPasswordInput}
                             />
                             <i onClick={() => changePasswordInputType('new_password', inputsType.new_password)}>
-                                <SVG id={inputsType.new_password === 'text' ? 'open-eye' : 'close-eye'}/>
+                                <SVG id={inputsType.new_password === 'text' ? 'eye-opened' : 'eye-closed'}/>
                             </i>
                         </div>
 
@@ -172,7 +172,7 @@ const Password = () => {
                                 onBlur={handleBlurConfirmPasswordInput}
                             />
                             <i onClick={() => changePasswordInputType('password_confirmation', inputsType.password_confirmation)}>
-                                <SVG id={inputsType.password_confirmation === 'text' ? 'open-eye' : 'close-eye'}/>
+                                <SVG id={inputsType.password_confirmation === 'text' ? 'eye-opened' : 'eye-closed'}/>
                             </i>
                         </div>
 

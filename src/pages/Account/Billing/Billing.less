@@ -2,40 +2,33 @@
 
 .user-cabinet.billing-page {
   height: 100%;
+  display: grid;
+  grid-template-areas: 'cardBlock companyDetails' 'billingHistory billingHistory';
+  grid-template-columns: minmax(400px, 1fr) minmax(400px, 1fr);
+  grid-column-gap: 1.4285714285714286rem;
+  grid-row-gap: 1.4285714285714286rem;
 
   section {
     width: 100%;
     min-height: 27em;
-    height: max-content;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
     border-radius: 4px;
     background-color: @white;
-    padding: 3em 2.5em 3em 2.5em;
-    margin-bottom: 0.4em;
+    padding: 2.857142857142857rem 2.142857142857143rem;
     box-shadow: @default-section-shadow;
-
 
     .block-description {
       display: flex;
       flex-direction: column;
-      width: 20%;
       min-width: 200px;
       grid-area: billingDescription;
 
       h3 {
-        font-size: 1.7142857142857142rem;
-        //font-size: 20px;
-        line-height: 2.142857142857143rem;
-        letter-spacing: 0.4px;
-        color: #343C5A;
+        font-size: 1.4285714285714286rem;
+        color: #38454F;
       }
 
       span {
-        font-size: 1.1428571428571428rem;
-        line-height: 1.7142857142857142rem;
-        letter-spacing: 0.4px;
+        font-size: 1rem;
         color: #656A84;
       }
     }
@@ -61,62 +54,72 @@
   }
 
   .account-billing-block {
-    justify-content: flex-start;
+    justify-content: space-between;
+    grid-area: cardBlock;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
 
     .user-cards {
-      width: 55%;
       display: flex;
+      flex-direction: column;
       flex-wrap: wrap;
       grid-area: userCards;
-      margin: 0 0 0 auto;
-      padding: 0 0 0 20px;
+
+      .add-card {
+        font-size: 1rem;
+        color: #6D6DF6;
+        display: flex;
+        align-items: center;
+        margin: 0 33px 35px auto;
+
+        svg {
+          margin: 0 0.8571428571428571rem 0 0;
+
+          use {
+            stroke: #6D6DF6;
+          }
+        }
+      }
 
       .cards-carousel {
-        width: 45%;
-        min-width: 300px;
-        margin: 0 30px 0 0;
-
         .carousel-body {
-          width: 300px;
-          height: 180px;
-          max-height: 180px;
-          min-width: 150px;
           display: flex;
           align-items: center;
           position: relative;
 
           .card-shadow {
             position: absolute;
-            background: #343C5A;
+            background: #6D6DF6;
+            top: 0;
             left: 0;
             right: 0;
             margin: 0 auto;
             width: 295px;
-            height: 100%;
-            max-width: 100%;
-            max-height: 180px;
+            height: 180px;
             border-radius: 4px;
+            z-index: 0;
+            opacity: .2;
           }
 
           i {
-            font-size: 1.3rem;
             cursor: pointer;
-            position: absolute;
+            display: flex;
+            align-items: center;
 
             &:first-child {
-              left: -20px;
+              margin: 0 25px 0 0;
             }
 
             &:last-child {
-              right: -20px;
+              margin: 0 0 0 25px;
             }
           }
         }
 
         .card-block {
-          max-width: 295px;
-          width: 100%;
-          height: 100%;
+          width: 295px;
+          height: 180px;
           border-radius: 4px;
           background-image: url(../../../assets/img/card-background.svg);
           background-repeat: no-repeat;
@@ -223,13 +226,15 @@
 
         .carousel-pagination {
           display: flex;
-          margin: 10px auto;
+          justify-content: center;
+          margin: 30px auto 0;
 
           & > div {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #3E4A62;
+            background: #6D6DF6;
+            border: 1px solid #6D6DF6;
             margin: 0 10px 0 0;
             cursor: pointer;
           }
@@ -258,21 +263,31 @@
   }
 
   .company-details-block {
+    grid-area: companyDetails;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
     .block-description {
-      grid-area: companyDescription;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .col {
+        display: flex;
+        flex-direction: column;
+      }
+
+      i {
+        height: max-content;
+        cursor: pointer;
+      }
     }
 
-    .buttons-block {
-      grid-area: companyButtons;
-    }
 
     .company-information {
-      width: 55%;
       display: flex;
-      grid-area: companyInformation;
-
-      margin: 0 0 0 auto;
-      padding: 0 0 0 20px;
+      margin: 25px 0 0 0;
 
       .column {
         width: 48%;
@@ -290,18 +305,14 @@
 
           label {
             font-size: 1rem;
-            line-height: 20px;
             color: #343C5A;
-            margin: 0 0 12px 0;
+            font-weight: 500;
+            margin-bottom: 8px;
           }
 
           span {
             font-size: 1rem;
-            line-height: 24px;
-            letter-spacing: 0.4px;
             color: #656A84;
-            display: flex;
-            flex-wrap: wrap;
           }
         }
       }
@@ -309,8 +320,12 @@
   }
 
   .billing-history-block {
+    grid-area: billingHistory;
+
     flex-direction: column;
     align-items: flex-start;
+
+    padding-bottom: 1.4285714285714286rem;
 
     .block-description {
       width: 100%;

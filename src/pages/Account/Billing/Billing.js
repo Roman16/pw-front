@@ -181,8 +181,6 @@ const Billing = () => {
 
     return (
         <div className="user-cabinet billing-page">
-            {/*<Navigation/>*/}
-
             <AccountBilling
                 onOpenWindow={handleOpenWindow}
                 handleConfirmDeleteCard={handleRemoveCard}

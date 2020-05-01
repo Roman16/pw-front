@@ -1,60 +1,55 @@
 import React from "react";
 import {allCountries} from '../../../utils/countries';
+import {SVG} from "../../../utils/icons";
 
 const CompanyDetails = ({onOpenWindow, company}) => {
     return (
         <section className='company-details-block page-box'>
             <div className='block-description'>
-                <h3>
-                    Company Details
-                </h3>
+                <div className="col">
+                    <h3>
+                        Company Details
+                    </h3>
 
-                <span>
+                    <span>
                     Your company details will be reflected on your invoices
                 </span>
+                </div>
+
+                <i onClick={() => onOpenWindow('company')}><SVG id={'edit-pen-icon'}/></i>
             </div>
 
             {company && <div className='company-information'>
                 <div className='column'>
-                    {company.name && <div>
+                    <div>
                         <label htmlFor="">Company</label>
-                        <span>{company.name || 'Fidget Spinners International'}</span>
-                    </div>}
-                    {company.city && <div>
+                        <span>{company.name || '---'}</span>
+                    </div>
+                    <div>
                         <label htmlFor="">City</label>
-                        <span>{company.city || ''}</span>
-                    </div>}
-                    {company.zip && <div>
+                        <span>{company.city || '---'}</span>
+                    </div>
+                    <div>
                         <label htmlFor="">Zip</label>
-                        <span>{company.zip || ''}</span>
-                    </div>}
-                    {company.state && <div>
-                        <label htmlFor="">State</label>
-                        <span>{company.state || ''}</span>
-                    </div>}
+                        <span>{company.zip || '---'}</span>
+                    </div>
                 </div>
 
                 <div className='column'>
-                    {company.address1 && <div>
+                    <div>
                         <label htmlFor="">Address Line 1</label>
-                        <span>{company.address1 || ''}</span>
-                    </div>}
-                    {company.address2 && <div>
+                        <span>{company.address1 || '---'}</span>
+                    </div>
+                    <div>
                         <label htmlFor="">Address Line 2</label>
-                        <span>{company.address2 || ''}</span>
-                    </div>}
-                    {company.country && <div>
+                        <span>{company.address2 || '---'}</span>
+                    </div>
+                    <div>
                         <label htmlFor="">Country</label>
-                        <span>{allCountries[company.country] || ''}</span>
-                    </div>}
+                        <span>{company.country ? allCountries[company.country] : '---'}</span>
+                    </div>
                 </div>
             </div>}
-
-            <div className='buttons-block'>
-                {company && <button className='btn green-btn' onClick={() => onOpenWindow('company')}>
-                    Add company details
-                </button>}
-            </div>
         </section>
     )
 };

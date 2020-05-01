@@ -33,11 +33,11 @@
     align-items: center;
     border-radius: 0 0 0.8em 0.8em;
     background-color: @white;
-    padding: 3em 4em 3em 2.5rem;
-    margin-bottom: 3px;
+    padding: 2.857142857142857rem 4em 2.857142857142857rem 2.5rem;
+    margin-bottom: 1.4285714285714286rem;
     flex-wrap: wrap;
     box-shadow: @default-section-shadow;
-
+    box-sizing: border-box;
 
     .avatar-box {
       display: flex;
@@ -46,9 +46,9 @@
       position: relative;
       margin: 0 3.2142857142857144rem 0 0;
 
-      img, .ant-avatar {
-        width: 11.214285714285714rem !important;
-        height: 11.214285714285714rem !important;
+      img {
+        width: 10.714285714285714rem;
+        height: 10.714285714285714rem;
       }
 
       .avatar {
@@ -200,7 +200,7 @@
     align-items: center;
     background-color: @white;
     border-radius: 0.8em;
-    padding: 3em 4em 3em 2.5rem;
+    padding: 2.857142857142857rem 4em 2.857142857142857rem 2.5rem;
     margin-bottom: 0.4em;
     box-shadow: @default-section-shadow;
 
@@ -211,8 +211,8 @@
       margin: 0 3.2142857142857144rem 0 0;
 
       .lock {
-        width: 11.214285714285714rem;
-        height: 11.214285714285714rem;
+        width: 10.714285714285714rem;
+        height: 10.714285714285714rem;
       }
     }
 
@@ -256,6 +256,7 @@
 
           .password-input {
             position: relative;
+
             i {
               cursor: pointer;
               position: absolute;
