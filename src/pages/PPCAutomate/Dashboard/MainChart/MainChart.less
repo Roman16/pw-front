@@ -182,6 +182,7 @@
 
     .DatePicker {
       grid-area: datePiker;
+      margin: 0 0 0 auto;
     }
   }
 
@@ -223,10 +224,10 @@
     }
   }
 
-  @media (max-width: 1300px) {
+  @media (max-width: 1200px) {
     & {
       .chart-header {
-        grid-template-areas: 'datePiker chartLegend' 'switches switches';
+        grid-template-areas: 'switches datePiker ' 'chartLegend chartLegend';
       }
     }
   }
@@ -234,7 +235,7 @@
   @media (max-width: 910px) {
     & {
       .chart-header {
-        grid-template-areas: 'datePiker' 'chartLegend' 'switches';
+        grid-template-areas: 'datePiker'  'switches' 'chartLegend';
 
         .DatePicker {
           margin: 0 auto;

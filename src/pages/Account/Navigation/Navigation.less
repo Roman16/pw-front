@@ -1,38 +1,56 @@
-@import "../../../style/variables.less";
-
 .cabinet-nav {
-  display: flex;
-  list-style: none;
+  overflow: hidden;
+  width: max-content;
   margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px 4px 0 0;
 
   li {
-    width: 204px;
-    height: 50px;
-    text-align: center;
-    background: #fff;
-    border-radius: 4px 4px 0 0;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.02);
-
-    .page-link {
-      font-size: 1rem;
-      width: 100%;
-      height: 100%;
+    a {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      width: 204px;
+      height: 50px;
+      position: relative;
+      background: #fff;
+      text-decoration: none;
+      -webkit-border-radius: 4px 4px 0 0;
+      -moz-border-radius: 4px 4px 0 0;
+      border-radius: 4px 4px 0 0;
+      -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.02);
+      -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.02);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.02);
+      font-size: 1rem;
       color: #343C5A;
+      border-top: 4px solid #fff;
+    }
+
+    &:nth-child(2) {
+      a {
+        z-index: 5;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+      }
     }
 
     &.current-page-link {
-      border-top: 4px solid #6D6DF6;
-      border-radius: 4px 4px 0 0;
-      box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
-      z-index: 10;
-
-      .page-link {
-        color: #6D6DF6;
-        font-weight: 500;
+      a {
+        border-top: 4px solid #6D6DF6;
+        border-radius: 4px 4px 0 0;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+        z-index: 10;
       }
     }
   }
 }
+
+.personal-box,
+.automate-box {
+  position: relative;
+  z-index: 8;
+}
+
+

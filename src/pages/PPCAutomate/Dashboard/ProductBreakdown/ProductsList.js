@@ -30,7 +30,7 @@ const RenderPramsChanges = ({type, product}) => {
                         <SVG id='up-white-arrow'/>
                     </div>}
 
-                    {(value <= 0 ) && <div className='upward-changes'>
+                    {(value <= 0) && <div className='upward-changes'>
                         {round(Math.abs(+value), 2)}%
                         <SVG id='down-white-arrow'/>
                     </div>}
@@ -65,14 +65,12 @@ const RenderPramsChanges = ({type, product}) => {
 export const ProfitTooltipDescription = () => (
     <div className='profit-tooltip-description'>
         <div className='title'>Warning</div>
-        <p>We need to know your product net margin before algorithm start optimization</p>
+        <p>
+            In order for this metric to display, we need to know your net margin for a given product, make sure you add
+            it on the product settings page.
+        </p>
 
         <button className='btn default' onClick={() => history.push('/ppc/product-settings')}>Add Net Margin</button>
-
-        <div className='title'>Tip</div>
-        <p>
-            Amazon Fees + Cost of Goods + Inbound Shipping + Reshipping + PPC Spend
-        </p>
     </div>
 );
 
