@@ -34,7 +34,7 @@
     border-radius: 0 0 0.8em 0.8em;
     background-color: @white;
     padding: 3em 4em 3em 2.5rem;
-    margin-bottom: 0.21428571428571427rem;
+    margin-bottom: 3px;
     flex-wrap: wrap;
     box-shadow: @default-section-shadow;
 
@@ -254,12 +254,33 @@
           color: @second-account-color;
           position: relative;
 
+          .password-input {
+            position: relative;
+            i {
+              cursor: pointer;
+              position: absolute;
+              right: 1.0714285714285714rem;
+              top: 0;
+              bottom: 0;
+
+              display: flex;
+              align-items: center;
+
+              svg {
+                width: 20px;
+              }
+            }
+
+            input {
+              padding-right: 35px;
+            }
+          }
+
           .input-wrap {
             input {
               display: flex;
               justify-content: space-between;
               align-items: center;
-              padding-right: 35px;
 
               font-size: 1rem;
             }

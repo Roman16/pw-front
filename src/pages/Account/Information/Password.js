@@ -5,6 +5,7 @@ import lock from '../../../assets/img/account-password-image.svg';
 import OpenedEye from '../../../assets/img/opened-eye.svg';
 import ClosedEye from '../../../assets/img/closed-eye.svg';
 import {notification} from "../../../components/Notification";
+import {SVG} from "../../../utils/icons";
 
 const CustomInputSuffix = ({type, name, onChangeType}) => {
     return (
@@ -113,6 +114,8 @@ const Password = () => {
                     <div className="form-group">
                         <label>Old Password</label>
 
+
+                        <div className="password-input">
                             <Input
                                 className={`form-control ${oldPasswordError && 'error'}`}
                                 type={inputsType.current_password}
@@ -121,13 +124,11 @@ const Password = () => {
                                 value={inputsValue.current_password}
                                 onChange={handleChangeInput}
                                 onBlur={handleBlurOldPasswordInput}
-                                // suffix={
-                                //     <CustomInputSuffix
-                                //         name={'current_password'}
-                                //         onChangeType={changePasswordInputType}
-                                //         type={inputsType.current_password}/>
-                                // }
                             />
+                            <i onClick={() => changePasswordInputType('current_password', inputsType.current_password)}>
+                                <SVG id={inputsType.current_password === 'text' ? 'open-eye' : 'close-eye'}/>
+                            </i>
+                        </div>
 
                         <div className='input-error'>
                             {oldPasswordError}
@@ -137,21 +138,20 @@ const Password = () => {
                     <div className="form-group">
                         <label>New Password</label>
 
-                        <Input
-                            className={`form-control ${newPasswordError && 'error'}`}
-                            type={inputsType.new_password}
-                            name="new_password"
-                            placeholder="Type new password"
-                            value={inputsValue.new_password}
-                            onChange={handleChangeInput}
-                            onBlur={handleBlurNewPasswordInput}
-                            // suffix={
-                            //     <CustomInputSuffix
-                            //         name={'new_password'}
-                            //         onChangeType={changePasswordInputType}
-                            //         type={inputsType.new_password}
-                            //     />}
-                        />
+                        <div className="password-input">
+                            <Input
+                                className={`form-control ${newPasswordError && 'error'}`}
+                                type={inputsType.new_password}
+                                name="new_password"
+                                placeholder="Type new password"
+                                value={inputsValue.new_password}
+                                onChange={handleChangeInput}
+                                onBlur={handleBlurNewPasswordInput}
+                            />
+                            <i onClick={() => changePasswordInputType('new_password', inputsType.new_password)}>
+                                <SVG id={inputsType.new_password === 'text' ? 'open-eye' : 'close-eye'}/>
+                            </i>
+                        </div>
 
                         <div className='input-error'>
                             {newPasswordError}
@@ -161,21 +161,20 @@ const Password = () => {
                     <div className="form-group">
                         <label>Repeat New Password</label>
 
-                        <Input
-                            className={`form-control ${confirmPasswordError && 'error'}`}
-                            type={inputsType.password_confirmation}
-                            name="password_confirmation"
-                            placeholder="Type new password"
-                            value={inputsValue.password_confirmation}
-                            onChange={handleChangeInput}
-                            onBlur={handleBlurConfirmPasswordInput}
-                            // suffix={
-                            //     <CustomInputSuffix
-                            //         name={'password_confirmation'}
-                            //         onChangeType={changePasswordInputType}
-                            //         type={inputsType.password_confirmation}
-                            //     />}
-                        />
+                        <div className="password-input">
+                            <Input
+                                className={`form-control ${confirmPasswordError && 'error'}`}
+                                type={inputsType.password_confirmation}
+                                name="password_confirmation"
+                                placeholder="Type new password"
+                                value={inputsValue.password_confirmation}
+                                onChange={handleChangeInput}
+                                onBlur={handleBlurConfirmPasswordInput}
+                            />
+                            <i onClick={() => changePasswordInputType('password_confirmation', inputsType.password_confirmation)}>
+                                <SVG id={inputsType.password_confirmation === 'text' ? 'open-eye' : 'close-eye'}/>
+                            </i>
+                        </div>
 
                         <div className='input-error'>
                             {confirmPasswordError}
