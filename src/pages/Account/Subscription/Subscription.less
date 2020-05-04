@@ -14,6 +14,8 @@
     background-color: @white;
     margin-bottom: 1.4285714285714286rem;
     box-shadow: @default-section-shadow;
+    z-index: 8;
+    position: relative;
 
     .description {
       margin-bottom: 1.2142857142857142rem;
@@ -43,6 +45,94 @@
         border-bottom: 1px solid #C9CBD4;
         border-radius: 0;
       }
+
+      .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+        background: initial;
+      }
+
+      .price {
+        color: #343C5A;
+        font-size: 1rem;
+
+        .prev-value {
+          color: #343C5A;
+          text-decoration: line-through;
+        }
+
+        .new-value {
+          color: #7DD4A1;
+          margin: 0 0 0 10px;
+        }
+      }
+
+      a {
+        font-size: 0.8571428571428571rem;
+        text-decoration-line: underline;
+        color: #6D6DF6;
+      }
+
+      .status-field {
+        a {
+          font-size: 1rem;
+          color: #EC7F5C;
+          text-decoration: underline;
+        }
+      }
+
+      .coupon-fields {
+        position: relative;
+        width: 9.357142857142858rem;
+        min-width: 9.357142857142858rem;
+
+        .ant-input {
+          width: 9.357142857142858rem;
+          height: 32px;
+          box-sizing: border-box;
+        }
+
+        .btn {
+          width: 9.357142857142858rem;
+          position: absolute;
+          right: 0;
+          top: 0;
+
+          svg {
+            width: 1rem;
+            height: 1rem;
+            min-width: 1rem;
+            line-height: 2.2857142857142856rem;
+
+            use {
+              stroke: #fff;
+            }
+          }
+
+          &.short {
+            width: 34px;
+            padding: 0;
+            transition: width .1s;
+
+            svg {
+              margin: 0;
+            }
+
+            span {
+              display: none;
+            }
+          }
+        }
+
+        .coupon-name {
+          display: block;
+          color: #6D6DF6;
+          margin: 3px 0 0 0;
+
+          b {
+            font-weight: 500;
+            margin: 0 0 0 5px;
+          }
+        }
+      }
     }
 
     .subscription-actions {
@@ -51,6 +141,10 @@
       margin-top: 1.4285714285714286rem;
 
       .btn {
+        margin: 0 20px 0 0;
+      }
+
+      .white {
         margin-right: 2.142857142857143rem;
         background: #fff;
       }

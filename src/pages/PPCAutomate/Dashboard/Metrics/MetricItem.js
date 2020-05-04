@@ -59,7 +59,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                     </div>
                 </div>
             )
-        } else if (name === 'cpc' || name === 'acos' || name === 'cpa' || name === 'macos') {
+        } else if (name === 'cpc' || name === 'acos' || name === 'cpa' || name === 'macos' || name==='returns') {
             return (
                 <InformationTooltip
                     type='custom'

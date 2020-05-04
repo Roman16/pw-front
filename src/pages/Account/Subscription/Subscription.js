@@ -56,7 +56,7 @@ const Subscription = () => {
             })
     }
 
-    function applyCoupon(productId, coupon, planId) {
+    function applyCoupon(productId, planId, coupon) {
         if (coupon) {
             userService.applyCoupon(productId, planId, coupon)
                 .then((res) => {
@@ -65,6 +65,8 @@ const Subscription = () => {
                         ...res[productId]
                     })))
                 })
+        } else {
+            notification.error({title: 'Enter coupon first'})
         }
     }
 
@@ -104,7 +106,6 @@ const Subscription = () => {
                 dispatch(userActions.getPersonalUserInfo());
                 fetchSubscriptions();
             } catch (e) {
-                console.log(e);
                 changeButton(false);
             }
         } else {
@@ -208,7 +209,7 @@ const Subscription = () => {
 
                 visible={openedAccountWindow}
 
-                onCancel={() => openAccountWindow(false) }
+                onCancel={() => openAccountWindow(false)}
                 onOk={handleCancelSubscription}
 
                 okText="I want to cancel"

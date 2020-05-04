@@ -29,7 +29,7 @@ const Navigation = ({page}) => {
                 <NavLink
                     className="page-link"
                     exact
-                    to="/account-subscription"
+                    to="/api-connections"
                 >
                     API Connection
                 </NavLink>

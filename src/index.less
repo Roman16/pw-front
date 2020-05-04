@@ -825,7 +825,8 @@ button.white[disabled] {
 */
 .form-group {
 
-  .form-control {
+  .form-control,
+  .ant-input-search {
     &:hover {
       .ant-input:not(.ant-input-disabled),
       .ant-input {
@@ -857,7 +858,7 @@ button.white[disabled] {
     &:focus {
       box-shadow: none;
       outline: none;
-      border: 1px solid #6D6DF6;
+      border: 1px solid #6D6DF6 !important;
     }
 
     &::placeholder {

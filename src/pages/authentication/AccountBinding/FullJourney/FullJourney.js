@@ -11,6 +11,8 @@ import {history} from "../../../../utils/history";
 
 import '../components/Steps.less';
 import {userService} from "../../../../services/user.services";
+import {userActions} from "../../../../actions/user.actions";
+import {useDispatch} from "react-redux";
 
 const {Step} = Steps;
 
@@ -26,6 +28,8 @@ const FullJourney = () => {
         region: 'north_america',
         account: 'seller_account'
     });
+    const dispatch = useDispatch();
+
     const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
 
     const goNextStep = () => setCurrentStep(prevState => prevState + 1)
@@ -45,6 +49,7 @@ const FullJourney = () => {
 
         try {
             const res = await userService.setMWS(fields);
+            dispatch(userActions.setInformation(res))
             setCurrentStep(prevState => prevState + 1)
         } catch (e) {
             setConnectMwsStatus('error');

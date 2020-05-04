@@ -19,7 +19,7 @@ export const userActions = {
     getPersonalUserInfo,
     unsetAccount,
     resetChangesCount,
-    setPpcStatus
+    setPpcStatus,
 };
 
 function login(user) {
@@ -99,7 +99,6 @@ function setMWS(data) {
 
         if (data.account_links) {
             if (!data.account_links[0].amazon_ppc.is_connected) {
-                history.push('/ppc');
             } else {
                 history.push((data.notifications.account_bootstrap && (data.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization-loading' : '/ppc/optimization');
             }
@@ -153,14 +152,6 @@ function getUserInfo() {
                 email: res.user.email, // Email address
                 created_at: moment(new Date()).unix()// Signup date as a Unix timestamp
             });
-
-            if (!res.account_links[0].amazon_mws.is_connected) {
-                history.push('/mws');
-            } else if (!res.account_links[0].amazon_ppc.is_connected) {
-                history.push('/ppc');
-            } else {
-                history.push((res.notifications.account_bootstrap && (res.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization-loading' : '/ppc/optimization');
-            }
         });
     };
 }
@@ -180,12 +171,6 @@ function getAuthorizedUserInfo() {
         userService.getUserInfo()
             .then(res => {
                 dispatch(setInformation(res));
-
-                if (!res.account_links[0].amazon_mws.is_connected) {
-                    history.push('/mws');
-                } else if (!res.account_links[0].amazon_ppc.is_connected) {
-                    history.push('/ppc');
-                }
             });
     };
 }

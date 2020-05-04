@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
-import {Spin, Table} from "antd";
+import {Input, Spin, Table} from "antd";
 import ppcIcon from "../../../assets/img/icons/ppc-automate-subscription-logo.svg";
 import moment from "moment";
 import {numberMask} from "../../../utils/numberMask";
@@ -8,6 +8,82 @@ import {history} from "../../../utils/history";
 import {useSelector} from "react-redux";
 import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import {SVG} from "../../../utils/icons";
+
+const CouponField = ({applyCoupon, setCoupon, product}) => {
+    const [openedField, openField] = useState(false);
+
+    const submitCouponHandler = () => {
+        if (!openedField) {
+            openField(true)
+        } else {
+            applyCoupon()
+        }
+    }
+
+    if (product.status === 'not_connect') {
+        return '---'
+    } else {
+        return (
+            <div className={'form-group coupon-fields'}>
+                <Input onChange={e => setCoupon(e.target.value)}/>
+                <button onClick={submitCouponHandler} className={`btn default p15 ${openedField ? 'short' : ''}`}>
+                    <SVG id={'plus-icon'}/>
+                    <span>Add Coupon</span>
+                </button>
+
+                {product.applied_coupon && <span className="coupon-name">
+              <span>Coupon:</span>
+                    {product.applied_coupon.amount_off && <b>${product.applied_coupon.amount_off}</b>}
+                    {product.applied_coupon.percent_off && <b>{product.applied_coupon.percent_off}%</b>}
+            </span>}
+            </div>
+        )
+    }
+}
+
+const ProductPrice = ({product}) => {
+    if (product.status === 'not_connect') {
+        return (<div className={'price'}>
+            ---
+            <br/>
+            <Link to={'/pricing'}>How it’s calculated?</Link>
+        </div>)
+
+    } else if (!product.applied_coupon) {
+        return (<div className={'price'}>
+            ${numberMask(product.next_charge_value, 2)}
+            <br/>
+            <Link to={'/pricing'}>How it’s calculated?</Link>
+        </div>)
+    } else if (product.applied_coupon.amount_off) {
+        return (<div className={'price'}>
+            <span className="prev-value">
+                ${numberMask(product.next_charge_value, 2)}
+            </span>
+
+            <span className="new-value">
+                ${numberMask(product.next_charge_value - product.applied_coupon.amount_off, 2)}
+            </span>
+
+            <br/>
+            <Link to={'/pricing'}>How it’s calculated?</Link>
+        </div>)
+    } else if (product.applied_coupon.percent_off) {
+        return (<div className={'price'}>
+            <span className="prev-value">
+                ${numberMask(product.next_charge_value, 2)}
+            </span>
+
+            <span className="new-value">
+                ${numberMask(product.next_charge_value - ((product.next_charge_value / 100) * product.applied_coupon.percent_off), 2)}
+            </span>
+
+            <br/>
+            <Link to={'/pricing'}>How it’s calculated?</Link>
+        </div>)
+    }
+}
+
 
 const SubscriptionPlan = ({
                               onOpenAccountWindow,
@@ -28,83 +104,10 @@ const SubscriptionPlan = ({
 
     const [coupon, setCoupon] = useState('');
 
-    let timeout = null;
 
     function handleSubscribe() {
         onSubscribe({coupon, ...product});
     }
-
-    function renderPlanContent() {
-        if (fetching) {
-            return (
-                <div className="load-data">
-                    <Spin/>
-                </div>
-            )
-        } else if (!mwsConnected || !ppcConnected) {
-            return (
-                <div className="load-data">
-                    <div className='load-text'>Please connect your Amazon MWS and PPC accounts</div>
-                </div>
-            )
-        } else if (product.next_charge_value == null || product.flat_amount == null || product.quantity == null) {
-            return (
-                <div className="load-data">
-                    <div className='load-text'>
-                        We are calculating your subscription price. <br/> Please wait for a few seconds.
-                    </div>
-                    <Spin/>
-                </div>
-            )
-        } else {
-            return (
-                <Fragment>
-                    <div className="indicators-data">
-                        $ {product.flat_amount || 0} + <span>{product.percent_amount || 0}%  <div>Monthly <br/> ad spend</div></span>
-                    </div>
-
-                    <div className="spend-text">
-                        <div className="spend-data">$ {numberMask(product.quantity, 2) || 0}</div>
-                        <div className='description'>Your monthly <br/> Ad Spend <InformationTooltip
-                            description={'This is the amount of your spend on Amazon PPC for the past 30 days. We update it daily.'}/>
-                        </div>
-                    </div>
-
-                    <div className="charged-description">
-                        <div className="charged-data">$ {numberMask(product.next_charge_value, 2) || 0}</div>
-                        <div className='description'>You'll be charged <br/> next billing cycle <InformationTooltip
-                            description={'This amount is calculated based on your last 30 days ad spend. It\'s updating every hour, so the exact amount of the invoice will be visible right before the end of the current billing cycle.'}/>
-                        </div>
-                    </div>
-                </Fragment>
-            )
-        }
-    }
-
-    function renderButtonsBlock() {
-        if (!mwsConnected || !ppcConnected) {
-            return (
-                <div className="subscribe-btn">
-                    <button className="btn green-btn">
-                        {!mwsConnected && !ppcConnected && <Link to={'/mws'}>Edit Credentials</Link>}
-                        {mwsConnected && !ppcConnected && <Link to={'/ppc'}>Edit Credentials</Link>}
-                    </button>
-                </div>
-            )
-        } else if (!product.has_access && stripeId) {
-            return (
-                <div className="subscribe-btn">
-                    <button className="btn green-btn on-subscribe" onClick={handleSubscribe} disabled={disableButton}>
-                        {disableButton ? <Spin/> : 'Subscribe'}
-                    </button>
-                </div>
-            )
-        }
-    }
-
-    // useEffect(() => {
-    //     setCoupon('');
-    // }, [product])
 
     const columns = [
         {
@@ -114,42 +117,59 @@ const SubscriptionPlan = ({
         },
         {
             title: 'Status',
-            dataIndex: 'age',
-            key: 'age',
+            dataIndex: 'status',
+            key: 'status',
+            render: status => status === 'not_connect' && <div className={'status-field'}>
+                {!mwsConnected && ppcConnected && <Link to={'/connect-mws-account'}>Needs API Connection</Link>}
+                {!ppcConnected && mwsConnected && <Link to={'/connect-ppc-account'}>Needs API Connection</Link>}
+                {!ppcConnected && !mwsConnected && <Link to={'/connect-amazon-account'}>Needs API Connection</Link>}
+            </div>
         },
         {
             title: 'Next invoice date',
             dataIndex: 'next_invoice_at',
             key: 'next_invoice_at',
-            render: date => moment(date).format('MMM DD, YYYY')
+            render: date => date ? moment(date).format('MMM DD, YYYY') : '---'
         },
         {
             title: 'Price',
-            dataIndex: 'address',
-            key: 'address',
+            dataIndex: 'next_charge_value',
+            key: 'next_charge_value',
+            render: (price, product) => <ProductPrice product={product}/>
         },
         {
             title: 'Plan',
-            dataIndex: 'address',
-            key: 'address',
+            dataIndex: 'plan',
+            key: 'plan',
+            render: (plan, product) => product.status === 'not_connect' ? <>---</> : <> ${product.flat_amount || 0} + {product.percent_amount || 0}%
+                last
+                30 <br/> days ad spend</>
         },
         {
             title: 'Last 30-days Ad Spend',
-            dataIndex: 'address',
-            key: 'address',
+            dataIndex: 'quantity',
+            key: 'quantity',
+            render: spend => spend ? <>${numberMask(spend, 2)}</> : '---'
         },
         {
             title: 'Coupon',
-            dataIndex: 'address',
-            key: 'address',
+            dataIndex: 'coupon',
+            key: 'coupon',
+            render: (action, product) => <CouponField
+                applyCoupon={() => {
+                    applyCoupon(product.productId, product.plan_id, coupon)
+                }}
+                setCoupon={setCoupon}
+                product={product}
+            />
         },
     ];
 
-    useEffect(() => {
-        // console.log(product);
 
-    }, [product])
-
+    const notConnectData = [{
+        status: 'not_connect',
+        productName: product.productName
+    }]
 
     return (
         <div className="subscriptions">
@@ -160,14 +180,22 @@ const SubscriptionPlan = ({
             </div>
 
             <Table
-                dataSource={product.productId && [product]}
+                dataSource={(!mwsConnected || !ppcConnected) ? notConnectData : product.productId && [product]}
                 columns={columns}
                 pagination={false}
-                loading={!product.productId}
+                loading={fetching}
             />
 
-            <div className="subscription-actions">
-                {product.has_access && !product.cancelled && <>
+
+            {!fetching && <div className="subscription-actions">
+                {(!mwsConnected || !ppcConnected) && <button disabled className={'btn default'}>Subscribe</button>}
+
+                {mwsConnected && ppcConnected && !product.has_access && stripeId &&
+                <button className="btn default on-subscribe" onClick={handleSubscribe} disabled={disableButton}>
+                    {disableButton ? <Spin/> : 'Subscribe'}
+                </button>}
+
+                {mwsConnected && ppcConnected && product.has_access && !product.cancelled && <>
                     <button className={'btn white bord'} onClick={() => onOpenAccountWindow(product)}>Cancel
                         Subscription
                     </button>
@@ -179,7 +207,7 @@ const SubscriptionPlan = ({
                 <button className={'btn default'} onClick={() => onOpenReactivateWindow(product)}>Reactivate</button>
                 }
             </div>
-        </div>
+            }        </div>
     )
 };
 
