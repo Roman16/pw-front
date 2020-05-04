@@ -4,6 +4,8 @@ import {userService} from '../services/user.services';
 import {notification} from "../components/Notification";
 import moment from "moment";
 import {store} from "../store/store";
+import {Redirect, Route} from "react-router-dom";
+import React from "react";
 
 export const userActions = {
     login,
@@ -27,6 +29,7 @@ function login(user) {
         userService.login(user)
             .then(res => {
                 localStorage.setItem('token', res.access_token);
+                history.push('/ppc/optimization')
 
                 dispatch(setInformation({
                     user: {
@@ -106,15 +109,10 @@ function setMWS(data) {
     };
 }
 
-function unsetAccount(type, id) {
-    return dispatch => {
-        userService[`unset${type}`](id)
-            .then(() => {
-                dispatch({
-                    type: userConstants[`UNSET_AMAZON_${type}`],
-                });
-            })
-    };
+function unsetAccount({type}) {
+    return ({
+        type: userConstants[`UNSET_AMAZON_${type}`],
+    });
 }
 
 function getUserInfo() {

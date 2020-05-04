@@ -7,7 +7,7 @@ import ConnectMws from "../components/ConnectMws/ConnectMws";
 import SuccessPage from "../components/SuccessPage/SuccessPage";
 import {userService} from "../../../../services/user.services";
 import {userActions} from "../../../../actions/user.actions";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const {Step} = Steps;
 
@@ -22,6 +22,10 @@ const ConnectMWSJourney = () => {
     const [fields, setFields] = useState({});
     const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
     const dispatch = useDispatch();
+
+    const {mwsId} = useSelector(state => ({
+        mwsId: state.user.account_links[0].amazon_mws.id
+    }))
 
     const closeJourney = () => {
         history.push('./account-settings')
@@ -41,7 +45,10 @@ const ConnectMWSJourney = () => {
         setConnectMwsStatus('processing');
 
         try {
-            const res = await userService.setMWS(fields);
+            const res = await userService.setMWS({
+                ...fields,
+                ...mwsId && {id: mwsId}
+            });
             dispatch(userActions.setInformation(res))
             setCurrentStep(prevState => prevState + 1)
         } catch (e) {

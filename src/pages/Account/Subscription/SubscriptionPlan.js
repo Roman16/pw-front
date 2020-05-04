@@ -31,7 +31,7 @@ const CouponField = ({applyCoupon, setCoupon, product}) => {
                     <span>Add Coupon</span>
                 </button>
 
-                {product.applied_coupon && <span className="coupon-name">
+                {product.applied_coupon.name !== null && <span className="coupon-name">
               <span>Coupon:</span>
                     {product.applied_coupon.amount_off && <b>${product.applied_coupon.amount_off}</b>}
                     {product.applied_coupon.percent_off && <b>{product.applied_coupon.percent_off}%</b>}
@@ -49,7 +49,7 @@ const ProductPrice = ({product}) => {
             <Link to={'/pricing'}>How it’s calculated?</Link>
         </div>)
 
-    } else if (!product.applied_coupon) {
+    } else if (product.applied_coupon.name == null) {
         return (<div className={'price'}>
             ${numberMask(product.next_charge_value, 2)}
             <br/>
@@ -64,7 +64,6 @@ const ProductPrice = ({product}) => {
             <span className="new-value">
                 ${numberMask(product.next_charge_value - product.applied_coupon.amount_off, 2)}
             </span>
-
             <br/>
             <Link to={'/pricing'}>How it’s calculated?</Link>
         </div>)
@@ -81,6 +80,8 @@ const ProductPrice = ({product}) => {
             <br/>
             <Link to={'/pricing'}>How it’s calculated?</Link>
         </div>)
+    } else {
+        return '---'
     }
 }
 

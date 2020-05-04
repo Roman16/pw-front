@@ -11,7 +11,7 @@
 
   & > .row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     border-radius: 0 0 4px 4px;
     padding: 2.857142857142857rem 2.5em;
     background-color: @white;
@@ -19,6 +19,7 @@
     box-shadow: @default-section-shadow;
     position: relative;
     z-index: 8;
+    overflow: hidden;
 
     .ant-input-affix-wrapper {
       width: 300px;
@@ -75,22 +76,24 @@
       h2 {
         width: 100%;
         height: 5.714285714285714rem;
-        margin: 0;
+        margin: 0 ;
         display: flex;
         align-items: center;
 
         img {
           width: 2.5rem;
           height: 1.5714285714285714rem;
-          margin: 0 0 0 15px;
+          margin: 0 auto 0 15px;
         }
 
         button {
-          margin: 0 0 0 auto;
+          width: 40px;
+          height: 30px;
           display: flex;
           align-items: center;
+          justify-content: center;
 
-          svg {
+          svg:nth-child(2) {
             margin: 0 0 0 10px;
           }
         }
@@ -132,6 +135,7 @@
         }
       }
 
+
       &.opened {
         border-color: #6D6DF6;
 
@@ -139,6 +143,53 @@
           svg:last-child {
             transform: rotate(180deg);
           }
+        }
+      }
+    }
+  }
+}
+
+.disconnect-api-window {
+  .ant-modal-body {
+    padding: 40px;
+
+    h2 {
+      font-size: 1.4285714285714286rem;
+      color: #343C5A;
+      margin-bottom: 1.4285714285714286rem;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.1428571428571428rem;
+      color: #343C5A;
+      margin: 0;
+    }
+
+    form {
+      margin: 2.142857142857143rem 0 0 0;
+      display: flex;
+      flex-direction: column;
+
+      label {
+        display: block;
+        font-size: 1rem;
+        color: #343C5A;
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: flex-end;
+        margin: 2.857142857142857rem 0 0 0;
+
+        .btn {
+          font-weight: 500;
+        }
+
+        .default {
+          margin: 0 0 0 15px;
         }
       }
     }
