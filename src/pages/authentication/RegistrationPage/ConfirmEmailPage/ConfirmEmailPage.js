@@ -31,7 +31,7 @@ const ConfirmEmailPage = (props) => {
                 notification.success({title: 'Email already confirmed'});
 
                 setTimeout(() => {
-                    history.push('/account-settings')
+                    history.push('/welcome')
                 }, 2000)
             } else {
                 setConfirmStatus('dont-confirm');

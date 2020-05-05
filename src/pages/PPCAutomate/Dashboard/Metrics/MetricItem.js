@@ -59,7 +59,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                     </div>
                 </div>
             )
-        } else if (name === 'cpc' || name === 'acos' || name === 'cpa' || name === 'macos' || name==='returns') {
+        } else if (name === 'cpc' || name === 'acos' || name === 'cpa' || name === 'macos' || name === 'returns') {
             return (
                 <InformationTooltip
                     type='custom'
@@ -197,12 +197,12 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
                 {metricInformation.title}
                 {key === 'profit' ?
                     !hasMargin &&
-                    <Tooltip getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode.parentNode}
-                             type='warning' description={<ProfitTooltipDescription/>}/>
+                    <Tooltip
+                        type='warning' description={<ProfitTooltipDescription/>}/>
                     :
                     metricInformation.info &&
-                    <Tooltip getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode.parentNode}
-                             description={metricInformation.info}/>
+                    <Tooltip
+                        description={metricInformation.info}/>
                 }
 
                 <div className="close" onClick={handleRemoveItem}>

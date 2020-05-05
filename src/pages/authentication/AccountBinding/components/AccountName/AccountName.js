@@ -1,6 +1,7 @@
 import React from "react";
 import './AccountName.less';
 import {SVG} from "../../../../../utils/icons";
+import {Input} from "antd";
 
 const AccountName = ({onGoNextStep, onGoBackStep, onChangeInput}) => {
     const onSubmit = (e) => {
@@ -16,7 +17,7 @@ const AccountName = ({onGoNextStep, onGoBackStep, onChangeInput}) => {
             <form action="" onSubmit={onSubmit}>
                 <div className="form-group">
                     <label htmlFor="">Seller Account Name</label>
-                    <input
+                    <Input
                         required
                         type="text"
                         name={'accountName'}

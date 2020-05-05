@@ -2,6 +2,7 @@ import React, {Suspense} from 'react';
 import {Router, Route, Switch, Redirect} from 'react-router-dom';
 import {history} from '../utils/history';
 import RouteLoader from "../components/RouteLoader/RouteLoader";
+import PPCRedirect from "../pages/authentication/AccountBinding/components/ConnectPpc/PPCRedirect";
 
 const LandingAutomation = React.lazy(() => import('../pages/LandingPages/Automation/LandingAutomation'));
 const LandingAffiliates = React.lazy(() => import('../pages/LandingPages/Affiliates/LandingAffiliates'));
@@ -42,6 +43,7 @@ const routers = () => {
                     <Route exact path="/policy" component={PrivacyPolicy}/>
                     <Route exact path="/terms-and-conditions" component={TermsOfUse}/>
                     <Route exact path="/videos" component={Video}/>
+                    <Route exact path="/ppc-redirect" component={PPCRedirect}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login" component={LoginPage}/>
                     <Route exact path="/registration" component={RegistrationPage}/>

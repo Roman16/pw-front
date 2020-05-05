@@ -10,6 +10,7 @@ const DisconnectWindow = ({handleCancel, onDisconnect}) => {
 
         if (inputValue.toLowerCase() === 'disconnect') {
             onDisconnect();
+            setInputValue('');
         } else {
             notification.error({title: 'You typed incorrect value'})
         }

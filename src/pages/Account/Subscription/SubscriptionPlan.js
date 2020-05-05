@@ -98,12 +98,13 @@ const SubscriptionPlan = ({
                               disableButton
                           }) => {
 
-    const {mwsConnected, ppcConnected} = useSelector(state => ({
+    const {mwsConnected, ppcConnected, sellerId} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
-        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false
+        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
+        sellerId: state.user.default_accounts.amazon_mws.seller_id
     }));
 
-    const [coupon, setCoupon] = useState('');
+    const [coupon, setCoupon] = useState(null);
 
 
     function handleSubscribe() {
@@ -120,10 +121,16 @@ const SubscriptionPlan = ({
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            render: status => status === 'not_connect' && <div className={'status-field'}>
-                {!mwsConnected && ppcConnected && <Link to={'/connect-mws-account'}>Needs API Connection</Link>}
-                {!ppcConnected && mwsConnected && <Link to={'/connect-ppc-account'}>Needs API Connection</Link>}
-                {!ppcConnected && !mwsConnected && <Link to={'/connect-amazon-account'}>Needs API Connection</Link>}
+            render: status => <div className={'status-field'}>
+                {status === 'not_connect' && <div className={'error-status'}>
+                    {!mwsConnected && ppcConnected && <Link to={'/connect-mws-account'}>Needs API Connection</Link>}
+                    {!ppcConnected && mwsConnected && <Link to={'/connect-ppc-account'}>Needs API Connection</Link>}
+                    {!ppcConnected && !mwsConnected && <Link to={'/connect-amazon-account'}>Needs API Connection</Link>}
+                </div>}
+
+                {status === 'Ongoing' && <div className="success-status">
+                    {status}
+                </div>}
             </div>
         },
         {
@@ -158,7 +165,7 @@ const SubscriptionPlan = ({
             key: 'coupon',
             render: (action, product) => <CouponField
                 applyCoupon={() => {
-                    applyCoupon(product.productId, product.plan_id, coupon)
+                    (!product.has_access && stripeId) ? getCouponStatus(coupon) : applyCoupon(product.productId, product.plan_id, coupon)
                 }}
                 setCoupon={setCoupon}
                 product={product}
@@ -175,13 +182,16 @@ const SubscriptionPlan = ({
     return (
         <div className="subscriptions">
             <div className="description">
-                <h2>Subscription for Seller ID:</h2>
+                <h2>Subscription for Seller ID: {sellerId || ''}</h2>
                 <p>This is a prepaid plan, and you are paying for the next 30 days of using it.</p>
                 <p>To view your invoices, <a href="">see billing info</a></p>
             </div>
 
             <Table
-                dataSource={(!mwsConnected || !ppcConnected) ? notConnectData : product.productId && [product]}
+                dataSource={(!mwsConnected || !ppcConnected) ? notConnectData : product.productId && [{
+                    ...product,
+                    status: 'Ongoing'
+                }]}
                 columns={columns}
                 pagination={false}
                 loading={fetching}
@@ -208,7 +218,8 @@ const SubscriptionPlan = ({
                 <button className={'btn default'} onClick={() => onOpenReactivateWindow(product)}>Reactivate</button>
                 }
             </div>
-            }        </div>
+            }
+        </div>
     )
 };
 

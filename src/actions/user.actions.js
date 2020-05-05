@@ -29,15 +29,24 @@ function login(user) {
         userService.login(user)
             .then(res => {
                 localStorage.setItem('token', res.access_token);
-                history.push('/ppc/optimization')
 
-                dispatch(setInformation({
-                    user: {
-                        email: user.email
-                    }
-                }));
+                userService.getUserInfo()
+                    .then(userFullInformation => {
+                        dispatch(setInformation(userFullInformation));
 
-                dispatch(getUserInfo());
+                        const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
+                            ppcConnected = userFullInformation.account_links[0].amazon_ppc.is_connected;
+
+                        if (!mwsConnected && !ppcConnected) {
+                            history.push('/connect-amazon-account');
+                        } else if (!mwsConnected && ppcConnected) {
+                            history.push('/connect-mws-account');
+                        } else if (!ppcConnected && mwsConnected) {
+                            history.push('/connect-ppc-account');
+                        } else {
+                            history.push('/ppc/optimization');
+                        }
+                    })
             });
     };
 }
@@ -109,7 +118,7 @@ function setMWS(data) {
     };
 }
 
-function unsetAccount({type}) {
+function unsetAccount(type) {
     return ({
         type: userConstants[`UNSET_AMAZON_${type}`],
     });

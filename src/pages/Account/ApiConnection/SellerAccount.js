@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect} from "react";
 import {SVG} from "../../../utils/icons";
 import USAFlag from '../../../assets/img/flags/usa-flag.svg';
 import {history} from "../../../utils/history";
@@ -14,6 +14,10 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
             history.push('/connect-ppc-account')
         }
     }
+
+    useEffect(() => {
+        console.log(deleteProcessing);
+    }, [deleteProcessing])
 
     return (
         <Fragment>
@@ -42,7 +46,9 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                         <div className="account-action">
                             {account.amazon_mws.is_connected ?
                                 deleteProcessing === 'MWS' ?
-                                    <Spin/>
+                                    <button className={'btn white'} disabled>
+                                        <Spin size={'small'}/>
+                                    </button>
                                     :
                                     <button className={'btn white'}
                                             onClick={() => onDisconnect({
@@ -66,10 +72,15 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
 
                         <div className="account-action">
                             {account.amazon_ppc.is_connected ?
-                                <button className={'btn white'}
-                                        onClick={() => onDisconnect({type: 'PPC', id: account.amazon_ppc.id})}>
-                                    Disconnect
-                                </button>
+                                deleteProcessing === 'PPC' ?
+                                    <button className={'btn white'} disabled>
+                                        <Spin size={'small'}/>
+                                    </button>
+                                    :
+                                    <button className={'btn white'}
+                                            onClick={() => onDisconnect({type: 'PPC', id: account.amazon_ppc.id})}>
+                                        Disconnect
+                                    </button>
                                 :
                                 <button className={'btn default'} onClick={reconnectHandler}>
                                     Reconnect

@@ -13,6 +13,7 @@ const Navigation = ({page}) => {
                 >
                     Account information
                 </NavLink>
+                <div className="border"/>
             </li>
 
             <li className={`current-page ${page === 'subscriptions' ? 'current-page-link' : ''}`}>
@@ -23,6 +24,7 @@ const Navigation = ({page}) => {
                 >
                     Subscriptions
                 </NavLink>
+                <div className="border"/>
             </li>
 
             <li className={`current-page ${page === 'api_connections' ? 'current-page-link' : ''}`}>
@@ -33,6 +35,8 @@ const Navigation = ({page}) => {
                 >
                     API Connection
                 </NavLink>
+
+                <div className="border"/>
             </li>
         </ul>
     );

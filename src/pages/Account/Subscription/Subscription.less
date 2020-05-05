@@ -14,7 +14,7 @@
     background-color: @white;
     margin-bottom: 1.4285714285714286rem;
     box-shadow: @default-section-shadow;
-    z-index: 8;
+    z-index: 5;
     position: relative;
 
     .description {
@@ -72,10 +72,19 @@
       }
 
       .status-field {
-        a {
-          font-size: 1rem;
+        font-size: 1rem;
+
+        .error-status {
           color: #EC7F5C;
-          text-decoration: underline;
+
+          a {
+            color: #EC7F5C;
+            text-decoration: underline;
+          }
+        }
+
+        .success-status {
+          color: #7DD4A1;
         }
       }
 
@@ -86,7 +95,7 @@
 
         .ant-input {
           width: 9.357142857142858rem;
-          height: 32px;
+          height: 2.2857142857142856rem;
           box-sizing: border-box;
         }
 
@@ -108,7 +117,7 @@
           }
 
           &.short {
-            width: 34px;
+            width: 2.2857142857142856rem;
             padding: 0;
             transition: width .1s;
 
