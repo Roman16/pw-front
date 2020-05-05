@@ -5,7 +5,7 @@ import CustomSelect from "../../../../components/Select/Select";
 
 const Option = Select.Option;
 
-const UpdateCompanyInformationWindow = ({onClose, company, onSubmit}) => {
+const UpdateCompanyInformationWindow = ({onClose, company, onSubmit, processing}) => {
     const [companyInformation, changeInformation] = useState(company);
 
     function handleChangeInput({target: {name, value}, target}) {
@@ -137,7 +137,7 @@ const UpdateCompanyInformationWindow = ({onClose, company, onSubmit}) => {
 
                 <div className='button-block'>
                     <button className='btn white' type='button' onClick={onClose}>Cancel</button>
-                    <button className='btn green-btn'>Save</button>
+                    <button className='btn green-btn' disabled={processing}>Save</button>
                 </div>
             </form>
         </div>
