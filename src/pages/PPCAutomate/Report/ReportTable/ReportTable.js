@@ -349,101 +349,100 @@ class ReportTable extends Component {
 
         return (
             <div className="ReportTable">
-                <div className="report-table">
-                    <h3 className="main-title">Changes Report</h3>
-                    <div className="changes-calendar-download">
-                        <div className="total-count">
-                            Today Changes
-                            <span>{todayChanges}</span>
-                        </div>
+                {/*<div className="report-table">*/}
+                {/*    <h3 className="main-title">Changes Report</h3>*/}
+                {/*    <div className="changes-calendar-download">*/}
+                {/*        <div className="total-count">*/}
+                {/*            Today Changes*/}
+                {/*            <span>{todayChanges}</span>*/}
+                {/*        </div>*/}
 
-                        <DatePicker
-                            timeRange={this.timeRange}/>
+                {/*        <DatePicker*/}
+                {/*            timeRange={this.timeRange}/>*/}
 
-                        <Button className="btn default download-btn" onClick={this.downloadFile}>
-                            <span> Download </span>
+                {/*        <Button className="btn default download-btn" onClick={this.downloadFile}>*/}
+                {/*            <span> Download </span>*/}
 
-                            <SVG id='download'/>
-                        </Button>
-                    </div>
+                {/*            <SVG id='download'/>*/}
+                {/*        </Button>*/}
+                {/*    </div>*/}
 
-                    <FreeTrial product={'ppc'}/>
-                </div>
+                {/*</div>*/}
 
-                <div className="tabs desc">
-                    <Slider
-                        dots={false}
-                        infinite={false}
-                        speed={500}
-                        slidesToShow={7}
-                        slidesToScroll={1}
-                        nextArrow={<button>&#8250;</button>}
-                        prevArrow={<button>&#8249;</button>}
-                        responsive={[
-                            {
-                                breakpoint: device ? 2400 : 2000,
-                                settings: {
-                                    slidesToShow: 6,
-                                    slidesToScroll: 1,
-                                }
-                            },
-                            {
-                                breakpoint: device ? 1400 : 1840,
-                                settings: {
-                                    slidesToShow: 5,
-                                    slidesToScroll: 1,
-                                }
-                            },
-                            {
-                                breakpoint: device ? 1350 : 1700,
-                                settings: {
-                                    slidesToShow: 4,
-                                    slidesToScroll: 1
-                                }
-                            },
-                            {
-                                breakpoint: device ? 1100 : 1430,
-                                settings: {
-                                    slidesToShow: 3,
-                                    slidesToScroll: 1
-                                }
-                            },
-                            {
-                                breakpoint: device ? 950 : 1220,
-                                settings: {
-                                    slidesToShow: 2,
-                                    slidesToScroll: 1
-                                }
-                            },
-                            {
-                                breakpoint: device ? 2400 : 1060,
-                                settings: {
-                                    slidesToShow: 1,
-                                    slidesToScroll: 1
-                                }
-                            },
-                        ]}
-                    >
-                        {Object.keys(mainTabs).map((item) => (
-                            <div className={`tab ${activeTab === item && 'active'}`}
-                                 onClick={() => this.handleChangeTab(item)}>
-                                {mainTabs[item].tabName(item, counts, countsWithNew)}
-                            </div>
-                        ))}
-                    </Slider>
-                </div>
+                {/*<div className="tabs desc">*/}
+                {/*    <Slider*/}
+                {/*        dots={false}*/}
+                {/*        infinite={false}*/}
+                {/*        speed={500}*/}
+                {/*        slidesToShow={7}*/}
+                {/*        slidesToScroll={1}*/}
+                {/*        nextArrow={<button>&#8250;</button>}*/}
+                {/*        prevArrow={<button>&#8249;</button>}*/}
+                {/*        responsive={[*/}
+                {/*            {*/}
+                {/*                breakpoint: device ? 2400 : 2000,*/}
+                {/*                settings: {*/}
+                {/*                    slidesToShow: 6,*/}
+                {/*                    slidesToScroll: 1,*/}
+                {/*                }*/}
+                {/*            },*/}
+                {/*            {*/}
+                {/*                breakpoint: device ? 1400 : 1840,*/}
+                {/*                settings: {*/}
+                {/*                    slidesToShow: 5,*/}
+                {/*                    slidesToScroll: 1,*/}
+                {/*                }*/}
+                {/*            },*/}
+                {/*            {*/}
+                {/*                breakpoint: device ? 1350 : 1700,*/}
+                {/*                settings: {*/}
+                {/*                    slidesToShow: 4,*/}
+                {/*                    slidesToScroll: 1*/}
+                {/*                }*/}
+                {/*            },*/}
+                {/*            {*/}
+                {/*                breakpoint: device ? 1100 : 1430,*/}
+                {/*                settings: {*/}
+                {/*                    slidesToShow: 3,*/}
+                {/*                    slidesToScroll: 1*/}
+                {/*                }*/}
+                {/*            },*/}
+                {/*            {*/}
+                {/*                breakpoint: device ? 950 : 1220,*/}
+                {/*                settings: {*/}
+                {/*                    slidesToShow: 2,*/}
+                {/*                    slidesToScroll: 1*/}
+                {/*                }*/}
+                {/*            },*/}
+                {/*            {*/}
+                {/*                breakpoint: device ? 2400 : 1060,*/}
+                {/*                settings: {*/}
+                {/*                    slidesToShow: 1,*/}
+                {/*                    slidesToScroll: 1*/}
+                {/*                }*/}
+                {/*            },*/}
+                {/*        ]}*/}
+                {/*    >*/}
+                {/*        {Object.keys(mainTabs).map((item) => (*/}
+                {/*            <div className={`tab ${activeTab === item && 'active'}`}*/}
+                {/*                 onClick={() => this.handleChangeTab(item)}>*/}
+                {/*                {mainTabs[item].tabName(item, counts, countsWithNew)}*/}
+                {/*            </div>*/}
+                {/*        ))}*/}
+                {/*    </Slider>*/}
+                {/*</div>*/}
 
-                <div className="tabs mob">
-                    <CustomSelect value={activeTab} onChange={(e) => {
-                        this.handleChangeTab(e)
-                    }}>
-                        {Object.keys(mainTabs).map((item) => (
-                            <Option value={item}>
-                                {mainTabs[item].tabName(item, counts, countsWithNew)}
-                            </Option>
-                        ))}
-                    </CustomSelect>
-                </div>
+                {/*<div className="tabs mob">*/}
+                {/*    <CustomSelect value={activeTab} onChange={(e) => {*/}
+                {/*        this.handleChangeTab(e)*/}
+                {/*    }}>*/}
+                {/*        {Object.keys(mainTabs).map((item) => (*/}
+                {/*            <Option value={item}>*/}
+                {/*                {mainTabs[item].tabName(item, counts, countsWithNew)}*/}
+                {/*            </Option>*/}
+                {/*        ))}*/}
+                {/*    </CustomSelect>*/}
+                {/*</div>*/}
 
                 <div className="content">
                     <div className="report-item-table-btn">
