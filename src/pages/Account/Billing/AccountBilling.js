@@ -108,21 +108,24 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
         <Fragment>
             <section className='account-billing-block' id={'user-cards'}>
                 <div className='block-description'>
-                    <h3>
-                        Account billing
-                    </h3>
+                    <div className="col">
+                        <h3>
+                            Account billing
+                        </h3>
 
-                    <span>
+                        <span>
                         Your bills are paid using your <br/> active payment method
                     </span>
-                </div>
+                    </div>
 
-                {haveCard && <div className='user-cards'>
                     {paymentCards.length < 10 &&
                     <button className="add-card" onClick={() => onOpenWindow('updateCard')}>
                         <SVG id={'plus-icon'}/>
                         Add Card
                     </button>}
+                </div>
+
+                {haveCard && <div className='user-cards'>
 
                     <div className='cards-carousel'>
                         <div className='carousel-body'>
@@ -149,7 +152,7 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                             />}
 
                             {paymentCards.length > 1 &&
-                                <i onClick={goNextCard}><SVG id={'right-arrow'}/></i>}
+                            <i onClick={goNextCard}><SVG id={'right-arrow'}/></i>}
                         </div>
 
                         {paymentCards.length > 1 &&

@@ -57,21 +57,27 @@
     justify-content: space-between;
     grid-area: cardBlock;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     height: 100%;
 
-    .user-cards {
+    .block-description {
       display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      grid-area: userCards;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      .col {
+        display: flex;
+        flex-direction: column;
+      }
 
       .add-card {
         font-size: 1rem;
         color: #6D6DF6;
         display: flex;
         align-items: center;
-        margin: 0 33px 35px auto;
+        margin: 5px 2.5rem 0 0;
 
         svg {
           margin: 0 0.8571428571428571rem 0 0;
@@ -81,12 +87,26 @@
           }
         }
       }
+    }
+
+    .user-cards {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      grid-area: userCards;
+      width: max-content;
+      margin: 10px 0 0 auto;
+
 
       .cards-carousel {
+        width: max-content;
+
         .carousel-body {
+          width: max-content;
           display: flex;
           align-items: center;
           position: relative;
+          margin: 0 0 0 auto;
 
           .card-shadow {
             position: absolute;
@@ -437,157 +457,37 @@
     }
   }
 
-  @media (max-width: 1245px) {
+  @media (max-width: 1000px) {
     & {
-      .account-billing-block {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas: "billingDescription billingButtons" "userCards userCards";
+      grid-template-areas: 'cardBlock' 'companyDetails' 'billingHistory';
+      grid-template-columns: 100%;
+    }
+  }
 
-        .user-cards {
-          width: 100%;
-          margin: 30px 0 0 0;
-          justify-content: center;
-
-          .billing-address {
-            width: max-content;
-          }
-        }
+  @media (max-width: 600px) {
+    & {
+      .account-billing-block .user-cards {
+        margin: 15px auto 0;
+      }
+      .account-billing-block .user-cards .cards-carousel .card-block {
+        width: 200px;
+        height: 122px;
       }
 
-      .company-details-block {
-        display: grid;
-        grid-template-areas: "companyDescription companyButtons" "companyInformation companyInformation";
+      .account-billing-block .user-cards .cards-carousel .carousel-body .card-shadow {
+        display: none;
+      }
 
-        .company-information {
-          width: 100%;
-          margin: 20px 0 0 0;
-          justify-content: center;
+      .account-billing-block .user-cards .cards-carousel .carousel-body i:first-child {
+        margin: 0 10px 0 0;
+      }
 
-          .column {
-            width: 28%;
-          }
-        }
+      .account-billing-block .user-cards .cards-carousel .carousel-body i:last-child {
+        margin: 0 0 0 10px;
       }
     }
   }
 
-  @media (max-width: 1100px) {
-    & {
-      .billing-history-block .history-list .custom-table .table-body .table-body__row .table-body__field .card-number {
-        i {
-          display: none;
-        }
-      }
-    }
-  }
-
-  @media (max-width: 700px) {
-    section {
-      flex-direction: column;
-      align-items: center;
-
-      .block-description {
-        width: 100%;
-        text-align: center;
-        height: 150px;
-      }
-
-      .buttons-block {
-        width: max-content;
-        padding: 0;
-      }
-    }
-
-
-    & {
-      .account-billing-block {
-        grid-template-areas: "billingDescription" "billingButtons" "userCards";
-        grid-template-columns: 1fr;
-
-        .user-cards {
-          width: 100%;
-          flex-direction: column;
-          margin: 30px auto 0 auto;
-          padding: 0;
-
-          .cards-carousel {
-            width: 100%;
-            margin: 0;
-
-            .carousel-body {
-              height: 180px;
-              margin: 0 auto;
-            }
-
-            .carousel-pagination {
-              justify-content: center;
-            }
-          }
-
-          .billing-address {
-            width: 100%;
-            text-align: center;
-          }
-        }
-      }
-
-      section .buttons-block {
-        height: max-content;
-        margin: 20px auto 0 auto;
-      }
-
-      section .block-description {
-        height: max-content;
-      }
-    }
-
-    .company-details-block {
-      grid-template-areas: "companyDescription" "companyButtons" "companyInformation";
-      grid-template-columns: 1fr;
-
-      .company-information {
-        width: 100%;
-        justify-content: space-around;
-        padding: 0;
-
-        .column {
-          width: 30%;
-        }
-      }
-    }
-  }
-
-  @media (max-width: 500px) {
-    & {
-      .company-details-block {
-        .company-information {
-          flex-direction: column;
-
-          .column {
-            width: 100%;
-          }
-        }
-      }
-    }
-  }
-
-  @media (max-width: 450px) {
-    & {
-      .account-billing-block {
-        .user-cards {
-          .cards-carousel {
-            min-width: 150px;
-
-            .carousel-body {
-              width: 100%;
-              min-width: 150px;
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
 .ant-drawer {

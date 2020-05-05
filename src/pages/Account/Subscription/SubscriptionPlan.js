@@ -195,6 +195,7 @@ const SubscriptionPlan = ({
                 columns={columns}
                 pagination={false}
                 loading={fetching}
+                scroll={{x: 800}}
             />
 
 
