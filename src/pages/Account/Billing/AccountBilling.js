@@ -7,7 +7,7 @@ import moment from "moment";
 import {allCountries} from '../../../utils/countries';
 import {SVG} from "../../../utils/icons";
 
-const UserCard = ({card: {last4, brand, exp_month, exp_year}, card, onUpdateCardInformation, deleteCard, onSet}) => {
+const UserCard = ({card: {last4, brand, exp_month, exp_year}, card, onUpdateCardInformation, deleteCard, onSet, onSwipe, onStartTouch}) => {
     const menu = (
         <Menu>
             {!card.default && <Menu.Item key="0" onClick={() => onSet(card)}>Default</Menu.Item>}
@@ -19,7 +19,7 @@ const UserCard = ({card: {last4, brand, exp_month, exp_year}, card, onUpdateCard
     );
 
     return (
-        <div className='card-block'>
+        <div className='card-block' onTouchMove={onSwipe} onTouchStart={onStartTouch}>
             <div className="card-header">
                 <div className="card-logo">
                     <img src={brand === 'visa' ? visaLogo : masterLogo} alt=""/>
@@ -84,7 +84,7 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
         if (paymentCards.length === (selectedCardIndex + 1)) {
             setCardIndex(0);
         } else {
-            setCardIndex(selectedCardIndex + 1);
+            setCardIndex(prevIndex => prevIndex + 1);
         }
     }
 
@@ -103,6 +103,43 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
     useEffect(() => {
         setCardIndex(0)
     }, [paymentCards.length]);
+
+    //------------------------
+    //swipe event handler
+    let xDown = null;
+    let yDown = null;
+
+    const handleTouchStart = (evt) => {
+        const firstTouch = evt.touches[0];
+        xDown = firstTouch.clientX;
+        yDown = firstTouch.clientY;
+    }
+
+    const swipeCardHandler = (evt) => {
+        if (!xDown || !yDown) {
+            return;
+        }
+
+        const xUp = evt.touches[0].clientX;
+        const yUp = evt.touches[0].clientY;
+
+        const xDiff = xDown - xUp;
+        const yDiff = yDown - yUp;
+
+
+        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+            if (xDiff > 0) {
+                /* left swipe */
+                goNextCard();
+            } else {
+                /* right swipe */
+                goPrevCard();
+            }
+        }
+        /* reset values */
+        xDown = null;
+        yDown = null;
+    }
 
     return (
         <Fragment>
@@ -149,6 +186,8 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                                 deleteCard={() => targetWindow(true)}
                                 onSet={onSetDefaultCard}
                                 onUpdateCardInformation={onUpdateCardInformation}
+                                onSwipe={swipeCardHandler}
+                                onStartTouch={handleTouchStart}
                             />}
 
                             {paymentCards.length > 1 &&

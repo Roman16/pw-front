@@ -46,14 +46,14 @@ const ProductPrice = ({product}) => {
         return (<div className={'price'}>
             ---
             <br/>
-            <Link to={'/pricing'}>How it’s calculated?</Link>
+            <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
         </div>)
 
     } else if (product.applied_coupon.name == null) {
         return (<div className={'price'}>
             ${numberMask(product.next_charge_value, 2)}
             <br/>
-            <Link to={'/pricing'}>How it’s calculated?</Link>
+            <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
         </div>)
     } else if (product.applied_coupon.amount_off) {
         return (<div className={'price'}>
@@ -65,7 +65,7 @@ const ProductPrice = ({product}) => {
                 ${numberMask(product.next_charge_value - product.applied_coupon.amount_off, 2)}
             </span>
             <br/>
-            <Link to={'/pricing'}>How it’s calculated?</Link>
+            <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
         </div>)
     } else if (product.applied_coupon.percent_off) {
         return (<div className={'price'}>
@@ -78,7 +78,7 @@ const ProductPrice = ({product}) => {
             </span>
 
             <br/>
-            <Link to={'/pricing'}>How it’s calculated?</Link>
+            <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
         </div>)
     } else {
         return '---'
@@ -116,6 +116,7 @@ const SubscriptionPlan = ({
             title: 'Product',
             dataIndex: 'productName',
             key: 'productName',
+            width: '12.857142857142858rem'
         },
         {
             title: 'Status',
@@ -131,19 +132,22 @@ const SubscriptionPlan = ({
                 {status === 'Ongoing' && <div className="success-status">
                     {status}
                 </div>}
-            </div>
+            </div>,
+            width: '12.857142857142858rem'
         },
         {
             title: 'Next invoice date',
             dataIndex: 'next_invoice_at',
             key: 'next_invoice_at',
-            render: date => date ? moment(date).format('MMM DD, YYYY') : '---'
+            render: date => date ? moment(date).format('MMM DD, YYYY') : '---',
+            width: '14.285714285714286rem'
         },
         {
             title: 'Price',
             dataIndex: 'next_charge_value',
             key: 'next_charge_value',
-            render: (price, product) => <ProductPrice product={product}/>
+            render: (price, product) => <ProductPrice product={product}/>,
+            width: '14.285714285714286rem'
         },
         {
             title: 'Plan',
@@ -151,13 +155,15 @@ const SubscriptionPlan = ({
             key: 'plan',
             render: (plan, product) => product.status === 'not_connect' ? <>---</> : <> ${product.flat_amount || 0} + {product.percent_amount || 0}%
                 last
-                30 <br/> days ad spend</>
+                30 <br/> days ad spend</>,
+            width: '14.285714285714286rem'
         },
         {
             title: 'Last 30-days Ad Spend',
             dataIndex: 'quantity',
             key: 'quantity',
-            render: spend => spend ? <>${numberMask(spend, 2)}</> : '---'
+            render: spend => spend ? <>${numberMask(spend, 2)}</> : '---',
+            width: '14.285714285714286rem'
         },
         {
             title: 'Coupon',
@@ -169,7 +175,8 @@ const SubscriptionPlan = ({
                 }}
                 setCoupon={setCoupon}
                 product={product}
-            />
+            />,
+            width: '14.285714285714286rem'
         },
     ];
 
