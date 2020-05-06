@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Spin, Switch} from "antd";
+import {Input, Spin, Switch} from "antd";
 import {useDispatch, useSelector} from 'react-redux';
 import {dashboardServices} from '../../../../services/dashboard.services';
 import './ProductBreakdown.less';
@@ -7,9 +7,11 @@ import ProductsList from "./ProductsList";
 import {dashboardActions} from "../../../../actions/dashboard.actions";
 import {productsActions} from "../../../../actions/products.actions";
 import axios from "axios";
+import {SVG} from "../../../../utils/icons";
 
 const CancelToken = axios.CancelToken;
 let source = null;
+const Search = Input.Search;
 
 const initialFetchParams = {
     page: 1,
@@ -101,15 +103,27 @@ const ProductBreakdown = () => {
     return (
         <div className='product-breakdown'>
             <div className="title">
-                <span> Product Breakdown</span>
+                Product Breakdown
+            </div>
+
+            <div className="filters">
+                <div className="form-group">
+                    <Search
+                        className="search-field"
+                        placeholder={'Search'}
+                        // onChange={e => onSearch(e.target.value)}
+                        data-intercom-target='search-field'
+                        suffix={<SVG id={'search'}/>}
+                    />
+                </div>
 
                 <div className='switch-block'>
-                    On optimization only
-
                     <Switch
                         checked={onlyOptimization}
                         onChange={handleChangeSwitch}
                     />
+
+                    On optimization only
                 </div>
             </div>
 

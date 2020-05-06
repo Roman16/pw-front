@@ -1,44 +1,42 @@
+@import "../../../../style/variables.less";
+
 .product-breakdown {
   width: 70%;
   margin: 0 25px 0 0;
   position: relative;
+  box-shadow: @default-section-shadow;
+  background: #fff;
+  padding: 20px;
+  border-radius: 4px;
 
   & > .title {
     width: 100%;
-    padding: 0 0 0 30px;
     margin: 0 0 10px 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     flex-wrap: wrap;
-    border-left: 2px solid #6D6DF6;
+    font-size: 1.4285714285714286rem;
+    color: #343C5A;
 
-
-    & > span:first-child {
-      font-size: 1.4285714285714286rem;
-      line-height: 2rem;
-      color: #363694;
-      font-weight: 500;
-    }
-
-    .switch-block {
-      display: flex;
-      align-items: center;
-      font-size: 1rem;
-      margin: 0 0 0 20px;
-
-      button {
-        margin: 0 0 0 10px;
-      }
-    }
 
     @media (max-width: 532px) {
       flex-direction: column;
       align-items: flex-start;
+    }
+  }
 
-      .switch-block {
-        margin: 10px 0 0 0;
-      }
+  .filters {
+    display: flex;
+    align-items: center;
+
+    .form-group {
+      width: 25%;
+      height: 20px;
+      margin: 0 20px 0 0;
+    }
+
+    .switch-block {
+
     }
   }
 
@@ -438,6 +436,7 @@
 
 .profit-tooltip-description {
   width: 250px;
+
   .title {
     font-size: 1rem;
     padding: 8px 0;
