@@ -25,8 +25,8 @@ const customDot = (dot) => (
 const FullJourney = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [fields, setFields] = useState({
-        region: 'north_america',
-        account: 'seller_account'
+        account_region: 'north_america',
+        account_type: 'seller_account'
     });
     const dispatch = useDispatch();
 
@@ -87,6 +87,7 @@ const FullJourney = () => {
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
                     onChangeInput={changeInputHandler}
+                    accountName={fields.account_name}
                 />}
 
                 {currentStep === 2 && <SelectRegion

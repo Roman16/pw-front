@@ -40,11 +40,11 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                         <h3>MWS Authorization</h3>
 
                         <div className={`account-status ${account.amazon_mws.is_connected ? 'active' : 'expired'}`}>
-                            {account.amazon_mws.is_connected ? 'Active' : 'Expired'}
+                            {account.amazon_mws.id ? account.amazon_mws.is_connected ? 'Active' : 'Expired' : ''}
                         </div>
 
                         <div className="account-action">
-                            {account.amazon_mws.is_connected ?
+                            {account.amazon_mws.id ? account.amazon_mws.is_connected ?
                                 deleteProcessing === 'MWS' ?
                                     <button className={'btn white'} disabled>
                                         <Spin size={'small'}/>
@@ -61,17 +61,21 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                                 <button className={'btn default'} onClick={reconnectHandler}>
                                     Reconnect
                                 </button>
+                                :
+                                <button className={'btn default'} onClick={reconnectHandler}>
+                                    Connect
+                                </button>
                             }
                         </div>
                     </div>
                     <div className="row">
                         <h3>Advertising API</h3>
                         <div className={`account-status ${account.amazon_ppc.is_connected ? 'active' : 'expired'}`}>
-                            {account.amazon_ppc.is_connected ? 'Active' : 'Expired'}
+                            {account.amazon_ppc.id ? account.amazon_ppc.is_connected ? 'Active' : 'Expired' : ''}
                         </div>
 
                         <div className="account-action">
-                            {account.amazon_ppc.is_connected ?
+                            {account.amazon_ppc.id ? account.amazon_ppc.is_connected ?
                                 deleteProcessing === 'PPC' ?
                                     <button className={'btn white'} disabled>
                                         <Spin size={'small'}/>
@@ -84,6 +88,10 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                                 :
                                 <button className={'btn default'} onClick={reconnectHandler}>
                                     Reconnect
+                                </button>
+                                :
+                                <button className={'btn default'} onClick={reconnectHandler}>
+                                    Connect
                                 </button>
                             }
                         </div>

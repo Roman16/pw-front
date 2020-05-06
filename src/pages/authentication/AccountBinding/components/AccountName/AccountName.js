@@ -3,7 +3,7 @@ import './AccountName.less';
 import {SVG} from "../../../../../utils/icons";
 import {Input} from "antd";
 
-const AccountName = ({onGoNextStep, onGoBackStep, onChangeInput}) => {
+const AccountName = ({onGoNextStep, onGoBackStep, onChangeInput, accountName}) => {
     const onSubmit = (e) => {
         e.preventDefault();
 
@@ -18,9 +18,10 @@ const AccountName = ({onGoNextStep, onGoBackStep, onChangeInput}) => {
                 <div className="form-group">
                     <label htmlFor="">Seller Account Name</label>
                     <Input
+                        value={accountName}
                         required
                         type="text"
-                        name={'accountName'}
+                        name={'account_name'}
                         placeholder={'eg. DSG14HAMO23R2'}
                         onChange={onChangeInput}
                     />
