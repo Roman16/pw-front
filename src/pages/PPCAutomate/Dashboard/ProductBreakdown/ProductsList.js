@@ -78,13 +78,7 @@ export const ProfitTooltipDescription = () => (
 const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationChange, onSelect, selectedProduct, hasMargin}) => {
     const columns = [
         {
-            title: () => (
-                <div className="input-search">
-                    <Input.Search
-                        onChange={onSearchChange}
-                    />
-                </div>
-            ),
+            title: 'Product Name',
             key: 'id',
             dataIndex: 'id',
             width: '200px',
@@ -95,21 +89,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: 'Total Changes',
-            dataIndex: 'total_changes',
-            key: 'total_changes',
-            width: '10em',
-            render: (text) => (
-                <div className='count-changes'>
-                    {numberMask(text) || 0}
-                </div>
-            )
-        },
-        {
-            title: () => <div>Budget <br/> Allocation<Tooltip getPopupContainer={trigger => trigger.parentNode}
-
-                                                              description={'A budget allocation is the amount of funding designated to each of your product.'}
-            /></div>,
+            title: 'Budget Allocation',
             dataIndex: 'budget_allocation',
             key: 'budget_allocation',
             width: '10em',

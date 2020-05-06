@@ -17,6 +17,7 @@
     flex-wrap: wrap;
     font-size: 1.4285714285714286rem;
     color: #343C5A;
+    font-weight: 500;
 
 
     @media (max-width: 532px) {
@@ -31,12 +32,56 @@
 
     .form-group {
       width: 25%;
-      height: 20px;
       margin: 0 20px 0 0;
     }
 
     .switch-block {
+      button {
+        margin: 0 10px 0 0;
+      }
+    }
 
+    .product-selected {
+      display: flex;
+      align-items: center;
+      margin: 0 0 0 auto;
+
+      span {
+        color: #6D6DF6;
+
+        b {
+          font-weight: 500;
+        }
+      }
+
+      .select-switch {
+        display: flex;
+        margin: 0 0 0 15px;
+
+        button {
+          width: 2.2857142857142856rem;
+          height: 2.2857142857142856rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 4px;
+          margin: 0 0 0 3px;
+
+          svg {
+            width: 1.4285714285714286rem;
+            height: 1.4285714285714286rem;
+          }
+
+          &:hover {
+            background: rgba(109, 109, 246, 0.05);
+          }
+
+
+          &.active {
+            background: rgba(109, 109, 246, 0.15);
+          }
+        }
+      }
     }
   }
 

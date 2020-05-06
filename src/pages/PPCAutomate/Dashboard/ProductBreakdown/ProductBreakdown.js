@@ -100,6 +100,8 @@ const ProductBreakdown = () => {
         getProducts();
     }, [fetchParams.page, fetchParams.searchText, fetchParams.onlyOptimization, selectedRangeDate]);
 
+    console.log(selectedProduct);
+
     return (
         <div className='product-breakdown'>
             <div className="title">
@@ -125,17 +127,34 @@ const ProductBreakdown = () => {
 
                     On optimization only
                 </div>
+
+                <div className="product-selected">
+                    <span>
+                       <b>{selectedProduct == null ? fetchParams.totalSize : '1'}</b> selected
+                    </span>
+
+                    <div className="select-switch">
+                        <button className={selectedProduct == null && 'active'}>
+                            <SVG id={'all-selected-icon'}/>
+                        </button>
+
+                        <button className={selectedProduct !== null && 'active'}>
+                            <SVG id={'one-selected-icon'}/>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div className='products-table'>
                 <ProductsList
                     fetchParams={fetchParams}
                     products={products}
+                    selectedProduct={selectedProduct}
+                    hasMargin={hasMargin}
                     onSearchChange={onSearchChange}
                     handlePaginationChange={handlePaginationChange}
                     onSelect={handleSelectProduct}
-                    selectedProduct={selectedProduct}
-                    hasMargin={hasMargin}
+
                 />
             </div>
 

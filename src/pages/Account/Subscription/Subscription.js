@@ -109,6 +109,7 @@ const Subscription = () => {
                 changeButton(false);
             }
         } else {
+            changeButton(false);
             history.push('/account-subscription#user-cards');
             notification.error({title: 'Add card!'})
         }
