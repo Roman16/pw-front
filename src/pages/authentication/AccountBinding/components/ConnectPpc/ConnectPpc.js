@@ -51,8 +51,9 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
         window.addEventListener('message', event => {
             if (event.origin === 'https://front1.profitwhales.com' || event.origin === 'https://profitwhales.com') {
                 if (event.data && event.data.type && event.data.type === 'intercom-snippet__ready') {
-                    console.log(win.location);
-                    if (win.location.search && win.location.search.indexOf('?status=') !== -1) {
+                    if (win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'FAILED') {
+                        setPageStatus('error');
+                    } else if ((win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'SUCCESS') || (win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'IN_PROGRESS')) {
                         dispatch(userActions.setPpcStatus({status: win.location.search.split('?status=')[1]}));
                         setPageStatus('success');
                     } else if (win.location.search && win.location.search.indexOf('?error_message=') !== -1) {
