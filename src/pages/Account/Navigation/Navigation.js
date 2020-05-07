@@ -33,7 +33,7 @@ const Navigation = ({page}) => {
                     exact
                     to="/api-connections"
                 >
-                    API Connection
+                    API Connections
                 </NavLink>
 
                 <div className="border"/>

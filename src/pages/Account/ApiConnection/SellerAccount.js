@@ -22,7 +22,7 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
     return (
         <Fragment>
             <div className={`seller-account ${opened && 'opened'}`}>
-                <h2>Seller Name: {sellerName}
+                <div className={'seller-name'} onClick={onOpenAccount}>Seller Name: {sellerName}
                     <img src={USAFlag} alt=""/>
 
                     {(!account.amazon_mws.is_connected || !account.amazon_ppc.is_connected) &&
@@ -30,10 +30,10 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                         <SVG id={'warningsmall'}/>
                     </div>}
 
-                    <button onClick={onOpenAccount}>
+                    <button >
                         <SVG id={'down'}/>
                     </button>
-                </h2>
+                </div>
 
                 {opened && <div className="account-links">
                     <div className="row">
