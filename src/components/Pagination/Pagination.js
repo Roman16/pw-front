@@ -13,7 +13,8 @@ const Pagination = ({
                         pageSizeOptions,
                         pageSize,
                         totalSize,
-                        listLength
+                        listLength,
+                        processing
                     }) => {
     const [paginationParams, setPaginationParams] = useState({
         page,
@@ -22,17 +23,19 @@ const Pagination = ({
     });
 
     useEffect(() => {
-        setPaginationParams({
-            page,
-            pageSize,
-            listLength
-        })
-    }, [listLength])
+        if (!processing) {
+            setPaginationParams({
+                page,
+                pageSize,
+                listLength
+            })
+        }
+    }, [listLength, processing])
 
 
     const changePageSizeHandler = (size) => {
         onChange({
-            page,
+            page: 1,
             pageSize: size
         })
     }

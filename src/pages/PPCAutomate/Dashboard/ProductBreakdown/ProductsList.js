@@ -76,7 +76,7 @@ export const ProfitTooltipDescription = () => (
 );
 
 
-const ProductsList = ({products, fetchParams, handlePaginationChange, onSelect, selectedProduct, hasMargin}) => {
+const ProductsList = ({fetching,products, fetchParams, handlePaginationChange, onSelect, selectedProduct, hasMargin}) => {
     const columns = [
         {
             title: 'Product Name',
@@ -238,11 +238,12 @@ const ProductsList = ({products, fetchParams, handlePaginationChange, onSelect, 
 
             <Pagination
                 onChange={handlePaginationChange}
-                pageSizeOptions={[10, 50, 100]}
+                pageSizeOptions={[2,10, 50, 100]}
                 pageSize={fetchParams.pageSize}
                 page={fetchParams.page}
                 totalSize={fetchParams.totalSize}
-                listLength={products.length}
+                listLength={products.length ? products.length : 0}
+                processing={fetching}
             />
 
         </div>

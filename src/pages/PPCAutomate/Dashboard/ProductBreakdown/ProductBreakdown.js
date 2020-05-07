@@ -164,6 +164,7 @@ const ProductBreakdown = () => {
                     hasMargin={hasMargin}
                     handlePaginationChange={handlePaginationChange}
                     onSelect={handleSelectProduct}
+                    fetching={fetching}
                 />
             </div>
 
