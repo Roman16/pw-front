@@ -12,7 +12,7 @@ import {history} from "../../../../utils/history";
 import '../components/Steps.less';
 import {userService} from "../../../../services/user.services";
 import {userActions} from "../../../../actions/user.actions";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const {Step} = Steps;
 
@@ -28,6 +28,9 @@ const FullJourney = () => {
         account_region: 'north_america',
         account_type: 'seller_account'
     });
+    const {mwsId} = useSelector(state => ({
+        mwsId: state.user.account_links[0].amazon_mws.id
+    }))
     const dispatch = useDispatch();
 
     const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
@@ -48,7 +51,10 @@ const FullJourney = () => {
         setConnectMwsStatus('processing');
 
         try {
-            const res = await userService.setMWS(fields);
+            const res = await userService.setMWS({
+                ...fields,
+                ...mwsId && {id: mwsId}
+            });
             dispatch(userActions.setInformation(res))
             setCurrentStep(prevState => prevState + 1)
         } catch (e) {

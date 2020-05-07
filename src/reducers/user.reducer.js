@@ -64,7 +64,8 @@ export function user(state = initialState, action) {
                     ...state.account_links[0],
                     amazon_mws: {
                         ...state.account_links[0].amazon_mws,
-                        is_connected: false
+                        is_connected: false,
+                        status: null
                     }
                 }],
                 default_accounts: {
@@ -82,7 +83,8 @@ export function user(state = initialState, action) {
                     ...state.account_links[0],
                     amazon_ppc: {
                         ...state.account_links[0].amazon_ppc,
-                        is_connected: false
+                        is_connected: false,
+                        status: null
                     }
                 }],
                 default_accounts: {

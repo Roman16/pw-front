@@ -28,6 +28,7 @@ const DisconnectWindow = ({handleCancel, onDisconnect}) => {
                 <div className="form-group">
                     <label htmlFor="">Type DISCONNECT to confirm operation</label>
                     <Input
+                        value={inputValue}
                         required
                         placeholder={'Type here'}
                         onChange={e => setInputValue(e.target.value)}
