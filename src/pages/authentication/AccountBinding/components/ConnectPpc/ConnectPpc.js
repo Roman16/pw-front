@@ -50,7 +50,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                 clearInterval(timer);
                 console.log(event);
 
-                if (event.data && event.type && event.type === 'intercom-snippet__ready') {
+                if (event.data && event.data.type && event.data.type === 'intercom-snippet__ready') {
                     console.log(win);
                     win.close();
                     setPageStatus('success');
