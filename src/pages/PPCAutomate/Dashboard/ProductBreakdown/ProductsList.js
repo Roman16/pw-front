@@ -8,6 +8,7 @@ import {round} from "../../../../utils/round";
 import {history} from "../../../../utils/history";
 import {numberMask} from "../../../../utils/numberMask";
 import {SVG} from "../../../../utils/icons";
+import Pagination from "../../../../components/Pagination/Pagination";
 
 const RenderPramsChanges = ({type, product}) => {
     const value = product[type];
@@ -75,13 +76,13 @@ export const ProfitTooltipDescription = () => (
 );
 
 
-const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationChange, onSelect, selectedProduct, hasMargin}) => {
+const ProductsList = ({products, fetchParams, handlePaginationChange, onSelect, selectedProduct, hasMargin}) => {
     const columns = [
         {
             title: 'Product Name',
             key: 'id',
             dataIndex: 'id',
-            width: '200px',
+            width: '260px',
             render: (text, record) => (
                 <ProductItem
                     product={record.product}
@@ -89,14 +90,16 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => <div>Budget Allocation
+            title: () =>
                 <Tooltip
-                    getPopupContainer={trigger => trigger.parentNode}
+                    type={'custom'}
                     description={'A budget allocation is the amount of funding designated to each of your product.'}
-                /></div>,
+                >
+                    <span>Budget Allocation</span>
+                </Tooltip>,
             dataIndex: 'budget_allocation',
             key: 'budget_allocation',
-            width: '10em',
+            width: '100px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -109,14 +112,16 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => <div>Ad Sales Share
+            title: () =>
                 <Tooltip
-                    getPopupContainer={trigger => trigger.parentNode}
+                    type={'custom'}
                     description={'The percentage of sales allocated to the given product.'}
-                /></div>,
+                >
+                    <span>Ad Sales Share</span>
+                </Tooltip>,
             dataIndex: 'sales_share',
             key: 'sales_share',
-            width: '11em',
+            width: '100px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -129,13 +134,15 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => <div>CPA<Tooltip
-                getPopupContainer={trigger => trigger.parentNode}
+            title: () => <Tooltip
+                type={'custom'}
                 description={'Cost to acquire one paying customer on a campaign.'}
-            /></div>,
+            >
+                <span>CPA</span>
+            </Tooltip>,
             dataIndex: 'cpa',
             key: 'cpa',
-            width: '10em',
+            width: '80px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
@@ -148,13 +155,16 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             )
         },
         {
-            title: () => <div>Ad CVR
-                <Tooltip getPopupContainer={trigger => trigger.parentNode}
-                         description={'The Conversion Rate of a campaign is the percentage of people who clicked on an ad and then completed an action/purchase/conversion.'}
-                /></div>,
+            title: () =>
+                <Tooltip
+                    type={'custom'}
+                    description={'The Conversion Rate of a campaign is the percentage of people who clicked on an ad and then completed an action/purchase/conversion.'}
+                >
+                    <span>Ad CVR</span>
+                </Tooltip>,
             dataIndex: 'conversion_rate',
             key: 'conversion_rate',
-            width: '11em',
+            width: '100px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -170,7 +180,7 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            width: '10em',
+            width: '80px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -184,11 +194,12 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
         },
         {
             title: () => (<span>Profit {!hasMargin &&
-            <Tooltip getPopupContainer={trigger => trigger.parentNode}
-                     type='warning' description={<ProfitTooltipDescription/>}/>}</span>),
+            <Tooltip
+                type='warning'
+                description={<ProfitTooltipDescription/>}/>}</span>),
             dataIndex: 'profit',
             key: 'profit',
-            width: '12em',
+            width: '100px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
@@ -214,11 +225,8 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
                 onChangePagination={handlePaginationChange}
                 dataSource={products}
                 columns={columns}
-                currentPage={fetchParams.page}
-                showPagination={true}
-                pageSize={fetchParams.size}
-                totalSize={fetchParams.totalSize}
-                scroll={{x: true}}
+                showPagination={false}
+                scroll={{x: '800px', y: '380px'}}
                 rowClassName={(record) => selectedProduct && (selectedProduct === record.product.id ? 'activated-product' : 'default-product')}
                 rowKey={record => record.product.id}
                 onRow={(record, rowIndex) => {
@@ -226,6 +234,15 @@ const ProductsList = ({products, onSearchChange, fetchParams, handlePaginationCh
                         onClick: () => onSelect(record.product.id)
                     };
                 }}
+            />
+
+            <Pagination
+                onChange={handlePaginationChange}
+                pageSizeOptions={[10, 50, 100]}
+                pageSize={fetchParams.pageSize}
+                page={fetchParams.page}
+                totalSize={fetchParams.totalSize}
+                listLength={products.length}
             />
 
         </div>

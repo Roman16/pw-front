@@ -48,7 +48,8 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
         window.addEventListener('message', event => {
             if (event.origin === 'https://front1.profitwhales.com' || event.origin === 'https://profitwhales.com') {
                 clearInterval(timer);
-
+                console.log(event);
+                console.log(win);
                 win.close();
                 setPageStatus('success');
             }

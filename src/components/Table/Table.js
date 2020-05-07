@@ -26,7 +26,6 @@ const Table = props => {
     <div className="Table">
       <AntTable
         {...props}
-        scroll={{ y: showPagination ? scroll - 80 : scroll }}
         pagination={paginationSettings}
       />
     </div>

@@ -34,13 +34,13 @@ function fetchLineChartData({startDate, endDate, firstMetric, secondMetric, prod
     return api('get', `${dashboardUrls.chartData}${parameters.join('')}`, false, false, cancelToken)
 }
 
-function fetchProducts({page, size = 10, searchText, onlyOptimization, startDate, endDate, cancelToken}) {
+function fetchProducts({page, pageSize = 10, searchText, onlyOptimization, startDate, endDate, cancelToken}) {
     const parameters = [
         startDate ? `&start_date=${startDate}` : '',
         endDate ? `&end_date=${endDate}` : '',
     ];
 
-    return api('get', `${dashboardUrls.products}?size=${size}&page=${page}&only_under_optimization=${onlyOptimization ? 1 : 0}&search_query=${searchText}${parameters.join('')}`, false, false, cancelToken)
+    return api('get', `${dashboardUrls.products}?size=${pageSize}&page=${page}&only_under_optimization=${onlyOptimization ? 1 : 0}&search_query=${searchText}${parameters.join('')}`, false, false, cancelToken)
 }
 
 function fetchBarChartData({startDate, endDate, selectedProduct}) {

@@ -1,0 +1,101 @@
+.pw-pagination {
+  display: flex;
+  align-items: center;
+
+  .page-size {
+    font-size: 1rem;
+    color: #343C5A;
+
+    .custom-select {
+      margin: 0 10px;
+
+      .ant-select-selection {
+        border: 0;
+        display: flex;
+        align-items: center;
+
+        .ant-select-selection__rendered {
+          margin: 0 5px 0 0;
+        }
+
+        .ant-select-selection-selected-value {
+          font-weight: 500;
+          font-size: 1rem;
+          color: #343C5A;
+        }
+
+        .ant-select-arrow {
+          position: initial;
+
+          svg {
+            use {
+              stroke: #343C5A;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .items-count {
+    font-size: 1rem;
+    margin: 0 0 0 60px;
+    color: #343C5A;
+    span {
+      margin: 0 5px;
+    }
+  }
+
+  .pagination-actions {
+    margin: 0 0 0 20px;
+    display: flex;
+    align-items: center;
+
+    button {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        use {
+          stroke: #343C5A;
+        }
+      }
+
+      &.prev-page {
+        margin: 0 10px 0 0;
+
+        svg {
+          transform: rotate(90deg);
+        }
+      }
+
+      &.next-page {
+        svg {
+          transform: rotate(-90deg);
+        }
+      }
+
+      &[disabled] {
+        cursor: initial;
+
+        svg {
+          use {
+            stroke: #C9CBD4;
+          }
+        }
+      }
+    }
+  }
+}
+
+.pagination-select {
+  width: 50px !important;
+
+  li {
+    padding: 5px;
+    font-size: 1rem;
+  }
+}

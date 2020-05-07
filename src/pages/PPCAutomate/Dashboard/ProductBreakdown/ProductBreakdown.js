@@ -13,13 +13,7 @@ const CancelToken = axios.CancelToken;
 let source = null;
 const Search = Input.Search;
 
-const initialFetchParams = {
-    page: 1,
-    size: 4,
-    totalSize: 0,
-    searchText: ''
-};
-
+let prevProductId;
 
 const ProductBreakdown = () => {
     const dispatch = useDispatch();
@@ -30,7 +24,10 @@ const ProductBreakdown = () => {
         hasMargin: state.dashboard.hasMargin || false
     }));
     const [fetchParams, changeFetchParams] = useState({
-            ...initialFetchParams,
+            page: 1,
+            pageSize: 10,
+            totalSize: 0,
+            searchText: '',
             onlyOptimization: onlyOptimization || false
         }),
         [products, updateProductsList] = useState([]);
@@ -89,18 +86,32 @@ const ProductBreakdown = () => {
         }, 1000);
     };
 
-    const handlePaginationChange = page => changeFetchParams({...fetchParams, page: page});
+    const handlePaginationChange = params => changeFetchParams({...fetchParams, ...params});
 
     const handleSelectProduct = (id) => {
         dispatch(dashboardActions.selectProduct(id))
     };
 
+    const selectAllProduct = () => {
+        prevProductId = selectedProduct;
+        dispatch(dashboardActions.selectProduct(null))
+    }
+
+    const selectPrevProduct = () => {
+        if (!prevProductId) {
+            handleSelectProduct(products[0].product.id)
+        } else if (products.find(product => product.product.id === prevProductId)) {
+            handleSelectProduct(prevProductId)
+        } else if (products.length > 0) {
+            handleSelectProduct(products[0].product.id)
+        }
+    }
+
     useEffect(() => {
         source && source.cancel();
         getProducts();
-    }, [fetchParams.page, fetchParams.searchText, fetchParams.onlyOptimization, selectedRangeDate]);
+    }, [fetchParams.page, fetchParams.pageSize, fetchParams.searchText, fetchParams.onlyOptimization, selectedRangeDate]);
 
-    console.log(selectedProduct);
 
     return (
         <div className='product-breakdown'>
@@ -113,7 +124,7 @@ const ProductBreakdown = () => {
                     <Search
                         className="search-field"
                         placeholder={'Search'}
-                        // onChange={e => onSearch(e.target.value)}
+                        onChange={onSearchChange}
                         data-intercom-target='search-field'
                         suffix={<SVG id={'search'}/>}
                     />
@@ -134,11 +145,11 @@ const ProductBreakdown = () => {
                     </span>
 
                     <div className="select-switch">
-                        <button className={selectedProduct == null && 'active'}>
+                        <button className={selectedProduct == null && 'active'} onClick={selectAllProduct}>
                             <SVG id={'all-selected-icon'}/>
                         </button>
 
-                        <button className={selectedProduct !== null && 'active'}>
+                        <button className={selectedProduct !== null && 'active'} onClick={selectPrevProduct}>
                             <SVG id={'one-selected-icon'}/>
                         </button>
                     </div>
@@ -151,10 +162,8 @@ const ProductBreakdown = () => {
                     products={products}
                     selectedProduct={selectedProduct}
                     hasMargin={hasMargin}
-                    onSearchChange={onSearchChange}
                     handlePaginationChange={handlePaginationChange}
                     onSelect={handleSelectProduct}
-
                 />
             </div>
 
