@@ -129,6 +129,10 @@ const SubscriptionPlan = ({
                     {!ppcConnected && !mwsConnected && <Link to={'/connect-amazon-account'}>Needs API Connection</Link>}
                 </div>}
 
+                {status === 'Canceled' && <div className={'error-status'}>
+                    {status}
+                </div>}
+
                 {status === 'Ongoing' && <div className="success-status">
                     {status}
                 </div>}
@@ -195,10 +199,12 @@ const SubscriptionPlan = ({
             </div>
 
             <Table
-                dataSource={(!mwsConnected || !ppcConnected) ? notConnectData : product.productId && [{
-                    ...product,
-                    status: 'Ongoing'
-                }]}
+                dataSource={
+                    (!mwsConnected || !ppcConnected) ? notConnectData : product.productId && [{
+                        ...product,
+                        status: (product.grace_period && product.grace_period.on_grace_period) ? 'Canceled' : 'Ongoing'
+                    }]
+                }
                 columns={columns}
                 pagination={false}
                 loading={fetching}
