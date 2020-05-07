@@ -49,10 +49,12 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
             if (event.origin === 'https://front1.profitwhales.com' || event.origin === 'https://profitwhales.com') {
                 clearInterval(timer);
                 console.log(event);
-                console.log(win);
 
-                // win.close();
-                // setPageStatus('success');
+                if (event.data && event.type && event.type === 'intercom-snippet__ready') {
+                    console.log(win);
+                    win.close();
+                    setPageStatus('success');
+                }
             }
         })
     }
