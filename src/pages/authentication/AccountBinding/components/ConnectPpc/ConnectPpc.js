@@ -4,6 +4,8 @@ import {Link} from "react-router-dom";
 import {SVG} from "../../../../../utils/icons";
 import {useSelector} from "react-redux";
 import loader from '../../../../../assets/img/loader.svg';
+import {userActions} from "../../../../../actions/user.actions";
+import {notification} from "../../../../../components/Notification";
 
 
 const popupCenter = ({url, title, w, h}) => {
@@ -52,8 +54,14 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
 
                 if (event.data && event.data.type && event.data.type === 'intercom-snippet__ready') {
                     console.log(win.location);
-                    // win.close();
-                    setPageStatus('success');
+                    if (win.location.search && win.location.search.indexOf('?status=') !== -1) {
+                        userActions.setPpcStatus({status: win.location.search.split('?status=')[1]});
+                        setPageStatus('success');
+                    } else if (win.location.search && win.location.search.indexOf('?error_message=') !== -1) {
+                        notification.error({title: decodeURIComponent(win.location.search.split('?error_message=')[1].split('+').join(' '))})
+                        setPageStatus('error');
+                    }
+                    win.close();
                 }
             }
         })

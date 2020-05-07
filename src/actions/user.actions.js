@@ -214,8 +214,6 @@ function updateUserInformation(user) {
 }
 
 function setPpcStatus(status) {
-    history.push('/ppc/optimization');
-
     return {
         type: userConstants.SET_PPC_STATUS,
         payload: status
