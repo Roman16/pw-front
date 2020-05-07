@@ -51,8 +51,8 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                 console.log(event);
 
                 if (event.data && event.data.type && event.data.type === 'intercom-snippet__ready') {
-                    console.log(win);
-                    win.close();
+                    console.log(win.location);
+                    // win.close();
                     setPageStatus('success');
                 }
             }
