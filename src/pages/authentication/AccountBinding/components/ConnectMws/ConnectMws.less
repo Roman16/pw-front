@@ -49,11 +49,14 @@
 
   .mws-credentials {
     display: flex;
+    flex-wrap: wrap;
 
     .form-group {
       display: flex;
       flex-direction: column;
       flex: 1;
+      min-width: 175px;
+      margin-bottom: 10px;
 
       &:first-child {
         margin-right: 2.142857142857143rem;
@@ -73,6 +76,16 @@
         box-sizing: border-box;
         border-radius: 4px;
         padding: 0 10px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      & {
+        flex-direction: column;
+
+        .form-group {
+          margin: 0 0 10px 0 !important;
+        }
       }
     }
   }

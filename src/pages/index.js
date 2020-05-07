@@ -11,25 +11,11 @@ import RouteLoader from "../components/RouteLoader/RouteLoader";
 import ErrorBar from "../components/ErrorBar/ErrorBar";
 import WelcomePage from "./authentication/AccountBinding/WelcomePage/WelcomePage";
 
-// import Optimization from "./PPCAutomate/Optimization/Optimization";
-// import Report from "./PPCAutomate/Report/Report";
-// import ProductSettings from "./PPCAutomate/ProductSettings/ProductSettings";
-// import MWS from "./authentication/AccountBinding/MWS/MWS";
-// import PPC from "./authentication/AccountBinding/PPC/PPC";
-// import Dashboard from "./PPCAutomate/Dashboard/Dashboard";
-// import Information from "./Account/Information/Information";
-// import Billing from "./Account/Billing/Billing";
-// import Subscription from "./Account/Subscription/Subscription";
-// import Home from "./Home/Home";
-// import Scanner from "./PPCAutomate/Scanner/Scanner";
-// import Dayparting from "./PPCAutomate/Dayparting/Dayparting";
 
 
 const Optimization = React.lazy(() => import('./PPCAutomate/Optimization/Optimization'));
 const Report = React.lazy(() => import('./PPCAutomate/Report/Report'));
 const ProductSettings = React.lazy(() => import('./PPCAutomate/ProductSettings/ProductSettings'));
-const MWS = React.lazy(() => import('./authentication/AccountBinding/MWS/MWS'));
-const PPC = React.lazy(() => import('./authentication/AccountBinding/PPC/PPC'));
 const Dashboard = React.lazy(() => import('./PPCAutomate/Dashboard/Dashboard'));
 const Information = React.lazy(() => import('./Account/Information/Information'));
 const ApiConnection = React.lazy(() => import('./Account/ApiConnection/ApiConnection'));
@@ -189,9 +175,6 @@ const AuthorizedUser = (props) => {
                                     path="/ppc/scanner"
                                     component={Scanner}
                                 />
-
-                                <Route exact path="/mws" component={MWS}/>
-                                <Route exact path="/ppc" component={PPC}/>
 
                                 <Route exact path="/connect-amazon-account" component={FullJourney}/>
                                 <Route exact path="/connect-mws-account" component={ConnectMWS}/>
