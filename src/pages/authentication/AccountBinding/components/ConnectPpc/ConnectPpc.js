@@ -50,6 +50,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                 clearInterval(timer);
                 console.log(event);
                 console.log(win);
+
                 // win.close();
                 // setPageStatus('success');
             }
