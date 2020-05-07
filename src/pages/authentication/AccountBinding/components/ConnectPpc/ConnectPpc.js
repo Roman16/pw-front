@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from "react";
 import './ConnectPpc.less';
 import {Link} from "react-router-dom";
 import {SVG} from "../../../../../utils/icons";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import loader from '../../../../../assets/img/loader.svg';
 import {userActions} from "../../../../../actions/user.actions";
 import {notification} from "../../../../../components/Notification";
@@ -30,6 +30,7 @@ const popupCenter = ({url, title, w, h}) => {
 
 const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
     const [pageStatus, setPageStatus] = useState('connect');
+    const dispatch = useDispatch();
 
     const {ppcLink} = useSelector(state => ({
         ppcLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.connect_link : null,
@@ -49,19 +50,17 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
 
         window.addEventListener('message', event => {
             if (event.origin === 'https://front1.profitwhales.com' || event.origin === 'https://profitwhales.com') {
-                clearInterval(timer);
-                console.log(event);
-
                 if (event.data && event.data.type && event.data.type === 'intercom-snippet__ready') {
                     console.log(win.location);
                     if (win.location.search && win.location.search.indexOf('?status=') !== -1) {
-                        userActions.setPpcStatus({status: win.location.search.split('?status=')[1]});
+                        dispatch(userActions.setPpcStatus({status: win.location.search.split('?status=')[1]}));
                         setPageStatus('success');
                     } else if (win.location.search && win.location.search.indexOf('?error_message=') !== -1) {
                         notification.error({title: decodeURIComponent(win.location.search.split('?error_message=')[1].split('+').join(' '))})
                         setPageStatus('error');
                     }
                     win.close();
+                    clearInterval(timer);
                 }
             }
         })
