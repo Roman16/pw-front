@@ -36,7 +36,7 @@ const FullJourney = () => {
     const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
 
     const goNextStep = () => {
-        if (sessionStorage.getItem('userFromAgency') && currentStep === 4) {
+        if (localStorage.getItem('userFromAgency') && currentStep === 4) {
             history.push('/success-connect');
         } else {
             setCurrentStep(prevState => prevState + 1);
