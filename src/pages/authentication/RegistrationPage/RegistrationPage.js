@@ -25,7 +25,6 @@ fbq('track', 'PageView');`
     useEffect(() => {
         if(props.match.params.tag && props.match.params.tag === 'from-agency') {
             sessionStorage.setItem('userFromAgency', 'true');
-            console.log(props.match.params.tag);
         }
     }, [])
 

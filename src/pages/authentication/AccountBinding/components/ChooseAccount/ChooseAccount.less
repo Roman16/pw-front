@@ -3,7 +3,10 @@
 .amazon-connect .choose-account {
   .accounts-type-list {
     display: flex;
-    flex-wrap: wrap;
+
+    @media (max-width: 1200px) {
+      flex-wrap: wrap;
+    }
 
     .account-type {
       min-width: 15.5rem;
@@ -13,7 +16,7 @@
       position: relative;
 
       &:last-child {
-        margin: 0;
+        margin-right: 0;
       }
 
       h3 {

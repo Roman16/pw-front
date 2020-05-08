@@ -69,7 +69,7 @@ const ConfirmEmailPage = (props) => {
                     localStorage.setItem('token', res.access_token);
 
                     setTimeout(() => {
-                        history.push('/account-settings')
+                        history.push('/welcome')
                     }, 1)
                 })
                 .catch(() => {
