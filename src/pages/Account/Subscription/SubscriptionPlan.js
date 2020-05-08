@@ -136,6 +136,8 @@ const SubscriptionPlan = ({
                 {status === 'Ongoing' && <div className="success-status">
                     {status}
                 </div>}
+
+                {!status && '---'}
             </div>,
             width: '12.857142857142858rem'
         },

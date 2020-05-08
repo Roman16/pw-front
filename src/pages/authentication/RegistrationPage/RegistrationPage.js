@@ -22,12 +22,6 @@ fbq('init', '2628499780566506');
 fbq('track', 'PageView');`
     });
 
-    useEffect(() => {
-        if(props.match.params.tag && props.match.params.tag === 'from-agency') {
-            localStorage.setItem('userFromAgency', 'true');
-        }
-    }, [])
-
     return (
         <div className="auth-page">
             <div className="registration-page">
@@ -41,7 +35,9 @@ fbq('track', 'PageView');`
                         <h4>Getting started with ProfitWhales is <br/> easy and takes a few steps!</h4>
                     </div>
 
-                    <RegistrationPageForm/>
+                    <RegistrationPageForm
+                        match={props.match}
+                    />
 
                     <ul>
                         <li>No credit card required</li>

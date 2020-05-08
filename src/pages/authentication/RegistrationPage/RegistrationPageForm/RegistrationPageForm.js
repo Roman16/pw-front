@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import {Form, Input, Spin} from 'antd';
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -66,6 +66,10 @@ class RegistrationPage extends Component {
             });
             return;
         } else {
+                if(this.props.match.params.tag && this.props.match.params.tag === 'from-agency') {
+                    localStorage.setItem('userFromAgency', email);
+                }
+
             this.props.regist({
                 name,
                 last_name,

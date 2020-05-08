@@ -28,15 +28,16 @@ const FullJourney = () => {
         account_region: 'north_america',
         account_type: 'seller_account'
     });
-    const {mwsId} = useSelector(state => ({
-        mwsId: state.user.account_links[0].amazon_mws.id
+    const {mwsId, userEmail} = useSelector(state => ({
+        mwsId: state.user.account_links[0].amazon_mws.id,
+        userEmail: state.user.user.email
     }))
     const dispatch = useDispatch();
 
     const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
 
     const goNextStep = () => {
-        if (localStorage.getItem('userFromAgency') && currentStep === 4) {
+        if (localStorage.getItem('userFromAgency') && localStorage.getItem('userFromAgency') === userEmail && currentStep === 4) {
             history.push('/success-connect');
         } else {
             setCurrentStep(prevState => prevState + 1);
