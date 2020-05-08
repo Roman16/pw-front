@@ -227,7 +227,7 @@ const ProductsList = ({fetching,products, fetchParams, handlePaginationChange, o
                 columns={columns}
                 showPagination={false}
                 scroll={{x: '800px', y: '380px'}}
-                rowClassName={(record) => selectedProduct && (selectedProduct === record.product.id ? 'activated-product' : 'default-product')}
+                rowClassName={(record) => ((selectedProduct == null || selectedProduct === record.product.id) ? 'activated-product' : 'default-product')}
                 rowKey={record => record.product.id}
                 onRow={(record, rowIndex) => {
                     return {
