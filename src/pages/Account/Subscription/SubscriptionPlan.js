@@ -202,7 +202,8 @@ const SubscriptionPlan = ({
                 dataSource={
                     (!mwsConnected || !ppcConnected) ? notConnectData : product.productId && [{
                         ...product,
-                        status: (product.grace_period && product.grace_period.on_grace_period) ? 'Canceled' : 'Ongoing'
+                        ...product.grace_period && product.grace_period.on_grace_period && {status: 'Canceled'},
+                        ...product.has_access && !product.cancelled && {status: 'Ongoing'},
                     }]
                 }
                 columns={columns}
@@ -221,8 +222,8 @@ const SubscriptionPlan = ({
                 </button>}
 
                 {mwsConnected && ppcConnected && product.has_access && !product.cancelled && <>
-                    <button className={'btn white bord'} onClick={() => onOpenAccountWindow(product)}>Cancel
-                        Subscription
+                    <button className={'btn white bord'} onClick={() => onOpenAccountWindow(product)}>
+                        Cancel Subscription
                     </button>
 
                     <p>You will have access to the software until the end of this billing cycle.</p>
