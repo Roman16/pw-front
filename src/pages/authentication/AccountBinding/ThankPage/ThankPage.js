@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './ThankPage.less';
 import image from '../../../../assets/img/success-connect-full.svg'
 import Header from "../../../LandingPages/components/Header/Header";
 
 const ThankPage = () => {
+
+    useEffect(() => {
+        localStorage.removeItem('userFromAgency');
+    }, [])
 
     return (
         <div className={'thank-connect-page'}>
