@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import './RegistrationPage.less';
 import '../LoginPage/LoginPage.less';
@@ -8,7 +8,7 @@ import logo from '../../../assets/img/ProfitWhales-logo-white.svg';
 import {history} from "../../../utils/history";
 import useScript from "../../../utils/useScript";
 
-const RegistrationPage = () => {
+const RegistrationPage = (props) => {
     useScript({
         funk: `!function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -21,6 +21,13 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 fbq('init', '2628499780566506');
 fbq('track', 'PageView');`
     });
+
+    useEffect(() => {
+        if(props.match.params.tag && props.match.params.tag === 'from-agency') {
+            sessionStorage.setItem('userFromAgency', 'true');
+            console.log(props.match.params.tag);
+        }
+    }, [])
 
     return (
         <div className="auth-page">

@@ -35,7 +35,13 @@ const FullJourney = () => {
 
     const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
 
-    const goNextStep = () => setCurrentStep(prevState => prevState + 1)
+    const goNextStep = () => {
+        if (sessionStorage.getItem('userFromAgency') && currentStep === 4) {
+            history.push('/success-connect');
+        } else {
+            setCurrentStep(prevState => prevState + 1);
+        }
+    }
 
     const goBackStep = () => setCurrentStep(prevState => prevState - 1)
 
@@ -67,7 +73,7 @@ const FullJourney = () => {
     }
 
     const closeJourney = () => {
-        history.push('./welcome')
+        history.push('/welcome')
     }
 
     return (
