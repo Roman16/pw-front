@@ -37,8 +37,8 @@ const MainChart = () => {
     const timeRange = (start, end) => {
         if (start) {
             dispatch(dashboardActions.selectDateRange({
-                    startDate: moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
-                    endDate: end ? moment(end, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]') : moment(start, 'DD-MM-YYYY').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+                    startDate: moment.tz(`${moment(start, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString(),
+                    endDate: moment.tz(`${moment(end, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
                 }
             ))
         } else {
@@ -61,8 +61,8 @@ const MainChart = () => {
             source = CancelToken.source();
 
             dashboardServices.fetchLineChartData({
-                startDate: selectedRangeDate.startDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.startDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
-                endDate: selectedRangeDate.endDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.endDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
+                startDate: selectedRangeDate.startDate,
+                endDate: selectedRangeDate.endDate,
                 firstMetric: activeMetrics[0] ? activeMetrics[0].key : null,
                 secondMetric: activeMetrics[1] ? activeMetrics[1].key : null,
                 productId: selectedProduct,
