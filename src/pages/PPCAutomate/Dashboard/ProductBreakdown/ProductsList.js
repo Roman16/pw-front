@@ -85,7 +85,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
             title: 'Product Name',
             key: 'id',
             dataIndex: 'id',
-            width: '375px',
+            width: '26.785714285714285rem',
             render: (text, record) => (
                 <ProductItem
                     product={record.product}
@@ -102,7 +102,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
                 </Tooltip>,
             dataIndex: 'budget_allocation',
             key: 'budget_allocation',
-            minWidth: '150px',
+            minWidth: '10.714285714285714rem',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -124,7 +124,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
                 </Tooltip>,
             dataIndex: 'sales_share',
             key: 'sales_share',
-            minWidth: '130px',
+            minWidth: '9.285714285714286rem',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -145,7 +145,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
             </Tooltip>,
             dataIndex: 'cpa',
             key: 'cpa',
-            minWidth: '80px',
+            minWidth: '10rem',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
@@ -167,7 +167,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
                 </Tooltip>,
             dataIndex: 'conversion_rate',
             key: 'conversion_rate',
-            minWidth: '100px',
+            minWidth: '7.142857142857143rem',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -183,7 +183,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            minWidth: '80px',
+            minWidth: '7.142857142857143rem',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -202,7 +202,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
                 description={<ProfitTooltipDescription/>}/>}</span>),
             dataIndex: 'profit',
             key: 'profit',
-            minWidth: '100px',
+            minWidth: '10.714285714285714rem',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
