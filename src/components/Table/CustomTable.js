@@ -20,6 +20,7 @@ const CustomTable = ({
                          pageSize,
                          showSizeChanger = false,
                          rowClassName,
+                         rowClick,
                          onChangeSorter,
                          sorterColumn
                      }) => {
@@ -72,6 +73,7 @@ const CustomTable = ({
                             <div
                                 className={`table-body__row ${rowClassName && rowClassName(report)}`}
                                 key={`report_${index}_`}
+                                onClick={() => rowClick && rowClick(report, index)}
                             >
                                 {columns.map((item) => {
 

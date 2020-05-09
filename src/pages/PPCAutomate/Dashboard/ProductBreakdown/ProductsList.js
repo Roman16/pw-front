@@ -9,6 +9,9 @@ import {history} from "../../../../utils/history";
 import {numberMask} from "../../../../utils/numberMask";
 import {SVG} from "../../../../utils/icons";
 import Pagination from "../../../../components/Pagination/Pagination";
+import CustomTable from "../../../../components/Table/CustomTable";
+import {dateField, indexField} from "../../Report/ReportTable/Tables/const";
+import {allColumnsOrder} from "../../Report/ReportTable/Tables/allColumnsOrder";
 
 const RenderPramsChanges = ({type, product}) => {
     const value = product[type];
@@ -19,7 +22,7 @@ const RenderPramsChanges = ({type, product}) => {
                 <div className='product-metric-changes up'>
                     <div className='down-changes'>
                         0%
-                        <div className='horizontal-line-icon'></div>
+                        <div className='horizontal-line-icon'/>
                     </div>
                 </div>
             )
@@ -76,13 +79,13 @@ export const ProfitTooltipDescription = () => (
 );
 
 
-const ProductsList = ({fetching,products, fetchParams, handlePaginationChange, onSelect, selectedProduct, hasMargin}) => {
+const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, onSelect, selectedProduct, hasMargin}) => {
     const columns = [
         {
             title: 'Product Name',
             key: 'id',
             dataIndex: 'id',
-            width: '260px',
+            width: '375px',
             render: (text, record) => (
                 <ProductItem
                     product={record.product}
@@ -99,7 +102,7 @@ const ProductsList = ({fetching,products, fetchParams, handlePaginationChange, o
                 </Tooltip>,
             dataIndex: 'budget_allocation',
             key: 'budget_allocation',
-            width: '100px',
+            minWidth: '150px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -121,7 +124,7 @@ const ProductsList = ({fetching,products, fetchParams, handlePaginationChange, o
                 </Tooltip>,
             dataIndex: 'sales_share',
             key: 'sales_share',
-            width: '100px',
+            minWidth: '130px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -142,7 +145,7 @@ const ProductsList = ({fetching,products, fetchParams, handlePaginationChange, o
             </Tooltip>,
             dataIndex: 'cpa',
             key: 'cpa',
-            width: '80px',
+            minWidth: '80px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
@@ -164,7 +167,7 @@ const ProductsList = ({fetching,products, fetchParams, handlePaginationChange, o
                 </Tooltip>,
             dataIndex: 'conversion_rate',
             key: 'conversion_rate',
-            width: '100px',
+            minWidth: '100px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -180,7 +183,7 @@ const ProductsList = ({fetching,products, fetchParams, handlePaginationChange, o
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            width: '80px',
+            minWidth: '80px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -199,7 +202,7 @@ const ProductsList = ({fetching,products, fetchParams, handlePaginationChange, o
                 description={<ProfitTooltipDescription/>}/>}</span>),
             dataIndex: 'profit',
             key: 'profit',
-            width: '100px',
+            minWidth: '100px',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
@@ -221,31 +224,23 @@ const ProductsList = ({fetching,products, fetchParams, handlePaginationChange, o
 
     return (
         <div>
-            <Table
+            <CustomTable
                 onChangePagination={handlePaginationChange}
                 dataSource={products}
                 columns={columns}
-                showPagination={false}
-                scroll={{x: '800px', y: '380px'}}
                 rowClassName={(record) => ((selectedProduct == null || selectedProduct === record.product.id) ? 'activated-product' : 'default-product')}
-                rowKey={record => record.product.id}
-                onRow={(record, rowIndex) => {
-                    return {
-                        onClick: () => onSelect(record.product.id)
-                    };
-                }}
+                rowClick={(record, rowIndex) => onSelect(record.product.id)}
             />
 
             <Pagination
                 onChange={handlePaginationChange}
-                pageSizeOptions={[2,10, 50, 100]}
+                pageSizeOptions={[10, 50, 100]}
                 pageSize={fetchParams.pageSize}
                 page={fetchParams.page}
                 totalSize={fetchParams.totalSize}
                 listLength={products.length ? products.length : 0}
                 processing={fetching}
             />
-
         </div>
     )
 };
