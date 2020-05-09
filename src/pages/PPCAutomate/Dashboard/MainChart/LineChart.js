@@ -15,33 +15,6 @@ import {
 import ChartTooltip from "./ChartTooltip";
 import moment from "moment";
 
-const CustomizedAxisTick = (props) => {
-    const {
-        x, y, stroke, payload,
-    } = props;
-
-    return (
-        <g transform={`translate(${x},${y})`}>
-            <text x={0} y={0} dy={20}>{moment(payload.value).format('MMM DD')}</text>
-        </g>
-    );
-};
-
-const ReferenceCustomLabel = props => {
-    const textClass = props.text === 'started' ? 'started-optimization' : 'paused-optimization';
-
-    return (
-        <Fragment>
-            <text x={props.viewBox.x} y={20} className={textClass}>
-                Optimisation
-            </text>
-            <text x={props.viewBox.x} y={35} className={textClass}>
-                {props.text}
-            </text>
-        </Fragment>
-    )
-};
-
 const animationDuration = 1000,
     dashedLineAnimationDuration = 1000,
     animationBegin = 1000,

@@ -20,7 +20,7 @@
     font-size: 1.4285714285714286rem;
     color: #343C5A;
     font-weight: 500;
-    padding: 0 1.4285714285714286rem;
+    padding: 0 1.4285714285714286rem 0 1.7142857142857142rem;
 
 
     @media (max-width: 532px) {
@@ -33,11 +33,16 @@
     display: flex;
     align-items: center;
     margin: 0 0 1.4285714285714286rem 0;
-    padding: 0 1.4285714285714286rem;
+    padding: 0 1.4285714285714286rem 0 0;
 
     .form-group {
-      width: 26.785714285714285rem;
+      width: 375px;
       margin: 0 20px 0 0;
+      padding: 0 0 0 1.7142857142857142rem;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        width: 297px;
+      }
     }
 
     .switch-block {
@@ -128,7 +133,7 @@
 
         &:first-child {
           justify-content: flex-start;
-          padding-left: 1.4285714285714286rem;
+          padding-left: 1.7142857142857142rem;
         }
 
         &:last-child {
@@ -146,7 +151,7 @@
 
           .table-body__field {
             &:first-child {
-              border-left: 4px solid rgba(245, 245, 255, 0.5);
+              border-left: 0.2857142857142857rem solid rgba(245, 245, 255, 0.5);
             }
           }
         }
@@ -156,7 +161,7 @@
 
           .table-body__field {
             &:first-child {
-              border-left: 4px solid #6D6DF6;
+              border-left: 0.2857142857142857rem solid #6D6DF6;
             }
           }
         }
@@ -169,7 +174,7 @@
             justify-content: flex-start;
             padding-left: 1.4285714285714286rem;
             border-right: 1px solid #C9CBD4;
-            border-left: 4px solid #fff;
+            border-left: 0.2857142857142857rem solid #fff;
           }
 
           &:last-child {
@@ -243,6 +248,7 @@
             color: #343C5A;
             display: flex;
             flex-direction: column;
+            align-items: flex-end;
 
             .product-metric-changes {
               & > div {
