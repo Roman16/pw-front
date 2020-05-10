@@ -14,6 +14,7 @@
     align-items: center;
     font-size: 1rem;
 
+
     svg {
       width: 15px;
       min-width: 15px;
@@ -32,6 +33,15 @@
       height: 32px;
       min-width: 150px;
       margin: 0 0 0 30px;
+    }
+
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+
+      a {
+        margin: 0;
+      }
     }
   }
 
