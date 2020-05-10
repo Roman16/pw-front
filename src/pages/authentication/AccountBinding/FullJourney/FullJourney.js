@@ -28,9 +28,11 @@ const FullJourney = () => {
         account_region: 'north_america',
         account_type: 'seller_account'
     });
-    const {mwsId, userEmail} = useSelector(state => ({
+    const {mwsId, userEmail, mwsConnected, ppcConnected} = useSelector(state => ({
         mwsId: state.user.account_links[0].amazon_mws.id,
-        userEmail: state.user.user.email
+        userEmail: state.user.user.email,
+        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
+        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
     }))
     const dispatch = useDispatch();
 
@@ -75,6 +77,14 @@ const FullJourney = () => {
 
     const closeJourney = () => {
         history.push('/welcome')
+    }
+
+    if (mwsConnected && !ppcConnected) {
+        history.push('./connect-ppc-account');
+    } else if (!mwsConnected && ppcConnected) {
+        history.push('./connect-mws-account');
+    } else if (mwsConnected && ppcConnected) {
+        history.push('./api-connections');
     }
 
     return (

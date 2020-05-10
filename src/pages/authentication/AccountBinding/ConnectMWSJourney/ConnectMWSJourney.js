@@ -23,12 +23,13 @@ const ConnectMWSJourney = () => {
     const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
     const dispatch = useDispatch();
 
-    const {mwsId} = useSelector(state => ({
-        mwsId: state.user.account_links[0].amazon_mws.id
+    const {mwsId, mwsConnected} = useSelector(state => ({
+        mwsId: state.user.account_links[0].amazon_mws.id,
+        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
     }))
 
     const closeJourney = () => {
-        history.push('./account-settings')
+        history.push('./api-connections')
     }
 
     const goNextStep = () => setCurrentStep(prev => prev + 1);
@@ -58,6 +59,10 @@ const ConnectMWSJourney = () => {
 
     const tryAgainMws = () => {
         setConnectMwsStatus('connect')
+    }
+
+    if(mwsConnected) {
+        history.push('/api-connections')
     }
 
     return (
