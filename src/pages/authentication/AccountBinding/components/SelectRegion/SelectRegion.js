@@ -7,7 +7,7 @@ import americaImage from '../../../../../assets/img/north-america-bg.svg';
 import europeImage from '../../../../../assets/img/europe-bg.svg';
 import asiaImage from '../../../../../assets/img/asia-pacific-bg.svg';
 
-const SelectRegion = ({onGoNextStep}) => {
+const SelectRegion = ({onGoNextStep, onGoBackStep}) => {
 
     return (
         <Fragment>
@@ -38,6 +38,11 @@ const SelectRegion = ({onGoNextStep}) => {
                 </div>
 
                 <div className="actions">
+                    <button type={'button'} className="btn white" onClick={onGoBackStep}>
+                        <SVG id={'left-grey-arrow'}/>
+                        Back
+                    </button>
+
                     <button className="btn default" onClick={onGoNextStep}>
                         Next
                         <SVG id={'right-white-arrow'}/>

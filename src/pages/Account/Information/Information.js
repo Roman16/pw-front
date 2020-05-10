@@ -5,7 +5,6 @@ import {userActions} from "../../../actions/user.actions";
 import Navigation from '../Navigation/Navigation';
 import Personal from './Personal';
 import Password from './Password';
-import Seller from './AmazonConnection/Seller';
 
 import './Information.less';
 
@@ -18,13 +17,11 @@ const Information = () => {
 
   return (
     <div className="user-cabinet">
-      <Navigation />
+      <Navigation page={'information'}/>
 
       <Personal />
 
       <Password />
-
-      <Seller />
     </div>
   );
 };

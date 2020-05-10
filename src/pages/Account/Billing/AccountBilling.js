@@ -7,7 +7,7 @@ import moment from "moment";
 import {allCountries} from '../../../utils/countries';
 import {SVG} from "../../../utils/icons";
 
-const UserCard = ({card: {last4, brand, exp_month, exp_year}, card, onUpdateCardInformation, deleteCard, onSet}) => {
+const UserCard = ({card: {last4, brand, exp_month, exp_year}, card, onUpdateCardInformation, deleteCard, onSet, onSwipe, onStartTouch}) => {
     const menu = (
         <Menu>
             {!card.default && <Menu.Item key="0" onClick={() => onSet(card)}>Default</Menu.Item>}
@@ -19,7 +19,7 @@ const UserCard = ({card: {last4, brand, exp_month, exp_year}, card, onUpdateCard
     );
 
     return (
-        <div className='card-block'>
+        <div className='card-block' onTouchMove={onSwipe} onTouchStart={onStartTouch}>
             <div className="card-header">
                 <div className="card-logo">
                     <img src={brand === 'visa' ? visaLogo : masterLogo} alt=""/>
@@ -84,7 +84,7 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
         if (paymentCards.length === (selectedCardIndex + 1)) {
             setCardIndex(0);
         } else {
-            setCardIndex(selectedCardIndex + 1);
+            setCardIndex(prevIndex => prevIndex + 1);
         }
     }
 
@@ -104,33 +104,78 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
         setCardIndex(0)
     }, [paymentCards.length]);
 
+    //------------------------
+    //swipe event handler
+    let xDown = null;
+    let yDown = null;
+
+    const handleTouchStart = (evt) => {
+        const firstTouch = evt.touches[0];
+        xDown = firstTouch.clientX;
+        yDown = firstTouch.clientY;
+    }
+
+    const swipeCardHandler = (evt) => {
+        if (!xDown || !yDown) {
+            return;
+        }
+
+        const xUp = evt.touches[0].clientX;
+        const yUp = evt.touches[0].clientY;
+
+        const xDiff = xDown - xUp;
+        const yDiff = yDown - yUp;
+
+
+        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+            if (xDiff > 0) {
+                /* left swipe */
+                goNextCard();
+            } else {
+                /* right swipe */
+                goPrevCard();
+            }
+        }
+        /* reset values */
+        xDown = null;
+        yDown = null;
+    }
+
     return (
         <Fragment>
             <section className='account-billing-block' id={'user-cards'}>
                 <div className='block-description'>
-                    <h3>
-                        Account billing
-                    </h3>
+                    <div className="col">
+                        <h3>
+                            Account billing
+                        </h3>
 
-                    <span>
-                        Your bills are paid using your active <br/> payment method
+                        <span>
+                        Your bills are paid using your <br/> active payment method
                     </span>
+                    </div>
+
+                    {paymentCards.length < 10 &&
+                    <button className="add-card" onClick={() => onOpenWindow('updateCard')}>
+                        <SVG id={'plus-icon'}/>
+                        Add Card
+                    </button>}
                 </div>
 
                 {haveCard && <div className='user-cards'>
+
                     <div className='cards-carousel'>
                         <div className='carousel-body'>
                             {paymentCards.length > 1 &&
-                            <Icon type="left" onClick={goPrevCard}/>}
+                            <i onClick={goPrevCard}><SVG id={'left-arrow'}/></i>}
 
-                            {(paymentCards.length > 5 ? [0, 1, 2, 3, 4] : paymentCards).map((item, index) => (
+                            {(paymentCards.length > 3 ? [0, 1, 2] : paymentCards).map((item, index) => (
                                 <div
                                     key={`shadow_${paymentCards[index].id}`}
                                     className='card-shadow'
                                     style={{
-                                        top: `${0 - 5 * index}px`,
-                                        opacity: `0.${10 - index}`,
-                                        width: `${290 - index * 10}px`
+                                        top: `${10 * index}px`,
+                                        left: `${20 * index}px`,
                                     }}
                                 >
                                 </div>
@@ -141,17 +186,19 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                                 deleteCard={() => targetWindow(true)}
                                 onSet={onSetDefaultCard}
                                 onUpdateCardInformation={onUpdateCardInformation}
+                                onSwipe={swipeCardHandler}
+                                onStartTouch={handleTouchStart}
                             />}
 
                             {paymentCards.length > 1 &&
-                            <Icon type="right" onClick={goNextCard}/>}
+                            <i onClick={goNextCard}><SVG id={'right-arrow'}/></i>}
                         </div>
 
                         {paymentCards.length > 1 &&
                         <div className='carousel-pagination'>
                             {paymentCards.map((item, index) => (
                                 <div
-                                    style={{opacity: paymentCards[selectedCardIndex] && paymentCards[selectedCardIndex].id != item.id && 0.5}}
+                                    style={{background: paymentCards[selectedCardIndex] && paymentCards[selectedCardIndex].id != item.id && '#fff'}}
                                     key={`pagination_${index}`}
                                     onClick={() => onChangePagination(index)}
                                 />
@@ -159,30 +206,7 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                         </div>}
                     </div>
 
-                    {paymentCards[selectedCardIndex] && <div className='billing-address'>
-                        {(paymentCards[selectedCardIndex].address.address.line1 ||
-                            paymentCards[selectedCardIndex].address.address.city ||
-                            paymentCards[selectedCardIndex].address.address.postal_code ||
-                            allCountries[paymentCards[selectedCardIndex].address.address.country])
-                        && <Fragment>
-                            <h3>Billing address</h3>
-                            <span className='street'>{paymentCards[selectedCardIndex].address.address.line1}</span>
-                            <span className='city'>{paymentCards[selectedCardIndex].address.address.city}</span>
-                            <span className='zip'>{paymentCards[selectedCardIndex].address.address.postal_code}</span>
-                            <span
-                                className='country'>{allCountries[paymentCards[selectedCardIndex].address.address.country]}</span>
-                        </Fragment>
-                        }
-
-                    </div>
-                    }                </div>}
-
-                <div className="buttons-block">
-                    {paymentCards.length < 10 &&
-                    <button className='btn green-btn' onClick={() => onOpenWindow('updateCard')}>
-                        Add card
-                    </button>}
-                </div>
+                </div>}
             </section>
 
             <ConfirmActionPopup

@@ -379,35 +379,57 @@ img {
 //switch
 .main-pages {
   .ant-switch {
-    background: #fff;
-    border: 1px solid rgba(212, 218, 222, 0.32);
+    width: 30px;
+    min-width: 30px;
+    height: 20px;
+    background: #C9CBD4;
+    border: 0;
+    position: relative;
+  }
+
+  .ant-switch:not(.ant-switch-disabled):active::after {
+    width: 18px;
   }
 
   .ant-switch::after {
-    background: #c9cbd4;
-    width: 16px;
-    height: 16px;
-    top: 2px;
+    background: #FFFFFF;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    top: 3px;
+    left: 4px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
   }
 
   .ant-switch-checked::after {
-    background: #8fd39d;
+    left: 28px;
   }
 
   .ant-switch-checked {
-    border: 1px solid #8fd39d;
+    background: #7DD4A1;
   }
 
   @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
     & {
       .ant-switch {
-        min-width: 33px;
-        height: 18px;
+        min-width: 24px;
+        width: 24px;
+        height: 16px;
+      }
+
+      .ant-switch:not(.ant-switch-disabled):active::after {
+        width: 16px;
       }
 
       .ant-switch::after {
         width: 12px;
         height: 12px;
+        top: 2px;
+        left: 3px;
+      }
+
+      .ant-switch-checked::after {
+        left: 22px;
       }
     }
   }
@@ -618,9 +640,16 @@ button.btn {
 
   background-position: center;
   transition: background 0.8s;
-
   overflow: hidden;
 
+
+  &.p15 {
+    padding: 0 1.0714285714285714rem;
+
+    svg {
+      margin: 0 0.8571428571428571rem 0 0;
+    }
+  }
 
   a {
     color: #fff;
@@ -659,6 +688,10 @@ button.btn {
     &:hover {
       background: #E0E0F9;
     }
+  }
+
+  &.white.bord {
+    border: 1px solid #C9CBD4;
   }
 
   //ripple effect
@@ -788,8 +821,71 @@ button.white[disabled] {
 */
 
 /*
+*  INPUT
+*/
+.form-group {
+
+  .form-control,
+  .ant-input-search {
+    &:hover {
+      .ant-input:not(.ant-input-disabled),
+      .ant-input {
+        border: 1px solid #343C5A;
+      }
+    }
+
+    &:focus {
+      outline: none;
+
+      .ant-input:not(.ant-input-disabled),
+      .ant-input {
+        border: 1px solid #6D6DF6;
+      }
+    }
+  }
+
+  .ant-input-suffix {
+    svg {
+      width: 1.2857142857142858rem;
+      height: 1.2857142857142858rem;
+    }
+    i {
+      display: none;
+    }
+  }
+
+
+  .ant-input {
+    height: 2.2857142857142856rem;
+    border-radius: 4px;
+    border: 1px solid #C9CBD4;
+    background: #FFFFFF;
+    color: #656A84;
+
+    &:hover {
+      border: 1px solid #343C5A;
+    }
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+      border: 1px solid #6D6DF6 !important;
+    }
+
+    &::placeholder {
+      color: rgba(101, 106, 132, 0.4);
+    }
+  }
+}
+
+/*
+*  /INPUT
+*/
+
+/*
 *  SCROLLBAR
 */
+
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -801,7 +897,7 @@ button.white[disabled] {
 
 ::-webkit-scrollbar:horizontal {
   width: unset;
-  height: 4px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
@@ -982,3 +1078,4 @@ body {
   -webkit-box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
   box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
 }
+

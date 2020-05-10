@@ -35,7 +35,8 @@ const Billing = () => {
         [newCard, changeCardType] = useState(true),
         [paginationParams, changePagination] = useState(defaultPaginationParams),
         [paymentHistory, updateHistoryList] = useState([]),
-        [paymentCards, updatePayment] = useState({});
+        [paymentCards, updatePayment] = useState({}),
+        [processing, setProcessing] = useState(false);
 
     const {subscriptions} = useSelector(state => ({
         subscriptions: Object.keys(state.user.subscriptions).map(item => state.user.subscriptions[item])
@@ -62,6 +63,8 @@ const Billing = () => {
     }
 
     async function handleUpdatePaymentMethod(card) {
+        setProcessing(true);
+
         if (card.id) {
             const res = await userService.updatePaymentMethod(card);
             updatePayment(res);
@@ -71,6 +74,7 @@ const Billing = () => {
             selectCard(res[0]);
         }
         openWindow(null);
+        setProcessing(false);
     }
 
     async function getPaymentHistory() {
@@ -107,6 +111,8 @@ const Billing = () => {
     }
 
     function handleUpdateCompanyInformation(company) {
+        setProcessing(true);
+
         userService.updateCompanyInformation(selectedCard.id, company)
             .then(() => {
                 selectCard({
@@ -122,6 +128,7 @@ const Billing = () => {
                     item))
             });
         openWindow(null);
+        setProcessing(false);
     }
 
     async function handlePaginationChange({page}) {
@@ -144,6 +151,7 @@ const Billing = () => {
                     onClose={handleCloseWindow}
                     company={selectedCard.metadata}
                     onSubmit={handleUpdateCompanyInformation}
+                    processing={processing}
                 />
             )
         } else if (openedWindow === 'updateCard') {
@@ -154,6 +162,7 @@ const Billing = () => {
                             onClose={handleCloseWindow}
                             onSubmit={handleUpdatePaymentMethod}
                             card={!newCard && selectedCard}
+                            processing={processing}
                         />
                     </Elements>
                 </StripeProvider>
@@ -181,8 +190,6 @@ const Billing = () => {
 
     return (
         <div className="user-cabinet billing-page">
-            {/*<Navigation/>*/}
-
             <AccountBilling
                 onOpenWindow={handleOpenWindow}
                 handleConfirmDeleteCard={handleRemoveCard}
@@ -208,7 +215,7 @@ const Billing = () => {
                 className='account-drawer'
                 closable={false}
                 onClose={handleCloseWindow}
-                visible={openedWindow ? true : false}
+                visible={!!openedWindow}
             >
                 {renderDrawer()}
             </Drawer>

@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from "react";
 import {Link} from "react-router-dom";
 import CustomSelect from "../../../../../components/Select/Select";
-import {Select} from "antd";
+import {Input, Select} from "antd";
 import './ConnectMws.less';
 import loader from '../../../../../assets/img/loader.svg';
 
@@ -44,7 +44,7 @@ const ConnectMws = ({onGoBackStep, onChangeInput, onConnectMws, connectMwsStatus
                     <div className="mws-credentials">
                         <div className="form-group">
                             <label htmlFor="">Seller ID</label>
-                            <input
+                            <Input
                                 required
                                 type="text"
                                 placeholder="This will look like A1BCDE23F4GHIJ"
@@ -54,7 +54,7 @@ const ConnectMws = ({onGoBackStep, onChangeInput, onConnectMws, connectMwsStatus
                         </div>
                         <div className="form-group">
                             <label htmlFor="">MWS Authorization Token</label>
-                            <input
+                            <Input
                                 required
                                 type="text"
                                 placeholder="This will look like amzn.mws. 01234567"

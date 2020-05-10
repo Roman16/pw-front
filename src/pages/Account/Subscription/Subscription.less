@@ -3,17 +3,178 @@
 .main-container .user-cabinet {
   font-size: 0.714286rem; // 10px
 
-  .automate-box {
+  .subscriptions {
     width: 100%;
     height: max-content;
     display: flex;
     flex-flow: column;
     justify-content: space-between;
     border-radius: 0 0 4px 4px;
-    padding: 2.5em;
+    padding: 2.857142857142857rem 2.5em;
     background-color: @white;
-    margin-bottom: 0.4em;
+    margin-bottom: 1.4285714285714286rem;
     box-shadow: @default-section-shadow;
+    z-index: 5;
+    position: relative;
+
+    .description {
+      margin-bottom: 1.2142857142857142rem;
+
+      h2 {
+        font-size: 1.4285714285714286rem;
+        color: #38454F;
+        margin-bottom: 1.7142857142857142rem;
+      }
+
+      p {
+        font-size: 0.8571428571428571rem;
+        color: #343C5A;
+        margin-bottom: 0;
+      }
+    }
+
+    .ant-table-wrapper {
+      .ant-table-thead > tr > th {
+        background: #F5F5FF;
+        border-top: 1px solid #C9CBD4;
+        border-bottom: 1px solid #C9CBD4;
+        border-radius: 0;
+        font-size: 1rem;
+      }
+
+      .ant-table-tbody > tr > td {
+        border-bottom: 1px solid #C9CBD4;
+        border-radius: 0;
+        font-size: 1rem;
+      }
+
+      .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+        background: initial;
+      }
+
+      .price {
+        color: #343C5A;
+        font-size: 1rem;
+
+        .prev-value {
+          color: #343C5A;
+          text-decoration: line-through;
+        }
+
+        .new-value {
+          color: #7DD4A1;
+          margin: 0 0 0 10px;
+        }
+      }
+
+      a {
+        font-size: 0.8571428571428571rem;
+        text-decoration-line: underline;
+        color: #6D6DF6;
+      }
+
+      .status-field {
+        font-size: 1rem;
+
+        .error-status {
+          color: #EC7F5C;
+
+          a {
+            color: #EC7F5C;
+            text-decoration: underline;
+          }
+        }
+
+        .success-status {
+          color: #7DD4A1;
+        }
+      }
+
+      .coupon-fields {
+        position: relative;
+        width: 9.357142857142858rem;
+        min-width: 9.357142857142858rem;
+
+        .ant-input {
+          width: 9.357142857142858rem;
+          height: 2.2857142857142856rem;
+          box-sizing: border-box;
+        }
+
+        .btn {
+          width: 9.357142857142858rem;
+          position: absolute;
+          right: 0;
+          top: 0;
+
+          svg {
+            width: 1rem;
+            height: 1rem;
+            min-width: 1rem;
+            line-height: 2.2857142857142856rem;
+
+            use {
+              stroke: #fff;
+            }
+          }
+
+          &.short {
+            width: 2.2857142857142856rem;
+            padding: 0;
+            transition: width .1s;
+
+            svg {
+              margin: 0;
+            }
+
+            span {
+              display: none;
+            }
+          }
+        }
+
+        .coupon-name {
+          display: block;
+          color: #6D6DF6;
+          margin: 3px 0 0 0;
+
+          b {
+            font-weight: 500;
+            margin: 0 0 0 5px;
+          }
+        }
+      }
+    }
+
+
+
+    .subscription-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 1.4285714285714286rem;
+
+      .btn {
+        margin: 0 20px 0 0;
+
+        .ant-spin {
+          height: 2.2857142857142856rem;
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .white {
+        margin-right: 2.142857142857143rem;
+        background: #fff;
+      }
+
+      p {
+        font-size: 0.8571428571428571rem;
+        color: #656A84;
+        margin: 0;
+      }
+    }
 
 
     .reactivate {
@@ -68,585 +229,5 @@
       }
     }
 
-    .automate {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-
-      .ppc {
-        min-width: 150px;
-        height: 100%;
-        width: 20%;
-        display: flex;
-        flex-flow: column;
-        justify-content: space-between;
-        grid-area: ppcDescription;
-
-
-        .ppc-title-wrap {
-          display: flex;
-          align-items: center;
-
-          .ppc-icon {
-            width: 3.2em;
-            height: 3.2em;
-            margin-right: 1.2em;
-          }
-
-          .ppc-title {
-            font-size: 1.7142857142857142rem; // 24px
-            color: #343C5A;
-            margin: 0;
-          }
-        }
-
-        .ppc-text {
-          font-size: 1.1428571428571428rem;
-          color: @third-account-color;
-          margin: 15px 0;
-        }
-
-        .ppc-link-wrap {
-          font-size: 1rem; // 14px
-          color: @second-account-color;
-          margin: 0;
-        }
-
-        .ppc-link {
-          font-size: 1rem; // 14px
-          color: #6d6df6;
-        }
-
-        .learn-more {
-          font-size: 1rem;
-          margin: 0 0 15px 0;
-        }
-      }
-
-      .plan {
-        width: 55%;
-        min-width: max-content;
-        flex-wrap: nowrap;
-        margin: 0 0 0 auto;
-        padding: 0 0 0 20px;
-        grid-area: plan;
-
-
-        .charged {
-          width: 100%;
-          min-height: 9.6em;
-          display: flex;
-          justify-content: space-between;
-          flex-wrap: wrap;
-          padding: 1em 2em 1.4em;
-          border-radius: 0.8em;
-          background-color: #F5F5FF;
-          margin-bottom: 1em;
-          letter-spacing: .2px;
-
-          .subscription-plan {
-            width: max-content;
-            font-size: 1.1429rem; // 16px
-            font-weight: 600;
-            color: #343C5A;
-            margin: 3px 25px 0 0;
-          }
-
-          .charged-description {
-            flex: 1;
-            min-width: max-content;
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8571428571428571rem;
-            color: #6D6DF6;
-            text-align: center;
-            padding: 0 10px;
-
-            .charged-data {
-              font-size: 1.7143rem; // 24px
-              font-weight: 600;
-              color: #6D6DF6;
-            }
-
-            .description {
-              display: flex;
-              align-items: flex-end;
-              margin: 0 0 0 3px;
-
-              .custom-tooltip {
-                display: block;
-                margin: 0 0 3px 5px;
-
-                @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-                  margin: 0 0 0 4px;
-                }
-              }
-            }
-
-            @media (max-width: 1400px) {
-              & {
-                width: auto;
-                align-items: center;
-                margin: 0 auto;
-
-                .charged-data {
-                  margin: 0;
-                }
-              }
-            }
-          }
-
-
-          .indicators-data {
-            flex: 1;
-            min-width: 150px;
-            display: flex;
-            justify-content: center;
-            font-size: 1.7143rem; // 24px
-            color: #343C5A;
-            padding: 0 10px 0 0;
-
-            span {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              color: #7DD4A1;
-              padding: 0 0 0 5px;
-
-              div {
-                font-size: 0.8571428571428571rem; // 12px
-                color: #7DD4A1;
-                text-align: center;
-              }
-            }
-          }
-
-          .spend-text {
-            flex: 1;
-            min-width: max-content;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 0.8571428571428571rem;
-            color: #656A84;
-            padding: 0 10px;
-
-            border-right: 1px solid #C9CBD4;
-            border-left: 1px solid #C9CBD4;
-
-            .spend-data {
-              font-size: 1.7142857142857142rem;
-              color: #343C5A;
-            }
-
-            .description {
-              display: flex;
-              align-items: flex-end;
-
-              .custom-tooltip {
-                display: block;
-                margin: 0 0 3px -13px;
-
-                @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-                  margin: 0 0 0 -10px;
-                }
-              }
-            }
-          }
-
-          .load-data {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            flex: 1;
-            font-size: 1.5rem;
-            text-align: center;
-
-            .load-text {
-              text-align: left;
-              padding: 0 10px;
-            }
-          }
-        }
-
-        .plan-text {
-          font-size: 1.0714285714285714rem; // 15px
-          width: fit-content;
-          color: @second-account-color;
-          font-weight: 600;
-          margin: 0;
-          margin-left: auto;
-
-          .plan-data {
-            font-size: 1.1429rem; // 16px
-            color: @account-color-action;
-            font-weight: 600;
-          }
-        }
-
-        .row {
-          display: flex;
-          align-items: center;
-          margin: 0 0 15px 0;
-
-          .cancel-text {
-            font-size: 1rem;
-            color: #38454F;
-            margin: 0;
-
-            .cancel-data {
-              color: @second-account-color;
-              white-space: nowrap;
-              font-weight: 600;
-            }
-          }
-
-          .cancel-btn {
-            font-size: 1rem;
-            margin: 0 0 0 20px;
-
-            font-weight: 500;
-            text-decoration-line: underline;
-            color: #656A84;
-          }
-        }
-      }
-
-      .coupon {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0 0 20px 20px;
-
-        h4 {
-          font-size: 0.8571428571428571rem;
-          color: #656A84;
-          grid-area: title;
-        }
-
-        .row {
-          width: 100%;
-          display: flex;
-          justify-content: flex-end;
-          grid-area: fields;
-
-
-          .input-block {
-            width: 50%;
-            position: relative;
-
-            input {
-              width: 100%;
-              height: 2.2857142857142856rem;
-              background: #F3F7FD;
-              border: 1px solid rgba(148, 163, 173, 0.4);
-              box-sizing: border-box;
-              border-radius: 8px;
-              padding: 0 0 0 40px;
-
-              font-size: 1rem;
-              color: rgba(101, 106, 132, 0.6);
-
-              &:focus {
-                outline: none;
-              }
-            }
-
-            svg {
-              position: absolute;
-              left: 15px;
-              top: 0;
-              bottom: 0;
-              margin: auto 0;
-            }
-
-          }
-
-          .btn {
-            width: 46%;
-            height: 2.2857142857142856rem;
-            text-transform: capitalize;
-            font-size: 1.1428571428571428rem;
-            margin: 0 0 0 10px;
-          }
-        }
-
-        .applied-coupon {
-          width: 100%;
-          margin: 10px 0 0 0;
-          grid-area: appliedCoupon;
-
-          h4 {
-            left: 0;
-            color: #82BB79;
-            font-size: 1rem;
-            margin: 0 0 10px 0;
-          }
-
-          .col {
-            display: flex;
-            flex-direction: column;
-
-            .name {
-              font-size: 0.8571428571428571rem;
-              color: #6D6DF6;
-            }
-
-            .discount {
-              font-size: 1.0714285714285714rem;
-              color: #6D6DF6;
-              font-weight: bold;
-            }
-          }
-        }
-
-      }
-
-
-      .cancel {
-        width: 20%;
-        display: flex;
-        flex-flow: column;
-        margin: 0 0 0 auto;
-        grid-area: cancelBlock;
-
-        .plan-text {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin: auto 0 0 0;
-          font-size: 1rem;
-          color: #656A84;
-
-          .plan-data {
-            width: 50%;
-            min-width: max-content;
-            font-size: 1.7142857142857142rem;
-            color: #6D6DF6;
-            font-weight: 600;
-            margin: 0 0 0 10px;
-            text-align: left;
-          }
-        }
-      }
-
-      .subscribe-btn {
-        width: 220px;
-        height: 100%;
-        min-width: 100px;
-        display: flex;
-        margin: auto 0 auto auto;
-
-        .on-subscribe {
-          margin: auto 0 0 auto;
-        }
-
-        .btn {
-          width: 100%;
-          max-width: 14.85714286rem;
-          height: 40px;
-          font-size: 1.1428571428571428rem;
-          margin: 0 0 0 auto;
-
-          a {
-            font-size: 1.1428571428571428rem;
-
-          }
-
-          .ant-spin-spinning {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-        }
-      }
-    }
-
   }
-
-  @media (max-width: 1514px) {
-    & {
-      .automate-box {
-        .automate {
-          .plan {
-            margin-right: 0;
-          }
-        }
-      }
-
-    }
-  }
-
-
-  @media (max-width: 1242px) {
-    & {
-      .automate-box {
-        .automate {
-          display: grid;
-          grid-template-areas: "ppcDescription cancelBlock" "plan plan";
-
-          .ppc {
-            width: 100%;
-          }
-
-          .plan {
-            width: 100%;
-            margin: 20px 0 0 0;
-            padding: 0;
-          }
-
-          .cancel {
-            width: 100%;
-          }
-
-        }
-      }
-    }
-  }
-
-  @media (max-width: 860px) {
-    & {
-      .automate-box {
-        .automate {
-          display: flex;
-          flex-direction: column;
-
-          .plan {
-            width: 100%;
-            margin: 20px 0 0 0;
-            min-width: initial;
-
-            .charged {
-              flex-wrap: wrap;
-
-              .subscription-plan {
-                width: 100%;
-                text-align: center;
-                border-bottom: 1px solid #C9CBD4;
-
-                br {
-                  display: none;
-                }
-              }
-            }
-          }
-
-          .cancel {
-            .coupon {
-              padding: 0;
-            }
-            .row {
-              justify-content: space-between;
-
-              .input-block {
-                width: 35%;
-              }
-
-              .btn {
-                width: 30%;
-              }
-            }
-          }
-
-        }
-      }
-    }
-  }
-
-
-  @media (max-width: 700px) {
-    & {
-      .automate-box {
-        .reactivate {
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-
-          .reactivate-text {
-            margin: 10px 0;
-          }
-        }
-        .automate {
-          flex-direction: column;
-          align-items: center;
-
-          .ppc {
-            width: 100%;
-            text-align: center;
-
-            .ppc-title-wrap {
-              justify-content: center;
-            }
-          }
-
-          .plan {
-            width: 100%;
-            margin: 0;
-
-            .charged {
-              flex-direction: column;
-              margin: 10px 0;
-
-              .indicators-data {
-                padding: 0;
-              }
-
-              .subscription-plan {
-                margin: 0 auto 20px auto;
-
-                br {
-                  display: none;
-                }
-              }
-
-              .spend-text {
-                border: 0;
-                margin: 20px 0;
-                padding: 0;
-              }
-
-              .charged-description {
-                padding: 0;
-              }
-            }
-
-            .row {
-              flex-direction: column;
-              flex-wrap: wrap;
-            }
-          }
-
-          .cancel {
-            width: 100%;
-            align-items: center;
-
-            .coupon {
-              display: grid;
-              text-align: center;
-              grid-template-areas: "title" "appliedCoupon" "fields";
-
-              .row {
-                width: 150px;
-                align-items: center;
-                flex-direction: column;
-                justify-content: center;
-                margin: 0 auto;
-
-                .input-block,
-                .btn {
-                  width: 100%;
-                  margin: 10px 0 0 0;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
 }

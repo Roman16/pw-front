@@ -23,7 +23,7 @@ const CardNumberElementStyles = {
 };
 
 const StripeForm = (props) => {
-    const {onBlurCardElement, stripeElementChange, handleSubmit, onClose, handleChangeInput, countriesList, onChangeSelect, paymentDetails, selectedCard, cardNumber, expiry, cvc, autofocus} = props;
+    const {onBlurCardElement,localProcessing, stripeElementChange, handleSubmit, processing, onClose, handleChangeInput, countriesList, onChangeSelect, paymentDetails, selectedCard, cardNumber, expiry, cvc, autofocus} = props;
     return (
         <form onSubmit={handleSubmit}>
             <div className="card-container">
@@ -180,7 +180,7 @@ const StripeForm = (props) => {
 
             <div className='button-block'>
                 <button className='btn white' type='button' onClick={onClose}>Cancel</button>
-                <button className='btn green-btn'>Save</button>
+                <button className='btn green-btn' disabled={processing || localProcessing}>Save</button>
             </div>
         </form>
     )
@@ -190,6 +190,7 @@ const StripeForm = (props) => {
 class UpdateCard extends Component {
     state = {
         countriesList: [],
+        localProcessing: false,
 
         paymentDetails: {
             name: '',
@@ -243,6 +244,9 @@ class UpdateCard extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
+        this.setState({
+            localProcessing: true
+        })
         const {
                 paymentDetails: {
                     name,
@@ -297,6 +301,11 @@ class UpdateCard extends Component {
         } catch (e) {
             console.log(e);
         }
+
+        this.setState({
+            localProcessing: false
+        })
+
     };
 
 
@@ -315,9 +324,9 @@ class UpdateCard extends Component {
     }
 
     render() {
-        const {onClose} = this.props,
+        const {onClose, processing} = this.props,
             {
-                countriesList, paymentDetails, selectedCard, card_number, expiry, cvc, autofocus
+                countriesList, paymentDetails, selectedCard, card_number, expiry, cvc, autofocus, localProcessing
             } = this.state;
 
         return (
@@ -347,6 +356,9 @@ class UpdateCard extends Component {
                     cvc={cvc}
 
                     autofocus={autofocus}
+
+                    processing={processing}
+                    localProcessing={localProcessing}
                 />
             </div>
         )

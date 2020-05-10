@@ -21,29 +21,25 @@
     input {
       height: 2.857142857142857rem;
       width: 100%;
-      border-radius: 0.615em;
-      border: 0.0769em solid @border-solid;
       font-size: 1rem;
-
-      &::placeholder {
-        color: @third-account-color;
-      }
     }
   }
 
   .personal-box {
     width: 100%;
-    min-height: 20em;
+    min-height: 16.428571428571427rem;
     height: max-content;
     display: flex;
     align-items: center;
     border-radius: 0 0 0.8em 0.8em;
     background-color: @white;
-    padding: 3em 4em 3em 2.5rem;
-    margin-bottom: 0.4em;
+    padding: 2.857142857142857rem 4em 2.857142857142857rem 2.5rem;
+    margin-bottom: 1.4285714285714286rem;
     flex-wrap: wrap;
     box-shadow: @default-section-shadow;
-
+    box-sizing: border-box;
+    position: relative;
+    z-index: 5;
 
     .avatar-box {
       display: flex;
@@ -52,9 +48,9 @@
       position: relative;
       margin: 0 3.2142857142857144rem 0 0;
 
-      img, .ant-avatar {
-        width: 11.214285714285714rem !important;
-        height: 11.214285714285714rem !important;
+      img {
+        width: 10.714285714285714rem;
+        height: 10.714285714285714rem;
       }
 
       .avatar {
@@ -200,13 +196,13 @@
 
   .passwords-box {
     width: 100%;
-    min-height: 20em;
+    min-height: 16.428571428571427rem;
     height: max-content;
     display: flex;
     align-items: center;
     background-color: @white;
     border-radius: 0.8em;
-    padding: 3em 4em 3em 2.5rem;
+    padding: 2.857142857142857rem 4em 2.857142857142857rem 2.5rem;
     margin-bottom: 0.4em;
     box-shadow: @default-section-shadow;
 
@@ -217,8 +213,8 @@
       margin: 0 3.2142857142857144rem 0 0;
 
       .lock {
-        width: 11.214285714285714rem;
-        height: 11.214285714285714rem;
+        width: 10.714285714285714rem;
+        height: 10.714285714285714rem;
       }
     }
 
@@ -260,14 +256,34 @@
           color: @second-account-color;
           position: relative;
 
+          .password-input {
+            position: relative;
+
+            i {
+              cursor: pointer;
+              position: absolute;
+              right: 1.0714285714285714rem;
+              top: 0;
+              bottom: 0;
+
+              display: flex;
+              align-items: center;
+
+              svg {
+                width: 20px;
+              }
+            }
+
+            input {
+              padding-right: 35px;
+            }
+          }
+
           .input-wrap {
             input {
               display: flex;
               justify-content: space-between;
               align-items: center;
-              border: 0.077em solid @border-solid;
-              border-radius: 0.6154em;
-              padding-right: 35px;
 
               font-size: 1rem;
             }
@@ -554,7 +570,6 @@
                 width: 100%;
                 height: 100%;
                 outline: none;
-                border-radius: 0.5714em;
               }
 
               .anticon {
@@ -615,11 +630,6 @@
                 border: 1px solid @border-solid;
                 background: rgba(201, 203, 212, 0.3);
                 color: @third-account-color;
-
-                &::placeholder {
-                  font-size: 0.8571rem; // 12px
-                  color: @third-account-color;
-                }
               }
             }
 

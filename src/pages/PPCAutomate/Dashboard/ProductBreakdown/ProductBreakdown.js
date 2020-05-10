@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Spin, Switch} from "antd";
+import {Input, Spin, Switch} from "antd";
 import {useDispatch, useSelector} from 'react-redux';
 import {dashboardServices} from '../../../../services/dashboard.services';
 import './ProductBreakdown.less';
@@ -7,17 +7,13 @@ import ProductsList from "./ProductsList";
 import {dashboardActions} from "../../../../actions/dashboard.actions";
 import {productsActions} from "../../../../actions/products.actions";
 import axios from "axios";
+import {SVG} from "../../../../utils/icons";
 
 const CancelToken = axios.CancelToken;
 let source = null;
+const Search = Input.Search;
 
-const initialFetchParams = {
-    page: 1,
-    size: 4,
-    totalSize: 0,
-    searchText: ''
-};
-
+let prevProductId;
 
 const ProductBreakdown = () => {
     const dispatch = useDispatch();
@@ -28,7 +24,10 @@ const ProductBreakdown = () => {
         hasMargin: state.dashboard.hasMargin || false
     }));
     const [fetchParams, changeFetchParams] = useState({
-            ...initialFetchParams,
+            page: 1,
+            pageSize: 10,
+            totalSize: 0,
+            searchText: '',
             onlyOptimization: onlyOptimization || false
         }),
         [products, updateProductsList] = useState([]);
@@ -87,29 +86,73 @@ const ProductBreakdown = () => {
         }, 1000);
     };
 
-    const handlePaginationChange = page => changeFetchParams({...fetchParams, page: page});
+    const handlePaginationChange = params => changeFetchParams({...fetchParams, ...params});
 
     const handleSelectProduct = (id) => {
         dispatch(dashboardActions.selectProduct(id))
     };
 
+    const selectAllProduct = () => {
+        prevProductId = selectedProduct;
+        dispatch(dashboardActions.selectProduct(null))
+    }
+
+    const selectPrevProduct = () => {
+        if (!prevProductId) {
+            handleSelectProduct(products[0].product.id)
+        } else if (products.find(product => product.product.id === prevProductId)) {
+            handleSelectProduct(prevProductId)
+        } else if (products.length > 0) {
+            handleSelectProduct(products[0].product.id)
+        }
+    }
+
     useEffect(() => {
         source && source.cancel();
         getProducts();
-    }, [fetchParams.page, fetchParams.searchText, fetchParams.onlyOptimization, selectedRangeDate]);
+    }, [fetchParams.page, fetchParams.pageSize, fetchParams.searchText, fetchParams.onlyOptimization, selectedRangeDate]);
+
 
     return (
         <div className='product-breakdown'>
             <div className="title">
-                <span> Product Breakdown</span>
+                Product Breakdown
+            </div>
+
+            <div className="filters">
+                <div className="form-group">
+                    <Search
+                        className="search-field"
+                        placeholder={'Search'}
+                        onChange={onSearchChange}
+                        data-intercom-target='search-field'
+                        suffix={<SVG id={'search'}/>}
+                    />
+                </div>
 
                 <div className='switch-block'>
-                    On optimization only
-
                     <Switch
                         checked={onlyOptimization}
                         onChange={handleChangeSwitch}
                     />
+
+                    On optimization only
+                </div>
+
+                <div className="product-selected">
+                    <span>
+                       <b>{selectedProduct == null ? fetchParams.totalSize : '1'}</b> selected
+                    </span>
+
+                    <div className="select-switch">
+                        <button className={selectedProduct == null && 'active'} onClick={selectAllProduct}>
+                            <SVG id={'all-selected-icon'}/>
+                        </button>
+
+                        <button className={selectedProduct !== null && 'active'} onClick={selectPrevProduct}>
+                            <SVG id={'one-selected-icon'}/>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -117,11 +160,11 @@ const ProductBreakdown = () => {
                 <ProductsList
                     fetchParams={fetchParams}
                     products={products}
-                    onSearchChange={onSearchChange}
-                    handlePaginationChange={handlePaginationChange}
-                    onSelect={handleSelectProduct}
                     selectedProduct={selectedProduct}
                     hasMargin={hasMargin}
+                    handlePaginationChange={handlePaginationChange}
+                    onSelect={handleSelectProduct}
+                    fetching={fetching}
                 />
             </div>
 

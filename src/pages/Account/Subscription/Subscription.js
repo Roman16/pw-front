@@ -56,7 +56,7 @@ const Subscription = () => {
             })
     }
 
-    function applyCoupon(productId, coupon, planId) {
+    function applyCoupon(productId, planId, coupon) {
         if (coupon) {
             userService.applyCoupon(productId, planId, coupon)
                 .then((res) => {
@@ -65,6 +65,8 @@ const Subscription = () => {
                         ...res[productId]
                     })))
                 })
+        } else {
+            notification.error({title: 'Enter coupon first'})
         }
     }
 
@@ -104,9 +106,10 @@ const Subscription = () => {
                 dispatch(userActions.getPersonalUserInfo());
                 fetchSubscriptions();
             } catch (e) {
-                console.log(e);
+                changeButton(false);
             }
         } else {
+            changeButton(false);
             history.push('/account-subscription#user-cards');
             notification.error({title: 'Add card!'})
         }
@@ -179,7 +182,7 @@ const Subscription = () => {
 
     return (
         <div className="user-cabinet">
-            <Navigation/>
+            <Navigation page={'subscriptions'}/>
 
             {subscriptionProducts.map((product) => (
                 <SubscriptionPlan
@@ -189,11 +192,11 @@ const Subscription = () => {
                     product={{...subscriptions[0], ...product}}
                     onSubscribe={handleSubscribe}
                     reloadData={handleUpdateSubscriptionStatus}
-                    stripeId={stripeId}
                     applyCoupon={applyCoupon}
                     getCouponStatus={getCouponStatus}
                     fetching={fetching}
                     disableButton={disableButton}
+                    stripeId={stripeId}
                 />
             ))}
 
@@ -207,7 +210,7 @@ const Subscription = () => {
 
                 visible={openedAccountWindow}
 
-                onCancel={() => openAccountWindow(false) }
+                onCancel={() => openAccountWindow(false)}
                 onOk={handleCancelSubscription}
 
                 okText="I want to cancel"

@@ -223,17 +223,17 @@ const Sidebar = () => {
 
                 <nav className="bottom-nav">
                     <ul className="bottom-nav-list">
-                        <li className={`bottom-nav-item ${bootstrapInProgress && 'disabled-link'} `}>
-                            <a
-                                href={bootstrapInProgress ? '#' : "/ppc/optimization?product_tour_id=108046"}
-                            >
-                                <div className="link-icon">
-                                    <SVG id='how-it-works'/>
-                                </div>
+                        {/*<li className={`bottom-nav-item ${bootstrapInProgress && 'disabled-link'} `}>*/}
+                        {/*    <a*/}
+                        {/*        href={bootstrapInProgress ? '#' : "/ppc/optimization?product_tour_id=108046"}*/}
+                        {/*    >*/}
+                        {/*        <div className="link-icon">*/}
+                        {/*            <SVG id='how-it-works'/>*/}
+                        {/*        </div>*/}
 
-                                <span className="bottom-span">How it works?</span>
-                            </a>
-                        </li>
+                        {/*        <span className="bottom-span">How it works?</span>*/}
+                        {/*    </a>*/}
+                        {/*</li>*/}
 
                         <li className="bottom-nav-item">
                             <NavLink

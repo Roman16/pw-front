@@ -41,8 +41,6 @@ const Dayparting = () => {
                 </div>
 
                 <div className="week-select">
-                    <label htmlFor="">Select Week:</label>
-
                     <CustomSelect
                         getPopupContainer={trigger => trigger.parentNode}
                         defaultValue={0}

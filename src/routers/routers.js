@@ -2,6 +2,7 @@ import React, {Suspense} from 'react';
 import {Router, Route, Switch, Redirect} from 'react-router-dom';
 import {history} from '../utils/history';
 import RouteLoader from "../components/RouteLoader/RouteLoader";
+import PPCRedirect from "../pages/authentication/AccountBinding/components/ConnectPpc/PPCRedirect";
 
 const LandingAutomation = React.lazy(() => import('../pages/LandingPages/Automation/LandingAutomation'));
 const LandingAffiliates = React.lazy(() => import('../pages/LandingPages/Affiliates/LandingAffiliates'));
@@ -24,6 +25,7 @@ const RegistrationPage = React.lazy(() => import('../pages/authentication/Regist
 const ConfirmEmailPage = React.lazy(() => import('../pages/authentication/RegistrationPage/ConfirmEmailPage/ConfirmEmailPage'));
 const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPassword/ResetPassword'));
 const LoginWithAmazon = React.lazy(() => import('../pages/authentication/LoginWithAmazon/LoginWithAmazon'));
+const ThankPage = React.lazy(() => import('../pages/authentication/AccountBinding/ThankPage/ThankPage'));
 
 const routers = () => {
     return (
@@ -42,12 +44,14 @@ const routers = () => {
                     <Route exact path="/policy" component={PrivacyPolicy}/>
                     <Route exact path="/terms-and-conditions" component={TermsOfUse}/>
                     <Route exact path="/videos" component={Video}/>
+                    <Route exact path="/ppc-redirect" component={PPCRedirect}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login" component={LoginPage}/>
-                    <Route exact path="/registration" component={RegistrationPage}/>
+                    <Route exact path="/registration/:tag?" component={RegistrationPage}/>
                     <Route exact path="/confirm-email/:token?" component={ConfirmEmailPage}/>
                     <Route exact path="/reset-password/:userId?/:token?" component={ResetPassword}/>
                     <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
+                    <Route path="/success-connect" component={ThankPage}/>
                     {/*-----------------------------------------------------------*/}
 
                     <Route exact path={'/404'} component={NotFound}/>

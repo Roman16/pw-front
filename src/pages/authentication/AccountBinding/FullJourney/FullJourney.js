@@ -11,6 +11,8 @@ import {history} from "../../../../utils/history";
 
 import '../components/Steps.less';
 import {userService} from "../../../../services/user.services";
+import {userActions} from "../../../../actions/user.actions";
+import {useDispatch, useSelector} from "react-redux";
 
 const {Step} = Steps;
 
@@ -23,12 +25,24 @@ const customDot = (dot) => (
 const FullJourney = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [fields, setFields] = useState({
-        region: 'north_america',
-        account: 'seller_account'
+        account_region: 'north_america',
+        account_type: 'seller_account'
     });
+    const {mwsId, userEmail} = useSelector(state => ({
+        mwsId: state.user.account_links[0].amazon_mws.id,
+        userEmail: state.user.user.email
+    }))
+    const dispatch = useDispatch();
+
     const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
 
-    const goNextStep = () => setCurrentStep(prevState => prevState + 1)
+    const goNextStep = () => {
+        if (localStorage.getItem('userFromAgency') && localStorage.getItem('userFromAgency') === userEmail && currentStep === 4) {
+            history.push('/success-connect');
+        } else {
+            setCurrentStep(prevState => prevState + 1);
+        }
+    }
 
     const goBackStep = () => setCurrentStep(prevState => prevState - 1)
 
@@ -44,7 +58,11 @@ const FullJourney = () => {
         setConnectMwsStatus('processing');
 
         try {
-            const res = await userService.setMWS(fields);
+            const res = await userService.setMWS({
+                ...fields,
+                ...mwsId && {id: mwsId}
+            });
+            dispatch(userActions.setInformation(res))
             setCurrentStep(prevState => prevState + 1)
         } catch (e) {
             setConnectMwsStatus('error');
@@ -56,7 +74,7 @@ const FullJourney = () => {
     }
 
     const closeJourney = () => {
-        history.push('./welcome')
+        history.push('/welcome')
     }
 
     return (
@@ -82,6 +100,7 @@ const FullJourney = () => {
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
                     onChangeInput={changeInputHandler}
+                    accountName={fields.account_name}
                 />}
 
                 {currentStep === 2 && <SelectRegion

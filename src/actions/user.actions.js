@@ -4,6 +4,8 @@ import {userService} from '../services/user.services';
 import {notification} from "../components/Notification";
 import moment from "moment";
 import {store} from "../store/store";
+import {Redirect, Route} from "react-router-dom";
+import React from "react";
 
 export const userActions = {
     login,
@@ -19,7 +21,7 @@ export const userActions = {
     getPersonalUserInfo,
     unsetAccount,
     resetChangesCount,
-    setPpcStatus
+    setPpcStatus,
 };
 
 function login(user) {
@@ -28,13 +30,23 @@ function login(user) {
             .then(res => {
                 localStorage.setItem('token', res.access_token);
 
-                dispatch(setInformation({
-                    user: {
-                        email: user.email
-                    }
-                }));
+                userService.getUserInfo()
+                    .then(userFullInformation => {
+                        dispatch(setInformation(userFullInformation));
 
-                dispatch(getUserInfo());
+                        const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
+                            ppcConnected = userFullInformation.account_links[0].amazon_ppc.is_connected;
+
+                        if (!mwsConnected && !ppcConnected) {
+                            history.push('/connect-amazon-account');
+                        } else if (!mwsConnected && ppcConnected) {
+                            history.push('/connect-mws-account');
+                        } else if (!ppcConnected && mwsConnected) {
+                            history.push('/connect-ppc-account');
+                        } else {
+                            history.push('/ppc/optimization');
+                        }
+                    })
             });
     };
 }
@@ -99,7 +111,6 @@ function setMWS(data) {
 
         if (data.account_links) {
             if (!data.account_links[0].amazon_ppc.is_connected) {
-                history.push('/ppc');
             } else {
                 history.push((data.notifications.account_bootstrap && (data.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization-loading' : '/ppc/optimization');
             }
@@ -107,15 +118,10 @@ function setMWS(data) {
     };
 }
 
-function unsetAccount(type, id) {
-    return dispatch => {
-        userService[`unset${type}`](id)
-            .then(() => {
-                dispatch({
-                    type: userConstants[`UNSET_AMAZON_${type}`],
-                });
-            })
-    };
+function unsetAccount(type) {
+    return ({
+        type: userConstants[`UNSET_AMAZON_${type}`],
+    });
 }
 
 function getUserInfo() {
@@ -153,14 +159,6 @@ function getUserInfo() {
                 email: res.user.email, // Email address
                 created_at: moment(new Date()).unix()// Signup date as a Unix timestamp
             });
-
-            if (!res.account_links[0].amazon_mws.is_connected) {
-                history.push('/mws');
-            } else if (!res.account_links[0].amazon_ppc.is_connected) {
-                history.push('/ppc');
-            } else {
-                history.push((res.notifications.account_bootstrap && (res.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization-loading' : '/ppc/optimization');
-            }
         });
     };
 }
@@ -180,12 +178,6 @@ function getAuthorizedUserInfo() {
         userService.getUserInfo()
             .then(res => {
                 dispatch(setInformation(res));
-
-                if (!res.account_links[0].amazon_mws.is_connected) {
-                    history.push('/mws');
-                } else if (!res.account_links[0].amazon_ppc.is_connected) {
-                    history.push('/ppc');
-                }
             });
     };
 }
@@ -222,8 +214,6 @@ function updateUserInformation(user) {
 }
 
 function setPpcStatus(status) {
-    history.push('/ppc/optimization');
-
     return {
         type: userConstants.SET_PPC_STATUS,
         payload: status

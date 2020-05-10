@@ -12,7 +12,7 @@ const LoadingAmazonAccount = () => {
     const [visibleWindow, switchWindow] = useState(false);
     const dispatch = useDispatch();
     const {firstName, lastName, bootstrapInProgress, productList} = useSelector(state => ({
-        productList: state.products.productList,
+        productList: state.products.productList || [],
         firstName: state.user.user ? state.user.user.name : '',
         lastName: state.user.user ? state.user.user.last_name : '',
         bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true

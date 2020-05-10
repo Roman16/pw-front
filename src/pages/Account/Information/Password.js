@@ -5,6 +5,7 @@ import lock from '../../../assets/img/account-password-image.svg';
 import OpenedEye from '../../../assets/img/opened-eye.svg';
 import ClosedEye from '../../../assets/img/closed-eye.svg';
 import {notification} from "../../../components/Notification";
+import {SVG} from "../../../utils/icons";
 
 const CustomInputSuffix = ({type, name, onChangeType}) => {
     return (
@@ -51,9 +52,9 @@ const Password = () => {
         if (name === 'new_password' && value.length >= 6) {
             addNewPasswordError();
 
-            if((inputsValue.password_confirmation !== value) && inputsValue.password_confirmation.length > 1) {
+            if ((inputsValue.password_confirmation !== value) && inputsValue.password_confirmation.length > 1) {
                 addConfirmPasswordError('Please enter the same value again.')
-            } else if(inputsValue.password_confirmation === value) {
+            } else if (inputsValue.password_confirmation === value) {
                 addConfirmPasswordError()
             }
         }
@@ -84,7 +85,7 @@ const Password = () => {
             addNewPasswordError('Minimum 6 characters.')
         }
 
-        if(!inputsValue.current_password) {
+        if (!inputsValue.current_password) {
             addOldPasswordError('This is a required field.')
         }
     }
@@ -113,7 +114,8 @@ const Password = () => {
                     <div className="form-group">
                         <label>Old Password</label>
 
-                        <div className="input-wrap">
+
+                        <div className="password-input">
                             <Input
                                 className={`form-control ${oldPasswordError && 'error'}`}
                                 type={inputsType.current_password}
@@ -122,13 +124,10 @@ const Password = () => {
                                 value={inputsValue.current_password}
                                 onChange={handleChangeInput}
                                 onBlur={handleBlurOldPasswordInput}
-                                suffix={
-                                    <CustomInputSuffix
-                                        name={'current_password'}
-                                        onChangeType={changePasswordInputType}
-                                        type={inputsType.current_password}/>
-                                }
                             />
+                            <i onClick={() => changePasswordInputType('current_password', inputsType.current_password)}>
+                                <SVG id={inputsType.current_password === 'text' ? 'eye-opened' : 'eye-closed'}/>
+                            </i>
                         </div>
 
                         <div className='input-error'>
@@ -139,7 +138,7 @@ const Password = () => {
                     <div className="form-group">
                         <label>New Password</label>
 
-                        <div className="input-wrap">
+                        <div className="password-input">
                             <Input
                                 className={`form-control ${newPasswordError && 'error'}`}
                                 type={inputsType.new_password}
@@ -148,13 +147,10 @@ const Password = () => {
                                 value={inputsValue.new_password}
                                 onChange={handleChangeInput}
                                 onBlur={handleBlurNewPasswordInput}
-                                suffix={
-                                    <CustomInputSuffix
-                                        name={'new_password'}
-                                        onChangeType={changePasswordInputType}
-                                        type={inputsType.new_password}
-                                    />}
                             />
+                            <i onClick={() => changePasswordInputType('new_password', inputsType.new_password)}>
+                                <SVG id={inputsType.new_password === 'text' ? 'eye-opened' : 'eye-closed'}/>
+                            </i>
                         </div>
 
                         <div className='input-error'>
@@ -165,7 +161,7 @@ const Password = () => {
                     <div className="form-group">
                         <label>Repeat New Password</label>
 
-                        <div className="input-wrap">
+                        <div className="password-input">
                             <Input
                                 className={`form-control ${confirmPasswordError && 'error'}`}
                                 type={inputsType.password_confirmation}
@@ -174,13 +170,10 @@ const Password = () => {
                                 value={inputsValue.password_confirmation}
                                 onChange={handleChangeInput}
                                 onBlur={handleBlurConfirmPasswordInput}
-                                suffix={
-                                    <CustomInputSuffix
-                                        name={'password_confirmation'}
-                                        onChangeType={changePasswordInputType}
-                                        type={inputsType.password_confirmation}
-                                    />}
                             />
+                            <i onClick={() => changePasswordInputType('password_confirmation', inputsType.password_confirmation)}>
+                                <SVG id={inputsType.password_confirmation === 'text' ? 'eye-opened' : 'eye-closed'}/>
+                            </i>
                         </div>
 
                         <div className='input-error'>

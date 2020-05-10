@@ -30,10 +30,9 @@ const ProductItem = ({
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(productsActions.fetchProductDetails({id: null}));
-
-    }, []);
+    // useEffect(() => {
+    //     dispatch(productsActions.fetchProductDetails({id: null}));
+    // }, []);
 
     return (
         <div

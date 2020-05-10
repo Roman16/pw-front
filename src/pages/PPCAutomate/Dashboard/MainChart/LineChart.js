@@ -15,33 +15,6 @@ import {
 import ChartTooltip from "./ChartTooltip";
 import moment from "moment";
 
-const CustomizedAxisTick = (props) => {
-    const {
-        x, y, stroke, payload,
-    } = props;
-
-    return (
-        <g transform={`translate(${x},${y})`}>
-            <text x={0} y={0} dy={20}>{moment(payload.value).format('MMM DD')}</text>
-        </g>
-    );
-};
-
-const ReferenceCustomLabel = props => {
-    const textClass = props.text === 'started' ? 'started-optimization' : 'paused-optimization';
-
-    return (
-        <Fragment>
-            <text x={props.viewBox.x} y={20} className={textClass}>
-                Optimisation
-            </text>
-            <text x={props.viewBox.x} y={35} className={textClass}>
-                {props.text}
-            </text>
-        </Fragment>
-    )
-};
-
 const animationDuration = 1000,
     dashedLineAnimationDuration = 1000,
     animationBegin = 1000,
@@ -66,22 +39,19 @@ const Chart = ({
                 return ({
                     date: item.date,
                     daily_first_metric_value: null,
-                    seven_days_first_metric_value: null,
                     daily_second_metric_value: null,
-                    seven_days_second_metric_value: null,
+                    seven_days_second_metric_value: item.seven_days_second_metric_value,
+                    seven_days_first_metric_value: item.seven_days_first_metric_value,
+
 
                     dashed_daily_first_metric_value: item.daily_first_metric_value,
-                    dashed_seven_days_first_metric_value: item.seven_days_first_metric_value,
                     dashed_daily_second_metric_value: item.daily_second_metric_value,
-                    dashed_seven_days_second_metric_value: item.seven_days_second_metric_value,
                 })
             } else if (`${moment().tz('America/Los_Angeles').subtract(3, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === item.date) {
                 return ({
                     ...item,
                     dashed_daily_first_metric_value: item.daily_first_metric_value,
-                    dashed_seven_days_first_metric_value: item.seven_days_first_metric_value,
                     dashed_daily_second_metric_value: item.daily_second_metric_value,
-                    dashed_seven_days_second_metric_value: item.seven_days_second_metric_value,
                 })
 
             } else {
@@ -210,20 +180,20 @@ const Chart = ({
                         isAnimationActive={isAnimationActive}
                     />}
 
-                    {(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line
-                        yAxisId="left"
-                        type="monotone"
-                        dataKey="dashed_seven_days_first_metric_value"
-                        stroke="#82ca9d"
-                        strokeWidth={3}
-                        dot={false}
-                        filter={'url(#dropshadow)'}
-                        strokeDasharray="7 5"
-                        animationBegin={animationBegin}
-                        animationEasing={animationEasing}
-                        animationDuration={dashedLineAnimationDuration}
-                        isAnimationActive={isAnimationActive}
-                    />}
+                    {/*{(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line*/}
+                    {/*    yAxisId="left"*/}
+                    {/*    type="monotone"*/}
+                    {/*    dataKey="dashed_seven_days_first_metric_value"*/}
+                    {/*    stroke="#82ca9d"*/}
+                    {/*    strokeWidth={3}*/}
+                    {/*    dot={false}*/}
+                    {/*    filter={'url(#dropshadow)'}*/}
+                    {/*    strokeDasharray="7 5"*/}
+                    {/*    animationBegin={animationBegin}*/}
+                    {/*    animationEasing={animationEasing}*/}
+                    {/*    animationDuration={dashedLineAnimationDuration}*/}
+                    {/*    isAnimationActive={isAnimationActive}*/}
+                    {/*/>}*/}
 
                     {(activeMetrics && activeMetrics[0].key && showDailyChart) && <Line
                         yAxisId='left'
@@ -268,20 +238,20 @@ const Chart = ({
                         isAnimationActive={isAnimationActive}
                     />}
 
-                    {(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line
-                        yAxisId="right"
-                        type="monotone"
-                        dataKey="dashed_seven_days_second_metric_value"
-                        stroke="#8884d8"
-                        strokeWidth={3}
-                        dot={false}
-                        filter={'url(#dropshadow)'}
-                        strokeDasharray="7 5"
-                        animationBegin={animationBegin}
-                        animationEasing={animationEasing}
-                        animationDuration={dashedLineAnimationDuration}
-                        isAnimationActive={isAnimationActive}
-                    />}
+                    {/*{(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line*/}
+                    {/*    yAxisId="right"*/}
+                    {/*    type="monotone"*/}
+                    {/*    dataKey="dashed_seven_days_second_metric_value"*/}
+                    {/*    stroke="#8884d8"*/}
+                    {/*    strokeWidth={3}*/}
+                    {/*    dot={false}*/}
+                    {/*    filter={'url(#dropshadow)'}*/}
+                    {/*    strokeDasharray="7 5"*/}
+                    {/*    animationBegin={animationBegin}*/}
+                    {/*    animationEasing={animationEasing}*/}
+                    {/*    animationDuration={dashedLineAnimationDuration}*/}
+                    {/*    isAnimationActive={isAnimationActive}*/}
+                    {/*/>}*/}
 
                     {(activeMetrics && activeMetrics[1].key && showDailyChart) && <Line
                         yAxisId='right'

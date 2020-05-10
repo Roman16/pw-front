@@ -381,7 +381,7 @@ class DaySwitches extends Component {
                                 Active
                             </div>
 
-                            <button className='btn white' onClick={this.handleReset} disabled={!activeDayparting}>
+                            <button className='btn white p15' onClick={this.handleReset} disabled={!activeDayparting}>
                                 <SVG id='reload-icon'/>
                                 Reset
                             </button>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import './RegistrationPage.less';
 import '../LoginPage/LoginPage.less';
@@ -8,7 +8,7 @@ import logo from '../../../assets/img/ProfitWhales-logo-white.svg';
 import {history} from "../../../utils/history";
 import useScript from "../../../utils/useScript";
 
-const RegistrationPage = () => {
+const RegistrationPage = (props) => {
     useScript({
         funk: `!function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -35,7 +35,9 @@ fbq('track', 'PageView');`
                         <h4>Getting started with ProfitWhales is <br/> easy and takes a few steps!</h4>
                     </div>
 
-                    <RegistrationPageForm/>
+                    <RegistrationPageForm
+                        match={props.match}
+                    />
 
                     <ul>
                         <li>No credit card required</li>
