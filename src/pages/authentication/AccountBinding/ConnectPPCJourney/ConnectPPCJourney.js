@@ -5,6 +5,7 @@ import SuccessPage from "../components/SuccessPage/SuccessPage";
 import {SVG} from "../../../../utils/icons";
 import ConnectPpc from "../components/ConnectPpc/ConnectPpc";
 import {history} from "../../../../utils/history";
+import {useSelector} from "react-redux";
 
 const {Step} = Steps;
 
@@ -16,12 +17,19 @@ const customDot = (dot) => (
 
 const ConnectPPCJourney = () => {
     const [currentStep, setCurrentStep] = useState(4);
+    const {ppcConnected} = useSelector(state => ({
+        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
+    }));
 
     const closeJourney = () => {
-        history.push('./account-settings')
+        history.push('./api-connections')
     }
 
     const goNextStep = () => setCurrentStep(prev => prev + 1)
+
+    if (ppcConnected) {
+        history.push('./api-connections')
+    }
 
     return (
         <div className="amazon-connect full-journey">
