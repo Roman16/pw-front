@@ -1,6 +1,29 @@
 .Toastify__toast-container {
   width: 432px;
   z-index: 1000000;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    top: 0;
+
+    .Toastify__toast {
+      padding: 0 10px;
+      min-height: 0;
+      height: max-content;
+
+      .Toastify__close-button {
+        display: none;
+      }
+
+      .Toastify__toast-body {
+        margin: 5px 0;
+
+        svg {
+          display: none;
+        }
+      }
+    }
+  }
 }
 
 .Toastify__toast {
