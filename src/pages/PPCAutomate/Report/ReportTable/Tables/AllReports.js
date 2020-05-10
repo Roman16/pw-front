@@ -35,25 +35,20 @@ export const allReports = () => {
         'created-negative-pat-from-cst-no-sales': 'Created Negative PAT From CST (No Sales)',
     };
 
-    return ({
-        columns: {
-            ['all-reports']: [
-                {
-                    title: 'Type',
-                    dataIndex: 'type',
-                    key: 'type',
-                    width: '20%',
-                    render: key => <span>{allSubTabs[key]}</span>,
-                },
-                {
-                    title: 'Message',
-                    dataIndex: 'info',
-                    key: 'info',
-                    render: text => <span dangerouslySetInnerHTML={{__html: text}}/>,
-                },
-            ]
+    return ([
+        {
+            title: 'Type',
+            dataIndex: 'type',
+            key: 'type',
+            width: '20%',
+            render: key => <span>{allSubTabs[key]}</span>,
         },
-        subTabs: []
-    });
+        {
+            title: 'Message',
+            dataIndex: 'info',
+            key: 'info',
+            render: text => <span dangerouslySetInnerHTML={{__html: text}}/>,
+        },
+    ])
 };
 
