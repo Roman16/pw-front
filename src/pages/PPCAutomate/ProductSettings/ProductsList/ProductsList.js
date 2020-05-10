@@ -464,8 +464,7 @@ class ProductsList extends Component {
                 totalSize: totalSize,
                 onChangePagination: this.changePagination,
                 showPagination: true
-            },
-            windowHeight = window.innerHeight;
+            };
 
         return (
             <div className="table-settings">
@@ -476,7 +475,6 @@ class ProductsList extends Component {
                     expandIcon={(props) => this.customExpandIcon(props)}
 
                     expandedRowRender={this.expandedRowRender}
-                    scroll={{y: paginationOption.totalSize > paginationOption.pageSize ? windowHeight - 350 : windowHeight - 300}}
                     {...paginationOption}
                 />
             </div>
