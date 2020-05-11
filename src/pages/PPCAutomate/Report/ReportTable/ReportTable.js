@@ -1,27 +1,9 @@
 import React from "react";
 import axios from "axios";
-import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
-import FreeTrial from "../../../../components/FreeTrial/FreeTrial";
-import {allColumnsOrder} from "./Tables/allColumnsOrder";
-import {indexField, dateField} from './Tables/const';
-import {keywordsOptimization} from "./Tables/KeywordsOptimization";
-import {patsOptimization} from "./Tables/PATsOptimization";
-import {newKeywords} from "./Tables/NewKeywords";
-import {newNegativeKeywords} from "./Tables/NewNegativeKeywords";
-import {newPats} from "./Tables/NewPats";
-import {newNegativePats} from "./Tables/NewNegativePats";
-import {allReports} from "./Tables/AllReports";
-import {reportsUrls} from "../../../../constans/api.urls";
+import {dateField} from './Tables/const';
 import "./ReportTable.less";
-import {mainChangesCount, mainHasNewReport, subChangesCount} from "./Tables/changesCount";
 import CustomTable from "../../../../components/Table/CustomTable";
-import TableButton from "./TableButton/TableButton";
-import tz from 'moment-timezone';
-
 import {Select} from "antd";
-import CustomSelect from "../../../../components/Select/Select";
-import {SVG} from "../../../../utils/icons";
-import Button from "../../../../components/Button/Button";
 import Pagination from "../../../../components/Pagination/Pagination";
 
 const Option = Select.Option;

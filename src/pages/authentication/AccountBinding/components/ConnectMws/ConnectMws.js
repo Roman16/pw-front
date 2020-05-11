@@ -36,7 +36,9 @@ const ConnectMws = ({onGoBackStep, onChangeInput, onConnectMws, connectMwsStatus
                             <Option value={'UKDEFRESITINTR'} disabled>Europe (UK, DE, FR, ES, IT, IN, TR)</Option>
                         </CustomSelect>
 
-                        <button className='btn default' onClick={() => window.open(mwsLink)}>Get Credentials</button>
+                        <button className='btn default'>
+                            <a href={mwsLink} target={'_blank'}>Get Credentials</a>
+                        </button>
                     </div>
 
                     <h4>Then, copy and paste your credentials below:</h4>
