@@ -1,8 +1,5 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import moment from "moment";
+import React from "react";
 import axios from "axios";
-import Slider from "react-slick";
 import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
 import FreeTrial from "../../../../components/FreeTrial/FreeTrial";
 import {allColumnsOrder} from "./Tables/allColumnsOrder";
@@ -43,38 +40,14 @@ const subTables = {
 
 
 const ReportTable = ({
-                         currentTab,
                          reportsList,
                          processing,
                          paginationParams,
-                         paginationChangeHandler
+                         paginationChangeHandler,
+                         sortChangeHandler,
+                         columns
                      }) => {
-    //
-    // fetchReports = (selectedPage) => {
-    //     const {activeTab, activeSubTab, startDate, endDate, page, pageSize, filteredColumns, sorterColumn} = this.state,
-    //         {selectedAll, selectedProductId} = this.props;
-    //
-    //     source && source.cancel();
-    //
-    //     source = CancelToken.source();
-    //
-    //     if (selectedAll || selectedProductId) {
-    //         this.props.getReports({
-    //             id: selectedAll ? "all" : selectedProductId,
-    //             dataType: activeTab,
-    //             dataSubType: activeSubTab,
-    //             size: 10,
-    //             startDate,
-    //             endDate,
-    //             page: selectedPage ? selectedPage : page,
-    //             pageSize,
-    //             filteredColumns,
-    //             sorterColumn
-    //         }, source.token);
-    //     }
-    // };
-    //
-    //
+
     // timeRange = (startDate, endDate) => {
     //     this.setState(
     //         {
@@ -130,47 +103,20 @@ const ReportTable = ({
     //     }
     // };
     //
-    // handleChangeSorter = (column) => {
-    //     const {sorterColumn} = this.state;
-    //
-    //     if (sorterColumn && sorterColumn.key === column) {
-    //         if (sorterColumn.type === 'desc') this.setState({
-    //             sorterColumn: {
-    //                 key: column,
-    //                 type: 'asc'
-    //             }
-    //         }, this.fetchReports);
-    //         if (sorterColumn.type === 'asc') this.setState({sorterColumn: {}}, this.fetchReports);
-    //
-    //     } else {
-    //         this.setState({
-    //             sorterColumn: {
-    //                 key: column,
-    //                 type: 'desc'
-    //             }
-    //         }, this.fetchReports)
-    //     }
-    // };
 
-    const mainTabs = {
-        'allReports': allReports(),
-        "targetingImprovements": keywordsOptimization(),
-        "searchTerms": patsOptimization(),
-    };
+
 
 
     return (
         <div className="ReportTable">
             <div className="content">
                 <CustomTable
-                    // onChangeSorter={this.handleChangeSorter}
+                    onChangeSorter={sortChangeHandler}
                     loading={processing}
                     dataSource={reportsList}
                     columns={[
                         {...dateField},
-                        ...allColumnsOrder
-                            .map(column => (mainTabs[currentTab].find(item => item.key === column.key)))
-                            .filter(column => column != null)
+                        ...columns
                     ]}
                     // sorterColumn={sorterColumn}
                     rowClassName={(item) => !item.viewed && 'new-report'}

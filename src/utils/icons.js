@@ -647,10 +647,26 @@ const files = {
                 '<path xmlns="http://www.w3.org/2000/svg"  fill-rule="evenodd" d="M18.888 13.3337H18.999C19.5513 13.3337 19.999 13.7815 19.999 14.3337V19.0002C19.999 19.5525 19.5513 20.0002 18.999 20.0002H14.3325C13.7803 20.0002 13.3325 19.5525 13.3325 19.0002V18.8882H17.888C18.4402 18.8882 18.888 18.4405 18.888 17.8882V13.3337Z" clip-rule="evenodd"/>' +
                 '<path xmlns="http://www.w3.org/2000/svg"  fill-rule="evenodd" d="M18.888 6.6665H18.999C19.5513 6.6665 19.999 6.21879 19.999 5.6665V1.00002C19.999 0.447733 19.5513 1.7643e-05 18.999 1.7643e-05H14.3325C13.7803 1.7643e-05 13.3325 0.447733 13.3325 1.00002V1.1133H17.888C18.4402 1.1133 18.888 1.56101 18.888 2.1133V6.6665Z" clip-rule="evenodd"/>' +
                 '<path xmlns="http://www.w3.org/2000/svg" d="M3.33301 4.3335C3.33301 3.78121 3.78072 3.3335 4.33301 3.3335H7.88841C8.4407 3.3335 8.88841 3.78121 8.88841 4.3335V7.8889C8.88841 8.44119 8.4407 8.8889 7.88841 8.8889H4.33301C3.78072 8.8889 3.33301 8.44119 3.33301 7.8889V4.3335Z"/>'
+        },
+        'sorter-arrow': {
+            width: 10,
+            height: 14,
+            viewBox: [0, 0, 10, 14],
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="10" height="15" x="0" y="0" maskUnits="userSpaceOnUse">' +
+                '<path fill="#C4C4C4" d="M10 0.001H24V10.001H10z" transform="rotate(90 10 .001)"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)">' +
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9.25098L5 13.001M5 13.001L0.999999 9.25098M5 13.001L5 1.00098"/></g>'
+        },
+        'remove-filter-icon': {
+            width: 10,
+            height: 10,
+            viewBox: [0,0,10,10],
+            data: '<path xmlns="http://www.w3.org/2000/svg" stroke="white" stroke-linecap="round" d="M0.999939 1L8.99994 9M0.999939 9L8.99994 1"/>'
         }
 
     },
     allIds: [
+        'remove-filter-icon',
+        'sorter-arrow',
         'all-selected-icon',
         'one-selected-icon',
         'usa-flag',

@@ -38,7 +38,7 @@
         .title {
           min-height: 24px;
           display: flex;
-          align-items: flex-start;
+          align-items: center;
           font-weight: 500;
 
 
@@ -48,19 +48,29 @@
           }
 
           .sorter-buttons {
-            flex-direction: column;
-            justify-content: center;
-            margin: 0 0 0 5px;
-            display: none;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            margin: 0 0 0 10px;
 
-            i {
-              font-size: 12px;
-              cursor: pointer;
-              color: #bfbfbf;
+            svg {
+              use {
+                stroke: #C9CBD4;
+              }
             }
 
             &.is-sorter {
-              display: flex;
+              svg {
+                use {
+                  stroke: #6D6DF6;
+                }
+              }
+
+              &.asc {
+                svg {
+                  transform: rotate(180deg);
+                }
+              }
             }
           }
 
@@ -72,16 +82,6 @@
 
         &.sorter-column {
           cursor: pointer;
-
-          &:hover {
-            background: #fafafa;
-
-            .title {
-              .sorter-buttons {
-                display: flex;
-              }
-            }
-          }
         }
 
         &.filter-column {
