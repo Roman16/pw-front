@@ -9,12 +9,9 @@ import Tabs from "./Tabs/Tabs";
 import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 import Filters from "./Filters/Filters";
 import {reportsServices} from "../../../services/reports.services";
-import {allReports} from "./ReportTable/Tables/AllReports";
-import {keywordsOptimization} from "./ReportTable/Tables/KeywordsOptimization";
-import {patsOptimization} from "./ReportTable/Tables/PATsOptimization";
-import {dateField} from "./ReportTable/Tables/const";
-import {allColumnsOrder} from "./ReportTable/Tables/allColumnsOrder";
-import CustomTable from "../../../components/Table/CustomTable";
+import {allReports} from "./ReportTable/Tables/allReports";
+import {targetingImprovements} from "./ReportTable/Tables/targetingImprovements";
+import {searchTerms} from "./ReportTable/Tables/searchTerms";
 
 function Report() {
     const [currentTab, setCurrentTab] = useState('allReports'),
@@ -34,7 +31,8 @@ function Report() {
             ...paginationParams,
             page: 1,
             totalSize: 0
-        })
+        });
+        setFilters([]);
     }
 
     const sortChangeHandler = (params) => {
@@ -71,8 +69,8 @@ function Report() {
 
     const mainTabs = {
         'allReports': allReports(),
-        "targetingImprovements": keywordsOptimization(),
-        "searchTerms": patsOptimization(),
+        "targetingImprovements": targetingImprovements(),
+        "searchTerms": searchTerms(),
     };
 
     return (
@@ -86,11 +84,7 @@ function Report() {
 
             <Filters
                 filters={filters}
-                columns={[
-                    ...allColumnsOrder
-                        .map(column => (mainTabs[currentTab].find(item => item.key === column.key)))
-                        .filter(column => column != null)
-                ]}
+                columns={mainTabs[currentTab]}
 
                 onAddFilter={addFilterHandler}
                 onReset={resetFiltersHandler}
@@ -102,11 +96,7 @@ function Report() {
                 reportsList={reportsList}
                 processing={processing}
                 paginationParams={paginationParams}
-                columns={[
-                    ...allColumnsOrder
-                        .map(column => (mainTabs[currentTab].find(item => item.key === column.key)))
-                        .filter(column => column != null)
-                ]}
+                columns={mainTabs[currentTab]}
 
                 paginationChangeHandler={paginationChangeHandler}
                 sortChangeHandler={sortChangeHandler}

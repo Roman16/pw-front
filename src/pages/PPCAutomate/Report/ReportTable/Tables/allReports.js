@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const allReports = () => {
 
     const allSubTabs = {
@@ -37,17 +35,30 @@ export const allReports = () => {
 
     return ([
         {
-            title: 'Type',
-            dataIndex: 'type',
-            key: 'type',
-            width: '20%',
-            render: key => <span>{allSubTabs[key]}</span>,
+            title: 'Object',
+            dataIndex: 'object',
+            key: 'object',
+            minWidth: '14.285714285714286rem',
+            sorter: true,
         },
         {
-            title: 'Message',
-            dataIndex: 'info',
-            key: 'info',
-            render: text => <span dangerouslySetInnerHTML={{__html: text}}/>,
+            title: 'Object Type',
+            dataIndex: 'object_type',
+            key: 'object_type',
+            minWidth: '14.285714285714286rem',
+            sorter: true,
+        },
+        {
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            minWidth: '14.285714285714286rem',
+        },
+        {
+            title: 'Reason',
+            dataIndex: 'reason',
+            key: 'reason',
+            minWidth: '14.285714285714286rem',
         },
     ])
 };

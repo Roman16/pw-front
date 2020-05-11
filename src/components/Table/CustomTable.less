@@ -36,10 +36,19 @@
         }
 
         .title {
+          width: 100%;
           min-height: 24px;
           display: flex;
           align-items: center;
           font-weight: 500;
+
+          &.right {
+            flex-direction: row-reverse;
+
+            .sorter-buttons {
+              margin: 0 10px 0 0;
+            }
+          }
 
 
           .title-info {
@@ -54,6 +63,8 @@
             margin: 0 0 0 10px;
 
             svg {
+              opacity: 0;
+
               use {
                 stroke: #C9CBD4;
               }
@@ -61,6 +72,8 @@
 
             &.is-sorter {
               svg {
+                opacity: 1;
+
                 use {
                   stroke: #6D6DF6;
                 }
@@ -82,6 +95,12 @@
 
         &.sorter-column {
           cursor: pointer;
+
+          &:hover {
+            svg {
+              opacity: 1;
+            }
+          }
         }
 
         &.filter-column {
@@ -151,6 +170,11 @@
         border-bottom: 1px solid #c9cbd4;
 
         .table-body__field {
+          &.right {
+            display: flex;
+            flex-direction: row-reverse;
+          }
+
           .title-info {
             .custom-tooltip.information-tooltip {
               width: 0.8571429em;

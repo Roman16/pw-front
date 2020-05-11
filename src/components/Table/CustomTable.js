@@ -60,10 +60,13 @@ const CustomTable = ({
                             <div
                                 className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''}`}
                                 key={`${item.dataIndex}_${index}`}
-                                style={{...fieldWidth, minWidth: item.minWidth || '0'}}
+                                style={{
+                                    ...fieldWidth,
+                                    minWidth: item.minWidth || '0',
+                                }}
                                 onClick={() => item.sorter && changeSortHandler(item.key)}
                             >
-                                <div className='title'>
+                                <div className={`title ${item.align || ''}`}>
                                     {typeof item.title === 'function' ? item.title() : item.title}
 
                                     {item.sorter && <div
@@ -98,7 +101,7 @@ const CustomTable = ({
 
                                     return (
                                         <div
-                                            className="table-body__field"
+                                            className={`table-body__field ${item.align || ''}`}
                                             style={{...fieldWidth, minWidth: item.minWidth || '0'}}
                                             key={shortid.generate()}
                                         >
