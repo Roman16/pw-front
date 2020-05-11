@@ -27,7 +27,8 @@ const ReportTable = ({
                          paginationParams,
                          paginationChangeHandler,
                          sortChangeHandler,
-                         columns
+                         columns,
+                         sorterColumn
                      }) => {
 
     // timeRange = (startDate, endDate) => {
@@ -96,6 +97,7 @@ const ReportTable = ({
                     onChangeSorter={sortChangeHandler}
                     loading={processing}
                     dataSource={reportsList}
+                    sorterColumn={sorterColumn}
                     columns={[
                         {...dateField},
                         ...columns

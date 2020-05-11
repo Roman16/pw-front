@@ -4,6 +4,8 @@ import shortid from 'shortid';
 import './CustomTable.less';
 import {SVG} from "../../utils/icons";
 
+let firstRender = true;
+
 const CustomTable = ({
                          columns,
                          dataSource,
@@ -12,37 +14,8 @@ const CustomTable = ({
                          rowClassName,
                          rowClick,
                          onChangeSorter,
-                         defaultSorterColumn
+                         sorterColumn
                      }) => {
-
-    const [sorterColumn, setSorterColumn] = useState(null)
-
-    const changeSortHandler = (column) => {
-        if (sorterColumn && sorterColumn.column === column) {
-            if (sorterColumn.type === 'desc') {
-                setSorterColumn({
-                    column: column,
-                    type: 'asc'
-                })
-            } else if (sorterColumn.type === 'asc') {
-                setSorterColumn({
-                    column: null,
-                    type: 'desc'
-                })
-            }
-        } else {
-            setSorterColumn({
-                column: column,
-                type: 'desc'
-            })
-        }
-    }
-
-    useEffect(() => {
-        if (sorterColumn !== null) {
-            onChangeSorter(sorterColumn);
-        }
-    }, [sorterColumn])
 
     const devicePixelRatio = window.devicePixelRatio;
 
@@ -64,7 +37,7 @@ const CustomTable = ({
                                     ...fieldWidth,
                                     minWidth: item.minWidth || '0',
                                 }}
-                                onClick={() => item.sorter && changeSortHandler(item.key)}
+                                onClick={() => item.sorter && onChangeSorter(item.key)}
                             >
                                 <div className={`title ${item.align || ''}`}>
                                     {typeof item.title === 'function' ? item.title() : item.title}

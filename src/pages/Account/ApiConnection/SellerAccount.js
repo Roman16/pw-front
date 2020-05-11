@@ -25,12 +25,12 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                 <div className={'seller-name'} onClick={onOpenAccount}>Seller Name: {sellerName}
                     <img src={USAFlag} alt=""/>
 
-                    {(!account.amazon_mws.is_connected || !account.amazon_ppc.is_connected) &&
+                    {(account.amazon_mws.status === 'FAILED' || account.amazon_ppc.status === 'FAILED' || account.amazon_mws.is_connected === false || account.amazon_ppc.is_connected === false) &&
                     <div className="some-problems">
                         <SVG id={'warningsmall'}/>
                     </div>}
 
-                    <button >
+                    <button>
                         <SVG id={'down'}/>
                     </button>
                 </div>
@@ -40,10 +40,14 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                         <h3>MWS Authorization</h3>
 
                         <div className={`account-status`}>
-                            {account.amazon_mws.id && account.amazon_mws.status === 'IN_PROGRESS' && <span style={{color: '#f0b849'}}>Verifying</span>}
-                            {account.amazon_mws.id && account.amazon_mws.status === 'SUCCESS' && <span style={{color: '#7DD4A1'}}>Success</span>}
-                            {account.amazon_mws.id && account.amazon_mws.status === 'FAILED' && <span style={{color: '#EC7F5C'}}>Failed</span>}
-                            {account.amazon_mws.id && account.amazon_mws.is_connected === false && <span style={{color: '#EC7F5C'}}>Canceled</span>}
+                            {account.amazon_mws.id && account.amazon_mws.status === 'IN_PROGRESS' &&
+                            <span style={{color: '#f0b849'}}>Verifying</span>}
+                            {account.amazon_mws.id && account.amazon_mws.status === 'SUCCESS' &&
+                            <span style={{color: '#7DD4A1'}}>Success</span>}
+                            {account.amazon_mws.id && account.amazon_mws.status === 'FAILED' &&
+                            <span style={{color: '#EC7F5C'}}>Failed</span>}
+                            {account.amazon_mws.id && account.amazon_mws.is_connected === false &&
+                            <span style={{color: '#EC7F5C'}}>Canceled</span>}
                         </div>
 
                         <div className="account-action">
@@ -75,10 +79,14 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                         <h3>Advertising API</h3>
 
                         <div className={`account-status`}>
-                            {account.amazon_ppc.id && account.amazon_ppc.status === 'IN_PROGRESS' && <span style={{color: '#f0b849'}}>Verifying</span>}
-                            {account.amazon_ppc.id && account.amazon_ppc.status === 'SUCCESS' && <span style={{color: '#7DD4A1'}}>Success</span>}
-                            {account.amazon_ppc.id && account.amazon_ppc.status === 'FAILED' && <span style={{color: '#EC7F5C'}}>Failed</span>}
-                            {account.amazon_ppc.id && account.amazon_ppc.is_connected === false && <span style={{color: '#EC7F5C'}}>Canceled</span>}
+                            {account.amazon_ppc.id && account.amazon_ppc.status === 'IN_PROGRESS' &&
+                            <span style={{color: '#f0b849'}}>Verifying</span>}
+                            {account.amazon_ppc.id && account.amazon_ppc.status === 'SUCCESS' &&
+                            <span style={{color: '#7DD4A1'}}>Success</span>}
+                            {account.amazon_ppc.id && account.amazon_ppc.status === 'FAILED' &&
+                            <span style={{color: '#EC7F5C'}}>Failed</span>}
+                            {account.amazon_ppc.id && account.amazon_ppc.is_connected === false &&
+                            <span style={{color: '#EC7F5C'}}>Canceled</span>}
                         </div>
 
                         <div className="account-action">

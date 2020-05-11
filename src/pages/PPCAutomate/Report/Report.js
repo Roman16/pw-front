@@ -18,13 +18,18 @@ function Report() {
         [reportsList, setReportsList] = useState([]),
         [processing, setProcessing] = useState(false),
         [filters, setFilters] = useState([]),
+        [sorterColumn, setSorterColumn] = useState({
+            column: 'eventDateTime',
+            type: 'desc'
+        }),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
             pageSize: 10,
             totalSize: 0
         })
 
-    const paginationChangeHandler = (params) => setPaginationParams(params)
+    const paginationChangeHandler = (params) => setPaginationParams(params);
+
     const changeTabHandler = (tab) => {
         setCurrentTab(tab);
         setPaginationParams({
@@ -33,10 +38,31 @@ function Report() {
             totalSize: 0
         });
         setFilters([]);
+        setSorterColumn({
+            column: 'eventDateTime',
+            type: 'desc'
+        })
     }
 
-    const sortChangeHandler = (params) => {
-        console.log(params);
+    const sortChangeHandler = (column) => {
+        if (sorterColumn && sorterColumn.column === column) {
+            if (sorterColumn.type === 'desc') {
+                setSorterColumn({
+                    column: column,
+                    type: 'asc'
+                })
+            } else if (sorterColumn.type === 'asc') {
+                setSorterColumn({
+                    column: null,
+                    type: 'desc'
+                })
+            }
+        } else {
+            setSorterColumn({
+                column: column,
+                type: 'desc'
+            })
+        }
     }
 
     const addFilterHandler = (filter) => {
@@ -97,6 +123,7 @@ function Report() {
                 processing={processing}
                 paginationParams={paginationParams}
                 columns={mainTabs[currentTab]}
+                sorterColumn={sorterColumn}
 
                 paginationChangeHandler={paginationChangeHandler}
                 sortChangeHandler={sortChangeHandler}
