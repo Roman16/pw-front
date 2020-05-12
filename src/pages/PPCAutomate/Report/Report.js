@@ -54,7 +54,9 @@ function Report() {
         setSorterColumn({
             column: 'datetime',
             type: 'desc'
-        })
+        });
+
+        document.querySelector('.table-overflow').scroll(0, 0);
     }
 
     const sortChangeHandler = (column) => {
