@@ -236,7 +236,7 @@ const SubscriptionPlan = ({
                     <button className={'btn default'} onClick={() => onOpenReactivateWindow(product)}>
                         Reactivate
                     </button>
-                    {/*<p>You will have access to the software until the end of this billing cycle.</p>*/}
+                    <p>You will have access to the software until the {product.grace_period.on_grace_period_until && moment(product.grace_period.on_grace_period_until).format('MMM DD, YYYY')}.</p>
                 </>
                 }
             </div>

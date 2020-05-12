@@ -42,7 +42,7 @@ export const metricsListArray = [
         type: 'number'
     },
     {
-        title: 'Total Orders Cleared',
+        title: `Total Orders <br/> Cleared`,
         key: 'total_orders_pure',
         info: 'Total Orders Cleared = Total Orders - Returned Orders',
         label: 'Total',
@@ -102,7 +102,7 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'number'
     },
     {
-        title: 'Total Units Cleared',
+        title: `Total Units <br/> Cleared`,
         key: 'total_units_pure',
         info: 'Total Units Cleared = Total Units - Returned Units',
         label: 'Total',
