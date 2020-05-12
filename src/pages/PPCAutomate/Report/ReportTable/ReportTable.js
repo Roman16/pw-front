@@ -13,7 +13,7 @@ import {newKeywords} from "./Tables/NewKeywords";
 import {newNegativeKeywords} from "./Tables/NewNegativeKeywords";
 import {newPats} from "./Tables/NewPats";
 import {newNegativePats} from "./Tables/NewNegativePats";
-import {allReports} from "./Tables/AllReports";
+import {allReports} from "./Tables/allReports";
 import {reportsActions} from "../../../../actions/reports.actions";
 import {reportsUrls} from "../../../../constans/api.urls";
 import "./ReportTable.less";
