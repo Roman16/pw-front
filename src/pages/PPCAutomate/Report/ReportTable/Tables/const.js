@@ -1,19 +1,81 @@
 import React from 'react';
 import moment from 'moment';
-import {Menu, Dropdown} from 'antd';
 
 import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {SVG} from "../../../../../utils/icons";
-import {numberMask} from "../../../../../utils/numberMask";
+import {ColumnMenuFilter, ColumnNumberFilter} from "./columnFilter";
 import {round} from "../../../../../utils/round";
+import {SVG} from "../../../../../utils/icons";
+
+function getIndexColumnWidth(count) {
+    return `${25 + count.toString().length * 7}px`;
+}
+
+export const patIntentValues = {
+    queryHighRelMatches: 'Close Match',
+    queryBroadRelMatches: 'Loose Match',
+    asinAccessoryRelated: 'Complements',
+    asinSubstituteRelated: 'Substitutes',
+    asinSameAs: 'ASIN',
+    asinCategorySameAs: 'Category',
+    asinBrandSameAs: 'Brand'
+};
+const negativeMatchValues = {
+    negativeExact: 'Negative Exact',
+    negativePhrase: 'Negative Phrase'
+};
+
+export const patIntentField = (onChangeFilter, filteredColumns) => ({
+    title: (
+        <TitleInfo
+            title="PAT Intent Type"
+            info="Automatic and Manual Product Targetings use multiple strategies to match your ads to shoppers looking for your products. For Automatic Product Targetings these strategies are: Close Match, Loose Match, Complements, Substitutes. For Manual: ASIN, Categories, Brand."
+            position="top"
+        />
+    ),
+    dataIndex: 'd_patIntentType',
+    key: 'd_patIntentType',
+    render: text => <span>{patIntentValues[text]}</span>,
+    sorter: true,
+    filter: (dataIndex) => <ColumnMenuFilter
+        onChangeFilter={onChangeFilter}
+        filteredColumns={filteredColumns}
+        dataIndex={dataIndex}
+        menu={Object.keys(patIntentValues).map(key => ({
+            label: patIntentValues[key],
+            value: key
+        }))}
+    />
+});
+
+export const negativeMatchTypeField = {
+    title: 'Negative Match Type',
+    dataIndex: 'negativeMatchType',
+    key: 'negativeMatchType',
+    width: '150px',
+    render: text => <span>{negativeMatchValues[text]}</span>,
+
+};
+
+export const indexField = (currentPage, pageSize) => ({
+    title: '#',
+    dataIndex: 'id',
+    key: 'id',
+    width: getIndexColumnWidth(Number(currentPage * pageSize - pageSize)),
+    render: (id, item, index) => {
+        return (<span className='index-field'> {!item.viewed &&
+        <div/>} {currentPage * pageSize - pageSize + index + 1}</span>)
+    }
+});
 
 export const dateField = {
     title: 'Date',
-    dataIndex: 'datetime',
-    key: 'datetime',
-    width: '160px',
+    dataIndex: 'eventDateTime',
+    key: 'eventDateTime',
+    width: '120px',
     render: date => <span>
-        {moment.utc(date).tz('America/Los_Angeles').format('MM/DD/YYYY hh:mm:ss')}
+        {moment.utc(date).tz('America/Los_Angeles').format('MMM DD, YYYY')}
+        <br/>
+        {moment.utc(date).tz('America/Los_Angeles').format('hh:mm:ss A')}
     </span>,
     sorter: true,
 };
@@ -22,198 +84,98 @@ export const actionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    minWidth: '14.285714285714286rem',
-    render: (action, item) => {
+    className: 'left-border',
+    render: text => (
+        <div>
+            <span dangerouslySetInnerHTML={{__html: text}}/>
+        </div>
+    )
+};
 
-        switch (action.type) {
-            case 'CHANGED':
-                return (<div className="action-field">
-                    {action.data && <>
-                        <span className="previous">Bid ${action.data.previous_bid}</span>
-                        <i className={action.data.new_bid > action.data.previous_bid ? 'up' : 'down'}>
-                            <SVG id='change-bid-icon'/>
-                        </i>
-                        <span className="current">${action.data.new_bid}</span>
+export const bidActionField = {
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+    width: '10em',
+    className: 'left-border',
+    render: ({data}) => {
+        if (data) {
+            return (
+                <div className="action-field">
+                    {data && <>
+                        <span className="previous">${data.previous_state}</span>
+                        <i className={data.current_state > data.previous_state ? 'up' : 'down'}><SVG id='right-row'/></i>
+                        <span className="current">${data.current_state}</span>
                     </>}
-                </div>)
-                break;
-
-            case 'CREATED':
-                return (<div className="action-field">Created</div>)
-                break;
-
-            case 'PAUSED':
-                return (<div className="action-field">Pause</div>)
-                break;
-
-            default:
-                return ('');
+                </div>
+            )
         }
     }
 };
 
-export const reasonField = {
-    title: 'Reason',
-    dataIndex: 'type',
-    key: 'type',
-    minWidth: '14.285714285714286rem',
-    render: (type, item) => {
-        switch (type) {
-            case 'AddedCreatedKeywordAsNegative':
-                return (<span>Created negative keyword to prevent competition between new ads</span>)
-                break;
-
-            case 'AddedCreatedPATAsNegative':
-                return (<span>Created negative PT to prevent competition between new ads</span>)
-                break;
-
-            case 'ChangedKeywordBidACoS':
-                return (<span>Adjusting bid to maximize profits</span>)
-                break;
-
-            case 'ChangedKeywordBidImpressions':
-                return (<span>Increasing bid to generate more clicks</span>)
-                break;
-
-            case 'ChangedPATBidACoS':
-                return (<span>Adjusting bid to maximize profits</span>)
-                break;
-
-            case 'ChangedPATBidImpressions':
-                return (<span>Increasing bid to generate more clicks</span>)
-                break;
-
-            case 'CreatedAdGroup':
-                return (<span>Created ad group for new targetings from search terms</span>)
-                break;
-
-            case 'CreatedCampaign':
-                return (<span>Created campaign for new targetings from search terms</span>)
-                break;
-
-            case 'CreatedKeywordFromCST':
-                return (
-                    <span>Detected new keyword opportunity from search terms. Created it with bid <b>${numberMask(item.bid, 2)}</b></span>)
-                break;
-
-            case 'CreatedNegativeKeywordFromCSTHighACoS':
-                return (<span>Created negative keyword for unprofitable search term</span>)
-                break;
-
-            case 'CreatedNegativeKeywordFromCSTNoSales':
-                return (<span>Created negative keyword to prevent loss</span>)
-                break;
-
-            case 'CreatedNegativePATFromCSTHighACoS':
-                return (<span>Created negative PT for unprofitable search term</span>)
-                break;
-
-            case 'CreatedNegativePATFromCSTNoSales':
-                return (<span>Created negative PT to prevent loss</span>)
-                break;
-
-            case 'CreatedPATFromCST':
-                return (
-                    <span>Detected new PT opportunity from search terms. Created it with bid <b>${numberMask(item.bid, 2)}</b></span>)
-                break;
-
-            case 'CreatedProductAd':
-                return (<span>Created product ad for new targetings from search terms</span>)
-                break;
-
-            case 'PausedKeywordDuplicateFromCustomerSearchTerm':
-                return (
-                    <span>This keyword is a duplicate of another better performing keyword based on search terms</span>)
-                break;
-
-            case 'PausedKeywordDuplicateOfPAT':
-                return (<span>This keyword is a duplicate of another better performing PT</span>)
-                break;
-
-            case 'PausedKeywordDuplicate':
-                return (<span>This keyword is a duplicate of another better performing keyword</span>)
-                break;
-
-            case 'PausedKeywordHighACoS':
-            case 'PausedKeywordNoSales':
-                return (<span>Not profitable keyword</span>)
-                break;
-
-            case 'PausedPATHighACoS':
-            case 'PausedPATNoSales':
-                return (<span>Not profitable PT</span>)
-                break;
-
-            case 'PausedPATDuplicate':
-                return (<span>This PT is a duplicate of another better performing PT</span>)
-                break;
-
-            case 'RevertLastChangeKeywordNoSales':
-            case 'RevertLastChangePATNoSales':
-                return (<span>Adjusting profitable bid</span>)
-                break;
-
-            default:
-                return ('');
-        }
-    }
+export const pauseKeywordsActionField = {
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+    width: '170px',
+    className: 'left-border',
+    render: () => (
+        <div className="action-field">
+            <SVG id='pause'/> Paused Keyword
+        </div>
+    )
 };
+
+export const createdKeywordsActionField = {
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+    width: '100px',
+    className: 'left-border',
+    render: () => <div className="action-field">Created</div>
+};
+
+export const pausePatActionField = {
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+    width: '160px',
+    className: 'left-border',
+    render: () => (
+        <div className="action-field">
+            <SVG id='pause'/> Paused Keyword
+        </div>
+    )
+};
+
+export const averageCVRField = (onChangeFilter, filteredColumns) => ({
+    title: (
+        <TitleInfo
+            position='top'
+            title="Normalized CVR"
+            info={`Normalized CVR is our own calculated metric that gives better representation of an expected CVR for a keyword or a Product Targeting. <br/>
+                   When no data is available for product in PPC we use average numbers calculated based on millions of data points.
+                   When there is data for product we smoothly transition into using the product's specific numbers.<br/>
+                   We also account for trends between different match types and apply correction to CVR if needed based on these trends`}
+        />
+    ),
+    dataIndex: 'd_averageConversionRate',
+    key: 'd_averageConversionRate',
+    width: '15em',
+    render: (text) => (text && <span>{round(+text * 100, 2)}%</span>),
+    sorter: true,
+    filter: (dataIndex) => <ColumnNumberFilter
+        onChangeFilter={onChangeFilter}
+        filteredColumns={filteredColumns}
+        dataIndex={dataIndex}
+        percent={true}
+    />
+});
 
 export const infoField = {
     title: '',
     dataIndex: 'info',
     key: 'info',
-    width: '35px',
-    render: (text, item) => (
-        <TitleInfo info={text} position="left" type="info"/>
-    )
-};
-
-
-export const sorterByKeywordField = (filterByKeyword) => ({
-    title: '',
-    dataIndex: 'keyword_id',
-    key: 'keyword_id',
     width: '30px',
-    fixed: true,
-    render: (id) => {
-        const menu = (
-            <Menu onClick={(e) => {
-                if (e.key === 'show') {
-                    filterByKeyword({
-                        filterBy: 'keyword_id',
-                        type: '=',
-                        value: id
-                    })
-                }
-            }}>
-                <Menu.Item key="show">
-                    Show all changes for this keyword
-                </Menu.Item>
-            </Menu>
-        );
-
-        return (
-            <Dropdown disabled={id == null} overlay={menu} trigger={['click']}>
-                <button
-                    className={'filter-btn'}
-                    disabled={id == null}>
-                    <div/>
-                    <div/>
-                    <div/>
-                </button>
-            </Dropdown>)
-    }
-});
-
-
-export const renderCurrencyField = {
-    render: (data) => (data && data !== null) ? (<span>${numberMask(data, 2)}</span>) : ''
-};
-
-export const renderNumberField = {
-    render: (data) => (data && data !== null) ? (<span>{round(data, 2)}</span>) : ''
-};
-export const renderPercentField = {
-    render: (data) => (data && data !== null) ? (<span>{round(data, 2)}%</span>) : ''
+    render: text => <TitleInfo info={text} position="left" type="info"/>
 };

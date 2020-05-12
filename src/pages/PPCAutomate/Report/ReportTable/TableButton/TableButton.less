@@ -1,0 +1,64 @@
+@import '../../../../../style/variables.less';
+
+.TableButton {
+  display: inline-block;
+
+  &.active,
+  &:hover {
+    button.ant-btn {
+      border-color: @action-color;
+      color: @action-color;
+    }
+
+    .count {
+      border-color: #c9cbd4;
+    }
+  }
+
+  button.ant-btn {
+    font-size: 0.7857143rem;
+    display: flex;
+    align-items: center;
+    min-height: 3.4545455em;
+    text-transform: uppercase;
+    border-radius: 0.7272727em;
+    padding: 0 0.9090909em;
+
+    span {
+      font-size: inherit; //11px
+    }
+  }
+
+  .tab-name-count {
+    height: 1.1428571428571428rem;
+    line-height: 1.1428571428571428rem;
+    background: #F5F5FF;
+    border-radius: 1.1428571428571428rem;
+    font-size: 0.7142857142857143rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #343C5A;
+    font-weight: 500;
+    margin: 0 0 0 10px;
+    padding: 0 0.5714285714285714rem;
+  }
+
+  .new-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: capitalize;
+    background: #8FD39D;
+    color: #fff;
+    min-width: 3em;
+    font-size: 0.8571428571428571rem;
+    height: 1.3333333em !important;
+    border-radius: 3px;
+    margin: 0 0 0 0.8333333em;
+    position: absolute;
+    top: -8px;
+    left: 0;
+    padding: 0 3px;
+  }
+}
