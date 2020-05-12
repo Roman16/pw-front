@@ -194,7 +194,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
 
 
             <div className="title-info">
-                {metricInformation.title}
+                <span className={'metric-name'}>{metricInformation.title}</span>
                 {key === 'profit' ?
                     !hasMargin &&
                     <Tooltip
