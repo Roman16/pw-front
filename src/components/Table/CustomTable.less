@@ -36,9 +36,19 @@
         }
 
         .title {
+          width: 100%;
           min-height: 24px;
           display: flex;
-          align-items: flex-start;
+          align-items: center;
+          font-weight: 500;
+
+          &.right {
+            flex-direction: row-reverse;
+
+            .sorter-buttons {
+              margin: 0 10px 0 0;
+            }
+          }
 
 
           .title-info {
@@ -47,19 +57,33 @@
           }
 
           .sorter-buttons {
-            flex-direction: column;
-            justify-content: center;
-            margin: 0 0 0 5px;
-            display: none;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            margin: 0 0 0 10px;
 
-            i {
-              font-size: 12px;
-              cursor: pointer;
-              color: #bfbfbf;
+            svg {
+              opacity: 0;
+
+              use {
+                stroke: #C9CBD4;
+              }
             }
 
             &.is-sorter {
-              display: flex;
+              svg {
+                opacity: 1;
+
+                use {
+                  stroke: #6D6DF6;
+                }
+              }
+
+              &.asc {
+                svg {
+                  transform: rotate(180deg);
+                }
+              }
             }
           }
 
@@ -73,12 +97,8 @@
           cursor: pointer;
 
           &:hover {
-            background: #fafafa;
-
-            .title {
-              .sorter-buttons {
-                display: flex;
-              }
+            svg {
+              opacity: 1;
             }
           }
         }
@@ -150,6 +170,11 @@
         border-bottom: 1px solid #c9cbd4;
 
         .table-body__field {
+          &.right {
+            display: flex;
+            flex-direction: row-reverse;
+          }
+
           .title-info {
             .custom-tooltip.information-tooltip {
               width: 0.8571429em;
@@ -167,13 +192,6 @@
           padding: 1.0714286em 0.5714286em;
           display: flex;
           align-items: center;
-
-          &:first-child {
-            font-size: 1rem; // 14px
-            min-width: 1.4285714em;
-            color: #343c5a;
-            font-weight: 500;
-          }
 
           &:last-child {
             display: flex;

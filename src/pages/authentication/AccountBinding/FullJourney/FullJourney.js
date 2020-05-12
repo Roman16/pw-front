@@ -79,13 +79,16 @@ const FullJourney = () => {
         history.push('/welcome')
     }
 
-    if (mwsConnected && !ppcConnected) {
-        history.push('./connect-ppc-account');
-    } else if (!mwsConnected && ppcConnected) {
-        history.push('./connect-mws-account');
-    } else if (mwsConnected && ppcConnected) {
-        history.push('./api-connections');
-    }
+    useEffect(() => {
+        if (mwsConnected && !ppcConnected) {
+            history.push('./connect-ppc-account');
+        } else if (!mwsConnected && ppcConnected) {
+            history.push('./connect-mws-account');
+        } else if (mwsConnected && ppcConnected) {
+            history.push('./api-connections');
+        }
+    }, [])
+
 
     return (
         <div className="amazon-connect full-journey">

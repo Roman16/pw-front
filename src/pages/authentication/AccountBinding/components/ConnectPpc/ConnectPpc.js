@@ -86,7 +86,6 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                     </p>
 
                     <div className="actions">
-                        <button className={'btn white'} onClick={onGoBackStep}>Cancel</button>
                         <button className={'btn default'} onClick={openConnectLink}>Connect Amazon Advertising</button>
                     </div>
                 </section>

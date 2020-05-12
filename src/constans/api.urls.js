@@ -49,6 +49,7 @@ export const reportsUrls = {
     lastReports: 'ppc-automation/last-changes',
     allReports: 'ppc-automation/reports-ch',
     downloadReports: 'ppc-automation/reports-ch/download',
+    reports: 'ppc-automation/reports'
 };
 
 export const dashboardUrls = {

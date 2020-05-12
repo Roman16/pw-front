@@ -1,24 +1,14 @@
-import React, {Fragment} from 'react';
-import {Pagination, Spin, Select, Icon} from 'antd';
+import React from 'react';
+import {Spin} from 'antd';
 import shortid from 'shortid';
-
 import './CustomTable.less';
-import CustomSelect from "../Select/Select";
-
-const Option = Select.Option;
-
-const pageSizeOptions = ['10', '50', '100', '200'];
+import {SVG} from "../../utils/icons";
 
 const CustomTable = ({
                          columns,
                          dataSource,
-                         totalSize,
-                         onChangePagination,
-                         currentPage,
                          loading,
                          heightTabBtn,
-                         pageSize,
-                         showSizeChanger = false,
                          rowClassName,
                          rowClick,
                          onChangeSorter,
@@ -41,19 +31,20 @@ const CustomTable = ({
                             <div
                                 className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''}`}
                                 key={`${item.dataIndex}_${index}`}
-                                style={{...fieldWidth, minWidth: item.minWidth || '0'}}
+                                style={{
+                                    ...fieldWidth,
+                                    minWidth: item.minWidth || '0',
+                                }}
                                 onClick={() => item.sorter && onChangeSorter(item.key)}
                             >
-                                <div className='title'>
+                                <div className={`title ${item.align || ''}`}>
                                     {typeof item.title === 'function' ? item.title() : item.title}
 
-                                    {sorterColumn && (<div
-                                        className={`sorter-buttons ${sorterColumn.key === item.key && 'is-sorter'}`}>
-                                        <Icon type="caret-up"
-                                              style={{color: `${(sorterColumn.key === item.key && sorterColumn.type === 'asc') ? "#6d6df6" : ""}`}}/>
-                                        <Icon type="caret-down"
-                                              style={{color: `${(sorterColumn.key === item.key && sorterColumn.type === 'desc') ? "#6d6df6" : ""}`}}/>
-                                    </div>)}
+                                    {item.sorter && <div
+                                        className={`sorter-buttons
+                                         ${sorterColumn && sorterColumn.column === item.key ? sorterColumn.type === 'desc' ? 'is-sorter desc' : 'is-sorter asc' : ''}`}>
+                                        <SVG id={'sorter-arrow'}/>
+                                    </div>}
                                 </div>
 
                                 {(item.filter && (
@@ -76,12 +67,11 @@ const CustomTable = ({
                                 onClick={() => rowClick && rowClick(report, index)}
                             >
                                 {columns.map((item) => {
-
                                     const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
 
                                     return (
                                         <div
-                                            className="table-body__field"
+                                            className={`table-body__field ${item.align || ''}`}
                                             style={{...fieldWidth, minWidth: item.minWidth || '0'}}
                                             key={shortid.generate()}
                                         >
@@ -99,43 +89,8 @@ const CustomTable = ({
                         </div>
                     )}
                 </div>
-            </div>
 
-            <div className='table-pagination'>
-                {(totalSize > +pageSize) && (
-                    <Fragment>
-                        <div className='desk'>
-                            <Pagination
-                                defaultCurrent={1}
-                                pageSize={+pageSize || 10}
-                                current={currentPage}
-                                total={+totalSize}
-                                responsive={true}
-                                onChange={(page) => onChangePagination({page})}
-                            />
-                        </div>
 
-                        <div className='mob'>
-                            <Pagination
-                                defaultCurrent={1}
-                                pageSize={+pageSize || 10}
-                                current={currentPage}
-                                total={+totalSize}
-                                responsive={true}
-                                showLessItems={true}
-                                onChange={(page) => onChangePagination({page})}
-                            />
-                        </div>
-                    </Fragment>
-                )}
-
-                {(showSizeChanger && (totalSize > 10)) &&
-                <CustomSelect onChange={(pageSize) => onChangePagination({pageSize})} value={pageSize}>
-                    {pageSizeOptions.map(size => (
-                        <Option value={size} key={size}>{size}</Option>
-                    ))}
-                </CustomSelect>
-                }
             </div>
         </div>
     );
