@@ -44,7 +44,7 @@ export const metricsListArray = [
     {
         title: 'Total Orders Cleared',
         key: 'total_orders_pure',
-        info: 'Total Orders Cleared = Total Orders - Organic Orders',
+        info: 'Total Orders Cleared = Total Orders - Returned Orders',
         label: 'Total',
         type: 'number'
     },
@@ -70,13 +70,13 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         label: 'Total',
         type: 'currency'
     },
-    {
-        title: 'Total Sales Cleared',
-        key: 'total_sales_pure',
-        info: 'Total Sales Cleared = Total Sales - Organic Sales',
-        label: 'Total',
-        type: 'currency'
-    },
+    // {
+    //     title: 'Total Sales Cleared',
+    //     key: 'total_sales_pure',
+    //     info: 'Total Sales Cleared = Total Sales - Organic Sales',
+    //     label: 'Total',
+    //     type: 'currency'
+    // },
     {
         title: 'Ad Sales',
         key: 'ad_sales',
