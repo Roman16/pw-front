@@ -25,6 +25,7 @@ const Subscription = () => {
     const [fetching, switchFetching] = useState(false);
     const [cardsList, setCardsList] = useState(null);
     const [disableButton, changeButton] = useState(false);
+    const [disableReactivateButtons, setDisableReactivateButtons] = useState(false);
 
     const {mwsConnected, ppcConnected, stripeId} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
@@ -116,6 +117,8 @@ const Subscription = () => {
     }
 
     async function handleReactivateSubscription() {
+        setDisableReactivateButtons(true);
+
         try {
             await userService.reactivateSubscription({
                 subscription_plan_id: selectedPlan.plan_id,
@@ -129,9 +132,14 @@ const Subscription = () => {
         } catch (e) {
             console.log(e);
         }
+        setTimeout(() => {
+            setDisableReactivateButtons(false);
+        }, 500)
     }
 
     async function handleCancelSubscription() {
+        setDisableReactivateButtons(true);
+
         try {
             await userService.cancelSubscription({
                 subscription_plan_id: selectedPlan.plan_id,
@@ -145,6 +153,10 @@ const Subscription = () => {
         } catch (e) {
             console.log(e);
         }
+
+        setTimeout(() => {
+            setDisableReactivateButtons(false);
+        }, 500)
     }
 
     async function handleUpdateSubscriptionStatus() {
@@ -207,16 +219,16 @@ const Subscription = () => {
                 placement="right"
                 closable
                 onClose={() => openAccountWindow(false)}
+                onCancel={() => openAccountWindow(false)}
 
                 visible={openedAccountWindow}
 
-                onCancel={() => openAccountWindow(false)}
-                onOk={handleCancelSubscription}
-
-                okText="I want to cancel"
-                cancelText="Keep my account active"
+                footer={false}
             >
                 <CancelAccountWindow
+                    onOk={handleCancelSubscription}
+                    onCancel={() => openAccountWindow(false)}
+                    disableReactivateButtons={disableReactivateButtons}
                 />
             </Modal>
 
@@ -224,13 +236,15 @@ const Subscription = () => {
                 className="reactivate-account"
                 closable
                 centered
-                onOk={handleReactivateSubscription}
-                okText="Reactivate my account"
-                cancelText="Cancel"
+                onClose={() => openAccountWindow(false)}
                 onCancel={() => openReactivateWindow(false)}
+                footer={false}
                 visible={openedReactivateWindow}
             >
                 <Reactivate
+                    onOk={handleReactivateSubscription}
+                    onCancel={() => openReactivateWindow(false)}
+                    disableReactivateButtons={disableReactivateButtons}
                     date={selectedPlan && selectedPlan.grace_period.on_grace_period_until}
                 />
             </Modal>
