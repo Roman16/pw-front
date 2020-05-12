@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import Navigation from "../Navigation/Navigation";
 import {SVG} from "../../../utils/icons";
 import {Input} from "antd";
@@ -23,6 +23,10 @@ const ApiConnection = () => {
     const {user} = useSelector(state => ({
         user: state.user
     }))
+
+    useEffect(() => {
+        dispatch(userActions.getPersonalUserInfo());
+    }, []);
 
     const onOpenAccount = (index) => {
         if (openedAccount === index) {

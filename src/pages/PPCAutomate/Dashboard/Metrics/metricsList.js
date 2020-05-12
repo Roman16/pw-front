@@ -88,6 +88,12 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'currency'
     },
     {
+        title: 'Ad Units',
+        key: 'ad_units_ordered',
+        label: 'Total',
+        type: 'number'
+    },
+    {
         title: 'Total units',
         key: 'total_units',
         label: 'Total',
@@ -168,6 +174,12 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
     {
         title: 'Returns',
         key: 'returns',
+        label: 'Total',
+        type: 'number'
+    },
+    {
+        title: 'Returns Units',
+        key: 'returns_units',
         label: 'Total',
         type: 'number'
     },

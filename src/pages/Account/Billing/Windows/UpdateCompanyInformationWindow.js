@@ -137,7 +137,7 @@ const UpdateCompanyInformationWindow = ({onClose, company, onSubmit, processing}
 
                 <div className='button-block'>
                     <button className='btn white' type='button' onClick={onClose}>Cancel</button>
-                    <button className='btn green-btn' disabled={processing}>Save</button>
+                    <button className='btn default' disabled={processing}>Save</button>
                 </div>
             </form>
         </div>

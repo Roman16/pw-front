@@ -1,3 +1,5 @@
+import {actionField, reasonField, renderCurrencyField, renderNumberField, renderPercentField} from "./const";
+
 export const targetingImprovements = () => {
     return ([
         {
@@ -16,22 +18,15 @@ export const targetingImprovements = () => {
         },
         {
             title: 'Campaign',
-            dataIndex: 'campaign',
-            key: 'campaign',
+            dataIndex: 'campaign_name',
+            key: 'campaign_name',
             minWidth: '14.285714285714286rem',
             sorter: true,
         },
         {
             title: 'Ad Group',
-            dataIndex: 'ad_group',
-            key: 'ad_group',
-            minWidth: '14.285714285714286rem',
-            sorter: true,
-        },
-        {
-            title: 'Ad Group',
-            dataIndex: 'ad_group',
-            key: 'ad_group',
+            dataIndex: 'ad_group_name',
+            key: 'ad_group_name',
             minWidth: '14.285714285714286rem',
             sorter: true,
         },
@@ -41,7 +36,8 @@ export const targetingImprovements = () => {
             key: 'impressions',
             minWidth: '14.285714285714286rem',
             sorter: true,
-            align: 'right'
+            align: 'right',
+            ...renderNumberField
         },
         {
             title: 'Clicks',
@@ -49,7 +45,8 @@ export const targetingImprovements = () => {
             key: 'clicks',
             minWidth: '14.285714285714286rem',
             sorter: true,
-            align: 'right'
+            align: 'right',
+            ...renderNumberField
         },
         {
             title: 'Spend',
@@ -57,7 +54,8 @@ export const targetingImprovements = () => {
             key: 'spend',
             minWidth: '14.285714285714286rem',
             sorter: true,
-            align: 'right'
+            align: 'right',
+            ...renderCurrencyField
         },
         {
             title: 'Sales',
@@ -65,7 +63,8 @@ export const targetingImprovements = () => {
             key: 'sales',
             minWidth: '14.285714285714286rem',
             sorter: true,
-            align: 'right'
+            align: 'right',
+            ...renderCurrencyField
         },
         {
             title: 'ACoS',
@@ -73,27 +72,23 @@ export const targetingImprovements = () => {
             key: 'acos',
             minWidth: '14.285714285714286rem',
             sorter: true,
-            align: 'right'
+            align: 'right',
+            ...renderPercentField
         },
         {
             title: 'Normalized CVR',
-            dataIndex: 'normalized',
-            key: 'normalized',
+            dataIndex: 'normalized_cvr',
+            key: 'normalized_cvr',
             minWidth: '14.285714285714286rem',
             sorter: true,
-            align: 'right'
+            align: 'right',
+            ...renderPercentField
         },
         {
-            title: 'Action',
-            dataIndex: 'action',
-            key: 'action',
-            minWidth: '14.285714285714286rem',
+            ...actionField
         },
         {
-            title: 'Reason',
-            dataIndex: 'reason',
-            key: 'reason',
-            minWidth: '14.285714285714286rem',
+            ...reasonField
         },
     ])
 };

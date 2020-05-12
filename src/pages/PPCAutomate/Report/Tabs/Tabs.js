@@ -1,48 +1,50 @@
 import React from "react";
 import './Tabs.less';
-import {mainChangesCount, mainHasNewReport} from "../ReportTable/Tables/changesCount";
-
-//
-// const TabName = ({name = null, type}) => {
-//     return (
-//         <div className="TabName" data-intercom-target={`${type}-category`}>
-//             <span>{name}</span>
-//
-//             <div className="tab-name-count">
-//                 {mainChangesCount(counts, type) > 1000 ? '999+' : mainChangesCount(counts, type)}
-//
-//                 {mainHasNewReport(countsWithNew, type) > 0 &&
-//                 <div className='new-count'>New {mainHasNewReport(countsWithNew, type)}</div>}
-//             </div>
-//         </div>
-//     )
-// };
 
 
 const Tabs = ({currentTab, onChangeTab}) => {
+    const TabName = ({title, key}) => {
+        return (
+            <div className="TabName" data-intercom-target={`${key}-category`}>
+                <span>{title}</span>
+
+                {/*{changesCounts[key] && <div className='new-count'>*/}
+                {/*    {changesCounts[key].new_count}*/}
+                {/*</div>}*/}
+            </div>
+        )
+    };
+
     return (
         <ul className="tabs">
             <li
-                onClick={() => onChangeTab('allReports')}
-                className={currentTab === 'allReports' && 'current-page-link'}
+                onClick={() => onChangeTab('all-reports')}
+                className={currentTab === 'all-reports' && 'current-page-link'}
             >
-                all reports
+                <TabName
+                    title={'all reports'}
+                    key={'all'}
+                />
             </li>
 
             <li
-                onClick={() => onChangeTab('targetingImprovements')}
-                className={currentTab === 'targetingImprovements' && 'current-page-link'}
+                onClick={() => onChangeTab('targeting-improvements')}
+                className={currentTab === 'targeting-improvements' && 'current-page-link'}
             >
-                TARGETING IMPROVEMENTS
-
+                <TabName
+                    title={'TARGETING IMPROVEMENTS'}
+                    key={'targeting_improvements'}
+                />
             </li>
 
             <li
-                onClick={() => onChangeTab('searchTerms')}
-                className={currentTab === 'searchTerms' && 'current-page-link'}
+                onClick={() => onChangeTab('search-terms')}
+                className={currentTab === 'search-terms' && 'current-page-link'}
             >
-                SEARCH TERMS
-
+                <TabName
+                    title={'SEARCH TERMS'}
+                    key={'search_terms'}
+                />
             </li>
         </ul>
     )

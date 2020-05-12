@@ -1,5 +1,6 @@
-export const searchTerms = () => {
+import {actionField, reasonField, renderCurrencyField, renderNumberField, renderPercentField} from "./const";
 
+export const searchTerms = () => {
     return ([
         {
             title: 'Object',
@@ -21,7 +22,8 @@ export const searchTerms = () => {
             key: 'clicks',
             minWidth: '14.285714285714286rem',
             sorter: true,
-            align: 'right'
+            align: 'right',
+            ...renderNumberField
         },
         {
             title: 'Spend',
@@ -29,7 +31,8 @@ export const searchTerms = () => {
             key: 'spend',
             minWidth: '14.285714285714286rem',
             sorter: true,
-            align: 'right'
+            align: 'right',
+            ...renderCurrencyField
         },
         {
             title: 'Sales',
@@ -37,7 +40,8 @@ export const searchTerms = () => {
             key: 'sales',
             minWidth: '14.285714285714286rem',
             sorter: true,
-            align: 'right'
+            align: 'right',
+            ...renderCurrencyField
         },
         {
             title: 'ACoS',
@@ -45,7 +49,8 @@ export const searchTerms = () => {
             key: 'acos',
             minWidth: '14.285714285714286rem',
             sorter: true,
-            align: 'right'
+            align: 'right',
+            ...renderPercentField
         },
         {
             title: 'Normalized CVR',
@@ -53,19 +58,14 @@ export const searchTerms = () => {
             key: 'normalized',
             minWidth: '14.285714285714286rem',
             sorter: true,
-            align: 'right'
+            align: 'right',
+            ...renderPercentField
         },
         {
-            title: 'Action',
-            dataIndex: 'action',
-            key: 'action',
-            minWidth: '14.285714285714286rem',
+            ...actionField
         },
         {
-            title: 'Reason',
-            dataIndex: 'reason',
-            key: 'reason',
-            minWidth: '14.285714285714286rem',
+            ...reasonField
         },
     ])
 };

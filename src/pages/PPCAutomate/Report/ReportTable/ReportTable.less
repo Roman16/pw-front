@@ -55,6 +55,7 @@ div.ReportTable {
 
   .action-field {
     display: flex;
+    align-items: center;
 
     .previous {
       margin: 0 5px 0 0;
@@ -68,13 +69,7 @@ div.ReportTable {
     i {
       &.up {
         svg {
-          transform: rotate(-90deg);
-        }
-      }
-
-      &.down {
-        svg {
-          transform: rotate(90deg);
+          transform: rotate(180deg);
         }
       }
     }
@@ -113,11 +108,88 @@ div.ReportTable {
 
       .table-overflow {
         flex: 1;
+
+        font-size: 1rem;
+        color: #343C5A;
+
+        .table-head {
+          & > div {
+            padding-left: 15px;
+          }
+        }
+
+        .table-body {
+          .table-body__row {
+            position: relative;
+          }
+
+          .table-body__row > div {
+            padding-left: 15px;
+
+            &:last-child {
+              padding: 0;
+              justify-content: center;
+              position: sticky;
+              right: 0;
+              background: #fff;
+            }
+
+            .custom-tooltip .info-icon {
+              svg use {
+                fill: #C9CBD4;
+              }
+
+              &:hover {
+                svg use {
+                  fill: #656A84;
+                }
+              }
+            }
+
+            .filter-btn {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              align-items: center;
+              width: 20px;
+              height: 20px;
+
+              div {
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background: #C9CBD4;
+              }
+
+              &:hover {
+                div {
+                  background: #656A84;
+                }
+              }
+
+              &[disabled] {
+                cursor: not-allowed;
+
+                &:hover {
+                  div {
+                    background: #C9CBD4;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
 
   .pw-pagination {
     margin: 15px 0 15px 20px;
+  }
+}
+
+.ant-dropdown-menu li {
+  &:hover {
+    background: #F5F5FF;
   }
 }

@@ -1,14 +1,10 @@
 import React from "react";
 import axios from "axios";
-import {dateField} from './Tables/const';
+import {dateField, infoField, sorterByKeywordField} from './Tables/const';
 import "./ReportTable.less";
 import CustomTable from "../../../../components/Table/CustomTable";
 import {Select} from "antd";
 import Pagination from "../../../../components/Pagination/Pagination";
-
-const Option = Select.Option;
-const CancelToken = axios.CancelToken;
-let source = null;
 
 const subTables = {
     "all-reports": "all-reports",
@@ -28,7 +24,8 @@ const ReportTable = ({
                          paginationChangeHandler,
                          sortChangeHandler,
                          columns,
-                         sorterColumn
+                         sorterColumn,
+                         addFilterHandler
                      }) => {
 
     // timeRange = (startDate, endDate) => {
@@ -87,9 +84,6 @@ const ReportTable = ({
     // };
     //
 
-
-
-
     return (
         <div className="ReportTable">
             <div className="content">
@@ -100,7 +94,9 @@ const ReportTable = ({
                     sorterColumn={sorterColumn}
                     columns={[
                         {...dateField},
-                        ...columns
+                        ...columns,
+                        {...infoField},
+                        {...sorterByKeywordField(addFilterHandler)}
                     ]}
                     // sorterColumn={sorterColumn}
                     rowClassName={(item) => !item.viewed && 'new-report'}

@@ -1,10 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Spin} from 'antd';
 import shortid from 'shortid';
 import './CustomTable.less';
 import {SVG} from "../../utils/icons";
-
-let firstRender = true;
 
 const CustomTable = ({
                          columns,
@@ -69,7 +67,6 @@ const CustomTable = ({
                                 onClick={() => rowClick && rowClick(report, index)}
                             >
                                 {columns.map((item) => {
-
                                     const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
 
                                     return (
@@ -92,6 +89,8 @@ const CustomTable = ({
                         </div>
                     )}
                 </div>
+
+
             </div>
         </div>
     );

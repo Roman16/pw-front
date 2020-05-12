@@ -12,6 +12,7 @@ import {allCountries, countries} from "../../../../utils/countries";
 import {states} from "../../../../utils/states";
 import moment from "moment";
 import {SVG} from "../../../../utils/icons";
+import CustomSelect from "../../../../components/Select/Select";
 
 const {Option} = Select;
 
@@ -23,7 +24,7 @@ const CardNumberElementStyles = {
 };
 
 const StripeForm = (props) => {
-    const {onBlurCardElement,localProcessing, stripeElementChange, handleSubmit, processing, onClose, handleChangeInput, countriesList, onChangeSelect, paymentDetails, selectedCard, cardNumber, expiry, cvc, autofocus} = props;
+    const {onBlurCardElement, localProcessing, stripeElementChange, handleSubmit, processing, onClose, handleChangeInput, countriesList, onChangeSelect, paymentDetails, selectedCard, cardNumber, expiry, cvc, autofocus} = props;
     return (
         <form onSubmit={handleSubmit}>
             <div className="card-container">
@@ -148,7 +149,7 @@ const StripeForm = (props) => {
                 <div className="row">
                     <div className="form-group">
                         <label>Country</label>
-                        <Select
+                        <CustomSelect
                             onChange={onChangeSelect('country')}
                             placeholder='Country'
                             showSearch
@@ -161,7 +162,7 @@ const StripeForm = (props) => {
                             {countries.map(item => (
                                 <Option key={item.code} value={item.code}>{item.name}</Option>
                             ))}
-                        </Select>
+                        </CustomSelect>
                     </div>
 
                     <div className="form-group">
@@ -180,7 +181,7 @@ const StripeForm = (props) => {
 
             <div className='button-block'>
                 <button className='btn white' type='button' onClick={onClose}>Cancel</button>
-                <button className='btn green-btn' disabled={processing || localProcessing}>Save</button>
+                <button className='btn default' disabled={processing || localProcessing}>Save</button>
             </div>
         </form>
     )
@@ -312,7 +313,7 @@ class UpdateCard extends Component {
     componentDidMount() {
         if (this.props.card.id) {
             this.setState({
-                paymentDetails: this.props.card.address.address,
+                paymentDetails: {...this.props.card.address.address, name: this.props.card.address.name},
                 selectedCard: this.props.card,
             });
         }

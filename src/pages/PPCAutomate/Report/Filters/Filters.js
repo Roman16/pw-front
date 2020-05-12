@@ -100,7 +100,6 @@ const Filters = ({columns, onAddFilter, filters, onReset, onRemove}) => {
         <div className="report-filter">
             <p>Filters: </p>
 
-            <div className="current-filters">
                 {filters.map((filter, index) => (
                     <div className="filter-items">
                         {`${filter.filterBy} ${filter.type} ${filter.value}`}
@@ -108,7 +107,6 @@ const Filters = ({columns, onAddFilter, filters, onReset, onRemove}) => {
                         <i onClick={() => onRemove(index)}><SVG id={'remove-filter-icon'}/></i>
                     </div>
                 ))}
-            </div>
 
             <Popover
                 content={<FilterPopover

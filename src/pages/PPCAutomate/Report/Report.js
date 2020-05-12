@@ -12,21 +12,33 @@ import {reportsServices} from "../../../services/reports.services";
 import {allReports} from "./ReportTable/Tables/allReports";
 import {targetingImprovements} from "./ReportTable/Tables/targetingImprovements";
 import {searchTerms} from "./ReportTable/Tables/searchTerms";
+import {useSelector} from "react-redux";
+import axios from 'axios';
+
+
+const CancelToken = axios.CancelToken;
+let source = null;
 
 function Report() {
-    const [currentTab, setCurrentTab] = useState('allReports'),
+    const [currentTab, setCurrentTab] = useState('all-reports'),
         [reportsList, setReportsList] = useState([]),
+        [changesCounts, setChangesCounts] = useState({}),
         [processing, setProcessing] = useState(false),
         [filters, setFilters] = useState([]),
         [sorterColumn, setSorterColumn] = useState({
-            column: 'eventDateTime',
+            column: 'datetime',
             type: 'desc'
         }),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
             pageSize: 10,
             totalSize: 0
-        })
+        });
+
+    const {productId, selectedAll} = useSelector(state => ({
+        productId: state.products.selectedProduct.id,
+        selectedAll: state.products.selectedAll
+    }))
 
     const paginationChangeHandler = (params) => setPaginationParams(params);
 
@@ -38,8 +50,9 @@ function Report() {
             totalSize: 0
         });
         setFilters([]);
+        setReportsList([]);
         setSorterColumn({
-            column: 'eventDateTime',
+            column: 'datetime',
             type: 'desc'
         })
     }
@@ -78,10 +91,23 @@ function Report() {
 
     const fetchReportsList = async () => {
         setProcessing(true);
+        source && source.cancel();
+        source = CancelToken.source();
 
         try {
-            const res = await reportsServices.getAllReports();
-            setReportsList(res);
+            const res = await reportsServices.getAllReports(
+                currentTab,
+                {
+                    id: selectedAll ? 'all' : productId,
+                    ...paginationParams,
+                    sorterColumn,
+                    filters
+                },
+                source.token
+            );
+
+            setReportsList(res.data);
+            setChangesCounts(res.counts);
         } catch (e) {
             console.log(e);
         }
@@ -90,13 +116,14 @@ function Report() {
     }
 
     useEffect(() => {
-        fetchReportsList();
-    }, [])
+        if (productId !== null)
+            fetchReportsList();
+    }, [productId, currentTab, selectedAll, paginationParams, sorterColumn, filters])
 
     const mainTabs = {
-        'allReports': allReports(),
-        "targetingImprovements": targetingImprovements(),
-        "searchTerms": searchTerms(),
+        'all-reports': allReports(),
+        "targeting-improvements": targetingImprovements(),
+        "search-terms": searchTerms(),
     };
 
     return (
@@ -127,6 +154,7 @@ function Report() {
 
                 paginationChangeHandler={paginationChangeHandler}
                 sortChangeHandler={sortChangeHandler}
+                addFilterHandler={addFilterHandler}
             />
 
             <SubscriptionNotificationWindow product={'ppc'}/>
