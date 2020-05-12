@@ -134,9 +134,18 @@
         background: #fff;
         margin: 0;
 
+        .title {
+          display: flex;
+          justify-content: flex-end;
+        }
+
         &:first-child {
           justify-content: flex-start;
           padding-left: 1.7142857142857142rem;
+
+          .title {
+            justify-content: flex-start;
+          }
         }
 
         &:last-child {
