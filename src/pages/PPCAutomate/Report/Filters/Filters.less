@@ -88,11 +88,18 @@
   .row {
     display: flex;
 
+    .form-group {
+      margin: 0 15px 0 0;
+
+      &:last-child {
+        margin: 0;
+      }
+    }
+
     .custom-select {
       flex: 1;
       min-width: 10rem;
       height: 2.2857142857142856rem;
-      margin: 0 15px 0 0;
 
       &:nth-child(3) {
         margin: 0;
@@ -104,6 +111,20 @@
         //display: flex !important;
       }
 
+    }
+  }
+
+  .DatePicker {
+    max-width: 170px;
+
+    .ant-calendar-picker,
+    .ant-input {
+      width: 100%;
+      text-align: left;
+    }
+
+    .DateIcon {
+      display: none;
     }
   }
 

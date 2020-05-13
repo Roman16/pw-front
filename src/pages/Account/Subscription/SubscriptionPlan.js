@@ -48,7 +48,6 @@ const ProductPrice = ({product}) => {
             <br/>
             <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
         </div>)
-
     } else if (product.applied_coupon.name == null) {
         return (<div className={'price'}>
             ${numberMask(product.next_charge_value, 2)}
@@ -236,7 +235,8 @@ const SubscriptionPlan = ({
                     <button className={'btn default'} onClick={() => onOpenReactivateWindow(product)}>
                         Reactivate
                     </button>
-                    <p>You will have access to the software until the {product.grace_period.on_grace_period_until && moment(product.grace_period.on_grace_period_until).format('MMM DD, YYYY')}.</p>
+                    <p>You will have access to the software until
+                        the {product.grace_period.on_grace_period_until && moment(product.grace_period.on_grace_period_until).format('MMM DD, YYYY')}.</p>
                 </>
                 }
             </div>
