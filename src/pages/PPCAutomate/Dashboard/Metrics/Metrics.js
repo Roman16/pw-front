@@ -38,16 +38,23 @@ const Metrics = () => {
 
     return (
         <div className="metrics-block">
-            {selectedMetrics.length > 0 && selectedMetrics.map(selected => (
-                <MetricItem
-                    key={selected.key}
-                    removeSelectedMetric={removeSelectedMetric}
-                    metric={selected}
-                    activeMetrics={activeMetrics}
-                    onActivateMetric={activateMetric}
-                    onDeactivateMetric={deactivateMetric}
-                />
-            ))}
+            {selectedMetrics.length > 0 && selectedMetrics.map(selected => {
+                    if (metricsListArray.find(item => item.key === selected.key)) {
+                        return (
+                            <MetricItem
+                                key={selected.key}
+                                removeSelectedMetric={removeSelectedMetric}
+                                metric={selected}
+                                activeMetrics={activeMetrics}
+                                onActivateMetric={activateMetric}
+                                onDeactivateMetric={deactivateMetric}
+                            />
+                        )
+                    } else {
+                        return '';
+                    }
+                }
+            )}
 
             {selectedMetrics.length < metricsListArray.length && <AddMetric/>}
         </div>
