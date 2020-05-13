@@ -75,7 +75,7 @@ function fetchProducts(paginationParams) {
                     if (res.result && res.result.length > 0 && !paginationParams.selectedAll) {
                         dispatch(fetchProductDetails(res.result[0], paginationParams.pathname));
                     } else {
-                        dispatch(fetchProductDetails({id: null}, paginationParams.pathname));
+                        dispatch(fetchProductDetails('all', paginationParams.pathname));
                     }
                 })
                 .catch(error => {

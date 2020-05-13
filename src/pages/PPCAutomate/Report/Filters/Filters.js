@@ -3,7 +3,7 @@ import './Filters.less';
 import {SVG} from "../../../../utils/icons";
 import {Popover, Select} from "antd";
 import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
-
+import TreeSelect from "../../../../components/TreeSelect/TreeSelect";
 import CustomSelect from "../../../../components/Select/Select";
 
 const Option = Select.Option;
@@ -83,6 +83,23 @@ const FilterPopover = ({columns, onClose, onAddFilter}) => {
                 >
                     <Option value={'all'}>all</Option>
                 </CustomSelect>}
+
+                {<TreeSelect
+                    treeData={[
+                        {
+                            title: 'Node1',
+                            value: '0-0',
+                            key: '0-0',
+                        },
+                        {
+                            title: 'Node1',
+                            value: '0-0',
+                            key: '0-1',
+                        }
+                    ]}
+                    value={['0-0']}
+                    treeCheckable={true}
+                />}
             </div>
         </div>
 
@@ -100,13 +117,13 @@ const Filters = ({columns, onAddFilter, filters, onReset, onRemove}) => {
         <div className="report-filter">
             <p>Filters: </p>
 
-                {filters.map((filter, index) => (
-                    <div className="filter-items">
-                        {`${filter.filterBy} ${filter.type} ${filter.value}`}
+            {filters.map((filter, index) => (
+                <div className="filter-items">
+                    {`${filter.filterBy} ${filter.type} ${filter.value}`}
 
-                        <i onClick={() => onRemove(index)}><SVG id={'remove-filter-icon'}/></i>
-                    </div>
-                ))}
+                    <i onClick={() => onRemove(index)}><SVG id={'remove-filter-icon'}/></i>
+                </div>
+            ))}
 
             <Popover
                 content={<FilterPopover

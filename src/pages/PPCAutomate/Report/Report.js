@@ -118,7 +118,7 @@ function Report() {
     }
 
     useEffect(() => {
-        if (productId !== null)
+        if (productId !== null || selectedAll)
             fetchReportsList();
     }, [productId, currentTab, selectedAll, paginationParams, sorterColumn, filters])
 
