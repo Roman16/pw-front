@@ -2,113 +2,9 @@ import React, {useState} from "react";
 import './Filters.less';
 import {SVG} from "../../../../utils/icons";
 import {Popover, Select} from "antd";
-import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
-import TreeSelect from "../../../../components/TreeSelect/TreeSelect";
-import CustomSelect from "../../../../components/Select/Select";
+import FilterWindow from "./FiltersWindow";
 
-const Option = Select.Option;
 
-const FilterPopover = ({columns, onClose, onAddFilter}) => {
-    const [filterByValue, setFilterByValue] = useState(),
-        [typeValue, setTypeValue] = useState('contains'),
-        [filterValue, setFilterValue] = useState();
-
-    const changeFilterByHandler = (value) => {
-        setFilterByValue(value)
-    }
-
-    const changeTypeHandler = (value) => {
-        setTypeValue(value)
-    }
-    const changeValueHandler = (value) => {
-        setFilterValue(value)
-    }
-
-    const submitHandler = (e) => {
-        e.preventDefault();
-
-        onAddFilter({
-            filterBy: filterByValue,
-            type: typeValue,
-            value: filterValue
-        })
-
-        setFilterByValue(undefined);
-        setTypeValue('contains');
-        setFilterValue(undefined);
-    }
-
-    return (<form className="filter-variables" onSubmit={submitHandler}>
-        <div className="row">
-            <div className="form-group">
-                <CustomSelect
-                    required={true}
-                    placeholder={'Filter by'}
-                    value={filterByValue}
-                    onChange={changeFilterByHandler}
-                    getPopupContainer={trigger => trigger.parentNode}
-                >
-                    <Option value={'eventDateTime'}>Date</Option>
-                    {columns.map(column => (
-                        <Option value={column.key}>{column.title}</Option>
-                    ))}
-                </CustomSelect>
-            </div>
-
-            <div className="form-group">
-                <CustomSelect
-                    required
-                    value={typeValue}
-                    onChange={changeTypeHandler}
-                    getPopupContainer={trigger => trigger.parentNode}
-                    disabled={!filterByValue}
-                >
-                    <Option value={'contains'}>Contains</Option>
-                    <Option value={'range'}>Range</Option>
-                </CustomSelect>
-            </div>
-
-            <div className="form-group">
-                {filterByValue === 'eventDateTime' && <DatePicker
-                    timeRange={changeValueHandler}
-                />}
-
-                {filterByValue !== 'eventDateTime' && <CustomSelect
-                    required
-                    placeholder={'Type'}
-                    value={filterValue}
-                    onChange={changeValueHandler}
-                    getPopupContainer={trigger => trigger.parentNode}
-                    disabled={!filterByValue}
-                >
-                    <Option value={'all'}>all</Option>
-                </CustomSelect>}
-
-                {<TreeSelect
-                    treeData={[
-                        {
-                            title: 'Node1',
-                            value: '0-0',
-                            key: '0-0',
-                        },
-                        {
-                            title: 'Node1',
-                            value: '0-0',
-                            key: '0-1',
-                        }
-                    ]}
-                    value={['0-0']}
-                    treeCheckable={true}
-                />}
-            </div>
-        </div>
-
-        <div className="buttons">
-            <button type={'button'} className="btn white" onClick={onClose}>Cancel</button>
-            <button className="btn default" disabled={!filterValue}>Add Filter</button>
-        </div>
-    </form>)
-}
 
 const Filters = ({columns, onAddFilter, filters, onReset, onRemove}) => {
     const [visibleFilterPopover, setVisibleFilterPopover] = useState(false)
@@ -126,7 +22,7 @@ const Filters = ({columns, onAddFilter, filters, onReset, onRemove}) => {
             ))}
 
             <Popover
-                content={<FilterPopover
+                content={<FilterWindow
                     columns={columns}
                     onClose={() => setVisibleFilterPopover(false)}
                     onAddFilter={(filter) => {
