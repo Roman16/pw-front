@@ -87,7 +87,7 @@ const MainChart = () => {
     };
 
     const getProductOptimizationDetails = (productId) => {
-        if (productId || productId != null) {
+        if (productId) {
             dashboardServices.fetchProductOptimizationDetails({
                 productId: productId,
                 startDate: selectedRangeDate.startDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.startDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
