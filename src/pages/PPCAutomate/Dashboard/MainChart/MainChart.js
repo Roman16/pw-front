@@ -137,13 +137,13 @@ const MainChart = () => {
                 {activeMetrics[0] && activeMetrics[0].title && <div className="first-line">
                     <div className="green-line"/>
 
-                    {activeMetrics[0] && activeMetrics[0].title}
+                    {activeMetrics[0] &&  <span dangerouslySetInnerHTML={{__html: activeMetrics[0].title}}/>}
                 </div>}
 
                 {activeMetrics[0] && activeMetrics[1].title && <div className="second-line">
                     <div className="violet-line"/>
 
-                    {activeMetrics[0] && activeMetrics[1].title}
+                    {activeMetrics[0] &&   <span dangerouslySetInnerHTML={{__html: activeMetrics[1].title}}/>}
                 </div>}
             </div>
 
