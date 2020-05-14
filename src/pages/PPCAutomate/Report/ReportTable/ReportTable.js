@@ -25,7 +25,8 @@ const ReportTable = ({
                          sortChangeHandler,
                          columns,
                          sorterColumn,
-                         addFilterHandler
+                         addFilterHandler,
+                         totalSize
                      }) => {
 
     // timeRange = (startDate, endDate) => {
@@ -108,7 +109,7 @@ const ReportTable = ({
                 page={paginationParams.page}
                 pageSizeOptions={[10, 50, 100]}
                 pageSize={paginationParams.pageSize}
-                totalSize={paginationParams.totalSize}
+                totalSize={totalSize}
                 listLength={reportsList.length}
                 processing={processing}
             />

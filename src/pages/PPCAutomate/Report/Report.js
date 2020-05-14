@@ -29,10 +29,10 @@ function Report() {
             column: 'datetime',
             type: 'desc'
         }),
+        [totalSize, setTotalSize] = useState(0),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
             pageSize: 10,
-            totalSize: 0
         });
 
     const {productId, selectedAll} = useSelector(state => ({
@@ -50,6 +50,7 @@ function Report() {
             totalSize: 0
         });
         setFilters([]);
+        setTotalSize(0);
         setReportsList([]);
         setSorterColumn({
             column: 'datetime',
@@ -110,6 +111,14 @@ function Report() {
 
             setReportsList(res.data);
             setChangesCounts(res.counts);
+
+            if(currentTab === 'all-reports') {
+                setTotalSize(res.counts.all.total_count)
+            } else if(currentTab === 'targeting-improvements') {
+                setTotalSize(res.counts.targeting_improvements.total_count)
+            }else if(currentTab === 'search-terms') {
+                setTotalSize(res.counts.search_term.total_count)
+            }
         } catch (e) {
             console.log(e);
         }
@@ -153,6 +162,7 @@ function Report() {
                 paginationParams={paginationParams}
                 columns={mainTabs[currentTab]}
                 sorterColumn={sorterColumn}
+                totalSize={totalSize}
 
                 paginationChangeHandler={paginationChangeHandler}
                 sortChangeHandler={sortChangeHandler}
