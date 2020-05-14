@@ -41,11 +41,11 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                         className='date title'>{days[moment(label).weekday()] + ', ' + moment(label).format('DD MMM YY')}</div>
 
                     {activeMetrics[0].key && <div className='name'>
-                        {activeMetrics[0].title}
+                        <span dangerouslySetInnerHTML={{__html: activeMetrics[0].title}}/>
                     </div>}
 
                     {activeMetrics[1].key && <div className='name'>
-                        {activeMetrics[1].title}
+                        <span dangerouslySetInnerHTML={{__html: activeMetrics[1].title}}/>
                     </div>}
                 </div>
 
