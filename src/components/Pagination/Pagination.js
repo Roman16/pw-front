@@ -91,7 +91,7 @@ const Pagination = ({
 
                 <button
                     className={'next-page'}
-                    disabled={paginationParams.page >= Math.ceil(totalSize / paginationParams.pageSize)}
+                    disabled={page >= Math.ceil(totalSize / pageSize)}
                     onClick={goNextPage}
                 >
                     <SVG id={'select-icon'}/>
