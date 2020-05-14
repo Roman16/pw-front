@@ -238,7 +238,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
                 pageSize={fetchParams.pageSize}
                 page={fetchParams.page}
                 totalSize={fetchParams.totalSize}
-                listLength={products.length ? products.length : 0}
+                listLength={products && products.length ? products.length : 0}
                 processing={fetching}
             />
         </div>

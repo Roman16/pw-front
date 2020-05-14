@@ -41,7 +41,7 @@ const Optimization = () => {
 
 
     useEffect(() => {
-        if ((selectedAll || productId) && type === 'product' && productList.length > 0) {
+        if ((selectedAll || productId) && productList.length > 0) {
             setProcessing(true);
 
             async function fetchProductDetails() {
