@@ -11,7 +11,8 @@ const ProductFilters = ({
                             onlyOptimization,
                             totalSize,
                             onSelectAll,
-                            onSelectLastProduct
+                            onSelectLastProduct,
+                            onSearch
                         }) => {
 
     return (
@@ -20,7 +21,7 @@ const ProductFilters = ({
                 <Search
                     className="search-field"
                     placeholder={'Search by product name, ASIN or SKU'}
-                    // onChange={e => onSearch(e.target.value)}
+                    onChange={e => onSearch(e.target.value)}
                     data-intercom-target='search-field'
                     suffix={<SVG id={'search'}/>}
                 />

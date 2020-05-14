@@ -17,17 +17,21 @@ export const productsActions = {
     updateCampaignBudget,
     activatedDayparing,
     deactivatedDayparing,
-    showOnlyOnDayparting
+    showOnlyOnDayparting,
+    switchFetching
 };
+
+function switchFetching(state) {
+    return ({
+        type: productsConstants.SET_FETCHING_STATE,
+        payload: state
+    })
+
+}
 
 function fetchProducts(paginationParams) {
     return dispatch => {
-        dispatch({
-            type: productsConstants.SET_PRODUCT_LIST,
-            payload: {
-                fetching: true
-            }
-        });
+        dispatch(switchFetching(true));
 
         productsServices.getProducts(paginationParams)
             .then(res => {
@@ -38,19 +42,7 @@ function fetchProducts(paginationParams) {
                         fetching: false
                     }
                 });
-
-                dispatch(fetchProductDetails(res.result[0], paginationParams.pathname));
             })
-            .catch(error => {
-                dispatch({
-                    type: productsConstants.SET_PRODUCT_LIST,
-                    payload: {
-                        result: [],
-                        totalSize: 0,
-                        fetching: false
-                    }
-                });
-            });
     };
 }
 

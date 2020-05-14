@@ -30,6 +30,7 @@ export const productsConstants = {
     CAMPAIGN_BUDGET: 'CAMPAIGN_BUDGET',
     ACTIVATED_DAYPARTING: 'ACTIVATED_DAYPARTING',
     DEACTIVATED_DAYPARTING: 'DEACTIVATED_DAYPARTING',
+    SET_FETCHING_STATE: 'SET_FETCHING_STATE'
 };
 
 //--------------------------------------------

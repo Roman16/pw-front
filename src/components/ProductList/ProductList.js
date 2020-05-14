@@ -7,7 +7,6 @@ import './ProductList.less';
 import {debounce} from 'throttle-debounce';
 import FilterFields from "./ProductFilters";
 import CustomSelect from "../Select/Select";
-import ProductPagination from "./ProductPagination";
 import axios from "axios";
 import InformationTooltip from "../Tooltip/Tooltip";
 import {SVG} from "../../utils/icons";
@@ -23,6 +22,7 @@ const ProductList = () => {
     const [isOpenList, setIsOpenList] = useState(true),
         [processing, setProcessing] = useState(false),
         [openedProduct, setOpenedProduct] = useState(null),
+        [searchStr, setSearchStr] = useState(''),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
             pageSize: 10
@@ -59,15 +59,16 @@ const ProductList = () => {
     //
     const getProductsList = () => {
         source && source.cancel();
-
         source = CancelToken.source();
 
         dispatch(productsActions.fetchProducts({
             ...paginationParams,
+            searchStr,
+            selectedAll,
+            ungroupVariations: 0,
+
             // onlyOptimization: this.props.pathname !== '/ppc/scanner' ? this.state.onlyOptimization : false,
             // selectedAll: this.state.isSelectedAll,
-            // ungroupVariations: this.state.ungroupVariations,
-            // onlyOndayparting: this.state.onlyOnDayparting,
             cancelToken: source.token
         }))
 
@@ -99,21 +100,11 @@ const ProductList = () => {
     const openProductHandler = (id) => {
         setOpenedProduct(id === openedProduct ? null : id)
     };
-    //
-    // handleChangePagination = page => {
-    //     if (+page !== this.state.paginationParams.page) {
-    //         this.setState(
-    //             {
-    //                 ...this.state,
-    //                 paginationParams: {
-    //                     ...this.state.paginationParams,
-    //                     page: page ? +page : 1
-    //                 }
-    //             },
-    //             this.getProducts
-    //         );
-    //     }
-    // };
+
+    const changePaginationHandler = params => {
+        setPaginationParams(params)
+    };
+
     //
     // handleChangePageSize = (pageSize) => {
     //     this.setState(
@@ -145,21 +136,15 @@ const ProductList = () => {
     //         this.getProducts
     //     );
     // };
-    //
-    // handleSearch = debounce(500, false, str => {
-    //     this.setState(
-    //         {
-    //             ...this.state,
-    //             paginationParams: {
-    //                 ...this.state.paginationParams,
-    //                 searchStr: str,
-    //                 page: 1
-    //             }
-    //         },
-    //         this.getProducts
-    //     );
-    // });
-    //
+
+    const changeSearchHandler = debounce(500, false, str => {
+        setSearchStr(str);
+        setPaginationParams({
+            ...paginationParams,
+            page: 1
+        })
+    });
+
     const selectAllHandler = (value) => {
         dispatch(productsActions.selectAll(value));
     };
@@ -253,7 +238,7 @@ const ProductList = () => {
 
     useEffect(() => {
         getProductsList();
-    }, [])
+    }, [paginationParams, searchStr])
 
     return (
         <Fragment>
@@ -265,13 +250,15 @@ const ProductList = () => {
                     onlyOptimization={onlyOptimization}
                     totalSize={totalSize}
 
+                    onSearch={changeSearchHandler}
                     onSelectAll={selectAllHandler}
                     onSelectLastProduct={selectLastProductHandler}
                 />
 
-                {processing && <div className='fetching-data'><Spin size={'large'}/></div>}
 
-                <div className='products-list'>
+                <div className='products'>
+                    {fetching && <div className='fetching-data'><Spin size={'large'}/></div>}
+
                     {productList && productList.map(product => (
                         <ProductItem
                             key={product.id}
@@ -289,6 +276,8 @@ const ProductList = () => {
                 </div>
 
                 <Pagination
+                    onChange={changePaginationHandler}
+
                     page={paginationParams.page}
                     pageSizeOptions={[10, 30, 50]}
                     pageSize={paginationParams.pageSize}

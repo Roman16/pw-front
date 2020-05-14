@@ -25,7 +25,8 @@ export function products(state = initialState, action) {
                 ...state,
                 productList: action.payload.result,
                 totalSize: action.payload.fetching ? state.totalSize : action.payload.totalSize,
-                fetching: action.payload.fetching
+                fetching: action.payload.fetching,
+                selectedProduct: action.payload.result && action.payload.result.length > 0 ? action.payload.result[0] : {}
             };
 
         case productsConstants.UPDATE_SELECTED_PRODUCT:
@@ -101,6 +102,12 @@ export function products(state = initialState, action) {
             return {
                 ...state,
                 selectedAll: action.payload,
+            };
+
+        case productsConstants.SET_FETCHING_STATE:
+            return {
+                ...state,
+                fetching: action.payload,
             };
 
         case productsConstants.SHOW_ONLY_OPTIMIZED:
