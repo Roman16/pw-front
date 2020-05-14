@@ -49,9 +49,16 @@ const FilterWindow = ({columns, onClose, onAddFilter}) => {
                     getPopupContainer={trigger => trigger.parentNode}
                 >
                     <Option value={'datetime'}>Date</Option>
-                    {columns.map(column => (
-                        <Option value={column.key}>{column.title}</Option>
-                    ))}
+                    {columns.map(column => {
+                            if (column.key !== 'action' && column.key !== 'type') {
+                                return (
+                                    <Option value={column.key}>{column.title}</Option>
+                                )
+                            } else {
+                                return null
+                            }
+                        }
+                    )}
                 </CustomSelect>
             </div>
 

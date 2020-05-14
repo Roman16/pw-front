@@ -4,6 +4,7 @@ import {Icon, Popover} from 'antd';
 import InformationTooltip from "../Tooltip/Tooltip";
 import {productsActions} from "../../actions/products.actions";
 import {useDispatch} from "react-redux";
+import {SVG} from "../../utils/icons";
 
 const maxText = (text, length = 60) => {
     if (text && text.length > length) {
@@ -20,7 +21,6 @@ const ProductItem = ({
                          isActive,
                          onOpenChild,
                          openedProduct,
-                         pathname
                      }) => {
 
     const switchList = (e) => {
@@ -45,25 +45,12 @@ const ProductItem = ({
                     <div className="image">
                         <img src={image_url} alt=""/>
                     </div>
-
-                    {variations && <div className={`open-children-list-button ${openedProduct === id && 'opened'}`}
-                                        onClick={switchList}>
-                        {variations && variations.length}
-                        <Icon type="caret-down"/>
-                    </div>}
                 </div>
 
 
                 <div className="product-item-content">
                     <div className="caption">
                         <span className={'short-name'}>{name}</span>
-
-                        {product.has_new_changes && pathname === '/ppc/report' &&
-                        <div className='has-new-reports'>New</div>}
-
-                        {/*<div className='full-name'>*/}
-                        {/*    {name}*/}
-                        {/*</div>*/}
                     </div>
 
 
@@ -80,35 +67,42 @@ const ProductItem = ({
                     </div>
                 </div>
 
-                <div className='optimization-status'>
-                    {/*{true && <InformationTooltip*/}
-                    {/*    arrowPointAtCenter={true}*/}
-                    {/*    type={'custom'}*/}
-                    {/*    description={'Product has new changes'}*/}
-                    {/*    position={'topRight'}*/}
-                    {/*>*/}
-                    {/*    <div className='has-changes'/>*/}
-                    {/*</InformationTooltip>}*/}
-
-                    {under_optimization && has_optimization_results && <InformationTooltip
-                        arrowPointAtCenter={true}
-                        type={'custom'}
-                        description={'Product on optimization'}
-                        position={'topRight'}
-                    >
-                        <div className='on-optimization'/>
-                    </InformationTooltip>}
-
-                    {under_optimization && !has_optimization_results && <InformationTooltip
-                        arrowPointAtCenter={true}
-                        type={'custom'}
-                        description={'Optimization in progress ...'}
-                        position={'topRight'}
-                    >
-                        <div className='optimization-processing'/>
-                    </InformationTooltip>}
-
+                <div
+                    className={`open-children-list-button ${openedProduct === id && 'opened'}`}
+                    onClick={switchList}
+                >
+                    {variations && <SVG id='select-icon'/>}
                 </div>
+
+                {/*<div className='optimization-status'>*/}
+                {/*    /!*{true && <InformationTooltip*!/*/}
+                {/*    /!*    arrowPointAtCenter={true}*!/*/}
+                {/*    /!*    type={'custom'}*!/*/}
+                {/*    /!*    description={'Product has new changes'}*!/*/}
+                {/*    /!*    position={'topRight'}*!/*/}
+                {/*    /!*>*!/*/}
+                {/*    /!*    <div className='has-changes'/>*!/*/}
+                {/*    /!*</InformationTooltip>}*!/*/}
+
+                {/*    {under_optimization && has_optimization_results && <InformationTooltip*/}
+                {/*        arrowPointAtCenter={true}*/}
+                {/*        type={'custom'}*/}
+                {/*        description={'Product on optimization'}*/}
+                {/*        position={'topRight'}*/}
+                {/*    >*/}
+                {/*        <div className='on-optimization'/>*/}
+                {/*    </InformationTooltip>}*/}
+
+                {/*    {under_optimization && !has_optimization_results && <InformationTooltip*/}
+                {/*        arrowPointAtCenter={true}*/}
+                {/*        type={'custom'}*/}
+                {/*        description={'Optimization in progress ...'}*/}
+                {/*        position={'topRight'}*/}
+                {/*    >*/}
+                {/*        <div className='optimization-processing'/>*/}
+                {/*    </InformationTooltip>}*/}
+
+                {/*</div>*/}
             </div>
 
             {(variations) && (openedProduct === id) && <div className='product-children-list'>

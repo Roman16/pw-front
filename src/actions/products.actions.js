@@ -25,86 +25,41 @@ function fetchProducts(paginationParams) {
         dispatch({
             type: productsConstants.SET_PRODUCT_LIST,
             payload: {
-                result: [],
                 fetching: true
             }
         });
 
-        dispatch(fetchProductDetails({id: null}, paginationParams.pathname));
-
-
-        if (paginationParams.type === 'campaigns') {
-            daypartingServices.getCampaigns(paginationParams)
-                .then(res => {
-                    dispatch({
-                        type: productsConstants.SET_PRODUCT_LIST,
-                        payload: {
-                            result: res.response,
-                            totalSize: res.total_count,
-                            fetching: false
-                        }
-                    });
-
-                    if (res.response && res.response.length > 0) {
-                        dispatch(fetchProductDetails(res.response[0], paginationParams.pathname));
-                    } else {
-                        dispatch(fetchProductDetails({id: null}, paginationParams.pathname));
+        productsServices.getProducts(paginationParams)
+            .then(res => {
+                dispatch({
+                    type: productsConstants.SET_PRODUCT_LIST,
+                    payload: {
+                        ...res,
+                        fetching: false
                     }
-                })
-                .catch(error => {
-                    dispatch({
-                        type: productsConstants.SET_PRODUCT_LIST,
-                        payload: {
-                            result: [],
-                            totalSize: 0,
-                            fetching: false
-                        }
-                    });
-                })
-        } else {
-            productsServices.getProducts(paginationParams)
-                .then(res => {
-                    dispatch({
-                        type: productsConstants.SET_PRODUCT_LIST,
-                        payload: {
-                            ...res,
-                            fetching: false
-                        }
-                    });
-
-                    if (res.result && res.result.length > 0 && !paginationParams.selectedAll) {
-                        dispatch(fetchProductDetails(res.result[0], paginationParams.pathname));
-                    } else {
-                        dispatch(fetchProductDetails('all', paginationParams.pathname));
-                    }
-                })
-                .catch(error => {
-                    dispatch({
-                        type: productsConstants.SET_PRODUCT_LIST,
-                        payload: {
-                            result: [],
-                            totalSize: 0,
-                            fetching: false
-                        }
-                    });
                 });
-        }
+
+                dispatch(fetchProductDetails(res.result[0], paginationParams.pathname));
+            })
+            .catch(error => {
+                dispatch({
+                    type: productsConstants.SET_PRODUCT_LIST,
+                    payload: {
+                        result: [],
+                        totalSize: 0,
+                        fetching: false
+                    }
+                });
+            });
     };
 }
 
-function fetchProductDetails(product, pathname) {
+function fetchProductDetails(product) {
     return dispatch => {
-        if (product !== 'all') {
-            dispatch({
-                type: productsConstants.SELECT_PRODUCT,
-                payload: {...product, type: pathname === '/ppc/dayparting' ? 'campaign' : 'product'},
-            });
-        } else {
-            dispatch({
-                type: productsConstants.SELECT_ALL_PRODUCT,
-                payload: true
-            });
-        }
+        dispatch({
+            type: productsConstants.SELECT_PRODUCT,
+            payload: {...product},
+        });
     };
 }
 
@@ -158,7 +113,7 @@ function setNetMargin(product) {
 }
 
 function selectAll(data) {
-    return({
+    return ({
         type: productsConstants.SELECT_ALL_PRODUCT,
         payload: data
     })
@@ -193,17 +148,17 @@ function showOnlyActive(data) {
 }
 
 function activatedDayparing(id) {
-        return({
-            type: productsConstants.ACTIVATED_DAYPARTING,
-            payload: id
-        });
+    return ({
+        type: productsConstants.ACTIVATED_DAYPARTING,
+        payload: id
+    });
 }
 
 function deactivatedDayparing(id) {
-        return({
-            type: productsConstants.DEACTIVATED_DAYPARTING,
-            payload: id
-        });
+    return ({
+        type: productsConstants.DEACTIVATED_DAYPARTING,
+        payload: id
+    });
 }
 
 function dontShowWindowAgain(window) {
