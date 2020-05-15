@@ -323,6 +323,7 @@
       font-size: 1rem; // 14px
       height: 2.857142857142857rem;
       width: 2.857142857142857rem;
+      min-width: 2.857142857142857rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -359,6 +360,10 @@
     &.active {
       border-left: 4px solid #6D6DF6;
       background: rgba(245, 245, 255, 0.7);
+
+      .product-children-list .children-indicator {
+        background: #6D6DF6;
+      }
     }
 
     .optimization-status {
@@ -441,7 +446,7 @@
         min-width: 7px;
         height: 7px;
         border-radius: 50%;
-        background: #6D6DF6;
+        background: #C9CBD4;
         margin: 0 1.4285714285714286rem;
       }
 

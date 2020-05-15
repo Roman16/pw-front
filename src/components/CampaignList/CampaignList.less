@@ -1,0 +1,53 @@
+.campaign-list {
+  //padding: 1.7142857em 0 1.7142857em 1.42857143rem;
+  box-sizing: border-box;
+
+  .products-filters .row {
+    &:first-child {
+      margin: 0;
+    }
+
+    .form-group {
+      flex: 1;
+    }
+
+    button.filters {
+      margin: 0 0 0 1.4285714285714286rem;
+      display: flex;
+      justify-content: center;
+
+      svg {
+        use {
+          fill: #656A84;
+        }
+      }
+
+      &:hover {
+        svg {
+          use {
+            fill: #4a4d61;
+          }
+        }
+      }
+    }
+
+    .active-only {
+      button {
+        margin: 0 8px 0 0;
+      }
+    }
+  }
+
+  .campaigns {
+    flex: 1 1;
+    background: #fff;
+    z-index: 1;
+    overflow: auto;
+    position: relative;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .pw-pagination {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  }
+}

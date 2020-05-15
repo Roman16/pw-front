@@ -10,7 +10,7 @@ import {useSelector, useDispatch} from "react-redux";
 import RouteLoader from "../components/RouteLoader/RouteLoader";
 import ErrorBar from "../components/ErrorBar/ErrorBar";
 import WelcomePage from "./authentication/AccountBinding/WelcomePage/WelcomePage";
-
+import CampaignList from "../components/CampaignList/CampaignList";
 
 
 const Optimization = React.lazy(() => import('./PPCAutomate/Optimization/Optimization'));
@@ -119,12 +119,13 @@ const AuthorizedUser = (props) => {
                     {(pathname === '/ppc/optimization' ||
                         pathname === '/ppc/report' ||
                         pathname === '/ppc/scanner' ||
-                        pathname === '/ppc/optimization-loading' ||
-                        pathname === '/ppc/dayparting'
+                        pathname === '/ppc/optimization-loading'
                     ) &&
                     <ProductList
                         pathname={props.location.pathname}
                     />}
+
+                    {pathname === '/ppc/dayparting' && <CampaignList/>}
 
                     <div className="page">
                         <Suspense fallback={<RouteLoader/>}>
