@@ -66,15 +66,16 @@ class RegistrationPage extends Component {
             });
             return;
         } else {
-                if(this.props.match.params.tag && this.props.match.params.tag === 'from-agency') {
-                    localStorage.setItem('userFromAgency', email);
-                }
+            if (this.props.match.params.tag && this.props.match.params.tag === 'from-agency') {
+                localStorage.setItem('userFromAgency', email);
+            }
 
             this.props.regist({
                 name,
                 last_name,
                 email,
                 password,
+                ...this.props.match.params.tag && this.props.match.params.tag === 'from-agency' && {is_agency_client: 1},
                 ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
             });
         }
