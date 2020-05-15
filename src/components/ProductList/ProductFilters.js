@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import {Input, Select, Switch} from "antd";
+import React from "react";
+import {Input, Switch} from "antd";
 import {SVG} from "../../utils/icons";
 
 const {Search} = Input;
@@ -12,7 +12,8 @@ const ProductFilters = ({
                             totalSize,
                             onSelectAll,
                             onSelectLastProduct,
-                            onSearch
+                            onSearch,
+                            onShowOnlyOnOptimization
                         }) => {
 
     return (
@@ -46,7 +47,7 @@ const ProductFilters = ({
                     </div>
 
                     <span>
-                        <b>{selectedAll ? totalSize : selectedProduct.id !== null ? '1' : '0'}</b> selected
+                        <b>{totalSize > 0 ? selectedAll ? totalSize : selectedProduct.id !== null ? '1' : '0' : '0'}</b> selected
                     </span>
                 </div>
 
@@ -54,7 +55,7 @@ const ProductFilters = ({
                     <label htmlFor="">On optimization only</label>
                     <Switch
                         checked={onlyOptimization}
-                        onChange={e => this.handleChangeSwitch(e, 'onlyOptimization')}
+                        onChange={onShowOnlyOnOptimization}
                     />
                 </div>
             </div>

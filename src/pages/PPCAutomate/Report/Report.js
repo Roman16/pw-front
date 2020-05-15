@@ -35,9 +35,10 @@ function Report() {
             pageSize: 10,
         });
 
-    const {productId, selectedAll} = useSelector(state => ({
+    const {productId, selectedAll, productsFetching} = useSelector(state => ({
         productId: state.products.selectedProduct.id,
-        selectedAll: state.products.selectedAll
+        selectedAll: state.products.selectedAll,
+        productsFetching: state.products.fetching,
     }))
 
     const paginationChangeHandler = (params) => setPaginationParams(params);
@@ -127,7 +128,7 @@ function Report() {
     }
 
     useEffect(() => {
-        if (productId !== null || selectedAll)
+        if ((productId !== null || selectedAll) && !productsFetching)
             fetchReportsList();
     }, [productId, currentTab, selectedAll, paginationParams, sorterColumn, filters])
 

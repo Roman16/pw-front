@@ -35,13 +35,25 @@ function fetchProducts(paginationParams) {
 
         productsServices.getProducts(paginationParams)
             .then(res => {
-                dispatch({
-                    type: productsConstants.SET_PRODUCT_LIST,
-                    payload: {
-                        ...res,
-                        fetching: false
-                    }
-                });
+                if(res.totalSize > 0) {
+                    dispatch({
+                        type: productsConstants.SET_PRODUCT_LIST,
+                        payload: {
+                            ...res,
+                            fetching: false
+                        }
+                    });
+                } else {
+                    dispatch({
+                        type: productsConstants.SET_PRODUCT_LIST,
+                        payload: {
+                            result: [],
+                            totalSize: 0,
+                            fetching: false
+                        }
+                    });
+
+                }
             })
     };
 }

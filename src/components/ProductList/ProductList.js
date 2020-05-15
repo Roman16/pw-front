@@ -18,9 +18,11 @@ let source = null;
 const Option = Select.Option;
 const {Search} = Input;
 
-const ProductList = () => {
+let prevPathname = '';
+
+const ProductList = ({pathname}) => {
     const [isOpenList, setIsOpenList] = useState(true),
-        [processing, setProcessing] = useState(false),
+        [ungroupVariations, setUngroupVariations] = useState(0),
         [openedProduct, setOpenedProduct] = useState(null),
         [searchStr, setSearchStr] = useState(''),
         [paginationParams, setPaginationParams] = useState({
@@ -65,10 +67,9 @@ const ProductList = () => {
             ...paginationParams,
             searchStr,
             selectedAll,
-            ungroupVariations: 0,
+            ungroupVariations,
 
-            // onlyOptimization: this.props.pathname !== '/ppc/scanner' ? this.state.onlyOptimization : false,
-            // selectedAll: this.state.isSelectedAll,
+            onlyOptimization: onlyOptimization,
             cancelToken: source.token
         }))
 
@@ -86,17 +87,7 @@ const ProductList = () => {
         //     cancelToken: source.token
         // });
     };
-    //
-    // selectChangeHandler = ({name, value}) => {
-    //     this.setState({
-    //         [name]: value,
-    //         paginationParams: {
-    //             ...this.state.paginationParams,
-    //             page: 1
-    //         }
-    //     }, this.getProducts)
-    // };
-    //
+
     const openProductHandler = (id) => {
         setOpenedProduct(id === openedProduct ? null : id)
     };
@@ -105,37 +96,9 @@ const ProductList = () => {
         setPaginationParams(params)
     };
 
-    //
-    // handleChangePageSize = (pageSize) => {
-    //     this.setState(
-    //         {
-    //             ...this.state,
-    //             paginationParams: {
-    //                 ...this.state.paginationParams,
-    //                 page: 1,
-    //                 size: pageSize
-    //             }
-    //         },
-    //         this.getProducts
-    //     );
-    // };
-    //
-    // handleChangeSwitch = (event, type) => {
-    //     type === 'onlyOptimization' && this.props.showOnlyOptimized(event);
-    //     type === 'onlyOnDayparting' && this.props.showOnlyOnDayparting(event);
-    //
-    //     this.setState(
-    //         {
-    //             [type]: event,
-    //             isSelectedAll: false,
-    //             paginationParams: {
-    //                 ...this.state.paginationParams,
-    //                 page: 1
-    //             }
-    //         },
-    //         this.getProducts
-    //     );
-    // };
+    const changeSwitchHandler = (event) => {
+        dispatch(productsActions.showOnlyOptimized(event));
+    };
 
     const changeSearchHandler = debounce(500, false, str => {
         setSearchStr(str);
@@ -152,8 +115,11 @@ const ProductList = () => {
     const selectLastProductHandler = () => {
         if (productList.find(product => product.id === selectedProduct.id)) {
             selectAllHandler(false);
-        } else {
+        } else if (productList[0]) {
             onSelect(productList[0])
+            selectAllHandler(false);
+        } else {
+            onSelect({})
             selectAllHandler(false);
         }
     }
@@ -164,81 +130,19 @@ const ProductList = () => {
         }
     };
 
-    //
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     if (this.props.pathname !== prevProps.pathname) {
-    //         if (this.props.pathname === '/ppc/optimization' && this.state.onlyHasNew) {
-    //             this.setState({
-    //                 paginationParams: {
-    //                     ...this.state.paginationParams,
-    //                     page: 1,
-    //                     searchStr: ''
-    //                 }
-    //             }, this.getProducts);
-    //         } else if (this.props.pathname === '/ppc/report' && this.state.onlyHasNew) {
-    //             this.setState({
-    //                 paginationParams: {
-    //                     ...this.state.paginationParams,
-    //                     page: 1,
-    //                     searchStr: ''
-    //                 }
-    //             }, this.getProducts);
-    //         }
-    //
-    //         if (this.props.pathname === '/ppc/scanner') {
-    //             this.setState({
-    //                 paginationParams: {
-    //                     ...this.state.paginationParams,
-    //                     page: 1,
-    //                     searchStr: ''
-    //                 },
-    //                 ungroupVariations: 1
-    //             }, this.getProducts)
-    //         } else if (this.props.pathname !== '/ppc/scanner' && this.state.ungroupVariations === 1) {
-    //             this.setState({
-    //                 paginationParams: {
-    //                     ...this.state.paginationParams,
-    //                     page: 1,
-    //                     searchStr: ''
-    //                 },
-    //                 ungroupVariations: 0
-    //             }, this.getProducts)
-    //         }
-    //
-    //         if (this.props.pathname === '/ppc/dayparting') {
-    //             this.props.selectAllProducts(false);
-    //             this.props.showOnlyOptimized(false);
-    //
-    //             this.setState({
-    //                 paginationParams: {
-    //                     ...this.state.paginationParams,
-    //                     page: 1,
-    //                     searchStr: ''
-    //                 },
-    //                 isSelectedAll: false,
-    //                 onlyOptimization: false,
-    //             }, this.getProducts);
-    //
-    //         } else if (prevProps.pathname === '/ppc/dayparting' && this.props.pathname !== '/ppc/dayparting') {
-    //             this.setState({
-    //                 paginationParams: {
-    //                     ...this.state.paginationParams,
-    //                     page: 1,
-    //                     searchStr: ''
-    //                 }
-    //             }, this.getProducts);
-    //
-    //         }
-    //     }
-    // }
-    //
-    // componentDidMount() {
-    //     this.getProducts();
-    // }
+    useEffect(() => {
+        if (pathname === '/ppc/scanner') {
+            setUngroupVariations(1);
+        } else if (prevPathname === '/ppc/scanner' && pathname !== '/ppc/scanner') {
+            setUngroupVariations(0);
+        }
+
+        prevPathname = pathname;
+    }, [pathname])
 
     useEffect(() => {
         getProductsList();
-    }, [paginationParams, searchStr])
+    }, [paginationParams, searchStr, onlyOptimization, ungroupVariations])
 
     return (
         <Fragment>
@@ -253,6 +157,7 @@ const ProductList = () => {
                     onSearch={changeSearchHandler}
                     onSelectAll={selectAllHandler}
                     onSelectLastProduct={selectLastProductHandler}
+                    onShowOnlyOnOptimization={changeSwitchHandler}
                 />
 
 
@@ -312,19 +217,14 @@ const ProductList = () => {
                 {/*    </div>*/}
                 {/*}*/}
 
+            </div>
 
-                {/*<ProductPagination*/}
-                {/*    page={page}*/}
-                {/*    totalSize={totalSize}*/}
-                {/*    size={size}*/}
-                {/*    onChangePagination={this.handleChangePagination}*/}
-                {/*/>*/}
-
-                <div className={`switch-list ${isOpenList ? 'opened' : 'closed'}`}>
-                    <div className="image" onClick={() => this.setState({closedList: !isOpenList})}>
+            <div className={`switch-list ${isOpenList ? 'opened' : 'closed'}`}>
+                <button onClick={() => setIsOpenList(prevState => !prevState)}>
+                    <div className="image">
                         <SVG id='select-icon'/>
                     </div>
-                </div>
+                </button>
             </div>
         </Fragment>
     )

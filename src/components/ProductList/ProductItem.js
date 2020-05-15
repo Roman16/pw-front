@@ -40,7 +40,7 @@ const ProductItem = ({
             onClick={() => onClick(product)}
             title={name}
         >
-            <div className='product-information'>
+            <div className={`product-information ${openedProduct === id && 'opened-child-list'}`}>
                 <div className="image-block">
                     <div className="image">
                         <img src={image_url} alt=""/>
@@ -68,7 +68,7 @@ const ProductItem = ({
                 </div>
 
                 <div
-                    className={`open-children-list-button ${openedProduct === id && 'opened'}`}
+                    className={`open-children-list-button ${openedProduct === id ? 'opened' : ''}`}
                     onClick={switchList}
                 >
                     {variations && <SVG id='select-icon'/>}
@@ -107,21 +107,26 @@ const ProductItem = ({
 
             {(variations) && (openedProduct === id) && <div className='product-children-list'>
                 {variations.map(childrenProduct => (
-                    <div key={childrenProduct.id} className='children-information'>
-                        <img src={childrenProduct.image_url} alt=""/>
+                    <div className={'children-product-item'}>
+                        <div className="children-indicator"/>
 
-                        <div className="product-item-content">
-                            <div className="caption">{maxText(childrenProduct.name, 70)}</div>
+                        <div key={childrenProduct.id} className='children-information'>
 
-                            <div className='detail'>
-                                <div className="asin">
-                                    <span> ASIN: </span>
-                                    <span>{childrenProduct.asin}</span>
-                                </div>
+                            <img src={childrenProduct.image_url} alt=""/>
 
-                                <div className="sku">
-                                    <span> SKU: </span>
-                                    <span>{childrenProduct.sku}</span>
+                            <div className="product-item-content">
+                                <div className="caption">{childrenProduct.name}</div>
+
+                                <div className='detail'>
+                                    <div className="asin">
+                                        <span> ASIN: </span>
+                                        <span>{childrenProduct.asin}</span>
+                                    </div>
+
+                                    <div className="sku">
+                                        <span> SKU: </span>
+                                        <span>{childrenProduct.sku}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

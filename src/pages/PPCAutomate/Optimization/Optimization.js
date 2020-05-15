@@ -32,16 +32,16 @@ const Optimization = () => {
 
     const dispatch = useDispatch();
 
-    const {productId, selectedAll, type, productList} = useSelector(state => ({
+    const {productId, selectedAll, productList, productsFetching} = useSelector(state => ({
         productId: state.products.selectedProduct.id,
-        type: state.products.selectedProduct.type,
         selectedAll: state.products.selectedAll,
         productList: state.products.productList,
+        productsFetching: state.products.fetching,
     }));
 
 
     useEffect(() => {
-        if ((selectedAll || productId) && productList.length > 0) {
+        if ((selectedAll || productId) && productList.length > 0 && !productsFetching) {
             setProcessing(true);
 
             async function fetchProductDetails() {

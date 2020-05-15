@@ -120,8 +120,8 @@ img {
     background: #f5f5ff;
 
     display: grid;
-    grid-template-areas: 'errorsBar errorsBar' 'productList mainPage';
-    grid-template-columns: max-content 1fr;
+    grid-template-areas: 'errorsBar errorsBar errorsBar' 'productList switchProductList mainPage';
+    grid-template-columns: max-content max-content 1fr;
     grid-template-rows: max-content 1fr;
 
     z-index: 10;
@@ -146,6 +146,10 @@ img {
 
     .product-list {
       grid-area: productList;
+    }
+
+    .switch-list {
+      grid-area: switchProductList;
     }
 
     @media (max-width: 800px) {
