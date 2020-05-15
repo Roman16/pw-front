@@ -98,12 +98,16 @@ const ProductBreakdown = () => {
     }
 
     const selectPrevProduct = () => {
-        if (!prevProductId) {
-            handleSelectProduct(products[0].product.id)
-        } else if (products.find(product => product.product.id === prevProductId)) {
-            handleSelectProduct(prevProductId)
-        } else if (products.length > 0) {
-            handleSelectProduct(products[0].product.id)
+        if (products) {
+            if (!prevProductId) {
+                handleSelectProduct(products[0].product.id)
+            } else if (products.find(product => product.product.id === prevProductId)) {
+                handleSelectProduct(prevProductId)
+            } else if (products.length > 0) {
+                handleSelectProduct(products[0].product.id)
+            }
+        } else {
+            handleSelectProduct(null)
         }
     }
 
@@ -141,7 +145,7 @@ const ProductBreakdown = () => {
 
                 <div className="product-selected">
                     <span>
-                       <b>{selectedProduct == null ? fetchParams.totalSize : '1'}</b> selected
+                       <b>{(!products || products.length === 0) ? '0' : selectedProduct == null ? fetchParams.totalSize || 0 : '1'}</b> selected
                     </span>
 
                     <div className="select-switch">
