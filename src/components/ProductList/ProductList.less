@@ -538,8 +538,21 @@
     justify-content: flex-end;
     padding: 0 0.5rem 0 0;
     box-sizing: border-box;
+    transition: .1s;
+
+    &:hover {
+      background: #f1f3f4;
+      transition: .1s;
+
+
+      &::before {
+        background: #f1f3f4;
+        transition: .1s;
+      }
+    }
 
     &::before {
+      transition: .1s;
       content: '';
       width: 1.4285714285714286rem;
       height: 2.857142857142857rem;

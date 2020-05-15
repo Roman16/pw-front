@@ -33,7 +33,7 @@ const Optimization = () => {
     const dispatch = useDispatch();
 
     const {productId, selectedAll, productList, productsFetching} = useSelector(state => ({
-        productId: state.products.selectedProduct.id,
+        productId: state.products.selectedProduct.id || null,
         selectedAll: state.products.selectedAll,
         productList: state.products.productList,
         productsFetching: state.products.fetching,

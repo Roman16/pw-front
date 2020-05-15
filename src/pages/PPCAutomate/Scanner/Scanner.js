@@ -251,6 +251,8 @@ class Scanner extends Component {
             fetching: false,
             successFetch: false,
         })
+
+        this.props.selectProduct({})
     }
 
     render() {

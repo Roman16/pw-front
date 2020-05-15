@@ -36,7 +36,7 @@ function Report() {
         });
 
     const {productId, selectedAll, productsFetching} = useSelector(state => ({
-        productId: state.products.selectedProduct.id,
+        productId: state.products.selectedProduct.id || null,
         selectedAll: state.products.selectedAll,
         productsFetching: state.products.fetching,
     }))
