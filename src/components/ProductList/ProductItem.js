@@ -6,14 +6,6 @@ import {productsActions} from "../../actions/products.actions";
 import {useDispatch} from "react-redux";
 import {SVG} from "../../utils/icons";
 
-const maxText = (text, length = 60) => {
-    if (text && text.length > length) {
-        return `${text.slice(0, length)}...`;
-    }
-
-    return text;
-};
-
 const ProductItem = ({
                          product: {id, asin, name, sku, image_url, under_optimization, has_optimization_results, variations},
                          onClick,
@@ -28,17 +20,10 @@ const ProductItem = ({
         onOpenChild(id)
     };
 
-    const dispatch = useDispatch();
-
-    // useEffect(() => {
-    //     dispatch(productsActions.fetchProductDetails({id: null}));
-    // }, []);
-
     return (
         <div
             className={`product-item ${isActive ? 'active' : ''}`}
             onClick={() => onClick(product)}
-            title={name}
         >
             <div className={`product-information ${openedProduct === id && 'opened-child-list'}`}>
                 <div className="image-block">
@@ -49,18 +34,18 @@ const ProductItem = ({
 
 
                 <div className="product-item-content">
-                    <div className="caption">
+                    <div className="caption" title={name}>
                         <span className={'short-name'}>{name}</span>
                     </div>
 
 
                     <div className='detail'>
-                        <div className="asin">
+                        <div className="asin" title={asin}>
                             <span> ASIN: </span>
                             <span>{asin}</span>
                         </div>
 
-                        <div className="sku">
+                        <div className="sku" title={sku}>
                             <span> SKU: </span>
                             <span>{sku}</span>
                         </div>
@@ -68,8 +53,8 @@ const ProductItem = ({
                 </div>
 
                 <div
-                    className={`open-children-list-button ${openedProduct === id ? 'opened' : ''}`}
-                    onClick={switchList}
+                    className={`open-children-list-button ${variations ? 'has-variations' : ''} ${openedProduct === id ? 'opened' : ''}`}
+                    onClick={variations && switchList}
                 >
                     {variations && <SVG id='select-icon'/>}
                 </div>

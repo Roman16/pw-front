@@ -132,6 +132,7 @@ const ProductList = ({pathname}) => {
 
     useEffect(() => {
         if (pathname === '/ppc/scanner') {
+            selectAllHandler(false);
             setUngroupVariations(1);
         } else if (prevPathname === '/ppc/scanner' && pathname !== '/ppc/scanner') {
             setUngroupVariations(0);
@@ -153,6 +154,7 @@ const ProductList = ({pathname}) => {
                     selectedProduct={selectedProduct}
                     onlyOptimization={onlyOptimization}
                     totalSize={totalSize}
+                    pathname={pathname}
 
                     onSearch={changeSearchHandler}
                     onSelectAll={selectAllHandler}
@@ -160,9 +162,10 @@ const ProductList = ({pathname}) => {
                     onShowOnlyOnOptimization={changeSwitchHandler}
                 />
 
+                {fetching && <div className='fetching-data'><Spin size={'large'}/></div>}
 
-                <div className='products'>
-                    {fetching && <div className='fetching-data'><Spin size={'large'}/></div>}
+
+                <div className={`products`}>
 
                     {productList && productList.map(product => (
                         <ProductItem

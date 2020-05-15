@@ -66,15 +66,16 @@ class RegistrationPage extends Component {
             });
             return;
         } else {
-                if(this.props.match.params.tag && this.props.match.params.tag === 'from-agency') {
-                    localStorage.setItem('userFromAgency', email);
-                }
+            if (this.props.match.params.tag && this.props.match.params.tag === 'from-agency') {
+                localStorage.setItem('userFromAgency', email);
+            }
 
             this.props.regist({
                 name,
                 last_name,
                 email,
                 password,
+                ...this.props.match.params.tag && this.props.match.params.tag === 'from-agency' && {is_agency_client: 1},
                 ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
             });
         }
@@ -176,7 +177,8 @@ class RegistrationPage extends Component {
                 </Form.Item>
 
                 <div className='terms-and-privacy'>
-                    By signing in, you agree to Profit Whales <b><Link target="_blank" to={'/terms-and-conditions'}> Terms
+                    By signing in, you agree to Profit Whales <b><Link target="_blank"
+                                                                       to={'/terms-and-conditions'}> Terms
                     and <br/> Conditions</Link> & <Link target="_blank" to={'/policy'}>Privacy Policy</Link></b>
                 </div>
 

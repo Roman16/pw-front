@@ -6,6 +6,7 @@ const {Search} = Input;
 
 
 const ProductFilters = ({
+                            pathname,
                             selectedAll,
                             selectedProduct,
                             onlyOptimization,
@@ -29,7 +30,7 @@ const ProductFilters = ({
             </div>
 
             <div className="row">
-                <div className="product-selected">
+                {pathname !== '/ppc/scanner' && <div className="product-selected">
                     <div className="select-switch">
                         <button
                             className={selectedAll && 'active'}
@@ -50,7 +51,7 @@ const ProductFilters = ({
                         <b>{totalSize > 0 ? selectedAll ? totalSize : selectedProduct.id !== null ? '1' : '0' : '0'}</b> selected
                     </span>
                 </div>
-
+                }
                 <div className="active-only">
                     <label htmlFor="">On optimization only</label>
                     <Switch
