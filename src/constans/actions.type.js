@@ -4,11 +4,11 @@
 export const userConstants = {
     SET_INFORMATION: 'SET_INFORMATION',
     USER_LOGOUT: 'USER_LOGOUT',
-    UPDATE_USER:'UPDATE_USER',
-    UNSET_AMAZON_MWS:'UNSET_AMAZON_MWS',
-    UNSET_AMAZON_PPC:'UNSET_AMAZON_PPC',
-    RESET_CHANGES_COUNT:'RESET_CHANGES_COUNT',
-    SET_PPC_STATUS:'SET_PPC_STATUS',
+    UPDATE_USER: 'UPDATE_USER',
+    UNSET_AMAZON_MWS: 'UNSET_AMAZON_MWS',
+    UNSET_AMAZON_PPC: 'UNSET_AMAZON_PPC',
+    RESET_CHANGES_COUNT: 'RESET_CHANGES_COUNT',
+    SET_PPC_STATUS: 'SET_PPC_STATUS',
 };
 
 //--------------------------------------------
@@ -59,4 +59,12 @@ export const dashboardConstants = {
     RE_SET: 'RE_SET',
     SET_PRODUCTS_MARGIN_STATUS: 'SET_PRODUCTS_MARGIN_STATUS',
     RELOAD_METRICS: 'RELOAD_METRICS',
+};
+
+//--------------------------------------------
+//------------ dayparting constants--------------
+//--------------------------------------------
+export const daypartingConstants = {
+    SET_CAMPAIGN_LIST: 'SET_CAMPAIGN_LIST',
+    SET_PROCESSING_STATE: 'SET_PROCESSING_STATE'
 };

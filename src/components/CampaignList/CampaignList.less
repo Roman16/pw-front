@@ -29,11 +29,62 @@
           }
         }
       }
+
+      &.ant-dropdown-open {
+        svg {
+          use {
+            fill: #6D6DF6;
+          }
+        }
+      }
     }
 
     .active-only {
       button {
         margin: 0 8px 0 0;
+      }
+    }
+  }
+
+  .filter-dropdown-window {
+    background: #fff;
+    padding: 1.4285714285714286rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      width: 10.714285714285714rem;
+
+      &:first-child {
+        margin: 0 15px 0 0;
+      }
+
+      label {
+        font-size: 0.8571428571428571rem;
+        color: #343C5A;
+        display: block;
+        margin: 0 0 5px 0;
+        font-weight: 500;
+      }
+
+      .custom-select {
+        height: 2.2857142857142856rem;
+      }
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1.4285714285714286rem;
+
+      button {
+        margin: 0 0 0 15px;
+        height: 2.2857142857142856rem;
+        font-size: 0.8571428571428571rem;
       }
     }
   }

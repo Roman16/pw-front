@@ -8,54 +8,73 @@ import './CampaignList.less';
 import Filters from "./Filters";
 import axios from "axios";
 import {daypartingServices} from "../../services/dayparting.services";
+import {debounce} from "throttle-debounce";
+import {daypartingActions} from "../../actions/dayparting.actions";
+import {useDispatch, useSelector} from "react-redux";
 
 const CancelToken = axios.CancelToken;
 let source = null;
 
 const CampaignList = () => {
+    const dispatch = useDispatch();
+
     const [isOpenList, setIsOpenList] = useState(true),
         [searchStr, setSearchStr] = useState(''),
-        [processing, setProcessing] = useState(false),
-        [campaignList, setCampaignList] = useState([]),
-        [totalSize, setTotalSize] = useState(0),
-        [campaign_type, setCampaignType] = useState('all'),
-        [campaign_status, setCampaignStatus] = useState('all'),
+        [filterParams, setFilterParams] = useState({
+            campaign_status: 'all',
+            campaign_type: 'all'
+        }),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
             pageSize: 10
         });
 
-    const getCampaignList = async () => {
+    const {campaignList, processing, totalSize} = useSelector(state => ({
+        campaignList: state.dayparting.campaignList,
+        processing: state.dayparting.processing,
+        totalSize: state.dayparting.totalSize,
+    }))
+
+    const getCampaignList = () => {
         source && source.cancel();
         source = CancelToken.source();
 
-        const res = await daypartingServices.getCampaigns({
+        dispatch(daypartingActions.getCampaignList({
             ...paginationParams,
-            campaign_type,
-            campaign_status,
+            ...filterParams,
             cancelToken: source.token
-        });
-
-        setCampaignList(res.response);
-        setTotalSize(res.total_count);
+        }))
     }
+
+    const changePaginationHandler = (params) => {
+        setPaginationParams(params);
+    }
+
+    const changeSelectHandler = (params) => {
+        setFilterParams(params)
+    }
+
+    const changeSearchHandler = debounce(500, false, str => {
+        setSearchStr(str);
+        setPaginationParams({
+            ...paginationParams,
+            page: 1
+        })
+    });
 
     useEffect(() => {
         getCampaignList();
-    }, [])
+    }, [paginationParams, searchStr, filterParams])
 
     return (
         <Fragment>
             <div className={`${isOpenList ? 'product-list campaign-list' : 'product-list campaign-list closed'}`}>
                 <Filters
-                    // onlyOptimization={onlyOptimization}
-
-                    // onSearch={changeSearchHandler}
-                    // onShowOnlyOnOptimization={changeSwitchHandler}
+                    onSearch={changeSearchHandler}
+                    onChangeSelect={changeSelectHandler}
                 />
 
                 {processing && <div className='fetching-data'><Spin size={'large'}/></div>}
-
 
                 <div className={`campaigns`}>
                     {campaignList && campaignList.map(product => (
@@ -81,7 +100,7 @@ const CampaignList = () => {
                 </div>
 
                 <Pagination
-                    // onChange={changePaginationHandler}
+                    onChange={changePaginationHandler}
 
                     page={paginationParams.page}
                     pageSizeOptions={[10, 30, 50]}
