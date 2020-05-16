@@ -15,8 +15,6 @@ export const productsActions = {
     showOnlyActive,
     dontShowWindowAgain,
     updateCampaignBudget,
-    activatedDayparing,
-    deactivatedDayparing,
     showOnlyOnDayparting,
     switchFetching
 };
@@ -151,19 +149,6 @@ function showOnlyActive(data) {
     };
 }
 
-function activatedDayparing(id) {
-    return ({
-        type: productsConstants.ACTIVATED_DAYPARTING,
-        payload: id
-    });
-}
-
-function deactivatedDayparing(id) {
-    return ({
-        type: productsConstants.DEACTIVATED_DAYPARTING,
-        payload: id
-    });
-}
 
 function dontShowWindowAgain(window) {
     return dispatch => {

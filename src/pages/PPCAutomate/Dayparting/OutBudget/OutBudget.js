@@ -47,8 +47,8 @@ const OutBudget = ({date}) => {
 
     const dispatch = useDispatch();
     const {campaignId, fetchingCampaignList} = useSelector(state => ({
-        campaignId: state.products.selectedProduct.id,
-        fetchingCampaignList: state.products.fetching,
+        campaignId: state.dayparting.selectedCampaign.id,
+        fetchingCampaignList: state.dayparting.processing,
     }));
 
     async function saveBudget(data) {

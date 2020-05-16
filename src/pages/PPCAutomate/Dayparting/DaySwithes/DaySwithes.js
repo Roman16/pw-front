@@ -14,6 +14,7 @@ import axios from "axios";
 import {productsActions} from '../../../../actions/products.actions'
 import {NavLink} from "react-router-dom";
 import {SVG} from "../../../../utils/icons";
+import {daypartingActions} from "../../../../actions/dayparting.actions";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -483,13 +484,13 @@ class DaySwitches extends Component {
 
 
 const mapStateToProps = state => ({
-    campaignId: state.products.selectedProduct.id,
-    fetchingCampaignList: state.products.fetching
+    campaignId: state.dayparting.selectedCampaign.id,
+    fetchingCampaignList: state.dayparting.processing,
 });
 
 const mapDispatchToProps = dispatch => ({
-    activated: (id) => dispatch(productsActions.activatedDayparing(id)),
-    deactivated: (id) => dispatch(productsActions.deactivatedDayparing(id)),
+    activated: (id) => dispatch(daypartingActions.activateDayparing(id)),
+    deactivated: (id) => dispatch(daypartingActions.deactivateDayparing(id)),
 });
 
 export default connect(

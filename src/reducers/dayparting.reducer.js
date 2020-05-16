@@ -1,4 +1,4 @@
-import {daypartingConstants} from "../constans/actions.type";
+import {daypartingConstants, productsConstants} from "../constans/actions.type";
 
 const defaultState = {
     campaignList: [],
@@ -28,6 +28,31 @@ export function dayparting(state = defaultState, action) {
             return {
                 ...state,
                 processing: action.payload,
+            };
+
+
+        case daypartingConstants.ACTIVATED_DAYPARTING:
+            return {
+                ...state,
+                campaignList: state.campaignList.map(item => {
+                    if (item.id === action.payload) {
+                        item.hasEnabledDayparting = true;
+                    }
+
+                    return item;
+                })
+            };
+
+        case daypartingConstants.DEACTIVATED_DAYPARTING:
+            return {
+                ...state,
+                campaignList: state.campaignList.map(item => {
+                    if (item.id === action.payload) {
+                        item.hasEnabledDayparting = false;
+                    }
+
+                    return item;
+                })
             };
 
         default:

@@ -1,9 +1,11 @@
-import {daypartingConstants} from '../constans/actions.type';
+import {daypartingConstants, productsConstants} from '../constans/actions.type';
 import {daypartingServices} from "../services/dayparting.services";
 
 export const daypartingActions = {
     getCampaignList,
-    selectCampaign
+    selectCampaign,
+    activateDayparing,
+    deactivateDayparing
 };
 
 function getCampaignList(parameters) {
@@ -29,4 +31,20 @@ function selectCampaign(campaign) {
         type: daypartingConstants.SELECT_CAMPAIGN,
         payload: campaign
     })
+}
+
+
+function activateDayparing(id) {
+    return ({
+        type: daypartingConstants.ACTIVATED_DAYPARTING,
+        payload: id
+    });
+}
+
+
+function deactivateDayparing(id) {
+    return ({
+        type: daypartingConstants.DEACTIVATED_DAYPARTING,
+        payload: id
+    });
 }
