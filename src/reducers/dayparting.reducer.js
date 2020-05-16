@@ -3,7 +3,8 @@ import {daypartingConstants} from "../constans/actions.type";
 const defaultState = {
     campaignList: [],
     processing: false,
-    totalSize: 0
+    totalSize: 0,
+    selectedCampaign: null
 }
 
 export function dayparting(state = defaultState, action) {
@@ -18,6 +19,12 @@ export function dayparting(state = defaultState, action) {
             };
 
         case daypartingConstants.SET_PROCESSING_STATE:
+            return {
+                ...state,
+                processing: action.payload,
+            };
+
+        case daypartingConstants.SELECT_CAMPAIGN:
             return {
                 ...state,
                 processing: action.payload,

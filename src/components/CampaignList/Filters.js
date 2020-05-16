@@ -8,11 +8,36 @@ const {Search} = Input,
 
 const Filters = ({
                      onSearch,
+                     onApplyFilter,
+                     onlyOndayparting,
+                     onChangeSwitch
                  }) => {
 
     const [visibleDropdown, setVisibleDropdown] = useState(false),
         [campaign_type, setCampaignType] = useState('all'),
         [campaign_status, setCampaignStatus] = useState('all');
+
+    const applyFilterHandler = () => {
+        onApplyFilter({
+            campaign_type,
+            campaign_status
+        });
+
+        setVisibleDropdown(false)
+    }
+
+    const resetFilterHandler = () => {
+        if (campaign_type !== 'all' || campaign_status !== 'all') {
+            setCampaignType('all');
+            setCampaignStatus('all');
+            onApplyFilter({
+                campaign_type: 'all',
+                campaign_status: 'all'
+            })
+        }
+
+        setVisibleDropdown(false)
+    }
 
     const dropdownWindow = (
         <Menu className={'filter-dropdown-window'}>
@@ -22,6 +47,8 @@ const Filters = ({
 
                     <CustomSelect value={campaign_type} onChange={value => setCampaignType(value)}>
                         <Option value={'all'}>All</Option>
+                        <Option value={'auto'}>Auto</Option>
+                        <Option value={'manual'}>Manual</Option>
                     </CustomSelect>
                 </div>
                 <div className="form-group">
@@ -29,13 +56,15 @@ const Filters = ({
 
                     <CustomSelect value={campaign_status} onChange={value => setCampaignStatus(value)}>
                         <Option value={'all'}>All</Option>
+                        <Option value={'enabled'}>Enabled</Option>
+                        <Option value={'paused'}>Paused</Option>
                     </CustomSelect>
                 </div>
             </div>
 
             <div className="buttons">
-                <button className={'btn white'} onClick={() => setVisibleDropdown(false)}>Reset</button>
-                <button className={'btn default'}>Apply</button>
+                <button className={'btn white'} onClick={resetFilterHandler}>Reset</button>
+                <button className={'btn default'} onClick={applyFilterHandler}>Apply</button>
             </div>
         </Menu>
     );
@@ -52,7 +81,6 @@ const Filters = ({
                         suffix={<SVG id={'search'}/>}
                     />
                 </div>
-
 
                 <Dropdown
                     visible={visibleDropdown}
@@ -72,8 +100,8 @@ const Filters = ({
             <div className="row">
                 <div className="active-only">
                     <Switch
-                        // checked={onlyOptimization}
-                        // onChange={onShowOnlyOnOptimization}
+                        checked={onlyOndayparting}
+                        onChange={onChangeSwitch}
                     />
 
                     <label htmlFor="">On day-parting only</label>

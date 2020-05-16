@@ -20,6 +20,7 @@ const CampaignList = () => {
 
     const [isOpenList, setIsOpenList] = useState(true),
         [searchStr, setSearchStr] = useState(''),
+        [onlyOndayparting, setOnlyOndayparting] = useState(false),
         [filterParams, setFilterParams] = useState({
             campaign_status: 'all',
             campaign_type: 'all'
@@ -42,8 +43,13 @@ const CampaignList = () => {
         dispatch(daypartingActions.getCampaignList({
             ...paginationParams,
             ...filterParams,
+            onlyOndayparting,
             cancelToken: source.token
         }))
+    }
+
+    const selectCampaignHandler = (campaign) => {
+        dispatch(daypartingActions.selectCampaign(campaign))
     }
 
     const changePaginationHandler = (params) => {
@@ -52,6 +58,9 @@ const CampaignList = () => {
 
     const changeSelectHandler = (params) => {
         setFilterParams(params)
+    }
+    const changeSwitchHandler = (value) => {
+        setOnlyOndayparting(value)
     }
 
     const changeSearchHandler = debounce(500, false, str => {
@@ -64,14 +73,17 @@ const CampaignList = () => {
 
     useEffect(() => {
         getCampaignList();
-    }, [paginationParams, searchStr, filterParams])
+    }, [paginationParams, searchStr, filterParams, onlyOndayparting])
 
     return (
         <Fragment>
             <div className={`${isOpenList ? 'product-list campaign-list' : 'product-list campaign-list closed'}`}>
                 <Filters
                     onSearch={changeSearchHandler}
-                    onChangeSelect={changeSelectHandler}
+                    onlyOndayparting={onlyOndayparting}
+
+                    onApplyFilter={changeSelectHandler}
+                    onChangeSwitch={changeSwitchHandler}
                 />
 
                 {processing && <div className='fetching-data'><Spin size={'large'}/></div>}

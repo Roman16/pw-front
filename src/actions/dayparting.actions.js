@@ -2,7 +2,8 @@ import {daypartingConstants} from '../constans/actions.type';
 import {daypartingServices} from "../services/dayparting.services";
 
 export const daypartingActions = {
-    getCampaignList
+    getCampaignList,
+    selectCampaign
 };
 
 function getCampaignList(parameters) {
@@ -21,4 +22,11 @@ function getCampaignList(parameters) {
                 });
             });
     };
+}
+
+function selectCampaign(campaign) {
+    return ({
+        type: daypartingConstants.SELECT_CAMPAIGN,
+        payload: campaign
+    })
 }

@@ -66,5 +66,6 @@ export const dashboardConstants = {
 //--------------------------------------------
 export const daypartingConstants = {
     SET_CAMPAIGN_LIST: 'SET_CAMPAIGN_LIST',
-    SET_PROCESSING_STATE: 'SET_PROCESSING_STATE'
+    SET_PROCESSING_STATE: 'SET_PROCESSING_STATE',
+    SELECT_CAMPAIGN: 'SELECT_CAMPAIGN'
 };
