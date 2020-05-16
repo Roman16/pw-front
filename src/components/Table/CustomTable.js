@@ -46,11 +46,6 @@ const CustomTable = ({
                                         <SVG id={'sorter-arrow'}/>
                                     </div>}
                                 </div>
-
-                                {(item.filter && (
-                                    item.filter(item.key)
-                                ))
-                                }
                             </div>
                         )
                     })}

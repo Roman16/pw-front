@@ -1,21 +1,8 @@
 import React from "react";
-import axios from "axios";
 import {dateField, infoField, sorterByKeywordField} from './Tables/const';
 import "./ReportTable.less";
 import CustomTable from "../../../../components/Table/CustomTable";
-import {Select} from "antd";
 import Pagination from "../../../../components/Pagination/Pagination";
-
-const subTables = {
-    "all-reports": "all-reports",
-    "keywords-optimization": "changed-keyword-bid-acos",
-    "pats-optimization": "changed-pat-bid-acos",
-    "new-keywords": "created-campaign",
-    "new-negative-keywords": "created-negative-keyword-from-cst-high-acos",
-    "new-pats": "created-cross-negative-pat",
-    "new-negative-pats": "created-negative-pat-from-cst-high-acos"
-};
-
 
 const ReportTable = ({
                          reportsList,

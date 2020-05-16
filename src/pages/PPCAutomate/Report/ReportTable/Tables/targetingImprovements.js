@@ -7,14 +7,14 @@ export const targetingImprovements = () => {
             dataIndex: 'keyword_PT',
             key: 'keyword_PT',
             minWidth: '14.285714285714286rem',
-            sorter: true,
+            filter: true,
         },
         {
             title: 'Match Type',
             dataIndex: 'match_type',
             key: 'match_type',
             minWidth: '14.285714285714286rem',
-            sorter: true,
+            filter: true,
         },
         {
             title: 'Campaign',
@@ -22,6 +22,7 @@ export const targetingImprovements = () => {
             key: 'campaign_name',
             minWidth: '14.285714285714286rem',
             sorter: true,
+            filter: true
         },
         {
             title: 'Ad Group',
@@ -29,6 +30,7 @@ export const targetingImprovements = () => {
             key: 'ad_group_name',
             minWidth: '14.285714285714286rem',
             sorter: true,
+            filter: true
         },
         {
             title: 'Impressions',
@@ -36,6 +38,7 @@ export const targetingImprovements = () => {
             key: 'impressions',
             minWidth: '14.285714285714286rem',
             sorter: true,
+            filter: true,
             align: 'right',
             ...renderNumberField
         },
@@ -45,6 +48,7 @@ export const targetingImprovements = () => {
             key: 'clicks',
             minWidth: '14.285714285714286rem',
             sorter: true,
+            filter: true,
             align: 'right',
             ...renderNumberField
         },
@@ -54,6 +58,7 @@ export const targetingImprovements = () => {
             key: 'spend',
             minWidth: '14.285714285714286rem',
             sorter: true,
+            filter: true,
             align: 'right',
             ...renderCurrencyField
         },
@@ -63,6 +68,7 @@ export const targetingImprovements = () => {
             key: 'sales',
             minWidth: '14.285714285714286rem',
             sorter: true,
+            filter: true,
             align: 'right',
             ...renderCurrencyField
         },
@@ -72,6 +78,7 @@ export const targetingImprovements = () => {
             key: 'acos',
             minWidth: '14.285714285714286rem',
             sorter: true,
+            filter: true,
             align: 'right',
             ...renderPercentField
         },

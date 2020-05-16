@@ -2,18 +2,44 @@ import React, {useState} from "react";
 import CustomSelect from "../../../../components/Select/Select";
 import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
 import TreeSelect from "../../../../components/TreeSelect/TreeSelect";
-import {Select} from "antd";
+import {Input, Select} from "antd";
+import InputCurrency from "../../../../components/Inputs/InputCurrency";
 
 const Option = Select.Option;
 
+const numberVariations = [
+    {label: 'Greater than', key: 'greater'},
+    {label: 'Equals', key: 'equals'},
+    {label: 'Less than', key: 'less'},
+    {label: 'Greater than or equal to', key: 'greater_or_equals'},
+    {label: 'Less than or equal to', key: 'Less_or_equals'},
+    {label: 'Not equals', key: 'not_equals'}
+]
+
+const containsVariations = {
+    'datetime': [{label: 'In', key: 'in'}],
+    'object': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
+    'object_type': [{label: 'Is one of', key: 'one_of'}],
+    'keyword_PT': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
+    'match_type': [{label: 'Is one of', key: 'one_of'}],
+    'campaign_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
+    'ad_group_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
+    'impressions': numberVariations,
+    'clicks': numberVariations,
+    'spend': numberVariations,
+    'sales': numberVariations,
+    'acos': numberVariations,
+
+}
 
 const FilterWindow = ({columns, onClose, onAddFilter}) => {
     const [filterBy, setFilterBy] = useState(),
-        [filterType, setFilterType] = useState('contains'),
+        [filterType, setFilterType] = useState(),
         [filterValue, setFilterValue] = useState();
 
     const changeFilterByHandler = (value) => {
         setFilterBy(value);
+        setFilterType(containsVariations[value][0])
         setFilterValue(null)
     }
 
@@ -49,49 +75,64 @@ const FilterWindow = ({columns, onClose, onAddFilter}) => {
                     getPopupContainer={trigger => trigger.parentNode}
                 >
                     <Option value={'datetime'}>Date</Option>
-                    {columns.map(column => {
-                            if (column.key !== 'action' && column.key !== 'type') {
-                                return (
-                                    <Option value={column.key}>{column.title}</Option>
-                                )
-                            } else {
-                                return null
-                            }
-                        }
-                    )}
+                    {columns.map(column => (column.filter && <Option value={column.key}>{column.title}</Option>))}
+
                 </CustomSelect>
             </div>
 
             <div className="form-group">
                 <CustomSelect
                     required
-                    value={filterType}
+                    value={filterBy && filterType.key}
+                    placeholder={'Contains'}
                     onChange={changeTypeHandler}
                     getPopupContainer={trigger => trigger.parentNode}
                     disabled={!filterBy}
                 >
-                    <Option value={'contains'}>Contains</Option>
-                    <Option value={'range'}>Range</Option>
+                    {filterBy && containsVariations[filterBy].map((item, index) => (
+                        <Option value={item.key}>{item.label}</Option>
+                    ))}
                 </CustomSelect>
             </div>
 
             <div className="form-group">
-                {filterBy === 'datetime' && <DatePicker
+                {filterBy === 'datetime' &&
+                <DatePicker
                     timeRange={changeValueHandler}
                 />}
 
-                {filterBy !== 'datetime' && filterBy !== 'object' && <CustomSelect
-                    required
-                    placeholder={'Type'}
-                    value={filterValue}
-                    onChange={changeValueHandler}
-                    getPopupContainer={trigger => trigger.parentNode}
+                {(!filterType ||
+                    filterBy === 'object' ||
+                    filterBy === 'keyword_PT' ||
+                    filterBy === 'campaign_name' ||
+                    filterBy === 'ad_group_name'
+                ) &&
+                <Input
                     disabled={!filterBy}
-                >
-                    <Option value={'all'}>all</Option>
-                </CustomSelect>}
+                    placeholder={'Type'}
+                    onChange={changeValueHandler}
+                />}
 
-                {filterBy === 'object' && <TreeSelect
+                {(filterBy === 'clicks' || filterBy === 'impressions') &&
+                <Input
+                    disabled={!filterBy}
+                    type={'number'}
+                    onChange={changeValueHandler}
+                />}
+
+                {(filterBy === 'acos') &&
+                <InputCurrency
+                    typeIcon='percent'
+                    onChange={changeValueHandler}
+                />}
+
+                {(filterBy === 'spend' || filterBy === 'sales') &&
+                <InputCurrency
+                    onChange={changeValueHandler}
+                />}
+
+                {filterBy && filterType.key === 'one_of' &&
+                <TreeSelect
                     treeData={[
                         {
                             title: 'filter1',

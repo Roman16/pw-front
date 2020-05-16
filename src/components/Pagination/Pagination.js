@@ -61,7 +61,9 @@ const Pagination = ({
     return (
         <div className="pw-pagination">
             <div className="page-size">
-                Items per page:
+                <label>
+                    Items per page:
+                </label>
 
                 <CustomSelect
                     onChange={changePageSizeHandler}

@@ -7,14 +7,14 @@ export const searchTerms = () => {
             dataIndex: 'object',
             key: 'object',
             minWidth: '14.285714285714286rem',
-            sorter: true,
+            filter: true,
         },
         {
             title: 'Object Type',
             dataIndex: 'object_type',
             key: 'object_type',
             minWidth: '14.285714285714286rem',
-            sorter: true,
+            filter: true,
         },
         {
             title: 'Clicks',
@@ -22,6 +22,7 @@ export const searchTerms = () => {
             key: 'clicks',
             minWidth: '14.285714285714286rem',
             sorter: true,
+            filter: true,
             align: 'right',
             ...renderNumberField
         },
@@ -31,6 +32,7 @@ export const searchTerms = () => {
             key: 'spend',
             minWidth: '14.285714285714286rem',
             sorter: true,
+            filter: true,
             align: 'right',
             ...renderCurrencyField
         },
@@ -40,6 +42,7 @@ export const searchTerms = () => {
             key: 'sales',
             minWidth: '14.285714285714286rem',
             sorter: true,
+            filter: true,
             align: 'right',
             ...renderCurrencyField
         },
@@ -49,6 +52,7 @@ export const searchTerms = () => {
             key: 'acos',
             minWidth: '14.285714285714286rem',
             sorter: true,
+            filter: true,
             align: 'right',
             ...renderPercentField
         },

@@ -7,14 +7,14 @@ export const allReports = () => {
             dataIndex: 'object',
             key: 'object',
             minWidth: '14.285714285714286rem',
-            sorter: true,
+            filter: true
         },
         {
             title: 'Object Type',
             dataIndex: 'object_type',
             key: 'object_type',
             minWidth: '14.285714285714286rem',
-            sorter: true,
+            filter: true
         },
         {
           ...actionField

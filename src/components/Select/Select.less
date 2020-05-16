@@ -51,7 +51,6 @@
 
   }
 
-
   .ant-select-arrow {
     height: 100%;
     right: 1.0714285714285714rem;
@@ -73,15 +72,22 @@
 }
 
 
+
 .ant-select-dropdown-menu {
   z-index: 100000000;
 
   .ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
     background-color: #F5F5FF;
+    color: #343C5A;
   }
 
   .ant-select-dropdown-menu-item-selected {
     font-weight: 400;
     background: #F5F5FF;
+  }
+
+  .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
+    background: rgba(245, 245, 255, 0.45);
+    color: #6D6DF6;
   }
 }
