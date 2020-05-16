@@ -1,5 +1,7 @@
 import {productsConstants} from '../constans/actions.type';
 
+const onlyOptimizationFromLocalStorage = localStorage.getItem('onlyOptimization') && JSON.parse(localStorage.getItem('onlyOptimization'));
+
 const initialState = {
     productList: [],
     totalSize: 0,
@@ -10,8 +12,7 @@ const initialState = {
     dontShowStartNotificationAgain: false,
     dontShowStopNotificationAgain: false,
     selectedAll: false,
-    onlyOptimization: false,
-    onlyOnDayparting: false,
+    onlyOptimization: onlyOptimizationFromLocalStorage && onlyOptimizationFromLocalStorage,
     onlyActiveOnAmazon: false,
     selectedProduct: {
         optimization_strategy: '',
@@ -111,14 +112,11 @@ export function products(state = initialState, action) {
             };
 
         case productsConstants.SHOW_ONLY_OPTIMIZED:
+            localStorage.setItem('onlyOptimization', JSON.stringify(action.payload));
+
             return {
                 ...state,
                 onlyOptimization: action.payload
-            };
-        case productsConstants.SHOW_ONLY_ON_DAYPARTING:
-            return {
-                ...state,
-                onlyOnDayparting: action.payload
             };
 
         case productsConstants.SHOW_ONLY_ACTIVE:

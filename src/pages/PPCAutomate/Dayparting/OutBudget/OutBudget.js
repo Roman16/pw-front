@@ -74,11 +74,11 @@ const OutBudget = ({date}) => {
             source && source.cancel();
             source = CancelToken.source();
 
+            console.log(campaignId);
+
             if (campaignId == null) {
                 setData(defaultData)
-            }
-
-            if (!fetchingCampaignList) {
+            } else if (!fetchingCampaignList) {
                 setFetchingData(true);
                 localFetching = true;
 

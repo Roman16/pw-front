@@ -65,14 +65,6 @@ const Optimization = () => {
 
     }, [productId, selectedAll]);
 
-    useEffect(() => {
-        window.onbeforeunload = function() {
-            dispatch(productsActions.fetchProductDetails({id: null}));
-
-            this.onUnload();
-            return "";
-        }.bind(this);
-    }, []);
 
     async function startOptimizationHandler(optimization_strategy, targetAcosValue, netMargin) {
         setProcessing(true);

@@ -1,10 +1,12 @@
-import {daypartingConstants, productsConstants} from "../constans/actions.type";
+import {daypartingConstants} from "../constans/actions.type";
 
 const defaultState = {
     campaignList: [],
     processing: false,
     totalSize: 0,
-    selectedCampaign: null
+    selectedCampaign: {
+        id: null
+    }
 }
 
 export function dayparting(state = defaultState, action) {
@@ -14,7 +16,7 @@ export function dayparting(state = defaultState, action) {
                 ...state,
                 campaignList: action.payload.response,
                 totalSize: action.payload.total_count,
-                selectedCampaign: action.payload.response[0] || {},
+                selectedCampaign: action.payload.response[0] || {id: null},
                 processing: false
             };
 

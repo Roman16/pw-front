@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import Metrics from './Metrics/Metrics';
 import LineChart from "./MainChart/MainChart";
@@ -7,7 +7,8 @@ import {dashboardActions} from "../../../actions/dashboard.actions";
 import './Dashboard.less';
 import Chart from "./Chart/Chart";
 
-import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
+import SubscriptionNotificationWindow
+    from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 
 

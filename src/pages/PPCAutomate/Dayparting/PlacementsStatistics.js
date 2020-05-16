@@ -210,9 +210,7 @@ const PlacementsStatistics = ({date}) => {
             if (campaignId == null) {
                 setChartData([]);
                 setStatisticData({});
-            }
-
-            if (!fetchingCampaignList) {
+            } else if (!fetchingCampaignList) {
                 setProcessing(true);
                 localFetching = true;
 

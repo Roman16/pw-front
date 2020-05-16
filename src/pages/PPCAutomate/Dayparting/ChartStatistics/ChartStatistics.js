@@ -31,9 +31,7 @@ const ChartStatistics = ({date}) => {
 
             if (campaignId == null) {
                 setData([])
-            }
-
-            if (!fetchingCampaignList) {
+            } else if (!fetchingCampaignList) {
                 setProcessing(true);
                 localFetching = true;
 
