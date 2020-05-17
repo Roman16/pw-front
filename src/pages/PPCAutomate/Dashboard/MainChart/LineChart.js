@@ -60,8 +60,6 @@ const Chart = ({
         }));
     }, [data]);
 
-    console.log(data);
-
     return (
         <div className='main-chart-container'>
             <ResponsiveContainer height='100%' width='100%'>
