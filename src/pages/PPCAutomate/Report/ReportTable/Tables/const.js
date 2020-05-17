@@ -7,13 +7,23 @@ import {SVG} from "../../../../../utils/icons";
 import {numberMask} from "../../../../../utils/numberMask";
 import {round} from "../../../../../utils/round";
 
+const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+];
+
 export const dateField = {
     title: 'Date',
     dataIndex: 'datetime',
     key: 'datetime',
-    width: '160px',
+    width: '12.857142857142858rem',
     render: date => <span>
-        {moment.utc(date).tz('America/Los_Angeles').format('MM/DD/YYYY hh:mm:ss')}
+        {moment.utc(date).tz('America/Los_Angeles').format('MMM DD, YYYY hh:mm:ss')}
     </span>,
     sorter: true,
     filter: true

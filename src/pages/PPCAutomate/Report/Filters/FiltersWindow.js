@@ -16,6 +16,16 @@ const numberVariations = [
     {label: 'Not equals', key: 'not_equals'}
 ]
 
+const multiSelectVariations = {
+    'object_type': [
+        {title: 'Keyword', key: 'keyword', value: 'keyword'},
+        {title: 'PT', key: 'pt', value: 'pt'},
+        {title: 'Campaign', key: 'campaign', value: 'campaign'},
+        {title: 'Ad Group', key: 'ad_group', value: 'ad_group'},
+        {title: 'Product Ad', key: 'product_ad', value: 'product_ad'},
+    ]
+}
+
 const containsVariations = {
     'datetime': [{label: 'In', key: 'in'}],
     'object': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
@@ -32,7 +42,7 @@ const containsVariations = {
 
 }
 
-const FilterWindow = ({columns, onClose, onAddFilter}) => {
+const FilterWindow = ({columns, onClose, onAddFilter, filters}) => {
     const [filterBy, setFilterBy] = useState(),
         [filterType, setFilterType] = useState(),
         [filterValue, setFilterValue] = useState();
@@ -44,7 +54,8 @@ const FilterWindow = ({columns, onClose, onAddFilter}) => {
     }
 
     const changeTypeHandler = (value) => {
-        setFilterType(value)
+        setFilterType(containsVariations[filterBy].find(item => item.key === value))
+
     }
     const changeValueHandler = (value) => {
         setFilterValue(value)
@@ -60,7 +71,7 @@ const FilterWindow = ({columns, onClose, onAddFilter}) => {
         })
 
         setFilterBy(undefined);
-        setFilterType('contains');
+        setFilterType(undefined);
         setFilterValue(undefined);
     }
 
@@ -74,8 +85,12 @@ const FilterWindow = ({columns, onClose, onAddFilter}) => {
                     onChange={changeFilterByHandler}
                     getPopupContainer={trigger => trigger.parentNode}
                 >
-                    <Option value={'datetime'}>Date</Option>
-                    {columns.map(column => (column.filter && <Option value={column.key}>{column.title}</Option>))}
+                    <Option value={'datetime'}
+                            disabled={filters.find(item => item.filterBy === 'datetime')}>Date</Option>
+                    {columns.map(column => (column.filter &&
+                        <Option value={column.key}
+                                disabled={filters.find(item => item.filterBy === column.key)}>{column.title}</Option>
+                    ))}
 
                 </CustomSelect>
             </div>
@@ -98,7 +113,7 @@ const FilterWindow = ({columns, onClose, onAddFilter}) => {
             <div className="form-group">
                 {filterBy === 'datetime' &&
                 <DatePicker
-                    timeRange={changeValueHandler}
+                    timeRange={(startDate, endDate) => changeValueHandler({startDate, endDate})}
                 />}
 
                 {(!filterType ||
@@ -110,12 +125,14 @@ const FilterWindow = ({columns, onClose, onAddFilter}) => {
                 <Input
                     disabled={!filterBy}
                     placeholder={'Type'}
-                    onChange={changeValueHandler}
+                    value={filterValue}
+                    onChange={(e) => changeValueHandler(e.target.value)}
                 />}
 
                 {(filterBy === 'clicks' || filterBy === 'impressions') &&
                 <Input
                     disabled={!filterBy}
+                    value={filterValue}
                     type={'number'}
                     onChange={changeValueHandler}
                 />}
@@ -123,43 +140,19 @@ const FilterWindow = ({columns, onClose, onAddFilter}) => {
                 {(filterBy === 'acos') &&
                 <InputCurrency
                     typeIcon='percent'
+                    value={filterValue}
                     onChange={changeValueHandler}
                 />}
 
                 {(filterBy === 'spend' || filterBy === 'sales') &&
                 <InputCurrency
+                    value={filterValue}
                     onChange={changeValueHandler}
                 />}
 
                 {filterBy && filterType.key === 'one_of' &&
                 <TreeSelect
-                    treeData={[
-                        {
-                            title: 'filter1',
-                            value: '1',
-                            key: '1',
-                        },
-                        {
-                            title: 'filter2',
-                            value: '2',
-                            key: '2',
-                        },
-                        {
-                            title: 'filter3',
-                            value: '3',
-                            key: '3',
-                        },
-                        {
-                            title: 'filter4',
-                            value: '4',
-                            key: '4',
-                        },
-                        {
-                            title: 'filter5',
-                            value: '5',
-                            key: '5',
-                        },
-                    ]}
+                    treeData={multiSelectVariations[filterBy]}
                     getPopupContainer={triggerNode => triggerNode.parentNode}
                     value={filterValue}
                     treeCheckable={true}

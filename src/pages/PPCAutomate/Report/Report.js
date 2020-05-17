@@ -150,6 +150,7 @@ function Report() {
             <Filters
                 filters={filters}
                 columns={mainTabs[currentTab]}
+                currentTab={currentTab}
 
                 onAddFilter={addFilterHandler}
                 onReset={resetFiltersHandler}
