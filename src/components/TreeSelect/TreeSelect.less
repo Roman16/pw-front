@@ -1,6 +1,7 @@
 .pw-tree-select {
   .ant-select {
     width: 100%;
+    cursor: pointer;
 
     &.ant-select-open {
       .ant-select-selection {
@@ -17,12 +18,55 @@
         outline: none;
       }
     }
+
+    .ant-select-selection--multiple {
+      padding: 0;
+    }
+  }
+
+  .ant-select-search__field__placeholder {
+    margin-top: -9px;
+    color: rgba(101, 106, 132, 0.4);
+  }
+
+  .ant-select-selection__rendered {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 0 0 10px;
+    cursor: pointer;
+
+    li {
+      border: 0;
+      background: 0;
+      margin: 0;
+      height: 100%;
+      float: none;
+      display: flex;
+      align-items: center;
+      padding: 0 10px 0 0;
+      cursor: pointer;
+
+      &.ant-select-selection__choice::after {
+        content: ',';
+      }
+
+      &:last-child::after {
+        display: none;
+      }
+
+      .ant-select-selection__choice__remove {
+        display: none;
+      }
+    }
   }
 
   .ant-select-dropdown {
     ul.ant-select-tree {
       padding: 0;
     }
+
     li {
       padding: 5px 0 5px 12px;
       margin: 0;

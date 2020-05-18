@@ -12,7 +12,7 @@ const numberVariations = [
     {label: 'Equals', key: 'equals'},
     {label: 'Less than', key: 'less'},
     {label: 'Greater than or equal to', key: 'greater_or_equals'},
-    {label: 'Less than or equal to', key: 'Less_or_equals'},
+    {label: 'Less than or equal to', key: 'less_or_equals'},
     {label: 'Not equals', key: 'not_equals'}
 ]
 
@@ -23,7 +23,11 @@ const multiSelectVariations = {
         {title: 'Campaign', key: 'campaign', value: 'campaign'},
         {title: 'Ad Group', key: 'ad_group', value: 'ad_group'},
         {title: 'Product Ad', key: 'product_ad', value: 'product_ad'},
-    ]
+    ],
+    'match_type': [
+        {title: 'Keyword', key: 'keyword', value: 'keyword'},
+        {title: 'PT', key: 'pt', value: 'pt'},
+    ],
 }
 
 const containsVariations = {
@@ -105,7 +109,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters}) => {
                     disabled={!filterBy}
                 >
                     {filterBy && containsVariations[filterBy].map((item, index) => (
-                        <Option value={item.key}>{item.label}</Option>
+                        <Option value={item.key} title={item.label}>{item.label}</Option>
                     ))}
                 </CustomSelect>
             </div>
@@ -133,13 +137,15 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters}) => {
                 <Input
                     disabled={!filterBy}
                     value={filterValue}
+                    placeholder={'Type'}
                     type={'number'}
-                    onChange={changeValueHandler}
+                    onChange={(e) => changeValueHandler(e.target.value)}
                 />}
 
                 {(filterBy === 'acos') &&
                 <InputCurrency
                     typeIcon='percent'
+                    placeholder={'Type'}
                     value={filterValue}
                     onChange={changeValueHandler}
                 />}
@@ -147,6 +153,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters}) => {
                 {(filterBy === 'spend' || filterBy === 'sales') &&
                 <InputCurrency
                     value={filterValue}
+                    placeholder={'Type'}
                     onChange={changeValueHandler}
                 />}
 
@@ -156,6 +163,8 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters}) => {
                     getPopupContainer={triggerNode => triggerNode.parentNode}
                     value={filterValue}
                     treeCheckable={true}
+                    showSearch={false}
+                    placeholder={'Type'}
                     onChange={changeValueHandler}
                 />}
             </div>

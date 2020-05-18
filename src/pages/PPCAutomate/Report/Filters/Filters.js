@@ -13,6 +13,30 @@ const valueTile = {
     'product_ad': 'Product Ad',
 }
 
+const numberMark = {
+    'greater': '>',
+    'equals': '=',
+    'less': '<',
+    'greater_or_equals': '>=',
+    'less_or_equals': '<=',
+    'not_equals': '!=',
+
+}
+
+const columnTitle = {
+    'object': 'Object',
+    'keyword_PT': 'Keyword / PT',
+    'object_type': 'Object Type',
+    'match_type': 'Match Type',
+    'campaign_name': 'Campaign',
+    'ad_group_name': 'Ad Group',
+    'impressions': 'Impressions',
+    'clicks': 'Clicks',
+    'spend': 'Spend',
+    'sales': 'Sales',
+    'acos': 'ACoS',
+}
+
 
 const FilterItem = ({filter, onRemove}) => {
     if (filter.filterBy === 'datetime') {
@@ -23,17 +47,24 @@ const FilterItem = ({filter, onRemove}) => {
                 <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
             </div>
         )
-    } else if (filter.filterBy === 'object') {
+    } else if (filter.filterBy === 'object' || filter.filterBy === 'keyword_PT' || filter.filterBy === 'campaign_name' || filter.filterBy === 'ad_group_name') {
         return (
             <div className="filter-item">
-                {`Object ${filter.type.key}: ${filter.value}`}
+                {`${columnTitle[filter.filterBy]} ${filter.type.key}: ${filter.value}`}
                 <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
             </div>
         )
-    } else if (filter.filterBy === 'object_type') {
+    } else if (filter.filterBy === 'object_type' || filter.filterBy === 'match_type') {
         return (
             <div className="filter-item">
-                {`Object Type is one of: ${filter.value.map(item => valueTile[item]).join(', ')}`}
+                {`${columnTitle[filter.filterBy]} is one of: ${filter.value.map(item => valueTile[item]).join(', ')}`}
+                <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
+            </div>
+        )
+    } else if (filter.filterBy === 'impressions' || filter.filterBy === 'clicks' || filter.filterBy === 'spend' || filter.filterBy === 'sales' || filter.filterBy === 'acos') {
+        return (
+            <div className="filter-item">
+                {`${columnTitle[filter.filterBy]} ${numberMark[filter.type.key]} ${filter.value}`}
                 <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
             </div>
         )

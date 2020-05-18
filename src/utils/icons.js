@@ -653,24 +653,38 @@ const files = {
         'remove-filter-icon': {
             width: 10,
             height: 10,
-            viewBox: [0,0,10,10],
-            data: '<path xmlns="http://www.w3.org/2000/svg" stroke="white" stroke-linecap="round" d="M0.999939 1L8.99994 9M0.999939 9L8.99994 1"/>'
+            viewBox: [0, 0, 10, 10],
+            data: '<path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" d="M0.999939 1L8.99994 9M0.999939 9L8.99994 1"/>'
         },
         'change-bid-icon': {
             width: 9,
             height: 13,
-            viewBox: [0,0,9,13],
+            viewBox: [0, 0, 9, 13],
             data: '<path xmlns="http://www.w3.org/2000/svg" stroke="#343C5A" stroke-linecap="round" stroke-linejoin="round" d="M8 8.75L4.25 12.5M4.25 12.5L0.499999 8.75M4.25 12.5L4.25 0.5"/>'
         },
         'filter-icon': {
             width: 16,
             height: 14,
-            viewBox: [0,0,16,14],
+            viewBox: [0, 0, 16, 14],
             data: '<path xmlns="http://www.w3.org/2000/svg" d="M15.8328 1.10128L10.0669 7.62003V11.7814C10.0669 11.9273 9.98596 12.0643 9.85346 12.1355L6.56474 13.9466C6.50033 13.9822 6.42856 14 6.35494 14C6.28133 14 6.20771 13.9822 6.1433 13.9448C6.01448 13.8719 5.9335 13.7367 5.9335 13.5926V7.62003L0.167672 1.10128C-0.0108424 0.900241 -0.0494898 0.628034 0.0646122 0.387851C0.178714 0.147668 0.4198 0 0.692173 0H15.3064C15.5788 0 15.8199 0.149447 15.934 0.387851C16.0499 0.626255 16.0113 0.900241 15.8328 1.10128Z"/>'
+        },
+        'upward-metric-changes': {
+            width: 6,
+            height: 5,
+            viewBox: [0, 0, 6, 5],
+            data: '<path xmlns="http://www.w3.org/2000/svg" fill="#7DD4A1" d="M3 0L5.59808 4.5H0.401924L3 0Z"/>'
+        },
+        'downward-metric-changes': {
+            width: 6,
+            height: 5,
+            viewBox: [0, 0, 6, 5],
+            data: '<path xmlns="http://www.w3.org/2000/svg" fill="#EC7F5C" d="M3 5L5.59808 0.5H0.401924L3 5Z"/>'
         }
 
     },
     allIds: [
+        'upward-metric-changes',
+        'downward-metric-changes',
         'change-bid-icon',
         'remove-filter-icon',
         'sorter-arrow',

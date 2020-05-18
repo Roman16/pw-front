@@ -31,7 +31,7 @@ const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, i
 
     return (<div className='metric-item' onClick={() => listType === 'visible' ? removeMetric(item) : addMetric(item)}>
             <div className="title-info">
-                <span dangerouslySetInnerHTML={{__html: metricInformation.title}}/>
+                <span title={metricInformation.title} dangerouslySetInnerHTML={{__html: metricInformation.title}}/>
 
                 {key === 'profit' ?
                     !hasMargin && <Tooltip getPopupContainer={trigger => trigger.parentNode}
@@ -50,13 +50,14 @@ const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, i
                 </div>}
             </div>
 
+            <div className="value">
+                <RenderMetricValue
+                    value={metric_value}
+                    type={type}
+                />
+            </div>
+
             <div className='metric-item__description'>
-                <div className="value">
-                    <RenderMetricValue
-                        value={metric_value}
-                        type={type}
-                    />
-                </div>
                 <div className='label'>{label}</div>
             </div>
         </div>
