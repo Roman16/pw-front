@@ -1,37 +1,67 @@
-import React, {Fragment} from "react";
+import React, {useEffect, useState} from "react";
 
 import ProductsList from "./ProductsList/ProductsList";
-import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 import "./ProductSettings.less";
-import SubscriptionNotificationWindow from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
+import SubscriptionNotificationWindow
+    from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
+import Filters from "./Filters/Filters";
+import axios from "axios";
+import {productsServices} from "../../../services/products.services";
+
+const CancelToken = axios.CancelToken;
+let source = null;
 
 const ProductSettingsMain = () => {
-  return (
-    <div className="product-settings-page">
-      <div className="page-caption">
-        <h3 className="main-title">REMINDER</h3>
-        <FreeTrial product={'ppc'}/>
-      </div>
+    const [productsList, setProductsList] = useState([]),
+        // [searchStr, setSearchStr] = useState(''),
+        [totalSize, setTotalSize] = useState(0),
+        [onlyActive, setOnlyActive] = useState(false),
+        [processing, setProcessing] = useState(false),
+        [paginationOptions, setPaginationOptions] = useState({
+            page: 1,
+            pageSize: 10
+        })
 
-      <div className="reminder">
-        <div className="reminder-title">
-          For those using campaign strategies in Seller Central:
+    const fetchProducts = async (searchStr = '') => {
+        if (processing && source) {
+            source.cancel();
+        }
+
+        source = CancelToken.source();
+
+        setProcessing(true);
+
+        const {result, totalSize} = await productsServices.getProductsSettingsList({
+            ...paginationOptions,
+            searchStr,
+
+            onlyActive: onlyActive,
+            cancelToken: source.token
+        });
+
+        setProductsList(result);
+        setTotalSize(totalSize);
+        setProcessing(false);
+    };
+
+    useEffect(() => {
+        fetchProducts();
+    }, [])
+
+    return (
+        <div className="product-settings-page">
+            <Filters/>
+
+            <ProductsList
+                products={productsList}
+                totalSize={totalSize}
+                paginationOption={paginationOptions}
+            />
+
+            <LoadingAmazonAccount/>
         </div>
-        <div>
-          All campaigns better to be set to "Dynamic bids - down only." or
-          "Fixed Bids." bidding strategy. Additionally, "Adjust bids by
-          placement" should be set to 0% (default) as it will negatively affect
-          your performance with our algorithm. Also, you should have only one
-          Active SKU per Ad Group, or its variations.
-        </div>
-      </div>
-
-      <ProductsList />
-
-      <LoadingAmazonAccount/>
-    </div>
-  );
+    );
 };
 
 export default ProductSettingsMain;

@@ -6,7 +6,6 @@ import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWin
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Tabs from "./Tabs/Tabs";
-import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 import Filters from "./Filters/Filters";
 import {reportsServices} from "../../../services/reports.services";
 import {allReports} from "./ReportTable/Tables/allReports";
@@ -140,8 +139,6 @@ function Report() {
 
     return (
         <div className="product-main basic-container reports-page">
-            <FreeTrial product={'ppc'}/>
-
             <Tabs
                 currentTab={currentTab}
                 onChangeTab={changeTabHandler}

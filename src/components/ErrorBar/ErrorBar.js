@@ -4,6 +4,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
 import {SVG} from "../../utils/icons";
 import {userActions} from "../../actions/user.actions";
+import moment from "moment";
 
 // const accountLinks = {
 //     amazon_mws: {
@@ -19,9 +20,14 @@ let intervalId = null;
 const ErrorBar = () => {
     const dispatch = useDispatch();
 
-    const {accountLinks} = useSelector(state => ({
-        accountLinks: state.user.account_links[0]
+    const {accountLinks, trialEndsDate, onTrial} = useSelector(state => ({
+        accountLinks: state.user.account_links[0],
+        trialEndsDate: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]] && state.user.subscriptions[Object.keys(state.user.subscriptions)[0]].trial_ends_at,
+        onTrial: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]] && state.user.subscriptions[Object.keys(state.user.subscriptions)[0]].on_trial,
     }));
+
+    const freeTrialDays = Math.round(moment(trialEndsDate).diff(moment(new Date()), 'hours') / 24);
+
 
     useEffect(() => {
         intervalId = setInterval(() => {
@@ -40,6 +46,13 @@ const ErrorBar = () => {
 
     return (
         <div className='errors-bar'>
+            {onTrial && <div className={'on-trial'}>
+                <SVG id={'attention-bar-icon'}/>
+                Free Trial
+                <span>{freeTrialDays >= 0 ? freeTrialDays : 0}</span>
+                Days Left
+            </div>}
+
             {(accountLinks.amazon_mws.status === 'IN_PROGRESS' || accountLinks.amazon_ppc.status === 'IN_PROGRESS') &&
             <div className={'in-progress'}>
                 <SVG id={'attention-bar-icon'}/>

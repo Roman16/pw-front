@@ -3,7 +3,6 @@ import {useSelector, useDispatch} from "react-redux";
 import {Drawer} from "antd";
 import axios from "axios";
 
-import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 import OptimizationStrategy from "./OptimizationStrategy/OptimizationStrategy";
 import OptionsInfo from "./InfoDrawers/OptionInfo/OptionInfo";
 import StrategyInfo from "./InfoDrawers/StrategyInfo/StrategyInfo";
@@ -177,8 +176,6 @@ const Optimization = () => {
     return (
         <Fragment>
             <div className="optimization-page">
-                <FreeTrial product={'ppc'}/>
-
                 <div className="product-optimization-info">
                     <OptimizationIncludes
                         onShowDrawer={showDrawerHandler}

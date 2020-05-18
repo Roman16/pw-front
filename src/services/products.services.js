@@ -15,8 +15,8 @@ function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasN
     return api('get', `${productsUrls.allProducts}?search_query=${searchStr}&page=${page}&size=${pageSize}&ungroup_variations=${ungroupVariations}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}`, null, null, cancelToken)
 }
 
-function getProductsSettingsList({size, page, searchStr = '', onlyActive, cancelToken}) {
-    return api('get', `${productsUrls.productsSettingsList}?search_query=${searchStr}&page=${page}&size=${size}&is_active=${onlyActive ? 1 : 0}`, false, false, cancelToken)
+function getProductsSettingsList({pageSize, page, searchStr = '', onlyActive, cancelToken}) {
+    return api('get', `${productsUrls.productsSettingsList}?search_query=${searchStr}&page=${page}&size=${pageSize}&is_active=${onlyActive ? 1 : 0}`, false, false, cancelToken)
 }
 
 function updateProductSettings(parameters) {
