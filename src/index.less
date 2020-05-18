@@ -152,13 +152,20 @@ img {
       grid-area: switchProductList;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 850px) {
       height: max-content;
 
-      grid-template-areas: 'errorsBar' 'productList' 'mainPage';
+      grid-template-areas: 'errorsBar' 'productList' 'switchProductList' 'mainPage';
       grid-template-columns: 1fr;
       grid-template-rows: auto;
 
+      padding: 1.7142857em 1.42857143rem;
+
+      .page {
+        & > div {
+          padding: 0;
+        }
+      }
     }
   }
 

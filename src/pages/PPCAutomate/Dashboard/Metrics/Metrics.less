@@ -16,15 +16,6 @@
     cursor: pointer;
     box-shadow: @default-section-shadow;
 
-    .info-icon {
-      svg {
-        use {
-          fill: #C9CBD4;
-        }
-      }
-    }
-
-
     & > .custom-tooltip {
       margin: 0;
       width: max-content;
@@ -57,16 +48,32 @@
     .close {
       margin: 0 0 0 auto;
       cursor: pointer;
+      border-radius: 50%;
+      padding: 5px;
+      transition: .3s;
 
-      //.bg-close();
+      &:hover {
+        transition: .3s;
+        background: rgba(109, 109, 246, 0.05);
+
+        svg {
+          stroke: #6D6DF6;
+        }
+      }
+
+      &:active {
+        background: rgba(109, 109, 246, 0.15);
+
+        svg {
+          stroke: #6D6DF6;
+        }
+      }
 
       svg {
         width: 10px;
         height: 10px;
 
-        use {
-          stroke: #343C5A;
-        }
+        stroke: #343C5A;
       }
     }
   }
@@ -88,7 +95,7 @@
   flex-direction: column;
   justify-content: space-between;
   min-width: 140px;
-  height: 110px;
+  height: 100px;
   padding: 8px 12px 8px;
   background: #FFFFFF;
   border-radius: 4px;
@@ -99,11 +106,11 @@
     font-size: 1rem;
     color: #343C5A;
 
-   & > span {
-     width: 75%;
-     text-overflow: ellipsis;
-     overflow: hidden;
-     white-space: nowrap;
+    & > span {
+      width: 75%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
     .anticon {
@@ -114,11 +121,6 @@
 
     .information-tooltip {
       margin: 0 5px 0 5px;
-      svg {
-        use {
-          fill: #C9CBD4;
-        }
-      }
     }
 
     .close {
@@ -150,7 +152,7 @@
         display: flex;
         align-items: center;
         border-radius: 4px;
-        font-size: 0.8571428571428571rem; //12px
+        font-size: 1rem;
         text-transform: uppercase;
 
         .horizontal-line-icon {
@@ -178,8 +180,8 @@
     }
 
     .label {
-      font-size: 0.8571428571428571rem;
-      color: #C9CBD4;
+      font-size: 1rem;
+      color: #686876;
     }
   }
 
@@ -188,7 +190,7 @@
   //-------------------------------------
   @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
     & {
-      height: 85px;
+      height: 80px;
       padding: 6px 9px;
 
       .metric-item__changes {
