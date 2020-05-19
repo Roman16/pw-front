@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import ProductsList from "./ProductsList/ProductsList";
 import "./ProductSettings.less";
@@ -79,6 +79,39 @@ const ProductSettingsMain = () => {
             page: 1
         })
     });
+    //
+    const setRowData = (value, item, index) => {
+
+        // setProductsList(productsList[index] = {
+        //     ...productsList[index],
+        //     [item]: value ? +value : null,
+        // });
+
+        console.log(productsList);
+
+        const newList = productsList.map((product, productIndex) => {
+            if (productIndex === index) {
+                product[item] = value
+            }
+
+            return (product)
+        })
+
+        // console.log(newList);
+        //
+        setProductsList(newList)
+
+        // return {
+        //     product_id: products[index].id,
+        //     [item]: value ? +value : null
+        // };
+    };
+
+    useEffect(() => {
+        console.log(productsList);
+
+    }, [productsList])
+
 
     const changePaginationHandler = (params) => {
         setPaginationOptions(params)
@@ -103,6 +136,7 @@ const ProductSettingsMain = () => {
 
                 changePagination={changePaginationHandler}
                 onUpdateSettings={updateSettingsHandler}
+                setRowData={setRowData}
             />
 
             <LoadingAmazonAccount/>

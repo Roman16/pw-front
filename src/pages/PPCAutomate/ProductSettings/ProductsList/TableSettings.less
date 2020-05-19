@@ -11,6 +11,13 @@
       & > div {
         padding: 10px 20px;
 
+        &:first-child {
+          justify-content: center;
+          position: sticky;
+          left: 0;
+          background: #fff;
+        }
+
         .title {
           .custom-tooltip {
             margin: 0;
@@ -25,6 +32,12 @@
 
     .table-body {
       .table-body__row {
+        &:hover {
+          .table-body__field:first-child {
+            background: #FAFAFF;
+          }
+        }
+
         .table-body__field {
           padding: 10px 20px;
 
@@ -35,8 +48,15 @@
 
           &:first-child {
             border-right: 1px solid #C9CBD4;
+            justify-content: center;
+            position: sticky;
+            left: 0;
+            background: #fff;
+            z-index: 50;
 
             .product-item {
+              width: 100%;
+
               .image-block {
                 margin: 0 5px 0 0;
               }
@@ -52,6 +72,7 @@
 
                 div {
                   display: flex;
+                  font-size: 1rem;
 
                   &:first-child {
                     margin: 0 10px 0 0;
@@ -59,11 +80,12 @@
 
                   span:first-child {
                     font-weight: 500;
+                    margin: 0 3px 0 0;
                   }
 
                   span:last-child {
                     display: block;
-                    width: 8.571428571428571rem;
+                    width: 7.142857142857143rem;
                     text-overflow: ellipsis;
                     overflow: hidden;
                     white-space: nowrap;
@@ -130,7 +152,35 @@
     }
 
     .open-children-list-button {
-      display: none;
+      font-size: 1rem;
+      height: 2.85714286rem;
+      width: 2.85714286rem;
+      min-width: 2.85714286rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      margin: 0 0 0 auto;
+      cursor: pointer;
+
+      &.has-variations {
+        &:hover {
+          background: rgba(113, 113, 113, 0.15);
+          transition: .2s;
+        }
+      }
+
+      &.opened {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+
+      svg {
+        width: 1.28571429rem;
+        height: 0.71428571rem;
+        stroke: #343C5A;
+      }
     }
   }
 }

@@ -1,37 +1,61 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Spin} from 'antd';
 import shortid from 'shortid';
 import './CustomTable.less';
 import {SVG} from "../../utils/icons";
 
+
+const TableRow = memo(({rowClassName, report, rowClick, index, columns}) => {
+    return (<div
+            className={`table-body__row ${rowClassName && rowClassName(report)}`}
+            onClick={() => rowClick && rowClick(report, index)}
+        >
+            {columns.map((item) => {
+                const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
+
+                return (
+                    <div
+                        className={`table-body__field ${item.align || ''}`}
+                        style={{...fieldWidth, minWidth: item.minWidth || '0'}}
+                        key={shortid.generate()}
+                    >
+                        {item.render
+                            ? item.render(report[item.key], report, index)
+                            : report[item.key]}
+                    </div>
+                )
+            })}
+        </div>
+    )
+})
+
+
 const CustomTable = ({
                          columns,
                          dataSource,
                          loading,
-                         heightTabBtn,
                          rowClassName,
                          rowClick,
                          onChangeSorter,
                          sorterColumn,
-                         processing
+                         processing,
+
+                         clickHandler
                      }) => {
 
     const devicePixelRatio = window.devicePixelRatio;
 
     return (
-        <div
-            className="custom-table"
-            style={{height: `calc(100% - ${heightTabBtn}px`}}
-        >
+        <div className="custom-table">
             <div className="table-overflow">
-                <div className="table-head">
+                <div className="table-head" key={'table-head'}>
                     {columns.map((item, index) => {
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
 
                         return (
                             <div
                                 className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''}`}
-                                key={`${item.dataIndex}_${index}`}
+                                key={`row_${item.dataIndex}_${index}`}
                                 style={{
                                     ...fieldWidth,
                                     minWidth: item.minWidth || '0',
@@ -59,7 +83,6 @@ const CustomTable = ({
                         dataSource.map((report, index) => (
                             <div
                                 className={`table-body__row ${rowClassName && rowClassName(report)}`}
-                                key={`report_${index}_`}
                                 onClick={() => rowClick && rowClick(report, index)}
                             >
                                 {columns.map((item) => {
@@ -69,7 +92,6 @@ const CustomTable = ({
                                         <div
                                             className={`table-body__field ${item.align || ''}`}
                                             style={{...fieldWidth, minWidth: item.minWidth || '0'}}
-                                            key={shortid.generate()}
                                         >
                                             {item.render
                                                 ? item.render(report[item.key], report, index)
@@ -87,9 +109,10 @@ const CustomTable = ({
                 </div>
             </div>
 
-            {processing && <div className={'load-data'}><Spin/></div>}
+            {processing && <div className={'load-data'}><Spin size={'large'}/></div>}
+
         </div>
     );
 };
 
-export default React.memo(CustomTable);
+export default memo(CustomTable);

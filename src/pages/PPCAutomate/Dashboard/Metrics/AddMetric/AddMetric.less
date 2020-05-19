@@ -9,38 +9,29 @@
     justify-content: center;
     width: 100%;
     height: 100px;
-    border: 2px solid #6D6DF6;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1.4285714285714286rem;
-    color: #6D6DF6;
-    box-shadow: @default-section-shadow;
+    color: #C9CBD4;
+    font-weight: 500;
+    border: 1px dashed #C9CBD4;
+    //transition: .2s;
 
-    &:hover {
-      background: #6D6DF6;
-      color: #fff;
-
-      span {
-        &.blue {
-          display: none;
-        }
-
-        &.white {
-          display: block;
-        }
-      }
+    svg {
+      stroke: #C9CBD4;
+      margin: 0 15px 0 0;
     }
 
-    span {
-      margin: 0 19px 0 0;
 
-      &.white {
-        display: none;
-      }
+    &:hover {
+      //transition: .2s;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      color: #6D6DF6;
+      border: 0;
 
       svg {
-        width: 1.125rem;
-        height: 1.125rem;
+        stroke: #6D6DF6;
       }
     }
 
