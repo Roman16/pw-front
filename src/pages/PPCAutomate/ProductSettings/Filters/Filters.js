@@ -4,7 +4,7 @@ import {Input, Switch} from "antd";
 
 const {Search} = Input;
 
-const Filters = () => {
+const Filters = ({onChangeSearch, onChangeSwitch}) => {
 
     return (
         <div className="filters">
@@ -12,7 +12,7 @@ const Filters = () => {
                 <Search
                     className="search-field"
                     placeholder={'Search'}
-                    // onChange={e => onSearch(e.target.value)}
+                    onChange={e => onChangeSearch(e.target.value)}
                     data-intercom-target='search-field'
                     suffix={<SVG id={'search'}/>}
                 />
@@ -20,8 +20,7 @@ const Filters = () => {
 
             <div className='switch-block'>
                 <Switch
-                    // checked={this.props.onlyActiveOnAmazon}
-                    // onChange={this.handleChangeSwitch}
+                    onChange={onChangeSwitch}
                 />
 
                 <label htmlFor="">

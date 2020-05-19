@@ -1,9 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {func, bool, string} from 'prop-types';
-import {Icon, Popover} from 'antd';
-import InformationTooltip from "../Tooltip/Tooltip";
-import {productsActions} from "../../actions/products.actions";
-import {useDispatch} from "react-redux";
 import {SVG} from "../../utils/icons";
 
 const ProductItem = ({

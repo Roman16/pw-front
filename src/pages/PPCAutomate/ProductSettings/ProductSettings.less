@@ -1,6 +1,10 @@
 @import "../../../style/variables.less";
 
 .product-settings-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
   .filters {
     display: flex;
     align-items: center;
@@ -25,7 +29,21 @@
     }
   }
 
-  .table-settings {
+  .custom-table {
     background: #fff;
+    flex: 1;
+    overflow: hidden;
+
+    .table-overflow {
+      height: 100%;
+    }
+  }
+
+  .pw-pagination {
+    height: 3.5714285714285716rem;
+    background: #fff;
+    border-radius: 0 0 4px 4px;
+    border-top: 1px solid #C9CBD4;
+    padding: 0 0 0 1.4285714285714286rem;
   }
 }

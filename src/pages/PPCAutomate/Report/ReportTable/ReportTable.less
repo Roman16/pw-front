@@ -125,6 +125,12 @@ div.ReportTable {
         .table-body {
           .table-body__row {
             position: relative;
+
+            &:hover {
+              & > div:last-child {
+                background: rgba(245, 245, 255, 0.5);
+              }
+            }
           }
 
           .table-body__row > div {

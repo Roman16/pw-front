@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {func, arrayOf, object} from 'prop-types';
 import {Input, Switch, Icon} from 'antd';
 import InputCurrency from '../../../../components/Inputs/InputCurrency';
@@ -22,6 +22,8 @@ let source = null;
 const ACTIVE = 'RUNNING';
 const PRODUCT = 'product';
 const NET_MARGIN = 'product_margin_value';
+const PRICE = 'item_price';
+const PRICE_FROM_USER = 'item_price_from_user';
 const MIN_BID_MANUAL_CAMPING = 'min_bid_manual_campaign';
 const MAX_BID_MANUAL_CAMPING = 'max_bid_manual_campaign';
 const MIN_BID_AUTO_CAMPING = 'min_bid_auto_campaign';
@@ -31,7 +33,7 @@ const OPTIMIZATION_STATUS = 'optimization_status';
 
 const delay = 1000; // ms
 
-const ProductsList = ({products, totalSize, paginationOption}) => {
+const ProductsList = ({products, totalSize, paginationOption, changePagination, processing}) => {
     // state = {
     //     products: [],
     //     openedProduct: '',
@@ -176,16 +178,7 @@ const ProductsList = ({products, totalSize, paginationOption}) => {
     //     this.setState({onlyActive: e, page: 1}, this.fetchProducts)
     // };
     //
-    // onSearchChange = ({target: {value}}) => {
-    //     clearTimeout(this.timerIdSearch);
-    //     this.timerIdSearch = setTimeout(() => {
-    //         this.setState({page: 1}, () => this.fetchProducts(value))
-    //     }, delay);
-    // };
-    //
-    // changePagination = (page) => {
-    //     this.setState({page}, this.fetchProducts)
-    // };
+
     //
     // handleOpenChild = (id) => {
     //     this.setState({
@@ -250,192 +243,201 @@ const ProductsList = ({products, totalSize, paginationOption}) => {
     //     return <Table className='child-list' columns={columns} dataSource={props.product.variations}
     //                   pagination={false}/>;
     // };
-    //
-    // customExpandIcon(props) {
-    //     if (props.expanded && props.record.product.variations) {
-    //         return <div className='open-children-list-button' onClick={e => {
-    //             props.onExpand(props.record, e);
-    //         }}>
-    //             {props.record.product.variations && props.record.product.variations.length}
-    //             <Icon type="caret-up"/>
-    //         </div>
-    //     } else if (!props.expanded && props.record.product.variations) {
-    //         return <div className='open-children-list-button' style={{color: 'black'}} onClick={e => {
-    //             props.onExpand(props.record, e);
-    //         }}>
-    //             {props.record.product.variations && props.record.product.variations.length}
-    //             <Icon type="caret-down"/>
-    //         </div>
-    //     }
-    // }
-    //
-    // componentDidMount() {
-    //     this.fetchProducts()
-    // }
 
     const columns = [
-            {
-                title: 'Product Name',
-                dataIndex: PRODUCT,
-                key: PRODUCT,
-                width: 150,
-                render: (product) => (
-                    <ProductItem
-                        product={product}
-                        products={products}
-                        // onOpenChild={this.handleOpenChild}
-                    />
-                )
-            },
+        {
+            title: 'Product Name',
+            dataIndex: PRODUCT,
+            key: PRODUCT,
+            width: '425px',
+            render: (product) => (
+                <ProductItem
+                    product={product}
+                    products={products}
+                    // onOpenChild={this.handleOpenChild}
+                />
+            )
+        },
 
-            {
-                title: <span className='net-margin'>Net Margin* <InformationTooltip
-                    description={'It is the percentage of profit generated from revenue after you have accounted for all of your expenses, costs, and open cash flow items. The formula for calculating net profit margin is total revenue minus COGS, divided by total revenue. We need this information, so the algorithm calculates your target ACoS based on your product profitability and business goal.'}/></span>,
-                dataIndex: NET_MARGIN,
-                key: NET_MARGIN,
-                width: 150,
-                render: (index, item, indexRow) => (
-                    <InputCurrency
-                        value={item[NET_MARGIN]}
-                        typeIcon='percent'
-                        data-intercom-target="net-margin-field"
-                        onChange={event =>
-                            this.onChangeRow(event, NET_MARGIN, indexRow)
-                        }
-                        onBlur={() => {
-                            this.onBlurRow()
-                        }}
-                    />
-                )
-            },
-            {
-                title: () => (<span>Min Bid <br/> (Manual Campaign)</span>),
-                dataIndex: MIN_BID_MANUAL_CAMPING,
-                key: MIN_BID_MANUAL_CAMPING,
-                width: 150,
-                render: (index, item, indexRow) => (
-                    <InputCurrency
-                        value={item[MIN_BID_MANUAL_CAMPING]}
-                        min={0}
-                        max={item[MAX_BID_MANUAL_CAMPING] || 999999999}
-                        step={0.01}
-                        data-intercom-target="min-bid-field"
-                        onChange={event =>
-                            this.onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)
-                        }
-                        onBlur={() => {
-                            this.onBlurRow()
-                        }}
-                    />
-                )
-            },
-            {
-                title: () => (<span>Max Bid <br/> (Manual Campaign)</span>),
-                dataIndex: MAX_BID_MANUAL_CAMPING,
-                key: MAX_BID_MANUAL_CAMPING,
-                width: 150,
-                render: (index, item, indexRow) => (
-                    <InputCurrency
-                        value={item[MAX_BID_MANUAL_CAMPING]}
-                        min={item[MIN_BID_MANUAL_CAMPING] || 0}
-                        step={0.01}
-                        onChange={event =>
-                            this.onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)
-                        }
-                        onBlur={() => {
-                            this.onBlurRow()
-                        }}
-                    />
-                )
-            },
-            {
-                title: () => (<span>Min Bid <br/> (Auto Campaign)</span>),
-                dataIndex: MIN_BID_AUTO_CAMPING,
-                key: MIN_BID_AUTO_CAMPING,
-                width: 150,
-                render: (index, item, indexRow) => (
-                    <InputCurrency
-                        value={item[MIN_BID_AUTO_CAMPING]}
-                        min={0}
-                        max={item[MAX_BID_AUTO_CAMPING] || 999999999}
-                        step={0.01}
-                        onChange={event =>
-                            this.onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)
-                        }
-                        onBlur={() => {
-                            this.onBlurRow()
-                        }}
-                    />
-                )
-            },
-            {
-                title: () => (<span>Max Bid <br/> (Auto Campaign)</span>),
-                dataIndex: MAX_BID_AUTO_CAMPING,
-                key: MAX_BID_AUTO_CAMPING,
-                width: 150,
-                render: (index, item, indexRow) => (
-                    <InputCurrency
-                        value={item[MAX_BID_AUTO_CAMPING]}
-                        min={item[MIN_BID_AUTO_CAMPING] || 0}
-                        step={0.01}
-                        onChange={event =>
-                            this.onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)
-                        }
-                        onBlur={() => {
-                            this.onBlurRow()
-                        }}
-                    />
-                )
-            },
-            {
-                title: 'Total Changes',
-                dataIndex: TOTAL_CHANGES,
-                key: TOTAL_CHANGES,
-                width: 100,
-                render: (index, item) => (
-                    <div style={{fontWeight: 600}}>{item[TOTAL_CHANGES]}</div>
-                )
-            },
-            {
-                title: 'Optimization Status',
-                dataIndex: OPTIMIZATION_STATUS,
-                key: OPTIMIZATION_STATUS,
-                width: '100px',
-                render: (index, item) => (
-                    <div
-                        className={`settings-status ${
-                            item[OPTIMIZATION_STATUS] === ACTIVE ? 'active' : ''
-                        }`}
-                    >
-                        {item[OPTIMIZATION_STATUS] === ACTIVE
-                            ? 'Active'
-                            : 'Paused'}
-                    </div>
-                )
-            }
-        ];
+        {
+            title: 'Product Price',
+            dataIndex: PRICE,
+            key: PRICE,
+            minWidth: '160px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[PRICE]}
+                    disabled
+                />
+            )
+        },
+        {
+            title: <>Overwrite <br/> Product Price</>,
+            dataIndex: PRICE_FROM_USER,
+            key: PRICE_FROM_USER,
+            minWidth: '160px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[PRICE_FROM_USER]}
+                />
+            )
+        },
+        {
+            title: <InformationTooltip
+                type={'custom'}
+                description={'It is the percentage of profit generated from revenue after you have accounted for all of your expenses, costs, and open cash flow items. ' +
+                'The formula for calculating net profit margin is total revenue minus COGS, ' +
+                'divided by total revenue. We need this information, so the algorithm calculates your ' +
+                'target ACoS based on your product profitability and business goal.'}>
+                <span className='net-margin'>Net Margin*</span>
+            </InformationTooltip>,
+            dataIndex: NET_MARGIN,
+            key: NET_MARGIN,
+            minWidth: '160px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[NET_MARGIN]}
+                    typeIcon='percent'
+                    data-intercom-target="net-margin-field"
+                    onChange={event =>
+                        this.onChangeRow(event, NET_MARGIN, indexRow)
+                    }
+                    onBlur={() => {
+                        this.onBlurRow()
+                    }}
+                />
+            )
+        },
+        {
+            title: () => (<span>Min Bid <br/> (Manual Campaign)</span>),
+            dataIndex: MIN_BID_MANUAL_CAMPING,
+            key: MIN_BID_MANUAL_CAMPING,
+            minWidth: '175px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[MIN_BID_MANUAL_CAMPING]}
+                    min={0}
+                    max={item[MAX_BID_MANUAL_CAMPING] || 999999999}
+                    step={0.01}
+                    data-intercom-target="min-bid-field"
+                    onChange={event =>
+                        this.onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)
+                    }
+                    onBlur={() => {
+                        this.onBlurRow()
+                    }}
+                />
+            )
+        },
+        {
+            title: () => (<span>Max Bid <br/> (Manual Campaign)</span>),
+            dataIndex: MAX_BID_MANUAL_CAMPING,
+            key: MAX_BID_MANUAL_CAMPING,
+            minWidth: '175px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[MAX_BID_MANUAL_CAMPING]}
+                    min={item[MIN_BID_MANUAL_CAMPING] || 0}
+                    step={0.01}
+                    onChange={event =>
+                        this.onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)
+                    }
+                    onBlur={() => {
+                        this.onBlurRow()
+                    }}
+                />
+            )
+        },
+        {
+            title: () => (<span>Min Bid <br/> (Auto Campaign)</span>),
+            dataIndex: MIN_BID_AUTO_CAMPING,
+            key: MIN_BID_AUTO_CAMPING,
+            minWidth: '175px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[MIN_BID_AUTO_CAMPING]}
+                    min={0}
+                    max={item[MAX_BID_AUTO_CAMPING] || 999999999}
+                    step={0.01}
+                    onChange={event =>
+                        this.onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)
+                    }
+                    onBlur={() => {
+                        this.onBlurRow()
+                    }}
+                />
+            )
+        },
+        {
+            title: () => (<span>Max Bid <br/> (Auto Campaign)</span>),
+            dataIndex: MAX_BID_AUTO_CAMPING,
+            key: MAX_BID_AUTO_CAMPING,
+            minWidth: '175px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[MAX_BID_AUTO_CAMPING]}
+                    min={item[MIN_BID_AUTO_CAMPING] || 0}
+                    step={0.01}
+                    onChange={event =>
+                        this.onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)
+                    }
+                    onBlur={() => {
+                        this.onBlurRow()
+                    }}
+                />
+            )
+        },
+        {
+            title: 'Total Changes',
+            dataIndex: TOTAL_CHANGES,
+            key: TOTAL_CHANGES,
+            width: '100px',
+            align: 'right',
+            render: (index, item) => (
+                <div style={{fontWeight: 600}}>{item[TOTAL_CHANGES]}</div>
+            )
+        },
+        {
+            title: 'Optimization Status',
+            dataIndex: OPTIMIZATION_STATUS,
+            key: OPTIMIZATION_STATUS,
+            width: '135px',
+            render: (index, item) => (
+                <div
+                    className={`settings-status ${
+                        item[OPTIMIZATION_STATUS] === ACTIVE ? 'active' : ''
+                    }`}
+                >
+                    {item[OPTIMIZATION_STATUS] === ACTIVE
+                        ? 'Active'
+                        : 'Paused'}
+                </div>
+            )
+        }
+    ];
 
     return (
-        <div className="table-settings">
+        <Fragment>
             <CustomTable
                 rowKey="id"
                 dataSource={products}
                 columns={columns}
+                processing={processing}
                 // expandIcon={(props) => this.customExpandIcon(props)}
 
                 // expandedRowRender={this.expandedRowRender}
             />
 
             <Pagination
-                onChange={paginationOption.pageSize}
+                onChange={changePagination}
                 page={paginationOption.page}
                 pageSizeOptions={[10, 30, 50]}
                 pageSize={paginationOption.pageSize}
                 totalSize={totalSize}
                 listLength={products.length}
-                // processing={}
+                processing={processing}
             />
-        </div>
+        </Fragment>
     );
 }
 //

@@ -12,7 +12,8 @@ const CustomTable = ({
                          rowClassName,
                          rowClick,
                          onChangeSorter,
-                         sorterColumn
+                         sorterColumn,
+                         processing
                      }) => {
 
     const devicePixelRatio = window.devicePixelRatio;
@@ -84,9 +85,9 @@ const CustomTable = ({
                         </div>
                     )}
                 </div>
-
-
             </div>
+
+            {processing && <div className={'load-data'}><Spin/></div>}
         </div>
     );
 };

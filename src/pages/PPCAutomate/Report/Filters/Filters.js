@@ -35,6 +35,7 @@ const columnTitle = {
     'spend': 'Spend',
     'sales': 'Sales',
     'acos': 'ACoS',
+    'keyword_id': 'Keyword ID',
 }
 
 
@@ -65,6 +66,13 @@ const FilterItem = ({filter, onRemove}) => {
         return (
             <div className="filter-item">
                 {`${columnTitle[filter.filterBy]} ${numberMark[filter.type.key]} ${filter.value}`}
+                <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
+            </div>
+        )
+    } else if (filter.filterBy === 'keyword_id') {
+        return (
+            <div className="filter-item">
+                {`${columnTitle[filter.filterBy]} = ${filter.value}`}
                 <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
             </div>
         )
