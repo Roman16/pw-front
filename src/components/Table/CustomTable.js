@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {Checkbox, Spin} from 'antd';
 import shortid from 'shortid';
 import './CustomTable.less';
@@ -16,22 +16,38 @@ const CustomTable = ({
                          rowSelection,
                          clickHandler,
                          expandedRowRender,
-                         openedRow
+                         openedRow,
+                         selectedAll
                      }) => {
 
     const devicePixelRatio = window.devicePixelRatio;
 
-    const checkAllRowsHandler = ({target: {value}}) => {
-        if (value) {
-            rowSelection.onChange([...dataSource], true)
+    const [checkedRows, setCheckedRows] = useState([]);
+
+    const checkAllRowsHandler = ({target: {checked}}) => {
+        if (checked) {
+            setCheckedRows(dataSource.map(item => item.id))
         } else {
-            rowSelection.onChange([...dataSource], false)
+            setCheckedRows([])
         }
     }
 
-    const checkRowHandler = (row, value) => {
-        rowSelection.onChange([row], value)
+    const checkRowHandler = (id, value) => {
+        if (value) {
+            setCheckedRows([...checkedRows, id])
+        } else {
+            if (selectedAll) {
+                setCheckedRows(dataSource.map(item => item.id).filter(item => item !== id))
+            } else {
+                setCheckedRows(prevState => prevState.filter(item => item !== id))
+            }
+        }
     }
+
+
+    useEffect(() => {
+        rowSelection.onChange(checkedRows);
+    }, [checkedRows])
 
     return (
         <div className="custom-table">
@@ -39,6 +55,8 @@ const CustomTable = ({
                 <div className="table-head" key={'table-head'}>
                     {rowSelection && <div className={'th checkbox-column'}>
                         <Checkbox
+                            indeterminate={checkedRows.length > 0 && checkedRows.length !== dataSource.length}
+                            checked={(checkedRows.length > 0 && checkedRows.length === dataSource.length) || selectedAll}
                             onChange={checkAllRowsHandler}
                         />
                     </div>}
@@ -77,12 +95,13 @@ const CustomTable = ({
                         dataSource.map((report, index) => (
                             <>
                                 <div
-                                    className={`table-body__row ${rowClassName && rowClassName(report)}`}
+                                    className={`table-body__row ${rowClassName && rowClassName(report)} ${(checkedRows.length > 0 && checkedRows.find(item => item === report.id)) || selectedAll ? 'checked-row' : ''}`}
                                     onClick={() => rowClick && rowClick(report, index)}
                                 >
                                     {rowSelection && <div className={'table-body__field checkbox-column'}>
                                         <Checkbox
-                                            onChange={(e) => checkRowHandler(report, e.target.checked)}
+                                            checked={(checkedRows.length > 0 && checkedRows.find(item => item === report.id)) || selectedAll}
+                                            onChange={(e) => checkRowHandler(report.id, e.target.checked)}
                                         />
                                     </div>}
 
@@ -103,7 +122,9 @@ const CustomTable = ({
                                     })}
                                 </div>
 
-                                {expandedRowRender && openedRow === report.id && <div className={'table-body__row expand-row'}>
+                                {expandedRowRender && openedRow === report.id &&
+                                <div
+                                    className={`table-body__row expand-row ${checkedRows.length > 0 && checkedRows.find(item => item === report.id) ? 'checked-row' : ''}`}>
                                     {expandedRowRender(report)}
                                 </div>}
                             </>

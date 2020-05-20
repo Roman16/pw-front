@@ -1,19 +1,13 @@
-import React, {Component, Fragment, useCallback, useEffect, useState} from 'react';
-import {func, arrayOf, object} from 'prop-types';
-import {Input, Switch, Icon} from 'antd';
+import React, {Fragment, useState} from 'react';
 import InputCurrency from '../../../../components/Inputs/InputCurrency';
-import Table from '../../../../components/Table/Table';
 import ProductItem from '../../../../components/ProductList/ProductItem';
-import {productsServices} from '../../../../services/products.services';
 import {notification} from '../../../../components/Notification';
-import {throttling} from "../../../../utils/throttling";
 import './TableSettings.less';
-import {productsActions} from "../../../../actions/products.actions";
-import {connect} from "react-redux";
 import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 import CustomTable from "../../../../components/Table/CustomTable";
 import Pagination from "../../../../components/Pagination/Pagination";
 import {SVG} from "../../../../utils/icons";
+import MultiApply from "../MultiApply/MultiApply";
 
 
 const ACTIVE = 'RUNNING';
@@ -28,186 +22,65 @@ const MAX_BID_AUTO_CAMPING = 'max_bid_auto_campaign';
 const TOTAL_CHANGES = 'total_changes';
 const OPTIMIZATION_STATUS = 'optimization_status';
 
-const delay = 1000; // ms
 
+const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, setRowData, updateSettingsHandlerByIdList}) => {
+    const [selectedRows, setSelectedRows] = useState([]),
+        [selectedAll, setSelectedAll] = useState(false);
 
-const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, setRowData}) => {
-    let prevItemIndex = null;
-
-    const [productsList, setProductsList] = useState([...products]);
-
-    // useEffect(() => {
-    //     if (products.length > 0) {
-    //         setProductsList(products);
-    //     }
-    //
-    //     console.log(products);
-    // }, [products])
-
-
-    // const setRowData = (value, item, index) => {
-    //
-    //     // setProductsList(productsList[index] = {
-    //     //     ...productsList[index],
-    //     //     [item]: value ? +value : null,
-    //     // });
-    //
-    //     setProductsList(productsList.map((product, productIndex) => {
-    //         if (productIndex === index) {
-    //             product[item] = value
-    //         }
-    //
-    //         return (product)
-    //     }))
-    //
-    //     // return {
-    //     //     product_id: products[index].id,
-    //     //     [item]: value ? +value : null
-    //     // };
-    // }
-
-    // state = {
-    //     products: [],
-    //     openedProduct: '',
-    //     totalSize: 0,
-    //     page: 1,
-    //     size: 10,
-    //     onlyActive: this.props.onlyActiveOnAmazon || false,
-    //     fetching: false
-    // };
-    //
-    // timerId = null;
-    // timerNotificationId = null;
-    // timerIdSearch = null;
-    //
-    // prevItem = null;
-    //
-    //
-    //
-    // showNotification = throttling((text) => {
-    //     notification.warning({title: text});
-    // }, 3000);
-    //
-    // updateSettings = async (data) => {
-    //     clearTimeout(this.timerNotificationId);
-    //
-    //     try {
-    //         await productsServices.updateProductSettings(data);
-    //         this.prevItemIndex = null;
-    //
-    //         clearTimeout(this.timerNotificationId);
-    //
-    //         this.timerNotificationId = setTimeout(() => {
-    //             notification.success({
-    //                 title: 'Changes saved'
-    //             });
-    //         }, 1500)
-    //
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // };
-    //
     const onChangeRow = (value, item, index) => {
-        // const products = [...products];
-        // let dataSourceRow;
+        if (products[index][item] !== value) {
+            if (value === '' || value == null) {
+                setRowData(null, item, index);
 
-        setRowData(value, item, index)
+            } else if (item !== NET_MARGIN && value > 0.02) {
+                if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null) {
+                    notification.warning({
+                        title: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
+                    });
+                    return;
+                }
+                if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING]) && products[index][MIN_BID_MANUAL_CAMPING] != null) {
+                    notification.warning({
+                        title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                    });
+                    return;
+                }
+                if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING]) && products[index][MAX_BID_AUTO_CAMPING] != null) {
+                    notification.warning({
+                        title: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
+                    });
+                    return;
+                }
+                if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING]) && products[index][MIN_BID_AUTO_CAMPING] != null) {
+                    notification.warning({
+                        title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                    });
+                    return;
+                }
 
-        // if (products[index][item] !== value) {
-        //     prevItemIndex = index;
-        //
-        //     if (value === '' || value == null) {
-        //         dataSourceRow = setRowData(null, item, index);
-        //
-        //         clearTimeout(this.timerId);
-        //         this.timerId = setTimeout(() => {
-        //             this.updateSettings(dataSourceRow);
-        //         }, delay);
-        //     } else if (item !== NET_MARGIN && value > 0.02) {
-        //         if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null) {
-        //             notification.warning({
-        //                 title: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
-        //             });
-        //             return;
-        //         }
-        //         if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING]) && products[index][MIN_BID_MANUAL_CAMPING] != null) {
-        //             notification.warning({
-        //                 title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
-        //             });
-        //             return;
-        //         }
-        //         if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING]) && products[index][MAX_BID_AUTO_CAMPING] != null) {
-        //             notification.warning({
-        //                 title: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
-        //             });
-        //             return;
-        //         }
-        //         if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING]) && products[index][MIN_BID_AUTO_CAMPING] != null) {
-        //             notification.warning({
-        //                 title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
-        //             });
-        //             return;
-        //         }
-        //         dataSourceRow = this.setRowData(value, item, index);
-        //
-        //         clearTimeout(this.timerId);
-        //         this.timerId = setTimeout(() => {
-        //             this.updateSettings(dataSourceRow);
-        //         }, delay);
-        //     } else if (item === NET_MARGIN && value > 0 && value <= 100) {
-        //         dataSourceRow = this.setRowData(value, NET_MARGIN, index);
-        //
-        //         clearTimeout(this.timerId);
-        //         this.timerId = setTimeout(() => {
-        //             this.updateSettings(dataSourceRow);
-        //         }, delay);
-        //     } else if (item === NET_MARGIN && (value < 0 || value > 100)) {
-        //         dataSourceRow = this.setRowData(null, NET_MARGIN, index);
-        //         this.showNotification('Product net margin should be greater than 0% and less than 100%');
-        //
-        //         clearTimeout(this.timerId);
-        //         this.timerId = setTimeout(() => {
-        //             this.updateSettings(dataSourceRow);
-        //         }, delay);
-        //     } else {
-        //         this.showNotification(item === NET_MARGIN ? 'Product net margin should be greater than 0% and less than 100%' : 'Bids should be greater than or equal to 0.02$')
-        //     }
-        // }
+                setRowData(value, item, index)
+            } else if (item === NET_MARGIN && value > 0 && value <= 100) {
+                setRowData(value, item, index)
+            } else if (item === NET_MARGIN && (value < 0 || value > 100)) {
+                notification.warning({
+                    title: 'Product net margin should be greater than 0% and less than 100%'
+                });
+            } else {
+                notification.warning({
+                    title: item === NET_MARGIN ? 'Product net margin should be greater than 0% and less than 100%' : 'Bids should be greater than or equal to 0.02$'
+                });
+            }
+        }
     };
 
-    const onBlurRow = () => {
-        // const {products} = this.state;
-        //
-        // if (this.prevItemIndex !== null) {
-        //     clearTimeout(this.timerId);
-        //
-        //     this.updateSettings({
-        //         ...products[this.prevItemIndex],
-        //         product_id: products[this.prevItemIndex].id,
-        //     });
-        // }
-    };
-
-    // const setRowData = (value, item, index) => {
-    //     const products = productsList;
-    //
-    //     products[index] = {
-    //         ...products[index],
-    //         [item]: value ? +value : null,
-    //     };
-    //     console.log(products);
-    //     setProductsList(products)
-    //
-    //     // return {
-    //     //     product_id: products[index].id,
-    //     //     [item]: value ? +value : null
-    //     // };
-    // };
-
+    const onSubmitSettingParams = (value) => {
+        updateSettingsHandlerByIdList({
+            id: selectedAll ? 'all' : selectedRows,
+            ...value
+        })
+    }
 
     const expandedRowRender = (props) => {
-
         const columns = [
             {
                 width: 'calc(440px + 3.57142857rem)',
@@ -220,51 +93,35 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 minWidth: '160px',
-                render: (props) => (<span className='value'>
-                    {props[PRICE] !== null && `$${props[PRICE]}`}
-                </span>)
+                render: (props) => (<span className='value'>{props[PRICE]} <SVG id={'dollar-icon'}/></span>)
             },
             {
                 minWidth: '160px',
-                render: (props) => (
-                    <span className='value'>
-                        {props[PRICE_FROM_USER] !== null && `$${props[PRICE_FROM_USER]}`}
-                    </span>)
+                render: (props) => (<span className='value'> {props[PRICE_FROM_USER]} <SVG id={'dollar-icon'}/></span>)
             },
             {
                 minWidth: '160px',
-                render: (props) => (
-                    <span className='value'>
-                        {props[NET_MARGIN] !== null && `${props[NET_MARGIN]}%`}
-                    </span>)
+                render: (props) => (<span className='value'> {props[NET_MARGIN]} <SVG id={'percent-icon'}/></span>)
             },
             {
                 minWidth: '175px',
                 render: (props) => (
-                    <span className='value'>
-                        {props[MIN_BID_MANUAL_CAMPING] !== null && `$${props[MIN_BID_MANUAL_CAMPING]}`}
-                    </span>)
+                    <span className='value'> {props[MIN_BID_MANUAL_CAMPING]} <SVG id={'dollar-icon'}/></span>)
             },
             {
                 minWidth: '175px',
                 render: (props) => (
-                    <span className='value'>
-                        {props[MAX_BID_MANUAL_CAMPING] !== null && `$${props[MAX_BID_MANUAL_CAMPING]}`}
-                    </span>)
+                    <span className='value'> {props[MAX_BID_MANUAL_CAMPING]} <SVG id={'dollar-icon'}/></span>)
             },
             {
                 minWidth: '175px',
                 render: (props) => (
-                    <span className='value'>
-                        {props[MIN_BID_AUTO_CAMPING] !== null && `$${props[MIN_BID_AUTO_CAMPING]}`}
-                    </span>)
+                    <span className='value'> {props[MIN_BID_AUTO_CAMPING]} <SVG id={'dollar-icon'}/></span>)
             },
             {
                 minWidth: '175px',
                 render: (props) => (
-                    <span className='value'>
-                        {props[MAX_BID_AUTO_CAMPING] !== null && `$${props[MAX_BID_AUTO_CAMPING]}`}
-                    </span>)
+                    <span className='value'> {props[MAX_BID_AUTO_CAMPING]} <SVG id={'dollar-icon'}/></span>)
             },
             {
                 width: '100px',
@@ -303,13 +160,15 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
     };
 
     const rowSelection = {
-        onChange: (selectedRows, value) => {
-            console.log(selectedRows);
+        onChange: (selectedRows, type) => {
+            setSelectedRows(selectedRows);
+            if (type !== 'all') {
+                setSelectedAll(false);
+            }
         }
     };
 
     const [openedProduct, setOpenedProduct] = useState(null);
-
 
     const openVariationsHandler = (id) => {
         setOpenedProduct(prevState => prevState === id ? null : id);
@@ -353,7 +212,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     key={PRICE_FROM_USER}
                     value={item[PRICE_FROM_USER]}
                     onChance={event => onChangeRow(event, PRICE_FROM_USER, indexRow)}
-                    onBlur={onBlurRow}
                 />
             )
         },
@@ -376,7 +234,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                         typeIcon='percent'
                         data-intercom-target="net-margin-field"
                         onChange={event => onChangeRow(event, NET_MARGIN, indexRow)}
-                        onBlur={onBlurRow}
                     />
                 )
             }
@@ -394,7 +251,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     step={0.01}
                     data-intercom-target="min-bid-field"
                     onChange={event => onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)}
-                    onBlur={onBlurRow}
                 />
             )
         },
@@ -409,7 +265,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     min={item[MIN_BID_MANUAL_CAMPING] || 0}
                     step={0.01}
                     onChange={event => onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)}
-                    onBlur={onBlurRow}
                 />
             )
         },
@@ -425,7 +280,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     max={item[MAX_BID_AUTO_CAMPING] || 999999999}
                     step={0.01}
                     onChange={event => onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)}
-                    onBlur={onBlurRow}
                 />
             )
         },
@@ -440,7 +294,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     min={item[MIN_BID_AUTO_CAMPING] || 0}
                     step={0.01}
                     onChange={event => onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)}
-                    onBlur={onBlurRow}
                 />
             )
         },
@@ -471,6 +324,15 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
 
     return (
         <Fragment>
+            {selectedRows.length > 0 && <MultiApply
+                selectedRows={selectedRows}
+                totalSize={totalSize}
+                onSelectAll={() => setSelectedAll(true)}
+                selectedAll={selectedAll}
+
+                onSubmit={onSubmitSettingParams}
+            />}
+
             <CustomTable
                 key={'table'}
                 rowKey="id"
@@ -479,6 +341,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 processing={processing}
                 rowSelection={rowSelection}
                 openedRow={openedProduct}
+                selectedAll={selectedAll}
 
                 expandedRowRender={expandedRowRender}
             />
@@ -495,26 +358,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
         </Fragment>
     );
 }
-//
-// ProductsList.propTypes = {
-//     onChangeRow: func,
-//     dataSource: arrayOf(object)
-// };
-// ProductsList.defaultProps = {
-//     onChangeRow: () => {
-//     },
-//     dataSource: []
-// };
-//
-// const mapStateToProps = state => ({
-//     onlyActiveOnAmazon: state.products.onlyActiveOnAmazon,
-// });
-//
-// const mapDispatchToProps = dispatch => ({
-//     showOnlyOptimized: (data) => {
-//         dispatch(productsActions.showOnlyActive(data));
-//     }
-// });
 
 export default React.memo(ProductsList);
 

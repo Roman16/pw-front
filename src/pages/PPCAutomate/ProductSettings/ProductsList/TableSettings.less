@@ -49,6 +49,18 @@
           }
         }
 
+        &.checked-row {
+          .table-body__field:first-child,
+          .table-body__field:nth-child(2) {
+            background: #F5F5FF;
+          }
+
+          .table-body__field .variation-indicator {
+            background: #6D6DF6;
+
+          }
+        }
+
         .table-body__field {
           padding: 10px 20px;
 
@@ -75,6 +87,7 @@
             left: 3.5714285714285716rem;
             background: #fff;
             z-index: 50;
+            padding-right: 10px;
 
             .product-item {
               width: 100%;
@@ -114,6 +127,10 @@
                   }
                 }
               }
+
+              .open-children-list-button {
+                margin: 0 0 0 auto;
+              }
             }
           }
 
@@ -143,7 +160,7 @@
             min-width: 8px;
             min-height: 8px;
             border-radius: 50%;
-            background: #6D6DF6;
+            background: #C9CBD4;
             margin: 0 3.57142857rem;
           }
 
@@ -209,18 +226,18 @@
           .value {
             width: 8.57142857rem;
             height: 2.2857142857142856rem;
-            //border: 1px solid #C9CBD4;
-            //border-radius: 4px;
-            //padding: 0 8px 0 5px;
+            border: 1px solid #C9CBD4;
+            border-radius: 4px;
+            padding: 0 8px 0 5px;
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            //background-color: #f5f5f5;
-            color: #343C5A;
+            background-color: #f5f5f5;
+            color: rgba(0, 0, 0, 0.25);
 
-            //svg {
-            //  margin: 0 0 0 auto;
-            //}
+            svg {
+              margin: 0 0 0 auto;
+            }
           }
         }
       }

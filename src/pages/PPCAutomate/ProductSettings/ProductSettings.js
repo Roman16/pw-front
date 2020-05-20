@@ -14,6 +14,10 @@ import {debounce} from "throttle-debounce";
 const CancelToken = axios.CancelToken;
 let source = null;
 
+let timerId = null;
+
+let editableRow = null;
+
 const ProductSettingsMain = () => {
     const [productsList, setProductsList] = useState([]),
         [searchStr, setSearchStr] = useState(''),
@@ -54,19 +58,25 @@ const ProductSettingsMain = () => {
         })
     }
 
-    const updateSettingsHandler = async (data) => {
-
+    const updateSettingsHandlerById = async (data) => {
         try {
             await productsServices.updateProductSettings(data);
 
-            this.prevItemIndex = null;
+            notification.success({
+                title: 'Changes saved'
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
-            this.timerNotificationId = setTimeout(() => {
-                notification.success({
-                    title: 'Changes saved'
-                });
-            }, 1500)
+    const updateSettingsHandlerByIdList = async (data) => {
+        try {
+            await productsServices.updateProductSettingsByIdList(data);
 
+            notification.success({
+                title: 'Changes saved'
+            });
         } catch (e) {
             console.log(e);
         }
@@ -79,16 +89,8 @@ const ProductSettingsMain = () => {
             page: 1
         })
     });
-    //
+
     const setRowData = (value, item, index) => {
-
-        // setProductsList(productsList[index] = {
-        //     ...productsList[index],
-        //     [item]: value ? +value : null,
-        // });
-
-        console.log(productsList);
-
         const newList = productsList.map((product, productIndex) => {
             if (productIndex === index) {
                 product[item] = value
@@ -96,22 +98,22 @@ const ProductSettingsMain = () => {
 
             return (product)
         })
+        setProductsList(newList);
 
-        // console.log(newList);
-        //
-        setProductsList(newList)
 
-        // return {
-        //     product_id: products[index].id,
-        //     [item]: value ? +value : null
-        // };
+        clearTimeout(timerId);
+        timerId = setTimeout(() => {
+            updateSettingsHandlerById(productsList[index]);
+            editableRow = null;
+        }, 2000);
+
+        if (editableRow !== null && editableRow !== index) {
+            updateSettingsHandlerById(productsList[editableRow]);
+            clearTimeout(timerId);
+        }
+
+        editableRow = index;
     };
-
-    useEffect(() => {
-        console.log(productsList);
-
-    }, [productsList])
-
 
     const changePaginationHandler = (params) => {
         setPaginationOptions(params)
@@ -119,6 +121,12 @@ const ProductSettingsMain = () => {
 
     useEffect(() => {
         fetchProducts();
+
+        return (() => {
+            if (editableRow !== null) {
+                updateSettingsHandlerById(productsList[editableRow]);
+            }
+        })
     }, [paginationOptions])
 
     return (
@@ -135,8 +143,8 @@ const ProductSettingsMain = () => {
                 paginationOption={paginationOptions}
 
                 changePagination={changePaginationHandler}
-                onUpdateSettings={updateSettingsHandler}
                 setRowData={setRowData}
+                updateSettingsHandlerByIdList={updateSettingsHandlerByIdList}
             />
 
             <LoadingAmazonAccount/>

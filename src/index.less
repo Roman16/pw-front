@@ -365,6 +365,20 @@ img {
   }
 }
 
+.ant-checkbox-wrapper {
+  &:hover {
+    .ant-checkbox-inner {
+      border-color: #6D6DF6 !important;
+    }
+  }
+  .ant-checkbox-indeterminate {
+    .ant-checkbox-inner::after {
+      background: #6D6DF6;
+    }
+  }
+}
+
+
 .ant-checkbox-wrapper-checked:hover {
   .ant-checkbox-checked {
     &::after {
