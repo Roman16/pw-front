@@ -1,34 +1,8 @@
 import React, {memo} from 'react';
-import {Spin} from 'antd';
+import {Checkbox, Spin} from 'antd';
 import shortid from 'shortid';
 import './CustomTable.less';
 import {SVG} from "../../utils/icons";
-
-
-const TableRow = memo(({rowClassName, report, rowClick, index, columns}) => {
-    return (<div
-            className={`table-body__row ${rowClassName && rowClassName(report)}`}
-            onClick={() => rowClick && rowClick(report, index)}
-        >
-            {columns.map((item) => {
-                const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
-
-                return (
-                    <div
-                        className={`table-body__field ${item.align || ''}`}
-                        style={{...fieldWidth, minWidth: item.minWidth || '0'}}
-                        key={shortid.generate()}
-                    >
-                        {item.render
-                            ? item.render(report[item.key], report, index)
-                            : report[item.key]}
-                    </div>
-                )
-            })}
-        </div>
-    )
-})
-
 
 const CustomTable = ({
                          columns,
@@ -39,16 +13,36 @@ const CustomTable = ({
                          onChangeSorter,
                          sorterColumn,
                          processing,
-
-                         clickHandler
+                         rowSelection,
+                         clickHandler,
+                         expandedRowRender,
+                         openedRow
                      }) => {
 
     const devicePixelRatio = window.devicePixelRatio;
+
+    const checkAllRowsHandler = ({target: {value}}) => {
+        if (value) {
+            rowSelection.onChange([...dataSource], true)
+        } else {
+            rowSelection.onChange([...dataSource], false)
+        }
+    }
+
+    const checkRowHandler = (row, value) => {
+        rowSelection.onChange([row], value)
+    }
 
     return (
         <div className="custom-table">
             <div className="table-overflow">
                 <div className="table-head" key={'table-head'}>
+                    {rowSelection && <div className={'th checkbox-column'}>
+                        <Checkbox
+                            onChange={checkAllRowsHandler}
+                        />
+                    </div>}
+
                     {columns.map((item, index) => {
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
 
@@ -81,25 +75,38 @@ const CustomTable = ({
                         dataSource &&
                         dataSource.length > 0 &&
                         dataSource.map((report, index) => (
-                            <div
-                                className={`table-body__row ${rowClassName && rowClassName(report)}`}
-                                onClick={() => rowClick && rowClick(report, index)}
-                            >
-                                {columns.map((item) => {
-                                    const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
+                            <>
+                                <div
+                                    className={`table-body__row ${rowClassName && rowClassName(report)}`}
+                                    onClick={() => rowClick && rowClick(report, index)}
+                                >
+                                    {rowSelection && <div className={'table-body__field checkbox-column'}>
+                                        <Checkbox
+                                            onChange={(e) => checkRowHandler(report, e.target.checked)}
+                                        />
+                                    </div>}
 
-                                    return (
-                                        <div
-                                            className={`table-body__field ${item.align || ''}`}
-                                            style={{...fieldWidth, minWidth: item.minWidth || '0'}}
-                                        >
-                                            {item.render
-                                                ? item.render(report[item.key], report, index)
-                                                : report[item.key]}
-                                        </div>
-                                    )
-                                })}
-                            </div>
+
+                                    {columns.map((item) => {
+                                        const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
+
+                                        return (
+                                            <div
+                                                className={`table-body__field ${item.align || ''}`}
+                                                style={{...fieldWidth, minWidth: item.minWidth || '0'}}
+                                            >
+                                                {item.render
+                                                    ? item.render(report[item.key], report, index)
+                                                    : report[item.key]}
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+
+                                {expandedRowRender && openedRow === report.id && <div className={'table-body__row expand-row'}>
+                                    {expandedRowRender(report)}
+                                </div>}
+                            </>
                         ))
                     ) : (
                         <div className='spin-wrap'>

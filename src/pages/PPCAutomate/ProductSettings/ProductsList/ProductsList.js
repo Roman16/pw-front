@@ -13,6 +13,7 @@ import {connect} from "react-redux";
 import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 import CustomTable from "../../../../components/Table/CustomTable";
 import Pagination from "../../../../components/Pagination/Pagination";
+import {SVG} from "../../../../utils/icons";
 
 
 const ACTIVE = 'RUNNING';
@@ -205,70 +206,113 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
     // };
 
 
-    //
-    // expandedRowRender = (props) => {
-    //     const columns = [
-    //         {
-    //             title: '',
-    //             width: '300px',
-    //             render: (title, item) => {
-    //                 return (<ProductItem
-    //                         product={item}
-    //                     />
-    //                 )
-    //             }
-    //         },
-    //         {
-    //             title: '',
-    //             width: 150,
-    //             render: () => (<span className='value'><SVG id={'percent-icon'}/> {props[NET_MARGIN]}</span>)
-    //         },
-    //         {
-    //             title: '',
-    //             width: 150,
-    //             render: () => (
-    //                 <span className='value'><SVG id={'dollar-icon'}/> {props[MIN_BID_MANUAL_CAMPING]}</span>)
-    //         },
-    //         {
-    //             title: '',
-    //             width: 150,
-    //             render: () => (
-    //                 <span className='value'><SVG id={'dollar-icon'}/> {props[MAX_BID_MANUAL_CAMPING]}</span>)
-    //         },
-    //         {
-    //             title: '',
-    //             width: 150,
-    //             render: () => (
-    //                 <span className='value'><SVG id={'dollar-icon'}/> {props[MIN_BID_AUTO_CAMPING]}</span>)
-    //         },
-    //         {
-    //             title: '',
-    //             width: 150,
-    //             render: () => (
-    //                 <span className='value'><SVG id={'dollar-icon'}/> {props[MAX_BID_AUTO_CAMPING]}</span>)
-    //         },
-    //         {
-    //             title: '',
-    //             width: 150,
-    //         },
-    //         {
-    //             title: '',
-    //             width: '120px',
-    //             render: () => (<span> {props[OPTIMIZATION_STATUS] === ACTIVE ?
-    //                 <span style={{color: '#8fd39d'}}>Active</span> : 'Paused'}</span>)
-    //         },
-    //     ];
-    //
-    //
-    //     return <Table className='child-list' columns={columns} dataSource={props.product.variations}
-    //                   pagination={false}/>;
-    // };
+    const expandedRowRender = (props) => {
+
+        const columns = [
+            {
+                width: 'calc(440px + 3.57142857rem)',
+                render: (props) => {
+                    return (<ProductItem
+                            product={props.product}
+                        />
+                    )
+                }
+            },
+            {
+                minWidth: '160px',
+                render: (props) => (<span className='value'>
+                    {props[PRICE] !== null && `$${props[PRICE]}`}
+                </span>)
+            },
+            {
+                minWidth: '160px',
+                render: (props) => (
+                    <span className='value'>
+                        {props[PRICE_FROM_USER] !== null && `$${props[PRICE_FROM_USER]}`}
+                    </span>)
+            },
+            {
+                minWidth: '160px',
+                render: (props) => (
+                    <span className='value'>
+                        {props[NET_MARGIN] !== null && `${props[NET_MARGIN]}%`}
+                    </span>)
+            },
+            {
+                minWidth: '175px',
+                render: (props) => (
+                    <span className='value'>
+                        {props[MIN_BID_MANUAL_CAMPING] !== null && `$${props[MIN_BID_MANUAL_CAMPING]}`}
+                    </span>)
+            },
+            {
+                minWidth: '175px',
+                render: (props) => (
+                    <span className='value'>
+                        {props[MAX_BID_MANUAL_CAMPING] !== null && `$${props[MAX_BID_MANUAL_CAMPING]}`}
+                    </span>)
+            },
+            {
+                minWidth: '175px',
+                render: (props) => (
+                    <span className='value'>
+                        {props[MIN_BID_AUTO_CAMPING] !== null && `$${props[MIN_BID_AUTO_CAMPING]}`}
+                    </span>)
+            },
+            {
+                minWidth: '175px',
+                render: (props) => (
+                    <span className='value'>
+                        {props[MAX_BID_AUTO_CAMPING] !== null && `$${props[MAX_BID_AUTO_CAMPING]}`}
+                    </span>)
+            },
+            {
+                width: '100px',
+                render: (props) => (<div style={{textAlign: 'right'}}>{props[TOTAL_CHANGES]}</div>)
+            },
+            {
+                width: '135px',
+                render: (props) => (<span> {props[OPTIMIZATION_STATUS] === ACTIVE ? 'Active' : 'Paused'}</span>)
+            },
+        ];
+
+
+        return (
+            props.product.variations.map(productVariation => (
+                    <div>
+
+                        {columns.map((item, index) => {
+                                const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
+
+                                return (
+                                    <div
+                                        className={`table-body__field ${item.align || ''}`}
+                                        style={{...fieldWidth, minWidth: item.minWidth || '0'}}
+                                    >
+                                        {index === 0 && <div className="variation-indicator"/>}
+
+                                        {item.render(props)}
+                                    </div>
+                                )
+                            }
+                        )}
+                    </div>
+                )
+            )
+        )
+    };
+
+    const rowSelection = {
+        onChange: (selectedRows, value) => {
+            console.log(selectedRows);
+        }
+    };
 
     const [openedProduct, setOpenedProduct] = useState(null);
 
 
     const openVariationsHandler = (id) => {
-        setOpenedProduct(id);
+        setOpenedProduct(prevState => prevState === id ? null : id);
     }
 
     const columns = [
@@ -282,6 +326,8 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     product={product}
                     products={products}
                     onOpenChild={openVariationsHandler}
+                    openedProductOnSetting={openedProduct}
+
                 />
             )
         },
@@ -342,7 +388,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             minWidth: '175px',
             render: (index, item, indexRow) => (
                 <InputCurrency
-                    // value={item[MIN_BID_MANUAL_CAMPING]}
+                    value={item[MIN_BID_MANUAL_CAMPING]}
                     min={0}
                     max={item[MAX_BID_MANUAL_CAMPING] || 999999999}
                     step={0.01}
@@ -359,7 +405,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             minWidth: '175px',
             render: (index, item, indexRow) => (
                 <InputCurrency
-                    // value={item[MAX_BID_MANUAL_CAMPING]}
+                    value={item[MAX_BID_MANUAL_CAMPING]}
                     min={item[MIN_BID_MANUAL_CAMPING] || 0}
                     step={0.01}
                     onChange={event => onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)}
@@ -374,7 +420,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             minWidth: '175px',
             render: (index, item, indexRow) => (
                 <InputCurrency
-                    // value={item[MIN_BID_AUTO_CAMPING]}
+                    value={item[MIN_BID_AUTO_CAMPING]}
                     min={0}
                     max={item[MAX_BID_AUTO_CAMPING] || 999999999}
                     step={0.01}
@@ -390,7 +436,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             minWidth: '175px',
             render: (index, item, indexRow) => (
                 <InputCurrency
-                    // value={item[MAX_BID_AUTO_CAMPING]}
+                    value={item[MAX_BID_AUTO_CAMPING]}
                     min={item[MIN_BID_AUTO_CAMPING] || 0}
                     step={0.01}
                     onChange={event => onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)}
@@ -423,19 +469,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
         }
     ];
 
-    console.log(products);
-
-    const clickHandler = () => {
-        setProductsList(productsList.map((item, index) => {
-
-            if (index === 0) {
-                item.id = `${item.id}_111`
-            }
-
-            return item;
-        }))
-    }
-
     return (
         <Fragment>
             <CustomTable
@@ -444,11 +477,10 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 dataSource={products}
                 columns={columns}
                 processing={processing}
+                rowSelection={rowSelection}
+                openedRow={openedProduct}
 
-                clickHandler={clickHandler}
-                // expandIcon={(props) => this.customExpandIcon(props)}
-
-                // expandedRowRender={this.expandedRowRender}
+                expandedRowRender={expandedRowRender}
             />
 
             <Pagination

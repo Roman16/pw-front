@@ -9,6 +9,7 @@ const ProductItem = ({
                          isActive,
                          onOpenChild,
                          openedProduct,
+                         openedProductOnSetting
                      }) => {
 
     const switchList = (e) => {
@@ -49,7 +50,7 @@ const ProductItem = ({
                 </div>
 
                 <div
-                    className={`open-children-list-button ${variations ? 'has-variations' : ''} ${openedProduct === id ? 'opened' : ''}`}
+                    className={`open-children-list-button ${variations ? 'has-variations' : ''} ${(openedProduct === id || openedProductOnSetting === id) ? 'opened' : ''}`}
                     onClick={variations && switchList}
                 >
                     {variations && <SVG id='select-icon'/>}
