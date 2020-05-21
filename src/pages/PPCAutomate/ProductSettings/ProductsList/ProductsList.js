@@ -84,7 +84,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
     const expandedRowRender = (props) => {
         const columns = [
             {
-                width: 'calc(440px + 3.57142857rem)',
+                width: '35rem',
                 render: (props) => {
                     return (<ProductItem
                             product={props.product}
@@ -180,7 +180,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             title: 'Product Name',
             dataIndex: PRODUCT,
             key: PRODUCT,
-            width: '440px',
+            width: '31.428571428571427rem',
             render: (product) => (
                 <ProductItem
                     product={product}
