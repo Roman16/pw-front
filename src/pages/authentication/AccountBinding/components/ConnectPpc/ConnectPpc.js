@@ -55,6 +55,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                         setPageStatus('error');
                     } else if ((win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'SUCCESS') || (win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'IN_PROGRESS')) {
                         dispatch(userActions.setPpcStatus({status: win.location.search.split('?status=')[1]}));
+                        dispatch(userActions.setBootstrap(true));
                         // setPageStatus('success');
                         onGoNextStep();
                     } else if (win.location.search && win.location.search.indexOf('?error_message=') !== -1) {

@@ -22,6 +22,7 @@ export const userActions = {
     unsetAccount,
     resetChangesCount,
     setPpcStatus,
+    setBootstrap,
 };
 
 function login(user) {
@@ -216,6 +217,12 @@ function updateUserInformation(user) {
 function setPpcStatus(status) {
     return {
         type: userConstants.SET_PPC_STATUS,
+        payload: status
+    }
+}
+function setBootstrap(status) {
+    return {
+        type: userConstants.SET_BOOTSTRAP,
         payload: status
     }
 }
