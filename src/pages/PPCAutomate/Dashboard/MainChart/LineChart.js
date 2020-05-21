@@ -56,7 +56,10 @@ const Chart = ({
                 })
 
             } else {
-                return item;
+                return ({
+                    ...item,
+                    date: `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`
+                });
             }
         }));
     }, [data]);
