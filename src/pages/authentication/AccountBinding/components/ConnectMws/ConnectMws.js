@@ -34,7 +34,7 @@ const ConnectMws = ({onGoBackStep, onChangeInput, onConnectMws, connectMwsStatus
                             <Option value={'UKDEFRESITINTR'} disabled>Europe (UK, DE, FR, ES, IT, IN, TR)</Option>
                         </CustomSelect>
 
-                        <button className='btn default'>
+                        <button type={'button'} className='btn default'>
                             <a href={mwsLink} target={'_blank'}>Get Credentials</a>
                         </button>
                     </div>

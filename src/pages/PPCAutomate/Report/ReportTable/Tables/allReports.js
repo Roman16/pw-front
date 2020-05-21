@@ -6,14 +6,14 @@ export const allReports = () => {
             title: 'Object',
             dataIndex: 'object',
             key: 'object',
-            minWidth: '14.285714285714286rem',
+            width: '15.714285714285714rem',
             filter: true
         },
         {
             title: 'Object Type',
             dataIndex: 'object_type',
             key: 'object_type',
-            minWidth: '14.285714285714286rem',
+            width: '14.285714285714286rem',
             filter: true
         },
         {

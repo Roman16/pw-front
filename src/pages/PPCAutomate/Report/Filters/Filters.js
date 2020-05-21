@@ -14,18 +14,17 @@ const valueTile = {
 }
 
 const numberMark = {
-    'greater': '>',
-    'equals': '=',
-    'less': '<',
-    'greater_or_equals': '>=',
-    'less_or_equals': '<=',
-    'not_equals': '!=',
-
+    'gt': '>',
+    'eq': '=',
+    'lt': '<',
+    'gte': '>=',
+    'lte': '<=',
+    'neq': '!=',
 }
 
 const columnTitle = {
     'object': 'Object',
-    'keyword_PT': 'Keyword / PT',
+    'keyword_pt': 'Keyword / PT',
     'object_type': 'Object Type',
     'match_type': 'Match Type',
     'campaign_name': 'Campaign',
@@ -48,7 +47,7 @@ const FilterItem = ({filter, onRemove}) => {
                 <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
             </div>
         )
-    } else if (filter.filterBy === 'object' || filter.filterBy === 'keyword_PT' || filter.filterBy === 'campaign_name' || filter.filterBy === 'ad_group_name') {
+    } else if (filter.filterBy === 'object' || filter.filterBy === 'keyword_pt' || filter.filterBy === 'campaign_name' || filter.filterBy === 'ad_group_name') {
         return (
             <div className="filter-item">
                 {`${columnTitle[filter.filterBy]} ${filter.type.key}: ${filter.value}`}

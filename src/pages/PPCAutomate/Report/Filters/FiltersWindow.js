@@ -8,12 +8,12 @@ import InputCurrency from "../../../../components/Inputs/InputCurrency";
 const Option = Select.Option;
 
 const numberVariations = [
-    {label: 'Greater than', key: 'greater'},
-    {label: 'Equals', key: 'equals'},
-    {label: 'Less than', key: 'less'},
-    {label: 'Greater than or equal to', key: 'greater_or_equals'},
-    {label: 'Less than or equal to', key: 'less_or_equals'},
-    {label: 'Not equals', key: 'not_equals'}
+    {label: 'Greater than', key: 'gt'},
+    {label: 'Equals', key: 'eq'},
+    {label: 'Less than', key: 'lt'},
+    {label: 'Greater than or equal to', key: 'gte'},
+    {label: 'Less than or equal to', key: 'lte'},
+    {label: 'Not equals', key: 'neq'}
 ]
 
 const multiSelectVariations = {
@@ -34,7 +34,7 @@ const containsVariations = {
     'datetime': [{label: 'In', key: 'in'}],
     'object': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'object_type': [{label: 'Is one of', key: 'one_of'}],
-    'keyword_PT': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
+    'keyword_pt': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'match_type': [{label: 'Is one of', key: 'one_of'}],
     'campaign_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'ad_group_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
@@ -92,8 +92,8 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters}) => {
                     <Option value={'datetime'}
                             disabled={filters.find(item => item.filterBy === 'datetime')}>Date</Option>
                     {columns.map(column => (column.filter &&
-                        <Option value={column.key}
-                                disabled={filters.find(item => item.filterBy === column.key)}>{column.title}</Option>
+                        <Option value={column.dataIndex}
+                                disabled={filters.find(item => item.filterBy === column.dataIndex)}>{column.title}</Option>
                     ))}
 
                 </CustomSelect>
@@ -122,7 +122,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters}) => {
 
                 {(!filterType ||
                     filterBy === 'object' ||
-                    filterBy === 'keyword_PT' ||
+                    filterBy === 'keyword_pt' ||
                     filterBy === 'campaign_name' ||
                     filterBy === 'ad_group_name'
                 ) &&

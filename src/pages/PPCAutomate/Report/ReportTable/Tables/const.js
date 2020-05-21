@@ -33,7 +33,7 @@ export const actionField = {
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
-    minWidth: '14.285714285714286rem',
+    width: '12.857142857142858rem',
     render: (action, item) => {
 
         switch (action.type) {
