@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import ModalWindow from "../ModalWindow";
 import whales from '../../../assets/img/whales-loading-window.svg';
@@ -9,7 +9,6 @@ import {SVG} from "../../../utils/icons";
 let intervalId = null;
 
 const LoadingAmazonAccount = () => {
-    const [visibleWindow, switchWindow] = useState(false);
     const dispatch = useDispatch();
     const {firstName, lastName, bootstrapInProgress, productList} = useSelector(state => ({
         productList: state.products.productList || [],

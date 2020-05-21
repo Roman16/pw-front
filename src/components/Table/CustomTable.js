@@ -46,7 +46,9 @@ const CustomTable = ({
 
 
     useEffect(() => {
-        rowSelection.onChange(checkedRows);
+        if (rowSelection) {
+            rowSelection.onChange(checkedRows);
+        }
     }, [checkedRows])
 
     return (

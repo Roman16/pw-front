@@ -31,7 +31,8 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
         if (products[index][item] !== value) {
             if (value === '' || value == null) {
                 setRowData(null, item, index);
-
+            } else if (item === PRICE_FROM_USER && value > 0) {
+                setRowData(value, item, index)
             } else if (item !== NET_MARGIN && value > 0.02) {
                 if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null) {
                     notification.warning({
