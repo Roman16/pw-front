@@ -37,7 +37,7 @@ const Chart = ({
         setChartData(data.map(item => {
             if (`${moment().tz('America/Los_Angeles').format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz('America/Los_Angeles').subtract(1, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz('America/Los_Angeles').subtract(2, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`) {
                 return ({
-                    date: item.date,
+                    date: `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`,
                     daily_first_metric_value: null,
                     daily_second_metric_value: null,
                     seven_days_second_metric_value: item.seven_days_second_metric_value,
@@ -50,12 +50,16 @@ const Chart = ({
             } else if (`${moment().tz('America/Los_Angeles').subtract(3, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`) {
                 return ({
                     ...item,
+                    date: `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`,
                     dashed_daily_first_metric_value: item.daily_first_metric_value,
                     dashed_daily_second_metric_value: item.daily_second_metric_value,
                 })
 
             } else {
-                return item;
+                return ({
+                    ...item,
+                    date: `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`
+                });
             }
         }));
     }, [data]);
