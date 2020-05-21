@@ -24,7 +24,8 @@ const MultiApply = ({selectedRows, totalSize, onSelectAll, selectedAll, onSubmit
                 <b>{selectedAll ? totalSize : selectedRows.length}</b> products {selectedAll ? '' : <>on
                 this <b>page</b></>} are
                 selected.
-                <a onClick={onSelectAll}>Select all {totalSize} products.</a>
+
+                {!selectedAll && <a onClick={onSelectAll}>Select all {totalSize} products.</a>}
             </p>
 
             <form action="" onSubmit={submitHandler}>
