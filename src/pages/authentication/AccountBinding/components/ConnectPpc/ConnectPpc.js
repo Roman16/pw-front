@@ -82,7 +82,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
             <Fragment>
                 <section className='connect-ppc-section'>
                     <h2>Connect Amazon Advertising</h2>
-                    <Link to={'/videos'} target="_blank">View Detailed Instructions</Link>
+                    <Link to={'/videos/ppc'} target="_blank">View Detailed Instructions</Link>
                     <p>To use Profit Whales, we need access to your Amazon Advertising
                         profile that is attached to the primary account that you used when connecting MWS. Click the
                         button below to grant access.

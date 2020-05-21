@@ -22,7 +22,7 @@ const ConnectMws = ({onGoBackStep, onChangeInput, onConnectMws, connectMwsStatus
             <section className='connect-mws-section'>
                 <form onSubmit={onConnectMws}>
                     <h2>Connect MWS</h2>
-                    <Link to={'/videos'} target="_blank">View Detailed Instructions</Link>
+                    <Link to={'/videos/mws'} target="_blank">View Detailed Instructions</Link>
                     <h4>Please note that you need to connect the primary account holder. <br/>
                         Click button below to open the Seller Central to get the credentials.</h4>
 

@@ -212,7 +212,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 <InputCurrency
                     key={PRICE_FROM_USER}
                     value={item[PRICE_FROM_USER]}
-                    onChance={event => onChangeRow(event, PRICE_FROM_USER, indexRow)}
+                    onChange={event => onChangeRow(event, PRICE_FROM_USER, indexRow)}
                 />
             )
         },

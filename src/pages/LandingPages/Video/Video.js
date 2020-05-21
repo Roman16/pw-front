@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 
@@ -8,7 +8,13 @@ import aircraftImage from '../../../assets/img/landing-video/aircraft.svg';
 import './Video.less';
 import {history} from "../../../utils/history";
 
-const Video = () => {
+const Video = (props) => {
+    useEffect(() => {
+        if(props.match.params.block) {
+            document.getElementById(props.match.params.block).scrollIntoView();
+        }
+    }, [])
+
     return (
         <div className='landing-video'>
             <Header/>
@@ -44,7 +50,7 @@ const Video = () => {
                     {/*    </div>*/}
                     </div>
 
-                    <div className="video-item">
+                    <div className="video-item" id={'mws'}>
                         <h2>Connect Amazon MWS Account to Profit Whales Software</h2>
 
                         <iframe src="https://www.youtube.com/embed/lKbV7iOOtDw"
@@ -53,7 +59,7 @@ const Video = () => {
                                 allowFullScreen/>
                     </div>
 
-                    <div className="video-item">
+                    <div className="video-item" id={'ppc'}>
                         <h2>Link Profit Whales Tool to your Amazon PPC Account</h2>
                         <p>
                             Wait till we are gathering all the data from your account.
