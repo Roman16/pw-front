@@ -38,7 +38,7 @@ const ReportTable = ({
             <Pagination
                 onChange={paginationChangeHandler}
                 page={paginationParams.page}
-                pageSizeOptions={[10, 50, 100]}
+                pageSizeOptions={[25, 50, 100, 200]}
                 pageSize={paginationParams.pageSize}
                 totalSize={totalSize}
                 listLength={reportsList.length}

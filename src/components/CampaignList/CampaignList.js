@@ -30,10 +30,11 @@ const CampaignList = () => {
             pageSize: 10
         });
 
-    const {campaignList, processing, totalSize} = useSelector(state => ({
+    const {campaignList, processing, totalSize, selectedCampaign} = useSelector(state => ({
         campaignList: state.dayparting.campaignList,
         processing: state.dayparting.processing,
         totalSize: state.dayparting.totalSize,
+        selectedCampaign: state.dayparting.selectedCampaign,
     }))
 
     const getCampaignList = () => {
@@ -57,9 +58,19 @@ const CampaignList = () => {
     }
 
     const changeSelectHandler = (params) => {
+        setPaginationParams({
+            ...paginationParams,
+            page: 1
+        })
+
         setFilterParams(params)
     }
     const changeSwitchHandler = (value) => {
+        setPaginationParams({
+            ...paginationParams,
+            page: 1
+        })
+
         setOnlyOndayparting(value)
     }
 
@@ -89,23 +100,14 @@ const CampaignList = () => {
                 {processing && <div className='fetching-data'><Spin size={'large'}/></div>}
 
                 <div className={`campaigns`}>
-                    {campaignList && campaignList.map(product => (
+                    {campaignList && campaignList.map(campaign => (
                         <div
-                            key={product.id}
-                            // className={selectedProduct.id === item.id ? 'campaign-item active' : 'campaign-item'}
-                            // onClick={() => this.onSelect(item)}
-                            title={product.name}
+                            key={campaign.id}
+                            className={`${selectedCampaign.id === campaign.id ? 'campaign-item active' : 'campaign-item'} ${campaign.hasEnabledDayparting ? 'enabled-dayparting' : ''}`}
+                            onClick={() => selectCampaignHandler(campaign)}
+                            title={campaign.name}
                         >
-                            {/*{product.hasEnabledDayparting && <InformationTooltip*/}
-                            {/*    arrowPointAtCenter={true}*/}
-                            {/*    type={'custom'}*/}
-                            {/*    description={'Campaign on day-parting'}*/}
-                            {/*    position={'topRight'}*/}
-                            {/*>*/}
-                            {/*    <div className='on-optimization'/>*/}
-                            {/*</InformationTooltip>}*/}
-
-                            <span className={'short-name'}>{product.name}</span>
+                            <span className={'short-name'}>{campaign.name}</span>
                         </div>
 
                     ))}

@@ -8,6 +8,8 @@ import CustomTable from "../../../../components/Table/CustomTable";
 import Pagination from "../../../../components/Pagination/Pagination";
 import {SVG} from "../../../../utils/icons";
 import MultiApply from "../MultiApply/MultiApply";
+import {numberMask} from "../../../../utils/numberMask";
+import {round} from "../../../../utils/round";
 
 
 const ACTIVE = 'RUNNING';
@@ -94,43 +96,80 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 minWidth: '160px',
-                render: (props) => (<span className='value'>{props[PRICE]} <SVG id={'dollar-icon'}/></span>)
+                render: (props) => (
+                    <InputCurrency
+                        value={props[PRICE]}
+                        disabled
+                    />
+                )
             },
             {
                 minWidth: '160px',
-                render: (props) => (<span className='value'> {props[PRICE_FROM_USER]} <SVG id={'dollar-icon'}/></span>)
+                render: (props) => (
+                    <InputCurrency
+                        value={props[PRICE_FROM_USER]}
+                        disabled
+                        step={0.01}
+                    />
+                )
             },
             {
                 minWidth: '160px',
-                render: (props) => (<span className='value'> {props[NET_MARGIN]} <SVG id={'percent-icon'}/></span>)
+                render: (props) => (
+                    <InputCurrency
+                        value={props[NET_MARGIN]}
+                        typeIcon='percent'
+                        disabled
+                    />
+                )
             },
             {
                 minWidth: '175px',
                 render: (props) => (
-                    <span className='value'> {props[MIN_BID_MANUAL_CAMPING]} <SVG id={'dollar-icon'}/></span>)
+                    <InputCurrency
+                        value={props[MIN_BID_MANUAL_CAMPING]}
+                        disabled
+                        step={0.01}
+                    />
+                )
             },
             {
                 minWidth: '175px',
                 render: (props) => (
-                    <span className='value'> {props[MAX_BID_MANUAL_CAMPING]} <SVG id={'dollar-icon'}/></span>)
+                    <InputCurrency
+                        value={props[MAX_BID_MANUAL_CAMPING]}
+                        disabled
+                        step={0.01}
+                    />
+                )
             },
             {
                 minWidth: '175px',
                 render: (props) => (
-                    <span className='value'> {props[MIN_BID_AUTO_CAMPING]} <SVG id={'dollar-icon'}/></span>)
+                    <InputCurrency
+                        value={props[MIN_BID_AUTO_CAMPING]}
+                        disabled
+                        step={0.01}
+                    />
+                )
             },
             {
                 minWidth: '175px',
                 render: (props) => (
-                    <span className='value'> {props[MAX_BID_AUTO_CAMPING]} <SVG id={'dollar-icon'}/></span>)
+                    <InputCurrency
+                        value={props[MAX_BID_AUTO_CAMPING]}
+                        disabled
+                        step={0.01}
+                    />
+                )
             },
             {
                 width: '100px',
-                render: (props) => (<div style={{textAlign: 'right'}}>{props[TOTAL_CHANGES]}</div>)
+                render: (props) => (<div style={{textAlign: 'right'}}></div>)
             },
             {
                 width: '135px',
-                render: (props) => (<span> {props[OPTIMIZATION_STATUS] === ACTIVE ? 'Active' : 'Paused'}</span>)
+                render: (props) => (<span> {props[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> : <span className={'paused'}>Paused</span>}</span>)
             },
         ];
 
@@ -212,6 +251,8 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 <InputCurrency
                     key={PRICE_FROM_USER}
                     value={item[PRICE_FROM_USER]}
+                    min={0}
+                    step={0.01}
                     onChange={event => onChangeRow(event, PRICE_FROM_USER, indexRow)}
                 />
             )
@@ -313,13 +354,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             dataIndex: OPTIMIZATION_STATUS,
             key: OPTIMIZATION_STATUS,
             width: '135px',
-            render: (index, item) => (
-                <div>
-                    {item[OPTIMIZATION_STATUS] === ACTIVE
-                        ? 'Running'
-                        : 'Paused'}
-                </div>
-            )
+            render: (index, item) => (<span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> : <span className={'paused'}>Paused</span>}</span>)
         }
     ];
 

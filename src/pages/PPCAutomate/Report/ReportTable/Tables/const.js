@@ -226,5 +226,5 @@ export const renderNumberField = {
     render: (data) => (data && data !== null) ? (<span>{round(data, 2)}</span>) : ''
 };
 export const renderPercentField = {
-    render: (data) => (data && data !== null) ? (<span>{round(data, 2)}%</span>) : ''
+    render: (data) => (data && data !== null) ? (<span>{round(data * 100, 2)}%</span>) : ''
 };

@@ -31,7 +31,7 @@ function Report() {
         [totalSize, setTotalSize] = useState(0),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
-            pageSize: 10,
+            pageSize: 25,
         });
 
     const {productId, selectedAll, productsFetching} = useSelector(state => ({

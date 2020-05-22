@@ -187,7 +187,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            minWidth: '7.142857142857143rem',
+            minWidth: '9.285714285714286rem',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -206,7 +206,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
                 description={<ProfitTooltipDescription/>}/>}</span>),
             dataIndex: 'profit',
             key: 'profit',
-            minWidth: '10.714285714285714rem',
+            minWidth: '12.142857142857142rem',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `$${numberMask(text, 2)}` : 'N/A'}

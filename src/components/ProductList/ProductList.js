@@ -61,6 +61,10 @@ const ProductList = ({pathname}) => {
 
     const changeSwitchHandler = (event) => {
         dispatch(productsActions.showOnlyOptimized(event));
+        setPaginationParams({
+            ...paginationParams,
+            page: 1
+        })
     };
 
     const changeSearchHandler = debounce(500, false, str => {

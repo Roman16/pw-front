@@ -29,7 +29,7 @@ export function dayparting(state = defaultState, action) {
         case daypartingConstants.SELECT_CAMPAIGN:
             return {
                 ...state,
-                processing: action.payload,
+                selectedCampaign: action.payload,
             };
 
 

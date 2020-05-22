@@ -94,6 +94,18 @@
     }
   }
 
+  .products-filters,
+  .campaigns,
+  .pw-pagination {
+    min-width: 395px;
+
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      width: 305px;
+      min-width: 305px;
+
+    }
+  }
+
   .campaigns {
     flex: 1 1;
     background: #fff;
@@ -101,6 +113,48 @@
     overflow: auto;
     position: relative;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+
+    .campaign-item {
+      min-height: 4.285714285714286rem;
+      padding: 0.7142857142857143rem 1.4285714285714286rem;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #C9CBD4;
+      position: relative;
+      font-size: 1rem;
+      color: #343C5A;
+      font-weight: 500;
+
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+
+      &.enabled-dayparting {
+        background: #F2FBF6;
+      }
+
+      &:hover {
+        background: rgba(245, 245, 255, 0.45);
+        cursor: pointer;
+      }
+
+      &.active {
+        background: rgba(245, 245, 255, 0.7);
+
+        &::before {
+          content: '';
+          width: 4px;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          top: 0;
+          background: #6D6DF6;
+        }
+      }
+
+    }
   }
 
   .pw-pagination {
