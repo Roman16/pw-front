@@ -125,6 +125,16 @@
       color: #343C5A;
       font-weight: 500;
 
+      .short-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        width: -moz-fit-content;
+        width: fit-content;
+      }
+
 
       &:last-child {
         border-bottom: 0;

@@ -110,6 +110,11 @@ const ProductList = ({pathname}) => {
 
     useEffect(() => {
         getProductsList();
+
+        return (() => {
+            dispatch(productsActions.setProductsList([]))
+            dispatch(productsActions.updateProduct({}))
+        })
     }, [paginationParams, searchStr, onlyOptimization, ungroupVariations])
 
     return (

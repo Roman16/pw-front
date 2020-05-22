@@ -16,7 +16,8 @@ export const productsActions = {
     dontShowWindowAgain,
     updateCampaignBudget,
     showOnlyOnDayparting,
-    switchFetching
+    switchFetching,
+    setProductsList
 };
 
 function switchFetching(state) {
@@ -33,7 +34,7 @@ function fetchProducts(paginationParams) {
 
         productsServices.getProducts(paginationParams)
             .then(res => {
-                if(res.totalSize > 0) {
+                if (res.totalSize > 0) {
                     dispatch({
                         type: productsConstants.SET_PRODUCT_LIST,
                         payload: {
@@ -54,6 +55,17 @@ function fetchProducts(paginationParams) {
                 }
             })
     };
+}
+
+function setProductsList(list) {
+    return ({
+        type: productsConstants.SET_PRODUCT_LIST,
+        payload: {
+            result: list,
+            totalSize: 0,
+            fetching: false
+        }
+    })
 }
 
 function fetchProductDetails(product) {

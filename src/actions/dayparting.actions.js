@@ -5,7 +5,8 @@ export const daypartingActions = {
     getCampaignList,
     selectCampaign,
     activateDayparing,
-    deactivateDayparing
+    deactivateDayparing,
+    setCampaignList
 };
 
 function getCampaignList(parameters) {
@@ -24,6 +25,13 @@ function getCampaignList(parameters) {
                 });
             });
     };
+}
+
+function setCampaignList(list) {
+    return ({
+        type: daypartingConstants.SET_CAMPAIGN_LIST,
+        payload: list
+    })
 }
 
 function selectCampaign(campaign) {

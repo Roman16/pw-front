@@ -84,6 +84,15 @@ const CampaignList = () => {
 
     useEffect(() => {
         getCampaignList();
+
+        return (() => {
+            dispatch(daypartingActions.setCampaignList({
+                response: [],
+                total_count: 0,
+            }))
+
+            selectCampaignHandler({})
+        })
     }, [paginationParams, searchStr, filterParams, onlyOndayparting])
 
     return (
