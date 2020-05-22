@@ -13,7 +13,8 @@ const ReportTable = ({
                          columns,
                          sorterColumn,
                          addFilterHandler,
-                         totalSize
+                         totalSize,
+                         filteredById
                      }) => {
 
     return (
@@ -28,7 +29,7 @@ const ReportTable = ({
                         {...dateField},
                         ...columns,
                         {...infoField},
-                        {...sorterByKeywordField(addFilterHandler)}
+                        {...sorterByKeywordField(addFilterHandler, filteredById)}
                     ]}
                     rowClassName={(item) => !item.viewed && 'new-report'}
                 />

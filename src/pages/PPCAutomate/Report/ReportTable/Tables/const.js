@@ -181,7 +181,7 @@ export const infoField = {
 };
 
 
-export const sorterByKeywordField = (filterByKeyword) => ({
+export const sorterByKeywordField = (filterByKeyword, filtered) => ({
     title: '',
     dataIndex: 'keyword_id',
     key: 'keyword_id',
@@ -205,7 +205,7 @@ export const sorterByKeywordField = (filterByKeyword) => ({
         );
 
         return (
-            <Dropdown disabled={id == null} overlay={menu} trigger={['click']}>
+            <Dropdown disabled={id == null || filtered} overlay={menu} trigger={['click']}>
                 <button
                     className={'filter-btn'}
                     disabled={id == null}>

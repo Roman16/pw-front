@@ -112,13 +112,7 @@ function Report() {
             setReportsList(res.data);
             setChangesCounts(res.counts);
 
-            if(currentTab === 'all-reports') {
-                setTotalSize(res.counts.all.total_count)
-            } else if(currentTab === 'targeting-improvements') {
-                setTotalSize(res.counts.targeting_improvements.total_count)
-            }else if(currentTab === 'search-terms') {
-                setTotalSize(res.counts.search_term.total_count)
-            }
+            setTotalSize(res.total_size)
         } catch (e) {
             console.log(e);
         }
@@ -162,6 +156,7 @@ function Report() {
                 columns={mainTabs[currentTab]}
                 sorterColumn={sorterColumn}
                 totalSize={totalSize}
+                filteredById={filters.find(item => item.filterBy === 'keyword_id')}
 
                 paginationChangeHandler={paginationChangeHandler}
                 sortChangeHandler={sortChangeHandler}
