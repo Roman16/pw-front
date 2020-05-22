@@ -23,6 +23,7 @@ const ProductSettingsMain = () => {
         [searchStr, setSearchStr] = useState(''),
         [totalSize, setTotalSize] = useState(0),
         [onlyActive, setOnlyActive] = useState(false),
+        [onlyOptimization, setOnlyOptimization] = useState(false),
         [processing, setProcessing] = useState(false),
         [paginationOptions, setPaginationOptions] = useState({
             page: 1,
@@ -42,6 +43,7 @@ const ProductSettingsMain = () => {
             ...paginationOptions,
             searchStr,
             onlyActive,
+            onlyOptimization,
             cancelToken: source.token
         });
 
@@ -50,7 +52,14 @@ const ProductSettingsMain = () => {
         setProcessing(false);
     };
 
-    const changeSwitchHandler = (value) => {
+    const changeSwitchHandler = (type, value) => {
+        if (type === 'active') {
+            setOnlyActive(value);
+
+        } else if (type === 'optimization') {
+            setOnlyOptimization(value)
+        }
+
         setOnlyActive(value);
         setPaginationOptions({
             ...paginationOptions,

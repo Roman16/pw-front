@@ -20,11 +20,21 @@ const Filters = ({onChangeSearch, onChangeSwitch}) => {
 
             <div className='switch-block'>
                 <Switch
-                    onChange={onChangeSwitch}
+                    onChange={(e) => onChangeSwitch('active', e)}
                 />
 
                 <label htmlFor="">
                     Show only Active Listings on Amazon
+                </label>
+            </div>
+
+            <div className='switch-block'>
+                <Switch
+                    onChange={(e) => onChangeSwitch('optimization', e)}
+                />
+
+                <label htmlFor="">
+                    On optimization only
                 </label>
             </div>
         </div>

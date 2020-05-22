@@ -1,6 +1,7 @@
 import React from 'react';
 import {func, bool, string} from 'prop-types';
 import {SVG} from "../../utils/icons";
+import InformationTooltip from "../Tooltip/Tooltip";
 
 const ProductItem = ({
                          product: {id, asin, name, sku, image_url, under_optimization, has_optimization_results, variations},
@@ -56,35 +57,35 @@ const ProductItem = ({
                     {variations && <SVG id='select-icon'/>}
                 </div>
 
-                {/*<div className='optimization-status'>*/}
-                {/*    /!*{true && <InformationTooltip*!/*/}
-                {/*    /!*    arrowPointAtCenter={true}*!/*/}
-                {/*    /!*    type={'custom'}*!/*/}
-                {/*    /!*    description={'Product has new changes'}*!/*/}
-                {/*    /!*    position={'topRight'}*!/*/}
-                {/*    /!*>*!/*/}
-                {/*    /!*    <div className='has-changes'/>*!/*/}
-                {/*    /!*</InformationTooltip>}*!/*/}
+                <div className='optimization-status'>
+                    {/*<InformationTooltip*/}
+                    {/*    arrowPointAtCenter={true}*/}
+                    {/*    type={'custom'}*/}
+                    {/*    description={'Product has new changes'}*/}
+                    {/*    position={'topRight'}*/}
+                    {/*>*/}
+                    {/*    <div className='has-changes'/>*/}
+                    {/*</InformationTooltip>*/}
 
-                {/*    {under_optimization && has_optimization_results && <InformationTooltip*/}
-                {/*        arrowPointAtCenter={true}*/}
-                {/*        type={'custom'}*/}
-                {/*        description={'Product on optimization'}*/}
-                {/*        position={'topRight'}*/}
-                {/*    >*/}
-                {/*        <div className='on-optimization'/>*/}
-                {/*    </InformationTooltip>}*/}
+                    {under_optimization && has_optimization_results && <InformationTooltip
+                        arrowPointAtCenter={true}
+                        type={'custom'}
+                        description={'Product on optimization'}
+                        position={'topRight'}
+                    >
+                        <div className='on-optimization'/>
+                    </InformationTooltip>}
 
-                {/*    {under_optimization && !has_optimization_results && <InformationTooltip*/}
-                {/*        arrowPointAtCenter={true}*/}
-                {/*        type={'custom'}*/}
-                {/*        description={'Optimization in progress ...'}*/}
-                {/*        position={'topRight'}*/}
-                {/*    >*/}
-                {/*        <div className='optimization-processing'/>*/}
-                {/*    </InformationTooltip>}*/}
+                    {under_optimization && !has_optimization_results && <InformationTooltip
+                        arrowPointAtCenter={true}
+                        type={'custom'}
+                        description={'Waiting for data'}
+                        position={'topRight'}
+                    >
+                        <div className='optimization-processing'/>
+                    </InformationTooltip>}
 
-                {/*</div>*/}
+                </div>
             </div>
 
             {(variations) && (openedProduct === id) && <div className='product-children-list'>
