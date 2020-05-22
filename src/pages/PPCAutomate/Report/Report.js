@@ -61,6 +61,11 @@ function Report() {
     }
 
     const sortChangeHandler = (column) => {
+        setPaginationParams({
+            ...paginationParams,
+            page: 1,
+        });
+
         if (sorterColumn && sorterColumn.column === column) {
             if (sorterColumn.type === 'desc') {
                 setSorterColumn({
@@ -82,13 +87,24 @@ function Report() {
     }
 
     const addFilterHandler = (filter) => {
+        setPaginationParams({
+            ...paginationParams,
+            page: 1,
+        });
+
         setFilters([
             ...filters,
             filter
         ])
     }
 
-    const resetFiltersHandler = () => setFilters([]);
+    const resetFiltersHandler = () => {
+        setPaginationParams({
+            ...paginationParams,
+            page: 1,
+        });
+        setFilters([])
+    };
 
     const removeFilterHandler = (index) => setFilters(prevState => prevState.filter((item, itemIndex) => itemIndex !== index));
 
