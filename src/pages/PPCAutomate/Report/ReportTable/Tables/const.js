@@ -7,16 +7,6 @@ import {SVG} from "../../../../../utils/icons";
 import {numberMask} from "../../../../../utils/numberMask";
 import {round} from "../../../../../utils/round";
 
-const days = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-];
-
 export const dateField = {
     title: 'Date',
     dataIndex: 'datetime',
@@ -223,7 +213,7 @@ export const renderCurrencyField = {
 };
 
 export const renderNumberField = {
-    render: (data) => (data && data !== null) ? (<span>{round(data, 2)}</span>) : ''
+    render: (data) => (data && data !== null) ? (<span>{numberMask(data, 0)}</span>) : ''
 };
 export const renderPercentField = {
     render: (data) => (data && data !== null) ? (<span>{round(data * 100, 2)}%</span>) : ''
