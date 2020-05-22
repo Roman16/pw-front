@@ -4,7 +4,8 @@ import './InputCurrency.less';
 import {SVG} from "../../utils/icons";
 
 const Dollar = ({typeIcon}) => (
-    <span className={`Dollar ${typeIcon}`}>{typeIcon === 'percent' ? <SVG id={'percent-icon'}/> : <SVG id={'dollar-icon'}/>}</span>
+    <span className={`Dollar ${typeIcon}`}>{typeIcon === 'percent' ? <SVG id={'percent-icon'}/> :
+        <SVG id={'dollar-icon'}/>}</span>
 );
 
 const InputCurrency = ({
@@ -31,4 +32,4 @@ const InputCurrency = ({
 //percent -> %
 //other -> $
 
-export default InputCurrency;
+export default React.memo(InputCurrency);

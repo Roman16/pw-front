@@ -156,7 +156,11 @@ const AccountBilling = ({onOpenWindow, paymentCards, handleConfirmDeleteCard, on
                     </div>
 
                     {paymentCards.length < 10 &&
-                    <button className="add-card btn default p15" onClick={() => onOpenWindow('updateCard')}>
+                    <button
+                        style={{marginRight: paymentCards.length > 1 ? '3rem' : '0'}}
+                        className="add-card btn default p15"
+                        onClick={() => onOpenWindow('updateCard')}
+                    >
                         <SVG id={'plus-icon'}/>
                         Add Card
                     </button>}

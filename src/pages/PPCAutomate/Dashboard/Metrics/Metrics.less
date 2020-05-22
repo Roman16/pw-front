@@ -16,7 +16,6 @@
     cursor: pointer;
     box-shadow: @default-section-shadow;
 
-
     & > .custom-tooltip {
       margin: 0;
       width: max-content;
@@ -49,12 +48,32 @@
     .close {
       margin: 0 0 0 auto;
       cursor: pointer;
+      border-radius: 50%;
+      padding: 5px;
+      transition: .3s;
 
-      //.bg-close();
+      &:hover {
+        transition: .3s;
+        background: rgba(109, 109, 246, 0.05);
 
-      img, svg {
-        width: 1.7142857142857142rem;
-        height: 1.7142857142857142rem;
+        svg {
+          stroke: #6D6DF6;
+        }
+      }
+
+      &:active {
+        background: rgba(109, 109, 246, 0.15);
+
+        svg {
+          stroke: #6D6DF6;
+        }
+      }
+
+      svg {
+        width: 10px;
+        height: 10px;
+
+        stroke: #343C5A;
       }
     }
   }
@@ -76,7 +95,7 @@
   flex-direction: column;
   justify-content: space-between;
   min-width: 140px;
-  height: 110px;
+  height: 100px;
   padding: 8px 12px 8px;
   background: #FFFFFF;
   border-radius: 4px;
@@ -84,8 +103,15 @@
   .title-info {
     display: flex;
     align-items: center;
-    font-size: 1.14rem;
-    color: #656A84;
+    font-size: 1rem;
+    color: #343C5A;
+
+    & > span {
+      width: 75%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
 
     .anticon {
       color: #656A84;
@@ -93,73 +119,70 @@
       margin: 0 0 0 8px;
     }
 
-    img.warning-icon {
-      margin: 0 0 0 8px;
+    .information-tooltip {
+      margin: 0 5px 0 5px;
+    }
+
+    .close {
+      display: flex;
     }
   }
 
-  .metric-item__changes {
-    & > div {
-      width: max-content;
-      height: 1.1428571428571428rem;
-      display: flex;
-      align-items: center;
-      padding: 0 10px;
-      border-radius: 4px;
-      font-size: 0.8571428571428571rem; //12px
-      text-transform: uppercase;
 
-      svg {
-        margin: 0 0 0 5px;
-      }
-
-      .horizontal-line-icon {
-        display: inline-block;
-        background: #000;
-        width: 5px;
-        height: 1px;
-        margin: 0 0 0 3px;
-      }
-    }
-
-    .upward-changes {
-      background: #8FD39D;
-      color: #fff;
-    }
-
-    .up-changes {
-      background: rgba(143, 211, 157, 0.2);
-      color: #8FD39D;
-    }
-
-    .down-changes {
-      background: rgba(201, 203, 212, 0.2);
-      color: #656A84;
-    }
-
-    .downward-changes {
-      background: #656A84;
-      color: #fff;
-    }
+  .value {
+    flex: 1;
+    font-size: 1.7142857142857142rem;
+    color: #343C5A;
+    background: #fff;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
   }
 
   .metric-item__description {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     flex-wrap: wrap;
 
-    .value {
-      flex: 1;
-      font-size: 1.8571428571428572rem;
-      line-height: 2.2857142857142856rem;
-      color: #38454F;
-      background: #fff;
+    .metric-item__changes {
+      & > div {
+        width: max-content;
+        height: 1.1428571428571428rem;
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+        font-size: 1rem;
+        text-transform: uppercase;
+        font-weight: 500;
+
+        .horizontal-line-icon {
+          display: inline-block;
+          background: #000;
+          width: 5px;
+          height: 1px;
+          margin: 0 0 0 3px;
+        }
+      }
+
+      i {
+        display: flex;
+        align-items: center;
+        margin: 0 3px 0 0;
+      }
+
+      .upward-changes {
+        color: #7DD4A1;
+      }
+
+      .downward-changes {
+        color: #EC7F5C;
+      }
     }
 
     .label {
-      font-size: 0.8571428571428571rem;
-      color: #656A84;
+      font-size: 1rem;
+      color: #686876;
     }
   }
 
@@ -168,7 +191,7 @@
   //-------------------------------------
   @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
     & {
-      height: 85px;
+      height: 80px;
       padding: 6px 9px;
 
       .metric-item__changes {

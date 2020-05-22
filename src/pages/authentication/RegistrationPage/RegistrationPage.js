@@ -6,7 +6,7 @@ import '../LoginPage/LoginPage.less';
 import RegistrationPageForm from './RegistrationPageForm/RegistrationPageForm';
 import logo from '../../../assets/img/ProfitWhales-logo-white.svg';
 import {history} from "../../../utils/history";
-import useScript from "../../../utils/useScript";
+import useScript from "../../../utils/hooks/useScript";
 
 const RegistrationPage = (props) => {
     useScript({

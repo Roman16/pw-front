@@ -43,7 +43,7 @@ const routers = () => {
                     <Route exact path="/contact-us/:status?" component={ContactUs}/>
                     <Route exact path="/policy" component={PrivacyPolicy}/>
                     <Route exact path="/terms-and-conditions" component={TermsOfUse}/>
-                    <Route exact path="/videos" component={Video}/>
+                    <Route exact path="/videos/:block?" component={Video}/>
                     <Route exact path="/ppc-redirect" component={PPCRedirect}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login" component={LoginPage}/>

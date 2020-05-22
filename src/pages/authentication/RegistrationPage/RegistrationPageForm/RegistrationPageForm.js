@@ -177,7 +177,8 @@ class RegistrationPage extends Component {
                 </Form.Item>
 
                 <div className='terms-and-privacy'>
-                    By signing in, you agree to Profit Whales <b><Link target="_blank" to={'/terms-and-conditions'}> Terms
+                    By signing in, you agree to Profit Whales <b><Link target="_blank"
+                                                                       to={'/terms-and-conditions'}> Terms
                     and <br/> Conditions</Link> & <Link target="_blank" to={'/policy'}>Privacy Policy</Link></b>
                 </div>
 

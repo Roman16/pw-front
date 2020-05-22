@@ -120,8 +120,8 @@ img {
     background: #f5f5ff;
 
     display: grid;
-    grid-template-areas: 'errorsBar errorsBar' 'productList mainPage';
-    grid-template-columns: max-content 1fr;
+    grid-template-areas: 'errorsBar errorsBar errorsBar' 'productList switchProductList mainPage';
+    grid-template-columns: max-content max-content 1fr;
     grid-template-rows: max-content 1fr;
 
     z-index: 10;
@@ -148,13 +148,24 @@ img {
       grid-area: productList;
     }
 
-    @media (max-width: 800px) {
+    .switch-list {
+      grid-area: switchProductList;
+    }
+
+    @media (max-width: 850px) {
       height: max-content;
 
-      grid-template-areas: 'errorsBar' 'productList' 'mainPage';
+      grid-template-areas: 'errorsBar' 'productList' 'switchProductList' 'mainPage';
       grid-template-columns: 1fr;
       grid-template-rows: auto;
 
+      padding: 1.7142857em 1.42857143rem;
+
+      .page {
+        & > div {
+          padding: 0;
+        }
+      }
     }
   }
 
@@ -353,6 +364,20 @@ img {
     border: 0;
   }
 }
+
+.ant-checkbox-wrapper {
+  &:hover {
+    .ant-checkbox-inner {
+      border-color: #6D6DF6 !important;
+    }
+  }
+  .ant-checkbox-indeterminate {
+    .ant-checkbox-inner::after {
+      background: #6D6DF6;
+    }
+  }
+}
+
 
 .ant-checkbox-wrapper-checked:hover {
   .ant-checkbox-checked {
@@ -831,6 +856,7 @@ button.white[disabled] {
       .ant-input:not(.ant-input-disabled),
       .ant-input {
         border: 1px solid #343C5A;
+        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       }
     }
 
@@ -849,6 +875,7 @@ button.white[disabled] {
       width: 1.2857142857142858rem;
       height: 1.2857142857142858rem;
     }
+
     i {
       display: none;
     }
@@ -861,9 +888,11 @@ button.white[disabled] {
     border: 1px solid #C9CBD4;
     background: #FFFFFF;
     color: #656A84;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
     &:hover {
       border: 1px solid #343C5A;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
     }
 
     &:focus {

@@ -4,18 +4,21 @@ import moment from 'moment';
 
 let metricClickCount = 0;
 
+
+const metricsFromLocalStorage = localStorage.getItem('selectedMetrics') && JSON.parse(localStorage.getItem('selectedMetrics'));
+
 const initialState = {
     showWeekChart: true,
     showDailyChart: true,
     showOptimizationChart: true,
-    selectedProduct: '',
+    selectedProduct: null,
     selectedRangeDate: {
         startDate: moment(new Date()).subtract(30, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
         endDate: moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
     },
     allMetrics: metricsListArray,
-    activeMetrics: metricsListArray.slice(0, 2),
-    selectedMetrics: metricsListArray.slice(0, 5)
+    activeMetrics: metricsFromLocalStorage ? metricsFromLocalStorage.slice(0, 2) : metricsListArray.slice(0, 2),
+    selectedMetrics: metricsFromLocalStorage ? metricsFromLocalStorage : metricsListArray.slice(0, 5)
 };
 
 export function dashboard(state = initialState, action) {
@@ -59,6 +62,8 @@ export function dashboard(state = initialState, action) {
                 newActiveMetricsList[0] = {};
                 newActiveMetricsList[1] = {};
             }
+
+            localStorage.setItem('selectedMetrics', JSON.stringify(newMetricList));
 
             if (JSON.stringify(state.activeMetrics) !== JSON.stringify(newActiveMetricsList)) {
                 return {
@@ -117,11 +122,20 @@ export function dashboard(state = initialState, action) {
                 newActiveMetricsList[1] = {};
             }
 
-            return {
-                ...state,
-                selectedMetrics: action.payload,
-                activeMetrics: newActiveMetricsList
-            };
+            localStorage.setItem('selectedMetrics', JSON.stringify(action.payload));
+
+            if (JSON.stringify(state.activeMetrics) !== JSON.stringify(newActiveMetricsList)) {
+                return {
+                    ...state,
+                    selectedMetrics: action.payload,
+                    activeMetrics: newActiveMetricsList
+                };
+            } else {
+                return {
+                    ...state,
+                    selectedMetrics: action.payload,
+                };
+            }
         }
 
         case dashboardConstants.SELECT_PRODUCT:

@@ -8,10 +8,8 @@ import {getClassNames} from "../../utils";
 import {userActions} from "../../actions/user.actions";
 import logo from "../../assets/img/ProfitWhales-logo-white.svg";
 import "./Sidebar.less";
-import {history} from "../../utils/history";
 import {SVG} from "../../utils/icons";
 import '../../style/variables.less';
-import InformationTooltip from "../Tooltip/Tooltip";
 
 const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
@@ -21,7 +19,7 @@ const Sidebar = () => {
         [automate, setAutomate] = useState(true),
         [regions] = useState(regionsMenu),
         dispatch = useDispatch(),
-        {user, notFirstEntry, bootstrapInProgress} = useSelector(state => ({
+        {user, bootstrapInProgress} = useSelector(state => ({
             user: state.user,
             notFirstEntry: state.user.notFirstEntry,
             bootstrapInProgress: state.user.notifications && state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
@@ -46,7 +44,6 @@ const Sidebar = () => {
     const toggleSubMenu = () => setAutomate(prevState => !prevState);
 
     useEffect(() => {
-        dispatch(userActions.getPersonalUserInfo());
         window.innerWidth < 1132 ? setCollapsed(false) : setCollapsed(true);
 
         document.querySelector('body').classList.add('visible-intercom');
@@ -56,14 +53,6 @@ const Sidebar = () => {
         })
     }, []);
 
-    // useEffect(() => {
-    //     window.innerWidth < 800 ? setCollapsed(false) : setCollapsed(true);
-    // }, [width]);
-
-    if (!notFirstEntry) {
-        history.push('/login');
-        return ('');
-    }
 
     return (
         <div

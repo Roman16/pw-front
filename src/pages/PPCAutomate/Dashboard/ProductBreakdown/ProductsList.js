@@ -1,7 +1,5 @@
 import React, {useEffect} from "react";
-import {Input} from "antd";
 import Tooltip from '../../../../components/Tooltip/Tooltip';
-import Table from "../../../../components/Table/Table";
 import ProductItem from "../../../../components/ProductList/ProductItem";
 import {round} from "../../../../utils/round";
 
@@ -10,8 +8,6 @@ import {numberMask} from "../../../../utils/numberMask";
 import {SVG} from "../../../../utils/icons";
 import Pagination from "../../../../components/Pagination/Pagination";
 import CustomTable from "../../../../components/Table/CustomTable";
-import {dateField, indexField} from "../../Report/ReportTable/Tables/const";
-import {allColumnsOrder} from "../../Report/ReportTable/Tables/allColumnsOrder";
 
 const RenderPramsChanges = ({type, product}) => {
     const value = product[type];
@@ -30,13 +26,17 @@ const RenderPramsChanges = ({type, product}) => {
             return (
                 <div className='product-metric-changes up'>
                     {(value > 0) && <div className='downward-changes'>
+                        <i style={{transform: 'rotate(180deg)'}}>
+                            <SVG id='downward-metric-changes'/>
+                        </i>
                         {round(Math.abs(+value), 2)}%
-                        <SVG id='up-white-arrow'/>
                     </div>}
 
                     {(value <= 0) && <div className='upward-changes'>
+                        <i style={{transform: 'rotate(180deg)'}}>
+                            <SVG id='upward-metric-changes'/>
+                        </i>
                         {round(Math.abs(+value), 2)}%
-                        <SVG id='down-white-arrow'/>
                     </div>}
                 </div>
             )
@@ -44,13 +44,17 @@ const RenderPramsChanges = ({type, product}) => {
             return (
                 <div className='product-metric-changes up'>
                     {(value > 0) && <div className='upward-changes'>
+                        <i>
+                            <SVG id='upward-metric-changes'/>
+                        </i>
                         {round(Math.abs(+value), 2)}%
-                        <SVG id='up-white-arrow'/>
                     </div>}
 
                     {(value <= 0) && <div className='downward-changes'>
+                        <i>
+                            <SVG id='downward-metric-changes'/>
+                        </i>
                         {round(Math.abs(+value), 2)}%
-                        <SVG id='down-white-arrow'/>
                     </div>}
                 </div>
             )
@@ -183,7 +187,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
             title: 'ACoS',
             dataIndex: 'acos',
             key: 'acos',
-            minWidth: '7.142857142857143rem',
+            minWidth: '9.285714285714286rem',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
@@ -202,7 +206,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
                 description={<ProfitTooltipDescription/>}/>}</span>),
             dataIndex: 'profit',
             key: 'profit',
-            minWidth: '10.714285714285714rem',
+            minWidth: '12.142857142857142rem',
             render: (text, record) => (
                 <div className='product-params'>
                     {text != null ? `$${numberMask(text, 2)}` : 'N/A'}

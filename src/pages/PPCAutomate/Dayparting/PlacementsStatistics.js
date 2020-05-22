@@ -198,8 +198,8 @@ const PlacementsStatistics = ({date}) => {
         [processing, setProcessing] = useState(false);
 
     const {campaignId, fetchingCampaignList} = useSelector(state => ({
-        campaignId: state.products.selectedProduct.id,
-        fetchingCampaignList: state.products.fetching,
+        campaignId: state.dayparting.selectedCampaign.id,
+        fetchingCampaignList: state.dayparting.processing,
     }));
 
     useEffect(() => {
@@ -210,9 +210,7 @@ const PlacementsStatistics = ({date}) => {
             if (campaignId == null) {
                 setChartData([]);
                 setStatisticData({});
-            }
-
-            if (!fetchingCampaignList) {
+            } else if (!fetchingCampaignList) {
                 setProcessing(true);
                 localFetching = true;
 

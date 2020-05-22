@@ -48,7 +48,6 @@ const ProductPrice = ({product}) => {
             <br/>
             <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
         </div>)
-
     } else if (product.applied_coupon.name == null) {
         return (<div className={'price'}>
             ${numberMask(product.next_charge_value, 2)}
@@ -120,25 +119,40 @@ const SubscriptionPlan = ({
         },
         {
             title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: status => <div className={'status-field'}>
-                {status === 'not_connect' && <div className={'error-status'}>
-                    {!mwsConnected && ppcConnected && <Link to={'/connect-mws-account'}>Needs API Connection</Link>}
-                    {!ppcConnected && mwsConnected && <Link to={'/connect-ppc-account'}>Needs API Connection</Link>}
-                    {!ppcConnected && !mwsConnected && <Link to={'/connect-amazon-account'}>Needs API Connection</Link>}
-                </div>}
-
-                {status === 'Canceled' && <div className={'error-status'}>
-                    {status}
-                </div>}
-
-                {status === 'Ongoing' && <div className="success-status">
-                    {status}
-                </div>}
-
-                {!status && '---'}
-            </div>,
+            dataIndex: 'stripe_status',
+            key: 'stripe_status',
+            render: status => {
+                if (product.grace_period && product.grace_period.on_grace_period) {
+                    return (<div className={'status-field'}>
+                        <div className={'error-status'}>
+                            Canceled
+                        </div>
+                    </div>)
+                } else if (status === 'not_connect') {
+                    return (
+                        <div className={'status-field'}>
+                            <div className={'error-status'}>
+                                {!mwsConnected && ppcConnected &&
+                                <Link to={'/connect-mws-account'}>Needs API Connection</Link>}
+                                {!ppcConnected && mwsConnected &&
+                                <Link to={'/connect-ppc-account'}>Needs API Connection</Link>}
+                                {!ppcConnected && !mwsConnected &&
+                                <Link to={'/connect-amazon-account'}>Needs API Connection</Link>}
+                            </div>
+                        </div>
+                    )
+                } else if (status === 'active') {
+                    return (<div className={'status-field'}>
+                        <div className="success-status">
+                            {status}
+                        </div>
+                    </div>)
+                } else {
+                    return (<div className={'status-field'}>
+                        {status}
+                    </div>)
+                }
+            },
             width: '12.857142857142858rem'
         },
         {
@@ -188,7 +202,7 @@ const SubscriptionPlan = ({
 
 
     const notConnectData = [{
-        status: 'not_connect',
+        stripe_status: 'not_connect',
         productName: product.productName
     }]
 
@@ -197,15 +211,13 @@ const SubscriptionPlan = ({
             <div className="description">
                 <h2>Subscription for Seller ID: {sellerId || ''}</h2>
                 <p>This is a prepaid plan, and you are paying for the next 30 days of using it.</p>
-                <p>To view your invoices, <a href="">see billing info</a></p>
+                <p>To view your invoices, <a href="#user-cards">see billing info</a></p>
             </div>
 
             <Table
                 dataSource={
                     (!mwsConnected || !ppcConnected) ? notConnectData : product.productId && [{
                         ...product,
-                        ...product.grace_period && product.grace_period.on_grace_period && {status: 'Canceled'},
-                        ...product.has_access && !product.cancelled && {status: 'Ongoing'},
                     }]
                 }
                 columns={columns}
@@ -236,7 +248,8 @@ const SubscriptionPlan = ({
                     <button className={'btn default'} onClick={() => onOpenReactivateWindow(product)}>
                         Reactivate
                     </button>
-                    <p>You will have access to the software until the {product.grace_period.on_grace_period_until && moment(product.grace_period.on_grace_period_until).format('MMM DD, YYYY')}.</p>
+                    <p>You will have access to the software until
+                        the {product.grace_period.on_grace_period_until && moment(product.grace_period.on_grace_period_until).format('MMM DD, YYYY')}.</p>
                 </>
                 }
             </div>

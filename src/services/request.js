@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {loadProgressBar} from 'axios-progress-bar';
 import {notification} from '../components/Notification';
+import {useDispatch} from "react-redux";
 
 import {history} from '../utils/history';
 import {userService} from "./user.services";

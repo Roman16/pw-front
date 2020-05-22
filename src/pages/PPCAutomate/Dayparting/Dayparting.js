@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import './Dayparting.less';
 import OutBudget from "./OutBudget/OutBudget";
 import ChartStatistics from "./ChartStatistics/ChartStatistics";
@@ -29,9 +29,11 @@ const Dayparting = () => {
 
     const [selectedDate, setSelectedDate] = useState(weeks[0]);
 
+
     function changeDateHandler(dateIndex) {
         setSelectedDate(weeks[dateIndex]);
     }
+
 
     return (
         <div className='dayparting-page'>
@@ -93,6 +95,7 @@ const Dayparting = () => {
 
             <SubscriptionNotificationWindow product={'ppc'} page={'dayparting'}/>
         </div>
+
     )
 };
 

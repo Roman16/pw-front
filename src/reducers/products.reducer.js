@@ -1,5 +1,7 @@
 import {productsConstants} from '../constans/actions.type';
 
+const onlyOptimizationFromLocalStorage = localStorage.getItem('onlyOptimization') && JSON.parse(localStorage.getItem('onlyOptimization'));
+
 const initialState = {
     productList: [],
     totalSize: 0,
@@ -10,8 +12,7 @@ const initialState = {
     dontShowStartNotificationAgain: false,
     dontShowStopNotificationAgain: false,
     selectedAll: false,
-    onlyOptimization: false,
-    onlyOnDayparting: false,
+    onlyOptimization: onlyOptimizationFromLocalStorage && onlyOptimizationFromLocalStorage,
     onlyActiveOnAmazon: false,
     selectedProduct: {
         optimization_strategy: '',
@@ -25,7 +26,8 @@ export function products(state = initialState, action) {
                 ...state,
                 productList: action.payload.result,
                 totalSize: action.payload.fetching ? state.totalSize : action.payload.totalSize,
-                fetching: action.payload.fetching
+                fetching: action.payload.fetching,
+                selectedProduct: action.payload.result && action.payload.result.length > 0 ? action.payload.result[0] : {}
             };
 
         case productsConstants.UPDATE_SELECTED_PRODUCT:
@@ -103,15 +105,18 @@ export function products(state = initialState, action) {
                 selectedAll: action.payload,
             };
 
+        case productsConstants.SET_FETCHING_STATE:
+            return {
+                ...state,
+                fetching: action.payload,
+            };
+
         case productsConstants.SHOW_ONLY_OPTIMIZED:
+            localStorage.setItem('onlyOptimization', JSON.stringify(action.payload));
+
             return {
                 ...state,
                 onlyOptimization: action.payload
-            };
-        case productsConstants.SHOW_ONLY_ON_DAYPARTING:
-            return {
-                ...state,
-                onlyOnDayparting: action.payload
             };
 
         case productsConstants.SHOW_ONLY_ACTIVE:
@@ -130,31 +135,6 @@ export function products(state = initialState, action) {
             return {
                 ...state,
                 dontShowStopNotificationAgain: action.payload
-            };
-
-
-        case productsConstants.ACTIVATED_DAYPARTING:
-            return {
-                ...state,
-                productList: state.productList.map(item => {
-                    if (item.id === action.payload) {
-                        item.hasEnabledDayparting = true;
-                    }
-
-                    return item;
-                })
-            };
-
-        case productsConstants.DEACTIVATED_DAYPARTING:
-            return {
-                ...state,
-                productList: state.productList.map(item => {
-                    if (item.id === action.payload) {
-                        item.hasEnabledDayparting = false;
-                    }
-
-                    return item;
-                })
             };
 
         case productsConstants.CAMPAIGN_BUDGET:

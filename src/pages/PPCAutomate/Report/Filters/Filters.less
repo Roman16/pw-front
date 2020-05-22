@@ -2,32 +2,152 @@
   width: 100%;
   min-height: 4.285714285714286rem;
   background: #fff;
-  padding: 0 1.4285714285714286rem;
+  padding: 1.0714285714285714rem 1.4285714285714286rem 0.35714285714285715rem;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
   border-bottom: 1px solid #C9CBD4;
 
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
 
   p {
+    height: 2.28571429rem;
     font-size: 1rem;
     color: #343C5A;
-    margin: 0;
+    margin: 0 15px 0.7142857142857143rem 0;
+    display: flex;
+    align-items: center;
   }
 
-  button {
+  .add-filter {
     width: 2.2857142857142856rem;
     height: 2.2857142857142856rem;
     padding: 0;
     border-radius: 50%;
     position: relative;
-    margin: 0 0 0 15px;
     text-align: center;
+    margin: 0 15px 0 0;
 
     svg {
       use {
         stroke: #fff;
       }
+    }
+  }
+
+  .reset-btn {
+    height: 2.28571429rem;
+    color: #6D6DF6;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+
+
+  .filter-item {
+    background: #6D6DF6;
+    border-radius: 2.857142857142857rem;
+    height: 2.2857142857142856rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1.0714285714285714rem;
+    color: #fff;
+    font-size: 0.8571428571428571rem;
+    font-weight: 500;
+    margin: 0 15px 10px 0;
+
+    i {
+      margin: 0 0 0 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+
+      svg {
+        use {
+          stroke: #fff;
+        }
+      }
+    }
+  }
+}
+
+.filter-popover {
+  .ant-popover-inner-content {
+    max-width: max-content;
+    padding: 1.4285714285714286rem;
+  }
+
+  .ant-popover-content > .ant-popover-arrow {
+    left: 12px;
+    background: #fff;
+  }
+}
+
+.filter-variables {
+  display: flex;
+  flex-direction: column;
+
+  .custom-tooltip {
+    display: none;
+  }
+
+  .row {
+    display: flex;
+
+    .form-group {
+      width: 170px;
+      margin: 0 15px 0 0;
+      height: max-content;
+
+      &:last-child {
+        margin: 0;
+      }
+    }
+
+    .InputCurrency {
+      height: 2.2857142857142856rem;
+    }
+
+    .custom-select {
+      width: 100%;
+      flex: 1;
+      min-width: 10rem;
+      height: 2.2857142857142856rem;
+
+      &:nth-child(3) {
+        margin: 0;
+      }
+
+      .ant-select-selection-selected-value,
+      .ant-select-selection__placeholder {
+        padding-left: 1.0714285714285714rem;
+        //display: flex !important;
+      }
+
+    }
+  }
+
+  .DatePicker {
+    max-width: 170px;
+
+    .ant-calendar-picker,
+    .ant-input {
+      width: 100%;
+      text-align: left;
+    }
+
+    .DateIcon {
+      display: none;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0 0 0;
+
+    button:last-child {
+      margin: 0 0 0 15px;
     }
   }
 }

@@ -1,49 +1,39 @@
 import api from './request';
 import {reportsUrls} from '../constans/api.urls';
+import moment from "moment";
 
 export const reportsServices = {
-    getLastReports,
     getAllReports
 };
 
-function getLastReports(id) {
-    return api('get', `${reportsUrls.lastReports}?product_id=${id}`)
-}
-
-function getAllReports(options, cancelToken) {
+function getAllReports(type, options, cancelToken) {
     const {
         id,
         page = 1,
         pageSize = 10,
-        dataType = 'keywords-optimization',
-        dataSubType = 'changed-keyword-bid-acos',
-        startDate,
-        endDate,
-        filteredColumns,
+        filters,
         sorterColumn
     } = options;
 
-    const parameters = [
-        startDate ? `&start_date=${startDate}` : '',
-        endDate ? `&end_date=${endDate}` : '',
-    ];
+    const parameters = [];
 
-    Object.keys(filteredColumns).forEach(key => {
-        if (filteredColumns[key] != null) {
-            if ((typeof filteredColumns[key] === 'object') && !Array.isArray(filteredColumns[key])) {
-                parameters.push(`&${key}:${filteredColumns[key].type}=${filteredColumns[key].value}`)
-            } else if (typeof filteredColumns[key] === 'string') {
-                parameters.push(`&${key}:search=${filteredColumns[key]}`)
-            } else if (Array.isArray(filteredColumns[key])) {
-                parameters.push(`&${key}:in=${filteredColumns[key].join(',')}`)
-            }
+    filters.forEach(({filterBy, type, value}) => {
+        if (filterBy === 'datetime') {
+            parameters.push(`&datetime:range=${moment.tz(`${moment(value.startDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${moment.tz(`${moment(value.endDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
+        } else if (filterBy === 'object' || filterBy === 'keyword_pt' || filterBy === 'campaign_name' || filterBy === 'ad_group_name') {
+            parameters.push(`&${filterBy === 'keyword_pt' ? 'object' : filterBy}:${type.key}=${value}`)
+        } else if (filterBy === 'object_type' || filterBy === 'match_type') {
+            parameters.push(`&object_type:in=${value.join(',')}`)
+        } else if (filterBy === 'impressions' || filterBy === 'clicks' || filterBy === 'spend' || filterBy === 'sales' || filterBy === 'acos') {
+            parameters.push(`&${filterBy}:${type.key}=${value}`)
+        } else if (filterBy === 'keyword_id') {
+            parameters.push(`&keyword_id:eq=${value}`)
         }
-    });
-
+    })
 
     if (sorterColumn.type) {
-        parameters.push(`&order_by:${sorterColumn.type}=${sorterColumn.key}`)
+        parameters.push(`&order_by:${sorterColumn.type}=${sorterColumn.column}`)
     }
 
-    return api('get', `${reportsUrls.allReports}?product_id=${id}&page=${page}&size=${pageSize}&data_type=${dataType}&data_sub_type=${dataSubType}${parameters.join('')}`, false, false, cancelToken)
+    return api('get', `${reportsUrls.reports}/${type}?product_id=${id}&page=${page}&size=${pageSize}${parameters.join('')}`, false, false, cancelToken)
 }

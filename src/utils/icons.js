@@ -178,12 +178,6 @@ const files = {
             viewBox: [0, 0, 24, 24],
             data: '<path xmlns="http://www.w3.org/2000/svg" fill="none" d="M0 0h24v24H0V0z"/><path xmlns="http://www.w3.org/2000/svg" fill="#6d6df6" d="M11 18h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1zm4 6h10c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1z"/>'
         },
-        'filter-icon': {
-            width: 24,
-            height: 24,
-            viewBox: [0, 0, 24, 24],
-            data: '<path xmlns="http://www.w3.org/2000/svg" fill="none" d="M0 0h24v24H0V0z"/><path xmlns="http://www.w3.org/2000/svg" fill="#9b9b9b" d="M11 18h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1zm4 6h10c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1z"/>'
-        },
         'footer-subs-arrow': {
             width: 27,
             height: 27,
@@ -290,7 +284,7 @@ const files = {
             width: 18,
             height: 18,
             viewBox: [0, 0, 18, 18],
-            data: '<path xmlns="http://www.w3.org/2000/svg" fill="black" stroke="#6D6DF6" d="M8 8.5H8.5V8V1C8.5 0.723857 8.72386 0.5 9 0.5C9.27614 0.5 9.5 0.723857 9.5 1V8V8.5H10H17C17.2761 8.5 17.5 8.72386 17.5 9C17.5 9.27614 17.2761 9.5 17 9.5H10H9.5V10V17C9.5 17.2761 9.27614 17.5 9 17.5C8.72386 17.5 8.5 17.2761 8.5 17V10V9.5H8H1C0.723857 9.5 0.5 9.27614 0.5 9C0.5 8.72386 0.723857 8.5 1 8.5H8Z"/>'
+            data: '<path xmlns="http://www.w3.org/2000/svg" fill="black" d="M8 8.5H8.5V8V1C8.5 0.723857 8.72386 0.5 9 0.5C9.27614 0.5 9.5 0.723857 9.5 1V8V8.5H10H17C17.2761 8.5 17.5 8.72386 17.5 9C17.5 9.27614 17.2761 9.5 17 9.5H10H9.5V10V17C9.5 17.2761 9.27614 17.5 9 17.5C8.72386 17.5 8.5 17.2761 8.5 17V10V9.5H8H1C0.723857 9.5 0.5 9.27614 0.5 9C0.5 8.72386 0.723857 8.5 1 8.5H8Z"/>'
         },
         'plus-green': {
             width: 10,
@@ -659,18 +653,38 @@ const files = {
         'remove-filter-icon': {
             width: 10,
             height: 10,
-            viewBox: [0,0,10,10],
-            data: '<path xmlns="http://www.w3.org/2000/svg" stroke="white" stroke-linecap="round" d="M0.999939 1L8.99994 9M0.999939 9L8.99994 1"/>'
+            viewBox: [0, 0, 10, 10],
+            data: '<path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" d="M0.999939 1L8.99994 9M0.999939 9L8.99994 1"/>'
         },
         'change-bid-icon': {
             width: 9,
             height: 13,
-            viewBox: [0,0,9,13],
+            viewBox: [0, 0, 9, 13],
             data: '<path xmlns="http://www.w3.org/2000/svg" stroke="#343C5A" stroke-linecap="round" stroke-linejoin="round" d="M8 8.75L4.25 12.5M4.25 12.5L0.499999 8.75M4.25 12.5L4.25 0.5"/>'
+        },
+        'filter-icon': {
+            width: 16,
+            height: 14,
+            viewBox: [0, 0, 16, 14],
+            data: '<path xmlns="http://www.w3.org/2000/svg" d="M15.8328 1.10128L10.0669 7.62003V11.7814C10.0669 11.9273 9.98596 12.0643 9.85346 12.1355L6.56474 13.9466C6.50033 13.9822 6.42856 14 6.35494 14C6.28133 14 6.20771 13.9822 6.1433 13.9448C6.01448 13.8719 5.9335 13.7367 5.9335 13.5926V7.62003L0.167672 1.10128C-0.0108424 0.900241 -0.0494898 0.628034 0.0646122 0.387851C0.178714 0.147668 0.4198 0 0.692173 0H15.3064C15.5788 0 15.8199 0.149447 15.934 0.387851C16.0499 0.626255 16.0113 0.900241 15.8328 1.10128Z"/>'
+        },
+        'upward-metric-changes': {
+            width: 6,
+            height: 5,
+            viewBox: [0, 0, 6, 5],
+            data: '<path xmlns="http://www.w3.org/2000/svg" fill="#7DD4A1" d="M3 0L5.59808 4.5H0.401924L3 0Z"/>'
+        },
+        'downward-metric-changes': {
+            width: 6,
+            height: 5,
+            viewBox: [0, 0, 6, 5],
+            data: '<path xmlns="http://www.w3.org/2000/svg" fill="#EC7F5C" d="M3 5L5.59808 0.5H0.401924L3 5Z"/>'
         }
 
     },
     allIds: [
+        'upward-metric-changes',
+        'downward-metric-changes',
         'change-bid-icon',
         'remove-filter-icon',
         'sorter-arrow',

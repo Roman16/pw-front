@@ -1,17 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {func, bool, string} from 'prop-types';
-import {Icon, Popover} from 'antd';
+import {SVG} from "../../utils/icons";
 import InformationTooltip from "../Tooltip/Tooltip";
-import {productsActions} from "../../actions/products.actions";
-import {useDispatch} from "react-redux";
-
-const maxText = (text, length = 60) => {
-    if (text && text.length > length) {
-        return `${text.slice(0, length)}...`;
-    }
-
-    return text;
-};
 
 const ProductItem = ({
                          product: {id, asin, name, sku, image_url, under_optimization, has_optimization_results, variations},
@@ -20,7 +10,7 @@ const ProductItem = ({
                          isActive,
                          onOpenChild,
                          openedProduct,
-                         pathname
+                         openedProductOnSetting
                      }) => {
 
     const switchList = (e) => {
@@ -28,67 +18,54 @@ const ProductItem = ({
         onOpenChild(id)
     };
 
-    const dispatch = useDispatch();
-
-    // useEffect(() => {
-    //     dispatch(productsActions.fetchProductDetails({id: null}));
-    // }, []);
-
     return (
         <div
             className={`product-item ${isActive ? 'active' : ''}`}
             onClick={() => onClick(product)}
-            title={name}
         >
-            <div className='product-information'>
+            <div className={`product-information ${openedProduct === id && 'opened-child-list'}`}>
                 <div className="image-block">
                     <div className="image">
                         <img src={image_url} alt=""/>
                     </div>
-
-                    {variations && <div className={`open-children-list-button ${openedProduct === id && 'opened'}`}
-                                        onClick={switchList}>
-                        {variations && variations.length}
-                        <Icon type="caret-down"/>
-                    </div>}
                 </div>
 
 
                 <div className="product-item-content">
-                    <div className="caption">
+                    <div className="caption" title={name}>
                         <span className={'short-name'}>{name}</span>
-
-                        {product.has_new_changes && pathname === '/ppc/report' &&
-                        <div className='has-new-reports'>New</div>}
-
-                        {/*<div className='full-name'>*/}
-                        {/*    {name}*/}
-                        {/*</div>*/}
                     </div>
 
 
                     <div className='detail'>
-                        <div className="asin">
+                        <div className="asin" title={asin}>
                             <span> ASIN: </span>
                             <span>{asin}</span>
                         </div>
 
-                        <div className="sku">
+                        <div className="sku" title={sku}>
                             <span> SKU: </span>
                             <span>{sku}</span>
                         </div>
                     </div>
                 </div>
 
+                <div
+                    className={`open-children-list-button ${variations ? 'has-variations' : ''} ${(openedProduct === id || openedProductOnSetting === id) ? 'opened' : ''}`}
+                    onClick={variations && switchList}
+                >
+                    {variations && <SVG id='select-icon'/>}
+                </div>
+
                 <div className='optimization-status'>
-                    {/*{true && <InformationTooltip*/}
+                    {/*<InformationTooltip*/}
                     {/*    arrowPointAtCenter={true}*/}
                     {/*    type={'custom'}*/}
                     {/*    description={'Product has new changes'}*/}
                     {/*    position={'topRight'}*/}
                     {/*>*/}
                     {/*    <div className='has-changes'/>*/}
-                    {/*</InformationTooltip>}*/}
+                    {/*</InformationTooltip>*/}
 
                     {under_optimization && has_optimization_results && <InformationTooltip
                         arrowPointAtCenter={true}
@@ -102,7 +79,7 @@ const ProductItem = ({
                     {under_optimization && !has_optimization_results && <InformationTooltip
                         arrowPointAtCenter={true}
                         type={'custom'}
-                        description={'Optimization in progress ...'}
+                        description={'Waiting for data'}
                         position={'topRight'}
                     >
                         <div className='optimization-processing'/>
@@ -113,21 +90,26 @@ const ProductItem = ({
 
             {(variations) && (openedProduct === id) && <div className='product-children-list'>
                 {variations.map(childrenProduct => (
-                    <div key={childrenProduct.id} className='children-information'>
-                        <img src={childrenProduct.image_url} alt=""/>
+                    <div className={'children-product-item'}>
+                        <div className="children-indicator"/>
 
-                        <div className="product-item-content">
-                            <div className="caption">{maxText(childrenProduct.name, 70)}</div>
+                        <div key={childrenProduct.id} className='children-information'>
 
-                            <div className='detail'>
-                                <div className="asin">
-                                    <span> ASIN: </span>
-                                    <span>{childrenProduct.asin}</span>
-                                </div>
+                            <img src={childrenProduct.image_url} alt=""/>
 
-                                <div className="sku">
-                                    <span> SKU: </span>
-                                    <span>{childrenProduct.sku}</span>
+                            <div className="product-item-content">
+                                <div className="caption">{childrenProduct.name}</div>
+
+                                <div className='detail'>
+                                    <div className="asin">
+                                        <span> ASIN: </span>
+                                        <span>{childrenProduct.asin}</span>
+                                    </div>
+
+                                    <div className="sku">
+                                        <span> SKU: </span>
+                                        <span>{childrenProduct.sku}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 
@@ -8,7 +8,13 @@ import aircraftImage from '../../../assets/img/landing-video/aircraft.svg';
 import './Video.less';
 import {history} from "../../../utils/history";
 
-const Video = () => {
+const Video = (props) => {
+    useEffect(() => {
+        if (props.match.params.block) {
+            document.getElementById(props.match.params.block).scrollIntoView();
+        }
+    }, [])
+
     return (
         <div className='landing-video'>
             <Header/>
@@ -30,47 +36,48 @@ const Video = () => {
                         <br/>
                         <p>Follow the directions below on how to setup Profit Whales Automation Software for optimizing
                             your Amazon PPC Campaigns.</p>
-                    {/*    <br/>*/}
-                    {/*    <p><strong>Take action to get closer to your business goals!</strong></p>*/}
-                    {/*    <br/>*/}
-                    {/*    <p>This guide will help set you up and show you how to take all these actions for your*/}
-                    {/*        business.</p>*/}
-                    {/*    <br/>*/}
-                    {/*    <p><strong> Let’s take off!</strong></p>*/}
-                    {/*    <br/>*/}
-                    {/*    <p><strong>P.S.</strong> Сheck the requirements for the Amazon PPC Automation:</p>*/}
-                    {/*    <div className="list-item">Available for US Amazon Sellers only;</div>*/}
-                    {/*    <div className="list-item">one active product per Ad Group or a product with its variations;*/}
-                    {/*    </div>*/}
+                        {/*    <br/>*/}
+                        {/*    <p><strong>Take action to get closer to your business goals!</strong></p>*/}
+                        {/*    <br/>*/}
+                        {/*    <p>This guide will help set you up and show you how to take all these actions for your*/}
+                        {/*        business.</p>*/}
+                        {/*    <br/>*/}
+                        {/*    <p><strong> Let’s take off!</strong></p>*/}
+                        {/*    <br/>*/}
+                        {/*    <p><strong>P.S.</strong> Сheck the requirements for the Amazon PPC Automation:</p>*/}
+                        {/*    <div className="list-item">Available for US Amazon Sellers only;</div>*/}
+                        {/*    <div className="list-item">one active product per Ad Group or a product with its variations;*/}
+                        {/*    </div>*/}
                     </div>
 
-                    <div className="video-item">
-                        <h2>Connect Amazon MWS Account to Profit Whales Software</h2>
+                    <div className="video-item" id={'mws'}>
+                        <h2>Connect Amazon MWS/Seller Central Account to Profit Whales Software</h2>
 
-                        <iframe src="https://www.youtube.com/embed/lKbV7iOOtDw"
+                        <iframe src="https://www.youtube.com/embed/vwhajStS8L0"
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen/>
-                    </div>
 
-                    <div className="video-item">
-                        <h2>Link Profit Whales Tool to your Amazon PPC Account</h2>
-                        <p>
+
+                        <p style={{marginTop: '50px'}}>
                             Wait till we are gathering all the data from your account.
                         </p>
 
                         <p>
                             Need any help with the registration procedure? - Here is our <a target={'_blank'}
                                                                                             href="https://intercom.help/profitwhales/en/articles/3763624-registration-procedure">Help
-                            Center</a> or contact us using
-                            the chat button in the right corner inside the software.
+                            Center</a> or contact us using the chat button in the right corner inside the software.
                         </p>
-
-                        <iframe src="https://www.youtube.com/embed/SRhhgDVB0jk"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen/>
                     </div>
+
+                    {/*<div className="video-item" id={'ppc'}>*/}
+                    {/*    /!*<h2>Link Profit Whales Tool to your Amazon PPC Account</h2>*!/*/}
+
+                    {/*    /!*<iframe src="https://www.youtube.com/embed/SRhhgDVB0jk"*!/*/}
+                    {/*    /!*        frameBorder="0"*!/*/}
+                    {/*    /!*        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"*!/*/}
+                    {/*    /!*        allowFullScreen/>*!/*/}
+                    {/*</div>*/}
 
                     <div className="video-item">
                         <h2>Where is the START button? - Optimization Setup Tutorial</h2>

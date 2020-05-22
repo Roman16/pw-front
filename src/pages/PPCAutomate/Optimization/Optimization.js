@@ -3,7 +3,6 @@ import {useSelector, useDispatch} from "react-redux";
 import {Drawer} from "antd";
 import axios from "axios";
 
-import FreeTrial from "../../../components/FreeTrial/FreeTrial";
 import OptimizationStrategy from "./OptimizationStrategy/OptimizationStrategy";
 import OptionsInfo from "./InfoDrawers/OptionInfo/OptionInfo";
 import StrategyInfo from "./InfoDrawers/StrategyInfo/StrategyInfo";
@@ -32,16 +31,16 @@ const Optimization = () => {
 
     const dispatch = useDispatch();
 
-    const {productId, selectedAll, type, productList} = useSelector(state => ({
-        productId: state.products.selectedProduct.id,
-        type: state.products.selectedProduct.type,
+    const {productId, selectedAll, productList, productsFetching} = useSelector(state => ({
+        productId: state.products.selectedProduct.id || null,
         selectedAll: state.products.selectedAll,
         productList: state.products.productList,
+        productsFetching: state.products.fetching,
     }));
 
 
     useEffect(() => {
-        if ((selectedAll || productId) && type === 'product' && productList.length > 0) {
+        if ((selectedAll || productId) && productList.length > 0 && !productsFetching) {
             setProcessing(true);
 
             async function fetchProductDetails() {
@@ -65,14 +64,6 @@ const Optimization = () => {
 
     }, [productId, selectedAll]);
 
-    useEffect(() => {
-        window.onbeforeunload = function() {
-            dispatch(productsActions.fetchProductDetails({id: null}));
-
-            this.onUnload();
-            return "";
-        }.bind(this);
-    }, []);
 
     async function startOptimizationHandler(optimization_strategy, targetAcosValue, netMargin) {
         setProcessing(true);
@@ -185,8 +176,6 @@ const Optimization = () => {
     return (
         <Fragment>
             <div className="optimization-page">
-                <FreeTrial product={'ppc'}/>
-
                 <div className="product-optimization-info">
                     <OptimizationIncludes
                         onShowDrawer={showDrawerHandler}

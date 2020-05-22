@@ -1,0 +1,119 @@
+.pw-tree-select {
+  .ant-select {
+    width: 100%;
+    cursor: pointer;
+
+    &.ant-select-open {
+      .ant-select-selection {
+        border-color: #6D6DF6 !important;
+      }
+    }
+
+    .ant-select-selection {
+      border: 1px solid #C9CBD4;
+      box-shadow: none;
+
+      &:hover {
+        border-color: #343C5A;
+        outline: none;
+      }
+    }
+
+    .ant-select-selection--multiple {
+      padding: 0;
+    }
+  }
+
+  .ant-select-search__field__placeholder {
+    margin-top: -9px;
+    color: rgba(101, 106, 132, 0.4);
+  }
+
+  .ant-select-selection__rendered {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 0 0 10px;
+    cursor: pointer;
+
+    li {
+      border: 0;
+      background: 0;
+      margin: 0;
+      height: 100%;
+      float: none;
+      display: flex;
+      align-items: center;
+      padding: 0 10px 0 0;
+      cursor: pointer;
+
+      &.ant-select-selection__choice::after {
+        content: ',';
+      }
+
+      &:last-child::after {
+        display: none;
+      }
+
+      .ant-select-selection__choice__remove {
+        display: none;
+      }
+    }
+  }
+
+  .ant-select-dropdown {
+    ul.ant-select-tree {
+      padding: 0;
+    }
+
+    li {
+      padding: 5px 0 5px 12px;
+      margin: 0;
+
+      .ant-select-tree-checkbox-inner {
+        border-radius: 3px;
+      }
+
+      .ant-select-tree-checkbox-checked {
+        .ant-select-tree-checkbox-inner {
+          background: url(../../assets/img/icons/checked-checkbox.svg) no-repeat center center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+          border-color: #6d6df6;
+          border-radius: 3px;
+
+          &::after {
+            display: none;
+          }
+        }
+      }
+
+      .ant-select-tree-checkbox-checked::after {
+        border-color: #6d6df6;
+        border-radius: 3px;
+      }
+
+      .ant-select-tree-checkbox:hover {
+        .ant-select-tree-checkbox-inner {
+          border-color: #6d6df6;
+        }
+      }
+
+      .ant-select-tree-switcher {
+        display: none;
+      }
+
+      .ant-select-tree-node-content-wrapper-normal {
+        width: calc(100% - 20px) !important;
+        padding: 0 0 0 5px;
+
+        &:hover {
+          background: #F5F5FF;
+        }
+      }
+    }
+  }
+}

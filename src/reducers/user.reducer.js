@@ -57,6 +57,17 @@ export function user(state = initialState, action) {
                 }]
             };
 
+        case userConstants.SET_BOOTSTRAP:
+            return {
+                ...state,
+                notifications: {
+                    ...state.notifications,
+                    account_bootstrap: {
+                        bootstrap_in_progress: action.payload
+                    }
+                }
+            };
+
         case userConstants.UNSET_AMAZON_MWS:
             return {
                 ...state,

@@ -59,7 +59,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                     </div>
                 </div>
             )
-        } else if (name === 'cpc' || name === 'acos' || name === 'cpa' || name === 'macos' || name === 'returns'|| name === 'returns_units') {
+        } else if (name === 'cpc' || name === 'acos' || name === 'cpa' || name === 'macos' || name === 'returns' || name === 'returns_units') {
             return (
                 <InformationTooltip
                     type='custom'
@@ -71,12 +71,17 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                     />}>
                     <div className='metric-item__changes'>
                         {(diff > 0) && <div className='downward-changes'>
+                            <i style={{transform: 'rotate(180deg)'}}>
+                                <SVG style={{transform: 'rotate(180deg)'}} id='downward-metric-changes'/>
+                            </i>
                             {round(Math.abs(+diff), 2)}%
-                            <SVG style={{transform: 'rotate(180deg)'}} id='up-white-arrow'/>
                         </div>}
                         {(diff <= 0) && <div className='upward-changes'>
+                            <i style={{transform: 'rotate(180deg)'}}>
+                                <SVG id='upward-metric-changes'/>
+                            </i>
+
                             {round(Math.abs(+diff), 2)}%
-                            <SVG style={{transform: 'rotate(180deg)'}} id='down-white-arrow'/>
                         </div>}
                     </div>
                 </InformationTooltip>
@@ -102,13 +107,17 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                 </p>}>
                 <div className='metric-item__changes'>
                     {(value > prevValue) && <div className='upward-changes'>
+                        <i>
+                            <SVG id='upward-metric-changes'/>
+                        </i>
                         ${numberMask(diffValue, 2)}
-                        <SVG id='up-white-arrow'/>
                     </div>}
 
                     {(value <= prevValue) && <div className='downward-changes'>
+                        <i>
+                            <SVG id='downward-metric-changes'/>
+                        </i>
                         ${numberMask(diffValue, 2)}
-                        <SVG id='down-white-arrow'/>
                     </div>}
                 </div>
             </InformationTooltip>)
@@ -125,12 +134,16 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
 
                     <div className='metric-item__changes'>
                         {(diff > 0) && <div className='upward-changes'>
+                            <i>
+                                <SVG id='upward-metric-changes'/>
+                            </i>
                             {round(Math.abs(+diff), 2)}%
-                            <SVG id='up-white-arrow'/>
                         </div>}
                         {(diff <= 0) && <div className='downward-changes'>
+                            <i>
+                                <SVG id='downward-metric-changes'/>
+                            </i>
                             {round(Math.abs(+diff), 2)}%
-                            <SVG id='down-white-arrow'/>
                         </div>}
                     </div>
                 </InformationTooltip>
@@ -194,7 +207,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
 
 
             <div className="title-info">
-                <span dangerouslySetInnerHTML={{__html: metricInformation.title}}/>
+                <span title={metricInformation.title} dangerouslySetInnerHTML={{__html: metricInformation.title}}/>
                 {key === 'profit' ?
                     !hasMargin &&
                     <Tooltip
@@ -206,26 +219,28 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
                 }
 
                 <div className="close" onClick={handleRemoveItem}>
-                    <SVG id='close'/>
+                    <SVG id='remove-filter-icon'/>
                 </div>
             </div>
 
-            <RenderMetricChanges
-                value={metric_value}
-                diff={metric_diff}
-                type={type}
-                name={key}
-                prevValue={metric_prev_value}
-            />
+            <div className="value">
+                <RenderMetricValue
+                    value={metric_value}
+                    type={type}
+                />
+            </div>
+
 
             <div className='metric-item__description'>
-                <div className="value">
-                    <RenderMetricValue
-                        value={metric_value}
-                        type={type}
-                    />
-                </div>
                 <div className='label'>{label}</div>
+
+                <RenderMetricChanges
+                    value={metric_value}
+                    diff={metric_diff}
+                    type={type}
+                    name={key}
+                    prevValue={metric_prev_value}
+                />
             </div>
         </div>
     )

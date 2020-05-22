@@ -55,6 +55,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                         setPageStatus('error');
                     } else if ((win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'SUCCESS') || (win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'IN_PROGRESS')) {
                         dispatch(userActions.setPpcStatus({status: win.location.search.split('?status=')[1]}));
+                        dispatch(userActions.setBootstrap(true));
                         // setPageStatus('success');
                         onGoNextStep();
                     } else if (win.location.search && win.location.search.indexOf('?error_message=') !== -1) {
@@ -82,8 +83,10 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
             <Fragment>
                 <section className='connect-ppc-section'>
                     <h2>Connect Amazon Advertising</h2>
-                    <p>To use Profit Whales we need access to your Amazon Advertising <br/> account. Please grant
-                        access.
+                    <Link to={'/videos/mws'} target="_blank">View Detailed Instructions</Link>
+                    <p>To use Profit Whales, we need access to your Amazon Advertising
+                        profile that is attached to the primary account that you used when connecting MWS. Click the
+                        button below to grant access.
                     </p>
 
                     <div className="actions">

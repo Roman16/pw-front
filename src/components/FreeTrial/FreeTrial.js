@@ -10,8 +10,7 @@ const FreeTrial = ({product}) => {
         onTrial: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]] && state.user.subscriptions[Object.keys(state.user.subscriptions)[0]].on_trial,
     }));
 
-    const todayDate = moment(new Date());
-    const freeTrial = Math.round(moment(trialEndsDate).diff(todayDate, 'hours') / 24);
+    const freeTrial = Math.round(moment(trialEndsDate).diff(moment(new Date()), 'hours') / 24);
 
     if (onTrial) {
         return (

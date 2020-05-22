@@ -3,7 +3,7 @@ import LoginPageForm from './LoginPageForm/LoginPageForm';
 import './LoginPage.less';
 import {history} from "../../../utils/history";
 import logo from '../../../assets/img/ProfitWhales-logo-white.svg';
-import useScript from "../../../utils/useScript";
+import useScript from "../../../utils/hooks/useScript";
 import {Link} from "react-router-dom";
 
 const LoginPage = () => {

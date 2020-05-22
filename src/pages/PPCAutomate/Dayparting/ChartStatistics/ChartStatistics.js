@@ -20,8 +20,8 @@ const ChartStatistics = ({date}) => {
         [processing, setProcessing] = useState(false);
 
     const {campaignId, fetchingCampaignList} = useSelector(state => ({
-        campaignId: state.products.selectedProduct.id,
-        fetchingCampaignList: state.products.fetching,
+        campaignId: state.dayparting.selectedCampaign.id,
+        fetchingCampaignList: state.dayparting.processing,
     }));
 
     useEffect(() => {
@@ -31,9 +31,7 @@ const ChartStatistics = ({date}) => {
 
             if (campaignId == null) {
                 setData([])
-            }
-
-            if (!fetchingCampaignList) {
+            } else if (!fetchingCampaignList) {
                 setProcessing(true);
                 localFetching = true;
 

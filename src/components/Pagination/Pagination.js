@@ -61,7 +61,9 @@ const Pagination = ({
     return (
         <div className="pw-pagination">
             <div className="page-size">
-                Items per page:
+                <label>
+                    Items per page:
+                </label>
 
                 <CustomSelect
                     onChange={changePageSizeHandler}
@@ -91,7 +93,7 @@ const Pagination = ({
 
                 <button
                     className={'next-page'}
-                    disabled={paginationParams.page >= Math.ceil(totalSize / paginationParams.pageSize)}
+                    disabled={page >= Math.ceil(totalSize / pageSize)}
                     onClick={goNextPage}
                 >
                     <SVG id={'select-icon'}/>
