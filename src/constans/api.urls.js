@@ -41,6 +41,7 @@ export const productsUrls = {
     allProducts: 'products/list',
     productsSettingsList: 'products/settings/list',
     updateSettings: 'products/settings',
+    updateSettingsByProducts: 'products/settings/bulk',
     saveProductData: 'ppc-automation/start',
     productDetails: (id) => `products/${id}/details`,
 };

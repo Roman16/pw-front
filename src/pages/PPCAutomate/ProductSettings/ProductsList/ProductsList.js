@@ -78,8 +78,8 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
 
     const onSubmitSettingParams = (value) => {
         updateSettingsHandlerByIdList({
-            id: selectedAll ? 'all' : selectedRows,
-            ...value
+            ...value,
+            ...!selectedAll && {product_id: selectedRows},
         })
     }
 
@@ -169,7 +169,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 width: '135px',
-                render: (props) => (<span> {props[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> : <span className={'paused'}>Paused</span>}</span>)
+                render: (props) => (
+                    <span> {props[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
+                        <span className={'paused'}>Paused</span>}</span>)
             },
         ];
 
@@ -354,7 +356,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             dataIndex: OPTIMIZATION_STATUS,
             key: OPTIMIZATION_STATUS,
             width: '135px',
-            render: (index, item) => (<span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> : <span className={'paused'}>Paused</span>}</span>)
+            render: (index, item) => (
+                <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
+                    <span className={'paused'}>Paused</span>}</span>)
         }
     ];
 

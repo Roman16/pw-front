@@ -34,7 +34,7 @@ function updateProductSettings(parameters) {
 }
 
 function updateProductSettingsByIdList(params) {
-    return api('post', `${productsUrls.updateSettings}`, params)
+    return api('post', `${productsUrls.updateSettingsByProducts}`, params)
 }
 
 function updateProductTargetAcos(acos) {

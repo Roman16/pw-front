@@ -24,7 +24,7 @@ const Filters = ({onChangeSearch, onChangeSwitch}) => {
                 />
 
                 <label htmlFor="">
-                    Show only Active Listings on Amazon
+                    Show only active listings
                 </label>
             </div>
 
@@ -34,7 +34,7 @@ const Filters = ({onChangeSearch, onChangeSwitch}) => {
                 />
 
                 <label htmlFor="">
-                    On optimization only
+                    Products under optimization
                 </label>
             </div>
         </div>
