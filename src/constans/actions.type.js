@@ -70,3 +70,11 @@ export const daypartingConstants = {
     ACTIVATED_DAYPARTING: 'ACTIVATED_DAYPARTING',
     DEACTIVATED_DAYPARTING: 'DEACTIVATED_DAYPARTING',
 };
+
+//--------------------------------------------
+//---------- zero to hero constants-----------
+//--------------------------------------------
+export const zthConstants = {
+    SET_CAMPAIGN: 'SET_CAMPAIGN',
+    SET_PRODUCT_AMOUNT: 'SET_PRODUCT_AMOUNT',
+};

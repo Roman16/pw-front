@@ -14,6 +14,10 @@ import CampaignList from "../components/CampaignList/CampaignList";
 import {userService} from "../services/user.services";
 
 
+const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/ChooseCampaign'));
+const Marketing = React.lazy(() => import('./ZeroToHero/Marketing/Marketing'));
+const CreatingCampaign = React.lazy(() => import('./ZeroToHero/CreatingCampaign/CreatingCampaign'));
+const Settings = React.lazy(() => import('./ZeroToHero/Settings/Settings'));
 const Optimization = React.lazy(() => import('./PPCAutomate/Optimization/Optimization'));
 const Report = React.lazy(() => import('./PPCAutomate/Report/Report'));
 const ProductSettings = React.lazy(() => import('./PPCAutomate/ProductSettings/ProductSettings'));
@@ -209,6 +213,16 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
                                     <AdminRoute exact path="/admin-panel" component={AdminPanel}/>
                                     {/*-------------------------------------------*/}
+
+                                    {/*ZERO TO HERO*/}
+                                    {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/campaign"
+                                                                        component={ChooseCampaign}/>}
+                                    {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/ppc-structure"
+                                                                        component={Marketing}/>}
+                                    {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/creating"
+                                                                        component={CreatingCampaign}/>}
+                                    {developer &&
+                                    <ConnectedAmazonRoute exact path="/zero-to-hero/settings" component={Settings}/>}
 
                                     <Route path={'*'} render={() => (
                                         <Redirect to={'/404'}/>

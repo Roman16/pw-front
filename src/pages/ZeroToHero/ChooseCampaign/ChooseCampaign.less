@@ -1,0 +1,56 @@
+@import "../../../style/variables.less";
+
+.choose-campaign {
+  background: #fff;
+  box-shadow: @default-section-shadow;
+  border-radius: 4px;
+
+  padding: 5.357142857142857rem 6.428571428571429rem;
+
+  h2 {
+    font-size: 2.2857142857142856rem;
+    color: #343C5A;
+    margin-bottom: 20px;
+  }
+
+  .campaign-types {
+    width: 100%;
+    display: grid;
+    grid-column-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fff;
+
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+
+
+      h3 {
+        font-size: 1.4285714285714286rem;
+        text-align: center;
+        color: #394163;
+        margin: 3.2142857142857144rem 0 1.4285714285714286rem 0;
+      }
+
+      p {
+        font-size: 1rem;
+        text-align: center;
+        color: #656A84;
+        margin: 0 0 2.142857142857143rem 0;
+        padding: 0 3.5714285714285716rem;
+      }
+
+      .btn {
+        width: 45%;
+        height: 3.4285714285714284rem;
+        font-size: 1.1428571428571428rem;
+        margin: auto 0 2.857142857142857rem 0;
+        font-weight: 500;
+      }
+    }
+  }
+}

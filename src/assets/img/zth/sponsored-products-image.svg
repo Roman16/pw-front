@@ -1,0 +1,88 @@
+<svg width="485" height="500" viewBox="0 0 485 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect opacity="0.5" width="485" height="500" rx="4" fill="#F5F5FF"/>
+<rect x="146" y="88" width="56" height="56" rx="4" fill="#C9CBD4"/>
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="146" y="88" width="56" height="56">
+<rect x="146" y="88" width="56" height="56" rx="4" fill="#C9CBD4"/>
+</mask>
+<g mask="url(#mask0)">
+<path opacity="0.5" d="M123 145L160.504 105.111L201.5 145L160.504 145L123 145Z" fill="#F9F9F9"/>
+<rect opacity="0.8" x="160.778" y="143.726" width="38.1111" height="38.1111" transform="rotate(-45 160.778 143.726)" fill="#F9F9F9"/>
+<circle cx="191.5" cy="104.722" r="4.27778" fill="#F9F9F9"/>
+</g>
+<rect opacity="0.5" x="218" y="91" width="57" height="8" rx="4" fill="#C9CBD4"/>
+<rect x="16" y="92" width="97" height="8" rx="4" fill="#C9CBD4"/>
+<rect x="41" y="36" width="145" height="8" rx="4" fill="#C9CBD4"/>
+<rect opacity="0.5" x="16" y="108" width="81" height="8" rx="4" fill="#C9CBD4"/>
+<rect opacity="0.5" x="16" y="124" width="41" height="8" rx="4" fill="#C9CBD4"/>
+<rect opacity="0.5" x="64" y="124" width="49" height="8" rx="4" fill="#C9CBD4"/>
+<rect x="16" y="140" width="97" height="8" rx="4" fill="#C9CBD4"/>
+<rect opacity="0.7" x="16" y="188" width="81" height="8" rx="4" fill="#C9CBD4"/>
+<rect opacity="0.5" x="16" y="156" width="81" height="8" rx="4" fill="#C9CBD4"/>
+<rect opacity="0.5" x="16" y="204" width="97" height="8" rx="4" fill="#C9CBD4"/>
+<rect opacity="0.5" x="16" y="252" width="97" height="8" rx="4" fill="#C9CBD4"/>
+<rect opacity="0.5" x="16" y="220" width="73" height="8" rx="4" fill="#C9CBD4"/>
+<rect x="16" y="236" width="97" height="8" rx="4" fill="#C9CBD4"/>
+<rect x="16" y="268" width="65" height="8" rx="4" fill="#C9CBD4"/>
+<rect x="16" y="172" width="49" height="8" rx="4" fill="#C9CBD4"/>
+<rect x="80" y="172" width="33" height="8" rx="4" fill="#C9CBD4"/>
+<rect x="339" y="88" width="32" height="32" rx="4" fill="#C9CBD4"/>
+<mask id="mask1" mask-type="alpha" maskUnits="userSpaceOnUse" x="339" y="88" width="32" height="32">
+<rect x="339" y="88" width="32" height="32" rx="4" fill="#C9CBD4"/>
+</mask>
+<g mask="url(#mask1)">
+<rect opacity="0.5" x="331.889" y="113.177" width="21.7778" height="21.7778" transform="rotate(-45 331.889 113.177)" fill="#F9F9F9"/>
+<rect opacity="0.8" x="347.444" y="119.844" width="21.7778" height="21.7778" transform="rotate(-45 347.444 119.844)" fill="#F9F9F9"/>
+<circle cx="365" cy="97.5555" r="2.44444" fill="#F9F9F9"/>
+</g>
+<rect opacity="0.5" x="323" y="132" width="64" height="6" rx="3" fill="#C9CBD4"/>
+<rect x="419" y="88" width="32" height="32" rx="4" fill="#C9CBD4"/>
+<mask id="mask2" mask-type="alpha" maskUnits="userSpaceOnUse" x="419" y="88" width="32" height="32">
+<rect x="419" y="88" width="32" height="32" rx="4" fill="#C9CBD4"/>
+</mask>
+<g mask="url(#mask2)">
+<rect opacity="0.5" x="411.889" y="113.177" width="21.7778" height="21.7778" transform="rotate(-45 411.889 113.177)" fill="#F9F9F9"/>
+<rect opacity="0.8" x="427.444" y="119.844" width="21.7778" height="21.7778" transform="rotate(-45 427.444 119.844)" fill="#F9F9F9"/>
+<circle cx="445" cy="97.5555" r="2.44444" fill="#F9F9F9"/>
+</g>
+<rect opacity="0.5" x="403" y="132" width="64" height="6" rx="3" fill="#C9CBD4"/>
+<rect opacity="0.5" x="218" y="131" width="25" height="8" rx="4" fill="#C9CBD4"/>
+<rect x="218" y="107" width="89" height="8" rx="4" fill="#C9CBD4"/>
+<rect x="146" y="194" width="56" height="56" rx="4" fill="#7DD4A1"/>
+<mask id="mask3" mask-type="alpha" maskUnits="userSpaceOnUse" x="146" y="194" width="56" height="56">
+<rect x="146" y="194" width="56" height="56" rx="4" fill="#C9CBD4"/>
+</mask>
+<g mask="url(#mask3)">
+<path opacity="0.5" d="M109.5 265.008L160.504 211.111L206 265.008L160.504 265.008L109.5 265.008Z" fill="#F9F9F9"/>
+<rect opacity="0.8" x="160.778" y="249.726" width="38.1111" height="38.1111" transform="rotate(-45 160.778 249.726)" fill="#F9F9F9"/>
+<circle cx="191.5" cy="210.722" r="4.27778" fill="#F9F9F9"/>
+</g>
+<rect opacity="0.5" x="218" y="242" width="105" height="8" rx="4" fill="#7DD4A1"/>
+<rect x="218" y="194" width="169" height="8" rx="4" fill="#7DD4A1"/>
+<rect x="218" y="207" width="136" height="6" rx="3" fill="#7DD4A1"/>
+<rect x="146" y="290" width="56" height="56" rx="4" fill="#7DD4A1"/>
+<mask id="mask4" mask-type="alpha" maskUnits="userSpaceOnUse" x="146" y="290" width="56" height="56">
+<rect x="146" y="290" width="56" height="56" rx="4" fill="#C9CBD4"/>
+</mask>
+<g mask="url(#mask4)">
+<path opacity="0.5" d="M109.5 361.008L160.504 307.111L206 361.008L160.504 361.008L109.5 361.008Z" fill="#F9F9F9"/>
+<rect opacity="0.8" x="160.778" y="345.726" width="38.1111" height="38.1111" transform="rotate(-45 160.778 345.726)" fill="#F9F9F9"/>
+<circle cx="191.5" cy="306.722" r="4.27778" fill="#F9F9F9"/>
+</g>
+<rect opacity="0.5" x="218" y="338" width="105" height="8" rx="4" fill="#7DD4A1"/>
+<rect x="218" y="290" width="169" height="8" rx="4" fill="#7DD4A1"/>
+<rect x="218" y="303" width="136" height="6" rx="3" fill="#7DD4A1"/>
+<rect x="146" y="386" width="56" height="56" rx="4" fill="#C9CBD4"/>
+<mask id="mask5" mask-type="alpha" maskUnits="userSpaceOnUse" x="146" y="386" width="56" height="56">
+<rect x="146" y="386" width="56" height="56" rx="4" fill="#C9CBD4"/>
+</mask>
+<g mask="url(#mask5)">
+<path opacity="0.5" d="M109.5 457.008L160.504 403.111L206 457.008L160.504 457.008L109.5 457.008Z" fill="#F9F9F9"/>
+<rect opacity="0.8" x="160.778" y="441.726" width="38.1111" height="38.1111" transform="rotate(-45 160.778 441.726)" fill="#F9F9F9"/>
+<circle cx="191.5" cy="402.722" r="4.27778" fill="#F9F9F9"/>
+</g>
+<rect opacity="0.5" x="218" y="434" width="105" height="8" rx="4" fill="#C9CBD4"/>
+<rect opacity="0.5" x="218" y="386" width="169" height="8" rx="4" fill="#C9CBD4"/>
+<rect x="218" y="399" width="136" height="6" rx="3" fill="#C9CBD4"/>
+<rect opacity="0.5" x="20" y="24" width="432" height="32" rx="4" fill="#C9CBD4"/>
+<rect x="434" y="24" width="32" height="32" rx="4" fill="#7DD4A1"/>
+</svg>
