@@ -93,9 +93,9 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                             <span style={{color: '#EC7F5C'}}>Canceled</span>}
                         </div>
 
-                        <div className="api-email">
-
-                        </div>
+                       {account.amazon_ppc.id && <div className="api-email">
+                           {account.amazon_ppc.account_email}
+                        </div>}
 
                         <div className="account-action">
                             {account.amazon_ppc.id ? account.amazon_ppc.is_connected ?
