@@ -45,12 +45,6 @@ const Sidebar = () => {
 
     useEffect(() => {
         window.innerWidth < 1132 ? setCollapsed(false) : setCollapsed(true);
-
-        document.querySelector('body').classList.add('visible-intercom');
-
-        return (() => {
-            document.querySelector('body').classList.remove('visible-intercom')
-        })
     }, []);
 
 
