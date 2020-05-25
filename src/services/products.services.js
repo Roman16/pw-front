@@ -21,8 +21,7 @@ function getProductsSettingsList({pageSize, page, searchStr = '', onlyActive, on
 }
 
 function updateProductSettings(parameters) {
-    return api('post', `${productsUrls.updateSettings}`, {
-        product_id: parameters.id,
+    return api('post', `${productsUrls.updateSettings}/${parameters.id}`, {
         'product_margin_value': parameters.product_margin_value,
         'item_price': parameters.item_price,
         'item_price_from_user': parameters.item_price_from_user,
@@ -34,7 +33,7 @@ function updateProductSettings(parameters) {
 }
 
 function updateProductSettingsByIdList(params) {
-    return api('post', `${productsUrls.updateSettingsByProducts}`, params)
+    return api('post', `${productsUrls.updateSettings}`, params)
 }
 
 function updateProductTargetAcos(acos) {

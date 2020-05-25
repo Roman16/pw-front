@@ -86,6 +86,7 @@ const ApiConnection = () => {
                                 key={`account_${index}`}
                                 sellerName={user.user.name}
                                 account={account}
+                                sellerId={user.default_accounts.amazon_mws.seller_id}
                                 opened={openedAccount === index}
                                 onOpenAccount={() => onOpenAccount(index)}
                                 onDisconnect={disconnectHandler}

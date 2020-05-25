@@ -140,9 +140,22 @@
         border-bottom: 0;
       }
 
-
       &.enabled-dayparting {
-        background: #F2FBF6;
+        position: relative;
+
+        .custom-tooltip {
+          z-index: 10;
+          position: absolute;
+          right: 0.7142857142857143rem;
+          top: 0.7142857142857143rem;
+
+          .on-dayparting {
+            width: 10px;
+            height: 10px;
+            background: #409600;
+            border-radius: 50%;
+          }
+        }
       }
 
       &:hover {

@@ -65,7 +65,7 @@ const ProductSettingsMain = () => {
             ...paginationOptions,
             page: 1
         })
-    }
+    };
 
     const updateSettingsHandlerById = async (data) => {
         try {
@@ -81,7 +81,30 @@ const ProductSettingsMain = () => {
 
     const updateSettingsHandlerByIdList = async (data) => {
         try {
-            await productsServices.updateProductSettingsByIdList(data);
+            await productsServices.updateProductSettingsByIdList({
+                [data.field]: data[data.field],
+                ...data.product_id && {product_id: data.product_id}
+            });
+
+            if (data.product_id) {
+                const newList = [...productsList.map(item => {
+                    if (data.product_id.find(id => id === item.id)) {
+                        item[data.field] = data[data.field]
+                    }
+
+                    return item;
+                })];
+
+                setProductsList([...newList]);
+            } else {
+                const newList = [...productsList.map(item => {
+                    item[data.field] = data[data.field];
+
+                    return item;
+                })];
+
+                setProductsList([...newList]);
+            }
 
             notification.success({
                 title: 'Changes saved'

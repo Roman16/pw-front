@@ -97,6 +97,84 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
             )
         },
         {
+            title: () => (<span>Profit {!hasMargin &&
+            <Tooltip
+                type='warning'
+                description={<ProfitTooltipDescription/>}/>}</span>),
+            dataIndex: 'profit',
+            key: 'profit',
+            minWidth: '12.142857142857142rem',
+            render: (text, record) => (
+                <div className='product-params'>
+                    {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
+
+                    <RenderPramsChanges
+                        type='profit_diff'
+                        product={record}
+                    />
+                </div>
+            )
+        },
+        {
+            title: () => <Tooltip
+                type={'custom'}
+                description={'Cost to acquire one paying customer on a campaign.'}
+            >
+                <span>CPA</span>
+            </Tooltip>,
+            dataIndex: 'cpa',
+            key: 'cpa',
+            minWidth: '100px',
+            render: (text, record) => (
+                <div className='product-params'>
+                    {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
+
+                    <RenderPramsChanges
+                        type='cpa_diff'
+                        product={record}
+                    />
+                </div>
+            )
+        },
+        {
+            title: () =>
+                <Tooltip
+                    type={'custom'}
+                    description={'The Conversion Rate of a campaign is the percentage of people who clicked on an ad and then completed an action/purchase/conversion.'}
+                >
+                    <span>Ad CVR</span>
+                </Tooltip>,
+            dataIndex: 'conversion_rate',
+            key: 'conversion_rate',
+            minWidth: '7.142857142857143rem',
+            render: (text, record) => (
+                <div className='product-params'>
+                    {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
+
+                    <RenderPramsChanges
+                        type='conversion_rate_diff'
+                        product={record}
+                    />
+                </div>
+            )
+        },
+        {
+            title: 'ACoS',
+            dataIndex: 'acos',
+            key: 'acos',
+            minWidth: '100px',
+            render: (text, record) => (
+                <div className='product-params'>
+                    {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
+
+                    <RenderPramsChanges
+                        type='acos_diff'
+                        product={record}
+                    />
+                </div>
+            )
+        },
+        {
             title: () =>
                 <Tooltip
                     type={'custom'}
@@ -135,84 +213,6 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
 
                     <RenderPramsChanges
                         type='sales_share_diff'
-                        product={record}
-                    />
-                </div>
-            )
-        },
-        {
-            title: () => <Tooltip
-                type={'custom'}
-                description={'Cost to acquire one paying customer on a campaign.'}
-            >
-                <span>CPA</span>
-            </Tooltip>,
-            dataIndex: 'cpa',
-            key: 'cpa',
-            minWidth: '10rem',
-            render: (text, record) => (
-                <div className='product-params'>
-                    {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
-
-                    <RenderPramsChanges
-                        type='cpa_diff'
-                        product={record}
-                    />
-                </div>
-            )
-        },
-        {
-            title: () =>
-                <Tooltip
-                    type={'custom'}
-                    description={'The Conversion Rate of a campaign is the percentage of people who clicked on an ad and then completed an action/purchase/conversion.'}
-                >
-                    <span>Ad CVR</span>
-                </Tooltip>,
-            dataIndex: 'conversion_rate',
-            key: 'conversion_rate',
-            minWidth: '7.142857142857143rem',
-            render: (text, record) => (
-                <div className='product-params'>
-                    {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
-
-                    <RenderPramsChanges
-                        type='conversion_rate_diff'
-                        product={record}
-                    />
-                </div>
-            )
-        },
-        {
-            title: 'ACoS',
-            dataIndex: 'acos',
-            key: 'acos',
-            minWidth: '9.285714285714286rem',
-            render: (text, record) => (
-                <div className='product-params'>
-                    {text != null ? `${numberMask(text, 2)}%` : 'N/A'}
-
-                    <RenderPramsChanges
-                        type='acos_diff'
-                        product={record}
-                    />
-                </div>
-            )
-        },
-        {
-            title: () => (<span>Profit {!hasMargin &&
-            <Tooltip
-                type='warning'
-                description={<ProfitTooltipDescription/>}/>}</span>),
-            dataIndex: 'profit',
-            key: 'profit',
-            minWidth: '12.142857142857142rem',
-            render: (text, record) => (
-                <div className='product-params'>
-                    {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
-
-                    <RenderPramsChanges
-                        type='profit_diff'
                         product={record}
                     />
                 </div>

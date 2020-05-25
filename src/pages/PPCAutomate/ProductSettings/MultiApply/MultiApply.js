@@ -6,7 +6,7 @@ import InputCurrency from "../../../../components/Inputs/InputCurrency";
 const Option = Select.Option;
 
 const MultiApply = ({selectedRows, totalSize, onSelectAll, selectedAll, onSubmit}) => {
-    const [fieldType, setFieldType] = useState('price'),
+    const [fieldType, setFieldType] = useState('item_price_from_user'),
         [settingValue, setSettingValue] = useState('');
 
     const submitHandler = e => {
@@ -14,7 +14,7 @@ const MultiApply = ({selectedRows, totalSize, onSelectAll, selectedAll, onSubmit
 
         onSubmit({
             field: fieldType,
-            value: settingValue
+            [fieldType]: settingValue
         })
     }
 
@@ -30,15 +30,14 @@ const MultiApply = ({selectedRows, totalSize, onSelectAll, selectedAll, onSubmit
 
             <form action="" onSubmit={submitHandler}>
                 <label htmlFor="">Apply to all:</label>
-
                 <div className="form-group">
                     <CustomSelect value={fieldType} onChange={e => setFieldType(e)}>
                         <Option value={'item_price_from_user'}>Overwrite Product Price</Option>
-                        <Option value={'net_margin'}>Net Margin</Option>
-                        <Option value={'min_bid_manual'}>Min Bid (Manual Campaign)</Option>
-                        <Option value={'max_bid_manual'}>Max Bid (Manual Campaign)</Option>
-                        <Option value={'min_bid_auto'}>Min Bid (Auto Campaign)</Option>
-                        <Option value={'max_bid_auto'}>Max Bid (Auto Campaign)</Option>
+                        <Option value={'product_margin_value'}>Net Margin</Option>
+                        <Option value={'min_bid_manual_campaign'}>Min Bid (Manual Campaign)</Option>
+                        <Option value={'max_bid_manual_campaign'}>Max Bid (Manual Campaign)</Option>
+                        <Option value={'min_bid_auto_campaign'}>Min Bid (Auto Campaign)</Option>
+                        <Option value={'max_bid_auto_campaign'}>Max Bid (Auto Campaign)</Option>
                     </CustomSelect>
                 </div>
 

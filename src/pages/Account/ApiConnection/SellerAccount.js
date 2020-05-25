@@ -4,7 +4,7 @@ import USAFlag from '../../../assets/img/flags/usa-flag.svg';
 import {history} from "../../../utils/history";
 import {Spin} from "antd";
 
-const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect, deleteProcessing}) => {
+const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect, deleteProcessing, sellerId}) => {
     const reconnectHandler = () => {
         if (!account.amazon_mws.is_connected && !account.amazon_ppc.is_connected) {
             history.push('/connect-amazon-account')
@@ -50,6 +50,10 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                             <span style={{color: '#EC7F5C'}}>Canceled</span>}
                         </div>
 
+                        {sellerId && <div className="api-token">
+                            Seller id: {sellerId}
+                        </div>}
+
                         <div className="account-action">
                             {account.amazon_mws.id ? account.amazon_mws.is_connected ?
                                 deleteProcessing === 'MWS' ?
@@ -87,6 +91,10 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                             <span style={{color: '#EC7F5C'}}>Failed</span>}
                             {account.amazon_ppc.id && account.amazon_ppc.is_connected === false &&
                             <span style={{color: '#EC7F5C'}}>Canceled</span>}
+                        </div>
+
+                        <div className="api-email">
+
                         </div>
 
                         <div className="account-action">
