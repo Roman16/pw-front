@@ -2,19 +2,19 @@ import React, {useState} from "react";
 
 import './Marketing.less';
 import '../ZeroToHero.less';
-// import ppcStructureImage from '../../../assets/img/zero-to-hero/ppc-structure.svg';
-// import arrowRight from "../../../assets/img/icons/arrow-right-white.svg";
+import ppcStructureImage from '../../../assets/img/zth/zth-structure.svg';
 import {zthActions} from "../../../actions/zth.actions";
 import {history} from "../../../utils/history";
 import ProductAmountSlider from "../components/ProductAmountSlider/ProductAmountSlider";
+import {Link} from "react-router-dom";
 
 const benefitsList = [
-    'You are starting with a lot of relevant keywords, so you don’t need to spend a lot of money to gather these keywords from search-term reports in the future.',
-    'No need to know how to research for keywords and set up Amazon PPC campaigns, we automate this process for you.',
-    'This PPC Structure is like the live organism that improves over time with the improvement of your sales.',
-    'With a lot of mid and long-tail keywords, your conversion rate will be high, so you’ll get more keyword ranking juice from Amazon.',
-    'This structure gives you a precise statistic on every keyword that you have in your campaign.',
-    'We are using keywords that your competitors are getting sales for and keywords that you need to steel the market share to grow brand awareness.'
+    'One-minute campaigns setup with our data-driven algorithms and you ready to go.',
+    'Save time&money by starting with the most relevant keywords in your niche without getting them from auto campaigns.',
+    'Professionally structured campaigns that we used in our Agency to grow eight-figure brands.',
+    'Spend more time on growing your business while we focus on your advertising performance.',
+    'No Amazon Advertising knowledge required. Just feel in some data in 3 easy steps.',
+    'You’ll get more than 5 Campaigns and 30-200+ Ad Groups that have their own goal(grow your sales and profits).',
 ];
 
 const Marketing = () => {
@@ -26,21 +26,24 @@ const Marketing = () => {
         <div className='zero-to-hero-page'>
             <h2>Create and Upload PPC Campaign Structure from Scratch</h2>
 
+            <ProductAmountSlider/>
+
             <section className="marketing-block">
-                <ProductAmountSlider/>
-
-                <div className="block-annotation"><span>*</span> All variations counts as one Semantic Core</div>
-
                 <div className="row">
                     <div className="col">
-                        <h2>Here is the PPC structure you’ll receive:</h2>
+                        <h3>Here is the PPC campaigns structure we create:</h3>
+                        <p>
+                            To learn more about Zero to Hero structure
+                            <Link to={''} target={'_blank'}>watch these video</Link>
+                        </p>
+
                         <div className="image">
-                            {/*<img src={ppcStructureImage} alt=""/>*/}
+                            <img src={ppcStructureImage} alt=""/>
                         </div>
                     </div>
 
                     <div className="col">
-                        <h2>Benefits of this structure:</h2>
+                        <h2>Benefits of Zero to Hero:</h2>
 
                         <div className="list">
                             {benefitsList.map((item, index) => (
@@ -52,8 +55,7 @@ const Marketing = () => {
                         </div>
 
                         <button className='btn default' onClick={handleContinue}>
-                            Start Creating
-                            {/*<img src={arrowRight} alt=""/>*/}
+                            Start
                         </button>
                     </div>
                 </div>
