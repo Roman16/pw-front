@@ -94,7 +94,7 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                         </div>
 
                        {account.amazon_ppc.id && <div className="api-email">
-                           {account.amazon_ppc.account_email}
+                          Email: {account.amazon_ppc.account_email}
                         </div>}
 
                         <div className="account-action">
