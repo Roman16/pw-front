@@ -11,33 +11,48 @@ import InputCurrency from "../../../../components/Inputs/InputCurrency";
 import {SVG} from "../../../../utils/icons";
 
 
-const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handleOk}) => {
-    const [value, setValue] = useState(0);
+const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handleOk, itemPrice, itemPriceFromUser, productMargin}) => {
+    const [netMarginValue, setNetMarginValue] = useState(0),
+        [priceValue, setPriceValue] = useState(0);
     const [isError, setError] = useState(false);
 
-    const {product, options} = useSelector(state => ({
+    const {product} = useSelector(state => ({
         product: state.products.selectedProduct,
-        options: state.products.defaultOptimizationOptions
     }));
 
-    const onChange = (value) => {
-        if(value > 100) {
-            setValue(100);
-        } else {
-            setValue(+value);
+    const onChange = (value, field) => {
+        if (field === 'margin' && value > 100) {
+            setNetMarginValue(100);
+        } else if (field === 'margin') {
+            setNetMarginValue(+value);
+        } else if (field === 'price') {
+            setPriceValue(+value)
         }
     };
 
     const submit = async () => {
-        if (value > 0) {
+        if (!productMargin && (!itemPrice || !itemPriceFromUser)) {
             await productsServices.updateProductSettings({
-                product_id: product.id,
-                product_margin_value: value
+                id: product.id,
+                product_margin_value: netMarginValue,
+                item_price_from_user: priceValue
             });
 
-            handleOk(value);
-        } else {
-            setError(true);
+            handleOk(netMarginValue);
+        } else if (!productMargin) {
+            await productsServices.updateProductSettings({
+                id: product.id,
+                product_margin_value: netMarginValue
+            });
+
+            handleOk(netMarginValue);
+        } else if (!itemPrice || !itemPriceFromUser) {
+            await productsServices.updateProductSettings({
+                id: product.id,
+                item_price_from_user: priceValue
+            });
+
+            handleOk(productMargin);
         }
     };
 
@@ -53,7 +68,9 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
                     <div className="net-margin-header">
                         <SVG id='warning'/>
                         <h2>Attention!</h2>
-                        <p>We need your Product Net Margin to start the optimization.</p>
+                        <p>We need
+                            your {!productMargin && 'Product Net Margin '} {!productMargin && (!itemPrice || !itemPriceFromUser) && 'and '} {(!itemPrice || !itemPriceFromUser) && 'Product Price '} to
+                            start the optimization.</p>
                     </div>
                     {selectedAll ?
                         <Button className="start" onClick={handleCancel}>
@@ -61,26 +78,35 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
                         </Button>
                         :
                         <Fragment>
-                            <div className="product-net-margin">
+                            {!productMargin && <div className="product-net-margin">
                                 <span>Product Net Margin</span>
 
                                 <InputCurrency
-                                    value={value}
+                                    value={netMarginValue}
                                     max={100}
                                     min={0}
                                     typeIcon='percent'
-                                    onChange={onChange}
+                                    onChange={(e) => onChange(e, 'margin')}
                                 />
-                            </div>
+                            </div>}
 
-                            <button className="btn default start" onClick={submit}> Start </button>
+                            {(!itemPrice || !itemPriceFromUser) && <div className="product-net-margin">
+                                <span>Product Price</span>
+
+                                <InputCurrency
+                                    value={priceValue}
+                                    min={0}
+                                    onChange={(e) => onChange(e, 'price')}
+                                />
+                            </div>}
+                            <button className="btn default start" onClick={submit}> Start</button>
                         </Fragment>
                     }
                 </div>
 
                 <div className="net-margin-footer">
-                    If you want to set Product Net Margin for all your products go to
-                    Products Settings
+                    If you want to set Product Net Margin or Product Price for all your products go to
+                    <Link to={'/ppc/product-settings'} target={'_blank'}> Products Settings</Link>
                 </div>
                 <br/>
             </div>

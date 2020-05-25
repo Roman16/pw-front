@@ -217,7 +217,7 @@ function StrategyItem({
 let sliding = false;
 let targetAcosValue;
 
-const OptimizationStrategy = ({product: {desired_target_acos, optimization_strategy, status, product_margin}, onShowDrawer, onStart, onStop, selectedAll, processing, productId, onSaveTargetAcos}) => {
+const OptimizationStrategy = ({product: {desired_target_acos, optimization_strategy, status, product_margin, item_price, item_price_from_user}, onShowDrawer, onStart, onStop, selectedAll, processing, productId, onSaveTargetAcos}) => {
     const dispatch = useDispatch();
 
 
@@ -270,7 +270,7 @@ const OptimizationStrategy = ({product: {desired_target_acos, optimization_strat
     function onStartProductOptimization() {
         setConfirmWindows({...visibleConfirmWindows, confirmStartAllProducts: false, confirmStartProduct: false});
 
-        if (!product_margin) {
+        if (!product_margin || (!item_price || !item_price_from_user)) {
             setNetMarginWindow(true)
         } else {
             onStart(strategies[selectedSlide].key, targetAcosValue);
@@ -417,7 +417,11 @@ const OptimizationStrategy = ({product: {desired_target_acos, optimization_strat
 
             <NetMarginWindow
                 isShowModal={visibleNetMarginWindow}
+                // isShowModal={true}
                 selectedAll={selectedAll}
+                itemPrice={item_price}
+                itemPriceFromUser={item_price_from_user}
+                productMargin={product_margin}
                 handleCancel={() => setNetMarginWindow(false)}
                 handleOk={setNetMarginHandler}
             />

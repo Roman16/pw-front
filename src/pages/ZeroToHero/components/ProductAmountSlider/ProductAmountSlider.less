@@ -1,0 +1,157 @@
+@import '../../../../style/variables';
+
+.product-slider {
+  margin-bottom: 1.4285714285714286rem;
+
+  .slider-block {
+    min-height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 4px;
+    padding: 0 7.142857142857143rem 0 1.4285714285714286rem;
+    position: relative;
+    box-shadow: @default-section-shadow;
+
+    .col {
+
+      .amount {
+        font-size: 1.4285714285714286rem;
+        color: #343C5A;
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+
+        .value {
+          height: 30px;
+          box-sizing: border-box;
+          background: #F5F5FF;
+          border-radius: 16px;
+          font-size: 1.4285714285714286rem;
+          color: #343C5A;
+          padding: 0 20px;
+          margin: 0 0 0 20px;
+          font-weight: 500;
+        }
+      }
+
+      .description {
+        font-size: 1.1428571428571428rem;
+        letter-spacing: -0.05px;
+        color: #656A84;
+        margin: 10px 0 0 0;
+
+        a {
+          text-decoration: underline;
+        }
+      }
+
+      p {
+        font-size: 1rem;
+        color: #C9CBD4;
+        margin: 5px 0 0;
+
+        span {
+          color: #EC7F5C;
+        }
+      }
+    }
+
+
+    .slider {
+      flex: 1;
+      margin: 0 50px;
+
+      .ant-slider {
+        height: 1px;
+        padding: 0;
+
+        .ant-slider-rail {
+          height: 1px;
+          background: #C9CBD4;
+        }
+
+        .ant-slider-track {
+          background: #6D6DF6;
+          height: 1px;
+        }
+
+        .ant-slider-step {
+          height: 1px;
+        }
+
+        .ant-slider-dot {
+          width: 9px;
+          height: 9px;
+          background: #C9CBD4;
+          border: 0;
+          top: -4px;
+
+          &:first-child {
+            left: 0 !important;
+            background: #6D6DF6;
+          }
+
+          &.ant-slider-dot-active {
+            background: #6D6DF6;
+          }
+        }
+
+        .ant-slider-mark-text {
+          font-size: 1.1428571428571428rem;
+          color: #C9CBD4;
+          font-weight: 500;
+
+          &:first-child {
+            color: #6D6DF6;
+            left: 0 !important;
+          }
+
+          &.ant-slider-mark-text-active {
+            color: #6D6DF6;
+          }
+        }
+
+        .ant-slider-handle {
+          width: 15px;
+          height: 15px;
+          background: #6D6DF6;
+          box-sizing: content-box;
+          margin-top: -7px;
+          border: 0;
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+      }
+    }
+
+    .row {
+      display: flex;
+
+      .price {
+        color: #6D6DF6;
+        font-size: 1rem;
+        text-transform: uppercase;
+        font-weight: 500;
+        display: flex;
+        flex-direction: column;
+
+        .value {
+          font-size: 3.4285714285714284rem;
+          color: #6D6DF6;
+        }
+      }
+
+      .save-label {
+        font-size: 1rem;
+        text-transform: uppercase;
+        color: #7DD4A1;
+        margin: 15px 0 0 20px;
+        font-weight: 500;
+      }
+    }
+  }
+}

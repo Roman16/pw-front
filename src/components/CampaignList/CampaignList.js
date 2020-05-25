@@ -11,6 +11,7 @@ import {daypartingServices} from "../../services/dayparting.services";
 import {debounce} from "throttle-debounce";
 import {daypartingActions} from "../../actions/dayparting.actions";
 import {useDispatch, useSelector} from "react-redux";
+import InformationTooltip from "../Tooltip/Tooltip";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -27,7 +28,7 @@ const CampaignList = () => {
         }),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
-            pageSize: 10
+            pageSize: 25
         });
 
     const {campaignList, processing, totalSize, selectedCampaign} = useSelector(state => ({
@@ -114,9 +115,18 @@ const CampaignList = () => {
                             key={campaign.id}
                             className={`${selectedCampaign.id === campaign.id ? 'campaign-item active' : 'campaign-item'} ${campaign.hasEnabledDayparting ? 'enabled-dayparting' : ''}`}
                             onClick={() => selectCampaignHandler(campaign)}
-                            title={campaign.name}
+
                         >
-                            <span className={'short-name'}>{campaign.name}</span>
+                            <span className={'short-name'} title={campaign.name}>{campaign.name}</span>
+
+                            {campaign.hasEnabledDayparting && <InformationTooltip
+                                arrowPointAtCenter={true}
+                                type={'custom'}
+                                description={'Campaign on day-parting'}
+                                position={'topRight'}
+                            >
+                                <div className='on-dayparting'/>
+                            </InformationTooltip>}
                         </div>
 
                     ))}
@@ -126,7 +136,7 @@ const CampaignList = () => {
                     onChange={changePaginationHandler}
 
                     page={paginationParams.page}
-                    pageSizeOptions={[10, 30, 50]}
+                    pageSizeOptions={[25, 50, 100]}
                     pageSize={paginationParams.pageSize}
                     totalSize={totalSize}
                     processing={processing}

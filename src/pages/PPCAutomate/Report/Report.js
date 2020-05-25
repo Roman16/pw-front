@@ -86,27 +86,23 @@ function Report() {
         }
     }
 
+    const changeFiltersHandler = (filters) => {
+        setPaginationParams({
+            ...paginationParams,
+            page: 1,
+        });
+
+        setFilters(filters)
+    }
+
     const addFilterHandler = (filter) => {
         setPaginationParams({
             ...paginationParams,
             page: 1,
         });
 
-        setFilters([
-            ...filters,
-            filter
-        ])
+        setFilters([...filters, filter])
     }
-
-    const resetFiltersHandler = () => {
-        setPaginationParams({
-            ...paginationParams,
-            page: 1,
-        });
-        setFilters([])
-    };
-
-    const removeFilterHandler = (index) => setFilters(prevState => prevState.filter((item, itemIndex) => itemIndex !== index));
 
     const fetchReportsList = async () => {
         setProcessing(true);
@@ -159,9 +155,7 @@ function Report() {
                 columns={mainTabs[currentTab]}
                 currentTab={currentTab}
 
-                onAddFilter={addFilterHandler}
-                onReset={resetFiltersHandler}
-                onRemove={removeFilterHandler}
+                onChange={changeFiltersHandler}
             />
 
             <ReportTable
@@ -172,7 +166,7 @@ function Report() {
                 columns={mainTabs[currentTab]}
                 sorterColumn={sorterColumn}
                 totalSize={totalSize}
-                filteredById={filters.find(item => item.filterBy === 'keyword_id')}
+                filteredById={filters && filters.find(item => item.filterBy === 'keyword_id')}
 
                 paginationChangeHandler={paginationChangeHandler}
                 sortChangeHandler={sortChangeHandler}

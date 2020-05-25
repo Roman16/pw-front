@@ -38,7 +38,7 @@ const columnTitle = {
 }
 
 
-const FilterItem = ({filter, onRemove}) => {
+const FilterItem = ({filter, onRemove, onEdit}) => {
     if (filter.filterBy === 'datetime') {
         return (
             <div className="filter-item">
@@ -70,16 +70,36 @@ const FilterItem = ({filter, onRemove}) => {
         )
     } else if (filter.filterBy === 'keyword_id') {
         return (
-            <div className="filter-item">
+            <div className="filter-item" onClick={onEdit}>
                 {`${columnTitle[filter.filterBy]} = ${filter.value}`}
-                <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
+                <i onClick={(e) => {
+                    e.stopPropagation();
+                    onRemove();
+                }}><SVG id={'remove-filter-icon'}/></i>
             </div>
         )
     }
 }
 
-const Filters = ({columns, onAddFilter, filters, onReset, onRemove, currentTab}) => {
-    const [visibleFilterPopover, setVisibleFilterPopover] = useState(false)
+const Filters = ({columns, onChange, filters, currentTab}) => {
+    const [visibleFilterPopover, setVisibleFilterPopover] = useState(false),
+        [visibleEditFilterPopover, setVisibleEditFilterPopover] = useState(false),
+        [editFilter, setEditFilter] = useState(null);
+
+    const editFilterHandler = (filter) => {
+        setEditFilter(filter);
+    }
+
+    const addFilterHandler = (filter) => {
+        onChange([...filters, filter])
+    }
+
+    const resetFiltersHandler = () => {
+        onChange([])
+    };
+
+    const removeFilterHandler = (index) => onChange(filters.filter((item, itemIndex) => itemIndex !== index));
+
 
     return (
         <div className="report-filter">
@@ -88,7 +108,8 @@ const Filters = ({columns, onAddFilter, filters, onReset, onRemove, currentTab})
             {filters.map((filter, index) => (
                 <FilterItem
                     filter={filter}
-                    onRemove={() => onRemove(index)}
+                    onRemove={() => removeFilterHandler(index)}
+                    onEdit={() => editFilterHandler(filter)}
                 />
             ))}
 
@@ -100,7 +121,7 @@ const Filters = ({columns, onAddFilter, filters, onReset, onRemove, currentTab})
                     columns={columns}
                     onClose={() => setVisibleFilterPopover(false)}
                     onAddFilter={(filter) => {
-                        onAddFilter(filter)
+                        addFilterHandler(filter)
                         setVisibleFilterPopover(false)
                     }}
                 />}
@@ -117,7 +138,7 @@ const Filters = ({columns, onAddFilter, filters, onReset, onRemove, currentTab})
                 </button>
             </Popover>}
 
-            {filters.length > 0 && <button className={'reset-btn'} onClick={onReset}>
+            {filters.length > 0 && <button className={'reset-btn'} onClick={resetFiltersHandler}>
                 Reset
             </button>}
         </div>

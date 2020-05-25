@@ -3,12 +3,14 @@ import {user} from './user.reducer';
 import {products} from './products.reducer';
 import {dashboard} from './dashboard.reducer';
 import {dayparting} from "./dayparting.reducer";
+import {zth} from "./zth.reducer";
 
 const appReducer = combineReducers({
     products,
     user,
     dashboard,
-    dayparting
+    dayparting,
+    zth
 });
 
 export const rootReducer = (state, action) => {

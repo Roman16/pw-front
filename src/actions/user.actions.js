@@ -35,6 +35,14 @@ function login(user) {
                     .then(userFullInformation => {
                         dispatch(setInformation(userFullInformation));
 
+                        window.Intercom("boot", {
+                            app_id: "hkyfju3m",
+                            name: userFullInformation.user.name, // Full name
+                            email: userFullInformation.user.email, // Email address
+                            created_at: moment(new Date()).unix()// Signup date as a Unix timestamp
+                        });
+
+
                         const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
                             ppcConnected = userFullInformation.account_links[0].amazon_ppc.is_connected;
 
@@ -154,12 +162,6 @@ function getUserInfo() {
             localStorage.setItem('userId', res.user.id);
 
             dispatch(setInformation(res));
-            window.Intercom("boot", {
-                app_id: "hkyfju3m",
-                name: res.user.name, // Full name
-                email: res.user.email, // Email address
-                created_at: moment(new Date()).unix()// Signup date as a Unix timestamp
-            });
         });
     };
 }
@@ -220,6 +222,7 @@ function setPpcStatus(status) {
         payload: status
     }
 }
+
 function setBootstrap(status) {
     return {
         type: userConstants.SET_BOOTSTRAP,

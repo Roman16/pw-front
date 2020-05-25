@@ -8,7 +8,7 @@ export const productsServices = {
     getProductDetails,
     getProductsSettingsList,
     updateProductSettings,
-    // updateProductSettingsByIdList,
+    updateProductSettingsByIdList,
     updateProductTargetAcos
 };
 
@@ -16,12 +16,24 @@ function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasN
     return api('get', `${productsUrls.allProducts}?search_query=${searchStr}&page=${page}&size=${pageSize}&ungroup_variations=${ungroupVariations}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}`, null, null, cancelToken)
 }
 
-function getProductsSettingsList({size, page, searchStr = '', onlyActive, cancelToken}) {
-    return api('get', `${productsUrls.productsSettingsList}?search_query=${searchStr}&page=${page}&size=${size}&is_active=${onlyActive ? 1 : 0}`, false, false, cancelToken)
+function getProductsSettingsList({pageSize, page, searchStr = '', onlyActive, onlyOptimization, cancelToken}) {
+    return api('get', `${productsUrls.productsSettingsList}?search_query=${searchStr}&page=${page}&size=${pageSize}&is_active=${onlyActive ? 1 : 0}&only_under_optimization=${onlyOptimization ? 1 : 0}`, false, false, cancelToken)
 }
 
 function updateProductSettings(parameters) {
-    return api('post', `${productsUrls.updateSettings}`, parameters)
+    return api('post', `${productsUrls.updateSettings}/${parameters.id}`, {
+        'product_margin_value': parameters.product_margin_value,
+        'item_price': parameters.item_price,
+        'item_price_from_user': parameters.item_price_from_user,
+        'min_bid_manual_campaign': parameters.min_bid_manual_campaign,
+        'max_bid_manual_campaign': parameters.max_bid_manual_campaign,
+        'min_bid_auto_campaign': parameters.min_bid_auto_campaign,
+        'max_bid_auto_campaign': parameters.max_bid_auto_campaign,
+    })
+}
+
+function updateProductSettingsByIdList(params) {
+    return api('post', `${productsUrls.updateSettings}`, params)
 }
 
 function updateProductTargetAcos(acos) {
