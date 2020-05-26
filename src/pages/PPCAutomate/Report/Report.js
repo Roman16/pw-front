@@ -127,10 +127,12 @@ function Report() {
             setTotalSize(res.total_size)
         } catch (e) {
             console.log(e);
+            setReportsList([]);
+            setTotalSize(0)
         }
 
         setProcessing(false);
-    }
+    };
 
     useEffect(() => {
         if ((productId !== null || selectedAll) && !productsFetching)
