@@ -1,10 +1,8 @@
 @import '../../../../style/variables';
 
 .product-slider {
-  margin-bottom: 1.4285714285714286rem;
-
   .slider-block {
-    min-height: 130px;
+    min-height: 150px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -24,15 +22,17 @@
         font-weight: 500;
 
         .value {
-          height: 30px;
           box-sizing: border-box;
-          background: #F5F5FF;
           border-radius: 16px;
           font-size: 1.4285714285714286rem;
           color: #343C5A;
-          padding: 0 20px;
           margin: 0 0 0 20px;
           font-weight: 500;
+
+          input {
+            width: 80px;
+            height: 30px;
+          }
         }
       }
 
@@ -61,7 +61,7 @@
 
     .slider {
       flex: 1;
-      margin: 0 50px;
+      margin: 20px 50px 0;
 
       .ant-slider {
         height: 1px;
@@ -114,8 +114,8 @@
         }
 
         .ant-slider-handle {
-          width: 15px;
-          height: 15px;
+          width: 14px;
+          height: 14px;
           background: #6D6DF6;
           box-sizing: content-box;
           margin-top: -7px;
@@ -125,6 +125,39 @@
             box-shadow: none;
           }
         }
+      }
+    }
+
+    .ant-tooltip {
+      height: 75px;
+      width: 38px;
+      background: url(../../../../assets/img/zth/Mask.png) no-repeat center center;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      padding: 0;
+      top: -68px !important;
+
+      .ant-tooltip-content {
+        margin: 0;
+        width: 100%;
+      }
+
+      .ant-tooltip-inner {
+        background-color: inherit !important;
+        box-shadow: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 16px;
+        color: #FFFFFF !important;
+        font-weight: 500;
+      }
+
+      .ant-tooltip-arrow {
+        display: none;
       }
     }
 
@@ -151,6 +184,17 @@
         color: #7DD4A1;
         margin: 15px 0 0 20px;
         font-weight: 500;
+
+        display: flex;
+        flex-direction: column;
+
+        span {
+          width: max-content;
+          background: #7DD4A1;
+          border-radius: 4px;
+          padding: 3px 5px;
+          color: #fff;
+        }
       }
     }
   }

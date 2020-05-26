@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 import './Marketing.less';
 import '../ZeroToHero.less';
-import ppcStructureImage from '../../../assets/img/zth/zth-structure.svg';
+import ppcStructureImage from '../../../assets/img/zth/zth-structure.png';
 import {zthActions} from "../../../actions/zth.actions";
 import {history} from "../../../utils/history";
 import ProductAmountSlider from "../components/ProductAmountSlider/ProductAmountSlider";
