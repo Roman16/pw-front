@@ -35,6 +35,11 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 setRowData(null, item, index);
             } else if (item === PRICE_FROM_USER && value > 0) {
                 setRowData(value, item, index)
+            } else if (item === PRICE_FROM_USER && value <= 0) {
+                notification.warning({
+                    title: 'Price should be greater than to 0'
+                });
+                return;
             } else if (item !== NET_MARGIN && value > 0.02) {
                 if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null) {
                     notification.warning({
@@ -56,7 +61,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 }
                 if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING]) && products[index][MIN_BID_AUTO_CAMPING] != null) {
                     notification.warning({
-                        title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                        title: 'Max Bid (Manual Campaign) should be greater than  Min Bid (Manual Campaign)'
                     });
                     return;
                 }

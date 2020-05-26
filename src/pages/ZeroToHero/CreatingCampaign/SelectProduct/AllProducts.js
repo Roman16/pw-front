@@ -5,6 +5,7 @@ import {Input} from "antd";
 import {useSelector} from "react-redux";
 import {productsServices} from "../../../../services/products.services";
 import './SelectProduct.less';
+import ProductItem from "./ProductItem";
 
 const {Search} = Input;
 
@@ -12,11 +13,24 @@ const AllProducts = () => {
     const [allProducts, setAllProducts] = useState([]),
         [totalSize, setTotalSize] = useState(0),
         [processing, setProcessing] = useState(false),
+        [openedProduct, setOpenedProduct] = useState(null),
+        [selectedProducts, setSelectedProducts] = useState([]),
         [paginationOptions, setPaginationOptions] = useState({
             page: 1,
             pageSize: 10,
         });
 
+    const selectProductHandler = (product, status) => {
+        if (status) {
+            setSelectedProducts(selectedProducts.filter(item => item.id !== product.id))
+        } else {
+            setSelectedProducts([...selectedProducts, product])
+        }
+    };
+
+    const openVariationsListHandler = (id) => {
+        setOpenedProduct(prevState => prevState === id ? null : id)
+    }
 
 
     const getProductsList = async () => {
@@ -29,9 +43,8 @@ const AllProducts = () => {
                 ungroupVariations: 0
             });
 
-            setAllProducts(res.result)
-
-
+            setAllProducts(res.result);
+            setTotalSize(res.totalSize);
         } catch (e) {
             setAllProducts([])
         }
@@ -59,41 +72,30 @@ const AllProducts = () => {
                     </div>
 
                     <div className="products-actions">
-                        <div className="selected-count">
-                            <b>3</b> selected on this page
+                        {selectedProducts.length > 0 && <div className="selected-count">
+                            <b>{selectedProducts.length}</b> selected on this page
                         </div>
-
-                        <button className={'btn default p15'}>Add To The List</button>
+                        }
+                        <button
+                            disabled={selectedProducts.length === 0}
+                            className={'btn default p15'}>
+                            Add To The List
+                        </button>
                     </div>
                 </div>
             </div>
 
-
             <div className="products-list">
                 {allProducts.map((product, index) => (
-                    <div className="product-item" key={product.id}>
-                        <div className="photo">
-                            <img src={product.image_url} alt=""/>
-                        </div>
+                    <ProductItem
+                        key={product.id}
+                        product={product}
+                        isOpened={product.id === openedProduct}
+                        isSelected={selectedProducts.find(item => item.id === product.id)}
 
-                        <div className="col">
-                            <div className="row">
-                                <div className="product-name">{product.name}</div>
-                            </div>
-
-                            <div className="row">
-                                <div className="price">$35.99</div>
-                                <div className="stock">In Stock</div>
-                            </div>
-
-                            <div className="row">
-                                <div className='asin-sku'>
-                                    <span className="asin">ASIN: {product.asin}</span>
-                                    <span className="sku">SKU: {product.sku}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        onSelect={selectProductHandler}
+                        onOpenVariations={openVariationsListHandler}
+                    />
                 ))}
             </div>
 

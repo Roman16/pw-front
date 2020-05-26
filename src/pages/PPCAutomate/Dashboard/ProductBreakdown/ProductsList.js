@@ -17,7 +17,7 @@ const RenderPramsChanges = ({type, product}) => {
             return (
                 <div className='product-metric-changes up'>
                     <div className='down-changes'>
-                        0%
+                        {type === 'profit' ? '$0' : '0%'}
                         <div className='horizontal-line-icon'/>
                     </div>
                 </div>
@@ -37,6 +37,24 @@ const RenderPramsChanges = ({type, product}) => {
                             <SVG id='upward-metric-changes'/>
                         </i>
                         {round(Math.abs(+value), 2)}%
+                    </div>}
+                </div>
+            )
+        } else if (type === 'profit') {
+            return (
+                <div className='product-metric-changes up'>
+                    {(product.profit > product.profit_prev_value) && <div className='upward-changes'>
+                        <i>
+                            <SVG id='upward-metric-changes'/>
+                        </i>
+                        ${round(Math.abs(product.profit_prev_value - product.profit), 2)}
+                    </div>}
+
+                    {(product.profit < product.profit_prev_value) && <div className='downward-changes'>
+                        <i>
+                            <SVG id='downward-metric-changes'/>
+                        </i>
+                        ${round(Math.abs(product.profit_prev_value - product.profit), 2)}
                     </div>}
                 </div>
             )
@@ -109,7 +127,7 @@ const ProductsList = ({fetching, products, fetchParams, handlePaginationChange, 
                     {text != null ? `$${numberMask(text, 2)}` : 'N/A'}
 
                     <RenderPramsChanges
-                        type='profit_diff'
+                        type='profit'
                         product={record}
                     />
                 </div>
