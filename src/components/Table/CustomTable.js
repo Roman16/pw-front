@@ -91,8 +91,7 @@ const CustomTable = ({
                 </div>
 
                 <div className="table-body">
-                    {!loading ? (
-                        dataSource &&
+                    {dataSource &&
                         dataSource.length > 0 &&
                         dataSource.map((report, index) => (
                             <>
@@ -130,16 +129,11 @@ const CustomTable = ({
                                     {expandedRowRender(report)}
                                 </div>}
                             </>
-                        ))
-                    ) : (
-                        <div className='spin-wrap'>
-                            <Spin size="large"/>
-                        </div>
-                    )}
+                        ))}
                 </div>
             </div>
 
-            {processing && <div className={'load-data'}><Spin size={'large'}/></div>}
+            {loading && <div className={'load-data'}><Spin size={'large'}/></div>}
 
         </div>
     );
