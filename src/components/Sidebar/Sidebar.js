@@ -15,7 +15,7 @@ const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
 
 const Sidebar = () => {
-    const [collapsed, setCollapsed] = useState(true),
+    const [collapsed, setCollapsed] = useState(false),
         [automate, setAutomate] = useState(true),
         [regions] = useState(regionsMenu),
         dispatch = useDispatch(),
@@ -43,9 +43,9 @@ const Sidebar = () => {
 
     const toggleSubMenu = () => setAutomate(prevState => !prevState);
 
-    useEffect(() => {
-        window.innerWidth < 1132 ? setCollapsed(false) : setCollapsed(true);
-    }, []);
+    // useEffect(() => {
+    //     window.innerWidth < 1132 ? setCollapsed(false) : setCollapsed(true);
+    // }, []);
 
 
     return (

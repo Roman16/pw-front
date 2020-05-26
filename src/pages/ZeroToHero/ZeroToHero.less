@@ -1,7 +1,43 @@
 .main-container div.zero-to-hero-page {
+  height: max-content;
+  overflow: auto;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+  grid-template-areas: 'title title' 'productSlider productSlider' 'marketingBlock marketingBlock';
+
+
+  &.creating-campaign-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'title title' 'productSlider productSlider' 'allProducts selectedProducts' 'productSettings productSettings';
+    grid-gap: 20px;
+  }
+
   & > h2 {
     font-size: 2.2857142857142856rem;
     color: #343C5A;
-    margin-bottom: 1.4285714285714286rem;
+    margin-bottom: 0;
+    grid-area: title;
+  }
+
+  .product-slider {
+    grid-area: productSlider;
+  }
+
+  .selected-products {
+    grid-area: selectedProducts;
+  }
+
+  .all-products {
+    grid-area: allProducts;
+  }
+  .product-settings {
+    grid-area: productSettings;
+  }
+
+  .marketing-block {
+    grid-area: marketingBlock;
   }
 }

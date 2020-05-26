@@ -30,13 +30,13 @@ const ProductSettings = () => {
 
     useEffect(() => {
         productsServices.getProducts({
-            size: 10,
+            pageSize: 10,
             page: 1,
             searchStr: '',
             ungroupVariations: 0
         })
             .then(res => {
-                setAllProducts(res.result)
+                setAllProducts([])
             })
     }, []);
 

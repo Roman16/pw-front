@@ -17,7 +17,7 @@ const ChooseCampaign = () => {
     }
 
     return (
-        <div className='zero-to-hero-page'>
+        <div>
 
             <section className='choose-campaign'>
                 <h2>Choose Your Campaign Type</h2>

@@ -2,10 +2,11 @@ import React, {memo} from "react";
 import '../ZeroToHero.less';
 import './CreatingCampaign.less';
 import ProductAmountSlider from "../components/ProductAmountSlider/ProductAmountSlider";
-import SelectProduct from "./SelectProduct/SelectProduct";
 import ProductSettings from "./ProductSettings/ProductSettings";
 import KeywordList from "./KeywordList/KeywordList";
 import Payment from "./Payment/Payment";
+import AllProducts from "./SelectProduct/AllProducts";
+import SelectedProduct from "./SelectProduct/SelectedProduct";
 
 
 const CreatingCampaign = () => {
@@ -16,13 +17,15 @@ const CreatingCampaign = () => {
 
             <ProductAmountSlider/>
 
-            <SelectProduct />
+            <AllProducts/>
+
+            <SelectedProduct/>
 
             <ProductSettings/>
 
-            <KeywordList/>
+            {/*<KeywordList/>*/}
 
-            <Payment/>
+            {/*<Payment/>*/}
         </div>
     )
 };

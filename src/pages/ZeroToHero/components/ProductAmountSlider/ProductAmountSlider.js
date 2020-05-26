@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Slider} from "antd";
+import {Input, Slider} from "antd";
 import './ProductAmountSlider.less';
 import {useDispatch, useSelector} from "react-redux";
 import {zthActions} from "../../../../actions/zth.actions";
@@ -34,9 +34,9 @@ const ProductAmountSlider = () => {
     useEffect(() => {
         clearTimeout(timerId);
 
-        // timerId = setTimeout(() => {
-        //     dispatch(zthActions.setProductAmount(productCount));
-        // }, 500)
+        timerId = setTimeout(() => {
+            dispatch(zthActions.setProductAmount(productCount));
+        }, 500)
     }, [productCount]);
 
     return (
@@ -46,8 +46,13 @@ const ProductAmountSlider = () => {
                     <div className="amount">
                         Product Amount
 
-                        <div className="value">
-                            {productCount}
+                        <div className="value form-group">
+                            <Input
+                                type={'number'}
+                                value={productCount}
+                                onChange={(e) => handleChangeSlider(e.target.value)}
+                                max={100}
+                            />
                         </div>
                     </div>
 
@@ -63,7 +68,7 @@ const ProductAmountSlider = () => {
                 <div className="slider">
                     <Slider
                         tooltipVisible={true}
-                        marks={{0: '0', 25: '25', 50: '50', 75: '75', 100: '100'}}
+                        marks={{1: '1', 25: '25', 50: '50', 75: '75', 100: '100'}}
                         value={sliderValue}
                         onChange={handleChangeSlider}
                         min={1}
@@ -80,7 +85,7 @@ const ProductAmountSlider = () => {
                     </div>
 
                     <div className="save-label">
-                        You save <br/> $32
+                        You save <span> $32</span>
                     </div>
                 </div>
             </div>
