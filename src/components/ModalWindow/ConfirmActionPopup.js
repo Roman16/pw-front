@@ -1,12 +1,12 @@
 import React from "react";
 import {Modal, Checkbox} from 'antd';
 
-const ConfirmActionPopup = ({title, description, visible, handleOk, handleCancel, checkboxText, handleChangeCheckbox}) => {
+const ConfirmActionPopup = ({title, description, visible, handleOk, handleCancel, checkboxText, handleChangeCheckbox, className}) => {
     return (
         <Modal
             title={title}
             className='confirm-action-modal'
-            wrapClassName={'over-modal-wrap'}
+            wrapClassName={`over-modal-wrap ${className}`}
             visible={visible}
             onOk={handleOk}
             onCancel={handleCancel}

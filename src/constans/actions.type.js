@@ -77,4 +77,6 @@ export const daypartingConstants = {
 export const zthConstants = {
     SET_CAMPAIGN: 'SET_CAMPAIGN',
     SET_PRODUCT_AMOUNT: 'SET_PRODUCT_AMOUNT',
+    ADD_PRODUCTS: 'ADD_PRODUCTS',
+    REMOVE_PRODUCTS: 'REMOVE_PRODUCTS',
 };

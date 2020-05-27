@@ -2,7 +2,8 @@ import {zthConstants} from '../constans/actions.type';
 
 const initialState = {
     selectedCampaign: '',
-    productAmount: 1
+    productAmount: 1,
+    selectedProducts: []
 };
 
 export function zth(state = initialState, action) {
@@ -18,6 +19,28 @@ export function zth(state = initialState, action) {
                 ...state,
                 productAmount: action.payload
             };
+
+        case zthConstants.ADD_PRODUCTS:
+            return {
+                ...state,
+                selectedProducts: [...state.selectedProducts, ...action.payload]
+            };
+
+        case zthConstants.REMOVE_PRODUCTS:
+            if (action.payload === 'all') {
+                return {
+                    ...state,
+                    selectedProducts: []
+                };
+            } else {
+                const nevList = [...state.selectedProducts];
+                nevList.splice(action.payload, 1);
+
+                return {
+                    ...state,
+                    selectedProducts: [...nevList]
+                };
+            }
 
         default:
             return state;
