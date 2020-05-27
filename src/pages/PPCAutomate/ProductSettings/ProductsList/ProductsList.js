@@ -37,7 +37,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 setRowData(value, item, index)
             } else if (item === PRICE_FROM_USER && value <= 0) {
                 notification.warning({
-                    title: 'Price should be greater than to 0'
+                    title: 'Price should be greater than 0'
                 });
                 return;
             } else if (item !== NET_MARGIN && value > 0.02) {
