@@ -58,8 +58,8 @@ export const searchTerms = () => {
         },
         {
             title: 'Normalized CVR',
-            dataIndex: 'normalized',
-            key: 'normalized',
+            dataIndex: 'normalized_cvr',
+            key: 'normalized_cvr',
             minWidth: '12.142857142857142rem',
             sorter: true,
             align: 'right',
