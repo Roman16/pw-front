@@ -47,6 +47,8 @@ const MultiApply = ({selectedRows, totalSize, onSelectAll, selectedAll, onSubmit
                         typeIcon={fieldType === 'net_margin' ? 'percent' : 'currency'}
                         value={settingValue}
                         onChange={value => setSettingValue(value)}
+                        min={0}
+                        step={0.01}
                     />
                 </div>
 

@@ -23,8 +23,9 @@ const AllProducts = () => {
             pageSize: 10,
         });
 
-    const {addedProducts} = useSelector(state => ({
-        addedProducts: state.zth.selectedProducts
+    const {addedProducts, productAmount} = useSelector(state => ({
+        addedProducts: state.zth.selectedProducts,
+        productAmount: state.zth.productAmount,
     }));
 
     const dispatch = useDispatch();
@@ -105,7 +106,7 @@ const AllProducts = () => {
                         </div>
                         }
                         <button
-                            disabled={selectedProducts.length === 0}
+                            disabled={selectedProducts.length === 0 || (selectedProducts.length + addedProducts.length > productAmount)}
                             className={'btn default p15'}
                             onClick={addProductsHandler}
                         >
