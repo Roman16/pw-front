@@ -9,22 +9,13 @@ let timerId = null;
 const ProductAmountSlider = () => {
     const dispatch = useDispatch();
 
-    const {productAmount} = useSelector(state => ({
-        productAmount: state.zth.productAmount
+    const {productAmount, addedProducts} = useSelector(state => ({
+        productAmount: state.zth.productAmount,
+        addedProducts: state.zth.selectedProducts,
     }));
 
     const [productCount, setCount] = useState(productAmount),
         [sliderValue, setValue] = useState(productAmount);
-
-    function handleChangeInput({target: {value}}) {
-        if (value > 100) {
-            setCount(+value);
-            setValue(100);
-        } else {
-            setCount(+value);
-            setValue(+value);
-        }
-    }
 
     function handleChangeSlider(value) {
         setCount(value);
@@ -52,12 +43,15 @@ const ProductAmountSlider = () => {
                                 value={productCount}
                                 onChange={(e) => handleChangeSlider(e.target.value)}
                                 max={100}
+                                min={addedProducts.length}
                             />
                         </div>
                     </div>
 
                     <div className="description">
-                        See the example of the campaigns <a target={'_blank'} href="https://docs.google.com/spreadsheets/d/14FUMQKNV8-oqbd_XeyecVmZtMamY6qhi3GcHEEO0dFM/edit#gid=277769766">you’ll get</a>
+                        See the example of the campaigns <a target={'_blank'}
+                                                            href="https://docs.google.com/spreadsheets/d/14FUMQKNV8-oqbd_XeyecVmZtMamY6qhi3GcHEEO0dFM/edit#gid=277769766">you’ll
+                        get</a>
                     </div>
 
                     <p>
@@ -71,7 +65,7 @@ const ProductAmountSlider = () => {
                         marks={{1: '1', 25: '25', 50: '50', 75: '75', 100: '100'}}
                         value={sliderValue}
                         onChange={handleChangeSlider}
-                        min={1}
+                        min={addedProducts.length || 1}
                         max={100}
                         tooltipPlacement={'top'}
                         getTooltipPopupContainer={triggerNode => triggerNode.parentNode}
