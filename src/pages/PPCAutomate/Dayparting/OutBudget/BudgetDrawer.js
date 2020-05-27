@@ -11,8 +11,8 @@ const BudgetDrawer = ({onClose, onSave, processing}) => {
         [recommendedBudget, setRecommendedBudget] = useState(false);
 
     const {campaignId, dailyBudget} = useSelector(state => ({
-        campaignId: state.products.selectedProduct.id,
-        dailyBudget: state.products.selectedProduct.dailyBudget
+        campaignId: state.dayparting.selectedCampaign.id,
+        dailyBudget: state.dayparting.selectedCampaign.dailyBudget
     }));
 
     function changesRadioHandler(e) {

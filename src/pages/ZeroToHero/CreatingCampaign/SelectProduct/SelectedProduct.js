@@ -1,57 +1,75 @@
-import React from "react";
-import {useSelector} from "react-redux";
+import React, {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import ProductItem from "./ProductItem";
+import {zthActions} from "../../../../actions/zth.actions";
+import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup";
+import {Modal} from "antd";
 
 const SelectedProduct = () => {
-    const {productAmount} = useSelector(state => ({
-        productAmount: state.zth.productAmount
+    const [openedProduct, setOpenedProduct] = useState(null),
+        [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false),
+        [removedProduct, setRemovedProduct] = useState(null);
+
+    const {productAmount, selectedProducts} = useSelector(state => ({
+        productAmount: state.zth.productAmount,
+        selectedProducts: state.zth.selectedProducts
     }));
 
+    const dispatch = useDispatch();
+
+    const openVariationsListHandler = (id) => setOpenedProduct(prevState => prevState === id ? null : id);
+
+    const removeProductHandler = (index) => {
+        setRemovedProduct(index);
+        setVisibleConfirmWindow(true);
+    };
+
+    const removeProduct = () => {
+        dispatch(zthActions.removeProduct(removedProduct));
+        setVisibleConfirmWindow(false);
+    };
+
     return (
-        <div className="col selected-products">
-            <div className="header-block">
-                <h3>
-                    Available Products to Setup
-                    <span className="count">{productAmount}</span>
-                </h3>
+        <>
+            <div className="col selected-products">
+                <div className="header-block">
+                    <h3>
+                        Available Products to Setup
+                        <span className="count">{productAmount}</span>
+                    </h3>
 
-                <div className='selected-products-count'>
-                    {/*<div className={'added-count'}><b>{allProducts.length}</b> products added</div>*/}
-                    <div className={'added-count'}><b>{0}</b> products added</div>
+                    <div className='selected-products-count'>
+                        <div className={'added-count'}><b>{selectedProducts.length}</b> products added</div>
 
-                    <button className="remove-all-btn">Remove all</button>
+                        <button className="remove-all-btn" onClick={() => removeProductHandler('all')}>Remove all
+                        </button>
+                    </div>
+                </div>
+
+
+                <div className="products-list">
+                    {selectedProducts.map((product, index) => (
+                        <ProductItem
+                            key={product.id}
+                            product={product}
+                            isOpened={product.id === openedProduct}
+
+                            onOpenVariations={openVariationsListHandler}
+                            onRemove={() => removeProductHandler(index)}
+                        />
+                    ))}
                 </div>
             </div>
 
-
-            <div className="products-list">
-                {/*{allProducts.map((product, index) => (*/}
-                {/*    <div className="product-item" key={product.id}>*/}
-                {/*        <div className="photo">*/}
-                {/*            <img src={product.image_url} alt=""/>*/}
-                {/*        </div>*/}
-
-                {/*        <div className="col">*/}
-                {/*            <div className="row">*/}
-                {/*                <div className="product-name">{product.name}</div>*/}
-                {/*            </div>*/}
-
-                {/*            <div className="row">*/}
-                {/*                <div className="price">$35.99</div>*/}
-                {/*                <div className="stock">In Stock</div>*/}
-                {/*            </div>*/}
-
-                {/*            <div className="row">*/}
-                {/*                <div className='asin-sku'>*/}
-                {/*                    <span className="asin">ASIN: {product.asin}</span>*/}
-                {/*                    <span className="sku">SKU: {product.sku}</span>*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*))}*/}
-            </div>
-        </div>
-
+            <ConfirmActionPopup
+                className={'confirm-remove-product-window'}
+                visible={visibleConfirmWindow}
+                title={'Are you sure you want to delete the product?'}
+                description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'}
+                handleOk={removeProduct}
+                handleCancel={() => setVisibleConfirmWindow(false)}
+            />
+        </>
     )
 };
 

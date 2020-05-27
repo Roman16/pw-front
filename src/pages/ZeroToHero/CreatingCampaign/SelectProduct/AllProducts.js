@@ -1,17 +1,20 @@
 import React, {useEffect, useState} from "react";
 import {SVG} from "../../../../utils/icons";
 import Pagination from "../../../../components/Pagination/Pagination";
-import {Input} from "antd";
-import {useSelector} from "react-redux";
+import {Input, Spin} from "antd";
+import {useDispatch, useSelector} from "react-redux";
 import {productsServices} from "../../../../services/products.services";
 import './SelectProduct.less';
 import ProductItem from "./ProductItem";
+import {debounce} from "throttle-debounce";
+import {zthActions} from "../../../../actions/zth.actions";
 
 const {Search} = Input;
 
 const AllProducts = () => {
     const [allProducts, setAllProducts] = useState([]),
         [totalSize, setTotalSize] = useState(0),
+        [searchStr, setSearchStr] = useState(''),
         [processing, setProcessing] = useState(false),
         [openedProduct, setOpenedProduct] = useState(null),
         [selectedProducts, setSelectedProducts] = useState([]),
@@ -19,6 +22,12 @@ const AllProducts = () => {
             page: 1,
             pageSize: 10,
         });
+
+    const {addedProducts} = useSelector(state => ({
+        addedProducts: state.zth.selectedProducts
+    }));
+
+    const dispatch = useDispatch();
 
     const selectProductHandler = (product, status) => {
         if (status) {
@@ -30,7 +39,24 @@ const AllProducts = () => {
 
     const openVariationsListHandler = (id) => {
         setOpenedProduct(prevState => prevState === id ? null : id)
-    }
+    };
+
+    const changePaginationHandler = (options) => {
+        setPaginationOptions(options);
+    };
+
+    const changeSearchHandler = debounce(500, false, str => {
+        setSearchStr(str);
+        setPaginationOptions({
+            ...paginationOptions,
+            page: 1
+        })
+    });
+
+    const addProductsHandler = () => {
+        dispatch(zthActions.addProducts(selectedProducts));
+        setSelectedProducts([]);
+    };
 
 
     const getProductsList = async () => {
@@ -39,11 +65,11 @@ const AllProducts = () => {
         try {
             const res = await productsServices.getProducts({
                 ...paginationOptions,
-                searchStr: '',
+                searchStr: searchStr,
                 ungroupVariations: 0
             });
 
-            setAllProducts(res.result);
+            setAllProducts(res.result || []);
             setTotalSize(res.totalSize);
         } catch (e) {
             setAllProducts([])
@@ -54,7 +80,9 @@ const AllProducts = () => {
 
     useEffect(() => {
         getProductsList();
-    }, []);
+
+        setSelectedProducts([]);
+    }, [paginationOptions]);
     return (
         <div className="col all-products">
             <div className="header-block">
@@ -65,7 +93,7 @@ const AllProducts = () => {
                         <Search
                             className="search-field"
                             placeholder={'Search by product name, ASIN or SKU'}
-                            // onChange={e => onSearch(e.target.value)}
+                            onChange={e => changeSearchHandler(e.target.value)}
                             data-intercom-target='search-field'
                             suffix={<SVG id={'search'}/>}
                         />
@@ -78,7 +106,9 @@ const AllProducts = () => {
                         }
                         <button
                             disabled={selectedProducts.length === 0}
-                            className={'btn default p15'}>
+                            className={'btn default p15'}
+                            onClick={addProductsHandler}
+                        >
                             Add To The List
                         </button>
                     </div>
@@ -92,6 +122,7 @@ const AllProducts = () => {
                         product={product}
                         isOpened={product.id === openedProduct}
                         isSelected={selectedProducts.find(item => item.id === product.id)}
+                        isDisabled={addedProducts.find(item => item.id === product.id)}
 
                         onSelect={selectProductHandler}
                         onOpenVariations={openVariationsListHandler}
@@ -99,8 +130,12 @@ const AllProducts = () => {
                 ))}
             </div>
 
+            {processing && <div className="load-data">
+                <Spin size={'large'}/>
+            </div>}
+
             <Pagination
-                // onChange={}
+                onChange={changePaginationHandler}
                 page={paginationOptions.page}
                 pageSizeOptions={[10, 25, 50]}
                 pageSize={paginationOptions.pageSize}

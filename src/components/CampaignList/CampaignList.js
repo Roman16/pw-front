@@ -46,6 +46,7 @@ const CampaignList = () => {
             ...paginationParams,
             ...filterParams,
             onlyOndayparting,
+            searchStr,
             cancelToken: source.token
         }))
     }

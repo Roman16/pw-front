@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 import {SVG} from "../../utils/icons";
 import {userActions} from "../../actions/user.actions";
 import moment from "moment";
+import InformationTooltip from "../Tooltip/Tooltip";
+import {Popover} from "antd";
 
 // const accountLinks = {
 //     amazon_mws: {
@@ -47,7 +49,13 @@ const ErrorBar = () => {
     return (
         <div className='errors-bar'>
             {onTrial && <div className={'on-trial'}>
-                <SVG id={'attention-bar-icon'}/>
+                <InformationTooltip
+                    position={'bottomRight'}
+                    type={'custom'}
+                    className={'trial-tooltip'}
+                    description={'Hey Profit Whaler, to make sure the software will continue to work after the free trial ends, please make sure that you have a valid credit card attached to the account.'}>
+                    <SVG id={'attention-bar-icon'}/>
+                </InformationTooltip>
                 Free Trial
                 <span>{freeTrialDays >= 0 ? freeTrialDays : 0}</span>
                 Days Left
