@@ -1,436 +1,59 @@
+@import '../../../../style/variables';
+
 .product-settings {
-  .products-slider {
-    background: #FFFFFF;
-    border-radius: 8px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    padding: 12px 0;
 
-    .slick-slider {
-      position: initial;
-      width: 60%;
+  section {
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: @default-section-shadow;
+    margin-bottom: 20px;
+    padding: 0 0 50px 0;
 
-      .prev,
-      .next {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto 0;
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1080px;
+      padding: 0 20px;
+      box-sizing: content-box;
+      margin: 0 auto;
+      min-height: 100%;
+    }
+
+    .section-header {
+      border-bottom: 1px solid #C9CBD4;
+      min-height: 5.714285714285714rem;
+      display: flex;
+
+      h2 {
+        font-size: 1.4285714285714286rem;
+        color: #343C5A;
+        margin: 0;
+        height: 100%;
+        width: max-content;
         display: flex;
         align-items: center;
-        cursor: pointer;
-      }
+        position: relative;
 
-      .prev {
-        left: 55px;
-      }
+        .optional {
+          background: #F5F5FF;
+          border-radius: 4px;
 
-      .next {
-        right: 55px;
-      }
-    }
-
-    .product-item {
-      display: flex !important;
-      align-items: center;
-
-      .image {
-        width: 124px;
-        height: 124px;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 25px 0 0;
-      }
-
-      & > .col {
-        display: flex;
-        flex-direction: column;
-
-        .product-name {
-          font-weight: 600;
-          font-size: 1.1428571428571428rem;
-          letter-spacing: 0.2px;
-          color: #343C5A;
-          text-shadow: 0px 6px 40px rgba(44, 48, 58, 0.03);
-        }
-
-        .row {
-          display: flex;
-
-          .price {
-            font-size: 1rem;
-            letter-spacing: 0.2px;
-            color: #6D6DF6;
-            text-shadow: 0px 6px 40px rgba(44, 48, 58, 0.03);
-            margin: 5px 15px 5px 0;
-          }
-
-          .stock {
-            font-weight: 600;
-            font-size: 0.8571428571428571rem;
-            letter-spacing: 0.2px;
-            color: #8FD39D;
-            margin: 7px auto 5px 0;
-          }
-        }
-
-        .asin-sku {
-          width: 100%;
           font-size: 0.8571428571428571rem;
-          letter-spacing: 0.2px;
-          color: #656A84;
-          text-shadow: 0px 6px 40px rgba(44, 48, 58, 0.03);
-
-          .asin {
-            margin: 0 25px 0 0;
-          }
-        }
-      }
-    }
-  }
-
-  .settings {
-    display: flex;
-    justify-content: space-between;
-    background: #FFFFFF;
-    border-radius: 8px;
-    padding: 40px 55px 50px;
-    margin: 25px 0 0 0;
-
-    .col {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .ant-checkbox-wrapper {
-      display: flex;
-      align-items: center;
-
-      .ant-checkbox {
-        width: 16px;
-        height: 16px;
-        margin: 3px 0 0 0;
-
-        input,
-        span {
-          width: 100%;
-          height: 100%;
-        }
-      }
-
-      .ant-checkbox-inner::after {
-        left: 4px;
-      }
-    }
-
-    .col:first-child {
-      width: 35%;
-
-      .ant-checkbox-wrapper {
-        margin: 0 0 30px 0;
-
-        span {
-          font-size: 1.4285714285714286rem;
-          letter-spacing: -0.0555556px;
           color: #343C5A;
-        }
-      }
 
-      .input-group {
-        display: flex;
-        flex-direction: column;
-        margin: 0 0 25px 0;
-
-        label {
-          font-weight: 600;
-          font-size: 0.8571428571428571rem;
-          letter-spacing: -0.05px;
-          color: #343C5A;
-          margin: 0 0 8px 0;
-        }
-
-        input {
-          height: 40px;
-          width: 100%;
-          background: #FFFFFF;
-          box-sizing: border-box;
-          border-radius: 8px;
-
-          font-size: 1rem;
-          letter-spacing: -0.05px;
-          color: #343C5A;
-          padding: 0 5px 0 15px;
-        }
-
-        .ant-select {
-          .ant-select-selection--single {
-            height: 40px;
-            width: 100%;
-            border-radius: 8px;
-
-            .ant-select-selection__rendered {
-              height: 100%;
-              margin-left: 15px;
-
-              .ant-select-selection-selected-value {
-                align-items: center;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .col:last-child {
-      width: 60%;
-
-      & > .row {
-        width: 100%;
-        display: flex;
-        margin: 0 0 25px 0;
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-
-        label {
-          font-weight: 600;
-          font-size: 0.8571428571428571rem;
-          letter-spacing: -0.05px;
-          color: #343C5A;
-          margin: 0 0 5px 0;
-        }
-
-        .date-picker {
-          width: 254px;
           display: flex;
+          align-items: center;
+          padding: 0 5px;
+          font-weight: 400;
 
-          & > div {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-
-            .ant-calendar-picker {
-              width: 100%;
-              height: max-content;
-
-              div {
-                input {
-                  width: 100%;
-                  height: 40px;
-                  padding-left: 30px;
-
-                  font-size: 0.8571428571428571rem !important;
-                  letter-spacing: 0.2px;
-                  color: #38454F;
-                }
-
-                img {
-                  left: 10px;
-                }
-              }
-            }
-
-            &:first-child {
-              input {
-                border-radius: 8px 0 0 8px;
-              }
-            }
-
-            &:last-child {
-              input {
-                border-radius: 0 8px 8px 0;
-              }
-            }
-          }
-
-          .ant-calendar-tbody .ant-calendar-active-week .ant-calendar-today .ant-calendar-date {
-            background-color: #fff;
-          }
-        }
-
-        .InputCurrency {
-          width: 120px;
-
-          .Dollar {
-            width: 24px;
-          }
-
-          .ant-input-number {
-            width: 100%;
-            height: 40px;
-            border-radius: 8px;
-
-            .ant-input-number-input-wrap {
-              height: 100%;
-
-              input {
-                height: 100%;
-                padding-left: 35px;
-
-                font-size: 0.8571428571428571rem;
-                letter-spacing: 0.2px;
-                color: #38454F;
-              }
-            }
-
-            .ant-input-number-handler-wrap {
-              right: 2px;
-            }
-          }
-        }
-
-        .bid {
-          display: flex;
-          flex-direction: column;
-          margin: 0 auto 0 15px;
-
-        }
-
-        .daily-budget {
-          display: flex;
-          flex-direction: column;
-
-          & > div {
-            display: flex;
-
-            .btn {
-              height: 40px;
-              padding: 0 15px;
-              margin: 0 0 0 8px;
-              font-size: 1rem;
-            }
-          }
-        }
-
-        &.bidding-strategy {
-          justify-content: space-between;
-          padding: 15px 0 0 0;
-          border-top: 1px solid rgba(201, 203, 212, 0.5);
-
-          .col {
-            &:first-child {
-              width: 50%;
-            }
-
-            &:last-child {
-              width: 45%;
-            }
-
-            h3 {
-              font-size: 1.4285714285714286rem;
-              letter-spacing: -0.0555556px;
-              color: #656A84;
-              margin: 0 0 30px 0;
-            }
-          }
-
-          .ant-radio-group {
-            display: flex;
-            flex-direction: column;
-
-            .ant-radio-wrapper {
-              display: flex;
-              align-items: center;
-              margin: 0;
-
-              .ant-radio {
-                padding: 0;
-
-                .ant-radio-inner {
-                  width: 20px;
-                  height: 20px;
-
-                  &::after {
-                    left: 5px;
-                    top: 5px;
-                  }
-                }
-              }
-
-              & > span {
-                font-weight: 600;
-                font-size: 1rem;
-                letter-spacing: -0.05px;
-                color: #343C5A;
-                padding-left: 10px;
-              }
-            }
-
-            .radio-description {
-              font-size: 0.8571428571428571rem;
-              line-height: 1.1428571428571428rem;
-              letter-spacing: 0.2px;
-              color: #656A84;
-              margin: 10px 0 30px 26px;
-
-              &:last-child {
-                margin-bottom: 0;
-              }
-
-              a {
-                letter-spacing: 0.2px;
-                text-decoration-line: underline;
-                color: #6D6DF6;
-                margin: 0 0 0 5px;
-              }
-            }
-          }
-
-          .percent-input-group {
-            display: flex;
-            flex-direction: column;
-            margin: 10px 0 20px 0;
-
-            label {
-              font-weight: 600;
-              font-size: 1rem;
-              letter-spacing: -0.05px;
-              color: #343C5A;
-              margin: 0 0 10px 0;
-            }
-
-            .InputCurrency {
-              .ant-input-number-handler-wrap {
-                display: none;
-              }
-
-              .Dollar {
-                right: 5px;
-                left: auto;
-                background: rgba(182, 182, 251, 0.1);
-                color: #6D6DF6;
-              }
-
-              input {
-                padding: 0 35px 0 15px;
-                font-size: 1.1428571428571428rem;
-                letter-spacing: -0.4375px;
-                color: #656A84;
-              }
-            }
-          }
-        }
-
-        &.bidding-strategy-description {
-          font-size: 1rem;
-          letter-spacing: -0.05px;
-          color: #343C5A;
-
-          span {
-            color: #EC7F5C;
-            margin: 0 3px 0 0;
-          }
+          position: absolute;
+          right: -4.285714285714286rem;
+          top: 1.4285714285714286rem;
         }
       }
-    }
-  }
-
-  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-    & {
     }
   }
 }

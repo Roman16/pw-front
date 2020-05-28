@@ -24,6 +24,11 @@ const MAX_BID_AUTO_CAMPING = 'max_bid_auto_campaign';
 const TOTAL_CHANGES = 'total_changes';
 const OPTIMIZATION_STATUS = 'optimization_status';
 
+let minBidManualTimerId = null,
+    minBidAutoTimerId = null,
+    maxBidManualTimerId = null,
+    maxBidAutoTimerId = null;
+
 
 const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, setRowData, updateSettingsHandlerByIdList}) => {
     const [selectedRows, setSelectedRows] = useState([]),
@@ -40,31 +45,48 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     title: 'Price should be greater than 0'
                 });
                 return;
-            } else if (item !== NET_MARGIN && value > 0.02) {
-                if ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null) {
-                    notification.warning({
-                        title: 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
-                    });
+            } else if (item !== NET_MARGIN) {
+                if (value < 0.02 || ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null)) {
+                    clearTimeout(minBidManualTimerId);
+                    minBidManualTimerId = setTimeout(() => {
+                        notification.warning({
+                            title: value < 0.02 ? 'Bids should be greater than or equal to 0.02$' : 'Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)'
+                        });
+                    }, 1000);
                     return;
                 }
-                if ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING]) && products[index][MIN_BID_MANUAL_CAMPING] != null) {
-                    notification.warning({
-                        title: 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
-                    });
+                if (value < 0.02 || ((item === MAX_BID_MANUAL_CAMPING) && (value < products[index][MIN_BID_MANUAL_CAMPING]) && products[index][MIN_BID_MANUAL_CAMPING] != null)) {
+                    clearTimeout(maxBidManualTimerId);
+                    maxBidManualTimerId = setTimeout(() => {
+                        notification.warning({
+                            title: value < 0.02 ? 'Bids should be greater than or equal to 0.02$' : 'Max Bid (Manual Campaign) should be greater than Min Bid (Manual Campaign)'
+                        });
+                    }, 1000);
                     return;
                 }
-                if ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING]) && products[index][MAX_BID_AUTO_CAMPING] != null) {
-                    notification.warning({
-                        title: 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
-                    });
+                if (value < 0.02 || ((item === MIN_BID_AUTO_CAMPING) && (value > products[index][MAX_BID_AUTO_CAMPING]) && products[index][MAX_BID_AUTO_CAMPING] != null)) {
+                    clearTimeout(minBidAutoTimerId);
+                    minBidAutoTimerId = setTimeout(() => {
+                        notification.warning({
+                            title: value < 0.02 ? 'Bids should be greater than or equal to 0.02$' : 'Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)'
+                        });
+                    }, 1000);
                     return;
                 }
-                if ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING]) && products[index][MIN_BID_AUTO_CAMPING] != null) {
-                    notification.warning({
-                        title: 'Max Bid (Manual Campaign) should be greater than  Min Bid (Manual Campaign)'
-                    });
+                if (value < 0.02 || ((item === MAX_BID_AUTO_CAMPING) && (value < products[index][MIN_BID_AUTO_CAMPING]) && products[index][MIN_BID_AUTO_CAMPING] != null)) {
+                    clearTimeout(maxBidAutoTimerId);
+                    maxBidAutoTimerId = setTimeout(() => {
+                        notification.warning({
+                            title: value < 0.02 ? 'Bids should be greater than or equal to 0.02$' : 'Max Bid (Manual Campaign) should be greater than  Min Bid (Manual Campaign)'
+                        });
+                    }, 1000);
                     return;
                 }
+
+                clearTimeout(maxBidAutoTimerId);
+                clearTimeout(minBidAutoTimerId);
+                clearTimeout(minBidManualTimerId);
+                clearTimeout(maxBidManualTimerId);
 
                 setRowData(value, item, index)
             } else if (item === NET_MARGIN && value > 0 && value <= 100) {

@@ -16,6 +16,8 @@
   transform: scaleX(1);
   transition: opacity 0.1s;
   opacity: 0;
+  width: 0;
+  transition: width 0.3s ease-in 0.3s;
 }
 
 .sidebar {
@@ -348,6 +350,15 @@
     .refer-link {
       margin: 0 4px 0 4px;
 
+      .custom-tooltip {
+        margin: 0;
+        width: 100%;
+
+        a {
+          width: 100%;
+        }
+      }
+
       a {
         display: flex;
         align-items: center;
@@ -417,6 +428,15 @@
     .facebook-link {
       margin: auto 4px 15px 4px;
 
+      .custom-tooltip {
+        width: 100%;
+        margin: 0;
+
+        a {
+          width: 100%;
+        }
+      }
+
       a {
         display: flex;
         align-items: center;
@@ -470,6 +490,11 @@
         .bottom-nav-item {
           margin: 3em 0;
           cursor: pointer;
+          position: relative;
+
+          .custom-tooltip {
+            margin: 0;
+          }
 
           button,
           a {
@@ -499,8 +524,8 @@
           }
         }
 
-        .bottom-nav-item:hover > button,
-        .bottom-nav-item:hover > a {
+        .bottom-nav-item:hover button,
+        .bottom-nav-item:hover a {
           color: @white;
 
           .link-icon {
@@ -636,6 +661,7 @@
 
     .refer-link,
     .facebook-link {
+
       a {
         span {
           .hideAnimation();
@@ -784,6 +810,31 @@ a:focus {
 
     .collapsed-automate {
       width: 150px;
+    }
+  }
+}
+
+.hide-tooltip {
+  display: none;
+}
+
+.sidebar-link-tooltip {
+  padding-left: 5px !important;
+
+  .ant-popover-arrow {
+    display: none;
+  }
+
+  .ant-popover-inner {
+    background: #343C5A;
+
+    .ant-popover-inner-content {
+      height: 2.2857142857142856rem;
+      color: #B6B6FB;
+      font-size: 0.8571428571428571rem;
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
     }
   }
 }

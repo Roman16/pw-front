@@ -10,6 +10,7 @@ import logo from "../../assets/img/ProfitWhales-logo-white.svg";
 import "./Sidebar.less";
 import {SVG} from "../../utils/icons";
 import '../../style/variables.less';
+import InformationTooltip from "../Tooltip/Tooltip";
 
 const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
@@ -183,25 +184,39 @@ const Sidebar = () => {
                 </nav>
 
                 <div className="facebook-link">
-                    <a href='https://www.facebook.com/groups/profitwhales.software/' target="_blank">
-                        <div className="icon">
-                            <SVG id='facebook-icon-white'/>
-                        </div>
+                    <InformationTooltip
+                        type={'custom'}
+                        description={'Join us on Facebook'}
+                        position={'right'}
+                        overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
+                    >
+                        <a href='https://www.facebook.com/groups/profitwhales.software/' target="_blank">
+                            <div className="icon">
+                                <SVG id='facebook-icon-white'/>
+                            </div>
 
-                        <span className="bottom-span">Join us on Facebook</span>
-                    </a>
+                            <span className="bottom-span">Join us on Facebook</span>
+                        </a>
+                    </InformationTooltip>
                 </div>
 
                 <div className="refer-link">
-                    <Link to={'/affiliates'} target="_blank">
-                        <div className="icon">
-                            <SVG id='refer-icon'/>
-                        </div>
+                    <InformationTooltip
+                        type={'custom'}
+                        description={'Refer sellers! Get Cash'}
+                        position={'right'}
+                        overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
+                    >
+                        <Link to={'/affiliates'} target="_blank">
+                            <div className="icon">
+                                <SVG id='refer-icon'/>
+                            </div>
 
-                        {devicePixelRatio === 2 ? <span className="bottom-span">Refer sellers! <br/> Get Cash</span>
-                            :
-                            <span className="bottom-span">Refer sellers! Get Cash</span>}
-                    </Link>
+                            {devicePixelRatio === 2 ? <span className="bottom-span">Refer sellers! <br/> Get Cash</span>
+                                :
+                                <span className="bottom-span">Refer sellers! Get Cash</span>}
+                        </Link>
+                    </InformationTooltip>
                 </div>
 
                 <nav className="bottom-nav">
@@ -219,27 +234,34 @@ const Sidebar = () => {
                         {/*</li>*/}
 
                         <li className="bottom-nav-item">
-                            <NavLink
-                                className="automate-link"
-                                activeClassName="automate-link-active"
-                                exact
-                                to={`/account-settings`}
+                            <InformationTooltip
+                                type={'custom'}
+                                description={'Account'}
+                                position={'right'}
+                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                             >
-                                <div className="link-icon">
-                                    <SVG id='account'/>
+                                <NavLink
+                                    className="automate-link"
+                                    activeClassName="automate-link-active"
+                                    exact
+                                    to={`/account-settings`}
+                                >
+                                    <div className="link-icon">
+                                        <SVG id='account'/>
 
-                                    {(accountLinks.amazon_mws.status === 'FAILED' ||
-                                        accountLinks.amazon_mws.status === 'UNAUTHORIZED' ||
-                                        accountLinks.amazon_ppc.status === 'FAILED' ||
-                                        accountLinks.amazon_ppc.status === 'UNAUTHORIZED') &&
-                                    <i><SVG id={'notification-icon'}/></i>}
-                                </div>
+                                        {(accountLinks.amazon_mws.status === 'FAILED' ||
+                                            accountLinks.amazon_mws.status === 'UNAUTHORIZED' ||
+                                            accountLinks.amazon_ppc.status === 'FAILED' ||
+                                            accountLinks.amazon_ppc.status === 'UNAUTHORIZED') &&
+                                        <i><SVG id={'notification-icon'}/></i>}
+                                    </div>
 
-                                <span className="bottom-span">
+                                    <span className="bottom-span">
                                     Account
-                                    {/*<InformationTooltip type={'warning'} description={'test test test test test test test test  test test test test test test test test test '}/>*/}
+                                        {/*<InformationTooltip type={'warning'} description={'test test test test test test test test  test test test test test test test test test '}/>*/}
                                 </span>
-                            </NavLink>
+                                </NavLink>
+                            </InformationTooltip>
                         </li>
 
                         {/*<li className="bottom-nav-item">*/}
@@ -253,27 +275,41 @@ const Sidebar = () => {
                         {/*</li>*/}
 
                         <li className="bottom-nav-item">
-                            <a
-                                href="https://intercom.help/profitwhales/en/"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                            <InformationTooltip
+                                type={'custom'}
+                                description={'Help Center'}
+                                position={'right'}
+                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                             >
-                                <div className="link-icon">
-                                    <SVG id='help-center'/>
-                                </div>
+                                <a
+                                    href="https://intercom.help/profitwhales/en/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <div className="link-icon">
+                                        <SVG id='help-center'/>
+                                    </div>
 
-                                <span className="bottom-span">Help Center</span>
-                            </a>
+                                    <span className="bottom-span">Help Center</span>
+                                </a>
+                            </InformationTooltip>
                         </li>
 
                         <li className="bottom-nav-item" onClick={handleLogout}>
-                            <button type="button">
-                                <div className="link-icon">
-                                    <SVG id='log-out'/>
-                                </div>
+                            <InformationTooltip
+                                type={'custom'}
+                                description={'Log Out'}
+                                position={'right'}
+                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
+                            >
+                                <button type="button">
+                                    <div className="link-icon">
+                                        <SVG id='log-out'/>
+                                    </div>
 
-                                <span className="bottom-span">Log Out</span>
-                            </button>
+                                    <span className="bottom-span">Log Out</span>
+                                </button>
+                            </InformationTooltip>
                         </li>
                     </ul>
                 </nav>

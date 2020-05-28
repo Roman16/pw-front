@@ -28,7 +28,8 @@ const ProductBreakdown = () => {
             pageSize: 10,
             totalSize: 0,
             searchText: '',
-            onlyOptimization: onlyOptimization || false
+            onlyOptimization: onlyOptimization || false,
+            onlyActive: false
         }),
         [products, updateProductsList] = useState([]);
     const [fetching, switchFetch] = useState(false);
@@ -50,6 +51,10 @@ const ProductBreakdown = () => {
             .then(res => {
                 switchFetch(false);
 
+                if (res.result.length === 1) {
+                    handleSelectProduct(res.result[0].product.id)
+                }
+
                 updateProductsList(res.result);
                 dispatch(dashboardActions.setProductsMarginStatus(res.all_products_has_margin));
                 changeFetchParams({
@@ -64,12 +69,14 @@ const ProductBreakdown = () => {
             })
     };
 
-    const handleChangeSwitch = e => {
-        dispatch(productsActions.showOnlyOptimized(e));
+    const handleChangeSwitch = (type, value) => {
+        if (type === 'onlyOptimization') {
+            dispatch(productsActions.showOnlyOptimized(value));
+        }
 
         changeFetchParams({
             ...fetchParams,
-            onlyOptimization: e,
+            [type]: value,
             page: 1,
         });
 
@@ -137,10 +144,19 @@ const ProductBreakdown = () => {
                 <div className='switch-block'>
                     <Switch
                         checked={onlyOptimization}
-                        onChange={handleChangeSwitch}
+                        onChange={(e) => handleChangeSwitch('onlyOptimization', e)}
                     />
 
                     On optimization only
+                </div>
+
+                <div className='switch-block'>
+                    <Switch
+                        checked={fetchParams.onlyActive}
+                        onChange={(e) => handleChangeSwitch('onlyActive', e)}
+                    />
+
+                    Only active on Amazon
                 </div>
 
                 <div className="product-selected">
