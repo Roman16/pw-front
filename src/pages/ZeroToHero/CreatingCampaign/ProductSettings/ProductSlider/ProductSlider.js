@@ -3,23 +3,29 @@ import ProductItem from "../../SelectProduct/ProductItem";
 import {SVG} from "../../../../../utils/icons";
 import './ProductSlider.less';
 
-const ProductSlider = ({product}) => {
+const ProductSlider = ({
+                           product,
+                           productsCount,
+                           onNext,
+                           onPrev
+                       }) => {
 
     return (
         <section className="products-slider">
-            <button className={'prev'}>
+            {productsCount > 1 && <button className={'prev'} onClick={onPrev}>
                 <SVG id={'slider-arrow'}/>
-            </button>
+            </button>}
 
             <div className="container">
                 <ProductItem
                     product={product}
+                    showChildCount
                 />
             </div>
 
-            <button className={'next'}>
+            {productsCount > 1 && <button className={'next'} onClick={onNext}>
                 <SVG id={'slider-arrow'}/>
-            </button>
+            </button>}
         </section>
     )
 };

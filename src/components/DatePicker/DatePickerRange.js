@@ -5,7 +5,6 @@ import tz from 'moment-timezone';
 
 import DateIcon from './DateIcon/DateIcon';
 import './DatePicker.less';
-import CustomSelect from "../Select/Select";
 
 const { RangePicker } = AntDatePicker;
 

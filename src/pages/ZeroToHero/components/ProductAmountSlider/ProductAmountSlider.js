@@ -32,7 +32,7 @@ const ProductAmountSlider = () => {
 
         timerId = setTimeout(() => {
             dispatch(zthActions.setProductAmount(productCount));
-        }, 500)
+        }, 10)
     }, [productCount]);
 
     return (
@@ -48,7 +48,7 @@ const ProductAmountSlider = () => {
                                 value={productCount}
                                 onChange={(e) => handleChangeSlider(e.target.value)}
                                 max={100}
-                                min={addedProducts.length}
+                                min={addedProducts.length || 1}
                             />
                         </div>
                     </div>

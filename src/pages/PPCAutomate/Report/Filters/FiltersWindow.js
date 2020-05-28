@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import CustomSelect from "../../../../components/Select/Select";
-import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
+import DatePicker from "../../../../components/DatePicker/DatePickerRange";
 import TreeSelect from "../../../../components/TreeSelect/TreeSelect";
 import {Input, Select} from "antd";
 import InputCurrency from "../../../../components/Inputs/InputCurrency";

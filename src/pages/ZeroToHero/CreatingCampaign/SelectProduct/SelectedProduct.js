@@ -41,8 +41,12 @@ const SelectedProduct = () => {
                     <div className='selected-products-count'>
                         <div className={'added-count'}><b>{selectedProducts.length}</b> products added</div>
 
-                        <button className="remove-all-btn" onClick={() => removeProductHandler('all')}>Remove all
-                        </button>
+                        {selectedProducts.length > 0 && <button
+                            className="remove-all-btn"
+                            onClick={() => removeProductHandler('all')}
+                        >
+                            Remove all
+                        </button>}
                     </div>
                 </div>
 

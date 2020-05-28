@@ -302,7 +302,7 @@ const Sidebar = () => {
                                 position={'right'}
                                 overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                             >
-                                <button type="button">
+                                <button type="button"  onClick={handleLogout}>
                                     <div className="link-icon">
                                         <SVG id='log-out'/>
                                     </div>

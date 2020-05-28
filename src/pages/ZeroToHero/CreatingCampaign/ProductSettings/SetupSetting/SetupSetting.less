@@ -1,0 +1,68 @@
+.setup-setting {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row {
+    display: flex;
+
+    & > .col:first-child {
+      width: 50%;
+      padding: 0 20px 0 0;
+    }
+
+    & > .col:last-child {
+      width: 50%;
+      padding: 0 0 0 20px;
+    }
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  h3 {
+    font-size: 1rem;
+    margin-bottom: 1.2142857142857142rem;
+    color: #343C5A;
+  }
+
+  p {
+    font-size: 0.8571428571428571rem;
+    color: #656A84;
+  }
+
+  .portfolio-settings {
+    margin-bottom: 20px;
+
+    .ant-radio-wrapper {
+      & > span:last-child {
+        font-size: 1rem;
+        color: #343C5A;
+        padding: 0;
+        margin: 0 0 0 10px;
+      }
+    }
+
+    .form-group {
+      margin: 10px 0 20px 28px;
+    }
+  }
+
+  .date-settings {
+    .form-group {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-size: 1rem;
+        color: #343C5A;
+        font-weight: 500;
+        display: block;
+        margin: 0 0 5px 0;
+      }
+    }
+  }
+}
