@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import './ProductSettings.less';
-import ProductSlider from "./ProductSlider";
+import ProductSlider from "./ProductSlider/ProductSlider";
 import SetupSetting from "./SetupSetting";
 import BiddingStrategies from "./BiddingStrategies";
 import RelevantKeywords from "./RelevantKeywords";
@@ -17,7 +17,7 @@ const ProductSettings = () => {
         return (
             <section className='product-settings'>
                 <ProductSlider
-                    products={addedProducts}
+                    product={addedProducts[0]}
                 />
 
                 <SetupSetting/>
