@@ -679,10 +679,17 @@ const files = {
             height: 5,
             viewBox: [0, 0, 6, 5],
             data: '<path xmlns="http://www.w3.org/2000/svg" fill="#EC7F5C" d="M3 5L5.59808 0.5H0.401924L3 5Z"/>'
+        },
+        'slider-arrow': {
+            width: 20,
+            height: 36,
+            viewBox: [0,0,20,36],
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="36" x="0" y="0" maskUnits="userSpaceOnUse"><path fill="none" d="M0 0H20V35.556H0z" transform="matrix(-1 0 0 1 20 0)"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17.7778 2.22217L2.22228 17.7777L17.7778 33.3333"/></g>'
         }
 
     },
     allIds: [
+        'slider-arrow',
         'upward-metric-changes',
         'downward-metric-changes',
         'change-bid-icon',

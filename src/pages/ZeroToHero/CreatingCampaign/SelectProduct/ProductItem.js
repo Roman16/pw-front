@@ -1,7 +1,7 @@
 import React from "react";
 import {SVG} from "../../../../utils/icons";
 
-const ProductItem = ({product, onSelect, isSelected, isDisabled, isOpened, onOpenVariations, onRemove}) => {
+const ProductItem = ({product, onSelect, isSelected, isDisabled, isOpened, onOpenVariations, onRemove, showChildCount}) => {
 
     return (
         <>
@@ -39,6 +39,8 @@ const ProductItem = ({product, onSelect, isSelected, isDisabled, isOpened, onOpe
 
                         {isDisabled && <div className="added">Added</div>}
                         {onRemove && <button className="remove" onClick={onRemove}>Remove</button>}
+                        {showChildCount && product.variations &&
+                        <div className="variations-count">Has <b>{product.variations.length}</b> child Products</div>}
                     </div>
                 </div>
             </div>
@@ -46,7 +48,8 @@ const ProductItem = ({product, onSelect, isSelected, isDisabled, isOpened, onOpe
             {product.variations && isOpened &&
             <div className={`variations-list ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`}>
                 {product.variations.map(variationProduct => (
-                    <div className={'variation-item'} onClick={() => !isDisabled && onSelect && onSelect(product, isSelected)}>
+                    <div className={'variation-item'}
+                         onClick={() => !isDisabled && onSelect && onSelect(product, isSelected)}>
                         <div className="variation-indicator"/>
                         <ProductItem
                             product={variationProduct}

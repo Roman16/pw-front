@@ -1,7 +1,7 @@
 import React, {Fragment} from "react";
 import {Switch} from "antd";
 import moment from "moment";
-import DatePicker from "../../../../components/DatePicker/DatePickerOLD";
+import DatePicker from "../../../../components/DatePicker/DatePickerRange";
 import {SVG} from "../../../../utils/icons";
 
 const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveMetricTitle, secondActiveMetricTitle, showWeekChart, showDailyChart, showOptimizationChart}) => {

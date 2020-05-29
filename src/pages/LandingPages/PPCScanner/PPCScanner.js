@@ -16,7 +16,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";
 import {userService} from "../../../services/user.services";
 import {history} from "../../../utils/history";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const PPCScanner = () => {
     const [selectedSlide, setSlide] = useState(0),

@@ -18,8 +18,13 @@ const ProductAmountSlider = () => {
         [sliderValue, setValue] = useState(productAmount);
 
     function handleChangeSlider(value) {
-        setCount(value);
-        setValue(value);
+        if (value < addedProducts.length) {
+            setCount(addedProducts.length);
+            setValue(addedProducts.length);
+        } else {
+            setCount(value);
+            setValue(value);
+        }
     }
 
     useEffect(() => {
@@ -27,7 +32,7 @@ const ProductAmountSlider = () => {
 
         timerId = setTimeout(() => {
             dispatch(zthActions.setProductAmount(productCount));
-        }, 500)
+        }, 10)
     }, [productCount]);
 
     return (
@@ -43,7 +48,7 @@ const ProductAmountSlider = () => {
                                 value={productCount}
                                 onChange={(e) => handleChangeSlider(e.target.value)}
                                 max={100}
-                                min={addedProducts.length}
+                                min={addedProducts.length || 1}
                             />
                         </div>
                     </div>
@@ -65,7 +70,7 @@ const ProductAmountSlider = () => {
                         marks={{1: '1', 25: '25', 50: '50', 75: '75', 100: '100'}}
                         value={sliderValue}
                         onChange={handleChangeSlider}
-                        min={addedProducts.length || 1}
+                        min={1}
                         max={100}
                         tooltipPlacement={'top'}
                         getTooltipPopupContainer={triggerNode => triggerNode.parentNode}
