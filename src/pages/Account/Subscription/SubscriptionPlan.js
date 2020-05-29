@@ -149,7 +149,9 @@ const SubscriptionPlan = ({
                     </div>)
                 } else {
                     return (<div className={'status-field'}>
-                        {status}
+                        <div className="progress-status">
+                            {status}
+                        </div>
                     </div>)
                 }
             },
