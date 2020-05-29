@@ -1,0 +1,60 @@
+.multi-text-area {
+  border: 1px solid #C9CBD4;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 5px 15px 5px 5px;
+  height: 150px;
+  overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  .list {
+    height: max-content;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+
+  .item-text {
+    height: 2.2857142857142856rem;
+    padding: 0 10px;
+    color: #fff;
+    font-size: 0.8571428571428571rem;
+    margin: 0 0 10px 10px;
+    background: #6D6DF6;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+
+    i {
+      cursor: pointer;
+    }
+
+    svg {
+      width: 0.7142857142857143rem;
+      height: 0.7142857142857143rem;
+      stroke: #fff;
+      margin: 0 0 0 10px;
+    }
+  }
+
+  input {
+    flex: 1;
+    border: 0;
+    background: inherit;
+    height: 2.2857142857142856rem;
+    padding: 0;
+    margin: 0 0 0 10px;
+
+    &::placeholder {
+      color: #C9CBD4;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}

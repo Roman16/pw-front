@@ -121,7 +121,7 @@ const ProductBreakdown = () => {
     useEffect(() => {
         source && source.cancel();
         getProducts();
-    }, [fetchParams.page, fetchParams.pageSize, fetchParams.searchText, fetchParams.onlyOptimization, selectedRangeDate]);
+    }, [fetchParams.page, fetchParams.pageSize, fetchParams.searchText, fetchParams.onlyOptimization,fetchParams.onlyActive, selectedRangeDate]);
 
 
     return (
@@ -134,7 +134,7 @@ const ProductBreakdown = () => {
                 <div className="form-group">
                     <Search
                         className="search-field"
-                        placeholder={'Search'}
+                        placeholder={'Search by product name, ASIN or SKU'}
                         onChange={onSearchChange}
                         data-intercom-target='search-field'
                         suffix={<SVG id={'search'}/>}
