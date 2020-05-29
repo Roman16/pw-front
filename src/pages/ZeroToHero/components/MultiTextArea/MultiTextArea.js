@@ -14,8 +14,8 @@ const MultiTextArea = () => {
     };
 
     const removeKeywordHandler = (index) => {
-
-    }
+        setKeywordList(keywordList.filter((item, itemIndex) => itemIndex !== index))
+    };
 
     return (
         <div className={'multi-text-area'}>

@@ -28,15 +28,22 @@
       display: flex;
       margin: 0 0 15px 0;
 
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 0;
+      }
+
       h2 {
         font-size: 1.4285714285714286rem;
         color: #343C5A;
-        margin: 0;
         height: 100%;
         width: max-content;
         display: flex;
         align-items: center;
         position: relative;
+        margin: 0 auto 0 0;
 
         .optional {
           background: #F5F5FF;
@@ -53,6 +60,23 @@
           position: absolute;
           right: -4.285714285714286rem;
           top: 1.4285714285714286rem;
+        }
+      }
+
+      button {
+        width: 2.857142857142857rem;
+        height: 2.857142857142857rem;
+        border-radius: 50%;
+
+        svg {
+          width: 16px;
+          height: 9px;
+          stroke: #343C5A;
+        }
+
+        &:hover {
+          background: rgba(113, 113, 113, 0.15);
+          transition: 0.2s;
         }
       }
     }
