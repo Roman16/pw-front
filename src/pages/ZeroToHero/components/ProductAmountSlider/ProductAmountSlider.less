@@ -96,6 +96,12 @@
           &.ant-slider-dot-active {
             background: #6D6DF6;
           }
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+            height: 5px;
+            width: 5px;
+            top: -2px;
+          }
         }
 
         .ant-slider-mark-text {
@@ -114,9 +120,8 @@
         }
 
         .ant-slider-handle {
-          width: 14px;
-          height: 14px;
-          background: #6D6DF6;
+          width: 1rem;
+          height: 1rem;
           box-sizing: content-box;
           margin-top: -7px;
           border: 0;
@@ -148,16 +153,21 @@
         background-color: inherit !important;
         box-shadow: none;
         display: flex;
-        align-items: center;
         justify-content: center;
 
-        font-size: 16px;
+        font-size: 1.1428571428571428rem;
         color: #FFFFFF !important;
         font-weight: 500;
       }
 
       .ant-tooltip-arrow {
         display: none;
+      }
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        height: 63px;
+        width: 32px;
+        top: -57px !important;
       }
     }
 

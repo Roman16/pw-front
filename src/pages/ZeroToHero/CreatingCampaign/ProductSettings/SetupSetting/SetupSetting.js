@@ -79,7 +79,7 @@ const SetupSetting = () => {
 
                                 <DatePicker
                                     showToday={false}
-                                    getPopupContainer={trigger => trigger}
+                                    format="MMM DD, YYYY"
                                 />
                             </div>
 
@@ -87,7 +87,7 @@ const SetupSetting = () => {
                                 <label htmlFor="">End</label>
                                 <DatePicker
                                     showToday={false}
-                                    getPopupContainer={trigger => trigger}
+                                    format="MMM DD, YYYY"
                                 />
                             </div>
                         </div>

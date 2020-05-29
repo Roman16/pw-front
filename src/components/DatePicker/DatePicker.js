@@ -8,6 +8,8 @@ const DatePicker = (props) => {
 
     return (<AntDatePicker
         {...props}
+        className={'pw-date-picker'}
+        dropdownClassName={'pw-date-picker-dropdown'}
         suffixIcon={<SVG id={'select-icon'} />}
 
     />)

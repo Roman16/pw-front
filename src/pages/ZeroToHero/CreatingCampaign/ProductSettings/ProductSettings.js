@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import './ProductSettings.less';
 import ProductSlider from "./ProductSlider/ProductSlider";
 import SetupSetting from "./SetupSetting/SetupSetting";
-import BiddingStrategies from "./BiddingStrategies";
+import BiddingStrategies from "./BiddingStrategies/BiddingStrategies";
 import RelevantKeywords from "./RelevantKeywords";
 import NegativeKeywords from "./NegativeKeywords";
 import {useSelector} from "react-redux";
