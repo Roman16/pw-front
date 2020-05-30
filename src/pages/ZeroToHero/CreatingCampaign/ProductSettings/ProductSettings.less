@@ -19,7 +19,29 @@
       padding-right: 20px;
       box-sizing: content-box;
       margin: 0 auto;
-      min-height: 100%;
+    }
+
+    & > .container {
+      height: max-content;
+    }
+
+    &.collapsed {
+      .section-header {
+        border-color: #fff;
+        border-radius: 4px;
+
+        button {
+          svg {
+            transform: rotate(0deg);
+          }
+        }
+      }
+
+      & > .container {
+        height: 0;
+        overflow: hidden;
+        transition: height .3s;
+      }
     }
 
     .section-header {
@@ -71,6 +93,7 @@
           width: 16px;
           height: 9px;
           stroke: #343C5A;
+          transform: rotate(180deg);
         }
 
         &:hover {

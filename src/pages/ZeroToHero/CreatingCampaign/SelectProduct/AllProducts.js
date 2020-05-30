@@ -106,7 +106,7 @@ const AllProducts = () => {
                         </div>
                         }
                         <button
-                            disabled={selectedProducts.length === 0 || (selectedProducts.length + addedProducts.length > productAmount)}
+                            disabled={selectedProducts.length === 0}
                             className={'btn default p15'}
                             onClick={addProductsHandler}
                         >

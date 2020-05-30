@@ -8,6 +8,7 @@
 
       &:first-child {
         margin-top: 15px;
+        margin-bottom: 10px;
       }
 
       &:last-child {
@@ -44,7 +45,7 @@
   p {
     font-size: 0.8571428571428571rem;
     color: #656A84;
-    margin-bottom: 9px;
+    margin-bottom: 0;
   }
 
   .form-group {
@@ -69,7 +70,10 @@
   }
 
   .ant-radio-group {
-    flex: 1;
+    .row {
+      margin-bottom: 10px;
+    }
+
     .ant-radio-wrapper {
       & > span:last-child {
         padding: 0 0 0 15px;
@@ -77,7 +81,7 @@
     }
 
     .radio-description {
-      margin: 7px 0 25px 33px;
+      margin: 7px 0 0 33px;
       font-size: 0.8571428571428571rem;
       color: #656A84;
     }

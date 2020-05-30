@@ -3,8 +3,8 @@ import './ProductSettings.less';
 import ProductSlider from "./ProductSlider/ProductSlider";
 import SetupSetting from "./SetupSetting/SetupSetting";
 import BiddingStrategies from "./BiddingStrategies/BiddingStrategies";
-import RelevantKeywords from "./RelevantKeywords";
-import NegativeKeywords from "./NegativeKeywords";
+import RelevantKeywords from "./RelevantKeywords/RelevantKeywords";
+import NegativeKeywords from "./NegativeKeywords/NegativeKeywords";
 import {useSelector} from "react-redux";
 
 

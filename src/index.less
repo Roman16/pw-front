@@ -994,6 +994,29 @@ button.white[disabled] {
     }
   }
 
+  textarea {
+    width: 100%;
+    border: 1px solid #C9CBD4;
+    border-radius: 4px;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    box-sizing: border-box;
+    padding: 13px 15px;
+
+    &:hover {
+      border: 1px solid #343C5A;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+
+    &:focus {
+      outline: none;
+      border: 1px solid #6D6DF6;
+    }
+
+    &::placeholder {
+      font-size: 1rem;
+      color: #C9CBD4;
+    }
+  }
 
   .ant-input {
     height: 2.2857142857142856rem;

@@ -23,7 +23,8 @@ export function zth(state = initialState, action) {
         case zthConstants.ADD_PRODUCTS:
             return {
                 ...state,
-                selectedProducts: [...state.selectedProducts, ...action.payload]
+                selectedProducts: [...state.selectedProducts, ...action.payload],
+                productAmount: [...state.selectedProducts, ...action.payload].length > state.productAmount ? [...state.selectedProducts, ...action.payload].length : state.productAmount
             };
 
         case zthConstants.REMOVE_PRODUCTS:

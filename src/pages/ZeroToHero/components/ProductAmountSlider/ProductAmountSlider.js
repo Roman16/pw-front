@@ -1,10 +1,31 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {Input, Slider} from "antd";
 import './ProductAmountSlider.less';
 import {useDispatch, useSelector} from "react-redux";
 import {zthActions} from "../../../../actions/zth.actions";
 
-let timerId = null;
+const priceRender = (count) => {
+    if (count > 0 && count <= 5) {
+        return (<span>$ {count * 500}</span>)
+    } else if (count >= 6 && count <= 20) {
+        return (<span>$ {count * 400}</span>)
+    } else if (count >= 21 && count <= 50) {
+        return (<span>$ {count * 350}</span>)
+    } else if (count >= 51 && count <= 100) {
+        return (<span>$ {count * 300}</span>)
+    }
+};
+
+const saleRender = (count) => {
+    if (count >= 6 && count <= 20) {
+        return (<span>$ {count * 500 * 0.2}</span>)
+    } else if (count >= 21 && count <= 50) {
+        return (<span>$ {count * 500 * 0.3}</span>)
+    } else if (count >= 51 && count <= 100) {
+        return (<span>$ {count * 500 * 0.4}</span>)
+    }
+};
+
 
 const ProductAmountSlider = () => {
     const dispatch = useDispatch();
@@ -14,26 +35,13 @@ const ProductAmountSlider = () => {
         addedProducts: state.zth.selectedProducts,
     }));
 
-    const [productCount, setCount] = useState(productAmount),
-        [sliderValue, setValue] = useState(productAmount);
-
     function handleChangeSlider(value) {
         if (value < addedProducts.length) {
-            setCount(addedProducts.length);
-            setValue(addedProducts.length);
+            dispatch(zthActions.setProductAmount(addedProducts.length));
         } else {
-            setCount(value);
-            setValue(value);
+            dispatch(zthActions.setProductAmount(value));
         }
     }
-
-    useEffect(() => {
-        clearTimeout(timerId);
-
-        timerId = setTimeout(() => {
-            dispatch(zthActions.setProductAmount(productCount));
-        }, 10)
-    }, [productCount]);
 
     return (
         <section className='product-slider'>
@@ -45,7 +53,7 @@ const ProductAmountSlider = () => {
                         <div className="value form-group">
                             <Input
                                 type={'number'}
-                                value={productCount}
+                                value={productAmount}
                                 onChange={(e) => handleChangeSlider(e.target.value)}
                                 max={100}
                                 min={addedProducts.length || 1}
@@ -68,7 +76,7 @@ const ProductAmountSlider = () => {
                     <Slider
                         tooltipVisible={true}
                         marks={{1: '1', 25: '25', 50: '50', 75: '75', 100: '100'}}
-                        value={sliderValue}
+                        value={productAmount}
                         onChange={handleChangeSlider}
                         min={1}
                         max={100}
@@ -79,12 +87,12 @@ const ProductAmountSlider = () => {
 
                 <div className="row">
                     <div className="price">
-                        <span className="value">$ 99</span>
+                        <span className="value">{priceRender(productAmount)}</span>
                         Per product
                     </div>
 
                     <div className="save-label">
-                        You save <span> $32</span>
+                        {productAmount > 5 && <>You save {saleRender(productAmount)}</>}
                     </div>
                 </div>
             </div>
