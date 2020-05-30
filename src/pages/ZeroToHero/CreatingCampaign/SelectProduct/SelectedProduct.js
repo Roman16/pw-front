@@ -69,7 +69,6 @@ const SelectedProduct = () => {
                 className={'confirm-remove-product-window'}
                 visible={visibleConfirmWindow}
                 title={'Are you sure you want to delete the product?'}
-                description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'}
                 handleOk={removeProduct}
                 handleCancel={() => setVisibleConfirmWindow(false)}
             />

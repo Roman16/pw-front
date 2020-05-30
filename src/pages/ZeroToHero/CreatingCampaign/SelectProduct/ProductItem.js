@@ -40,7 +40,9 @@ const ProductItem = ({product, onSelect, isSelected, isDisabled, isOpened, onOpe
                         {isDisabled && <div className="added">Added</div>}
                         {onRemove && <button className="remove" onClick={onRemove}>Remove</button>}
                         {showChildCount && product.variations &&
-                        <div className="variations-count">Has <b>{product.variations.length}</b> child Products</div>}
+                        <div className="variations-count">
+                            This Product has <b>{product.variations.length}</b> child ASIN(s)
+                        </div>}
                     </div>
                 </div>
             </div>
