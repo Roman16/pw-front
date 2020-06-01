@@ -7,14 +7,43 @@ import DatePicker from "../../../../../components/DatePicker/DatePicker";
 import InputCurrency from "../../../../../components/Inputs/InputCurrency";
 import CustomSelect from "../../../../../components/Select/Select";
 import MultiTextArea from "../../../components/MultiTextArea/MultiTextArea";
+import moment from "moment";
 
 const Option = Select.Option;
 
 
-const SetupSetting = () => {
-    const [portfolioType, setPortfolioType] = useState('create');
+const SetupSetting = ({
+                          onUpdate, product: {
+        portfolioType = 'create',
+        portfolioName,
+    }
+                      }) => {
+    // const [portfolioType, setPortfolioType] = useState('create');
 
-    const changeRadioHandler = ({target: {value}}) => setPortfolioType(value);
+    const changeRadioHandler = ({target: {value}}) => {
+        onUpdate({portfolioType: value});
+
+        // setPortfolioType(value)
+    };
+
+    const changePortfolioNameHandler = (name) => {
+        onUpdate({
+            portfolioName: name,
+            portfolioType: portfolioType || 'create'
+        });
+    };
+
+    const changeDateHandler = (type, date) => {
+        onUpdate({
+            [`${type}_date`]: moment(date).format('DD MM YYYY'),
+        });
+    };
+
+    const changeInputHandler = (name, value) => {
+        onUpdate({
+            [name]: value,
+        });
+    };
 
     return (
         <section className={'setup-setting'}>
@@ -37,6 +66,8 @@ const SetupSetting = () => {
 
                             <div className="radio-description form-group">
                                 <Input
+                                    value={portfolioName}
+                                    onChange={({target: {value}}) => changePortfolioNameHandler(value)}
                                     disabled={portfolioType !== 'create'}
                                     placeholder={'Portfolio Name'}
                                 />
@@ -48,6 +79,7 @@ const SetupSetting = () => {
 
                             <div className="radio-description form-group">
                                 <CustomSelect
+                                    onChange={(value) => changePortfolioNameHandler(value)}
                                     disabled={portfolioType !== 'select'}
                                     placeholder={'Select existing portfolio'}
                                 >
@@ -80,6 +112,7 @@ const SetupSetting = () => {
                                 <DatePicker
                                     showToday={false}
                                     format="MMM DD, YYYY"
+                                    onChange={(date) => changeDateHandler('start', date)}
                                 />
                             </div>
 
@@ -88,6 +121,7 @@ const SetupSetting = () => {
                                 <DatePicker
                                     showToday={false}
                                     format="MMM DD, YYYY"
+                                    onChange={(date) => changeDateHandler('end', date)}
                                 />
                             </div>
                         </div>
@@ -150,7 +184,9 @@ const SetupSetting = () => {
                     <div className="col">
                         <h3>Enter your main keywords (add up to 5)</h3>
 
-                        <MultiTextArea/>
+                        <MultiTextArea
+                            onChange={(list) => changeInputHandler('main_keywords', list)}
+                        />
                     </div>
 
                     <div className="col">
@@ -170,6 +206,7 @@ const SetupSetting = () => {
                         <div className="form-group">
                             <Input
                                 placeholder={'Your Brand Name'}
+                                onChange={({target: {value}}) => changeInputHandler('brand_name', value)}
                             />
                         </div>
                     </div>
@@ -185,7 +222,9 @@ const SetupSetting = () => {
                     <div className="col">
                         <h3>Enter Your Competitors Brands Names</h3>
 
-                        <MultiTextArea/>
+                        <MultiTextArea
+                            onChange={(list) => changeInputHandler('brands_names', list)}
+                        />
                     </div>
 
                     <div className="col">

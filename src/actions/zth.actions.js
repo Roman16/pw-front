@@ -4,7 +4,9 @@ export const zthActions = {
     setCampaign,
     setProductAmount,
     addProducts,
-    removeProduct
+    removeProduct,
+    setActiveProduct,
+    updateActiveProduct
 };
 
 function setCampaign(campaign) {
@@ -27,9 +29,24 @@ function addProducts(products) {
         payload: products
     })
 }
+
 function removeProduct(productIndex) {
     return ({
         type: zthConstants.REMOVE_PRODUCTS,
         payload: productIndex
+    })
+}
+
+function setActiveProduct(productIndex) {
+    return ({
+        type: zthConstants.SET_ACTIVE_PRODUCT,
+        payload: productIndex
+    })
+}
+
+function updateActiveProduct(params) {
+    return ({
+        type: zthConstants.UPDATE_ACTIVE_PRODUCT,
+        payload: params
     })
 }

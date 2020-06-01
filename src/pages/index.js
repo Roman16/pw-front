@@ -14,6 +14,7 @@ import CampaignList from "../components/CampaignList/CampaignList";
 import {userService} from "../services/user.services";
 
 
+const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'));
 const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/ChooseCampaign'));
 const Marketing = React.lazy(() => import('./ZeroToHero/Marketing/Marketing'));
 const CreatingCampaign = React.lazy(() => import('./ZeroToHero/CreatingCampaign/CreatingCampaign'));
@@ -221,6 +222,8 @@ const AuthorizedUser = (props) => {
                                                                         component={Marketing}/>}
                                     {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/creating"
                                                                         component={CreatingCampaign}/>}
+                                    {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/payment"
+                                                                        component={Payment}/>}
                                     {developer &&
                                     <ConnectedAmazonRoute exact path="/zero-to-hero/settings" component={Settings}/>}
 

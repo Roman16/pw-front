@@ -3,7 +3,8 @@ import {zthConstants} from '../constans/actions.type';
 const initialState = {
     selectedCampaign: '',
     productAmount: 1,
-    selectedProducts: []
+    selectedProducts: [],
+    activeProductIndex: 0
 };
 
 export function zth(state = initialState, action) {
@@ -42,6 +43,27 @@ export function zth(state = initialState, action) {
                     selectedProducts: [...nevList]
                 };
             }
+
+        case zthConstants.SET_ACTIVE_PRODUCT:
+            return {
+                ...state,
+                activeProductIndex: action.payload
+            };
+
+        case zthConstants.UPDATE_ACTIVE_PRODUCT:
+            return {
+                ...state,
+                selectedProducts: state.selectedProducts.map(((product, index) => {
+                    if (index === state.activeProductIndex) {
+                        product = {
+                            ...product,
+                            ...action.payload
+                        }
+                    }
+
+                    return product;
+                }))
+            };
 
         default:
             return state;
