@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Checkbox, Input, Radio, Select} from 'antd';
+import {Checkbox, DatePicker as AntDatePicker, Input, Radio, Select} from 'antd';
 
 
 import './SetupSetting.less';
@@ -94,7 +94,7 @@ const SetupSetting = ({
                     </div>
 
                     <div className="col">
-                        <p>
+                        <p className={'portfolio-p'}>
                             At Profit Whales, we use Portfolios to better organize advertising campaigns for different
                             products so that you can adjust them in the Advertising Console more easily. We highly
                             encourage
@@ -112,6 +112,7 @@ const SetupSetting = ({
                                 <DatePicker
                                     showToday={false}
                                     format="MMM DD, YYYY"
+                                    defaultValue={moment(new Date())}
                                     onChange={(date) => changeDateHandler('start', date)}
                                 />
                             </div>
@@ -136,7 +137,7 @@ const SetupSetting = ({
                     </div>
 
                     <div className="col">
-                        <p>
+                        <p className={'date-p'}>
                             You can use the start date to activate campaigns at a specific time if you need it. Also by
                             clicking on “ Set campaigns status to “paused” will upload campaigns with Paused Status in
                             case you want to switch them on later.
@@ -156,7 +157,7 @@ const SetupSetting = ({
                     </div>
 
                     <div className="col">
-                        <p>
+                        <p className={'budget-p'}>
                             Daily budget is used to put a limit on how much you'll spend on this particular Product.
                             This amount will split between the campaigns the software will create. Based on your sales
                             and sales history, we are providing you with our "Recommended Daily Budget."
@@ -172,7 +173,7 @@ const SetupSetting = ({
                     </div>
 
                     <div className="col">
-                        <p>
+                        <p className={'bid-p'}>
                             Default Bid is the maximum amount you will pay for a click when the target triggers your ad.
                             We’ll use this information as the starter point to set our bids for all the keywords and
                             targets.
@@ -186,11 +187,12 @@ const SetupSetting = ({
 
                         <MultiTextArea
                             onChange={(list) => changeInputHandler('main_keywords', list)}
+                            max={5}
                         />
                     </div>
 
                     <div className="col">
-                        <p>
+                        <p className={'keywords-p'}>
                             That's the most critical part of creating Zero to Hero campaigns for your product. You need
                             to enter up to 5 most popular keywords that people use to find your product on the Amazon
                             marketplace. You can analyze your Title's of your competitors to find these keywords. That
@@ -212,7 +214,7 @@ const SetupSetting = ({
                     </div>
 
                     <div className="col">
-                        <p>
+                        <p className={'brand-name-p'}>
                             For certain campaigns with the “Brand Defence” goal we need to know your Brand name.
                         </p>
                     </div>
@@ -228,7 +230,7 @@ const SetupSetting = ({
                     </div>
 
                     <div className="col">
-                        <p>
+                        <p className={'brands-names-p'}>
                             For the campaigns with the “Steal Marketshare” object, we need to know the top 5 or 10 of
                             your competitors that you want to steal sales from. We will use this as a starting point to
                             get the brand names of all your competitors.

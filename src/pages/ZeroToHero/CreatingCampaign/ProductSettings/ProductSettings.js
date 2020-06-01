@@ -8,12 +8,15 @@ import NegativeKeywords from "./NegativeKeywords/NegativeKeywords";
 import {useDispatch, useSelector} from "react-redux";
 import {zthActions} from "../../../../actions/zth.actions";
 import {history} from "../../../../utils/history";
+import ToPaymentBar from "./ToPaymentBar/ToPaymentBar";
 
 
 const ProductSettings = () => {
-    const {addedProducts, activeProductIndex} = useSelector(state => ({
+    const {addedProducts, activeProductIndex, productAmount} = useSelector(state => ({
         addedProducts: state.zth.selectedProducts,
         activeProductIndex: state.zth.activeProductIndex,
+        productAmount: state.zth.productAmount,
+
     }));
 
     const dispatch = useDispatch();
@@ -56,11 +59,11 @@ const ProductSettings = () => {
 
                 <NegativeKeywords/>
 
-                <div className="next-step">
-                    <p> Campaign type: <b>Sponsored Products</b></p>
-
-                    <button className={'btn green-btn'} onClick={goPaymentStep}>Proceed to payment</button>
-                </div>
+                <ToPaymentBar
+                    productsCount={addedProducts.length}
+                    productAmount={productAmount}
+                    goPaymentStep={goPaymentStep}
+                />
             </section>
         )
     } else {

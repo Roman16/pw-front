@@ -30,11 +30,11 @@ const NegativeKeywords = () => {
 
     return (
         <section className={`negative-keywords relevant-keywords ${sectionCollapse ? 'collapsed' : ''}`}>
-            <div className="section-header">
+            <div className="section-header hover" onClick={() => setSectionCollapse(prevState => !prevState)}>
                 <div className="container">
                     <h2>Negative keywords <span className={'optional'}>optional</span></h2>
 
-                    <button onClick={() => setSectionCollapse(prevState => !prevState)}>
+                    <button>
                         <SVG id='select-icon'/>
                     </button>
                 </div>

@@ -186,7 +186,8 @@ const Sidebar = () => {
                 <div className="facebook-link">
                     <InformationTooltip
                         type={'custom'}
-                        description={'Join us on Facebook'}
+                        description={<a href='https://www.facebook.com/groups/profitwhales.software/' target="_blank">Join
+                            us on Facebook</a>}
                         position={'right'}
                         overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                     >
@@ -203,7 +204,7 @@ const Sidebar = () => {
                 <div className="refer-link">
                     <InformationTooltip
                         type={'custom'}
-                        description={'Refer sellers! Get Cash'}
+                        description={<Link to={'/affiliates'} target="_blank">Refer sellers! Get Cash</Link>}
                         position={'right'}
                         overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                     >
@@ -236,7 +237,12 @@ const Sidebar = () => {
                         <li className="bottom-nav-item">
                             <InformationTooltip
                                 type={'custom'}
-                                description={'Account'}
+                                description={<NavLink
+                                    className="automate-link"
+                                    activeClassName="automate-link-active"
+                                    exact
+                                    to={`/account-settings`}
+                                >Account</NavLink>}
                                 position={'right'}
                                 overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                             >
@@ -277,7 +283,13 @@ const Sidebar = () => {
                         <li className="bottom-nav-item">
                             <InformationTooltip
                                 type={'custom'}
-                                description={'Help Center'}
+                                description={<a
+                                    href="https://intercom.help/profitwhales/en/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Help Center
+                                </a>}
                                 position={'right'}
                                 overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                             >
@@ -298,11 +310,11 @@ const Sidebar = () => {
                         <li className="bottom-nav-item" onClick={handleLogout}>
                             <InformationTooltip
                                 type={'custom'}
-                                description={'Log Out'}
+                                description={<button type="button" onClick={handleLogout}>Log Out</button>}
                                 position={'right'}
                                 overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                             >
-                                <button type="button"  onClick={handleLogout}>
+                                <button type="button" onClick={handleLogout}>
                                     <div className="link-icon">
                                         <SVG id='log-out'/>
                                     </div>

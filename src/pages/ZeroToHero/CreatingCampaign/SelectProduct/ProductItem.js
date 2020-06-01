@@ -16,16 +16,6 @@ const ProductItem = ({product, onSelect, isSelected, isDisabled, isOpened, onOpe
                         <div className="product-name" title={product.name}>
                             {product.name}
                         </div>
-
-                        {product.variations && <button
-                            onClick={e => {
-                                e.stopPropagation();
-                                onOpenVariations(product.id)
-                            }}
-                            className={`variations-button ${isOpened ? 'opened' : ''}`}
-                        >
-                            <SVG id='select-icon'/>
-                        </button>}
                     </div>
 
                     <div className="row">
@@ -45,6 +35,16 @@ const ProductItem = ({product, onSelect, isSelected, isDisabled, isOpened, onOpe
                         </div>}
                     </div>
                 </div>
+
+                {product.variations && <button
+                    onClick={e => {
+                        e.stopPropagation();
+                        onOpenVariations(product.id)
+                    }}
+                    className={`variations-button ${isOpened ? 'opened' : ''}`}
+                >
+                    <SVG id='select-icon'/>
+                </button>}
             </div>
 
             {product.variations && isOpened &&

@@ -3,30 +3,34 @@
     display: flex;
     flex-direction: column;
 
+    .row {
+      display: flex;
+    }
+
     & > .row {
       margin-bottom: 20px;
     }
-  }
 
-  .row {
-    display: flex;
+    & > .row {
+      display: flex;
 
-    &:first-child {
-      margin-top: 15px;
-    }
+      &:first-child {
+        margin-top: 15px;
+      }
 
-    &:last-child {
-      margin-bottom: 40px;
-    }
+      &:last-child {
+        margin-bottom: 40px;
+      }
 
-    & > .col:first-child {
-      width: 50%;
-      padding: 0 20px 0 0;
-    }
+      & > .col:first-child {
+        width: 50%;
+        padding: 0 20px 0 0;
+      }
 
-    & > .col:last-child {
-      width: 50%;
-      padding: 0 0 0 20px;
+      & > .col:last-child {
+        width: 50%;
+        padding: 0 0 0 20px;
+      }
     }
   }
 
@@ -44,6 +48,29 @@
   p {
     font-size: 1rem;
     color: #656A84;
+    border-left: 0.5px solid #C9CBD4;
+    padding: 0 0 0 10px;
+
+    &.portfolio-p {
+      margin-top: 62px;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+        margin-top: 56px;
+      }
+    }
+
+    &.date-p,
+    &.bid-p,
+    &.keywords-p,
+    &.brand-name-p,
+    &.brands-names-p,
+    &.budget-p {
+      margin-top: 32px;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+        margin-top: 25px;
+      }
+    }
   }
 
   .InputCurrency {
@@ -121,7 +148,7 @@
 
   .daily-budget-settings {
     .recommended-budget {
-      font-size: 0.8571428571428571rem;
+      font-size: 1rem;
       color: #343C5A;
       margin: 5px 0 0 0;
 
@@ -129,7 +156,7 @@
         background: #F5F5FF;
         border-radius: 16px;
         font-weight: 500;
-        padding: 3px 5px;
+        padding: 3px 10px;
         margin: 0 0 0 5px;
       }
     }

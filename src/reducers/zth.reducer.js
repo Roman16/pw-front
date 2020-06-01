@@ -32,7 +32,8 @@ export function zth(state = initialState, action) {
             if (action.payload === 'all') {
                 return {
                     ...state,
-                    selectedProducts: []
+                    selectedProducts: [],
+                    activeProductIndex: 0
                 };
             } else {
                 const nevList = [...state.selectedProducts];
@@ -40,7 +41,8 @@ export function zth(state = initialState, action) {
 
                 return {
                     ...state,
-                    selectedProducts: [...nevList]
+                    selectedProducts: [...nevList],
+                    activeProductIndex: 0
                 };
             }
 

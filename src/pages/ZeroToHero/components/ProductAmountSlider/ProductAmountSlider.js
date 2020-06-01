@@ -18,11 +18,11 @@ const priceRender = (count) => {
 
 const saleRender = (count) => {
     if (count >= 6 && count <= 20) {
-        return (<span>$ {500 * 0.2}</span>)
+        return (<span>$ {count * 500 * 0.2}</span>)
     } else if (count >= 21 && count <= 50) {
-        return (<span>$ {500 * 0.3}</span>)
+        return (<span>$ {count * 500 * 0.3}</span>)
     } else if (count >= 51 && count <= 100) {
-        return (<span>$ {500 * 0.4}</span>)
+        return (<span>$ {count * 500 * 0.4}</span>)
     }
 };
 

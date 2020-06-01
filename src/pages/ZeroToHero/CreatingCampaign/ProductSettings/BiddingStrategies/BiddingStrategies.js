@@ -10,11 +10,11 @@ const BiddingStrategies = () => {
 
     return (
         <section className={`bidding-strategies ${sectionCollapse ? 'collapsed' : ''}`}>
-            <div className="section-header">
+            <div className="section-header hover" onClick={() => setSectionCollapse(prevState => !prevState)}>
                 <div className="container">
                     <h2>Bidding strategies and bids adjustments <span className={'optional'}>optional</span></h2>
 
-                    <button onClick={() => setSectionCollapse(prevState => !prevState)}>
+                    <button>
                         <SVG id='select-icon'/>
                     </button>
 
@@ -136,7 +136,7 @@ const BiddingStrategies = () => {
                             You can enter a percent increase to your base bid for two placements: top of search (first
                             page) and product pages. If you choose to set bids by placement, bids will be increased by
                             the specified amounts when your ads compete for opportunities on those placements. <br/>
-                            <a href="#"> Learn more about Adjusting Bids by Placement</a>
+                            <a href="https://sellercentral.amazon.com/gp/help/GD4WPBFXSE2YQ8QM" target={'_blank'}> Learn more about Adjusting Bids by Placement</a>
                         </p>
                     </div>
                 </div>

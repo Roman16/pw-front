@@ -54,7 +54,7 @@ const Marketing = () => {
                             ))}
                         </div>
 
-                        <button className='btn default' onClick={handleContinue}>
+                        <button className='btn default p70' onClick={handleContinue}>
                             Start
                         </button>
                     </div>

@@ -12,7 +12,7 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
     : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 
-const totalPriceRender = (count) => {
+export const totalPriceRender = (count) => {
     if (count > 0 && count <= 5) {
         return (<>${count * 500}</>)
     } else if (count >= 6 && count <= 20) {
