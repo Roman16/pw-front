@@ -1,9 +1,8 @@
 import React from "react";
 import {totalPriceRender} from "../../../Payment/Payment";
+import {Spin} from "antd";
 
-const ToPaymentBar = ({goPaymentStep, productAmount}) => {
-
-
+const ToPaymentBar = ({goPaymentStep, productAmount, processing}) => {
     return (
         <div className="next-step">
             <p> Campaign type: <b>Sponsored Products</b></p>
@@ -12,7 +11,15 @@ const ToPaymentBar = ({goPaymentStep, productAmount}) => {
                 You’ll be charged <b>{totalPriceRender(productAmount)}</b> for <b>{productAmount}</b> Products
             </div>
 
-            <button className={'btn green-btn p-70'} onClick={goPaymentStep}>Go to Payment Page</button>
+            <button
+                className={'btn green-btn p-70'}
+                onClick={goPaymentStep}
+                disabled={processing}
+            >
+                Go to Payment Page
+
+                {processing && <Spin size={'small'}/>}
+            </button>
         </div>
     )
 };

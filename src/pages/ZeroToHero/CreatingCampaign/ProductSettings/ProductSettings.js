@@ -12,6 +12,8 @@ import ToPaymentBar from "./ToPaymentBar/ToPaymentBar";
 
 
 const ProductSettings = () => {
+    const [createProcessing, setProcessing] = useState(false);
+
     const {addedProducts, activeProductIndex, productAmount, productsWithSettings} = useSelector(state => ({
         addedProducts: state.zth.selectedProducts,
         activeProductIndex: state.zth.activeProductIndex,
@@ -36,7 +38,12 @@ const ProductSettings = () => {
     };
 
     const goPaymentStep = () => {
-        history.push('/zero-to-hero/payment')
+        setProcessing(true);
+
+        setTimeout(() => {
+            history.push('/zero-to-hero/payment');
+            setProcessing(false);
+        }, 2000)
     };
 
     if (addedProducts.length > 0) {
@@ -61,6 +68,7 @@ const ProductSettings = () => {
                 <NegativeKeywords/>
 
                 <ToPaymentBar
+                    processing={createProcessing}
                     productsCount={addedProducts.length}
                     productAmount={productAmount}
                     goPaymentStep={goPaymentStep}
@@ -72,4 +80,4 @@ const ProductSettings = () => {
     }
 };
 
-export default ProductSettings;
+export default React.memo(ProductSettings);
