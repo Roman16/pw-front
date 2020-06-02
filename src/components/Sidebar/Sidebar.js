@@ -18,6 +18,10 @@ const devicePixelRatio = window.devicePixelRatio;
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
         [automate, setAutomate] = useState(true),
+        [subMenuState, setSubMenuState] = useState({
+            zth: true,
+            ppc: true
+        }),
         [regions] = useState(regionsMenu),
         dispatch = useDispatch(),
         {user, bootstrapInProgress} = useSelector(state => ({
@@ -42,7 +46,12 @@ const Sidebar = () => {
         dispatch(userActions.logOut());
     };
 
-    const toggleSubMenu = () => setAutomate(prevState => !prevState);
+    const toggleSubMenu = (menu) => {
+        setSubMenuState({
+            ...subMenuState,
+            [menu]: !subMenuState[menu]
+        })
+    };
 
     // useEffect(() => {
     //     window.innerWidth < 1132 ? setCollapsed(false) : setCollapsed(true);
@@ -77,23 +86,77 @@ const Sidebar = () => {
 
                 <nav className="top-nav">
                     <ul className="top-nav-list">
-                        <li className="top-nav-item disabled-link">
-                            <NavLink
-                                className="top-nav-link"
-                                activeClassName="top-nav-link-active"
-                                exact
-                                to="/"
-                                disabled
-                            >
-                                <div className="link-icon">
-                                    <SVG id='zth-icon'/>
-                                </div>
+                        <li className="top-nav-item ">
+                            <div onClick={() => toggleSubMenu('zth')} className={'has-child'}>
+                                <NavLink
+                                    className="top-nav-link"
+                                    activeClassName="top-nav-link-active"
+                                    exact
+                                    to="/"
+                                    disabled
+                                >
+                                    <div className="link-icon">
+                                        <SVG id='zth-icon'/>
+                                    </div>
 
-                                <span className="top-span">
+                                    <span className="top-span">
                                         Zero to Hero
-                                    <span className="soon">soon</span>
-                                    </span>
-                            </NavLink>
+                                        <span className="new-fiches">new</span>
+                                </span>
+                                </NavLink>
+                            </div>
+
+                            <ul className={`automate-list ${subMenuState.zth ? 'opened' : 'closed'}`}>
+                                <li className="automate-item">
+                                    <NavLink
+                                        className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                        activeClassName="automate-link-active"
+                                        exact
+                                        to={'/zero-to-hero/campaign'}
+                                    >
+                                        Campaigns Setup
+                                    </NavLink>
+                                </li>
+
+                                <li className="automate-item">
+                                    <NavLink
+                                        className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                        activeClassName="automate-link-active"
+                                        exact
+                                        to={'/zero-to-hero/settings'}
+                                    >
+                                        ZTH Status
+                                    </NavLink>
+                                </li>
+                            </ul>
+
+                            {!collapsed && (
+                                <div className={`collapsed-automate zth`}>
+                                    <ul className="collapsed-automate-list">
+                                        <li className="automate-item">
+                                            <NavLink
+                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                                activeClassName="automate-link-active"
+                                                exact
+                                                to={'/zero-to-hero/campaign'}
+                                            >
+                                                Campaigns Setup
+                                            </NavLink>
+                                        </li>
+
+                                        <li className="automate-item">
+                                            <NavLink
+                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                                activeClassName="automate-link-active"
+                                                exact
+                                                to={'/zero-to-hero/settings'}
+                                            >
+                                                ZTH Status
+                                            </NavLink>
+                                        </li>
+                                    </ul>
+                                </div>
+                            )}
                         </li>
 
                         {/*<li className="top-nav-item">*/}
@@ -112,7 +175,7 @@ const Sidebar = () => {
                         {/*</li>*/}
 
                         <li className="top-nav-item ppc-automate-link">
-                            <div onClick={toggleSubMenu}>
+                            <div onClick={() => toggleSubMenu('ppc')}>
                                 <NavLink
                                     className="top-nav-link"
                                     activeClassName="top-nav-link-active"
@@ -128,7 +191,7 @@ const Sidebar = () => {
                                 </NavLink>
                             </div>
 
-                            <ul className={`automate-list`}>
+                            <ul className={`automate-list ${subMenuState.ppc ? 'opened' : 'closed'}`}>
                                 {ppcAutomateMenu.map(item => (
                                     <li className="automate-item" key={item.link}>
                                         <NavLink

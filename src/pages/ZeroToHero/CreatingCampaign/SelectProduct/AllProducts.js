@@ -71,7 +71,7 @@ const AllProducts = () => {
             });
 
             setAllProducts(res.result || []);
-            setTotalSize(res.totalSize);
+            // setTotalSize(res.totalSize);
         } catch (e) {
             setAllProducts([])
         }
