@@ -3,8 +3,6 @@ import '../ZeroToHero.less';
 import './CreatingCampaign.less';
 import ProductAmountSlider from "../components/ProductAmountSlider/ProductAmountSlider";
 import ProductSettings from "./ProductSettings/ProductSettings";
-import KeywordList from "./KeywordList/KeywordList";
-import Payment from "../Payment/Payment";
 import AllProducts from "./SelectProduct/AllProducts";
 import SelectedProduct from "./SelectProduct/SelectedProduct";
 

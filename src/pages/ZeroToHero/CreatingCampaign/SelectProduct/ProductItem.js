@@ -51,7 +51,7 @@ const ProductItem = ({product, onSelect, isSelected, isDisabled, isOpened, onOpe
             <div className={`variations-list ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`}>
                 {product.variations.map(variationProduct => (
                     <div className={'variation-item'}
-                         onClick={() => !isDisabled && onSelect && onSelect(product, isSelected)}>
+                         onClick={() => !isDisabled && onSelect && onSelect(variationProduct, isSelected)}>
                         <div className="variation-indicator"/>
                         <ProductItem
                             product={variationProduct}

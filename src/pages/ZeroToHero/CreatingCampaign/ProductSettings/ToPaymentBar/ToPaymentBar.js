@@ -12,7 +12,7 @@ const ToPaymentBar = ({goPaymentStep, productAmount}) => {
                 You’ll be charged <b>{totalPriceRender(productAmount)}</b> for <b>{productAmount}</b> Products
             </div>
 
-            <button className={'btn green-btn p-70'} onClick={goPaymentStep}>Proceed to payment</button>
+            <button className={'btn green-btn p-70'} onClick={goPaymentStep}>Go to Payment Page</button>
         </div>
     )
 };
