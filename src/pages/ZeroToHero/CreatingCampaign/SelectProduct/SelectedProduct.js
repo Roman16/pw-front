@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import ProductItem from "./ProductItem";
 import {zthActions} from "../../../../actions/zth.actions";
 import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup";
-import {Modal} from "antd";
 
 const SelectedProduct = () => {
     const [openedProduct, setOpenedProduct] = useState(null),
@@ -68,7 +67,7 @@ const SelectedProduct = () => {
             <ConfirmActionPopup
                 className={'confirm-remove-product-window'}
                 visible={visibleConfirmWindow}
-                title={'Are you sure you want to delete the product?'}
+                title={removedProduct === 'all' ? 'Are you sure you want to delete All products?' : 'Are you sure you want to delete the product?'}
                 handleOk={removeProduct}
                 handleCancel={() => setVisibleConfirmWindow(false)}
             />

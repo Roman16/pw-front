@@ -63,9 +63,13 @@ const ProductAmountSlider = () => {
                     </div>
 
                     <div className="description">
-                        See the example of the campaigns <a target={'_blank'}
-                                                            href="https://docs.google.com/spreadsheets/d/14FUMQKNV8-oqbd_XeyecVmZtMamY6qhi3GcHEEO0dFM/edit#gid=277769766">you’ll
-                        get</a>
+                        See the example of the campaigns
+                        <a
+                            target={'_blank'}
+                            href="https://docs.google.com/spreadsheets/d/1HqPXFEh1bsElCUF4OiXayOsKoci27i-3sYL0HIqmJfc/edit?usp=sharing"
+                        >
+                            you’ll get
+                        </a>
                     </div>
 
                     <p>

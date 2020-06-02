@@ -1,9 +1,10 @@
 import {zthConstants} from '../constans/actions.type';
 
 const initialState = {
-    selectedCampaign: '',
+    selectedCampaign: 'Sponsored Products',
     productAmount: 1,
     selectedProducts: [],
+    selectedProductsWithSettingsParams: [],
     activeProductIndex: 0
 };
 
@@ -25,7 +26,8 @@ export function zth(state = initialState, action) {
             return {
                 ...state,
                 selectedProducts: [...state.selectedProducts, ...action.payload],
-                productAmount: [...state.selectedProducts, ...action.payload].length > state.productAmount ? [...state.selectedProducts, ...action.payload].length : state.productAmount
+                productAmount: [...state.selectedProducts, ...action.payload].length > state.productAmount ? [...state.selectedProducts, ...action.payload].length : state.productAmount,
+                selectedProductsWithSettingsParams: [...state.selectedProducts, ...action.payload].map(item => ({id: item.id}))
             };
 
         case zthConstants.REMOVE_PRODUCTS:
@@ -33,15 +35,19 @@ export function zth(state = initialState, action) {
                 return {
                     ...state,
                     selectedProducts: [],
+                    selectedProductsWithSettingsParams: [],
                     activeProductIndex: 0
                 };
             } else {
-                const nevList = [...state.selectedProducts];
+                const nevList = [...state.selectedProducts],
+                    newListWithSettings = [...state.selectedProductsWithSettingsParams]
                 nevList.splice(action.payload, 1);
+                newListWithSettings.splice(action.payload, 1);
 
                 return {
                     ...state,
                     selectedProducts: [...nevList],
+                    selectedProductsWithSettingsParams: [...newListWithSettings],
                     activeProductIndex: 0
                 };
             }
@@ -55,7 +61,7 @@ export function zth(state = initialState, action) {
         case zthConstants.UPDATE_ACTIVE_PRODUCT:
             return {
                 ...state,
-                selectedProducts: state.selectedProducts.map(((product, index) => {
+                selectedProductsWithSettingsParams: state.selectedProductsWithSettingsParams.map(((product, index) => {
                     if (index === state.activeProductIndex) {
                         product = {
                             ...product,

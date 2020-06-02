@@ -12,10 +12,11 @@ import ToPaymentBar from "./ToPaymentBar/ToPaymentBar";
 
 
 const ProductSettings = () => {
-    const {addedProducts, activeProductIndex, productAmount} = useSelector(state => ({
+    const {addedProducts, activeProductIndex, productAmount, productsWithSettings} = useSelector(state => ({
         addedProducts: state.zth.selectedProducts,
         activeProductIndex: state.zth.activeProductIndex,
         productAmount: state.zth.productAmount,
+        productsWithSettings: state.zth.selectedProductsWithSettingsParams,
 
     }));
 
@@ -49,7 +50,7 @@ const ProductSettings = () => {
                 />
 
                 <SetupSetting
-                    product={addedProducts[activeProductIndex]}
+                    product={productsWithSettings[activeProductIndex]}
                     onUpdate={updateProductHandler}
                 />
 

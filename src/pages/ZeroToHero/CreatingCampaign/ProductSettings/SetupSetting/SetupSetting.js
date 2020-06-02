@@ -130,7 +130,7 @@ const SetupSetting = ({
                         <Checkbox
                             // onChange={(e) => setPausedCampaigns(e.target.checked)}
                         >
-                            Set campaigns status to “paused”
+                            Set campaigns status to “<b>paused</b>”
                         </Checkbox>
 
 

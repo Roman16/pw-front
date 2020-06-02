@@ -44,7 +44,7 @@ const RelevantKeywords = () => {
                                 value={newKeyword}
                                 onChange={({target: {value}}) => setNewKeyword(value)}
                                 required
-                                placeholder={'Enter your list and separate each item with a new line'}
+                                placeholder={'Enter the keywords you consider relevant for your product, paste one keyword per line'}
                             />
                         </div>
 

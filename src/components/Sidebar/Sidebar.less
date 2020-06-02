@@ -337,7 +337,7 @@
               flex-direction: column;
               justify-content: space-between;
               margin: 0;
-              padding: 1.1em 0 1.1em 2.4em;
+              padding: 1.1em 0 1.1em 1.4285714285714286rem;
               background-color: @third-default-dark;
               border-radius: 4px;
 
@@ -877,13 +877,18 @@ a:focus {
     .ant-popover-inner-content {
 
       height: 2.2857142857142856rem;
-      padding: 0 10px;
+      padding: 0 1.4285714285714286rem;
       display: flex;
       align-items: center;
 
       a, button {
         color: #B6B6FB;
-        font-size: 0.8571428571428571rem;
+        font-size: 1rem;
+        height: 1.4285714285714286rem;
+
+        &:hover {
+          color: #fff;
+        }
       }
     }
   }
