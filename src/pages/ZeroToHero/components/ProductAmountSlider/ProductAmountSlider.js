@@ -3,6 +3,7 @@ import {Input, Slider} from "antd";
 import './ProductAmountSlider.less';
 import {useDispatch, useSelector} from "react-redux";
 import {zthActions} from "../../../../actions/zth.actions";
+import {numberMask} from "../../../../utils/numberMask";
 
 const priceRender = (count) => {
     if (count > 0 && count <= 5) {
@@ -18,11 +19,11 @@ const priceRender = (count) => {
 
 const saleRender = (count) => {
     if (count >= 6 && count <= 20) {
-        return (<span>$ {count * 500 * 0.2}</span>)
+        return (<span>$ {numberMask(count * 500 * 0.2, 0)}</span>)
     } else if (count >= 21 && count <= 50) {
-        return (<span>$ {count * 500 * 0.3}</span>)
+        return (<span>$ {numberMask(count * 500 * 0.3, 0)}</span>)
     } else if (count >= 51 && count <= 100) {
-        return (<span>$ {count * 500 * 0.4}</span>)
+        return (<span>$ {numberMask(count * 500 * 0.4, 0)}</span>)
     }
 };
 

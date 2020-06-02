@@ -22,10 +22,6 @@ const CreatingCampaign = () => {
             <SelectedProduct/>
 
             <ProductSettings/>
-
-            {/*<KeywordList/>*/}
-
-            {/*<Payment/>*/}
         </div>
     )
 };

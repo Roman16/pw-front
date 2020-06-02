@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import './Payment.less';
-import {Elements, StripeProvider} from "react-stripe-elements";
+import {Elements, injectStripe, StripeProvider} from "react-stripe-elements";
 import {userService} from "../../../services/user.services";
 import {Radio} from "antd";
 import {useSelector} from "react-redux";
 import NewCard from "./NewCard";
 import UserCards from './UserCards';
+import {numberMask} from "../../../utils/numberMask";
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
@@ -14,19 +15,20 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
 
 export const totalPriceRender = (count) => {
     if (count > 0 && count <= 5) {
-        return (<>${count * 500}</>)
+        return (<>${numberMask(count * 500, 0)}</>)
     } else if (count >= 6 && count <= 20) {
-        return (<>${count * 400}</>)
+        return (<>${numberMask(count * 400, 0)}</>)
     } else if (count >= 21 && count <= 50) {
-        return (<>${count * 350}</>)
+        return (<>${numberMask(count * 350, 0)}</>)
     } else if (count >= 51 && count <= 100) {
-        return (<>${count * 300}</>)
+        return (<>${numberMask(count * 300, 0)}</>)
     }
 };
 
-const Payment = () => {
+const Payment = (props) => {
     const [cardsList, setCardList] = useState([]),
         [selectedPaymentMethod, setPaymentMethod] = useState('new_card'),
+        [userName, setUserName] = useState(''),
         [newCard, setNewCard] = useState({
             card_number: false,
             expiry: false,
@@ -52,17 +54,22 @@ const Payment = () => {
         }
     };
 
-    // useEffect(() => {
-    //     if (cardParams.card_number && cardParams.expiry && cardParams.cvc) {
-    //         const billing_details = {};
-    //         billing_details.name = userName;
-    //
-    //         props.stripe.createPaymentMethod('card', {billing_details})
-    //             .then(res => {
-    //                 console.log(res.paymentMethod.id);
-    //             })
-    //     }
-    // }, [cardParams]);
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        console.log(newCard);
+        console.log(props.stripe);
+        let res;
+
+        if (userName) {
+            const billing_details = {};
+            billing_details.name = userName;
+            res = await props.stripe.createToken(billing_details);
+        } else {
+            res = await props.stripe.createToken();
+        }
+
+        console.log(res);
+    };
 
     useEffect(() => {
         userService.fetchBillingInformation()
@@ -87,15 +94,12 @@ const Payment = () => {
                             </Radio>
 
                             <div className="radio-description">
-                                <StripeProvider apiKey={stripeKey}>
-                                    <Elements>
-                                        <NewCard
-                                            disabled={selectedPaymentMethod !== 'new_card'}
-                                            newCard={newCard}
-                                            stripeElementChange={stripeElementChangeHandler}
-                                        />
-                                    </Elements>
-                                </StripeProvider>
+                                <NewCard
+                                    disabled={selectedPaymentMethod !== 'new_card'}
+                                    newCard={newCard}
+                                    stripeElementChange={stripeElementChangeHandler}
+                                    onChangeUserName={(value) => setUserName(value)}
+                                />
                             </div>
                         </div>
 
@@ -142,11 +146,21 @@ const Payment = () => {
                         <div className="value">{totalPriceRender(productAmount)}</div>
                     </div>
 
-                    <button className={'btn white'}>Pay</button>
+                    <button className={'btn white'} onClick={handleSubmit}>Pay</button>
                 </div>
             </section>
         </div>
     )
 };
 
-export default Payment;
+const PaymentRender = injectStripe(Payment);
+
+const PaymentContainer = () => {
+    return (<StripeProvider apiKey={stripeKey}>
+        <Elements>
+            {<PaymentRender/>}
+        </Elements>
+    </StripeProvider>)
+};
+
+export default PaymentContainer;
