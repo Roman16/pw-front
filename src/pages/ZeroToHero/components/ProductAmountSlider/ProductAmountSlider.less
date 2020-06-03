@@ -1,16 +1,18 @@
 @import '../../../../style/variables';
 
 .product-slider {
+  box-shadow: @default-section-shadow;
+  background: #fff;
+  padding: 0 1.4285714285714286rem 1.4285714285714286rem 1.4285714285714286rem;
+  border-radius: 4px;
+
   .slider-block {
     min-height: 150px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #fff;
-    border-radius: 4px;
-    padding: 0 7.142857142857143rem 0 1.4285714285714286rem;
     position: relative;
-    box-shadow: @default-section-shadow;
+    padding-right: 2.857142857142857rem;
 
     .col {
 
@@ -215,5 +217,13 @@
         }
       }
     }
+  }
+
+  & > .description {
+    background: #B6B6FB;
+    border-radius: 4px;
+    font-size: 1.1428571428571428rem;
+    color: #FFFFFF;
+    padding: 0.7142857142857143rem 1.4285714285714286rem;
   }
 }

@@ -191,11 +191,11 @@ const AuthorizedUser = (props) => {
                                         component={ProductSettings}
                                     />
 
-                                    <ConnectedAmazonRoute
-                                        exact
-                                        path="/ppc/scanner"
-                                        component={Scanner}
-                                    />
+                                    {/*<ConnectedAmazonRoute*/}
+                                    {/*    exact*/}
+                                    {/*    path="/ppc/scanner"*/}
+                                    {/*    component={Scanner}*/}
+                                    {/*/>*/}
 
                                     <Route exact path="/connect-amazon-account" component={FullJourney}/>
                                     <Route exact path="/connect-mws-account" component={ConnectMWS}/>

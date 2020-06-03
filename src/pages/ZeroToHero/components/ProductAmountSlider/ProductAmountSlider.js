@@ -17,7 +17,7 @@ const priceRender = (count) => {
     }
 };
 
-const saleRender = (count) => {
+export const saleRender = (count) => {
     if (count >= 6 && count <= 20) {
         return (<span>$ {numberMask(count * 500 * 0.2, 0)}</span>)
     } else if (count >= 21 && count <= 50) {
@@ -71,10 +71,6 @@ const ProductAmountSlider = () => {
                             you’ll get
                         </a>
                     </div>
-
-                    <p>
-                        <span>*</span> All variations counts as one Product
-                    </p>
                 </div>
 
                 <div className="slider">
@@ -100,6 +96,12 @@ const ProductAmountSlider = () => {
                         {productAmount > 5 && <>You save {saleRender(productAmount)}</>}
                     </div>
                 </div>
+            </div>
+
+            <div className="description">
+                Excess products will be added as free Zero to Hero tokens to your account so you will be able to create
+                Zero to Hero later. In this way you can save money if you need to create Zero to Hero for multiple
+                products, but right now only have time to fill data just for couple of them
             </div>
         </section>
 

@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import NewCard from "./NewCard";
 import UserCards from './UserCards';
 import {numberMask} from "../../../utils/numberMask";
+import {saleRender} from "../components/ProductAmountSlider/ProductAmountSlider";
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
@@ -144,6 +145,11 @@ const Payment = (props) => {
                     <div className="total-price">
                         <label htmlFor="">TOTAL PRICE:</label>
                         <div className="value">{totalPriceRender(productAmount)}</div>
+                    </div>
+
+                    <div className="row save-info">
+                        <label htmlFor="">You save:</label>
+                        <div className="value">{saleRender(productAmount)}</div>
                     </div>
 
                     <button className={'btn white'} onClick={handleSubmit}>Pay</button>
