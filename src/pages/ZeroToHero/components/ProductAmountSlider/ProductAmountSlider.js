@@ -28,7 +28,7 @@ export const saleRender = (count) => {
 };
 
 
-const ProductAmountSlider = () => {
+const ProductAmountSlider = ({description}) => {
     const dispatch = useDispatch();
 
     const {productAmount, addedProducts} = useSelector(state => ({
@@ -98,13 +98,12 @@ const ProductAmountSlider = () => {
                 </div>
             </div>
 
-            <div className="description">
+           {description &&  <div className="description">
                 Excess products will be added as free Zero to Hero tokens to your account so you will be able to create
                 Zero to Hero later. In this way you can save money if you need to create Zero to Hero for multiple
-                products, but right now only have time to fill data just for couple of them
-            </div>
+                products, but right now only have time to fill data just for couple of them.
+            </div>}
         </section>
-
     )
 };
 

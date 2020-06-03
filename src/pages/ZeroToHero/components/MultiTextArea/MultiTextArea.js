@@ -1,42 +1,33 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, {useState, useRef} from "react";
 import './MultiTextArea.less';
 import {Input} from "antd";
 import {SVG} from "../../../../utils/icons";
 
-
-const MultiTextArea = ({onChange, max = 999999}) => {
-    const [keywordList, setKeywordList] = useState(null),
-        [inputValue, setInputValue] = useState(null);
+const MultiTextArea = ({onChange, max = 999999, value}) => {
+    const [inputValue, setInputValue] = useState(null);
 
     const inputEl = useRef(null);
 
-
-    const addKeywordHandler = ({target: {value}}) => {
-        if (value !== '') {
-            if (keywordList == null) {
-                setKeywordList([value]);
+    const addKeywordHandler = ({target}) => {
+        if (target.value !== '') {
+            if (value == null) {
+                onChange([target.value]);
             } else {
-                setKeywordList([...keywordList, value]);
+                onChange([...value, target.value]);
             }
             setInputValue(null);
         }
     };
 
     const removeKeywordHandler = (index) => {
-        setKeywordList(keywordList.filter((item, itemIndex) => itemIndex !== index))
+        onChange(value.filter((item, itemIndex) => itemIndex !== index))
     };
-
-    useEffect(() => {
-        if (keywordList !== null) {
-            onChange(keywordList)
-        }
-    }, [keywordList]);
 
     return (
         <div className={'multi-text-area'}
-             onClick={() => (!keywordList || keywordList.length < max) && inputEl.current.focus()}>
+             onClick={() => (!value || value.length < max) && inputEl.current.focus()}>
             <div className="list">
-                {keywordList && keywordList.map((item, index) => <div className={'item-text'}>
+                {value && value.map((item, index) => <div className={'item-text'}>
                     {item}
 
                     <i onClick={() => removeKeywordHandler(index)}>
@@ -44,7 +35,7 @@ const MultiTextArea = ({onChange, max = 999999}) => {
                     </i>
                 </div>)}
 
-                {(!keywordList || keywordList.length < max) && <Input
+                {(!value || value.length < max) && <Input
                     ref={inputEl}
                     value={inputValue}
                     placeholder={'Add keywords and separate each item by “Enter”'}

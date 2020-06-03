@@ -4,28 +4,29 @@ import {Radio} from "antd";
 
 import './NegativeKeywords.less';
 
-const NegativeKeywords = () => {
-    const [addedKeywords, setAddedKeywords] = useState([]),
-        [newKeyword, setNewKeyword] = useState(''),
+const NegativeKeywords = ({keywords, onUpdate}) => {
+    const [newKeyword, setNewKeyword] = useState(''),
         [keywordType, setKeywordType] = useState('exact'),
         [sectionCollapse, setSectionCollapse] = useState(true);
 
     const addKeywordsHandler = (e) => {
         e.preventDefault();
 
-        setAddedKeywords([...addedKeywords, ...newKeyword.split('\n').filter(item => item !== '').map(item => ({
-            text: item,
-            type: keywordType
-        }))]);
+        onUpdate({
+            negative_keywords: [...keywords, ...newKeyword.split('\n').filter(item => item !== '').map(item => ({
+                text: item,
+                type: keywordType
+            }))]
+        });
         setNewKeyword('');
     };
 
     const clearKeywordsListHandler = () => {
-        setAddedKeywords([]);
+        onUpdate({negative_keywords: []});
     };
 
     const removeKeywordHandler = (index) => {
-        setAddedKeywords(addedKeywords.filter((item, itemIndex) => itemIndex !== index))
+        onUpdate({negative_keywords: keywords.filter((item, itemIndex) => itemIndex !== index)})
     };
 
     return (
@@ -75,7 +76,7 @@ const NegativeKeywords = () => {
 
                     <div className="col added-keywords">
                         <div className="row">
-                            <div className="count"><b>{addedKeywords.length || 0}</b> keywords added</div>
+                            <div className="count"><b>{keywords.length || 0}</b> keywords added</div>
                             <button onClick={clearKeywordsListHandler}>Remove All</button>
                         </div>
 
@@ -91,7 +92,7 @@ const NegativeKeywords = () => {
                             </div>
 
                             <ul>
-                                {addedKeywords.map((keyword, index) => (
+                                {keywords.map((keyword, index) => (
                                     <li>
                                         <div className="text">
                                             {keyword.text}

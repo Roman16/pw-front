@@ -19,7 +19,7 @@ const AllProducts = () => {
         [openedProduct, setOpenedProduct] = useState(null),
         [selectedProducts, setSelectedProducts] = useState([]),
         [paginationOptions, setPaginationOptions] = useState({
-            page: 2,
+            page: 1,
             pageSize: 10,
         });
 
@@ -91,7 +91,7 @@ const AllProducts = () => {
             });
 
             setAllProducts(res.result || []);
-            // setTotalSize(res.totalSize);
+            setTotalSize(res.totalSize);
         } catch (e) {
             setAllProducts([])
         }

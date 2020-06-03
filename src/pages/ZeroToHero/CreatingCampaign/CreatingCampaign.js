@@ -13,7 +13,7 @@ const CreatingCampaign = () => {
         <div className='zero-to-hero-page creating-campaign-page'>
             <h2>Welcome to Zero to Hero set up page. Let’s do the magic!</h2>
 
-            <ProductAmountSlider/>
+            <ProductAmountSlider description/>
 
             <AllProducts/>
 

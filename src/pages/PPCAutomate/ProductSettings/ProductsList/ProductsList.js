@@ -268,7 +268,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     products={products}
                     onOpenChild={openVariationsHandler}
                     openedProductOnSetting={openedProduct}
-
                 />
             )
         },

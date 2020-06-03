@@ -14,34 +14,43 @@ const Option = Select.Option;
 
 const SetupSetting = ({
                           onUpdate, product: {
-        portfolioType = 'create',
-        portfolioName,
+        portfolio,
+        campaigns,
+        brand
     }
                       }) => {
-    // const [portfolioType, setPortfolioType] = useState('create');
 
-    const changeRadioHandler = ({target: {value}}) => {
-        onUpdate({portfolioType: value});
-
-        // setPortfolioType(value)
-    };
-
-    const changePortfolioNameHandler = (name) => {
+    const changePortfolioHandler = (value) => {
         onUpdate({
-            portfolioName: name,
-            portfolioType: portfolioType || 'create'
+            portfolio: {
+                ...portfolio,
+                ...value
+            }
         });
     };
+
+    const changeCampaignsHandler = (value) => {
+        onUpdate({
+            campaigns: {
+                ...campaigns,
+                ...value
+            }
+        });
+    };
+
+    const changeBrandHandler = (value) => {
+        onUpdate({
+            brand: {
+                ...brand,
+                ...value
+            }
+        });
+    };
+
 
     const changeDateHandler = (type, date) => {
-        onUpdate({
-            [`${type}_date`]: moment(date).format('DD MM YYYY'),
-        });
-    };
-
-    const changeInputHandler = (name, value) => {
-        onUpdate({
-            [name]: value,
+        changeCampaignsHandler({
+            [`${type}_date`]: moment(date).format('YYYY-MM-DD'),
         });
     };
 
@@ -59,16 +68,17 @@ const SetupSetting = ({
                     <div className="col">
                         <h3>Portfolio Settings</h3>
 
-                        <Radio.Group value={portfolioType} onChange={changeRadioHandler}>
+                        <Radio.Group value={portfolio.portfolioType}
+                                     onChange={({target: {value}}) => changePortfolioHandler({portfolioType: value})}>
                             <Radio value={'create'}>
                                 Create portfolio
                             </Radio>
 
                             <div className="radio-description form-group">
                                 <Input
-                                    value={portfolioName}
-                                    onChange={({target: {value}}) => changePortfolioNameHandler(value)}
-                                    disabled={portfolioType !== 'create'}
+                                    value={portfolio.name}
+                                    onChange={({target: {value}}) => changePortfolioHandler({name: value})}
+                                    disabled={portfolio.portfolioType !== 'create'}
                                     placeholder={'Portfolio Name'}
                                 />
                             </div>
@@ -79,15 +89,17 @@ const SetupSetting = ({
 
                             <div className="radio-description form-group">
                                 <CustomSelect
-                                    onChange={(value) => changePortfolioNameHandler(value)}
-                                    disabled={portfolioType !== 'select'}
+                                    value={portfolio.id}
+                                    onChange={(value) => changePortfolioHandler({id: value})}
+                                    disabled={portfolio.portfolioType !== 'select'}
                                     placeholder={'Select existing portfolio'}
                                 >
-                                    <Option value={'test'}>Test</Option>
+                                    <Option value={'portfolio1'}>Portfolio1</Option>
+                                    <Option value={'portfolio2'}>Portfolio2</Option>
                                 </CustomSelect>
                             </div>
 
-                            <Radio value={'no'}>
+                            <Radio value={'no-portfolio'}>
                                 No portfolio
                             </Radio>
                         </Radio.Group>
@@ -112,7 +124,7 @@ const SetupSetting = ({
                                 <DatePicker
                                     showToday={false}
                                     format="MMM DD, YYYY"
-                                    defaultValue={moment(new Date())}
+                                    value={moment(campaigns.start_date, 'YYYY-MM-DD')}
                                     onChange={(date) => changeDateHandler('start', date)}
                                 />
                             </div>
@@ -122,18 +134,18 @@ const SetupSetting = ({
                                 <DatePicker
                                     showToday={false}
                                     format="MMM DD, YYYY"
+                                    value={campaigns.end_date && moment(campaigns.end_date, 'YYYY-MM-DD')}
                                     onChange={(date) => changeDateHandler('end', date)}
                                 />
                             </div>
                         </div>
 
                         <Checkbox
-                            // onChange={(e) => setPausedCampaigns(e.target.checked)}
+                            checked={campaigns.set_to_paused}
+                            onChange={({target: {checked}}) => changeCampaignsHandler({set_to_paused: checked})}
                         >
                             Set campaigns status to “<b>paused</b>”
                         </Checkbox>
-
-
                     </div>
 
                     <div className="col">
@@ -149,7 +161,10 @@ const SetupSetting = ({
                     <div className="col">
                         <h3>Daily budget</h3>
 
-                        <InputCurrency/>
+                        <InputCurrency
+                            value={campaigns.daily_budget}
+                            onChange={daily_budget => changeCampaignsHandler({daily_budget})}
+                        />
 
                         <div className="recommended-budget">
                             Recommended Daily Budget: <span>$500</span>
@@ -169,7 +184,10 @@ const SetupSetting = ({
                     <div className="col">
                         <h3>Default Bid</h3>
 
-                        <InputCurrency/>
+                        <InputCurrency
+                            value={campaigns.default_bid}
+                            onChange={default_bid => changeCampaignsHandler({default_bid})}
+                        />
                     </div>
 
                     <div className="col">
@@ -186,7 +204,8 @@ const SetupSetting = ({
                         <h3>Enter your main keywords (add up to 5)</h3>
 
                         <MultiTextArea
-                            onChange={(list) => changeInputHandler('main_keywords', list)}
+                            value={campaigns.main_keywords}
+                            onChange={(main_keywords) => changeCampaignsHandler({main_keywords})}
                             max={5}
                         />
                     </div>
@@ -208,7 +227,8 @@ const SetupSetting = ({
                         <div className="form-group">
                             <Input
                                 placeholder={'Your Brand Name'}
-                                onChange={({target: {value}}) => changeInputHandler('brand_name', value)}
+                                value={brand.name}
+                                onChange={({target: {value}}) => changeBrandHandler({name: value})}
                             />
                         </div>
                     </div>
@@ -225,7 +245,8 @@ const SetupSetting = ({
                         <h3>Enter Your Competitors Brands Names</h3>
 
                         <MultiTextArea
-                            onChange={(list) => changeInputHandler('brands_names', list)}
+                            value={brand.competitor_brand_names}
+                            onChange={(competitor_brand_names) => changeBrandHandler({competitor_brand_names})}
                         />
                     </div>
 

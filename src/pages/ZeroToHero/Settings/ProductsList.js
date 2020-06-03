@@ -1,41 +1,64 @@
-import React from "react";
+import React, {useState} from "react";
 import CustomTable from "../../../components/Table/CustomTable";
 import {Input} from "antd";
 import moment from "moment";
 import Pagination from "../../../components/Pagination/Pagination";
+import {SVG} from "../../../utils/icons";
 
-const ProductsList = ({productsList, selectedTab}) => {
+
+const ProductItem = ({product, openedProduct, onOpenVariations}) => {
+    return (
+        <div className='product-block'>
+            <div className="image">
+                <img src={product.image_url} alt=""/>
+            </div>
+
+            <div className="col">
+                <div className="name" title={product.name}>
+                    {product.name}
+                </div>
+
+                <div className="row">
+                    <span className='price'>$35.99</span>
+                    <span className='stock'>In Stock</span>
+                </div>
+            </div>
+
+            <div
+                className={`open-children-list-button ${product.variations ? 'has-variations' : ''} ${(openedProduct === product.id) ? 'opened' : ''}`}
+                onClick={() => product.variations && onOpenVariations(product.id)}
+            >
+                {product.variations && <SVG id='select-icon'/>}
+            </div>
+
+        </div>
+    )
+};
+
+const ProductsList = ({productsList, selectedTab, paginationOptions, processing, totalSize, onChangePagination}) => {
+    const [openedProduct, setOpenedProduct] = useState(null);
+
+    const openProductVariationsHandler = (id) => {
+        setOpenedProduct(prevState => prevState === id ? null : id)
+    };
 
     const defaultColumns = [
         {
             title: 'Product Name',
             dataIndex: 'id',
             key: 'id',
-            width: '500px',
-            render: (id, product) => (
-                <div className='product-block'>
-                    <div className="image">
-                        <img src={product.image_url} alt=""/>
-                    </div>
-
-                    <div className="col">
-                        <div className="name">
-                            {product.name}
-                        </div>
-
-                        <div className="row">
-                            <span className='price'>$35.99</span>
-                            <span className='stock'>In Stock</span>
-                        </div>
-                    </div>
-                </div>
-            )
+            width: '35.714285714285715rem',
+            render: (id, product) => (<ProductItem
+                product={product}
+                openedProduct={openedProduct}
+                onOpenVariations={openProductVariationsHandler}
+            />)
         },
         {
             title: 'Date',
             dataIndex: 'date',
             key: 'date',
-            width: '150px',
+            width: '10.714285714285714rem',
             render: (date) => (
                 <div className='date-field'>
                     {moment(date).format('DD MMM YYYY')}
@@ -46,13 +69,13 @@ const ProductsList = ({productsList, selectedTab}) => {
             title: 'ASIN',
             dataIndex: 'asin',
             key: 'asin',
-            minWidth: '150px',
+            width: '14.285714285714286rem',
         },
         {
             title: 'SKU',
             dataIndex: 'sku',
             key: 'sku',
-            minWidth: '150px',
+            width: '14.285714285714286rem',
         }
     ];
     const columns = {
@@ -70,7 +93,6 @@ const ProductsList = ({productsList, selectedTab}) => {
                       </div>*/
 
                     <div className="status-field created">
-                        <div/>
                         <span>Created</span>
                     </div>
                 )
@@ -86,15 +108,16 @@ const ProductsList = ({productsList, selectedTab}) => {
                 dataIndex: 'campaign_type',
                 key: 'campaign_type',
                 minWidth: '150px',
+                render: () => <span>SP</span>
             },
             {
                 title: 'PPC Automate Status',
-                dataIndex: 'optimization_status',
-                key: 'optimization_status',
+                dataIndex: 'under_optimization',
+                key: 'under_optimization',
                 minWidth: '200px',
                 render: (status) => (
                     <div className="optimization-field">
-                        <button className='btn green-btn'>Start</button>
+                        {status ? <span>On Optimization</span> : <button className='btn default'>Start</button>}
                     </div>
                 )
             },
@@ -107,17 +130,17 @@ const ProductsList = ({productsList, selectedTab}) => {
                 key: 'zth_status',
                 render: (status) => (
                     <div className="zth-status-field">
-                        <button className='btn default'>Start</button>
+                        <button className='btn green-btn'>Start</button>
                     </div>
                 )
             },
             {
                 title: 'Optimization Status',
-                dataIndex: 'optimization_status',
-                key: 'optimization_status',
+                dataIndex: 'under_optimization',
+                key: 'under_optimization',
                 render: (status) => (
                     <div className="optimization-field">
-                        <button className='btn green-btn'>Start</button>
+                        {status ? <span>On Optimization</span> : <button className='btn default'>Start</button>}
                     </div>
                 )
             },
@@ -130,16 +153,17 @@ const ProductsList = ({productsList, selectedTab}) => {
                 rowKey="id"
                 dataSource={productsList}
                 columns={columns[selectedTab]}
+                loading={processing}
             />
 
             <Pagination
-                // onChange={() => {}}
-                page={1}
+                onChange={onChangePagination}
+                page={paginationOptions.page}
                 pageSizeOptions={[10, 25, 50]}
-                pageSize={10}
-                totalSize={0}
+                pageSize={paginationOptions.pageSize}
+                totalSize={totalSize}
                 listLength={productsList.length}
-                processing={false}
+                processing={processing}
             />
         </>
     )

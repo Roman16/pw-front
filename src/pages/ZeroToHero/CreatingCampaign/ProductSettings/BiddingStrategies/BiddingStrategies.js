@@ -5,8 +5,17 @@ import './BiddingStrategies.less';
 import {Radio} from "antd";
 import InputCurrency from "../../../../../components/Inputs/InputCurrency";
 
-const BiddingStrategies = () => {
+const BiddingStrategies = ({campaigns, onUpdate}) => {
     const [sectionCollapse, setSectionCollapse] = useState(true);
+
+    const changeBrandHandler = (value) => {
+        onUpdate({
+            campaigns: {
+                ...campaigns,
+                ...value
+            }
+        });
+    };
 
     return (
         <section className={`bidding-strategies ${sectionCollapse ? 'collapsed' : ''}`}>
@@ -34,12 +43,13 @@ const BiddingStrategies = () => {
                     </div>
                 </div>
 
-                <Radio.Group>
-
-
+                <Radio.Group
+                    value={campaigns.bidding_strategy}
+                    onChange={({target: {value}}) => changeBrandHandler({bidding_strategy: value})}
+                >
                     <div className="row">
                         <div className="col">
-                            <Radio value={'create'}>
+                            <Radio value={'DYNAMIC_BIDS_DOWN_ONLY'}>
                                 Dynamic bids - down only
 
                                 <span className={'recommend-label'}>Recommended by Profit Whales</span>
@@ -62,7 +72,7 @@ const BiddingStrategies = () => {
 
                     <div className="row">
                         <div className="col">
-                            <Radio value={'select'}>
+                            <Radio value={'DYNAMIC_BIDS_UP_AND_DOWN'}>
                                 Dynamic bids - up and down
                             </Radio>
 
@@ -85,7 +95,7 @@ const BiddingStrategies = () => {
 
                     <div className="row">
                         <div className="col">
-                            <Radio value={'no'}>
+                            <Radio value={'FIXED_BIDS'}>
                                 Fixed bids
                             </Radio>
 
@@ -115,12 +125,30 @@ const BiddingStrategies = () => {
 
                         <div className="form-group">
                             <label htmlFor="">Top of Search (first page)</label>
-                            <InputCurrency typeIcon={'percent'}/>
+                            <InputCurrency
+                                typeIcon={'percent'}
+                                value={campaigns.adjust_bid_by_placements.top_of_search}
+                                onChange={(top_of_search) => changeBrandHandler({
+                                    adjust_bid_by_placements: {
+                                        ...campaigns.adjust_bid_by_placements,
+                                        top_of_search
+                                    }
+                                })}
+                            />
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="">Product pages (competitors pages)</label>
-                            <InputCurrency typeIcon={'percent'}/>
+                            <InputCurrency
+                                typeIcon={'percent'}
+                                value={campaigns.adjust_bid_by_placements.product_pages}
+                                onChange={(product_pages) => changeBrandHandler({
+                                    adjust_bid_by_placements: {
+                                        ...campaigns.adjust_bid_by_placements,
+                                        product_pages
+                                    }
+                                })}
+                            />
                         </div>
                     </div>
 

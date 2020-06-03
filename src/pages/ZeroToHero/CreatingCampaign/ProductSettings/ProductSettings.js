@@ -61,11 +61,20 @@ const ProductSettings = () => {
                     onUpdate={updateProductHandler}
                 />
 
-                <BiddingStrategies/>
+                <BiddingStrategies
+                    campaigns={productsWithSettings[activeProductIndex].campaigns}
+                    onUpdate={updateProductHandler}
+                />
 
-                <RelevantKeywords/>
+                <RelevantKeywords
+                    keywords={productsWithSettings[activeProductIndex].relevant_keywords}
+                    onUpdate={updateProductHandler}
+                />
 
-                <NegativeKeywords/>
+                <NegativeKeywords
+                    keywords={productsWithSettings[activeProductIndex].negative_keywords}
+                    onUpdate={updateProductHandler}
+                />
 
                 <ToPaymentBar
                     processing={createProcessing}

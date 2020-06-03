@@ -1,4 +1,5 @@
 import {zthConstants} from '../constans/actions.type';
+import moment from "moment";
 
 const initialState = {
     selectedCampaign: 'Sponsored Products',
@@ -6,6 +7,24 @@ const initialState = {
     selectedProducts: [],
     selectedProductsWithSettingsParams: [],
     activeProductIndex: 0
+};
+
+const initialProductSettings = {
+    portfolio: {
+        portfolioType: 'create'
+    },
+    campaigns: {
+        start_date: moment(new Date()).format('YYYY-MM-DD'),
+        set_to_paused: false,
+        main_keywords: [],
+        bidding_strategy: 'DYNAMIC_BIDS_DOWN_ONLY',
+        adjust_bid_by_placements: {}
+    },
+    brand: {
+        competitor_brand_names: []
+    },
+    relevant_keywords: [],
+    negative_keywords: []
 };
 
 export function zth(state = initialState, action) {
@@ -27,7 +46,7 @@ export function zth(state = initialState, action) {
                 ...state,
                 selectedProducts: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)),
                 productAmount: [...state.selectedProducts, ...action.payload].length > state.productAmount ? [...state.selectedProducts, ...action.payload].length : state.productAmount,
-                selectedProductsWithSettingsParams: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)).map(item => ({id: item.id}))
+                selectedProductsWithSettingsParams: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)).map(item => ({id: item.id, ...initialProductSettings}))
             };
 
         case zthConstants.REMOVE_PRODUCTS:

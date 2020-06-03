@@ -8,6 +8,7 @@ import NewCard from "./NewCard";
 import UserCards from './UserCards';
 import {numberMask} from "../../../utils/numberMask";
 import {saleRender} from "../components/ProductAmountSlider/ProductAmountSlider";
+import {history} from "../../../utils/history";
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
@@ -57,8 +58,6 @@ const Payment = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(newCard);
-        console.log(props.stripe);
         let res;
 
         if (userName) {
@@ -70,6 +69,7 @@ const Payment = (props) => {
         }
 
         console.log(res);
+        history.push('/zero-to-hero/success')
     };
 
     useEffect(() => {
@@ -147,10 +147,10 @@ const Payment = (props) => {
                         <div className="value">{totalPriceRender(productAmount)}</div>
                     </div>
 
-                    <div className="row save-info">
+                    {productAmount > 5 && <div className="row save-info">
                         <label htmlFor="">You save:</label>
                         <div className="value">{saleRender(productAmount)}</div>
-                    </div>
+                    </div>}
 
                     <button className={'btn white'} onClick={handleSubmit}>Pay</button>
                 </div>

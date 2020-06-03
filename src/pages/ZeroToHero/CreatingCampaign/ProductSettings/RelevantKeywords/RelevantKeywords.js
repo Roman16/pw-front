@@ -3,25 +3,23 @@ import {SVG} from "../../../../../utils/icons";
 import './RelevantKeywords.less';
 
 
-const RelevantKeywords = () => {
-    const [addedKeywords, setAddedKeywords] = useState([]),
-        [newKeyword, setNewKeyword] = useState(''),
+const RelevantKeywords = ({keywords, onUpdate}) => {
+    const [newKeyword, setNewKeyword] = useState(''),
         [sectionCollapse, setSectionCollapse] = useState(true);
-
 
     const addKeywordsHandler = (e) => {
         e.preventDefault();
 
-        setAddedKeywords([...addedKeywords, ...newKeyword.split('\n').filter(item => item !== '')]);
+        onUpdate({relevant_keywords: [...keywords, ...newKeyword.split('\n').filter(item => item !== '')]});
         setNewKeyword('');
     };
 
     const clearKeywordsListHandler = () => {
-        setAddedKeywords([]);
+        onUpdate({relevant_keywords: []});
     };
 
     const removeKeywordHandler = (keyword) => {
-        setAddedKeywords(addedKeywords.filter(item => item !== keyword))
+        onUpdate({relevant_keywords: keywords.filter(item => item !== keyword)})
     };
 
     return (
@@ -56,7 +54,7 @@ const RelevantKeywords = () => {
 
                     <div className="col added-keywords">
                         <div className="row">
-                            <div className="count"><b>{addedKeywords.length || 0}</b> keywords added</div>
+                            <div className="count"><b>{keywords.length || 0}</b> keywords added</div>
                             <button onClick={clearKeywordsListHandler}>Remove All</button>
                         </div>
 
@@ -64,7 +62,7 @@ const RelevantKeywords = () => {
                             <div className="header">Keywords</div>
 
                             <ul>
-                                {addedKeywords.map(keyword => (
+                                {keywords.map(keyword => (
                                     <li>
                                         {keyword}
 
@@ -82,4 +80,4 @@ const RelevantKeywords = () => {
     )
 };
 
-export default RelevantKeywords;
+export default React.memo(RelevantKeywords);
