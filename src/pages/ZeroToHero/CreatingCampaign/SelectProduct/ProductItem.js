@@ -1,7 +1,20 @@
 import React from "react";
 import {SVG} from "../../../../utils/icons";
 
-const ProductItem = ({product, onSelect, isSelected, isDisabled, isOpened, onOpenVariations, onRemove, showChildCount}) => {
+const ProductItem = ({
+                         type,
+                         product,
+                         onSelect,
+                         onSelectVariation,
+                         isSelected,
+                         isDisabled,
+                         isOpened,
+                         onOpenVariations,
+                         onRemove,
+                         showChildCount,
+                         selectedProducts,
+                         addedProducts
+                     }) => {
 
     return (
         <>
@@ -48,21 +61,43 @@ const ProductItem = ({product, onSelect, isSelected, isDisabled, isOpened, onOpe
             </div>
 
             {product.variations && isOpened &&
-            <div className={`variations-list ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`}>
-                {product.variations.map(variationProduct => (
-                    <div className={'variation-item'}
-                         onClick={() => !isDisabled && onSelect && onSelect(variationProduct, isSelected)}>
-                        <div className="variation-indicator"/>
-                        <ProductItem
-                            product={variationProduct}
-                            onSelect={() => {
-                            }}
-                        />
-                    </div>
-                ))}
+            <div className={`variations-list`}>
+                {product.variations.map(variationProduct => {
+                    if (type === 'all_products') {
+                        const variationIsSelected = !!selectedProducts.find(item => item.id === variationProduct.id) || isSelected,
+                            variationIsAdded = !!addedProducts.find(item => item.id === variationProduct.id);
+
+                        return (
+                            <div
+                                className={`variation-item ${(isSelected || variationIsSelected) ? 'selected' : ''} ${(isDisabled || variationIsAdded) ? 'disabled' : ''}`}
+                                onClick={() => !isDisabled && !variationIsAdded && onSelect && onSelectVariation({
+                                    ...variationProduct,
+                                    parent_id: product.id
+                                }, variationIsSelected, isSelected)}
+                            >
+                                <div className="variation-indicator"/>
+                                <ProductItem
+                                    product={variationProduct}
+                                    isDisabled={!isDisabled && variationIsAdded}
+                                />
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div
+                                className={`variation-item ${(isSelected) ? 'selected' : ''} ${(isDisabled) ? 'disabled' : ''}`}
+                            >
+                                <div className="variation-indicator"/>
+                                <ProductItem
+                                    product={variationProduct}
+                                />
+                            </div>
+                        )
+                    }
+                })}
             </div>}
         </>
     )
 };
 
-export default ProductItem;
+export default React.memo(ProductItem);

@@ -25,9 +25,9 @@ export function zth(state = initialState, action) {
         case zthConstants.ADD_PRODUCTS:
             return {
                 ...state,
-                selectedProducts: [...state.selectedProducts, ...action.payload],
+                selectedProducts: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)),
                 productAmount: [...state.selectedProducts, ...action.payload].length > state.productAmount ? [...state.selectedProducts, ...action.payload].length : state.productAmount,
-                selectedProductsWithSettingsParams: [...state.selectedProducts, ...action.payload].map(item => ({id: item.id}))
+                selectedProductsWithSettingsParams: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)).map(item => ({id: item.id}))
             };
 
         case zthConstants.REMOVE_PRODUCTS:
