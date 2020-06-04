@@ -69,7 +69,11 @@ const SetupSetting = ({
                         <h3>Portfolio Settings</h3>
 
                         <Radio.Group value={portfolio.portfolioType}
-                                     onChange={({target: {value}}) => changePortfolioHandler({portfolioType: value})}>
+                                     onChange={({target: {value}}) => changePortfolioHandler({
+                                         portfolioType: value,
+                                         no_portfolio: value === 'no-portfolio'
+                                     })}
+                        >
                             <Radio value={'create'}>
                                 Create portfolio
                             </Radio>

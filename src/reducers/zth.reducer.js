@@ -11,7 +11,8 @@ const initialState = {
 
 const initialProductSettings = {
     portfolio: {
-        portfolioType: 'create'
+        portfolioType: 'create',
+        no_portfolio: false
     },
     campaigns: {
         start_date: moment(new Date()).format('YYYY-MM-DD'),
@@ -46,7 +47,7 @@ export function zth(state = initialState, action) {
                 ...state,
                 selectedProducts: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)),
                 productAmount: [...state.selectedProducts, ...action.payload].length > state.productAmount ? [...state.selectedProducts, ...action.payload].length : state.productAmount,
-                selectedProductsWithSettingsParams: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)).map(item => ({id: item.id, ...initialProductSettings}))
+                selectedProductsWithSettingsParams: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)).map(item => ({product_id: item.id, ...initialProductSettings}))
             };
 
         case zthConstants.REMOVE_PRODUCTS:

@@ -89,3 +89,9 @@ export const daypartingUrls = {
     dayParting: (id) => `ppc-automation/dayparting/campaigns/${id}/state`,
     placements: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/placements` : 'ppc-automation/dayparting/campaigns/placements'
 };
+
+export const zthUrls = {
+    productsList: 'zero-to-hero/products',
+    setupSettings: 'zero-to-hero/setup-settings',
+    incompleteBatch: 'zero-to-hero/batch/incomplete-batch-data'
+};

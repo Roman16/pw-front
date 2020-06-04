@@ -3,11 +3,12 @@ import {SVG} from "../../../../utils/icons";
 import Pagination from "../../../../components/Pagination/Pagination";
 import {Input, Spin} from "antd";
 import {useDispatch, useSelector} from "react-redux";
-import {productsServices} from "../../../../services/products.services";
+import {zthServices} from "../../../../services/zth.services";
 import './SelectProduct.less';
 import ProductItem from "./ProductItem";
 import {debounce} from "throttle-debounce";
 import {zthActions} from "../../../../actions/zth.actions";
+import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup";
 
 const {Search} = Input;
 
@@ -16,6 +17,7 @@ const AllProducts = () => {
         [totalSize, setTotalSize] = useState(0),
         [searchStr, setSearchStr] = useState(''),
         [processing, setProcessing] = useState(false),
+        [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false),
         [openedProduct, setOpenedProduct] = useState(null),
         [selectedProducts, setSelectedProducts] = useState([]),
         [paginationOptions, setPaginationOptions] = useState({
@@ -75,8 +77,17 @@ const AllProducts = () => {
     });
 
     const addProductsHandler = () => {
+        if (selectedProducts.find(item => item.parent_id)) {
+            setVisibleConfirmWindow(true)
+        } else {
+            addProducts();
+        }
+    };
+
+    const addProducts = () => {
         dispatch(zthActions.addProducts(selectedProducts));
         setSelectedProducts([]);
+        setVisibleConfirmWindow(false)
     };
 
 
@@ -84,10 +95,9 @@ const AllProducts = () => {
         setProcessing(true);
 
         try {
-            const res = await productsServices.getProducts({
+            const res = await zthServices.getAllProducts({
                 ...paginationOptions,
                 searchStr: searchStr,
-                ungroupVariations: 0
             });
 
             setAllProducts(res.result || []);
@@ -167,6 +177,14 @@ const AllProducts = () => {
                 totalSize={totalSize}
                 listLength={allProducts.length}
                 processing={processing}
+            />
+
+            <ConfirmActionPopup
+                className={'confirm-remove-product-window'}
+                visible={visibleConfirmWindow}
+                title={'Are you sure you want to add variation?'}
+                handleOk={addProducts}
+                handleCancel={() => setVisibleConfirmWindow(false)}
             />
         </div>
     )

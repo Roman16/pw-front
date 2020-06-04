@@ -1,13 +1,20 @@
-import React, {memo} from "react";
+import React, {memo, useEffect} from "react";
 import '../ZeroToHero.less';
 import './CreatingCampaign.less';
 import ProductAmountSlider from "../components/ProductAmountSlider/ProductAmountSlider";
 import ProductSettings from "./ProductSettings/ProductSettings";
 import AllProducts from "./SelectProduct/AllProducts";
 import SelectedProduct from "./SelectProduct/SelectedProduct";
+import {zthServices} from "../../../services/zth.services";
 
 
 const CreatingCampaign = () => {
+    useEffect(() => {
+        zthServices.checkIncompleteBatch()
+            .then(res => {
+                console.log(res);
+            })
+    });
 
     return (
         <div className='zero-to-hero-page creating-campaign-page'>

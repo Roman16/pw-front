@@ -4,6 +4,7 @@ import {Input} from "antd";
 import moment from "moment";
 import Pagination from "../../../components/Pagination/Pagination";
 import {SVG} from "../../../utils/icons";
+import InputCurrency from "../../../components/Inputs/InputCurrency";
 
 
 const ProductItem = ({product, openedProduct, onOpenVariations}) => {
@@ -41,6 +42,99 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
     const openProductVariationsHandler = (id) => {
         setOpenedProduct(prevState => prevState === id ? null : id)
     };
+
+    const expandedRowRender = (product) => {
+        const columns = {
+            'zth-products': [
+                {
+                    width: '35.714285714285715rem',
+                    render: (props) => {
+                        return (<ProductItem
+                                product={props}
+                            />
+                        )
+                    }
+                },
+                {
+                    width: '10.714285714285714rem',
+                    render: (date) => (
+                        <div className='date-field'>
+                            {moment(date).format('DD MMM YYYY')}
+                        </div>
+                    )
+                },
+                {
+                    width: '14.285714285714286rem',
+                    render: (props) => (<span>{props.asin}</span>)
+                },
+                {
+                    width: '14.285714285714286rem',
+                    render: (props) => (<span>{props.sku}</span>)
+                },
+                {
+                    minWidth: '200px',
+                    render: (status) => (
+                        <div className="status-field created">
+                            <span>Created</span>
+                        </div>
+                    )
+                }
+            ],
+            'other-products': [
+                {
+                    width: '35.714285714285715rem',
+                    render: (props) => {
+                        return (<ProductItem
+                                product={props}
+                            />
+                        )
+                    }
+                },
+                {
+                    minWidth: '14.285714285714286rem',
+                    render: (props) => (<span>{props.asin}</span>)
+                },
+                {
+                    minWidth: '14.285714285714286rem',
+                    render: (props) => (<span>{props.sku}</span>)
+                },
+                {
+                    minWidth: '14.285714285714286rem',
+                    render: (props) => ('')
+                },
+                {
+                    minWidth: '14.285714285714286rem',
+                    render: (props) => ('')
+                },
+            ]
+        };
+
+
+        return (
+            product.variations.map(productVariation => (
+                    <div>
+
+                        {columns[selectedTab].map((item, index) => {
+                                const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
+
+                                return (
+                                    <div
+                                        className={`table-body__field ${item.align || ''}`}
+                                        style={{...fieldWidth, minWidth: item.minWidth || '0'}}
+                                    >
+                                        {index === 0 && <div className="variation-indicator"/>}
+
+                                        {item.render(productVariation)}
+                                    </div>
+                                )
+                            }
+                        )}
+                    </div>
+                )
+            )
+        )
+    };
+
 
     const defaultColumns = [
         {
@@ -168,6 +262,9 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 dataSource={productsList}
                 columns={columns[selectedTab]}
                 loading={processing}
+                openedRow={openedProduct}
+
+                expandedRowRender={expandedRowRender}
             />
 
             <Pagination

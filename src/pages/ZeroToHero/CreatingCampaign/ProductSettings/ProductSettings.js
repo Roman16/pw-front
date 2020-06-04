@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './ProductSettings.less';
 import ProductSlider from "./ProductSlider/ProductSlider";
 import SetupSetting from "./SetupSetting/SetupSetting";
@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {zthActions} from "../../../../actions/zth.actions";
 import {history} from "../../../../utils/history";
 import ToPaymentBar from "./ToPaymentBar/ToPaymentBar";
+import {zthServices} from "../../../../services/zth.services";
 
 
 const ProductSettings = () => {
@@ -37,13 +38,21 @@ const ProductSettings = () => {
         dispatch(zthActions.updateActiveProduct(params))
     };
 
-    const goPaymentStep = () => {
+    const goPaymentStep = async () => {
         setProcessing(true);
 
-        setTimeout(() => {
+        try {
+            await zthServices.saveSettings({
+                zth_tokens_count: productAmount,
+                setup_settings: productsWithSettings
+            });
             history.push('/zero-to-hero/payment');
-            setProcessing(false);
-        }, 2000)
+
+        } catch (e) {
+            console.log(e);
+        }
+
+        setProcessing(false);
     };
 
     if (addedProducts.length > 0) {

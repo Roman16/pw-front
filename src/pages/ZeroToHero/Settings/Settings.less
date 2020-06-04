@@ -141,6 +141,21 @@
             justify-content: flex-start;
           }
 
+          &.expand-row {
+            & > div {
+              padding: 0;
+              width: 100%;
+
+              .table-body__field {
+                padding: 1.0714285714285714rem 1.4285714285714286rem;
+
+                &:first-child {
+                  padding-left: 4.285714285714286rem;
+                }
+              }
+            }
+          }
+
           .table-body__field {
             padding-left: 1.4285714285714286rem;
             padding-right: 1.4285714285714286rem;
