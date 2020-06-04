@@ -832,12 +832,21 @@ a:focus {
     background: #343C5A;
 
     .ant-popover-inner-content {
+
       height: 2.2857142857142856rem;
-      color: #B6B6FB;
-      font-size: 0.8571428571428571rem;
-      padding: 0 10px;
+      padding: 0 1.4285714285714286rem;
       display: flex;
       align-items: center;
+
+      a, button {
+        color: #B6B6FB;
+        font-size: 1rem;
+        height: 1.4285714285714286rem;
+
+        &:hover {
+          color: #fff;
+        }
+      }
     }
   }
 }
