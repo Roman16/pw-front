@@ -44,7 +44,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
 
     const defaultColumns = [
         {
-            title: 'Product Name',
+            title: 'Products with ZTH',
             dataIndex: 'id',
             key: 'id',
             width: '35.714285714285715rem',
@@ -53,34 +53,34 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 openedProduct={openedProduct}
                 onOpenVariations={openProductVariationsHandler}
             />)
-        },
-        {
-            title: 'Date',
-            dataIndex: 'date',
-            key: 'date',
-            width: '10.714285714285714rem',
-            render: (date) => (
-                <div className='date-field'>
-                    {moment(date).format('DD MMM YYYY')}
-                </div>
-            )
-        },
-        {
-            title: 'ASIN',
-            dataIndex: 'asin',
-            key: 'asin',
-            width: '14.285714285714286rem',
-        },
-        {
-            title: 'SKU',
-            dataIndex: 'sku',
-            key: 'sku',
-            width: '14.285714285714286rem',
         }
     ];
     const columns = {
         'zth-products': [
             ...defaultColumns,
+            {
+                title: 'Created Date',
+                dataIndex: 'date',
+                key: 'date',
+                width: '10.714285714285714rem',
+                render: (date) => (
+                    <div className='date-field'>
+                        {moment(date).format('DD MMM YYYY')}
+                    </div>
+                )
+            },
+            {
+                title: 'ASIN',
+                dataIndex: 'asin',
+                key: 'asin',
+                width: '14.285714285714286rem',
+            },
+            {
+                title: 'SKU',
+                dataIndex: 'sku',
+                key: 'sku',
+                width: '14.285714285714286rem',
+            },
             {
                 title: 'Status',
                 dataIndex: 'status',
@@ -98,17 +98,10 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 )
             },
             {
-                title: 'Problems',
+                title: 'Issues',
                 dataIndex: 'problems',
                 key: 'problems',
                 minWidth: '150px',
-            },
-            {
-                title: 'Campaign Type',
-                dataIndex: 'campaign_type',
-                key: 'campaign_type',
-                minWidth: '150px',
-                render: () => <span>SP</span>
             },
             {
                 title: 'PPC Automate Status',
@@ -121,26 +114,47 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     </div>
                 )
             },
+            {
+                title: 'Campaign Type',
+                dataIndex: 'campaign_type',
+                key: 'campaign_type',
+                minWidth: '150px',
+                render: () => <span>SP</span>
+            },
         ],
         'other-products': [
             ...defaultColumns,
             {
+                title: 'ASIN',
+                dataIndex: 'asin',
+                key: 'asin',
+                minWidth: '14.285714285714286rem',
+            },
+            {
+                title: 'SKU',
+                dataIndex: 'sku',
+                key: 'sku',
+                minWidth: '14.285714285714286rem',
+            },
+            {
                 title: 'Zero To Hero Status',
                 dataIndex: 'zth_status',
                 key: 'zth_status',
+                minWidth: '14.285714285714286rem',
                 render: (status) => (
                     <div className="zth-status-field">
-                        <button className='btn green-btn'>Start</button>
+                        <button className='btn green-btn'>Create</button>
                     </div>
                 )
             },
             {
-                title: 'Optimization Status',
+                title: 'PPC Automate Status',
                 dataIndex: 'under_optimization',
                 key: 'under_optimization',
+                minWidth: '14.285714285714286rem',
                 render: (status) => (
                     <div className="optimization-field">
-                        {status ? <span>On Optimization</span> : <button className='btn default'>Start</button>}
+                        {status ? <span>Automation: on</span> : <button className='btn default'>Automate</button>}
                     </div>
                 )
             },

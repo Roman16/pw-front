@@ -3,7 +3,6 @@ import image from '../../../assets/img/zth/success-image.png';
 import './ThankPageZTH.less';
 import {history} from "../../../utils/history";
 
-
 const ThankPage = () => {
     return (
         <div className={'success-page-zth'}>
@@ -13,10 +12,9 @@ const ThankPage = () => {
                 </h1>
 
                 <p>
-                    Our algorithm has started to create your campaigns. Because of the high volume and complexity of
-                    this process of creating professionally structured campaigns from scratch, it takes our system
-                    up to
-                    6 hours to create the campaigns. This time will be reduced in the upcoming time.
+                    We have been developing this tool for years. The fist semantic cores were creating during 8-12
+                    hours. Nowadays, it takes up to 15 minutes to create and upload professionally structured campaigns
+                    to your Seller Central account. The future is here.
                 </p>
 
                 <button

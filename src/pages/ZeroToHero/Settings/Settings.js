@@ -68,8 +68,6 @@ const Settings = () => {
 
     return (
         <div className="zth-settings">
-            <h2>Zero to Hero Settings</h2>
-
             <ul className="tabs">
                 <li
                     className={`tab ${selectedTab === 'zth-products' ? 'active' : ''}`}
@@ -102,7 +100,7 @@ const Settings = () => {
                 </div>
 
                 <div className="credits-count">
-                    Your Credits:
+                    ZTH Credits Left:
 
                     <span>30</span>
                 </div>
