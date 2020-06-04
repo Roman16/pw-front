@@ -14,7 +14,7 @@ const CreatingCampaign = () => {
             .then(res => {
                 console.log(res);
             })
-    });
+    }, []);
 
     return (
         <div className='zero-to-hero-page creating-campaign-page'>
