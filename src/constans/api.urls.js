@@ -93,5 +93,6 @@ export const daypartingUrls = {
 export const zthUrls = {
     productsList: 'zero-to-hero/products',
     setupSettings: 'zero-to-hero/setup-settings',
-    incompleteBatch: 'zero-to-hero/batch/incomplete-batch-data'
+    incompleteBatch: 'zero-to-hero/batch/incomplete-batch-data',
+    deleteIncompleteBatch: (batchId) => `zero-to-hero/batch/${batchId}/delete`,
 };

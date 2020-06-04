@@ -68,7 +68,6 @@ const Payment = (props) => {
             res = await props.stripe.createToken();
         }
 
-        console.log(res);
         history.push('/zero-to-hero/success')
     };
 
@@ -76,7 +75,9 @@ const Payment = (props) => {
         userService.fetchBillingInformation()
             .then(res => {
                 setCardList(res);
-            })
+            });
+
+        console.log(props.batchId);
     }, []);
 
     return (
@@ -161,10 +162,10 @@ const Payment = (props) => {
 
 const PaymentRender = injectStripe(Payment);
 
-const PaymentContainer = () => {
+const PaymentContainer = (props) => {
     return (<StripeProvider apiKey={stripeKey}>
         <Elements>
-            {<PaymentRender/>}
+            {<PaymentRender batchId={props.match.params.batchId}/>}
         </Elements>
     </StripeProvider>)
 };

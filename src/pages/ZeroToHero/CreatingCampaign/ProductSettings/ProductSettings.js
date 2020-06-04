@@ -42,16 +42,15 @@ const ProductSettings = () => {
         setProcessing(true);
 
         try {
-            await zthServices.saveSettings({
+            const createdBatch = await zthServices.saveSettings({
                 zth_tokens_count: productAmount,
                 setup_settings: productsWithSettings
             });
-            history.push('/zero-to-hero/payment');
 
+            history.push(`/zero-to-hero/payment/${createdBatch.batch_id}`);
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
-
         setProcessing(false);
     };
 

@@ -6,6 +6,7 @@ import ppcStructureImage from '../../../assets/img/zth/zth-structure.png';
 import {history} from "../../../utils/history";
 import ProductAmountSlider from "../components/ProductAmountSlider/ProductAmountSlider";
 import {Link} from "react-router-dom";
+import HasIncompleteBatch from "../HasIncompleteBatch/HasIncompleteBatch";
 
 const benefitsList = [
     'You are starting with campaigns already packed with lots of relevant keywords. Save your time and money on doing additional future research, and get straight to business!',
@@ -23,8 +24,6 @@ const Marketing = () => {
 
     return (
         <div className='zero-to-hero-page'>
-            <h2>Create and Upload PPC Campaign Structure from Scratch</h2>
-
             <ProductAmountSlider/>
 
             <section className="marketing-block">
@@ -60,6 +59,8 @@ const Marketing = () => {
                 </div>
 
             </section>
+
+            <HasIncompleteBatch/>
         </div>
     )
 };

@@ -4,7 +4,8 @@ import {zthUrls} from '../constans/api.urls';
 export const zthServices = {
     getAllProducts,
     saveSettings,
-    checkIncompleteBatch
+    checkIncompleteBatch,
+    deleteIncompleteBatch
 };
 
 function getAllProducts({pageSize, page, searchStr = '', cancelToken}) {
@@ -13,10 +14,13 @@ function getAllProducts({pageSize, page, searchStr = '', cancelToken}) {
 
 
 function saveSettings(data, cancelToken) {
-    return api('post', `${zthUrls.setupSettings}`, data, false, cancelToken)
+    return api('post', `${zthUrls.setupSettings}`, data, false)
 }
 
 function checkIncompleteBatch(cancelToken) {
     return api('get', `${zthUrls.incompleteBatch}`, false, false, cancelToken)
+}
+function deleteIncompleteBatch(id) {
+    return api('post', `${zthUrls.deleteIncompleteBatch(id)}`, null, false)
 }
 

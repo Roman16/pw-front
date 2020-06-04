@@ -223,8 +223,11 @@ const AuthorizedUser = (props) => {
                                                                         component={Marketing}/>}
                                     {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/creating"
                                                                         component={CreatingCampaign}/>}
-                                    {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/payment"
-                                                                        component={Payment}/>}
+                                    {developer && <ConnectedAmazonRoute
+                                        exact
+                                        path="/zero-to-hero/payment/:batchId"
+                                        component={Payment}
+                                    />}
 
                                     {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/success"
                                                                         component={ThankPage}/>}
