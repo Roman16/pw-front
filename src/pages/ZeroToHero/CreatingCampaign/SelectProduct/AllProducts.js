@@ -182,7 +182,7 @@ const AllProducts = () => {
             <ConfirmActionPopup
                 className={'confirm-remove-product-window'}
                 visible={visibleConfirmWindow}
-                title={'Are you sure you want to add variation?'}
+                title={'NOTE! You are adding the Variation, and we will create separate campaigns for every Variation. Or you can set up campaigns for all Variations if you choose the Parent listing.'}
                 handleOk={addProducts}
                 handleCancel={() => setVisibleConfirmWindow(false)}
             />

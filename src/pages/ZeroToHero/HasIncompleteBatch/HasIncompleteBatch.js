@@ -44,7 +44,7 @@ const HasIncompleteBatch = ({visible = false, onChange}) => {
             footer={false}
         >
             <h2>
-                You have incomplete batch
+                Attention! You have unpaid Zero to Hero products. Please cancel the outstanding products to create the new ones.
             </h2>
 
             <div className={`actions ${deleteProcessing ? 'processing' : ''}`}>
