@@ -47,7 +47,7 @@ const ProductSettings = () => {
                 setup_settings: productsWithSettings
             });
 
-            history.push(`/zero-to-hero/payment/${createdBatch.batch_id}`);
+            history.push(`/zero-to-hero/payment/${createdBatch.result.batch_id}`);
         } catch (e) {
             console.log(e)
         }
