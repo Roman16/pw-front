@@ -17,7 +17,7 @@ const ChooseCampaign = () => {
     const dispatch = useDispatch();
 
     function handleContinue(campaign) {
-        if (hasIncompleteBatch) {
+        if (hasIncompleteBatch.status === 'DRAFT') {
             setVisibleWindow(true)
         } else {
             dispatch(zthActions.setCampaign(campaign));
@@ -97,7 +97,7 @@ const ChooseCampaign = () => {
                 </div>
             </section>
 
-            {visibleWindow && <HasIncompleteBatch visible/>}
+            {visibleWindow && <HasIncompleteBatch visible onChange={() => setIncompleteBatch(false)}/>}
         </div>
     )
 };

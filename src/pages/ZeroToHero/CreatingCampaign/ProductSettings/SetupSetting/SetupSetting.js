@@ -1,23 +1,25 @@
-import React, {useState} from "react";
-import {Checkbox, DatePicker as AntDatePicker, Input, Radio, Select} from 'antd';
+import React from "react";
+import {Checkbox, Input, Radio, Select} from 'antd';
+import tz from 'moment-timezone';
 
-
-import './SetupSetting.less';
 import DatePicker from "../../../../../components/DatePicker/DatePicker";
 import InputCurrency from "../../../../../components/Inputs/InputCurrency";
 import CustomSelect from "../../../../../components/Select/Select";
 import MultiTextArea from "../../../components/MultiTextArea/MultiTextArea";
 import moment from "moment";
+import './SetupSetting.less';
 
 const Option = Select.Option;
 
 
 const SetupSetting = ({
-                          onUpdate, product: {
-        portfolio,
-        campaigns,
-        brand
-    }
+                          onUpdate,
+                          portfolioList,
+                          product: {
+                              portfolio,
+                              campaigns,
+                              brand
+                          }
                       }) => {
 
     const changePortfolioHandler = (value) => {
@@ -50,7 +52,7 @@ const SetupSetting = ({
 
     const changeDateHandler = (type, date) => {
         changeCampaignsHandler({
-            [`${type}_date`]: moment(date).format('YYYY-MM-DD'),
+            [`${type}_date`]: date ? moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString() : null,
         });
     };
 
@@ -98,8 +100,9 @@ const SetupSetting = ({
                                     disabled={portfolio.portfolioType !== 'select'}
                                     placeholder={'Select existing portfolio'}
                                 >
-                                    <Option value={'portfolio1'}>Portfolio1</Option>
-                                    <Option value={'portfolio2'}>Portfolio2</Option>
+                                    {portfolioList.map(portfolio => (
+                                        <Option value={portfolio.id}>{portfolio.name}</Option>
+                                    ))}
                                 </CustomSelect>
                             </div>
 
@@ -128,8 +131,10 @@ const SetupSetting = ({
                                 <DatePicker
                                     showToday={false}
                                     format="MMM DD, YYYY"
-                                    value={moment(campaigns.start_date, 'YYYY-MM-DD')}
+                                    value={moment(campaigns.start_date)}
                                     onChange={(date) => changeDateHandler('start', date)}
+                                    allowClear={false}
+                                    disabledDate={current => moment().tz('America/Los_Angeles').add(-1, 'days') >= current && moment()}
                                 />
                             </div>
 
@@ -138,8 +143,9 @@ const SetupSetting = ({
                                 <DatePicker
                                     showToday={false}
                                     format="MMM DD, YYYY"
-                                    value={campaigns.end_date && moment(campaigns.end_date, 'YYYY-MM-DD')}
+                                    value={campaigns.end_date && moment(campaigns.end_date)}
                                     onChange={(date) => changeDateHandler('end', date)}
+                                    disabledDate={current => moment(campaigns.start_date).tz('America/Los_Angeles').add(1, 'days') > current && moment()}
                                 />
                             </div>
                         </div>

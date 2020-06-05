@@ -2,13 +2,14 @@ import React, {useEffect, useState} from "react";
 import './Payment.less';
 import {Elements, injectStripe, StripeProvider} from "react-stripe-elements";
 import {userService} from "../../../services/user.services";
-import {Radio} from "antd";
+import {Radio, Spin} from "antd";
 import {useSelector} from "react-redux";
 import NewCard from "./NewCard";
 import UserCards from './UserCards';
 import {numberMask} from "../../../utils/numberMask";
 import {saleRender} from "../components/ProductAmountSlider/ProductAmountSlider";
 import {history} from "../../../utils/history";
+import {zthServices} from "../../../services/zth.services";
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
@@ -31,6 +32,8 @@ const Payment = (props) => {
     const [cardsList, setCardList] = useState([]),
         [selectedPaymentMethod, setPaymentMethod] = useState('new_card'),
         [userName, setUserName] = useState(''),
+        [currentButch, setCurrentButch] = useState({}),
+        [payProcessing, setPayProcessing] = useState(false),
         [newCard, setNewCard] = useState({
             card_number: false,
             expiry: false,
@@ -58,17 +61,35 @@ const Payment = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setPayProcessing(true);
+
         let res;
 
-        if (userName) {
-            const billing_details = {};
-            billing_details.name = userName;
-            res = await props.stripe.createToken(billing_details);
+        if (selectedPaymentMethod === 'new_card') {
+            try {
+                if (userName) {
+                    const billing_details = {};
+                    billing_details.name = userName;
+                    res = await props.stripe.createToken(billing_details);
+                } else {
+                    res = await props.stripe.createToken();
+                }
+                console.log(res);
+                await zthServices.payBatch(props.batchId, res.token.id);
+                history.push('/zero-to-hero/success');
+            } catch (e) {
+                console.log(e);
+            }
         } else {
-            res = await props.stripe.createToken();
+            try {
+                await zthServices.payBatch(props.batchId, cardsList.find(item => item.default).id);
+                history.push('/zero-to-hero/success');
+            } catch (e) {
+                console.log(e);
+            }
         }
 
-        history.push('/zero-to-hero/success')
+        setPayProcessing(false);
     };
 
     useEffect(() => {
@@ -77,7 +98,11 @@ const Payment = (props) => {
                 setCardList(res);
             });
 
-        console.log(props.batchId);
+        zthServices.checkBatchById(props.batchId)
+            .then(res => {
+                setCurrentButch(res.result);
+                console.log(res.result);
+            })
     }, []);
 
     return (
@@ -145,7 +170,7 @@ const Payment = (props) => {
 
                     <div className="total-price">
                         <label htmlFor="">TOTAL PRICE:</label>
-                        <div className="value">{totalPriceRender(productAmount)}</div>
+                        <div className="value">${currentButch.amount}</div>
                     </div>
 
                     {productAmount > 5 && <div className="row save-info">
@@ -153,7 +178,14 @@ const Payment = (props) => {
                         <div className="value">{saleRender(productAmount)}</div>
                     </div>}
 
-                    <button className={'btn white'} onClick={handleSubmit}>Pay</button>
+                    <button
+                        className={'btn white'}
+                        onClick={handleSubmit}
+                        disabled={payProcessing}
+                    >
+                        Pay
+                        {payProcessing && <Spin size={'small'}/>}
+                    </button>
                 </div>
             </section>
         </div>

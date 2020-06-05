@@ -281,6 +281,13 @@ td.ant-calendar-cell.ant-calendar-selected-start-date.ant-calendar-selected-end-
     line-height: 24px;
     border: 0;
 
+    width: 24px;
+    height: 24px;
+
+    &::before {
+      display: none;
+    }
+
     &:hover {
       border-radius: 50%;
       background-color: rgba(143, 211, 157, 0.2);
@@ -336,6 +343,10 @@ td.ant-calendar-cell.ant-calendar-selected-start-date.ant-calendar-selected-end-
   .ant-calendar {
     width: max-content;
     border: 0;
+
+    .ant-calendar-disabled-cell {
+
+    }
 
     .ant-calendar-today {
       .ant-calendar-date {

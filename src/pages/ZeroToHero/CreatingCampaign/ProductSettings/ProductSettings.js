@@ -13,14 +13,14 @@ import {zthServices} from "../../../../services/zth.services";
 
 
 const ProductSettings = () => {
-    const [createProcessing, setProcessing] = useState(false);
+    const [createProcessing, setProcessing] = useState(false),
+        [portfolioList, setPortfolioList] = useState([]);
 
     const {addedProducts, activeProductIndex, productAmount, productsWithSettings} = useSelector(state => ({
         addedProducts: state.zth.selectedProducts,
         activeProductIndex: state.zth.activeProductIndex,
         productAmount: state.zth.productAmount,
         productsWithSettings: state.zth.selectedProductsWithSettingsParams,
-
     }));
 
     const dispatch = useDispatch();
@@ -54,6 +54,13 @@ const ProductSettings = () => {
         setProcessing(false);
     };
 
+    useEffect(() => {
+        zthServices.getUserPortfolio()
+            .then(res => {
+                setPortfolioList(res.result)
+            })
+    }, [])
+
     if (addedProducts.length > 0) {
         return (
             <section className='product-settings'>
@@ -66,6 +73,8 @@ const ProductSettings = () => {
 
                 <SetupSetting
                     product={productsWithSettings[activeProductIndex]}
+                    portfolioList={portfolioList}
+
                     onUpdate={updateProductHandler}
                 />
 

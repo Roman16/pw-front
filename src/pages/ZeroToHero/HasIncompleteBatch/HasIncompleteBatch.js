@@ -6,7 +6,7 @@ import './HasIncompleteBatch.less';
 import {Spin} from "antd";
 
 
-const HasIncompleteBatch = ({visible = false}) => {
+const HasIncompleteBatch = ({visible = false, onChange}) => {
     const [incompleteBatch, setIncompleteBatch] = useState(visible),
         [deleteProcessing, setDeleteProcessing] = useState(false);
 
@@ -25,6 +25,7 @@ const HasIncompleteBatch = ({visible = false}) => {
         try {
             await zthServices.deleteIncompleteBatch(incompleteBatch.batch_id);
             setIncompleteBatch(false);
+            onChange && onChange();
         } catch (e) {
             console.log(e);
         }
@@ -38,7 +39,7 @@ const HasIncompleteBatch = ({visible = false}) => {
 
     return (
         <ModalWindow
-            visible={!!incompleteBatch}
+            visible={incompleteBatch.status === 'DRAFT'}
             className={'has-incomplete-batch-window'}
             footer={false}
         >
