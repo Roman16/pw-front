@@ -8,6 +8,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  position: relative;
 
   .list {
     width: 100%;
@@ -16,6 +17,18 @@
     flex-wrap: wrap;
   }
 
+  .custom-tooltip {
+    margin: 0 0 10px 10px;
+
+    .item-text {
+      margin: 0;
+      background: #EC7F5C;
+    }
+  }
+
+  .ant-popover-inner-content {
+    font-size: 1rem;
+  }
 
   .item-text {
     height: 2.2857142857142856rem;
@@ -29,6 +42,7 @@
     display: flex;
     align-items: center;
     font-weight: 500;
+    //border: 1px solid #6D6DF6;
 
     i {
       cursor: pointer;

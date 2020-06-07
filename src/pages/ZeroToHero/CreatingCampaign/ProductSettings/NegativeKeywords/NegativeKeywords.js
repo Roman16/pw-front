@@ -3,21 +3,35 @@ import {SVG} from "../../../../../utils/icons";
 import {Radio} from "antd";
 
 import './NegativeKeywords.less';
+import {unique} from "../../../../../utils/unique";
 
 const NegativeKeywords = ({keywords, onUpdate}) => {
     const [newKeyword, setNewKeyword] = useState(''),
         [keywordType, setKeywordType] = useState('exact'),
-        [sectionCollapse, setSectionCollapse] = useState(true);
+        [sectionCollapse, setSectionCollapse] = useState(true),
+        [keywordsCount, setKeywordsCount] = useState(null),
+        [validKeywordsCount, setValidKeywordsCount] = useState(null);
+
 
     const addKeywordsHandler = (e) => {
         e.preventDefault();
 
-        onUpdate({
-            negative_keywords: [...keywords, ...newKeyword.split('\n').filter(item => item !== '').map(item => ({
+        const validKeywords = [...newKeyword.split('\n')
+            .filter(item => item !== '')
+            .filter(item => item.length < 80)
+            .map(item => unique(item).join(' '))
+            .filter(item => item.match(/\b\w+\b/g).length <= (keywordType === 'exact' ? 10 : 4))
+            .map(item => ({
                 text: item,
                 type: keywordType
-            }))]
-        });
+            }))
+        ];
+
+        onUpdate({negative_keywords: [...keywords, ...validKeywords]});
+
+        setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length);
+        setValidKeywordsCount(validKeywords.length);
+
         setNewKeyword('');
     };
 
@@ -68,10 +82,16 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
                             />
                         </div>
 
-                        <button className={'btn default p15'}>
-                            <SVG id={'plus-icon'}/>
-                            Add Keyword
-                        </button>
+                        <div className="actions">
+                            {validKeywordsCount !== keywordsCount && <div className="added-description">
+                                {validKeywordsCount}/{keywordsCount}
+                            </div>}
+
+                            <button className={'btn default p15'}>
+                                <SVG id={'plus-icon'}/>
+                                Add Keyword
+                            </button>
+                        </div>
                     </form>
 
                     <div className="col added-keywords">

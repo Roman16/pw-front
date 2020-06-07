@@ -1,14 +1,6 @@
 import {zthConstants} from '../constans/actions.type';
 import moment from "moment";
 
-const initialState = {
-    selectedCampaign: 'Sponsored Products',
-    productAmount: 1,
-    selectedProducts: [],
-    selectedProductsWithSettingsParams: [],
-    activeProductIndex: 0
-};
-
 const initialProductSettings = {
     portfolio: {
         portfolioType: 'create',
@@ -27,6 +19,19 @@ const initialProductSettings = {
     relevant_keywords: [],
     negative_keywords: []
 };
+
+const initialState = {
+    selectedCampaign: 'Sponsored Products',
+    productAmount: 1,
+    selectedProducts: [],
+    selectedProductsWithSettingsParams: [],
+    activeProductIndex: 0,
+    invalidField: {
+        productIndex: null,
+        field: ''
+    }
+};
+
 
 export function zth(state = initialState, action) {
     switch (action.type) {
@@ -91,6 +96,13 @@ export function zth(state = initialState, action) {
 
                     return product;
                 }))
+            };
+
+        case zthConstants.SET_INVALID_FIELD:
+            return {
+                ...state,
+                invalidField: action.payload,
+                ...action.payload.productIndex !== null && {activeProductIndex: action.payload.productIndex}
             };
 
         default:

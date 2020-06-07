@@ -30,7 +30,7 @@ const NewCard = (props) => {
             ':disabled': {
                 cursor: 'not-allowed'
             }
-        }
+        },
     };
 
     return (
@@ -47,6 +47,7 @@ const NewCard = (props) => {
             <div className="card-container card-container__card">
                 <label className="label">Card Number</label>
                 <CardNumberElement
+                    required={!props.disabled}
                     disabled={props.disabled}
                     placeholder='**** **** **** ****'
                     style={CardElementStyles}
@@ -58,6 +59,7 @@ const NewCard = (props) => {
                 <div className="card-container card-container__expiry">
                     <label className="label">Expiry</label>
                     <CardExpiryElement
+                        required={!props.disabled}
                         disabled={props.disabled}
                         style={CardElementStyles}
                         ref={(instance) => {
@@ -71,6 +73,7 @@ const NewCard = (props) => {
                 <div className="card-container card-container__cvc">
                     <label className="label">CVC</label>
                     <CardCvcElement
+                        required={!props.disabled}
                         disabled={props.disabled}
                         style={CardElementStyles}
                         ref={(instance) => {

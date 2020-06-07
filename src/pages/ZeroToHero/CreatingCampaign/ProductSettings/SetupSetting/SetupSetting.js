@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Checkbox, Input, Radio, Select} from 'antd';
 import tz from 'moment-timezone';
 
@@ -15,6 +15,7 @@ const Option = Select.Option;
 const SetupSetting = ({
                           onUpdate,
                           portfolioList,
+                          invalidField,
                           product: {
                               portfolio,
                               campaigns,
@@ -22,31 +23,31 @@ const SetupSetting = ({
                           }
                       }) => {
 
-    const changePortfolioHandler = (value) => {
+    const changePortfolioHandler = (value, isInvalid) => {
         onUpdate({
             portfolio: {
                 ...portfolio,
                 ...value
             }
-        });
+        }, isInvalid);
     };
 
-    const changeCampaignsHandler = (value) => {
+    const changeCampaignsHandler = (value, isInvalid) => {
         onUpdate({
             campaigns: {
                 ...campaigns,
                 ...value
             }
-        });
+        }, isInvalid);
     };
 
-    const changeBrandHandler = (value) => {
+    const changeBrandHandler = (value, isInvalid) => {
         onUpdate({
             brand: {
                 ...brand,
                 ...value
             }
-        });
+        }, isInvalid);
     };
 
 
@@ -55,6 +56,12 @@ const SetupSetting = ({
             [`${type}_date`]: date ? moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString() : null,
         });
     };
+
+    useEffect(() => {
+        if (invalidField) {
+            document.querySelector('.error-field').scrollIntoView({block: "center", behavior: "smooth"});
+        }
+    }, [invalidField]);
 
     return (
         <section className={'setup-setting'}>
@@ -74,16 +81,17 @@ const SetupSetting = ({
                                      onChange={({target: {value}}) => changePortfolioHandler({
                                          portfolioType: value,
                                          no_portfolio: value === 'no-portfolio'
-                                     })}
+                                     }, invalidField === 'portfolioName' || invalidField === 'portfolioId')}
                         >
                             <Radio value={'create'}>
                                 Create portfolio
                             </Radio>
 
-                            <div className="radio-description form-group">
+                            <div
+                                className={`radio-description form-group ${invalidField === 'portfolioName' ? 'error-field' : ''}`}>
                                 <Input
                                     value={portfolio.name}
-                                    onChange={({target: {value}}) => changePortfolioHandler({name: value})}
+                                    onChange={({target: {value}}) => changePortfolioHandler({name: value}, invalidField === 'portfolioName')}
                                     disabled={portfolio.portfolioType !== 'create'}
                                     placeholder={'Portfolio Name'}
                                 />
@@ -93,10 +101,11 @@ const SetupSetting = ({
                                 Use existing portfolio
                             </Radio>
 
-                            <div className="radio-description form-group">
+                            <div
+                                className={`radio-description form-group ${invalidField === 'portfolioId' ? 'error-field' : ''}`}>
                                 <CustomSelect
                                     value={portfolio.id}
-                                    onChange={(value) => changePortfolioHandler({id: value})}
+                                    onChange={(value) => changePortfolioHandler({id: value}, invalidField === 'portfolioId')}
                                     disabled={portfolio.portfolioType !== 'select'}
                                     placeholder={'Select existing portfolio'}
                                 >
@@ -145,7 +154,7 @@ const SetupSetting = ({
                                     format="MMM DD, YYYY"
                                     value={campaigns.end_date && moment(campaigns.end_date)}
                                     onChange={(date) => changeDateHandler('end', date)}
-                                    disabledDate={current => moment(campaigns.start_date).tz('America/Los_Angeles').add(1, 'days') > current && moment()}
+                                    disabledDate={current => moment(campaigns.start_date).tz('America/Los_Angeles') > current && moment()}
                                 />
                             </div>
                         </div>
@@ -168,12 +177,12 @@ const SetupSetting = ({
                 </div>
 
                 <div className="row daily-budget-settings">
-                    <div className="col">
+                    <div className={`col ${invalidField === 'dailyBudget' ? 'error-field' : ''}`}>
                         <h3>Daily budget</h3>
 
                         <InputCurrency
                             value={campaigns.daily_budget}
-                            onChange={daily_budget => changeCampaignsHandler({daily_budget})}
+                            onChange={daily_budget => changeCampaignsHandler({daily_budget}, invalidField === 'dailyBudget')}
                         />
 
                         <div className="recommended-budget">
@@ -191,12 +200,12 @@ const SetupSetting = ({
                 </div>
 
                 <div className="row default-bid-settings">
-                    <div className="col">
+                    <div className={`col ${invalidField === 'defaultBid' ? 'error-field' : ''}`}>
                         <h3>Default Bid</h3>
 
                         <InputCurrency
                             value={campaigns.default_bid}
-                            onChange={default_bid => changeCampaignsHandler({default_bid})}
+                            onChange={default_bid => changeCampaignsHandler({default_bid}, invalidField === 'defaultBid')}
                         />
                     </div>
 
@@ -210,13 +219,14 @@ const SetupSetting = ({
                 </div>
 
                 <div className="row main-keywords-setting">
-                    <div className="col">
+                    <div className={`col ${invalidField === 'mainKeywords' ? 'error-field' : ''}`}>
                         <h3>Enter your main keywords (add up to 5)</h3>
 
                         <MultiTextArea
                             value={campaigns.main_keywords}
-                            onChange={(main_keywords) => changeCampaignsHandler({main_keywords})}
+                            onChange={(main_keywords) => changeCampaignsHandler({main_keywords}, invalidField === 'mainKeywords')}
                             max={5}
+                            toMark={true}
                         />
                     </div>
 
@@ -234,11 +244,12 @@ const SetupSetting = ({
                     <div className="col">
                         <h3>Enter Your Brand Name</h3>
 
-                        <div className="form-group">
+                        <div className={`form-group ${invalidField === 'brandName' ? 'error-field' : ''}`}>
                             <Input
+                                maxLength={80}
                                 placeholder={'Your Brand Name'}
                                 value={brand.name}
-                                onChange={({target: {value}}) => changeBrandHandler({name: value})}
+                                onChange={({target: {value}}) => changeBrandHandler({name: value}, invalidField === 'brandName')}
                             />
                         </div>
                     </div>
@@ -251,12 +262,12 @@ const SetupSetting = ({
                 </div>
 
                 <div className="row competitors-brands-name-setting">
-                    <div className="col">
+                    <div className={`col ${invalidField === 'brandCompetitorsNames' ? 'error-field' : ''}`}>
                         <h3>Enter Your Competitors Brands Names</h3>
 
                         <MultiTextArea
                             value={brand.competitor_brand_names}
-                            onChange={(competitor_brand_names) => changeBrandHandler({competitor_brand_names})}
+                            onChange={(competitor_brand_names) => changeBrandHandler({competitor_brand_names}, invalidField === 'brandCompetitorsNames')}
                         />
                     </div>
 

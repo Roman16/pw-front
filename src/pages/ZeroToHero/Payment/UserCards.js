@@ -2,9 +2,19 @@ import React from "react";
 import visaLogo from "../../../assets/img/visa-logo-white.svg";
 import masterLogo from "../../../assets/img/master-logo-white.svg";
 import moment from "moment";
+import {SVG} from "../../../utils/icons";
 
-const UserCards = ({card, allCards, disabled}) => {
-    if (card) {
+const UserCards = ({selectedCard, allCards, disabled, onSwipeCard}) => {
+    const onPrev = () => {
+        onSwipeCard(selectedCard === 0 ? allCards.length - 1 : selectedCard - 1)
+    };
+
+    const onNext = () => {
+        onSwipeCard(selectedCard === allCards.length - 1 ? 0 : selectedCard + 1)
+    };
+
+
+    if (allCards[selectedCard]) {
         return (
             <div className={`card-block ${disabled ? 'disabled' : ''}`}>
                 {(allCards.length > 3 ? [0, 1, 2] : allCards).map((item, index) => (
@@ -18,24 +28,47 @@ const UserCards = ({card, allCards, disabled}) => {
                     </div>
                 ))}
 
+                {allCards.length > 1 && <button
+                    disabled={disabled}
+                    className={'prev'}
+                    onClick={onPrev}
+                    type={'button'}
+                >
+                    <SVG id={'left-arrow'}/>
+                </button>}
+
                 <div className="card-header">
                     <div className="card-logo">
-                        <img src={card.brand === 'visa' ? visaLogo : masterLogo} alt=""/>
+                        <img src={allCards[selectedCard].brand === 'visa' ? visaLogo : masterLogo} alt=""/>
                     </div>
                 </div>
 
                 <div className="card-number">
-                    **** **** **** {card.last4}
+                    **** **** **** {allCards[selectedCard].last4}
                 </div>
 
                 <div className="card-footer">
                     <div className='expires-block'>
                         <label htmlFor="">expires</label>
-                        <span>{card.exp_month}/{moment(card.exp_year, 'YYYY').format('YY')}</span>
+                        <span>{allCards[selectedCard].exp_month}/{moment(allCards[selectedCard].exp_year, 'YYYY').format('YY')}</span>
                     </div>
+
+                    {allCards[selectedCard].default && <div className='default-card-block'>
+                        Default Card
+                        <div>
+                            <SVG id='default-card-icon'/>
+                        </div>
+                    </div>}
                 </div>
 
-
+                {allCards.length > 1 && <button
+                    disabled={disabled}
+                    className={'next'}
+                    onClick={onNext}
+                    type={'button'}
+                >
+                    <SVG id={'left-arrow'}/>
+                </button>}
             </div>
         )
     } else {

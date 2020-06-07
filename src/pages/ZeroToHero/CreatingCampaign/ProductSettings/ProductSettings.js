@@ -10,17 +10,19 @@ import {zthActions} from "../../../../actions/zth.actions";
 import {history} from "../../../../utils/history";
 import ToPaymentBar from "./ToPaymentBar/ToPaymentBar";
 import {zthServices} from "../../../../services/zth.services";
+import {notification} from "../../../../components/Notification";
 
 
 const ProductSettings = () => {
     const [createProcessing, setProcessing] = useState(false),
         [portfolioList, setPortfolioList] = useState([]);
 
-    const {addedProducts, activeProductIndex, productAmount, productsWithSettings} = useSelector(state => ({
+    const {addedProducts, activeProductIndex, productAmount, productsWithSettings, invalidField} = useSelector(state => ({
         addedProducts: state.zth.selectedProducts,
         activeProductIndex: state.zth.activeProductIndex,
         productAmount: state.zth.productAmount,
         productsWithSettings: state.zth.selectedProductsWithSettingsParams,
+        invalidField: state.zth.invalidField.field,
     }));
 
     const dispatch = useDispatch();
@@ -34,23 +36,85 @@ const ProductSettings = () => {
         dispatch(zthActions.setActiveProduct(activeProductIndex === 0 ? addedProducts.length - 1 : activeProductIndex - 1));
     };
 
-    const updateProductHandler = (params) => {
-        dispatch(zthActions.updateActiveProduct(params))
+    const updateProductHandler = (params, isInvalid) => {
+        dispatch(zthActions.updateActiveProduct(params));
+
+        if (isInvalid) {
+            dispatch(zthActions.setInvalidField({
+                productIndex: null,
+                field: ''
+            }));
+        }
     };
 
-    const goPaymentStep = async () => {
+    const saveBatchHandler = async () => {
         setProcessing(true);
 
-        try {
-            const createdBatch = await zthServices.saveSettings({
-                zth_tokens_count: productAmount,
-                setup_settings: productsWithSettings
-            });
+        const submit = async () => {
+            try {
+                const createdBatch = await zthServices.saveSettings({
+                    zth_tokens_count: productAmount,
+                    setup_settings: productsWithSettings.map(product => ({
+                        ...product,
+                        portfolio: {
+                            no_portfolio: product.portfolio.portfolioType === 'no-portfolio',
+                            ...product.portfolio.portfolioType === 'create' ? {name: product.portfolio.name} : {id: product.portfolio.id}
+                        }
+                    }))
+                });
 
-            history.push(`/zero-to-hero/payment/${createdBatch.result.batch_id}`);
+                history.push(`/zero-to-hero/payment/${createdBatch.result.batch_id}`);
+            } catch (e) {
+                console.log(e)
+            }
+        };
+
+        let BreakException = {};
+
+        try {
+            productsWithSettings.forEach((product, index) => {
+                const setField = (field) => {
+                    dispatch(zthActions.setInvalidField({
+                        productIndex: index,
+                        field: field
+                    }));
+
+                    field === invalidField && document.querySelector('.error-field').scrollIntoView({
+                        block: "center",
+                        behavior: "smooth"
+                    });
+                    throw BreakException;
+                };
+
+                if (product.portfolio.portfolioType === 'create' && (!product.portfolio.name || product.portfolio.name === '')) {
+                    notification.error({title: 'Please enter the portfolio name'});
+                    setField('portfolioName');
+                } else if (product.portfolio.portfolioType === 'select' && (!product.portfolio.id)) {
+                    notification.error({title: 'Please select the existing portfolio'});
+                    setField('portfolioId');
+                } else if (!product.campaigns.daily_budget) {
+                    notification.error({title: 'Please enter your daily budged'});
+                    setField('dailyBudget');
+                } else if (!product.campaigns.default_bid) {
+                    notification.error({title: 'Please enter your default bid'});
+                    setField('defaultBid');
+                } else if (product.campaigns.main_keywords.length < 3) {
+                    notification.error({title: 'Please enter at least 3 main keywords'});
+                    setField('mainKeywords');
+                } else if (!product.brand.name) {
+                    notification.error({title: 'Please enter your Brand Name'});
+                    setField('brandName');
+                } else if (product.brand.competitor_brand_names.length === 0) {
+                    notification.error({title: 'Please enter your competitors names'});
+                    setField('brandCompetitorsNames');
+                } else {
+                    submit()
+                }
+            });
         } catch (e) {
-            console.log(e)
+            if (e !== BreakException) throw e;
         }
+
         setProcessing(false);
     };
 
@@ -59,7 +123,7 @@ const ProductSettings = () => {
             .then(res => {
                 setPortfolioList(res.result)
             })
-    }, [])
+    }, []);
 
     if (addedProducts.length > 0) {
         return (
@@ -74,6 +138,7 @@ const ProductSettings = () => {
                 <SetupSetting
                     product={productsWithSettings[activeProductIndex]}
                     portfolioList={portfolioList}
+                    invalidField={invalidField}
 
                     onUpdate={updateProductHandler}
                 />
@@ -97,7 +162,7 @@ const ProductSettings = () => {
                     processing={createProcessing}
                     productsCount={addedProducts.length}
                     productAmount={productAmount}
-                    goPaymentStep={goPaymentStep}
+                    goPaymentStep={saveBatchHandler}
                 />
             </section>
         )

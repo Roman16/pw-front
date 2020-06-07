@@ -32,6 +32,7 @@ const Payment = (props) => {
     const [cardsList, setCardList] = useState([]),
         [selectedPaymentMethod, setPaymentMethod] = useState('new_card'),
         [userName, setUserName] = useState(''),
+        [selectedCard, setSelectedCard] = useState(0),
         [currentButch, setCurrentButch] = useState({}),
         [payProcessing, setPayProcessing] = useState(false),
         [newCard, setNewCard] = useState({
@@ -74,7 +75,7 @@ const Payment = (props) => {
                 } else {
                     res = await props.stripe.createToken();
                 }
-                console.log(res);
+
                 await zthServices.payBatch(props.batchId, res.token.id);
                 history.push('/zero-to-hero/success');
             } catch (e) {
@@ -82,7 +83,7 @@ const Payment = (props) => {
             }
         } else {
             try {
-                await zthServices.payBatch(props.batchId, cardsList.find(item => item.default).id);
+                await zthServices.payBatch(props.batchId, cardsList[selectedCard].id);
                 history.push('/zero-to-hero/success');
             } catch (e) {
                 console.log(e);
@@ -90,6 +91,10 @@ const Payment = (props) => {
         }
 
         setPayProcessing(false);
+    };
+
+    const swipeCardHandler = (index) => {
+        setSelectedCard(index)
     };
 
     useEffect(() => {
@@ -107,7 +112,7 @@ const Payment = (props) => {
 
     return (
         <div className="zero-to-hero-page">
-            <section className='payment-section'>
+            <form onSubmit={handleSubmit} className='payment-section'>
                 <div className="payment-method">
                     <h2>Select payment method</h2>
 
@@ -132,14 +137,16 @@ const Payment = (props) => {
 
                         <div className="col">
                             <Radio value={'select'}>
-                                Use card that attached to PPC Automate Tool
+                                Use an existing card
                             </Radio>
 
                             <div className="radio-description user-cards">
                                 <UserCards
                                     disabled={selectedPaymentMethod !== 'select'}
-                                    card={cardsList.find(item => item.default)}
+                                    selectedCard={selectedCard}
                                     allCards={cardsList}
+
+                                    onSwipeCard={swipeCardHandler}
                                 />
                             </div>
                         </div>
@@ -170,7 +177,7 @@ const Payment = (props) => {
 
                     <div className="total-price">
                         <label htmlFor="">TOTAL PRICE:</label>
-                        <div className="value">${currentButch.amount}</div>
+                        <div className="value">${numberMask(currentButch.amount / 100, 0)}</div>
                     </div>
 
                     {productAmount > 5 && <div className="row save-info">
@@ -180,14 +187,13 @@ const Payment = (props) => {
 
                     <button
                         className={'btn white'}
-                        onClick={handleSubmit}
                         disabled={payProcessing}
                     >
                         Pay
                         {payProcessing && <Spin size={'small'}/>}
                     </button>
                 </div>
-            </section>
+            </form>
         </div>
     )
 };

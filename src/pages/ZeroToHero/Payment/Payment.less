@@ -97,6 +97,10 @@
           &.StripeElement--focus {
             border: 1px solid #6D6DF6;
           }
+
+          &.StripeElement--invalid {
+            border: 1px solid #EC7F5C;
+          }
         }
       }
 
@@ -221,13 +225,41 @@
               width: 4em;
               height: 1.4285714285714286rem;
 
-
               svg {
                 width: 1.4285714285714286rem;
                 height: 1.4285714285714286rem;
                 margin: 0 0 0 10px;
               }
             }
+          }
+        }
+
+        button {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          margin: auto 0;
+          height: max-content;
+
+          &:disabled {
+            cursor: default;
+          }
+
+          &.prev {
+            left: -20px
+          }
+
+          &.next {
+            right: -20px;
+
+            svg {
+              transform: rotate(180deg);
+            }
+          }
+
+          svg {
+            width: .85714286rem;
+            height: 1.5rem;
           }
         }
 

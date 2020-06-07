@@ -126,6 +126,11 @@ const BiddingStrategies = ({campaigns, onUpdate}) => {
                         <div className="form-group">
                             <label htmlFor="">Top of Search (first page)</label>
                             <InputCurrency
+                                min={0}
+                                max={900}
+                                step={1}
+                                formatter={value => `${value.replace(/[^0-9]/g,'')}`}
+                                parser={value => value.replace(/[^0-9]/g,'')}
                                 typeIcon={'percent'}
                                 value={campaigns.adjust_bid_by_placements.top_of_search}
                                 onChange={(top_of_search) => changeBrandHandler({
@@ -140,6 +145,11 @@ const BiddingStrategies = ({campaigns, onUpdate}) => {
                         <div className="form-group">
                             <label htmlFor="">Product pages (competitors pages)</label>
                             <InputCurrency
+                                min={0}
+                                max={900}
+                                step={1}
+                                formatter={value => `${value.replace(/[^0-9]/g,'')}`}
+                                parser={value => value.replace(/[^0-9]/g,'')}
                                 typeIcon={'percent'}
                                 value={campaigns.adjust_bid_by_placements.product_pages}
                                 onChange={(product_pages) => changeBrandHandler({

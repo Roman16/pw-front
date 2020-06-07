@@ -6,7 +6,8 @@ export const zthActions = {
     addProducts,
     removeProduct,
     setActiveProduct,
-    updateActiveProduct
+    updateActiveProduct,
+    setInvalidField
 };
 
 function setCampaign(campaign) {
@@ -48,5 +49,12 @@ function updateActiveProduct(params) {
     return ({
         type: zthConstants.UPDATE_ACTIVE_PRODUCT,
         payload: params
+    })
+}
+
+function setInvalidField(field) {
+    return ({
+        type: zthConstants.SET_INVALID_FIELD,
+        payload: field
     })
 }
