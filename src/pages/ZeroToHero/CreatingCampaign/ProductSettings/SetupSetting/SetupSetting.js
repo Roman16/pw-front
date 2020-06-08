@@ -219,7 +219,7 @@ const SetupSetting = ({
 
                 <div className="row main-keywords-setting">
                     <div className={`col ${invalidField === 'mainKeywords' ? 'error-field' : ''}`}>
-                        <h3>Enter your main keywords (add up to 5)</h3>
+                        <h3>Please add a minimum of 3 seed keywords that customers using to find your product</h3>
 
                         <MultiTextArea
                             value={campaigns.main_keywords}

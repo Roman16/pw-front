@@ -85,8 +85,7 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
                         <div className="actions">
                             <div
                                 className={`added-description ${validKeywordsCount !== keywordsCount ? 'visible' : ''}`}>
-                                Some of the keywords were not added because they exceeded the maximum amount of words in
-                                it.
+                                Some of the keywords were not added because they exceeded the maximum amount of words in it or 80 characters.
                             </div>
 
                             <button className={'btn default p15'}>

@@ -58,6 +58,7 @@ const HasIncompleteBatch = ({visible = false, onChange}) => {
         <>
             <ModalWindow
                 visible={incompleteBatch.status === 'DRAFT'}
+                // visible={true}
                 className={'has-incomplete-batch-window'}
                 footer={false}
             >
