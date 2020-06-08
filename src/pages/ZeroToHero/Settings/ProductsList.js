@@ -3,6 +3,9 @@ import CustomTable from "../../../components/Table/CustomTable";
 import moment from "moment";
 import Pagination from "../../../components/Pagination/Pagination";
 import {SVG} from "../../../utils/icons";
+import {history} from "../../../utils/history";
+import {zthActions} from "../../../actions/zth.actions";
+import {useDispatch} from "react-redux";
 
 
 const ProductItem = ({product, openedProduct, onOpenVariations}) => {
@@ -37,8 +40,20 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
 const ProductsList = ({productsList, selectedTab, paginationOptions, processing, totalSize, onChangePagination}) => {
     const [openedProduct, setOpenedProduct] = useState(null);
 
+    const dispatch = useDispatch();
+
     const openProductVariationsHandler = (id) => {
         setOpenedProduct(prevState => prevState === id ? null : id)
+    };
+
+    const goOptimizationPage = () => {
+        history.push('/ppc/optimization')
+    };
+
+    const createZthHandler = (product) => {
+        dispatch(zthActions.addProducts([product]));
+
+        history.push('/zero-to-hero/creating')
     };
 
     const expandedRowRender = (product) => {
@@ -73,7 +88,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     minWidth: '200px',
                     render: (props) => (
                         <div className="status-field created">
-                            <span>{props.job.status}</span>
+                            <span>{props.job && props.job.status}</span>
                         </div>
                     )
                 }
@@ -98,7 +113,16 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 },
                 {
                     minWidth: '14.285714285714286rem',
-                    render: (props) => ('')
+                    render: (props) => {
+                        console.log(props);
+
+                        return (
+                            <div className="optimization-field">
+                                {props.under_optimization && <span> Running</span>}
+                            </div>
+                        )
+                    }
+
                 },
                 {
                     minWidth: '14.285714285714286rem',
@@ -198,7 +222,8 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 minWidth: '200px',
                 render: (status) => (
                     <div className="optimization-field">
-                        {status ? <span>On Optimization</span> : <button className='btn default'>Start</button>}
+                        {status ? <span>Running</span> :
+                            <button className='btn default' onClick={goOptimizationPage}>Automate</button>}
                     </div>
                 )
             },
@@ -229,9 +254,11 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 dataIndex: 'zth_status',
                 key: 'zth_status',
                 minWidth: '14.285714285714286rem',
-                render: (status) => (
+                render: (status, product) => (
                     <div className="zth-status-field">
-                        <button className='btn green-btn'>Create</button>
+                        <button className='btn green-btn' onClick={() => createZthHandler(product)}>
+                            Create
+                        </button>
                     </div>
                 )
             },
@@ -242,7 +269,10 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 minWidth: '14.285714285714286rem',
                 render: (status) => (
                     <div className="optimization-field">
-                        {status ? <span>Automation: on</span> : <button className='btn default'>Automate</button>}
+                        {status ? <span>Running</span> :
+                            <button className='btn default' onClick={goOptimizationPage}>
+                                Automate
+                            </button>}
                     </div>
                 )
             },

@@ -176,21 +176,21 @@ const Payment = (props) => {
                         <b>560</b>
                     </div>
 
-                    {selectedPaymentMethod === 'select' && <div className="coupon-block">
-                        <h3>Add a Coupon</h3>
+                    {/*{selectedPaymentMethod === 'select' && <div className="coupon-block">*/}
+                    {/*    <h3>Add a Coupon</h3>*/}
 
-                        <div className="row">
-                            <div className="form-group">
-                                <label htmlFor="">Enter Coupon</label>
-                                <Input/>
-                            </div>
+                    {/*    <div className="row">*/}
+                    {/*        <div className="form-group">*/}
+                    {/*            <label htmlFor="">Enter Coupon</label>*/}
+                    {/*            <Input/>*/}
+                    {/*        </div>*/}
 
-                            <button className={'p15 btn white'}>
-                                <SVG id={'plus-icon'}/>
-                                Add coupon
-                            </button>
-                        </div>
-                    </div>}
+                    {/*        <button className={'p15 btn white'}>*/}
+                    {/*            <SVG id={'plus-icon'}/>*/}
+                    {/*            Add coupon*/}
+                    {/*        </button>*/}
+                    {/*    </div>*/}
+                    {/*</div>}*/}
 
                     <div className="total-price">
                         <label htmlFor="">TOTAL PRICE:</label>

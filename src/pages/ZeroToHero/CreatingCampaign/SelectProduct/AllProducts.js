@@ -143,7 +143,7 @@ const AllProducts = () => {
                         </div>
                         }
                         <button
-                            disabled={selectedProducts.length === 0}
+                            disabled={selectedProducts.length === 0 || (availableTokens && [...addedProducts, ...selectedProducts].length > availableTokens)}
                             className={'btn default p15'}
                             onClick={addProductsHandler}
                         >
