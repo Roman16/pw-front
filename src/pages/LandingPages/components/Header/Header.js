@@ -49,7 +49,7 @@ const Header = ({type = 'light'}) => {
                             <li className="has-child"><a href="#">Services <SVG id='menu-arrow'/></a>
                                 <ul className="sub-menu">
                                     <li><Link to='/'>PPC Optimization</Link></li>
-                                    <li><Link to='/scanner'>PPC Scanner</Link></li>
+                                    {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
                                     <li className="soon"><a href='#'>Zero To Hero</a></li>
                                     <li className="soon"><a href='#'>Analytics</a></li>
                                 </ul>

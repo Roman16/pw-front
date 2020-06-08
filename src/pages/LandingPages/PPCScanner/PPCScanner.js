@@ -66,7 +66,7 @@ const PPCScanner = () => {
     }
 
     function goToScanPage() {
-        history.push('/ppc/scanner');
+        // history.push('/ppc/scanner');
     }
 
     useEffect(() => {
@@ -414,7 +414,9 @@ const PPCScanner = () => {
                                 <li>And many more inside the book.</li>
                             </ul>
 
-                            <button className='btn green-btn' onClick={() => history.push('/amazon-ppc-blueprint')}>get it now</button>
+                            <button className='btn green-btn' onClick={() => history.push('/amazon-ppc-blueprint')}>get
+                                it now
+                            </button>
                         </div>
                     </div>
                 </div>

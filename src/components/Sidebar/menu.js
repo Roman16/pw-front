@@ -69,11 +69,11 @@ export const ppcAutomateMenu = [
         title: 'Product Settings',
         link: 'product-settings'
     },
-    {
-        title: 'PPC Scanner',
-        link: 'scanner',
-        className: 'ppcScaner'
-    },
+    // {
+    //     title: 'PPC Scanner',
+    //     link: 'scanner',
+    //     className: 'ppcScaner'
+    // },
     {
         title: 'Dayparting',
         link: 'dayparting',
