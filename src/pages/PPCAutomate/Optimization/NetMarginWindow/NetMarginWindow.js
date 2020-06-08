@@ -69,7 +69,7 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
                         <SVG id='warning'/>
                         <h2>Attention!</h2>
                         <p>We need
-                            your {!productMargin && 'Product Net Margin '} {!productMargin && (!itemPrice || !itemPriceFromUser) && 'and '} {(!itemPrice || !itemPriceFromUser) && 'Product Price '} to
+                            your {!productMargin && 'Product Net Margin '} {!productMargin && (!itemPrice && !itemPriceFromUser) && 'and '} {(!itemPrice && !itemPriceFromUser) && 'Product Price '} to
                             start the optimization.</p>
                     </div>
                     {selectedAll ?
