@@ -73,9 +73,9 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 },
                 {
                     minWidth: '200px',
-                    render: (status) => (
+                    render: (props) => (
                         <div className="status-field created">
-                            <span>Created</span>
+                            <span>{props.job.status}</span>
                         </div>
                     )
                 }
@@ -113,7 +113,6 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
         return (
             product.variations.map(productVariation => (
                     <div>
-
                         {columns[selectedTab].map((item, index) => {
                                 const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
 

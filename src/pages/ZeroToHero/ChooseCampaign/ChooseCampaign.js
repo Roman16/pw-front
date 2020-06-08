@@ -19,8 +19,6 @@ const ChooseCampaign = () => {
     function handleContinue(campaign) {
         if (hasIncompleteBatch.status === 'DRAFT') {
             setVisibleWindow(true)
-        } else if (hasIncompleteBatch.status === 'PAID') {
-            history.push('/zero-to-hero/creating');
         } else {
             dispatch(zthActions.setCampaign(campaign));
             history.push('/zero-to-hero/ppc-structure');
