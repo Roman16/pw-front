@@ -8,7 +8,8 @@ export const zthActions = {
     setActiveProduct,
     updateActiveProduct,
     setInvalidField,
-    setPaidBatch
+    setPaidBatch,
+    clearSettings
 };
 
 function setCampaign(campaign) {
@@ -64,5 +65,11 @@ function setPaidBatch(batch) {
     return ({
         type: zthConstants.SET_PAID_BATCH,
         payload: batch
+    })
+}
+
+function clearSettings() {
+    return ({
+        type: zthConstants.CLEAR_SETTINGS,
     })
 }

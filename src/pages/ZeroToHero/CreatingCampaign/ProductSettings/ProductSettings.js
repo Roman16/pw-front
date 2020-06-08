@@ -136,7 +136,11 @@ const ProductSettings = () => {
         zthServices.getUserPortfolio()
             .then(res => {
                 setPortfolioList(res.result)
-            })
+            });
+
+        return (() => {
+            dispatch(zthActions.clearSettings())
+        })
     }, []);
 
     if (addedProducts.length > 0) {

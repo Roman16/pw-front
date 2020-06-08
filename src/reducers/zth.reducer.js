@@ -116,6 +116,12 @@ export function zth(state = initialState, action) {
                 productAmount: action.payload.available_tokens
             };
 
+
+        case zthConstants.CLEAR_SETTINGS:
+            return {
+                ...initialState
+            }
+
         default:
             return state;
     }
