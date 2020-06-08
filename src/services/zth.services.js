@@ -3,6 +3,7 @@ import {zthUrls} from '../constans/api.urls';
 
 export const zthServices = {
     getAllProducts,
+    getZthProducts,
     saveSettings,
     createFreeBatch,
     checkIncompleteBatch,
@@ -14,6 +15,10 @@ export const zthServices = {
 
 function getAllProducts({pageSize, page, searchStr = '', cancelToken}) {
     return api('get', `${zthUrls.productsList}?search_query=${searchStr}&page=${page}&size=${pageSize}`, false, false, cancelToken)
+}
+
+function getZthProducts({pageSize, page, searchStr = '', cancelToken}) {
+    return api('get', `${zthUrls.zthProductsList}?search_query=${searchStr}&page=${page}&size=${pageSize}`, false, false, cancelToken)
 }
 
 

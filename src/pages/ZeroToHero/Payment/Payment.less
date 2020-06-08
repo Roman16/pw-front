@@ -7,6 +7,7 @@
 
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   .payment-method {
     padding: 34px 20px;
@@ -19,6 +20,7 @@
     }
 
     .col {
+      min-width: 330px;
       width: 50%;
       display: flex;
       flex-direction: column;
@@ -26,6 +28,7 @@
 
     .ant-radio-group {
       display: flex;
+      flex-wrap: wrap;
 
       .ant-radio-wrapper {
         & > span:last-child {
@@ -35,7 +38,7 @@
     }
 
     .radio-description {
-      margin: 2.857142857142857rem 0 0 33px;
+      margin: 2.857142857142857rem 0 10px 33px;
     }
 
     .new-card-container {
@@ -277,12 +280,48 @@
           opacity: .2;
         }
       }
+    }
+
+    @media (max-width: 500px) {
+      .col {
+        width: 100%;
+        min-width: 200px;
+      }
+
+      .radio-description {
+        margin-left: 0;
+      }
+
+      .new-card-container {
+        .row {
+          display: flex;
+          flex-wrap: wrap;
+
+          .description {
+            width: 100%;
+            margin: 10px 0 0;
+          }
+        }
+      }
+
+      .user-cards {
+        .card-block {
+          width: 250px;
+          height: 150px;
+
+          .card-shadow {
+            width: 250px;
+            height: 150px;
+          }
+        }
+      }
 
     }
   }
 
   .summary {
-    width: 38.57142857142857rem;
+    min-width: 320px;
+    width: 32%;
     background: #6D6DF6;
     border-radius: 0px 4px 4px 0px;
     padding: 34px 20px;
@@ -300,6 +339,57 @@
       margin-bottom: 1.4285714285714286rem;
       font-size: 1.1428571428571428rem;
       color: #fff;
+    }
+
+    .coupon-block {
+      color: #FFFFFF;
+      padding: 2.142857142857143rem 0 0 0;
+      border-top: 1px solid #FFFFFF;
+      margin-top: 1.4285714285714286rem;
+
+      h3 {
+        color: #FFFFFF;
+        font-size: 1.1428571428571428rem;
+        margin-bottom: 15px;
+      }
+
+      .row {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+      }
+
+      .form-group {
+        width: 9.285714285714286rem;
+        display: flex;
+        flex-direction: column;
+
+        label {
+          margin: 0 0 5px 0;
+        }
+
+        input {
+          background: inherit;
+          color: #fff;
+          border: 1px solid #fff;
+          height: 2.2857142857142856rem;
+
+          &:focus {
+            border: 1px solid #fff !important;
+          }
+        }
+      }
+
+      .btn {
+        height: 2.2857142857142856rem;
+        padding: 0 1.0714285714285714rem;
+        margin: 0 0 0 20px;
+        font-size: 0.8571428571428571rem;
+
+        svg {
+          stroke: #6D6DF6;
+        }
+      }
     }
 
     .total-price {
@@ -337,6 +427,17 @@
         align-items: center;
         justify-content: center;
       }
+    }
+
+    @media (max-width: 1150px) {
+      & {
+        width: 100%;
+        padding: 15px 20px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      min-width: auto;
     }
   }
 }

@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import './Settings.less';
 import {Input} from "antd";
-import {productsServices} from "../../../services/products.services";
 import ProductsList from "./ProductsList";
 import {SVG} from "../../../utils/icons";
 import {debounce} from "throttle-debounce";
+import {zthServices} from "../../../services/zth.services";
 
 
 const {Search} = Input;
@@ -14,6 +14,7 @@ const Settings = () => {
         [productsList, setList] = useState([]),
         [processing, setProcessing] = useState(false),
         [searchStr, setSearchStr] = useState(''),
+        [tokens, setTokens] = useState(null),
         [totalSize, setTotalSize] = useState(0),
         [paginationOptions, setPaginationOptions] = useState({
             page: 1,
@@ -45,7 +46,7 @@ const Settings = () => {
         setProcessing(true);
 
         try {
-            const res = await productsServices.getProducts({
+            const res = await zthServices[selectedTab === 'zth-products' ? 'getZthProducts' : 'getAllProducts']({
                 ...paginationOptions,
                 searchStr: searchStr,
                 ungroupVariations: 0
@@ -64,6 +65,16 @@ const Settings = () => {
     useEffect(() => {
         getProductsList()
     }, [paginationOptions]);
+
+    useEffect(() => {
+        zthServices.checkIncompleteBatch()
+            .then(res => {
+                if (res.result) {
+                    setTokens(res.result.available_tokens)
+                }
+            })
+
+    }, []);
 
 
     return (
@@ -99,11 +110,11 @@ const Settings = () => {
                     />
                 </div>
 
-                <div className="credits-count">
+                {tokens && <div className="credits-count">
                     ZTH Credits Left:
 
-                    <span>30</span>
-                </div>
+                    <span>{tokens}</span>
+                </div>}
             </div>
 
             <ProductsList

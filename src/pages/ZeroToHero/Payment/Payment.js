@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import './Payment.less';
 import {Elements, injectStripe, StripeProvider} from "react-stripe-elements";
 import {userService} from "../../../services/user.services";
-import {Radio, Spin} from "antd";
+import {Input, Radio, Spin} from "antd";
 import {useSelector} from "react-redux";
 import NewCard from "./NewCard";
 import UserCards from './UserCards';
@@ -10,6 +10,7 @@ import {numberMask} from "../../../utils/numberMask";
 import {saleRender} from "../components/ProductAmountSlider/ProductAmountSlider";
 import {history} from "../../../utils/history";
 import {zthServices} from "../../../services/zth.services";
+import {SVG} from "../../../utils/icons";
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
@@ -157,7 +158,7 @@ const Payment = (props) => {
                     <h2>Summary</h2>
                     <div className="row">
                         <label htmlFor="">Products:</label>
-                        <b>{productAmount} unique SKU</b>
+                        <b>{currentButch.token_count} unique SKU</b>
                     </div>
 
                     <div className="row">
@@ -167,13 +168,29 @@ const Payment = (props) => {
 
                     <div className="row">
                         <label htmlFor="">Campaigns amount:</label>
-                        <b>{selectedProducts.length}</b>
+                        <b>{currentButch.jobs}</b>
                     </div>
 
                     <div className="row">
                         <label htmlFor="">Approximate amount of keywords:</label>
                         <b>560</b>
                     </div>
+
+                    {selectedPaymentMethod === 'select' && <div className="coupon-block">
+                        <h3>Add a Coupon</h3>
+
+                        <div className="row">
+                            <div className="form-group">
+                                <label htmlFor="">Enter Coupon</label>
+                                <Input/>
+                            </div>
+
+                            <button className={'p15 btn white'}>
+                                <SVG id={'plus-icon'}/>
+                                Add coupon
+                            </button>
+                        </div>
+                    </div>}
 
                     <div className="total-price">
                         <label htmlFor="">TOTAL PRICE:</label>

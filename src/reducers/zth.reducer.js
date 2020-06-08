@@ -111,7 +111,8 @@ export function zth(state = initialState, action) {
         case zthConstants.SET_PAID_BATCH:
             return {
                 ...state,
-                paidBatch: action.payload
+                paidBatch: action.payload,
+                productAmount: action.payload.available_tokens
             };
 
         default:

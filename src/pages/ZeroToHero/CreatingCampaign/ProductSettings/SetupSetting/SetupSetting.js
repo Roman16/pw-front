@@ -72,7 +72,6 @@ const SetupSetting = ({
             </div>
 
             <div className="container">
-
                 <div className="row portfolio-settings">
                     <div className="col">
                         <h3>Portfolio Settings</h3>

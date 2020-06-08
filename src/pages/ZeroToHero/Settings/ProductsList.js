@@ -157,11 +157,13 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 dataIndex: 'date',
                 key: 'date',
                 width: '10.714285714285714rem',
-                render: (date) => (
-                    <div className='date-field'>
-                        {moment(date).format('DD MMM YYYY')}
-                    </div>
-                )
+                render: (date, item) => {
+                    return (
+                        <div className='date-field'>
+                            {item.job && moment(item.job.created_at).format('DD MMM YYYY')}
+                        </div>
+                    )
+                }
             },
             {
                 title: 'ASIN',
@@ -180,14 +182,9 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 dataIndex: 'status',
                 key: 'status',
                 minWidth: '200px',
-                render: (status) => (
-                    /*  <div className="status-field loading">
-                          <div />
-                          <span>Loading ...</span>
-                      </div>*/
-
-                    <div className="status-field created">
-                        <span>Created</span>
+                render: (status, item) => (
+                    <div className="status-field">
+                        {item.job && item.job.status}
                     </div>
                 )
             },

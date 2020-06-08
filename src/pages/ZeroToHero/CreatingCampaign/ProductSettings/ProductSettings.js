@@ -52,19 +52,8 @@ const ProductSettings = () => {
 
         const submit = async () => {
             try {
-                const createdBatch = paidBatch.available_tokens && paidBatch.status === 'PAID' ?
-                    await zthServices.saveSettings({
-                        zth_tokens_count: productAmount,
-                        setup_settings: productsWithSettings.map(product => ({
-                            ...product,
-                            portfolio: {
-                                no_portfolio: product.portfolio.portfolioType === 'no-portfolio',
-                                ...product.portfolio.portfolioType === 'create' ? {name: product.portfolio.name} : {id: product.portfolio.id}
-                            }
-                        }))
-                    })
-                    :
-                    await zthServices.createFreeBatch(paidBatch.id, {
+                if (paidBatch.available_tokens && paidBatch.status === 'PAID') {
+                    await zthServices.createFreeBatch(paidBatch.batch_id, {
                         setup_settings: productsWithSettings.map(product => ({
                             ...product,
                             portfolio: {
@@ -74,8 +63,21 @@ const ProductSettings = () => {
                         }))
                     });
 
+                    history.push('/zero-to-hero/success');
+                } else {
+                    const createdBatch = await zthServices.saveSettings({
+                        zth_tokens_count: productAmount,
+                        setup_settings: productsWithSettings.map(product => ({
+                            ...product,
+                            portfolio: {
+                                no_portfolio: product.portfolio.portfolioType === 'no-portfolio',
+                                ...product.portfolio.portfolioType === 'create' ? {name: product.portfolio.name} : {id: product.portfolio.id}
+                            }
+                        }))
+                    });
 
-                history.push(`/zero-to-hero/payment/${createdBatch.result.batch_id}`);
+                    history.push(`/zero-to-hero/payment/${createdBatch.result.batch_id}`);
+                }
             } catch (e) {
                 console.log(e)
             }
