@@ -1,10 +1,8 @@
 import React, {useState} from "react";
 import CustomTable from "../../../components/Table/CustomTable";
-import {Input} from "antd";
 import moment from "moment";
 import Pagination from "../../../components/Pagination/Pagination";
 import {SVG} from "../../../utils/icons";
-import InputCurrency from "../../../components/Inputs/InputCurrency";
 
 
 const ProductItem = ({product, openedProduct, onOpenVariations}) => {

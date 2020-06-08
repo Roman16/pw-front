@@ -8,7 +8,6 @@ import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {Spin} from "antd";
 import axios from "axios";
-import {SVG} from "../../../../utils/icons";
 
 const CancelToken = axios.CancelToken;
 let source = null;

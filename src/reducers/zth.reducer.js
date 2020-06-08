@@ -1,5 +1,6 @@
 import {zthConstants} from '../constans/actions.type';
 import moment from "moment";
+import tz from 'moment-timezone';
 
 const initialProductSettings = {
     portfolio: {
@@ -7,7 +8,7 @@ const initialProductSettings = {
         no_portfolio: false
     },
     campaigns: {
-        start_date: moment(new Date()).format('YYYY-MM-DD'),
+        start_date: moment.tz(`${moment(new Date()).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString(),
         set_to_paused: false,
         main_keywords: [],
         bidding_strategy: 'DYNAMIC_BIDS_DOWN_ONLY',
