@@ -90,7 +90,7 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
                                 />
                             </div>}
 
-                            {(!itemPrice || !itemPriceFromUser) && <div className="product-net-margin">
+                            {(!itemPrice && !itemPriceFromUser) && <div className="product-net-margin">
                                 <span>Product Price</span>
 
                                 <InputCurrency
