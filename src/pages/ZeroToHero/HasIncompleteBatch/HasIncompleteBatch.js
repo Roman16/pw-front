@@ -4,18 +4,35 @@ import {zthServices} from "../../../services/zth.services";
 import {history} from "../../../utils/history";
 import './HasIncompleteBatch.less';
 import {Spin} from "antd";
+import {useDispatch} from "react-redux";
+import {zthActions} from "../../../actions/zth.actions";
+import RouteLoader from "../../../components/RouteLoader/RouteLoader";
 
 
 const HasIncompleteBatch = ({visible = false, onChange}) => {
     const [incompleteBatch, setIncompleteBatch] = useState(visible),
-        [deleteProcessing, setDeleteProcessing] = useState(false);
+        [deleteProcessing, setDeleteProcessing] = useState(false),
+        [fetchProcessing, setFetchProcessing] = useState(true);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
+        setFetchProcessing(true);
+
         zthServices.checkIncompleteBatch()
             .then(res => {
                 if (res.result !== null) {
-                    setIncompleteBatch(res.result)
+                    setIncompleteBatch(res.result);
+
+                    if (res.result.status === 'PAID') {
+                        dispatch(zthActions.setPaidBatch(res.result))
+                    }
                 }
+
+                setFetchProcessing(false);
+            })
+            .catch(() => {
+                setFetchProcessing(false);
             })
     }, []);
 
@@ -38,35 +55,41 @@ const HasIncompleteBatch = ({visible = false, onChange}) => {
     };
 
     return (
-        <ModalWindow
-            visible={incompleteBatch.status === 'DRAFT'}
-            className={'has-incomplete-batch-window'}
-            footer={false}
-        >
-            <h2>
-                Attention! You have unpaid Zero to Hero products. Please cancel the outstanding products to create the new ones.
-            </h2>
+        <>
+            <ModalWindow
+                visible={incompleteBatch.status === 'DRAFT'}
+                className={'has-incomplete-batch-window'}
+                footer={false}
+            >
+                <h2>
+                    Attention! You have unpaid Zero to Hero products. Please cancel the outstanding products to create
+                    the
+                    new ones.
+                </h2>
 
-            <div className={`actions ${deleteProcessing ? 'processing' : ''}`}>
-                <button
-                    disabled={deleteProcessing}
-                    className={'btn white'}
-                    onClick={deleteBatchHandler}
-                >
-                    Delete
-                    {deleteProcessing && <Spin size={'small'}/>}
-                </button>
+                <div className={`actions ${deleteProcessing ? 'processing' : ''}`}>
+                    <button
+                        disabled={deleteProcessing}
+                        className={'btn white'}
+                        onClick={deleteBatchHandler}
+                    >
+                        Delete
+                        {deleteProcessing && <Spin size={'small'}/>}
+                    </button>
 
-                <button
-                    disabled={deleteProcessing}
-                    className={'btn default'}
-                    onClick={goToPaymentPage}
-                >
-                    Pay
-                </button>
+                    <button
+                        disabled={deleteProcessing}
+                        className={'btn default'}
+                        onClick={goToPaymentPage}
+                    >
+                        Pay
+                    </button>
 
-            </div>
-        </ModalWindow>
+                </div>
+            </ModalWindow>
+
+            {fetchProcessing && <RouteLoader/>}
+        </>
     )
 };
 

@@ -7,7 +7,6 @@
   grid-gap: 20px;
   grid-template-areas: 'productSlider productSlider' 'marketingBlock marketingBlock';
 
-
   &.creating-campaign-page {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -39,5 +38,12 @@
 
   .marketing-block {
     grid-area: marketingBlock;
+  }
+
+  .route-loader {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 100000;
   }
 }

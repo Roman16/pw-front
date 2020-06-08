@@ -50,12 +50,18 @@
 
     .actions {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
 
       .added-description {
-        font-size: 1rem;
+        width: 60%;
+        font-size: 0.8571428571428571rem;
         margin: 0 20px 0 0;
+        opacity: 0;
+
+        &.visible {
+          opacity: 1;
+        }
       }
     }
 

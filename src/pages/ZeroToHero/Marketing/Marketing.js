@@ -7,6 +7,7 @@ import {history} from "../../../utils/history";
 import ProductAmountSlider from "../components/ProductAmountSlider/ProductAmountSlider";
 import {Link} from "react-router-dom";
 import HasIncompleteBatch from "../HasIncompleteBatch/HasIncompleteBatch";
+import {useSelector} from "react-redux";
 
 const benefitsList = [
     'You are starting with campaigns already packed with lots of relevant keywords. Save your time and money on doing additional future research, and get straight to business!',
@@ -22,9 +23,13 @@ const Marketing = () => {
         history.push('/zero-to-hero/creating');
     }
 
+    const {availableTokens} = useSelector(state => ({
+        availableTokens: state.zth.paidBatch.available_tokens
+    }));
+
     return (
         <div className='zero-to-hero-page'>
-            <ProductAmountSlider/>
+            {!availableTokens && <ProductAmountSlider/>}
 
             <section className="marketing-block">
                 <div className="row">

@@ -25,9 +25,10 @@ const AllProducts = () => {
             pageSize: 10,
         });
 
-    const {addedProducts, productAmount} = useSelector(state => ({
+    const {addedProducts, productAmount, availableTokens} = useSelector(state => ({
         addedProducts: state.zth.selectedProducts,
         productAmount: state.zth.productAmount,
+        availableTokens: state.zth.paidBatch.available_tokens
     }));
 
     const dispatch = useDispatch();
@@ -117,7 +118,13 @@ const AllProducts = () => {
     return (
         <div className="col all-products">
             <div className="header-block">
-                <h3>Select Products</h3>
+                <h3>
+                    Select Products
+
+                    {availableTokens && <span className="free-tokens">
+                        Free tokens: {availableTokens}
+                    </span>}
+                </h3>
 
                 <div className="filters">
                     <div className="form-group">

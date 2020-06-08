@@ -4,6 +4,7 @@ import {zthUrls} from '../constans/api.urls';
 export const zthServices = {
     getAllProducts,
     saveSettings,
+    createFreeBatch,
     checkIncompleteBatch,
     deleteIncompleteBatch,
     payBatch,
@@ -16,8 +17,12 @@ function getAllProducts({pageSize, page, searchStr = '', cancelToken}) {
 }
 
 
-function saveSettings(data, cancelToken) {
+function saveSettings(data) {
     return api('post', `${zthUrls.setupSettings}`, data, false)
+}
+
+function createFreeBatch(id, data) {
+    return api('post', `${zthUrls.saveBatchSettings(id)}`, data, false)
 }
 
 function checkIncompleteBatch(cancelToken) {

@@ -6,12 +6,17 @@ import ProductSettings from "./ProductSettings/ProductSettings";
 import AllProducts from "./SelectProduct/AllProducts";
 import SelectedProduct from "./SelectProduct/SelectedProduct";
 import HasIncompleteBatch from "../HasIncompleteBatch/HasIncompleteBatch";
+import {useSelector} from "react-redux";
 
 
 const CreatingCampaign = () => {
+    const {availableTokens} = useSelector(state => ({
+        availableTokens: state.zth.paidBatch.available_tokens
+    }));
+
     return (
         <div className='zero-to-hero-page creating-campaign-page'>
-            <ProductAmountSlider description/>
+            {!availableTokens && <ProductAmountSlider description/>}
 
             <AllProducts/>
 

@@ -97,5 +97,6 @@ export const zthUrls = {
     deleteIncompleteBatch: (batchId) => `zero-to-hero/batch/${batchId}/delete`,
     payBatch: (batchId) => `zero-to-hero/batch/${batchId}/make-payment`,
     batchInfo: `zero-to-hero/batch`,
-    portfolioList: 'zero-to-hero/portfolio'
+    portfolioList: 'zero-to-hero/portfolio',
+    saveBatchSettings: (batchId) =>  `zero-to-hero/batch/${batchId}/setup-settings`
 };

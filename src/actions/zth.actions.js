@@ -7,7 +7,8 @@ export const zthActions = {
     removeProduct,
     setActiveProduct,
     updateActiveProduct,
-    setInvalidField
+    setInvalidField,
+    setPaidBatch
 };
 
 function setCampaign(campaign) {
@@ -56,5 +57,12 @@ function setInvalidField(field) {
     return ({
         type: zthConstants.SET_INVALID_FIELD,
         payload: field
+    })
+}
+
+function setPaidBatch(batch) {
+    return ({
+        type: zthConstants.SET_PAID_BATCH,
+        payload: batch
     })
 }

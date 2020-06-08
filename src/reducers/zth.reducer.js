@@ -26,6 +26,9 @@ const initialState = {
     selectedProducts: [],
     selectedProductsWithSettingsParams: [],
     activeProductIndex: 0,
+    paidBatch: {
+        available_tokens: null
+    },
     invalidField: {
         productIndex: null,
         field: ''
@@ -103,6 +106,12 @@ export function zth(state = initialState, action) {
                 ...state,
                 invalidField: action.payload,
                 ...action.payload.productIndex !== null && {activeProductIndex: action.payload.productIndex}
+            };
+
+        case zthConstants.SET_PAID_BATCH:
+            return {
+                ...state,
+                paidBatch: action.payload
             };
 
         default:

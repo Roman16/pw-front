@@ -61,9 +61,9 @@ const RelevantKeywords = ({keywords, onUpdate}) => {
                         </div>
 
                         <div className="actions">
-                            {validKeywordsCount !== keywordsCount && <div className="added-description">
-                                {validKeywordsCount}/{keywordsCount}
-                            </div>}
+                             <div className={`added-description ${validKeywordsCount !== keywordsCount ? 'visible' : ''}`}>
+                                Some of the keywords were not added because they exceeded the maximum amount of words in it.
+                            </div>
 
                             <button className={'btn default p15'}>
                                 <SVG id={'plus-icon'}/>

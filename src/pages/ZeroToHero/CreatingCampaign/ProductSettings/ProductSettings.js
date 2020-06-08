@@ -17,16 +17,16 @@ const ProductSettings = () => {
     const [createProcessing, setProcessing] = useState(false),
         [portfolioList, setPortfolioList] = useState([]);
 
-    const {addedProducts, activeProductIndex, productAmount, productsWithSettings, invalidField} = useSelector(state => ({
+    const {addedProducts, activeProductIndex, productAmount, productsWithSettings, invalidField, paidBatch} = useSelector(state => ({
         addedProducts: state.zth.selectedProducts,
         activeProductIndex: state.zth.activeProductIndex,
         productAmount: state.zth.productAmount,
         productsWithSettings: state.zth.selectedProductsWithSettingsParams,
         invalidField: state.zth.invalidField.field,
+        paidBatch: state.zth.paidBatch
     }));
 
     const dispatch = useDispatch();
-
 
     const nextProductHandler = () => {
         dispatch(zthActions.setActiveProduct(activeProductIndex === addedProducts.length - 1 ? 0 : activeProductIndex + 1));
@@ -52,16 +52,28 @@ const ProductSettings = () => {
 
         const submit = async () => {
             try {
-                const createdBatch = await zthServices.saveSettings({
-                    zth_tokens_count: productAmount,
-                    setup_settings: productsWithSettings.map(product => ({
-                        ...product,
-                        portfolio: {
-                            no_portfolio: product.portfolio.portfolioType === 'no-portfolio',
-                            ...product.portfolio.portfolioType === 'create' ? {name: product.portfolio.name} : {id: product.portfolio.id}
-                        }
-                    }))
-                });
+                const createdBatch = paidBatch.available_tokens && paidBatch.status === 'PAID' ?
+                    await zthServices.saveSettings({
+                        zth_tokens_count: productAmount,
+                        setup_settings: productsWithSettings.map(product => ({
+                            ...product,
+                            portfolio: {
+                                no_portfolio: product.portfolio.portfolioType === 'no-portfolio',
+                                ...product.portfolio.portfolioType === 'create' ? {name: product.portfolio.name} : {id: product.portfolio.id}
+                            }
+                        }))
+                    })
+                    :
+                    await zthServices.createFreeBatch(paidBatch.id, {
+                        setup_settings: productsWithSettings.map(product => ({
+                            ...product,
+                            portfolio: {
+                                no_portfolio: product.portfolio.portfolioType === 'no-portfolio',
+                                ...product.portfolio.portfolioType === 'create' ? {name: product.portfolio.name} : {id: product.portfolio.id}
+                            }
+                        }))
+                    });
+
 
                 history.push(`/zero-to-hero/payment/${createdBatch.result.batch_id}`);
             } catch (e) {
@@ -163,6 +175,7 @@ const ProductSettings = () => {
                     productsCount={addedProducts.length}
                     productAmount={productAmount}
                     goPaymentStep={saveBatchHandler}
+                    availableTokens={paidBatch.available_tokens}
                 />
             </section>
         )
