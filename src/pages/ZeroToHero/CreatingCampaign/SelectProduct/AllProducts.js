@@ -190,7 +190,7 @@ const AllProducts = () => {
                 className={'confirm-remove-product-window'}
                 visible={visibleConfirmWindow}
                 title={'NOTE!'}
-                description={'You are adding the Variation, and we will create separate campaigns for every Variation. Or you can set up campaigns for all Variations if you choose the Parent listing. Are you sure?'}
+                description={'You are adding the Variation. We highly recommend you to create campaigns for the Parent listing. Proceed with Variation?'}
                 handleOk={addProducts}
                 handleCancel={() => setVisibleConfirmWindow(false)}
             />

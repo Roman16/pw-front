@@ -49,7 +49,7 @@ const BiddingStrategies = ({campaigns, onUpdate}) => {
                 >
                     <div className="row">
                         <div className="col">
-                            <Radio value={'DYNAMIC_BIDS_DOWN_ONLY'}>
+                            <Radio value={'legacyForSales'}>
                                 Dynamic bids - down only
 
                                 <span className={'recommend-label'}>Recommended by Profit Whales</span>
@@ -72,7 +72,7 @@ const BiddingStrategies = ({campaigns, onUpdate}) => {
 
                     <div className="row">
                         <div className="col">
-                            <Radio value={'DYNAMIC_BIDS_UP_AND_DOWN'}>
+                            <Radio value={'autoForSales'}>
                                 Dynamic bids - up and down
                             </Radio>
 
@@ -95,7 +95,7 @@ const BiddingStrategies = ({campaigns, onUpdate}) => {
 
                     <div className="row">
                         <div className="col">
-                            <Radio value={'FIXED_BIDS'}>
+                            <Radio value={'manual'}>
                                 Fixed bids
                             </Radio>
 

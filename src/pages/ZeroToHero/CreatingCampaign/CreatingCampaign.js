@@ -25,6 +25,7 @@ const CreatingCampaign = () => {
             <ProductSettings/>
 
             <HasIncompleteBatch/>
+
         </div>
     )
 };

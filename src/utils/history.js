@@ -1,8 +1,7 @@
 import {createBrowserHistory} from 'history';
 import React from "react";
 import ReactDOM from "react-dom";
-import ModalWindow from "../components/ModalWindow/ModalWindow";
-import RescanWindow from "../pages/PPCAutomate/Scanner/ModalWindows/RescanWindow";
+import ConfirmActionPopup from "../components/ModalWindow/ConfirmActionPopup";
 
 const getUserConfirmation = (message, callback) => {
     const modal = document.createElement("div");
@@ -15,18 +14,14 @@ const getUserConfirmation = (message, callback) => {
     };
 
     ReactDOM.render(
-        <ModalWindow
-            className={'scanner-window'}
-            mask={true}
-            footer={null}
+        <ConfirmActionPopup
+            className={'confirm-remove-product-window'}
             visible={true}
+            title={'Are you sure you want to leave this page?'}
+            description={'You have made changes. They will be lost if you continue'}
+            handleOk={() => withCleanup(true)}
             handleCancel={() => withCleanup(false)}
-        >
-            <RescanWindow
-                onClose={() => withCleanup(false)}
-                onConfirm={() => withCleanup(true)}
-            />
-        </ModalWindow>,
+        />,
         modal
     )
 };

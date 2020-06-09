@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import './ProductSettings.less';
 import ProductSlider from "./ProductSlider/ProductSlider";
 import SetupSetting from "./SetupSetting/SetupSetting";
@@ -11,11 +11,13 @@ import {history} from "../../../../utils/history";
 import ToPaymentBar from "./ToPaymentBar/ToPaymentBar";
 import {zthServices} from "../../../../services/zth.services";
 import {notification} from "../../../../components/Notification";
+import {Prompt} from 'react-router-dom';
 
 
 const ProductSettings = () => {
     const [createProcessing, setProcessing] = useState(false),
-        [portfolioList, setPortfolioList] = useState([]);
+        [portfolioList, setPortfolioList] = useState([]),
+        [promptState, setPromptState] = useState(false);
 
     const {addedProducts, activeProductIndex, productAmount, productsWithSettings, invalidField, paidBatch} = useSelector(state => ({
         addedProducts: state.zth.selectedProducts,
@@ -57,11 +59,14 @@ const ProductSettings = () => {
                         setup_settings: productsWithSettings.map(product => ({
                             ...product,
                             portfolio: {
-                                no_portfolio: product.portfolio.portfolioType === 'no-portfolio',
-                                ...product.portfolio.portfolioType === 'create' ? {name: product.portfolio.name} : {id: product.portfolio.id}
+                                type: product.portfolio.type,
+                                enum: product.portfolio.type === 'NoPortfolio',
+                                ...product.portfolio.type === 'CreateNew' ? {name: product.portfolio.name} : {id: product.portfolio.id}
                             }
                         }))
                     });
+
+                    setPromptState(false);
 
                     history.push('/zero-to-hero/success');
                 } else {
@@ -70,11 +75,14 @@ const ProductSettings = () => {
                         setup_settings: productsWithSettings.map(product => ({
                             ...product,
                             portfolio: {
-                                no_portfolio: product.portfolio.portfolioType === 'no-portfolio',
-                                ...product.portfolio.portfolioType === 'create' ? {name: product.portfolio.name} : {id: product.portfolio.id}
+                                type: product.portfolio.type,
+                                enum: product.portfolio.type === 'NoPortfolio',
+                                ...product.portfolio.type === 'CreateNew' ? {name: product.portfolio.name} : {id: product.portfolio.id}
                             }
                         }))
                     });
+
+                    setPromptState(false);
 
                     history.push(`/zero-to-hero/payment/${createdBatch.result.batch_id}`);
                 }
@@ -100,10 +108,13 @@ const ProductSettings = () => {
                     throw BreakException;
                 };
 
-                if (product.portfolio.portfolioType === 'create' && (!product.portfolio.name || product.portfolio.name === '')) {
+                if (product.campaigns.main_keywords.length < 3) {
+                    notification.error({title: 'Please enter at least 3 main keywords'});
+                    setField('mainKeywords');
+                } else if (product.portfolio.type === 'CreateNew' && (!product.portfolio.name || product.portfolio.name === '')) {
                     notification.error({title: 'Please enter the portfolio name'});
                     setField('portfolioName');
-                } else if (product.portfolio.portfolioType === 'select' && (!product.portfolio.id)) {
+                } else if (product.portfolio.type === 'UseExisting' && (!product.portfolio.id)) {
                     notification.error({title: 'Please select the existing portfolio'});
                     setField('portfolioId');
                 } else if (!product.campaigns.daily_budget) {
@@ -112,9 +123,6 @@ const ProductSettings = () => {
                 } else if (!product.campaigns.default_bid) {
                     notification.error({title: 'Please enter your default bid'});
                     setField('defaultBid');
-                } else if (product.campaigns.main_keywords.length < 3) {
-                    notification.error({title: 'Please enter at least 3 main keywords'});
-                    setField('mainKeywords');
                 } else if (!product.brand.name) {
                     notification.error({title: 'Please enter your Brand Name'});
                     setField('brandName');
@@ -131,6 +139,14 @@ const ProductSettings = () => {
 
         setProcessing(false);
     };
+
+    useEffect(() => {
+        if (addedProducts.length > 0) {
+            setPromptState(true);
+        } else {
+            setPromptState(false);
+        }
+    }, [addedProducts]);
 
     useEffect(() => {
         zthServices.getUserPortfolio()
@@ -182,6 +198,11 @@ const ProductSettings = () => {
                     productAmount={productAmount}
                     goPaymentStep={saveBatchHandler}
                     availableTokens={paidBatch.available_tokens}
+                />
+
+                <Prompt
+                    when={promptState}
+                    message="Are you sure? The current scanning results will be lost"
                 />
             </section>
         )

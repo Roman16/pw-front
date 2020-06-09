@@ -86,12 +86,51 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 },
                 {
                     minWidth: '200px',
-                    render: (props) => (
-                        <div className="status-field created">
-                            <span>{props.job && props.job.status}</span>
-                        </div>
-                    )
-                }
+                    render: (props, item) => {
+                        if (item.job) {
+                            if (item.job.status === 'DONE') {
+                                return (
+                                    <div className="status-field finished">
+                                        Finished
+                                    </div>
+                                )
+                            } else if (item.job.status === 'DRAFT') {
+                                return (
+                                    <div className="status-field draft">
+                                        Draft
+                                    </div>
+                                )
+                            } else if (item.job.status === 'PROCESSING') {
+                                return (
+                                    <div className="status-field processing">
+                                        Processing...
+                                    </div>
+                                )
+                            } else if (item.job.status === 'THROTTLED' || item.job.status === 'FAILED') {
+                                return (
+                                    <div className="status-field failed">
+                                        Failed
+                                    </div>
+                                )
+                            }
+                        }
+                    }
+                },
+                {
+                    minWidth: '150px',
+                    render: (props) => ('')
+                },
+                {
+                    minWidth: '200px',
+                    render: (props, product) => (<div className="optimization-field">
+                        {product.under_optimization ? <span>Running</span> :
+                            <button className='btn default' onClick={goOptimizationPage}>Automate</button>}
+                    </div>)
+                },
+                {
+                    minWidth: '150px',
+                    render: () => <span>SP</span>
+                },
             ],
             'other-products': [
                 {
@@ -113,27 +152,24 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 },
                 {
                     minWidth: '14.285714285714286rem',
-                    render: (props) => {
-                        console.log(props);
-
-                        return (
-                            <div className="optimization-field">
-                                {props.under_optimization && <span> Running</span>}
-                            </div>
-                        )
-                    }
-
+                    render: (props) => ('')
                 },
                 {
                     minWidth: '14.285714285714286rem',
-                    render: (props) => ('')
+                    render: (props, item) => {
+                        return (
+                            <div className="optimization-field">
+                                {item.under_optimization && <span> Running</span>}
+                            </div>
+                        )
+                    }
                 },
             ]
         };
 
 
         return (
-            product.variations.map(productVariation => (
+            product.variations.map((productVariation, index) => (
                     <div>
                         {columns[selectedTab].map((item, index) => {
                                 const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
@@ -145,7 +181,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                                     >
                                         {index === 0 && <div className="variation-indicator"/>}
 
-                                        {item.render(productVariation)}
+                                        {item.render(productVariation, product)}
                                     </div>
                                 )
                             }
@@ -203,11 +239,35 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 dataIndex: 'status',
                 key: 'status',
                 minWidth: '200px',
-                render: (status, item) => (
-                    <div className="status-field">
-                        {item.job && item.job.status}
-                    </div>
-                )
+                render: (status, item) => {
+                    if (item.job) {
+                        if (item.job.status === 'DONE') {
+                            return (
+                                <div className="status-field finished">
+                                    Finished
+                                </div>
+                            )
+                        } else if (item.job.status === 'DRAFT') {
+                            return (
+                                <div className="status-field draft">
+                                    Draft
+                                </div>
+                            )
+                        } else if (item.job.status === 'PROCESSING') {
+                            return (
+                                <div className="status-field processing">
+                                    Processing...
+                                </div>
+                            )
+                        } else if (item.job.status === 'THROTTLED' || item.job.status === 'FAILED') {
+                            return (
+                                <div className="status-field failed">
+                                    Failed
+                                </div>
+                            )
+                        }
+                    }
+                }
             },
             {
                 title: 'Issues',

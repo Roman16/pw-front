@@ -4,14 +4,14 @@ import tz from 'moment-timezone';
 
 const initialProductSettings = {
     portfolio: {
-        portfolioType: 'create',
+        type: 'CreateNew',
         no_portfolio: false
     },
     campaigns: {
         start_date: moment.tz(`${moment(new Date()).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString(),
         set_to_paused: false,
         main_keywords: [],
-        bidding_strategy: 'DYNAMIC_BIDS_DOWN_ONLY',
+        bidding_strategy: 'legacyForSales',
         adjust_bid_by_placements: {}
     },
     brand: {

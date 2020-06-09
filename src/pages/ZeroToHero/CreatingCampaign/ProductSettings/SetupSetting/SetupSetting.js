@@ -72,17 +72,39 @@ const SetupSetting = ({
             </div>
 
             <div className="container">
+                <div className="row main-keywords-setting">
+                    <div className={`col ${invalidField === 'mainKeywords' ? 'error-field' : ''}`}>
+                        <h3>Please Add a Minimum of 3 Top Keywords that Customers Use to Find Your Product</h3>
+
+                        <MultiTextArea
+                            value={campaigns.main_keywords}
+                            onChange={(main_keywords) => changeCampaignsHandler({main_keywords}, invalidField === 'mainKeywords')}
+                            max={5}
+                            toMark={true}
+                        />
+                    </div>
+
+                    <div className="col">
+                        <p className={'keywords-p'}>
+                            That's the most critical part of creating Zero to Hero campaigns for your product. You need
+                            to enter up to 5 most popular keywords that people use to find your product on the Amazon
+                            marketplace. You can analyze your Title's of your competitors to find these keywords. That
+                            action will help us to create campaigns with the relevant keywords to your product.
+                        </p>
+                    </div>
+                </div>
+
                 <div className="row portfolio-settings">
                     <div className="col">
                         <h3>Portfolio Settings</h3>
 
-                        <Radio.Group value={portfolio.portfolioType}
+                        <Radio.Group value={portfolio.type}
                                      onChange={({target: {value}}) => changePortfolioHandler({
-                                         portfolioType: value,
-                                         no_portfolio: value === 'no-portfolio'
+                                         type: value,
+                                         no_portfolio: value === 'NoPortfolio'
                                      }, invalidField === 'portfolioName' || invalidField === 'portfolioId')}
                         >
-                            <Radio value={'create'}>
+                            <Radio value={'CreateNew'}>
                                 Create portfolio
                             </Radio>
 
@@ -91,12 +113,12 @@ const SetupSetting = ({
                                 <Input
                                     value={portfolio.name}
                                     onChange={({target: {value}}) => changePortfolioHandler({name: value}, invalidField === 'portfolioName')}
-                                    disabled={portfolio.portfolioType !== 'create'}
+                                    disabled={portfolio.type !== 'CreateNew'}
                                     placeholder={'Portfolio Name'}
                                 />
                             </div>
 
-                            <Radio value={'select'}>
+                            <Radio value={'UseExisting'}>
                                 Use existing portfolio
                             </Radio>
 
@@ -105,7 +127,7 @@ const SetupSetting = ({
                                 <CustomSelect
                                     value={portfolio.id}
                                     onChange={(value) => changePortfolioHandler({id: value}, invalidField === 'portfolioId')}
-                                    disabled={portfolio.portfolioType !== 'select'}
+                                    disabled={portfolio.type !== 'UseExisting'}
                                     placeholder={'Select existing portfolio'}
                                 >
                                     {portfolioList.map(portfolio => (
@@ -114,7 +136,7 @@ const SetupSetting = ({
                                 </CustomSelect>
                             </div>
 
-                            <Radio value={'no-portfolio'}>
+                            <Radio value={'NoPortfolio'}>
                                 No portfolio
                             </Radio>
                         </Radio.Group>
@@ -204,6 +226,7 @@ const SetupSetting = ({
 
                         <InputCurrency
                             value={campaigns.default_bid}
+                            max={1000}
                             onChange={default_bid => changeCampaignsHandler({default_bid}, invalidField === 'defaultBid')}
                         />
                     </div>
@@ -213,28 +236,6 @@ const SetupSetting = ({
                             Default Bid is the maximum amount you will pay for a click when the target triggers your ad.
                             We’ll use this information as the starter point to set our bids for all the keywords and
                             targets.
-                        </p>
-                    </div>
-                </div>
-
-                <div className="row main-keywords-setting">
-                    <div className={`col ${invalidField === 'mainKeywords' ? 'error-field' : ''}`}>
-                        <h3>Please add a minimum of 3 seed keywords that customers using to find your product</h3>
-
-                        <MultiTextArea
-                            value={campaigns.main_keywords}
-                            onChange={(main_keywords) => changeCampaignsHandler({main_keywords}, invalidField === 'mainKeywords')}
-                            max={5}
-                            toMark={true}
-                        />
-                    </div>
-
-                    <div className="col">
-                        <p className={'keywords-p'}>
-                            That's the most critical part of creating Zero to Hero campaigns for your product. You need
-                            to enter up to 5 most popular keywords that people use to find your product on the Amazon
-                            marketplace. You can analyze your Title's of your competitors to find these keywords. That
-                            action will help us to create campaigns with the relevant keywords to your product.
                         </p>
                     </div>
                 </div>

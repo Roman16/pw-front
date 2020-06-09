@@ -148,9 +148,16 @@
           }
 
           &.expand-row {
+            display: flex;
+            flex-direction: column;
             & > div {
               padding: 0;
               width: 100%;
+              border-bottom: 1px solid #c9cbd4;
+
+              &:last-child {
+                border-bottom: 0;
+              }
 
               .table-body__field {
                 padding: 1.0714285714285714rem 1.4285714285714286rem;
@@ -278,20 +285,20 @@
           font-size: 1rem;
           text-transform: capitalize;
 
-          &.loading {
-            color: #6D6DF6;
-
-            div {
-              background: #6D6DF6;
-            }
+          &.finished {
+            color: #7DD4A1;
           }
 
-          &.created {
-            color: #8FD39D;
+          &.draft {
+            color: #F0B849;
+          }
 
-            div {
-              background: #8FD39D;
-            }
+          &.processing {
+            color: #6D6DF6;
+          }
+
+          &.failed {
+            color: #EC7F5C;
           }
         }
 
