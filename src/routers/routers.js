@@ -4,6 +4,7 @@ import {history} from '../utils/history';
 import RouteLoader from "../components/RouteLoader/RouteLoader";
 import PPCRedirect from "../pages/authentication/AccountBinding/components/ConnectPpc/PPCRedirect";
 
+const LandingZTH = React.lazy(() => import('../pages/LandingPages/ZTH/ZTH'));
 const LandingAutomation = React.lazy(() => import('../pages/LandingPages/Automation/LandingAutomation'));
 const LandingAffiliates = React.lazy(() => import('../pages/LandingPages/Affiliates/LandingAffiliates'));
 const Ebook = React.lazy(() => import('../pages/LandingPages/Ebook/Ebook'));
@@ -45,6 +46,7 @@ const routers = () => {
                     <Route exact path="/terms-and-conditions" component={TermsOfUse}/>
                     <Route exact path="/videos/:block?" component={Video}/>
                     <Route exact path="/ppc-redirect" component={PPCRedirect}/>
+                    <Route exact path="/zero-to-hero" component={LandingZTH}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login" component={LoginPage}/>
                     <Route exact path="/registration/:tag?" component={RegistrationPage}/>

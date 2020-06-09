@@ -37,6 +37,46 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
     )
 };
 
+const jobStatus = (status) => {
+    if (status === 'DONE') {
+        return (
+            <div className="status-field finished">
+                Finished
+            </div>
+        )
+    } else if (status === 'DRAFT') {
+        return (
+            <div className="status-field draft">
+                Draft
+            </div>
+        )
+    } else if (status === 'PROCESSING') {
+        return (
+            <div className="status-field processing">
+                Processing...
+            </div>
+        )
+    } else if (status === 'PENDING') {
+        return (
+            <div className="status-field processing">
+                Pending...
+            </div>
+        )
+    } else if (status === 'THROTTLED' || status === 'FAILED') {
+        return (
+            <div className="status-field failed">
+                Failed
+            </div>
+        )
+    } else {
+        return (
+            <div className="status-field">
+                {status}
+            </div>
+        )
+    }
+};
+
 const ProductsList = ({productsList, selectedTab, paginationOptions, processing, totalSize, onChangePagination}) => {
     const [openedProduct, setOpenedProduct] = useState(null);
 
@@ -86,35 +126,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 },
                 {
                     minWidth: '200px',
-                    render: (props, item) => {
-                        if (item.job) {
-                            if (item.job.status === 'DONE') {
-                                return (
-                                    <div className="status-field finished">
-                                        Finished
-                                    </div>
-                                )
-                            } else if (item.job.status === 'DRAFT') {
-                                return (
-                                    <div className="status-field draft">
-                                        Draft
-                                    </div>
-                                )
-                            } else if (item.job.status === 'PROCESSING') {
-                                return (
-                                    <div className="status-field processing">
-                                        Processing...
-                                    </div>
-                                )
-                            } else if (item.job.status === 'THROTTLED' || item.job.status === 'FAILED') {
-                                return (
-                                    <div className="status-field failed">
-                                        Failed
-                                    </div>
-                                )
-                            }
-                        }
-                    }
+                    render: (props, item) => (item.job && jobStatus(item.job.status))
                 },
                 {
                     minWidth: '150px',
@@ -239,35 +251,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 dataIndex: 'status',
                 key: 'status',
                 minWidth: '200px',
-                render: (status, item) => {
-                    if (item.job) {
-                        if (item.job.status === 'DONE') {
-                            return (
-                                <div className="status-field finished">
-                                    Finished
-                                </div>
-                            )
-                        } else if (item.job.status === 'DRAFT') {
-                            return (
-                                <div className="status-field draft">
-                                    Draft
-                                </div>
-                            )
-                        } else if (item.job.status === 'PROCESSING') {
-                            return (
-                                <div className="status-field processing">
-                                    Processing...
-                                </div>
-                            )
-                        } else if (item.job.status === 'THROTTLED' || item.job.status === 'FAILED') {
-                            return (
-                                <div className="status-field failed">
-                                    Failed
-                                </div>
-                            )
-                        }
-                    }
-                }
+                render: (status, item) => (item.job && jobStatus(item.job.status))
             },
             {
                 title: 'Issues',

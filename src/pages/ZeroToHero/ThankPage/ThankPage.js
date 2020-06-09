@@ -12,8 +12,7 @@ const ThankPage = () => {
                 </h1>
 
                 <p>
-                    We have been developing this tool for years. The fist semantic cores were creating during 8-12
-                    hours. Nowadays, it takes up to 15 minutes to create and upload professionally structured campaigns
+                    It takes up to 15 minutes for our algorithm to create and upload professionally structured campaigns
                     to your Seller Central account. The future is here.
                 </p>
 

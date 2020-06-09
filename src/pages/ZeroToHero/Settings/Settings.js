@@ -5,7 +5,10 @@ import ProductsList from "./ProductsList";
 import {SVG} from "../../../utils/icons";
 import {debounce} from "throttle-debounce";
 import {zthServices} from "../../../services/zth.services";
+import axios from "axios";
 
+const CancelToken = axios.CancelToken;
+let source = null;
 
 const {Search} = Input;
 
@@ -44,21 +47,27 @@ const Settings = () => {
 
     const getProductsList = async () => {
         setProcessing(true);
+        source && source.cancel();
+        source = CancelToken.source();
 
         try {
+            setProcessing(true);
+
             const res = await zthServices[selectedTab === 'zth-products' ? 'getZthProducts' : 'getAllProducts']({
                 ...paginationOptions,
                 searchStr: searchStr,
-                ungroupVariations: 0
+                ungroupVariations: 0,
+                cancelToken: source.token
             });
 
             setList(res.result || []);
             setTotalSize(res.totalSize);
-        } catch (e) {
-            setList([])
-        }
 
-        setProcessing(false);
+            setProcessing(false);
+
+        } catch (e) {
+            setList([]);
+        }
     };
 
 

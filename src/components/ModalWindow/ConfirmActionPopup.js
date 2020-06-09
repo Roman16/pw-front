@@ -1,7 +1,7 @@
 import React from "react";
 import {Modal, Checkbox} from 'antd';
 
-const ConfirmActionPopup = ({title, description, visible, handleOk, handleCancel, checkboxText, handleChangeCheckbox, className}) => {
+const ConfirmActionPopup = ({title, description, visible, handleOk, handleCancel, checkboxText, handleChangeCheckbox, className, okText='Yes', cancelText='No'}) => {
     return (
         <Modal
             title={title}
@@ -10,8 +10,8 @@ const ConfirmActionPopup = ({title, description, visible, handleOk, handleCancel
             visible={visible}
             onOk={handleOk}
             onCancel={handleCancel}
-            okText='Yes'
-            cancelText='No'
+            okText={okText}
+            cancelText={cancelText}
             okButtonProps={{
                 'data-intercom-target': 'confirm-action-button'
             }}

@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import './ProductSettings.less';
 import ProductSlider from "./ProductSlider/ProductSlider";
 import SetupSetting from "./SetupSetting/SetupSetting";
@@ -12,12 +12,14 @@ import ToPaymentBar from "./ToPaymentBar/ToPaymentBar";
 import {zthServices} from "../../../../services/zth.services";
 import {notification} from "../../../../components/Notification";
 import {Prompt} from 'react-router-dom';
+import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup";
 
 
 const ProductSettings = () => {
     const [createProcessing, setProcessing] = useState(false),
         [portfolioList, setPortfolioList] = useState([]),
-        [promptState, setPromptState] = useState(false);
+        [promptState, setPromptState] = useState(false),
+        [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false);
 
     const {addedProducts, activeProductIndex, productAmount, productsWithSettings, invalidField, paidBatch} = useSelector(state => ({
         addedProducts: state.zth.selectedProducts,
@@ -52,6 +54,8 @@ const ProductSettings = () => {
     const saveBatchHandler = async () => {
         setProcessing(true);
 
+        let BreakException = {};
+
         const submit = async () => {
             try {
                 if (paidBatch.available_tokens && paidBatch.status === 'PAID') {
@@ -65,8 +69,6 @@ const ProductSettings = () => {
                             }
                         }))
                     });
-
-                    setPromptState(false);
 
                     history.push('/zero-to-hero/success');
                 } else {
@@ -82,16 +84,16 @@ const ProductSettings = () => {
                         }))
                     });
 
-                    setPromptState(false);
-
                     history.push(`/zero-to-hero/payment/${createdBatch.result.batch_id}`);
                 }
             } catch (e) {
                 console.log(e)
             }
+
+            setPromptState(false);
+            setProcessing(false);
         };
 
-        let BreakException = {};
 
         try {
             productsWithSettings.forEach((product, index) => {
@@ -126,9 +128,6 @@ const ProductSettings = () => {
                 } else if (!product.brand.name) {
                     notification.error({title: 'Please enter your Brand Name'});
                     setField('brandName');
-                } else if (product.brand.competitor_brand_names.length === 0) {
-                    notification.error({title: 'Please enter your competitors names'});
-                    setField('brandCompetitorsNames');
                 } else {
                     submit()
                 }
@@ -136,8 +135,6 @@ const ProductSettings = () => {
         } catch (e) {
             if (e !== BreakException) throw e;
         }
-
-        setProcessing(false);
     };
 
     useEffect(() => {
@@ -199,6 +196,17 @@ const ProductSettings = () => {
                     goPaymentStep={saveBatchHandler}
                     availableTokens={paidBatch.available_tokens}
                 />
+
+                {/*<ConfirmActionPopup*/}
+                {/*    className={'confirm-remove-product-window'}*/}
+                {/*    visible={visibleConfirmWindow}*/}
+                {/*    title={'Do you want to proceed to payment?'}*/}
+                {/*    description={'Please check information before submitting.'}*/}
+                {/*    handleOk={submit}*/}
+                {/*    okText={'Proceed'}*/}
+                {/*    handleCancel={() => setVisibleConfirmWindow(false)}*/}
+                {/*    cancelText={'Cancel'}*/}
+                {/*/>*/}
 
                 <Prompt
                     when={promptState}

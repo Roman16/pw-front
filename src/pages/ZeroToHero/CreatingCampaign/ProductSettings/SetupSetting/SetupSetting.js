@@ -206,9 +206,9 @@ const SetupSetting = ({
                             onChange={daily_budget => changeCampaignsHandler({daily_budget}, invalidField === 'dailyBudget')}
                         />
 
-                        <div className="recommended-budget">
-                            Recommended Daily Budget: <span>$500</span>
-                        </div>
+                        {/*<div className="recommended-budget">*/}
+                        {/*    Recommended Daily Budget: <span>$500</span>*/}
+                        {/*</div>*/}
                     </div>
 
                     <div className="col">
