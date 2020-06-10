@@ -107,6 +107,9 @@ const ProductSettings = () => {
                         block: "center",
                         behavior: "smooth"
                     });
+
+                    setProcessing(false);
+
                     throw BreakException;
                 };
 
