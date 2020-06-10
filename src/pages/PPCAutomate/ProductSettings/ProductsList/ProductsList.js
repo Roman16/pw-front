@@ -37,7 +37,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
         [selectedAll, setSelectedAll] = useState(false);
 
     const onChangeRow = (value, item, index) => {
-        console.log(value);
         if (products[index][item] !== value) {
             if (value === '' || value == null) {
                 setRowData(null, item, index);
@@ -129,25 +128,25 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 width: '35rem',
                 render: (props) => {
                     return (<ProductItem
-                            product={props.product}
+                            product={props}
                         />
                     )
                 }
             },
             {
                 minWidth: '160px',
-                render: (props) => (
+                render: (props, item) => (
                     <InputCurrency
-                        value={props[PRICE]}
+                        value={item[PRICE]}
                         disabled
                     />
                 )
             },
             {
                 minWidth: '160px',
-                render: (props) => (
+                render: (props, item) => (
                     <InputCurrency
-                        value={props[PRICE_FROM_USER]}
+                        value={item[PRICE_FROM_USER]}
                         disabled
                         step={0.01}
                     />
@@ -155,9 +154,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 minWidth: '160px',
-                render: (props) => (
+                render: (props, item) => (
                     <InputCurrency
-                        value={props[NET_MARGIN]}
+                        value={item[NET_MARGIN]}
                         typeIcon='percent'
                         disabled
                     />
@@ -165,9 +164,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 minWidth: '175px',
-                render: (props) => (
+                render: (props, item) => (
                     <InputCurrency
-                        value={props[MIN_BID_MANUAL_CAMPING]}
+                        value={item[MIN_BID_MANUAL_CAMPING]}
                         disabled
                         step={0.01}
                     />
@@ -175,9 +174,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 minWidth: '175px',
-                render: (props) => (
+                render: (props, item) => (
                     <InputCurrency
-                        value={props[MAX_BID_MANUAL_CAMPING]}
+                        value={item[MAX_BID_MANUAL_CAMPING]}
                         disabled
                         step={0.01}
                     />
@@ -185,9 +184,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 minWidth: '175px',
-                render: (props) => (
+                render: (props, item) => (
                     <InputCurrency
-                        value={props[MIN_BID_AUTO_CAMPING]}
+                        value={item[MIN_BID_AUTO_CAMPING]}
                         disabled
                         step={0.01}
                     />
@@ -195,9 +194,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 minWidth: '175px',
-                render: (props) => (
+                render: (props, item) => (
                     <InputCurrency
-                        value={props[MAX_BID_AUTO_CAMPING]}
+                        value={item[MAX_BID_AUTO_CAMPING]}
                         disabled
                         step={0.01}
                     />
@@ -209,8 +208,8 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 width: '135px',
-                render: (props) => (
-                    <span> {props[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
+                render: (props, item) => (
+                    <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
                         <span className={'paused'}>Paused</span>}</span>)
             },
         ];
@@ -230,7 +229,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                                     >
                                         {index === 0 && <div className="variation-indicator"/>}
 
-                                        {item.render(props)}
+                                        {item.render(productVariation, props)}
                                     </div>
                                 )
                             }
@@ -268,7 +267,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     products={products}
                     onOpenChild={openVariationsHandler}
                     openedProductOnSetting={openedProduct}
-
                 />
             )
         },
