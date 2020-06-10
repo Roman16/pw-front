@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
-import ModalWindow from "../../../components/ModalWindow/ModalWindow";
-import {zthServices} from "../../../services/zth.services";
-import {history} from "../../../utils/history";
+import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
+import {zthServices} from "../../../../services/zth.services";
+import {history} from "../../../../utils/history";
 import './HasIncompleteBatch.less';
 import {Spin} from "antd";
 import {useDispatch} from "react-redux";
-import {zthActions} from "../../../actions/zth.actions";
-import RouteLoader from "../../../components/RouteLoader/RouteLoader";
+import {zthActions} from "../../../../actions/zth.actions";
+import RouteLoader from "../../../../components/RouteLoader/RouteLoader";
 
 
 const HasIncompleteBatch = ({visible = false, onChange}) => {

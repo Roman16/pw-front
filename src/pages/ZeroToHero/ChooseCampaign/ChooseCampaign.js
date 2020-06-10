@@ -8,7 +8,7 @@ import sponsoredDisplayImage from '../../../assets/img/zth/sponsored-display-ima
 import {zthActions} from "../../../actions/zth.actions";
 import {history} from "../../../utils/history";
 import {zthServices} from "../../../services/zth.services";
-import HasIncompleteBatch from "../HasIncompleteBatch/HasIncompleteBatch";
+import HasIncompleteBatch from "../components/HasIncompleteBatch/HasIncompleteBatch";
 
 const ChooseCampaign = () => {
     const [hasIncompleteBatch, setIncompleteBatch] = useState(false),

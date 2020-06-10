@@ -6,7 +6,7 @@ import ppcStructureImage from '../../../assets/img/zth/zth-structure.png';
 import {history} from "../../../utils/history";
 import ProductAmountSlider from "../components/ProductAmountSlider/ProductAmountSlider";
 import {Link} from "react-router-dom";
-import HasIncompleteBatch from "../HasIncompleteBatch/HasIncompleteBatch";
+import HasIncompleteBatch from "../components/HasIncompleteBatch/HasIncompleteBatch";
 import {useSelector} from "react-redux";
 
 const benefitsList = [

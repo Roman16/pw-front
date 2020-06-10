@@ -5,7 +5,7 @@ import ProductAmountSlider from "../components/ProductAmountSlider/ProductAmount
 import ProductSettings from "./ProductSettings/ProductSettings";
 import AllProducts from "./SelectProduct/AllProducts";
 import SelectedProduct from "./SelectProduct/SelectedProduct";
-import HasIncompleteBatch from "../HasIncompleteBatch/HasIncompleteBatch";
+import HasIncompleteBatch from "../components/HasIncompleteBatch/HasIncompleteBatch";
 import {useSelector} from "react-redux";
 
 
