@@ -46,7 +46,7 @@ const routers = () => {
                     <Route exact path="/terms-and-conditions" component={TermsOfUse}/>
                     <Route exact path="/videos/:block?" component={Video}/>
                     <Route exact path="/ppc-redirect" component={PPCRedirect}/>
-                    <Route exact path="/zero-to-hero" component={LandingZTH}/>
+                    <Route exact path="/zth" component={LandingZTH}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login" component={LoginPage}/>
                     <Route exact path="/registration/:tag?" component={RegistrationPage}/>
