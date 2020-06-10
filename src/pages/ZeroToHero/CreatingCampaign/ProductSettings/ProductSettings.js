@@ -168,6 +168,7 @@ const ProductSettings = () => {
 
                 <SetupSetting
                     product={productsWithSettings[activeProductIndex]}
+                    selectedProductName={addedProducts[activeProductIndex].name}
                     portfolioList={portfolioList}
                     invalidField={invalidField}
 

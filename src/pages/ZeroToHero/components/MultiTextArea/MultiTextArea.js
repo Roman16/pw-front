@@ -4,7 +4,9 @@ import {Input} from "antd";
 import {SVG} from "../../../../utils/icons";
 import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 
-const MultiTextArea = ({onChange, max = 999999, value, toMark}) => {
+import {isMainKeywordValid} from './isMainKeywordValid';
+
+const MultiTextArea = ({onChange, max = 999999, value, toMark, productName}) => {
     const [inputValue, setInputValue] = useState(null);
 
     const inputEl = useRef(null);
@@ -28,17 +30,33 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark}) => {
         <div className={'multi-text-area'}
              onClick={() => (!value || value.length < max) && inputEl.current.focus()}>
             <div className="list">
-                {value && value.map((item, index) =>
-                    (
-                        <div className={'item-text'}>
-                            {item}
+                {value && value.map((item, index) => {
+                    if (isMainKeywordValid(item, productName)) {
+                        return (
+                            <div className={'item-text'}>
+                                {item}
 
-                            <i onClick={() => removeKeywordHandler(index)}>
-                                <SVG id={'remove-filter-icon'}/>
-                            </i>
-                        </div>
-                    )
-                )}
+                                <i onClick={() => removeKeywordHandler(index)}>
+                                    <SVG id={'remove-filter-icon'}/>
+                                </i>
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div className={'item-text'}>
+                                {item}
+
+                                <InformationTooltip type={'custom'}>
+                                    <SVG id={'warning-icon'}/>
+                                </InformationTooltip>
+
+                                <i onClick={() => removeKeywordHandler(index)}>
+                                    <SVG id={'remove-filter-icon'}/>
+                                </i>
+                            </div>
+                        )
+                    }
+                })}
 
                 {(!value || value.length < max) && <Input
                     ref={inputEl}

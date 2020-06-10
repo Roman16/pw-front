@@ -13,7 +13,12 @@ const ThankPage = () => {
 
                 <p>
                     It takes up to 15 minutes for our algorithm to create and upload professionally structured campaigns
-                    to your Seller Central account. The future is here.
+                    to your Seller Central account.
+                </p>
+
+                <p>
+                    Make sure you paused the SKU's with Zero to Hero campaigns in other ad campaigns that weren't
+                    created by our software to prevent the competition.
                 </p>
 
                 <button

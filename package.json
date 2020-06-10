@@ -19,6 +19,7 @@
     "js-cookie": "^2.2.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
+    "pluralize": "^8.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-app-rewire-less": "^2.1.3",
@@ -37,6 +38,7 @@
     "shortid": "^2.2.15",
     "slick-carousel": "^1.8.1",
     "throttle-debounce": "^2.1.0",
+    "wink-porter2-stemmer": "^2.0.1",
     "xlsx": "^0.15.4"
   },
   "scripts": {

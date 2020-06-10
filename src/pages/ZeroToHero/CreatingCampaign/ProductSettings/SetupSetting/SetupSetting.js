@@ -16,6 +16,7 @@ const SetupSetting = ({
                           onUpdate,
                           portfolioList,
                           invalidField,
+                          selectedProductName,
                           product: {
                               portfolio,
                               campaigns,
@@ -81,6 +82,7 @@ const SetupSetting = ({
                             onChange={(main_keywords) => changeCampaignsHandler({main_keywords}, invalidField === 'mainKeywords')}
                             max={5}
                             toMark={true}
+                            productName={selectedProductName}
                         />
                     </div>
 
@@ -233,9 +235,8 @@ const SetupSetting = ({
 
                     <div className="col">
                         <p className={'bid-p'}>
-                            Default Bid is the maximum amount you will pay for a click when the target triggers your ad.
-                            We’ll use this information as the starter point to set our bids for all the keywords and
-                            targets.
+                            We use this information as the starter point to put the bids on our different campaigns with
+                            different objections. Please enter your average bid for the given product.
                         </p>
                     </div>
                 </div>
