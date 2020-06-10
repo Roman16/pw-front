@@ -11,6 +11,7 @@ import "./Sidebar.less";
 import {SVG} from "../../utils/icons";
 import '../../style/variables.less';
 import InformationTooltip from "../Tooltip/Tooltip";
+import {history} from "../../utils/history";
 
 const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
@@ -43,7 +44,7 @@ const Sidebar = () => {
     )[0];
 
     const handleLogout = () => {
-        dispatch(userActions.logOut());
+        history.push('/login/logout');
     };
 
     const toggleSubMenu = (menu) => {
