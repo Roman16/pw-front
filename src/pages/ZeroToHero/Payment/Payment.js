@@ -11,6 +11,7 @@ import {saleRender} from "../components/ProductAmountSlider/ProductAmountSlider"
 import {history} from "../../../utils/history";
 import {zthServices} from "../../../services/zth.services";
 import {SVG} from "../../../utils/icons";
+import {notification} from "../../../components/Notification";
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
@@ -67,8 +68,8 @@ const Payment = (props) => {
 
         let res;
 
-        if (selectedPaymentMethod === 'new_card') {
-            try {
+        try {
+            if (selectedPaymentMethod === 'new_card') {
                 if (userName) {
                     const billing_details = {};
                     billing_details.name = userName;
@@ -79,15 +80,26 @@ const Payment = (props) => {
 
                 await zthServices.payBatch(props.batchId, res.token.id);
                 history.push('/zero-to-hero/success');
-            } catch (e) {
-                console.log(e);
-            }
-        } else {
-            try {
+            } else {
                 await zthServices.payBatch(props.batchId, cardsList[selectedCard].id);
                 history.push('/zero-to-hero/success');
-            } catch (e) {
-                console.log(e);
+            }
+        } catch ({response: {data}}) {
+            console.log(data);
+            if (data.error_code === 'authentication_required') {
+                props.stripe.confirmCardPayment(
+                    data.result.payment_intent_client_secret,
+                    {
+                        payment_method: data.result.payment_intent_id
+                    })
+                    .then((res) => {
+                        if (res.error) {
+                            notification.error({title: res.error.message})
+                        }
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    })
             }
         }
 

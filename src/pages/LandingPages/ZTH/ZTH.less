@@ -170,8 +170,9 @@
   }
 
   .structure-section {
-    margin: 50px 0;
+    padding: 50px 0 90px 0;
     position: relative;
+    background: linear-gradient(180deg, #F3F7FD 0%, #FFFFFF 100%);
 
     .container {
       display: flex;
@@ -179,6 +180,10 @@
     }
 
     .ppc-structure {
+      h2 {
+        margin-top: 15px;
+      }
+
       .col {
         width: 50%;
       }
@@ -186,7 +191,217 @@
       img {
         position: absolute;
         right: 0;
-        top: 0;
+        top: 50px;
+      }
+
+      .metrics {
+        width: 80%;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 30px 0 45px 0;
+
+        div {
+          width: 50%;
+          display: flex;
+          align-items: center;
+
+          font-size: 32px;
+          text-transform: uppercase;
+          color: #6D6DF6;
+          font-weight: 500;
+          margin: 0 0 20px 0;
+
+          i {
+            min-width: 20px;
+            margin: 0 20px 0 0;
+            display: flex;
+            align-items: center;
+          }
+
+          svg {
+            fill: #FF8685;
+          }
+
+          & > svg {
+            margin: 0 0 0 10px;
+          }
+
+          &:nth-child(3),
+          &:nth-child(4) {
+            & > svg {
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+
+      p {
+        width: 90%;
+        font-size: 21px;
+        line-height: 25px;
+        color: #4B5271;
+        margin: 0;
+      }
+    }
+
+    .zth-structure {
+      margin: 170px 0 0 0;
+
+      .metrics {
+        display: flex;
+
+        div {
+          font-size: 32px;
+          text-transform: uppercase;
+          color: #6D6DF6;
+          font-weight: 500;
+          margin: 0 60px 0 0;
+          display: flex;
+          align-items: center;
+
+          i {
+            margin: 0 20px 0 0;
+          }
+
+          & > svg {
+            fill: #7DD4A1;
+            margin: 0 0 0 10px;
+          }
+
+          &:nth-child(1),
+          &:nth-child(2) {
+            & > svg {
+              transform: rotate(180deg);
+
+            }
+          }
+        }
+      }
+
+      p {
+        width: 700px;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.4px;
+        color: #4B5271;
+        margin: 65px 0 50px 0;
+      }
+
+      .btn {
+        background: #FFFFFF;
+        border: 1px solid #6D6DF6;
+        color: #6D6DF6;
+
+        &:hover {
+          background: rgba(96, 93, 249, 0.1);
+        }
+      }
+    }
+
+    .zth-structure-image {
+      margin: 130px 0 0 0;
+    }
+  }
+
+  .updated-version {
+    position: relative;
+    padding: 20px 0 0 0;
+
+    h2 {
+      text-align: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .setup-description {
+      flex-direction: column;
+      align-items: center;
+
+      h3 {
+        font-size: 48px;
+        line-height: 58px;
+        color: #4B5271;
+        text-align: right;
+        flex: 1;
+        margin-bottom: 25px;
+
+        &:last-child {
+          color: #363694;
+          text-align: left;
+        }
+      }
+
+      .row {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+
+        i {
+          width: 90px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        h5 {
+          font-size: 21px;
+          line-height: 25px;
+          text-align: right;
+          color: #4B5271;
+          flex: 1;
+          margin: 0;
+
+          &:last-child {
+            text-align: left;
+            color: #6D6DF6;
+          }
+        }
+      }
+
+
+    }
+
+    .setup-price {
+      width: 100%;
+      max-width: 1062px;
+      display: flex;
+      justify-content: center;
+      border-top: 1px dashed #6D6DF6;
+      border-bottom: 1px dashed #6D6DF6;
+      margin-top: 20px;
+
+      div {
+        flex: 1;
+        font-size: 32px;
+        line-height: 40px;
+        font-weight: 500;
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .ppc {
+        text-align: right;
+        color: #4B5271;
+        padding-right: 50px;
+        border-right: 1px dashed #6D6DF6;
+
+        span {
+          color: #ef3f1e;
+        }
+      }
+
+      .zth {
+        color: #363694;
+        padding-left: 50px;
+        text-align: left;
+
+        span {
+          color: #7dd4a1;
+        }
       }
     }
   }
