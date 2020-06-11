@@ -67,8 +67,8 @@ const ProductSettings = () => {
                         ...product.portfolio.type === 'CreateNew' ? {name: product.portfolio.name} : {id: product.portfolio.id}
                     },
                     negative_keywords: {
-                        exact: product.negative_keywords.filter(item => item.type === 'exact'),
-                        phrase: product.negative_keywords.filter(item => item.type === 'phrase')
+                        exact: product.negative_keywords.filter(item => item.type === 'exact').map(item => item.text),
+                        phrase: product.negative_keywords.filter(item => item.type === 'phrase').map(item => item.text)
                     }
                 }))
             };
