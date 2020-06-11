@@ -46,7 +46,7 @@ const Header = ({type = 'light'}) => {
 
                     <nav className={`header-menu ${openedMenu ? 'open' : ''}`}>
                         <ul className="">
-                            <li className="has-child"><a href="#">Services <SVG id='menu-arrow'/></a>
+                            <li className="has-child"><a href="#">Products <SVG id='menu-arrow'/></a>
                                 <ul className="sub-menu">
                                     <li><Link to='/'>PPC Optimization</Link></li>
                                     {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
