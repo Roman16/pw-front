@@ -46,7 +46,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark, productName}) => 
                             <div className={'item-text'}>
                                 {item}
 
-                                <InformationTooltip type={'custom'} description={'It looks like this keyword may not be the top one. Make sure you enter only the top keywords here.'}>
+                                <InformationTooltip type={'custom'} description={'Looks like this is a long tail keyword or you didn’t include it in the title. Please enter a keyword that customers use to describe the product in general.'}>
                                     <SVG id={'warning-icon'}/>
                                 </InformationTooltip>
 
