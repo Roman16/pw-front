@@ -57,32 +57,38 @@ const ProductSettings = () => {
         let BreakException = {};
 
         const submit = async () => {
+
+            const setupSettingsFilter = (arr) => {
+                return arr.map(product => ({
+                    ...product,
+                    portfolio: {
+                        type: product.portfolio.type,
+                        enum: product.portfolio.type === 'NoPortfolio',
+                        ...product.portfolio.type === 'CreateNew' ? {name: product.portfolio.name} : {id: product.portfolio.id}
+                    },
+                    negative_keywords: {
+                        exact: product.negative_keywords.filter(item => item.type === 'exact'),
+                        phrase: product.negative_keywords.filter(item => item.type === 'phrase')
+                    }
+                }))
+            };
+
             try {
                 if (paidBatch.available_tokens && paidBatch.status === 'PAID') {
                     await zthServices.createFreeBatch(paidBatch.batch_id, {
-                        setup_settings: productsWithSettings.map(product => ({
-                            ...product,
-                            portfolio: {
-                                type: product.portfolio.type,
-                                enum: product.portfolio.type === 'NoPortfolio',
-                                ...product.portfolio.type === 'CreateNew' ? {name: product.portfolio.name} : {id: product.portfolio.id}
-                            }
-                        }))
+                        setup_settings: setupSettingsFilter(productsWithSettings)
                     });
+
+                    setPromptState(false);
 
                     history.push('/zero-to-hero/success');
                 } else {
                     const createdBatch = await zthServices.saveSettings({
                         zth_tokens_count: productAmount,
-                        setup_settings: productsWithSettings.map(product => ({
-                            ...product,
-                            portfolio: {
-                                type: product.portfolio.type,
-                                enum: product.portfolio.type === 'NoPortfolio',
-                                ...product.portfolio.type === 'CreateNew' ? {name: product.portfolio.name} : {id: product.portfolio.id}
-                            }
-                        }))
+                        setup_settings: setupSettingsFilter(productsWithSettings)
                     });
+
+                    setPromptState(false);
 
                     history.push(`/zero-to-hero/payment/${createdBatch.result.batch_id}`);
                 }
@@ -90,7 +96,6 @@ const ProductSettings = () => {
                 console.log(e)
             }
 
-            setPromptState(false);
             setProcessing(false);
         };
 

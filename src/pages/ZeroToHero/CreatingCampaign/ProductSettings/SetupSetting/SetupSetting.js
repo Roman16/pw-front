@@ -88,10 +88,10 @@ const SetupSetting = ({
 
                     <div className="col">
                         <p className={'keywords-p'}>
-                            That's the most critical part of creating Zero to Hero campaigns for your product. You need
+                            That’s the most critical part of creating Zero to Hero campaigns for your product. You need
                             to enter up to 5 most popular keywords that people use to find your product on the Amazon
-                            marketplace. You can analyze your Title's of your competitors to find these keywords. That
-                            action will help us to create campaigns with the relevant keywords to your product.
+                            marketplace. You can analyze your competitor’s Titles to find these keywords. That action
+                            will help us to create campaigns with the relevant keywords to your product.
                         </p>
                     </div>
                 </div>
