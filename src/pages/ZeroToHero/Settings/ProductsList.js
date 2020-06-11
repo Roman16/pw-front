@@ -37,43 +37,73 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
     )
 };
 
-const jobStatus = (status) => {
-    if (status === 'DONE') {
-        return (
-            <div className="status-field finished">
-                Finished
-            </div>
-        )
-    } else if (status === 'DRAFT') {
-        return (
-            <div className="status-field draft">
-                Draft
-            </div>
-        )
-    } else if (status === 'PROCESSING') {
-        return (
-            <div className="status-field processing">
-                Processing...
-            </div>
-        )
-    } else if (status === 'PENDING') {
-        return (
-            <div className="status-field processing">
-                Pending...
-            </div>
-        )
-    } else if (status === 'THROTTLED' || status === 'FAILED') {
-        return (
-            <div className="status-field failed">
-                Failed
-            </div>
-        )
-    } else {
-        return (
-            <div className="status-field">
-                {status}
-            </div>
-        )
+const jobStatus = ({job}) => {
+    if(job) {
+        if (job.status === 'DONE') {
+            return (
+                <div className="status-field finished">
+                    Finished
+                </div>
+            )
+        } else if (job.status === 'DRAFT') {
+            return (
+                <div className="status-field draft">
+                    Draft
+                </div>
+            )
+        } else if (job.status === 'PROCESSING') {
+            return (
+                <div className="status-field processing">
+                    Processing...
+                </div>
+            )
+        } else if (job.status === 'PENDING') {
+            return (
+                <div className="status-field processing">
+                    Pending...
+                </div>
+            )
+        } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
+            return (
+                <div className="status-field failed">
+                    Failed
+                </div>
+            )
+        } else {
+            return (
+                <div className="status-field">
+                    {job.status}
+                </div>
+            )
+        }
+    }
+};
+
+const jobIssues = ({job, batch}) => {
+    if(job) {
+        if (batch.status === 'DRAFT') {
+            return (
+                <div className="issues-field">
+                    <button className={'btn green-btn'} onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
+                        Fix Payment
+                    </button>
+                </div>
+            )
+        } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
+            return (
+                <div className="issues-field">
+                    <button className={'btn green-btn'} onClick={() => window.Intercom('show')}>
+                        Help Center
+                    </button>
+                </div>
+            )
+        } else {
+            return (
+                <div className="issues-field">
+                    {job.issue}
+                </div>
+            )
+        }
     }
 };
 
@@ -126,10 +156,10 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 },
                 {
                     minWidth: '200px',
-                    render: (props, item) => (item.job && jobStatus(item.job.status))
+                    render: (props, item) => (jobStatus(item))
                 },
                 {
-                    minWidth: '150px',
+                    minWidth: '200px',
                     render: (props) => ('')
                 },
                 {
@@ -251,13 +281,14 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 dataIndex: 'status',
                 key: 'status',
                 minWidth: '200px',
-                render: (status, item) => (item.job && jobStatus(item.job.status))
+                render: (status, item) => (jobStatus(item))
             },
             {
                 title: 'Issues',
                 dataIndex: 'problems',
                 key: 'problems',
-                minWidth: '150px',
+                minWidth: '200px',
+                render: (status, item) => (jobIssues(item))
             },
             {
                 title: 'PPC Automate Status',

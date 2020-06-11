@@ -225,7 +225,7 @@ const AuthorizedUser = (props) => {
                                                                         component={CreatingCampaign}/>}
                                     {developer && <ConnectedAmazonRoute
                                         exact
-                                        path="/zero-to-hero/payment/:batchId"
+                                        path="/zero-to-hero/payment/:batchId?"
                                         component={Payment}
                                     />}
 

@@ -3,13 +3,17 @@ import './ZTH.less';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {SVG} from "../../../utils/icons";
+import OurCases from "../Automation/OurCases/OurCases";
+
 
 import zthKingImage from '../../../assets/img/landing-zth/zth-king.svg'
 import amazonStoreLogo from '../../../assets/img/landing-zth/amazon_appstore.svg'
-import dragonImage from '../../../assets/img/landing-zth/dragon.svg'
+import dragonImage from '../../../assets/img/landing-zth/dragon.png'
 import ppcStructure from '../../../assets/img/landing-zth/ppc-structure.svg'
-import zthStructure from '../../../assets/img/landing-zth/zth-structure.svg'
+import zthStructure from '../../../assets/img/landing-zth/zth-structure.png'
 import expertImage from '../../../assets/img/landing-zth/expert-image.png'
+import caseImage from '../../../assets/img/landing-zth/cases-image.png'
+import x10SuccessImage from '../../../assets/img/landing-zth/x10-success.svg'
 
 
 const setupDescription = [
@@ -45,6 +49,15 @@ const setupDescription = [
         ppc: 'The common structure that all other sellers use',
         zth: 'Patented Profit Whales PPC Campaign Structure',
     },
+];
+
+const includesList = [
+    'One-minute campaigns setup with our data-driven algorithms and you ready to go.',
+    'Professionally structured campaigns that we used in our Agency to grow eight-figure brands.',
+    'No Amazon Advertising knowledge required. Just feel in some data.',
+    'Spend more time on growing your business while we focus on your ads.',
+    'Save time&money by starting with the most relevant keywords in your niche without getting them from auto campaigns.',
+    'More than five campaigns and 30-200 ad groups that have their own goal.'
 ];
 
 const ZTHLanding = () => {
@@ -203,6 +216,93 @@ const ZTHLanding = () => {
                     <div className={'zth'}>
                         Price Per 1 SKU <span>$500</span><br/>
                         In average <span>10 minutes</span> needed
+                    </div>
+                </div>
+            </section>
+
+            <section className={'secret-sauce'}>
+                <div className="container description">
+                    <div className="col">
+                        <h2>
+                            ZTH + PPC Automate is the secret sauce
+                        </h2>
+
+                        <p>
+                            Combining our algorithmic campaigns creation and data-driven Amazon Ads Automation you get
+                            the
+                            fully automated Amazon Advertising management in ONE place
+                        </p>
+
+                        <button className={'btn default'}>
+                            CHECK PPC AUTOMATE
+                        </button>
+                    </div>
+                </div>
+
+                <img src={caseImage} alt=""/>
+
+                <OurCases/>
+            </section>
+
+            <section className="plans">
+                <div className="container">
+                    <h2>Simple Plan</h2>
+                    <p>
+                        No contracts. Few minutes setup. Post payment support.
+                    </p>
+
+                    <div className="actions">
+                        <div>
+                            Zero To Hero
+                        </div>
+
+                        <div className="col">
+                            <label htmlFor="">
+                                X10 Of Your Success
+                            </label>
+
+                            <img src={x10SuccessImage} alt=""/>
+                        </div>
+
+                        <div>
+                            PPC Automation
+                        </div>
+                    </div>
+
+                    <div className="plan-information">
+                        <h3>
+                            What’s your monthly Amazon Advertising Spend?
+                        </h3>
+
+                        <div className="row">
+                            <div className="col">
+                                <div className="price">
+                                    $500
+                                    <span>
+                                        One time fee <br/> per Product
+                                    </span>
+                                </div>
+
+                                <ul>
+                                    <li>* One-time fee per one Product</li>
+                                    <li>* Variations are included with no additional cost.</li>
+                                </ul>
+
+                                <button className={'btn default'}>
+                                    START NOW
+                                </button>
+                            </div>
+
+                            <div className="col includes">
+                                <h4>Includes:</h4>
+
+                                {includesList.map(text => (
+                                    <p>
+                                        {text}
+                                    </p>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

@@ -50,7 +50,7 @@ const Header = ({type = 'light'}) => {
                                 <ul className="sub-menu">
                                     <li><Link to='/'>PPC Optimization</Link></li>
                                     {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
-                                    <li className="soon"><a href='#'>Zero To Hero</a></li>
+                                    <li><Link to={'/zero-to-hero-info'}>Zero To Hero</Link></li>
                                     <li className="soon"><a href='#'>Analytics</a></li>
                                 </ul>
                             </li>

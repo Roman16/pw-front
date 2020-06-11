@@ -2,19 +2,20 @@
   display: flex;
   flex-direction: column;
   font-family: Eina;
+  font-size: 14px;
 
   & > section {
     .container {
       display: flex;
-      width: 100%;
+      width: 90vw;
       height: 100%;
       max-width: 1440px;
       margin: 0 auto;
       padding: 0 10px;
 
       h2 {
-        font-size: 60px;
-        line-height: 72px;
+        font-size: 4.285714285714286em;
+        line-height: 1.2em;
       }
 
       .row {
@@ -27,8 +28,8 @@
       }
 
       .btn {
-        height: 56px;
-        font-size: 16px;
+        font-size: 1.1428571428571428em;
+        height: 3.5em;
         font-weight: 500;
         text-transform: uppercase;
       }
@@ -43,7 +44,7 @@
     -o-background-size: cover;
     background-size: cover;
 
-    padding: 50px 0 550px 0;
+    padding: 50px 0 300px 0;
 
     .container {
       justify-content: space-between;
@@ -65,8 +66,8 @@
     }
 
     p {
-      font-size: 21px;
-      line-height: 25px;
+      font-size: 1.5em;
+      line-height: 1.1904761904761905em;
       color: #FFFFFF;
       margin-bottom: 48px;
     }
@@ -75,8 +76,6 @@
       display: flex;
 
       .btn {
-        height: 56px;
-        font-size: 16px;
         font-weight: 500;
         margin-right: 35px;
       }
@@ -84,15 +83,23 @@
   }
 
   .dragon-section {
-    height: 1490px;
+    height: 100em;
     background: url("../../../assets/img/landing-zth/dragon-bg.png") no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    margin-top: -230px;
-    position: relative;
+    margin-top: -50px;
     z-index: 1000;
+
+    .container {
+      position: relative;
+
+    }
+
+    .col {
+      z-index: 100;
+    }
 
     h2 {
       color: #17175A;
@@ -100,23 +107,19 @@
     }
 
     p {
-      font-size: 21px;
-      line-height: 25px;
+      font-size: 1.5em;
+      line-height: 1.1904761904761905em;
       color: #4B5271;
       margin-bottom: 48px;
     }
 
-    .btn {
-      height: 56px;
-      font-size: 16px;
-    }
-
     img {
+      width: 70%;
       position: absolute;
       top: -30px;
       left: 0;
       right: 0;
-      margin: 0 0 0 24%;
+      margin: 0 0 0 20%;
     }
   }
 
@@ -131,15 +134,15 @@
         color: #fff;
 
         .value {
-          font-size: 80px;
-          line-height: 80px;
+          font-size: 5.714285714285714em;
+          line-height: 1em;
           font-weight: 500;
           margin-bottom: 15px;
         }
 
         p {
           margin: 0;
-          font-size: 21px;
+          font-size: 1.5em;
           font-weight: 500;
           text-transform: uppercase;
         }
@@ -189,6 +192,7 @@
       }
 
       img {
+        width: 50%;
         position: absolute;
         right: 0;
         top: 50px;
@@ -205,7 +209,7 @@
           display: flex;
           align-items: center;
 
-          font-size: 32px;
+          font-size: 2.2857142857142856em;
           text-transform: uppercase;
           color: #6D6DF6;
           font-weight: 500;
@@ -237,8 +241,8 @@
 
       p {
         width: 90%;
-        font-size: 21px;
-        line-height: 25px;
+        font-size: 1.5em;
+        line-height: 1.1904761904761905em;
         color: #4B5271;
         margin: 0;
       }
@@ -251,7 +255,7 @@
         display: flex;
 
         div {
-          font-size: 32px;
+          font-size: 2.2857142857142856em;
           text-transform: uppercase;
           color: #6D6DF6;
           font-weight: 500;
@@ -280,8 +284,8 @@
 
       p {
         width: 700px;
-        font-size: 16px;
-        line-height: 24px;
+        font-size: 1.1428571428571428em;
+        line-height: 1.5em;
         letter-spacing: 0.4px;
         color: #4B5271;
         margin: 65px 0 50px 0;
@@ -299,7 +303,8 @@
     }
 
     .zth-structure-image {
-      margin: 130px 0 0 0;
+      width: 90%;
+      margin: 50px 0 0 0;
     }
   }
 
@@ -320,8 +325,8 @@
       align-items: center;
 
       h3 {
-        font-size: 48px;
-        line-height: 58px;
+        font-size: 3.4285714285714284em;
+        line-height: 1.2083333333333333em;
         color: #4B5271;
         text-align: right;
         flex: 1;
@@ -348,8 +353,8 @@
         }
 
         h5 {
-          font-size: 21px;
-          line-height: 25px;
+          font-size: 1.5em;
+          line-height: 1.1904761904761905em;
           text-align: right;
           color: #4B5271;
           flex: 1;
@@ -376,8 +381,8 @@
 
       div {
         flex: 1;
-        font-size: 32px;
-        line-height: 40px;
+        font-size: 2.2857142857142856em;
+        line-height: 1.75em;
         font-weight: 500;
         padding-top: 20px;
         padding-bottom: 20px;
@@ -401,6 +406,129 @@
 
         span {
           color: #7dd4a1;
+        }
+      }
+    }
+  }
+
+  .secret-sauce {
+    position: relative;
+    margin-top: 50px;
+
+    .description {
+      position: absolute;
+      top: 50px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+
+      .col {
+        width: 700px;
+      }
+    }
+
+    p {
+      font-size: 1.5em;
+      line-height: 1.1904761904761905em;
+      color: #4B5271;
+      margin: 48px 0;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    .our-cases {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      bottom: 50px;
+
+      .container {
+        flex-direction: column;
+
+        h2 {
+          text-align: center;
+        }
+
+        .content {
+          margin: 0 0 0 30%;
+
+          .btn {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .modal-image {
+      display: none;
+    }
+  }
+
+  .plans {
+    background: #F3F7FD;
+    padding: 100px 0;
+
+    .container {
+      flex-direction: column;
+
+      h2 {
+        text-align: center;
+      }
+
+      p {
+        text-align: center;
+        font-size: 1.5rem;
+        color: #4B5271;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-top: 30px;
+
+        div:not(.col) {
+          width: 40%;
+          height: 3.3333333333333335em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #FFFFFF;
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+          border-radius: 4px;
+          font-size: 1.5rem;
+          color: #6D6DF6;
+          font-weight: 500;
+        }
+
+        .col {
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          margin-bottom: -10px;
+
+          label {
+            font-size: 1.7857142857142858rem;
+            color: #6D6DF6;
+            position: absolute;
+            top: 20px;
+          }
+        }
+      }
+
+      .plan-information {
+        background: #FFFFFF;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        margin: 10px 0 0 0;
+
+        ul {
+          margin: 0;
+          padding: 0;
+          list-style: none;
         }
       }
     }
