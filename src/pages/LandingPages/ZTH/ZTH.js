@@ -53,10 +53,11 @@ const setupDescription = [
 
 const includesList = [
     'One-minute campaigns setup with our data-driven algorithms and you ready to go.',
-    'Professionally structured campaigns that we used in our Agency to grow eight-figure brands.',
     'No Amazon Advertising knowledge required. Just feel in some data.',
-    'Spend more time on growing your business while we focus on your ads.',
     'Save time&money by starting with the most relevant keywords in your niche without getting them from auto campaigns.',
+
+    'Professionally structured campaigns that we used in our Agency to grow eight-figure brands.',
+    'Spend more time on growing your business while we focus on your ads.',
     'More than five campaigns and 30-200 ad groups that have their own goal.'
 ];
 
@@ -253,6 +254,7 @@ const ZTHLanding = () => {
 
                     <div className="actions">
                         <div>
+                            <SVG id={'zth-icon'}/>
                             Zero To Hero
                         </div>
 
@@ -265,6 +267,7 @@ const ZTHLanding = () => {
                         </div>
 
                         <div>
+                            <SVG id={'ppc-automate-icon'}/>
                             PPC Automation
                         </div>
                     </div>
@@ -296,14 +299,132 @@ const ZTHLanding = () => {
                             <div className="col includes">
                                 <h4>Includes:</h4>
 
-                                {includesList.map(text => (
-                                    <p>
-                                        {text}
-                                    </p>
-                                ))}
+                                <ul>
+                                    {includesList.map((text, index) => (
+                                        <li>
+                                            <SVG id={`includes-icon-${index + 1}`}/>
+                                            {text}
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <section className={'pricing-guide'}>
+                <div className="container">
+                    <h2>Our Simple Pricing Guide</h2>
+
+                    <div className="pricing-plans">
+                        <div className={'plan'}>
+                            <div className="counts">
+                                <div className="count"/>
+                            </div>
+
+                            <h4>0-5 Products</h4>
+                            <label htmlFor=""></label>
+
+                            <h3>
+                                $500
+
+                                <span>
+                                    one time fee <br/> per 1 Product
+                                </span>
+                            </h3>
+
+                            <button className={'btn default'}>
+                                GET STARTED
+                            </button>
+                        </div>
+
+                        <div className={'plan'}>
+                            <div className="counts">
+                                {[1, 2].map(item => (
+                                    <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
+                                         className="count"/>
+                                ))}
+                            </div>
+                            <h4>6-20 Products</h4>
+                            <label htmlFor="">20% Discount</label>
+
+                            <h3>
+                                $400
+
+                                <span>
+                                    one time fee <br/> per 1 Product
+                                </span>
+                            </h3>
+
+                            <button className={'btn default'}>
+                                GET STARTED
+                            </button>
+                        </div>
+
+                        <div className={'plan'}>
+                            <div className="counts">
+                                {[1, 2, 3].map(item => (
+                                    <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
+                                         className="count"/>
+                                ))}
+                            </div>
+
+                            <h4>21-50 Products</h4>
+                            <label htmlFor="">30% Discount</label>
+
+                            <h3>
+                                $350
+
+                                <span>
+                                    one time fee <br/> per 1 Product
+                                </span>
+                            </h3>
+
+                            <button className={'btn default'}>
+                                GET STARTED
+                            </button>
+                        </div>
+
+                        <div className={'plan'}>
+                            <div className="counts">
+                                {[1, 2, 4].map(item => (
+                                    <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
+                                         className="count"/>
+                                ))}
+                            </div>
+
+                            <h4>51-100 Products</h4>
+                            <label htmlFor="">40% Discount</label>
+
+                            <h3>
+                                $300
+
+                                <span>
+                                    one time fee <br/> per 1 Product
+                                </span>
+                            </h3>
+
+                            <button className={'btn default'}>
+                                GET STARTED
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className={'waiting-action'}>
+                <div className="container">
+                    <div className="col">
+                        <h2>What are you waiting for?</h2>
+                        <p>
+                            Create professionaly structured Amazon Advertising <br/> Campaigns in a few clicks
+                        </p>
+                    </div>
+
+                    <button className={'btn white'}>
+                        create campaigns
+                    </button>
                 </div>
             </section>
 
