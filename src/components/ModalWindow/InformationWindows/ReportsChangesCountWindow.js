@@ -19,7 +19,12 @@ const ReportsChangesCountWindow = () => {
         switchWindow(false);
         setCount(0);
         dispatch(userActions.resetChangesCount('ppc_optimization'));
-        history.push('/ppc/report');
+
+        if (window.location.pathname === '/ppc/report') {
+            window.location.reload()
+        } else {
+            history.push('/ppc/report');
+        }
     }
 
     function handleCancel() {
@@ -47,7 +52,7 @@ const ReportsChangesCountWindow = () => {
             {/*<img src={whales} alt=""/>*/}
             <h3>Yay!</h3>
             While you were away the software <br/> performed: <b>{changesCount}</b> <span>changes</span>
-             {/*{moment.duration(changesDate, "days").humanize()}*/}
+            {/*{moment.duration(changesDate, "days").humanize()}*/}
         </ModalWindow>
     )
 };

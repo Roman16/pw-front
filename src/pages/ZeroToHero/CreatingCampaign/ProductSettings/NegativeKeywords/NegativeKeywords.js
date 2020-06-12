@@ -3,7 +3,7 @@ import {SVG} from "../../../../../utils/icons";
 import {Radio} from "antd";
 
 import './NegativeKeywords.less';
-import {unique} from "../../../../../utils/unique";
+import {unique, uniqueArrOfObj} from "../../../../../utils/unique";
 
 const NegativeKeywords = ({keywords, onUpdate}) => {
     const [newKeyword, setNewKeyword] = useState(''),
@@ -27,6 +27,7 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
             }))
         ];
 
+        // onUpdate({negative_keywords: [...uniqueArrOfObj([...keywords, ...validKeywords], 'text')]});
         onUpdate({negative_keywords: [...keywords, ...validKeywords]});
 
         setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length);
@@ -85,7 +86,8 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
                         <div className="actions">
                             <div
                                 className={`added-description ${validKeywordsCount !== keywordsCount ? 'visible' : ''}`}>
-                                Some of the keywords were not added because they exceeded the maximum amount of words in it or 80 characters.
+                                Some of the keywords were not added because they exceeded the maximum amount of words in
+                                it or 80 characters.
                             </div>
 
                             <button className={'btn default p15'}>

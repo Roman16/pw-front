@@ -121,7 +121,7 @@ const AllProducts = () => {
                 <h3>
                     Select Products
 
-                    {availableTokens && <span className="free-tokens">
+                    {availableTokens > 0 && <span className="free-tokens">
                         Free tokens: {availableTokens}
                     </span>}
                 </h3>

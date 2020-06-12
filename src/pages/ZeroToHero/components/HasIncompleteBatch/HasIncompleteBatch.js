@@ -50,6 +50,10 @@ const HasIncompleteBatch = ({visible = false, onChange}) => {
         setDeleteProcessing(false);
     };
 
+    const handleCancel = () => {
+        history.push('/zero-to-hero/settings')
+    };
+
     const goToPaymentPage = () => {
         history.push(`/zero-to-hero/payment/${incompleteBatch.batch_id}`)
     };
@@ -61,6 +65,7 @@ const HasIncompleteBatch = ({visible = false, onChange}) => {
                 // visible={true}
                 className={'has-incomplete-batch-window'}
                 footer={false}
+                handleCancel={handleCancel}
             >
                 <h2>
                     Attention!

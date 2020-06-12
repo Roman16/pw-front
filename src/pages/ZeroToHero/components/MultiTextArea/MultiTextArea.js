@@ -6,20 +6,21 @@ import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 
 import {isMainKeywordValid} from './isMainKeywordValid';
 
-const MultiTextArea = ({onChange, max = 999999, value, toMark, productName}) => {
+const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productName, unique = false}) => {
     const [inputValue, setInputValue] = useState(null);
 
     const inputEl = useRef(null);
 
     const addKeywordHandler = ({target}) => {
-        if (target.value !== '') {
+        if (target.value !== '' && unique && !value.includes(target.value)) {
             if (value == null) {
                 onChange([target.value]);
             } else {
                 onChange([...value, target.value]);
             }
-            setInputValue(null);
         }
+
+        setInputValue(null);
     };
 
     const removeKeywordHandler = (index) => {
@@ -31,10 +32,15 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark, productName}) => 
              onClick={() => (!value || value.length < max) && inputEl.current.focus()}>
             <div className="list">
                 {value && value.map((item, index) => {
-                    if (isMainKeywordValid(item, productName)) {
+                    if (toMark && !isMainKeywordValid(item, productName)) {
                         return (
                             <div className={'item-text'}>
                                 {item}
+
+                                <InformationTooltip type={'custom'}
+                                                    description={'Looks like this is a long tail keyword or it’s not present in your title. Please make sure you enter a keyword that customers use to describe your product in general.'}>
+                                    <SVG id={'warning-icon'}/>
+                                </InformationTooltip>
 
                                 <i onClick={() => removeKeywordHandler(index)}>
                                     <SVG id={'remove-filter-icon'}/>
@@ -45,10 +51,6 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark, productName}) => 
                         return (
                             <div className={'item-text'}>
                                 {item}
-
-                                <InformationTooltip type={'custom'} description={'Looks like this is a long tail keyword or it’s not present in your title. Please make sure you enter a keyword that customers use to describe your product in general.'}>
-                                    <SVG id={'warning-icon'}/>
-                                </InformationTooltip>
 
                                 <i onClick={() => removeKeywordHandler(index)}>
                                     <SVG id={'remove-filter-icon'}/>

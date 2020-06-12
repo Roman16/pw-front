@@ -35,10 +35,10 @@ const Marketing = () => {
                 <div className="row">
                     <div className="col">
                         <h3>Here is the PPC campaigns structure we create:</h3>
-                        <p>
-                            To learn more about Zero to Hero structure
-                            <Link to={''} target={'_blank'}>watch these video</Link>
-                        </p>
+                        {/*<p>*/}
+                        {/*    To learn more about Zero to Hero structure*/}
+                        {/*    <Link to={''} target={'_blank'}>watch these video</Link>*/}
+                        {/*</p>*/}
 
                         <div className="image">
                             <img src={ppcStructureImage} alt=""/>

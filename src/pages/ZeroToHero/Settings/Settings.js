@@ -124,7 +124,7 @@ const Settings = () => {
                     />
                 </div>
 
-                {tokens && <div className="credits-count">
+                {tokens > 0 && <div className="credits-count">
                     ZTH Credits Left:
 
                     <span>{tokens}</span>

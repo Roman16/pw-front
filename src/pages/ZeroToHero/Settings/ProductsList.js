@@ -160,10 +160,6 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 },
                 {
                     minWidth: '200px',
-                    render: (props) => ('')
-                },
-                {
-                    minWidth: '200px',
                     render: (props, product) => (<div className="optimization-field">
                         {product.under_optimization ? <span>Running</span> :
                             <button className='btn default' onClick={goOptimizationPage}>Automate</button>}
@@ -172,6 +168,10 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 {
                     minWidth: '150px',
                     render: () => <span>SP</span>
+                },
+                {
+                    minWidth: '200px',
+                    render: (props) => ('')
                 },
             ],
             'other-products': [
@@ -284,13 +284,6 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 render: (status, item) => (jobStatus(item))
             },
             {
-                title: 'Issues',
-                dataIndex: 'problems',
-                key: 'problems',
-                minWidth: '200px',
-                render: (status, item) => (jobIssues(item))
-            },
-            {
                 title: 'PPC Automate Status',
                 dataIndex: 'under_optimization',
                 key: 'under_optimization',
@@ -308,6 +301,13 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 key: 'campaign_type',
                 minWidth: '150px',
                 render: () => <span>SP</span>
+            },
+            {
+                title: 'Issues',
+                dataIndex: 'problems',
+                key: 'problems',
+                minWidth: '200px',
+                render: (status, item) => (jobIssues(item))
             },
         ],
         'other-products': [

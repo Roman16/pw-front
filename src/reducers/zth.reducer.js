@@ -113,7 +113,7 @@ export function zth(state = initialState, action) {
             return {
                 ...state,
                 paidBatch: action.payload,
-                productAmount: action.payload.available_tokens
+                productAmount: action.payload.available_tokens === 0 ? 1 : action.payload.available_tokens
             };
 
 

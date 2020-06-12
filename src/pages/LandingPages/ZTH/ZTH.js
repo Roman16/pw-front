@@ -13,6 +13,7 @@ import ppcStructure from '../../../assets/img/landing-zth/ppc-structure.svg'
 import zthStructure from '../../../assets/img/landing-zth/zth-structure.png'
 import expertImage from '../../../assets/img/landing-zth/expert-image.png'
 import caseImage from '../../../assets/img/landing-zth/cases-image.png'
+import kingOnTronImage from '../../../assets/img/landing-zth/king-on-tron.png'
 import x10SuccessImage from '../../../assets/img/landing-zth/x10-success.svg'
 import skuIcon from '../../../assets/img/landing-zth/100sku.svg'
 import agencyIcon from '../../../assets/img/landing-zth/agency-icon.svg'
@@ -250,6 +251,8 @@ const ZTHLanding = () => {
                 <img src={caseImage} alt=""/>
 
                 <OurCases/>
+
+                <img src={kingOnTronImage} alt="" className={'king-on-tron'}/>
             </section>
 
             <section className="plans">
@@ -401,7 +404,7 @@ const ZTHLanding = () => {
 
                         <div className={'plan'}>
                             <div className="counts">
-                                {[1, 2, 4].map(item => (
+                                {[1, 2, 3, 4].map(item => (
                                     <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
                                          className="count"/>
                                 ))}

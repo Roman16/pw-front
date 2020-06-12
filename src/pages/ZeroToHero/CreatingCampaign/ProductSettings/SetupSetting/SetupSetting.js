@@ -86,6 +86,7 @@ const SetupSetting = ({
                             max={5}
                             toMark={true}
                             productName={selectedProductName}
+                            unique={true}
                         />
                     </div>
 
@@ -270,6 +271,7 @@ const SetupSetting = ({
                         <h3>Enter Your Competitors Brands Names</h3>
 
                         <MultiTextArea
+                            unique={true}
                             value={brand.competitor_brand_names}
                             onChange={(competitor_brand_names) => changeBrandHandler({competitor_brand_names}, invalidField === 'brandCompetitorsNames')}
                         />

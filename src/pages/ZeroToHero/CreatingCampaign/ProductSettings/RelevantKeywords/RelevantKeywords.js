@@ -20,7 +20,8 @@ const RelevantKeywords = ({keywords, onUpdate}) => {
             .filter(item => item.match(/\b\w+\b/g).length <= 10)
         ];
 
-        onUpdate({relevant_keywords: [...keywords, ...validKeywords]});
+
+        onUpdate({relevant_keywords: [...new Set([...keywords, ...validKeywords])]});
 
         setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length);
         setValidKeywordsCount(validKeywords.length);
@@ -61,8 +62,10 @@ const RelevantKeywords = ({keywords, onUpdate}) => {
                         </div>
 
                         <div className="actions">
-                             <div className={`added-description ${validKeywordsCount !== keywordsCount ? 'visible' : ''}`}>
-                                 Some of the keywords were not added because they exceeded the maximum amount of words in it or 80 characters.
+                            <div
+                                className={`added-description ${validKeywordsCount !== keywordsCount ? 'visible' : ''}`}>
+                                Some of the keywords were not added because they exceeded the maximum amount of words in
+                                it or 80 characters.
                             </div>
 
                             <button className={'btn default p15'}>
