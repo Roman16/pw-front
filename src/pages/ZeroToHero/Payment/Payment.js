@@ -73,12 +73,12 @@ const Payment = (props) => {
                 if (userName) {
                     const billing_details = {};
                     billing_details.name = userName;
-                    res = await props.stripe.createToken(billing_details);
+                    res = await props.stripe.createPaymentMethod('card', {billing_details});
                 } else {
-                    res = await props.stripe.createToken();
+                    res = await props.stripe.createPaymentMethod('card');
                 }
 
-                await zthServices.payBatch(props.batchId, res.token.id);
+                await zthServices.payBatch(props.batchId, res.paymentMethod.id);
                 history.push('/zero-to-hero/success');
             } else {
                 await zthServices.payBatch(props.batchId, cardsList[selectedCard].id);
@@ -90,7 +90,7 @@ const Payment = (props) => {
                 props.stripe.confirmCardPayment(
                     data.result.payment_intent_client_secret,
                     {
-                        payment_method: selectedPaymentMethod === 'new_card' ? res.token.id : cardsList[selectedCard].id
+                        payment_method: selectedPaymentMethod === 'new_card' ? res.paymentMethod.id : cardsList[selectedCard].id
                     })
                     .then((res) => {
                         if (res.error) {
