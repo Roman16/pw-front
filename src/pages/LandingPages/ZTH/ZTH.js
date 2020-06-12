@@ -14,7 +14,10 @@ import zthStructure from '../../../assets/img/landing-zth/zth-structure.png'
 import expertImage from '../../../assets/img/landing-zth/expert-image.png'
 import caseImage from '../../../assets/img/landing-zth/cases-image.png'
 import x10SuccessImage from '../../../assets/img/landing-zth/x10-success.svg'
-
+import skuIcon from '../../../assets/img/landing-zth/100sku.svg'
+import agencyIcon from '../../../assets/img/landing-zth/agency-icon.svg'
+import bestSellerIcon from '../../../assets/img/landing-zth/best-seller-icon.svg'
+import {history} from "../../../utils/history";
 
 const setupDescription = [
     {
@@ -60,6 +63,10 @@ const includesList = [
     'Spend more time on growing your business while we focus on your ads.',
     'More than five campaigns and 30-200 ad groups that have their own goal.'
 ];
+
+const contactUsPAge = () => {
+    history.push('/contact-us')
+}
 
 const ZTHLanding = () => {
     return (
@@ -256,6 +263,8 @@ const ZTHLanding = () => {
                         <div>
                             <SVG id={'zth-icon'}/>
                             Zero To Hero
+
+                            <div>Create Ads</div>
                         </div>
 
                         <div className="col">
@@ -269,6 +278,7 @@ const ZTHLanding = () => {
                         <div>
                             <SVG id={'ppc-automate-icon'}/>
                             PPC Automation
+                            <div>Automate Ads</div>
                         </div>
                     </div>
 
@@ -336,6 +346,7 @@ const ZTHLanding = () => {
 
                             <button className={'btn default'}>
                                 GET STARTED
+                                <SVG id={'right-white-arrow'}/>
                             </button>
                         </div>
 
@@ -359,6 +370,7 @@ const ZTHLanding = () => {
 
                             <button className={'btn default'}>
                                 GET STARTED
+                                <SVG id={'right-white-arrow'}/>
                             </button>
                         </div>
 
@@ -383,6 +395,7 @@ const ZTHLanding = () => {
 
                             <button className={'btn default'}>
                                 GET STARTED
+                                <SVG id={'right-white-arrow'}/>
                             </button>
                         </div>
 
@@ -407,8 +420,40 @@ const ZTHLanding = () => {
 
                             <button className={'btn default'}>
                                 GET STARTED
+                                <SVG id={'right-white-arrow'}/>
                             </button>
                         </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="contact-block">
+                            <img src={skuIcon} alt=""/>
+                            <h4>Have more than <b>100 SKU’s?</b></h4>
+
+                            <button className={'btn default'} onClick={contactUsPAge}>Contact Us</button>
+                        </div>
+
+                        <div className="contact-block">
+                            <img src={agencyIcon} alt=""/>
+                            <h4>Are you an <b>Agency?</b></h4>
+
+                            <button className={'btn default'} onClick={contactUsPAge}>Contact Us</button>
+                        </div>
+                    </div>
+
+                    <div className="contact-block">
+                        <img src={bestSellerIcon} alt=""/>
+
+                        <div className="col">
+                            <h4>Do you want to be <b>The Best Seller?</b></h4>
+                            <p>Get in touch with our Managed Service team of experts.</p>
+                        </div>
+
+                        <div className="best-seller-label">
+                            Best Seller
+                        </div>
+
+                        <button className={'btn default'} onClick={contactUsPAge}>Contact Us</button>
                     </div>
                 </div>
             </section>

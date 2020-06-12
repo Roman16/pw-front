@@ -14,6 +14,11 @@ const UserCards = ({selectedCard, allCards, disabled, onSwipeCard}) => {
     };
 
 
+    const onChangePagination = (index) => {
+        onSwipeCard(index)
+    };
+
+
     if (allCards[selectedCard]) {
         return (
             <div className={`card-block ${disabled ? 'disabled' : ''}`}>
@@ -69,6 +74,17 @@ const UserCards = ({selectedCard, allCards, disabled, onSwipeCard}) => {
                 >
                     <SVG id={'left-arrow'}/>
                 </button>}
+
+                {allCards.length > 1 &&
+                <div className='carousel-pagination'>
+                    {allCards.map((item, index) => (
+                        <div
+                            style={{background: allCards[selectedCard] && allCards[selectedCard].id != item.id && '#fff'}}
+                            key={`pagination_${index}`}
+                            onClick={() => onChangePagination(index)}
+                        />
+                    ))}
+                </div>}
             </div>
         )
     } else {

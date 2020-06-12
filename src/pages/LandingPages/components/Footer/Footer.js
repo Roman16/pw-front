@@ -6,128 +6,110 @@ import {faPlay, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {faFacebook, faFacebookSquare, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons";
 
 import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
-import aLogo from '../../../../assets/img/amazon_logo.png';
+import aLogo from '../../../../assets/img/amazon-app-store-logo.png';
 
 import './Footer.less';
-import {SVG} from "../../../../utils/icons";
+import {history} from "../../../../utils/history";
+import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 
 const Footer = () => (
     <footer className='not-found-page__footer'>
         <div className="container">
-            <div className="col logo-wrap">
+            <div className="row">
                 <div className="logo">
                     <img src={logo} alt=""/>
                 </div>
 
-                <div className="a-logo">
-                    <img src={aLogo} alt=""/>
+                <div className="actions">
+                    <Link to={'/login'} className={'login-link'}>
+                        LOG IN
+                    </Link>
+
+                    <button className={'btn default'} onClick={() => history.push('/amazon-ppc-blueprint')}>
+                        BOOK A DEMO
+                    </button>
+                </div>
+            </div>
+
+            <div className="menu">
+                <div className="col">
+                    <h5>Products</h5>
+
+                    <ul>
+                        <li><Link to={'/'}>PPC Optimization</Link></li>
+                        <li><Link to={'/zero-to-hero-info'}>Zero To Hero</Link></li>
+                    </ul>
                 </div>
 
-                <form action="https://profitwhales.com/subscribe">
-                    <input type="hidden" name="_token" value=""/>
-                    <h4>Subscribe to our list</h4>
-                    <label>
-                        <input type="email" name="email" placeholder="Your email address"/>
-                    </label>
-                    <button className="btn ripple legitRipple">
-                        <FontAwesomeIcon icon={faArrowRight}/>
-                    </button>
-                </form>
+                <div className="col">
+                    <h5><Link to={'/pricing'}>Pricing</Link></h5>
+                </div>
+
+                <div className="col">
+                    <h5>Resources</h5>
+
+                    <ul>
+                        <li><a href="/blog" target="_blank">Blog</a></li>
+                        <li>
+                            <a
+                                href="https://intercom.help/profitwhales/en/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Automate Help Centre
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div className="col">
+                    <h5><Link to={'/videos'}>How it works</Link></h5>
+                </div>
+
+                <div className="col">
+                    <h5>Contact Us</h5>
+
+                    <ul>
+                        <li><Link to={'/affiliates'}>Affiliates Program</Link></li>
+                        <li><a className={'email'} href="mailto: info@profitwhales.agency">info@profitwhales.agency</a></li>
+                        <li>Coral Springs, FL 33065</li>
+                    </ul>
+                </div>
             </div>
 
-            <div className="col products">
-                <h4>Partners</h4>
-                <ul>
+            <div className="row">
+                <label>Profit Whales © 2020 All Right Reserved</label>
+
+                <img src={aLogo} alt="" className={'amazon-appstore-logo'}/>
+
+                <ul className="social-icons">
                     <li>
-                        {/*<a href="https://blog.profitwhales.com/partners">*/}
-                        <a href="#" style={{pointerEvents: 'none'}}>
-                            Partners
+                        <a href="https://twitter.com/ProfitWhales" className="i-tw" target="_blank"
+                           title="Twitter">
+                            <FontAwesomeIcon icon={faTwitter}/>
                         </a>
                     </li>
                     <li>
-                        {/*<a href="https://blog.profitwhales.com/coupons">*/}
-                        <a href="#" style={{pointerEvents: 'none'}}>
-                            Coupons
+                        <a href="https://www.facebook.com/profitwhales/" className="i-fb" target="_blank"
+                           title="Facebook">
+                            <FontAwesomeIcon icon={faFacebookSquare}/>
                         </a>
                     </li>
                     <li>
-                        <Link to={'/affiliates'}>
-                            Affiliate Program
-                        </Link>
+                        <a href="https://www.linkedin.com/company/profitwhales/" className="i-in"
+                           target="_blank"
+                           title="LinkedIn">
+                            <FontAwesomeIcon icon={faLinkedin}/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/channel/UCtUreqMG_C_P8Ymqa-LJ2Yg" className="you"
+                           target="_blank"
+                           title="Youtube">
+                            <FontAwesomeIcon icon={faYoutube}/>
+                        </a>
                     </li>
                 </ul>
-            </div>
-
-            <div className="col knowledge">
-                <h4>Knowledge</h4>
-                <ul>
-                    <li>
-                        <Link to={'/about-us'}>About us</Link>
-                    </li>
-                    <li>
-                        <Link to='/terms-and-conditions'>
-                            Terms and Conditions
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to='/policy'>
-                            Privacy policy
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-
-            <div className="col contacts">
-                <h4>Contacts</h4>
-
-                <ul>
-                    <li>
-                        <Link to={'/affiliates'}>Affiliates program</Link>
-                    </li>
-
-                    <li>
-                        <div className="adr">
-                            <a href="mailto:info@profitwhales.agency" className="email">info@profitwhales.agency</a>
-                            <address>Coral Springs, FL 33065</address>
-                        </div>
-
-                    </li>
-
-                    <li>
-                        <ul className="soc-netw">
-                            <li>
-                                <a href="https://twitter.com/ProfitWhales" className="i-tw" target="_blank"
-                                   title="Twitter">
-                                    <FontAwesomeIcon icon={faTwitter}/>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.facebook.com/profitwhales/" className="i-fb" target="_blank"
-                                   title="Facebook">
-                                    <FontAwesomeIcon icon={faFacebookSquare}/>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.linkedin.com/company/profitwhales/" className="i-in"
-                                   target="_blank"
-                                   title="LinkedIn">
-                                    <FontAwesomeIcon icon={faLinkedin}/>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.youtube.com/channel/UCtUreqMG_C_P8Ymqa-LJ2Yg" className="you"
-                                   target="_blank"
-                                   title="Youtube">
-                                    <FontAwesomeIcon icon={faYoutube}/>
-                                </a>
-                            </li>
-                        </ul>
-
-                    </li>
-                </ul>
-
-
-                <div className="copyright">Profit Whales © 2020 All Right Reserved</div>
             </div>
         </div>
     </footer>

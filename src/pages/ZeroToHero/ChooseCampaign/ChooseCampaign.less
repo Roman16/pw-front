@@ -50,10 +50,29 @@
 
       .btn {
         width: 45%;
+        min-width: 13.214285714285714rem;
         height: 3.4285714285714284rem;
         font-size: 1.1428571428571428rem;
         margin: auto 0 2.857142857142857rem 0;
         font-weight: 500;
+      }
+    }
+  }
+
+  @media (max-width: 1100px) {
+    padding: 3.5714285714285716rem 2.142857142857143rem;
+  }
+
+  @media (max-width: 800px) {
+    overflow: scroll;
+
+    .campaign-types {
+      height: max-content;
+      display: flex;
+      flex-direction: column;
+
+      & > div {
+        margin-bottom: 20px;
       }
     }
   }

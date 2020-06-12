@@ -89,8 +89,8 @@ const Settings = () => {
     return (
         <div className="zth-settings">
             {selectedTab === 'zth-products' && <div className="description">
-                Make sure you paused the SKU’s with Zero to Hero campaigns in other ad campaigns that weren’t created by
-                our software to prevent the competition.
+                Make sure you paused the SKU’s with Zero to Hero campaigns in other Sponsored Products Ad Campaigns that
+                weren’t created by our software to prevent the competition.
             </div>}
 
             <ul className="tabs">

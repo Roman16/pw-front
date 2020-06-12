@@ -55,6 +55,9 @@ const SetupSetting = ({
     const changeDateHandler = (type, date) => {
         changeCampaignsHandler({
             [`${type}_date`]: date ? moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString() : null,
+            ...type === 'start' && moment(campaigns.end_date) < moment(date) && {
+                end_date: date ? moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString() : null,
+            }
         });
     };
 

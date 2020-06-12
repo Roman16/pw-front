@@ -90,7 +90,7 @@ const Payment = (props) => {
                 props.stripe.confirmCardPayment(
                     data.result.payment_intent_client_secret,
                     {
-                        payment_method: data.result.payment_intent_id
+                        payment_method: selectedPaymentMethod === 'new_card' ? res.token.id : cardsList[selectedCard].id
                     })
                     .then((res) => {
                         if (res.error) {
@@ -113,13 +113,14 @@ const Payment = (props) => {
     useEffect(() => {
         userService.fetchBillingInformation()
             .then(res => {
-                setCardList(res);
+                setCardList(res.sort((x, y) => {
+                    return x.default ? -1 : y.default ? 1 : 0;
+                }));
             });
 
         zthServices.checkBatchById(props.batchId)
             .then(res => {
                 setCurrentButch(res.result);
-                console.log(res.result);
             })
     }, []);
 
@@ -206,12 +207,13 @@ const Payment = (props) => {
 
                     <div className="total-price">
                         <label htmlFor="">TOTAL PRICE:</label>
-                        <div className="value">${numberMask(currentButch.amount / 100, 0)}</div>
+                        <div
+                            className="value">{currentButch.amount && `$${numberMask(currentButch.amount / 100, 0)}`}</div>
                     </div>
 
                     {productAmount > 5 && <div className="row save-info">
                         <label htmlFor="">You save:</label>
-                        <div className="value">{saleRender(productAmount)}</div>
+                        <div className="value">{saleRender(currentButch.jobs)}</div>
                     </div>}
 
                     <button
