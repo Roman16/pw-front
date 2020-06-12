@@ -78,6 +78,16 @@
 
     .action {
       display: flex;
+      align-items: center;
+
+      img {
+        margin: 0 50px 0 0;
+        height: 25px;
+
+        &:last-child {
+          height: 23px;
+        }
+      }
 
       .btn {
         font-weight: 500;
@@ -197,7 +207,7 @@
       }
 
       img {
-        width: 50%;
+        width: 48%;
         position: absolute;
         right: 0;
         top: 50px;
@@ -685,6 +695,7 @@
       grid-column-gap: 20px;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       margin-bottom: 30px;
+      margin-top: 30px;
 
       .plan {
         background: #FFFFFF;
@@ -711,8 +722,6 @@
             z-index: 100;
           }
         }
-
-
 
         .bg {
           content: '';

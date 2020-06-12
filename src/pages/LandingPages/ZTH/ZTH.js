@@ -9,8 +9,9 @@ import {history} from "../../../utils/history";
 
 import zthKingImage from '../../../assets/img/landing-zth/zth-king.svg'
 import amazonStoreLogo from '../../../assets/img/landing-zth/amazon_appstore.svg'
+import amazonSpnLogo from '../../../assets/img/amazon-spn-logo.png'
 import dragonImage from '../../../assets/img/landing-zth/dragon.png'
-import ppcStructure from '../../../assets/img/landing-zth/ppc-structure.svg'
+import ppcStructure from '../../../assets/img/landing-zth/ppc-structure.png'
 import zthStructure from '../../../assets/img/landing-zth/zth-structure.png'
 import expertImage from '../../../assets/img/landing-zth/expert-image.png'
 import caseImage from '../../../assets/img/landing-zth/cases-image.png'
@@ -98,6 +99,7 @@ const ZTHLanding = () => {
                             </button>
 
                             <img src={amazonStoreLogo} alt=""/>
+                            <img src={amazonSpnLogo} alt=""/>
                         </div>
                     </div>
                 </div>
