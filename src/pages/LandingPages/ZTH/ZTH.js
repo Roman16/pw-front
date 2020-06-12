@@ -4,6 +4,7 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {SVG} from "../../../utils/icons";
 import OurCases from "../Automation/OurCases/OurCases";
+import {history} from "../../../utils/history";
 
 
 import zthKingImage from '../../../assets/img/landing-zth/zth-king.svg'
@@ -18,7 +19,7 @@ import x10SuccessImage from '../../../assets/img/landing-zth/x10-success.svg'
 import skuIcon from '../../../assets/img/landing-zth/100sku.svg'
 import agencyIcon from '../../../assets/img/landing-zth/agency-icon.svg'
 import bestSellerIcon from '../../../assets/img/landing-zth/best-seller-icon.svg'
-import {history} from "../../../utils/history";
+import bestSellerLabel from '../../../assets/img/landing-zth/best-seller-label.png'
 
 const setupDescription = [
     {
@@ -332,25 +333,30 @@ const ZTHLanding = () => {
 
                     <div className="pricing-plans">
                         <div className={'plan'}>
-                            <div className="counts">
-                                <div className="count"/>
-                            </div>
+                            <div className="bg"/>
+                            <div className="content">
+                                <img src={bestSellerLabel} alt=""/>
 
-                            <h4>0-5 Products</h4>
-                            <label htmlFor=""></label>
+                                <div className="counts">
+                                    <div className="count"/>
+                                </div>
 
-                            <h3>
-                                $500
+                                <h4>0-5 Products</h4>
+                                <label htmlFor=""></label>
 
-                                <span>
+                                <h3>
+                                    $500
+
+                                    <span>
                                     one time fee <br/> per 1 Product
                                 </span>
-                            </h3>
+                                </h3>
 
-                            <button className={'btn default'}>
-                                GET STARTED
-                                <SVG id={'right-white-arrow'}/>
-                            </button>
+                                <button className={'btn default'}>
+                                    GET STARTED
+                                    <SVG id={'right-white-arrow'}/>
+                                </button>
+                            </div>
                         </div>
 
                         <div className={'plan'}>

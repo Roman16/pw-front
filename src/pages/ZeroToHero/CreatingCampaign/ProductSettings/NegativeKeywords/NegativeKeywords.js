@@ -27,8 +27,7 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
             }))
         ];
 
-        // onUpdate({negative_keywords: [...uniqueArrOfObj([...keywords, ...validKeywords], 'text')]});
-        onUpdate({negative_keywords: [...keywords, ...validKeywords]});
+        onUpdate({negative_keywords: [...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.type === 'exact'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.type === 'phrase'), 'text')]});
 
         setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length);
         setValidKeywordsCount(validKeywords.length);

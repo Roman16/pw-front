@@ -72,8 +72,7 @@ const HasIncompleteBatch = ({visible = false, onChange}) => {
                 </h2>
 
                 <p>
-                    You have unpaid Zero to Hero products. Please cancel the outstanding products to create the new
-                    ones.
+                    You have uncompleted Zero to Hero products! Do you want to delete all previous settings and start all over again?
                 </p>
 
                 <div className={`actions ${deleteProcessing ? 'processing' : ''}`}>
@@ -82,7 +81,7 @@ const HasIncompleteBatch = ({visible = false, onChange}) => {
                         className={'btn white'}
                         onClick={deleteBatchHandler}
                     >
-                        Delete
+                        Yes, delete
                         {deleteProcessing && <Spin size={'small'}/>}
                     </button>
 
@@ -91,7 +90,7 @@ const HasIncompleteBatch = ({visible = false, onChange}) => {
                         className={'btn default'}
                         onClick={goToPaymentPage}
                     >
-                        Pay
+                        No, proceed to payment
                     </button>
 
                 </div>

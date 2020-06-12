@@ -85,7 +85,6 @@ const Payment = (props) => {
                 history.push('/zero-to-hero/success');
             }
         } catch ({response: {data}}) {
-            console.log(data);
             if (data.error_code === 'authentication_required') {
                 props.stripe.confirmCardPayment(
                     data.result.payment_intent_client_secret,
@@ -95,6 +94,8 @@ const Payment = (props) => {
                     .then((res) => {
                         if (res.error) {
                             notification.error({title: res.error.message})
+                        } else {
+                            handleSubmit(event);
                         }
                     })
                     .catch(e => {
