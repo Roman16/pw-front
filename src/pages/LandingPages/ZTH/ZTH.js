@@ -1,20 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import './ZTH.less';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {SVG} from "../../../utils/icons";
 import OurCases from "../Automation/OurCases/OurCases";
-import {history} from "../../../utils/history";
-
 
 import zthKingImage from '../../../assets/img/landing-zth/zth-king.svg'
 import amazonStoreLogo from '../../../assets/img/landing-zth/amazon_appstore.svg'
 import amazonSpnLogo from '../../../assets/img/amazon-spn-logo.png'
 import dragonImage from '../../../assets/img/landing-zth/dragon.png'
+import dragonImageMob from '../../../assets/img/landing-zth/dragon_mob.png'
 import ppcStructure from '../../../assets/img/landing-zth/ppc-structure.png'
 import zthStructure from '../../../assets/img/landing-zth/zth-structure.png'
+import zthStructureMob from '../../../assets/img/landing-zth/zth-structure_mob.png'
 import expertImage from '../../../assets/img/landing-zth/expert-image.png'
 import caseImage from '../../../assets/img/landing-zth/cases-image.png'
+import caseImageMob from '../../../assets/img/landing-zth/cases-image_mob.png'
 import kingOnTronImage from '../../../assets/img/landing-zth/king-on-tron.png'
 import x10SuccessImage from '../../../assets/img/landing-zth/x10-success.svg'
 import skuIcon from '../../../assets/img/landing-zth/100sku.svg'
@@ -60,11 +61,12 @@ const setupDescription = [
 
 const includesList = [
     'One-minute campaigns setup with our data-driven algorithms and you ready to go.',
-    'No Amazon Advertising knowledge required. Just feel in some data.',
-    'Save time&money by starting with the most relevant keywords in your niche without getting them from auto campaigns.',
-
     'Professionally structured campaigns that we used in our Agency to grow eight-figure brands.',
+
+    'No Amazon Advertising knowledge required. Just feel in some data.',
     'Spend more time on growing your business while we focus on your ads.',
+
+    'Save time&money by starting with the most relevant keywords in your niche without getting them from auto campaigns.',
     'More than five campaigns and 30-200 ad groups that have their own goal.'
 ];
 
@@ -73,15 +75,14 @@ const onOpenChat = () => {
 }
 
 const ZTHLanding = () => {
+    const [setupType, setSetupType] = useState('zth');
     return (
         <div className="landing-zth">
             <Header/>
 
             <section className={'zth-king-section'}>
                 <div className="container">
-                    <div className="col">
-                        <img src={zthKingImage} alt="" className={'king'}/>
-                    </div>
+                    <img src={zthKingImage} alt="" className={'king'}/>
 
                     <div className="col">
                         <h2>
@@ -137,8 +138,9 @@ const ZTHLanding = () => {
                         </button>
                     </div>
 
-                    <img src={dragonImage} alt=""/>
+                    <img src={dragonImage} alt="" className={'desc'}/>
                 </div>
+                <img src={dragonImageMob} alt="" className={'mob'}/>
             </section>
 
             <section className={'static-section'}>
@@ -147,10 +149,12 @@ const ZTHLanding = () => {
                         <div className="value">$240M</div>
                         <p>total amazon revenue <br/> managed</p>
                     </div>
+                    <div className={'border'}/>
                     <div>
                         <div className="value">34%</div>
                         <p>average decrease <br/> in acos</p>
                     </div>
+                    <div className={'border'}/>
                     <div>
                         <div className="value">27%</div>
                         <p>average growth in <br/> sales</p>
@@ -197,13 +201,14 @@ const ZTHLanding = () => {
                             competition on the Amazon
                         </p>
 
-                        <button className={'btn white'}>
-                            read more about zth
-                        </button>
+                        {/*<button className={'btn white'}>*/}
+                        {/*    read more about zth*/}
+                        {/*</button>*/}
                     </div>
                 </div>
 
-                <img src={zthStructure} alt="" className={'zth-structure-image'}/>
+                <img src={zthStructure} alt="" className={'zth-structure-image desc'}/>
+                <img src={zthStructureMob} alt="" className={'zth-structure-image mob'}/>
             </section>
 
             <section className={'updated-version'}>
@@ -211,9 +216,9 @@ const ZTHLanding = () => {
                     <h2>The Most Updated Version of Any Expert</h2>
                 </div>
 
-                <img src={expertImage} alt=""/>
+                <img src={expertImage} alt="" className={'desc'}/>
 
-                <div className="container setup-description">
+                <div className="container setup-description desc">
                     <div className="row">
                         <h3>
                             Setup by Amazon <br/> PPC expert
@@ -239,7 +244,7 @@ const ZTHLanding = () => {
                     ))}
                 </div>
 
-                <div className="container setup-price">
+                <div className="container setup-price desc">
                     <div className={'ppc'}>
                         Total Per 1 SKU <span>$750-$2000</span><br/>
                         In average <span>48 hours</span> needed
@@ -248,6 +253,48 @@ const ZTHLanding = () => {
                     <div className={'zth'}>
                         Price Per 1 SKU <span>$500</span><br/>
                         In average <span>10 minutes</span> needed
+                    </div>
+                </div>
+
+                <div className={`${setupType} mob setup-description`}>
+                    <img src={expertImage} alt=""/>
+
+                    <div className="col">
+                        <div className="row title">
+                            <h3 className={`${setupType === 'zth' && 'active'}`} onClick={() => setSetupType('zth')}>
+                                Profit Whales <br/> Zero to Hero Setup
+                            </h3>
+
+                            <h3 className={`${setupType === 'ppc' && 'active'}`} onClick={() => setSetupType('ppc')}>
+                                Setup by Amazon <br/> PPC expert
+                            </h3>
+                        </div>
+
+                        <div className="container list">
+                            {setupDescription.map((item, index) => (
+                                <div className="row">
+                                    <h5 className={'ppc'} dangerouslySetInnerHTML={{__html: item.ppc}}/>
+
+                                    <i>
+                                        <SVG id={`zth-setup-${index + 1}`}/>
+                                    </i>
+
+                                    <h5 className={'zth'} dangerouslySetInnerHTML={{__html: item.zth}}/>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="ppc ppc-price">
+                            Total Per 1 SKU $750-$2000
+                            <div className={'line'} />
+                            In average 48 hours needed
+                        </div>
+
+                        <div className="zth zth-price">
+                            Total Per 1 SKU $750-$2000
+                            <div className={'line'} />
+                            In average 48 hours needed
+                        </div>
                     </div>
                 </div>
             </section>
@@ -266,14 +313,15 @@ const ZTHLanding = () => {
                         </p>
 
                         <button className={'btn default link'}>
-                            <Link to={'/'}>
+                            <Link to={'/'} target={'_blank'}>
                                 CHECK PPC AUTOMATE
                             </Link>
                         </button>
                     </div>
                 </div>
 
-                <img src={caseImage} alt=""/>
+                <img src={caseImage} alt="" className={'desc'}/>
+                <img src={caseImageMob} alt="" className={'mob'}/>
 
                 <OurCases/>
 
@@ -303,7 +351,7 @@ const ZTHLanding = () => {
                             <img src={x10SuccessImage} alt=""/>
                         </div>
 
-                        <Link to={'/'}>
+                        <Link to={'/'}  target={'_blank'}>
                             <SVG id={'ppc-automate-icon'}/>
                             PPC Automation
                             <div>Automate Ads</div>

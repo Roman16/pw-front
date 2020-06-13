@@ -217,22 +217,17 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     {/*ZERO TO HERO*/}
-                                    {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/campaign"
-                                                                        component={ChooseCampaign}/>}
-                                    {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/ppc-structure"
-                                                                        component={Marketing}/>}
-                                    {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/creating"
-                                                                        component={CreatingCampaign}/>}
-                                    {developer && <ConnectedAmazonRoute
-                                        exact
-                                        path="/zero-to-hero/payment/:batchId?"
-                                        component={Payment}
-                                    />}
+                                    <AdminRoute exact path="/zero-to-hero/campaign" component={ChooseCampaign}/>
 
-                                    {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/success"
-                                                                        component={ThankPage}/>}
-                                    {developer &&
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/settings" component={Settings}/>}
+                                    <AdminRoute exact path="/zero-to-hero/ppc-structure" component={Marketing}/>
+
+                                    <AdminRoute exact path="/zero-to-hero/creating" component={CreatingCampaign}/>
+
+                                    <AdminRoute exact path="/zero-to-hero/payment/:batchId?" component={Payment}/>
+
+                                    <AdminRoute exact path="/zero-to-hero/success" component={ThankPage}/>
+
+                                    <AdminRoute exact path="/zero-to-hero/settings" component={Settings}/>
 
                                     <Route path={'*'} render={() => (
                                         <Redirect to={'/404'}/>
