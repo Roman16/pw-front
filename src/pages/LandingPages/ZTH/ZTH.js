@@ -21,6 +21,7 @@ import skuIcon from '../../../assets/img/landing-zth/100sku.svg'
 import agencyIcon from '../../../assets/img/landing-zth/agency-icon.svg'
 import bestSellerIcon from '../../../assets/img/landing-zth/best-seller-icon.svg'
 import bestSellerLabel from '../../../assets/img/landing-zth/best-seller-label.png'
+import {Link} from "react-router-dom";
 
 const setupDescription = [
     {
@@ -67,8 +68,8 @@ const includesList = [
     'More than five campaigns and 30-200 ad groups that have their own goal.'
 ];
 
-const contactUsPAge = () => {
-    history.push('/contact-us')
+const onOpenChat = () => {
+    window.Intercom('show')
 }
 
 const ZTHLanding = () => {
@@ -94,12 +95,27 @@ const ZTHLanding = () => {
                         </p>
 
                         <div className="action">
-                            <button className="btn default">
-                                LET’S TALK
-                            </button>
+                            <div className="row">
+                                <button className="btn default link">
+                                    <a href="https://calendly.com/vitalii-pw-success-manager/demo-call-with-profit-whales"
+                                       target={'_blank'}>
+                                        LET’S TALK
+                                    </a>
+                                </button>
 
-                            <img src={amazonStoreLogo} alt=""/>
-                            <img src={amazonSpnLogo} alt=""/>
+                                <span>or</span>
+
+                                <button className="btn white link">
+                                    <Link to={'/registration'}>
+                                        TRY IT NOW
+                                    </Link>
+                                </button>
+                            </div>
+
+                            <div className="row">
+                                <img src={amazonStoreLogo} alt=""/>
+                                <img src={amazonSpnLogo} alt=""/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -114,7 +130,11 @@ const ZTHLanding = () => {
                             agency, we have discovered an ideal structure of a PPC <br/>
                             campaign, that works best with Amazon’s algorithms.
                         </p>
-                        <button className={'btn default'}>TRY NOW</button>
+                        <button className={'btn default link'}>
+                            <Link to={'/registration'}>
+                                TRY NOW
+                            </Link>
+                        </button>
                     </div>
 
                     <img src={dragonImage} alt=""/>
@@ -245,8 +265,10 @@ const ZTHLanding = () => {
                             fully automated Amazon Advertising management in ONE place
                         </p>
 
-                        <button className={'btn default'}>
-                            CHECK PPC AUTOMATE
+                        <button className={'btn default link'}>
+                            <Link to={'/'}>
+                                CHECK PPC AUTOMATE
+                            </Link>
                         </button>
                     </div>
                 </div>
@@ -281,11 +303,11 @@ const ZTHLanding = () => {
                             <img src={x10SuccessImage} alt=""/>
                         </div>
 
-                        <div>
+                        <Link to={'/'}>
                             <SVG id={'ppc-automate-icon'}/>
                             PPC Automation
                             <div>Automate Ads</div>
-                        </div>
+                        </Link>
                     </div>
 
                     <div className="plan-information">
@@ -307,8 +329,10 @@ const ZTHLanding = () => {
                                     <li>* Variations are included with no additional cost.</li>
                                 </ul>
 
-                                <button className={'btn default'}>
-                                    START NOW
+                                <button className={'btn default link'}>
+                                    <Link to={'registration'}>
+                                        START NOW
+                                    </Link>
                                 </button>
                             </div>
 
@@ -354,9 +378,11 @@ const ZTHLanding = () => {
                                 </span>
                                 </h3>
 
-                                <button className={'btn default'}>
-                                    GET STARTED
-                                    <SVG id={'right-white-arrow'}/>
+                                <button className={'btn default link'}>
+                                    <Link to={'registration'}>
+                                        GET STARTED
+                                        <SVG id={'right-white-arrow'}/>
+                                    </Link>
                                 </button>
                             </div>
                         </div>
@@ -379,9 +405,11 @@ const ZTHLanding = () => {
                                 </span>
                             </h3>
 
-                            <button className={'btn default'}>
-                                GET STARTED
-                                <SVG id={'right-white-arrow'}/>
+                            <button className={'btn default link'}>
+                                <Link to={'registration'}>
+                                    GET STARTED
+                                    <SVG id={'right-white-arrow'}/>
+                                </Link>
                             </button>
                         </div>
 
@@ -404,9 +432,11 @@ const ZTHLanding = () => {
                                 </span>
                             </h3>
 
-                            <button className={'btn default'}>
-                                GET STARTED
-                                <SVG id={'right-white-arrow'}/>
+                            <button className={'btn default link'}>
+                                <Link to={'registration'}>
+                                    GET STARTED
+                                    <SVG id={'right-white-arrow'}/>
+                                </Link>
                             </button>
                         </div>
 
@@ -429,9 +459,11 @@ const ZTHLanding = () => {
                                 </span>
                             </h3>
 
-                            <button className={'btn default'}>
-                                GET STARTED
-                                <SVG id={'right-white-arrow'}/>
+                            <button className={'btn default link'}>
+                                <Link to={'registration'}>
+                                    GET STARTED
+                                    <SVG id={'right-white-arrow'}/>
+                                </Link>
                             </button>
                         </div>
                     </div>
@@ -441,14 +473,14 @@ const ZTHLanding = () => {
                             <img src={skuIcon} alt=""/>
                             <h4>Have more than <b>100 SKU’s?</b></h4>
 
-                            <button className={'btn default'} onClick={contactUsPAge}>Contact Us</button>
+                            <button className={'btn default'} onClick={onOpenChat}>Contact Us</button>
                         </div>
 
                         <div className="contact-block">
                             <img src={agencyIcon} alt=""/>
                             <h4>Are you an <b>Agency?</b></h4>
 
-                            <button className={'btn default'} onClick={contactUsPAge}>Contact Us</button>
+                            <button className={'btn default'} onClick={onOpenChat}>Contact Us</button>
                         </div>
                     </div>
 
@@ -464,7 +496,7 @@ const ZTHLanding = () => {
                             Best Seller
                         </div>
 
-                        <button className={'btn default'} onClick={contactUsPAge}>Contact Us</button>
+                        <button className={'btn default'} onClick={onOpenChat}>Contact Us</button>
                     </div>
                 </div>
             </section>
@@ -478,8 +510,10 @@ const ZTHLanding = () => {
                         </p>
                     </div>
 
-                    <button className={'btn white'}>
-                        create campaigns
+                    <button className={'btn white link'}>
+                        <Link to={'/registration'}>
+                            create campaigns
+                        </Link>
                     </button>
                 </div>
             </section>

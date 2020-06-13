@@ -1,16 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Icon} from "antd";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlay, faArrowRight} from "@fortawesome/free-solid-svg-icons";
-import {faFacebook, faFacebookSquare, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons";
+import {faFacebookSquare, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons";
 
 import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
 import aLogo from '../../../../assets/img/amazon-app-store-logo.png';
 
 import './Footer.less';
-import {history} from "../../../../utils/history";
-import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 
 const Footer = () => (
     <footer className='not-found-page__footer'>
@@ -25,9 +21,13 @@ const Footer = () => (
                         LOG IN
                     </Link>
 
-                    <button className={'btn default'} onClick={() => history.push('/amazon-ppc-blueprint')}>
+                    <a
+                        href={'https://calendly.com/vitalii-pw-success-manager/demo-call-with-profit-whales'}
+                        className={'btn default'}
+                        target={'_blank'}
+                    >
                         BOOK A DEMO
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -71,7 +71,8 @@ const Footer = () => (
 
                     <ul>
                         <li><Link to={'/affiliates'}>Affiliates Program</Link></li>
-                        <li><a className={'email'} href="mailto: info@profitwhales.agency">info@profitwhales.agency</a></li>
+                        <li><a className={'email'} href="mailto: info@profitwhales.agency">info@profitwhales.agency</a>
+                        </li>
                         <li>Coral Springs, FL 33065</li>
                     </ul>
                 </div>

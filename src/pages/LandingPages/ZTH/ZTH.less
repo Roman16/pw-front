@@ -16,6 +16,7 @@
       h2 {
         font-size: 4.285714285714286em;
         line-height: 1.2em;
+        color: #17175A;
       }
 
       .row {
@@ -33,6 +34,24 @@
         font-weight: 500;
         text-transform: uppercase;
 
+        &.white {
+          a {
+            color: #6D6DF6;
+          }
+        }
+
+        &.link {
+          padding: 0;
+
+          a {
+            width: 100%;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+
         &:focus {
           outline: none;
         }
@@ -48,10 +67,20 @@
     -o-background-size: cover;
     background-size: cover;
 
-    padding: 50px 0 300px 0;
+    padding: 50px 0 250px 0;
 
     .container {
       justify-content: space-between;
+
+      h2 {
+        color: #fff;
+        margin-bottom: 48px;
+        margin-top: 40px;
+
+        span {
+          color: #17175a;
+        }
+      }
     }
 
     img.king {
@@ -59,15 +88,6 @@
       margin-right: 20px;
     }
 
-    h2 {
-      color: #fff;
-      margin-bottom: 48px;
-      margin-top: 40px;
-
-      span {
-        color: #17175a;
-      }
-    }
 
     p {
       font-size: 1.5em;
@@ -78,20 +98,37 @@
 
     .action {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+
+      .row {
+        display: flex;
+        align-items: center;
+
+        &:first-child {
+          margin-bottom: 30px;
+        }
+
+        span {
+          font-size: 21px;
+          color: #FFFFFF;
+          margin: 0 40px;
+        }
+      }
 
       img {
         margin: 0 50px 0 0;
-        height: 25px;
+
+        &:first-child {
+          width: 179px;
+        }
 
         &:last-child {
-          height: 23px;
+          width: 138px;
         }
       }
 
       .btn {
         font-weight: 500;
-        margin-right: 35px;
       }
     }
   }
@@ -517,7 +554,7 @@
         margin-top: 180px;
         position: relative;
 
-        div:not(.col) {
+        div:first-child {
           width: 40%;
           height: 3.3333333333333335em;
           display: flex;
@@ -543,6 +580,9 @@
             color: #fff;
             font-size: 0.6190476190476191em;
             font-weight: 400;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
         }
 
@@ -558,8 +598,36 @@
           }
         }
 
-        div:last-child {
+        a {
           color: #4B5271;
+          width: 40%;
+          height: 3.3333333333333335em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #FFFFFF;
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+          border-radius: 4px;
+          font-size: 1.5em;
+          font-weight: 500;
+          position: relative;
+
+          div {
+            width: 140px;
+            height: 23px;
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 0.6190476190476191em;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
 
           svg {
             fill: #4B5271;
@@ -791,18 +859,21 @@
         .btn {
           width: 100%;
           margin: auto 0 0 0;
-          position: relative;
           border-radius: 0 0 4px 4px;
           height: 56px;
 
-          svg {
-            width: 17px;
-            height: 11px;
-            position: absolute;
-            right: 15px;
-            top: 0;
-            bottom: 0;
-            margin: auto 0;
+          a {
+            position: relative;
+
+            svg {
+              width: 17px;
+              height: 11px;
+              position: absolute;
+              right: 15px;
+              top: 0;
+              bottom: 0;
+              margin: auto 0;
+            }
           }
         }
       }
@@ -894,10 +965,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
 
-    h2 {
-      color: #fff;
+      h2 {
+        color: #fff;
+      }
     }
 
     p {
