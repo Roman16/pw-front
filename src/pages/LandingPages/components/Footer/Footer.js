@@ -33,7 +33,7 @@ const Footer = () => (
 
             <div className="menu">
                 <div className="col">
-                    <h5>Products</h5>
+                    <h4>Products</h4>
 
                     <ul>
                         <li><Link to={'/'}>PPC Optimization</Link></li>
@@ -42,11 +42,11 @@ const Footer = () => (
                 </div>
 
                 <div className="col">
-                    <h5><Link to={'/pricing'}>Pricing</Link></h5>
+                    <h4><Link to={'/pricing'}>Pricing</Link></h4>
                 </div>
 
                 <div className="col">
-                    <h5>Resources</h5>
+                    <h4>Resources</h4>
 
                     <ul>
                         <li><a href="/blog" target="_blank">Blog</a></li>
@@ -63,11 +63,11 @@ const Footer = () => (
                 </div>
 
                 <div className="col">
-                    <h5><Link to={'/videos'}>How it works</Link></h5>
+                    <h4><Link to={'/videos'}>How it works</Link></h4>
                 </div>
 
                 <div className="col">
-                    <h5>Contact Us</h5>
+                    <h4>Contact Us</h4>
 
                     <ul>
                         <li><Link to={'/affiliates'}>Affiliates Program</Link></li>
