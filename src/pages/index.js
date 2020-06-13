@@ -14,6 +14,8 @@ import CampaignList from "../components/CampaignList/CampaignList";
 import {userService} from "../services/user.services";
 
 
+const ThankPage = React.lazy(() => import('./ZeroToHero/ThankPage/ThankPage'));
+const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'));
 const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/ChooseCampaign'));
 const Marketing = React.lazy(() => import('./ZeroToHero/Marketing/Marketing'));
 const CreatingCampaign = React.lazy(() => import('./ZeroToHero/CreatingCampaign/CreatingCampaign'));
@@ -57,7 +59,7 @@ const AdminRoute = (props) => {
         userId: state.user.user.id,
     }));
 
-    if ((!developer && userId === 714) || (developer && userId === 777)) {
+    if ((!developer && userId === 714) || (developer)) {
         return <Route {...props} />
     } else {
         return <Redirect to={'/404'}/>
@@ -215,14 +217,17 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     {/*ZERO TO HERO*/}
-                                    {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/campaign"
-                                                                        component={ChooseCampaign}/>}
-                                    {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/ppc-structure"
-                                                                        component={Marketing}/>}
-                                    {developer && <ConnectedAmazonRoute exact path="/zero-to-hero/creating"
-                                                                        component={CreatingCampaign}/>}
-                                    {developer &&
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/settings" component={Settings}/>}
+                                    <AdminRoute exact path="/zero-to-hero/campaign" component={ChooseCampaign}/>
+
+                                    <AdminRoute exact path="/zero-to-hero/ppc-structure" component={Marketing}/>
+
+                                    <AdminRoute exact path="/zero-to-hero/creating" component={CreatingCampaign}/>
+
+                                    <AdminRoute exact path="/zero-to-hero/payment/:batchId?" component={Payment}/>
+
+                                    <AdminRoute exact path="/zero-to-hero/success" component={ThankPage}/>
+
+                                    <AdminRoute exact path="/zero-to-hero/settings" component={Settings}/>
 
                                     <Route path={'*'} render={() => (
                                         <Redirect to={'/404'}/>

@@ -3,11 +3,12 @@ import {SVG} from "../../../../utils/icons";
 import Pagination from "../../../../components/Pagination/Pagination";
 import {Input, Spin} from "antd";
 import {useDispatch, useSelector} from "react-redux";
-import {productsServices} from "../../../../services/products.services";
+import {zthServices} from "../../../../services/zth.services";
 import './SelectProduct.less';
 import ProductItem from "./ProductItem";
 import {debounce} from "throttle-debounce";
 import {zthActions} from "../../../../actions/zth.actions";
+import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup";
 
 const {Search} = Input;
 
@@ -16,6 +17,7 @@ const AllProducts = () => {
         [totalSize, setTotalSize] = useState(0),
         [searchStr, setSearchStr] = useState(''),
         [processing, setProcessing] = useState(false),
+        [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false),
         [openedProduct, setOpenedProduct] = useState(null),
         [selectedProducts, setSelectedProducts] = useState([]),
         [paginationOptions, setPaginationOptions] = useState({
@@ -23,9 +25,10 @@ const AllProducts = () => {
             pageSize: 10,
         });
 
-    const {addedProducts, productAmount} = useSelector(state => ({
+    const {addedProducts, productAmount, availableTokens} = useSelector(state => ({
         addedProducts: state.zth.selectedProducts,
         productAmount: state.zth.productAmount,
+        availableTokens: state.zth.paidBatch.available_tokens
     }));
 
     const dispatch = useDispatch();
@@ -34,7 +37,27 @@ const AllProducts = () => {
         if (status) {
             setSelectedProducts(selectedProducts.filter(item => item.id !== product.id))
         } else {
-            setSelectedProducts([...selectedProducts, product])
+            setSelectedProducts([...selectedProducts.filter(item => item.parent_id !== product.id), product])
+        }
+    };
+
+    const selectVariationHandler = (product, variationStatus, parentStatus) => {
+        if (parentStatus) {
+            if (variationStatus) {
+                setSelectedProducts(selectedProducts.filter(item => item.id !== product.parent_id));
+            } else if ([...selectedProducts.filter(item => item.parent_id === product.parent_id), ...addedProducts.filter(item => item.parent_id === product.parent_id)].length + 1 === allProducts.find(item => item.id === product.parent_id).variations.length) {
+                setSelectedProducts([...selectedProducts.filter(item => item.parent_id !== product.parent_id), allProducts.find(item => item.id === product.parent_id)])
+            } else {
+                setSelectedProducts([...selectedProducts.filter(item => item.id !== product.parent_id), product])
+            }
+        } else if (variationStatus) {
+            setSelectedProducts(selectedProducts.filter(item => item.id !== product.id))
+        } else {
+            if ([...selectedProducts.filter(item => item.parent_id === product.parent_id), ...addedProducts.filter(item => item.parent_id === product.parent_id)].length + 1 === allProducts.find(item => item.id === product.parent_id).variations.length) {
+                setSelectedProducts([...selectedProducts.filter(item => item.parent_id !== product.parent_id), allProducts.find(item => item.id === product.parent_id)])
+            } else {
+                setSelectedProducts([...selectedProducts, product])
+            }
         }
     };
 
@@ -55,8 +78,17 @@ const AllProducts = () => {
     });
 
     const addProductsHandler = () => {
+        if (selectedProducts.find(item => item.parent_id)) {
+            setVisibleConfirmWindow(true)
+        } else {
+            addProducts();
+        }
+    };
+
+    const addProducts = () => {
         dispatch(zthActions.addProducts(selectedProducts));
         setSelectedProducts([]);
+        setVisibleConfirmWindow(false)
     };
 
 
@@ -64,10 +96,9 @@ const AllProducts = () => {
         setProcessing(true);
 
         try {
-            const res = await productsServices.getProducts({
+            const res = await zthServices.getAllProducts({
                 ...paginationOptions,
                 searchStr: searchStr,
-                ungroupVariations: 0
             });
 
             setAllProducts(res.result || []);
@@ -87,7 +118,13 @@ const AllProducts = () => {
     return (
         <div className="col all-products">
             <div className="header-block">
-                <h3>Select Products</h3>
+                <h3>
+                    Select Products
+
+                    {availableTokens > 0 && <span className="free-tokens">
+                        Free tokens: {availableTokens}
+                    </span>}
+                </h3>
 
                 <div className="filters">
                     <div className="form-group">
@@ -106,7 +143,7 @@ const AllProducts = () => {
                         </div>
                         }
                         <button
-                            disabled={selectedProducts.length === 0 || (selectedProducts.length + addedProducts.length > productAmount)}
+                            disabled={selectedProducts.length === 0 || (availableTokens && [...addedProducts, ...selectedProducts].length > availableTokens)}
                             className={'btn default p15'}
                             onClick={addProductsHandler}
                         >
@@ -122,10 +159,14 @@ const AllProducts = () => {
                         key={product.id}
                         product={product}
                         isOpened={product.id === openedProduct}
-                        isSelected={selectedProducts.find(item => item.id === product.id)}
-                        isDisabled={addedProducts.find(item => item.id === product.id)}
+                        isSelected={!!selectedProducts.find(item => item.id === product.id)}
+                        isDisabled={!!addedProducts.find(item => item.id === product.id)}
+                        selectedProducts={selectedProducts}
+                        addedProducts={addedProducts}
+                        type={'all_products'}
 
                         onSelect={selectProductHandler}
+                        onSelectVariation={selectVariationHandler}
                         onOpenVariations={openVariationsListHandler}
                     />
                 ))}
@@ -143,6 +184,15 @@ const AllProducts = () => {
                 totalSize={totalSize}
                 listLength={allProducts.length}
                 processing={processing}
+            />
+
+            <ConfirmActionPopup
+                className={'confirm-remove-product-window'}
+                visible={visibleConfirmWindow}
+                title={'NOTE!'}
+                description={'You are adding the Variation. We highly recommend you to create campaigns for the Parent listing. Proceed with Variation?'}
+                handleOk={addProducts}
+                handleCancel={() => setVisibleConfirmWindow(false)}
             />
         </div>
     )

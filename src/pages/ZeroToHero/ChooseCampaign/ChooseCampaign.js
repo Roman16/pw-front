@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import './ChooseCampaign.less';
 import '../ZeroToHero.less';
@@ -7,14 +7,32 @@ import sponsoredBrandsImage from '../../../assets/img/zth/sponsored-brands-image
 import sponsoredDisplayImage from '../../../assets/img/zth/sponsored-display-image.svg';
 import {zthActions} from "../../../actions/zth.actions";
 import {history} from "../../../utils/history";
+import {zthServices} from "../../../services/zth.services";
+import HasIncompleteBatch from "../components/HasIncompleteBatch/HasIncompleteBatch";
 
 const ChooseCampaign = () => {
+    const [hasIncompleteBatch, setIncompleteBatch] = useState(false),
+        [visibleWindow, setVisibleWindow] = useState(false);
+
     const dispatch = useDispatch();
 
     function handleContinue(campaign) {
-        dispatch(zthActions.setCampaign(campaign));
-        history.push('/zero-to-hero/ppc-structure');
+        if (hasIncompleteBatch.status === 'DRAFT') {
+            setVisibleWindow(true)
+        } else {
+            dispatch(zthActions.setCampaign(campaign));
+            history.push('/zero-to-hero/ppc-structure');
+        }
     }
+
+    useEffect(() => {
+        zthServices.checkIncompleteBatch()
+            .then(res => {
+                if (res.result !== null) {
+                    setIncompleteBatch(res.result)
+                }
+            })
+    }, []);
 
     return (
         <div>
@@ -78,6 +96,8 @@ const ChooseCampaign = () => {
                     </div>
                 </div>
             </section>
+
+            {visibleWindow && <HasIncompleteBatch visible onChange={() => setIncompleteBatch(false)}/>}
         </div>
     )
 };

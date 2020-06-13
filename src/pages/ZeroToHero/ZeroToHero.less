@@ -4,15 +4,19 @@
 
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 20px;
-  grid-template-areas: 'title title' 'productSlider productSlider' 'marketingBlock marketingBlock';
-
+  grid-column-gap: 20px;
+  grid-template-areas: 'productSlider productSlider' 'marketingBlock marketingBlock';
 
   &.creating-campaign-page {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: 'title title' 'productSlider productSlider' 'allProducts selectedProducts' 'productSettings productSettings';
-    grid-gap: 20px;
+    grid-template-areas: 'productSlider productSlider' 'allProducts selectedProducts' 'productSettings productSettings';
+    grid-column-gap: 20px;
+
+    @media (max-width: 900px) {
+      grid-template-areas: 'productSlider productSlider' 'allProducts allProducts' 'selectedProducts selectedProducts' 'productSettings productSettings';
+
+    }
   }
 
   & > h2 {
@@ -32,12 +36,24 @@
 
   .all-products {
     grid-area: allProducts;
+
+    @media (max-width: 900px) {
+      margin-bottom: 20px;
+    }
   }
+
   .product-settings {
     grid-area: productSettings;
   }
 
   .marketing-block {
     grid-area: marketingBlock;
+  }
+
+  .route-loader {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 100000;
   }
 }

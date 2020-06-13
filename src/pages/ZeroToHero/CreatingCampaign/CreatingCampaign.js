@@ -3,19 +3,20 @@ import '../ZeroToHero.less';
 import './CreatingCampaign.less';
 import ProductAmountSlider from "../components/ProductAmountSlider/ProductAmountSlider";
 import ProductSettings from "./ProductSettings/ProductSettings";
-import KeywordList from "./KeywordList/KeywordList";
-import Payment from "./Payment/Payment";
 import AllProducts from "./SelectProduct/AllProducts";
 import SelectedProduct from "./SelectProduct/SelectedProduct";
+import HasIncompleteBatch from "../components/HasIncompleteBatch/HasIncompleteBatch";
+import {useSelector} from "react-redux";
 
 
 const CreatingCampaign = () => {
+    const {availableTokens} = useSelector(state => ({
+        availableTokens: state.zth.paidBatch.available_tokens
+    }));
 
     return (
         <div className='zero-to-hero-page creating-campaign-page'>
-            <h2>Welcome to Zero to Hero set up page. Let’s do the magic!</h2>
-
-            <ProductAmountSlider/>
+            {!availableTokens && <ProductAmountSlider description/>}
 
             <AllProducts/>
 
@@ -23,9 +24,8 @@ const CreatingCampaign = () => {
 
             <ProductSettings/>
 
-            {/*<KeywordList/>*/}
+            <HasIncompleteBatch/>
 
-            {/*<Payment/>*/}
         </div>
     )
 };

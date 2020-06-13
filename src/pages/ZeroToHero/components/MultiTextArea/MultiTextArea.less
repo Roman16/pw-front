@@ -8,25 +8,47 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  position: relative;
 
   .list {
+    width: 100%;
     height: max-content;
     display: flex;
     flex-wrap: wrap;
   }
 
+  .item-text {
+    .custom-tooltip {
+      margin: 0 0 0 10px;
+
+      svg {
+        width: 1.0714285714285714rem;
+        height: 1.2142857142857142rem;
+        margin: 0;
+
+        fill: #F0B849;
+        stroke: #F0B849;
+      }
+    }
+  }
+
+  .ant-popover-inner-content {
+    font-size: 1rem;
+  }
 
   .item-text {
     height: 2.2857142857142856rem;
     padding: 0 10px;
     color: #fff;
     font-size: 0.8571428571428571rem;
+    line-height: 0.8571428571428571rem;
     margin: 0 0 10px 10px;
     background: #6D6DF6;
     border-radius: 40px;
     display: flex;
     align-items: center;
     font-weight: 500;
+    //border: 1px solid #6D6DF6;
 
     i {
       cursor: pointer;
@@ -42,6 +64,7 @@
 
   input {
     flex: 1;
+    min-width: 50px;
     border: 0;
     background: inherit;
     height: 2.2857142857142856rem;

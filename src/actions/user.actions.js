@@ -75,10 +75,6 @@ function loginWithAmazon(user) {
 
 function logOut() {
     return dispatch => {
-        history.push('/login');
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
-
         dispatch(setInformation({
             user: {}
         }));

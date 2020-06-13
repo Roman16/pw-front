@@ -51,6 +51,7 @@
       border-bottom: 1px solid rgba(101, 106, 132, 0.2);
       cursor: pointer;
       min-height: 7.142857142857143rem;
+      position: relative;
 
       &:hover {
         background: rgba(245, 245, 255, 0.45);
@@ -82,6 +83,7 @@
 
       .photo {
         min-width: 5rem;
+        width: 5rem;
         height: 5rem;
         border-radius: 2px;
         overflow: hidden;
@@ -114,33 +116,6 @@
             -webkit-box-orient: vertical;
           }
 
-          .variations-button {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin: 0 0 auto auto;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            &.opened {
-              svg {
-                transform: rotate(180deg);
-              }
-            }
-
-            svg {
-              width: 1.2857142857142858rem;
-              height: 0.7142857142857143rem;
-              stroke: #343C5A;
-            }
-
-            &:hover {
-              background: #F5F5FF;
-            }
-          }
-
           .price {
             font-size: 1rem;
             letter-spacing: 0.2px;
@@ -170,14 +145,18 @@
 
           .added {
             font-size: 0.8571428571428571rem;
-            margin: 0 5px 0 auto;
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
           }
 
           .remove {
             font-size: 0.8571428571428571rem;
             color: #343C5A;
             font-weight: 500;
-            margin: 0 5px 0 auto;
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
 
             &:hover {
               color: #6D6DF6;
@@ -185,14 +164,54 @@
           }
         }
       }
+
+      .variations-button {
+        height: 2.85714286rem;
+        width: 2.85714286rem;
+        border-radius: 50%;
+        margin: auto 0 auto auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 0;
+
+        &.opened {
+          svg {
+            transform: rotate(180deg);
+          }
+        }
+
+        svg {
+          width: 1.28571429rem;
+          height: 0.71428571rem;
+          stroke: #343C5A;
+        }
+
+        &:hover {
+          background: #F5F5FF;
+        }
+      }
+
     }
 
     .variations-list {
       display: flex;
       flex-direction: column;
 
-      &.selected {
-        .variation-item {
+
+      .variation-item {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(101, 106, 132, 0.2);
+        cursor: pointer;
+
+        &:hover {
+          background: rgba(245, 245, 255, 0.45);
+        }
+
+        &.selected {
           background: rgba(245, 245, 255, 0.7);
           position: relative;
 
@@ -210,10 +229,8 @@
             background: #6D6DF6;
           }
         }
-      }
 
-      &.disabled {
-        .variation-item {
+        &.disabled {
           opacity: .6;
           cursor: default;
 
@@ -229,17 +246,6 @@
             background: #fff;
           }
         }
-      }
-
-      .variation-item {
-        display: flex;
-        align-items: center;
-        border-bottom: 1px solid rgba(101, 106, 132, 0.2);
-        cursor: pointer;
-
-        &:hover {
-          background: rgba(245, 245, 255, 0.45);
-        }
 
         .variation-indicator {
           min-width: 8px;
@@ -250,6 +256,7 @@
         }
 
         .product-item {
+          flex: 1;
           border: 0;
           padding-left: 0;
 
@@ -287,12 +294,22 @@
 
 .all-products {
   .header-block {
+    h3 {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
     .filters {
       display: flex;
       align-items: center;
 
       .form-group {
         width: 45%;
+
+        input {
+          font-size: 1rem;
+        }
       }
 
       .products-actions {
@@ -320,13 +337,13 @@
       display: flex;
 
       .count {
-        background: #F5F5FF;
+        background: #6D6DF6;
+        color: #fff;
         border-radius: 16px;
         height: 2.142857142857143rem;
         margin: 0 0 0 15px;
 
         font-size: 1.4285714285714286rem;
-        color: #343C5A;
         padding: 0 15px;
         display: flex;
         align-items: center;
@@ -361,21 +378,26 @@
 
 .confirm-remove-product-window {
   .ant-modal {
+    width: 100%!important;
     max-width: 42.857142857142854rem;
 
     .ant-modal-content {
-      width: 100%;
+      width: 42.857142857142854rem;
       padding: 2.857142857142857rem !important;
 
       .ant-modal-title {
         text-align: left;
         font-size: 1.4285714285714286rem;
+        color: #343C5A;
+        margin-bottom: 0;
       }
 
       .ant-modal-body {
         p {
           text-align: left;
           font-size: 1rem;
+          color: #343C5A;
+          margin-bottom: 2.857142857142857rem;
         }
       }
 

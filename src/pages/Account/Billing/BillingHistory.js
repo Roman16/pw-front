@@ -45,12 +45,15 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             render: (text) => {
                 let status = text;
                 status.toUpperCase();
-                if ((status === 'PAID') || (status === 'SUCCESS')) return (
-                    <span className='payment-status success'>{text.toLowerCase()}</span>);
-                if ((status === 'PENDING') || (status === 'WAITING') || (status === 'OPEN') || (status === 'INCOMPLETE')) return (
-                    <span className='payment-status waiting'>{text.toLowerCase()}</span>);
-                if ((status === 'CANCELLED') || (status === 'VOID') || (status === 'FAILED')) return (
-                    <span className='payment-status error'>{text.toLowerCase()}</span>);
+                if ((status === 'PAID') || (status === 'SUCCESS')) {
+                    return (<span className='payment-status success'>{text.toLowerCase()}</span>);
+                } else if ((status === 'PENDING') || (status === 'WAITING') || (status === 'OPEN') || (status === 'INCOMPLETE')) {
+                    return (<span className='payment-status waiting'>{text.toLowerCase()}</span>);
+                } else if ((status === 'CANCELLED') || (status === 'VOID') || (status === 'FAILED')) {
+                    return (<span className='payment-status error'>{text.toLowerCase()}</span>);
+                } else {
+                    return (<span className='payment-status'>{text.toLowerCase()}</span>);
+                }
             }
         },
         {

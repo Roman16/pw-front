@@ -1,12 +1,34 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {Input, Slider} from "antd";
 import './ProductAmountSlider.less';
 import {useDispatch, useSelector} from "react-redux";
 import {zthActions} from "../../../../actions/zth.actions";
+import {numberMask} from "../../../../utils/numberMask";
 
-let timerId = null;
+const priceRender = (count) => {
+    if (count > 0 && count <= 5) {
+        return (<span>$ 500</span>)
+    } else if (count >= 6 && count <= 20) {
+        return (<span>$ 400</span>)
+    } else if (count >= 21 && count <= 50) {
+        return (<span>$ 350</span>)
+    } else if (count >= 51 && count <= 100) {
+        return (<span>$ 300</span>)
+    }
+};
 
-const ProductAmountSlider = () => {
+export const saleRender = (count) => {
+    if (count >= 6 && count <= 20) {
+        return (<span>$ {numberMask(count * 500 * 0.2, 0)}</span>)
+    } else if (count >= 21 && count <= 50) {
+        return (<span>$ {numberMask(count * 500 * 0.3, 0)}</span>)
+    } else if (count >= 51 && count <= 100) {
+        return (<span>$ {numberMask(count * 500 * 0.4, 0)}</span>)
+    }
+};
+
+
+const ProductAmountSlider = ({description}) => {
     const dispatch = useDispatch();
 
     const {productAmount, addedProducts} = useSelector(state => ({
@@ -14,26 +36,13 @@ const ProductAmountSlider = () => {
         addedProducts: state.zth.selectedProducts,
     }));
 
-    const [productCount, setCount] = useState(productAmount),
-        [sliderValue, setValue] = useState(productAmount);
-
     function handleChangeSlider(value) {
         if (value < addedProducts.length) {
-            setCount(addedProducts.length);
-            setValue(addedProducts.length);
+            dispatch(zthActions.setProductAmount(addedProducts.length));
         } else {
-            setCount(value);
-            setValue(value);
+            dispatch(zthActions.setProductAmount(value));
         }
     }
-
-    useEffect(() => {
-        clearTimeout(timerId);
-
-        timerId = setTimeout(() => {
-            dispatch(zthActions.setProductAmount(productCount));
-        }, 10)
-    }, [productCount]);
 
     return (
         <section className='product-slider'>
@@ -45,7 +54,7 @@ const ProductAmountSlider = () => {
                         <div className="value form-group">
                             <Input
                                 type={'number'}
-                                value={productCount}
+                                value={productAmount}
                                 onChange={(e) => handleChangeSlider(e.target.value)}
                                 max={100}
                                 min={addedProducts.length || 1}
@@ -54,21 +63,21 @@ const ProductAmountSlider = () => {
                     </div>
 
                     <div className="description">
-                        See the example of the campaigns <a target={'_blank'}
-                                                            href="https://docs.google.com/spreadsheets/d/14FUMQKNV8-oqbd_XeyecVmZtMamY6qhi3GcHEEO0dFM/edit#gid=277769766">you’ll
-                        get</a>
+                        See the example of the campaigns
+                        <a
+                            target={'_blank'}
+                            href="https://docs.google.com/spreadsheets/d/1HqPXFEh1bsElCUF4OiXayOsKoci27i-3sYL0HIqmJfc/edit?usp=sharing"
+                        >
+                            you’ll get
+                        </a>
                     </div>
-
-                    <p>
-                        <span>*</span> All variations counts as one Product
-                    </p>
                 </div>
 
                 <div className="slider">
                     <Slider
                         tooltipVisible={true}
                         marks={{1: '1', 25: '25', 50: '50', 75: '75', 100: '100'}}
-                        value={sliderValue}
+                        value={productAmount}
                         onChange={handleChangeSlider}
                         min={1}
                         max={100}
@@ -79,17 +88,22 @@ const ProductAmountSlider = () => {
 
                 <div className="row">
                     <div className="price">
-                        <span className="value">$ 99</span>
+                        <span className="value">{priceRender(productAmount)}</span>
                         Per product
                     </div>
 
                     <div className="save-label">
-                        You save <span> $32</span>
+                        {productAmount > 5 && <>You save {saleRender(productAmount)}</>}
                     </div>
                 </div>
             </div>
-        </section>
 
+           {description &&  <div className="description">
+                Excess products will be added as free Zero to Hero tokens to your account so you will be able to create
+                Zero to Hero later. In this way you can save money if you need to create Zero to Hero for multiple
+                products, but right now only have time to fill data just for couple of them.
+            </div>}
+        </section>
     )
 };
 

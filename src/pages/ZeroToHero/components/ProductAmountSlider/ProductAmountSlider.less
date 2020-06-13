@@ -1,16 +1,19 @@
 @import '../../../../style/variables';
 
 .product-slider {
+  box-shadow: @default-section-shadow;
+  background: #fff;
+  padding: 0 1.4285714285714286rem 1.4285714285714286rem 1.4285714285714286rem;
+  border-radius: 4px;
+  margin-bottom: 20px;
+
   .slider-block {
     min-height: 150px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #fff;
-    border-radius: 4px;
-    padding: 0 7.142857142857143rem 0 1.4285714285714286rem;
     position: relative;
-    box-shadow: @default-section-shadow;
+    padding-right: 2.857142857142857rem;
 
     .col {
 
@@ -44,6 +47,7 @@
 
         a {
           text-decoration: underline;
+          margin: 0 0 0 5px;
         }
       }
 
@@ -64,26 +68,32 @@
       margin: 20px 50px 0;
 
       .ant-slider {
-        height: 1px;
+        height: 3px;
         padding: 0;
 
         .ant-slider-rail {
-          height: 1px;
+          height: 3px;
           background: #C9CBD4;
+          top: 0;
+          bottom: 0;
+          margin: auto 0;
         }
 
         .ant-slider-track {
           background: #6D6DF6;
-          height: 1px;
+          height: 3px;
+          top: 0;
+          bottom: 0;
+          margin: auto 0;
         }
 
         .ant-slider-step {
-          height: 1px;
+          height: 3px;
         }
 
         .ant-slider-dot {
-          width: 9px;
-          height: 9px;
+          width: 10px;
+          height: 10px;
           background: #C9CBD4;
           border: 0;
           top: -4px;
@@ -95,6 +105,12 @@
 
           &.ant-slider-dot-active {
             background: #6D6DF6;
+          }
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+            height: 7px;
+            width: 7px;
+            top: -2px;
           }
         }
 
@@ -114,9 +130,8 @@
         }
 
         .ant-slider-handle {
-          width: 14px;
-          height: 14px;
-          background: #6D6DF6;
+          width: 1rem;
+          height: 1rem;
           box-sizing: content-box;
           margin-top: -7px;
           border: 0;
@@ -137,7 +152,7 @@
       -o-background-size: cover;
       background-size: cover;
       padding: 0;
-      top: -68px !important;
+      top: -67px !important;
 
       .ant-tooltip-content {
         margin: 0;
@@ -148,16 +163,21 @@
         background-color: inherit !important;
         box-shadow: none;
         display: flex;
-        align-items: center;
         justify-content: center;
 
-        font-size: 16px;
+        font-size: 1.1428571428571428rem;
         color: #FFFFFF !important;
         font-weight: 500;
       }
 
       .ant-tooltip-arrow {
         display: none;
+      }
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        height: 63px;
+        width: 32px;
+        top: -57px !important;
       }
     }
 
@@ -179,6 +199,7 @@
       }
 
       .save-label {
+        min-width: 5rem;
         font-size: 1rem;
         text-transform: uppercase;
         color: #7DD4A1;
@@ -197,5 +218,14 @@
         }
       }
     }
+  }
+
+  & > .description {
+    background: #B6B6FB;
+    border-radius: 4px;
+    font-size: 1.1428571428571428rem;
+    color: #FFFFFF;
+    padding: 0.7142857142857143rem 1.4285714285714286rem;
+    margin: -10px 0 0 0;
   }
 }
