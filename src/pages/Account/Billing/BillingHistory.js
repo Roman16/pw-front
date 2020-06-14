@@ -63,14 +63,16 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams, 
             key: 'status',
             width: '100px',
             render: (invoiceNumber, item) => {
-                if (item.invoice_link_id) return (
+                return (
                     <div className='invoice-actions'>
-                        <a href={`https://pay.stripe.com/invoice/${item.invoice_link_id}`} target='_blank'>
+                        {item.invoice_link &&
+                        <a href={item.invoice_link} target='_blank'>
                             <Icon type="eye"/>
-                        </a>
-                        <a href={`https://pay.stripe.com/invoice/${item.invoice_link_id}/pdf`}>
+                        </a>}
+
+                        {item.invoice_link_pdf && <a href={item.invoice_link_pdf}>
                             <Icon type="file-pdf"/>
-                        </a>
+                        </a>}
                     </div>)
             }
         },
