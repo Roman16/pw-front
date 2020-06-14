@@ -204,9 +204,15 @@ const ZTHLanding = () => {
                             competition on the Amazon
                         </p>
 
-                        {/*<button className={'btn white'}>*/}
-                        {/*    read more about zth*/}
-                        {/*</button>*/}
+                        <button
+                            className={'btn white link'}>
+                            <a
+                                href="http://learn.profitwhales.com/en/articles/4162147-zero-to-hero-campaigns-structure"
+                                target={'_blank'}
+                            >
+                                read more about zth
+                            </a>
+                        </button>
                     </div>
                 </div>
 
