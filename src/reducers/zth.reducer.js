@@ -24,6 +24,7 @@ const initialProductSettings = {
 const initialState = {
     selectedCampaign: 'Sponsored Products',
     productAmount: 1,
+    productSliderType: 'soft',
     selectedProducts: [],
     selectedProductsWithSettingsParams: [],
     activeProductIndex: 0,
@@ -48,15 +49,19 @@ export function zth(state = initialState, action) {
         case zthConstants.SET_PRODUCT_AMOUNT:
             return {
                 ...state,
-                productAmount: action.payload
+                productAmount: action.payload,
+                productSliderType: 'user'
             };
 
         case zthConstants.ADD_PRODUCTS:
             return {
                 ...state,
                 selectedProducts: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)),
-                productAmount: [...state.selectedProducts, ...action.payload].length > state.productAmount ? [...state.selectedProducts, ...action.payload].length : state.productAmount,
-                selectedProductsWithSettingsParams: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)).map(item => ({product_id: item.id, ...initialProductSettings}))
+                selectedProductsWithSettingsParams: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)).map(item => ({product_id: item.id, ...initialProductSettings})),
+                ...[...state.selectedProducts, ...action.payload].length > state.productAmount && {
+                    productAmount: [...state.selectedProducts, ...action.payload].length,
+                    productSliderType: 'soft'
+                }
             };
 
         case zthConstants.REMOVE_PRODUCTS:
@@ -65,7 +70,8 @@ export function zth(state = initialState, action) {
                     ...state,
                     selectedProducts: [],
                     selectedProductsWithSettingsParams: [],
-                    activeProductIndex: 0
+                    activeProductIndex: 0,
+                    ...state.productSliderType === 'soft' && {productAmount: 1}
                 };
             } else {
                 const nevList = [...state.selectedProducts],
@@ -77,6 +83,7 @@ export function zth(state = initialState, action) {
                     ...state,
                     selectedProducts: [...nevList],
                     selectedProductsWithSettingsParams: [...newListWithSettings],
+                    ...state.productSliderType === 'soft' && {productAmount: nevList.length || 1},
                     activeProductIndex: 0
                 };
             }
@@ -120,7 +127,7 @@ export function zth(state = initialState, action) {
         case zthConstants.CLEAR_SETTINGS:
             return {
                 ...initialState
-            }
+            };
 
         default:
             return state;

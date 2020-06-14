@@ -4,6 +4,9 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {SVG} from "../../../utils/icons";
 import OurCases from "../Automation/OurCases/OurCases";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import zthKingImage from '../../../assets/img/landing-zth/zth-king.svg'
 import amazonStoreLogo from '../../../assets/img/landing-zth/amazon_appstore.svg'
@@ -23,6 +26,7 @@ import agencyIcon from '../../../assets/img/landing-zth/agency-icon.svg'
 import bestSellerIcon from '../../../assets/img/landing-zth/best-seller-icon.svg'
 import bestSellerLabel from '../../../assets/img/landing-zth/best-seller-label.png'
 import {Link} from "react-router-dom";
+import {stepsImages} from "../../../assets/img/landing-automation/steps";
 
 const setupDescription = [
     {
@@ -286,13 +290,13 @@ const ZTHLanding = () => {
 
                         <div className="ppc ppc-price">
                             Total Per 1 SKU $750-$2000
-                            <div className={'line'} />
+                            <div className={'line'}/>
                             In average 48 hours needed
                         </div>
 
                         <div className="zth zth-price">
                             Total Per 1 SKU $750-$2000
-                            <div className={'line'} />
+                            <div className={'line'}/>
                             In average 48 hours needed
                         </div>
                     </div>
@@ -351,7 +355,7 @@ const ZTHLanding = () => {
                             <img src={x10SuccessImage} alt=""/>
                         </div>
 
-                        <Link to={'/'}  target={'_blank'}>
+                        <Link to={'/'} target={'_blank'}>
                             <SVG id={'ppc-automate-icon'}/>
                             PPC Automation
                             <div>Automate Ads</div>
@@ -366,7 +370,8 @@ const ZTHLanding = () => {
                         <div className="row">
                             <div className="col">
                                 <div className="price">
-                                    $500
+                                    <span className={'dollar'}>$</span>
+                                    500
                                     <span>
                                         One time fee <br/> per Product
                                     </span>
@@ -405,7 +410,7 @@ const ZTHLanding = () => {
                 <div className="container">
                     <h2>Our Simple Pricing Guide</h2>
 
-                    <div className="pricing-plans">
+                    <div className="pricing-plans desc">
                         <div className={'plan'}>
                             <div className="bg"/>
                             <div className="content">
@@ -419,7 +424,8 @@ const ZTHLanding = () => {
                                 <label htmlFor=""></label>
 
                                 <h3>
-                                    $500
+                                    <span className={'dollar'}>$</span>
+                                    500
 
                                     <span>
                                     one time fee <br/> per 1 Product
@@ -446,7 +452,8 @@ const ZTHLanding = () => {
                             <label htmlFor="">20% Discount</label>
 
                             <h3>
-                                $400
+                                <span className={'dollar'}>$</span>
+                                400
 
                                 <span>
                                     one time fee <br/> per 1 Product
@@ -473,7 +480,8 @@ const ZTHLanding = () => {
                             <label htmlFor="">30% Discount</label>
 
                             <h3>
-                                $350
+                                <span className={'dollar'}>$</span>
+                                350
 
                                 <span>
                                     one time fee <br/> per 1 Product
@@ -500,7 +508,8 @@ const ZTHLanding = () => {
                             <label htmlFor="">40% Discount</label>
 
                             <h3>
-                                $300
+                                <span className={'dollar'}>$</span>
+                                300
 
                                 <span>
                                     one time fee <br/> per 1 Product
@@ -515,7 +524,135 @@ const ZTHLanding = () => {
                             </button>
                         </div>
                     </div>
+                </div>
 
+                <div className="pricing-plans mob">
+                    <Slider
+                        dots={false}
+                        infinite={true}
+                        slidesToShow={1}
+                        slidesToScroll={1}
+                        centerMode={true}
+                        focusOnSelect={true}
+                        centerPadding={'50px'}
+                    >
+                        <div className={'plan first'}>
+                            <div className="bg"/>
+                            <div className="content">
+                                <img src={bestSellerLabel} alt=""/>
+
+                                <div className="counts">
+                                    <div className="count"/>
+                                </div>
+
+                                <h4>0-5 Products</h4>
+                                <label htmlFor=""></label>
+
+                                <h3>
+                                    <span className={'dollar'}>$</span>
+                                    500
+
+                                    <span>
+                                    one time fee <br/> per 1 Product
+                                </span>
+                                </h3>
+
+                                <button className={'btn default link'}>
+                                    <Link to={'registration'}>
+                                        GET STARTED
+                                        <SVG id={'right-white-arrow'}/>
+                                    </Link>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className={'plan'}>
+                            <div className="counts">
+                                {[1, 2].map(item => (
+                                    <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
+                                         className="count"/>
+                                ))}
+                            </div>
+                            <h4>6-20 Products</h4>
+                            <label htmlFor="">20% Discount</label>
+
+                            <h3>
+                                <span className={'dollar'}>$</span>
+                                400
+
+                                <span>
+                                    one time fee <br/> per 1 Product
+                                </span>
+                            </h3>
+
+                            <button className={'btn default link'}>
+                                <Link to={'registration'}>
+                                    GET STARTED
+                                    <SVG id={'right-white-arrow'}/>
+                                </Link>
+                            </button>
+                        </div>
+
+                        <div className={'plan'}>
+                            <div className="counts">
+                                {[1, 2, 3].map(item => (
+                                    <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
+                                         className="count"/>
+                                ))}
+                            </div>
+
+                            <h4>21-50 Products</h4>
+                            <label htmlFor="">30% Discount</label>
+
+                            <h3>
+                                <span className={'dollar'}>$</span>
+                                350
+
+                                <span>
+                                    one time fee <br/> per 1 Product
+                                </span>
+                            </h3>
+
+                            <button className={'btn default link'}>
+                                <Link to={'registration'}>
+                                    GET STARTED
+                                    <SVG id={'right-white-arrow'}/>
+                                </Link>
+                            </button>
+                        </div>
+
+                        <div className={'plan'}>
+                            <div className="counts">
+                                {[1, 2, 3, 4].map(item => (
+                                    <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
+                                         className="count"/>
+                                ))}
+                            </div>
+
+                            <h4>51-100 Products</h4>
+                            <label htmlFor="">40% Discount</label>
+
+                            <h3>
+                                <span className={'dollar'}>$</span>
+                                300
+
+                                <span>
+                                    one time fee <br/> per 1 Product
+                                </span>
+                            </h3>
+
+                            <button className={'btn default link'}>
+                                <Link to={'registration'}>
+                                    GET STARTED
+                                    <SVG id={'right-white-arrow'}/>
+                                </Link>
+                            </button>
+                        </div>
+                    </Slider>
+
+                </div>
+
+                <div className="container">
                     <div className="row">
                         <div className="contact-block">
                             <img src={skuIcon} alt=""/>

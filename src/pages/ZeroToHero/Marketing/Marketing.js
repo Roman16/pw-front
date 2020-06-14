@@ -29,7 +29,7 @@ const Marketing = () => {
 
     return (
         <div className='zero-to-hero-page'>
-            {!availableTokens && <ProductAmountSlider/>}
+            {!availableTokens && <ProductAmountSlider onNextStep={handleContinue}/>}
 
             <section className="marketing-block">
                 <div className="row">

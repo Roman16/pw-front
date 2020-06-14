@@ -28,7 +28,7 @@ export const saleRender = (count) => {
 };
 
 
-const ProductAmountSlider = ({description}) => {
+const ProductAmountSlider = ({description, onNextStep}) => {
     const dispatch = useDispatch();
 
     const {productAmount, addedProducts} = useSelector(state => ({
@@ -96,6 +96,10 @@ const ProductAmountSlider = ({description}) => {
                         {productAmount > 5 && <>You save {saleRender(productAmount)}</>}
                     </div>
                 </div>
+
+                {onNextStep && <button className='btn default' onClick={onNextStep}>
+                    Start
+                </button>}
             </div>
 
            {description &&  <div className="description">

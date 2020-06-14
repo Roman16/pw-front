@@ -4,7 +4,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFacebookSquare, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons";
 
 import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
-import aLogo from '../../../../assets/img/amazon-app-store-logo.png';
+import appStoreLogo from '../../../../assets/img/amazon-app-store-logo-dark.png';
+import spnLogo from '../../../../assets/img/amazon-spn-logo-dark.png';
 
 import './Footer.less';
 
@@ -81,7 +82,9 @@ const Footer = () => (
             <div className="row">
                 <label>Profit Whales © 2020 All Right Reserved</label>
 
-                <img src={aLogo} alt="" className={'amazon-appstore-logo'}/>
+                <img src={spnLogo} alt="" className={'amazon-spn-logo'}/>
+
+                <img src={appStoreLogo} alt="" className={'amazon-appstore-logo'}/>
 
                 <ul className="social-icons">
                     <li>

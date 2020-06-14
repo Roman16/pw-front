@@ -5,6 +5,7 @@ import {casesImages} from "../../../../assets/img/landing-automation/cases";
 import Slider from "react-slick";
 import {history} from "../../../../utils/history";
 import './OurCases.less';
+import {useSwipeEffect} from "../../../../utils/hooks/useSwipeEffect";
 
 const ourCases = [
     {
@@ -246,6 +247,9 @@ const OurCases = () => {
         }, 10)
     };
 
+    const [touchStart, swipeHandler] = useSwipeEffect(prevSlide, nextSlide);
+
+
     const goToSlide = (slide) => {
         setCaseSlide(slide)
     };
@@ -261,7 +265,7 @@ const OurCases = () => {
                 <div className="container">
                     <h2>Our Cases</h2>
 
-                    <div className='slider' id='cases-slider'>
+                    <div className='slider' id='cases-slider' onTouchMove={swipeHandler} onTouchStart={touchStart}>
                         <div className="row">
                             <div className="prev" onClick={prevSlide}><FontAwesomeIcon icon={faPlay}/>
                             </div>

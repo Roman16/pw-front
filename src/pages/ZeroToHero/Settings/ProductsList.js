@@ -284,6 +284,12 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 render: (status, item) => (jobStatus(item))
             },
             {
+                title: 'KW Amount',
+                dataIndex: 'kw_amount',
+                key: 'kw_amount',
+                minWidth: '200px',
+            },
+            {
                 title: 'PPC Automate Status',
                 dataIndex: 'under_optimization',
                 key: 'under_optimization',

@@ -5,8 +5,9 @@ import masterLogo from '../../../assets/img/mastercard.svg';
 import {Icon} from "antd";
 import moment from "moment";
 import {numberMask} from "../../../utils/numberMask";
+import Pagination from "../../../components/Pagination/Pagination";
 
-const BillingHistory = ({historyList, handlePaginationChange, paginationParams}) => {
+const BillingHistory = ({historyList, handlePaginationChange, paginationParams, processing}) => {
     const columns = [
         {
             title: 'Date Issued',
@@ -90,18 +91,24 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams})
             {paginationParams.totalSize > 0 &&
             <div className={`history-list ${paginationParams.totalSize > 10 && 'full-list'}`}>
                 <CustomTable
-                    onChangePagination={handlePaginationChange}
                     dataSource={historyList}
                     columns={columns}
-                    currentPage={paginationParams.page}
-                    totalSize={paginationParams.totalSize}
-                    pageSize={paginationParams.pageSize}
                     rowClassName={(item) => {
                         const status = item.status.toUpperCase();
                         if ((status === 'PAID') || (status === 'SUCCESS')) return ('success-invoice');
                         if ((status === 'PENDING') || (status === 'WAITING') || (status === 'OPEN') || (status === 'INCOMPLETE')) return ('waiting-invoice');
                         if ((status === 'CANCELLED') || (status === 'VOID') || (status === 'FAILED')) return ('error-invoice');
                     }}
+                />
+
+                <Pagination
+                    onChange={handlePaginationChange}
+                    page={paginationParams.page}
+                    pageSizeOptions={[10, 25, 50]}
+                    pageSize={paginationParams.pageSize}
+                    totalSize={paginationParams.totalSize}
+                    listLength={historyList.length}
+                    processing={processing}
                 />
             </div>}
         </section>

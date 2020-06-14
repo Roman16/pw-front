@@ -36,7 +36,8 @@ const Billing = () => {
         [paginationParams, changePagination] = useState(defaultPaginationParams),
         [paymentHistory, updateHistoryList] = useState([]),
         [paymentCards, updatePayment] = useState({}),
-        [processing, setProcessing] = useState(false);
+        [processing, setProcessing] = useState(false),
+        [historyFetching, setHistoryFetching] = useState(false);
 
     const {subscriptions} = useSelector(state => ({
         subscriptions: Object.keys(state.user.subscriptions).map(item => state.user.subscriptions[item])
@@ -78,9 +79,12 @@ const Billing = () => {
     }
 
     async function getPaymentHistory() {
+        setHistoryFetching(true);
+
         try {
             const historyData = await userService.fetchBillingHistory(paginationParams);
             updateHistoryList(historyData.result);
+
             changePagination({
                 ...paginationParams,
                 totalSize: historyData.totalSize
@@ -88,6 +92,8 @@ const Billing = () => {
         } catch (e) {
             console.log(e);
         }
+
+        setHistoryFetching(false);
     }
 
     async function handleRemoveCard(card) {
@@ -131,10 +137,8 @@ const Billing = () => {
         setProcessing(false);
     }
 
-    async function handlePaginationChange({page}) {
-        const res = await userService.fetchBillingHistory({...paginationParams, page});
-        changePagination({...paginationParams, page});
-        updateHistoryList(res);
+    async function handlePaginationChange(params) {
+        changePagination({...paginationParams, ...params});
     }
 
     function handleUpdateInformation() {
@@ -186,7 +190,7 @@ const Billing = () => {
 
     useEffect(() => {
         getPaymentHistory();
-    }, [paginationParams.page]);
+    }, [paginationParams.page, paginationParams.pageSize]);
 
     return (
         <div className="user-cabinet billing-page">
@@ -208,6 +212,7 @@ const Billing = () => {
                 historyList={paymentHistory}
                 paginationParams={paginationParams}
                 handlePaginationChange={handlePaginationChange}
+                processing={historyFetching}
             />
 
             <Drawer
