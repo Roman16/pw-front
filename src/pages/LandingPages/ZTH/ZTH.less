@@ -133,17 +133,27 @@
         }
       }
 
-      img {
-        margin: 0 50px 0 0;
+      .images {
+        display: flex;
+        align-items: flex-end;
 
-        &:first-child {
-          width: 179px;
-        }
+        img {
+          margin: 0 50px 0 0;
 
-        &:last-child {
-          width: 138px;
+          &:first-child {
+            width: 179px;
+            height: 29px;
+          }
+
+          &:last-child {
+            width: 144px;
+            height: 32px;
+            margin: 0 0 2px 0;
+          }
         }
       }
+
+
 
       .btn {
         font-weight: 500;
@@ -169,7 +179,7 @@
         }
 
         .action {
-          .row {
+          .row, .images {
             justify-content: center;
           }
         }
@@ -191,8 +201,9 @@
         }
 
         .action {
-          .row {
+          .row, .images {
             flex-direction: column;
+            align-items: center;
 
             span {
               margin: 20px 0;
@@ -1057,6 +1068,28 @@
           .content {
             margin: 0;
           }
+
+
+          .slider {
+            .navigation {
+              width: 100%;
+              justify-content: center;
+              div {
+                width: 10px;
+                height: 10px;
+                margin-right: 10%;
+
+                &:last-child {
+                  margin: 0;
+                }
+
+                &.active-dot {
+                  width: 14px;
+                  height: 14px;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -1064,7 +1097,7 @@
 
   .plans {
     background: #F3F7FD;
-    padding: 100px 0;
+    padding: 80px 0 50px 0;
 
     .container {
       flex-direction: column;
@@ -1303,6 +1336,8 @@
     }
 
     @media (max-width: 600px) {
+      padding-top: 50px;
+      padding-bottom: 20px;
 
       .container {
         .actions {
@@ -1342,6 +1377,10 @@
 
         .plan-information {
           padding: 30px 40px;
+
+          h3 {
+            font-size: 24px;
+          }
 
           .col:first-child {
             width: 100%;
@@ -1577,6 +1616,12 @@
       .pricing-plans.desc {
         grid-template-columns: 1fr 1fr;
         grid-gap: 20px;
+
+        .plan {
+          h3 {
+            font-size: 8vw;
+          }
+        }
       }
 
       .contact-block {
@@ -1624,18 +1669,28 @@
                 padding: 50px 0 0;
                 position: relative;
 
+                h3 {
+                  font-size: 13vw;
+                  margin: 20px 0;
+                }
+
                 &.first {
                   padding: 0;
                 }
 
                 .btn {
                   min-height: 56px !important;
+
                   a {
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     font-weight: 500;
                     font-size: 16px;
+
+                    svg {
+                      right: 0;
+                    }
                   }
                 }
               }

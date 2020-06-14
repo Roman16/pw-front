@@ -9,8 +9,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import zthKingImage from '../../../assets/img/landing-zth/zth-king.svg'
-import amazonStoreLogo from '../../../assets/img/landing-zth/amazon_appstore.svg'
-import amazonSpnLogo from '../../../assets/img/amazon-spn-logo.png'
+import amazonStoreLogo from '../../../assets/img/amazon-app-store-logo-dark.png'
+import amazonSpnLogo from '../../../assets/img/amazon-spn-logo-dark.png'
 import dragonImage from '../../../assets/img/landing-zth/dragon.png'
 import dragonImageMob from '../../../assets/img/landing-zth/dragon_mob.png'
 import ppcStructure from '../../../assets/img/landing-zth/ppc-structure.png'
@@ -26,7 +26,6 @@ import agencyIcon from '../../../assets/img/landing-zth/agency-icon.svg'
 import bestSellerIcon from '../../../assets/img/landing-zth/best-seller-icon.svg'
 import bestSellerLabel from '../../../assets/img/landing-zth/best-seller-label.png'
 import {Link} from "react-router-dom";
-import {stepsImages} from "../../../assets/img/landing-automation/steps";
 
 const setupDescription = [
     {
@@ -117,7 +116,7 @@ const ZTHLanding = () => {
                                 </button>
                             </div>
 
-                            <div className="row">
+                            <div className="images">
                                 <img src={amazonStoreLogo} alt=""/>
                                 <img src={amazonSpnLogo} alt=""/>
                             </div>
@@ -364,7 +363,7 @@ const ZTHLanding = () => {
 
                     <div className="plan-information">
                         <h3>
-                            What’s your monthly Amazon Advertising Spend?
+                            Get the best Advertising Campaign structure that will last you for years.
                         </h3>
 
                         <div className="row">
