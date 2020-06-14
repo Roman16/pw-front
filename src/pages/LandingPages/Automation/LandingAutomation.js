@@ -573,19 +573,19 @@ const LandingAutomation = () => {
             <section className='achievements'>
                 <div className="container">
                     <div>
-                        <div className="value">$8M</div>
+                        <div className="value">$16M</div>
                         <div className="description">Total Amazon Ad Spend Managed</div>
                     </div>
                     <div>
-                        <div className="value">13%</div>
+                        <div className="value">34%</div>
                         <div className="description">Average Decrease <br/> in ACoS</div>
                     </div>
                     <div>
-                        <div className="value">$120M</div>
+                        <div className="value">$240M</div>
                         <div className="description">Total Amazon Revenue Optimized</div>
                     </div>
                     <div>
-                        <div className="value">24%</div>
+                        <div className="value">27%</div>
                         <div className="description">Average Increase in <br/>Revenue</div>
                     </div>
                     <div>
