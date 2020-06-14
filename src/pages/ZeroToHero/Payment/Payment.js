@@ -185,10 +185,10 @@ const Payment = (props) => {
                         <b>{currentButch.jobs}</b>
                     </div>
 
-                    <div className="row">
-                        <label htmlFor="">Approximate amount of keywords:</label>
-                        <b>560</b>
-                    </div>
+                    {/*<div className="row">*/}
+                    {/*    <label htmlFor="">Approximate amount of keywords:</label>*/}
+                    {/*    <b>560</b>*/}
+                    {/*</div>*/}
 
                     {/*{selectedPaymentMethod === 'select' && <div className="coupon-block">*/}
                     {/*    <h3>Add a Coupon</h3>*/}

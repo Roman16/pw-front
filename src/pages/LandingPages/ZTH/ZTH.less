@@ -9,7 +9,7 @@
     font-size: 12px;
   }
   @media (max-width: 600px) {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .mob {
@@ -28,6 +28,11 @@
         font-size: 4.285714285714286em;
         line-height: 1.2em;
         color: #17175A;
+        margin-bottom: 0.8em;
+
+        @media (max-width: 600px) {
+          font-size: 32px;
+        }
       }
 
       .row {
@@ -128,17 +133,27 @@
         }
       }
 
-      img {
-        margin: 0 50px 0 0;
+      .images {
+        display: flex;
+        align-items: flex-end;
 
-        &:first-child {
-          width: 179px;
-        }
+        img {
+          margin: 0 50px 0 0;
 
-        &:last-child {
-          width: 138px;
+          &:first-child {
+            width: 179px;
+            height: 29px;
+          }
+
+          &:last-child {
+            width: 144px;
+            height: 32px;
+            margin: 0 0 2px 0;
+          }
         }
       }
+
+
 
       .btn {
         font-weight: 500;
@@ -164,7 +179,7 @@
         }
 
         .action {
-          .row {
+          .row, .images {
             justify-content: center;
           }
         }
@@ -173,7 +188,8 @@
 
     @media (max-width: 600px) {
       background: url("../../../assets/img/landing-zth/zth-king-bg_mob.png") no-repeat;
-      background-position: center -330px;
+      background-position: center -500px;
+      padding-bottom: 190px;
 
       .container {
         img.king {
@@ -185,8 +201,9 @@
         }
 
         .action {
-          .row {
+          .row, .images {
             flex-direction: column;
+            align-items: center;
 
             span {
               margin: 20px 0;
@@ -404,7 +421,7 @@
         width: 80%;
         display: flex;
         flex-wrap: wrap;
-        margin: 30px 0 45px 0;
+        margin: 0 0 45px 0;
 
         div {
           width: 50%;
@@ -893,7 +910,7 @@
       font-size: 1.5em;
       line-height: 1.1904761904761905em;
       color: #4B5271;
-      margin: 48px 0;
+      margin: 0 0 48px 0;
     }
 
     img {
@@ -923,6 +940,7 @@
 
         .slider {
           width: 100%;
+          margin-top: 0;
         }
 
         h2 {
@@ -1050,6 +1068,28 @@
           .content {
             margin: 0;
           }
+
+
+          .slider {
+            .navigation {
+              width: 100%;
+              justify-content: center;
+              div {
+                width: 10px;
+                height: 10px;
+                margin-right: 10%;
+
+                &:last-child {
+                  margin: 0;
+                }
+
+                &.active-dot {
+                  width: 14px;
+                  height: 14px;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -1057,7 +1097,7 @@
 
   .plans {
     background: #F3F7FD;
-    padding: 100px 0;
+    padding: 80px 0 50px 0;
 
     .container {
       flex-direction: column;
@@ -1207,6 +1247,7 @@
 
         .col:first-child {
           min-width: 390px;
+          margin-right: 6%;
         }
 
         .row {
@@ -1221,6 +1262,11 @@
           font-weight: 500;
           display: flex;
           align-items: flex-end;
+
+          span.dollar {
+            font-size: 0.6em;
+            margin: 0 5px auto 0;
+          }
 
           span {
             font-size: 0.16em;
@@ -1290,9 +1336,13 @@
     }
 
     @media (max-width: 600px) {
+      padding-top: 50px;
+      padding-bottom: 20px;
 
       .container {
         .actions {
+          margin-top: 120px;
+
           svg {
             display: none;
           }
@@ -1302,6 +1352,10 @@
             left: 10px;
             bottom: 10px;
 
+            label {
+              top: 0;
+            }
+
             img {
               width: 50%;
               margin: 0 auto;
@@ -1310,19 +1364,23 @@
 
           div:first-child {
             div {
-              width: 100%;
+              width: 80%;
             }
           }
 
           a {
             div {
-              width: 100%;
+              width: 80%;
             }
           }
         }
 
         .plan-information {
           padding: 30px 40px;
+
+          h3 {
+            font-size: 24px;
+          }
 
           .col:first-child {
             width: 100%;
@@ -1352,12 +1410,14 @@
     }
 
     .pricing-plans {
-      width: 100%;
-      display: grid;
-      grid-column-gap: 20px;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      margin-bottom: 30px;
-      margin-top: 30px;
+
+      &.desc {
+        width: 100%;
+        display: grid;
+        grid-column-gap: 20px;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        margin-bottom: 30px;
+      }
 
       .plan {
         background: #FFFFFF;
@@ -1442,6 +1502,11 @@
           line-height: 0.8333333333333334em;
           color: #6D6DF6;
           margin: 50px 0 65px 0;
+
+          span.dollar {
+            font-size: 0.5em;
+            margin: 0 5px 10px 0;
+          }
 
           span {
             font-size: 0.3333333333333333em;
@@ -1548,9 +1613,15 @@
     }
 
     @media (max-width: 1150px) {
-      .pricing-plans {
+      .pricing-plans.desc {
         grid-template-columns: 1fr 1fr;
         grid-gap: 20px;
+
+        .plan {
+          h3 {
+            font-size: 8vw;
+          }
+        }
       }
 
       .contact-block {
@@ -1571,13 +1642,70 @@
 
     @media (max-width: 600px) {
       .pricing-plans {
-        grid-template-columns: 1fr;
-        grid-gap: 20px;
+        &.desc {
+          display: none;
+        }
+
+        &.mob {
+          display: block;
+          margin-bottom: 20px;
+
+          .slick-slide {
+            height: 380px;
+            padding: 10px;
+
+            & > div {
+              height: 100%;
+
+              .plan {
+                height: 100%;
+                display: flex !important;
+                flex-direction: column;
+                align-items: center;
+
+                background: #FFFFFF;
+                box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
+                border-radius: 4px;
+                padding: 50px 0 0;
+                position: relative;
+
+                h3 {
+                  font-size: 13vw;
+                  margin: 20px 0;
+                }
+
+                &.first {
+                  padding: 0;
+                }
+
+                .btn {
+                  min-height: 56px !important;
+
+                  a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: 500;
+                    font-size: 16px;
+
+                    svg {
+                      right: 0;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
 
       .contact-block {
         flex-direction: column;
         align-items: center;
+
+        h4 {
+          text-align: center;
+        }
 
         img {
           width: 80px;
@@ -1612,6 +1740,7 @@
       font-size: 1.5em;
       line-height: 1.1904761904761905em;
       color: #FFFFFF;
+      margin-bottom: 0;
     }
 
     .btn {
@@ -1627,14 +1756,11 @@
         h2, p {
           text-align: center;
         }
+
+        p {
+          margin: 0 0 32px 0;
+        }
       }
     }
   }
-
-  //
-  //@media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
-  //  & {
-  //    font-size: 10.5px;
-  //  }
-  //}
 }

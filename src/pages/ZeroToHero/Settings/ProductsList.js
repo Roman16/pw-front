@@ -38,7 +38,7 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
 };
 
 const jobStatus = ({job}) => {
-    if(job) {
+    if (job) {
         if (job.status === 'DONE') {
             return (
                 <div className="status-field finished">
@@ -80,11 +80,12 @@ const jobStatus = ({job}) => {
 };
 
 const jobIssues = ({job, batch}) => {
-    if(job) {
+    if (job) {
         if (batch.status === 'DRAFT') {
             return (
                 <div className="issues-field">
-                    <button className={'btn green-btn'} onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
+                    <button className={'btn green-btn'}
+                            onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
                         Fix Payment
                     </button>
                 </div>
@@ -282,6 +283,20 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 key: 'status',
                 minWidth: '200px',
                 render: (status, item) => (jobStatus(item))
+            },
+            {
+                title: 'Keywords Amount',
+                dataIndex: 'keywords_count',
+                key: 'keywords_count',
+                minWidth: '200px',
+                render: (date, item) => item.job && item.job.keywords_count
+            },
+            {
+                title: 'Targetings Amount',
+                dataIndex: 'pts_count',
+                key: 'pts_count',
+                minWidth: '200px',
+                render: (date, item) => item.job && item.job.pts_count
             },
             {
                 title: 'PPC Automate Status',

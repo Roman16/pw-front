@@ -10,9 +10,6 @@ import {SVG} from "../../../../utils/icons";
 
 const Header = ({type = 'light'}) => {
     const [openedMenu, switchMenu] = useState(false);
-    const {userId} = useSelector(state => ({
-        userId: state.user.user.id
-    }));
 
     useEffect(() => {
         document.querySelector('.header-menu').addEventListener('click', () => {
@@ -28,7 +25,7 @@ const Header = ({type = 'light'}) => {
         }
     }, [openedMenu]);
 
-    const authorized = !!userId;
+    const authorized = !!localStorage.getItem('token');
 
     return (
         <header className={`not-found-page__header ${type}`} id={'header'}>
