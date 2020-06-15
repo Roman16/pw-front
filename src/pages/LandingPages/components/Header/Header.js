@@ -28,15 +28,15 @@ const Header = ({type = 'light'}) => {
 
     return (
         <>
-            <div className="new-zth">
-                <span>NEW!</span> We launched Zero to Hero tool to create 100% ready-to-use Amazon PPC Campaigns.
+            {/*<div className="new-zth">*/}
+            {/*    <span>NEW!</span> We launched Zero to Hero tool to create 100% ready-to-use Amazon PPC Campaigns.*/}
 
-                <button className={'btn white'}>
-                    <Link to={'zero-to-hero-info'}>
-                        Learn More
-                    </Link>
-                </button>
-            </div>
+            {/*    <button className={'btn white'}>*/}
+            {/*        <Link to={'zero-to-hero-info'}>*/}
+            {/*            Learn More*/}
+            {/*        </Link>*/}
+            {/*    </button>*/}
+            {/*</div>*/}
 
             <header className={`not-found-page__header ${type}`} id={'header'}>
                 <div className="container">
