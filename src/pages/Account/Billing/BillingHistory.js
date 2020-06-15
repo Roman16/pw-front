@@ -27,6 +27,8 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams, 
             title: 'Description',
             dataIndex: 'description',
             key: 'description',
+            width: '20%',
+            render: description => <span className="description">{description}</span>
         },
         {
             title: 'Card',

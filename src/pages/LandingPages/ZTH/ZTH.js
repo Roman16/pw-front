@@ -9,8 +9,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import zthKingImage from '../../../assets/img/landing-zth/zth-king.svg'
-import amazonStoreLogo from '../../../assets/img/amazon-app-store-logo-dark.png'
-import amazonSpnLogo from '../../../assets/img/amazon-spn-logo-dark.png'
+import amazonStoreLogo from '../../../assets/img/amazon-logo/amazon-app-store-logo.svg'
+import amazonSpnLogo from '../../../assets/img/amazon-logo/amazon-spn-logo.svg'
 import dragonImage from '../../../assets/img/landing-zth/dragon.png'
 import dragonImageMob from '../../../assets/img/landing-zth/dragon_mob.png'
 import ppcStructure from '../../../assets/img/landing-zth/ppc-structure.png'
