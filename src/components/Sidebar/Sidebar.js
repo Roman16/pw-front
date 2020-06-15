@@ -87,81 +87,8 @@ const Sidebar = () => {
 
                 <nav className="top-nav">
                     <ul className="top-nav-list">
-                        {user.user.id === 714 ?
-                            <li className="top-nav-item ">
-                                <div onClick={() => toggleSubMenu('zth')} className={'has-child'}>
-                                    <NavLink
-                                        className="top-nav-link"
-                                        activeClassName="top-nav-link-active"
-                                        exact
-                                        to="/"
-                                        disabled
-                                    >
-                                        <div className="link-icon">
-                                            <SVG id='zth-icon'/>
-                                        </div>
-
-                                        <span className="top-span">
-                                        Zero to Hero
-                                        <span className="new-fiches">new</span>
-                                </span>
-                                    </NavLink>
-                                </div>
-
-                                <ul className={`automate-list ${subMenuState.zth ? 'opened' : 'closed'}`}>
-                                    <li className="automate-item">
-                                        <NavLink
-                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                            activeClassName="automate-link-active"
-                                            exact
-                                            to={'/zero-to-hero/campaign'}
-                                        >
-                                            Campaigns Setup
-                                        </NavLink>
-                                    </li>
-
-                                    <li className="automate-item">
-                                        <NavLink
-                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                            activeClassName="automate-link-active"
-                                            exact
-                                            to={'/zero-to-hero/settings'}
-                                        >
-                                            ZTH Status
-                                        </NavLink>
-                                    </li>
-                                </ul>
-
-                                {!collapsed && (
-                                    <div className={`collapsed-automate zth`}>
-                                        <ul className="collapsed-automate-list">
-                                            <li className="automate-item">
-                                                <NavLink
-                                                    className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                    activeClassName="automate-link-active"
-                                                    exact
-                                                    to={'/zero-to-hero/campaign'}
-                                                >
-                                                    Campaigns Setup
-                                                </NavLink>
-                                            </li>
-
-                                            <li className="automate-item">
-                                                <NavLink
-                                                    className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                    activeClassName="automate-link-active"
-                                                    exact
-                                                    to={'/zero-to-hero/settings'}
-                                                >
-                                                    ZTH Status
-                                                </NavLink>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                )}
-                            </li>
-                            :
-                            <li className="top-nav-item disabled-link">
+                        <li className="top-nav-item ">
+                            <div onClick={() => toggleSubMenu('zth')} className={'has-child'}>
                                 <NavLink
                                     className="top-nav-link"
                                     activeClassName="top-nav-link-active"
@@ -175,12 +102,63 @@ const Sidebar = () => {
 
                                     <span className="top-span">
                                         Zero to Hero
-                                    <span className="soon">soon</span>
-                                    </span>
+                                        <span className="new-fiches">new</span>
+                                </span>
                                 </NavLink>
-                            </li>
-                        }
+                            </div>
 
+                            <ul className={`automate-list ${subMenuState.zth ? 'opened' : 'closed'}`}>
+                                <li className="automate-item">
+                                    <NavLink
+                                        className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                        activeClassName="automate-link-active"
+                                        exact
+                                        to={'/zero-to-hero/campaign'}
+                                    >
+                                        Campaigns Setup
+                                    </NavLink>
+                                </li>
+
+                                <li className="automate-item">
+                                    <NavLink
+                                        className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                        activeClassName="automate-link-active"
+                                        exact
+                                        to={'/zero-to-hero/settings'}
+                                    >
+                                        ZTH Status
+                                    </NavLink>
+                                </li>
+                            </ul>
+
+                            {!collapsed && (
+                                <div className={`collapsed-automate zth`}>
+                                    <ul className="collapsed-automate-list">
+                                        <li className="automate-item">
+                                            <NavLink
+                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                                activeClassName="automate-link-active"
+                                                exact
+                                                to={'/zero-to-hero/campaign'}
+                                            >
+                                                Campaigns Setup
+                                            </NavLink>
+                                        </li>
+
+                                        <li className="automate-item">
+                                            <NavLink
+                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                                activeClassName="automate-link-active"
+                                                exact
+                                                to={'/zero-to-hero/settings'}
+                                            >
+                                                ZTH Status
+                                            </NavLink>
+                                        </li>
+                                    </ul>
+                                </div>
+                            )}
+                        </li>
 
                         {/*<li className="top-nav-item">*/}
                         {/*    <NavLink*/}
