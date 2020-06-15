@@ -293,13 +293,13 @@ const ZTHLanding = () => {
                             ))}
                         </div>
 
-                        <div className="ppc ppc-price">
+                        <div className="zth zth-price">
                             Price Per 1 SKU $500
                             <div className={'line'}/>
                             In average 10 minutes needed
                         </div>
 
-                        <div className="zth zth-price">
+                        <div className="ppc ppc-price">
                             Total Per 1 SKU $750-$2000
                             <div className={'line'}/>
                             In average 48 hours needed
