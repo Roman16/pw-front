@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './Pricing.less'
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -20,11 +20,8 @@ import {faPlay} from "@fortawesome/free-solid-svg-icons";
 import emojiImage from "../../../assets/img/landing-automation/emoji.png";
 import supportImage from "../../../assets/img/landing-automation/Vitalik-help.png";
 import listIcon from "../../../assets/img/landing-automation/yes_green.svg";
-
-const numberMask = (value, n, x) => {
-    let re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
-    return (+value).toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,').replace('.00', '');
-};
+import {SVG} from "../../../utils/icons";
+import PPCPriceSlider from "../components/PPCPriceSlider/PPCPriceSlider";
 
 
 const commentsList = [
@@ -72,6 +69,8 @@ const commentsList = [
 
 const Pricing = () => {
 
+    const [selectedProduct, setSelectedProduct] = useState('ppc');
+
     function goToRegistration() {
         history.push('/registration')
     }
@@ -86,175 +85,63 @@ const Pricing = () => {
         );
     }
 
-    useEffect(() => {
-        $(".js-range-slider").ionRangeSlider({
-            min: 0,
-            values: [
-                0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000, 3500, 4500, 5000,
-                6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000, 15000, 16000, 17000, 18000, 19000, 20000,
-                22500, 25000, 27500, 30000, 32500, 35000, 37500, 40000, 42500, 45000, 47500, 50000,
-                55000, 60000, 65000, 70000, 75000, 80000, 85000, 90000, 95000, 100000
-            ],
-            hide_min_max: true,
-            from: 10,
-            from_min: 10,
-            prefix: "< $ ",
-            max_postfix: "+",
-            postfix: "  / month",
-            onStart: function () {
-                $('.slider-container .slider .irs .irs-bar').html('$ 69');
-                setTimeout(() => {
-                    $('.irs-single').html('< $ 1,000 / month');
-                }, 1)
-            },
-            onChange: function (data) {
-                let value = data.from_value,
-                    result = 0,
-                    sumElement = $('#result-sum'),
-                    barLabel = $('.slider-container .slider .irs .irs-bar'),
-                    barTooltip = $('.slider-container .slider .irs .irs-single');
-
-
-                if (value <= 1000) {
-                    sumElement.text('$ 69');
-                    barLabel.html('$ 69');
-                    barTooltip.html('< $ 1,000 / month');
-                } else {
-                    barTooltip.html(`$ ${numberMask(value, 2)} / month`);
-
-                    if (value >= 50000) {
-                        result = ((2 / 100) * value) + 500;
-                        barLabel.html('$500 + 2% <small>ad spend</small>');
-                    } else if (value >= 20000) {
-                        result = ((2.5 / 100) * value) + 200;
-                        barLabel.html('$200 + 2,5% <small>ad spend</small>');
-                    } else {
-                        result = ((3 / 100) * value) + 100;
-                        barLabel.html('$100 + 3% <small>ad spend</small>');
-                    }
-
-                    sumElement.text('$ ' + numberMask(result));
-                }
-            }
-        });
-
-    }, []);
 
     return (
         <div className='landing-pricing'>
             <Header/>
 
-            <section className="price-list">
-                <div className="box">
-                    <div className="block-title">
-                        <h2>Flexible prepaid plans based on your monthly Ad Spend</h2>
-                        <p>
-                            We have a prepaid plan after the free trial and charging you based on your last 30-days ad
-                            spend. After that, you have 30 days usage of the software. We grow with the growth of your
-                            business.
-                        </p>
-                    </div>
-                    <div className="tabs-container">
-                        <ul className="tabs-navigation">
-                            <li className="disabled">
-                                <a href="#content1">
-                                    <span className="img">
-                                        <img src={zthImage} alt="zth-logo"/>
-                                    </span>
-                                    Zero To Hero
-                                </a>
-                            </li>
-                            <li>
-                                <a className="active" href="#content2">
-                                    <span className="img">
-                                        <img src={ppcImage} alt="ppc"/>
-                                    </span>
-                                    PPC Automation
-                                </a>
-                            </li>
-                            <li className="disabled">
-                                <a href="#">
-                                    <span className="img">
-                                        <img src={analyticImage} alt="analytic"/>
-                                    </span>
-                                    Analytics
-                                </a>
-                            </li>
-                            <li className="disabled">
-                                <a href="#">
-                                    <span className="img">
-                                        <img src={peopleImage} alt="people-icon"/>
-                                    </span>
-                                    Agencies Vendors
-                                </a>
-                            </li>
-                        </ul>
+            <section className="pw-products">
+                <div className="container">
+                    <h2>
+                        Flexible plans that grow with you
+                    </h2>
 
-                        <div className="tabs-content-wrap">
-                            <div className="tabs-content active" id="content2">
-                                <div className="slider-container">
-                                    <div className="row">
-                                        <div className="col">
-                                            <div className="title">What&rsquo;s your monthly Amazon Advertising
-                                                Spend?
-                                            </div>
+                    <p>
+                        We have a prepaid plan after the free trial and charging you based on your last 30-days ad
+                        spend. After that, you have 30 days usage of the software. We grow with the growth of your
+                        business.
+                    </p>
 
-                                            <div className="slider">
-                                                <input className="js-range-slider" type="text"/>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="sum">
-                                                <span id="result-sum">$ 69</span>
-                                                <span>Estimated price per month based on your 30-day Amazon Ad Spend.</span>
-                                                <a href="#plans">How is this calculated?</a>
-                                                <button className="btn green-btn"
-                                                        onClick={() => history.push('/registration')}>
-                                                    Free Trial
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <ul className="product-list">
+                        <li
+                            className={`${selectedProduct === 'ppc' ? 'active' : ''}`}
+                            onClick={() => setSelectedProduct('ppc')}
+                        >
+                            <SVG id={'ppc-automate-icon'}/>
+                            <div>Automate Ads</div>
+                            PPC Automation
+                        </li>
 
-                                        <div className="list">
-                                            <div>
-                                                <img src={yesGreenIcon} alt="yes"/>
-                                                Fully Automated Amazon Advertising Optimization in 1 Click
-                                            </div>
-                                            <div>
-                                                <img src={yesGreenIcon} alt="yes"/>
-                                                Automated Harvesting of Search-Terms and Negative Keywords
-                                            </div>
-                                            <div>
-                                                <img src={yesGreenIcon} alt="yes"/>
-                                                Amazon Analytics Tool
-                                            </div>
+                        <li
+                            className={`${selectedProduct === 'zth' ? 'active' : ''}`}
+                            onClick={() => setSelectedProduct('zth')}
+                        >
+                            <SVG id={'zth-icon'}/>
+                            <div>Create Ads</div>
+                            Zero To Hero
+                        </li>
 
-                                            <div>
-                                                <img src={yesGreenIcon} alt="yes"/>
-                                                Weekly Reports with Useful Information
-                                            </div>
-                                            <div>
-                                                <img src={yesGreenIcon} alt="yes"/>
-                                                The only Amazon Seller Tool you need for your business.
-                                            </div>
-                                            <div>
-                                                <img src={yesGreenIcon} alt="yes"/>
-                                                Friendly Support 24/7
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
+                        <li
+                            className={`${selectedProduct === 'manage' ? 'active' : ''}`}
+                            onClick={() => setSelectedProduct('manage')}
+                        >
+                            <SVG id={'manage-service-icon'}/>
+                            <div>Get extraordinary result</div>
+                            Managed Service
+                        </li>
+
+                    </ul>
+
+                    <div className="product-price-description">
+                        <PPCPriceSlider/>
                     </div>
                 </div>
             </section>
 
             <section className="pricing-guide">
-                <div className="box">
-                    <div className="block-title" id={'plans'}>
-                        <h2>Our Simple Pricing Guide</h2>
-                    </div>
+                <div className="container">
+                    <h2>Our Simple Pricing Guide</h2>
+
                     <div className="list">
                         <div className="item">
                             <div className="title">Startup</div>
