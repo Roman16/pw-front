@@ -13,6 +13,7 @@
   }
 
   .btn {
+    min-width: max-content;
     height: 26px;
     margin: 0 0 0 auto;
     padding: 0;
@@ -25,6 +26,21 @@
       color: #6D6DF6;
       text-transform: uppercase;
       font-weight: 500;
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 15px 25px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    span {
+      margin: 0 0 10px 0;
+    }
+
+    .btn {
+      margin: 10px auto 0 auto;
     }
   }
 }
@@ -241,10 +257,6 @@
         display: block;
       }
 
-      .login-btn {
-        display: none !important;
-      }
-
       .header-menu {
         display: none;
         position: fixed;
@@ -294,9 +306,15 @@
       }
 
       .nav-buttons {
-        .register-btn {
+        .login-link {
+          display: none;
+        }
+
+        .register-btn,
+        .login-btn {
           height: 30px;
-          font-size: 0.8571428571428571rem;
+          font-size: 12px;
+          padding: 0 20px;
         }
       }
     }

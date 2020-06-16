@@ -7,7 +7,7 @@ import {history} from "../../../../utils/history";
 import {SVG} from "../../../../utils/icons";
 
 
-const Header = ({type = 'light'}) => {
+const Header = ({type = 'light', page}) => {
     const [openedMenu, switchMenu] = useState(false);
 
     useEffect(() => {
@@ -28,7 +28,7 @@ const Header = ({type = 'light'}) => {
 
     return (
         <>
-            <div className="new-zth">
+            {page !== 'zth' && <div className="new-zth">
                 <span>NEW!</span> We launched Zero to Hero tool to create 100% ready-to-use Amazon PPC Campaigns.
 
                 <button className={'btn white'}>
@@ -36,7 +36,7 @@ const Header = ({type = 'light'}) => {
                         Learn More
                     </Link>
                 </button>
-            </div>
+            </div>}
 
             <header className={`not-found-page__header ${type}`} id={'header'}>
                 <div className="container">
@@ -78,9 +78,12 @@ const Header = ({type = 'light'}) => {
                     <div className='nav-buttons'>
                         {!authorized ?
                             <Fragment>
-                                <div onClick={() => history.push('/login')} className='login-btn'>LOG IN</div>
-                                <button onClick={() => history.push('/registration')} className='btn green-btn register-btn'>
-                                    TRY IT FOR FREE
+                                <div onClick={() => history.push('/login')} className='login-link'>LOG IN</div>
+                                <button
+                                    onClick={() => history.push('/registration')}
+                                    className='btn green-btn register-btn'
+                                >
+                                    {page === 'zth' ? 'Try it Now' : 'TRY IT FOR FREE'}
                                 </button>
                             </Fragment>
                             :
