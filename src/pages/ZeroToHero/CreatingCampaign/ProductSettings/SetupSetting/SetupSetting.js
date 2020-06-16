@@ -72,6 +72,13 @@ const SetupSetting = ({
             <div className="section-header">
                 <div className="container">
                     <h2>ZTH Setup Settings</h2>
+
+                    <a
+                        href="https://intercom.help/profitwhales/en/articles/4153000-step-by-step-zero-to-hero-set-up"
+                        target={'_blank'}
+                    >
+                        Check Out Step by Step Guide
+                    </a>
                 </div>
             </div>
 

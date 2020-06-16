@@ -43,21 +43,11 @@ const AllProducts = () => {
 
     const selectVariationHandler = (product, variationStatus, parentStatus) => {
         if (parentStatus) {
-            if (variationStatus) {
-                setSelectedProducts(selectedProducts.filter(item => item.id !== product.parent_id));
-            } else if ([...selectedProducts.filter(item => item.parent_id === product.parent_id), ...addedProducts.filter(item => item.parent_id === product.parent_id)].length + 1 === allProducts.find(item => item.id === product.parent_id).variations.length) {
-                setSelectedProducts([...selectedProducts.filter(item => item.parent_id !== product.parent_id), allProducts.find(item => item.id === product.parent_id)])
-            } else {
-                setSelectedProducts([...selectedProducts.filter(item => item.id !== product.parent_id), product])
-            }
+            setSelectedProducts([...selectedProducts.filter(item => (item.id !== product.parent_id || (item.parent_id && item.parent_id !== product.parent_id))), product]);
         } else if (variationStatus) {
-            setSelectedProducts(selectedProducts.filter(item => item.id !== product.id))
+            setSelectedProducts(selectedProducts.filter(item => item.id !== product.id));
         } else {
-            if ([...selectedProducts.filter(item => item.parent_id === product.parent_id), ...addedProducts.filter(item => item.parent_id === product.parent_id)].length + 1 === allProducts.find(item => item.id === product.parent_id).variations.length) {
-                setSelectedProducts([...selectedProducts.filter(item => item.parent_id !== product.parent_id), allProducts.find(item => item.id === product.parent_id)])
-            } else {
-                setSelectedProducts([...selectedProducts, product])
-            }
+            setSelectedProducts([...selectedProducts, product])
         }
     };
 
