@@ -81,7 +81,7 @@ const ZTHLanding = () => {
     const [setupType, setSetupType] = useState('zth');
     return (
         <div className="landing-zth">
-            <Header/>
+            <Header page={'zth'}/>
 
             <section className={'zth-king-section'}>
                 <div className="container">
