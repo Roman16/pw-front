@@ -33,8 +33,8 @@ const CouponField = ({applyCoupon, setCoupon, product}) => {
 
                 {product.applied_coupon.name !== null && <span className="coupon-name">
               <span>Coupon:</span>
-                    {product.applied_coupon.amount_off && <b>${product.applied_coupon.amount_off}</b>}
-                    {product.applied_coupon.percent_off && <b>{product.applied_coupon.percent_off}%</b>}
+                    {product.applied_coupon.amount_off !== null && <b>${product.applied_coupon.amount_off}</b>}
+                    {product.applied_coupon.percent_off !== null && <b>{product.applied_coupon.percent_off}%</b>}
             </span>}
             </div>
         )

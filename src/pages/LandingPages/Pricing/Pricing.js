@@ -3,13 +3,15 @@ import './Pricing.less'
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 
-import caseExampleImage from "../../../assets/img/landing-pricing/case-example-icon.svg";
 import humanSupportImage from "../../../assets/img/landing-pricing/human-support-image.png";
 import {SVG} from "../../../utils/icons";
 import PPCPriceSlider from "../components/PPCPriceSlider/PPCPriceSlider";
 import PPCPricingGuide from "../components/PPCPricingGuide/PPCPricingGuide";
 import {Link} from "react-router-dom";
 import Comments from "../components/Comments/Comments";
+import ZTHPriceSlider from "../components/ZTHPriceSlider/ZTHPriceSlider";
+import ZTHPricingGuide from "../components/ZTHPricingGuide/ZTHPricingGuide";
+import ManagedPriceSlider from "../components/ManagedPriceSlider/ManagedPriceSlider";
 
 
 const Pricing = () => {
@@ -62,12 +64,16 @@ const Pricing = () => {
                     </ul>
 
                     <div className="product-price-description">
-                        <PPCPriceSlider/>
+                        {selectedProduct === 'ppc' && <PPCPriceSlider/>}
+                        {selectedProduct === 'zth' && <ZTHPriceSlider/>}
+                        {selectedProduct === 'manage' && <ManagedPriceSlider/>}
                     </div>
                 </div>
             </section>
 
-            <PPCPricingGuide/>
+            {selectedProduct === 'ppc' && <PPCPricingGuide/>}
+            {selectedProduct === 'zth' && <ZTHPricingGuide/>}
+
 
             {/*<section className={'case-example'}>*/}
             {/*    <div className="container">*/}

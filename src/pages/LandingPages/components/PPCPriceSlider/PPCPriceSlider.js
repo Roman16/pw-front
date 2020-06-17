@@ -15,16 +15,17 @@ const numberMask = (value, n, x) => {
 };
 
 
-const includes = [
-    'Fully Automated Amazon Advertising Optimization in 1 Click',
-    'Weekly Reports with Useful Information',
-    'Automated Harvesting of Search-Terms and Negative Keywords',
-    'The only Amazon Seller Tool you need for your business',
-    'Amazon Analytics Tool',
-    'Friendly Support 24/7',
-];
 
 const PPCPriceSlider = () => {
+
+    const includes = [
+        'Fully Automated Amazon Advertising Optimization in 1 Click',
+        'Weekly Reports with Useful Information',
+        'Automated Harvesting of Search-Terms and Negative Keywords',
+        'The only Amazon Seller Tool you need for your business',
+        'Amazon Analytics Tool',
+        'Friendly Support 24/7',
+    ];
 
     useEffect(() => {
         $(".js-range-slider").ionRangeSlider({

@@ -1,13 +1,11 @@
 import React from "react";
 import './PPCPricingGuide.less';
 import {Link} from "react-router-dom";
-import {SVG} from "../../../../utils/icons";
 import coinsImage from '../../../../assets/img/landing-pricing/coins-icon.svg';
 import calendarImage from '../../../../assets/img/landing-pricing/calendar-icon.svg';
 
 
 const PPCPricingGuide = () => {
-
     const onOpenChat = () => {
         window.Intercom('show')
     };
@@ -17,8 +15,8 @@ const PPCPricingGuide = () => {
             <div className="container">
                 <h2>Our Simple Pricing Guide</h2>
 
-                <ul>
-                    <li>
+                <div className="pricing-plans desc">
+                    <div className={'plan'}>
                         <div className="counts">
                             <div style={{width: '8px', height: '8px'}}/>
                         </div>
@@ -39,9 +37,9 @@ const PPCPricingGuide = () => {
                         <Link to={'registration'} className={'btn default link'}>
                             START FREE
                         </Link>
-                    </li>
+                    </div>
 
-                    <li>
+                    <div className={'plan'}>
                         <div className="counts">
                             {[1, 2].map(item => (
                                 <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
@@ -68,9 +66,9 @@ const PPCPricingGuide = () => {
                         <Link to={'registration'} className={'btn default link'}>
                             GET STARTED
                         </Link>
-                    </li>
+                    </div>
 
-                    <li>
+                    <div className={'plan'}>
                         <div className="counts">
                             {[1, 2, 3].map(item => (
                                 <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
@@ -97,9 +95,9 @@ const PPCPricingGuide = () => {
                         <Link to={'registration'} className={'btn default link'}>
                             GET STARTED
                         </Link>
-                    </li>
+                    </div>
 
-                    <li>
+                    <div className={'plan'}>
                         <div className="counts">
                             {[1, 2, 3, 4].map(item => (
                                 <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
@@ -126,8 +124,8 @@ const PPCPricingGuide = () => {
                         <Link to={'registration'} className={'btn default link'}>
                             GET STARTED
                         </Link>
-                    </li>
-                </ul>
+                    </div>
+                </div>
 
                 <div className="row">
                     <div className="contact-block">

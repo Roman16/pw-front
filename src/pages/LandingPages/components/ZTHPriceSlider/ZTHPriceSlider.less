@@ -1,0 +1,134 @@
+.zth-price-slider {
+  .plan-information {
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    margin: 10px 0 0 0;
+    padding: 4.285714285714286em 8.571428571428571em;
+
+    h3 {
+      font-size: 3.4285714285714284em;
+      line-height: 1.2083333333333333em;
+      color: #17175A;
+    }
+
+    .col:first-child {
+      min-width: 450px;
+      margin-right: 20px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+    }
+
+    .price {
+      width: max-content;
+      font-size: 7.142857142857143em;
+      line-height: 0.9em;
+      color: #6D6DF6;
+      font-weight: 500;
+      display: flex;
+      align-items: flex-end;
+
+      span.dollar {
+        font-size: 0.6em;
+        margin: 0 5px auto 0;
+      }
+
+      span {
+        font-size: 0.16em;
+        line-height: 1.1875em;
+        margin: 0 0 0 10px;
+      }
+    }
+
+    .btn {
+      height: 56px;
+      font-weight: 500;
+      font-size: 21px;
+      text-transform: uppercase;
+    }
+
+    ul {
+      margin: 20px 0 30px 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        font-size: 1.1428571428571428em;
+        color: #7C8A95;
+      }
+    }
+
+    .includes {
+      h4 {
+        font-size: 2.2857142857142856em;
+        color: #6D6DF6;
+      }
+
+      ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 30px;
+
+        li {
+          font-size: 1.1428571428571428em;
+          line-height: 1.1875em;
+          color: #17175A;
+          margin-bottom: 20px;
+          display: flex;
+
+          svg {
+            min-width: 20px;
+            margin: 0 20px 0 0;
+            fill: none;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .plan-information {
+      h3 {
+        text-align: center;
+      }
+
+      .btn {
+        margin: 0 auto;
+      }
+
+      .row {
+        flex-direction: column;
+      }
+
+      .includes {
+        margin: 20px 0 0 0;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      .plan-information {
+        padding: 30px 40px;
+
+        h3 {
+          font-size: 24px;
+        }
+
+        .col:first-child {
+          width: 100%;
+          min-width: initial;
+        }
+
+        .includes {
+          ul {
+            grid-template-columns: 1fr;
+          }
+        }
+      }
+    }
+  }
+}

@@ -31,7 +31,7 @@ const ProductItem = ({
                         </div>
                     </div>
 
-                    <div className="row">
+                    {!product.variations && <div className="row">
                         <div className="price">{product.item_price !== null && `$${product.item_price}`}</div>
                         <div className="stock">
                             {product.status_on_amazon === 'Active' ?
@@ -40,7 +40,7 @@ const ProductItem = ({
                                 <span className={'out'}>Stock Out</span>
                             }
                         </div>
-                    </div>
+                    </div>}
 
                     <div className="row asin-sku">
                         <div className="asin"><b>ASIN:</b> {product.asin}</div>
