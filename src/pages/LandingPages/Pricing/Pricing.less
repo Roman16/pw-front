@@ -62,22 +62,20 @@
         margin-right: 10px;
 
         &:hover {
-          background: rgba(182, 182, 251, 0.1);
+          background: rgba(182, 182, 251, 0.2);
         }
 
         &:last-child {
           margin: 0;
         }
 
-        &:first-child {
-          div {
-            background: #FF9085;
-          }
-        }
-
         &.active {
           color: #6D6DF6;
           background: #fff;
+
+          div {
+            background: #FF9085;
+          }
 
           svg {
             fill: #6D6DF6;
@@ -209,6 +207,10 @@
         }
       }
     }
+  }
+
+  .pricing-guide {
+    padding: 80px 0;
   }
 
   .human-support {

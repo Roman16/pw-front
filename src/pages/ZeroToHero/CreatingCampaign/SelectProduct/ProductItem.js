@@ -32,8 +32,14 @@ const ProductItem = ({
                     </div>
 
                     <div className="row">
-                        <div className="price">$35.99</div>
-                        <div className="stock">In Stock</div>
+                        <div className="price">{product.item_price !== null && `$${product.item_price}`}</div>
+                        <div className="stock">
+                            {product.status_on_amazon ?
+                                <span className={'in'}>In Stock</span>
+                                :
+                                <span className={'out'}>Stock Out</span>
+                            }
+                        </div>
                     </div>
 
                     <div className="row asin-sku">
