@@ -37,9 +37,23 @@ const RelevantKeywords = ({keywords, onUpdate}) => {
         onUpdate({relevant_keywords: keywords.filter(item => item !== keyword)})
     };
 
+    const switchViewHandler = () => {
+        setSectionCollapse(prevState => !prevState);
+
+        if (sectionCollapse) {
+            setTimeout(() => {
+                document.querySelector('.relevant-keywords').scrollIntoView({
+                    block: "start",
+                    behavior: "smooth"
+                });
+            }, 20)
+        }
+    };
+
+
     return (
         <section className={`relevant-keywords ${sectionCollapse ? 'collapsed' : ''}`}>
-            <div className="section-header hover" onClick={() => setSectionCollapse(prevState => !prevState)}>
+            <div className="section-header hover" onClick={switchViewHandler}>
                 <div className="container">
                     <h2>Relevant keywords <span className={'optional'}>optional</span></h2>
 

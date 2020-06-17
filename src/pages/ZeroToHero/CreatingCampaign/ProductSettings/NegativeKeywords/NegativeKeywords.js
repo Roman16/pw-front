@@ -43,9 +43,22 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
         onUpdate({negative_keywords: keywords.filter((item, itemIndex) => itemIndex !== index)})
     };
 
+    const switchViewHandler = () => {
+        setSectionCollapse(prevState => !prevState);
+
+        if (sectionCollapse) {
+            setTimeout(() => {
+                document.querySelector('.negative-keywords').scrollIntoView({
+                    block: "start",
+                    behavior: "smooth"
+                });
+            }, 20)
+        }
+    };
+
     return (
         <section className={`negative-keywords relevant-keywords ${sectionCollapse ? 'collapsed' : ''}`}>
-            <div className="section-header hover" onClick={() => setSectionCollapse(prevState => !prevState)}>
+            <div className="section-header hover" onClick={switchViewHandler}>
                 <div className="container">
                     <h2>Negative keywords <span className={'optional'}>optional</span></h2>
 
@@ -89,7 +102,7 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
                                 it or 80 characters.
                             </div>
 
-                            <button className={'btn default p15'}>
+                            <button className={'btn default p15 add'}>
                                 <SVG id={'plus-icon'}/>
                                 Add Keyword
                             </button>

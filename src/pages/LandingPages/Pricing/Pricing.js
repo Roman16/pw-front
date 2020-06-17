@@ -31,7 +31,7 @@ const Pricing = () => {
                         business.
                     </p>
 
-                    <ul className="product-list">
+                    <ul>
                         <li
                             className={`${selectedProduct === 'ppc' ? 'active' : ''}`}
                             onClick={() => setSelectedProduct('ppc')}

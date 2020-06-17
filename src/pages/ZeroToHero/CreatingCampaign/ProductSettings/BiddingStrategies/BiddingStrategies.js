@@ -17,9 +17,23 @@ const BiddingStrategies = ({campaigns, onUpdate}) => {
         });
     };
 
+    const switchViewHandler = () => {
+        setSectionCollapse(prevState => !prevState);
+
+        if (sectionCollapse) {
+            setTimeout(() => {
+                document.querySelector('.bidding-strategies').scrollIntoView({
+                    block: "start",
+                    behavior: "smooth"
+                });
+            }, 20)
+        }
+    };
+
+
     return (
         <section className={`bidding-strategies ${sectionCollapse ? 'collapsed' : ''}`}>
-            <div className="section-header hover" onClick={() => setSectionCollapse(prevState => !prevState)}>
+            <div className="section-header hover" onClick={switchViewHandler}>
                 <div className="container">
                     <h2>Bidding strategies and bids adjustments <span className={'optional'}>optional</span></h2>
 
