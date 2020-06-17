@@ -1,90 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './Pricing.less'
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
-import zthImage from '../../../assets/img/landing-pricing/zth.svg';
-import ppcImage from '../../../assets/img/landing-pricing/ppc.svg';
-import analyticImage from '../../../assets/img/landing-pricing/analytic.svg';
-import peopleImage from '../../../assets/img/landing-pricing/people-icon.svg';
-import yesGreenIcon from '../../../assets/img/landing-pricing/yes_green.svg';
-import {history} from "../../../utils/history";
-import $ from "jquery";
-import ionRangeSlider from 'ion-rangeslider';
-import {avatars} from "../../../assets/img/landing-automation/avatars/avatars";
-import Slider from "react-slick";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlay} from "@fortawesome/free-solid-svg-icons";
-import emojiImage from "../../../assets/img/landing-automation/emoji.png";
-import supportImage from "../../../assets/img/landing-automation/Vitalik-help.png";
-import listIcon from "../../../assets/img/landing-automation/yes_green.svg";
+import caseExampleImage from "../../../assets/img/landing-pricing/case-example-icon.svg";
+import humanSupportImage from "../../../assets/img/landing-pricing/human-support-image.png";
 import {SVG} from "../../../utils/icons";
 import PPCPriceSlider from "../components/PPCPriceSlider/PPCPriceSlider";
+import PPCPricingGuide from "../components/PPCPricingGuide/PPCPricingGuide";
+import {Link} from "react-router-dom";
+import Comments from "../components/Comments/Comments";
 
-
-const commentsList = [
-    {
-        name: 'Corina Elena Damian',
-        comment: 'I only have words of praise and I warmly recommend this software, but especially the person who has guided me and who does not get rid of me until I win £100,000. Professional vitals, explains the steps in detail and has a lot of patience! For beginners on Amazon and not only recommend PROFIT WHALES!',
-        avatar: avatars.CorinaElenaDamian
-    },
-    {
-        name: 'Meet Patel',
-        comment: 'It was an amazing experience working with Amzbizon, I was really lost in my PPC spending and ACOS, So I took the help of Amzbizon. We started our campaigns on the 21st of November With 48% Acos, With good Keyword targeting and well established and optimized Bulk operation Campaigns, We shoot down to 24.71% in just 12 days, It is a miracle, I wish I could share my Screenshot here. But they have really worked on my ACOS. Thank You so much.',
-        avatar: avatars.MeetPatel
-    },
-    {
-        name: 'Maxim Antonov',
-        comment: 'Yes, very good company! They helped me a lot with advertising on Amazon and not only with advertising, there are practitioners working there who really know a lot about their business.',
-        avatar: avatars.MaximAntonov
-    },
-    {
-        name: 'Emil Sirbu',
-        comment: 'I highly recommend the services of these great guys. As their tool gives incredible results, that\'s obvious. I appreciated the attitude of this team for the client. We had a very humanized experience, where the money wasn\'t the first priority of our collaboration but customer satisfaction! Flexibility and promptness to any of my questions. I highly recommend!',
-        avatar: avatars.EmilSirbu
-    },
-    {
-        name: 'Dmitriy Golubovskiy',
-        comment: 'These guys are doing an amazing job, solved my problem with huge Acos. It took only 2-3 weeks for them to fully optimize all campaigns. I would like to mention separately communication level: wrote even in Sat/Sunday and got answers. Recommend!',
-        avatar: avatars.DmitriyGolubovskiy
-    },
-    {
-        name: 'Andrey Kaminskiy',
-        comment: 'The team behind the agency is doing an amazing job by consulting about how to grow the conversion rate and managing our Amazon Advertising campaigns. Their support team is incredibly responsible all day long. Highly recommend!',
-        avatar: avatars.AndreyKaminskiy
-    },
-    {
-        name: 'Jennie Fisher',
-        comment: 'ProfitWhales\' software is notably robust, and their analysts have helped us both maximize profitability and truly understand the incremental value of our Amazon Ads. They are a valued partner and we really appreciate the flexibility of their software and service model.',
-        avatar: avatars.JennieFisher
-    },
-    {
-        name: 'Daniel Jennings',
-        comment: 'I really enjoy Profit Whales\' user interface, the massive amounts of data and the differentoptimization strategies.I\'ve noticed that the software makes extremely dialed in bidding decisions that convert very well. I\'m really working on creating a successful PPC strategy to template the other 3 products!',
-        avatar: avatars.DanielJennings
-    },
-];
 
 const Pricing = () => {
-
     const [selectedProduct, setSelectedProduct] = useState('ppc');
-
-    function goToRegistration() {
-        history.push('/registration')
-    }
-
-    function SampleNextArrow({onClick}) {
-        return (<div className='next' onClick={onClick}><FontAwesomeIcon icon={faPlay}/></div>)
-    }
-
-    function SamplePrevArrow({onClick}) {
-        return (
-            <div className='prev' onClick={onClick}><FontAwesomeIcon icon={faPlay}/></div>
-        );
-    }
-
 
     return (
         <div className='landing-pricing'>
@@ -138,168 +67,111 @@ const Pricing = () => {
                 </div>
             </section>
 
-            <section className="pricing-guide">
+            <PPCPricingGuide/>
+
+
+            <section className={'case-example'}>
                 <div className="container">
-                    <h2>Our Simple Pricing Guide</h2>
+                    <h2>Powerful Case Study Examples</h2>
 
                     <div className="list">
-                        <div className="item">
-                            <div className="title">Startup</div>
-                            <div className="sum">&lt;$1000</div>
-                            <div className="sub-sum">in ad spend / per month</div>
-                            <div className="price">69$</div>
-                            <hr/>
-                            <p>Start growing your business with our Starter plan</p>
-                            <button className='btn green-btn' onClick={goToRegistration}>start free</button>
-                        </div>
+                        {[1, 2, 3, 4].map((item, index) => (
+                            <div className="slide-item">
+                                <div className="">
+                                </div>
 
-                        <div className="item">
-                            <div className="title">Grind</div>
-                            <div className="sum">$1k - $20k</div>
-                            <div className="sub-sum">in ad spend / per month</div>
-                            <div className="price">$100 + 3% monthly ad spend</div>
-                            <hr/>
-                            <p>Automatic system of your Amazon advertising for your success as a growing Amazon
-                                Seller</p>
-                            <button className='btn green-btn' onClick={goToRegistration}>start free</button>
-                        </div>
-
-                        <div className="item">
-                            <div className="title">Successful Seller</div>
-                            <div className="sum">$20k - $50k</div>
-                            <div className="sub-sum">in ad spend / per month</div>
-                            <div className="price">$200 + 2.5% monthly ad spend</div>
-                            <hr/>
-                            <p>Focus on the profitability of your business with our Data-Driven Optimization</p>
-                            <button className='btn green-btn' onClick={goToRegistration}>start free</button>
-                        </div>
-
-                        <div className="item">
-                            <div className="title">Established Brand</div>
-                            <div className="sum"> &gt; $50k</div>
-                            <div className="sub-sum">in ad spend / per month</div>
-                            <div className="price">$500 + 2% monthly ad spend</div>
-                            <hr/>
-                            <p>Maximize your sales &amp; profit with automatic optimization</p>
-                            <button className='btn green-btn' onClick={goToRegistration}>start free</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="rich-bro">
-                <div className="box">
-                    <div className="inside">
-                        <p>Spending more than <br/> <strong>100k</strong> on ads?</p>
-                        <button className="btn default" onClick={() => history.push('/contact-us')}>
-                            Contact Us
-                        </button>
-                    </div>
-
-                    <div className="inside">
-                        <p>Interested in <strong>annual plan?</strong></p>
-                        <button className="btn default" onClick={() => history.push('/contact-us')}>
-                            Contact Us
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <section className='comments'>
-                <div className="container">
-                    <h2>What our customers <br/> are saying</h2>
-
-                    <div className="carousel">
-
-
-                        <Slider
-                            dots={true}
-                            infinite={true}
-                            speed={500}
-                            slidesToShow={4}
-                            slidesToScroll={1}
-                            nextArrow={<SampleNextArrow/>}
-                            prevArrow={<SamplePrevArrow/>}
-                            responsive={[
-                                {
-                                    breakpoint: 1024,
-                                    settings: {
-                                        slidesToShow: 3,
-                                        slidesToScroll: 3,
-                                    }
-                                },
-                                {
-                                    breakpoint: 740,
-                                    settings: {
-                                        slidesToShow: 2,
-                                        slidesToScroll: 2
-                                    }
-                                },
-                                {
-                                    breakpoint: 500,
-                                    settings: {
-                                        slidesToShow: 1,
-                                        slidesToScroll: 1
-                                    }
-                                }
-                            ]}
-                        >
-                            {commentsList.map((item, index) => (
-                                <div className="slide-item">
-                                    <div className="row">
-                                        <img src={item.avatar} alt=""/>
-
-                                        <div className="name">
-                                            {item.name}
+                                <div className="card">
+                                    <div className="face face1">
+                                        <div className="content">
+                                            <img src={caseExampleImage} alt=""/>
                                         </div>
-
                                     </div>
 
-                                    <div className='comment'>{item.comment}</div>
+                                    <div className="face face2">
+                                        <div className="content">
+                                            <p>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eros, ultrices
+                                                nec placerat adipiscing natoque. Massa varius congue sed eleifend
+                                                commodo.
+                                            </p>
+
+                                            <Link to={'/'}>read more</Link>
+                                        </div>
+                                    </div>
                                 </div>
-                            ))}
-                        </Slider>
+
+                            </div>
+                        ))}
                     </div>
+
+                    {/*<Slider*/}
+                    {/*    dots={true}*/}
+                    {/*    infinite={true}*/}
+                    {/*    speed={500}*/}
+                    {/*    slidesToShow={4}*/}
+                    {/*    slidesToScroll={1}*/}
+                    {/*    nextArrow={<SampleNextArrow/>}*/}
+                    {/*    prevArrow={<SamplePrevArrow/>}*/}
+                    {/*    responsive={[*/}
+                    {/*        {*/}
+                    {/*            breakpoint: 1024,*/}
+                    {/*            settings: {*/}
+                    {/*                slidesToShow: 3,*/}
+                    {/*                slidesToScroll: 3,*/}
+                    {/*            }*/}
+                    {/*        },*/}
+                    {/*        {*/}
+                    {/*            breakpoint: 740,*/}
+                    {/*            settings: {*/}
+                    {/*                slidesToShow: 2,*/}
+                    {/*                slidesToScroll: 2*/}
+                    {/*            }*/}
+                    {/*        },*/}
+                    {/*        {*/}
+                    {/*            breakpoint: 500,*/}
+                    {/*            settings: {*/}
+                    {/*                slidesToShow: 1,*/}
+                    {/*                slidesToScroll: 1*/}
+                    {/*            }*/}
+                    {/*        }*/}
+                    {/*    ]}*/}
+                    {/*>*/}
+                    {/*</Slider>*/}
                 </div>
             </section>
 
-            <section className='support'>
+            <Comments/>
+
+            <section className={'human-support'}>
                 <div className="container">
                     <div className="col">
-                        <h3>Human Support <img src={emojiImage} alt=""/></h3>
+                        <h2>Human Support</h2>
                         <p>
-                            Our expert team is here to help you
-                            <br/>
-                            on your journey as Amazon Seller. We
-                            <br/>
-                            are here to answer your questions
-                            <br/>
-                            and provide actionable steps that
-                            <br/>
-                            you can implement in your business.
+                            Our expert team is here to help you on your journey as Amazon Seller. We are here to answer
+                            your questions and provide actionable steps that you can implement in your business.
                         </p>
-                        <h4>Don’t take our word for it</h4>
 
-                        <a href="https://www.trustpilot.com/review/profitwhales.com" target={'_blank'}>
+                        <h4>
+                            Don’t take our word for it
+                        </h4>
+
+                        <a href="#">
                             Check our customer reviews on Trustpilot
                         </a>
                     </div>
 
-                    <img src={supportImage} alt="" className='image'/>
+                    <img src={humanSupportImage} alt=""/>
                 </div>
-
-                <div className="rectangle"/>
             </section>
 
-            <section className='trial'>
+            <section className='waiting-action'>
                 <div className="container">
-                    <h2>What are you waiting for?</h2>
-                    <p>Get started wit 14-day free trial and get time saving machine for your business.</p>
-                    <button onClick={() => history.push('/registration')}>START 14 DAY FREE TRIAL TODAY</button>
-                    <ul>
-                        <li>No credit card required</li>
-                        <li>Cancel anytime</li>
-                    </ul>
+                    <div className="col">
+                        <h2>What are you waiting for?</h2>
+                        <p>Create professionally structured Amazon Advertising <br/> Campaigns in a few clicks</p>
+                    </div>
+
+                    <Link to={'/registration'} className={'btn white'}>create campaigns</Link>
                 </div>
             </section>
 

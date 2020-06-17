@@ -11,6 +11,7 @@ const Ebook = React.lazy(() => import('../pages/LandingPages/Ebook/Ebook'));
 const ThankYou = React.lazy(() => import('../pages/LandingPages/Ebook/ThankYou'));
 const AboutUs = React.lazy(() => import('../pages/LandingPages/AboutUs/AboutUs'));
 const Pricing = React.lazy(() => import('../pages/LandingPages/Pricing/Pricing'));
+const PricingOld = React.lazy(() => import('../pages/LandingPages/PricingOld/PricingOld'));
 const PPCScanner = React.lazy(() => import('../pages/LandingPages/PPCScanner/PPCScanner'));
 const DemoCall = React.lazy(() => import('../pages/LandingPages/DemoCall/DemoCall'));
 const ContactUs = React.lazy(() => import('../pages/LandingPages/ContactUs/ContactUs'));
@@ -28,6 +29,9 @@ const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPass
 const LoginWithAmazon = React.lazy(() => import('../pages/authentication/LoginWithAmazon/LoginWithAmazon'));
 const ThankPage = React.lazy(() => import('../pages/authentication/AccountBinding/ThankPage/ThankPage'));
 
+const developer = process.env.REACT_APP_ENV === "developer";
+
+
 const routers = () => {
     return (
         <Suspense fallback={<RouteLoader/>}>
@@ -37,7 +41,7 @@ const routers = () => {
                     <Route exact path="/affiliates" component={LandingAffiliates}/>
                     <Route exact path="/about-us" component={AboutUs}/>
                     {/*<Route exact path="/scanner" component={PPCScanner}/>*/}
-                    <Route exact path="/pricing" component={Pricing}/>
+                    <Route exact path="/pricing" component={developer ? Pricing : PricingOld}/>
                     <Route exact path="/amazon-ppc-blueprint" component={Ebook}/>
                     <Route exact path="/thank-you" component={ThankYou}/>
                     <Route exact path="/demo-call" component={DemoCall}/>

@@ -3,6 +3,8 @@ import './PPCPriceSlider.less';
 import {history} from "../../../../utils/history";
 import yesGreenIcon from "../../../../assets/img/landing-pricing/yes_green.svg";
 import $ from "jquery";
+import ionRangeSlider from 'ion-rangeslider';
+
 import {Link} from "react-router-dom";
 import {SVG} from "../../../../utils/icons";
 
