@@ -1,11 +1,10 @@
-import React, {useState} from "react";
+import React from "react";
 
 import './Marketing.less';
 import '../ZeroToHero.less';
 import ppcStructureImage from '../../../assets/img/zth/zth-structure.png';
 import {history} from "../../../utils/history";
 import ProductAmountSlider from "../components/ProductAmountSlider/ProductAmountSlider";
-import {Link} from "react-router-dom";
 import HasIncompleteBatch from "../components/HasIncompleteBatch/HasIncompleteBatch";
 import {useSelector} from "react-redux";
 
@@ -35,10 +34,14 @@ const Marketing = () => {
                 <div className="row">
                     <div className="col">
                         <h3>Here is the PPC campaigns structure we create:</h3>
-                        {/*<p>*/}
-                        {/*    To learn more about Zero to Hero structure*/}
-                        {/*    <Link to={''} target={'_blank'}>watch these video</Link>*/}
-                        {/*</p>*/}
+                        <p>
+                            Learn more about Zero to Hero unique structure:
+                            <a
+                                href={'https://learn.profitwhales.com/en/articles/4162147-zero-to-hero-zth-campaigns-structure'}
+                                target={'_blank'}>
+                                Click Here
+                            </a>
+                        </p>
 
                         <div className="image">
                             <img src={ppcStructureImage} alt=""/>

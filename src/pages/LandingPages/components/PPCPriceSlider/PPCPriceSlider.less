@@ -1,0 +1,179 @@
+.ppc-price-slider {
+  background: #FFFFFF;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  padding: 65px 120px;
+  font-family: Eina;
+
+  .title {
+    font-size: 48px;
+    line-height: 58px;
+    color: #17175A;
+    font-weight: 500;
+  }
+
+  .slider {
+    margin-top: 90px;
+
+    .irs--flat {
+      .irs-line {
+        height: 3px;
+        border-radius: 20px;
+        background: #C9CBD4;
+      }
+
+      .irs-bar {
+        height: 3px;
+        background: #6D6DF6;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+        border-radius: 20px;
+      }
+
+      .irs-handle {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #6D6DF6;
+        border: 3px solid #FFFFFF;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+        top: 17px;
+        cursor: pointer;
+
+        i {
+          display: none;
+        }
+
+        &::before {
+          position: absolute;
+          content: '';
+          border: 0;
+          width: 15px;
+          height: 9px;
+          background: url("../../../../assets/img/tooltip-rectangle.png") no-repeat center center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+          z-index: 100;
+          top: -13px;
+
+          left: 50%;
+          transform: translate(-50%, 0);
+        }
+
+        div {
+          width: max-content;
+          position: absolute;
+          font-size: 16px;
+          color: #7C8A95;
+
+          left: 50%;
+
+          bottom: -50px;
+
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      .irs-single {
+        font-size: 16px;
+        height: 48px;
+        background: #fff;
+        border: 1px solid #6D6DF6;
+        color: #6D6DF6;
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        top: -40px;
+
+        &::before {
+          display: none;
+
+          border: 0;
+          width: 15px;
+          height: 9px;
+          background: url("../../../../assets/img/tooltip-rectangle.png") no-repeat center center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+          z-index: 100;
+          bottom: -9px;
+          left: 0;
+          right: 0;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+
+  .row {
+    display: flex;
+    margin-top: 50px;
+  }
+
+  .sum {
+    display: flex;
+    flex-direction: column;
+    width: 42%;
+    margin: 0 7% 0 0;
+
+    .result-sum {
+      font-size: 100px;
+      line-height: 72px;
+      color: #6D6DF6;
+      font-weight: 500;
+      display: flex;
+      align-items: flex-start;
+      margin: 0 0 20px 0;
+
+      span:first-child {
+        font-size: 60px;
+        margin: -5px 5px auto 0;
+      }
+    }
+
+    p {
+      font-size: 1.1428571428571428em;
+      line-height: 19px;
+      color: #7C8A95;
+      margin: 20px 0 30px 0;
+    }
+
+    .btn {
+      height: 56px;
+      font-weight: 500;
+      font-size: 21px;
+    }
+  }
+
+  .includes {
+    h4 {
+      font-size: 32px;
+      line-height: 38px;
+      color: #6D6DF6;
+      margin-bottom: 33px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 30px;
+      grid-row-gap: 20px;
+
+      li {
+        display: flex;
+        align-items: flex-start;
+
+        svg {
+          min-width: 20px;
+          height: 20px;
+          margin: 0 20px 0 0;
+        }
+      }
+    }
+  }
+}

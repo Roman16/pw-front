@@ -54,12 +54,14 @@ export function zth(state = initialState, action) {
             };
 
         case zthConstants.ADD_PRODUCTS:
+            const filteredProductsList = [...state.selectedProducts, ...action.payload].filter(filterItem => !action.payload.find(findItem => findItem.id === filterItem.parent_id));
+
             return {
                 ...state,
-                selectedProducts: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)),
-                selectedProductsWithSettingsParams: [...state.selectedProducts, ...action.payload].filter(filterItem => ![...state.selectedProducts, ...action.payload].find(findItem => findItem.id === filterItem.parent_id)).map(item => ({product_id: item.id, ...initialProductSettings})),
-                ...[...state.selectedProducts, ...action.payload].length > state.productAmount && {
-                    productAmount: [...state.selectedProducts, ...action.payload].length,
+                selectedProducts: filteredProductsList,
+                selectedProductsWithSettingsParams: filteredProductsList.map(item => ({product_id: item.id, ...initialProductSettings})),
+                ...state.productSliderType === 'soft' && {
+                    productAmount: filteredProductsList.length,
                     productSliderType: 'soft'
                 }
             };
