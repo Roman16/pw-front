@@ -69,76 +69,41 @@ const Pricing = () => {
 
             <PPCPricingGuide/>
 
+            {/*<section className={'case-example'}>*/}
+            {/*    <div className="container">*/}
+            {/*        <h2>Powerful Case Study Examples</h2>*/}
 
-            <section className={'case-example'}>
-                <div className="container">
-                    <h2>Powerful Case Study Examples</h2>
+            {/*        <div className="list">*/}
+            {/*            {[1, 2, 3, 4].map((item, index) => (*/}
+            {/*                <div className="slide-item">*/}
+            {/*                    <div className="">*/}
+            {/*                    </div>*/}
 
-                    <div className="list">
-                        {[1, 2, 3, 4].map((item, index) => (
-                            <div className="slide-item">
-                                <div className="">
-                                </div>
+            {/*                    <div className="card">*/}
+            {/*                        <div className="face face1">*/}
+            {/*                            <div className="content">*/}
+            {/*                                <img src={caseExampleImage} alt=""/>*/}
+            {/*                            </div>*/}
+            {/*                        </div>*/}
 
-                                <div className="card">
-                                    <div className="face face1">
-                                        <div className="content">
-                                            <img src={caseExampleImage} alt=""/>
-                                        </div>
-                                    </div>
+            {/*                        <div className="face face2">*/}
+            {/*                            <div className="content">*/}
+            {/*                                <p>*/}
+            {/*                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eros, ultrices*/}
+            {/*                                    nec placerat adipiscing natoque. Massa varius congue sed eleifend*/}
+            {/*                                    commodo.*/}
+            {/*                                </p>*/}
 
-                                    <div className="face face2">
-                                        <div className="content">
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eros, ultrices
-                                                nec placerat adipiscing natoque. Massa varius congue sed eleifend
-                                                commodo.
-                                            </p>
+            {/*                                <Link to={'/'}>read more</Link>*/}
+            {/*                            </div>*/}
+            {/*                        </div>*/}
+            {/*                    </div>*/}
 
-                                            <Link to={'/'}>read more</Link>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        ))}
-                    </div>
-
-                    {/*<Slider*/}
-                    {/*    dots={true}*/}
-                    {/*    infinite={true}*/}
-                    {/*    speed={500}*/}
-                    {/*    slidesToShow={4}*/}
-                    {/*    slidesToScroll={1}*/}
-                    {/*    nextArrow={<SampleNextArrow/>}*/}
-                    {/*    prevArrow={<SamplePrevArrow/>}*/}
-                    {/*    responsive={[*/}
-                    {/*        {*/}
-                    {/*            breakpoint: 1024,*/}
-                    {/*            settings: {*/}
-                    {/*                slidesToShow: 3,*/}
-                    {/*                slidesToScroll: 3,*/}
-                    {/*            }*/}
-                    {/*        },*/}
-                    {/*        {*/}
-                    {/*            breakpoint: 740,*/}
-                    {/*            settings: {*/}
-                    {/*                slidesToShow: 2,*/}
-                    {/*                slidesToScroll: 2*/}
-                    {/*            }*/}
-                    {/*        },*/}
-                    {/*        {*/}
-                    {/*            breakpoint: 500,*/}
-                    {/*            settings: {*/}
-                    {/*                slidesToShow: 1,*/}
-                    {/*                slidesToScroll: 1*/}
-                    {/*            }*/}
-                    {/*        }*/}
-                    {/*    ]}*/}
-                    {/*>*/}
-                    {/*</Slider>*/}
-                </div>
-            </section>
+            {/*                </div>*/}
+            {/*            ))}*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
 
             <Comments/>
 
