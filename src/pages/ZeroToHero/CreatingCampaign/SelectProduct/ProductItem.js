@@ -34,7 +34,7 @@ const ProductItem = ({
                     <div className="row">
                         <div className="price">{product.item_price !== null && `$${product.item_price}`}</div>
                         <div className="stock">
-                            {product.status_on_amazon ?
+                            {product.status_on_amazon === 'Active' ?
                                 <span className={'in'}>In Stock</span>
                                 :
                                 <span className={'out'}>Stock Out</span>
