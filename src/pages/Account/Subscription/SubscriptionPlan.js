@@ -39,7 +39,7 @@ const CouponField = ({applyCoupon, setCoupon, product}) => {
             </div>
         )
     }
-}
+};
 
 const ProductPrice = ({product}) => {
     if (product.status === 'not_connect') {
@@ -57,11 +57,11 @@ const ProductPrice = ({product}) => {
     } else if (product.applied_coupon.amount_off) {
         return (<div className={'price'}>
             <span className="prev-value">
-                ${numberMask(product.next_charge_value, 2)}
+                ${numberMask(product.next_charge_value + product.applied_coupon.amount_off, 2)}
             </span>
 
             <span className="new-value">
-                ${numberMask(product.next_charge_value - product.applied_coupon.amount_off, 2)}
+                ${numberMask(product.next_charge_value, 2)}
             </span>
             <br/>
             <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
@@ -69,20 +69,19 @@ const ProductPrice = ({product}) => {
     } else if (product.applied_coupon.percent_off) {
         return (<div className={'price'}>
             <span className="prev-value">
-                ${numberMask(product.next_charge_value, 2)}
+                ${numberMask(product.next_charge_value / ((100 - product.applied_coupon.percent_off) / 100), 2)}
             </span>
 
             <span className="new-value">
-                ${numberMask(product.next_charge_value - ((product.next_charge_value / 100) * product.applied_coupon.percent_off), 2)}
+                ${numberMask(product.next_charge_value, 2)}
             </span>
-
             <br/>
             <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
         </div>)
     } else {
         return '---'
     }
-}
+};
 
 
 const SubscriptionPlan = ({
