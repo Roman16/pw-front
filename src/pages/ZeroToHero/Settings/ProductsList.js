@@ -148,7 +148,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     )
                 },
                 {
-                    width: '14.285714285714286rem',
+                    width: '150px',
                     render: (props) => (<span>{props.asin}</span>)
                 },
                 {
@@ -156,11 +156,11 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     render: (props) => (<span>{props.sku}</span>)
                 },
                 {
-                    minWidth: '200px',
+                    minWidth: '150px',
                     render: (props, item) => (jobStatus(item))
                 },
                 {
-                    minWidth: '200px',
+                    minWidth: '170px',
                     render: (props) => ('')
                 },
                 {
@@ -277,7 +277,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 title: 'ASIN',
                 dataIndex: 'asin',
                 key: 'asin',
-                width: '14.285714285714286rem',
+                width: '150px',
             },
             {
                 title: 'SKU',
@@ -289,18 +289,18 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 title: 'Status',
                 dataIndex: 'status',
                 key: 'status',
-                minWidth: '200px',
+                minWidth: '150px',
                 render: (status, item) => (jobStatus(item))
             },
             {
                 title: 'Keywords Amount',
                 dataIndex: 'keywords_count',
                 key: 'keywords_count',
-                minWidth: '200px',
+                minWidth: '170px',
                 render: (date, item) => item.job && item.job.keywords_count
             },
             {
-                title: 'Targetings Amount',
+                title: 'Product Targetings Amount',
                 dataIndex: 'pts_count',
                 key: 'pts_count',
                 minWidth: '200px',

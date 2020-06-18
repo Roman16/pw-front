@@ -142,6 +142,10 @@
         &:first-child {
           padding-left: 1.4285714285714286rem;
           padding-right: 10px;
+          position: sticky;
+          left: 0;
+          z-index: 10;
+          background: #fff;
         }
       }
     }
@@ -153,6 +157,12 @@
         .table-body__row {
           border-color: rgba(101, 106, 132, 0.2);
 
+          &:hover {
+            .table-body__field:first-child {
+              background: #fafaff;
+            }
+          }
+
           & > div:last-child {
             justify-content: flex-start;
           }
@@ -160,6 +170,7 @@
           &.expand-row {
             display: flex;
             flex-direction: column;
+
             & > div {
               padding: 0;
               width: 100%;
@@ -174,6 +185,7 @@
 
                 &:first-child {
                   padding-left: 4.285714285714286rem;
+
                 }
               }
             }
@@ -188,6 +200,10 @@
               padding-left: 1.4285714285714286rem;
               padding-right: 10px;
               border-right: 1px solid #C9CBD4;
+              position: sticky;
+              left: 0;
+              z-index: 10;
+              background: #fff;
             }
           }
         }

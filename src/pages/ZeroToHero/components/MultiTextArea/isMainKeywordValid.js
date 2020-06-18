@@ -17,24 +17,53 @@ export const isMainKeywordValid = (mainKeyword, productTitle) => {
         'it',
         'if',
     ];
+
     const mainKeywordWords = normalizeString(mainKeyword)
         .split(' ')
         .filter(x => x.length > 0 && !serviceWords.includes(x))
         .map(x => toSingular(x))
         .map(x => winkPorter2Stemmer(x));
+
     const productTitleWords = normalizeString(productTitle)
         .split(' ')
+        .filter(x => x.length > 0 && !serviceWords.includes(x))
+        .flatMap(x => trimTitleWordSpecialCharacters(x))
         .map(x => toSingular(x))
         .map(x => winkPorter2Stemmer(x));
 
     return mainKeywordWords.every(x => productTitleWords.includes(x));
 };
 
+
 function normalizeString(str) {
     let newStr = str || '';
     newStr = newStr.trim().replace(/\s+/gi, ' ');
     newStr = newStr.toLowerCase();
     return newStr;
+}
+
+function trimTitleWordSpecialCharacters(word) {
+    const hardTrimCharacters = ' !?🔶✓,:';
+    const softTrimCharacters = '."\'`+-';
+    const hard = trimCharacters(word, hardTrimCharacters);
+    const soft = trimCharacters(hard, softTrimCharacters);
+    return hard === soft ?
+        [hard] :
+        [hard, soft];
+}
+
+function trimCharacters(str, characters) {
+    const replacers = characters.split('').map(x => {
+        if (x === ']') {
+            return '\\]';
+        }
+        if (x === '\\') {
+            return '\\\\';
+        }
+        return x;
+    });
+    const reg = new RegExp('^[' + replacers.join('') + ']+|[' + replacers.join('') + ']+$', 'g');
+    return str.replace(reg, '');
 }
 
 function toSingular(word) {

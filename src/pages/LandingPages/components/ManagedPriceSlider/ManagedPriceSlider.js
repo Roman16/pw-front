@@ -28,6 +28,10 @@ const ManagedPriceSlider = () => {
         <section className={'manage-price-slider'}>
             <h3>What’s your monthly Amazon Advertising Spend?</h3>
 
+            <p className={'description'}>
+                Accelerate your Amazon Business with our Pro Advertising Managed Service
+            </p>
+
             <div className="row">
                 <div className="col">
                     <div className="price">

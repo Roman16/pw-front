@@ -53,7 +53,7 @@ const Pricing = () => {
                             onClick={() => setSelectedProduct('manage')}
                         >
                             <SVG id={'manage-service-icon'}/>
-                            <div>Get extraordinary result</div>
+                            <div>Get Extraordinary Result</div>
                             <span>Managed Service</span>
                         </li>
 
@@ -115,7 +115,7 @@ const Pricing = () => {
 
                     <ul>
                         <li>
-                            <a href="">
+                            <a href="https://www.trustpilot.com/review/profitwhales.com" target={'_blank'}>
                                 <img src={trustpilotLogo} alt=""/>
                                 <div>
                                     <SVG id={'right-white-arrow'}/>
@@ -123,7 +123,8 @@ const Pricing = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="https://sellercentral.amazon.com/tsba/provider-details/Advertising%20Optimization/4f60e5cd-a0a1-44f2-8336-074806a7775f?ref_=sc_spn_alst_adt-4f60e5cd&localeSelection=en_US&sellFrom=US&sellIn=US"
+                               target={'_blank'}>
                                 <img src={amazonSpnLogo} alt=""/>
                                 <div>
                                     <SVG id={'right-white-arrow'}/>
@@ -131,7 +132,8 @@ const Pricing = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9"
+                               target={'_blank'}>
                                 <img src={amazonAppStoreLogo} alt=""/>
                                 <div>
                                     <SVG id={'right-white-arrow'}/>
