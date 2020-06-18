@@ -175,7 +175,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     </div>)
                 },
                 {
-                    minWidth: '150px',
+                    minWidth: '130px',
                     render: () => <span>SP</span>
                 },
                 {
@@ -322,7 +322,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 title: 'Campaign Type',
                 dataIndex: 'campaign_type',
                 key: 'campaign_type',
-                minWidth: '150px',
+                minWidth: '130px',
                 render: () => <span>SP</span>
             },
             {
