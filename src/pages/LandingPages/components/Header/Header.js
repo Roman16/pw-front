@@ -55,7 +55,7 @@ const Header = ({type = 'light', page}) => {
                             <ul className="">
                                 <li className="has-child"><a href="#">Products <SVG id='menu-arrow'/></a>
                                     <ul className="sub-menu">
-                                        <li><Link to='/'>PPC Optimization</Link></li>
+                                        <li><Link to='/'>PPC Automate</Link></li>
                                         {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
                                         <li><Link to={'/zero-to-hero-info'}>Zero To Hero</Link></li>
                                         <li className="soon"><a href='#'>Analytics</a></li>
@@ -66,7 +66,7 @@ const Header = ({type = 'light', page}) => {
                                 <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
                                     <ul className="sub-menu">
                                         <li><a href="/blog">Blog</a></li>
-                                        <li><a href='http://learn.profitwhales.com/en/'>Automate <br/> -Help Centre</a>
+                                        <li><a href='http://learn.profitwhales.com/en/'>Help Centre</a>
                                         </li>
                                     </ul>
                                 </li>

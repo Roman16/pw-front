@@ -33,7 +33,7 @@ const ManagedPriceSlider = () => {
                     <div className="price">
                         <label>Starts <br/> from</label>
 
-                        $ flat fee + <br/> 3% ad spend
+                        $ flat fee + <br/>% ad spend
 
                         <label>/ month</label>
                     </div>

@@ -27,11 +27,11 @@ const Pricing = () => {
                         Flexible plans that grow with you
                     </h2>
 
-                    <p>
+                    {selectedProduct === 'ppc' && <p>
                         We have a prepaid plan after the free trial and charging you based on your last 30-days ad
                         spend. After that, you have 30 days usage of the software. We grow with the growth of your
                         business.
-                    </p>
+                    </p>}
 
                     <ul>
                         <li
@@ -40,7 +40,7 @@ const Pricing = () => {
                         >
                             <SVG id={'ppc-automate-icon'}/>
                             <div>Automate Ads</div>
-                            <span> PPC Automation</span>
+                            <span>PPC Automate</span>
                         </li>
 
                         <li
@@ -121,14 +121,6 @@ const Pricing = () => {
                             Our expert team is here to help you on your journey as Amazon Seller. We are here to answer
                             your questions and provide actionable steps that you can implement in your business.
                         </p>
-
-                        <h4>
-                            Don’t take our word for it
-                        </h4>
-
-                        <a href="#">
-                            Check our customer reviews on Trustpilot
-                        </a>
                     </div>
 
                     <img src={humanSupportImage} alt=""/>

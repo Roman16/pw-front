@@ -4,8 +4,6 @@ import {Link} from "react-router-dom";
 import coinsImage from '../../../../assets/img/landing-pricing/coins-icon.svg';
 import calendarImage from '../../../../assets/img/landing-pricing/calendar-icon.svg';
 import Slider from "react-slick";
-import bestSellerLabel from "../../../../assets/img/landing-zth/best-seller-label.png";
-import {SVG} from "../../../../utils/icons";
 
 
 const PPCPricingGuide = () => {
@@ -14,7 +12,7 @@ const PPCPricingGuide = () => {
     };
 
     return (
-        <section className={'ppc-pricing-guide pricing-guide'}>
+        <section className={'ppc-pricing-guide pricing-guide'} id={'guide'}>
             <div className="container">
                 <h2>Our Simple Pricing Guide</h2>
 

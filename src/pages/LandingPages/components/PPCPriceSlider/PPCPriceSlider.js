@@ -97,7 +97,7 @@ const PPCPriceSlider = () => {
                     </div>
 
                     <p>Estimated price per month based on your <br/> 30-day Amazon Ad Spend.
-                        <a href="#plans">How is this calculated?</a>
+                        <a href="#guide">How is this calculated?</a>
                     </p>
 
 
