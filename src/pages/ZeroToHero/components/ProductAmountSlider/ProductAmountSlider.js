@@ -53,7 +53,7 @@ const ProductAmountSlider = ({description, onNextStep}) => {
             <div className="slider-block">
                 <div className="col">
                     <div className="amount">
-                        Product Amount
+                        How many products do <br/> you want to setup?
 
                         <div className="value form-group">
                             <Input
