@@ -66,7 +66,7 @@ const ProductAmountSlider = ({description, onNextStep}) => {
                         See the example of the campaigns
                         <a
                             target={'_blank'}
-                            href="https://docs.google.com/spreadsheets/d/1HqPXFEh1bsElCUF4OiXayOsKoci27i-3sYL0HIqmJfc/edit?usp=sharing"
+                            href="https://docs.google.com/spreadsheets/d/1tNkh61K9ye8Xk90r6OOhXuHJ_zEPI6da5oMs4Iv-5P0/edit#gid=277769766"
                         >
                             you’ll get
                         </a>
@@ -102,7 +102,7 @@ const ProductAmountSlider = ({description, onNextStep}) => {
                 </button>}
             </div>
 
-           {description &&  <div className="description">
+            {description && <div className="description">
                 Excess products will be added as free Zero to Hero tokens to your account so you will be able to create
                 Zero to Hero later. In this way you can save money if you need to create Zero to Hero for multiple
                 products, but right now only have time to fill data just for couple of them.

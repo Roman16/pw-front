@@ -31,6 +31,7 @@ import "slick-carousel/slick/slick-theme.css";
 import {Modal} from "antd";
 import {Link} from "react-router-dom";
 import OurCases from "./OurCases/OurCases";
+import Comments from "../components/Comments/Comments";
 
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
@@ -597,63 +598,7 @@ const LandingAutomation = () => {
 
             <OurCases/>
 
-            <section className='comments'>
-                <div className="container">
-                    <h2>What Our Customers Say</h2>
-
-                    <div className="carousel">
-                        <Slider
-                            dots={true}
-                            infinite={true}
-                            speed={500}
-                            slidesToShow={4}
-                            slidesToScroll={1}
-                            nextArrow={<SampleNextArrow/>}
-                            prevArrow={<SamplePrevArrow/>}
-                            responsive={[
-                                {
-                                    breakpoint: 1024,
-                                    settings: {
-                                        slidesToShow: 3,
-                                        slidesToScroll: 3,
-                                    }
-                                },
-                                {
-                                    breakpoint: 740,
-                                    settings: {
-                                        slidesToShow: 2,
-                                        slidesToScroll: 2
-                                    }
-                                },
-                                {
-                                    breakpoint: 500,
-                                    settings: {
-                                        slidesToShow: 1,
-                                        slidesToScroll: 1
-                                    }
-                                }
-                            ]}
-                        >
-                            {commentsList.map((item, index) => (
-                                <div className="slide-item">
-                                    <div className="row">
-                                        <img src={item.avatar} alt=""/>
-
-                                        <div className="name">
-                                            {item.name}
-                                        </div>
-
-                                    </div>
-
-                                    <div className='comment'>{item.comment}</div>
-                                </div>
-                            ))}
-                        </Slider>
-
-
-                    </div>
-                </div>
-            </section>
+            <Comments/>
 
             <section className='under-hood'>
                 <div className="container">

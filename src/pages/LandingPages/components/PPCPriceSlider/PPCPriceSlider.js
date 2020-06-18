@@ -1,19 +1,11 @@
 import React, {useEffect} from "react";
 import './PPCPriceSlider.less';
 import {history} from "../../../../utils/history";
-import yesGreenIcon from "../../../../assets/img/landing-pricing/yes_green.svg";
 import $ from "jquery";
 import ionRangeSlider from 'ion-rangeslider';
 
 import {Link} from "react-router-dom";
 import {SVG} from "../../../../utils/icons";
-
-
-const numberMask = (value, n, x) => {
-    let re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
-    return (+value).toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,').replace('.00', '');
-};
-
 
 
 const PPCPriceSlider = () => {
@@ -26,6 +18,11 @@ const PPCPriceSlider = () => {
         'Amazon Analytics Tool',
         'Friendly Support 24/7',
     ];
+
+    const numberMask = (value, n, x) => {
+        let re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+        return (+value).toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,').replace('.00', '');
+    };
 
     useEffect(() => {
         $(".js-range-slider").ionRangeSlider({

@@ -9,7 +9,7 @@
     font-size: 48px;
     line-height: 58px;
     color: #17175A;
-    font-weight: 500;
+    margin-bottom: 74px;
   }
 
   .row {
@@ -18,7 +18,7 @@
   }
 
   .col {
-    min-width: 450px;
+    width: 450px;
     margin-right: 20px;
     display: flex;
     flex-direction: column;
@@ -26,8 +26,8 @@
 
   .price {
     width: max-content;
-    font-size: 100px;
-    line-height: 90px;
+    font-size: 40px;
+    line-height: 50px;
     color: #6D6DF6;
     font-weight: 500;
     display: flex;
@@ -42,7 +42,14 @@
     label {
       font-size: 16px;
       line-height: 20px;
-      margin: 0 10px 0 0;
+
+      &:first-child {
+        margin: 0 10px 7px 0;
+      }
+
+      &:last-child {
+        margin: 0 0 5px 10px;
+      }
     }
   }
 
@@ -75,6 +82,126 @@
           margin: 0 20px 0 0;
           fill: none;
         }
+      }
+    }
+
+    .btn {
+      font-size: 21px;
+      text-transform: uppercase;
+      color: #6D6DF6;
+      font-weight: 500;
+      height: 56px;
+      border: 2px solid #6D6DF6;
+      background: #fff;
+      margin: 48px 0 0 auto;
+
+      &:hover {
+        background: rgba(109, 109, 246, 0.1);
+        color: #6D6DF6;
+      }
+    }
+  }
+
+  @media (max-width: 1200px) {
+    padding: 65px 95px;
+
+    .col {
+      width: 420px;
+      margin-right: 65px;
+    }
+
+    .includes {
+      position: relative;
+      padding-bottom: 104px;
+
+      ul {
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        margin-right: auto;
+        margin-left: 0;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+    }
+  }
+
+  @media (max-width: 900px) {
+    padding: 60px;
+
+
+    .row {
+      flex-direction: column;
+    }
+
+    .col {
+      width: 100%;
+      margin: 0 0 60px 0;
+    }
+
+    .includes {
+      width: 100%;
+      padding: 0;
+
+      .btn {
+        position: initial;
+        margin: 30px auto 0 auto;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 45px 40px;
+
+    h3 {
+      font-size: 24px;
+      line-height: 29px;
+      margin-bottom: 48px;
+    }
+
+    .col {
+      margin-bottom: 40px;
+    }
+
+    .price {
+      font-size: 30px;
+      line-height: 35px;
+      flex-wrap: wrap;
+
+      label:first-child {
+        width: 100%;
+        font-size: 16px;
+        margin-bottom: 0;
+
+        br {
+          display: none;
+        }
+      }
+
+      label:last-child {
+        font-size: 16px;
+      }
+    }
+
+    .includes {
+      h4 {
+        font-size: 24px;
+      }
+
+      ul {
+        li {
+          font-size: 16px;
+        }
+      }
+
+      .btn {
+        height: 40px;
+        width: 100%;
+        font-size: 14px;
+        padding: 5px 10px;
+        text-align: center;
       }
     }
   }

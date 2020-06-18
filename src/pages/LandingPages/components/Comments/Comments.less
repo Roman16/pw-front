@@ -122,4 +122,24 @@
       }
     }
   }
+
+  @media (max-width: 900px) {
+    .carousel {
+      .slick-slider {
+        & > .prev,
+        & > .next {
+          display: none;
+        }
+      }
+    }
+  }
+  @media (max-width: 600px) {
+    .container {
+      width: 100vw !important;
+
+      h2 {
+        padding: 0 5vw;
+      }
+    }
+  }
 }

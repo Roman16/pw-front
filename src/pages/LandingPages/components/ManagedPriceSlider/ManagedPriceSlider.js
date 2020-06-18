@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import './ManagedPriceSlider.less';
 import {SVG} from "../../../../utils/icons";
-
+import presentation from '../../../../assets/files/Presentation vol2 .pdf';
 
 const ManagedPriceSlider = () => {
 
@@ -19,6 +19,11 @@ const ManagedPriceSlider = () => {
         'SP, SB, SD Campaigns Creation, and Daily Management',
     ];
 
+
+    const onOpenChat = () => {
+        window.Intercom('show')
+    };
+
     return (
         <section className={'manage-price-slider'}>
             <h3>What’s your monthly Amazon Advertising Spend?</h3>
@@ -27,14 +32,15 @@ const ManagedPriceSlider = () => {
                 <div className="col">
                     <div className="price">
                         <label>Starts <br/> from</label>
-                        <span className={'dollar'}>$</span>
-                        1,500
+
+                        $ flat fee + <br/> 3% ad spend
+
                         <label>/ month</label>
                     </div>
 
-                    <Link to={'registration'} className={'btn default'}>
+                    <button className={'btn default'} onClick={onOpenChat}>
                         LET'S TALK
-                    </Link>
+                    </button>
                 </div>
 
                 <div className="includes">
@@ -48,6 +54,10 @@ const ManagedPriceSlider = () => {
                             </li>
                         ))}
                     </ul>
+
+                    <a href={presentation} download className={'btn white'}>
+                        download the presentation
+                    </a>
                 </div>
 
             </div>

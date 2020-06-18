@@ -4,6 +4,7 @@
 
 .landing-automation {
   font-family: 'Open Sans', sans-serif;
+  overflow-x: hidden;
 
   section {
     h2 {
@@ -41,10 +42,6 @@
         &:hover {
           color: #4d4d99;
         }
-      }
-
-      .prev {
-        transform: rotate(180deg);
       }
 
       @media (max-width: 1440px) {
@@ -307,6 +304,7 @@
       @media (min-width: 1600px) {
         & {
           position: relative;
+
           .image-block {
             right: -200px;
             margin: 5% 0 0 0;
@@ -889,7 +887,7 @@
     }
   }
 
-  .comments {
+  .user-comments {
     background: #F3F7FD;
     padding: 5.714285714285714rem 5.714285714285714rem 100px 5.714285714285714rem;
     position: relative;
@@ -903,115 +901,6 @@
       margin-bottom: 4.642857142857143rem;
     }
 
-    .carousel {
-      padding: 0 40px;
-      position: relative;
-
-      .slick-track {
-        & > div {
-          padding: 0 10px;
-        }
-      }
-
-      .slide-item {
-        background: #FFFFFF;
-        border: 1px solid #DCDFF2;
-        box-sizing: border-box;
-        border-radius: 8px;
-        padding: 1.7142857142857142rem 1.4285714285714286rem;
-
-        .row {
-          display: flex;
-          margin: 0 0 1.0714285714285714rem 0;
-
-          img {
-            width: 40px;
-            height: 40px;
-            margin: 0 1.0714285714285714rem 0 0;
-          }
-
-          .name {
-            font-family: eb;
-            font-size: 1.1428571428571428rem;
-            letter-spacing: 0.4px;
-            color: #17175A;
-            display: flex;
-            align-items: center;
-          }
-        }
-
-        .comment {
-          font-size: 0.9285714285714286rem;
-          line-height: 1.4285714285714286rem;
-          letter-spacing: 0.4px;
-          color: #4B5271;
-        }
-      }
-
-      .prev,
-      .next {
-        width: 2.2857142857142856rem;
-        height: 2.2857142857142856rem;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        position: absolute;
-
-        top: 0;
-        bottom: 0;
-        margin: auto 0;
-
-        color: #8A8AF8;
-
-        &:hover {
-          color: #4d4d99;
-        }
-      }
-
-      .prev {
-        transform: rotate(180deg);
-        left: -50px;
-      }
-
-      .next {
-        right: -50px;
-      }
-    }
-
-    .slick-dots {
-      bottom: -4.285714285714286rem;
-
-      li {
-        margin: 0 1px 0 0;
-
-        &:last-child {
-          margin: 0;
-        }
-
-        button:before {
-          opacity: 1;
-          color: #17175A;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          margin: auto;
-        }
-
-        &.slick-active {
-          button:before {
-            width: 12px;
-            height: 12px;
-            color: #F3F7FD;
-            border: 1px solid #17175A;
-            border-radius: 50%;
-            font-size: 0;
-          }
-        }
-      }
-    }
 
     @media (max-width: 1000px) {
       & {
@@ -1022,15 +911,15 @@
 
     @media (max-width: 600px) {
       & {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 0;
+        padding-right: 0;
 
         h2 {
           margin-bottom: 30px;
         }
 
         .carousel {
-          padding: 0 30px;
+          padding: 0;
 
           .slick-track {
             & > div {
@@ -1347,6 +1236,7 @@
         & {
           .price-list {
             padding: 20px;
+
             .list {
               grid-template-columns: 1fr 1fr;
             }

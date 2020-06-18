@@ -4,12 +4,13 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
     border-radius: 4px;
     margin: 10px 0 0 0;
-    padding: 4.285714285714286em 8.571428571428571em;
+    padding: 65px 120px;
 
     h3 {
       font-size: 3.4285714285714284em;
       line-height: 1.2083333333333333em;
       color: #17175A;
+      margin-bottom: 74px;
     }
 
     .col:first-child {
@@ -89,43 +90,88 @@
     }
   }
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1200px) {
     .plan-information {
-      h3 {
-        text-align: center;
+      padding: 65px 95px;
+
+      .col:first-child {
+        width: 330px;
+        margin-right: 30px;
+        min-width: initial;
       }
 
-      .btn {
-        margin: 0 auto;
+      .includes {
+        ul {
+          grid-template-columns: 1fr;
+
+        }
       }
+    }
+  }
+
+  @media (max-width: 900px) {
+    .plan-information {
+      padding: 60px;
 
       .row {
         flex-direction: column;
       }
 
-      .includes {
-        margin: 20px 0 0 0;
+      .col:first-child {
+        width: 100%;
+        margin: 0 0 60px 0;
       }
     }
   }
 
+
   @media (max-width: 600px) {
     .container {
       .plan-information {
-        padding: 30px 40px;
+        padding: 45px 40px;
 
         h3 {
           font-size: 24px;
+          line-height: 29px;
+          margin-bottom: 48px;
         }
 
         .col:first-child {
-          width: 100%;
-          min-width: initial;
+          margin-bottom: 40px;
+
+          .price {
+            font-size: 60px;
+            line-height: 72px;
+
+            span {
+              font-size: 16px;
+              line-height: 19px;
+              margin-bottom: 10px;
+
+              &.dollar {
+                font-size: 32px;
+                margin: 0 5px 40px 0;
+              }
+            }
+          }
+
+          ul {
+            li {
+              font-size: 16px;
+              line-height: 19px;
+            }
+          }
         }
 
         .includes {
+          h4 {
+            font-size: 24px;
+          }
+
           ul {
-            grid-template-columns: 1fr;
+            li {
+              font-size: 16px;
+            }
           }
         }
       }

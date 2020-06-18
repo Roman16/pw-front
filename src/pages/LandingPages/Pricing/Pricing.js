@@ -40,7 +40,7 @@ const Pricing = () => {
                         >
                             <SVG id={'ppc-automate-icon'}/>
                             <div>Automate Ads</div>
-                            PPC Automation
+                            <span> PPC Automation</span>
                         </li>
 
                         <li
@@ -49,7 +49,7 @@ const Pricing = () => {
                         >
                             <SVG id={'zth-icon'}/>
                             <div>Create Ads</div>
-                            Zero To Hero
+                            <span>Zero To Hero</span>
                         </li>
 
                         <li
@@ -58,7 +58,7 @@ const Pricing = () => {
                         >
                             <SVG id={'manage-service-icon'}/>
                             <div>Get extraordinary result</div>
-                            Managed Service
+                            <span>Managed Service</span>
                         </li>
 
                     </ul>
