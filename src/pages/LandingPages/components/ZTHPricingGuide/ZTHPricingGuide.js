@@ -29,7 +29,7 @@ const ZTHPricingGuide = () => {
                                 <div className="count"/>
                             </div>
 
-                            <h4>0-5 Products</h4>
+                            <h4>1-5 Products</h4>
                             <label htmlFor=""></label>
 
                             <h3>

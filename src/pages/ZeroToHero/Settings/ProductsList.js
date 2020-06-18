@@ -161,6 +161,14 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 },
                 {
                     minWidth: '200px',
+                    render: (props) => ('')
+                },
+                {
+                    minWidth: '200px',
+                    render: (props) => ('')
+                },
+                {
+                    minWidth: '200px',
                     render: (props, product) => (<div className="optimization-field">
                         {product.under_optimization ? <span>Running</span> :
                             <button className='btn default' onClick={goOptimizationPage}>Automate</button>}

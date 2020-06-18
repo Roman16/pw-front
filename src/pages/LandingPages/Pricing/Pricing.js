@@ -12,7 +12,9 @@ import Comments from "../components/Comments/Comments";
 import ZTHPriceSlider from "../components/ZTHPriceSlider/ZTHPriceSlider";
 import ZTHPricingGuide from "../components/ZTHPricingGuide/ZTHPricingGuide";
 import ManagedPriceSlider from "../components/ManagedPriceSlider/ManagedPriceSlider";
-
+import trustpilotLogo from '../../../assets/img/logo/trustpilot.png'
+import amazonSpnLogo from '../../../assets/img/logo/amazon-spn-logo-dark.png'
+import amazonAppStoreLogo from '../../../assets/img/logo/amazon-app-store-logo-dark.png'
 
 const Pricing = () => {
     const [selectedProduct, setSelectedProduct] = useState('ppc');
@@ -26,12 +28,6 @@ const Pricing = () => {
                     <h2>
                         Flexible plans that grow with you
                     </h2>
-
-                    {selectedProduct === 'ppc' && <p>
-                        We have a prepaid plan after the free trial and charging you based on your last 30-days ad
-                        spend. After that, you have 30 days usage of the software. We grow with the growth of your
-                        business.
-                    </p>}
 
                     <ul>
                         <li
@@ -112,6 +108,39 @@ const Pricing = () => {
             {/*</section>*/}
 
             <Comments/>
+
+            <section className={'reviews'}>
+                <div className="container">
+                    <h2>Check our trusted reviews on:</h2>
+
+                    <ul>
+                        <li>
+                            <a href="">
+                                <img src={trustpilotLogo} alt=""/>
+                                <div>
+                                    <SVG id={'right-white-arrow'}/>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src={amazonSpnLogo} alt=""/>
+                                <div>
+                                    <SVG id={'right-white-arrow'}/>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src={amazonAppStoreLogo} alt=""/>
+                                <div>
+                                    <SVG id={'right-white-arrow'}/>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
 
             <section className={'human-support'}>
                 <div className="container">

@@ -85,6 +85,12 @@ const PPCPriceSlider = () => {
         <div className="ppc-price-slider">
             <div className="title">What’s your monthly Amazon Advertising Spend?</div>
 
+            <p className={'description'}>
+                We have a prepaid plan after the free trial and charging you based on your last 30-days ad
+                spend. After that, you have 30 days usage of the software. We grow with the growth of your
+                business.
+            </p>
+
             <div className="slider">
                 <input className="js-range-slider" type="text"/>
             </div>
@@ -97,7 +103,7 @@ const PPCPriceSlider = () => {
                     </div>
 
                     <p>Estimated price per month based on your <br/> 30-day Amazon Ad Spend.
-                        <a href="#guide">How is this calculated?</a>
+                        <a href="#guide"> How is this calculated?</a>
                     </p>
 
 

@@ -4,8 +4,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFacebookSquare, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons";
 
 import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
-import appStoreLogo from '../../../../assets/img/amazon-logo/amazon-app-store-logo-dark.png';
-import spnLogo from '../../../../assets/img/amazon-logo/amazon-spn-logo-dark.png';
+import appStoreLogo from '../../../../assets/img/logo/amazon-app-store-logo-dark.png';
+import spnLogo from '../../../../assets/img/logo/amazon-spn-logo-dark.png';
 
 import './Footer.less';
 
