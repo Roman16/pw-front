@@ -40,7 +40,11 @@ const ProductAmountSlider = ({description, onNextStep}) => {
         if (value < addedProducts.length) {
             dispatch(zthActions.setProductAmount(addedProducts.length));
         } else {
-            dispatch(zthActions.setProductAmount(value));
+            if (value > 100) {
+                dispatch(zthActions.setProductAmount(100));
+            } else {
+                dispatch(zthActions.setProductAmount(value));
+            }
         }
     }
 
@@ -49,7 +53,7 @@ const ProductAmountSlider = ({description, onNextStep}) => {
             <div className="slider-block">
                 <div className="col">
                     <div className="amount">
-                        How many products <br/> do you want to setup?
+                        Product Amount
 
                         <div className="value form-group">
                             <Input
