@@ -7,11 +7,11 @@ const includesList = [
     'One-minute campaigns setup with our data-driven algorithms and you ready to go.',
     'Professionally structured campaigns that we used in our Agency to grow eight-figure brands.',
 
-    'No Amazon Advertising knowledge required. Just feel in some data.',
-    'Spend more time on growing your business while we focus on your ads.',
+    'Keyword Research file with 500-2,500 relevant keywords that you can use for Google Adwords and Bing',
+    'Ready-to-use file with keywords for you listing SEO and backend keywords',
 
     'Save time&money by starting with the most relevant keywords in your niche without getting them from auto campaigns.',
-    'More than five campaigns and 30-200 ad groups that have their own goal.'
+    '11 Campaigns with their mission (Keywords harvesting, Brand protection, keywords indexation, etc.).'
 ];
 
 const ZTHPriceSlider = () => {
