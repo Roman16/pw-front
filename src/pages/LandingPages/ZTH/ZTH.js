@@ -4,7 +4,6 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {SVG} from "../../../utils/icons";
 import OurCases from "../Automation/OurCases/OurCases";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -21,10 +20,6 @@ import caseImage from '../../../assets/img/landing-zth/cases-image.png'
 import caseImageMob from '../../../assets/img/landing-zth/cases-image_mob.png'
 import kingOnTronImage from '../../../assets/img/landing-zth/king-on-tron.png'
 import x10SuccessImage from '../../../assets/img/landing-zth/x10-success.svg'
-import skuIcon from '../../../assets/img/landing-zth/100sku.svg'
-import agencyIcon from '../../../assets/img/landing-zth/agency-icon.svg'
-import bestSellerIcon from '../../../assets/img/landing-zth/best-seller-icon.svg'
-import bestSellerLabel from '../../../assets/img/landing-zth/best-seller-label.png'
 import {Link} from "react-router-dom";
 import ZTHPriceSlider from "../components/ZTHPriceSlider/ZTHPriceSlider";
 import ZTHPricingGuide from "../components/ZTHPricingGuide/ZTHPricingGuide";

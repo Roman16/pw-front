@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import {history} from "../../../../utils/history";
 import './OurCases.less';
 import {useSwipeEffect} from "../../../../utils/hooks/useSwipeEffect";
+import presentation from "../../../../assets/files/Presentation vol2 .pdf";
 
 const ourCases = [
     {
@@ -346,6 +347,10 @@ const OurCases = () => {
                             Get Started
                         </button>
                     </div>
+
+                    <a href={presentation} download className={'btn white'}>
+                        download the presentation
+                    </a>
                 </div>
             </section>
 
