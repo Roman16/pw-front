@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import ReportTable from './ReportTable/ReportTable';
-import SubscriptionNotificationWindow
-    from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
-import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Tabs from "./Tabs/Tabs";
@@ -174,9 +171,6 @@ function Report() {
                 sortChangeHandler={sortChangeHandler}
                 addFilterHandler={addFilterHandler}
             />
-
-            <SubscriptionNotificationWindow product={'ppc'}/>
-            <LoadingAmazonAccount/>
         </div>
     );
 }

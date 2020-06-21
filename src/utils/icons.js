@@ -828,7 +828,7 @@ const files = {
             width: 20,
             height: 20,
             viewBox: [0,0,20,20],
-            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse"><path fill="#C4C4C4" d="M0 0H20V20H0z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="#6D6DF6" fill="none" stroke-linecap="round" stroke-linejoin="round" d="M10.0513 1.5H15.7252L19.3804 7.25687L10.042 18.2391L0.619677 7.69312L4.38378 1.5H10.0513Z"/></g>'
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse"><path fill="#C4C4C4" stroke="#6D6DF6" d="M0 0H20V20H0z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="#6D6DF6" fill="none" stroke-linecap="round" stroke-linejoin="round" d="M10.0513 1.5H15.7252L19.3804 7.25687L10.042 18.2391L0.619677 7.69312L4.38378 1.5H10.0513Z"/></g>'
         },
         'ppc-include-icon-5': {
             width: 20,

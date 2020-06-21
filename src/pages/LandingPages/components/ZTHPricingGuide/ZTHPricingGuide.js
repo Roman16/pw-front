@@ -26,11 +26,11 @@ const ZTHPricingGuide = () => {
                             <img src={bestSellerLabel} alt=""/>
 
                             <div className="counts">
-                                <div className="count"/>
+                                <div className="count" style={{width: '8px', height: '8px'}}/>
                             </div>
 
                             <h4>1-5 Products</h4>
-                            <label htmlFor=""></label>
+                            <label htmlFor=""/>
 
                             <h3>
                                 <span className={'dollar'}>$</span>
@@ -134,7 +134,7 @@ const ZTHPricingGuide = () => {
                     slidesToShow={1}
                     slidesToScroll={1}
                     centerMode={true}
-                    focusOnSelect={true}
+                    focusOnSelect={true} 
                     centerPadding={'50px'}
                 >
                     <div className={'plan first'}>

@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import ModalWindow from "../ModalWindow";
 import whales from '../../../assets/img/whales-loading-window.svg';
 import {userActions} from "../../../actions/user.actions";
@@ -8,18 +8,12 @@ import {SVG} from "../../../utils/icons";
 
 let intervalId = null;
 
-const LoadingAmazonAccount = () => {
+const LoadingAmazonAccount = ({visible, lastName, firstName, productList}) => {
     const dispatch = useDispatch();
-    const {firstName, lastName, bootstrapInProgress, productList} = useSelector(state => ({
-        productList: state.products.productList || [],
-        firstName: state.user.user ? state.user.user.name : '',
-        lastName: state.user.user ? state.user.user.last_name : '',
-        bootstrapInProgress: state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
-    }));
 
     useEffect(() => {
         intervalId = setInterval(() => {
-            if (bootstrapInProgress) {
+            if (visible) {
                 dispatch(userActions.getPersonalUserInfo());
             } else {
                 if (!productList && productList.length <= 0) {
@@ -40,12 +34,12 @@ const LoadingAmazonAccount = () => {
         return (() => {
             clearInterval(intervalId)
         })
-    }, []);
+    }, [visible]);
 
     return (
         <ModalWindow
             className={'amazon-loading-window'}
-            visible={bootstrapInProgress}
+            visible={visible}
             okText={'Check it now'}
             container={true}
         >

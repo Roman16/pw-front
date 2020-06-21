@@ -2,9 +2,6 @@ import React, {useCallback, useEffect, useState} from "react";
 
 import ProductsList from "./ProductsList/ProductsList";
 import "./ProductSettings.less";
-import SubscriptionNotificationWindow
-    from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
-import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 import Filters from "./Filters/Filters";
 import axios from "axios";
 import {productsServices} from "../../../services/products.services";
@@ -178,8 +175,6 @@ const ProductSettingsMain = () => {
                 setRowData={setRowData}
                 updateSettingsHandlerByIdList={updateSettingsHandlerByIdList}
             />
-
-            <LoadingAmazonAccount/>
         </div>
     );
 };
