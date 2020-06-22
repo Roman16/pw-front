@@ -78,8 +78,12 @@ const Payment = (props) => {
                     res = await props.stripe.createPaymentMethod('card');
                 }
 
-                await zthServices.payBatch(props.batchId, res.paymentMethod.id);
-                history.push('/zero-to-hero/success');
+                if (res.error) {
+                    notification.error({title: res.error.message})
+                } else if (res.paymentMethod) {
+                    await zthServices.payBatch(props.batchId, res.paymentMethod.id);
+                    history.push('/zero-to-hero/success');
+                }
             } else {
                 await zthServices.payBatch(props.batchId, cardsList[selectedCard].id);
                 history.push('/zero-to-hero/success');
@@ -97,9 +101,14 @@ const Payment = (props) => {
                         } else {
                             handleSubmit(event);
                         }
+
+                        setPayProcessing(false);
                     })
                     .catch(e => {
+                        notification.error({title: e.error.message});
                         console.log(e);
+
+                        setPayProcessing(false);
                     })
             }
         }
