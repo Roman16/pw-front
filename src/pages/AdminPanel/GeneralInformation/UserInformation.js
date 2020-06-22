@@ -37,8 +37,8 @@ const GeneralUserInformation = ({data, onCheck}) => {
         },
         {
             title: 'Created',
-            dataIndex: 'create_at',
-            key: 'create_at',
+            dataIndex: 'created_at',
+            key: 'created_at',
             render: (date) => (date !== null &&
                 <span>{moment(date).format('MMM DD, YYYY')}<br/>{moment(date).format('HH:mm:ss')}</span>)
         },

@@ -10,6 +10,8 @@ export const adminServices = {
     checkAdGroupsList,
     checkAdGroupsCanBeOptimized,
     checkPatsList,
+
+    generateReport
 };
 
 function checkUserEmail(email) {
@@ -59,7 +61,13 @@ function checkAdGroupsList({userId, profile_id, sku}) {
 function checkAdGroupsCanBeOptimized({userId, profile_id, sku}) {
     return api('get', `${adminUrls.adGroupsCanBeOptimized}?user_id=${userId}&profile_id=${profile_id}&sku=${sku}`)
 }
+
 function checkPatsList({userId, profile_id, ad_groups_ids}) {
     return api('get', `${adminUrls.patsList}?user_id=${userId}&profile_id=${profile_id}&ad_groups_ids=${ad_groups_ids}`)
+}
+
+
+function generateReport(data) {
+    return api('post', `${adminUrls.report}`, data)
 }
 

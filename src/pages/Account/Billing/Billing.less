@@ -302,9 +302,18 @@
         flex-direction: column;
       }
 
-      i {
-        height: max-content;
+      .btn.icon {
+        width: 2.857142857142857rem;
+        height: 2.857142857142857rem;
+        border-radius: 50%;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          width: 50%;
+        }
       }
     }
 
@@ -455,15 +464,21 @@
       }
 
       .invoice-actions {
-        a {
+        display: flex;
+        align-items: center;
+
+        .btn {
+          width: 30px;
+          height: 30px;
           margin: 0 20px 0 0;
 
-          i {
-            font-size: 1.5rem;
+          &:last-child {
+            margin: 0;
+          }
 
-            &:hover {
-              color: @action-color;
-            }
+          svg {
+            width: 15px;
+            height: 15px;
           }
         }
       }

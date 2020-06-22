@@ -77,6 +77,7 @@ export const adminUrls = {
     adGroupsList: 'admin/support-manager/optimization-conditions-check/enabled-ad-groups',
     adGroupsCanBeOptimized: 'admin/support-manager/optimization-conditions-check/ad-groups-can-be-optimized',
     patsList: 'admin/support-manager/optimization-conditions-check/keywords-and-pats',
+    report: 'admin/support-manager/report',
 };
 
 export const daypartingUrls = {
