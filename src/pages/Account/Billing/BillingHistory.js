@@ -16,6 +16,12 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams, 
             render: (date) => <span>{moment(date).format('MMM DD, YYYY')}</span>
         },
         {
+            title: 'Transaction Id',
+            dataIndex: 'transaction_id',
+            key: 'transaction_id',
+            minWidth: '200px'
+        },
+        {
             title: 'Amount Due',
             dataIndex: 'amount_due',
             key: 'amount_due',

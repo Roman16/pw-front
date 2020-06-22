@@ -24,6 +24,10 @@ const MAX_BID_AUTO_CAMPING = 'max_bid_auto_campaign';
 const TOTAL_CHANGES = 'total_changes';
 const OPTIMIZATION_STATUS = 'optimization_status';
 
+const DESIRED_ACOS = 'desired_acos';
+const BREAK_EVEN_ACOS = 'break_even_acos';
+const COGS = 'cogs';
+
 let minBidManualTimerId = null,
     minBidAutoTimerId = null,
     maxBidManualTimerId = null,
@@ -197,6 +201,36 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 render: (props, item) => (
                     <InputCurrency
                         value={item[MAX_BID_AUTO_CAMPING]}
+                        disabled
+                        step={0.01}
+                    />
+                )
+            },
+            {
+                minWidth: '150px',
+                render: (props, item) => (
+                    <InputCurrency
+                        value={item[DESIRED_ACOS]}
+                        disabled
+                        step={0.01}
+                    />
+                )
+            },
+            {
+                minWidth: '170px',
+                render: (props, item) => (
+                    <InputCurrency
+                        value={item[BREAK_EVEN_ACOS]}
+                        disabled
+                        step={0.01}
+                    />
+                )
+            },
+            {
+                minWidth: '150px',
+                render: (props, item) => (
+                    <InputCurrency
+                        value={item[COGS]}
                         disabled
                         step={0.01}
                     />
@@ -378,6 +412,45 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     min={item[MIN_BID_AUTO_CAMPING] || 0}
                     step={0.01}
                     onChange={event => onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)}
+                />
+            )
+        },
+        {
+            title: () => (<span>Desired ACoS</span>),
+            dataIndex: DESIRED_ACOS,
+            key: DESIRED_ACOS,
+            minWidth: '150px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[DESIRED_ACOS]}
+                    step={0.01}
+                    onChange={event => onChangeRow(event, DESIRED_ACOS, indexRow)}
+                />
+            )
+        },
+        {
+            title: () => (<span>Break-even ACoS</span>),
+            dataIndex: BREAK_EVEN_ACOS,
+            key: BREAK_EVEN_ACOS,
+            minWidth: '170px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[BREAK_EVEN_ACOS]}
+                    step={0.01}
+                    onChange={event => onChangeRow(event, BREAK_EVEN_ACOS, indexRow)}
+                />
+            )
+        },
+        {
+            title: () => (<span>COGS</span>),
+            dataIndex: COGS,
+            key: COGS,
+            minWidth: '150px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[COGS]}
+                    step={0.01}
+                    onChange={event => onChangeRow(event, COGS, indexRow)}
                 />
             )
         },

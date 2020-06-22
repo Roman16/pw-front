@@ -132,8 +132,8 @@
 }
 
 .confirm-action-modal {
-  max-width: 450px;
-  width: max-content !important;
+  max-width: 42.857142857142854rem;
+  width: 100% !important;
   border-radius: 4px;
   height: max-content;
   padding: 0;
@@ -144,8 +144,7 @@
 
   .ant-modal-content {
     padding: 2.857142857142857rem !important;
-    min-width: 260px;
-    width: min-content;
+    width: 100%;
   }
 
   .ant-modal-close {
@@ -154,7 +153,7 @@
 
   .ant-modal-title {
     font-size: 1.2857142857142858rem;
-    text-align: center;
+    text-align: left;
     color: #343C5A;
   }
 
@@ -215,12 +214,13 @@
     & > div {
       width: 100%;
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
 
       button {
         height: 2.2857142857142856rem;
         padding: 0 2.857142857142857rem;
         box-shadow: none;
+        font-weight: 500;
 
         &::after {
           display: none;
