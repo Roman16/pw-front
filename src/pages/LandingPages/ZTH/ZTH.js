@@ -3,7 +3,7 @@ import './ZTH.less';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {SVG} from "../../../utils/icons";
-import OurCases from "../Automation/OurCases/OurCases";
+import OurCases from "../components/OurCases/OurCases";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -325,7 +325,7 @@ const ZTHLanding = () => {
                 <img src={caseImage} alt="" className={'desc'}/>
                 <img src={caseImageMob} alt="" className={'mob'}/>
 
-                <OurCases/>
+                <OurCases product={'zth'}/>
 
                 <img src={kingOnTronImage} alt="" className={'king-on-tron'}/>
             </section>

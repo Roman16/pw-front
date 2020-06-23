@@ -30,7 +30,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {Modal} from "antd";
 import {Link} from "react-router-dom";
-import OurCases from "./OurCases/OurCases";
+import OurCases from "../components/OurCases/OurCases";
 import Comments from "../components/Comments/Comments";
 
 
@@ -596,7 +596,7 @@ const LandingAutomation = () => {
                 </div>
             </section>
 
-            <OurCases/>
+            <OurCases product={'ppc'}/>
 
             <Comments/>
 
