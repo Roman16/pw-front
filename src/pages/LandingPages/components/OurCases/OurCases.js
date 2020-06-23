@@ -221,7 +221,7 @@ const casesList = {
             title: '8 days with Zero to Hero',
             firstColumnTitle: 'Before',
             secondColumnTitle: 'After',
-            img: casesImages.case1,
+            img: casesImages.zthCase1,
             firstColumn: [
                 {
                     metric: 'Clicks',
@@ -255,7 +255,7 @@ const casesList = {
             title: '40 days with Zero to Hero',
             firstColumnTitle: 'Before',
             secondColumnTitle: 'After',
-            img: casesImages.case4,
+            img: casesImages.zthCase2,
             firstColumn: [
                 {
                     metric: 'Total Sales',
@@ -289,7 +289,7 @@ const casesList = {
             title: '20 days with Zero to Hero',
             firstColumnTitle: 'Before',
             secondColumnTitle: 'After',
-            img: casesImages.case3,
+            img: casesImages.zthCase3,
             firstColumn: [
                 {
                     metric: 'Organic Sales',
@@ -323,7 +323,7 @@ const casesList = {
             title: '5 days with Zero to Hero',
             firstColumnTitle: 'Before',
             secondColumnTitle: 'After',
-            img: casesImages.case5_1,
+            img: casesImages.zthCase4,
             firstColumn: [
                 {
                     metric: 'Organic Sales',
@@ -357,7 +357,7 @@ const casesList = {
             title: '30  days with Zero to Hero',
             firstColumnTitle: 'Before',
             secondColumnTitle: 'After',
-            img: casesImages.case2,
+            img: casesImages.zthCase5,
             firstColumn: [
                 {
                     metric: 'PPC Sales',
