@@ -48,11 +48,11 @@ const AddMetric = () => {
 
     return (
         <div className='add-metric'>
-            <div className="add-metric__button" onClick={openModal}>
+            <button className="btn add-metric__button" onClick={openModal}>
                 <span className='blue'><SVG id='plus-blue'/></span>
 
                 Add Metric
-            </div>
+            </button>
 
             <AddMetricModal
                 className={'added-metrics-window'}

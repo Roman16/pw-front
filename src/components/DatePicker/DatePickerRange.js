@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
-import { DatePicker as AntDatePicker } from 'antd';
+import React, {Component} from 'react';
+import {DatePicker as AntDatePicker} from 'antd';
 import moment from 'moment';
 import tz from 'moment-timezone';
 
 import DateIcon from './DateIcon/DateIcon';
 import './DatePicker.less';
+import {SVG} from "../../utils/icons";
 
-const { RangePicker } = AntDatePicker;
+const {RangePicker} = AntDatePicker;
 
 class DatePicker extends Component {
     handleChange = ([start, end]) => {
-        const { timeRange } = this.props;
+        const {timeRange} = this.props;
 
         timeRange(
             start ? start.format('D-M-YY') : null,
@@ -19,7 +20,8 @@ class DatePicker extends Component {
     };
 
     disabledDate = current => {
-        return current && current > moment().tz('America/Los_Angeles');
+        // return current && current > moment().tz('America/Los_Angeles');
+        return current && current > moment().tz('America/Los_Angeles').add(1, 'days')
     };
 
     render() {
@@ -55,9 +57,11 @@ class DatePicker extends Component {
                             null
                         ]
                     }}
+                    className={'pw-range-date-picker'}
+                    dropdownClassName={'pw-date-picker-dropdown'}
                     separator="-"
                     format="DD/MM/YY"
-                    suffixIcon={<DateIcon />}
+                    suffixIcon={<SVG id={'select-icon'} />}
                     onChange={this.handleChange}
                     disabledDate={this.disabledDate}
                     defaultValue={defaultValue}

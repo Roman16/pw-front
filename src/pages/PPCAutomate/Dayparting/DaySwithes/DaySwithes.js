@@ -364,7 +364,7 @@ class DaySwitches extends Component {
                     <div className="section-header">
                         <button
                             data-intercom-target='switch-dayparting'
-                            className='btn default switch-day-parting'
+                            className='btn default p15 switch-day-parting'
                             onClick={this.switchDayPartingHandler}
                             disabled={processing || !this.props.campaignId}
                         >
