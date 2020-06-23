@@ -152,6 +152,10 @@ const Pricing = () => {
                             Our expert team is here to help you on your journey as Amazon Seller. We are here to answer
                             your questions and provide actionable steps that you can implement in your business.
                         </p>
+
+                        <button className={'btn default'} onClick={() => window.Intercom('show')}>
+                            Contact Us
+                        </button>
                     </div>
 
                     <img src={humanSupportImage} alt=""/>

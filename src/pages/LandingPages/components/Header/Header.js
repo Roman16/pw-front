@@ -66,7 +66,7 @@ const Header = ({type = 'light', page}) => {
                                 <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
                                     <ul className="sub-menu">
                                         <li><a href="/blog">Blog</a></li>
-                                        <li><a href='http://learn.profitwhales.com/en/'>Help Centre</a>
+                                        <li><a href='http://learn.profitwhales.com/en/'>Help Center</a>
                                         </li>
                                     </ul>
                                 </li>

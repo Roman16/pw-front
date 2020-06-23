@@ -57,7 +57,7 @@ const Footer = () => (
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                Automate Help Centre
+                                Automate Help Center
                             </a>
                         </li>
                     </ul>

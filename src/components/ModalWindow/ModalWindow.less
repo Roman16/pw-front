@@ -132,8 +132,8 @@
 }
 
 .confirm-action-modal {
-  max-width: 450px;
-  width: max-content !important;
+  max-width: 42.857142857142854rem;
+  width: 100% !important;
   border-radius: 4px;
   height: max-content;
   padding: 0;
@@ -144,8 +144,7 @@
 
   .ant-modal-content {
     padding: 2.857142857142857rem !important;
-    min-width: 260px;
-    width: min-content;
+    width: 100%;
   }
 
   .ant-modal-close {
@@ -154,7 +153,7 @@
 
   .ant-modal-title {
     font-size: 1.2857142857142858rem;
-    text-align: center;
+    text-align: left;
     color: #343C5A;
   }
 
@@ -164,15 +163,22 @@
     font-size: 1rem;
     line-height: 1.2857142857142858rem;
     color: #343C5A;
+    display: flex;
+    flex-direction: column;
 
     p {
-      text-align: center;
+      text-align: left;
       margin: 0 0 2.142857142857143rem 0;
+    }
+
+    & > div {
+      display: flex;
     }
 
     .ant-checkbox-wrapper {
       width: max-content;
       font-size: 1.1428571428571428rem;
+      margin: 0 auto 0 0;
 
       span {
         font-size: 0.9285714285714286rem;
@@ -215,12 +221,13 @@
     & > div {
       width: 100%;
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
 
       button {
         height: 2.2857142857142856rem;
         padding: 0 2.857142857142857rem;
         box-shadow: none;
+        font-weight: 500;
 
         &::after {
           display: none;
@@ -336,56 +343,57 @@
 //----------------------------------------------
 
 .payment-notification-window {
-  max-width: 35vw;
-  min-width: 400px;
   width: 100% !important;
+  max-width: 57.142857142857146rem;
 
-  .ant-result-image {
-    height: 280px;
+  .ant-modal-body {
+    padding: 0;
   }
 
-  .close-window {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    font-size: 35px;
-    line-height: 25px;
-  }
-
-  .ant-result-title {
-    text-align: center;
-    padding: 0 0 20px 0;
-    font-size: 1.7rem;
-    color: #343C5A;
-    font-weight: 500;
-  }
-
-  .ant-result-subtitle {
-    font-size: 1.2rem;
-  }
-
-  .buttons-block {
-    width: 100%;
-    padding: 0 0 50px 0;
+  .image {
+    padding: 3.5714285714285716rem 6.071428571428571rem 0;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 85%;
+    }
+  }
+
+  .description {
+    background: #6D6DF6;
+    border-radius: 0 0 4px 4px;
+    padding: 3.5714285714285716rem 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h3 {
+      font-size: 2.2857142857142856rem;
+      text-align: center;
+      color: #FFFFFF;
+      margin-bottom: 2rem;
+    }
+
+    p {
+      font-size: 1.4285714285714286rem;
+      line-height: 1.7142857142857142rem;
+      text-align: center;
+      color: #FFFFFF;
+      margin-bottom: 3.5714285714285716rem;
+    }
 
     .btn {
-      font-size: 1rem;
-      width: 40%;
-      height: 2.858em;
-      margin: 0 auto;
-    }
-  }
+      height: 3.4285714285714284rem;
+      font-size: 1.1428571428571428rem;
+      font-weight: 500;
+      color: #6D6DF6;
 
-  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-    & {
-      max-width: 40vw;
+      &:hover {
+        color: #6D6DF6;
+      }
     }
-  }
-
-  @media (max-width: 500px) {
-    max-width: 95vw;
   }
 }
 
@@ -447,4 +455,64 @@
 
 .ant-modal-mask {
   z-index: 10000;
+}
+
+//----------------------------------------------
+//----------------------------------------------
+//----------------------------------------------
+
+.start-free-trial-window {
+  width: 100% !important;
+  max-width: 57.142857142857146rem;
+
+
+  .ant-modal-body {
+    padding: 0;
+  }
+
+  .image {
+    padding: 3.5714285714285716rem 6.071428571428571rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 90%;
+    }
+  }
+
+  .description {
+    background: #6D6DF6;
+    border-radius: 0 0 4px 4px;
+    padding: 3.5714285714285716rem 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h3 {
+      font-size: 2.2857142857142856rem;
+      text-align: center;
+      color: #FFFFFF;
+      margin-bottom: 2rem;
+    }
+
+    p {
+      font-size: 1.4285714285714286rem;
+      line-height: 1.7142857142857142rem;
+      text-align: center;
+      color: #FFFFFF;
+      margin-bottom: 3.5714285714285716rem;
+    }
+
+    .btn {
+      height: 3.4285714285714284rem;
+      font-size: 1.1428571428571428rem;
+      font-weight: 500;
+      color: #6D6DF6;
+
+      &:hover {
+        color: #6D6DF6;
+      }
+    }
+  }
 }

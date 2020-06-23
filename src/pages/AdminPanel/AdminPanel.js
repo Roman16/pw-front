@@ -1,13 +1,16 @@
 import React, {useState} from "react";
 import './AdminPanel.less';
 import {adminServices} from "../../services/admin.services";
-import GeneralUserInformation from "./UserInformation";
-import AccountLinks from "./AccountLinks";
-import OptimizationJobs from "./OptimizationJobs";
-import OptimizationChanges from "./OptimizationChanges";
-import OptimizationCondition from "./OptimizationCondition";
+import GeneralUserInformation from "./GeneralInformation/UserInformation";
+import AccountLinks from "./GeneralInformation/AccountLinks";
+import OptimizationJobs from "./GeneralInformation/OptimizationJobs";
+import OptimizationChanges from "./GeneralInformation/OptimizationChanges";
+import OptimizationCondition from "./GeneralInformation/OptimizationCondition";
+import GenerateReport from "./GenerateReport/GenerateReport";
 
 const AdminPanel = () => {
+    const [selectedTab, setSelectedTab] = useState('genInfo');
+
     const [userInformation, setUserInformation] = useState(undefined);
     const [accountLinks, setAccountLinks] = useState(undefined);
     const [optimizationJobs, setOptimizationJobs] = useState(undefined);
@@ -106,38 +109,55 @@ const AdminPanel = () => {
 
     return (
         <div className="admin-panel">
-            <GeneralUserInformation
-                data={userInformation}
-                onCheck={checkUserEmail}
-            />
+            <div className="tabs">
+                <button
+                    className={`${selectedTab === 'genInfo' ? 'active' : ''}`}
+                        onClick={() => setSelectedTab('genInfo')}>
+                    General Information
+                </button>
+                <button
+                    className={`${selectedTab === 'report' ? 'active' : ''}`}
+                        onClick={() => setSelectedTab('report')}>
+                    Generate Report
+                </button>
+            </div>
 
-            <AccountLinks
-                data={accountLinks}
-                onCheck={checkAccountLinks}
-                userId={userInformation && userInformation.id}
-            />
+            {selectedTab === 'genInfo' && <>
+                <GeneralUserInformation
+                    data={userInformation}
+                    onCheck={checkUserEmail}
+                />
 
-            <OptimizationJobs
-                data={optimizationJobs}
-                onCheck={checkOptimizationJobs}
-                onCheckChanges={checkOptimizationChanges}
-                onCheckConditions={checkOptimizationConditions}
-                userId={userInformation && userInformation.id}
-            />
+                <AccountLinks
+                    data={accountLinks}
+                    onCheck={checkAccountLinks}
+                    userId={userInformation && userInformation.id}
+                />
 
-            {optimizationChanges && <OptimizationChanges
-                data={optimizationChanges}
-            />}
+                <OptimizationJobs
+                    data={optimizationJobs}
+                    onCheck={checkOptimizationJobs}
+                    onCheckChanges={checkOptimizationChanges}
+                    onCheckConditions={checkOptimizationConditions}
+                    userId={userInformation && userInformation.id}
+                />
 
-            <OptimizationCondition
-                adGroupsList={adGroupsList}
-                adGroupsCanBeOptimized={adGroupsCanBeOptimized}
-                patsList={patsList}
-                userId={userInformation && userInformation.id}
-                profileId={accountLinks && accountLinks[0] && accountLinks[0].lwa_profile_id}
+                {optimizationChanges && <OptimizationChanges
+                    data={optimizationChanges}
+                />}
 
-                onCheck={checkOptimizationConditions}
-            />
+                <OptimizationCondition
+                    adGroupsList={adGroupsList}
+                    adGroupsCanBeOptimized={adGroupsCanBeOptimized}
+                    patsList={patsList}
+                    userId={userInformation && userInformation.id}
+                    profileId={accountLinks && accountLinks[0] && accountLinks[0].lwa_profile_id}
+
+                    onCheck={checkOptimizationConditions}
+                />
+            </>}
+
+            {selectedTab === 'report' && <GenerateReport/>}
         </div>
     )
 };

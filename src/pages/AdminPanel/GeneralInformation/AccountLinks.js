@@ -39,6 +39,11 @@ const AccountLinks = ({data, onCheck, userId}) => {
             key: 'marketplace_id',
         },
         {
+            title: 'Country',
+            dataIndex: 'country',
+            key: 'country',
+        },
+        {
             title: 'MWS Status',
             dataIndex: 'mws_last_checked_status',
             key: 'mws_last_checked_status',

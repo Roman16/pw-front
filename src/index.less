@@ -524,6 +524,23 @@ img {
     background: #C9CBD4;
     border: 0;
     position: relative;
+    box-shadow: none !important;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    .ant-click-animating-node {
+      display: none !important;
+    }
+
+    &:active,
+    &:focus {
+      &::after {
+        box-shadow: 0 1px 3px rgba(125, 212, 161, 0.15), 0 0 0 0.9285714285714286rem rgba(125, 212, 161, 0.15);
+        transition: 0.1s !important;
+      }
+    }
   }
 
   .ant-switch:not(.ant-switch-disabled):active::after {
@@ -538,6 +555,7 @@ img {
     top: 3px;
     left: 4px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    transition: 0.1s !important;
   }
 
   .ant-switch-checked::after {
@@ -557,7 +575,7 @@ img {
       }
 
       .ant-switch:not(.ant-switch-disabled):active::after {
-        width: 16px;
+        width: 12px;
       }
 
       .ant-switch::after {
@@ -781,6 +799,31 @@ a.btn {
   background-position: center;
   transition: background 0.8s;
   overflow: hidden;
+
+  &.icon {
+    border-radius: 50%;
+    padding: 0;
+
+    svg {
+      fill: #656A84;
+    }
+
+    &:hover {
+      background: rgba(109, 109, 246, 0.05);
+
+      svg {
+        fill: #6D6DF6;
+      }
+    }
+
+    &:focus {
+      background: rgba(109, 109, 246, 0.15);
+
+      svg {
+        fill: #6D6DF6;
+      }
+    }
+  }
 
 
   &.p15 {
@@ -1047,6 +1090,7 @@ button.white[disabled] {
     background: #FFFFFF;
     color: #656A84;
     transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    font-size: 1rem;
 
     &:hover {
       border: 1px solid #343C5A;

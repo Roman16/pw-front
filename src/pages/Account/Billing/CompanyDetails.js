@@ -16,7 +16,7 @@ const CompanyDetails = ({onOpenWindow, company}) => {
                 </span>
                 </div>
 
-                <i onClick={() => onOpenWindow('company')}><SVG id={'edit-pen-icon'}/></i>
+                <button className={'btn icon'} onClick={() => onOpenWindow('company')}><SVG id={'edit-pen-icon'}/></button>
             </div>
 
             {company && <div className='company-information'>

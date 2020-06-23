@@ -202,7 +202,7 @@ const LandingAffiliates = () => {
 
                     <span>If you expect to generate more than 50 referrals, please reach out to us directly</span>
 
-                    <button className='btn green-btn' onClick={() => window.open('https://direct.lc.chat/11745246/2')}>
+                    <button className='btn green-btn' onClick={() => window.Intercom('show')}>
                         contact us
                     </button>
                 </div>

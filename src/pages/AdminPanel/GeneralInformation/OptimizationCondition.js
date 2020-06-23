@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Input, Select, Table} from "antd";
-import {adminServices} from "../../services/admin.services";
+import {adminServices} from "../../../services/admin.services";
 
 const Option = Select.Option;
 

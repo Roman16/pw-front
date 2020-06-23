@@ -1,9 +1,8 @@
 import React, {Fragment, Suspense, useEffect, useState} from 'react';
-import {Router, Route, Switch, Redirect} from 'react-router-dom';
+import {Route, Switch, Redirect} from 'react-router-dom';
 
 import Sidebar from '../components/Sidebar/Sidebar';
 import ProductList from "../components/ProductList/ProductList";
-import ReportsChangesCountWindow from "../components/ModalWindow/InformationWindows/ReportsChangesCountWindow";
 import {userActions} from "../actions/user.actions";
 import moment from "moment";
 import {useSelector, useDispatch} from "react-redux";
@@ -12,6 +11,7 @@ import ErrorBar from "../components/ErrorBar/ErrorBar";
 import WelcomePage from "./authentication/AccountBinding/WelcomePage/WelcomePage";
 import CampaignList from "../components/CampaignList/CampaignList";
 import {userService} from "../services/user.services";
+import PWWindows from "../components/ModalWindow/PWWindows";
 
 
 const ThankPage = React.lazy(() => import('./ZeroToHero/ThankPage/ThankPage'));
@@ -238,9 +238,7 @@ const AuthorizedUser = (props) => {
                     </div>
                 </div>
 
-                <ReportsChangesCountWindow/>
-
-                {/*<LoadingAmazonAccount/>*/}
+                <PWWindows pathname={pathname}/>
             </Fragment>
         );
     }

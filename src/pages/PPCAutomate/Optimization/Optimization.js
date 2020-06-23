@@ -9,10 +9,6 @@ import StrategyInfo from "./InfoDrawers/StrategyInfo/StrategyInfo";
 import OptimizationStatus from "./OptimizationStatus/OptimizationStatus";
 import OptimizationIncludes from "./OptimizationIncludes/OptimizationIncludes";
 
-import SubscriptionNotificationWindow
-    from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
-import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
-
 import {productsServices} from "../../../services/products.services";
 import {notification} from "../../../components/Notification";
 import {productsActions} from "../../../actions/products.actions";
@@ -210,9 +206,6 @@ const Optimization = () => {
             >
                 {infoType === "options" ? <OptionsInfo/> : <StrategyInfo/>}
             </Drawer>
-
-            <SubscriptionNotificationWindow product={'ppc'}/>
-            <LoadingAmazonAccount/>
         </Fragment>
     );
 };

@@ -15,6 +15,12 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams, 
             key: 'date_issued',
             render: (date) => <span>{moment(date).format('MMM DD, YYYY')}</span>
         },
+        // {
+        //     title: 'Transaction Id',
+        //     dataIndex: 'transaction_id',
+        //     key: 'transaction_id',
+        //     minWidth: '200px'
+        // },
         {
             title: 'Amount Due',
             dataIndex: 'amount_due',
@@ -68,11 +74,11 @@ const BillingHistory = ({historyList, handlePaginationChange, paginationParams, 
                 return (
                     <div className='invoice-actions'>
                         {item.invoice_link &&
-                        <a href={item.invoice_link} target='_blank'>
+                        <a className={'btn icon'} href={item.invoice_link} target='_blank'>
                             <Icon type="eye"/>
                         </a>}
 
-                        {item.invoice_link_pdf && <a href={item.invoice_link_pdf}>
+                        {item.invoice_link_pdf && <a className={'btn icon'} href={item.invoice_link_pdf}>
                             <Icon type="file-pdf"/>
                         </a>}
                     </div>)

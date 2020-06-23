@@ -1,6 +1,4 @@
 import React, {Fragment, Component} from 'react';
-import SubscriptionNotificationWindow
-    from "../../../components/ModalWindow/InformationWindows/SubscriptionNotificationWindow";
 import './Scanner.less';
 
 import {Prompt} from 'react-router-dom';
@@ -16,7 +14,6 @@ import SuccessWindow from "./ModalWindows/SuccessWindow";
 import {scannerServices} from "../../../services/scanner.services";
 import {productsActions} from "../../../actions/products.actions";
 import ErrorWindow from "./ModalWindows/ErrorWindow";
-import LoadingAmazonAccount from "../../../components/ModalWindow/InformationWindows/LoadingAmazonAccountWindow";
 
 let fetchingTimeout = null;
 
@@ -313,8 +310,6 @@ class Scanner extends Component {
                     when={fetching}
                     message="Are you sure? The current scanning results will be lost"
                 />
-
-                <LoadingAmazonAccount/>
             </Fragment>
         )
     }
