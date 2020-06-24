@@ -15,6 +15,8 @@ import {notification} from "../../../components/Notification";
 import {history} from "../../../utils/history";
 import Billing from "../Billing/Billing";
 
+const cancelCoupon = process.env.REACT_APP_SUBSCRIPTION_COUPON;
+
 const Subscription = () => {
     let interval = null;
     const dispatch = useDispatch();
@@ -159,6 +161,25 @@ const Subscription = () => {
         }, 500)
     }
 
+    async function keepSubscriptionHandler() {
+        setDisableReactivateButtons(true);
+
+        const {productId, plan_id} = subscriptions[0];
+
+        try {
+            await userService.applyCoupon(productId, plan_id, cancelCoupon);
+
+            dispatch(userActions.getPersonalUserInfo());
+            fetchSubscriptions();
+
+            openAccountWindow(false);
+        } catch (e) {
+            console.log(e);
+        }
+
+        setDisableReactivateButtons(false);
+    }
+
     async function handleUpdateSubscriptionStatus() {
         if (subscriptions[0]) {
             if (subscriptions[0].next_charge_value !== null || subscriptions[0].flat_amount !== null || subscriptions[0].quantity !== null) {
@@ -220,15 +241,14 @@ const Subscription = () => {
                 closable
                 onClose={() => openAccountWindow(false)}
                 onCancel={() => openAccountWindow(false)}
-
                 visible={openedAccountWindow}
-
                 footer={false}
             >
                 <CancelAccountWindow
-                    onOk={handleCancelSubscription}
-                    onCancel={() => openAccountWindow(false)}
+                    onCancelSubscription={handleCancelSubscription}
+                    onKeepSubscription={keepSubscriptionHandler}
                     disableReactivateButtons={disableReactivateButtons}
+                    subscriptionPrice={subscriptions[0] && subscriptions[0].next_charge_value}
                 />
             </Modal>
 

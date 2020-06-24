@@ -24,14 +24,6 @@ const OptimizationStatus = ({product: {status, created_at, total_changes, today_
         <section className="product-status">
             <div className="section-header">
                 <h3>Current Status </h3>
-
-                <button
-                    className='btn default'
-                    onClick={() => history.push('/ppc/report')}
-                    data-intercom-target='redirect-reports-page-button'
-                >
-                    Check Changes
-                </button>
             </div>
 
             <div className="row">
@@ -60,8 +52,15 @@ const OptimizationStatus = ({product: {status, created_at, total_changes, today_
                     caption="Current Strategy"
                     value={status === 'RUNNING' ? strategies[optimization_strategy] : undefined}
                 />
-
             </div>
+
+            <button
+                className='btn default'
+                onClick={() => history.push('/ppc/report')}
+                data-intercom-target='redirect-reports-page-button'
+            >
+                Check Changes
+            </button>
         </section>
     );
 };

@@ -344,14 +344,30 @@ const OptimizationStrategy = ({product: {desired_target_acos, optimization_strat
                 <div className="strategies desc">
                     <div className="all-strategies">
                         {strategies.map((item, index) => (
-                            <div
-                                key={item.key}
-                                data-intercom-target={`${item.key}-strategy`}
-                                className={`strategy-name ${index === selectedSlide && 'selected-strategy'} ${optimization_strategy === item.key && status === RUNNING && 'running-strategy'}`}
-                                onClick={() => goToSlideHandler(index)}>
-                                {item.name}
-                            </div>
+                            <>
+                                <div
+                                    key={item.key}
+                                    data-intercom-target={`${item.key}-strategy`}
+                                    className={`strategy-name ${index === selectedSlide && 'selected-strategy'} ${optimization_strategy === item.key && status === RUNNING && 'running-strategy'}`}
+                                    onClick={() => goToSlideHandler(index)}>
+
+
+                                    {item.name}
+                                </div>
+
+                                <input
+                                    type="radio"
+                                    name="slideItem"
+                                    id={`slide-item-${index + 1}`}
+                                    className="slide-toggle"
+                                    checked={index === selectedSlide}
+                                />
+                            </>
                         ))}
+
+                        <div className="slider">
+                            <div className="bar"/>
+                        </div>
                     </div>
 
                     <Slider
