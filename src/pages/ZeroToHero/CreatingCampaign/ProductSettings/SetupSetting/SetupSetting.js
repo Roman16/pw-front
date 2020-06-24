@@ -121,15 +121,28 @@ const SetupSetting = ({
                                 Create portfolio
                             </Radio>
 
-                            <div
-                                className={`radio-description form-group ${invalidField === 'portfolioName' ? 'error-field' : ''}`}>
-                                <Input
-                                    value={portfolio.name}
-                                    onChange={({target: {value}}) => changePortfolioHandler({name: value}, invalidField === 'portfolioName')}
-                                    disabled={portfolio.type !== 'CreateNew'}
-                                    placeholder={'Portfolio Name'}
-                                />
+                            <div className="row">
+                                <div
+                                    className={`radio-description form-group ${invalidField === 'portfolioName' ? 'error-field' : ''}`}>
+                                    <Input
+                                        value={portfolio.name}
+                                        onChange={({target: {value}}) => changePortfolioHandler({name: value}, invalidField === 'portfolioName')}
+                                        disabled={portfolio.type !== 'CreateNew'}
+                                        placeholder={'Portfolio Name'}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="">Portfolio Monthly Budget</label>
+
+                                    <InputCurrency
+                                        value={portfolio.budget}
+                                        disabled={portfolio.type !== 'CreateNew'}
+                                        onChange={budget => changePortfolioHandler({budget})}
+                                    />
+                                </div>
                             </div>
+
 
                             <Radio value={'UseExisting'}>
                                 Use existing portfolio
