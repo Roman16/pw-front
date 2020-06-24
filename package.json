@@ -10,6 +10,7 @@
     "@fortawesome/react-fontawesome": "^0.1.8",
     "@simonwep/selection-js": "^1.4.1",
     "antd": "^3.23.6",
+    "autoprefixer": "^9.8.4",
     "axios": "^0.19.0",
     "axios-progress-bar": "^1.2.0",
     "dotenv": "^8.2.0",
