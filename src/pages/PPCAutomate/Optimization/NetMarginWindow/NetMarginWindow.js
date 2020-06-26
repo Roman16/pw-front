@@ -31,7 +31,7 @@ const NetMarginWindow = ({isShowModal = false, handleCancel, selectedAll, handle
     };
 
     const submit = async () => {
-        if (!productMargin && (!itemPrice || !itemPriceFromUser)) {
+        if (!productMargin && (!itemPrice && !itemPriceFromUser)) {
             await productsServices.updateProductSettings({
                 id: product.id,
                 product_margin_value: netMarginValue,
