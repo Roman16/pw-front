@@ -24,6 +24,9 @@ const Optimization = React.lazy(() => import('./PPCAutomate/Optimization/Optimiz
 const Report = React.lazy(() => import('./PPCAutomate/Report/Report'));
 const ProductSettings = React.lazy(() => import('./PPCAutomate/ProductSettings/ProductSettings'));
 const Dashboard = React.lazy(() => import('./PPCAutomate/Dashboard/Dashboard'));
+
+const Account = React.lazy(() => import('./Account/Navigation/Navigation'));
+
 const Information = React.lazy(() => import('./Account/Information/Information'));
 const ApiConnection = React.lazy(() => import('./Account/ApiConnection/ApiConnection'));
 const Subscription = React.lazy(() => import('./Account/Subscription/Subscription'));
@@ -206,9 +209,8 @@ const AuthorizedUser = (props) => {
                                     {developer && <Route exact path="/home" component={Home}/>}
 
                                     {/* ACCOUNT */}
-                                    <Route exact path="/account-settings" component={Information}/>
-                                    <Route exact path="/api-connections" component={ApiConnection}/>
-                                    <Route exact path="/account-subscription" component={Subscription}/>
+                                    <Route path="/account" component={Account}/>
+
 
                                     <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
 
@@ -217,13 +219,17 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     {/*ZERO TO HERO*/}
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/campaign" component={ChooseCampaign}/>
+                                    <ConnectedAmazonRoute exact path="/zero-to-hero/campaign"
+                                                          component={ChooseCampaign}/>
 
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/ppc-structure" component={Marketing}/>
+                                    <ConnectedAmazonRoute exact path="/zero-to-hero/ppc-structure"
+                                                          component={Marketing}/>
 
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/creating" component={CreatingCampaign}/>
+                                    <ConnectedAmazonRoute exact path="/zero-to-hero/creating"
+                                                          component={CreatingCampaign}/>
 
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/payment/:batchId?" component={Payment}/>
+                                    <ConnectedAmazonRoute exact path="/zero-to-hero/payment/:batchId?"
+                                                          component={Payment}/>
 
                                     <ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>
 

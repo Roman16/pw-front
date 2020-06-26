@@ -28,7 +28,7 @@ const SubscriptionNotificationWindow = ({visible}) => {
                     continue using Profit Whales Software.
                 </p>
 
-                <Link to={'/account-subscription'} className={'btn white'}>
+                <Link to={'/account/subscription'} className={'btn white'}>
                     Upgrade Now
                 </Link>
             </div>

@@ -19,7 +19,6 @@ const Tabs = ({currentTab, onChangeTab}) => {
         <ul className="tabs">
             <li
                 onClick={() => onChangeTab('all-reports')}
-                className={currentTab === 'all-reports' && 'current-page-link'}
             >
                 <TabName
                     title={'all reports'}
@@ -29,7 +28,6 @@ const Tabs = ({currentTab, onChangeTab}) => {
 
             <li
                 onClick={() => onChangeTab('targeting-improvements')}
-                className={currentTab === 'targeting-improvements' && 'current-page-link'}
             >
                 <TabName
                     title={'TARGETING IMPROVEMENTS'}
@@ -39,13 +37,41 @@ const Tabs = ({currentTab, onChangeTab}) => {
 
             <li
                 onClick={() => onChangeTab('search-terms')}
-                className={currentTab === 'search-terms' && 'current-page-link'}
             >
                 <TabName
                     title={'SEARCH TERMS'}
                     key={'search_terms'}
                 />
             </li>
+
+            <input
+                type="radio"
+                name="slideItem"
+                id={`slide-item-1`}
+                className="slide-toggle"
+                checked={currentTab === 'all-reports'}
+            />
+
+            <input
+                type="radio"
+                name="slideItem"
+                id={`slide-item-2`}
+                className="slide-toggle"
+                checked={currentTab === 'targeting-improvements'}
+            />
+
+
+            <input
+                type="radio"
+                name="slideItem"
+                id={`slide-item-3`}
+                className="slide-toggle"
+                checked={currentTab === 'search-terms'}
+            />
+
+            <div className="slider">
+                <div className="bar"/>
+            </div>
         </ul>
     )
 };

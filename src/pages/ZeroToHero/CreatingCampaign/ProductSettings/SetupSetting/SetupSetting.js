@@ -136,9 +136,9 @@ const SetupSetting = ({
                                     <label htmlFor="">Portfolio Monthly Budget</label>
 
                                     <InputCurrency
-                                        value={portfolio.budget}
+                                        value={portfolio.monthly_recurring_budget}
                                         disabled={portfolio.type !== 'CreateNew'}
-                                        onChange={budget => changePortfolioHandler({budget})}
+                                        onChange={budget => changePortfolioHandler({monthly_recurring_budget: budget})}
                                     />
                                 </div>
                             </div>
@@ -225,7 +225,7 @@ const SetupSetting = ({
 
                 <div className="row daily-budget-settings">
                     <div className={`col ${invalidField === 'dailyBudget' ? 'error-field' : ''}`}>
-                        <h3>Daily budget</h3>
+                        <h3>ZTH Campaigns Daily Budget</h3>
 
                         <InputCurrency
                             value={campaigns.daily_budget}

@@ -76,7 +76,7 @@ const ErrorBar = () => {
                     enter it on your Profit Whales Account page. This will then reinstate access and your account synced
                     again.</p>
 
-                <Link to={'/api-connections'} className={'btn white'}>Edit Credentials</Link>
+                <Link to={'/account/api-connections'} className={'btn white'}>Edit Credentials</Link>
             </div>}
 
             {accountLinks.amazon_ppc.status === 'FAILED' &&
@@ -87,7 +87,7 @@ const ErrorBar = () => {
                     because of the wrong marketplace, wrong Amazon account, or you don’t have Amazon Advertising. Please
                     update your Amazon Advertising credentials in your account or contact support.</p>
 
-                <Link to={'/api-connections'} className={'btn white'}>Edit Credentials</Link>
+                <Link to={'/account/api-connections'} className={'btn white'}>Edit Credentials</Link>
             </div>}
 
             {(accountLinks.amazon_mws.status === 'UNAUTHORIZED' && accountLinks.amazon_ppc.status === 'UNAUTHORIZED') ?

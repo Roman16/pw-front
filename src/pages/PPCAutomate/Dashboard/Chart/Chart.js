@@ -87,6 +87,10 @@ const Chart = () => {
                     <span className={defaultChart === 'bar' && 'active'} onClick={() => changeChart('bar')}>
                         <SVG id={'bar-chart-icon'}/>
                     </span>
+
+                    <div className="slider">
+                        <div className="bar" style={{margin: defaultChart === 'bar' ? '0 0 0 50%' : '0'}}/>
+                    </div>
                 </div>
             </div>
 

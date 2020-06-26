@@ -85,7 +85,7 @@ const FullJourney = () => {
         } else if (!mwsConnected && ppcConnected) {
             history.push('./connect-mws-account');
         } else if (mwsConnected && ppcConnected) {
-            history.push('./api-connections');
+            history.push('/account/api-connections');
         }
     }, [])
 

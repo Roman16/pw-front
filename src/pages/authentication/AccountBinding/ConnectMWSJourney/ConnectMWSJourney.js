@@ -29,7 +29,7 @@ const ConnectMWSJourney = () => {
     }))
 
     const closeJourney = () => {
-        history.push('./api-connections')
+        history.push('/account/api-connections')
     }
 
     const goNextStep = () => setCurrentStep(prev => prev + 1);
@@ -62,7 +62,7 @@ const ConnectMWSJourney = () => {
     }
 
     if(mwsConnected) {
-        history.push('/api-connections')
+        history.push('/account/api-connections')
     }
 
     return (

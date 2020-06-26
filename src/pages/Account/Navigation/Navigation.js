@@ -1,45 +1,80 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
-import "./Navigation.less";
+import {NavLink, Route} from "react-router-dom";
+import './Navigation.less';
 
-const Navigation = ({page}) => {
+import Information from '../Information/Information';
+import ApiConnection from '../ApiConnection/ApiConnection';
+import Subscription from '../Subscription/Subscription';
+
+const Navigation = (props) => {
     return (
-        <ul className="cabinet-nav">
-            <li className={`current-page ${page === 'information' ? 'current-page-link' : ''}`}>
-                <NavLink
-                    className="page-link"
-                    exact
-                    to="/account-settings"
-                >
-                    Account information
-                </NavLink>
-                <div className="border"/>
-            </li>
+        <>
+            <div className="account-navigation">
+                <div className="container">
+                    <div className="cabinet-nav">
+                        <NavLink
+                            className="page-link"
+                            exact
+                            to="/account/settings"
+                        >
+                            Account information
+                        </NavLink>
 
-            <li className={`current-page ${page === 'subscriptions' ? 'current-page-link' : ''}`}>
-                <NavLink
-                    className="page-link"
-                    exact
-                    to="/account-subscription"
-                >
-                    Subscriptions
-                </NavLink>
-                <div className="border"/>
-            </li>
+                        <NavLink
+                            className="page-link"
+                            exact
+                            to="/account/subscription"
 
-            <li className={`current-page ${page === 'api_connections' ? 'current-page-link' : ''}`}>
-                <NavLink
-                    className="page-link"
-                    exact
-                    to="/api-connections"
-                >
-                    API Connections
-                </NavLink>
+                        >
+                            Subscriptions
+                        </NavLink>
 
-                <div className="border"/>
-            </li>
-        </ul>
+                        <NavLink
+                            className="page-link"
+                            exact
+                            to="/account/api-connections"
+                        >
+                            API Connections
+                        </NavLink>
+                    </div>
+
+
+                    <input
+                        type="radio"
+                        name="slideItem"
+                        id={`slide-item-1`}
+                        className="slide-toggle"
+                        checked={props.location.pathname === '/account/settings'}
+                    />
+
+                    <input
+                        type="radio"
+                        name="slideItem"
+                        id={`slide-item-2`}
+                        className="slide-toggle"
+                        checked={props.location.pathname === '/account/subscription'}
+                    />
+
+
+                    <input
+                        type="radio"
+                        name="slideItem"
+                        id={`slide-item-3`}
+                        className="slide-toggle"
+                        checked={props.location.pathname === '/account/api-connections'}
+                    />
+
+                    <div className="slider">
+                        <div className="bar"/>
+                    </div>
+                </div>
+            </div>
+
+            <Route exact path="/account/settings" component={Information}/>
+            <Route exact path="/account/api-connections" component={ApiConnection}/>
+            <Route exact path="/account/subscription" component={Subscription}/>
+        </>
     );
 };
 
-export default Navigation;
+export default React.memo(Navigation);

@@ -64,7 +64,9 @@ const Sidebar = () => {
             className={`sidebar ${className}`}
         >
             <div className="sidebar-header">
-                <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed}/>
+                <i className="sidebar-icon" onClick={toggleCollapsed}>
+                    <SVG id={'menu-icon'}/>
+                </i>
 
                 <Link to="/" className="sidebar-logo">
                     <img className="logo" src={logo} alt="logo"/>
@@ -305,7 +307,7 @@ const Sidebar = () => {
                                     className="automate-link"
                                     activeClassName="automate-link-active"
                                     exact
-                                    to={`/account-settings`}
+                                    to={`/account/settings`}
                                 >Account</NavLink>}
                                 position={'right'}
                                 overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
@@ -314,7 +316,7 @@ const Sidebar = () => {
                                     className="automate-link"
                                     activeClassName="automate-link-active"
                                     exact
-                                    to={`/account-settings`}
+                                    to={`/account/settings`}
                                 >
                                     <div className="link-icon">
                                         <SVG id='account'/>

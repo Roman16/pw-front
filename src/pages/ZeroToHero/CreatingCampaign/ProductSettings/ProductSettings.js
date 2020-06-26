@@ -64,7 +64,7 @@ const ProductSettings = () => {
                     portfolio: {
                         type: product.portfolio.type,
                         enum: product.portfolio.type === 'NoPortfolio',
-                        ...product.portfolio.type === 'CreateNew' ? {name: product.portfolio.name} : {id: product.portfolio.id}
+                        ...product.portfolio.type === 'CreateNew' ? {name: product.portfolio.name, ...product.portfolio.monthly_recurring_budget && {monthly_recurring_budget: product.portfolio.monthly_recurring_budget}} : {id: product.portfolio.id}
                     },
                     negative_keywords: {
                         exact: product.negative_keywords.filter(item => item.type === 'exact').map(item => item.text),

@@ -31,7 +31,13 @@ const DemoCall = () => {
 
                     <h2>Request your demo</h2>
 
-                    <button className='btn default' onClick={() => window.open('https://calendly.com/vitalii-pw-success-manager/demo-call-with-profit-whales')}>request</button>
+                    <a
+                        href={'https://calendly.com/lana_profit_whales'}
+                        target={'_blank'}
+                        className='btn default'
+                    >
+                        request
+                    </a>
                 </div>
             </section>
         </div>

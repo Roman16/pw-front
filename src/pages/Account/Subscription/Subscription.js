@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Drawer, Modal} from 'antd';
 
-import Navigation from '../Navigation/Navigation';
 import SubscriptionPlan from './SubscriptionPlan';
 import CancelAccountWindow from './DrawerWindows/CancelAccountWindow';
 import Reactivate from './DrawerWindows/Reactivate';
@@ -113,7 +112,7 @@ const Subscription = () => {
             }
         } else {
             changeButton(false);
-            history.push('/account-subscription#user-cards');
+            history.push('/account/subscription#user-cards');
             notification.error({title: 'Add card!'})
         }
     }
@@ -215,8 +214,6 @@ const Subscription = () => {
 
     return (
         <div className="user-cabinet">
-            <Navigation page={'subscriptions'}/>
-
             {subscriptionProducts.map((product) => (
                 <SubscriptionPlan
                     key={product.key}

@@ -6,10 +6,7 @@ import './TableSettings.less';
 import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 import CustomTable from "../../../../components/Table/CustomTable";
 import Pagination from "../../../../components/Pagination/Pagination";
-import {SVG} from "../../../../utils/icons";
 import MultiApply from "../MultiApply/MultiApply";
-import {numberMask} from "../../../../utils/numberMask";
-import {round} from "../../../../utils/round";
 
 
 const ACTIVE = 'RUNNING';
@@ -415,45 +412,45 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 />
             )
         },
-        // {
-        //     title: () => (<span>Desired ACoS</span>),
-        //     dataIndex: DESIRED_ACOS,
-        //     key: DESIRED_ACOS,
-        //     minWidth: '150px',
-        //     render: (index, item, indexRow) => (
-        //         <InputCurrency
-        //             value={item[DESIRED_ACOS]}
-        //             step={0.01}
-        //             onChange={event => onChangeRow(event, DESIRED_ACOS, indexRow)}
-        //         />
-        //     )
-        // },
-        // {
-        //     title: () => (<span>Break-even ACoS</span>),
-        //     dataIndex: BREAK_EVEN_ACOS,
-        //     key: BREAK_EVEN_ACOS,
-        //     minWidth: '170px',
-        //     render: (index, item, indexRow) => (
-        //         <InputCurrency
-        //             value={item[BREAK_EVEN_ACOS]}
-        //             step={0.01}
-        //             onChange={event => onChangeRow(event, BREAK_EVEN_ACOS, indexRow)}
-        //         />
-        //     )
-        // },
-        // {
-        //     title: () => (<span>COGS</span>),
-        //     dataIndex: COGS,
-        //     key: COGS,
-        //     minWidth: '150px',
-        //     render: (index, item, indexRow) => (
-        //         <InputCurrency
-        //             value={item[COGS]}
-        //             step={0.01}
-        //             onChange={event => onChangeRow(event, COGS, indexRow)}
-        //         />
-        //     )
-        // },
+        {
+            title: () => (<span>Desired ACoS</span>),
+            dataIndex: DESIRED_ACOS,
+            key: DESIRED_ACOS,
+            minWidth: '150px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[DESIRED_ACOS]}
+                    step={0.01}
+                    onChange={event => onChangeRow(event, DESIRED_ACOS, indexRow)}
+                />
+            )
+        },
+        {
+            title: () => (<span>Break-even ACoS</span>),
+            dataIndex: BREAK_EVEN_ACOS,
+            key: BREAK_EVEN_ACOS,
+            minWidth: '170px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[BREAK_EVEN_ACOS]}
+                    step={0.01}
+                    onChange={event => onChangeRow(event, BREAK_EVEN_ACOS, indexRow)}
+                />
+            )
+        },
+        {
+            title: () => (<span>COGS</span>),
+            dataIndex: COGS,
+            key: COGS,
+            minWidth: '150px',
+            render: (index, item, indexRow) => (
+                <InputCurrency
+                    value={item[COGS]}
+                    step={0.01}
+                    onChange={event => onChangeRow(event, COGS, indexRow)}
+                />
+            )
+        },
         {
             title: 'Total Changes',
             dataIndex: TOTAL_CHANGES,
