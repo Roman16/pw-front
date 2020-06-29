@@ -9,15 +9,24 @@ const Reactivate = ({date, disableReactivateButtons, onOk, onCancel}) => {
                 This action will lead to subscription reactivation. Please <br/> confirm this action.
             </p>
 
-            <div className="actions">
-                {disableReactivateButtons ?
-                    <Spin/>
-                    :
-                    <>
-                        <button className='btn white' onClick={onCancel}>Cancel</button>
-                        <button className='btn default' onClick={onOk}>Reactivate my account</button>
-                    </>
-                }
+            <div className={`actions`}>
+
+                <button
+                    className='btn white'
+                    onClick={onCancel}
+                    disabled={disableReactivateButtons}
+                >
+                    Cancel
+                </button>
+
+                <button
+                    className='btn default'
+                    onClick={onOk}
+                    disabled={disableReactivateButtons}
+                >
+                    {disableReactivateButtons && <Spin/>}
+                    Reactivate my account
+                </button>
             </div>
 
         </div>

@@ -23,7 +23,7 @@ const Footer = () => (
                     </Link>
 
                     <a
-                        href={'https://calendly.com/vitalii-pw-success-manager/demo-call-with-profit-whales'}
+                        href={'https://calendly.com/lana_profit_whales'}
                         className={'btn default'}
                         target={'_blank'}
                     >

@@ -35,7 +35,7 @@ const ChooseCampaign = () => {
     }, []);
 
     return (
-        <div>
+        <div className={'choose-campaign-container'}>
 
             <section className='choose-campaign'>
                 <h2>Choose Your Campaign Type</h2>

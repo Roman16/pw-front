@@ -38,13 +38,17 @@ const MultiApply = ({selectedRows, totalSize, onSelectAll, selectedAll, onSubmit
                         <Option value={'max_bid_manual_campaign'}>Max Bid (Manual Campaign)</Option>
                         <Option value={'min_bid_auto_campaign'}>Min Bid (Auto Campaign)</Option>
                         <Option value={'max_bid_auto_campaign'}>Max Bid (Auto Campaign)</Option>
+
+                        <Option value={'desired_acos'}>Desired ACoS</Option>
+                        <Option value={'break_even_acos'}>Break-even ACoS</Option>
+                        <Option value={'cogs'}>CoGS</Option>
                     </CustomSelect>
                 </div>
 
                 <div className="form-group">
                     <InputCurrency
                         required
-                        typeIcon={fieldType === 'net_margin' ? 'percent' : 'currency'}
+                        typeIcon={fieldType === 'product_margin_value' || fieldType === 'desired_acos' || fieldType === 'break_even_acos' ? 'percent' : 'currency'}
                         value={settingValue}
                         onChange={value => setSettingValue(value)}
                         min={0}

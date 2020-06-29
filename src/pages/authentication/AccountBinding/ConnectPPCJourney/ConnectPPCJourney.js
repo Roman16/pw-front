@@ -22,13 +22,13 @@ const ConnectPPCJourney = () => {
     }));
 
     const closeJourney = () => {
-        history.push('./api-connections')
+        history.push('./account/api-connections')
     }
 
     const goNextStep = () => setCurrentStep(prev => prev + 1)
 
     if (ppcConnected) {
-        history.push('./api-connections')
+        history.push('/account/api-connections')
     }
 
     return (

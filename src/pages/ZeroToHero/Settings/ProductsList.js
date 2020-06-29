@@ -6,6 +6,7 @@ import {SVG} from "../../../utils/icons";
 import {history} from "../../../utils/history";
 import {zthActions} from "../../../actions/zth.actions";
 import {useDispatch} from "react-redux";
+import InformationTooltip from "../../../components/Tooltip/Tooltip";
 
 
 const ProductItem = ({product, openedProduct, onOpenVariations}) => {
@@ -21,8 +22,14 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
                 </div>
 
                 <div className="row">
-                    <span className='price'>$35.99</span>
-                    <span className='stock'>In Stock</span>
+                    <span className='price'>{product.item_price !== null && `$${product.item_price}`}</span>
+                    <span className='stock'>
+                        {product.status_on_amazon === 'Active' ?
+                            <span className={'in'}>In Stock</span>
+                            :
+                            <span className={'out'}>Stock Out</span>
+                        }
+                    </span>
                 </div>
             </div>
 
@@ -55,6 +62,10 @@ const jobStatus = ({job}) => {
             return (
                 <div className="status-field processing">
                     Processing...
+
+                    <InformationTooltip
+                        description={'We are in the process of creating your PPC campaigns. You’ll get an email once it done.'}
+                    />
                 </div>
             )
         } else if (job.status === 'PENDING') {
@@ -65,8 +76,12 @@ const jobStatus = ({job}) => {
             )
         } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
             return (
-                <div className="status-field failed">
-                    Failed
+                <div className="status-field processing">
+                    Processing...
+
+                    <InformationTooltip
+                        description={'We are in the process of creating your PPC campaigns. You’ll get an email once it done.'}
+                    />
                 </div>
             )
         } else {

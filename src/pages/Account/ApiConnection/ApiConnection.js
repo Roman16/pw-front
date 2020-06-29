@@ -1,5 +1,4 @@
 import React, {Fragment, useEffect, useState} from "react";
-import Navigation from "../Navigation/Navigation";
 import {SVG} from "../../../utils/icons";
 import {Input} from "antd";
 import './ApiConnection.less'
@@ -58,8 +57,6 @@ const ApiConnection = () => {
     return (
         <Fragment>
             <div className="user-cabinet">
-                <Navigation page={'api_connections'}/>
-
                 <div className="api-connection-block">
                     <div className="row ">
                         {/*<div className="form-group">*/}

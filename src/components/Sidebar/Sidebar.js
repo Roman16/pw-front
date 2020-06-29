@@ -1,11 +1,9 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, NavLink} from "react-router-dom";
-import {Icon} from "antd";
 import shortid from "shortid";
 import {regionsMenu, ppcAutomateMenu} from "./menu";
 import {getClassNames} from "../../utils";
-import {userActions} from "../../actions/user.actions";
 import logo from "../../assets/img/ProfitWhales-logo-white.svg";
 import "./Sidebar.less";
 import {SVG} from "../../utils/icons";
@@ -64,7 +62,9 @@ const Sidebar = () => {
             className={`sidebar ${className}`}
         >
             <div className="sidebar-header">
-                <Icon className="sidebar-icon" type="menu" onClick={toggleCollapsed}/>
+                <i className="sidebar-icon" onClick={toggleCollapsed}>
+                    <SVG id={'menu-icon'}/>
+                </i>
 
                 <Link to="/" className="sidebar-logo">
                     <img className="logo" src={logo} alt="logo"/>
@@ -305,7 +305,7 @@ const Sidebar = () => {
                                     className="automate-link"
                                     activeClassName="automate-link-active"
                                     exact
-                                    to={`/account-settings`}
+                                    to={`/account/settings`}
                                 >Account</NavLink>}
                                 position={'right'}
                                 overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
@@ -314,7 +314,7 @@ const Sidebar = () => {
                                     className="automate-link"
                                     activeClassName="automate-link-active"
                                     exact
-                                    to={`/account-settings`}
+                                    to={`/account/settings`}
                                 >
                                     <div className="link-icon">
                                         <SVG id='account'/>

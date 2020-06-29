@@ -52,12 +52,12 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                 {showWeekChart && <div className='week-value'>
                     <div className='week-title title'>7-day average</div>
 
-                    {activeMetrics[0].key && <div className="week-value">
+                    {activeMetrics[0].key && <div className="week-value" style={{color: '#8FD39D'}}>
                         <SVG id='green-line'/>
                         {payload[0] && payload[0].payload.dashed_seven_days_first_metric_value ? getChartValue('dashed_seven_days_first_metric_value', activeMetrics[0].key) : getChartValue('seven_days_first_metric_value', activeMetrics[0].key)}
                     </div>}
 
-                    {activeMetrics[1].key && <div className="week-value">
+                    {activeMetrics[1].key && <div className="week-value" style={{color: '#6D6DF6'}}>
                         <SVG id='violet-line'/>
                         {payload[0] && payload[0].payload.dashed_seven_days_second_metric_value ? getChartValue('dashed_seven_days_second_metric_value', activeMetrics[1].key) : getChartValue('seven_days_second_metric_value', activeMetrics[1].key)}
                     </div>}
@@ -66,12 +66,12 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                 {showDailyChart && <div className='daily-value'>
                     <div className='daily-title title'>Daily</div>
 
-                    {activeMetrics[0].key && <div className="daily-value">
+                    {activeMetrics[0].key && <div className="daily-value" style={{color: '#8FD39D'}}>
                         <SVG id='green-daily'/>
                         {payload[0] && payload[0].payload.dashed_daily_first_metric_value ? getChartValue('dashed_daily_first_metric_value', activeMetrics[0].key) : getChartValue('daily_first_metric_value', activeMetrics[0].key)}
                     </div>}
 
-                    {activeMetrics[1].key && <div className="daily-value">
+                    {activeMetrics[1].key && <div className="daily-value" style={{color: '#6D6DF6'}}>
                         <SVG id='violet-daily'/>
                         {payload[0] && payload[0].payload.dashed_daily_second_metric_value ? getChartValue('dashed_daily_second_metric_value', activeMetrics[1].key) : getChartValue('daily_second_metric_value', activeMetrics[1].key)}
                     </div>}

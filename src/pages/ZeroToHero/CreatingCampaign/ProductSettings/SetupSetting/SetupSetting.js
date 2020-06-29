@@ -121,15 +121,28 @@ const SetupSetting = ({
                                 Create portfolio
                             </Radio>
 
-                            <div
-                                className={`radio-description form-group ${invalidField === 'portfolioName' ? 'error-field' : ''}`}>
-                                <Input
-                                    value={portfolio.name}
-                                    onChange={({target: {value}}) => changePortfolioHandler({name: value}, invalidField === 'portfolioName')}
-                                    disabled={portfolio.type !== 'CreateNew'}
-                                    placeholder={'Portfolio Name'}
-                                />
+                            <div className="row">
+                                <div
+                                    className={`radio-description form-group ${invalidField === 'portfolioName' ? 'error-field' : ''}`}>
+                                    <Input
+                                        value={portfolio.name}
+                                        onChange={({target: {value}}) => changePortfolioHandler({name: value}, invalidField === 'portfolioName')}
+                                        disabled={portfolio.type !== 'CreateNew'}
+                                        placeholder={'Portfolio Name'}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="">Portfolio Monthly Budget</label>
+
+                                    <InputCurrency
+                                        value={portfolio.monthly_recurring_budget}
+                                        disabled={portfolio.type !== 'CreateNew'}
+                                        onChange={budget => changePortfolioHandler({monthly_recurring_budget: budget})}
+                                    />
+                                </div>
                             </div>
+
 
                             <Radio value={'UseExisting'}>
                                 Use existing portfolio
@@ -212,7 +225,7 @@ const SetupSetting = ({
 
                 <div className="row daily-budget-settings">
                     <div className={`col ${invalidField === 'dailyBudget' ? 'error-field' : ''}`}>
-                        <h3>Daily budget</h3>
+                        <h3>ZTH Campaigns Daily Budget</h3>
 
                         <InputCurrency
                             value={campaigns.daily_budget}

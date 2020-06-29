@@ -44,7 +44,19 @@
       font-size: 1.8em; // 25.2px
       color: #b6b6fb;
       align-self: center;
-      margin: 0 1.7142857142857142rem 0 3px;
+      margin: 0 1.7142857142857142rem 0 0;
+
+      svg {
+        fill: #b6b6fb;
+      }
+
+      &:hover {
+        cursor: pointer;
+
+        svg {
+          fill: #fff;
+        }
+      }
     }
 
     .sidebar-logo {
@@ -404,6 +416,7 @@
         color: #FFFFFF;
         background: #6D6DF6;
         border-radius: 4px;
+        transition: background 0.3s;
 
         .icon {
           min-width: 20px;
@@ -456,6 +469,10 @@
           transform: scale(0, 0);
           opacity: .3;
           transition: 0s;
+        }
+
+        &:hover {
+          background: #5F5FBE;
         }
       }
     }

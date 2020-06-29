@@ -1,5 +1,5 @@
-import React, {Fragment, useEffect, useState} from "react";
-import {Modal, Popover} from "antd";
+import React, {Fragment, useEffect} from "react";
+import {Modal} from "antd";
 
 import './ModalWindow.less';
 
@@ -8,7 +8,7 @@ const ModalWindow = (props) => {
 
     useEffect(() => {
         if (container) {
-            document.querySelector('.sidebar-header .anticon-menu').addEventListener('click', () => {
+            document.querySelector('.sidebar-header .sidebar-icon').addEventListener('click', () => {
                 setTimeout(() => {
                     if (document.querySelector('.custom-modal-wrap')) {
                         document.querySelector('.custom-modal-wrap').style.left = `${document.querySelector('.sidebar').clientWidth}px`;

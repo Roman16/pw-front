@@ -57,6 +57,7 @@ const MainChart = () => {
 
             switchFetch(true);
             setFetchingError(false);
+
             source = CancelToken.source();
 
             dashboardServices.fetchLineChartData({
@@ -74,11 +75,11 @@ const MainChart = () => {
                     setFetchingError(false);
                     localFetch = false;
                 })
-                .catch(() => {
-                    localFetch = false;
-
-                    !localFetch && setFetchingError(true);
-                    !localFetch && switchFetch(false);
+                .catch((error) => {
+                    if (error.message !== undefined) {
+                        setFetchingError(true);
+                        switchFetch(false);
+                    }
                 })
         } else {
             updateChartData([])
@@ -136,13 +137,13 @@ const MainChart = () => {
                 {activeMetrics[0] && activeMetrics[0].title && <div className="first-line">
                     <div className="green-line"/>
 
-                    {activeMetrics[0] &&  <span dangerouslySetInnerHTML={{__html: activeMetrics[0].title}}/>}
+                    {activeMetrics[0] && <span dangerouslySetInnerHTML={{__html: activeMetrics[0].title}}/>}
                 </div>}
 
                 {activeMetrics[0] && activeMetrics[1].title && <div className="second-line">
                     <div className="violet-line"/>
 
-                    {activeMetrics[0] &&   <span dangerouslySetInnerHTML={{__html: activeMetrics[1].title}}/>}
+                    {activeMetrics[0] && <span dangerouslySetInnerHTML={{__html: activeMetrics[1].title}}/>}
                 </div>}
             </div>
 

@@ -23,6 +23,7 @@ import x10SuccessImage from '../../../assets/img/landing-zth/x10-success.svg'
 import {Link} from "react-router-dom";
 import ZTHPriceSlider from "../components/ZTHPriceSlider/ZTHPriceSlider";
 import ZTHPricingGuide from "../components/ZTHPricingGuide/ZTHPricingGuide";
+import amazonAppStoreLogo from "../../../assets/img/logo/amazon-app-store-logo-dark.png";
 
 const setupDescription = [
     {
@@ -94,8 +95,10 @@ const ZTHLanding = () => {
                         <div className="action">
                             <div className="row">
                                 <button className="btn default link">
-                                    <a href="https://calendly.com/vitalii-pw-success-manager/demo-call-with-profit-whales"
-                                       target={'_blank'}>
+                                    <a
+                                        href="https://calendly.com/lana_profit_whales"
+                                        target={'_blank'}
+                                    >
                                         LET’S TALK
                                     </a>
                                 </button>
@@ -110,8 +113,19 @@ const ZTHLanding = () => {
                             </div>
 
                             <div className="images">
-                                <img src={amazonStoreLogo} alt=""/>
-                                <img src={amazonSpnLogo} alt=""/>
+                                <a
+                                    href="https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9"
+                                    target={'_blank'}
+                                >
+                                    <img src={amazonStoreLogo} alt=""/>
+                                </a>
+
+                                <a
+                                    href="https://sellercentral.amazon.com/tsba/provider-details/Advertising%20Optimization/4f60e5cd-a0a1-44f2-8336-074806a7775f?ref_=sc_spn_alst_adt-4f60e5cd&localeSelection=en_US&sellFrom=US&sellIn=US"
+                                    target={'_blank'}
+                                >
+                                    <img src={amazonSpnLogo} alt=""/>
+                                </a>
                             </div>
                         </div>
                     </div>
