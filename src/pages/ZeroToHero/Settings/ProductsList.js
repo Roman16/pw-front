@@ -45,62 +45,49 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
 };
 
 const jobStatus = ({job}) => {
-    // if (job) {
-    //     if (job.status === 'DONE') {
-    //         return (
-    //             <div className="status-field finished">
-    //                 Finished
-    //             </div>
-    //         )
-    //     } else if (job.status === 'DRAFT') {
-    //         return (
-    //             <div className="status-field draft">
-    //                 Draft
-    //             </div>
-    //         )
-    //     } else if (job.status === 'PROCESSING') {
-    //         return (
-    //             <div className="status-field processing">
-    //                 Processing...
-    //             </div>
-    //         )
-    //     } else if (job.status === 'PENDING') {
-    //         return (
-    //             <div className="status-field processing">
-    //                 Pending...
-    //             </div>
-    //         )
-    //     } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
-    //         return (
-    //             <div className="status-field processing">
-    //                 Processing...
-    //
-    //                 <InformationTooltip
-    //                     description={'We are in the process of creating your PPC campaigns. You’ll get an email once it done.'}
-    //                 />
-    //             </div>
-    //         )
-    //     } else {
-    //         return (
-    //             <div className="status-field">
-    //                 {job.status}
-    //             </div>
-    //         )
-    //     }
-    // }
+    if (job) {
+        if (job.status === 'DONE') {
+            return (
+                <div className="status-field finished">
+                    Finished
+                </div>
+            )
+        } else if (job.status === 'DRAFT') {
+            return (
+                <div className="status-field draft">
+                    Draft
+                </div>
+            )
+        } else if (job.status === 'PROCESSING') {
+            return (
+                <div className="status-field processing">
+                    Processing...
+                </div>
+            )
+        } else if (job.status === 'PENDING') {
+            return (
+                <div className="status-field processing">
+                    Pending...
+                </div>
+            )
+        } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
+            return (
+                <div className="status-field processing">
+                    Processing...
 
-    return (
-        <div className="status-field processing">
-            Processing...
-
-            <InformationTooltip
-                getPopupContainer={trigger => trigger}
-                position={'bottom'}
-                description={'We are in the process of creating your PPC campaigns. You’ll get an email once it done.'}
-            />
-        </div>
-    )
-
+                    <InformationTooltip
+                        description={'We are in the process of creating your PPC campaigns. You’ll get an email once it done.'}
+                    />
+                </div>
+            )
+        } else {
+            return (
+                <div className="status-field">
+                    {job.status}
+                </div>
+            )
+        }
+    }
 };
 
 const jobIssues = ({job, batch}) => {

@@ -320,7 +320,7 @@ const casesList = {
             ]
         },
         {
-            title: '5 days with Zero to Hero',
+            title: '16 days with Zero to Hero',
             firstColumnTitle: 'Before',
             secondColumnTitle: 'After',
             img: casesImages.zthCase4,
