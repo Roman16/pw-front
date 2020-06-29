@@ -62,6 +62,10 @@ const jobStatus = ({job}) => {
             return (
                 <div className="status-field processing">
                     Processing...
+
+                    <InformationTooltip
+                        description={'We are in the process of creating your PPC campaigns. You’ll get an email once it done.'}
+                    />
                 </div>
             )
         } else if (job.status === 'PENDING') {
