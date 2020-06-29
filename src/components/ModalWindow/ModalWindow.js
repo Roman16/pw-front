@@ -1,5 +1,5 @@
-import React, {Fragment, useEffect, useState} from "react";
-import {Modal, Popover} from "antd";
+import React, {Fragment, useEffect} from "react";
+import {Modal} from "antd";
 
 import './ModalWindow.less';
 

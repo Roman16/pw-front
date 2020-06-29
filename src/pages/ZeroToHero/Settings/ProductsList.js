@@ -6,6 +6,7 @@ import {SVG} from "../../../utils/icons";
 import {history} from "../../../utils/history";
 import {zthActions} from "../../../actions/zth.actions";
 import {useDispatch} from "react-redux";
+import InformationTooltip from "../../../components/Tooltip/Tooltip";
 
 
 const ProductItem = ({product, openedProduct, onOpenVariations}) => {
@@ -21,8 +22,14 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
                 </div>
 
                 <div className="row">
-                    <span className='price'>$35.99</span>
-                    <span className='stock'>In Stock</span>
+                    <span className='price'>{product.item_price !== null && `$${product.item_price}`}</span>
+                    <span className='stock'>
+                        {product.status_on_amazon === 'Active' ?
+                            <span className={'in'}>In Stock</span>
+                            :
+                            <span className={'out'}>Stock Out</span>
+                        }
+                    </span>
                 </div>
             </div>
 
@@ -38,45 +45,62 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
 };
 
 const jobStatus = ({job}) => {
-    if (job) {
-        if (job.status === 'DONE') {
-            return (
-                <div className="status-field finished">
-                    Finished
-                </div>
-            )
-        } else if (job.status === 'DRAFT') {
-            return (
-                <div className="status-field draft">
-                    Draft
-                </div>
-            )
-        } else if (job.status === 'PROCESSING') {
-            return (
-                <div className="status-field processing">
-                    Processing...
-                </div>
-            )
-        } else if (job.status === 'PENDING') {
-            return (
-                <div className="status-field processing">
-                    Pending...
-                </div>
-            )
-        } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
-            return (
-                <div className="status-field failed">
-                    Failed
-                </div>
-            )
-        } else {
-            return (
-                <div className="status-field">
-                    {job.status}
-                </div>
-            )
-        }
-    }
+    // if (job) {
+    //     if (job.status === 'DONE') {
+    //         return (
+    //             <div className="status-field finished">
+    //                 Finished
+    //             </div>
+    //         )
+    //     } else if (job.status === 'DRAFT') {
+    //         return (
+    //             <div className="status-field draft">
+    //                 Draft
+    //             </div>
+    //         )
+    //     } else if (job.status === 'PROCESSING') {
+    //         return (
+    //             <div className="status-field processing">
+    //                 Processing...
+    //             </div>
+    //         )
+    //     } else if (job.status === 'PENDING') {
+    //         return (
+    //             <div className="status-field processing">
+    //                 Pending...
+    //             </div>
+    //         )
+    //     } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
+    //         return (
+    //             <div className="status-field processing">
+    //                 Processing...
+    //
+    //                 <InformationTooltip
+    //                     description={'We are in the process of creating your PPC campaigns. You’ll get an email once it done.'}
+    //                 />
+    //             </div>
+    //         )
+    //     } else {
+    //         return (
+    //             <div className="status-field">
+    //                 {job.status}
+    //             </div>
+    //         )
+    //     }
+    // }
+
+    return (
+        <div className="status-field processing">
+            Processing...
+
+            <InformationTooltip
+                getPopupContainer={trigger => trigger}
+                position={'bottom'}
+                description={'We are in the process of creating your PPC campaigns. You’ll get an email once it done.'}
+            />
+        </div>
+    )
+
 };
 
 const jobIssues = ({job, batch}) => {

@@ -29,6 +29,9 @@ function updateProductSettings(parameters) {
         'max_bid_manual_campaign': parameters.max_bid_manual_campaign,
         'min_bid_auto_campaign': parameters.min_bid_auto_campaign,
         'max_bid_auto_campaign': parameters.max_bid_auto_campaign,
+        'desired_acos': parameters.desired_acos,
+        'break_even_acos': parameters.break_even_acos,
+        'cogs': parameters.cogs,
     })
 }
 
