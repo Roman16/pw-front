@@ -208,6 +208,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 render: (props, item) => (
                     <InputCurrency
                         value={item[DESIRED_ACOS]}
+                        typeIcon='percent'
                         disabled
                         step={0.01}
                     />
@@ -218,6 +219,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 render: (props, item) => (
                     <InputCurrency
                         value={item[BREAK_EVEN_ACOS]}
+                        typeIcon='percent'
                         disabled
                         step={0.01}
                     />
@@ -421,6 +423,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 <InputCurrency
                     value={item[DESIRED_ACOS]}
                     step={0.01}
+                    typeIcon='percent'
                     onChange={event => onChangeRow(event, DESIRED_ACOS, indexRow)}
                 />
             )
@@ -434,12 +437,13 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 <InputCurrency
                     value={item[BREAK_EVEN_ACOS]}
                     step={0.01}
+                    typeIcon='percent'
                     onChange={event => onChangeRow(event, BREAK_EVEN_ACOS, indexRow)}
                 />
             )
         },
         {
-            title: () => (<span>COGS</span>),
+            title: () => (<span>CoGS</span>),
             dataIndex: COGS,
             key: COGS,
             minWidth: '160px',
