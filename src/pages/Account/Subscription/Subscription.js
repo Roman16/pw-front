@@ -245,7 +245,7 @@ const Subscription = () => {
                     onCancelSubscription={handleCancelSubscription}
                     onKeepSubscription={keepSubscriptionHandler}
                     disableReactivateButtons={disableReactivateButtons}
-                    subscriptionPrice={subscriptions[0] && subscriptions[0].next_charge_value}
+                    product={subscriptions[0] && subscriptions[0]}
                 />
             </Modal>
 

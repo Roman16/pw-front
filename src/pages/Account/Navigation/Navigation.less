@@ -35,6 +35,10 @@
     display: block;
     border-radius: 4px;
     z-index: 10;
+
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      width: 742px;
+    }
   }
 
   .slider .bar {
@@ -53,7 +57,6 @@
   }
 
   /*Toggle*/
-
 
   #slide-item-1:checked ~ .slider .bar {
     margin-left: 0;
@@ -82,7 +85,7 @@
   }
 
   @media (max-width: 850px) {
-  padding-left: 0 !important;
+    padding-left: 0 !important;
     padding-right: 0 !important;
   }
 }
