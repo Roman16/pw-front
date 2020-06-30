@@ -87,6 +87,13 @@ const SetupSetting = ({
                     <div className={`col ${invalidField === 'mainKeywords' ? 'error-field' : ''}`}>
                         <h3>Please Add a Minimum of 3 Top Keywords that Customers Use to Find Your Product</h3>
 
+                        <a
+                            href="https://learn.profitwhales.com/en/articles/4201379-seed-keywords-best-practices"
+                            target={'_blank'}
+                        >
+                            Here is the guide on how to do it
+                        </a>
+
                         <MultiTextArea
                             value={campaigns.main_keywords}
                             onChange={(main_keywords) => changeCampaignsHandler({main_keywords}, invalidField === 'mainKeywords')}
