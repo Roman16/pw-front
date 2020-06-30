@@ -109,18 +109,18 @@ const AdminPanel = () => {
 
     return (
         <div className="admin-panel">
-            <div className="tabs">
-                <button
-                    className={`${selectedTab === 'genInfo' ? 'active' : ''}`}
-                        onClick={() => setSelectedTab('genInfo')}>
-                    General Information
-                </button>
-                <button
-                    className={`${selectedTab === 'report' ? 'active' : ''}`}
-                        onClick={() => setSelectedTab('report')}>
-                    Generate Report
-                </button>
-            </div>
+            {/*<div className="tabs">*/}
+            {/*    <button*/}
+            {/*        className={`${selectedTab === 'genInfo' ? 'active' : ''}`}*/}
+            {/*            onClick={() => setSelectedTab('genInfo')}>*/}
+            {/*        General Information*/}
+            {/*    </button>*/}
+            {/*    <button*/}
+            {/*        className={`${selectedTab === 'report' ? 'active' : ''}`}*/}
+            {/*            onClick={() => setSelectedTab('report')}>*/}
+            {/*        Generate Report*/}
+            {/*    </button>*/}
+            {/*</div>*/}
 
             {selectedTab === 'genInfo' && <>
                 <GeneralUserInformation
