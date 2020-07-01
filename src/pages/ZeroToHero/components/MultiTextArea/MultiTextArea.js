@@ -4,7 +4,15 @@ import {Input} from "antd";
 import {SVG} from "../../../../utils/icons";
 import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 
-import {isMainKeywordValid} from './isMainKeywordValid';
+import {
+    cleanMainKeyword,
+    findExistingDuplicateOfNewMainKeyword,
+    keywordHasMeaningfulWords,
+    isMainKeywordValid,
+    isTooShort,
+    isLongTail,
+    isKeywordExtendsAnother
+} from './isMainKeywordValid';
 
 const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productName, unique = false}) => {
     const [inputValue, setInputValue] = useState(null);
@@ -12,13 +20,36 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
     const inputEl = useRef(null);
 
     const addKeywordHandler = ({target}) => {
-        if (target.value !== '' && unique && !value.includes(target.value)) {
-            if (value == null) {
-                onChange([target.value]);
-            } else {
-                onChange([...value, target.value]);
+        if (toMark) {
+            const clearKeyword = cleanMainKeyword(target.value);
+
+            if (clearKeyword !== '' && unique && !value.find(item => item.value === clearKeyword)) {
+                const keyword = {
+                    value: clearKeyword,
+                    hasMeaningfulWords: keywordHasMeaningfulWords(clearKeyword),
+                    isDuplicate: findExistingDuplicateOfNewMainKeyword(clearKeyword, value.map(item => item.value)),
+                    isMainKeywordValid: isMainKeywordValid(clearKeyword, productName),
+                    isLongTail: isLongTail(clearKeyword),
+                    isTooShort: isTooShort(clearKeyword)
+                }
+
+                if (value == null) {
+                    onChange([keyword]);
+                } else {
+                    onChange([...value, keyword]);
+                }
+            }
+        } else {
+            if (target.value !== '' && unique && !value.includes(target.value)) {
+
+                if (value == null) {
+                    onChange([target.value]);
+                } else {
+                    onChange([...value, target.value]);
+                }
             }
         }
+
 
         setInputValue(null);
     };
@@ -32,21 +63,84 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
              onClick={() => (!value || value.length < max) && inputEl.current.focus()}>
             <div className="list">
                 {value && value.map((item, index) => {
-                    if (toMark && !isMainKeywordValid(item, productName)) {
-                        return (
-                            <div className={'item-text'}>
-                                {item}
+                    if (toMark) {
+                        if (!item.hasMeaningfulWords || item.isDuplicate || !item.isMainKeywordValid || item.isLongTail || item.isTooShort) {
+                            return (
+                                <div className={'item-text'}>
+                                    {item.value}
 
-                                <InformationTooltip type={'custom'}
-                                                    description={'Looks like this is a long tail keyword or it’s not present in your title. Please make sure you enter a keyword that customers use to describe your product in general.'}>
-                                    <SVG id={'warning-icon'}/>
-                                </InformationTooltip>
+                                    <InformationTooltip
+                                        type={'custom'}
+                                        overlayClassName={'mistake-with-keyword'}
+                                        description={<>
+                                            <ul>
+                                                <li>
+                                                    <b>keywordHasMeaningfulWords</b> {new String(item.hasMeaningfulWords)}
+                                                </li>
+                                                <li>
+                                                    <b>findExistingDuplicateOfNewMainKeyword</b> {new String(item.isDuplicate)}
+                                                </li>
+                                                <li>
+                                                    <b>isMainKeywordValid</b> {new String(item.isMainKeywordValid)}
+                                                </li>
+                                                <li>
+                                                    <b>isTooShort</b> {new String(item.isTooShort)}
+                                                </li>
+                                                <li>
+                                                    <b>isLongTail</b> {new String(item.isLongTail)}
+                                                </li>
+                                                <li>
+                                                    ------------------------------------------
+                                                </li>
+                                                <li>
+                                                    <b>isKeywordExtendsAnother</b> {isKeywordExtendsAnother(item.value, value.map(item => item.value))}
+                                                </li>
+                                            </ul>
+                                        </>}
+                                    >
+                                        <i style={(!item.hasMeaningfulWords || item.isDuplicate) ? {
+                                            fill: '#EC7F5C',
+                                            stroke: '#EC7F5C'
+                                        } : {fill: '#F0B849', stroke: '#F0B849'}}>
+                                            <SVG id={'warning-icon'}/>
+                                        </i>
 
-                                <i onClick={() => removeKeywordHandler(index)}>
-                                    <SVG id={'remove-filter-icon'}/>
-                                </i>
-                            </div>
-                        )
+                                    </InformationTooltip>
+
+                                    <i onClick={() => removeKeywordHandler(index)}>
+                                        <SVG id={'remove-filter-icon'}/>
+                                    </i>
+                                </div>
+                            )
+                        } else {
+                            return (
+                                <div className={'item-text'}>
+                                    {item.value}
+
+                                    <InformationTooltip
+                                        type={'custom'}
+                                        overlayClassName={'mistake-with-keyword'}
+                                        description={<>
+                                            <ul>
+                                                <li>
+                                                    <b>isKeywordExtendsAnother</b> {isKeywordExtendsAnother(item.value, value.map(item => item.value))}
+                                                </li>
+                                            </ul>
+                                        </>}
+                                    >
+                                        <i style={{fill: '#F0B849', stroke: '#F0B849'}}>
+                                            <SVG id={'warning-icon'}/>
+                                        </i>
+
+                                    </InformationTooltip>
+
+
+                                    <i onClick={() => removeKeywordHandler(index)}>
+                                        <SVG id={'remove-filter-icon'}/>
+                                    </i>
+                                </div>
+                            )
+                        }
                     } else {
                         return (
                             <div className={'item-text'}>

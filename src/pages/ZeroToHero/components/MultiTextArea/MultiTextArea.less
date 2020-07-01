@@ -25,9 +25,7 @@
         width: 1.0714285714285714rem;
         height: 1.2142857142857142rem;
         margin: 0;
-
-        fill: #F0B849;
-        stroke: #F0B849;
+        stroke: inherit;
       }
     }
   }
@@ -78,6 +76,26 @@
     &:focus {
       outline: none;
       box-shadow: none;
+    }
+  }
+}
+
+.mistake-with-keyword {
+  width: 450px;
+
+  .ant-popover-inner-content {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  ul {
+    list-style: none;
+
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
     }
   }
 }

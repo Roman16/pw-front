@@ -61,6 +61,10 @@ const ProductSettings = () => {
             const setupSettingsFilter = (arr) => {
                 return arr.map(product => ({
                     ...product,
+                    campaigns: {
+                        ...product.campaigns,
+                        main_keywords: [...product.campaigns.main_keywords.map(item => item.value)],
+                    },
                     portfolio: {
                         type: product.portfolio.type,
                         enum: product.portfolio.type === 'NoPortfolio',
