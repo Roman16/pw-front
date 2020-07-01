@@ -89,12 +89,6 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                                 <li>
                                                     <b>isLongTail</b> {new String(item.isLongTail)}
                                                 </li>
-                                                <li>
-                                                    ------------------------------------------
-                                                </li>
-                                                <li>
-                                                    <b>isKeywordExtendsAnother</b> {isKeywordExtendsAnother(item.value, value.map(item => item.value))}
-                                                </li>
                                             </ul>
                                         </>}
                                     >
