@@ -34,19 +34,19 @@ const PWWindows = ({pathname}) => {
 
     return (
         <>
-            {(pathname.includes('/ppc') || pathname.includes('/zero-to-hero')) && <LoadingAmazonAccount
+            {(pathname.includes('/ppc/') || pathname.includes('/zero-to-hero')) && <LoadingAmazonAccount
                 visible={visibleWindow === 'loadingAmazon'}
                 lastName={user.user.last_name}
                 firstName={user.user.name}
                 productList={productList}
             />}
 
-            {pathname.includes('/ppc') && <SubscriptionNotificationWindow
+            {pathname.includes('/ppc/') && <SubscriptionNotificationWindow
                 visible={visibleWindow === 'expiredSubscription'}
                 onClose={closeWindowHandler}
             />}
 
-            {pathname.includes('/ppc') && <StartFreeTrialWindow
+            {pathname.includes('/ppc/') && <StartFreeTrialWindow
                 visible={visibleWindow === 'freeTrial'}
                 onClose={closeWindowHandler}
             />}
