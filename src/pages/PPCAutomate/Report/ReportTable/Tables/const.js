@@ -11,9 +11,9 @@ export const dateField = {
     title: 'Date',
     dataIndex: 'datetime',
     key: 'datetime',
-    width: '12.857142857142858rem',
+    width: '14.285714285714286rem',
     render: date => <span>
-        {moment.utc(date).tz('America/Los_Angeles').format('MMM DD, YYYY hh:mm:ss')}
+        {moment.utc(date).tz('America/Los_Angeles').format('MMM DD, YYYY hh:mm:ss A')}
     </span>,
     sorter: true,
     filter: true
