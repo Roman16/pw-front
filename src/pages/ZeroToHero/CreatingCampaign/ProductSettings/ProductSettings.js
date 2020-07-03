@@ -63,7 +63,7 @@ const ProductSettings = () => {
                     ...product,
                     campaigns: {
                         ...product.campaigns,
-                        main_keywords: [...product.campaigns.main_keywords.map(item => item.value)],
+                        main_keywords: [...product.campaigns.main_keywords.filter(item => item.hasMeaningfulWords !== false && item.isDuplicate === undefined).map(item => item.value)],
                     },
                     portfolio: {
                         type: product.portfolio.type,

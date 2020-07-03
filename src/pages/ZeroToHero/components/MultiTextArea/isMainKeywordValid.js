@@ -568,5 +568,5 @@ export function isKeywordExtendsAnother(keyword, otherKeywords) {
 
     const keywordRootWords = toRootWords(keyword);
 
-    return otherKeywords.find(x => difference(toRootWords(x), keywordRootWords).length === 0);
+    return otherKeywords.find(x => difference(toRootWords(x), keywordRootWords).length === 0 && x !== keyword);
 }
