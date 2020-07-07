@@ -110,25 +110,42 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                         overlayClassName={'mistake-with-keyword'}
                                         description={<>
                                             <ul>
-                                                <li>
-                                                    <b>keywordHasMeaningfulWords</b> {new String(item.hasMeaningfulWords)}
-                                                </li>
-                                                <li>
-                                                    <b>findExistingDuplicateOfNewMainKeyword</b> {new String(item.isDuplicate)}
-                                                </li>
-                                                <li>
-                                                    <b>isMainKeywordValid</b> {new String(item.isMainKeywordValid)}
-                                                </li>
-                                                <li>
-                                                    <b>isTooShort</b> {new String(item.isTooShort)}
-                                                </li>
-                                                <li>
-                                                    <b>isLongTail</b> {new String(item.isLongTail)}
-                                                </li>
-                                                <li>
-                                                    <b>isKeywordExtendsAnother</b> {isKeywordExtendsAnother(item.value, value.map(item => item.value))}
-                                                </li>
+                                                {!item.hasMeaningfulWords && <li>
+                                                    Keyword does not have any meaningful words that will help us to get
+                                                    relevant keywords suggestions for PPC Campaigns.
+                                                </li>}
 
+                                                {item.isDuplicate && <li>
+                                                    This keyword is an explicit duplicate of another seed keyword you
+                                                    provided: ${item.isDuplicate}.
+                                                </li>}
+
+                                                {!item.isMainKeywordValid && <li>
+                                                    Seems like this keyword is not present in the title of your product.
+                                                    Please make sure you enter a keyword that describes your product in
+                                                    general.
+                                                </li>}
+
+                                                {item.isTooShort && <li>
+                                                    There are too few meaningful words in this keyword. It may describe
+                                                    your product too broadly and lead to too many unrelated keywords
+                                                    suggestions. Consider using a seed keywords with two or three words.
+                                                </li>}
+
+                                                {item.isLongTail && <li>
+                                                    This keyword is probably a long tail and describes your product too
+                                                    narrowly. There may not be many keywords suggestions derived from
+                                                    this keyword. Consider using a seed keywords with two or three
+                                                    words.
+                                                </li>}
+
+                                                {isKeywordExtendsAnother(item.value, value.map(item => item.value)) &&
+                                                <li>
+                                                    This keyword extends another existing seed keyword:
+                                                    ${isKeywordExtendsAnother(item.value, value.map(item => item.value))}.
+                                                    It may not produce additional keywords suggestions if the original
+                                                    keyword was already a narrow description of your product.
+                                                </li>}
                                             </ul>
                                         </>}
                                     >

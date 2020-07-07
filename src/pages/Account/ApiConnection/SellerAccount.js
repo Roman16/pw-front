@@ -6,10 +6,6 @@ import {Spin} from "antd";
 
 
 const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect, deleteProcessing, sellerId, onReconnect}) => {
-    useEffect(() => {
-        console.log(deleteProcessing);
-    }, [deleteProcessing])
-
 
     const Actions = ({account, type}) => {
         if (account[`amazon_${type}`].id) {
