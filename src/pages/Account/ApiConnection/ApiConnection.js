@@ -8,6 +8,7 @@ import {userActions} from "../../../actions/user.actions";
 import ModalWindow from "../../../components/ModalWindow/ModalWindow";
 import DisconnectWindow from "./DisconnectWindow";
 import {userService} from "../../../services/user.services";
+import {history} from "../../../utils/history";
 
 const {Search} = Input;
 
@@ -36,6 +37,7 @@ const ApiConnection = () => {
     }
 
     const disconnectHandler = (data) => {
+        console.log(data);
         setDisconnectObj(data);
         setVisibleWindow(true);
     }
@@ -45,13 +47,40 @@ const ApiConnection = () => {
         setVisibleWindow(false);
 
         try {
-            await userService[`unset${disconnectObj.type}`]({id: disconnectObj.id})
-            dispatch(userActions.unsetAccount(disconnectObj.type));
+            await userService[disconnectObj.type === 'ppc' ? 'unsetPPC' : 'unsetMWS']({id: disconnectObj.id})
+            dispatch(userActions.unsetAccount(disconnectObj.type === 'ppc' ? 'PPC' : 'MWS'));
         } catch (e) {
             console.log(e);
         }
 
         setDeleteProcessing(false);
+    }
+
+    const reconnectHandler = async (account, isFailed, type) => {
+        if (isFailed) {
+            try {
+                await userService[type === 'ppc' ? 'unsetPPC' : 'unsetMWS']({id: account[`amazon_${type}`].id})
+                dispatch(userActions.unsetAccount(type === 'ppc' ? 'PPC' : 'MWS'));
+
+                if (!account.amazon_mws.is_connected && type === 'ppc') {
+                    history.push('/connect-ppc-account')
+                } else if (!account.amazon_ppc.is_connected && type === 'mws') {
+                    history.push('/connect-mws-account')
+                } else {
+                    history.push('/connect-amazon-account')
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        if (!account.amazon_mws.is_connected && !account.amazon_ppc.is_connected) {
+            history.push('/connect-amazon-account')
+        } else if (!account.amazon_mws.is_connected && account.amazon_ppc.is_connected) {
+            history.push('/connect-mws-account')
+        } else if (account.amazon_mws.is_connected && !account.amazon_ppc.is_connected) {
+            history.push('/connect-ppc-account')
+        }
     }
 
     return (
@@ -87,6 +116,7 @@ const ApiConnection = () => {
                                 opened={openedAccount === index}
                                 onOpenAccount={() => onOpenAccount(index)}
                                 onDisconnect={disconnectHandler}
+                                onReconnect={reconnectHandler}
                                 deleteProcessing={deleteProcessing}
                             />
                         ))}

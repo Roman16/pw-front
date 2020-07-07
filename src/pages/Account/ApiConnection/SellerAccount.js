@@ -4,20 +4,45 @@ import USAFlag from '../../../assets/img/flags/usa-flag.svg';
 import {history} from "../../../utils/history";
 import {Spin} from "antd";
 
-const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect, deleteProcessing, sellerId}) => {
-    const reconnectHandler = () => {
-        if (!account.amazon_mws.is_connected && !account.amazon_ppc.is_connected) {
-            history.push('/connect-amazon-account')
-        } else if (!account.amazon_mws.is_connected && account.amazon_ppc.is_connected) {
-            history.push('/connect-mws-account')
-        } else if (account.amazon_mws.is_connected && !account.amazon_ppc.is_connected) {
-            history.push('/connect-ppc-account')
-        }
-    }
 
+const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect, deleteProcessing, sellerId, onReconnect}) => {
     useEffect(() => {
         console.log(deleteProcessing);
     }, [deleteProcessing])
+
+
+    const Actions = ({account, type}) => {
+        if (account[`amazon_${type}`].id) {
+            if (account[`amazon_${type}`].is_connected && account[`amazon_${type}`].status !== 'FAILED') {
+                return (
+                    <button className={'btn white'}
+                            onClick={() => onDisconnect({
+                                type: type,
+                                id: account[`amazon_${type}`].id
+                            })}
+                            disabled={deleteProcessing === type}
+                    >
+                        Disconnect
+
+                        {deleteProcessing === type && <Spin size={'small'}/>}
+                    </button>
+                )
+            } else {
+                return (
+                    <button className={'btn default'}
+                            onClick={() => onReconnect(account, account[`amazon_${type}`].status === 'FAILED', type)}>
+                        Reconnect
+                    </button>
+                )
+            }
+        } else {
+            return (
+                <button className={'btn default'} onClick={() => onReconnect(account)}>
+                    Connect
+                </button>
+            )
+        }
+    }
 
     return (
         <Fragment>
@@ -55,28 +80,10 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                         </div>}
 
                         <div className="account-action">
-                            {account.amazon_mws.id ? account.amazon_mws.is_connected ?
-                                deleteProcessing === 'MWS' ?
-                                    <button className={'btn white'} disabled>
-                                        <Spin size={'small'}/>
-                                    </button>
-                                    :
-                                    <button className={'btn white'}
-                                            onClick={() => onDisconnect({
-                                                type: 'MWS',
-                                                id: account.amazon_mws.id
-                                            })}>
-                                        Disconnect
-                                    </button>
-                                :
-                                <button className={'btn default'} onClick={reconnectHandler}>
-                                    Reconnect
-                                </button>
-                                :
-                                <button className={'btn default'} onClick={reconnectHandler}>
-                                    Connect
-                                </button>
-                            }
+                            <Actions
+                                account={account}
+                                type={'mws'}
+                            />
                         </div>
                     </div>
                     <div className="row">
@@ -98,25 +105,10 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                         </div>}
 
                         <div className="account-action">
-                            {account.amazon_ppc.id ? account.amazon_ppc.is_connected ?
-                                deleteProcessing === 'PPC' ?
-                                    <button className={'btn white'} disabled>
-                                        <Spin size={'small'}/>
-                                    </button>
-                                    :
-                                    <button className={'btn white'}
-                                            onClick={() => onDisconnect({type: 'PPC', id: account.amazon_ppc.id})}>
-                                        Disconnect
-                                    </button>
-                                :
-                                <button className={'btn default'} onClick={reconnectHandler}>
-                                    Reconnect
-                                </button>
-                                :
-                                <button className={'btn default'} onClick={reconnectHandler}>
-                                    Connect
-                                </button>
-                            }
+                            <Actions
+                                account={account}
+                                type={'ppc'}
+                            />
                         </div>
                     </div>
                 </div>}
