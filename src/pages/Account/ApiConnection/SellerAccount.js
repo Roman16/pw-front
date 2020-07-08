@@ -65,7 +65,7 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                             <span style={{color: '#f0b849'}}>Verifying</span>}
                             {account.amazon_mws.id && account.amazon_mws.status === 'SUCCESS' &&
                             <span style={{color: '#7DD4A1'}}>Success</span>}
-                            {account.amazon_mws.id && account.amazon_mws.status === 'FAILED' &&
+                            {account.amazon_mws.id && (account.amazon_mws.status === 'FAILED' || account.amazon_mws.status === 'UNAUTHORIZED') &&
                             <span style={{color: '#EC7F5C'}}>Failed</span>}
                             {account.amazon_mws.id && account.amazon_mws.is_connected === false &&
                             <span style={{color: '#EC7F5C'}}>Canceled</span>}
@@ -90,7 +90,7 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                             <span style={{color: '#f0b849'}}>Verifying</span>}
                             {account.amazon_ppc.id && account.amazon_ppc.status === 'SUCCESS' &&
                             <span style={{color: '#7DD4A1'}}>Success</span>}
-                            {account.amazon_ppc.id && account.amazon_ppc.status === 'FAILED' &&
+                            {account.amazon_ppc.id && (account.amazon_ppc.status === 'FAILED' || account.amazon_ppc.status === 'UNAUTHORIZED') &&
                             <span style={{color: '#EC7F5C'}}>Failed</span>}
                             {account.amazon_ppc.id && account.amazon_ppc.is_connected === false &&
                             <span style={{color: '#EC7F5C'}}>Canceled</span>}
