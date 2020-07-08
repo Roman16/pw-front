@@ -109,7 +109,8 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                         type={'custom'}
                                         overlayClassName={'mistake-with-keyword'}
                                         description={<>
-                                            <p>This keyword has next issues and may not be a good candidate for seed keyword:</p>
+                                            <p>This keyword has next issues and may not be a good candidate for seed
+                                                keyword:</p>
 
                                             <ol>
                                                 {!item.hasMeaningfulWords && <li>
@@ -152,10 +153,9 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                         </>}
                                     >
                                         <i style={(!item.hasMeaningfulWords || item.isDuplicate) ? {
-                                            fill: '#EC7F5C',
-                                            stroke: '#EC7F5C'
-                                        } : {fill: '#F0B849', stroke: '#F0B849'}}>
-                                            <SVG id={'warning-icon'}/>
+                                            fill: '#EC7F5C'
+                                        } : {fill: '#F0B849'}}>
+                                            <SVG id={'circle-warning-icon'}/>
                                         </i>
 
                                     </InformationTooltip>
