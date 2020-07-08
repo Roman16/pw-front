@@ -1,15 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
 import ModalWindow from "../ModalWindow";
 
 import img from '../../../assets/img/start-free-trial-image.svg';
+import {userService} from "../../../services/user.services";
+import {Spin} from "antd";
+import {notification} from "../../Notification";
 
 const StartFreeTrialWindow = ({visible, onClose}) => {
-    const handleOk = () => {
+    const [processing, setProcessing] = useState(false);
 
+    const handleOk = async () => {
+        setProcessing(true);
+
+        try {
+            await userService.startFreeTrial();
+            notification.success({title: 'Success!'})
+            onClose();
+        } catch (e) {
+            console.log(e);
+        }
+
+        setProcessing(false);
     };
 
     const handleCancel = () => {
-
+        onClose();
     };
 
     return (
@@ -17,7 +32,6 @@ const StartFreeTrialWindow = ({visible, onClose}) => {
             className={'start-free-trial-window'}
             visible={visible}
             footer={false}
-            handleOk={handleOk}
             handleCancel={handleCancel}
         >
 
@@ -32,8 +46,10 @@ const StartFreeTrialWindow = ({visible, onClose}) => {
                     In order to start the 14-days free trial please click this <br/> button below.
                 </p>
 
-                <button className={'btn white'}>
+                <button className={'btn white'} onClick={handleOk} disabled={processing}>
                     Start My Free Trial
+
+                    {processing && <Spin size={'small'}/>}
                 </button>
             </div>
 

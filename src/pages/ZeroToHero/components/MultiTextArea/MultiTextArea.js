@@ -109,7 +109,9 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                         type={'custom'}
                                         overlayClassName={'mistake-with-keyword'}
                                         description={<>
-                                            <ul>
+                                            <p>This keyword has next issues and may not be a good candidate for seed keyword:</p>
+
+                                            <ol>
                                                 {!item.hasMeaningfulWords && <li>
                                                     Keyword does not have any meaningful words that will help us to get
                                                     relevant keywords suggestions for PPC Campaigns.
@@ -146,7 +148,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                                     It may not produce additional keywords suggestions if the original
                                                     keyword was already a narrow description of your product.
                                                 </li>}
-                                            </ul>
+                                            </ol>
                                         </>}
                                     >
                                         <i style={(!item.hasMeaningfulWords || item.isDuplicate) ? {
