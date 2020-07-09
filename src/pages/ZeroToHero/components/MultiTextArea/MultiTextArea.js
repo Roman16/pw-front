@@ -99,7 +99,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
             <div className="list">
                 {value && value.map((item, index) => {
                     if (toMark) {
-                        if (!item.hasMeaningfulWords || item.isDuplicate || !item.isMainKeywordValid || item.isLongTail || item.isTooShort || isKeywordExtendsAnother(item.value, value.map(item => item.value))) {
+                        if (!item.hasMeaningfulWords || item.isDuplicate || item.isLongTail || item.isTooShort || isKeywordExtendsAnother(item.value, value.map(item => item.value))) {
                             return (
                                 <div
                                     className={`item-text ${!item.hasMeaningfulWords || item.isDuplicate ? 'not-valid' : ''}`}>
@@ -109,8 +109,12 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                         type={'custom'}
                                         overlayClassName={'mistake-with-keyword'}
                                         description={<>
-                                            <p>This keyword has next issues and may not be a good candidate for seed
-                                                keyword:</p>
+                                            <p>
+                                                {!item.hasMeaningfulWords || item.isDuplicate ?
+                                                    'This keyword has next serious issues and will be ignored:'
+                                                    :
+                                                    'This keyword has next issues and may not be a good candidate for seed keyword:'}
+                                            </p>
 
                                             <ol>
                                                 {!item.hasMeaningfulWords && <li>
@@ -145,7 +149,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                                 {isKeywordExtendsAnother(item.value, value.map(item => item.value)) &&
                                                 <li>
                                                     This keyword extends another existing seed keyword:
-                                                    {isKeywordExtendsAnother(item.value, value.map(item => item.value))}.
+                                                    {` isKeywordExtendsAnother(item.value, value.map(item => item.value)) `}.
                                                     It may not produce additional keywords suggestions if the original
                                                     keyword was already a narrow description of your product.
                                                 </li>}
@@ -165,6 +169,42 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                     </i>
                                 </div>
                             )
+                        } else if (item.hasMeaningfulWords && !item.isDuplicate && !item.isMainKeywordValid && !item.isLongTail && !item.isTooShort && !isKeywordExtendsAnother(item.value, value.map(item => item.value))) {
+                            return (
+                                <div
+                                    className={`item-text`}>
+                                    {item.value}
+
+                                    <InformationTooltip
+                                        type={'custom'}
+                                        overlayClassName={'mistake-with-keyword'}
+                                        description={<>
+                                            <p>
+                                                This keyword has next issues and may not be a good candidate for seed
+                                                keyword:
+                                            </p>
+
+                                            <ol>
+                                                {!item.isMainKeywordValid && <li>
+                                                    Seems like this keyword is not present in the title of your product.
+                                                    Please make sure you enter a keyword that describes your product in
+                                                    general.
+                                                </li>}
+                                            </ol>
+                                        </>}
+                                    >
+                                        <i style={{fill: '#c9cbd4'}}>
+                                            <SVG id={'circle-warning-icon'}/>
+                                        </i>
+
+                                    </InformationTooltip>
+
+                                    <i onClick={() => removeKeywordHandler(index)}>
+                                        <SVG id={'remove-filter-icon'}/>
+                                    </i>
+                                </div>
+                            )
+
                         } else {
                             return (
                                 <div className={'item-text'}>

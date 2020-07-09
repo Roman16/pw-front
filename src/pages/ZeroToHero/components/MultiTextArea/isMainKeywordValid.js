@@ -559,14 +559,16 @@ export function isKeywordExtendsAnother(keyword, otherKeywords) {
         'it',
         'if',
     ];
-
+    const getWordsCount = kw => normalizeString(kw)
+        .split(' ')
+        .filter(x => x.length > 0)
+        .length;
     const toRootWords = kw => normalizeString(kw)
         .split(' ')
         .filter(x => x.length > 0 && !serviceWords.includes(x))
         .map(x => toSingular(x))
         .map(x => winkPorter2Stemmer(x));
-
+    const keywordWordsCount = getWordsCount(keyword);
     const keywordRootWords = toRootWords(keyword);
-
-    return otherKeywords.find(x => difference(toRootWords(x), keywordRootWords).length === 0 && x !== keyword);
+    return otherKeywords.find(x => getWordsCount(x) < keywordWordsCount && difference(toRootWords(x), keywordRootWords).length === 0 && x !== keyword);
 }
