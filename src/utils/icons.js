@@ -918,7 +918,7 @@ const files = {
             width: 9,
             height: 9,
             viewBox: [0,0,9,9],
-            data: '<circle xmlns="http://www.w3.org/2000/svg" cx="4.5" cy="4.5" r="3.375" fill="white"/><path xmlns="http://www.w3.org/2000/svg" d="M4.5 0C2.01471 1.08635e-07 0 2.01471 0 4.5C1.08635e-07 6.98529 2.01471 9 4.5 9C6.98529 9 9 6.98529 9 4.5C9 2.01471 6.98529 0 4.5 0Z"/><path xmlns="http://www.w3.org/2000/svg" stroke="white" stroke-linecap="round" d="M4.5 1.5L4.5 5"/><path xmlns="http://www.w3.org/2000/svg" fill="white" d="M5 7C5 7.27614 4.77614 7.5 4.5 7.5C4.22386 7.5 4 7.27614 4 7C4 6.72386 4.22386 6.5 4.5 6.5C4.77614 6.5 5 6.72386 5 7Z"/>'
+            data: '<circle xmlns="http://www.w3.org/2000/svg" cx="4.5" cy="4.5" r="3.375" fill="none"/><path stroke="none" xmlns="http://www.w3.org/2000/svg" d="M4.5 0C2.01471 1.08635e-07 0 2.01471 0 4.5C1.08635e-07 6.98529 2.01471 9 4.5 9C6.98529 9 9 6.98529 9 4.5C9 2.01471 6.98529 0 4.5 0Z"/><path xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" d="M4.5 1.5L4.5 5"/><path xmlns="http://www.w3.org/2000/svg" fill="white" d="M5 7C5 7.27614 4.77614 7.5 4.5 7.5C4.22386 7.5 4 7.27614 4 7C4 6.72386 4.22386 6.5 4.5 6.5C4.77614 6.5 5 6.72386 5 7Z"/>'
         }
 
     },

@@ -124,7 +124,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
 
                                                 {item.isDuplicate && <li>
                                                     This keyword is an explicit duplicate of another seed keyword you
-                                                    provided: ${item.isDuplicate}.
+                                                    provided: {item.isDuplicate}.
                                                 </li>}
 
                                                 {!item.isMainKeywordValid && <li>
@@ -149,7 +149,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                                 {isKeywordExtendsAnother(item.value, value.map(item => item.value)) &&
                                                 <li>
                                                     This keyword extends another existing seed keyword:
-                                                    {` ${isKeywordExtendsAnother(item.value, value.map(item => item.value))} `}.
+                                                    {` ${isKeywordExtendsAnother(item.value, value.map(item => item.value))}`}.
                                                     It may not produce additional keywords suggestions if the original
                                                     keyword was already a narrow description of your product.
                                                 </li>}
@@ -157,8 +157,8 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                         </>}
                                     >
                                         <i style={(!item.hasMeaningfulWords || item.isDuplicate) ? {
-                                            fill: '#EC7F5C'
-                                        } : {fill: '#F0B849'}}>
+                                            fill: '#EC7F5C', stroke: 'white'
+                                        } : {fill: '#F0B849', stroke: 'white'}}>
                                             <SVG id={'circle-warning-icon'}/>
                                         </i>
 
@@ -193,7 +193,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                             </ol>
                                         </>}
                                     >
-                                        <i style={{fill: '#c9cbd4'}}>
+                                        <i style={{fill: 'white', stroke: '#6D6DF6'}}>
                                             <SVG id={'circle-warning-icon'}/>
                                         </i>
 

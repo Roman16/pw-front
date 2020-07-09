@@ -209,12 +209,12 @@ export const sorterByKeywordField = (filterByKeyword, filtered) => ({
 
 
 export const renderCurrencyField = {
-    render: (data) => (data && data !== null) ? (<span>${numberMask(data, 2)}</span>) : ''
+    render: (data) => (data !== null) ? (<span>${numberMask(data, 2)}</span>) : ''
 };
 
 export const renderNumberField = {
-    render: (data) => (data && data !== null) ? (<span>{numberMask(data, 0)}</span>) : ''
+    render: (data) => (data !== null) ? (<span>{numberMask(data, 0)}</span>) : ''
 };
 export const renderPercentField = {
-    render: (data) => (data && data !== null) ? (<span>{round(data * 100, 2)}%</span>) : ''
+    render: (data) => (data !== null) ? (<span>{round(data * 100, 2)}%</span>) : ''
 };
