@@ -149,7 +149,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                                 {isKeywordExtendsAnother(item.value, value.map(item => item.value)) &&
                                                 <li>
                                                     This keyword extends another existing seed keyword:
-                                                    {` isKeywordExtendsAnother(item.value, value.map(item => item.value)) `}.
+                                                    {` ${isKeywordExtendsAnother(item.value, value.map(item => item.value))} `}.
                                                     It may not produce additional keywords suggestions if the original
                                                     keyword was already a narrow description of your product.
                                                 </li>}
