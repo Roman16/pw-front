@@ -208,7 +208,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
 
             <div className="title-info">
                 <span title={metricInformation.title} dangerouslySetInnerHTML={{__html: metricInformation.title}}/>
-                {key === 'profit' ?
+                {key === 'profit' ||  key === 'ad_profit' ?
                     !hasMargin &&
                     <Tooltip
                         type='warning' description={<ProfitTooltipDescription/>}/>

@@ -57,7 +57,7 @@ const ErrorBar = () => {
                     <SVG id={'attention-bar-icon'}/>
                 </InformationTooltip>
                 Free Trial
-                <span>{freeTrialDays >= 0 ? freeTrialDays : 0}</span>
+                <span> {freeTrialDays >= 0 ? ` ${freeTrialDays} ` : 0} </span>
                 Days Left
             </div>}
 

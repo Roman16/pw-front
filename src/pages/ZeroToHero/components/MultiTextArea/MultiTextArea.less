@@ -22,13 +22,15 @@
       margin: 0 0 0 10px;
 
       svg {
-        width: 1.0714285714285714rem;
+        width: 1.2142857142857142rem;
         height: 1.2142857142857142rem;
         margin: 0;
-
-        fill: #F0B849;
-        stroke: #F0B849;
+        stroke: inherit;
       }
+    }
+
+    &.not-valid {
+      background: #C9CBD4;
     }
   }
 
@@ -78,6 +80,37 @@
     &:focus {
       outline: none;
       box-shadow: none;
+    }
+  }
+}
+
+.mistake-with-keyword {
+  width: 450px;
+
+  .ant-popover-inner-content {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px 20px;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #343C5A;
+    margin-bottom: 18px;
+  }
+
+  ol {
+    margin: 0 0 0 15px;
+
+    li {
+      margin-bottom: 18px;
+      text-align: justify;
+      font-size: 1rem;
+      color: #343C5A;
+
+      &:last-child {
+        margin: 0;
+      }
     }
   }
 }

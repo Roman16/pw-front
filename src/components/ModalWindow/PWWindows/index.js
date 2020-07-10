@@ -23,7 +23,7 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('loadingAmazon');
         } else if(!subscribedProduct.has_access || (subscribedProduct.pending_payment && subscribedProduct.pending_payment.has_pending_payment)) {
             setVisibleWindow('expiredSubscription');
-        } else if(false) {
+        } else if(user.user.free_trial_available) {
             setVisibleWindow('freeTrial');
         } else if (user.notifications.ppc_optimization.count_from_last_login > 0 && subscribedProduct.has_access) {
             setVisibleWindow('newReportsCount');

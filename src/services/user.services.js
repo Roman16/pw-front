@@ -41,7 +41,8 @@ export const userService = {
     getCouponStatus,
     ebookOnSubscribe,
     onSubscribe,
-    sendContacts
+    sendContacts,
+    startFreeTrial
 };
 
 function login(user) {
@@ -159,6 +160,11 @@ function confirmPayment(data) {
     return api('post', userUrls.confirm, data);
 }
 
+//-------------------------------
+function startFreeTrial() {
+    return api('post', `${userUrls.freeTrial}`);
+}
+
 //-------------------------------------
 //-------------subscription---------
 function getSubscription() {
@@ -208,3 +214,5 @@ function getStripeAvailableCountries() {
         headers: {'Authorization': `Bearer ${stripeKey}`}
     });
 }
+
+

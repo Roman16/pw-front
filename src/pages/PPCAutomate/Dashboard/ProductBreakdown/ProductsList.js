@@ -47,14 +47,14 @@ const RenderPramsChanges = ({type, product}) => {
                         <i>
                             <SVG id='upward-metric-changes'/>
                         </i>
-                        ${round(Math.abs(product.profit_prev_value - product.profit), 2)}
+                        ${numberMask(Math.abs(product.profit_prev_value - product.profit), 2)}
                     </div>}
 
                     {(product.profit < product.profit_prev_value) && <div className='downward-changes'>
                         <i>
                             <SVG id='downward-metric-changes'/>
                         </i>
-                        ${round(Math.abs(product.profit_prev_value - product.profit), 2)}
+                        ${numberMask(Math.abs(product.profit_prev_value - product.profit), 2)}
                     </div>}
                 </div>
             )

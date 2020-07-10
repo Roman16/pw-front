@@ -33,7 +33,7 @@ const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, i
             <div className="title-info">
                 <span title={metricInformation.title} dangerouslySetInnerHTML={{__html: metricInformation.title}}/>
 
-                {key === 'profit' ?
+                {key === 'profit' || key === 'ad_profit' ?
                     !hasMargin && <Tooltip getPopupContainer={trigger => trigger.parentNode}
                                            type='warning' description={<ProfitTooltipDescription/>}/>
                     :

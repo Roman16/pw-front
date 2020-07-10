@@ -85,7 +85,7 @@ const SetupSetting = ({
             <div className="container">
                 <div className="row main-keywords-setting">
                     <div className={`col ${invalidField === 'mainKeywords' ? 'error-field' : ''}`}>
-                        <h3>Please Add a Minimum of 3 Top Keywords that Customers Use to Find Your Product</h3>
+                        <h3>Please add a minimum of 3 Seed Keywords that customers use to find your Product</h3>
 
                         <a
                             href="https://learn.profitwhales.com/en/articles/4201379-seed-keywords-best-practices"
