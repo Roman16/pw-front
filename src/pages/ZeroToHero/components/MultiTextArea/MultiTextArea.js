@@ -59,47 +59,13 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
         onChange(value.filter((item, itemIndex) => itemIndex !== index))
     };
 
-    // useEffect(() => {
-    //     setValueList(value.map(item => {
-    //         if (toMark) {
-    //             const clearKeyword = cleanMainKeyword(item);
-    //
-    //             if (clearKeyword !== '' && unique && !value.find(item => item.value === clearKeyword)) {
-    //                 const keyword = {
-    //                     value: clearKeyword,
-    //                     hasMeaningfulWords: keywordHasMeaningfulWords(clearKeyword),
-    //                     isDuplicate: findExistingDuplicateOfNewMainKeyword(clearKeyword, value.map(item => item.value)),
-    //                     isMainKeywordValid: isMainKeywordValid(clearKeyword, productName),
-    //                     isLongTail: isLongTail(clearKeyword),
-    //                     isTooShort: isTooShort(clearKeyword)
-    //                 }
-    //
-    //                 if (value == null) {
-    //                     onChange([keyword]);
-    //                 } else {
-    //                     onChange([...value, keyword]);
-    //                 }
-    //             }
-    //         } else {
-    //             if (item !== '' && unique && !value.includes(item)) {
-    //
-    //                 if (value == null) {
-    //                     onChange([item]);
-    //                 } else {
-    //                     onChange([...value, item]);
-    //                 }
-    //             }
-    //         }
-    //     }))
-    // }, [value])
-
     return (
         <div className={'multi-text-area'}
              onClick={() => (!value || value.length < max) && inputEl.current.focus()}>
             <div className="list">
                 {value && value.map((item, index) => {
                     if (toMark) {
-                        if (!item.hasMeaningfulWords || item.isDuplicate || item.isLongTail || item.isTooShort || isKeywordExtendsAnother(item.value, value.map(item => item.value))) {
+                        if (!item.hasMeaningfulWords || item.isDuplicate) {
                             return (
                                 <div
                                     className={`item-text ${!item.hasMeaningfulWords || item.isDuplicate ? 'not-valid' : ''}`}>
@@ -110,10 +76,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                         overlayClassName={'mistake-with-keyword'}
                                         description={<>
                                             <p>
-                                                {!item.hasMeaningfulWords || item.isDuplicate ?
-                                                    'This keyword has next serious issues and will be ignored:'
-                                                    :
-                                                    'This keyword has next issues and may not be a good candidate for seed keyword:'}
+                                                This keyword has next serious issues and will be ignored:
                                             </p>
 
                                             <ol>
@@ -126,7 +89,36 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                                     This keyword is an explicit duplicate of another seed keyword you
                                                     provided: {item.isDuplicate}.
                                                 </li>}
+                                            </ol>
+                                        </>}
+                                    >
+                                        <i style={{fill: '#EC7F5C', stroke: 'white'}}>
+                                            <SVG id={'circle-warning-icon'}/>
+                                        </i>
 
+                                    </InformationTooltip>
+
+                                    <i onClick={() => removeKeywordHandler(index)}>
+                                        <SVG id={'remove-filter-icon'}/>
+                                    </i>
+                                </div>
+                            )
+                        } else if (item.isLongTail || item.isTooShort || isKeywordExtendsAnother(item.value, value.filter(item => item.hasMeaningfulWords || !item.isDuplicate).map(item => item.value))) {
+                            return (
+                                <div
+                                    className={`item-text ${!item.hasMeaningfulWords || item.isDuplicate ? 'not-valid' : ''}`}>
+                                    {item.value}
+
+                                    <InformationTooltip
+                                        type={'custom'}
+                                        overlayClassName={'mistake-with-keyword'}
+                                        description={<>
+                                            <p>
+                                                This keyword has next issues and may not be a good candidate for seed
+                                                keyword:
+                                            </p>
+
+                                            <ol>
                                                 {!item.isMainKeywordValid && <li>
                                                     Seems like this keyword is not present in the title of your product.
                                                     Please make sure you enter a keyword that describes your product in
@@ -146,19 +138,17 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                                     words.
                                                 </li>}
 
-                                                {isKeywordExtendsAnother(item.value, value.map(item => item.value)) &&
+                                                {isKeywordExtendsAnother(item.value, value.filter(item => item.hasMeaningfulWords || !item.isDuplicate).map(item => item.value)) &&
                                                 <li>
                                                     This keyword extends another existing seed keyword:
-                                                    {` ${isKeywordExtendsAnother(item.value, value.map(item => item.value))}`}.
+                                                    {` ${isKeywordExtendsAnother(item.value, value.filter(item => item.hasMeaningfulWords || !item.isDuplicate).map(item => item.value))}`}.
                                                     It may not produce additional keywords suggestions if the original
                                                     keyword was already a narrow description of your product.
                                                 </li>}
                                             </ol>
                                         </>}
                                     >
-                                        <i style={(!item.hasMeaningfulWords || item.isDuplicate) ? {
-                                            fill: '#EC7F5C', stroke: 'white'
-                                        } : {fill: '#F0B849', stroke: 'white'}}>
+                                        <i style={{fill: '#F0B849', stroke: 'white'}}>
                                             <SVG id={'circle-warning-icon'}/>
                                         </i>
 
@@ -169,7 +159,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                     </i>
                                 </div>
                             )
-                        } else if (item.hasMeaningfulWords && !item.isDuplicate && !item.isMainKeywordValid && !item.isLongTail && !item.isTooShort && !isKeywordExtendsAnother(item.value, value.map(item => item.value))) {
+                        } else if (!item.isMainKeywordValid && !item.isLongTail && !item.isTooShort && !isKeywordExtendsAnother(item.value, value.filter(item => item.hasMeaningfulWords || !item.isDuplicate).map(item => item.value))) {
                             return (
                                 <div
                                     className={`item-text`}>
