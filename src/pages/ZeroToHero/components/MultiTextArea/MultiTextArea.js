@@ -59,10 +59,6 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
         onChange(value.filter((item, itemIndex) => itemIndex !== index))
     };
 
-    useEffect(() => {
-        console.log('start')
-    }, [])
-
     return (
         <div className={'multi-text-area'}
              onClick={() => (!value || value.length < max) && inputEl.current.focus()}>
