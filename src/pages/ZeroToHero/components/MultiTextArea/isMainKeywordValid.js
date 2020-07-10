@@ -469,7 +469,6 @@ export function findExistingDuplicateOfNewMainKeyword(newMainKeyword, existingMa
         'it',
         'if',
     ];
-
     const toRoot = kw => normalizeString(kw)
         .split(' ')
         .filter(x => x.length > 0 && !serviceWords.includes(x))
@@ -477,9 +476,15 @@ export function findExistingDuplicateOfNewMainKeyword(newMainKeyword, existingMa
         .map(x => winkPorter2Stemmer(x))
         .sort()
         .join(' ');
-
     const newMainKeywordRoot = toRoot(newMainKeyword);
-    return existingMainKeywords.find(x => newMainKeywordRoot === toRoot(x));
+    return existingMainKeywords.find(x => {
+        const otherWordRoot = toRoot(x);
+        // skip empty other word
+        if (otherWordRoot.length === 0) {
+            return false;
+        }
+        return newMainKeywordRoot === otherWordRoot;
+    });
 }
 
 function normalizeString(str) {
@@ -559,16 +564,19 @@ export function isKeywordExtendsAnother(keyword, otherKeywords) {
         'it',
         'if',
     ];
-    const getWordsCount = kw => normalizeString(kw)
-        .split(' ')
-        .filter(x => x.length > 0)
-        .length;
+
     const toRootWords = kw => normalizeString(kw)
         .split(' ')
         .filter(x => x.length > 0 && !serviceWords.includes(x))
         .map(x => toSingular(x))
         .map(x => winkPorter2Stemmer(x));
-    const keywordWordsCount = getWordsCount(keyword);
     const keywordRootWords = toRootWords(keyword);
-    return otherKeywords.find(x => getWordsCount(x) < keywordWordsCount && difference(toRootWords(x), keywordRootWords).length === 0 && x !== keyword);
+    return otherKeywords.find(x => {
+        const otherWords = toRootWords(x);
+        // ignore other keyword without any real words
+        if (otherWords.length === 0) {
+            return false;
+        }
+        return otherWords.length < keywordRootWords.length && difference(otherWords, keywordRootWords).length === 0 && x !== keyword;
+    });
 }
