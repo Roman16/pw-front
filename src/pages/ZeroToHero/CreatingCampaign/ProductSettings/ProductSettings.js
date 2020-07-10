@@ -13,6 +13,10 @@ import {zthServices} from "../../../../services/zth.services";
 import {notification} from "../../../../components/Notification";
 import {Prompt} from 'react-router-dom';
 import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup";
+import {
+    cleanMainKeyword,
+    findExistingDuplicateOfNewMainKeyword
+} from "../../components/MultiTextArea/isMainKeywordValid";
 
 
 const ProductSettings = () => {
@@ -63,7 +67,7 @@ const ProductSettings = () => {
                     ...product,
                     campaigns: {
                         ...product.campaigns,
-                        main_keywords: [...product.campaigns.main_keywords.filter(item => item.hasMeaningfulWords !== false && item.isDuplicate === undefined).map(item => item.value)],
+                        main_keywords: [...product.campaigns.main_keywords.filter(item => item.hasMeaningfulWords !== false && findExistingDuplicateOfNewMainKeyword(cleanMainKeyword(item.value), product.campaigns.main_keywords.filter(obj => obj.value !== item.value).map(item => item.value)) === undefined).map(item => item.value)],
                     },
                     portfolio: {
                         type: product.portfolio.type,

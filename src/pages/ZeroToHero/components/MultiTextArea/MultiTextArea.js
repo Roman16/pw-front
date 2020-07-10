@@ -59,16 +59,23 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
         onChange(value.filter((item, itemIndex) => itemIndex !== index))
     };
 
+    const isDuplicate = (keyword) => {
+        const clearKeyword = cleanMainKeyword(keyword);
+
+
+        return findExistingDuplicateOfNewMainKeyword(clearKeyword, value.filter(item => item.value !== clearKeyword).map(item => item.value))
+    }
+
     return (
         <div className={'multi-text-area'}
              onClick={() => (!value || value.length < max) && inputEl.current.focus()}>
             <div className="list">
                 {value && value.map((item, index) => {
                     if (toMark) {
-                        if (!item.hasMeaningfulWords || item.isDuplicate) {
+                        if (!item.hasMeaningfulWords || isDuplicate(item.value)) {
                             return (
                                 <div
-                                    className={`item-text ${!item.hasMeaningfulWords || item.isDuplicate ? 'not-valid' : ''}`}>
+                                    className={`item-text ${!item.hasMeaningfulWords || isDuplicate(item.value) ? 'not-valid' : ''}`}>
                                     {item.value}
 
                                     <InformationTooltip
@@ -85,9 +92,9 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                                     relevant keywords suggestions for PPC Campaigns.
                                                 </li>}
 
-                                                {item.isDuplicate && <li>
+                                                {isDuplicate(item.value) && <li>
                                                     This keyword is an explicit duplicate of another seed keyword you
-                                                    provided: {item.isDuplicate}.
+                                                    provided: <b>{isDuplicate(item.value)}</b>.
                                                 </li>}
                                             </ol>
                                         </>}
@@ -103,10 +110,10 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                     </i>
                                 </div>
                             )
-                        } else if (item.isLongTail || item.isTooShort || isKeywordExtendsAnother(item.value, value.filter(item => item.hasMeaningfulWords || !item.isDuplicate).map(item => item.value))) {
+                        } else if (item.isLongTail || item.isTooShort || isKeywordExtendsAnother(item.value, value.filter(item => item.hasMeaningfulWords && !isDuplicate(item.value)).map(item => item.value))) {
                             return (
                                 <div
-                                    className={`item-text ${!item.hasMeaningfulWords || item.isDuplicate ? 'not-valid' : ''}`}>
+                                    className={`item-text`}>
                                     {item.value}
 
                                     <InformationTooltip
@@ -126,9 +133,10 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                                 </li>}
 
                                                 {item.isTooShort && <li>
-                                                    There are too few meaningful words in this keyword. It may describe
-                                                    your product too broadly and lead to too many unrelated keywords
-                                                    suggestions. Consider using a seed keywords with two or three words.
+                                                    Keyword has too few words. It may describe your product too broadly
+                                                    and lead to many unrelated keywords suggestions. Consider using a
+                                                    seed keywords with two or three words or leave it as is if you are
+                                                    sure this keyword is relevant to your product.
                                                 </li>}
 
                                                 {item.isLongTail && <li>
@@ -138,10 +146,10 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                                     words.
                                                 </li>}
 
-                                                {isKeywordExtendsAnother(item.value, value.filter(item => item.hasMeaningfulWords || !item.isDuplicate).map(item => item.value)) &&
+                                                {isKeywordExtendsAnother(item.value, value.filter(item => item.hasMeaningfulWords && !isDuplicate(item.value)).map(item => item.value)) &&
                                                 <li>
                                                     This keyword extends another existing seed keyword:
-                                                    {` ${isKeywordExtendsAnother(item.value, value.filter(item => item.hasMeaningfulWords || !item.isDuplicate).map(item => item.value))}`}.
+                                                    <b>{` ${isKeywordExtendsAnother(item.value, value.filter(item => item.hasMeaningfulWords && !isDuplicate(item.value)).map(item => item.value))}`}</b>.
                                                     It may not produce additional keywords suggestions if the original
                                                     keyword was already a narrow description of your product.
                                                 </li>}
@@ -159,7 +167,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                     </i>
                                 </div>
                             )
-                        } else if (!item.isMainKeywordValid && !item.isLongTail && !item.isTooShort && !isKeywordExtendsAnother(item.value, value.filter(item => item.hasMeaningfulWords || !item.isDuplicate).map(item => item.value))) {
+                        } else if (!item.isMainKeywordValid && !item.isLongTail && !item.isTooShort && !isKeywordExtendsAnother(item.value, value.filter(item => item.hasMeaningfulWords && !isDuplicate(item.value)).map(item => item.value))) {
                             return (
                                 <div
                                     className={`item-text`}>
@@ -219,7 +227,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                     }
                 })}
 
-                {(!value || (toMark ? value.filter(item => item.hasMeaningfulWords !== false && item.isDuplicate === undefined).length < max : value.length < max)) &&
+                {(!value || (toMark ? value.filter(item => item.hasMeaningfulWords !== false && isDuplicate(item.value) === undefined).length < max : value.length < max)) &&
                 <Input
                     ref={inputEl}
                     value={inputValue}
