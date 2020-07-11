@@ -67,7 +67,18 @@ const ProductSettings = () => {
                     ...product,
                     campaigns: {
                         ...product.campaigns,
-                        main_keywords: [...product.campaigns.main_keywords.filter(item => item.hasMeaningfulWords !== false && findExistingDuplicateOfNewMainKeyword(cleanMainKeyword(item.value), product.campaigns.main_keywords.filter(obj => obj.value !== item.value).map(item => item.value)) === undefined).map(item => item.value)],
+                        main_keywords: [
+                            ...product.campaigns.main_keywords
+                                .filter(item => item.hasMeaningfulWords !== false)
+                                .reverse()
+                                .filter(item => {
+                                    const clearKeyword = cleanMainKeyword(item.value);
+
+                                    return !findExistingDuplicateOfNewMainKeyword(clearKeyword, product.campaigns.main_keywords.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
+                                })
+                                .reverse()
+                                .map(item => item.value)
+                        ],
                     },
                     portfolio: {
                         type: product.portfolio.type,
@@ -126,7 +137,18 @@ const ProductSettings = () => {
                     throw BreakException;
                 };
 
-                if (product.campaigns.main_keywords.length < 3) {
+                if ([
+                    ...product.campaigns.main_keywords
+                        .filter(item => item.hasMeaningfulWords !== false)
+                        .reverse()
+                        .filter(item => {
+                            const clearKeyword = cleanMainKeyword(item.value);
+
+                            return !findExistingDuplicateOfNewMainKeyword(clearKeyword, product.campaigns.main_keywords.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
+                        })
+                        .reverse()
+                        .map(item => item.value)
+                ].length < 3) {
                     notification.error({title: 'Please enter at least 3 main keywords'});
                     setField('mainKeywords');
                 } else if (product.portfolio.type === 'CreateNew' && (!product.portfolio.name || product.portfolio.name === '')) {
