@@ -61,10 +61,10 @@ export function zth(state = initialState, action) {
                 ...state,
                 selectedProducts: filteredProductsList,
                 selectedProductsWithSettingsParams: filteredProductsList.map(item => ({product_id: item.id, ...state.selectedProductsWithSettingsParams.find(findItem => findItem.product_id === item.id) ? state.selectedProductsWithSettingsParams.find(findItem => findItem.product_id === item.id) : initialProductSettings})),
-                ...state.productSliderType === 'soft' && {
+                ...filteredProductsList.length > state.productAmount ? {
                     productAmount: filteredProductsList.length,
                     productSliderType: 'soft'
-                }
+                } : {productAmount: state.productAmount}
             };
 
         case zthConstants.REMOVE_PRODUCTS:

@@ -17,6 +17,22 @@ export const searchTerms = () => {
             filter: true,
         },
         {
+            title: 'Campaign',
+            dataIndex: 'campaign_name',
+            key: 'campaign_name',
+            minWidth: '14.285714285714286rem',
+            sorter: true,
+            filter: true
+        },
+        {
+            title: 'Ad Group',
+            dataIndex: 'ad_group_name',
+            key: 'ad_group_name',
+            minWidth: '14.285714285714286rem',
+            sorter: true,
+            filter: true
+        },
+        {
             title: 'Clicks',
             dataIndex: 'clicks',
             key: 'clicks',
