@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './ZTH.less';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -24,6 +24,9 @@ import {Link} from "react-router-dom";
 import ZTHPriceSlider from "../components/ZTHPriceSlider/ZTHPriceSlider";
 import ZTHPricingGuide from "../components/ZTHPricingGuide/ZTHPricingGuide";
 import amazonAppStoreLogo from "../../../assets/img/logo/amazon-app-store-logo-dark.png";
+
+const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
+
 
 const setupDescription = [
     {
@@ -73,6 +76,20 @@ const includesList = [
 
 const ZTHLanding = () => {
     const [setupType, setSetupType] = useState('zth');
+
+    useEffect(() => {
+        (function (t, a, p) {
+            t.TapfiliateObject = a;
+            t[a] = t[a] || function () {
+                (t[a].q = t[a].q || []).push(arguments)
+            }
+        })(window, 'tap');
+
+        window.tap('create', tapfiliateKey, {integration: "javascript"});
+        // window.tap('click', {referral_code: ''});
+        window.tap('detect');
+    }, [])
+
     return (
         <div className="landing-zth">
             <Header page={'zth'}/>
