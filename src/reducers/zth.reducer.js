@@ -15,8 +15,8 @@ const initialProductSettings = {
         main_keywords: [],
         bidding_strategy: 'legacyForSales',
         adjust_bid_by_placements: {},
-        existing_ppc_targetings: true,
-        pause_duplicates_zth: true
+        useExistingPPCTargetings: true,
+        pausedExistingDuplicatesOfZTHTargetings: true
     },
     brand: {
         competitor_brand_names: []

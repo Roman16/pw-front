@@ -105,15 +105,15 @@ const SetupSetting = ({
 
 
                         <Checkbox
-                            checked={campaigns.existing_ppc_targetings}
-                            onChange={({target: {checked}}) => changeCampaignsHandler({existing_ppc_targetings: checked})}
+                            checked={campaigns.useExistingPPCTargetings}
+                            onChange={({target: {checked}}) => changeCampaignsHandler({useExistingPPCTargetings: checked})}
                         >
                             Use existing PPC targetings for ZTH campaigns
                         </Checkbox>
 
                         <Checkbox
-                            checked={campaigns.pause_duplicates_zth}
-                            onChange={({target: {checked}}) => changeCampaignsHandler({pause_duplicates_zth: checked})}
+                            checked={campaigns.pausedExistingDuplicatesOfZTHTargetings}
+                            onChange={({target: {checked}}) => changeCampaignsHandler({pausedExistingDuplicatesOfZTHTargetings: checked})}
                         >
                             Pause duplicates of ZTH
                         </Checkbox>
