@@ -1,6 +1,8 @@
 import {zthConstants} from '../constans/actions.type';
 import moment from "moment";
 import tz from 'moment-timezone';
+import {Checkbox} from "antd";
+import React from "react";
 
 const initialProductSettings = {
     portfolio: {
@@ -12,7 +14,9 @@ const initialProductSettings = {
         set_to_paused: false,
         main_keywords: [],
         bidding_strategy: 'legacyForSales',
-        adjust_bid_by_placements: {}
+        adjust_bid_by_placements: {},
+        existing_ppc_targetings: true,
+        pause_duplicates_zth: true
     },
     brand: {
         competitor_brand_names: []

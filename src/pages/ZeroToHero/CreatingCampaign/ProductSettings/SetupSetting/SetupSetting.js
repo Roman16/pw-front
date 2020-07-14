@@ -102,6 +102,21 @@ const SetupSetting = ({
                             productName={selectedProductName}
                             unique={true}
                         />
+
+
+                        <Checkbox
+                            checked={campaigns.existing_ppc_targetings}
+                            onChange={({target: {checked}}) => changeCampaignsHandler({existing_ppc_targetings: checked})}
+                        >
+                            Use existing PPC targetings for ZTH campaigns
+                        </Checkbox>
+
+                        <Checkbox
+                            checked={campaigns.pause_duplicates_zth}
+                            onChange={({target: {checked}}) => changeCampaignsHandler({pause_duplicates_zth: checked})}
+                        >
+                            Pause duplicates of ZTH
+                        </Checkbox>
                     </div>
 
                     <div className="col">
