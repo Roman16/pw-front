@@ -20,9 +20,17 @@ const SetupSetting = ({
                           product: {
                               portfolio,
                               campaigns,
-                              brand
+                              brand,
+                              use_existing_ppc_targetings,
+                              pause_existing_duplicates_of_zth_targetings
                           }
                       }) => {
+
+    const changeProductHandler = (value, isInvalid) => {
+        onUpdate({
+            ...value
+        }, isInvalid);
+    };
 
     const changePortfolioHandler = (value, isInvalid) => {
         onUpdate({
@@ -105,15 +113,15 @@ const SetupSetting = ({
 
 
                         <Checkbox
-                            checked={campaigns.useExistingPPCTargetings}
-                            onChange={({target: {checked}}) => changeCampaignsHandler({useExistingPPCTargetings: checked})}
+                            checked={use_existing_ppc_targetings}
+                            onChange={({target: {checked}}) => changeProductHandler({use_existing_ppc_targetings: checked})}
                         >
                             Use existing PPC targetings for ZTH campaigns
                         </Checkbox>
 
                         <Checkbox
-                            checked={campaigns.pausedExistingDuplicatesOfZTHTargetings}
-                            onChange={({target: {checked}}) => changeCampaignsHandler({pausedExistingDuplicatesOfZTHTargetings: checked})}
+                            checked={pause_existing_duplicates_of_zth_targetings}
+                            onChange={({target: {checked}}) => changeProductHandler({pause_existing_duplicates_of_zth_targetings: checked})}
                         >
                             Pause duplicates of ZTH
                         </Checkbox>

@@ -15,14 +15,14 @@ const initialProductSettings = {
         main_keywords: [],
         bidding_strategy: 'legacyForSales',
         adjust_bid_by_placements: {},
-        useExistingPPCTargetings: true,
-        pausedExistingDuplicatesOfZTHTargetings: true
     },
     brand: {
         competitor_brand_names: []
     },
     relevant_keywords: [],
-    negative_keywords: []
+    negative_keywords: [],
+    use_existing_ppc_targetings: true,
+    pause_existing_duplicates_of_zth_targetings: true
 };
 
 const initialState = {
