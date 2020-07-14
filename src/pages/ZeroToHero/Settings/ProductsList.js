@@ -21,16 +21,36 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
                     {product.name}
                 </div>
 
-                <div className="row">
-                    <span className='price'>{product.item_price !== null && `$${product.item_price}`}</span>
-                    <span className='stock'>
-                        {product.status_on_amazon === 'Active' ?
-                            <span className={'in'}>In Stock</span>
-                            :
-                            <span className={'out'}>Stock Out</span>
-                        }
-                    </span>
-                </div>
+                {!product.variations ?
+                    <div className="row">
+                        {(product.item_price !== null && product.item_price !== 0) && <div className="price">
+                            ${product.item_price}
+                        </div>}
+
+                        <div className="stock">
+                            {product.status_on_amazon === 'Active' ?
+                                <span className={'in'}>In Stock</span>
+                                :
+                                <span className={'out'}>Stock Out</span>
+                            }
+                        </div>
+                    </div>
+                    :
+                    <div className="row">
+                        {(product.item_price !== null && product.item_price !== 0) && <div className="price">
+                            ${product.item_price}
+                        </div>}
+
+                        <div className="stock">
+                            {product.variations.every(item => item.status_on_amazon === 'Active') &&
+                            <span className={'in'}>All in Stock</span>}
+                            {(product.variations.some(item => item.status_on_amazon === 'Active') && product.variations.some(item => item.status_on_amazon !== 'Active')) &&
+                            <span className={'some'}>Some Stock Out</span>}
+                            {product.variations.every(item => item.status_on_amazon !== 'Active') &&
+                            <span className={'out'}>All Stock Out</span>}
+                        </div>
+                    </div>
+                }
             </div>
 
             <div

@@ -202,9 +202,13 @@ const LandingAffiliates = () => {
 
                     <span>If you expect to generate more than 50 referrals, please reach out to us directly</span>
 
-                    <button className='btn green-btn' onClick={() => window.Intercom('show')}>
+                    <a
+                        target={'_blank'}
+                        href={'https://calendly.com/diana-partnership-manager-profit-whales/meeting'}
+                        className='btn green-btn'
+                    >
                         contact us
-                    </button>
+                    </a>
                 </div>
             </section>
 
