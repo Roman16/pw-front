@@ -19,7 +19,7 @@ const PWWindows = ({pathname}) => {
     };
 
     useEffect(() => {
-        if (user.notifications.account_bootstrap.bootstrap_in_progress) {
+        if (user.notifications.account_bootstrap.bootstrap_in_progress || (!subscribedProduct.has_access && subscribedProduct.has_pending_payment_tx)) {
             setVisibleWindow('loadingAmazon');
         } else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial');
