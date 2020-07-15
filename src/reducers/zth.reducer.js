@@ -1,6 +1,8 @@
 import {zthConstants} from '../constans/actions.type';
 import moment from "moment";
 import tz from 'moment-timezone';
+import {Checkbox} from "antd";
+import React from "react";
 
 const initialProductSettings = {
     portfolio: {
@@ -12,13 +14,15 @@ const initialProductSettings = {
         set_to_paused: false,
         main_keywords: [],
         bidding_strategy: 'legacyForSales',
-        adjust_bid_by_placements: {}
+        adjust_bid_by_placements: {},
     },
     brand: {
         competitor_brand_names: []
     },
     relevant_keywords: [],
-    negative_keywords: []
+    negative_keywords: [],
+    use_existing_ppc_targetings: true,
+    pause_existing_duplicates_of_zth_targetings: true
 };
 
 const initialState = {
@@ -54,16 +58,17 @@ export function zth(state = initialState, action) {
             };
 
         case zthConstants.ADD_PRODUCTS:
-            const filteredProductsList = [...state.selectedProducts, ...action.payload].filter(filterItem => !action.payload.find(findItem => findItem.id === filterItem.parent_id));
+            const filteredProductsList = [...state.selectedProducts, ...action.payload]
+                .filter(filterItem => !action.payload.find(findItem => findItem.id === filterItem.parent_id));
 
             return {
                 ...state,
                 selectedProducts: filteredProductsList,
-                selectedProductsWithSettingsParams: filteredProductsList.map(item => ({product_id: item.id, ...initialProductSettings})),
-                ...state.productSliderType === 'soft' && {
+                selectedProductsWithSettingsParams: filteredProductsList.map(item => ({product_id: item.id, ...state.selectedProductsWithSettingsParams.find(findItem => findItem.product_id === item.id) ? state.selectedProductsWithSettingsParams.find(findItem => findItem.product_id === item.id) : initialProductSettings})),
+                ...filteredProductsList.length > state.productAmount ? {
                     productAmount: filteredProductsList.length,
                     productSliderType: 'soft'
-                }
+                } : {productAmount: state.productAmount}
             };
 
         case zthConstants.REMOVE_PRODUCTS:

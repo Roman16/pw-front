@@ -477,6 +477,7 @@ export function findExistingDuplicateOfNewMainKeyword(newMainKeyword, existingMa
         .sort()
         .join(' ');
     const newMainKeywordRoot = toRoot(newMainKeyword);
+
     return existingMainKeywords.find(x => {
         const otherWordRoot = toRoot(x);
         // skip empty other word

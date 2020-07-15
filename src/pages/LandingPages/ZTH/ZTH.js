@@ -43,7 +43,7 @@ const setupDescription = [
     },
     {
         ppc: 'Up to 7 days to create and launch a new Campaign',
-        zth: 'Up to 12 hours to deliver a new Campaign',
+        zth: 'Up to 15 minutes to deliver new Campaigns',
     },
     {
         ppc: 'Oftentimes only one source of keywords is considered',
@@ -113,7 +113,7 @@ const ZTHLanding = () => {
                             <div className="row">
                                 <button className="btn default link">
                                     <a
-                                        href="https://calendly.com/lana_profit_whales"
+                                        href="https://calendly.com/lana_profit_whales/15min"
                                         target={'_blank'}
                                     >
                                         LET’S TALK

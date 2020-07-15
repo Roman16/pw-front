@@ -19,12 +19,12 @@ const PWWindows = ({pathname}) => {
     };
 
     useEffect(() => {
-        if (user.notifications.account_bootstrap.bootstrap_in_progress) {
+        if (user.notifications.account_bootstrap.bootstrap_in_progress || (!subscribedProduct.has_access && subscribedProduct.has_pending_payment_tx)) {
             setVisibleWindow('loadingAmazon');
-        } else if(!subscribedProduct.has_access || (subscribedProduct.pending_payment && subscribedProduct.pending_payment.has_pending_payment)) {
-            setVisibleWindow('expiredSubscription');
-        } else if(user.user.free_trial_available) {
+        } else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial');
+        } else if (!user.user.free_trial_available && !subscribedProduct.has_access && !subscribedProduct.has_pending_payment_tx) {
+            setVisibleWindow('expiredSubscription');
         } else if (user.notifications.ppc_optimization.count_from_last_login > 0 && subscribedProduct.has_access) {
             setVisibleWindow('newReportsCount');
         } else {

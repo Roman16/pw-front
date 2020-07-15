@@ -6,7 +6,7 @@ const CancelAccountWindow = ({onCancelSubscription, onKeepSubscription, disableR
     const [actionType, setActionType] = useState(null);
 
     const saveCount = () => {
-        if (product.applied_coupon.name == null) {
+        if (!product.applied_coupon || product.applied_coupon.name == null) {
             return (product.next_charge_value);
         } else if (product.applied_coupon.amount_off) {
             return product.next_charge_value + product.applied_coupon.amount_off

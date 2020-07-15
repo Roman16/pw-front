@@ -31,10 +31,12 @@ const CouponField = ({applyCoupon, setCoupon, product}) => {
                     <span>Add Coupon</span>
                 </button>
 
-                {product.applied_coupon.name !== null && <span className="coupon-name">
+                {product.applied_coupon && product.applied_coupon.name !== null && <span className="coupon-name">
               <span>Coupon:</span>
-                    {product.applied_coupon.amount_off !== null && <b>${product.applied_coupon.amount_off}</b>}
-                    {product.applied_coupon.percent_off !== null && <b>{product.applied_coupon.percent_off}%</b>}
+                    {product.applied_coupon.amount_off !== null && product.applied_coupon.amount_off !== 0 &&
+                    <b>${product.applied_coupon.amount_off}</b>}
+                    {product.applied_coupon.percent_off !== null && product.applied_coupon.percent_off !== 0 &&
+                    <b>{product.applied_coupon.percent_off}%</b>}
             </span>}
             </div>
         )
@@ -48,13 +50,13 @@ const ProductPrice = ({product}) => {
             <br/>
             <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
         </div>)
-    } else if (product.applied_coupon.name == null) {
+    } else if (!product.applied_coupon || product.applied_coupon.name == null) {
         return (<div className={'price'}>
             ${numberMask(product.next_charge_value, 2)}
             <br/>
             <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
         </div>)
-    } else if (product.applied_coupon.amount_off) {
+    } else if (product.applied_coupon && product.applied_coupon.amount_off) {
         return (<div className={'price'}>
             <span className="prev-value">
                 ${numberMask(product.next_charge_value + product.applied_coupon.amount_off, 2)}
@@ -66,7 +68,7 @@ const ProductPrice = ({product}) => {
             <br/>
             <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
         </div>)
-    } else if (product.applied_coupon.percent_off) {
+    } else if (product.applied_coupon && product.applied_coupon.percent_off) {
         return (<div className={'price'}>
             <span className="prev-value">
                 ${numberMask(product.next_charge_value / ((100 - product.applied_coupon.percent_off) / 100), 2)}

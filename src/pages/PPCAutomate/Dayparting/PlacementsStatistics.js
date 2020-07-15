@@ -83,6 +83,11 @@ const statisticMetrics = [
         title: 'Sales',
         key: 'sales'
     },
+     {
+        title: 'Impressions',
+        key: 'impressions'
+    },
+
 ];
 
 const chartColors = [
