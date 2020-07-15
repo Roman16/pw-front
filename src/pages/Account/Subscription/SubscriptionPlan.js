@@ -50,7 +50,7 @@ const ProductPrice = ({product}) => {
             <br/>
             <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
         </div>)
-    } else if (product.applied_coupon && product.applied_coupon.name == null) {
+    } else if (!product.applied_coupon || product.applied_coupon.name == null) {
         return (<div className={'price'}>
             ${numberMask(product.next_charge_value, 2)}
             <br/>
