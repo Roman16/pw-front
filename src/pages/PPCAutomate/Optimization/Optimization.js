@@ -117,7 +117,7 @@ const Optimization = () => {
                 await productsServices.updateProductById({
                     product_id: selectedAll ? 'all' : productId,
                     status: selectedProduct.status,
-                    optimization_strategy: selectedProduct.optimization_strategy,
+                    optimization_strategy: selectedProduct.optimization_strategy ? selectedProduct.optimization_strategy : 'AchieveTargetACoS',
                     desired_target_acos: targetAcos
                 });
 

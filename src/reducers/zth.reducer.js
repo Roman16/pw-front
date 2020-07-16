@@ -21,8 +21,8 @@ const initialProductSettings = {
     },
     relevant_keywords: [],
     negative_keywords: [],
-    use_existing_ppc_targetings: false,
-    pause_existing_duplicates_of_zth_targetings: false
+    use_existing_ppc_targetings: true,
+    pause_existing_duplicates_of_zth_targetings: true
 };
 
 const initialState = {

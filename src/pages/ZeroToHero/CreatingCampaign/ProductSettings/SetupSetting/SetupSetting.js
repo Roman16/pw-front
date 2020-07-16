@@ -110,21 +110,6 @@ const SetupSetting = ({
                             productName={selectedProductName}
                             unique={true}
                         />
-
-
-                        {/*<Checkbox*/}
-                        {/*    checked={use_existing_ppc_targetings}*/}
-                        {/*    onChange={({target: {checked}}) => changeProductHandler({use_existing_ppc_targetings: checked})}*/}
-                        {/*>*/}
-                        {/*    Use existing PPC targetings for ZTH campaigns*/}
-                        {/*</Checkbox>*/}
-
-                        {/*<Checkbox*/}
-                        {/*    checked={pause_existing_duplicates_of_zth_targetings}*/}
-                        {/*    onChange={({target: {checked}}) => changeProductHandler({pause_existing_duplicates_of_zth_targetings: checked})}*/}
-                        {/*>*/}
-                        {/*    Pause duplicates of ZTH*/}
-                        {/*</Checkbox>*/}
                     </div>
 
                     <div className="col">
@@ -133,6 +118,47 @@ const SetupSetting = ({
                             to enter up to 5 most popular keywords that people use to find your product on the Amazon
                             marketplace. You can analyze your competitor’s Titles to find these keywords. That action
                             will help us to create campaigns with the relevant keywords to your product.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col">
+                        <Checkbox
+                            checked={use_existing_ppc_targetings}
+                            onChange={({target: {checked}}) => changeProductHandler({use_existing_ppc_targetings: checked})}
+                        >
+                            Use existing PPC keywords / PTs for ZTH campaigns
+                        </Checkbox>
+                    </div>
+
+                    <div className="col">
+                        <p>
+                            If this option is enabled, we will try to find existing keywords / PTs on your account
+                            related to your product. These existing targetings will be merged into our Zero to Hero
+                            campaigns structure, so you will have everything in one place in Advertising Console. We
+                            recommend enabling this option.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col">
+                        <Checkbox
+                            checked={pause_existing_duplicates_of_zth_targetings}
+                            onChange={({target: {checked}}) => changeProductHandler({pause_existing_duplicates_of_zth_targetings: checked})}
+                        >
+                            Pause existing keywords / PTs that are duplicates of ZTH targetings
+                        </Checkbox>
+                    </div>
+
+                    <div className="col">
+                        <p>
+                            If this option is enabled, we will try to find existing keywords / PTs on your account
+                            related to your product that are duplicates of targetings we would create in Zero to Hero
+                            campaigns on upload to Advertising Console. Such duplicates will be paused to prevent
+                            competition between them and new Zero to Hero campaigns. Works best when "Use existing PPC
+                            keywords / PTs for ZTH campaigns" is enabled. We recommend enabling this option.
                         </p>
                     </div>
                 </div>
@@ -235,20 +261,29 @@ const SetupSetting = ({
                                 />
                             </div>
                         </div>
-
-                        <Checkbox
-                            checked={campaigns.set_to_paused}
-                            onChange={({target: {checked}}) => changeCampaignsHandler({set_to_paused: checked})}
-                        >
-                            Set campaigns status to “<b>paused</b>”
-                        </Checkbox>
                     </div>
 
                     <div className="col">
                         <p className={'date-p'}>
-                            You can use the start date to activate campaigns at a specific time if you need it. Also by
-                            clicking on “ Set campaigns status to “paused” will upload campaigns with Paused Status in
-                            case you want to switch them on later.
+                            You can use the start date to activate campaigns at a specific time if you need it.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col">
+                        <Checkbox
+                            checked={campaigns.set_to_paused}
+                            onChange={({target: {checked}}) => changeCampaignsHandler({set_to_paused: checked})}
+                        >
+                            Set campaigns Status to <b>Paused</b> on upload to Amazon
+                        </Checkbox>
+                    </div>
+
+                    <div className="col">
+                        <p>
+                            If this option is enabled, Zero to Hero campaigns will be uploaded in <b>Paused</b> Status
+                            in case you want to activate them later.
                         </p>
                     </div>
                 </div>
@@ -269,9 +304,8 @@ const SetupSetting = ({
 
                     <div className="col">
                         <p className={'budget-p'}>
-                            Daily budget is used to put a limit on how much you'll spend on this particular Product.
-                            This amount will split between the campaigns the software will create. Based on your sales
-                            and sales history, we are providing you with our "Recommended Daily Budget."
+                            Daily budget is used to put a limit on how much you'll spend on this particular product.
+                            This amount will be split between the Zero to Hero campaigns.
                         </p>
                     </div>
                 </div>
