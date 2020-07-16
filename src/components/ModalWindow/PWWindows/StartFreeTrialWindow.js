@@ -23,16 +23,13 @@ const StartFreeTrialWindow = ({visible, onClose}) => {
         setProcessing(false);
     };
 
-    const handleCancel = () => {
-        onClose();
-    };
-
     return (
         <ModalWindow
             className={'start-free-trial-window'}
             visible={visible}
             footer={false}
-            handleCancel={handleCancel}
+            handleCancel={false}
+            container={true}
         >
 
             <div className="image">
