@@ -160,7 +160,7 @@ const Payment = (props) => {
                         </div>
 
                         <div className="col">
-                            <Radio value={'select'}>
+                            <Radio value={'select'} disabled={cardsList.length === 0}>
                                 Use an existing card
                             </Radio>
 

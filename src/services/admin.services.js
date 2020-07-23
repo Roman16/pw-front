@@ -1,5 +1,6 @@
 import api from './request';
 import {adminUrls} from '../constans/api.urls';
+import moment from "moment";
 
 export const adminServices = {
     checkUserEmail,
@@ -10,6 +11,7 @@ export const adminServices = {
     checkAdGroupsList,
     checkAdGroupsCanBeOptimized,
     checkPatsList,
+    checkReports,
 
     generateReport
 };
@@ -64,6 +66,20 @@ function checkAdGroupsCanBeOptimized({userId, profile_id, sku}) {
 
 function checkPatsList({userId, profile_id, ad_groups_ids}) {
     return api('get', `${adminUrls.patsList}?user_id=${userId}&profile_id=${profile_id}&ad_groups_ids=${ad_groups_ids}`)
+}
+
+function checkReports({userId, size, page, sorterColumn, sorterType, startDate, endDate}) {
+    const parameters = [];
+
+    if (startDate) {
+        parameters.push(`&datetime:range=${moment.tz(`${moment(startDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${moment.tz(`${moment(endDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
+    }
+
+    if (sorterType) {
+        parameters.push(`&order_by:${sorterType}=${sorterColumn}`)
+    }
+
+    return api('get', `${adminUrls.userReports}?user_id=${userId}&page=${page}&size=${size}${parameters.join('')}`)
 }
 
 
