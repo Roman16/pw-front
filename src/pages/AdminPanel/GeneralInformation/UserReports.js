@@ -68,6 +68,7 @@ const UserReports = ({userReports, onCheck, userId}) => {
             dataIndex: 'object',
             key: 'object',
             width: '15.714285714285714rem',
+            sorter: true,
             filter: true
         },
         {
@@ -75,6 +76,7 @@ const UserReports = ({userReports, onCheck, userId}) => {
             dataIndex: 'object_type',
             key: 'object_type',
             width: '14.285714285714286rem',
+            sorter: true,
             filter: true
         },
         {...actionField},
