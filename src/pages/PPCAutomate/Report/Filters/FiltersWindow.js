@@ -18,103 +18,103 @@ const numberVariations = [
 
 const reasonList = [
     {
-        label: 'AddedCreatedKeywordAsNegative',
+        label: 'Added Created Keyword As Negative',
         value: 'AddedCreatedKeywordAsNegative'
     },
     {
-        label: 'AddedCreatedPATAsNegative',
+        label: 'Added Created PAT As Negative',
         value: 'AddedCreatedPATAsNegative'
     },
     {
-        label: 'ChangedKeywordBidACoS',
+        label: 'Changed Keyword Bid ACoS',
         value: 'ChangedKeywordBidACoS'
     },
     {
-        label: 'ChangedKeywordBidImpressions',
+        label: 'Changed Keyword Bid Impressions',
         value: 'ChangedKeywordBidImpressions'
     },
     {
-        label: 'ChangedPATBidACoS',
+        label: 'Changed PAT Bid ACoS',
         value: 'ChangedPATBidACoS'
     },
     {
-        label: 'ChangedPATBidImpressions',
+        label: 'Changed PAT Bid Impressions',
         value: 'ChangedPATBidImpressions'
     },
     {
-        label: 'CreatedAdGroup',
+        label: 'Created Ad Group',
         value: 'CreatedAdGroup'
     },
     {
-        label: 'CreatedCampaign',
+        label: 'Created Campaign',
         value: 'CreatedCampaign'
     },
     {
-        label: 'CreatedKeywordFromCST',
+        label: 'Created Keyword From CST',
         value: 'CreatedKeywordFromCST'
     },
     {
-        label: 'CreatedNegativeKeywordFromCSTHighACoS',
+        label: 'Created Negative Keyword From CST High ACoS',
         value: 'CreatedNegativeKeywordFromCSTHighACoS'
     },
     {
-        label: 'CreatedNegativeKeywordFromCSTNoSales',
+        label: 'Created Negative Keyword From CST No Sales',
         value: 'CreatedNegativeKeywordFromCSTNoSales'
     },
     {
-        label: 'CreatedNegativePATFromCSTHighACoS',
+        label: 'Created Negative PAT From CST High ACoS',
         value: 'CreatedNegativePATFromCSTHighACoS'
     },
     {
-        label: 'CreatedNegativePATFromCSTNoSales',
+        label: 'Created Negative PAT From CST No Sales',
         value: 'CreatedNegativePATFromCSTNoSales'
     },
     {
-        label: 'CreatedPATFromCST',
+        label: 'Created PAT From CST',
         value: 'CreatedPATFromCST'
     },
     {
-        label: 'CreatedProductAd',
+        label: 'Created Product Ad',
         value: 'CreatedProductAd'
     },
     {
-        label: 'PausedKeywordDuplicateFromCustomerSearchTerm',
+        label: 'Paused Keyword Duplicate From Customer Search Term',
         value: 'PausedKeywordDuplicateFromCustomerSearchTerm'
     },
     {
-        label: 'PausedKeywordDuplicateOfPAT',
+        label: 'Paused Keyword Duplicate Of PAT',
         value: 'PausedKeywordDuplicateOfPAT'
     },
     {
-        label: 'PausedKeywordDuplicate',
+        label: 'Paused Keyword Duplicate',
         value: 'PausedKeywordDuplicate'
     },
     {
-        label: 'PausedKeywordHighACoS',
+        label: 'Paused Keyword High ACoS',
         value: 'PausedKeywordHighACoS'
     },
     {
-        label: 'PausedKeywordNoSales',
+        label: 'Paused Keyword No Sales',
         value: 'PausedKeywordNoSales'
     },
     {
-        label: 'PausedPATHighACoS',
+        label: 'Paused PAT High ACoS',
         value: 'PausedPATHighACoS'
     },
     {
-        label: 'PausedPATNoSales',
+        label: 'Paused PAT No Sales',
         value: 'PausedPATNoSales'
     },
     {
-        label: 'PausedPATDuplicate',
+        label: 'Paused PAT Duplicate',
         value: 'PausedPATDuplicate'
     },
     {
-        label: 'RevertLastChangeKeywordNoSales',
+        label: 'Revert Last Change Keyword No Sales',
         value: 'RevertLastChangeKeywordNoSales'
     },
     {
-        label: 'RevertLastChangePATNoSales',
+        label: 'Revert Las tChange PAT No Sales',
         value: 'RevertLastChangePATNoSales'
     }
 ]
