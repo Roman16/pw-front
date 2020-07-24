@@ -16,6 +16,109 @@ const numberVariations = [
     {label: 'Not equals', key: 'neq'}
 ]
 
+const reasonList = [
+    {
+        label: 'AddedCreatedKeywordAsNegative',
+        value: 'AddedCreatedKeywordAsNegative'
+    },
+    {
+        label: 'AddedCreatedPATAsNegative',
+        value: 'AddedCreatedPATAsNegative'
+    },
+    {
+        label: 'ChangedKeywordBidACoS',
+        value: 'ChangedKeywordBidACoS'
+    },
+    {
+        label: 'ChangedKeywordBidImpressions',
+        value: 'ChangedKeywordBidImpressions'
+    },
+    {
+        label: 'ChangedPATBidACoS',
+        value: 'ChangedPATBidACoS'
+    },
+    {
+        label: 'ChangedPATBidImpressions',
+        value: 'ChangedPATBidImpressions'
+    },
+    {
+        label: 'CreatedAdGroup',
+        value: 'CreatedAdGroup'
+    },
+    {
+        label: 'CreatedCampaign',
+        value: 'CreatedCampaign'
+    },
+    {
+        label: 'CreatedKeywordFromCST',
+        value: 'CreatedKeywordFromCST'
+    },
+    {
+        label: 'CreatedNegativeKeywordFromCSTHighACoS',
+        value: 'CreatedNegativeKeywordFromCSTHighACoS'
+    },
+    {
+        label: 'CreatedNegativeKeywordFromCSTNoSales',
+        value: 'CreatedNegativeKeywordFromCSTNoSales'
+    },
+    {
+        label: 'CreatedNegativePATFromCSTHighACoS',
+        value: 'CreatedNegativePATFromCSTHighACoS'
+    },
+    {
+        label: 'CreatedNegativePATFromCSTNoSales',
+        value: 'CreatedNegativePATFromCSTNoSales'
+    },
+    {
+        label: 'CreatedPATFromCST',
+        value: 'CreatedPATFromCST'
+    },
+    {
+        label: 'CreatedProductAd',
+        value: 'CreatedProductAd'
+    },
+    {
+        label: 'PausedKeywordDuplicateFromCustomerSearchTerm',
+        value: 'PausedKeywordDuplicateFromCustomerSearchTerm'
+    },
+    {
+        label: 'PausedKeywordDuplicateOfPAT',
+        value: 'PausedKeywordDuplicateOfPAT'
+    },
+    {
+        label: 'PausedKeywordDuplicate',
+        value: 'PausedKeywordDuplicate'
+    },
+    {
+        label: 'PausedKeywordHighACoS',
+        value: 'PausedKeywordHighACoS'
+    },
+    {
+        label: 'PausedKeywordNoSales',
+        value: 'PausedKeywordNoSales'
+    },
+    {
+        label: 'PausedPATHighACoS',
+        value: 'PausedPATHighACoS'
+    },
+    {
+        label: 'PausedPATNoSales',
+        value: 'PausedPATNoSales'
+    },
+    {
+        label: 'PausedPATDuplicate',
+        value: 'PausedPATDuplicate'
+    },
+    {
+        label: 'RevertLastChangeKeywordNoSales',
+        value: 'RevertLastChangeKeywordNoSales'
+    },
+    {
+        label: 'RevertLastChangePATNoSales',
+        value: 'RevertLastChangePATNoSales'
+    }
+]
+
 const multiSelectVariations = {
     'object_type': [
         {title: 'Keyword', key: 'keyword', value: 'keyword'},
@@ -43,6 +146,7 @@ const containsVariations = {
     'spend': numberVariations,
     'sales': numberVariations,
     'acos': numberVariations,
+    'type': [{label: 'Contains', key: 'contains'}]
 
 }
 
@@ -167,6 +271,18 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters}) => {
                     placeholder={'Type'}
                     onChange={changeValueHandler}
                 />}
+
+                {filterBy === 'type' &&
+                <CustomSelect
+                    // value={filterValue}
+                    onChange={changeValueHandler}
+                    placeholder={'Type'}
+                    getPopupContainer={trigger => trigger.parentNode}
+                >
+                    {reasonList.map((item, index) => (
+                        <Option value={item.value} title={item.label}>{item.label}</Option>
+                    ))}
+                </CustomSelect>}
             </div>
         </div>
 

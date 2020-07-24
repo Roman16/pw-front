@@ -28,6 +28,8 @@ function getAllReports(type, options, cancelToken) {
             parameters.push(`&${filterBy}:${type.key}=${value}`)
         } else if (filterBy === 'keyword_id') {
             parameters.push(`&keyword_id:eq=${value}`)
+        } else if (filterBy === 'type') {
+            parameters.push(`&reason=${value}`)
         }
     })
 

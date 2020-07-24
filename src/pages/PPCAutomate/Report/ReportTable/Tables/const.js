@@ -58,6 +58,7 @@ export const reasonField = {
     dataIndex: 'type',
     key: 'type',
     minWidth: '14.285714285714286rem',
+    filter: true,
     render: (type, item) => {
         switch (type) {
             case 'AddedCreatedKeywordAsNegative':

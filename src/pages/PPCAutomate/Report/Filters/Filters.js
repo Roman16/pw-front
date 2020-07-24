@@ -78,6 +78,16 @@ const FilterItem = ({filter, onRemove, onEdit}) => {
                 }}><SVG id={'remove-filter-icon'}/></i>
             </div>
         )
+    }else if (filter.filterBy === 'type') {
+        return (
+            <div className="filter-item" onClick={onEdit}>
+                {`${filter.value}`}
+                <i onClick={(e) => {
+                    e.stopPropagation();
+                    onRemove();
+                }}><SVG id={'remove-filter-icon'}/></i>
+            </div>
+        )
     }
 }
 
@@ -91,6 +101,7 @@ const Filters = ({columns, onChange, filters, currentTab}) => {
     }
 
     const addFilterHandler = (filter) => {
+        console.log(filter);
         onChange([...filters, filter])
     }
 
