@@ -16,7 +16,6 @@ export const dateField = {
         {moment.utc(date).tz('America/Los_Angeles').format('MMM DD, YYYY hh:mm:ss A')}
     </span>,
     sorter: true,
-    filter: true
 };
 
 export const actionField = {

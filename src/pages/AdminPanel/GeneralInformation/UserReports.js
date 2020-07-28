@@ -3,9 +3,13 @@ import {Input, Table} from "antd";
 import moment from "moment";
 import {actionField, dateField, infoField, reasonField} from "../../PPCAutomate/Report/ReportTable/Tables/const";
 import DatePicker from "../../../components/DatePicker/DatePickerRange";
+import Filters from "../../PPCAutomate/Report/Filters/Filters";
+
+let filtersChanges = false;
 
 const UserReports = ({userReports, onCheck, userId}) => {
     const [fields, setFields] = useState({});
+    const [filters, setFilters] = useState([]);
     const [reportsQueryParams, setReportsQueryParams] = useState({
         page: 1,
         size: 10,
@@ -21,12 +25,22 @@ const UserReports = ({userReports, onCheck, userId}) => {
         })
     };
 
+    const changeFiltersHandler = (filters) => {
+        setFilters(filters);
+        filtersChanges = true;
+    }
+
+
     const getUserReports = (e) => {
         onCheck({
             userId: fields.id || userId,
+            filters,
             ...fields.startDate && {startDate: fields.startDate, endDate: fields.endDate},
-            ...reportsQueryParams
+            ...reportsQueryParams,
+            ...filtersChanges && {page: 1}
         });
+
+        filtersChanges = false;
     };
 
     const changeTableParamsHandler = (pagination, filters, sorter) => {
@@ -37,23 +51,6 @@ const UserReports = ({userReports, onCheck, userId}) => {
             sorterType: sorter ? sorter.order === 'descend' ? 'desc' : 'asc' : null
         })
     }
-
-    const timeRange = (start, end) => {
-        if (start) {
-            setFields({
-                ...fields,
-                startDate: start,
-                endDate: end
-            })
-        } else {
-            setFields({
-                ...fields,
-                startDate: 'lifetime',
-                endDate: 'lifetime'
-            })
-        }
-    };
-
 
     useEffect(() => {
         if (fields.id || userId) {
@@ -87,10 +84,7 @@ const UserReports = ({userReports, onCheck, userId}) => {
         <section className="user-information-section">
             <h2>User Reports</h2>
 
-            <form className="form-group" onSubmit={e => {
-                e.preventDefault();
-                getUserReports();
-            }}>
+            <div className="form-group">
                 <Input required
                        type="text"
                        placeholder={userId ? `User id: ${userId}` : `User id`}
@@ -98,12 +92,16 @@ const UserReports = ({userReports, onCheck, userId}) => {
                        onChange={changeFieldHandler}
                 />
 
-                <DatePicker
-                    timeRange={timeRange}
+                <Filters
+                    filters={filters}
+                    columns={[...userInformationColumns]}
+                    currentTab={'all-reports'}
+                    onChange={changeFiltersHandler}
                 />
 
-                <button className={'btn default'}>Check</button>
-            </form>
+                <button className={'btn default'} onClick={getUserReports}>Check</button>
+            </div>
+
 
             {typeof userReports === 'string' && <h2>{userReports}</h2>}
 

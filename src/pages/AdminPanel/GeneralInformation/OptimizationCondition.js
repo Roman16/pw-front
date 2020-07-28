@@ -4,10 +4,11 @@ import {adminServices} from "../../../services/admin.services";
 
 const Option = Select.Option;
 
-const OptimizationCondition = ({adGroupsList,adGroupsCanBeOptimized, onCheck, userId, profileId}) => {
+const OptimizationCondition = ({adGroupsList, adGroupsCanBeOptimized, onCheck, userId, profileId}) => {
     const [fields, setFields] = useState({});
     const [patsList, setPatsList] = useState(undefined);
     const [keywordsList, setKeywordsList] = useState(undefined);
+    const [openedTable, setOpenedTable] = useState(null);
 
     const changeFieldHandler = (e) => {
         setFields({
@@ -15,6 +16,10 @@ const OptimizationCondition = ({adGroupsList,adGroupsCanBeOptimized, onCheck, us
             [e.target.name]: e.target.value
         })
     };
+
+    const openTableHandler = (table) => {
+        setOpenedTable(table)
+    }
 
     const checkOptimizationCondition = (e) => {
         e.preventDefault();
@@ -29,11 +34,11 @@ const OptimizationCondition = ({adGroupsList,adGroupsCanBeOptimized, onCheck, us
     const checkGroupsPats = (id) => {
         adminServices.checkPatsList({
             userId: fields.user_id || userId,
-            profile_id: fields.profile_id,
+            profile_id: fields.profile_id || profileId,
             ad_groups_ids: id
         })
             .then(res => {
-                if(res.data) {
+                if (res.data) {
                     setPatsList(res.data.pats)
                     setKeywordsList(res.data.keywords)
                 }
@@ -41,6 +46,7 @@ const OptimizationCondition = ({adGroupsList,adGroupsCanBeOptimized, onCheck, us
             .catch(error => {
                 if (error.response && error.response.data) {
                     setPatsList(error.response.data.message);
+                    setKeywordsList(error.response.data.message);
                 }
             })
     }
@@ -72,7 +78,8 @@ const OptimizationCondition = ({adGroupsList,adGroupsCanBeOptimized, onCheck, us
             title: '',
             dataIndex: 'adGroupId',
             key: 'adGroupId',
-            render: (id) => (<button className={'btn default'} onClick={() => checkGroupsPats(id)}>Get PATs/Keywords</button>)
+            render: (id) => (
+                <button className={'btn default'} onClick={() => checkGroupsPats(id)}>Get PATs/Keywords</button>)
         },
 
     ];
@@ -87,11 +94,13 @@ const OptimizationCondition = ({adGroupsList,adGroupsCanBeOptimized, onCheck, us
             title: 'SKU',
             dataIndex: 'skus',
             key: 'skus',
-            render: (sku, adGroup) => (<Select defaultValue={adGroup.skus[0]}>
-                {adGroup.skus.map(item => (
-                    <Option value={item}>{item}</Option>
-                ))}
-            </Select>)
+            render: (sku, adGroup) => {
+                return (<Select defaultValue={adGroup.skus[0]}>
+                    {adGroup.skus.map(item => (
+                        <Option value={item}>{item}</Option>
+                    ))}
+                </Select>)
+            }
         }
     ];
 
@@ -141,7 +150,7 @@ const OptimizationCondition = ({adGroupsList,adGroupsCanBeOptimized, onCheck, us
     ];
 
     return (
-        <section>
+        <section className={'optimization-conditions'}>
             <h2>Optimization Conditions</h2>
             <div className="fields">
                 <form className="form-group" onSubmit={checkOptimizationCondition}>
@@ -171,35 +180,69 @@ const OptimizationCondition = ({adGroupsList,adGroupsCanBeOptimized, onCheck, us
             </div>
 
             {typeof adGroupsList === 'string' && <h2>{adGroupsList}</h2>}
-            {typeof adGroupsList === 'object' && <Table
-                dataSource={adGroupsList}
-                columns={columns}
-                pagination={false}
-                title={() => 'Ad Groups'}
-            />}
 
+            {adGroupsList && <div className="table-block">
+                <h2 className="table-title" onClick={() => openTableHandler('adGroups')}>
+                    {typeof adGroupsList === 'object' && adGroupsList.length > 0 ?
+                        <i className={'success'}>&#10004;</i> :
+                        <i className={'error'}>    &#10006;</i>}
 
-            {typeof keywordsList === 'object' && <Table
-                dataSource={keywordsList}
-                columns={keywordsColumns}
-                pagination={false}
-                title={() => 'Keywords'}
-            />}
+                    Ad Groups
+                </h2>
+                {openedTable === 'adGroups' && <Table
+                    dataSource={typeof adGroupsList === 'object' ? adGroupsList : []}
+                    // dataSource={adGroupsList}
+                    columns={columns}
+                    pagination={false}
+                />
+                }
+            </div>}
 
-            {typeof patsList === 'object' && <Table
-                dataSource={patsList}
-                columns={patsColumns}
-                pagination={false}
-                title={() => 'PATs'}
-            />}
+            {keywordsList && <div className="table-block">
+                <h2 className="table-title" onClick={() => openTableHandler('keywords')}>
+                    {typeof keywordsList === 'object' && keywordsList.length > 0 ?
+                        <i className={'success'}>&#10004;</i> :
+                        <i className={'error'}>    &#10006;</i>}
+                    Keywords
+                </h2>
 
-            {typeof adGroupsCanBeOptimized === 'string' && <h2>{adGroupsCanBeOptimized}</h2>}
-            {typeof adGroupsCanBeOptimized === 'object' && <Table
-                dataSource={adGroupsCanBeOptimized}
-                columns={columns2}
-                pagination={false}
-                title={() => 'Ad Groups Can Be Optimized'}
-            />}
+                {openedTable === 'keywords' && <Table
+                    dataSource={typeof keywordsList === 'object' ? keywordsList : []}
+                    columns={keywordsColumns}
+                    pagination={false}
+                />}
+            </div>}
+
+            {patsList && <div className="table-block">
+                <h2 className="table-title" onClick={() => openTableHandler('PATs')}>
+                    {typeof patsList === 'object' && patsList.length > 0 ? <i className={'success'}>&#10004;</i> :
+                        <i className={'error'}>    &#10006;</i>}
+                    PATs
+                </h2>
+
+                {openedTable === 'PATs' && <Table
+                    dataSource={typeof patsList === 'object' ? patsList : []}
+                    columns={patsColumns}
+                    pagination={false}
+                />}
+            </div>}
+
+            {adGroupsCanBeOptimized && <div className="table-block">
+                <h2 className="table-title" onClick={() => openTableHandler('AdGroupsCanBeOptimized')}>
+                    {typeof adGroupsCanBeOptimized === 'object' && adGroupsCanBeOptimized.length > 0 ?
+                        <i className={'success'}>&#10004;</i> :
+                        <i className={'error'}>    &#10006;</i>}
+
+                    Ad Groups Can Be Optimized
+                </h2>
+
+                {openedTable === 'AdGroupsCanBeOptimized' && <Table
+                    dataSource={typeof adGroupsCanBeOptimized === 'object' ? adGroupsCanBeOptimized : []}
+                    // dataSource={adGroupsCanBeOptimized}
+                    columns={columns2}
+                    pagination={false}
+                />}
+            </div>}
         </section>
     )
 };

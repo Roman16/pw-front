@@ -150,7 +150,7 @@ const Filters = ({columns, onChange, filters, currentTab}) => {
                     setVisibleFilterPopover(prevState => !prevState)
                 }}
             >
-                <button className={'btn default add-filter'}>
+                <button type={'button'} className={'btn default add-filter'}>
                     <SVG id={'plus-icon'}/>
                 </button>
             </Popover>}
