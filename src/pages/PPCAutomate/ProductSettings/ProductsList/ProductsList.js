@@ -7,6 +7,10 @@ import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 import CustomTable from "../../../../components/Table/CustomTable";
 import Pagination from "../../../../components/Pagination/Pagination";
 import MultiApply from "../MultiApply/MultiApply";
+import CustomSelect from "../../../../components/Select/Select";
+import {Select} from "antd";
+import {SVG} from "../../../../utils/icons";
+import TreeSelect from "../../../../components/TreeSelect/TreeSelect";
 
 
 const ACTIVE = 'RUNNING';
@@ -20,10 +24,13 @@ const MIN_BID_AUTO_CAMPING = 'min_bid_auto_campaign';
 const MAX_BID_AUTO_CAMPING = 'max_bid_auto_campaign';
 const TOTAL_CHANGES = 'total_changes';
 const OPTIMIZATION_STATUS = 'optimization_status';
+const ADVERTISING_STRATEGY = 'advertising_strategy';
 
 const DESIRED_ACOS = 'desired_acos';
 const BREAK_EVEN_ACOS = 'break_even_acos';
 const COGS = 'cogs';
+
+const Option = Select.Option;
 
 let minBidManualTimerId = null,
     minBidAutoTimerId = null,
@@ -32,6 +39,62 @@ let minBidManualTimerId = null,
     marginTimerId = null,
     priceTimerId = null;
 
+const advertisingStrategyVariations = [
+    {
+        label: 'ACoS Targeting',
+        value: 'acos_targeting',
+        icon: 'acos-targeting',
+        fill: 'EC7F5C'
+    },
+    {
+        label: 'Overall Profit Growth',
+        value: 'overall_profit_growth',
+        icon: 'overall-profit-growth',
+        fill: '6D6DF6'
+    },
+    {
+        label: 'PPC Profit Growth',
+        value: 'ppc_profit_growth',
+        icon: 'ppc-profit-growth',
+        fill: '83FED0'
+
+    },
+    {
+        label: 'Product Launch',
+        value: 'product_launch',
+        icon: 'product-launch',
+        fill: 'F0B849'
+
+    },
+    {
+        label: 'New Keywords Ranking',
+        value: 'new_keywords_ranking',
+        icon: 'new-keywords-ranking',
+        fill: '5BEBF3'
+
+    },
+    {
+        label: 'Get Best Seller Tag',
+        value: 'get_best_seller_tag',
+        icon: 'get-best-seller-tag',
+        fill: 'EC7F5C'
+
+    },
+    {
+        label: 'Defend Best Seller Tag',
+        value: 'defend_best_seller_tag',
+        icon: 'defend-best-seller-tag',
+        fill: '6D6DF6'
+
+    },
+    {
+        label: 'Low Inventory HPLS',
+        value: 'low_inventory_hpls',
+        icon: 'low-inventory-hpls',
+        fill: '83FED0'
+
+    },
+]
 
 const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, setRowData, updateSettingsHandlerByIdList}) => {
     const [selectedRows, setSelectedRows] = useState([]),
@@ -473,7 +536,31 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             render: (index, item) => (
                 <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
                     <span className={'paused'}>Paused</span>}</span>)
-        }
+        },
+        {
+            title: () => <div>
+                <span>Advertising <br/> Strategy</span>
+                <SVG id={'right-icon'}/>
+            </div>,
+            dataIndex: ADVERTISING_STRATEGY,
+            key: ADVERTISING_STRATEGY,
+            width: '260px',
+            render: (index, item) => (
+                <CustomSelect
+                    getPopupContainer={triggerNode => triggerNode.parentNode}
+                    placeholder={'Select a goal'}
+                >
+                    {advertisingStrategyVariations.map(item => (
+                        <Option value={item.value}>
+                            <i style={{fill: `#${item.fill}`}}>
+                                <SVG id={item.icon}/>
+                            </i>
+                            {item.label}
+                        </Option>
+                    ))}
+                </CustomSelect>
+            )
+        },
     ];
 
     return (

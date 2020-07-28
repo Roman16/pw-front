@@ -44,7 +44,7 @@ export const actionField = {
                 break;
 
             case 'PAUSED':
-                return (<div className="action-field">Pause</div>)
+                return (<div className="action-field">Paused</div>)
                 break;
 
             default:
@@ -152,7 +152,7 @@ export const reasonField = {
 
             case 'RevertLastChangeKeywordNoSales':
             case 'RevertLastChangePATNoSales':
-                return (<span>Adjusting profitable bid</span>)
+                return (<span>Adjusting bid to maximize profits</span>)
                 break;
 
             default:

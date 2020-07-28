@@ -24,6 +24,7 @@ const UserReports = ({userReports, onCheck, userId}) => {
     const getUserReports = (e) => {
         onCheck({
             userId: fields.id || userId,
+            ...fields.startDate && {startDate: fields.startDate, endDate: fields.endDate},
             ...reportsQueryParams
         });
     };
@@ -39,14 +40,14 @@ const UserReports = ({userReports, onCheck, userId}) => {
 
     const timeRange = (start, end) => {
         if (start) {
-            setReportsQueryParams({
-                ...reportsQueryParams,
+            setFields({
+                ...fields,
                 startDate: start,
                 endDate: end
             })
         } else {
-            setReportsQueryParams({
-                ...reportsQueryParams,
+            setFields({
+                ...fields,
                 startDate: 'lifetime',
                 endDate: 'lifetime'
             })
@@ -68,7 +69,6 @@ const UserReports = ({userReports, onCheck, userId}) => {
             dataIndex: 'object',
             key: 'object',
             width: '15.714285714285714rem',
-            sorter: true,
             filter: true
         },
         {
@@ -76,7 +76,6 @@ const UserReports = ({userReports, onCheck, userId}) => {
             dataIndex: 'object_type',
             key: 'object_type',
             width: '14.285714285714286rem',
-            sorter: true,
             filter: true
         },
         {...actionField},

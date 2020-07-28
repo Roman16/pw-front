@@ -75,7 +75,7 @@ function checkReports({userId, size, page, sorterColumn, sorterType, startDate, 
         parameters.push(`&datetime:range=${moment.tz(`${moment(startDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${moment.tz(`${moment(endDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
     }
 
-    if (sorterType) {
+    if (sorterType && sorterColumn) {
         parameters.push(`&order_by:${sorterType}=${sorterColumn}`)
     }
 

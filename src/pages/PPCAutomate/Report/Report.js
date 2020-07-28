@@ -84,7 +84,6 @@ function Report() {
     }
 
     const changeFiltersHandler = (filters) => {
-        console.log(filters);
         setPaginationParams({
             ...paginationParams,
             page: 1,

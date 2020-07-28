@@ -36,6 +36,28 @@
           background: #fff;
         }
 
+        &:last-child {
+          background: #6D6DF6;
+          border-radius: 4px 0px 0px 4px;
+          color: #fff;
+          padding: 0;
+
+          .title {
+            div {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              cursor: pointer;
+              padding: 10px 20px;
+
+              svg {
+                stroke: #fff;
+              }
+            }
+          }
+        }
+
         .title {
           .custom-tooltip {
             margin: 0;
@@ -162,6 +184,91 @@
 
           &:last-child {
             justify-content: flex-start;
+
+            .custom-select {
+              width: 100%;
+              height: 2.28571429rem;
+            }
+
+            .ant-select-dropdown {
+              width: max-content;
+            }
+
+            .ant-select-selection__placeholder {
+              font-size: 1rem;
+            }
+
+            .ant-select-selection-selected-value {
+              i {
+                display: flex;
+                align-items: center;
+                margin: 0 10px 0 0;
+              }
+            }
+
+            .ant-select-dropdown-menu-item {
+              display: flex;
+              align-items: center;
+              font-size: 1rem;
+
+              i {
+                width: 22px;
+                height: 22px;
+                min-width: 22px;
+                margin: 0 10px 0 0;
+                fill: #C9CBD4 !important;
+              }
+
+
+
+              &:first-child:hover {
+                i {
+                  fill: #EC7F5C !important;
+                }
+              }
+
+              &:nth-child(2):hover {
+                i {
+                  fill: #6D6DF6 !important;
+                }
+              }
+
+              &:nth-child(3):hover {
+                i {
+                  fill: #83FED0 !important;
+                }
+              }
+
+              &:nth-child(4):hover {
+                i {
+                  fill: #F0B849 !important;
+                }
+              }
+
+              &:nth-child(5):hover {
+                i {
+                  fill: #5BEBF3 !important;
+                }
+              }
+
+              &:nth-child(6):hover {
+                i {
+                  fill: #EC7F5C !important;
+                }
+              }
+
+              &:nth-child(7):hover {
+                i {
+                  fill: #6D6DF6 !important;
+                }
+              }
+
+              &:nth-child(8):hover {
+                i {
+                  fill: #83FED0 !important;
+                }
+              }
+            }
           }
         }
       }

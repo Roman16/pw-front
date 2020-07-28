@@ -95,9 +95,9 @@
     display: flex;
 
     .form-group {
-      width: 170px;
+      width: 200px;
       margin: 0 15px 0 0;
-      height: 2.2857142857142856rem;
+      min-height: 2.2857142857142856rem;
 
       &:last-child {
         margin: 0;
@@ -109,8 +109,6 @@
     }
 
     .pw-tree-select {
-      height: 2.2857142857142856rem;
-
       .ant-select,
       .ant-select-selection,
       .ant-select-selection__rendered {
@@ -144,7 +142,7 @@
   }
 
   .DatePicker {
-    max-width: 170px;
+    max-width: 200px;
 
     .ant-calendar-picker,
     .ant-input {
@@ -154,6 +152,10 @@
 
     .DateIcon {
       display: none;
+    }
+
+    .ant-calendar-range-picker-input:placeholder-shown {
+      padding-left: 5px;
     }
   }
 

@@ -2,6 +2,17 @@ import api from './request';
 import {reportsUrls} from '../constans/api.urls';
 import moment from "moment";
 
+const reasonFilterParams = {
+    'adjusted_bid': ['ChangedKeywordBidACoS', 'ChangedKeywordBidImpressions', 'ChangedPATBidACoS', 'ChangedPATBidImpressions', 'RevertLastChangeKeywordNoSales', 'RevertLastChangePATNoSales'],
+    'not_profitable_keyword_pt': ['PausedKeywordHighACoS', 'PausedKeywordNoSales', 'PausedPATHighACoS', 'PausedPATNoSales'],
+    'created_keyword_pt': ['CreatedKeywordFromCST', 'CreatedPATFromCST'],
+    'created_negative_keyword_pt': ['AddedCreatedKeywordAsNegative', 'AddedCreatedPATAsNegative', 'CreatedNegativeKeywordFromCSTHighACoS', 'CreatedNegativeKeywordFromCSTNoSales', 'CreatedNegativePATFromCSTHighACoS', 'CreatedNegativePATFromCSTNoSales'],
+    'duplicate_keyword_pt': ['PausedKeywordDuplicateFromCustomerSearchTerm', 'PausedKeywordDuplicateOfPAT', 'PausedKeywordDuplicate', 'PausedPATDuplicate'],
+    'created_campaign': ['CreatedCampaign'],
+    'created_ad_group': ['CreatedAdGroup'],
+    'created_product_ad': ['CreatedProductAd']
+}
+
 export const reportsServices = {
     getAllReports
 };
@@ -29,7 +40,7 @@ function getAllReports(type, options, cancelToken) {
         } else if (filterBy === 'keyword_id') {
             parameters.push(`&keyword_id:eq=${value}`)
         } else if (filterBy === 'type') {
-            parameters.push(`&reason=${value}`)
+            parameters.push(`&type:in=${value.map(item => reasonFilterParams[item].join(',')).join(',')}`)
         }
     })
 
