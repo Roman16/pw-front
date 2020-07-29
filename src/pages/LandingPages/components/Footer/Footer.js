@@ -84,7 +84,7 @@ const Footer = () => (
 
                 <img src={spnLogo} alt="" className={'amazon-spn-logo'}/>
 
-                <img src={appStoreLogo} alt="" className={'amazon-appstore-logo'}/>
+                {/*<img src={appStoreLogo} alt="" className={'amazon-appstore-logo'}/>*/}
 
                 <ul className="social-icons">
                     <li>

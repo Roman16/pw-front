@@ -130,12 +130,12 @@ const ZTHLanding = () => {
                             </div>
 
                             <div className="images">
-                                <a
-                                    href="https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9"
-                                    target={'_blank'}
-                                >
-                                    <img src={amazonStoreLogo} alt=""/>
-                                </a>
+                                {/*<a*/}
+                                {/*    href="https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9"*/}
+                                {/*    target={'_blank'}*/}
+                                {/*>*/}
+                                {/*    <img src={amazonStoreLogo} alt=""/>*/}
+                                {/*</a>*/}
 
                                 <a
                                     href="https://sellercentral.amazon.com/tsba/provider-details/Advertising%20Optimization/4f60e5cd-a0a1-44f2-8336-074806a7775f?ref_=sc_spn_alst_adt-4f60e5cd&localeSelection=en_US&sellFrom=US&sellIn=US"

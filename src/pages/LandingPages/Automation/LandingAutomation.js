@@ -21,6 +21,7 @@ import listIcon from '../../../assets/img/landing-automation/yes_green.svg'
 import confidenceLevelImage from '../../../assets/img/landing-automation/confidence-level.svg';
 import awsImage from '../../../assets/img/landing-automation/aws.svg';
 import appStoreImage from '../../../assets/img/landing-automation/app-store.svg';
+import pwSpnImage from '../../../assets/img/landing-automation/pw&amazonSpn.svg';
 import blogPostImage from '../../../assets/img/landing-automation/blog-post.png';
 import supportImage from '../../../assets/img/landing-automation/Vitalik-help.png';
 import emojiImage from '../../../assets/img/landing-automation/emoji.png';
@@ -413,8 +414,8 @@ const LandingAutomation = () => {
 
                                 <span>Or <Link to={'/demo-call'} target={'_blank'}>Book a Demo</Link></span>
 
-                                <img src={amazonApp} alt=""
-                                     onClick={() => window.open('https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9')}/>
+                                {/*<img src={amazonApp} alt=""*/}
+                                {/*     onClick={() => window.open('https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9')}/>*/}
                             </div>
                         </div>
                     </div>
@@ -773,11 +774,11 @@ const LandingAutomation = () => {
                         </div>
                         <div className="item">
                             <div className="image">
-                                <img src={appStoreImage} alt=""/>
+                                <img src={pwSpnImage} alt=""/>
                             </div>
                             <h4>Amazon Appstore</h4>
                             <p>
-                                Profit Whales is an official Amazon FBA Appstore participant. Amazon takes the
+                                Profit Whales is an official Amazon SPN participant. Amazon takes the
                                 information security of its sellers very seriously, and we have complied with its
                                 policy, so you can be sure your data is saved and not shared.
                             </p>
