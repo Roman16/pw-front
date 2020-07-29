@@ -7,6 +7,7 @@ import axios from "axios";
 import {productsServices} from "../../../services/products.services";
 import {notification} from '../../../components/Notification';
 import {debounce} from "throttle-debounce";
+import {SVG} from "../../../utils/icons";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -14,6 +15,8 @@ let source = null;
 let timerId = null;
 
 let editableRow = null;
+
+
 
 const ProductSettingsMain = () => {
     const [productsList, setProductsList] = useState([]),
@@ -175,6 +178,7 @@ const ProductSettingsMain = () => {
                 setRowData={setRowData}
                 updateSettingsHandlerByIdList={updateSettingsHandlerByIdList}
             />
+
         </div>
     );
 };

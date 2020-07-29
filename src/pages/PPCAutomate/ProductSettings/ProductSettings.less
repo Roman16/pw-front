@@ -2,8 +2,12 @@
 
 .product-settings-page {
   height: 100%;
-  display: flex;
+ display: flex;
   flex-direction: column;
+
+  .custom-table {
+    grid-area: table;
+  }
 
   .filters {
     display: flex;
@@ -103,7 +107,6 @@
     background: #fff;
     flex: 1;
     overflow: hidden;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
 
     .table-overflow {
       height: 100%;
@@ -118,4 +121,5 @@
     padding: 0 0 0 1.4285714285714286rem;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
   }
+
 }
