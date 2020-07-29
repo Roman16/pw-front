@@ -86,7 +86,7 @@ function checkReports({userId, size, page, sorterColumn, sorterType, startDate, 
         } else if (filterBy === 'keyword_id') {
             parameters.push(`&keyword_id:eq=${value}`)
         } else if (filterBy === 'type') {
-            parameters.push(`&reason_type:in=${value.map(item => reasonFilterParams[item].join(',')).join(',')}`)
+            parameters.push(`&type:in=${value.map(item => reasonFilterParams[item].join(',')).join(',')}`)
         }
     })
 
