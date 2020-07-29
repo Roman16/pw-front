@@ -109,6 +109,7 @@
     }
 
     .pw-tree-select {
+      overflow: hidden;
       .ant-select,
       .ant-select-selection,
       .ant-select-selection__rendered {
@@ -119,10 +120,8 @@
       .ant-select-selection__rendered {
         flex-wrap: nowrap;
         overflow: hidden;
-
-        li {
-          min-width: 70px;
-        }
+        width: max-content;
+        min-width: 100%;
       }
 
       .ant-select-search__field__placeholder {
