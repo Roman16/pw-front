@@ -16,6 +16,109 @@ const numberVariations = [
     {label: 'Not equals', key: 'neq'}
 ]
 
+const reasonList = [
+    {
+        label: 'Added Created Keyword As Negative',
+        value: 'AddedCreatedKeywordAsNegative'
+    },
+    {
+        label: 'Added Created PAT As Negative',
+        value: 'AddedCreatedPATAsNegative'
+    },
+    {
+        label: 'Changed Keyword Bid ACoS',
+        value: 'ChangedKeywordBidACoS'
+    },
+    {
+        label: 'Changed Keyword Bid Impressions',
+        value: 'ChangedKeywordBidImpressions'
+    },
+    {
+        label: 'Changed PAT Bid ACoS',
+        value: 'ChangedPATBidACoS'
+    },
+    {
+        label: 'Changed PAT Bid Impressions',
+        value: 'ChangedPATBidImpressions'
+    },
+    {
+        label: 'Created Ad Group',
+        value: 'CreatedAdGroup'
+    },
+    {
+        label: 'Created Campaign',
+        value: 'CreatedCampaign'
+    },
+    {
+        label: 'Created Keyword From CST',
+        value: 'CreatedKeywordFromCST'
+    },
+    {
+        label: 'Created Negative Keyword From CST High ACoS',
+        value: 'CreatedNegativeKeywordFromCSTHighACoS'
+    },
+    {
+        label: 'Created Negative Keyword From CST No Sales',
+        value: 'CreatedNegativeKeywordFromCSTNoSales'
+    },
+    {
+        label: 'Created Negative PAT From CST High ACoS',
+        value: 'CreatedNegativePATFromCSTHighACoS'
+    },
+    {
+        label: 'Created Negative PAT From CST No Sales',
+        value: 'CreatedNegativePATFromCSTNoSales'
+    },
+    {
+        label: 'Created PAT From CST',
+        value: 'CreatedPATFromCST'
+    },
+    {
+        label: 'Created Product Ad',
+        value: 'CreatedProductAd'
+    },
+    {
+        label: 'Paused Keyword Duplicate From Customer Search Term',
+        value: 'PausedKeywordDuplicateFromCustomerSearchTerm'
+    },
+    {
+        label: 'Paused Keyword Duplicate Of PAT',
+        value: 'PausedKeywordDuplicateOfPAT'
+    },
+    {
+        label: 'Paused Keyword Duplicate',
+        value: 'PausedKeywordDuplicate'
+    },
+    {
+        label: 'Paused Keyword High ACoS',
+        value: 'PausedKeywordHighACoS'
+    },
+    {
+        label: 'Paused Keyword No Sales',
+        value: 'PausedKeywordNoSales'
+    },
+    {
+        label: 'Paused PAT High ACoS',
+        value: 'PausedPATHighACoS'
+    },
+    {
+        label: 'Paused PAT No Sales',
+        value: 'PausedPATNoSales'
+    },
+    {
+        label: 'Paused PAT Duplicate',
+        value: 'PausedPATDuplicate'
+    },
+    {
+        label: 'Revert Last Change Keyword No Sales',
+        value: 'RevertLastChangeKeywordNoSales'
+    },
+    {
+        label: 'Revert Las tChange PAT No Sales',
+        value: 'RevertLastChangePATNoSales'
+    }
+]
+
 const multiSelectVariations = {
     'object_type': [
         {title: 'Keyword', key: 'keyword', value: 'keyword'},
@@ -28,6 +131,16 @@ const multiSelectVariations = {
         {title: 'Keyword', key: 'keyword', value: 'keyword'},
         {title: 'PT', key: 'pt', value: 'pt'},
     ],
+    'type': [
+        {title: 'Adjusted bid', key: 'adjusted_bid', value: 'adjusted_bid'},
+        {title: 'Not profitable keyword / PT', key: 'not_profitable_keyword_pt', value: 'not_profitable_keyword_pt'},
+        {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
+        {title: 'Created negative keyword / PT', key: 'created_negative_keyword_pt', value: 'created_negative_keyword_pt'},
+        {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
+        {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
+        {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
+        {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
+    ]
 }
 
 const containsVariations = {
@@ -43,6 +156,7 @@ const containsVariations = {
     'spend': numberVariations,
     'sales': numberVariations,
     'acos': numberVariations,
+    'type': [{label: 'Is one of', key: 'one_of'}]
 
 }
 

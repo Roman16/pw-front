@@ -42,6 +42,9 @@ const AccountLinks = ({data, onCheck, userId}) => {
             title: 'Country',
             dataIndex: 'country',
             key: 'country',
+            render: (country, item) => {
+                return(<span>{item.country && item.country.name}</span>)
+            }
         },
         {
             title: 'MWS Status',

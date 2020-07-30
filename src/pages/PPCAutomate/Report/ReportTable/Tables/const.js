@@ -16,7 +16,6 @@ export const dateField = {
         {moment.utc(date).tz('America/Los_Angeles').format('MMM DD, YYYY hh:mm:ss A')}
     </span>,
     sorter: true,
-    filter: true
 };
 
 export const actionField = {
@@ -44,7 +43,7 @@ export const actionField = {
                 break;
 
             case 'PAUSED':
-                return (<div className="action-field">Pause</div>)
+                return (<div className="action-field">Paused</div>)
                 break;
 
             default:
@@ -58,6 +57,7 @@ export const reasonField = {
     dataIndex: 'type',
     key: 'type',
     minWidth: '14.285714285714286rem',
+    filter: true,
     render: (type, item) => {
         switch (type) {
             case 'AddedCreatedKeywordAsNegative':
@@ -151,7 +151,7 @@ export const reasonField = {
 
             case 'RevertLastChangeKeywordNoSales':
             case 'RevertLastChangePATNoSales':
-                return (<span>Adjusting profitable bid</span>)
+                return (<span>Adjusting bid to maximize profits</span>)
                 break;
 
             default:

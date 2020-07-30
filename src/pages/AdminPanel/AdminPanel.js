@@ -7,6 +7,7 @@ import OptimizationJobs from "./GeneralInformation/OptimizationJobs";
 import OptimizationChanges from "./GeneralInformation/OptimizationChanges";
 import OptimizationCondition from "./GeneralInformation/OptimizationCondition";
 import GenerateReport from "./GenerateReport/GenerateReport";
+import UserReports from "./GeneralInformation/UserReports";
 
 const AdminPanel = () => {
     const [selectedTab, setSelectedTab] = useState('genInfo');
@@ -15,6 +16,7 @@ const AdminPanel = () => {
     const [accountLinks, setAccountLinks] = useState(undefined);
     const [optimizationJobs, setOptimizationJobs] = useState(undefined);
     const [optimizationChanges, setOptimizationChanges] = useState(undefined);
+    const [userReports, setUserReports] = useState({});
 
     const [adGroupsList, setAdGroupsList] = useState(undefined);
     const [adGroupsCanBeOptimized, setAdGroupsCanBeOptimized] = useState(undefined);
@@ -107,6 +109,16 @@ const AdminPanel = () => {
             })
     };
 
+    const checkUserReports = (queryParams) => {
+        adminServices.checkReports(queryParams)
+            .then(res => {
+                setUserReports(res)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
     return (
         <div className="admin-panel">
             {/*<div className="tabs">*/}
@@ -154,6 +166,13 @@ const AdminPanel = () => {
                     profileId={accountLinks && accountLinks[0] && accountLinks[0].lwa_profile_id}
 
                     onCheck={checkOptimizationConditions}
+                />
+
+                <UserReports
+                    userId={userInformation && userInformation.id}
+                    userReports={userReports}
+
+                    onCheck={checkUserReports}
                 />
             </>}
 

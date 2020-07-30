@@ -11,6 +11,16 @@ const valueTile = {
     'campaign': 'Campaign',
     'ad_group': 'Ad Group',
     'product_ad': 'Product Ad',
+    //---------------------------
+    //reason
+    'adjusted_bid': 'Adjusted bid',
+    'not_profitable_keyword_pt': 'Not profitable keyword / PT',
+    'created_keyword_pt': 'Created keyword / PT',
+    'created_negative_keyword_pt': 'Created negative keyword / PT',
+    'duplicate_keyword_pt': 'Duplicate keyword / PT',
+    'created_campaign': 'Created campaign',
+    'created_ad_group': 'Created ad group',
+    'created_product_ad': 'Created product ad'
 }
 
 const numberMark = {
@@ -78,6 +88,13 @@ const FilterItem = ({filter, onRemove, onEdit}) => {
                 }}><SVG id={'remove-filter-icon'}/></i>
             </div>
         )
+    }else if (filter.filterBy === 'type') {
+        return (
+            <div className="filter-item">
+                Reason is one of: {filter.value.map(item => valueTile[item]).join(', ')}
+                <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
+            </div>
+        )
     }
 }
 
@@ -133,7 +150,7 @@ const Filters = ({columns, onChange, filters, currentTab}) => {
                     setVisibleFilterPopover(prevState => !prevState)
                 }}
             >
-                <button className={'btn default add-filter'}>
+                <button type={'button'} className={'btn default add-filter'}>
                     <SVG id={'plus-icon'}/>
                 </button>
             </Popover>}

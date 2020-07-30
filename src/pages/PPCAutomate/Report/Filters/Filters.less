@@ -95,9 +95,9 @@
     display: flex;
 
     .form-group {
-      width: 170px;
+      width: 200px;
       margin: 0 15px 0 0;
-      height: max-content;
+      min-height: 2.2857142857142856rem;
 
       &:last-child {
         margin: 0;
@@ -106,6 +106,27 @@
 
     .InputCurrency {
       height: 2.2857142857142856rem;
+    }
+
+    .pw-tree-select {
+      overflow: hidden;
+      .ant-select,
+      .ant-select-selection,
+      .ant-select-selection__rendered {
+        min-height: 100%;
+        height: 100%;
+      }
+
+      .ant-select-selection__rendered {
+        flex-wrap: nowrap;
+        overflow: hidden;
+        width: max-content;
+        min-width: 100%;
+      }
+
+      .ant-select-search__field__placeholder {
+        font-size: 1rem;
+      }
     }
 
     .custom-select {
@@ -121,6 +142,7 @@
       .ant-select-selection-selected-value,
       .ant-select-selection__placeholder {
         padding-left: 1.0714285714285714rem;
+        font-size: 1rem;
         //display: flex !important;
       }
 
@@ -128,7 +150,7 @@
   }
 
   .DatePicker {
-    max-width: 170px;
+    max-width: 200px;
 
     .ant-calendar-picker,
     .ant-input {
@@ -138,6 +160,10 @@
 
     .DateIcon {
       display: none;
+    }
+
+    .ant-calendar-range-picker-input:placeholder-shown {
+      padding-left: 5px;
     }
   }
 

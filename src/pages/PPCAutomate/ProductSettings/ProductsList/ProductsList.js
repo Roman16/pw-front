@@ -7,7 +7,11 @@ import InformationTooltip from "../../../../components/Tooltip/Tooltip";
 import CustomTable from "../../../../components/Table/CustomTable";
 import Pagination from "../../../../components/Pagination/Pagination";
 import MultiApply from "../MultiApply/MultiApply";
-
+import CustomSelect from "../../../../components/Select/Select";
+import {Select} from "antd";
+import {SVG} from "../../../../utils/icons";
+import TreeSelect from "../../../../components/TreeSelect/TreeSelect";
+import $ from 'jquery';
 
 const ACTIVE = 'RUNNING';
 const PRODUCT = 'product';
@@ -20,10 +24,13 @@ const MIN_BID_AUTO_CAMPING = 'min_bid_auto_campaign';
 const MAX_BID_AUTO_CAMPING = 'max_bid_auto_campaign';
 const TOTAL_CHANGES = 'total_changes';
 const OPTIMIZATION_STATUS = 'optimization_status';
+const ADVERTISING_STRATEGY = 'advertising_strategy';
 
 const DESIRED_ACOS = 'desired_acos';
 const BREAK_EVEN_ACOS = 'break_even_acos';
 const COGS = 'cogs';
+
+const Option = Select.Option;
 
 let minBidManualTimerId = null,
     minBidAutoTimerId = null,
@@ -32,10 +39,97 @@ let minBidManualTimerId = null,
     marginTimerId = null,
     priceTimerId = null;
 
+const advertisingStrategyVariations = [
+    {
+        label: 'ACoS Targeting',
+        value: 'acos_targeting',
+        icon: 'acos-targeting',
+        fill: 'EC7F5C',
+        sales: 3,
+        acos: 1
+    },
+    {
+        label: 'Overall Profit Growth',
+        value: 'overall_profit_growth',
+        icon: 'overall-profit-growth',
+        fill: '6D6DF6',
+        sales: 4,
+        acos: 3
+    },
+    {
+        label: 'PPC Profit Growth',
+        value: 'ppc_profit_growth',
+        icon: 'ppc-profit-growth',
+        fill: '83FED0',
+        sales: 4,
+        acos: 2
+
+    },
+    {
+        label: 'Product Launch',
+        value: 'product_launch',
+        icon: 'product-launch',
+        fill: 'F0B849',
+        sales: 3,
+        acos: 5
+
+    },
+    {
+        label: 'New Keywords Ranking',
+        value: 'new_keywords_ranking',
+        icon: 'new-keywords-ranking',
+        fill: '5BEBF3',
+        sales: 3,
+        acos: 4
+
+    },
+    {
+        label: 'Get Best Seller Tag',
+        value: 'get_best_seller_tag',
+        icon: 'get-best-seller-tag',
+        fill: 'EC7F5C',
+        sales: 5,
+        acos: 5
+
+    },
+    {
+        label: 'Defend Best Seller Tag',
+        value: 'defend_best_seller_tag',
+        icon: 'defend-best-seller-tag',
+        fill: '6D6DF6',
+        sales: 5,
+        acos: 5
+    },
+    {
+        label: 'Low Inventory HPLS',
+        value: 'low_inventory_hpls',
+        icon: 'low-inventory-hpls',
+        fill: '83FED0',
+        sales: 2,
+        acos: 1
+
+    },
+]
+
 
 const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, setRowData, updateSettingsHandlerByIdList}) => {
     const [selectedRows, setSelectedRows] = useState([]),
-        [selectedAll, setSelectedAll] = useState(false);
+        [selectedAll, setSelectedAll] = useState(false),
+        [strategiesDescriptionState, setStrategiesDescriptionState] = useState(false);
+
+
+    const switchStrategyDescription = () => {
+        setStrategiesDescriptionState(prevState => !prevState);
+
+        // setTimeout(() => {
+
+            $('.table-overflow').animate({scrollLeft: 100000}, 400);
+
+            // const objDiv = document.querySelector('.table-overflow');
+            // objDiv.scro = 10000000;
+        // }, 300)
+
+    }
 
     const onChangeRow = (value, item, index) => {
         if (products[index][item] !== value) {
@@ -245,6 +339,10 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
                         <span className={'paused'}>Paused</span>}</span>)
             },
+            {
+                width: '18.571428571428573rem',
+                render: (props) => (<div style={{textAlign: 'right'}}></div>)
+            }
         ];
 
 
@@ -473,7 +571,36 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             render: (index, item) => (
                 <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
                     <span className={'paused'}>Paused</span>}</span>)
-        }
+        },
+        {
+            title: () => <div onClick={switchStrategyDescription}>
+                <span>Advertising <br/> Strategy</span>
+
+                <i className={strategiesDescriptionState ? 'opened' : ''}>
+                    <SVG id={'right-icon'}/>
+                </i>
+            </div>,
+            dataIndex: ADVERTISING_STRATEGY,
+            key: ADVERTISING_STRATEGY,
+            width: '18.571428571428573rem',
+            render: (index, item, indexRow) => (
+                <CustomSelect
+                    getPopupContainer={triggerNode => triggerNode.parentNode}
+                    value={item[ADVERTISING_STRATEGY] || undefined}
+                    onChange={event => onChangeRow(event, ADVERTISING_STRATEGY, indexRow)}
+                    placeholder={'Select a goal'}
+                >
+                    {advertisingStrategyVariations.map(item => (
+                        <Option value={item.value}>
+                            <i style={{fill: `#${item.fill}`}}>
+                                <SVG id={item.icon}/>
+                            </i>
+                            {item.label}
+                        </Option>
+                    ))}
+                </CustomSelect>
+            )
+        },
     ];
 
     return (
@@ -487,28 +614,72 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 onSubmit={onSubmitSettingParams}
             />}
 
-            <CustomTable
-                key={'table'}
-                rowKey="id"
-                dataSource={products}
-                columns={columns}
-                loading={processing}
-                rowSelection={rowSelection}
-                openedRow={openedProduct}
-                selectedAll={selectedAll}
 
-                expandedRowRender={expandedRowRender}
-            />
+            <div className="table-block">
+                <CustomTable
+                    key={'table'}
+                    rowKey="id"
+                    dataSource={products}
+                    columns={columns}
+                    loading={processing}
+                    rowSelection={rowSelection}
+                    openedRow={openedProduct}
+                    selectedAll={selectedAll}
 
-            <Pagination
-                onChange={changePagination}
-                page={paginationOption.page}
-                pageSizeOptions={[10, 30, 50]}
-                pageSize={paginationOption.pageSize}
-                totalSize={totalSize}
-                listLength={products.length}
-                processing={processing}
-            />
+                    expandedRowRender={expandedRowRender}
+                />
+
+                <Pagination
+                    onChange={changePagination}
+                    page={paginationOption.page}
+                    pageSizeOptions={[10, 30, 50]}
+                    pageSize={paginationOption.pageSize}
+                    totalSize={totalSize}
+                    listLength={products.length}
+                    processing={processing}
+                />
+
+                <div className={`strategies-description ${strategiesDescriptionState ? 'opened' : ''}`}>
+                    <div className="title">
+                        Advertising Strategies
+                    </div>
+
+                    <div className="list">
+                        {advertisingStrategyVariations.map(item => (
+                            <div>
+                                <div className="row">
+                                    <i><SVG id={item.icon}/></i>
+                                    <b>{item.label}</b>
+                                </div>
+
+                                <div className="row">
+                                    <div className="sales">
+                                        Sales
+
+
+                                        <div className="starts">
+                                            {[0, 1, 2, 3, 4].map(star => (
+                                                <div style={{width: `${4 + star}px`, height: `${4 + star}px`}}
+                                                     className={star <= item.sales ? 'active' : ''}/>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="acos">
+                                        ACoS
+                                        <div className="starts">
+                                            {[0, 1, 2, 3, 4].map(star => (
+                                                <div style={{width: `${4 + star}px`, height: `${4 + star}px`}}
+                                                     className={star <= item.acos ? 'active' : ''}/>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </Fragment>
     );
 }
