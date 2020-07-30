@@ -16,6 +16,8 @@ import {underHoodImages} from "../../../assets/img/landing-automation/under-hood
 import JeffInPlane from '../../../assets/img/landing-automation/Illustration.png';
 import JeffDaily from '../../../assets/img/landing-automation/jeff-daily.svg';
 import amazonApp from '../../../assets/img/landing-automation/amazon-app-store.svg';
+import spnLogo from '../../../assets/img/logo/amazon-spn-logo-dark.png';
+
 import dashIcon from '../../../assets/img/landing-automation/dash.svg';
 import listIcon from '../../../assets/img/landing-automation/yes_green.svg'
 import confidenceLevelImage from '../../../assets/img/landing-automation/confidence-level.svg';
@@ -414,8 +416,7 @@ const LandingAutomation = () => {
 
                                 <span>Or <Link to={'/demo-call'} target={'_blank'}>Book a Demo</Link></span>
 
-                                {/*<img src={amazonApp} alt=""*/}
-                                {/*     onClick={() => window.open('https://sellercentral.amazon.com/apps/store/dp/amzn1.sellerapps.app.c5bc0b50-69b9-4976-9e4c-6d30258fedb9')}/>*/}
+                                <img src={spnLogo} alt=""/>
                             </div>
                         </div>
                     </div>
@@ -776,7 +777,7 @@ const LandingAutomation = () => {
                             <div className="image">
                                 <img src={pwSpnImage} alt=""/>
                             </div>
-                            <h4>Amazon Appstore</h4>
+                            <h4>Amazon SPN</h4>
                             <p>
                                 Profit Whales is an official Amazon SPN participant. Amazon takes the
                                 information security of its sellers very seriously, and we have complied with its
