@@ -31,10 +31,6 @@
     .card-container__expiry,
     .card-container__cvc {
       height: 60px;
-      background: #FFFFFF;
-      border: 1px solid rgba(148, 163, 173, 0.4);
-      box-sizing: border-box;
-      border-radius: 8px;
 
       .StripeElement {
         width: 100%;
@@ -43,11 +39,21 @@
         align-items: center;
         padding: 4px 11px;
 
+        background: #FFFFFF;
+        border: 1px solid rgba(148, 163, 173, 0.4);
+        box-sizing: border-box;
+        border-radius: 8px;
+
+        &--focus {
+          box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+
         div {
           width: 100%;
         }
       }
     }
+
 
     p {
       display: flex;
@@ -121,11 +127,8 @@
         .card-container__expiry,
         .card-container__cvc {
           height: 50px;
-
         }
       }
-
     }
   }
-
 }
