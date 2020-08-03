@@ -4,15 +4,28 @@ import {CardNumberElement, CardExpiryElement, CardCvcElement} from 'react-stripe
 import {SVG} from "../../../../utils/icons";
 
 
-const CardElementStyles = {
+const CardElementStyles = window.devicePixelRatio === 2 ? {
     base: {
         color: '#000',
         fontWeight: 300,
         fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-        fontSize: '1.42857143rem',
+        fontSize: '15px',
         '::placeholder': {
             color: '#C9CBD4',
-            fontSize: '1.42857143rem',
+            fontSize: '15px',
+            fontWeight: 300,
+            fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+        },
+    },
+} : {
+    base: {
+        color: '#000',
+        fontWeight: 300,
+        fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+        fontSize: '20px',
+        '::placeholder': {
+            color: '#C9CBD4',
+            fontSize: '20px',
             fontWeight: 300,
             fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
         },

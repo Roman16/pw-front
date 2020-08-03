@@ -104,8 +104,6 @@ class RegistrationPage extends Component {
         } else {
             let stripe_token;
 
-            console.log(this.props.stripe)
-
             if (agencyUser) {
                 localStorage.setItem('userFromAgency', email);
             } else {
