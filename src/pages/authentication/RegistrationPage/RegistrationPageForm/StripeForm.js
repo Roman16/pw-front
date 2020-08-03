@@ -1,137 +1,94 @@
-import React, {useState, useEffect} from 'react';
-import {Select} from 'antd';
+import React, {useState} from 'react';
 
 import {CardNumberElement, CardExpiryElement, CardCvcElement} from 'react-stripe-elements';
-import {userService} from '../../../../services/user.services';
+import {SVG} from "../../../../utils/icons";
 
-import {countries} from '../../../../utils/countries';
-
-
-const {Option} = Select;
-
-const CardNumberElementStyles = {
-    base: {
-        fontSize: '16px',
-        letterSpacing: '5px',
-    }
-};
 
 const CardElementStyles = {
     base: {
-        fontSize: '16px',
-    }
+        color: '#000',
+        fontWeight: 300,
+        fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+        fontSize: '1.42857143rem',
+        '::placeholder': {
+            color: '#C9CBD4',
+            fontSize: '1.42857143rem',
+            fontWeight: 300,
+            fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+        },
+    },
 };
 
-const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
+const StripeForm = ({stripeElementChange, cardNumber, expiry, cvc}) => {
+    const [autofocus, setAutofocus] = useState(true);
 
-const StripeForm = ({stripeElementChange, onChangeInput, onChangeCountry, onChangeState, cardNumber, expiry, cvc, autofocus, onBlurCardElement}) => {
-    const [countriesList, setCountryList] = useState([]),
-        [selectedCountry, selectCountry] = useState('');
+    const handleBlurCardElement = () => {
+        setAutofocus(false)
+    };
 
-    function handleSelectCountry(country) {
-        selectCountry(country);
-        onChangeCountry(country);
-    }
+    const stripeElementChangeHandler = (element, name) => {
+        stripeElementChange(element, name);
 
-    let textInput = React.createRef();
+        if (!element.empty && element.complete) {
+            setAutofocus(true);
+        }
+    };
 
-    useEffect(() => {
-        userService.getStripeAvailableCountries(stripeKey)
-            .then(res => {
-                setCountryList(res.data.data)
-            });
-    }, []);
 
     return (
         <div className="stripe-form">
-            <div className="form-title">Billing Information (optional)</div>
+            <div className="form-title">Billing Information</div>
 
             <div className="card-container">
                 <div className="card-container__card">
-                    <label className="label">Credit card</label>
                     <CardNumberElement
-                        placeholder='**** **** **** ****'
-                        style={CardNumberElementStyles}
-                        onChange={(element) => stripeElementChange(element, 'card_number')}
+                        placeholder='Card number'
+                        style={CardElementStyles}
+                        onChange={(element) => stripeElementChangeHandler(element, 'card_number')}
                     />
                 </div>
-                <div className="card-container__expiry">
-                    <label className="label">Expiry</label>
-                    <CardExpiryElement
-                        onChange={(element) => stripeElementChange(element, 'expiry')}
-                        onBlur={onBlurCardElement}
-                        style={CardElementStyles}
-                        ref={(instance) => {
-                            (autofocus && cardNumber && instance && !expiry) && instance._element.focus()
-                        }}
-                    />
-                </div>
-                <div className="card-container__cvc">
-                    <label className="label">CVC</label>
-                    <CardCvcElement
-                        onChange={(element) => stripeElementChange(element, 'cvc')}
-                        onBlur={onBlurCardElement}
-                        style={CardElementStyles}
-                        ref={(instance) => {
-                            (autofocus && expiry && instance && !cvc) && instance._element.focus();
-                        }}
-                    />
+
+                <div className="row">
+                    <div className="card-container__expiry">
+                        <CardExpiryElement
+                            placeholder='Expires'
+                            onChange={(element) => stripeElementChangeHandler(element, 'expiry')}
+                            style={CardElementStyles}
+                            ref={(instance) => {
+                                (autofocus && cardNumber && instance && !expiry) && instance._element.focus()
+                            }}
+                            onBlur={handleBlurCardElement}
+                        />
+                    </div>
+
+                    <div className="card-container__cvc">
+                        <CardCvcElement
+                            placeholder='CVC'
+                            onChange={(element) => stripeElementChangeHandler(element, 'cvc')}
+                            style={CardElementStyles}
+                            ref={(instance) => {
+                                (autofocus && expiry && instance && !cvc) && instance._element.focus();
+                            }}
+                            onBlur={handleBlurCardElement}
+                        />
+                    </div>
                 </div>
             </div>
 
-            <div className="address-container">
-                <div>
-                    <label className="label">Street Address</label>
-                    <input
-                        type="text"
-                        name='line1'
-                        onChange={onChangeInput}
-                    />
-                </div>
-            </div>
+            <p>
+                <SVG id={'lock'}/>
 
-            <div className="country-container">
-                <div className="card-container__city">
-                    <label className="label">City</label>
-                    <input
-                        type="text"
-                        name='city'
-                        onChange={onChangeInput}
-                    />
-                </div>
-                <div className="card-container__zip">
-                    <label className="label">Zip</label>
-                    <input
-                        type="text"
-                        name='postal_code'
-                        onChange={onChangeInput}
-                    />
-                </div>
-                <div className="card-container__country">
-                    <label className="label">Country</label>
-                    <Select
-                        showSearch
-                        filterOption={(input, option) =>
-                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
-                        onChange={handleSelectCountry}
-                    >
-                        {countries.map(item => (
-                            <Option key={item.code} value={item.code}>{item.name}</Option>
-                        ))}
-                    </Select>
-                </div>
+                this is a secure 128-bit ssl encrypted payment
+            </p>
 
-                <div className="card-container__zip">
-                    <label className="label">State</label>
-                    <input
-                        type="text"
-                        name='state'
-                        onChange={onChangeInput}
-                    />
-                </div>
+            <div className="pay-logo">
+                <SVG id={'visa-logo'}/>
+                <SVG id={'mastercard'}/>
+                <SVG id={'discover'}/>
+                <SVG id={'american-express'}/>
 
+                <SVG id={'by-stripe'}/>
             </div>
         </div>
     );
