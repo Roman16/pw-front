@@ -65,7 +65,7 @@ const api = (method, url, data, type, abortToken) => {
                     if (error.response.data.message === 'Incorrect login or password') {
                         handlerErrors(error.response.data.message)
                     } else {
-                        history.push('/login');
+                        history.push(`/login?redirect=${window.location.pathname}`);
                         localStorage.clear();
                     }
                 } else if (error.response && error.response.status === 412) {

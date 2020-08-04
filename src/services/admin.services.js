@@ -14,7 +14,10 @@ export const adminServices = {
     checkPatsList,
     checkReports,
 
-    generateReport
+    generateReport,
+
+    fetchUsers,
+    fetchUserProducts
 };
 
 function checkUserEmail(email) {
@@ -72,8 +75,6 @@ function checkPatsList({userId, profile_id, ad_groups_ids}) {
 function checkReports({userId, size, page, sorterColumn, sorterType, startDate, endDate, filters}) {
     const parameters = [];
 
-    console.log(filters);
-
     filters.forEach(({filterBy, type, value}) => {
         if (filterBy === 'datetime') {
             parameters.push(`&datetime:range=${moment.tz(`${moment(value.startDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${moment.tz(`${moment(value.endDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
@@ -99,5 +100,12 @@ function checkReports({userId, size, page, sorterColumn, sorterType, startDate, 
 
 function generateReport(data) {
     return api('post', `${adminUrls.report}`, data)
+}
+
+function fetchUsers(data) {
+    return api('get', `${adminUrls.usersList}`)
+}
+function fetchUserProducts(id) {
+    return api('get', `${adminUrls.userProductsList}?id=${id}`)
 }
 
