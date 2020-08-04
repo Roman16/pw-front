@@ -172,15 +172,13 @@ const Optimization = () => {
     return (
         <Fragment>
             <div className="optimization-page">
-                <div className="product-optimization-info">
-                    <OptimizationIncludes
-                        onShowDrawer={showDrawerHandler}
-                    />
+                <OptimizationIncludes
+                    onShowDrawer={showDrawerHandler}
+                />
 
-                    <OptimizationStatus
-                        product={selectedProduct}
-                    />
-                </div>
+                <OptimizationStatus
+                    product={selectedProduct}
+                />
 
                 <OptimizationStrategy
                     productId={productId}
