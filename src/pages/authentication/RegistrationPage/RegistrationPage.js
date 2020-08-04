@@ -40,7 +40,6 @@ fbq('track', 'PageView');`
                     />
 
                     <ul>
-                        <li>No credit card required</li>
                         <li>Cancel anytime</li>
                     </ul>
 
