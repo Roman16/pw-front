@@ -590,6 +590,10 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     onChange={event => onChangeRow(event, ADVERTISING_STRATEGY, indexRow)}
                     placeholder={'Select a goal'}
                 >
+                    <Option value={null}>
+                        Select a goal
+                    </Option>
+
                     {advertisingStrategyVariations.map(item => (
                         <Option value={item.value}>
                             <i style={{fill: `#${item.fill}`}}>
