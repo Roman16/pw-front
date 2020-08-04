@@ -123,10 +123,10 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
 
         // setTimeout(() => {
 
-            $('.table-overflow').animate({scrollLeft: 100000}, 400);
+        $('.table-overflow').animate({scrollLeft: 100000}, 400);
 
-            // const objDiv = document.querySelector('.table-overflow');
-            // objDiv.scro = 10000000;
+        // const objDiv = document.querySelector('.table-overflow');
+        // objDiv.scro = 10000000;
         // }, 300)
 
     }
@@ -590,6 +590,10 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     onChange={event => onChangeRow(event, ADVERTISING_STRATEGY, indexRow)}
                     placeholder={'Select a goal'}
                 >
+                    <Option value={null}>
+                        Select a goal
+                    </Option>
+
                     {advertisingStrategyVariations.map(item => (
                         <Option value={item.value}>
                             <i style={{fill: `#${item.fill}`}}>
