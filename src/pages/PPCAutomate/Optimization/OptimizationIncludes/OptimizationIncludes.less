@@ -3,10 +3,8 @@
 
   ul {
     list-style: none;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 20px;
-    grid-row-gap: 15px;
+    column-count: 2;
+    margin: 0;
 
     li {
       width: max-content;
@@ -14,17 +12,17 @@
       color: #343C5A;
       display: flex;
       align-items: center;
+      margin: 0 0 10px 0;
       position: relative;
 
       &::before {
         content: '';
-        min-width: 12px;
-        width: 12px;
-        height: 12px;
+        min-width: 5px;
+        width: 5px;
+        height: 5px;
         border-radius: 50%;
-        background: #fff;
+        background: #343C5A;
         margin: 0 10px 0 0;
-        border: 1.5px solid #6D6DF6;
       }
 
       &.soon {

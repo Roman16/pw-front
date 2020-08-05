@@ -1,21 +1,28 @@
 import React from "react";
 import './OptimizationIncludes.less';
+import {Icon} from "antd";
+import soon from "../../../../assets/img/soon-label.svg";
 
-const OptimizationIncludes = () => {
+const OptimizationIncludes = ({onShowDrawer}) => {
 
     return (
         <section className='optimization-includes'>
-            <h3>Automation includes:</h3>
+            <h3>Automation includes:
+                {/*<Icon*/}
+                {/*    type="info-circle"*/}
+                {/*    theme="filled"*/}
+                {/*    onClick={() => onShowDrawer("options")}*/}
+                {/*/>*/}
+            </h3>
 
             <ul>
-                <li>Adding profitable Search Terms</li>
-                <li>Pausing Unprofitable Keywords</li>
-                <li>Proper Budget Allocation</li>
-                <li>Ad Positions Testing</li>
-                <li>Data-Driven Bid Management</li>
-                <li>Adding Negative Keywords</li>
-                <li>Prevents Search Terms Competition</li>
-                <li>Keywords Indexation Mode</li>
+                <li>Harvesting new keywords</li>
+                <li>Product targeting optimization</li>
+                <li>Pausing bleeding keywords</li>
+                <li className='soon'>Budget optimization <img src={soon} alt=""/></li>
+                <li>Finding and adding negatives</li>
+                <li>Real-time bid management</li>
+                <li>Pausing duplicates</li>
             </ul>
         </section>
     )
