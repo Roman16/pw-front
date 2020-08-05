@@ -117,16 +117,17 @@ const AdminPanel = () => {
                     onClick={() => setSelectedTab('genInfo')}>
                     General Information
                 </button>
+
                 <button
                     className={`${selectedTab === 'reports' ? 'active' : ''}`}
                     onClick={() => setSelectedTab('reports')}>
                     Reports
                 </button>
-                <button
-                    className={`${selectedTab === 'products' ? 'active' : ''}`}
-                    onClick={() => setSelectedTab('products')}>
-                    Products
-                </button>
+                {/*<button*/}
+                {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
+                {/*    onClick={() => setSelectedTab('products')}>*/}
+                {/*    Products*/}
+                {/*</button>*/}
             </div>
 
             {selectedTab === 'genInfo' && <>
