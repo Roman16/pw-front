@@ -81,56 +81,15 @@
     margin: 0 0 10px auto;
   }
 
-  @media (max-width: 1634px) {
-    & {
-      margin-left: 0;
+  @media (max-width: 1400px) {
+    .row {
+      grid-template-columns: repeat(3, 1fr);
+      grid-row-gap: 1.42857143rem;
     }
   }
-
-  @media (max-width: 1160px) {
-    & {
-      .row {
-        flex-wrap: wrap;
-
-        .status-info {
-          margin-bottom: 20px;
-        }
-      }
-    }
-  }
-
-
-  @media (max-width: 917px) {
-    & {
-      .section-header {
-        margin-bottom: 20px;
-      }
-    }
-  }
-
-  @media (max-width: 430px) {
-    & {
-      .section-header {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .row {
-        flex-direction: column;
-        align-items: center;
-
-        .status-info {
-          min-width: auto;
-          text-align: center;
-        }
-      }
-    }
-  }
-
-  @media only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1350px), only screen and (   min--moz-device-pixel-ratio: 2) and (min-width: 1350px), only screen and (     -o-min-device-pixel-ratio: 2/1) and (min-width: 1350px), only screen and (        min-device-pixel-ratio: 2) and (min-width: 1350px), only screen and (                min-resolution: 192dpi) and (min-width: 1350px), only screen and (                min-resolution: 2dppx) and (min-width: 1350px) {
-    & {
-      flex: 1;
-      margin-left: 1.4285714285714286rem;
+  @media (max-width: 1000px) {
+    .row {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }

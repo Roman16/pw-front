@@ -123,7 +123,7 @@ function StrategyItem({
                       }) {
     return (
         <div
-            className={`strategy-item ${selected && 'selected'}`}
+            className={`strategy-item ${selected && 'selected'} ${isActivated && 'active'}`}
             style={{borderColor: color}}
             onClick={onClick}
         >
