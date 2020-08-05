@@ -656,7 +656,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                                     <div className="sales">
                                         Sales
 
-
                                         <div className="starts">
                                             {[0, 1, 2, 3, 4].map(star => (
                                                 <div style={{width: `${4 + star}px`, height: `${4 + star}px`}}
