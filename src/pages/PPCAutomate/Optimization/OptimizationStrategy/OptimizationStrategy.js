@@ -358,8 +358,7 @@ const OptimizationStrategy = ({product: {desired_target_acos, optimization_strat
                                     <SVG id={'send-icon'}/>
                                 </button>
                             </div>
-                        </div>
-                        }
+                        </div>}
                     </div>
 
                     <div className="strategy-statistic">
