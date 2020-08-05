@@ -358,7 +358,7 @@ const Sidebar = () => {
                                 overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                             >
                                 <a
-                                    href="https://intercom.help/profitwhales/en/"
+                                    href="https://intercom.help/profitwhales/en"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >

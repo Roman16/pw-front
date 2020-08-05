@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from 'react';
+import React, {Component} from 'react';
 import {Form, Input, Spin} from 'antd';
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -6,6 +6,10 @@ import {notification} from '../../../../components/Notification';
 
 import {userActions} from '../../../../actions/user.actions';
 import Cookies from 'js-cookie';
+import StripeForm from "./StripeForm";
+import {Elements, injectStripe, StripeProvider} from "react-stripe-elements";
+
+const stripeKey = process.env.REACT_APP_ENV === 'production' ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST;
 
 class RegistrationPage extends Component {
     state = {
@@ -13,7 +17,13 @@ class RegistrationPage extends Component {
         last_name: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        agencyUser: false,
+        userCard: {
+            card_number: false,
+            expiry: false,
+            cvc: false,
+        }
     };
 
     onSubmit = async (e) => {
@@ -29,6 +39,8 @@ class RegistrationPage extends Component {
             email,
             password,
             confirmPassword,
+            agencyUser,
+            userCard
         } = this.state;
 
         // eslint-disable-next-line no-useless-escape
@@ -65,9 +77,38 @@ class RegistrationPage extends Component {
                 isLoading: false
             });
             return;
+        } else if (!agencyUser && !userCard.card_number) {
+            notification.error({
+                title: 'Card number is required!',
+            });
+            this.setState({
+                isLoading: false
+            });
+            return;
+        } else if (!agencyUser && !userCard.expiry) {
+            notification.error({
+                title: 'Expiry field is required!',
+            });
+            this.setState({
+                isLoading: false
+            });
+            return;
+        } else if (!agencyUser && !userCard.cvc) {
+            notification.error({
+                title: 'CVC field is required!',
+            });
+            this.setState({
+                isLoading: false
+            });
+            return;
         } else {
-            if (this.props.match.params.tag && this.props.match.params.tag === 'from-agency') {
+            let stripe_token;
+
+            if (agencyUser) {
                 localStorage.setItem('userFromAgency', email);
+            } else {
+                const res = await this.props.stripe.createPaymentMethod('card', {});
+                stripe_token = res.paymentMethod.id
             }
 
             this.props.regist({
@@ -75,9 +116,27 @@ class RegistrationPage extends Component {
                 last_name,
                 email,
                 password,
-                ...this.props.match.params.tag && this.props.match.params.tag === 'from-agency' && {is_agency_client: 1},
+                ...agencyUser ? {is_agency_client: 1} : {stripe_token},
                 ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
             });
+        }
+    };
+
+    stripeElementChangeHandler = (element, name) => {
+        if (!element.empty && element.complete) {
+            this.setState({
+                userCard: {
+                    ...this.state.userCard,
+                    [name]: true,
+                }
+            })
+        } else {
+            this.setState({
+                userCard: {
+                    ...this.state.userCard,
+                    [name]: false,
+                }
+            })
         }
     };
 
@@ -86,6 +145,10 @@ class RegistrationPage extends Component {
 
     componentDidMount() {
         this.setState({isLoading: false});
+
+        if (this.props.match.params.tag && this.props.match.params.tag === 'from-agency') {
+            this.setState({agencyUser: true});
+        }
     }
 
     render() {
@@ -97,6 +160,8 @@ class RegistrationPage extends Component {
             confirmPassword,
             registerSuccess,
             isLoading,
+            userCard,
+            agencyUser
         } = this.state;
 
         if (isLoading) {
@@ -176,10 +241,20 @@ class RegistrationPage extends Component {
                     />
                 </Form.Item>
 
+                {!agencyUser && <StripeForm
+                    stripeElementChange={this.stripeElementChangeHandler}
+                    cardNumber={userCard.card_number}
+                    expiry={userCard.expiry}
+                    cvc={userCard.cvc}
+                />}
+
                 <div className='terms-and-privacy'>
-                    By signing in, you agree to Profit Whales <b><Link target="_blank"
-                                                                       to={'/terms-and-conditions'}> Terms
-                    and <br/> Conditions</Link> & <Link target="_blank" to={'/policy'}>Privacy Policy</Link></b>
+                    By signing in, you agree to Profit Whales
+                    <b>
+                        <Link target="_blank" to={'/terms-and-conditions'}>Terms and <br/> Conditions</Link>
+                        &
+                        <Link target="_blank" to={'/policy'}>Privacy Policy</Link>
+                    </b>
                 </div>
 
                 <button type='submit'
@@ -205,7 +280,17 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-export default connect(
+const RegistrationFormRenderRender = connect(
     mapStateToProps,
     mapDispatchToProps
-)(RegistrationPage);
+)(injectStripe(RegistrationPage));
+
+const RegistrationContainer = (props) => {
+    return (<StripeProvider apiKey={stripeKey}>
+        <Elements>
+            {<RegistrationFormRenderRender {...props}/>}
+        </Elements>
+    </StripeProvider>)
+};
+
+export default RegistrationContainer;

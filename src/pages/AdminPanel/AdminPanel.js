@@ -6,8 +6,8 @@ import AccountLinks from "./GeneralInformation/AccountLinks";
 import OptimizationJobs from "./GeneralInformation/OptimizationJobs";
 import OptimizationChanges from "./GeneralInformation/OptimizationChanges";
 import OptimizationCondition from "./GeneralInformation/OptimizationCondition";
-import GenerateReport from "./GenerateReport/GenerateReport";
-import UserReports from "./GeneralInformation/UserReports";
+import Reports from "./Reports/Reports";
+import Products from "./Products/Products";
 
 const AdminPanel = () => {
     const [selectedTab, setSelectedTab] = useState('genInfo');
@@ -109,30 +109,26 @@ const AdminPanel = () => {
             })
     };
 
-    const checkUserReports = (queryParams) => {
-        adminServices.checkReports(queryParams)
-            .then(res => {
-                setUserReports(res)
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
-
     return (
         <div className="admin-panel">
-            {/*<div className="tabs">*/}
-            {/*    <button*/}
-            {/*        className={`${selectedTab === 'genInfo' ? 'active' : ''}`}*/}
-            {/*            onClick={() => setSelectedTab('genInfo')}>*/}
-            {/*        General Information*/}
-            {/*    </button>*/}
-            {/*    <button*/}
-            {/*        className={`${selectedTab === 'report' ? 'active' : ''}`}*/}
-            {/*            onClick={() => setSelectedTab('report')}>*/}
-            {/*        Generate Report*/}
-            {/*    </button>*/}
-            {/*</div>*/}
+            <div className="tabs">
+                <button
+                    className={`${selectedTab === 'genInfo' ? 'active' : ''}`}
+                    onClick={() => setSelectedTab('genInfo')}>
+                    General Information
+                </button>
+
+                <button
+                    className={`${selectedTab === 'reports' ? 'active' : ''}`}
+                    onClick={() => setSelectedTab('reports')}>
+                    Reports
+                </button>
+                {/*<button*/}
+                {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
+                {/*    onClick={() => setSelectedTab('products')}>*/}
+                {/*    Products*/}
+                {/*</button>*/}
+            </div>
 
             {selectedTab === 'genInfo' && <>
                 <GeneralUserInformation
@@ -167,16 +163,13 @@ const AdminPanel = () => {
 
                     onCheck={checkOptimizationConditions}
                 />
-
-                <UserReports
-                    userId={userInformation && userInformation.id}
-                    userReports={userReports}
-
-                    onCheck={checkUserReports}
-                />
             </>}
 
-            {selectedTab === 'report' && <GenerateReport/>}
+            {selectedTab === 'reports' && <Reports
+                userId={userInformation && userInformation.id}
+            />}
+
+            {selectedTab === 'products' && <Products/>}
         </div>
     )
 };

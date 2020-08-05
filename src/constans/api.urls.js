@@ -80,6 +80,8 @@ export const adminUrls = {
     patsList: 'admin/support-manager/optimization-conditions-check/keywords-and-pats',
     report: 'admin/support-manager/report',
     userReports: 'admin/support-manager/optimization-changes/list',
+    usersList: 'admin/support-manager/users',
+    userProductsList: 'admin/support-manager/userProducts',
 };
 
 export const daypartingUrls = {

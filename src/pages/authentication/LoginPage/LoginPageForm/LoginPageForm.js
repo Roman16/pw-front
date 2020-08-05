@@ -67,6 +67,7 @@ class LoginPageForm extends React.Component {
             email,
             password,
             remember_me,
+            ...this.props.location.search && {redirectLink: new URLSearchParams(this.props.location.search).get('redirect')},
             ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
         });
 

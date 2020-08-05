@@ -62,12 +62,13 @@ const routers = () => {
 
                     <Route exact path={'/404'} component={NotFound}/>
 
-                    <Route path={'/'} render={() =>
-                        localStorage.getItem('token') ? (
-                            <AuthorizedUser {...history}/>
-                        ) : (
-                            <Redirect to="/login"/>
-                        )
+                    <Route path={'/'} render={(props) => {
+                        if (localStorage.getItem('token')) {
+                            return <AuthorizedUser {...history}/>
+                        } else {
+                            return <Redirect to={`/login?redirect=${props.location.pathname}`}/>
+                        }
+                    }
                     }/>
                 </Switch>
             </Router>

@@ -25,7 +25,6 @@ fbq('track', 'PageView');`
     });
 
     useEffect(() => {
-
         if (props.match.params.status === 'logout') {
             localStorage.removeItem('token');
             localStorage.removeItem('userId');
@@ -48,7 +47,9 @@ fbq('track', 'PageView');`
                         <h4>Welcome back, Please login <br/> to your account</h4>
                     </div>
 
-                    <LoginPageForm/>
+                    <LoginPageForm
+                        location={props.location}
+                    />
 
                     <div className="redirect-link">
                         Don’t have an account?

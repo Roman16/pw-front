@@ -123,10 +123,10 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
 
         // setTimeout(() => {
 
-            $('.table-overflow').animate({scrollLeft: 100000}, 400);
+        $('.table-overflow').animate({scrollLeft: 100000}, 400);
 
-            // const objDiv = document.querySelector('.table-overflow');
-            // objDiv.scro = 10000000;
+        // const objDiv = document.querySelector('.table-overflow');
+        // objDiv.scro = 10000000;
         // }, 300)
 
     }
@@ -659,7 +659,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                                 <div className="row">
                                     <div className="sales">
                                         Sales
-
 
                                         <div className="starts">
                                             {[0, 1, 2, 3, 4].map(star => (

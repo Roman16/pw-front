@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {Input, Table} from "antd";
-import moment from "moment";
-import {actionField, dateField, infoField, reasonField} from "../../PPCAutomate/Report/ReportTable/Tables/const";
-import DatePicker from "../../../components/DatePicker/DatePickerRange";
 import Filters from "../../PPCAutomate/Report/Filters/Filters";
+import {actionField, dateField, infoField, reasonField} from "../../PPCAutomate/Report/ReportTable/Tables/const";
+import {adminServices} from "../../../services/admin.services";
 
 let filtersChanges = false;
 
-const UserReports = ({userReports, onCheck, userId}) => {
+const Reports = ({userId}) => {
+    const [reports, setReports] = useState([]);
     const [fields, setFields] = useState({});
     const [filters, setFilters] = useState([]);
     const [reportsQueryParams, setReportsQueryParams] = useState({
@@ -17,6 +17,15 @@ const UserReports = ({userReports, onCheck, userId}) => {
         sorterType: null
     });
 
+    const onCheck = (queryParams) => {
+        adminServices.checkReports(queryParams)
+            .then(res => {
+                setReports(res)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
 
     const changeFieldHandler = (e) => {
         setFields({
@@ -29,7 +38,6 @@ const UserReports = ({userReports, onCheck, userId}) => {
         setFilters(filters);
         filtersChanges = true;
     }
-
 
     const getUserReports = (e) => {
         onCheck({
@@ -103,15 +111,15 @@ const UserReports = ({userReports, onCheck, userId}) => {
             </div>
 
 
-            {typeof userReports === 'string' && <h2>{userReports}</h2>}
+            {typeof userReports === 'string' && <h2>{reports}</h2>}
 
-            {userReports && userReports.data && <Table
-                dataSource={userReports.data}
+            {reports && reports.data && <Table
+                dataSource={reports.data}
                 columns={userInformationColumns}
                 pagination={{
                     pageSize: reportsQueryParams.size,
                     current: reportsQueryParams.page,
-                    total: userReports.total_size
+                    total: reports.total_size
                 }}
 
                 onChange={changeTableParamsHandler}
@@ -121,4 +129,4 @@ const UserReports = ({userReports, onCheck, userId}) => {
     )
 };
 
-export default UserReports;
+export default Reports;

@@ -42,7 +42,6 @@ function login(user) {
                             created_at: moment(new Date()).unix()// Signup date as a Unix timestamp
                         });
 
-
                         const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
                             ppcConnected = userFullInformation.account_links[0].amazon_ppc.is_connected;
 
@@ -53,7 +52,11 @@ function login(user) {
                         } else if (!ppcConnected && mwsConnected) {
                             history.push('/connect-ppc-account');
                         } else {
-                            history.push('/ppc/optimization');
+                            if (user.redirectLink) {
+                                history.push(user.redirectLink);
+                            } else {
+                                history.push('/ppc/optimization');
+                            }
                         }
                     })
             });

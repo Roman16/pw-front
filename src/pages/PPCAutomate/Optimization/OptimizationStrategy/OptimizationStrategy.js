@@ -18,6 +18,7 @@ import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmAction
 import {productsActions} from "../../../../actions/products.actions";
 import CustomSelect from "../../../../components/Select/Select";
 import {notification} from "../../../../components/Notification";
+import {SVG} from "../../../../utils/icons";
 
 const Option = Select.Option;
 
@@ -25,10 +26,13 @@ const strategies = [
     {
         name: 'ACoS Targeting',
         key: 'AchieveTargetACoS',
-        img: acosTargetingImage,
+        img: 'acos-targeting',
         jeffRemark: `I’m hunting this <span>target ACoS</span> for over <br> decades. Let’s get it!`,
         description: `This strategy designed for sellers who know what ACoS they are targeting. Make sure you've correctly calculated your Target ACoS. <br/>Press start and see how the algorithm is making changes to get the results you want.`,
         descriptionTitle: 'Get the desired ACoS!',
+        sales: 3,
+        acos: 1,
+        color: '#EC7F5C',
         value: {
             'Spend/Rev.': "9%",
             'Profit/Rev.': "18%",
@@ -39,10 +43,13 @@ const strategies = [
     {
         name: 'Product Launch',
         key: 'LaunchProduct',
-        img: productLaunchImage,
+        img: 'product-launch',
         jeffRemark: `I’m just starting up. Please help me launch my <br> brand <span>new product.</span>`,
         description: `Strategy designed for sellers who wants to launch or relaunch the product. The algorithm will be more aggressive with the bids, so you will get your first sales, reviews, and increase your brand awareness. It works fantastic with other launch activities like giveaways and promotions.`,
         descriptionTitle: 'Launch my product!',
+        sales: 3,
+        acos: 5,
+        color: '#6D6DF6',
         value: {
             'Spend/Rev.': "18%",
             'Profit/Rev.': "< 5%",
@@ -53,10 +60,13 @@ const strategies = [
     {
         name: 'Organic Sales Growth',
         key: 'BoostOverallProfit',
-        img: organicSalesGrowthImage,
+        img: 'organic-sales-growth',
         jeffRemark: `All I care about is <span>organic sales.</span> I want to break-even  <br> on PPC so to boost my keywords position.`,
         description: `This strategy designed for sellers who want to keep their organic ranking positions with PPC efforts. So they can make more profit from Organic Sales. It will achieve your break-even ACoS to keep higher sales from ads that will lead to growing your organic sales.`,
         descriptionTitle: 'Leverage organic sales!',
+        sales: 5,
+        acos: 5,
+        color: '#83FED0',
         value: {
             'Spend/Rev.': "12%",
             'Profit/Rev.': "26%",
@@ -67,10 +77,13 @@ const strategies = [
     {
         name: 'Revenue Growth',
         key: 'GrowOverallSales',
-        img: revenueGrowthImage,
+        img: 'ppc-profit-growth',
         jeffRemark: `<span>ACoS?</span> Meh.. I want that Lambo <br> Let's grow my revenue!`,
         description: `This strategy designed for sellers who want to boost their overall sales, so to rank for more keywords. It requires increasing your advertising budget and keeping the ACoS higher than your break-even ACoS.`,
         descriptionTitle: 'Let’s grow your numbers!',
+        sales: 5,
+        acos: 5,
+        color: '#F0B849',
         value: {
             'Spend/Rev.': "18%",
             'Profit/Rev.': "14%",
@@ -81,10 +94,13 @@ const strategies = [
     {
         name: 'Profitable PPC',
         key: 'BoostPPCProfit',
-        img: profitablePpcImage,
+        img: 'overall-profit-growth',
         jeffRemark: `I don't care about all these metrics. I just want <span>low <br> ACoS</span> so I can share it on my Facebook page.`,
         description: `This strategy designed for sellers who want to increase their PPC profit. The Software will optimize all the bleeding and unprofitable keywords with proper bid management to get the best converting ad position possible.`,
         descriptionTitle: 'Maximize my PPC Profit!',
+        sales: 4,
+        acos: 2,
+        color: '#5BEBF3',
         value: {
             'Spend/Rev.': "7%",
             'Profit/Rev.': "22%",
@@ -100,117 +116,60 @@ const RUNNING = 'RUNNING';
 
 
 function StrategyItem({
-                          strategy: {description, descriptionTitle, value, img, jeffRemark, key},
-                          index,
-                          desired_target_acos,
-                          activeStrategy,
+                          strategy: {description, img, name, sales, acos, color},
+                          onClick,
                           isActivated,
-                          onStart,
-                          onStop,
-                          processing,
-                          visible,
-                          productId,
-                          onSaveTargetAcos,
-                          status
+                          selected,
                       }) {
-    const [targetAcos, setTargetAcos] = useState(desired_target_acos),
-        [fieldHasError, setError] = useState(false);
-
-    useEffect(() => {
-        setTargetAcos(desired_target_acos)
-    }, [desired_target_acos]);
-
     return (
-        <form className={`strategy-item  slide-${index + 1} ${visible && 'visible'}`} onSubmit={(e) => {
-            e.preventDefault();
-
-            if (targetAcos > 0 || key !== 'AchieveTargetACoS') {
-                onStart(targetAcos);
-            } else {
-                setError(true);
-                notification.error({title: 'Enter your target ACoS first'})
-            }
-        }}>
-            <div className="description-block">
+        <div
+            className={`strategy-item ${selected && 'selected'}`}
+            style={{borderColor: color}}
+            onClick={onClick}
+        >
+            <div className="row">
                 <div className="col">
-                    <div>
-                        <h4>{descriptionTitle}</h4>
-                        <p dangerouslySetInnerHTML={{__html: description}}/>
+                    <div className="title">
+                        <i style={{fill: color}}>
+                            <SVG id={img}/>
+                        </i>
+                        {name}
                     </div>
 
-                    <div className="value-list">
-                        {Object.keys(value).map(key => (
-                            <div key={key}>
-                                <span className='metric-name'>{key}</span>
-                                <span className={`metric-value ${value[key]}`}>{value[key]}</span>
+                    <div className="row">
+                        <div className="sales">
+                            Sales:
+
+                            <div className="starts">
+                                {[0, 1, 2, 3, 4].map(star => (
+                                    <div style={{width: `${4 + star}px`, height: `${4 + star}px`}}
+                                         className={star <= sales ? 'active' : ''}/>
+                                ))}
                             </div>
-                        ))}
+                        </div>
+                        <div className="acos">
+                            ACoS:
+
+                            <div className="starts">
+                                {[0, 1, 2, 3, 4].map(star => (
+                                    <div style={{width: `${4 + star}px`, height: `${4 + star}px`}}
+                                         className={star <= acos ? 'active' : ''}/>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div className="image">
-                    {index === 0 && <div className="target-acos">
-                        <span>Enter your target ACoS</span>
-                        <InputCurrency
-                            className={`${fieldHasError && 'empty-field'}`}
-                            typeIcon={'percent'}
-                            value={targetAcos}
-                            onFocus={() => {
-                                setError(false)
-                            }}
-                            onChange={value => {
-                                setTargetAcos(value);
-                                setError(false)
-                            }}
-                        />
-                        <button type={'button'} className='btn default' onClick={() => onSaveTargetAcos(targetAcos)}
-                                disabled={processing || productId == null}>save
-                        </button>
-                    </div>}
-
-                    <img src={img} alt=""/>
-                </div>
+                {isActivated && <i style={{fill: color}} className={'is-activated'}>
+                    <SVG id={'activated-strategy-icon'}/>
+                </i>}
             </div>
 
-            <div className="col">
-                <div className="remark" dangerouslySetInnerHTML={{__html: jeffRemark}}/>
-
-                <div className="actions">
-                    {isActivated ? (
-                            activeStrategy === key ?
-                                <button type="button" disabled={processing || productId == null}
-                                        className='btn default stop-btn'
-                                        onClick={onStop}>
-                                    stop
-                                    {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faStop}/>}
-                                </button>
-                                :
-                                <>
-                                    <button disabled={processing || productId == null} className='btn default'
-                                            onClick={() => onStart(targetAcos)}>
-                                        update
-                                        {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faPlay}/>}
-                                    </button>
-
-                                    <button type="button" disabled={processing || productId == null}
-                                            className='btn default stop-btn'
-                                            onClick={onStop}>
-                                        stop
-                                        {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faStop}/>}
-                                    </button>
-                                </>
-                        )
-                        :
-                        <button disabled={processing || productId == null} className='btn default'
-                                {...index === 1 && {"data-intercom-target": "start-button"}}
-                        >
-                            start
-                            {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faPlay}/>}
-                        </button>
-                    }
-                </div>
-            </div>
-        </form>
+            <div
+                className="description"
+                dangerouslySetInnerHTML={{__html: description}}
+            />
+        </div>
     )
 }
 
@@ -226,8 +185,8 @@ const OptimizationStrategy = ({product: {desired_target_acos, optimization_strat
         dontShowStopWindowAgain: state.products.dontShowStopNotificationAgain,
     }));
 
-    const [slider, setSlider] = useState(),
-        [selectedSlide, setSelectedSlide] = useState(0),
+    const [selectedSlide, setSelectedSlide] = useState(0),
+        [targetAcos, setTargetAcos] = useState(desired_target_acos),
         [visibleNetMarginWindow, setNetMarginWindow] = useState(false),
         [visibleConfirmWindows, setConfirmWindows] = useState({
             confirmStartAllProducts: false,
@@ -317,71 +276,19 @@ const OptimizationStrategy = ({product: {desired_target_acos, optimization_strat
         });
     }
 
-    function goToSlideHandler(index) {
-        if (!sliding) {
-            sliding = true;
-            slider.slickGoTo(index);
-            setSelectedSlide(index);
-
-            setTimeout(() => {
-                sliding = false;
-            }, 600)
-        }
+    function selectStrategy(index) {
+        setSelectedSlide(index);
     }
 
     return (
         <Fragment>
-            <section className="optimize-strategy">
+            <section className={`optimize-strategy slide-${selectedSlide + 1}`}>
                 <h3>
                     Our Strategies
-                    {/*<Icon*/}
-                    {/*    type="info-circle"*/}
-                    {/*    theme="filled"*/}
-                    {/*    onClick={() => onShowDrawer("strategy")}*/}
-                    {/*/>*/}
                 </h3>
 
-                <div className="strategies desc">
-                    <div className="all-strategies">
-                        {strategies.map((item, index) => (
-                            <>
-                                <div
-                                    key={item.key}
-                                    data-intercom-target={`${item.key}-strategy`}
-                                    className={`strategy-name ${index === selectedSlide && 'selected-strategy'} ${optimization_strategy === item.key && status === RUNNING && 'running-strategy'}`}
-                                    onClick={() => goToSlideHandler(index)}>
-
-
-                                    {item.name}
-                                </div>
-
-                                <input
-                                    type="radio"
-                                    name="slideItem"
-                                    id={`slide-item-${index + 1}`}
-                                    className="slide-toggle"
-                                    checked={index === selectedSlide}
-                                />
-                            </>
-                        ))}
-
-                        <div className="slider">
-                            <div className="bar"/>
-                        </div>
-                    </div>
-
-                    <Slider
-                        dots={false}
-                        infinite={true}
-                        swipe={false}
-                        speed={500}
-                        initialSlide={selectedSlide}
-                        slidesToShow={1}
-                        slidesToScroll={1}
-                        ref={slider => {
-                            setSlider(slider)
-                        }}
-                    >
+                <div className="row">
+                    <div className="strategy-list">
                         {strategies.map((item, index) => (
                             <StrategyItem
                                 productId={productId}
@@ -389,44 +296,85 @@ const OptimizationStrategy = ({product: {desired_target_acos, optimization_strat
                                 key={item.key}
                                 strategy={item}
                                 index={index}
+                                status={status}
                                 processing={processing}
                                 activeStrategy={optimization_strategy}
-                                isActivated={status === 'RUNNING'}
-                                status={status}
-                                onStart={startOptimizationHandler}
-                                onStop={stopOptimizationHandler}
-                                onSaveTargetAcos={onSaveTargetAcos}
+                                isActivated={status === 'RUNNING' && optimization_strategy === item.key}
+                                onClick={() => selectStrategy(index)}
+
+                                selected={selectedSlide === index}
                             />
                         ))}
-                    </Slider>
-                </div>
-
-                <div className="strategies mob">
-                    <div className="all-strategies">
-                        <CustomSelect onChange={goToSlideHandler} value={selectedSlide}>
-                            {strategies.map((item, index) => (
-                                <Option key={item.key} value={index}>{item.name}</Option>
-                            ))}
-                        </CustomSelect>
                     </div>
 
-                    {strategies.map((item, index) => (
-                        <StrategyItem
-                            productId={productId}
-                            desired_target_acos={desired_target_acos}
-                            key={item.key}
-                            strategy={item}
-                            index={index}
-                            status={status}
-                            processing={processing}
-                            activeStrategy={optimization_strategy}
-                            isActivated={status === 'RUNNING'}
-                            onStart={startOptimizationHandler}
-                            onStop={stopOptimizationHandler}
+                    <div className="optimization-action">
+                        <i>
+                            <SVG id={`strategy-lines-${selectedSlide + 1}`}/>
+                        </i>
 
-                            visible={selectedSlide === index}
-                        />
-                    ))}
+                        {status === 'RUNNING' && optimization_strategy === strategies[selectedSlide].key ?
+                            <button
+                                className={'btn stop'}
+                                style={{backgroundColor: strategies[selectedSlide].color}}
+                                onClick={stopOptimizationHandler}
+                            >
+                                STOP
+
+                                <SVG id={'stop'}/>
+                            </button>
+                            :
+                            <button
+                                className={'btn'}
+                                style={{backgroundColor: strategies[selectedSlide].color}}
+                                onClick={startOptimizationHandler}
+                            >
+                                START
+
+                                <SVG id={'start'}/>
+                            </button>
+                        }
+
+
+                        {selectedSlide === 0 && <div className={'target-acos-form'}>
+                            <div className="row">
+                                <SVG id={'pw-logo'}/>
+
+                                <div className="question">
+                                    What is your Target ACoS?
+                                </div>
+                            </div>
+
+                            <div className="row">
+                                <div className="field-block">
+                                    Target ACoS:
+                                    <InputCurrency
+                                        value={targetAcos}
+                                        typeIcon={'percent'}
+                                        onChange={(value) => setTargetAcos(value > 100 ? 100 : value)}
+                                    />
+                                </div>
+
+                                <button onClick={() => onSaveTargetAcos(targetAcos)}>
+                                    <SVG id={'send-icon'}/>
+                                </button>
+                            </div>
+                        </div>}
+                    </div>
+
+                    <div className="strategy-statistic">
+                        {Object.keys(strategies[selectedSlide].value).map(item => (
+                            <div className="statistic-item">
+                                <i style={{stroke: strategies[selectedSlide].color}}>
+                                    <SVG id={'strategy-statistic-icon'}/>
+                                </i>
+
+                                <div>
+                                    <div className="name">{item}</div>
+                                    <h4>{strategies[selectedSlide].value[item]}</h4>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </section>
 
