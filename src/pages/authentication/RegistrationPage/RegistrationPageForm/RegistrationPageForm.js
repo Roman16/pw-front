@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 import StripeForm from "./StripeForm";
 import {Elements, injectStripe, StripeProvider} from "react-stripe-elements";
 
-const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+const stripeKey = process.env.REACT_APP_ENV === 'production' ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST;
 
 class RegistrationPage extends Component {
     state = {
