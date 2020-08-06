@@ -10,14 +10,22 @@
   }
 
   & > .row {
-   min-width: 1348px;
+    width: 1348px;
     margin: 0 auto;
+
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      width: 990px;
+    }
   }
 
   .strategy-list {
     width: 35%;
     display: flex;
     flex-direction: column;
+
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      width: 30%;
+    }
 
     .strategy-item {
       height: 91px;
@@ -29,6 +37,11 @@
       box-sizing: border-box;
       margin-bottom: 20px;
       cursor: pointer;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        height: 78px;
+        margin-bottom: 15px;
+      }
 
       &:last-child {
         margin: 0;
@@ -112,6 +125,11 @@
 
       .is-activated {
         margin: 0 0 0 auto;
+
+        svg {
+          width: 2rem;
+          height: 2rem;
+        }
       }
 
       .description {
@@ -153,12 +171,20 @@
   &.slide-1 {
     .selected {
       height: 196px;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        height: 168px;
+      }
     }
 
     .optimization-action {
       i {
         width: 100%;
         margin-top: -5px;
+
+        @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+          margin-top: -4px;
+        }
       }
     }
   }
@@ -166,24 +192,40 @@
   &.slide-2 {
     .selected {
       height: 179px;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        height: 154px;
+      }
     }
   }
 
   &.slide-3 {
     .selected {
       height: 196px;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        height: 168px;
+      }
     }
   }
 
   &.slide-4 {
     .selected {
       height: 179px;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        height: 154px;
+      }
     }
   }
 
   &.slide-5 {
     .selected {
       height: 179px;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        height: 154px;
+      }
     }
   }
 
@@ -203,9 +245,16 @@
       width: 100%;
     }
 
+
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      margin-left: -6px;
+      padding: 36px 0 0 0;
+    }
+
+
     .btn {
-      height: 67px;
-      width: 295px;
+      height: 4.785714285714286rem;
+      width: 21.071428571428573rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -217,6 +266,11 @@
       right: 0;
       top: 280px;
       margin: 0 auto;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        top: 236px;
+        left: 20px;
+      }
 
       &.stop {
         background: #343C5A !important;
@@ -245,6 +299,7 @@
       border-radius: 4px 4px 4px 0px;
       padding: 10px 15px 10px 10px;
 
+
       .row {
         display: flex;
         align-items: center;
@@ -263,7 +318,7 @@
       }
 
       .question {
-        height: 48px;
+        height: 3.4285714285714284rem;
         width: max-content;
         color: #343C5A;
         display: flex;
@@ -281,7 +336,7 @@
       }
 
       .field-block {
-        height: 48px;
+        height: 3.4285714285714284rem;
         display: flex;
         align-items: center;
         font-size: 1.1428571428571428rem;
@@ -296,10 +351,23 @@
         border-radius: 4px 4px 4px 0px;
 
         .InputCurrency {
-          width: 108px;
-          height: 32px;
+          width: 7.857142857142857rem;
+          height: 2.2857142857142856rem;
           margin: 0 0 0 10px;
+
+          .Dollar {
+            svg {
+              width: 1.4285714285714286rem;
+              height: 1.4285714285714286rem;
+            }
+          }
         }
+      }
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        left: 20px;
+        top: 6px;
+        width: 285px;
       }
     }
   }
@@ -309,10 +377,11 @@
     flex-direction: column;
     padding: 75px 0 0 0;
 
+
     .statistic-item {
       display: flex;
       align-items: center;
-      margin-bottom: 75px;
+      margin-bottom: 85px;
 
       &:last-child {
         margin: 0;
@@ -320,6 +389,11 @@
 
       i {
         margin: 0 15px 0 0;
+
+        svg {
+          width: 3.7857142857142856rem;
+          height: 3.7857142857142856rem;
+        }
       }
 
       & > div {
@@ -339,6 +413,19 @@
         line-height: 1.7142857142857142rem;
         color: #343C5A;
         margin: 0;
+      }
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      padding: 65px 0 0 10px;
+      margin: 0 -10px 0 0;
+
+      .statistic-item {
+        margin-bottom: 76px;
+
+        h4 {
+          margin: 3px 0 0 0;
+        }
       }
     }
   }
