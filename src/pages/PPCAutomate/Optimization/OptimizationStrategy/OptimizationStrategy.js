@@ -326,7 +326,7 @@ const OptimizationStrategy = ({product: {desired_target_acos, optimization_strat
                             <button
                                 className={'btn'}
                                 style={{backgroundColor: strategies[selectedSlide].color}}
-                                onClick={startOptimizationHandler}
+                                onClick={() => startOptimizationHandler(targetAcos)}
                             >
                                 START
 
