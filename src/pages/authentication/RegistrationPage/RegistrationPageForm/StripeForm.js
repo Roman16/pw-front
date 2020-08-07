@@ -51,7 +51,7 @@ const StripeForm = ({stripeElementChange, cardNumber, expiry, cvc}) => {
 
     return (
         <div className="stripe-form">
-            <div className="form-title">Billing Information</div>
+            <div className="form-title">Billing Information <span>(You can cancel at any time, risk-free)</span></div>
 
             <div className="card-container">
                 <div className="card-container__card">

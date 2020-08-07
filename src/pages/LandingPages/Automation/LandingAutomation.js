@@ -9,38 +9,38 @@ import './LandingAutomation.less';
 import {history} from "../../../utils/history";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import {casesImages} from "../../../assets/img/landing-automation/cases";
 import {stepsImages} from "../../../assets/img/landing-automation/steps";
 import {avatars} from "../../../assets/img/landing-automation/avatars/avatars";
-import {underHoodImages} from "../../../assets/img/landing-automation/under-hood";
-import JeffInPlane from '../../../assets/img/landing-automation/Illustration.png';
-import JeffDaily from '../../../assets/img/landing-automation/jeff-daily.svg';
-import amazonApp from '../../../assets/img/landing-automation/amazon-app-store.svg';
-import spnLogo from '../../../assets/img/logo/amazon-spn-logo-dark.png';
-
-import dashIcon from '../../../assets/img/landing-automation/dash.svg';
-import listIcon from '../../../assets/img/landing-automation/yes_green.svg'
-import confidenceLevelImage from '../../../assets/img/landing-automation/confidence-level.svg';
-import awsImage from '../../../assets/img/landing-automation/aws.svg';
-import appStoreImage from '../../../assets/img/landing-automation/app-store.svg';
-import pwSpnImage from '../../../assets/img/landing-automation/pw&amazonSpn.svg';
-import blogPostImage from '../../../assets/img/landing-automation/blog-post.png';
-import supportImage from '../../../assets/img/landing-automation/Vitalik-help.png';
-import emojiImage from '../../../assets/img/landing-automation/emoji.png';
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {Modal} from "antd";
+import {Checkbox, Modal, Select} from "antd";
+import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png';
+import amazonLogo from '../../../assets/img/amazon.png';
+import exampleSoftImage from '../../../assets/img/landing-automation/example-soft.png';
+import exampleAmazonImage from '../../../assets/img/landing-automation/example-amazon-screen.png';
+import whiteWhale from '../../../assets/img/landing-automation/white-whale.svg';
+import pwStructureImage from '../../../assets/img/landing-automation/pw-structure.png';
+import vitaliiAvatar from '../../../assets/img/landing-automation/vitalii-avatar.png';
+import basketImage from '../../../assets/img/landing-automation/basket.png';
+import {underHoodImages} from '../../../assets/img/landing-automation/under-hood';
+import dataDrivenImage from '../../../assets/img/landing-automation/data-driven-image.png';
+import contactFormImage from '../../../assets/img/landing-automation/contact-form-image.png';
+
 import {Link} from "react-router-dom";
 import OurCases from "../components/OurCases/OurCases";
 import Comments from "../components/Comments/Comments";
+import {SVG} from "../../../utils/icons";
+import CustomSelect from "../../../components/Select/Select";
 
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
 const pixelRatio = window.devicePixelRatio;
 
 let swipeTimeoutId = null;
+
+const Option = Select.Option;
 
 
 const stepsSlider = [
@@ -360,8 +360,8 @@ const LandingAutomation = () => {
     }
 
     useEffect(() => {
-        document.getElementById('cases-slider').addEventListener('touchstart', handleTouchStart, false);
-        document.getElementById('cases-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'case'), false);
+        // document.getElementById('cases-slider').addEventListener('touchstart', handleTouchStart, false);
+        // document.getElementById('cases-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'case'), false);
     }, [currentCaseSlide]);
     //
     // useEffect(() => {
@@ -383,499 +383,530 @@ const LandingAutomation = () => {
             <Header/>
 
             <section className='first-section'>
+                <img src={whiteWhale} alt="" className={'whale'}/>
+
                 <div className='container'>
-                    <div className='content'>
-                        <div className='image-block'>
-                            <img src={JeffInPlane} alt=""/>
-                        </div>
+                    <h2>
+                        Accelerate your <span>Amazon Business</span> with the help <br/>
+                        of advanced decision-making technologies using <br/>
+                        <span>Big Data & Data Science</span>
+                    </h2>
 
-                        <div className="sponsored">
-                            <span><div/>Sponsored Products</span>
-                            <span><div/>US Marketplace</span>
-                        </div>
+                    <button className={'btn'}>
+                        Let’s talk
+                    </button>
 
-                        <h1>Engage in Amazon <br/> business <span>not in ads</span></h1>
+                    <img src={amazonSpnWhiteLogo} alt="" className={'spn-logo'}/>
 
-                        <div className='description'>
-                            Profit Whales fully automates Amazon PPC management for Third-party Sellers and Brands on
-                            Amazon Marketplace in One Click with the help of custom-built algorithms and Data Science.
-                            And no PPC knowledge required!
-                        </div>
+                    <img src={exampleSoftImage} alt="" className={'example-soft-image'}/>
 
-                        <div className="col">
-                            <div className='advantages'>
-                                <span><div/>Cancel anytime</span>
-                                <span><div/>14-day Free Trial</span>
-                                <span><div/>No credit card required</span>
+                    <div className="row">
+                        <Link to={'/demo'} className={'demo'}>
+                            Talk with us
+
+                            <div className="icon">
+                                DEMO
+                            </div>
+                        </Link>
+
+                        <div className="video-btn" onClick={() => switchWindow(true)}>
+                            <div className="pulse">
+                                <SVG id={'play-icon'}/>
                             </div>
 
-                            <div className="actions">
-                                <button className='btn default' onClick={goToRegistrationPage}>
-                                    START FREE
-                                </button>
-
-                                <span>Or <Link to={'/demo-call'} target={'_blank'}>Book a Demo</Link></span>
-
-                                <img src={spnLogo} alt=""/>
-                            </div>
+                            watch video
                         </div>
                     </div>
                 </div>
 
-                <div className="video-btn">
-                    Why Profit Whales?
-                    <div className="pulse" onClick={() => switchWindow(true)}>
-                        <div/>
-                        <FontAwesomeIcon icon={faPlay}/>
+            </section>
+
+            <section className={'top-amazon-platforms'}>
+                <div className="container">
+                    <h2>
+                        Trusted by <span>TOP</span> brands on Amazon platform
+                    </h2>
+
+                    <div className="partner-logos">
+                        <img src={amazonLogo} alt=""/>
+                        <img src={amazonLogo} alt=""/>
+                        <img src={amazonLogo} alt=""/>
                     </div>
+
+                    <h2>
+                        <span>Smart Bid</span> for every Ad position
+                    </h2>
+
+                    <p>
+                        Stay ahead of the competition with our smart bidding technology that is based on 16+ metrics
+                    </p>
+
+                    <img src={exampleAmazonImage} alt="" className={'amazon-example'}/>
+
+                    <h2>
+                        <span> All Amazon Ad types in one place</span> <br/>
+                        Programmatic Algorithms + Managed Service
+                    </h2>
+
+                    <img src={pwStructureImage} alt="" className={'pw-structure'}/>
                 </div>
             </section>
 
-            <section className='daily-routine-jeff'>
-                <div className='container'>
-                    <div className="image-block">
-                        <img src={JeffDaily} alt=""/>
-                    </div>
-
-                    <div className="content">
-                        <div className="title">
-                            This is Jeff. He has a successful Amazon FBA business. But,
-                        </div>
-
-                        <div className="description">
-                            every day, he is dealing with a lot of routine tasks regarding Amazon Pay Per Click
-                            campaigns instead of launching new products and improving existing ones.
-                        </div>
-
-                        <div className='list'>
-                            <div>
-                                Jeff spends up to 40 hours per week on Amazon Advertising and can’t scale it because of
-                                the amount of data, and it’s complexity.
-                            </div>
-
-                            <div>
-                                He is wasting a ton of money on unprofitable keywords and not utilizing the search terms
-                                that can maximize his Amazon sales.
-                            </div>
-
-                            <div>
-                                Jeff is always dealing with unfriendly and complicated Amazon Advertising Reports and
-                                rule-based software’s that make things harder.
-                            </div>
-
-                            <div>
-                                He doesn’t manage his Amazon pay per click campaigns and keywords bids in the way to
-                                stay competitive and win more sales, because it takes too much time and knowledge.
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-
-            <section className='steps'>
-                <div className='container'>
-                    <h2>How can we help?</h2>
-                    <h3>We developed all about ONE Sponsored Ads Software for Amazon FBA Seller like you.</h3>
-
-                    <div className="row">
-                        <Slider
-                            dots={false}
-                            infinite={true}
-                            slidesToShow={1}
-                            slidesToScroll={1}
-                        >
-                            <div>
-                                <img src={stepsImages.slide1} alt=""/>
-                            </div>
-                            <div>
-                                <img src={stepsImages.slide2} alt=""/>
-                            </div>
-                            <div>
-                                <img src={stepsImages.slide3} alt=""/>
-                            </div>
-                            <div>
-                                <img src={stepsImages.slide4} alt=""/>
-                            </div>
-                            <div>
-                                <img src={stepsImages.slide5} alt=""/>
-                            </div>
-                        </Slider>
-
-                        <div className="content">
-                            <h3>Strategy based algorithm</h3>
-                            <p>
-                                We designed five Amazon FBA advertising goals that you can choose. Every strategy will
-                                adjust the algorithm to reach your desired results. You can change the goal as your
-                                business evolves. Just select the right strategy and press START. That’s all you need to
-                                automate your whole Pay Per Click Advertising on Amazon.
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <div className="row">
-                        <div className="content">
-                            <h3>See the changes it performs</h3>
-                            <p>
-                                You have to make yourself comfortable, sit, and enjoy changes that the software
-                                performed. We created the Amazon Ads Changes Reporting tool that shows you everything
-                                that was made by the algorithm and why it did it. You see, for what you pay, it’s
-                                soothing, right?
-                            </p>
-                        </div>
-
-                        <div className="image">
-                            <img src={stepsImages.seeChangesImage} alt=""/>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="image">
-                            <img src={stepsImages.moreDataImage} alt=""/>
-                        </div>
-
-                        <div className="content">
-                            <h3>Access a lot more data</h3>
-                            <p>
-                                We’re obsessed with data, and we guess you too, so we developed the Amazon Analytics
-                                Tool, so you can see your business metrics at a glance and make more profitable
-                                decisions. Twenty-three metrics will help you understand your business from a different
-                                perspective of view.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="content">
-                            <h3>Find the best hours for your Ads</h3>
-                            <p>
-                                Day-parting tool will allow you to see what time of the day your campaigns is out of
-                                budget, what hours and days drive most of the daily sales so that you can set up your
-                                PPC campaigns to catch up more eyeballs during peak hours.” Fact! 70% of the sales on
-                                Amazon happened from 7 am to 8 pm.” <br/>
-                                Let’s test it!
-                            </p>
-                        </div>
-
-                        <div className="image">
-                            <img src={stepsImages.dayPartingImage} alt=""/>
-                        </div>
-                    </div>
-
+            <section className={'custom-strategies'}>
+                <div className="container">
                     <div className="col">
-                        <button className="btn default" onClick={goToRegistrationPage}>Try Now</button>
-                        <p>Or <Link to={'/demo-call'} target={'_blank'}>Book a Demo</Link> No credit
-                            card <br/> required. 60-second sign up.</p>
+                        <h3>
+                            Custom strategies tailor-made for <br/>
+                            your <span>Amazon Business</span>
+                        </h3>
+
+                        <p>
+                            At Profit Whales, we understand the needs of our clients very clearly. Whatever the goals
+                            are, we will create a custom advertising strategy aligned with the overall brand strategy to
+                            achieve the highest profitability with maximum efficiency.
+                        </p>
+
+                        <button className={'btn'}>
+                            Let’s talk
+                        </button>
                     </div>
 
+                    <img src={vitaliiAvatar} alt=""/>
                 </div>
             </section>
 
             <section className='achievements'>
                 <div className="container">
-                    <div>
+                    <div className={'total-revenue'}>
+                        <div className="description">Total Amazon <br/> Revenue <br/> Optimized</div>
+                        <div className="value">$120M</div>
+                    </div>
+                    <div className={'total-ad-spend'}>
+                        <div className="description">Total Amazon <br/> Ad Spend <br/> Managed</div>
                         <div className="value">$16M</div>
-                        <div className="description">Total Amazon Ad Spend Managed</div>
                     </div>
-                    <div>
+                    <div className={'average-decrease'}>
+                        <div className="description">Average <br/> Decrease <br/> in Acos</div>
                         <div className="value">34%</div>
-                        <div className="description">Average Decrease <br/> in ACoS</div>
                     </div>
-                    <div>
-                        <div className="value">$240M</div>
-                        <div className="description">Total Amazon Revenue Optimized</div>
-                    </div>
-                    <div>
-                        <div className="value">27%</div>
-                        <div className="description">Average Increase in <br/>Revenue</div>
-                    </div>
-                    <div>
+                    <div className={'higher-ctr'}>
+                        <div className="description">Higher <br/> CTR</div>
                         <div className="value">32%</div>
-                        <div className="description">Higher CTR</div>
                     </div>
+                    <div className={'average-increase'}>
+                        <div className="description">Average <br/> Increase in <br/> Revenue</div>
+                        <div className="value">27%</div>
+                    </div>
+                </div>
+
+                <div className="lines-w">
+                    {[0, 1, 2].map(() => <div/>)}
+                </div>
+
+                <div className="lines-h">
+                    {[0, 1, 2, 3].map(() => <div/>)}
                 </div>
             </section>
 
-            <OurCases product={'ppc'}/>
+            <section className={'best-software'}>
+                <div className="container">
+                    <h2>
+                        <span>The #1</span> Amazon Advertising software for <br/> your business
+                    </h2>
 
-            <Comments/>
+                    <p className={'section-description'}>
+                        Profit Whales is the platform that has everything you need to optimize your Amazon Business.
+                    </p>
+                </div>
+            </section>
+
+            <section className={'empower-business'}>
+                <div className="container">
+                    <h4>
+                        Empower you <br/> Amazon Business
+                    </h4>
+
+                    <img src={basketImage} alt=""/>
+
+                    <p>
+                        Smart Automated Advertising Solution
+                    </p>
+
+                    <button className={'btn'}>
+                        TALK WITH US
+                    </button>
+                </div>
+            </section>
+
 
             <section className='under-hood'>
                 <div className="container">
-                    <h2>What’s under the hood?</h2>
-
                     <div className="list">
                         <div>
-                            <div className="col">
-                                <div className="image"><img src={underHoodImages.icon1} alt=""/></div>
-                                <div className='title'>Product Targetings Optimization</div>
-                            </div>
                             <div className="description">
-                                Price aware algorithm optimizes your product attribute targeting (ASIN’s, categories)
-                                based on your target ACoS. It also makes bid adjustments based on your historical data
-                                to reach the best results possible.
+                                <h3>
+                                    <span>  Create ready-to-go <br/> Amazon PPC campaigns</span> <br/> using Zero to
+                                    Hero Tool
+                                </h3>
+
+                                <p>
+                                    It takes just a few minutes to set up! We’ve made this part easy, intuitive, and for
+                                    any level user.
+                                </p>
+
+                                <p>
+
+                                    Zero to Hero is excellent at quickly gathering lots of relevant
+                                    keywords and target ASINs that will start driving sales right away. No need for a
+                                    warm-up period (normally associated with manually creating new PPC campaigns).
+                                </p>
+
+                                <p>
+                                    Zero to Hero takes a few minutes to do its work. Come back shortly after and check
+                                    on
+                                    your Seller Central Campaigns Manager to see the new campaigns already up and
+                                    running!
+                                </p>
+                            </div>
+
+                            <div className="image"><img src={underHoodImages.icon1} alt=""/></div>
+                        </div>
+
+                        <div>
+                            <div className="image"><img src={underHoodImages.icon2} alt=""/></div>
+
+                            <div className="description">
+                                <h3>
+                                    <span> Patented Profit Whales <br/> PPC campaign structure </span> <br/> For Every
+                                    Ad Instrument
+                                </h3>
+
+                                <p>
+                                    Amazon Advertising Campaigns are more than a set of folders that house your
+                                    targeting keywords, negatives, bids, and ASIN’s. They are a sharp tool to not only
+                                    keep your different approaches and advertising techniques separate, but also to
+                                    advertise in a controlled and accountable manner.
+                                </p>
+
+                                <p>
+                                    A unique Ad Campaign structure is
+                                    used for Sponsored Product, Display, and Brand campaigns. Profit Whales offers its
+                                    unique, time-proven PPC Campaign structure. This structure leverages both our PPC
+                                    management experience and successful tests on dozens of big brands on Amazon.
+                                </p>
                             </div>
                         </div>
 
                         <div>
-                            <div className='col'>
-                                <div className="image"><img src={underHoodImages.icon2} alt=""/></div>
-                                <div className='title'>Negative Keywords Adding</div>
-                            </div>
                             <div className="description">
-                                Adding not relevant customer search terms that have unhealthy ACoS, or too many clicks
-                                and lack of sales, as negative keywords in the Auto and Broad campaigns to ensure you
-                                invest your money in the best keywords for your product.
+                                <h3>
+                                    <span>Goal-driven algorithms</span>
+                                </h3>
+
+                                <p>
+                                    Profit Whales Automated PPC Optimization Tool is smart software. And to start
+                                    working correctly, it requires a strategy to pursue.
+                                </p>
+
+                                <p>
+                                    Pick one that suits your Amazon
+                                    business goals best! Automation software utilizes a ton of data to gauge the
+                                    performance of PPC campaigns. It conducts its daily optimization following the
+                                    selected strategy.
+                                </p>
+                            </div>
+
+                            <div className="image"><img src={underHoodImages.icon3} alt=""/></div>
+                        </div>
+
+                        <div>
+                            <div className="image"><img src={underHoodImages.icon4} alt=""/></div>
+
+                            <div className="description">
+                                <h3><span>Algorithmic bid <br/> optimization</span></h3>
+
+                                <p>
+                                    Keyword level optimization is based on profitability, organic and PPC position, and
+                                    other factors.
+                                </p>
+
+                                <p>
+                                    Bid optimization is usually a large chunk of a PPC optimization
+                                    routine, and it’s all about increasing or decreasing bids based on recent
+                                    performance history.
+                                </p>
+
+                                <p>
+                                    Profit Whales automated optimization ensures that your product
+                                    is always positioned at a bid’s “sweet spot.” Our smart bidding algorithm allows it
+                                    to arrive there much faster than under manual optimization, giving our experts time
+                                    to do the job that machines can’t.
+                                </p>
                             </div>
                         </div>
 
                         <div>
-                            <div className='col'>
-                                <div className="image"><img src={underHoodImages.icon3} alt=""/></div>
-                                <div className='title'>Keywords Optimization</div>
-                            </div>
                             <div className="description">
-                                The algorithm optimizes your keywords based on a lot of metrics like your product
-                                profitability and conversion rate. It makes bid adjustments to get the best Ad position
-                                for your product that will lead to a sale.
+                                <h3><span>Carefully monitor <br/> product data and <br/> act on it</span></h3>
+
+                                <p>
+                                    Unlike PPC managers, the Automation tool is always on standby to act. More so, it
+                                    takes into account multiple metrics before making any decisions.
+                                </p>
+
+                                <p>
+                                    So be it a major
+                                    jump in ACoS due to a competitor’s aggressive advertising or a subtle shift in a
+                                    number of organic sales due to better BSR — it will not go unnoticed by our
+                                    software.
+                                </p>
+
+                                <p>
+                                    Automation is capable of actively managing PPC campaigns. It can execute
+                                    both subtle changes and sharp, protective alterations while running the campaigns.
+                                </p>
+
+                                <p>
+                                    It delivers changes where they will be most effective for your product sales and
+                                    verifies the results 24/7.
+                                </p>
+                            </div>
+
+                            <div className="image"><img src={underHoodImages.icon5} alt=""/></div>
+                        </div>
+
+                        <div>
+                            <div className="image"><img src={underHoodImages.icon6} alt=""/></div>
+
+                            <div className="description">
+                                <h3><span>Product-level Metrics</span></h3>
+
+                                <p>
+                                    Log in to immediately see your individual product or account level profitability
+                                    over any given period, changes in advertising effectiveness, etc.
+                                </p>
+
+                                <p>
+                                    Our interface
+                                    allows for the ability to group key metrics from across all advertising boards (for
+                                    example, all the keywords from different ad groups) to quickly find the most
+                                    significant deviations and take immediate actions to stay on top of any situation.
+                                </p>
                             </div>
                         </div>
 
                         <div>
-                            <div className='col'>
-                                <div className="image"><img src={underHoodImages.icon4} alt=""/></div>
-                                <div className='title'>Negative Pat Creation</div>
-                            </div>
                             <div className="description">
-                                User search terms, which are ASINs that either have large ACoS, or a large number of
-                                clicks and lack of sales are added as negative ASIN PATs to ensure your product is
-                                showing only on competitors pages that have higher chance to convert into a sale
+                                <h3><span>Track the impact of ads on your organic sales</span></h3>
+
+                                <p>
+                                    This is our favorite part! It’s well known across all Amazon Sellers that an
+                                    intelligent and well-guided Sponsored Ads Campaigns (be it Sponsored Product,
+                                    Display, or Sponsored Brands) is capable of boosting product sales both from Ads
+                                    themselves and from organic search.
+                                </p>
+
+                                <p>
+                                    This happens because Amazon’s search algorithm
+                                    values products that show better and consistent sales (regardless of their source).
+                                    And of course, our dashboard readily provides the business with up-to-date
+                                    information on the total impact the advertising campaigns have on both ad sales —
+                                    and organic sales.
+                                </p>
+                            </div>
+
+                            <div className="image"><img src={underHoodImages.icon7} alt=""/></div>
+                        </div>
+
+                        <div>
+                            <div className="image"><img src={underHoodImages.icon8} alt=""/></div>
+
+                            <div className="description">
+                                <h3><span>Find the best hours for <br/> your Ads</span></h3>
+
+                                <p>
+                                    Dayparting is yet another tool that we use. Make sure that your ads will show with
+                                    greater accuracy and save your ad’s budget until high-demand hours with the best
+                                    CTR.
+                                </p>
+
+                                <p>
+                                    Our experts also benefit from the insights into when your product's demand
+                                    peaks. This better understanding of buyers allows our managers to fine-tune your
+                                    product and advertising by gathering information about when and where they'll have
+                                    the most impact on your business.
+                                </p>
                             </div>
                         </div>
 
                         <div>
-                            <div className='col'>
-                                <div className="image"><img src={underHoodImages.icon5} alt=""/></div>
-                                <div className='title'>Harvesting New Product Targetings</div>
-                            </div>
                             <div className="description">
-                                Our Amazon PPC Tool will search through your advertising reports to find profitable and
-                                relevant ASIN’s and add them to your Amazon PPC campaign to maximize your sales with
-                                lower ACoS.
+                                <h3><span>Clear executive reporting <br/> system + Email reports</span></h3>
+
+                                <p>
+                                    How is your business doing? How are the sales of your newly launched product? How
+                                    much did you spend on advertising?
+                                </p>
+
+                                <p>
+                                    Our weekly and monthly business executive
+                                    advertising reports will keep you up to date with every significant change to your
+                                    Seller performance. After working with dozens of businesses across almost all of
+                                    Amazon’s categories, we’ve come up with a lean, straight-to-business, and
+                                    straightforward report form. You can see this information in your account or get a
+                                    copy emailed to you every week and every month.
+                                </p>
                             </div>
+
+                            <div className="image"><img src={underHoodImages.icon9} alt=""/></div>
                         </div>
 
                         <div>
-                            <div className='col'>
-                                <div className="image"><img src={underHoodImages.icon6} alt=""/></div>
-                                <div className='title'>Adding New Keywords</div>
-                            </div>
+                            <div className="image"><img src={underHoodImages.icon10} alt=""/></div>
+
                             <div className="description">
-                                Adding potential and already valid user search terms as new keywords to PPC campaigns.
-                                The quality of the keywords is determined based on your Target ACoS, conversion rate,
-                                number of sales, and other essential metrics.
+                                <h3><span>Programmatic algorithms <br/> + Human Brains</span></h3>
+
+                                <p>
+                                    We have it all: neural network, sensitive algorithms, and a dashboard that provides
+                                    essential information and tools right under the manager's fingertips. But it's the
+                                    human brains behind this setup that makes the difference for our customers.
+                                </p>
+
+                                <p>
+                                    <b>Customer Support</b><br/>
+                                    Our dedicated managers are pros at using our software and other means to
+                                    provide businesses with the best Amazon sales possible. They stand vigilant and are
+                                    ready to guide, interfere, or override any automated software's decision to ensure
+                                    cutting-edge PPC performance for all and every business that entrusts us with their
+                                    Amazon advertising. With lots of optimization routines out of the way, they have
+                                    more time to focus on key business metrics and manage your PPC faster and more
+                                    effectively.
+                                </p>
+
+                                <p>
+                                    <b>Developer team</b><br/>
+                                    Our development team has completed its 31st major update
+                                    of Profit Whales software, but we know that there is still room for further
+                                    fine-tuning and improvement. Amazon evolves and adapts — and so do we. That is why
+                                    all our client businesses can rest assured that we will provide them with the best
+                                    PPC performance now, and we will continue to do so in the future.
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className='pricing'>
+            <section className={'data-driven-algorithms'}>
                 <div className="container">
-                    <h2>Our Pricing</h2>
+                    <h2>
+                        Data-Driven algorithms that extend our <br/> experts’ possibilities
+                    </h2>
+                </div>
 
-                    <div className='price-drawer price-list'>
+                <img src={dataDrivenImage} alt=""/>
+            </section>
+
+            <Comments/>
+
+            <section className={'new-blog-posts'}>
+                <div className="container">
+                    <h2>What’s new at our <span>BLOG</span></h2>
+
+
+                    <div className="posts">
+                        <div/>
+                        <div/>
+                        <div/>
+                    </div>
+                </div>
+            </section>
+
+            <section className={'contact-form'}>
+                <div className="container">
+                    <img src={contactFormImage} alt=""/>
+
+                    <form action="">
+                        <h3>Talk With Our Experts</h3>
+
                         <div className="row">
-                            <div className="col">
-                                <h2>What’s your monthly Amazon <br/> Advertising Spend?</h2>
+                            <label htmlFor="">
+                                First Name
+                                <input type="text" placeholder={'First Name'}/>
+                            </label>
 
-                                <div className="range-slider slider-container">
-                                    <div className="slider">
-                                        <input className="js-range-slider" type="text"/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col">
-                                <div className="sum">
-                                    <span className="result-sum">$ 69</span>
-                                    <span className='description'>
-                                       Estimated price per month based on your 30-day Amazon Ad Spend
-                                    </span>
-
-                                    <a href="https://profitwhales.com/pricing">
-                                        How is this calculated?
-                                    </a>
-                                </div>
-
-                                <button className='btn green-btn' onClick={goToRegistrationPage}>
-                                    Free Trial
-                                </button>
-                            </div>
+                            <label htmlFor="">
+                                Last Name
+                                <input type="text" placeholder={'Last Name'}/>
+                            </label>
                         </div>
 
-                        <div className="list">
-                            <div>
-                                <img src={listIcon} alt="yes"/>
-                                Fully Automated Amazon Advertising Optimization in 1 Click
-                            </div>
-                            <div>
-                                <img src={listIcon} alt="yes"/>
-                                Automated Harvesting of Search-Terms and Negative Keywords
-                            </div>
-                            <div>
-                                <img src={listIcon} alt="yes"/>
-                                Amazon Analytics Tool
-                            </div>
+                        <label htmlFor="">
+                            E-mail
+                            <input type="email" placeholder={'E-mail'}/>
+                        </label>
 
-                            <div>
-                                <img src={listIcon} alt="yes"/>
-                                Weekly Reports with Useful Information
-                            </div>
-                            <div>
-                                <img src={listIcon} alt="yes"/>
-                                The only Amazon Seller Tool you need for your business.
-                            </div>
-                            <div>
-                                <img src={listIcon} alt="yes"/>
-                                Friendly Support 24/7
-                            </div>
+                        <div className="row">
+                            <label htmlFor="">
+                                Average Monthly Sales
+                                <CustomSelect
+                                    placeholder={'Select by'}
+                                >
+                                    <Option value={'1'}>1</Option>
+                                </CustomSelect>
+                            </label>
+
+                            <label htmlFor="">
+                                Average Monthly Ad Spend
+                                <CustomSelect
+                                    placeholder={'Select by'}
+                                >
+                                    <Option value={'1'}>1</Option>
+                                </CustomSelect>
+                            </label>
                         </div>
 
-                        <button className='btn white' onClick={goToPricingPage}>
-                            Learn more
+                        <div className="row">
+                            <label htmlFor="">
+                                What AMZ Marketplace do you sell the most
+                                <CustomSelect
+                                    placeholder={'Select by'}
+                                >
+                                    <Option value={'1'}>1</Option>
+                                </CustomSelect>
+                            </label>
+
+                            <label htmlFor="">
+                                What is your main goal?
+                                <CustomSelect
+                                    placeholder={'Select by'}
+                                >
+                                    <Option value={'1'}>1</Option>
+                                </CustomSelect>
+                            </label>
+                        </div>
+
+                        <div className="row">
+                            <label htmlFor="">
+                                Enter your Storefront Name
+                                <input type="text" placeholder={'Enter your Storefront Name'}/>
+                            </label>
+
+                            <label htmlFor="">
+                                Enter your main category
+                                <input type="text" placeholder={' Enter your main category'}/>
+                            </label>
+                        </div>
+
+                        <Checkbox>Yes, I agree to Profit Whales Terms and Conditions & Privacy Policy</Checkbox>
+
+                        <button className={'btn'}>
+                            Get Started
                         </button>
-                    </div>
+                    </form>
                 </div>
             </section>
-
-            <section className='secure'>
-                <div className="container">
-                    <h2><span>Safe</span> and secure</h2>
-                    <p>
-                        Want to try Profit Whales but worried about the risk of a program
-                        handling your whole Amazon PPC optimization? Don’t worry.
-                        Profit Whales and Amazon have safeguards in place to ensure
-                        every decision we make is not risky for your account.
-                    </p>
-
-                    <div className="list">
-                        <div className="item">
-                            <div className="image">
-                                <img src={confidenceLevelImage} alt=""/>
-                            </div>
-                            <h4>Confidence Level</h4>
-                            <p>
-                                This is an algorithm that makes sure that the decision that our optimization makes is
-                                right by at least 90%. We will not reveal all the cards about how we calculate this, but
-                                we can assure you that the algorithm does not make deliberately wrong decisions.
-                            </p>
-                        </div>
-                        <div className="item">
-                            <div className="image">
-                                <img src={pwSpnImage} alt=""/>
-                            </div>
-                            <h4>Amazon SPN</h4>
-                            <p>
-                                Profit Whales is an official Amazon SPN participant. Amazon takes the
-                                information security of its sellers very seriously, and we have complied with its
-                                policy, so you can be sure your data is saved and not shared.
-                            </p>
-                        </div>
-                        <div className="item">
-                            <div className="image">
-                                <img src={awsImage} alt=""/>
-                            </div>
-                            <h4>Amazon Partner</h4>
-                            <p>
-                                As an official Amazon Web Services partner, Profit Whales is hosted on Amazon servers
-                                and infrastructure, ensuring we can respond to any Amazon Advertising changes as fast as
-                                possible.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/*<section className='blog-posts'>*/}
-            {/*    <div className="container">*/}
-            {/*        <h2>Stay up-to-date with the latest Amazon expert content</h2>*/}
-
-            {/*        <p>*/}
-            {/*            We are one the mission to provide Amazon Sellers with the most <br/>*/}
-            {/*            useful and actionable content possible. Check it out.*/}
-            {/*        </p>*/}
-
-
-            {/*        <div className="posts">*/}
-            {/*            <div className="item">*/}
-            {/*                <div className="image"><img src={blogPostImage} alt=""/></div>*/}
-            {/*                <h4>text text</h4>*/}
-            {/*                <span className="date">Apr 4, 2020</span>*/}
-            {/*            </div>*/}
-            {/*            <div className="item">*/}
-            {/*                <div className="image"><img src={blogPostImage} alt=""/></div>*/}
-            {/*                <h4>text text</h4>*/}
-            {/*                <span className="date">Apr 4, 2020</span>*/}
-            {/*            </div>*/}
-            {/*            <div className="item">*/}
-            {/*                <div className="image"><img src={blogPostImage} alt=""/></div>*/}
-            {/*                <h4>text text</h4>*/}
-            {/*                <span className="date">Apr 4, 2020</span>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</section>*/}
-
-            <section className='support'>
-                <div className="container">
-                    <div className="col">
-                        <h3>Human Support <img src={emojiImage} alt=""/></h3>
-                        <p>
-                            Our expert team is here to help you
-                            <br/>
-                            on your journey as Amazon Seller. We
-                            <br/>
-                            are here to answer your questions
-                            <br/>
-                            and provide actionable steps that
-                            <br/>
-                            you can implement in your business.
-                        </p>
-                        <h4>Don’t take our word for it</h4>
-
-                        <a href="https://www.trustpilot.com/review/profitwhales.com" target={'_blank'}>
-                            Check our customer reviews on Trustpilot
-                        </a>
-                    </div>
-
-                    <img src={supportImage} alt="" className='image'/>
-                </div>
-
-                <div className="rectangle"/>
-            </section>
-
-            <section className='trial'>
-                <div className="container">
-                    <h2>What are you waiting for?</h2>
-                    <p>Get started wit 14-day free trial and get time saving machine for your business.</p>
-                    <button onClick={() => history.push('/registration')}>START 14-DAY FREE TRIAL TODAY</button>
-                    <ul>
-                        <li>No credit card required</li>
-                        <li>Cancel anytime</li>
-                    </ul>
-                </div>
-            </section>
-
-            <div className="scroll-top" onClick={() => $('html, body').animate({scrollTop: 0}, 'slow')}/>
-
-            {selectedImage && <div className="modal-image">
-                <span className="close" onClick={() => selectImage(null)}>&times;</span>
-
-                <img src={selectedImage} alt=""/>
-            </div>}
 
             <Footer/>
 
