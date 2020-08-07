@@ -20,7 +20,7 @@ const Pricing = () => {
     const [selectedProduct, setSelectedProduct] = useState('ppc');
 
     return (
-        <div className='landing-pricing'>
+        <div className='landing-pricing  landing-page'>
             <Header/>
 
             <section className="pw-products">

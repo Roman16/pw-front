@@ -91,7 +91,7 @@ const ZTHLanding = () => {
     }, [])
 
     return (
-        <div className="landing-zth">
+        <div className="landing-zth  landing-page">
             <Header page={'zth'}/>
 
             <section className={'zth-king-section'}>

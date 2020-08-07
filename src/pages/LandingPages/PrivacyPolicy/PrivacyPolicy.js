@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 
 const PrivacyPolicy = () => {
     return (
-        <div className="privacy-page">
+        <div className="privacy-page  landing-page">
             <Header/>
 
             <div className="box">

@@ -16,7 +16,7 @@ const Video = (props) => {
     }, [])
 
     return (
-        <div className='landing-video'>
+        <div className='landing-video  landing-page'>
             <Header/>
 
             <section className='welcome'>

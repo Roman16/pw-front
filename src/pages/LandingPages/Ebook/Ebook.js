@@ -20,7 +20,7 @@ const Ebook = () => {
     }
 
     return (
-        <div className='ebook-landing'>
+        <div className='ebook-landing  landing-page'>
             <Header type={'dark'}/>
 
             <section>

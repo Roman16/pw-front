@@ -51,7 +51,7 @@ const AboutUs = () => {
     }
 
     return (
-        <div className='landing-about-us'>
+        <div className='landing-about-us  landing-page'>
             <section className="hero-section">
                 <Header/>
 

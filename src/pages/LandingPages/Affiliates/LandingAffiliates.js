@@ -88,7 +88,7 @@ const LandingAffiliates = () => {
     window.tap('detect');
 
     return (
-        <div className='landing-affiliates'>
+        <div className='landing-affiliates landing-page'>
             <Header/>
 
             <section className='program-block'>

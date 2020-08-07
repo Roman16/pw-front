@@ -379,7 +379,7 @@ const LandingAutomation = () => {
 
 
     return (
-        <div className="landing-automation">
+        <div className="landing-automation  landing-page">
             <Header/>
 
             <section className='first-section'>
