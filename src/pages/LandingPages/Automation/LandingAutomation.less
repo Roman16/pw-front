@@ -6,6 +6,10 @@
   font-family: Eina;
   overflow-x: hidden;
 
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    zoom: 80%;
+  }
+
   .not-found-page__header {
     position: relative;
     z-index: 100;
@@ -552,7 +556,6 @@
         .ant-checkbox {
           width: 18px;
           height: 18px;
-
 
           .ant-checkbox-inner,
           input {
