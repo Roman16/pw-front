@@ -369,6 +369,160 @@
       color: #4B5271;
       margin: -20px 0 96px;
     }
+
+    .slider {
+      display: grid;
+      grid-template-areas: 'dots list image' 'dots list userMessage' 'demoLink demoLink userMessage';
+    }
+
+    .dots {
+      grid-area: dots;
+
+      display: flex;
+      flex-direction: column;
+      margin: 250px 48px 0 0;
+
+      div {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-bottom: 24px;
+        background: #DCDCDC;
+        cursor: pointer;
+
+        &.active {
+          background: #6D6DF6;
+        }
+
+        &:last-child {
+          margin: 0;
+        }
+
+        &:hover {
+          background: rgba(109, 109, 246, 0.49);
+        }
+      }
+    }
+
+    .list {
+      width: 480px;
+      grid-area: list;
+      margin: 0 120px 0 0;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        padding: 32px 22px;
+
+
+        &:last-child {
+          margin: 0;
+        }
+
+        h4 {
+          font-size: 32px;
+          line-height: 38px;
+          color: #17175A;
+          margin-bottom: 0;
+        }
+
+        p {
+          font-size: 21px;
+          line-height: 25px;
+          color: #FFFFFF;
+          display: none;
+          margin: 0;
+        }
+
+        &.active {
+          background: #6D6DF6;
+          border-radius: 4px;
+
+          h4 {
+            color: #fff;
+            margin-bottom: 12px;
+          }
+
+          p {
+            display: block;
+          }
+        }
+      }
+    }
+
+    .demo-link {
+      grid-area: demoLink;
+
+      display: flex;
+      align-items: center;
+      font-size: 32px;
+      color: #6D6DF6;
+      font-weight: 500;
+
+      .icon {
+        width: 29px;
+        height: 29px;
+        border-radius: 50%;
+        background: #6D6DF6;
+        padding: 0 0 0 7px;
+        margin: 0 25px 0 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+
+    .image {
+      max-width: 720px;
+      max-height: 624px;
+
+      grid-area: image;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .user-message {
+      grid-area: userMessage;
+
+      height: max-content;
+      display: flex;
+      align-items: flex-start;
+      padding: 15px;
+      border: 4px dashed #6D6DF6;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+      border-radius: 4px;
+
+      h5 {
+        font-size: 13px;
+        line-height: 17px;
+        color: #6D6DF6;
+        font-weight: 500;
+      }
+
+      p {
+        font-size: 13px;
+        line-height: 17px;
+        color: #4B5271;
+      }
+
+      .btn {
+        height: 40px;
+        min-width: max-content;
+        font-size: 14px;
+        font-weight: 500;
+        margin: auto 0 auto 24px;
+        padding: 0 30px;
+      }
+    }
   }
 
   .empower-business {
@@ -543,6 +697,80 @@
           font-size: 13px;
           font-weight: 400;
         }
+
+      }
+
+      .ant-select-selection-selected-value {
+        padding: 0 0 0 19px;
+
+        i {
+          display: flex;
+          align-items: center;
+          margin: 0 10px 0 5px;
+        }
+      }
+
+      .ant-select-dropdown-menu-item {
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+
+        i {
+          width: 22px;
+          height: 22px;
+          min-width: 22px;
+          margin: 0 10px 0 0;
+          fill: #C9CBD4 !important;
+        }
+
+
+        &:first-child:hover {
+          i {
+            fill: #EC7F5C !important;
+          }
+        }
+
+        &:nth-child(2):hover {
+          i {
+            fill: #6D6DF6 !important;
+          }
+        }
+
+        &:nth-child(3):hover {
+          i {
+            fill: #83FED0 !important;
+          }
+        }
+
+        &:nth-child(4):hover {
+          i {
+            fill: #F0B849 !important;
+          }
+        }
+
+        &:nth-child(5):hover {
+          i {
+            fill: #5BEBF3 !important;
+          }
+        }
+
+        &:nth-child(6):hover {
+          i {
+            fill: #EC7F5C !important;
+          }
+        }
+
+        &:nth-child(7):hover {
+          i {
+            fill: #6D6DF6 !important;
+          }
+        }
+
+        &:nth-child(8):hover {
+          i {
+            fill: #83FED0 !important;
+          }
+        }
       }
 
       .ant-checkbox-wrapper {
@@ -575,6 +803,11 @@
           font-size: 13px;
           color: #FFFFFF;
           font-weight: 400;
+        }
+
+        a {
+          color: #fff;
+          text-decoration: underline;
         }
       }
 

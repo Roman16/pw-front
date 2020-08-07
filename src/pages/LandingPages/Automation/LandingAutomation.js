@@ -1,20 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlay} from "@fortawesome/free-solid-svg-icons"
 import $ from 'jquery';
-import ionRangeSlider from 'ion-rangeslider';
 
 import './LandingAutomation.less';
 
-import {history} from "../../../utils/history";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {stepsImages} from "../../../assets/img/landing-automation/steps";
-import {avatars} from "../../../assets/img/landing-automation/avatars/avatars";
-
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import {Checkbox, Input, Modal, Select} from "antd";
 import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png';
 import amazonLogo from '../../../assets/img/amazon.png';
@@ -29,171 +20,163 @@ import dataDrivenImage from '../../../assets/img/landing-automation/data-driven-
 import contactFormImage from '../../../assets/img/landing-automation/contact-form-image.png';
 
 import {Link} from "react-router-dom";
-import OurCases from "../components/OurCases/OurCases";
 import Comments from "../components/Comments/Comments";
 import {SVG} from "../../../utils/icons";
 import CustomSelect from "../../../components/Select/Select";
 
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
-const pixelRatio = window.devicePixelRatio;
-
-let swipeTimeoutId = null;
 
 const Option = Select.Option;
+
+const advertisingStrategyVariations = [
+    {
+        label: 'ACoS Targeting',
+        value: 'acos_targeting',
+        icon: 'acos-targeting',
+        fill: 'EC7F5C',
+        sales: 3,
+        acos: 1
+    },
+    {
+        label: 'Overall Profit Growth',
+        value: 'overall_profit_growth',
+        icon: 'overall-profit-growth',
+        fill: '6D6DF6',
+        sales: 4,
+        acos: 3
+    },
+    {
+        label: 'PPC Profit Growth',
+        value: 'ppc_profit_growth',
+        icon: 'ppc-profit-growth',
+        fill: '83FED0',
+        sales: 4,
+        acos: 2
+
+    },
+    {
+        label: 'Product Launch',
+        value: 'product_launch',
+        icon: 'product-launch',
+        fill: 'F0B849',
+        sales: 3,
+        acos: 5
+
+    },
+    {
+        label: 'New Keywords Ranking',
+        value: 'new_keywords_ranking',
+        icon: 'new-keywords-ranking',
+        fill: '5BEBF3',
+        sales: 3,
+        acos: 4
+
+    },
+    {
+        label: 'Get Best Seller Tag',
+        value: 'get_best_seller_tag',
+        icon: 'get-best-seller-tag',
+        fill: 'EC7F5C',
+        sales: 5,
+        acos: 5
+
+    },
+    {
+        label: 'Defend Best Seller Tag',
+        value: 'defend_best_seller_tag',
+        icon: 'defend-best-seller-tag',
+        fill: '6D6DF6',
+        sales: 5,
+        acos: 5
+    },
+    {
+        label: 'Low Inventory HPLS',
+        value: 'low_inventory_hpls',
+        icon: 'low-inventory-hpls',
+        fill: '83FED0',
+        sales: 2,
+        acos: 1
+
+    },
+]
 
 
 const stepsSlider = [
     {
-        title: `Connect Seller <br/> Central Account`,
-        description: 'Profit Whales allows you to instantly connect Amazon Seller Central to automate your Amazon Advertising work and find productivity super powers.',
-        img: stepsImages.step1
+        title: `Easy to Master`,
+        description: 'User-friendly design that makes easy to navigate your account so you’ll never miss out on what’s important.',
+        userName: 'Stan Melrose',
+        userMessage: 'It was a new company for me... We have started form audit and detailed analysis of our niche. We spent some time to remake and prepare all needed campaigns. After the first 3 weeks, we have launched additional campaigns as SB / SD. We were impressed that our PPC campaigns could work so well. They have improved all our metrics and thanks to software+human control we start focusing on our business.',
+        userAvatar: '',
+        caseLink: '',
+        img: stepsImages.slide1
     },
     {
-        title: `Choose <br/> Your Goal`,
-        description: 'Inside the software, you\'ll find four business goals. You have to choose one of them and start optimization. Naturally, for each of them, we use a unique algorithm to achieve efficient results.',
-        img: stepsImages.step2
+        title: `Data-Driven Bidding <br/> Optimization`,
+        description: 'Profit Whales uses proprietary machine learning and algorithm-regulated software. It has already processed over two million real-life Amazon account iterations. And now it is ready to serve your business.',
+        userName: 'Alexey Ukhnalev',
+        userMessage: 'I dreamt about PPC automation in several clicks in an efficient way. In Profit Whales they make it happen. For those who tired of high ACOS, CPC and time spent optimizing AD groups.',
+        userAvatar: '',
+        caseLink: '',
+        img: stepsImages.slide2
     },
     {
-        title: `Monitor <br/> The Changes`,
-        description: 'You have to make yourself comfortable, sit, and enjoy changes that the software would do. You see, for what you pay, it’s soothing, right?',
-        img: stepsImages.step3
+        title: `Keyword Automation`,
+        description: 'Harvesting good keywords for a PPC campaign is a daunting task. Profit Whales Automation takes care of that for you. And it keeps testing new ones for active campaigns to achieve optimal performance.',
+        userName: 'Vasily Korobkin, Divelux, CEO',
+        userMessage: 'Finding a way into the top of page 1 results and directing major demand is an art form of Profit Whales. Our in-house Amazon marketing was adequate, but we needed some external knowledge to break the ice - the guys from Profit Whales are real professionals in regards not only to PPC optimization but also in the field of Amazon itself.',
+        userAvatar: '',
+        caseLink: '',
+        img: stepsImages.slide3
     },
     {
-        title: `Access <br/> A Lot More Data`,
-        description: 'We’re obsessed with data, so we developed a dashboard and day-parting tool, so you can see your business metrics at a glance and make more profitable decisions.',
-        img: stepsImages.step4
+        title: `Interactive Dashboard`,
+        description: 'Profit Whales provides a user-friendly dashboard that highlights the most important metrics of your Amazon business, as well as quick, 2-way control tools to stay on top of any situation and stay ahead of competition.',
+        userName: 'Lighting Equipment Brand',
+        userMessage: 'We\'ve decided to use Profit Whales Software because of its user-friendly interface and ready-made full optimization. There wasn’t anything that we have wanted that Profit Whales Team said couldn’t be done with their Automation tool. You indicate your business goal - and the software performs changes by itself.',
+        userAvatar: '',
+        caseLink: '',
+        img: stepsImages.slide4
+    },
+    {
+        title: `Dedicated Account <br/> Manager`,
+        description: 'Every customer is assigned a dedicated manager who is experienced in both Amazon Ads optimization and the clockworks of Profit Whales software.',
+        userName: 'Ethan Cooper',
+        userMessage: 'Amazing company. Loved the support from these guys. They correctly built the structure for my advertising companies. I am also impressed with their software. Very easy to use and you can set a strategy and not worry about the everyday work with advertising.',
+        userAvatar: '',
+        caseLink: '',
+        img: stepsImages.slide5
     },
 ];
 
-
-const commentsList = [
-    {
-        name: 'Corina Elena Damian',
-        comment: 'I only have words of praise and I warmly recommend this software, but especially the person who has guided me and who does not get rid of me until I win £100,000. Professional vitals, explains the steps in detail and has a lot of patience! For beginners on Amazon and not only recommend PROFIT WHALES!',
-        avatar: avatars.CorinaElenaDamian
-    },
-    {
-        name: 'Meet Patel',
-        comment: 'It was an amazing experience working with Amzbizon, I was really lost in my PPC spending and ACOS, So I took the help of Amzbizon. We started our campaigns on the 21st of November With 48% Acos, With good Keyword targeting and well established and optimized Bulk operation Campaigns, We shoot down to 24.71% in just 12 days, It is a miracle, I wish I could share my Screenshot here. But they have really worked on my ACOS. Thank You so much.',
-        avatar: avatars.MeetPatel
-    },
-    {
-        name: 'Maxim Antonov',
-        comment: 'Yes, very good company! They helped me a lot with advertising on Amazon and not only with advertising, there are practitioners working there who really know a lot about their business.',
-        avatar: avatars.MaximAntonov
-    },
-    {
-        name: 'Emil Sirbu',
-        comment: 'I highly recommend the services of these great guys. As their tool gives incredible results, that\'s obvious. I appreciated the attitude of this team for the client. We had a very humanized experience, where the money wasn\'t the first priority of our collaboration but customer satisfaction! Flexibility and promptness to any of my questions. I highly recommend!',
-        avatar: avatars.EmilSirbu
-    },
-    {
-        name: 'Dmitriy Golubovskiy',
-        comment: 'These guys are doing an amazing job, solved my problem with huge Acos. It took only 2-3 weeks for them to fully optimize all campaigns. I would like to mention separately communication level: wrote even in Sat/Sunday and got answers. Recommend!',
-        avatar: avatars.DmitriyGolubovskiy
-    },
-    {
-        name: 'Andrey Kaminskiy',
-        comment: 'The team behind the agency is doing an amazing job by consulting about how to grow the conversion rate and managing our Amazon Advertising campaigns. Their support team is incredibly responsible all day long. Highly recommend!',
-        avatar: avatars.AndreyKaminskiy
-    },
-    {
-        name: 'Jennie Fisher',
-        comment: 'ProfitWhales\' software is notably robust, and their analysts have helped us both maximize profitability and truly understand the incremental value of our Amazon Ads. They are a valued partner and we really appreciate the flexibility of their software and service model.',
-        avatar: avatars.JennieFisher
-    },
-    {
-        name: 'Daniel Jennings',
-        comment: 'I really enjoy Profit Whales\' user interface, the massive amounts of data and the differentoptimization strategies.I\'ve noticed that the software makes extremely dialed in bidding decisions that convert very well. I\'m really working on creating a successful PPC strategy to template the other 3 products!',
-        avatar: avatars.DanielJennings
-    },
-];
-
-const numberMask = (value, n, x) => {
-    let re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
-    return (+value).toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,').replace('.00', '');
-};
 
 const LandingAutomation = () => {
-    const [currentStepSlide, setStepSlide] = useState(0),
-        [currentCaseSlide, setCaseSlide] = useState(0),
-        [currentCommentSlide, setCommentSlide] = useState(0),
-        [selectedImage, selectImage] = useState(null),
-        [visibleVideoWindow, switchWindow] = useState(false);
+    const [visibleVideoWindow, switchWindow] = useState(false),
+        [contactFormParams, setContactFormParams] = useState({}),
+        [activeSlide, setActiveSlide] = useState(0);
 
-    function nextSlide(type) {
-        clearTimeout(swipeTimeoutId);
-        swipeTimeoutId = setTimeout(() => {
-            if (type === 'step') {
-                if (currentStepSlide === 3) {
-                    setStepSlide(0)
-                } else {
-                    setStepSlide(currentStepSlide + 1)
-                }
-            } else if (type === 'case') {
-                if (currentCaseSlide === 4) {
-                    setCaseSlide(0)
-                } else if (currentCaseSlide === 5) {
-                    setCaseSlide(4)
-                } else {
-                    setCaseSlide(currentCaseSlide + 1)
-                }
-            } else if (type === 'comment') {
-                Slider.slickNext();
-            }
-        }, 10)
-    }
+    const changeContactFormHandler = (name, value) => {
+        setContactFormParams({
+            ...contactFormParams,
+            [name]: value
+        })
+    };
 
-    function prevSlide(type) {
-        clearTimeout(swipeTimeoutId);
-        swipeTimeoutId = setTimeout(() => {
-            if (type === 'step') {
-                if (currentStepSlide === 0) {
-                    setStepSlide(3)
-                } else {
-                    setStepSlide(currentStepSlide - 1)
-                }
-            } else if (type === 'case') {
-                if (currentCaseSlide === 0) {
-                    setCaseSlide(4)
-                } else if (currentCaseSlide === 5) {
-                    setCaseSlide(2)
-                } else {
-                    setCaseSlide(currentCaseSlide - 1)
-                }
-            }
-        }, 10)
-    }
+    const submitFormHandler = (e) => {
+        e.preventDefault();
 
-    function goToSlide(slide, type) {
-        if (type === 'step') {
-            setStepSlide(slide)
-        } else if (type === 'case') {
-            setCaseSlide(slide)
-        }
-    }
+        console.log(contactFormParams);
+    };
+
+    const scrollToForm = () => {
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $("#form").offset().top
+        }, 1000);
+    };
 
     //---------------------------------------
     //---------------------------------------
-
-    function goToRegistrationPage() {
-        history.push('/registration')
-    }
-
-    function goToPricingPage() {
-        window.open('/pricing')
-    }
-
-    function SampleNextArrow({onClick}) {
-        return (<div className='next' onClick={onClick}><FontAwesomeIcon icon={faPlay}/></div>)
-    }
-
-    function SamplePrevArrow({onClick}) {
-        return (
-            <div className='prev' onClick={onClick}><FontAwesomeIcon icon={faPlay}/></div>
-        );
-    }
 
     useEffect(() => {
         (function (t, a, p) {
@@ -207,62 +190,7 @@ const LandingAutomation = () => {
         // window.tap('click', {referral_code: ''});
         window.tap('detect');
 
-        //----------------------------------------------------------------------
-        document.querySelector('html').classList.add('not-retina');
-        document.querySelector('body').classList.remove('hide-mc-modal');
 
-        //----------------------------------------------------------------------
-        //----------------------------------------------------------------------
-        $(".js-range-slider").ionRangeSlider({
-            min: 0,
-            values: [
-                0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000, 3500, 4500, 5000,
-                6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000, 15000, 16000, 17000, 18000, 19000, 20000,
-                22500, 25000, 27500, 30000, 32500, 35000, 37500, 40000, 42500, 45000, 47500, 50000,
-                55000, 60000, 65000, 70000, 75000, 80000, 85000, 90000, 95000, 100000
-            ],
-            hide_min_max: true,
-            from: 10,
-            from_min: 10,
-            prefix: "< $ ",
-            max_postfix: "+",
-            postfix: "  / month",
-            onStart: function () {
-                $('.slider-container .slider .irs .irs-bar').html('$ 69');
-                setTimeout(() => {
-                    $('.irs-single').html('< $ 1,000 / month');
-                }, 1)
-            },
-            onChange: function (data) {
-                let value = data.from_value,
-                    result = 0,
-                    sumElement = $('.result-sum'),
-                    barLabel = $('.slider-container .slider .irs .irs-bar'),
-                    barTooltip = $('.slider-container .slider .irs .irs-single');
-
-
-                if (value <= 1000) {
-                    sumElement.text('$ 69');
-                    barLabel.html('$ 69');
-                    barTooltip.html('< $ 1,000 / month');
-                } else {
-                    barTooltip.html(`$ ${numberMask(value, 2)} / month`);
-
-                    if (value >= 50000) {
-                        result = ((2 / 100) * value) + 500;
-                        barLabel.html('$500 + 2% <small>ad spend</small>');
-                    } else if (value >= 20000) {
-                        result = ((2.5 / 100) * value) + 200;
-                        barLabel.html('$200 + 2,5% <small>ad spend</small>');
-                    } else {
-                        result = ((3 / 100) * value) + 100;
-                        barLabel.html('$100 + 3% <small>ad spend</small>');
-                    }
-
-                    sumElement.text('$ ' + numberMask(result));
-                }
-            }
-        });
         //----------------------------------------------------------------------
         //----------------------------------------------------------------------
 
@@ -303,80 +231,6 @@ const LandingAutomation = () => {
         }
     }, []);
 
-    useEffect(() => {
-
-        const dots = document.querySelectorAll('.all-steps i');
-
-        dots.forEach((item, index) => {
-            if (index < currentStepSlide) {
-                dots[index].classList.add('loaded')
-            } else {
-                dots[index].classList.remove('loaded')
-            }
-        });
-    }, [currentStepSlide]);
-
-    let xDown = null;
-    let yDown = null;
-
-    function getTouches(evt) {
-        return evt.touches ||             // browser API
-            evt.originalEvent.touches; // jQuery
-    }
-
-    function handleTouchStart(evt) {
-        const firstTouch = getTouches(evt)[0];
-        xDown = firstTouch.clientX;
-        yDown = firstTouch.clientY;
-    }
-
-    function handleTouchMove(evt, type) {
-        if (!xDown || !yDown) {
-            return;
-        }
-
-        const xUp = evt.touches[0].clientX;
-        const yUp = evt.touches[0].clientY;
-
-        const xDiff = xDown - xUp;
-        const yDiff = yDown - yUp;
-
-        if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
-            if (xDiff > 0) {
-                nextSlide(type);
-            } else {
-                prevSlide(type);
-            }
-        } else {
-            if (yDiff > 0) {
-                /* up swipe */
-            } else {
-                /* down swipe */
-            }
-        }
-        /* reset values */
-        xDown = null;
-        yDown = null;
-    }
-
-    useEffect(() => {
-        // document.getElementById('cases-slider').addEventListener('touchstart', handleTouchStart, false);
-        // document.getElementById('cases-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'case'), false);
-    }, [currentCaseSlide]);
-    //
-    // useEffect(() => {
-    //     document.getElementById('steps-slider').addEventListener('touchstart', handleTouchStart, false);
-    //     document.getElementById('steps-slider').addEventListener('touchmove', (e) => handleTouchMove(e, 'step'), false);
-    // }, [currentStepSlide]);
-
-    useEffect(() => {
-        if (selectedImage && (window.innerHeight > window.innerWidth)) {
-            document.querySelector('body').style.overflow = 'hidden';
-        } else {
-            document.querySelector('body').style.overflow = 'auto';
-        }
-    }, [selectedImage, window.innerHeight]);
-
 
     return (
         <div className="landing-automation  landing-page">
@@ -392,7 +246,7 @@ const LandingAutomation = () => {
                         <span>Big Data & Data Science</span>
                     </h2>
 
-                    <button className={'btn'}>
+                    <button className={'btn'} onClick={scrollToForm}>
                         Let’s talk
                     </button>
 
@@ -401,7 +255,7 @@ const LandingAutomation = () => {
                     <img src={exampleSoftImage} alt="" className={'example-soft-image'}/>
 
                     <div className="row">
-                        <Link to={'/demo'} className={'demo'}>
+                        <Link to={'/demo-call'} className={'demo'}>
                             Talk with us
 
                             <div className="icon">
@@ -466,7 +320,7 @@ const LandingAutomation = () => {
                             achieve the highest profitability with maximum efficiency.
                         </p>
 
-                        <button className={'btn'}>
+                        <button className={'btn'} onClick={scrollToForm}>
                             Let’s talk
                         </button>
                     </div>
@@ -517,6 +371,54 @@ const LandingAutomation = () => {
                     <p className={'section-description'}>
                         Profit Whales is the platform that has everything you need to optimize your Amazon Business.
                     </p>
+
+
+                    <div className="slider">
+                        <div className="dots">
+                            {stepsSlider.map((item, index) => <div
+                                className={`${activeSlide === index && 'active'}`}
+                                onClick={() => setActiveSlide(index)}
+                            />)}
+                        </div>
+
+                        <div className="list">
+                            {stepsSlider.map((item, index) => (
+                                <div
+                                    onClick={() => setActiveSlide(index)}
+                                    className={`${activeSlide === index && 'active'}`}
+                                >
+                                    <h4 dangerouslySetInnerHTML={{__html: item.title}}/>
+                                    <p>{item.description}</p>
+                                </div>
+                            ))}
+                        </div>
+
+                        <Link to={'/demo-call'} className={'demo-link'}>
+
+                            <div className={'icon'}>
+                                <SVG id={'play-icon'}/>
+                            </div>
+
+                            Watch product demo
+                        </Link>
+
+                        <div className="image">
+                            <img src={stepsSlider[activeSlide].img} alt=""/>
+                        </div>
+
+                        <div className="user-message">
+                            <img src="" alt=""/>
+
+                            <div className="col">
+                                <h5>{stepsSlider[activeSlide].userName}</h5>
+                                <p>{stepsSlider[activeSlide].userMessage}</p>
+                            </div>
+
+                            <Link to={stepsSlider[activeSlide].caseLink} className={'btn default'}>
+                                Check My Case
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -532,7 +434,7 @@ const LandingAutomation = () => {
                         Smart Automated Advertising Solution
                     </p>
 
-                    <button className={'btn'}>
+                    <button className={'btn'} onClick={scrollToForm}>
                         TALK WITH US
                     </button>
                 </div>
@@ -823,37 +725,54 @@ const LandingAutomation = () => {
                 </div>
             </section>
 
-            <section className={'contact-form'}>
+            <section className={'contact-form'} id={'form'}>
                 <div className="container">
                     <img src={contactFormImage} alt=""/>
 
-                    <form action="">
+                    <form action="" onSubmit={submitFormHandler}>
                         <h3>Talk With Our Experts</h3>
 
                         <div className="row">
                             <div className="form-group">
                                 <label htmlFor="">First Name</label>
-                                <Input type="text" placeholder={'First Name'}/>
+                                <Input
+                                    type="text"
+                                    placeholder={'First Name'}
+                                    onChange={({target: {value}}) => changeContactFormHandler('first_name', value)}
+                                />
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="">Last Name</label>
-                                <Input type="text" placeholder={'Last Name'}/>
+                                <Input
+                                    type="text"
+                                    placeholder={'Last Name'}
+                                    onChange={({target: {value}}) => changeContactFormHandler('last_name', value)}
+                                />
                             </div>
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="">E-mail</label>
-                            <Input type="email" placeholder={'E-mail'}/>
+                            <Input
+                                type="email"
+                                placeholder={'E-mail'}
+                                onChange={({target: {value}}) => changeContactFormHandler('email', value)}
+                            />
                         </div>
 
                         <div className="row">
                             <div className="form-group">
                                 <label htmlFor="">Average Monthly Sales</label>
+
                                 <CustomSelect
                                     placeholder={'Select by'}
+                                    onChange={(value) => changeContactFormHandler('monthly_sales', value)}
                                 >
-                                    <Option value={'1'}>1</Option>
+                                    <Option value={'below 50k'}>below 50k</Option>
+                                    <Option value={'50-200k'}>50-200k</Option>
+                                    <Option value={'200k-1m'}>200k-1m</Option>
+                                    <Option value={'over 1m'}>over 1m</Option>
                                 </CustomSelect>
                             </div>
 
@@ -861,8 +780,13 @@ const LandingAutomation = () => {
                                 <label htmlFor="">Average Monthly Ad Spend</label>
                                 <CustomSelect
                                     placeholder={'Select by'}
+                                    onChange={(value) => changeContactFormHandler('monthly_ad_spend', value)}
                                 >
-                                    <Option value={'1'}>1</Option>
+                                    <Option value={'below 10k'}>below 10k</Option>
+                                    <Option value={'10-30k'}>10-30k</Option>
+                                    <Option value={'30-60k'}>30-60k</Option>
+                                    <Option value={'60-100k'}>60-100k</Option>
+                                    <Option value={'no ads'}>no ads</Option>
                                 </CustomSelect>
                             </div>
                         </div>
@@ -872,34 +796,61 @@ const LandingAutomation = () => {
                                 <label htmlFor="">What AMZ Marketplace do you sell the most</label>
                                 <CustomSelect
                                     placeholder={'Select by'}
+                                    onChange={(value) => changeContactFormHandler('amz_marketplace', value)}
                                 >
-                                    <Option value={'1'}>1</Option>
+                                    <Option value={'USA'}>USA</Option>
+                                    <Option value={'CA'}>CA</Option>
+                                    <Option value={'UK'}>UK</Option>
+                                    <Option value={'Germany'}>Germany</Option>
+                                    <Option value={'Other'}>Other</Option>
                                 </CustomSelect>
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="">What is your main goal?</label>
+
                                 <CustomSelect
                                     placeholder={'Select by'}
+                                    getPopupContainer={triggerNode => triggerNode.parentNode}
+                                    onChange={(value) => changeContactFormHandler('main_goal', value)}
                                 >
-                                    <Option value={'1'}>1</Option>
+                                    {advertisingStrategyVariations.map(item => (
+                                        <Option value={item.value}>
+                                            <i style={{fill: `#${item.fill}`}}>
+                                                <SVG id={item.icon}/>
+                                            </i>
+                                            {item.label}
+                                        </Option>
+                                    ))}
                                 </CustomSelect>
+
                             </div>
                         </div>
 
                         <div className="row">
                             <div className="form-group">
                                 <label htmlFor="">Enter your Storefront Name</label>
-                                <Input type="text" placeholder={'Enter your Storefront Name'}/>
+                                <Input
+                                    type="text"
+                                    placeholder={'Enter your Storefront Name'}
+                                    onChange={({target: {value}}) => changeContactFormHandler('storefront_name', value)}
+                                />
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="">Enter your main category</label>
-                                <Input type="text" placeholder={' Enter your main category'}/>
+                                <Input
+                                    type="text"
+                                    placeholder={' Enter your main category'}
+                                    onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
+                                />
                             </div>
                         </div>
 
-                        <Checkbox>Yes, I agree to Profit Whales Terms and Conditions & Privacy Policy</Checkbox>
+                        <Checkbox required>
+                            Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'}>Terms and
+                            Conditions</Link> & <Link to={'/policy'}> Privacy Policy</Link>
+                        </Checkbox>
 
                         <button className={'btn'}>
                             Get Started
