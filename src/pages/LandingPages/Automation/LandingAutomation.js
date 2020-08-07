@@ -15,7 +15,7 @@ import {avatars} from "../../../assets/img/landing-automation/avatars/avatars";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {Checkbox, Modal, Select} from "antd";
+import {Checkbox, Input, Modal, Select} from "antd";
 import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png';
 import amazonLogo from '../../../assets/img/amazon.png';
 import exampleSoftImage from '../../../assets/img/landing-automation/example-soft.png';
@@ -831,72 +831,72 @@ const LandingAutomation = () => {
                         <h3>Talk With Our Experts</h3>
 
                         <div className="row">
-                            <label htmlFor="">
-                                First Name
-                                <input type="text" placeholder={'First Name'}/>
-                            </label>
+                            <div className="form-group">
+                                <label htmlFor="">First Name</label>
+                                <Input type="text" placeholder={'First Name'}/>
+                            </div>
 
-                            <label htmlFor="">
-                                Last Name
-                                <input type="text" placeholder={'Last Name'}/>
-                            </label>
+                            <div className="form-group">
+                                <label htmlFor="">Last Name</label>
+                                <Input type="text" placeholder={'Last Name'}/>
+                            </div>
                         </div>
 
-                        <label htmlFor="">
-                            E-mail
-                            <input type="email" placeholder={'E-mail'}/>
-                        </label>
-
-                        <div className="row">
-                            <label htmlFor="">
-                                Average Monthly Sales
-                                <CustomSelect
-                                    placeholder={'Select by'}
-                                >
-                                    <Option value={'1'}>1</Option>
-                                </CustomSelect>
-                            </label>
-
-                            <label htmlFor="">
-                                Average Monthly Ad Spend
-                                <CustomSelect
-                                    placeholder={'Select by'}
-                                >
-                                    <Option value={'1'}>1</Option>
-                                </CustomSelect>
-                            </label>
+                        <div className="form-group">
+                            <label htmlFor="">E-mail</label>
+                            <Input type="email" placeholder={'E-mail'}/>
                         </div>
 
                         <div className="row">
-                            <label htmlFor="">
-                                What AMZ Marketplace do you sell the most
+                            <div className="form-group">
+                                <label htmlFor="">Average Monthly Sales</label>
                                 <CustomSelect
                                     placeholder={'Select by'}
                                 >
                                     <Option value={'1'}>1</Option>
                                 </CustomSelect>
-                            </label>
+                            </div>
 
-                            <label htmlFor="">
-                                What is your main goal?
+                            <div className="form-group">
+                                <label htmlFor="">Average Monthly Ad Spend</label>
                                 <CustomSelect
                                     placeholder={'Select by'}
                                 >
                                     <Option value={'1'}>1</Option>
                                 </CustomSelect>
-                            </label>
+                            </div>
                         </div>
 
                         <div className="row">
-                            <label htmlFor="">
-                                Enter your Storefront Name
-                                <input type="text" placeholder={'Enter your Storefront Name'}/>
-                            </label>
+                            <div className="form-group">
+                                <label htmlFor="">What AMZ Marketplace do you sell the most</label>
+                                <CustomSelect
+                                    placeholder={'Select by'}
+                                >
+                                    <Option value={'1'}>1</Option>
+                                </CustomSelect>
+                            </div>
 
-                            <label htmlFor="">
-                                Enter your main category
-                                <input type="text" placeholder={' Enter your main category'}/>
-                            </label>
+                            <div className="form-group">
+                                <label htmlFor="">What is your main goal?</label>
+                                <CustomSelect
+                                    placeholder={'Select by'}
+                                >
+                                    <Option value={'1'}>1</Option>
+                                </CustomSelect>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="form-group">
+                                <label htmlFor="">Enter your Storefront Name</label>
+                                <Input type="text" placeholder={'Enter your Storefront Name'}/>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="">Enter your main category</label>
+                                <Input type="text" placeholder={' Enter your main category'}/>
+                            </div>
                         </div>
 
                         <Checkbox>Yes, I agree to Profit Whales Terms and Conditions & Privacy Policy</Checkbox>
