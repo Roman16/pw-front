@@ -406,7 +406,6 @@ const LandingAutomation = () => {
                             <div className='advantages'>
                                 <span><div/>Cancel anytime</span>
                                 <span><div/>14-day Free Trial</span>
-                                <span><div/>No credit card required</span>
                             </div>
 
                             <div className="actions">
