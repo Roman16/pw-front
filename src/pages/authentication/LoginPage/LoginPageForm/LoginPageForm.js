@@ -104,7 +104,7 @@ class LoginPageForm extends React.Component {
 
 
         return (
-            <Form className="login-form" onSubmit={this.onSubmit}>
+            <Form className="login-form form" onSubmit={this.onSubmit}>
                 <Form.Item className="input-form-group">
                     <Input
                         className="email-input"

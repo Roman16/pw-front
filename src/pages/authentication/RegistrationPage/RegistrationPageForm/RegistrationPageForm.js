@@ -177,7 +177,7 @@ class RegistrationPage extends Component {
         }
 
         return (
-            <Form className="form " id="payment-form2" onSubmit={this.onSubmit}>
+            <div className="form " id="payment-form2">
                 <div className='row'>
                     <Form.Item className="input-form-group">
                         <Input
@@ -257,12 +257,13 @@ class RegistrationPage extends Component {
                     </b>
                 </div>
 
-                <button type='submit'
+                <button type='button'
                         className="btn default"
+                        onClick={this.onSubmit}
                 >
                     sign up
                 </button>
-            </Form>
+            </div>
         );
     }
 }
