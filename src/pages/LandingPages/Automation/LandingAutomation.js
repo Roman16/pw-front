@@ -6,7 +6,7 @@ import './LandingAutomation.less';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {stepsImages} from "../../../assets/img/landing-automation/steps";
-import {Checkbox, Input, Modal, Select} from "antd";
+import {Checkbox, Input, Modal, Rate, Select} from "antd";
 import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png';
 import amazonLogo from '../../../assets/img/amazon.png';
 import exampleSoftImage from '../../../assets/img/landing-automation/example-soft.png';
@@ -18,9 +18,9 @@ import basketImage from '../../../assets/img/landing-automation/basket.png';
 import {underHoodImages} from '../../../assets/img/landing-automation/under-hood';
 import dataDrivenImage from '../../../assets/img/landing-automation/data-driven-image.png';
 import contactFormImage from '../../../assets/img/landing-automation/contact-form-image.png';
-
+import {avatars} from '../../../assets/img/landing-automation/avatars/avatars'
+import trustpilotLogo from '../../../assets/img/landing-automation/Trustpilot-logo.png';
 import {Link} from "react-router-dom";
-import Comments from "../components/Comments/Comments";
 import {SVG} from "../../../utils/icons";
 import CustomSelect from "../../../components/Select/Select";
 
@@ -108,7 +108,7 @@ const stepsSlider = [
         description: 'User-friendly design that makes easy to navigate your account so you’ll never miss out on what’s important.',
         userName: 'Stan Melrose',
         userMessage: 'It was a new company for me... We have started form audit and detailed analysis of our niche. We spent some time to remake and prepare all needed campaigns. After the first 3 weeks, we have launched additional campaigns as SB / SD. We were impressed that our PPC campaigns could work so well. They have improved all our metrics and thanks to software+human control we start focusing on our business.',
-        userAvatar: '',
+        userAvatar: avatars.AndreyKaminskiy,
         caseLink: '',
         img: stepsImages.slide1
     },
@@ -117,7 +117,7 @@ const stepsSlider = [
         description: 'Profit Whales uses proprietary machine learning and algorithm-regulated software. It has already processed over two million real-life Amazon account iterations. And now it is ready to serve your business.',
         userName: 'Alexey Ukhnalev',
         userMessage: 'I dreamt about PPC automation in several clicks in an efficient way. In Profit Whales they make it happen. For those who tired of high ACOS, CPC and time spent optimizing AD groups.',
-        userAvatar: '',
+        userAvatar: avatars.AndreyKaminskiy,
         caseLink: '',
         img: stepsImages.slide2
     },
@@ -126,7 +126,7 @@ const stepsSlider = [
         description: 'Harvesting good keywords for a PPC campaign is a daunting task. Profit Whales Automation takes care of that for you. And it keeps testing new ones for active campaigns to achieve optimal performance.',
         userName: 'Vasily Korobkin, Divelux, CEO',
         userMessage: 'Finding a way into the top of page 1 results and directing major demand is an art form of Profit Whales. Our in-house Amazon marketing was adequate, but we needed some external knowledge to break the ice - the guys from Profit Whales are real professionals in regards not only to PPC optimization but also in the field of Amazon itself.',
-        userAvatar: '',
+        userAvatar: avatars.AndreyKaminskiy,
         caseLink: '',
         img: stepsImages.slide3
     },
@@ -135,7 +135,7 @@ const stepsSlider = [
         description: 'Profit Whales provides a user-friendly dashboard that highlights the most important metrics of your Amazon business, as well as quick, 2-way control tools to stay on top of any situation and stay ahead of competition.',
         userName: 'Lighting Equipment Brand',
         userMessage: 'We\'ve decided to use Profit Whales Software because of its user-friendly interface and ready-made full optimization. There wasn’t anything that we have wanted that Profit Whales Team said couldn’t be done with their Automation tool. You indicate your business goal - and the software performs changes by itself.',
-        userAvatar: '',
+        userAvatar: avatars.AndreyKaminskiy,
         caseLink: '',
         img: stepsImages.slide4
     },
@@ -144,9 +144,33 @@ const stepsSlider = [
         description: 'Every customer is assigned a dedicated manager who is experienced in both Amazon Ads optimization and the clockworks of Profit Whales software.',
         userName: 'Ethan Cooper',
         userMessage: 'Amazing company. Loved the support from these guys. They correctly built the structure for my advertising companies. I am also impressed with their software. Very easy to use and you can set a strategy and not worry about the everyday work with advertising.',
-        userAvatar: '',
+        userAvatar: avatars.AndreyKaminskiy,
         caseLink: '',
         img: stepsImages.slide5
+    },
+];
+
+const commentsList = [
+    {
+        name: 'Corina Elena Damian',
+        avatar: avatars.AndreyKaminskiy,
+        position: 'Corina Elena Damian',
+        rate: 5,
+        comment: '“ I only have words of praise and I warmly recommend this software, but especially the person who has guided me and who does not get rid of me until I win £100,000. Professional vitals, explains the steps in detail and has a lot of patience! For beginners on Amazon and not only recommend PROFIT WHALES! “'
+    },
+    {
+        name: 'Corina Elena Damian',
+        avatar: avatars.AndreyKaminskiy,
+        position: 'Corina Elena Damian',
+        rate: 4,
+        comment: '“ I only have words of praise and I warmly recommend this software, but especially the person who has guided me and who does not get rid of me until I win £100,000. Professional vitals, explains the steps in detail and has a lot of patience! For beginners on Amazon and not only recommend PROFIT WHALES! “'
+    },
+    {
+        name: 'Corina Elena Damian',
+        avatar: avatars.AndreyKaminskiy,
+        position: 'Corina Elena Damian',
+        rate: 3,
+        comment: '“ I only have words of praise and I warmly recommend this software, but especially the person who has guided me and who does not get rid of me until I win £100,000. Professional vitals, explains the steps in detail and has a lot of patience! For beginners on Amazon and not only recommend PROFIT WHALES! “'
     },
 ];
 
@@ -154,7 +178,8 @@ const stepsSlider = [
 const LandingAutomation = () => {
     const [visibleVideoWindow, switchWindow] = useState(false),
         [contactFormParams, setContactFormParams] = useState({}),
-        [activeSlide, setActiveSlide] = useState(0);
+        [activeSlide, setActiveSlide] = useState(0),
+        [activeComment, setActiveComment] = useState(0);
 
     const changeContactFormHandler = (name, value) => {
         setContactFormParams({
@@ -255,8 +280,8 @@ const LandingAutomation = () => {
                     <img src={exampleSoftImage} alt="" className={'example-soft-image'}/>
 
                     <div className="row">
-                        <Link to={'/demo-call'} className={'demo'}>
-                            Talk with us
+                        <Link to={'/demo-call'} className={'demo'} target={'_blank'}>
+                            REQUEST
 
                             <div className="icon">
                                 DEMO
@@ -272,7 +297,6 @@ const LandingAutomation = () => {
                         </div>
                     </div>
                 </div>
-
             </section>
 
             <section className={'top-amazon-platforms'}>
@@ -298,7 +322,7 @@ const LandingAutomation = () => {
                     <img src={exampleAmazonImage} alt="" className={'amazon-example'}/>
 
                     <h2>
-                        <span> All Amazon Ad types in one place</span> <br/>
+                        <span> The customers will see you everywhere</span> <br/>
                         Programmatic Algorithms + Managed Service
                     </h2>
 
@@ -393,7 +417,7 @@ const LandingAutomation = () => {
                             ))}
                         </div>
 
-                        <Link to={'/demo-call'} className={'demo-link'}>
+                        <Link to={'/demo-call'} className={'demo-link'} target={'_blank'}>
 
                             <div className={'icon'}>
                                 <SVG id={'play-icon'}/>
@@ -407,14 +431,16 @@ const LandingAutomation = () => {
                         </div>
 
                         <div className="user-message">
-                            <img src="" alt=""/>
+                            <div className="avatar">
+                                <img src={stepsSlider[activeSlide].userAvatar} alt=""/>
+                            </div>
 
                             <div className="col">
                                 <h5>{stepsSlider[activeSlide].userName}</h5>
                                 <p>{stepsSlider[activeSlide].userMessage}</p>
                             </div>
 
-                            <Link to={stepsSlider[activeSlide].caseLink} className={'btn default'}>
+                            <Link to={stepsSlider[activeSlide].caseLink} className={'btn default'} target={'_blank'}>
                                 Check My Case
                             </Link>
                         </div>
@@ -469,6 +495,8 @@ const LandingAutomation = () => {
                                     your Seller Central Campaigns Manager to see the new campaigns already up and
                                     running!
                                 </p>
+
+                                <Link to={'/'} target={'_blank'}>Learn more about Zero to Hero <SVG id={'right-row'}/></Link>
                             </div>
 
                             <div className="image"><img src={underHoodImages.icon1} alt=""/></div>
@@ -496,6 +524,8 @@ const LandingAutomation = () => {
                                     unique, time-proven PPC Campaign structure. This structure leverages both our PPC
                                     management experience and successful tests on dozens of big brands on Amazon.
                                 </p>
+
+                                <Link to={'/'} target={'_blank'}>Learn more about our structure <SVG id={'right-row'}/></Link>
                             </div>
                         </div>
 
@@ -516,6 +546,8 @@ const LandingAutomation = () => {
                                     performance of PPC campaigns. It conducts its daily optimization following the
                                     selected strategy.
                                 </p>
+
+                                <Link to={'/'} target={'_blank'}>Learn more about our algorithms <SVG id={'right-row'}/></Link>
                             </div>
 
                             <div className="image"><img src={underHoodImages.icon3} alt=""/></div>
@@ -572,6 +604,8 @@ const LandingAutomation = () => {
                                     It delivers changes where they will be most effective for your product sales and
                                     verifies the results 24/7.
                                 </p>
+
+                                <Link to={'/'} target={'_blank'}>Learn more about our Dashboard <SVG id={'right-row'}/></Link>
                             </div>
 
                             <div className="image"><img src={underHoodImages.icon5} alt=""/></div>
@@ -638,6 +672,8 @@ const LandingAutomation = () => {
                                     product and advertising by gathering information about when and where they'll have
                                     the most impact on your business.
                                 </p>
+
+                                <Link to={'/'} target={'_blank'}>Learn more about Dayparting <SVG id={'right-row'}/></Link>
                             </div>
                         </div>
 
@@ -710,12 +746,92 @@ const LandingAutomation = () => {
                 <img src={dataDrivenImage} alt=""/>
             </section>
 
-            <Comments/>
+            <section className={'user-comments'}>
+                <div className="container">
+                    <h2><span>Trusted</span> the world over</h2>
+
+                    <div className="users">
+                        {commentsList.map((user, index) => (
+                            <div className="user" onClick={() => setActiveComment(index)}>
+                                <div className="avatar">
+                                    <img src={user.avatar} alt=""/>
+                                </div>
+
+                                <div className="col">
+                                    <h4>{user.name}</h4>
+                                    <p>{user.position}</p>
+                                </div>
+                            </div>
+                        ))}
+
+                        <input
+                            type="radio"
+                            name="slideItem"
+                            id={`slide-item-1`}
+                            className="slide-toggle"
+                            checked={activeComment === 0}
+                        />
+
+                        <input
+                            type="radio"
+                            name="slideItem"
+                            id={`slide-item-2`}
+                            className="slide-toggle"
+                            checked={activeComment === 1}
+                        />
+
+
+                        <input
+                            type="radio"
+                            name="slideItem"
+                            id={`slide-item-3`}
+                            className="slide-toggle"
+                            checked={activeComment === 2}
+                        />
+
+                        <div className="slider">
+                            <div className="bar"/>
+                        </div>
+                    </div>
+
+                    <div className="comment">
+                        <div className="row">
+                            <p className="comment-text">
+                                {commentsList[activeComment].comment}
+                            </p>
+
+                            <div className="stars">
+                                <Rate disabled value={commentsList[activeComment].rate}/>
+                            </div>
+                        </div>
+
+                        <button className={'btn default'}>
+                            contact us
+                        </button>
+                    </div>
+
+                    <div className="trustpilot-block">
+                        <h3>
+                            Don’t take our word for it
+                        </h3>
+
+                        <p>
+                            Check our customer reviews on Trustpilot!
+                        </p>
+
+                        <button className={'btn'}>
+                            <a href="" target={'_blank'}>
+                                <img src={trustpilotLogo} alt=""/>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+            </section>
 
             <section className={'new-blog-posts'}>
                 <div className="container">
                     <h2>What’s new at our <span>BLOG</span></h2>
-
 
                     <div className="posts">
                         <div/>
@@ -848,12 +964,12 @@ const LandingAutomation = () => {
                         </div>
 
                         <Checkbox required>
-                            Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'}>Terms and
-                            Conditions</Link> & <Link to={'/policy'}> Privacy Policy</Link>
+                            Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms and
+                            Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
                         </Checkbox>
 
                         <button className={'btn'}>
-                            Get Started
+                            Request Demo
                         </button>
                     </form>
                 </div>
@@ -872,7 +988,7 @@ const LandingAutomation = () => {
                 <iframe width="853" height="480" src="https://www.youtube.com/embed/m608kntHUzU?autoplay=1"
                         frameBorder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen></iframe>
+                        allowFullScreen/>
             </Modal>
 
         </div>
