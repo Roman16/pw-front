@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import $ from 'jquery';
 
 import './LandingAutomation.less';
@@ -6,7 +6,7 @@ import './LandingAutomation.less';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {stepsImages} from "../../../assets/img/landing-automation/steps";
-import {Checkbox, Input, Modal, Rate, Select} from "antd";
+import {Checkbox, Input, Modal, Radio, Rate, Select, Spin} from "antd";
 import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png';
 import amazonLogo from '../../../assets/img/amazon.png';
 import exampleSoftImage from '../../../assets/img/landing-automation/example-soft.png';
@@ -23,7 +23,10 @@ import trustpilotLogo from '../../../assets/img/landing-automation/Trustpilot-lo
 import {Link} from "react-router-dom";
 import {SVG} from "../../../utils/icons";
 import CustomSelect from "../../../components/Select/Select";
+import {userService} from "../../../services/user.services";
 
+import axios from 'axios';
+import InputCurrency from "../../../components/Inputs/InputCurrency";
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
 
@@ -178,6 +181,7 @@ const commentsList = [
 const LandingAutomation = () => {
     const [visibleVideoWindow, switchWindow] = useState(false),
         [contactFormParams, setContactFormParams] = useState({}),
+        [blogPosts, setBlogPosts] = useState([]),
         [activeSlide, setActiveSlide] = useState(0),
         [activeComment, setActiveComment] = useState(0);
 
@@ -200,10 +204,43 @@ const LandingAutomation = () => {
         }, 1000);
     };
 
+    const getLastBlogPosts = async () => {
+        try {
+            let posts = [];
+
+            const getImage = async (url) => {
+                const res = await axios.get(url);
+                return res.data.guid.rendered;
+            };
+
+            const {data} = await userService.getBlogPosts();
+
+            posts = data;
+
+            posts = await Promise.all(posts.map(async (post) => {
+                const image = await getImage(post._links['wp:featuredmedia'][0].href);
+                return {
+                    ...post,
+                    image: image
+                };
+            }));
+
+
+            setBlogPosts(posts);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     //---------------------------------------
     //---------------------------------------
 
     useEffect(() => {
+        getLastBlogPosts();
+
+        //----------------------------------------------------------------------
+        //----------------------------------------------------------------------
+
         (function (t, a, p) {
             t.TapfiliateObject = a;
             t[a] = t[a] || function () {
@@ -357,7 +394,7 @@ const LandingAutomation = () => {
                 <div className="container">
                     <div className={'total-revenue'}>
                         <div className="description">Total Amazon <br/> Revenue <br/> Optimized</div>
-                        <div className="value">$120M</div>
+                        <div className="value">$240M</div>
                     </div>
                     <div className={'total-ad-spend'}>
                         <div className="description">Total Amazon <br/> Ad Spend <br/> Managed</div>
@@ -496,7 +533,8 @@ const LandingAutomation = () => {
                                     running!
                                 </p>
 
-                                <Link to={'/'} target={'_blank'}>Learn more about Zero to Hero <SVG id={'right-row'}/></Link>
+                                <Link to={'/'} target={'_blank'}>Learn more about Zero to Hero <SVG
+                                    id={'right-row'}/></Link>
                             </div>
 
                             <div className="image"><img src={underHoodImages.icon1} alt=""/></div>
@@ -673,7 +711,8 @@ const LandingAutomation = () => {
                                     the most impact on your business.
                                 </p>
 
-                                <Link to={'/'} target={'_blank'}>Learn more about Dayparting <SVG id={'right-row'}/></Link>
+                                <Link to={'/'} target={'_blank'}>Learn more about Dayparting <SVG
+                                    id={'right-row'}/></Link>
                             </div>
                         </div>
 
@@ -834,9 +873,21 @@ const LandingAutomation = () => {
                     <h2>What’s new at our <span>BLOG</span></h2>
 
                     <div className="posts">
-                        <div/>
-                        <div/>
-                        <div/>
+                        {blogPosts.map(post => (
+                            <div className="post">
+                                <div className="image">
+                                    <img src={post.image} alt=""/>
+                                </div>
+
+                                <h4>
+                                    {post.title.rendered}
+                                </h4>
+
+                                <a href={post.link} className={'btn default'} target={'_blank'}>
+                                    learn more
+                                </a>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -909,17 +960,17 @@ const LandingAutomation = () => {
 
                         <div className="row">
                             <div className="form-group">
-                                <label htmlFor="">What AMZ Marketplace do you sell the most</label>
-                                <CustomSelect
-                                    placeholder={'Select by'}
-                                    onChange={(value) => changeContactFormHandler('amz_marketplace', value)}
-                                >
-                                    <Option value={'USA'}>USA</Option>
-                                    <Option value={'CA'}>CA</Option>
-                                    <Option value={'UK'}>UK</Option>
-                                    <Option value={'Germany'}>Germany</Option>
-                                    <Option value={'Other'}>Other</Option>
-                                </CustomSelect>
+                                <label htmlFor="">Do you have brand registry?</label>
+
+                                <Radio.Group defaultValue={'yes'} onChange={(e) => changeContactFormHandler('brand_registry', e.target.value)}>
+                                    <Radio value={'yes'}>
+                                        Yes
+                                    </Radio>
+
+                                    <Radio value={'no'}>
+                                        No
+                                    </Radio>
+                                </Radio.Group>
                             </div>
 
                             <div className="form-group">

@@ -862,6 +862,41 @@
         color: #6D6DF6;
       }
     }
+
+    .posts {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-column-gap: 20px;
+
+      .post {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 28px;
+        border-radius: 4px 4px 0px 0px;
+        border: 3px solid #83FED0;
+        box-sizing: border-box;
+
+        .image {
+          margin-bottom: 20px;
+        }
+
+        h4 {
+          font-size: 24px;
+          line-height: 29px;
+          color: #17175A;
+          margin-bottom: 64px;
+        }
+
+        .btn {
+          height: 56px;
+          font-size: 21px;
+          font-weight: 500;
+          margin-bottom: 36px;
+          text-transform: uppercase;
+        }
+      }
+    }
   }
 
   .contact-form {
@@ -939,6 +974,39 @@
           font-weight: 400;
         }
 
+      }
+
+      .ant-radio-group {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+
+        label {
+          flex-direction: row;
+          margin-right: 25px;
+
+          .ant-radio {
+            .ant-radio-inner {
+              border-color: #fff;
+            }
+
+            &.ant-radio-checked {
+              .ant-radio-inner {
+                border-color: #fff !important;
+
+                &::after {
+                  background: #fff;
+                }
+              }
+            }
+          }
+        }
+
+        span {
+          color: #fff;
+          font-size: 13px;
+          font-weight: 400;
+        }
       }
 
       .ant-select-selection-selected-value {

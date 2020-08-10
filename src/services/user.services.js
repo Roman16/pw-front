@@ -42,7 +42,9 @@ export const userService = {
     ebookOnSubscribe,
     onSubscribe,
     sendContacts,
-    startFreeTrial
+    startFreeTrial,
+
+    getBlogPosts,
 };
 
 function login(user) {
@@ -213,6 +215,10 @@ function getStripeAvailableCountries() {
     return axios.get(`https://api.stripe.com/v1/country_specs?limit=100`, {
         headers: {'Authorization': `Bearer ${stripeKey}`}
     });
+}
+//-------------------------------------
+function getBlogPosts() {
+    return axios.get(`https://blog.profitwhales.com/wp-json/wp/v2/posts?per_page=3`);
 }
 
 
