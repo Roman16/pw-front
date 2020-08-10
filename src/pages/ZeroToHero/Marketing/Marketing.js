@@ -37,7 +37,7 @@ const Marketing = () => {
                         <p>
                             Learn more about Zero to Hero unique structure:
                             <a
-                                href={'https://learn.profitwhales.com/en/articles/4162147-zero-to-hero-zth-campaigns-structure'}
+                                href={'https://intercom.help/profitwhales/en/articles/4162147-zero-to-hero-zth-campaigns-structure'}
                                 target={'_blank'}>
                                 Click Here
                             </a>
