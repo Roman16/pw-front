@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import $ from 'jquery';
 
 import './LandingAutomation.less';
@@ -6,27 +6,30 @@ import './LandingAutomation.less';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {stepsImages} from "../../../assets/img/landing-automation/steps";
-import {Checkbox, Input, Modal, Radio, Rate, Select, Spin} from "antd";
+import {Checkbox, Input, Modal, Radio, Rate, Select} from "antd";
 import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png';
-import amazonLogo from '../../../assets/img/amazon.png';
 import exampleSoftImage from '../../../assets/img/landing-automation/example-soft.png';
 import exampleAmazonImage from '../../../assets/img/landing-automation/example-amazon-screen.png';
-import whiteWhale from '../../../assets/img/landing-automation/white-whale.svg';
+import whiteWhale from '../../../assets/img/landing-automation/white-whale.png';
 import pwStructureImage from '../../../assets/img/landing-automation/pw-structure.png';
 import vitaliiAvatar from '../../../assets/img/landing-automation/vitalii-avatar.png';
 import basketImage from '../../../assets/img/landing-automation/basket.png';
 import {underHoodImages} from '../../../assets/img/landing-automation/under-hood';
 import dataDrivenImage from '../../../assets/img/landing-automation/data-driven-image.png';
 import contactFormImage from '../../../assets/img/landing-automation/contact-form-image.png';
-import {avatars} from '../../../assets/img/landing-automation/avatars/avatars'
+import {avatars} from '../../../assets/img/landing-automation/commentAvatars';
+import {casesAvatars} from '../../../assets/img/landing-automation/casesAvatar';
 import trustpilotLogo from '../../../assets/img/landing-automation/Trustpilot-logo.png';
 import {Link} from "react-router-dom";
 import {SVG} from "../../../utils/icons";
 import CustomSelect from "../../../components/Select/Select";
 import {userService} from "../../../services/user.services";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import axios from 'axios';
-import InputCurrency from "../../../components/Inputs/InputCurrency";
+import Slider from "react-slick";
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
 
@@ -104,14 +107,12 @@ const advertisingStrategyVariations = [
     },
 ]
 
-
 const stepsSlider = [
     {
         title: `Easy to Master`,
         description: 'User-friendly design that makes easy to navigate your account so you’ll never miss out on what’s important.',
         userName: 'Stan Melrose',
-        userMessage: 'It was a new company for me... We have started form audit and detailed analysis of our niche. We spent some time to remake and prepare all needed campaigns. After the first 3 weeks, we have launched additional campaigns as SB / SD. We were impressed that our PPC campaigns could work so well. They have improved all our metrics and thanks to software+human control we start focusing on our business.',
-        userAvatar: avatars.AndreyKaminskiy,
+        userMessage: `It was a new company for me... We have started form audit and detailed analysis of our niche. We spent some time to remake and prepare all needed campaigns. After the first 3 weeks, we have launched additional campaigns as SB / SD. <span>We were impressed</span> that our PPC campaigns could <span>work so well</span>. They <span>have improved</span> all our metrics and thanks to software+human control we start focusing on our business.`,
         caseLink: '',
         img: stepsImages.slide1
     },
@@ -119,8 +120,7 @@ const stepsSlider = [
         title: `Data-Driven Bidding <br/> Optimization`,
         description: 'Profit Whales uses proprietary machine learning and algorithm-regulated software. It has already processed over two million real-life Amazon account iterations. And now it is ready to serve your business.',
         userName: 'Alexey Ukhnalev',
-        userMessage: 'I dreamt about PPC automation in several clicks in an efficient way. In Profit Whales they make it happen. For those who tired of high ACOS, CPC and time spent optimizing AD groups.',
-        userAvatar: avatars.AndreyKaminskiy,
+        userMessage: `I dreamt about <span> PPC automation in several clicks </span> in an efficient way. In <span>Profit Whales</span> they make it happen. For those who tired of high ACOS, CPC and time spent optimizing AD groups.`,
         caseLink: '',
         img: stepsImages.slide2
     },
@@ -128,8 +128,7 @@ const stepsSlider = [
         title: `Keyword Automation`,
         description: 'Harvesting good keywords for a PPC campaign is a daunting task. Profit Whales Automation takes care of that for you. And it keeps testing new ones for active campaigns to achieve optimal performance.',
         userName: 'Vasily Korobkin, Divelux, CEO',
-        userMessage: 'Finding a way into the top of page 1 results and directing major demand is an art form of Profit Whales. Our in-house Amazon marketing was adequate, but we needed some external knowledge to break the ice - the guys from Profit Whales are real professionals in regards not only to PPC optimization but also in the field of Amazon itself.',
-        userAvatar: avatars.AndreyKaminskiy,
+        userMessage: `Finding a way into the top of page 1 results and directing major demand is <span> an art form of Profit Whales</span>. Our in-house Amazon marketing was adequate, but we needed some external knowledge to break the ice - the guys from Profit Whales are <span>real professionals</span> in regards not only to PPC optimization but also in the field of Amazon itself.`,
         caseLink: '',
         img: stepsImages.slide3
     },
@@ -137,8 +136,7 @@ const stepsSlider = [
         title: `Interactive Dashboard`,
         description: 'Profit Whales provides a user-friendly dashboard that highlights the most important metrics of your Amazon business, as well as quick, 2-way control tools to stay on top of any situation and stay ahead of competition.',
         userName: 'Lighting Equipment Brand',
-        userMessage: 'We\'ve decided to use Profit Whales Software because of its user-friendly interface and ready-made full optimization. There wasn’t anything that we have wanted that Profit Whales Team said couldn’t be done with their Automation tool. You indicate your business goal - and the software performs changes by itself.',
-        userAvatar: avatars.AndreyKaminskiy,
+        userMessage: `We've decided to use Profit Whales Software because of its <span> user-friendly interface </span> and <span> ready-made full optimization</span>. There wasn’t anything that we have wanted that Profit Whales Team said couldn’t be done with their <span> Automation tool</span>. You indicate your business goal - and <span>the software performs changes by itself</span>.`,
         caseLink: '',
         img: stepsImages.slide4
     },
@@ -146,8 +144,7 @@ const stepsSlider = [
         title: `Dedicated Account <br/> Manager`,
         description: 'Every customer is assigned a dedicated manager who is experienced in both Amazon Ads optimization and the clockworks of Profit Whales software.',
         userName: 'Ethan Cooper',
-        userMessage: 'Amazing company. Loved the support from these guys. They correctly built the structure for my advertising companies. I am also impressed with their software. Very easy to use and you can set a strategy and not worry about the everyday work with advertising.',
-        userAvatar: avatars.AndreyKaminskiy,
+        userMessage: `<span>Amazing company</span>. Loved the <span>support</span> from these guys. They correctly built the structure for my advertising companies.<span>I am also impressed</span>  with their software. <span>Very easy to use</span> and you can set a strategy and not worry about the everyday work with advertising.`,
         caseLink: '',
         img: stepsImages.slide5
     },
@@ -155,26 +152,76 @@ const stepsSlider = [
 
 const commentsList = [
     {
-        name: 'Corina Elena Damian',
-        avatar: avatars.AndreyKaminskiy,
-        position: 'Corina Elena Damian',
+        name: 'David Lang',
         rate: 5,
-        comment: '“ I only have words of praise and I warmly recommend this software, but especially the person who has guided me and who does not get rid of me until I win £100,000. Professional vitals, explains the steps in detail and has a lot of patience! For beginners on Amazon and not only recommend PROFIT WHALES! “'
+        comment: '“Great product. The automation features saves me a ton of time on PPC. I like the daily changelog so that I can see the updates and keep an eye on the AI.“'
+    },
+    {
+        name: 'Steven Gregoire',
+        rate: 5,
+        comment: '“I signed up as a new customer with Profit Whales, and I am new to selling on Amazon. They have taken the time to share their experience and answer any newbie questions I have. They have taken the fear of selling on Amazon away. Straight forward and clear instructions! I recommend ProfitWhales to anyone selling on Amazon!“'
+    },
+    {
+        name: 'Andrew Tomson',
+        rate: 5,
+        comment: '“This is a great company. The best PPC management ever. I was able to scale my e-commerce with them. Don\'t wait for immediate results. They have a strategy and vision moths ahead.“'
+    },
+    {
+        name: 'Irakli',
+        rate: 5,
+        comment: '“I\'ve decided to use Profit Whales Software because of its user-friendly interface and ready-made full optimization. You indicate your business goal - and the software performs changes by itself. You can\'t even imagine how much time it saves me! I finally can launch new products and forgat about PPC Optimization using these crazy, unfriendly Bulk-files. That’s it. Easy and helpfull“'
+    },
+    {
+        name: 'Mikhail Madaliev',
+        rate: 5,
+        comment: '“The guys from Profit Whales are real professionals in regards not only to PPC optimization but also in the field of Amazon itself. I had a great free consultation that helped me better to understand the following aspects: I could felt solid practical experience from their representative Vitaliy and can honehstly say that they do not only intend for their business expansion but at first care about their customers providing valuable support.“'
+    },
+    {
+        name: 'Maxim Antonov',
+        rate: 5,
+        comment: '“Yes, very good company! They helped me a lot with advertising on Amazon and not only with advertising, there are practitioners working there who really know a lot about their business.“'
+    },
+    {
+        name: 'Dmitriy Golubovskiy',
+        rate: 5,
+        comment: '“These guys are doing an amazing job, solved my problem with huge Acos. It took only 2-3 weeks for them to fully optimize all campaigns. I would like to mention separately communication level: wrote even in Sat/Sunday and got answers. Recommend!“'
+    },
+    {
+        name: 'Ashot Tamrazyan',
+        rate: 5,
+        comment: '“Very responsive team! I am really satisfied with how they are working! So highly recommended them.! THX guys“'
     },
     {
         name: 'Corina Elena Damian',
-        avatar: avatars.AndreyKaminskiy,
-        position: 'Corina Elena Damian',
-        rate: 4,
-        comment: '“ I only have words of praise and I warmly recommend this software, but especially the person who has guided me and who does not get rid of me until I win £100,000. Professional vitals, explains the steps in detail and has a lot of patience! For beginners on Amazon and not only recommend PROFIT WHALES! “'
+        rate: 5,
+        comment: '“I only have words of praise and I warmly recommend this software, but especially the person who has guided me and who does not get rid of me until I win £ 100,000 ,, Professional vitals, explains the steps in detail and has a lot of patience ,,,,,, for beginners on Amazon and not only recommend PROFIT WHALES“'
     },
     {
-        name: 'Corina Elena Damian',
-        avatar: avatars.AndreyKaminskiy,
-        position: 'Corina Elena Damian',
-        rate: 3,
-        comment: '“ I only have words of praise and I warmly recommend this software, but especially the person who has guided me and who does not get rid of me until I win £100,000. Professional vitals, explains the steps in detail and has a lot of patience! For beginners on Amazon and not only recommend PROFIT WHALES! “'
+        name: 'Meet Patel',
+        rate: 5,
+        comment: '“It was an amazing experience working with Amzbizon, I was really lost in my PPC spending and ACOS, So I took the help of Amzbizon. We started our campaigns on the 21st of November With 48% Acos, With good Keyword targeting and well established and optimized Bulk operation Campaigns, We shoot down to 24.71% in just 12 days, It is a miracle, I wish I could share my Screenshot here. But they have really worked on my ACOS. Thank You so much.“'
     },
+    {
+        name: 'Emil Sirbu',
+        rate: 5,
+        comment: '“I highly recommend the services of these great guys. As their tool gives incredible results, that\'s obvious. I appreciated the attitude of this team for the client. We had a very humanized experience, where the money wasn\'t the first priority of our collaboration but customer satisfaction! Flexibility and promptness to any of my questions. I highly recommend!“'
+    },
+    {
+        name: 'Andrey Kaminskiy',
+        rate: 5,
+        comment: '“The team behind the agency is doing an amazing job by consulting about how to grow the conversion rate and managing our Amazon Advertising campaigns. Their support team is incredibly responsible all day long. Highly recommend!“'
+    },
+    {
+        name: 'Shtefan Vasilenyuk',
+        rate: 5,
+        comment: '“I am very satisfied with the work of these guys, they are the best of the PPC!“'
+    },
+    {
+        name: 'MyNewLands Brand',
+        rate: 5,
+        comment: '“Working with Profit Whales is pure value. They added me over 3,000 in Ad sales on the next day. I love that Profit Whales focusing on all types of advertising like Sponsored Brands, Sponsored Display, and Sponsored Products. Highly recommended for those who are looking to double or even triple their business with Amazon Advertising.“'
+    },
+
 ];
 
 
@@ -338,15 +385,15 @@ const LandingAutomation = () => {
 
             <section className={'top-amazon-platforms'}>
                 <div className="container">
-                    <h2>
-                        Trusted by <span>TOP</span> brands on Amazon platform
-                    </h2>
+                    {/*<h2>*/}
+                    {/*    Trusted by <span>TOP</span> brands on Amazon platform*/}
+                    {/*</h2>*/}
 
-                    <div className="partner-logos">
-                        <img src={amazonLogo} alt=""/>
-                        <img src={amazonLogo} alt=""/>
-                        <img src={amazonLogo} alt=""/>
-                    </div>
+                    {/*<div className="partner-logos">*/}
+                    {/*    <img src={amazonLogo} alt=""/>*/}
+                    {/*    <img src={amazonLogo} alt=""/>*/}
+                    {/*    <img src={amazonLogo} alt=""/>*/}
+                    {/*</div>*/}
 
                     <h2>
                         <span>Smart Bid</span> for every Ad position
@@ -469,12 +516,12 @@ const LandingAutomation = () => {
 
                         <div className="user-message">
                             <div className="avatar">
-                                <img src={stepsSlider[activeSlide].userAvatar} alt=""/>
+                                <img src={casesAvatars[stepsSlider[activeSlide].userName.replace(/ /g, "")]} alt=""/>
                             </div>
 
                             <div className="col">
                                 <h5>{stepsSlider[activeSlide].userName}</h5>
-                                <p>{stepsSlider[activeSlide].userMessage}</p>
+                                <p dangerouslySetInnerHTML={{__html: stepsSlider[activeSlide].userMessage}}/>
                             </div>
 
                             <Link to={stepsSlider[activeSlide].caseLink} className={'btn default'} target={'_blank'}>
@@ -790,43 +837,25 @@ const LandingAutomation = () => {
                     <h2><span>Trusted</span> the world over</h2>
 
                     <div className="users">
-                        {commentsList.map((user, index) => (
-                            <div className="user" onClick={() => setActiveComment(index)}>
-                                <div className="avatar">
-                                    <img src={user.avatar} alt=""/>
+                        <Slider
+                            dots={true}
+                            infinite={true}
+                            focusOnSelect={true}
+                            speed={500}
+                            slidesToShow={3}
+                            slidesToScroll={1}
+                        >
+                            {commentsList.map((item, index) => (
+                                <div className="user" onClick={() => setActiveComment(index)}>
+                                    <div className="avatar">
+                                        <img src={avatars[item.name.replace(/ /g, "")]} alt=""/>
+                                    </div>
+
+                                    <h4>{item.name}</h4>
                                 </div>
+                            ))}
+                        </Slider>
 
-                                <div className="col">
-                                    <h4>{user.name}</h4>
-                                    <p>{user.position}</p>
-                                </div>
-                            </div>
-                        ))}
-
-                        <input
-                            type="radio"
-                            name="slideItem"
-                            id={`slide-item-1`}
-                            className="slide-toggle"
-                            checked={activeComment === 0}
-                        />
-
-                        <input
-                            type="radio"
-                            name="slideItem"
-                            id={`slide-item-2`}
-                            className="slide-toggle"
-                            checked={activeComment === 1}
-                        />
-
-
-                        <input
-                            type="radio"
-                            name="slideItem"
-                            id={`slide-item-3`}
-                            className="slide-toggle"
-                            checked={activeComment === 2}
-                        />
 
                         <div className="slider">
                             <div className="bar"/>
@@ -962,7 +991,8 @@ const LandingAutomation = () => {
                             <div className="form-group">
                                 <label htmlFor="">Do you have brand registry?</label>
 
-                                <Radio.Group defaultValue={'yes'} onChange={(e) => changeContactFormHandler('brand_registry', e.target.value)}>
+                                <Radio.Group defaultValue={'yes'}
+                                             onChange={(e) => changeContactFormHandler('brand_registry', e.target.value)}>
                                     <Radio value={'yes'}>
                                         Yes
                                     </Radio>

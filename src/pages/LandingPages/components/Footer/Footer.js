@@ -32,6 +32,11 @@ const Footer = () => (
                 </div>
             </div>
 
+            <p className={'description'}>
+                Amazon Advertising Automation Software powered by Science and Data with the mission to build long-term
+                relationships with Sellers and Brands on Amazon Marketplace.
+            </p>
+
             <div className="menu">
                 <div className="col">
                     <h4>Products</h4>
