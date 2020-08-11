@@ -12,6 +12,7 @@ import exampleSoftImage from '../../../assets/img/landing-automation/example-sof
 import exampleAmazonImage from '../../../assets/img/landing-automation/example-amazon-screen.png';
 import whiteWhale from '../../../assets/img/landing-automation/white-whale.png';
 import pwStructureImage from '../../../assets/img/landing-automation/pw-structure.png';
+import pwStructureMobImage from '../../../assets/img/landing-automation/pw-structure-mob.png';
 import vitaliiAvatar from '../../../assets/img/landing-automation/vitalii-avatar.png';
 import basketImage from '../../../assets/img/landing-automation/basket.png';
 import {underHoodImages} from '../../../assets/img/landing-automation/under-hood';
@@ -349,11 +350,16 @@ const LandingAutomation = () => {
                 <img src={whiteWhale} alt="" className={'whale'}/>
 
                 <div className='container'>
-                    <h2>
+                    <h2 className={'desc'}>
                         Accelerate your <span>Amazon Business</span> with the help <br/>
                         of advanced decision-making technologies using <br/>
                         <span>Big Data & Data Science</span>
                     </h2>
+
+                    <h2 className={'mob'}>
+                        <span>Accelerate your Amazon Business</span> with the help
+                    </h2>
+
 
                     <button className={'btn'} onClick={scrollToForm}>
                         Let’s talk
@@ -365,7 +371,7 @@ const LandingAutomation = () => {
 
                     <div className="row">
                         <Link to={'/demo-call'} className={'demo'} target={'_blank'}>
-                            REQUEST
+                            <span>REQUEST</span>
 
                             <div className="icon">
                                 DEMO
@@ -377,7 +383,7 @@ const LandingAutomation = () => {
                                 <SVG id={'play-icon'}/>
                             </div>
 
-                            watch video
+                            <span> watch video</span>
                         </div>
                     </div>
                 </div>
@@ -410,8 +416,10 @@ const LandingAutomation = () => {
                         Programmatic Algorithms + Managed Service
                     </h2>
 
-                    <img src={pwStructureImage} alt="" className={'pw-structure'}/>
+                    <img src={pwStructureImage} alt="" className={'pw-structure desc'}/>
                 </div>
+
+                <img src={pwStructureMobImage} alt="" className={'pw-structure mob'}/>
             </section>
 
             <section className={'custom-strategies'}>
@@ -481,7 +489,7 @@ const LandingAutomation = () => {
                     </p>
 
 
-                    <div className="slider">
+                    <div className="pw-slider desc">
                         <div className="dots">
                             {stepsSlider.map((item, index) => <div
                                 className={`${activeSlide === index && 'active'}`}
@@ -528,6 +536,38 @@ const LandingAutomation = () => {
                                 Check My Case
                             </Link>
                         </div>
+                    </div>
+
+                    <div className={'mob'}>
+                        <Slider
+                            dots={true}
+                            infinite={true}
+                            focusOnSelect={true}
+                            speed={500}
+                            slidesToShow={1}
+                            slidesToScroll={1}
+                        >
+                            {stepsSlider.map((item, index) => (
+                                <div className={'slider-item'}>
+                                    <div className="image">
+                                        <img src={item.img} alt=""/>
+                                    </div>
+
+                                    <div className="description">
+                                        <h4 dangerouslySetInnerHTML={{__html: item.title}}/>
+                                        <p>{item.description}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </Slider>
+
+                        <Link to={'/demo-call'} className={'demo-link'} target={'_blank'}>
+                            <div className={'icon'}>
+                                <SVG id={'play-icon'}/>
+                            </div>
+
+                            Watch product demo
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -838,15 +878,34 @@ const LandingAutomation = () => {
 
                     <div className="users">
                         <Slider
-                            dots={true}
+                            dots={false}
                             infinite={true}
                             focusOnSelect={true}
                             speed={500}
                             slidesToShow={3}
                             slidesToScroll={1}
+                            afterChange={(index) => {
+                                setActiveComment(index)
+                            }}
+                            responsive={[
+                                {
+                                    breakpoint: 800,
+                                    settings: {
+                                        slidesToShow: 2,
+                                    }
+                                },
+                                {
+                                    breakpoint: 600,
+                                    settings: {
+                                        slidesToShow: 1,
+                                        slidesToScroll: 1,
+                                    }
+                                }
+                            ]}
+
                         >
                             {commentsList.map((item, index) => (
-                                <div className="user" onClick={() => setActiveComment(index)}>
+                                <div className="user">
                                     <div className="avatar">
                                         <img src={avatars[item.name.replace(/ /g, "")]} alt=""/>
                                     </div>
@@ -901,7 +960,7 @@ const LandingAutomation = () => {
                 <div className="container">
                     <h2>What’s new at our <span>BLOG</span></h2>
 
-                    <div className="posts">
+                    <div className="posts desc">
                         {blogPosts.map(post => (
                             <div className="post">
                                 <div className="image">
@@ -918,10 +977,38 @@ const LandingAutomation = () => {
                             </div>
                         ))}
                     </div>
+
+                    <div className="posts mob">
+                        <Slider
+                            dots={true}
+                            infinite={true}
+                            arrows={false}
+                            speed={500}
+                            slidesToShow={1}
+                            slidesToScroll={1}
+
+                        >
+                            {blogPosts.map(post => (
+                                <div className="post">
+                                    <div className="image">
+                                        <img src={post.image} alt=""/>
+                                    </div>
+
+                                    <h4>
+                                        {post.title.rendered}
+                                    </h4>
+
+                                    <a href={post.link} className={'btn default'} target={'_blank'}>
+                                        learn more
+                                    </a>
+                                </div>
+                            ))}
+                        </Slider>
+                    </div>
                 </div>
             </section>
 
-            <section className={'contact-form'} id={'form'}>
+            <section className={'contact-form desc'} id={'form'}>
                 <div className="container">
                     <img src={contactFormImage} alt=""/>
 
@@ -1042,6 +1129,131 @@ const LandingAutomation = () => {
                                     onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
                                 />
                             </div>
+                        </div>
+
+                        <Checkbox required>
+                            Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms and
+                            Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
+                        </Checkbox>
+
+                        <button className={'btn'}>
+                            Request Demo
+                        </button>
+                    </form>
+                </div>
+            </section>
+            <section className={'contact-form mob'} id={'form'}>
+                <div className="container">
+                    <h3>Talk With Our Experts</h3>
+
+                    <img src={contactFormImage} alt=""/>
+
+                    <form action="" onSubmit={submitFormHandler}>
+
+                        <div className="form-group">
+                            <label htmlFor="">First Name</label>
+                            <Input
+                                type="text"
+                                placeholder={'First Name'}
+                                onChange={({target: {value}}) => changeContactFormHandler('first_name', value)}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="">Last Name</label>
+                            <Input
+                                type="text"
+                                placeholder={'Last Name'}
+                                onChange={({target: {value}}) => changeContactFormHandler('last_name', value)}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="">E-mail</label>
+                            <Input
+                                type="email"
+                                placeholder={'E-mail'}
+                                onChange={({target: {value}}) => changeContactFormHandler('email', value)}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="">Average Monthly Sales</label>
+
+                            <select
+                                placeholder={'Select by'}
+                                onChange={(value) => changeContactFormHandler('monthly_sales', value)}
+                            >
+                                <option value={''}>Select by</option>
+                                <option value={'below 50k'}>below 50k</option>
+                                <option value={'50-200k'}>50-200k</option>
+                                <option value={'200k-1m'}>200k-1m</option>
+                                <option value={'over 1m'}>over 1m</option>
+                            </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="">Average Monthly Ad Spend</label>
+                            <select
+                                placeholder={'Select by'}
+                                onChange={(value) => changeContactFormHandler('monthly_ad_spend', value)}
+                            >
+                                <option value={''}>Select by</option>
+                                <option value={'below 10k'}>below 10k</option>
+                                <option value={'10-30k'}>10-30k</option>
+                                <option value={'30-60k'}>30-60k</option>
+                                <option value={'60-100k'}>60-100k</option>
+                                <option value={'no ads'}>no ads</option>
+                            </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="">Do you have brand registry?</label>
+
+                            <Radio.Group defaultValue={'yes'}
+                                         onChange={(e) => changeContactFormHandler('brand_registry', e.target.value)}>
+                                <Radio value={'yes'}>
+                                    Yes
+                                </Radio>
+
+                                <Radio value={'no'}>
+                                    No
+                                </Radio>
+                            </Radio.Group>
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="">What is your main goal?</label>
+
+                            <select
+                                placeholder={'Select by'}
+                                onChange={(value) => changeContactFormHandler('main_goal', value)}
+                            >
+                                <option value={''}>Select by</option>
+                                {advertisingStrategyVariations.map(item => (
+                                    <option value={item.value}>
+                                        {item.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="">Enter your Storefront Name</label>
+                            <Input
+                                type="text"
+                                placeholder={'Enter your Storefront Name'}
+                                onChange={({target: {value}}) => changeContactFormHandler('storefront_name', value)}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="">Enter your main category</label>
+                            <Input
+                                type="text"
+                                placeholder={' Enter your main category'}
+                                onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
+                            />
                         </div>
 
                         <Checkbox required>
