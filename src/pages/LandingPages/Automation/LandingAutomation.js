@@ -257,6 +257,10 @@ const LandingAutomation = () => {
         }, 1000);
     };
 
+    const scrollToTop = () => {
+        $("html, body").animate({scrollTop: 0}, "slow");
+    };
+
     const getLastBlogPosts = async () => {
         try {
             let posts = [];
@@ -291,6 +295,25 @@ const LandingAutomation = () => {
     useEffect(() => {
         getLastBlogPosts();
 
+        //----------------------------------------------------------------------
+        //----------------------------------------------------------------------
+        $(window).scroll(function () {
+            const scroll = $(window).scrollTop(),
+                documentHeight = $(document).height(),
+                windowHeight = $(window).height();
+
+            if (scroll >= 400) {
+                $(".scroll-to-top").addClass("visible");
+            } else {
+                $(".scroll-to-top").removeClass("visible");
+            }
+
+            if (scroll === documentHeight - windowHeight) {
+                $(".scroll-to-top").addClass("focus");
+            } else {
+                $(".scroll-to-top").removeClass("focus");
+            }
+        });
         //----------------------------------------------------------------------
         //----------------------------------------------------------------------
 
@@ -451,6 +474,14 @@ const LandingAutomation = () => {
             </section>
 
             <section className='achievements'>
+                <div className="lines-w">
+                    {[0, 1, 2].map(() => <div/>)}
+                </div>
+
+                <div className="lines-h">
+                    {[0, 1, 2, 3].map(() => <div/>)}
+                </div>
+
                 <div className="container">
                     <div className={'total-revenue'}>
                         <div className="description">Total Amazon <br/> Revenue <br/> Optimized</div>
@@ -472,14 +503,6 @@ const LandingAutomation = () => {
                         <div className="description">Average <br/> Increase in <br/> Revenue</div>
                         <div className="value">27%</div>
                     </div>
-                </div>
-
-                <div className="lines-w">
-                    {[0, 1, 2].map(() => <div/>)}
-                </div>
-
-                <div className="lines-h">
-                    {[0, 1, 2, 3].map(() => <div/>)}
                 </div>
             </section>
 
@@ -529,7 +552,9 @@ const LandingAutomation = () => {
 
                         <div className="user-message">
                             <div className="avatar">
-                                <img src={casesAvatars[stepsSlider[activeSlide].userName.replace(/ /g, "")]} alt=""/>
+                                <img
+                                    src={casesAvatars[activeSlide === 2 ? 'VasilyKorobkin' : stepsSlider[activeSlide].userName.replace(/ /g, "")]}
+                                    alt=""/>
                             </div>
 
                             <div className="col">
@@ -915,7 +940,7 @@ const LandingAutomation = () => {
                                         <img src={avatars[item.name.replace(/ /g, "")]} alt=""/>
                                     </div>
 
-                                    <h4>{item.name}</h4>
+                                    <h4 className={index === activeComment && 'active-user'}>{item.name}</h4>
                                 </div>
                             ))}
                         </Slider>
@@ -1015,152 +1040,149 @@ const LandingAutomation = () => {
 
             <section className={'contact-form desc'} id={'form'}>
                 <div className="container">
-
                     <div className="form-image">
                         <img src={contactFormImage} alt=""/>
 
                         {formState && <img src={sendProcessingImage} alt="" className={'processing'}/>}
                     </div>
 
-                    {formState ? <div className="thank-block">
-                            <img src={thankImage} alt=""/>
+                    <div className={`screen thank-block ${formState && 'active'}`}>
+                        <img src={thankImage} alt=""/>
 
-                            <button className={'btn'} onClick={() => setFormState(false)}>
-                                back to form
-                            </button>
-                        </div>
-                        :
-                        <form action="" onSubmit={submitFormHandler}>
-                            <h3>Talk With Our Experts</h3>
+                        <button className={'btn'} onClick={() => setFormState(false)}>
+                            back to form
+                        </button>
+                    </div>
 
-                            <div className="row">
-                                <div className="form-group">
-                                    <label htmlFor="">First Name</label>
-                                    <Input
-                                        type="text"
-                                        placeholder={'First Name'}
-                                        onChange={({target: {value}}) => changeContactFormHandler('first_name', value)}
-                                    />
-                                </div>
+                    <form className={`screen ${!formState && 'active'}`} onSubmit={submitFormHandler}>
+                        <h3>Talk With Our Experts</h3>
 
-                                <div className="form-group">
-                                    <label htmlFor="">Last Name</label>
-                                    <Input
-                                        type="text"
-                                        placeholder={'Last Name'}
-                                        onChange={({target: {value}}) => changeContactFormHandler('last_name', value)}
-                                    />
-                                </div>
-                            </div>
-
+                        <div className="row">
                             <div className="form-group">
-                                <label htmlFor="">E-mail</label>
+                                <label htmlFor="">First Name</label>
                                 <Input
-                                    type="email"
-                                    placeholder={'E-mail'}
-                                    onChange={({target: {value}}) => changeContactFormHandler('email', value)}
+                                    type="text"
+                                    placeholder={'First Name'}
+                                    onChange={({target: {value}}) => changeContactFormHandler('first_name', value)}
                                 />
                             </div>
 
-                            <div className="row">
-                                <div className="form-group">
-                                    <label htmlFor="">Average Monthly Sales</label>
+                            <div className="form-group">
+                                <label htmlFor="">Last Name</label>
+                                <Input
+                                    type="text"
+                                    placeholder={'Last Name'}
+                                    onChange={({target: {value}}) => changeContactFormHandler('last_name', value)}
+                                />
+                            </div>
+                        </div>
 
-                                    <CustomSelect
-                                        placeholder={'Select by'}
-                                        onChange={(value) => changeContactFormHandler('monthly_sales', value)}
-                                    >
-                                        <Option value={'below 50k'}>below 50k</Option>
-                                        <Option value={'50-200k'}>50-200k</Option>
-                                        <Option value={'200k-1m'}>200k-1m</Option>
-                                        <Option value={'over 1m'}>over 1m</Option>
-                                    </CustomSelect>
-                                </div>
+                        <div className="form-group">
+                            <label htmlFor="">E-mail</label>
+                            <Input
+                                type="email"
+                                placeholder={'E-mail'}
+                                onChange={({target: {value}}) => changeContactFormHandler('email', value)}
+                            />
+                        </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="">Average Monthly Ad Spend</label>
-                                    <CustomSelect
-                                        placeholder={'Select by'}
-                                        onChange={(value) => changeContactFormHandler('monthly_ad_spend', value)}
-                                    >
-                                        <Option value={'below 10k'}>below 10k</Option>
-                                        <Option value={'10-30k'}>10-30k</Option>
-                                        <Option value={'30-60k'}>30-60k</Option>
-                                        <Option value={'60-100k'}>60-100k</Option>
-                                        <Option value={'no ads'}>no ads</Option>
-                                    </CustomSelect>
-                                </div>
+                        <div className="row">
+                            <div className="form-group">
+                                <label htmlFor="">Average Monthly Sales</label>
+
+                                <CustomSelect
+                                    placeholder={'Select by'}
+                                    onChange={(value) => changeContactFormHandler('monthly_sales', value)}
+                                >
+                                    <Option value={'below 50k'}>below 50k</Option>
+                                    <Option value={'50-200k'}>50-200k</Option>
+                                    <Option value={'200k-1m'}>200k-1m</Option>
+                                    <Option value={'over 1m'}>over 1m</Option>
+                                </CustomSelect>
                             </div>
 
-                            <div className="row">
-                                <div className="form-group">
-                                    <label htmlFor="">Do you have brand registry?</label>
+                            <div className="form-group">
+                                <label htmlFor="">Average Monthly Ad Spend</label>
+                                <CustomSelect
+                                    placeholder={'Select by'}
+                                    onChange={(value) => changeContactFormHandler('monthly_ad_spend', value)}
+                                >
+                                    <Option value={'below 10k'}>below 10k</Option>
+                                    <Option value={'10-30k'}>10-30k</Option>
+                                    <Option value={'30-60k'}>30-60k</Option>
+                                    <Option value={'60-100k'}>60-100k</Option>
+                                    <Option value={'no ads'}>no ads</Option>
+                                </CustomSelect>
+                            </div>
+                        </div>
 
-                                    <Radio.Group defaultValue={'yes'}
-                                                 onChange={(e) => changeContactFormHandler('brand_registry', e.target.value)}>
-                                        <Radio value={'yes'}>
-                                            Yes
-                                        </Radio>
+                        <div className="row">
+                            <div className="form-group">
+                                <label htmlFor="">Do you have brand registry?</label>
 
-                                        <Radio value={'no'}>
-                                            No
-                                        </Radio>
-                                    </Radio.Group>
-                                </div>
+                                <Radio.Group defaultValue={'yes'}
+                                             onChange={(e) => changeContactFormHandler('brand_registry', e.target.value)}>
+                                    <Radio value={'yes'}>
+                                        Yes
+                                    </Radio>
 
-                                <div className="form-group">
-                                    <label htmlFor="">What is your main goal?</label>
-
-                                    <CustomSelect
-                                        placeholder={'Select by'}
-                                        getPopupContainer={triggerNode => triggerNode.parentNode}
-                                        onChange={(value) => changeContactFormHandler('main_goal', value)}
-                                    >
-                                        {advertisingStrategyVariations.map(item => (
-                                            <Option value={item.value}>
-                                                <i style={{fill: `#${item.fill}`}}>
-                                                    <SVG id={item.icon}/>
-                                                </i>
-                                                {item.label}
-                                            </Option>
-                                        ))}
-                                    </CustomSelect>
-
-                                </div>
+                                    <Radio value={'no'}>
+                                        No
+                                    </Radio>
+                                </Radio.Group>
                             </div>
 
-                            <div className="row">
-                                <div className="form-group">
-                                    <label htmlFor="">Enter your Storefront Name</label>
-                                    <Input
-                                        type="text"
-                                        placeholder={'Enter your Storefront Name'}
-                                        onChange={({target: {value}}) => changeContactFormHandler('storefront_name', value)}
-                                    />
-                                </div>
+                            <div className="form-group">
+                                <label htmlFor="">What is your main goal?</label>
 
-                                <div className="form-group">
-                                    <label htmlFor="">Enter your main category</label>
-                                    <Input
-                                        type="text"
-                                        placeholder={' Enter your main category'}
-                                        onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
-                                    />
-                                </div>
+                                <CustomSelect
+                                    placeholder={'Select by'}
+                                    getPopupContainer={triggerNode => triggerNode.parentNode}
+                                    onChange={(value) => changeContactFormHandler('main_goal', value)}
+                                >
+                                    {advertisingStrategyVariations.map(item => (
+                                        <Option value={item.value}>
+                                            <i style={{fill: `#${item.fill}`}}>
+                                                <SVG id={item.icon}/>
+                                            </i>
+                                            {item.label}
+                                        </Option>
+                                    ))}
+                                </CustomSelect>
+
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="form-group">
+                                <label htmlFor="">Enter your Storefront Name</label>
+                                <Input
+                                    type="text"
+                                    placeholder={'Enter your Storefront Name'}
+                                    onChange={({target: {value}}) => changeContactFormHandler('storefront_name', value)}
+                                />
                             </div>
 
-                            <Checkbox required>
-                                Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms
-                                and
-                                Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
-                            </Checkbox>
+                            <div className="form-group">
+                                <label htmlFor="">Enter your main category</label>
+                                <Input
+                                    type="text"
+                                    placeholder={' Enter your main category'}
+                                    onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
+                                />
+                            </div>
+                        </div>
 
-                            <button className={'btn'}>
-                                Request Demo
-                            </button>
-                        </form>
-                    }
+                        <Checkbox required>
+                            Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms
+                            and
+                            Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
+                        </Checkbox>
 
+                        <button className={'btn'}>
+                            Request Demo
+                        </button>
+                    </form>
 
                 </div>
             </section>
@@ -1289,6 +1311,14 @@ const LandingAutomation = () => {
                     </form>
                 </div>
             </section>
+
+            <button className={'scroll-to-top'} onClick={scrollToTop}>
+                <svg width="30" height="19" viewBox="0 0 30 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M1.41421 13.5858C0.633166 14.3668 0.633165 15.6332 1.41421 16.4142L3.27329 18.2733C4.05433 19.0543 5.32066 19.0543 6.10171 18.2733L13.5858 10.7892C14.3668 10.0082 15.6332 10.0082 16.4142 10.7892L23.8983 18.2733C24.6793 19.0543 25.9457 19.0543 26.7267 18.2733L28.5858 16.4142C29.3668 15.6332 29.3668 14.3668 28.5858 13.5858L16.4142 1.41421C15.6332 0.633166 14.3668 0.633165 13.5858 1.41421L1.41421 13.5858Z"
+                        fill="white"/>
+                </svg>
+            </button>
 
             <Footer/>
 

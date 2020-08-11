@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import './Header.less';
 import {history} from "../../../../utils/history";
 import {SVG} from "../../../../utils/icons";
+import $ from "jquery";
 
 
 const Header = ({type = 'light', page}) => {
@@ -24,6 +25,21 @@ const Header = ({type = 'light', page}) => {
         }
     }, [openedMenu]);
 
+    useEffect(() => {
+        $(window).scroll(function () {
+            const scroll = $(window).scrollTop();
+
+            if (scroll >= 400) {
+                $(".new-zth").addClass("scrollUp");
+                $(".not-found-page__header").addClass("scrollUp");
+            } else {
+                $(".new-zth").removeClass("scrollUp");
+                $(".not-found-page__header").removeClass("scrollUp");
+            }
+        });
+
+    }, []);
+
     const authorized = !!localStorage.getItem('token');
 
     return (
@@ -41,7 +57,7 @@ const Header = ({type = 'light', page}) => {
             <header className={`not-found-page__header ${type}`} id={'header'}>
                 <div className="container">
                     <div>
-                        <Link to='/'>
+                        <Link to='/' className={'logo-link'}>
                             <img src={type === 'dark' ? logoWhite : logoDark} alt="Profit Whales" className='logo'/>
                         </Link>
 
@@ -66,7 +82,8 @@ const Header = ({type = 'light', page}) => {
                                 <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
                                     <ul className="sub-menu">
                                         <li><a href="/blog">Blog</a></li>
-                                        <li><a href='https://intercom.help/profitwhales/en' target={'_blank'}>Help Center</a>
+                                        <li><a href='https://intercom.help/profitwhales/en' target={'_blank'}>Help
+                                            Center</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -76,25 +93,28 @@ const Header = ({type = 'light', page}) => {
                     </div>
 
                     <div className='nav-buttons'>
-                        {!authorized ?
-                            <Fragment>
-                                <div onClick={() => history.push('/login')} className='login-link'>LOG IN</div>
-                                <button
-                                    onClick={() => history.push('/registration')}
-                                    className='btn green-btn register-btn'
-                                >
-                                    {page === 'zth' ? 'Try it Now' : 'TRY IT FOR FREE'}
-                                </button>
-                            </Fragment>
-                            :
-                            <button
-                                onClick={() => history.push('/ppc/optimization')}
-                                className='btn green-btn login-btn'
-                            >
-                                SIGN IN
-                            </button>
-                        }
+                        {/*{!authorized ?*/}
+                        {/*    <Fragment>*/}
+                        {/*        <div onClick={() => history.push('/login')} className='login-link'>LOG IN</div>*/}
+                        {/*        <button*/}
+                        {/*            onClick={() => history.push('/registration')}*/}
+                        {/*            className='btn green-btn register-btn'*/}
+                        {/*        >*/}
+                        {/*            {page === 'zth' ? 'Try it Now' : 'TRY IT FOR FREE'}*/}
+                        {/*        </button>*/}
+                        {/*    </Fragment>*/}
+                        {/*    :*/}
+                        {/*    <button*/}
+                        {/*        onClick={() => history.push('/ppc/optimization')}*/}
+                        {/*        className='btn green-btn login-btn'*/}
+                        {/*    >*/}
+                        {/*        SIGN IN*/}
+                        {/*    </button>*/}
+                        {/*}*/}
 
+                        <Link to={'/login'}>LOG IN</Link>
+
+                        <button className={'btn default'}>Let’s Talk</button>
                     </div>
                 </div>
             </header>

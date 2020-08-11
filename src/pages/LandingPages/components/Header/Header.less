@@ -4,6 +4,10 @@
   }
 }
 
+.landing-page {
+  padding-top: 142px;
+}
+
 .new-zth {
   display: flex;
   align-items: center;
@@ -12,6 +16,17 @@
   color: #fff;
   font-family: Eina;
   padding: 10px 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.3s;
+
+  &.scrollUp {
+    transform: translateY(-46px)
+  }
+
 
   span {
     font-weight: 500;
@@ -62,7 +77,17 @@
   -webkit-box-shadow: 0 4px 12px rgba(44, 48, 58, .08), 0 0 20px rgba(44, 48, 58, .04);
   box-shadow: 0 4px 12px rgba(44, 48, 58, .08), 0 0 20px rgba(44, 48, 58, .04);
 
-  font-family: ir;
+  font-family: Eina;
+
+  transition: all 0.5s;
+  position: fixed;
+  top: 46px;
+  left: 0;
+  z-index: 10000;
+
+  &.scrollUp {
+    transform: translateY(-142px)
+  }
 
   .container {
     display: flex;
@@ -71,9 +96,10 @@
 
     width: 100%;
     height: 100%;
-    max-width: 1420px;
+    max-width: 1460px;
     margin: 0 auto;
-    padding: 0 10px;
+    padding: 0 20px;
+    box-sizing: border-box;
 
     div:first-child {
       flex: 1;
@@ -81,8 +107,11 @@
       align-items: center;
     }
 
+    .logo-link {
+      margin: 0 90px 0 0;
+    }
+
     .logo {
-      margin: 0 20px 0 0;
       min-width: 100px;
       max-width: 140px;
     }
@@ -122,6 +151,11 @@
           display: inline-block;
           vertical-align: middle;
           position: relative;
+          margin: 0 50px 0 0;
+
+          &:last-child {
+            margin: 0;
+          }
 
           &.has-child {
             a {
@@ -130,7 +164,7 @@
 
               svg {
                 width: 10px;
-                margin: 0 0 0 10px;
+                margin: 5px 0 0 10px;
               }
             }
           }
@@ -151,6 +185,12 @@
             overflow: hidden;
 
             li {
+              padding: 15px 10px;
+
+              &:hover {
+                background: rgba(241, 241, 241, 0.6);
+              }
+
               &.soon {
                 width: 100%;
                 background: rgba(156, 156, 156, 0.49);
@@ -175,16 +215,14 @@
           }
 
           a {
-            color: #38454f;
+            font-size: 14px;
+            color: #17175A;
             font-weight: 500;
             display: block;
             text-transform: capitalize;
             -webkit-transition: .2s;
             -o-transition: .2s;
             transition: .2s;
-            opacity: .7;
-            padding: 10px 25px;
-            font-size: 14px;
 
             &:hover {
               opacity: .9;
@@ -198,13 +236,23 @@
       display: flex;
       align-items: center;
 
-      div {
-        cursor: pointer;
+      .btn {
+        height: 40px;
+        margin: 0 0 0 10px;
+
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
       }
 
-      .login-btn {
+      a {
         font-size: 14px;
-        height: 40px;
+        color: #17175A;
+        font-weight: 500;
+
+        &:hover {
+          color: #83FED0;
+        }
       }
 
       .register-btn {
