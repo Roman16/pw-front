@@ -8,14 +8,7 @@
   padding-top: 142px;
 }
 
-.new-zth {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  background: #6D6DF6;
-  color: #fff;
-  font-family: Eina;
-  padding: 10px 30px;
+.header-block {
   position: fixed;
   top: 0;
   left: 0;
@@ -24,8 +17,18 @@
   transition: all 0.3s;
 
   &.scrollUp {
-    transform: translateY(-46px)
+    transform: translateY(-142px)
   }
+}
+
+.new-zth {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  background: #6D6DF6;
+  color: #fff;
+  font-family: Eina;
+  padding: 10px 30px;
 
 
   span {
@@ -78,16 +81,6 @@
   box-shadow: 0 4px 12px rgba(44, 48, 58, .08), 0 0 20px rgba(44, 48, 58, .04);
 
   font-family: Eina;
-
-  transition: all 0.5s;
-  position: fixed;
-  top: 46px;
-  left: 0;
-  z-index: 10000;
-
-  &.scrollUp {
-    transform: translateY(-142px)
-  }
 
   .container {
     display: flex;
@@ -225,7 +218,7 @@
             transition: .2s;
 
             &:hover {
-              opacity: .9;
+              color: #6D6DF6;
             }
           }
         }
@@ -236,13 +229,14 @@
       display: flex;
       align-items: center;
 
-      .btn {
+      .register-btn {
         height: 40px;
         margin: 0 0 0 10px;
 
         font-size: 14px;
         font-weight: 500;
         text-transform: uppercase;
+        color: #fff;
       }
 
       a {
@@ -255,13 +249,7 @@
         }
       }
 
-      .register-btn {
-        height: 40px;
-        text-transform: uppercase;
-        margin: 0 0 0 30px;
-        font-size: 14px;
-        font-weight: initial;
-      }
+
     }
   }
 
@@ -305,6 +293,10 @@
     & .container {
       .burger-menu-button {
         display: block;
+      }
+
+      .logo-link {
+        margin: 0 20px 0 0;
       }
 
       .header-menu.open {
@@ -374,6 +366,7 @@
     }
   }
 
+
   @media (max-width: 500px) {
     & .container {
       img {
@@ -385,6 +378,19 @@
         width: max-content;
         padding: 0 20px;
       }
+    }
+  }
+}
+
+
+@media (max-width: 600px) {
+  .landing-page {
+    padding-top: 235px;
+  }
+
+  .header-block {
+    &.scrollUp {
+      transform: translateY(-235px)
     }
   }
 }

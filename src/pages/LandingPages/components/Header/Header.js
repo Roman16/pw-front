@@ -30,11 +30,9 @@ const Header = ({type = 'light', page}) => {
             const scroll = $(window).scrollTop();
 
             if (scroll >= 400) {
-                $(".new-zth").addClass("scrollUp");
-                $(".not-found-page__header").addClass("scrollUp");
+                $(".header-block").addClass("scrollUp");
             } else {
-                $(".new-zth").removeClass("scrollUp");
-                $(".not-found-page__header").removeClass("scrollUp");
+                $(".header-block").removeClass("scrollUp");
             }
         });
 
@@ -43,7 +41,7 @@ const Header = ({type = 'light', page}) => {
     const authorized = !!localStorage.getItem('token');
 
     return (
-        <>
+        <div className={'header-block'}>
             {page !== 'zth' && <div className="new-zth">
                 <span>NEW!</span> We launched Zero to Hero tool to create 100% ready-to-use Amazon PPC Campaigns.
 
@@ -114,11 +112,11 @@ const Header = ({type = 'light', page}) => {
 
                         <Link to={'/login'}>LOG IN</Link>
 
-                        <button className={'btn default'}>Let’s Talk</button>
+                        <Link to={'/registration'} className={'btn default register-btn'}>sign up</Link>
                     </div>
                 </div>
             </header>
-        </>
+        </div>
     )
 }
 
