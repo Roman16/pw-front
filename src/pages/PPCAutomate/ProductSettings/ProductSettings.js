@@ -8,6 +8,7 @@ import {productsServices} from "../../../services/products.services";
 import {notification} from '../../../components/Notification';
 import {debounce} from "throttle-debounce";
 import {SVG} from "../../../utils/icons";
+import {useSelector} from "react-redux";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -15,7 +16,6 @@ let source = null;
 let timerId = null;
 
 let editableRow = null;
-
 
 
 const ProductSettingsMain = () => {
@@ -28,7 +28,12 @@ const ProductSettingsMain = () => {
         [paginationOptions, setPaginationOptions] = useState({
             page: 1,
             pageSize: 10
-        })
+        });
+
+    const {isAgencyClient} = useSelector(state => ({
+            isAgencyClient: state.user.user.is_agency_client
+        }
+    ));
 
     const fetchProducts = async () => {
         if (processing && source) {
@@ -173,6 +178,7 @@ const ProductSettingsMain = () => {
                 products={productsList}
                 totalSize={totalSize}
                 paginationOption={paginationOptions}
+                isAgencyClient={isAgencyClient}
 
                 changePagination={changePaginationHandler}
                 setRowData={setRowData}

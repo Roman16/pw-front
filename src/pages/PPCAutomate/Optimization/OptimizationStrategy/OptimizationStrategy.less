@@ -27,6 +27,7 @@
       width: 30%;
     }
 
+
     .strategy-item {
       height: 91px;
       display: flex;
@@ -80,7 +81,7 @@
         display: flex;
         align-items: center;
 
-        .starts {
+        .stars {
           display: flex;
           align-items: flex-end;
           margin: 3px 0 0 10px;
@@ -94,27 +95,6 @@
               margin: 0;
             }
 
-            &.active {
-              &:first-child {
-                background: linear-gradient(90deg, #83FED0 0%, #82F3D3 100%);
-              }
-
-              &:nth-child(2) {
-                background: linear-gradient(90deg, #80E5D7 0%, #7DD7DB 100%);
-              }
-
-              &:nth-child(3) {
-                background: linear-gradient(90deg, #7BC9DF 0%, #79B7E3 100%);
-              }
-
-              &:nth-child(4) {
-                background: linear-gradient(90deg, #77A9E7 0%, #7394ED 100%);
-              }
-
-              &:nth-child(5) {
-                background: linear-gradient(90deg, #7187F0 0%, #6E6EF7 100%);
-              }
-            }
           }
         }
       }
@@ -165,6 +145,27 @@
 
     .strategy-item:nth-child(5).active {
       background: rgba(91, 235, 243, 0.15);
+    }
+
+
+    .strategy-item:nth-child(1) .stars div.active {
+      background: #EC7F5C;
+    }
+
+    .strategy-item:nth-child(2) .stars div.active {
+      background: #6D6DF6;
+    }
+
+    .strategy-item:nth-child(3) .stars div.active {
+      background: #83FED0;
+    }
+
+    .strategy-item:nth-child(4) .stars div.active {
+      background: #F0B849;
+    }
+
+    .strategy-item:nth-child(5) .stars div.active {
+      background: #6D6DF6;
     }
   }
 

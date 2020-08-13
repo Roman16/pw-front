@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import logoDark from '../../../../assets/img/ProfitWhales-logo-dark.svg';
 import logoWhite from '../../../../assets/img/ProfitWhales-logo-white.svg';
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import './Header.less';
 import {history} from "../../../../utils/history";
 import {SVG} from "../../../../utils/icons";
@@ -55,9 +55,9 @@ const Header = ({type = 'light', page}) => {
             <header className={`not-found-page__header ${type}`} id={'header'}>
                 <div className="container">
                     <div>
-                        <Link to='/' className={'logo-link'}>
+                        <NavLink to='/' className={'logo-link'}>
                             <img src={type === 'dark' ? logoWhite : logoDark} alt="Profit Whales" className='logo'/>
-                        </Link>
+                        </NavLink>
 
                         <button className='burger-menu-button' onClick={() => switchMenu(!openedMenu)}>
                             <div/>
@@ -69,14 +69,14 @@ const Header = ({type = 'light', page}) => {
                             <ul className="">
                                 <li className="has-child"><a href="#">Products <SVG id='menu-arrow'/></a>
                                     <ul className="sub-menu">
-                                        <li><Link to='/'>PPC Automate</Link></li>
+                                        <li><NavLink to='/'>PPC Automate</NavLink></li>
                                         {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
-                                        <li><Link to={'/zero-to-hero-info'}>Zero To Hero</Link></li>
+                                        <li><NavLink to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
                                         <li className="soon"><a href='#'>Analytics</a></li>
                                     </ul>
                                 </li>
-                                <li><Link to={'/pricing'}>Pricing</Link></li>
-                                <li><Link to="/contact-us">Contact us</Link></li>
+                                <li><NavLink to={'/pricing'}>Pricing</NavLink></li>
+                                <li><NavLink to="/contact-us">Contact us</NavLink></li>
                                 <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
                                     <ul className="sub-menu">
                                         <li><a href="/blog">Blog</a></li>
@@ -85,7 +85,7 @@ const Header = ({type = 'light', page}) => {
                                         </li>
                                     </ul>
                                 </li>
-                                <li><Link to="/videos">How it works</Link></li>
+                                <li><NavLink to="/videos">How it works</NavLink></li>
                             </ul>
                         </nav>
                     </div>

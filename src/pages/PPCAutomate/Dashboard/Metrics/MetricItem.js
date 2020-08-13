@@ -87,7 +87,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                 </InformationTooltip>
 
             )
-        } else if (name === 'profit' || name === 'ad_profit' || name === 'organic_sales') {
+        } else if (name === 'profit' || name === 'ad_profit' || name === 'organic_sales' || name === 'total_sales'|| name === 'ad_sales' ) {
             const diffValue = Math.abs(value - prevValue);
 
             return (<InformationTooltip

@@ -140,7 +140,7 @@ function StrategyItem({
                         <div className="sales">
                             Sales:
 
-                            <div className="starts">
+                            <div className="stars">
                                 {[0, 1, 2, 3, 4].map(star => (
                                     <div style={{width: `${4 + star}px`, height: `${4 + star}px`}}
                                          className={star <= sales ? 'active' : ''}/>
@@ -150,7 +150,7 @@ function StrategyItem({
                         <div className="acos">
                             ACoS:
 
-                            <div className="starts">
+                            <div className="stars">
                                 {[0, 1, 2, 3, 4].map(star => (
                                     <div style={{width: `${4 + star}px`, height: `${4 + star}px`}}
                                          className={star <= acos ? 'active' : ''}/>
