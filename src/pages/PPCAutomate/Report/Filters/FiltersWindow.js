@@ -119,29 +119,6 @@ const reasonList = [
     }
 ]
 
-const multiSelectVariations = {
-    'object_type': [
-        {title: 'Keyword', key: 'keyword', value: 'keyword'},
-        {title: 'PT', key: 'pt', value: 'pt'},
-        {title: 'Campaign', key: 'campaign', value: 'campaign'},
-        {title: 'Ad Group', key: 'ad_group', value: 'ad_group'},
-        {title: 'Product Ad', key: 'product_ad', value: 'product_ad'},
-    ],
-    'match_type': [
-        {title: 'Keyword', key: 'keyword', value: 'keyword'},
-        {title: 'PT', key: 'pt', value: 'pt'},
-    ],
-    'type': [
-        {title: 'Adjusted bid', key: 'adjusted_bid', value: 'adjusted_bid'},
-        {title: 'Not profitable keyword / PT', key: 'not_profitable_keyword_pt', value: 'not_profitable_keyword_pt'},
-        {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
-        {title: 'Created negative keyword / PT', key: 'created_negative_keyword_pt', value: 'created_negative_keyword_pt'},
-        {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
-        {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
-        {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
-        {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
-    ]
-}
 
 const containsVariations = {
     'datetime': [{label: 'In', key: 'in'}],
@@ -160,16 +137,54 @@ const containsVariations = {
 
 }
 
-const FilterWindow = ({columns, onClose, onAddFilter, filters}) => {
+const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
     const [filterBy, setFilterBy] = useState(),
         [filterType, setFilterType] = useState(),
         [filterValue, setFilterValue] = useState();
+
+
+    const multiSelectVariations = {
+        'object_type': [
+            {title: 'Keyword', key: 'keyword', value: 'keyword'},
+            {title: 'PT', key: 'pt', value: 'pt'},
+            {title: 'Campaign', key: 'campaign', value: 'campaign'},
+            {title: 'Ad Group', key: 'ad_group', value: 'ad_group'},
+            {title: 'Product Ad', key: 'product_ad', value: 'product_ad'},
+        ],
+        'match_type': [
+            {title: 'Keyword', key: 'keyword', value: 'keyword'},
+            {title: 'PT', key: 'pt', value: 'pt'},
+        ],
+        'type':
+        currentTab === 'targeting-improvements' ? [
+            {title: 'Adjusted bid', key: 'adjusted_bid', value: 'adjusted_bid'},
+            {title: 'Not profitable keyword / PT', key: 'not_profitable_keyword_pt', value: 'not_profitable_keyword_pt'},
+            {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
+        ] :
+        currentTab === 'search-terms' ? [
+            {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
+            {title: 'Created negative keyword / PT', key: 'created_negative_keyword_pt', value: 'created_negative_keyword_pt'},
+            {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
+            {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
+            {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
+        ] :
+         [
+            {title: 'Adjusted bid', key: 'adjusted_bid', value: 'adjusted_bid'},
+            {title: 'Not profitable keyword / PT', key: 'not_profitable_keyword_pt', value: 'not_profitable_keyword_pt'},
+            {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
+            {title: 'Created negative keyword / PT', key: 'created_negative_keyword_pt', value: 'created_negative_keyword_pt'},
+            {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
+            {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
+            {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
+            {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
+        ]
+    };
 
     const changeFilterByHandler = (value) => {
         setFilterBy(value);
         setFilterType(containsVariations[value][0])
         setFilterValue(null)
-    }
+    };
 
     const changeTypeHandler = (value) => {
         setFilterType(containsVariations[filterBy].find(item => item.key === value))

@@ -136,6 +136,7 @@ const Filters = ({columns, onChange, filters, currentTab}) => {
                 content={<FilterWindow
                     filters={filters}
                     columns={columns}
+                    currentTab={currentTab}
                     onClose={() => setVisibleFilterPopover(false)}
                     onAddFilter={(filter) => {
                         addFilterHandler(filter)

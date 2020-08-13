@@ -20,8 +20,7 @@ class DatePicker extends Component {
     };
 
     disabledDate = current => {
-        // return current && current > moment().tz('America/Los_Angeles');
-        return current && current > moment().tz('America/Los_Angeles').add(1, 'days')
+        return current && current > moment().tz('America/Los_Angeles').endOf('day');
     };
 
     render() {
@@ -37,15 +36,15 @@ class DatePicker extends Component {
                             moment(new Date()).add(-1, 'days'),
                         ],
                         'Last 7 Days': [
-                            moment(new Date()).add(-7, 'days'),
+                            moment(new Date()).add(-6, 'days'),
                             moment()
                         ],
                         'Last 14 Days': [
-                            moment(new Date()).add(-14, 'days'),
+                            moment(new Date()).add(-13, 'days'),
                             moment()
                         ],
                         'Last 30 Days': [
-                            moment(new Date()).add(-30, 'days'),
+                            moment(new Date()).add(-29, 'days'),
                             moment()
                         ],
                         'Year to date': [
@@ -61,7 +60,7 @@ class DatePicker extends Component {
                     dropdownClassName={'pw-date-picker-dropdown'}
                     separator="-"
                     format="DD/MM/YY"
-                    suffixIcon={<SVG id={'select-icon'} />}
+                    suffixIcon={<SVG id={'select-icon'}/>}
                     onChange={this.handleChange}
                     disabledDate={this.disabledDate}
                     defaultValue={defaultValue}
