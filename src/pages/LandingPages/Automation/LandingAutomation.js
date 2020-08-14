@@ -168,6 +168,7 @@ const commentsList = [
         name: 'Andrew Tomson',
         rate: 5,
         comment: '“This is a great company. The best PPC management ever. I was able to scale my e-commerce with them. Don\'t wait for immediate results. They have a strategy and vision moths ahead.“'
+
     },
     {
         name: 'Irakli',
@@ -249,12 +250,6 @@ const LandingAutomation = () => {
 
         setFormState(true)
         console.log(contactFormParams);
-    };
-
-    const scrollToForm = () => {
-        $([document.documentElement, document.body]).animate({
-            scrollTop: $("#form").offset().top
-        }, 1000);
     };
 
     const scrollToTop = () => {
@@ -389,9 +384,9 @@ const LandingAutomation = () => {
                     </h2>
 
 
-                    <button className={'btn'} onClick={scrollToForm}>
+                    <a href={'#form'} className={'btn'}>
                         Let’s talk
-                    </button>
+                    </a>
 
                     <img src={amazonSpnWhiteLogo} alt="" className={'spn-logo'}/>
 
@@ -409,6 +404,8 @@ const LandingAutomation = () => {
                         <div className="video-btn" onClick={() => switchWindow(true)}>
                             <div className="pulse">
                                 <SVG id={'play-icon'}/>
+
+                                <div/>
                             </div>
 
                             <span> watch video</span>
@@ -464,9 +461,9 @@ const LandingAutomation = () => {
                             achieve the highest profitability with maximum efficiency.
                         </p>
 
-                        <button className={'btn'} onClick={scrollToForm}>
+                        <a href={'#form'} className={'btn'}>
                             Let’s talk
-                        </button>
+                        </a>
                     </div>
 
                     <img src={vitaliiAvatar} alt=""/>
@@ -537,14 +534,13 @@ const LandingAutomation = () => {
                             ))}
                         </div>
 
-                        <Link to={'/demo-call'} className={'demo-link'} target={'_blank'}>
-
+                        <a href={'https://youtu.be/Xm9uKq9-7b0'} className={'demo-link'} target={'_blank'}>
                             <div className={'icon'}>
                                 <SVG id={'play-icon'}/>
                             </div>
 
                             Watch product demo
-                        </Link>
+                        </a>
 
                         <div className="image">
                             <img src={stepsSlider[activeSlide].img} alt=""/>
@@ -591,13 +587,13 @@ const LandingAutomation = () => {
                             ))}
                         </Slider>
 
-                        <Link to={'/demo-call'} className={'demo-link'} target={'_blank'}>
+                        <a href={'https://youtu.be/Xm9uKq9-7b0'} className={'demo-link'} target={'_blank'}>
                             <div className={'icon'}>
                                 <SVG id={'play-icon'}/>
                             </div>
 
                             Watch product demo
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </section>
@@ -614,9 +610,9 @@ const LandingAutomation = () => {
                         Smart Automated Advertising Solution
                     </p>
 
-                    <button className={'btn'} onClick={scrollToForm}>
+                    <Link to={'/demo-call'} href={'#form'} className={'btn'}>
                         TALK WITH US
-                    </button>
+                    </Link>
                 </div>
             </section>
 
@@ -650,8 +646,12 @@ const LandingAutomation = () => {
                                     running!
                                 </p>
 
-                                <Link to={'/'} target={'_blank'}>Learn more about Zero to Hero <SVG
-                                    id={'right-row'}/></Link>
+                                <a
+                                    href={'https://intercom.help/profitwhales/en/articles/4164171-introduction-zero-to-hero-amazon-ppc-campaigns-creator'}
+                                    target={'_blank'}>
+                                    Learn more about Zero to Hero
+                                    <SVG id={'right-row'}/>
+                                </a>
                             </div>
 
                             <div className="image"><img src={underHoodImages.icon1} alt=""/></div>
@@ -680,7 +680,12 @@ const LandingAutomation = () => {
                                     management experience and successful tests on dozens of big brands on Amazon.
                                 </p>
 
-                                <Link to={'/'} target={'_blank'}>Learn more about our structure <SVG id={'right-row'}/></Link>
+                                <a
+                                    href={'https://intercom.help/profitwhales/en/articles/4162147-zero-to-hero-zth-campaigns-structure'}
+                                    target={'_blank'}>
+                                    Learn more about our structure
+                                    <SVG id={'right-row'}/>
+                                </a>
                             </div>
                         </div>
 
@@ -702,7 +707,12 @@ const LandingAutomation = () => {
                                     selected strategy.
                                 </p>
 
-                                <Link to={'/'} target={'_blank'}>Learn more about our algorithms <SVG id={'right-row'}/></Link>
+                                <a
+                                    href={'https://intercom.help/profitwhales/en/articles/3766517-the-basics-of-profit-whales-algorithms'}
+                                    target={'_blank'}>
+                                    Learn more about our algorithms
+                                    <SVG id={'right-row'}/>
+                                </a>
                             </div>
 
                             <div className="image"><img src={underHoodImages.icon3} alt=""/></div>
@@ -760,7 +770,12 @@ const LandingAutomation = () => {
                                     verifies the results 24/7.
                                 </p>
 
-                                <Link to={'/'} target={'_blank'}>Learn more about our Dashboard <SVG id={'right-row'}/></Link>
+                                <a
+                                    href={'https://intercom.help/profitwhales/en/articles/3763635-profit-whales-dashboard-navigation'}
+                                    target={'_blank'}>
+                                    Learn more about our Dashboard
+                                    <SVG id={'right-row'}/>
+                                </a>
                             </div>
 
                             <div className="image"><img src={underHoodImages.icon5} alt=""/></div>
@@ -828,8 +843,12 @@ const LandingAutomation = () => {
                                     the most impact on your business.
                                 </p>
 
-                                <Link to={'/'} target={'_blank'}>Learn more about Dayparting <SVG
-                                    id={'right-row'}/></Link>
+                                <a
+                                    href={'https://intercom.help/profitwhales/en/articles/3815260-day-parting-tool'}
+                                    target={'_blank'}>
+                                    Learn more about Dayparting
+                                    <SVG id={'right-row'}/>
+                                </a>
                             </div>
                         </div>
 
@@ -937,7 +956,11 @@ const LandingAutomation = () => {
                             {commentsList.map((item, index) => (
                                 <div className="user">
                                     <div className="avatar">
-                                        <img src={avatars[item.name.replace(/ /g, "")]} alt=""/>
+                                        {index === 2 ?
+                                            <SVG id='account'/>
+                                            :
+                                            <img src={avatars[item.name.replace(/ /g, "")]} alt=""/>
+                                        }
                                     </div>
 
                                     <h4 className={index === activeComment && 'active-user'}>{item.name}</h4>
@@ -945,9 +968,11 @@ const LandingAutomation = () => {
                             ))}
                         </Slider>
 
-
-                        <div className="slider">
+                        <div className="slider desc">
                             <div className="bar"/>
+                        </div>
+                        <div className="slider mob">
+                            <div className="bar" style={{marginLeft: `${7.14 * activeComment}%`}}/>
                         </div>
                     </div>
 
@@ -976,14 +1001,11 @@ const LandingAutomation = () => {
                             Check our customer reviews on Trustpilot!
                         </p>
 
-                        <button className={'btn'}>
-                            <a href="" target={'_blank'}>
-                                <img src={trustpilotLogo} alt=""/>
-                            </a>
-                        </button>
+                        <a href="https://www.trustpilot.com/review/profitwhales.com" target={'_blank'} className={'btn'}>
+                            <img src={trustpilotLogo} alt=""/>
+                        </a>
                     </div>
                 </div>
-
             </section>
 
             <section className={'new-blog-posts'}>
@@ -1043,7 +1065,7 @@ const LandingAutomation = () => {
                     <div className="form-image">
                         <img src={contactFormImage} alt=""/>
 
-                        {formState && <img src={sendProcessingImage} alt="" className={'processing'}/>}
+                        <img src={sendProcessingImage} alt="" className={`processing screen ${formState && 'active'}`}/>
                     </div>
 
                     <div className={`screen thank-block ${formState && 'active'}`}>
@@ -1092,6 +1114,7 @@ const LandingAutomation = () => {
 
                                 <CustomSelect
                                     placeholder={'Select by'}
+                                    getPopupContainer={triggerNode => triggerNode.parentNode}
                                     onChange={(value) => changeContactFormHandler('monthly_sales', value)}
                                 >
                                     <Option value={'below 50k'}>below 50k</Option>
@@ -1105,6 +1128,7 @@ const LandingAutomation = () => {
                                 <label htmlFor="">Average Monthly Ad Spend</label>
                                 <CustomSelect
                                     placeholder={'Select by'}
+                                    getPopupContainer={triggerNode => triggerNode.parentNode}
                                     onChange={(value) => changeContactFormHandler('monthly_ad_spend', value)}
                                 >
                                     <Option value={'below 10k'}>below 10k</Option>
@@ -1186,6 +1210,7 @@ const LandingAutomation = () => {
 
                 </div>
             </section>
+
             <section className={'contact-form mob'} id={'form'}>
                 <div className="container">
                     <h3>Talk With Our Experts</h3>
@@ -1330,8 +1355,7 @@ const LandingAutomation = () => {
                 footer={false}
                 destroyOnClose={true}
             >
-                <iframe width="853" height="480" src="https://www.youtube.com/embed/m608kntHUzU?autoplay=1"
-                        frameBorder="0"
+                <iframe width="1280" height="720" src="https://www.youtube.com/embed/m608kntHUzU" frameBorder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen/>
             </Modal>

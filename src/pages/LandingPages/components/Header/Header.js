@@ -26,14 +26,24 @@ const Header = ({type = 'light', page}) => {
     }, [openedMenu]);
 
     useEffect(() => {
+        let lastScrollTop = 0;
+
         $(window).scroll(function () {
             const scroll = $(window).scrollTop();
 
             if (scroll >= 400) {
+                $(".header-block").addClass("scrollDown");
+            } else {
+                $(".header-block").removeClass("scrollDown");
+            }
+
+            if (lastScrollTop > scroll) {
                 $(".header-block").addClass("scrollUp");
             } else {
                 $(".header-block").removeClass("scrollUp");
             }
+
+            lastScrollTop = scroll;
         });
 
     }, []);

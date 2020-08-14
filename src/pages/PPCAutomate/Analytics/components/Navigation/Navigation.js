@@ -1,6 +1,7 @@
 import React from "react";
 import './Navigation.less';
 import {NavLink} from "react-router-dom";
+import {SVG} from "../../../../../utils/icons";
 
 const Navigation = () => {
 
@@ -34,7 +35,13 @@ const Navigation = () => {
     return (
         <section className={'navigation'}>
             <ul>
-                {menu.map(item => <li><NavLink to={item.url}>{item.title}</NavLink></li>)}
+                {menu.map((item, index) => <li>
+                    <NavLink to={item.url}>
+                        {item.title}
+
+                        {index === 0 && <SVG id={'house'}/>}
+                    </NavLink>
+                </li>)}
             </ul>
         </section>
     )

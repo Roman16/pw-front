@@ -15,7 +15,8 @@
         height: 50px;
         display: flex;
         align-items: center;
-        padding: 0 0 0 28px;
+        justify-content: space-between;
+        padding: 0 15px 0 28px;
 
         font-size: 14px;
         color: #656A84;
@@ -24,10 +25,18 @@
 
         border-bottom: 0.5px solid #C9CBD4;
 
+        svg {
+          fill: #C9CBD4;
+        }
+
         &.active {
           background: rgba(245, 245, 255, 0.7);
-          padding: 0 0 0 24px;
+          padding-left: 24px;
           border-left: 4px solid #6D6DF6;
+
+          svg {
+            fill: #6D6DF6;
+          }
         }
 
         &:hover {

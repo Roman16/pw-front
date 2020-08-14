@@ -1,6 +1,5 @@
 import React from "react";
 import CustomTable from "../../../../../components/Table/CustomTable";
-import {dateField, infoField, sorterByKeywordField} from "../../../Report/ReportTable/Tables/const";
 import Pagination from "../../../../../components/Pagination/Pagination";
 import './CampaignsList.less';
 
