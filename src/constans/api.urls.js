@@ -35,7 +35,8 @@ export const userUrls = {
     ebookSubscribe: 'landings/ebook/send-me',
     userSubscribe: 'landings/subscribe',
     contacts: 'landings/contact-us',
-    freeTrial: 'user/account/subscription/start-free-trial'
+    freeTrial: 'user/account/subscription/start-free-trial',
+    contactForm: 'landings/request-talk-to-experts',
 };
 
 export const productsUrls = {

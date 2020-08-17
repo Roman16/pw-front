@@ -45,6 +45,7 @@ export const userService = {
     startFreeTrial,
 
     getBlogPosts,
+    sendContactForm
 };
 
 function login(user) {
@@ -208,6 +209,10 @@ function onSubscribe(email) {
 
 function sendContacts(data) {
     return api('post', `${userUrls.contacts}`, data);
+}
+
+function sendContactForm(data) {
+    return api('post', `${userUrls.contactForm}`, data);
 }
 
 //-------------------------------------

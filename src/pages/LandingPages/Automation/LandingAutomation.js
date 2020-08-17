@@ -22,7 +22,7 @@ import sendProcessingImage from '../../../assets/img/landing-automation/send-pro
 import thankImage from '../../../assets/img/landing-automation/thank-image.png';
 import {avatars} from '../../../assets/img/landing-automation/commentAvatars';
 import {casesAvatars} from '../../../assets/img/landing-automation/casesAvatar';
-import trustpilotLogo from '../../../assets/img/landing-automation/Trustpilot-logo.png';
+import trustpilotLogo from '../../../assets/img/landing-automation/trustpilot-logo.svg';
 import {Link} from "react-router-dom";
 import {SVG} from "../../../utils/icons";
 import CustomSelect from "../../../components/Select/Select";
@@ -33,6 +33,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 import axios from 'axios';
 import Slider from "react-slick";
+import {notification} from "../../../components/Notification";
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
 
@@ -225,13 +226,25 @@ const commentsList = [
         rate: 5,
         comment: '“Working with Profit Whales is pure value. They added me over 3,000 in Ad sales on the next day. I love that Profit Whales focusing on all types of advertising like Sponsored Brands, Sponsored Display, and Sponsored Products. Highly recommended for those who are looking to double or even triple their business with Amazon Advertising.“'
     },
-
 ];
+
+const defaultForm = {
+    first_name: null,
+    last_name: null,
+    email: null,
+    avg_monthly_ad_sales: null,
+    avg_monthly_ad_spend: null,
+    is_has_brand_registry: false,
+    main_goal: null,
+    storefront_name: null,
+    main_category: null,
+};
 
 
 const LandingAutomation = () => {
     const [visibleVideoWindow, switchWindow] = useState(false),
-        [contactFormParams, setContactFormParams] = useState({}),
+        [contactFormParams, setContactFormParams] = useState({...defaultForm}),
+        [agreeWithTerms, setAgreeWithTerms] = useState(false),
         [blogPosts, setBlogPosts] = useState([]),
         [activeSlide, setActiveSlide] = useState(0),
         [activeComment, setActiveComment] = useState(0),
@@ -244,12 +257,23 @@ const LandingAutomation = () => {
         })
     };
 
-    const submitFormHandler = (e) => {
+    const submitFormHandler = async (e) => {
         e.preventDefault();
 
 
-        setFormState(true)
-        console.log(contactFormParams);
+        if (Object.values(contactFormParams).some(item => item == null) || !agreeWithTerms) {
+            notification.error({title: 'All fields is required!'})
+        } else {
+            try {
+                await userService.sendContactForm(contactFormParams);
+
+                setFormState(true);
+                setContactFormParams(defaultForm);
+                setAgreeWithTerms(false);
+            } catch (e) {
+                console.log(e);
+            }
+        }
     };
 
     const scrollToTop = () => {
@@ -683,7 +707,7 @@ const LandingAutomation = () => {
                                 <a
                                     href={'https://intercom.help/profitwhales/en/articles/4162147-zero-to-hero-zth-campaigns-structure'}
                                     target={'_blank'}>
-                                    Learn more about our structure
+                                    Learn more about structure
                                     <SVG id={'right-row'}/>
                                 </a>
                             </div>
@@ -710,7 +734,7 @@ const LandingAutomation = () => {
                                 <a
                                     href={'https://intercom.help/profitwhales/en/articles/3766517-the-basics-of-profit-whales-algorithms'}
                                     target={'_blank'}>
-                                    Learn more about our algorithms
+                                    Learn more about algorithms
                                     <SVG id={'right-row'}/>
                                 </a>
                             </div>
@@ -773,7 +797,7 @@ const LandingAutomation = () => {
                                 <a
                                     href={'https://intercom.help/profitwhales/en/articles/3763635-profit-whales-dashboard-navigation'}
                                     target={'_blank'}>
-                                    Learn more about our Dashboard
+                                    Learn more about Dashboard
                                     <SVG id={'right-row'}/>
                                 </a>
                             </div>
@@ -1001,8 +1025,11 @@ const LandingAutomation = () => {
                             Check our customer reviews on Trustpilot!
                         </p>
 
-                        <a href="https://www.trustpilot.com/review/profitwhales.com" target={'_blank'} className={'btn'}>
+                        <a href="https://www.trustpilot.com/review/profitwhales.com" target={'_blank'}
+                           className={'btn'}>
                             <img src={trustpilotLogo} alt=""/>
+
+                            Trustpilot
                         </a>
                     </div>
                 </div>
@@ -1085,6 +1112,7 @@ const LandingAutomation = () => {
                                 <Input
                                     type="text"
                                     placeholder={'First Name'}
+                                    value={contactFormParams.first_name}
                                     onChange={({target: {value}}) => changeContactFormHandler('first_name', value)}
                                 />
                             </div>
@@ -1094,6 +1122,7 @@ const LandingAutomation = () => {
                                 <Input
                                     type="text"
                                     placeholder={'Last Name'}
+                                    value={contactFormParams.last_name}
                                     onChange={({target: {value}}) => changeContactFormHandler('last_name', value)}
                                 />
                             </div>
@@ -1104,6 +1133,7 @@ const LandingAutomation = () => {
                             <Input
                                 type="email"
                                 placeholder={'E-mail'}
+                                value={contactFormParams.email}
                                 onChange={({target: {value}}) => changeContactFormHandler('email', value)}
                             />
                         </div>
@@ -1115,12 +1145,13 @@ const LandingAutomation = () => {
                                 <CustomSelect
                                     placeholder={'Select by'}
                                     getPopupContainer={triggerNode => triggerNode.parentNode}
-                                    onChange={(value) => changeContactFormHandler('monthly_sales', value)}
+                                    value={contactFormParams.avg_monthly_ad_sales}
+                                    onChange={(value) => changeContactFormHandler('avg_monthly_ad_sales', value)}
                                 >
-                                    <Option value={'below 50k'}>below 50k</Option>
-                                    <Option value={'50-200k'}>50-200k</Option>
-                                    <Option value={'200k-1m'}>200k-1m</Option>
-                                    <Option value={'over 1m'}>over 1m</Option>
+                                    <Option value={'below_50k'}>below 50k</Option>
+                                    <Option value={'50_200k'}>50-200k</Option>
+                                    <Option value={'200_1000k'}>200k-1m</Option>
+                                    <Option value={'over_1m'}>over 1m</Option>
                                 </CustomSelect>
                             </div>
 
@@ -1129,13 +1160,14 @@ const LandingAutomation = () => {
                                 <CustomSelect
                                     placeholder={'Select by'}
                                     getPopupContainer={triggerNode => triggerNode.parentNode}
-                                    onChange={(value) => changeContactFormHandler('monthly_ad_spend', value)}
+                                    value={contactFormParams.avg_monthly_ad_spend}
+                                    onChange={(value) => changeContactFormHandler('avg_monthly_ad_spend', value)}
                                 >
-                                    <Option value={'below 10k'}>below 10k</Option>
-                                    <Option value={'10-30k'}>10-30k</Option>
-                                    <Option value={'30-60k'}>30-60k</Option>
-                                    <Option value={'60-100k'}>60-100k</Option>
-                                    <Option value={'no ads'}>no ads</Option>
+                                    <Option value={'below_10k'}>below 10k</Option>
+                                    <Option value={'10_30k'}>10-30k</Option>
+                                    <Option value={'30_60k'}>30-60k</Option>
+                                    <Option value={'60_100k'}>60-100k</Option>
+                                    <Option value={'no_ads'}>no ads</Option>
                                 </CustomSelect>
                             </div>
                         </div>
@@ -1145,12 +1177,13 @@ const LandingAutomation = () => {
                                 <label htmlFor="">Do you have brand registry?</label>
 
                                 <Radio.Group defaultValue={'yes'}
-                                             onChange={(e) => changeContactFormHandler('brand_registry', e.target.value)}>
-                                    <Radio value={'yes'}>
+                                             value={contactFormParams.is_has_brand_registry}
+                                             onChange={(e) => changeContactFormHandler('is_has_brand_registry', e.target.value)}>
+                                    <Radio value={true}>
                                         Yes
                                     </Radio>
 
-                                    <Radio value={'no'}>
+                                    <Radio value={false}>
                                         No
                                     </Radio>
                                 </Radio.Group>
@@ -1162,6 +1195,7 @@ const LandingAutomation = () => {
                                 <CustomSelect
                                     placeholder={'Select by'}
                                     getPopupContainer={triggerNode => triggerNode.parentNode}
+                                    value={contactFormParams.main_goal}
                                     onChange={(value) => changeContactFormHandler('main_goal', value)}
                                 >
                                     {advertisingStrategyVariations.map(item => (
@@ -1183,6 +1217,7 @@ const LandingAutomation = () => {
                                 <Input
                                     type="text"
                                     placeholder={'Enter your Storefront Name'}
+                                    value={contactFormParams.storefront_name}
                                     onChange={({target: {value}}) => changeContactFormHandler('storefront_name', value)}
                                 />
                             </div>
@@ -1192,12 +1227,13 @@ const LandingAutomation = () => {
                                 <Input
                                     type="text"
                                     placeholder={' Enter your main category'}
+                                    value={contactFormParams.main_category}
                                     onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
                                 />
                             </div>
                         </div>
 
-                        <Checkbox required>
+                        <Checkbox onChange={({target: {checked}}) => setAgreeWithTerms(checked)}>
                             Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms
                             and
                             Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
@@ -1224,6 +1260,7 @@ const LandingAutomation = () => {
                             <Input
                                 type="text"
                                 placeholder={'First Name'}
+                                value={contactFormParams.first_name}
                                 onChange={({target: {value}}) => changeContactFormHandler('first_name', value)}
                             />
                         </div>
@@ -1233,6 +1270,7 @@ const LandingAutomation = () => {
                             <Input
                                 type="text"
                                 placeholder={'Last Name'}
+                                value={contactFormParams.last_name}
                                 onChange={({target: {value}}) => changeContactFormHandler('last_name', value)}
                             />
                         </div>
@@ -1242,6 +1280,7 @@ const LandingAutomation = () => {
                             <Input
                                 type="email"
                                 placeholder={'E-mail'}
+                                value={contactFormParams.email}
                                 onChange={({target: {value}}) => changeContactFormHandler('email', value)}
                             />
                         </div>
@@ -1251,13 +1290,13 @@ const LandingAutomation = () => {
 
                             <select
                                 placeholder={'Select by'}
-                                onChange={(value) => changeContactFormHandler('monthly_sales', value)}
+                                value={contactFormParams.avg_monthly_ad_sales}
+                                onChange={(value) => changeContactFormHandler('avg_monthly_ad_sales', value)}
                             >
-                                <option value={''}>Select by</option>
-                                <option value={'below 50k'}>below 50k</option>
-                                <option value={'50-200k'}>50-200k</option>
-                                <option value={'200k-1m'}>200k-1m</option>
-                                <option value={'over 1m'}>over 1m</option>
+                                <option value={'below_50k'}>below 50k</option>
+                                <option value={'50_200k'}>50-200k</option>
+                                <option value={'200_1000k'}>200k-1m</option>
+                                <option value={'over_1m'}>over 1m</option>
                             </select>
                         </div>
 
@@ -1265,14 +1304,14 @@ const LandingAutomation = () => {
                             <label htmlFor="">Average Monthly Ad Spend</label>
                             <select
                                 placeholder={'Select by'}
-                                onChange={(value) => changeContactFormHandler('monthly_ad_spend', value)}
+                                value={contactFormParams.avg_monthly_ad_spend}
+                                onChange={(value) => changeContactFormHandler('avg_monthly_ad_spend', value)}
                             >
-                                <option value={''}>Select by</option>
-                                <option value={'below 10k'}>below 10k</option>
-                                <option value={'10-30k'}>10-30k</option>
-                                <option value={'30-60k'}>30-60k</option>
-                                <option value={'60-100k'}>60-100k</option>
-                                <option value={'no ads'}>no ads</option>
+                                <option value={'below_10k'}>below 10k</option>
+                                <option value={'10_30k'}>10-30k</option>
+                                <option value={'30_60k'}>30-60k</option>
+                                <option value={'60_100k'}>60-100k</option>
+                                <option value={'no_ads'}>no ads</option>
                             </select>
                         </div>
 
@@ -1280,12 +1319,13 @@ const LandingAutomation = () => {
                             <label htmlFor="">Do you have brand registry?</label>
 
                             <Radio.Group defaultValue={'yes'}
-                                         onChange={(e) => changeContactFormHandler('brand_registry', e.target.value)}>
-                                <Radio value={'yes'}>
+                                         value={contactFormParams.is_has_brand_registry}
+                                         onChange={(e) => changeContactFormHandler('is_has_brand_registry', e.target.value)}>
+                                <Radio value={true}>
                                     Yes
                                 </Radio>
 
-                                <Radio value={'no'}>
+                                <Radio value={false}>
                                     No
                                 </Radio>
                             </Radio.Group>
@@ -1296,6 +1336,7 @@ const LandingAutomation = () => {
 
                             <select
                                 placeholder={'Select by'}
+                                value={contactFormParams.main_goal}
                                 onChange={(value) => changeContactFormHandler('main_goal', value)}
                             >
                                 <option value={''}>Select by</option>
@@ -1312,6 +1353,7 @@ const LandingAutomation = () => {
                             <Input
                                 type="text"
                                 placeholder={'Enter your Storefront Name'}
+                                value={contactFormParams.storefront_name}
                                 onChange={({target: {value}}) => changeContactFormHandler('storefront_name', value)}
                             />
                         </div>
@@ -1321,11 +1363,12 @@ const LandingAutomation = () => {
                             <Input
                                 type="text"
                                 placeholder={' Enter your main category'}
+                                value={contactFormParams.main_category}
                                 onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
                             />
                         </div>
 
-                        <Checkbox required>
+                        <Checkbox onChange={({target: {checked}}) => setAgreeWithTerms(checked)}>
                             Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms and
                             Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
                         </Checkbox>

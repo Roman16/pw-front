@@ -1474,21 +1474,15 @@
         font-size: 18px;
         background: #17175A;
         padding: 0;
+        color: #fff;
 
         &:hover {
           background: rgba(23, 23, 90, 0.79);
-
         }
-
-        a {
-          display: flex;
-          align-items: center;
-          padding: 0 30px 5px;
-        }
-
 
         img {
           height: 70%;
+          margin: 0 10px 0 0;
         }
       }
     }
@@ -1790,6 +1784,8 @@
         line-height: 19px;
         color: #FFFFFF;
         font-weight: 500;
+        margin-bottom: 9px;
+        display: block;
       }
 
       input, select {
@@ -1797,8 +1793,9 @@
         height: 40px;
         background: #FFFFFF;
         border-radius: 4px;
-        margin: 9px 0 0 0;
+        //margin: 9px 0 0 0;
         padding-left: 19px;
+        font-size: 14px;
 
         &:focus {
           outline: none;
@@ -1819,7 +1816,7 @@
         .ant-select-selection__placeholder {
           padding-left: 19px;
           color: #7C8A95;
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 400;
         }
 
@@ -1837,6 +1834,10 @@
           .ant-radio {
             .ant-radio-inner {
               border-color: #fff;
+            }
+
+            .ant-radio-input {
+              margin: 0;
             }
 
             &.ant-radio-checked {
@@ -1860,6 +1861,7 @@
 
       .ant-select-selection-selected-value {
         padding: 0 0 0 19px;
+        font-size: 14px;
 
         i {
           display: flex;
@@ -1871,7 +1873,7 @@
       .ant-select-dropdown-menu-item {
         display: flex;
         align-items: center;
-        font-size: 1rem;
+        font-size: 14px;
 
         i {
           width: 22px;
