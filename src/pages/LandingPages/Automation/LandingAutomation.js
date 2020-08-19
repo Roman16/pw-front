@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import $ from 'jquery';
 
 import './LandingAutomation.less';
-
+import DocumentMeta from 'react-document-meta';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {stepsImages} from "../../../assets/img/landing-automation/steps";
@@ -229,17 +229,25 @@ const commentsList = [
 ];
 
 const defaultForm = {
-    first_name: null,
-    last_name: null,
-    email: null,
-    avg_monthly_ad_sales: null,
-    avg_monthly_ad_spend: null,
+    first_name: undefined,
+    last_name: undefined,
+    email: undefined,
+    active_marketplaces: undefined,
+    avg_monthly_ad_sales: undefined,
+    avg_monthly_ad_spend: undefined,
     is_has_brand_registry: false,
-    main_goal: null,
-    storefront_name: null,
-    main_category: null,
+    main_goal: undefined,
+    storefront_name: undefined,
+    main_category: undefined,
 };
 
+const meta = {
+    title: 'Profit Whales Amazon PPC Software | Accelerate your Brand',
+    description: 'Smart Automated Amazon Advertising Software for Brands to Kick-Start Amazon PPC Optimization with Programmatic Algorithms, Big Data & Data Science',
+    meta: {
+        charset: 'utf-8',
+    }
+};
 
 const LandingAutomation = () => {
     const [visibleVideoWindow, switchWindow] = useState(false),
@@ -260,20 +268,23 @@ const LandingAutomation = () => {
     const submitFormHandler = async (e) => {
         e.preventDefault();
 
-
-        if (Object.values(contactFormParams).some(item => item == null) || !agreeWithTerms) {
+        if (Object.values(contactFormParams).some(item => item == undefined) || !agreeWithTerms) {
             notification.error({title: 'All fields is required!'})
         } else {
             try {
                 await userService.sendContactForm(contactFormParams);
 
                 setFormState(true);
-                setContactFormParams(defaultForm);
                 setAgreeWithTerms(false);
             } catch (e) {
                 console.log(e);
             }
         }
+    };
+
+    const backToForm = () => {
+        setContactFormParams(defaultForm);
+        setFormState(false);
     };
 
     const scrollToTop = () => {
@@ -391,6 +402,8 @@ const LandingAutomation = () => {
 
     return (
         <div className="landing-automation  landing-page">
+            <DocumentMeta {...meta} />
+
             <Header/>
 
             <section className='first-section'>
@@ -398,9 +411,9 @@ const LandingAutomation = () => {
 
                 <div className='container'>
                     <h2 className={'desc'}>
-                        Accelerate your <span>Amazon Business</span> with the help <br/>
-                        of advanced decision-making technologies using <br/>
-                        <span>Big Data & Data Science</span>
+                        Turn Ad Spend into Ad Investment to Accelerate <br/> your <span>Amazon Business Growth</span>.
+                        Powered by Big <br/> Data
+                        & Data Science
                     </h2>
 
                     <h2 className={'mob'}>
@@ -417,22 +430,32 @@ const LandingAutomation = () => {
                     <img src={exampleSoftImage} alt="" className={'example-soft-image'}/>
 
                     <div className="row">
-                        <Link to={'/demo-call'} className={'demo'} target={'_blank'}>
-                            <span>REQUEST</span>
+                        <div className="demo">
+                            <Link to={'/demo-call'} className={''} target={'_blank'}>
+                                <span>REQUEST</span>
 
-                            <div className="icon">
-                                DEMO
-                            </div>
-                        </Link>
+                                <div className="icon">
+                                    DEMO
+                                </div>
+                            </Link>
+                        </div>
 
-                        <div className="video-btn" onClick={() => switchWindow(true)}>
-                            <div className="pulse">
-                                <SVG id={'play-icon'}/>
+                        <div className="registration-link">
+                            <Link to={'/registration'}>
+                                <div className="icon">
+                                    FREE TRIAL
+                                </div>
 
-                                <div/>
-                            </div>
+                                <span>start now</span>
+                            </Link>
+                        </div>
+                    </div>
 
-                            <span> watch video</span>
+                    <div className="video-btn" onClick={() => switchWindow(true)}>
+                        <div className="pulse">
+                            <SVG id={'play-icon'}/>
+
+                            <div/>
                         </div>
                     </div>
                 </div>
@@ -625,17 +648,17 @@ const LandingAutomation = () => {
             <section className={'empower-business'}>
                 <div className="container">
                     <h4>
-                        Empower you <br/> Amazon Business
+                        Accelerate you <br/> Amazon Business
                     </h4>
 
                     <img src={basketImage} alt=""/>
 
                     <p>
-                        Smart Automated Advertising Solution
+                        Free Audit of your Amazon Ad Spend, see how you can get higher ROAS on your Ad Investments
                     </p>
 
                     <Link to={'/demo-call'} href={'#form'} className={'btn'}>
-                        TALK WITH US
+                        Get a free audit
                     </Link>
                 </div>
             </section>
@@ -676,6 +699,8 @@ const LandingAutomation = () => {
                                     Learn more about Zero to Hero
                                     <SVG id={'right-row'}/>
                                 </a>
+
+                                <Link to={'/demo-call'} target={'_blank'} className={'btn default'}>DEMO</Link>
                             </div>
 
                             <div className="image"><img src={underHoodImages.icon1} alt=""/></div>
@@ -929,6 +954,8 @@ const LandingAutomation = () => {
                                     all our client businesses can rest assured that we will provide them with the best
                                     PPC performance now, and we will continue to do so in the future.
                                 </p>
+
+                                <a href="#form" className={'btn default'}>Let’s talk</a>
                             </div>
                         </div>
                     </div>
@@ -1096,9 +1123,12 @@ const LandingAutomation = () => {
                     </div>
 
                     <div className={`screen thank-block ${formState && 'active'}`}>
+                        <div className="user-name">
+                            Hey {contactFormParams.first_name}!
+                        </div>
                         <img src={thankImage} alt=""/>
 
-                        <button className={'btn'} onClick={() => setFormState(false)}>
+                        <button className={'btn'} onClick={backToForm}>
                             back to form
                         </button>
                     </div>
@@ -1128,15 +1158,36 @@ const LandingAutomation = () => {
                             </div>
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="">E-mail</label>
-                            <Input
-                                type="email"
-                                placeholder={'E-mail'}
-                                value={contactFormParams.email}
-                                onChange={({target: {value}}) => changeContactFormHandler('email', value)}
-                            />
+                        <div className="row">
+                            <div className="form-group">
+                                <label htmlFor="">E-mail</label>
+                                <Input
+                                    type="email"
+                                    placeholder={'E-mail'}
+                                    value={contactFormParams.email}
+                                    onChange={({target: {value}}) => changeContactFormHandler('email', value)}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="">Select your active amazon marketplaces</label>
+
+                                <CustomSelect
+                                    placeholder={'Select by'}
+                                    getPopupContainer={triggerNode => triggerNode.parentNode}
+                                    value={contactFormParams.active_marketplaces}
+                                    onChange={(value) => changeContactFormHandler('active_marketplaces', value)}
+                                >
+                                    <Option value={'ATVPDKIKX0DER'}>USA</Option>
+                                    <Option value={'A2EUQ1WTGCTBG2'}>CA</Option>
+                                    <Option value={'A1F83G8C2ARO7P'}>UK</Option>
+                                    <Option value={'A1PA6795UKMFR9'}>DE</Option>
+                                    <Option value={'A13V1IB3VIYZZH'}>FR</Option>
+                                </CustomSelect>
+                            </div>
+
                         </div>
+
 
                         <div className="row">
                             <div className="form-group">
@@ -1148,10 +1199,11 @@ const LandingAutomation = () => {
                                     value={contactFormParams.avg_monthly_ad_sales}
                                     onChange={(value) => changeContactFormHandler('avg_monthly_ad_sales', value)}
                                 >
-                                    <Option value={'below_50k'}>below 50k</Option>
-                                    <Option value={'50_200k'}>50-200k</Option>
-                                    <Option value={'200_1000k'}>200k-1m</Option>
-                                    <Option value={'over_1m'}>over 1m</Option>
+                                    <Option value={'below_50k'}>below $50,000</Option>
+                                    <Option value={'50_200k'}>$50k - $200k</Option>
+                                    <Option value={'200_500k'}>$200k - $500k</Option>
+                                    <Option value={'500_1000k'}>$500k - $1m</Option>
+                                    <Option value={'over_1m'}>over $1m</Option>
                                 </CustomSelect>
                             </div>
 
@@ -1167,6 +1219,7 @@ const LandingAutomation = () => {
                                     <Option value={'10_30k'}>10-30k</Option>
                                     <Option value={'30_60k'}>30-60k</Option>
                                     <Option value={'60_100k'}>60-100k</Option>
+                                    <Option value={'over_100k'}>over $100k</Option>
                                     <Option value={'no_ads'}>no ads</Option>
                                 </CustomSelect>
                             </div>
@@ -1213,20 +1266,20 @@ const LandingAutomation = () => {
 
                         <div className="row">
                             <div className="form-group">
-                                <label htmlFor="">Enter your Storefront Name</label>
+                                <label htmlFor="">Enter your Brand name</label>
                                 <Input
                                     type="text"
-                                    placeholder={'Enter your Storefront Name'}
+                                    placeholder={'Enter your Brand name'}
                                     value={contactFormParams.storefront_name}
                                     onChange={({target: {value}}) => changeContactFormHandler('storefront_name', value)}
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="">Enter your main category</label>
+                                <label htmlFor="">Enter your main Brand category</label>
                                 <Input
                                     type="text"
-                                    placeholder={' Enter your main category'}
+                                    placeholder={'Enter your main Brand category'}
                                     value={contactFormParams.main_category}
                                     onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
                                 />
@@ -1286,6 +1339,22 @@ const LandingAutomation = () => {
                         </div>
 
                         <div className="form-group">
+                            <label htmlFor="">Select your active amazon marketplaces</label>
+
+                            <select
+                                placeholder={'Select by'}
+                                value={contactFormParams.active_marketplaces}
+                                onChange={(value) => changeContactFormHandler('active_marketplaces', value)}
+                            >
+                                <option value={'ATVPDKIKX0DER'}>USA</option>
+                                <option value={'A2EUQ1WTGCTBG2'}>CA</option>
+                                <option value={'A1F83G8C2ARO7P'}>UK</option>
+                                <option value={'A1PA6795UKMFR9'}>DE</option>
+                                <option value={'A13V1IB3VIYZZH'}>FR</option>
+                            </select>
+                        </div>
+
+                        <div className="form-group">
                             <label htmlFor="">Average Monthly Sales</label>
 
                             <select
@@ -1293,10 +1362,11 @@ const LandingAutomation = () => {
                                 value={contactFormParams.avg_monthly_ad_sales}
                                 onChange={(value) => changeContactFormHandler('avg_monthly_ad_sales', value)}
                             >
-                                <option value={'below_50k'}>below 50k</option>
-                                <option value={'50_200k'}>50-200k</option>
-                                <option value={'200_1000k'}>200k-1m</option>
-                                <option value={'over_1m'}>over 1m</option>
+                                <option value={'below_50k'}>below $50,000</option>
+                                <option value={'50_200k'}>$50k - $200k</option>
+                                <option value={'200_500k'}>$200k - $500k</option>
+                                <option value={'500_1000k'}>$500k - $1m</option>
+                                <option value={'over_1m'}>over $1m</option>
                             </select>
                         </div>
 
@@ -1311,6 +1381,7 @@ const LandingAutomation = () => {
                                 <option value={'10_30k'}>10-30k</option>
                                 <option value={'30_60k'}>30-60k</option>
                                 <option value={'60_100k'}>60-100k</option>
+                                <option value={'over_100k'}>over $100k</option>
                                 <option value={'no_ads'}>no ads</option>
                             </select>
                         </div>
@@ -1349,20 +1420,20 @@ const LandingAutomation = () => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="">Enter your Storefront Name</label>
+                            <label htmlFor="">Enter your Brand name</label>
                             <Input
                                 type="text"
-                                placeholder={'Enter your Storefront Name'}
+                                placeholder={'Enter your Brand name'}
                                 value={contactFormParams.storefront_name}
                                 onChange={({target: {value}}) => changeContactFormHandler('storefront_name', value)}
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="">Enter your main category</label>
+                            <label htmlFor="">Enter your main Brand category</label>
                             <Input
                                 type="text"
-                                placeholder={' Enter your main category'}
+                                placeholder={'Enter your main Brand category'}
                                 value={contactFormParams.main_category}
                                 onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
                             />

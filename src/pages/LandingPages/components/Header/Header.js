@@ -89,7 +89,7 @@ const Header = ({type = 'light', page}) => {
                                 <li><NavLink to="/contact-us">Contact us</NavLink></li>
                                 <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
                                     <ul className="sub-menu">
-                                        <li><a href="/blog">Blog</a></li>
+                                        <li><a href="https://blog.profitwhales.com/">Blog</a></li>
                                         <li><a href='https://intercom.help/profitwhales/en' target={'_blank'}>Help
                                             Center</a>
                                         </li>
