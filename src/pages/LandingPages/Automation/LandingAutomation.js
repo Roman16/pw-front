@@ -1344,7 +1344,7 @@ const LandingAutomation = () => {
                             <select
                                 placeholder={'Select by'}
                                 value={contactFormParams.active_marketplaces}
-                                onChange={(value) => changeContactFormHandler('active_marketplaces', value)}
+                                onChange={({target: {value}}) => changeContactFormHandler('active_marketplaces', value)}
                                 multiple
                             >
                                 <option value={'ATVPDKIKX0DER'}>USA</option>
@@ -1361,7 +1361,7 @@ const LandingAutomation = () => {
                             <select
                                 placeholder={'Select by'}
                                 value={contactFormParams.avg_monthly_ad_sales}
-                                onChange={(value) => changeContactFormHandler('avg_monthly_ad_sales', value)}
+                                onChange={({target: {value}}) => changeContactFormHandler('avg_monthly_ad_sales', value)}
                             >
                                 <option value={'below_50k'}>below $50,000</option>
                                 <option value={'50_200k'}>$50k - $200k</option>
@@ -1376,7 +1376,7 @@ const LandingAutomation = () => {
                             <select
                                 placeholder={'Select by'}
                                 value={contactFormParams.avg_monthly_ad_spend}
-                                onChange={(value) => changeContactFormHandler('avg_monthly_ad_spend', value)}
+                                onChange={({target: {value}}) => changeContactFormHandler('avg_monthly_ad_spend', value)}
                             >
                                 <option value={'below_10k'}>below 10k</option>
                                 <option value={'10_30k'}>10-30k</option>
@@ -1409,7 +1409,7 @@ const LandingAutomation = () => {
                             <select
                                 placeholder={'Select by'}
                                 value={contactFormParams.main_goal}
-                                onChange={(value) => changeContactFormHandler('main_goal', value)}
+                                onChange={({target: {value}}) => changeContactFormHandler('main_goal', value)}
                             >
                                 <option value={''}>Select by</option>
                                 {advertisingStrategyVariations.map(item => (
