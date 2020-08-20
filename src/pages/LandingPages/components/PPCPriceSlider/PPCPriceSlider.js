@@ -11,12 +11,12 @@ import {SVG} from "../../../../utils/icons";
 const PPCPriceSlider = () => {
 
     const includes = [
-        'Programmatic Bid Management',
-        'Harvesting of New Keywords',
-        'Ranking New Keywords',
-        'Organic vs. PPC Dashboard',
-        'Designated Amazon Business Strategy Expert',
-        'Advertising Analytics Tool',
+        'Fully Automated Amazon Advertising Optimization in 1 Click',
+        'Weekly Reports with Useful Information',
+        'Automated Harvesting of Search-Terms and Negative Keywords',
+        'The only Amazon Seller Tool you need for your business',
+        'Amazon Analytics Tool',
+        'Friendly Support 24/7',
     ];
 
     const numberMask = (value, n, x) => {
@@ -40,10 +40,10 @@ const PPCPriceSlider = () => {
             max_postfix: "+",
             postfix: "  / month",
             onStart: function () {
-                $('.slider-container .slider .irs .irs-bar').html('$ 280');
+                $('.slider-container .slider .irs .irs-bar').html('$ 69');
                 setTimeout(() => {
-                    $('.irs-single').html('$ 1,000 / month');
-                    $('.slider .irs-handle').html('<div> $250 + 3% ad spend</div>');
+                    $('.irs-single').html('< $ 1,000 / month');
+                    $('.slider .irs-handle').html('<div> $69 </div>');
 
                 }, 1)
             },
@@ -55,20 +55,26 @@ const PPCPriceSlider = () => {
                     barTooltip = $('.slider .irs .irs-single');
 
 
-                barTooltip.html(`$ ${numberMask(value, 2)} / month`);
-
-                if (value >= 1000 && value < 20000) {
-                    result = ((3 / 100) * value) + 250;
-                    barLabel.html('<div>$250 + 3% ad spend</div>');
-                } else if (value >= 20000 && value < 50000) {
-                    result = ((2.5 / 100) * value) + 500;
-                    barLabel.html('<div>$500 + 2,5% ad spend</div>');
+                if (value <= 1000) {
+                    sumElement.text('69');
+                    barLabel.html('<div> $69 </div>');
+                    barTooltip.html('< $ 1,000 / month');
                 } else {
-                    result = ((2.5 / 100) * value);
-                    barLabel.html('<div>2,5% ad spend</div>');
-                }
+                    barTooltip.html(`$ ${numberMask(value, 2)} / month`);
 
-                sumElement.text(numberMask(result));
+                    if (value >= 50000) {
+                        result = ((2 / 100) * value) + 500;
+                        barLabel.html('<div>$500 + 2% ad spend</div>');
+                    } else if (value >= 20000) {
+                        result = ((2.5 / 100) * value) + 200;
+                        barLabel.html('<div>$200 + 2,5% ad spend</div>');
+                    } else {
+                        result = ((3 / 100) * value) + 100;
+                        barLabel.html('<div>$100 + 3% ad spend</div>');
+                    }
+
+                    sumElement.text(numberMask(result));
+                }
             }
         });
 
@@ -93,7 +99,7 @@ const PPCPriceSlider = () => {
                 <div className="sum">
                     <div className="result-sum">
                         <span className={'dollar'}>$</span>
-                        <span id={'result-sum'}>280</span>
+                        <span id={'result-sum'}>69</span>
                     </div>
 
                     <p>Estimated price per month based on your <br/> 30-day Amazon Ad Spend.
