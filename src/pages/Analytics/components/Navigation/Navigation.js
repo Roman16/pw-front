@@ -1,7 +1,7 @@
 import React from "react";
 import './Navigation.less';
 import {NavLink} from "react-router-dom";
-import {SVG} from "../../../../../utils/icons";
+import {SVG} from "../../../../utils/icons";
 
 const Navigation = () => {
 

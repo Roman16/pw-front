@@ -1,6 +1,6 @@
 import React from "react";
-import Metrics from "../../Dashboard/Metrics/Metrics";
-import LineChart from "../../Dashboard/MainChart/MainChart";
+import Metrics from "../../PPCAutomate/Dashboard/Metrics/Metrics";
+import LineChart from "../../PPCAutomate/Dashboard/MainChart/MainChart";
 import CampaignsList from "./CampaignsList/CampaignsList";
 
 const Campaigns = () => {

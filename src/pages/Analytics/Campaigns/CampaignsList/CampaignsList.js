@@ -1,8 +1,11 @@
 import React from "react";
-import CustomTable from "../../../../../components/Table/CustomTable";
-import Pagination from "../../../../../components/Pagination/Pagination";
+import CustomTable from "../../../../components/Table/CustomTable";
+import Pagination from "../../../../components/Pagination/Pagination";
 import './CampaignsList.less';
+import {SVG} from "../../../../utils/icons";
+import {Input} from "antd";
 
+const {Search} = Input;
 
 const CampaignsList = () => {
 
@@ -144,6 +147,17 @@ const CampaignsList = () => {
 
     return (
         <section className={'campaigns-list'}>
+            <div className="form-group">
+                <Search
+                    className="search-field"
+                    placeholder={'Search'}
+                    // onChange={e => onSearch(e.target.value)}
+                    data-intercom-target='search-field'
+                    suffix={<SVG id={'search'}/>}
+                />
+            </div>
+
+
             <CustomTable
                 // onChangeSorter={sortChangeHandler}
                 // loading={processing}

@@ -10,12 +10,6 @@ const files = {
             viewBox: [0, 0, 20, 20],
             data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse"><rect width="20" height="20" rx="10"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="none" fill-rule="evenodd" d="M0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10C20 12.0318 19.394 13.9221 18.353 15.5C16.5642 12.7889 13.491 11 10 11C6.50897 11 3.43576 12.7889 1.64702 15.5C0.605962 13.9221 0 12.0318 0 10ZM10 2C7.79086 2 6 3.79086 6 6C6 8.20914 7.79086 10 10 10C12.2091 10 14 8.20914 14 6C14 3.79086 12.2091 2 10 2Z" clip-rule="evenodd"/><rect width="18" height="18" x="1" y="1" fill="none" stroke-width="2" rx="9"/></g>'
         },
-        'analytics-icon': {
-            width: 20,
-            height: 20,
-            viewBox: [0, 0, 20, 20],
-            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse"><rect width="20" height="20" fill="#B6B6FB" rx="2"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="#B6B6FB" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.1818 1H1V16.8824L8.63636 7.88235L11.9091 11.0588L19 2.58824V19H4.27273"/></g>'
-        },
         'announcements-icon': {
             width: 32,
             height: 32,
@@ -1142,6 +1136,12 @@ const files = {
             viewBox: [0,0,16,15],
             data: '<path xmlns="http://www.w3.org/2000/svg" d="M14.8072 7.74299L8.05724 0.237547C7.77299 -0.0791824 7.22699 -0.0791824 6.94274 0.237547L0.192738 7.74299C0.0955801 7.85076 0.0318063 7.98447 0.00917104 8.12784C-0.0134643 8.27121 0.00601406 8.41807 0.0652378 8.55057C0.185238 8.82152 0.453738 8.99565 0.749988 8.99565H2.24999V14.2495C2.24999 14.4485 2.32901 14.6394 2.46966 14.7802C2.61031 14.9209 2.80108 15 2.99999 15H5.24999C5.4489 15 5.63967 14.9209 5.78032 14.7802C5.92097 14.6394 5.99999 14.4485 5.99999 14.2495V11.2473H8.99999V14.2495C8.99999 14.4485 9.07901 14.6394 9.21966 14.7802C9.36031 14.9209 9.55107 15 9.74999 15H12C12.1989 15 12.3897 14.9209 12.5303 14.7802C12.671 14.6394 12.75 14.4485 12.75 14.2495V8.99565H14.25C14.3952 8.99627 14.5375 8.95458 14.6595 8.87567C14.7815 8.79676 14.8779 8.68404 14.937 8.55124C14.9961 8.41845 15.0152 8.27133 14.9922 8.12781C14.9692 7.98429 14.9049 7.85059 14.8072 7.74299Z"/>'
         },
+        'analytics-icon': {
+            width: 20,
+            height: 20,
+            viewBox: [0,0,20,20],
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse"><rect width="19" height="19" x=".5" y=".5" fill="#B6B6FB" rx="1.5"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15.1818 1H1V16.8824L8.63636 7.88235L11.9091 11.0588L19 2.58824V19H4.27273"/></g>'
+        }
     },
     allIds: [
         'house',
