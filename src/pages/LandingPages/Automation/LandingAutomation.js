@@ -1345,6 +1345,7 @@ const LandingAutomation = () => {
                                 placeholder={'Select by'}
                                 value={contactFormParams.active_marketplaces}
                                 onChange={(value) => changeContactFormHandler('active_marketplaces', value)}
+                                multiple
                             >
                                 <option value={'ATVPDKIKX0DER'}>USA</option>
                                 <option value={'A2EUQ1WTGCTBG2'}>CA</option>
