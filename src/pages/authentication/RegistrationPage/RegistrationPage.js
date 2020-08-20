@@ -32,7 +32,7 @@ fbq('track', 'PageView');`
                 <div className="container">
                     <div className="title-block">
                         <h3>Sign Up</h3>
-                        <h4>After 14-day free trial, plan renews to a monthly subscription of $69+ % of ad spend (first $1k free).</h4>
+                        <h4>After 14-day free trial, plan renews to a monthly subscription.</h4>
                     </div>
 
                     <RegistrationPageForm
