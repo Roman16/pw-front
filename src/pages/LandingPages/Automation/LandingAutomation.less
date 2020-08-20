@@ -98,7 +98,7 @@
       }
     }
 
-    .demo a, .registration-link a {
+    .demo a {
       font-size: 24px;
       text-transform: uppercase;
       color: #83FED0;
@@ -108,6 +108,7 @@
       justify-content: flex-end;
       width: max-content;
       margin: 0 0 0 auto;
+
 
       .icon {
         width: 86px;
@@ -120,20 +121,17 @@
         font-size: 18px;
         border-radius: 50%;
         margin: 0 0 0 34px;
+        transition: 0.3s;
       }
-    }
-
-    .registration-link a {
-      color: #fff;
-      justify-content: flex-start;
-      margin: 0 auto 0 0;
 
 
-      .icon {
-        background: #fff;
-        color: #6D6DF6;
-        padding: 0 0 0 19px;
-        margin: 0 34px 0 0;
+      &:hover {
+        color: #fff;
+
+        .icon {
+          background: #fff;
+          transition: 0.3s;
+        }
       }
     }
 
@@ -145,6 +143,8 @@
       color: #FFFFFF;
       font-weight: 500;
       cursor: pointer;
+      transition: 0.3s;
+      width: max-content;
 
       .pulse {
         width: 86px;
@@ -156,20 +156,8 @@
         border: 2px solid #FFFFFF;
         padding: 0 0 0 8px;
         position: relative;
-        //
-        //&::before {
-        //  content: "";
-        //  position: absolute;
-        //  border: 3px solid #fff;
-        //  left: -20px;
-        //  right: -20px;
-        //  top: -20px;
-        //  bottom: -20px;
-        //  border-radius: 50%;
-        //  -webkit-animation: pulseAnimation 1.8s linear infinite;
-        //  animation: pulseAnimation 1.8s linear infinite;
-        //  opacity: 0;
-        //}
+        margin: 0 34px 0 0;
+        transition: 0.3s;
 
         div {
           content: '';
@@ -180,7 +168,9 @@
           bottom: -30px;
           border: 2px solid #fff;
           border-radius: 50%;
-          animation: animate 3s linear infinite
+          animation: animate 3s linear infinite;
+          transition: 0.3s;
+
         }
 
         &:before,
@@ -193,6 +183,7 @@
           bottom: -30px;
           border: 2px solid #fff;
           border-radius: 50%;
+          transition: 0.3s;
         }
 
         &:before {
@@ -220,6 +211,19 @@
             opacity: .1;
           }
         }
+      }
+
+      &:hover {
+        .pulse,
+        .pulse::after,
+        .pulse::before,
+        div {
+          border-color: #83FED0;
+          transition: 0.3s;
+        }
+
+        color: #83FED0;
+        transition: 0.3s;
       }
     }
 
@@ -1843,6 +1847,24 @@
           color: #7C8A95;
           font-size: 13px;
           font-weight: 400;
+        }
+      }
+
+      .pw-tree-select {
+        .ant-select-selection {
+          height: 40px;
+
+          ul {
+            height: 100%;
+            padding-left: 19px;
+          }
+
+          .ant-select-search__field__placeholder {
+            padding-left: 9px;
+            color: #7C8A95;
+            font-size: 14px;
+            font-weight: 400;
+          }
         }
       }
 

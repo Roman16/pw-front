@@ -34,6 +34,7 @@ import "slick-carousel/slick/slick-theme.css";
 import axios from 'axios';
 import Slider from "react-slick";
 import {notification} from "../../../components/Notification";
+import TreeSelect from "../../../components/TreeSelect/TreeSelect";
 
 const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
 
@@ -272,7 +273,10 @@ const LandingAutomation = () => {
             notification.error({title: 'All fields is required!'})
         } else {
             try {
-                await userService.sendContactForm(contactFormParams);
+                await userService.sendContactForm({
+                    ...contactFormParams,
+                    // active_marketplaces: contactFormParams.active_marketplaces.join(',')
+                });
 
                 setFormState(true);
                 setAgreeWithTerms(false);
@@ -440,24 +444,19 @@ const LandingAutomation = () => {
                             </Link>
                         </div>
 
-                        <div className="registration-link">
-                            <Link to={'/registration'}>
-                                <div className="icon">
-                                    FREE TRIAL
+                        <div>
+                            <div className="video-btn" onClick={() => switchWindow(true)}>
+                                <div className="pulse">
+                                    <SVG id={'play-icon'}/>
+
+                                    <div/>
                                 </div>
 
-                                <span>start now</span>
-                            </Link>
+                                <span>watch video</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="video-btn" onClick={() => switchWindow(true)}>
-                        <div className="pulse">
-                            <SVG id={'play-icon'}/>
-
-                            <div/>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -1172,18 +1171,19 @@ const LandingAutomation = () => {
                             <div className="form-group">
                                 <label htmlFor="">Select your active amazon marketplaces</label>
 
-                                <CustomSelect
-                                    placeholder={'Select by'}
+                                <TreeSelect
+                                    treeData={[{title: 'USA', key: 'ATVPDKIKX0DER', value: 'ATVPDKIKX0DER'},
+                                        {title: 'CA', key: 'A2EUQ1WTGCTBG2', value: 'A2EUQ1WTGCTBG2'},
+                                        {title: 'UK', key: 'A1F83G8C2ARO7P', value: 'A1F83G8C2ARO7P'},
+                                        {title: 'DE', key: 'A1PA6795UKMFR9', value: 'A1PA6795UKMFR9'},
+                                        {title: 'FR', key: 'A13V1IB3VIYZZH', value: 'A13V1IB3VIYZZH'},]}
                                     getPopupContainer={triggerNode => triggerNode.parentNode}
                                     value={contactFormParams.active_marketplaces}
+                                    treeCheckable={true}
+                                    showSearch={false}
+                                    placeholder={'Select by'}
                                     onChange={(value) => changeContactFormHandler('active_marketplaces', value)}
-                                >
-                                    <Option value={'ATVPDKIKX0DER'}>USA</Option>
-                                    <Option value={'A2EUQ1WTGCTBG2'}>CA</Option>
-                                    <Option value={'A1F83G8C2ARO7P'}>UK</Option>
-                                    <Option value={'A1PA6795UKMFR9'}>DE</Option>
-                                    <Option value={'A13V1IB3VIYZZH'}>FR</Option>
-                                </CustomSelect>
+                                />
                             </div>
 
                         </div>
