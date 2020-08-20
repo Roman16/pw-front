@@ -443,17 +443,28 @@ const LandingAutomation = () => {
                             </Link>
                         </div>
 
-                        <div>
-                            <div className="video-btn" onClick={() => switchWindow(true)}>
-                                <div className="pulse">
-                                    <SVG id={'play-icon'}/>
+                        {/*<div>*/}
+                        {/*    <div className="video-btn" onClick={() => switchWindow(true)}>*/}
+                        {/*        <div className="pulse">*/}
+                        {/*            <SVG id={'play-icon'}/>*/}
 
-                                    <div/>
+                        {/*            <div/>*/}
+                        {/*        </div>*/}
+
+                        {/*        <span>watch video</span>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+
+                        <div className="start">
+                            <Link to={'/registration'}>
+                                <div className="icon">
+                                    start
                                 </div>
 
-                                <span>watch video</span>
-                            </div>
+                                <span>14-DAY TRIAL</span>
+                            </Link>
                         </div>
+
                     </div>
 
                 </div>

@@ -47,9 +47,8 @@
     }
   }
 
-  .product-optimization-info {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  @media (max-width: 1200px) {
+    grid-template-areas: 'optimization-includes ' 'optimization-changes' 'product-status' 'optimize-strategy';
+    grid-template-columns: 1fr;
   }
 }
