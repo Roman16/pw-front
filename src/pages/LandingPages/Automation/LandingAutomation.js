@@ -416,8 +416,7 @@ const LandingAutomation = () => {
                 <div className='container'>
                     <h2 className={'desc'}>
                         Turn Ad Spend into Ad Investment to Accelerate <br/> your <span>Amazon Business Growth</span>.
-                        Powered by Big <br/> Data
-                        & Data Science
+                        <br/> Powered by Big Data & Data Science
                     </h2>
 
                     <h2 className={'mob'}>
