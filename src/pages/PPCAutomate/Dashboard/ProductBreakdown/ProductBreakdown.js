@@ -51,7 +51,7 @@ const ProductBreakdown = () => {
             .then(res => {
                 switchFetch(false);
 
-                if (res.result.length === 1) {
+                if (res.result.length === 1 && selectedProduct !== res.result[0].product.id) {
                     handleSelectProduct(res.result[0].product.id)
                 }
 

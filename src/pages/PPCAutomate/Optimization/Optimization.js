@@ -16,6 +16,7 @@ import {productsActions} from "../../../actions/products.actions";
 import "./Optimization.less";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import OptimizationChanges from "./OptimizationChanges/OptimizationChanges";
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -32,6 +33,7 @@ const Optimization = () => {
         selectedAll: state.products.selectedAll,
         productList: state.products.productList,
         productsFetching: state.products.fetching,
+        isAgencyUser: state.user.user.is_agency_client
     }));
 
 
@@ -172,15 +174,17 @@ const Optimization = () => {
     return (
         <Fragment>
             <div className="optimization-page">
-                <div className="product-optimization-info">
-                    <OptimizationIncludes
-                        onShowDrawer={showDrawerHandler}
-                    />
+                <OptimizationIncludes
+                    onShowDrawer={showDrawerHandler}
+                />
 
-                    <OptimizationStatus
-                        product={selectedProduct}
-                    />
-                </div>
+                <OptimizationChanges
+                    countChanges={selectedProduct.total_changes}
+                />
+
+                <OptimizationStatus
+                    product={selectedProduct}
+                />
 
                 <OptimizationStrategy
                     productId={productId}

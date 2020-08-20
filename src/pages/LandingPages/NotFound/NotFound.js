@@ -10,7 +10,7 @@ import img from '../../../assets/img/404.svg';
 const authorized = localStorage.getItem('token');
 
 const NotFound = () => (
-    <section className="not-found-page">
+    <section className="not-found-page  landing-page">
         <Header/>
 
         <div className="box">

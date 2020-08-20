@@ -3,8 +3,28 @@
 .optimization-page {
   min-height: 100%;
   height: max-content;
-  display: flex;
-  flex-direction: column;
+
+  display: grid;
+  grid-row-gap: 1.42857143rem;
+  grid-column-gap: 1.42857143rem;
+  grid-template-columns: 1fr 19%;
+  grid-template-areas: 'optimization-includes optimization-changes' 'product-status product-status' 'optimize-strategy optimize-strategy';
+
+  .optimization-includes {
+    grid-area: optimization-includes;
+  }
+
+  .optimization-changes {
+    grid-area: optimization-changes;
+  }
+
+  .product-status {
+    grid-area: product-status;
+  }
+
+  .optimize-strategy {
+    grid-area: optimize-strategy;
+  }
 
   section {
     background: #FFFFFF;

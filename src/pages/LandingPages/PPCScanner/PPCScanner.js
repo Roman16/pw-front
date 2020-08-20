@@ -82,7 +82,7 @@ const PPCScanner = () => {
     }, [selectedSlide]);
 
     return (
-        <div className='landing-ppc-scanner'>
+        <div className='landing-ppc-scanner  landing-page'>
             <section className="hero" id="hero">
                 <Header type={'dark'}/>
 

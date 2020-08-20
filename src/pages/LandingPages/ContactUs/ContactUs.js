@@ -50,7 +50,7 @@ const ContactUs = (props) => {
 
     return (
         <Fragment>
-            <div className="landing-contact-us">
+            <div className="landing-contact-us  landing-page">
                 <Header/>
 
                 <section>

@@ -7,7 +7,7 @@ import demoImage from '../../../assets/img/landing-demo-call/demo-call-image.svg
 const DemoCall = () => {
 
     return (
-        <div className="landing-demo-call">
+        <div className="landing-demo-call  landing-page">
             <Header type={'dark'}/>
 
             <section>

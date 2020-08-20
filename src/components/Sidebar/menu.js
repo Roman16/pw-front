@@ -66,7 +66,7 @@ export const ppcAutomateMenu = [
         link: 'report'
     },
     {
-        title: 'Product Settings',
+        title: 'Products Info',
         link: 'product-settings'
     },
     // {

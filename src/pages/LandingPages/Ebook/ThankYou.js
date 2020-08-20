@@ -6,7 +6,7 @@ import {history} from "../../../utils/history";
 
 const ThankYou = () => {
     return (
-        <div className='thank-page'>
+        <div className='thank-page  landing-page'>
             <Header type={'dark'}/>
 
             <section>

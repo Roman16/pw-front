@@ -1,0 +1,48 @@
+@import "../../../../style/variables.less";
+
+.main-pages .main-container .page > .analytics-page {
+  height: 100%;
+  padding: 0;
+
+  display: grid;
+  grid-template-areas: 'header header' 'nav workplace';
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+  grid-template-rows: max-content 1fr;
+  grid-template-columns: max-content 1fr;
+
+  .navigation {
+    grid-area: nav;
+  }
+
+  .workplace {
+    grid-area: workplace;
+    width: 100%;
+    overflow-x: hidden;
+    padding: 0 20px 0 0;
+  }
+
+  .analytics-header {
+    grid-area: header;
+
+    height: 80px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    box-shadow: @default-section-shadow;
+
+    svg {
+      stroke: #343C5A;
+      margin: 0 15px 0 0;
+    }
+
+    h1 {
+      margin: 0;
+    }
+  }
+
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    zoom: 80%;
+  }
+}

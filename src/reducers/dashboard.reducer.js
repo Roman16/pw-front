@@ -148,7 +148,6 @@ export function dashboard(state = initialState, action) {
             return {
                 ...state,
                 selectedRangeDate: action.payload
-
             };
 
         case dashboardConstants.ACTIVATE_METRIC:

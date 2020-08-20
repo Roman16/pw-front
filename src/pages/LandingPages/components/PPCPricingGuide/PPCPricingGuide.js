@@ -17,44 +17,40 @@ const PPCPricingGuide = () => {
                 <h2>Our Simple Pricing Guide</h2>
 
                 <div className="pricing-plans desc">
+                    {/*<div className={'plan'}>*/}
+                    {/*    <div className="counts">*/}
+                    {/*        <div style={{width: '8px', height: '8px'}}/>*/}
+                    {/*    </div>*/}
+
+                    {/*    <h4>Startup</h4>*/}
+
+                    {/*    <label><b>{'< $1k'}</b>in ad spend / per month</label>*/}
+
+                    {/*    <h3>*/}
+                    {/*        <span className={'dollar'}>$</span>*/}
+                    {/*        69*/}
+                    {/*    </h3>*/}
+
+                    {/*    <p>*/}
+                    {/*        Start growing your business with our Starter plan*/}
+                    {/*    </p>*/}
+
+                    {/*    <Link to={'registration'} className={'btn default link'}>*/}
+                    {/*        START FREE*/}
+                    {/*    </Link>*/}
+                    {/*</div>*/}
+
                     <div className={'plan'}>
                         <div className="counts">
                             <div style={{width: '8px', height: '8px'}}/>
                         </div>
-
-                        <h4>Startup</h4>
-
-                        <label><b>{'< $1k'}</b>in ad spend / per month</label>
-
-                        <h3>
-                            <span className={'dollar'}>$</span>
-                            69
-                        </h3>
-
-                        <p>
-                            Start growing your business with our Starter plan
-                        </p>
-
-                        <Link to={'registration'} className={'btn default link'}>
-                            START FREE
-                        </Link>
-                    </div>
-
-                    <div className={'plan'}>
-                        <div className="counts">
-                            {[1, 2].map(item => (
-                                <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
-                                     className="count"/>
-                            ))}
-                        </div>
-
                         <h4>Grind</h4>
 
                         <label><b>$1k - $20k</b> in ad spend / per month</label>
 
                         <h3>
                             <span className={'dollar'}>$</span>
-                            100 + 3
+                            250 + 3
                             <span className={'percent'}>%</span>
 
                             <label>monthly <br/> ad spend</label>
@@ -71,7 +67,7 @@ const PPCPricingGuide = () => {
 
                     <div className={'plan'}>
                         <div className="counts">
-                            {[1, 2, 3].map(item => (
+                            {[1, 2].map(item => (
                                 <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
                                      className="count"/>
                             ))}
@@ -83,7 +79,7 @@ const PPCPricingGuide = () => {
 
                         <h3>
                             <span className={'dollar'}>$</span>
-                            200 + 2,5
+                            500 + 2,5
                             <span className={'percent'}>%</span>
 
                             <label>monthly <br/> ad spend</label>
@@ -100,7 +96,7 @@ const PPCPricingGuide = () => {
 
                     <div className={'plan'}>
                         <div className="counts">
-                            {[1, 2, 3, 4].map(item => (
+                            {[1, 2, 3].map(item => (
                                 <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
                                      className="count"/>
                             ))}
@@ -111,8 +107,7 @@ const PPCPricingGuide = () => {
                         <label><b>$50k-100k</b> in ad spend / per month</label>
 
                         <h3>
-                            <span className={'dollar'}>$</span>
-                            500 + 2
+                            2,5
                             <span className={'percent'}>%</span>
 
                             <label>monthly <br/> ad spend</label>
@@ -139,37 +134,33 @@ const PPCPricingGuide = () => {
                     focusOnSelect={true}
                     centerPadding={'50px'}
                 >
+                    {/*<div className={'plan'}>*/}
+                    {/*    <div className="counts">*/}
+                    {/*        <div style={{width: '8px', height: '8px'}}/>*/}
+                    {/*    </div>*/}
+
+                    {/*    <h4>Startup</h4>*/}
+
+                    {/*    <label><b>{'< $1k'}</b>in ad spend / per month</label>*/}
+
+                    {/*    <h3>*/}
+                    {/*        <span className={'dollar'}>$</span>*/}
+                    {/*        69*/}
+                    {/*    </h3>*/}
+
+                    {/*    <p>*/}
+                    {/*        Start growing your business with our Starter plan*/}
+                    {/*    </p>*/}
+
+                    {/*    <Link to={'registration'} className={'btn default link'}>*/}
+                    {/*        START FREE*/}
+                    {/*    </Link>*/}
+                    {/*</div>*/}
+
                     <div className={'plan'}>
                         <div className="counts">
                             <div style={{width: '8px', height: '8px'}}/>
                         </div>
-
-                        <h4>Startup</h4>
-
-                        <label><b>{'< $1k'}</b>in ad spend / per month</label>
-
-                        <h3>
-                            <span className={'dollar'}>$</span>
-                            69
-                        </h3>
-
-                        <p>
-                            Start growing your business with our Starter plan
-                        </p>
-
-                        <Link to={'registration'} className={'btn default link'}>
-                            START FREE
-                        </Link>
-                    </div>
-
-                    <div className={'plan'}>
-                        <div className="counts">
-                            {[1, 2].map(item => (
-                                <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
-                                     className="count"/>
-                            ))}
-                        </div>
-
                         <h4>Grind</h4>
 
                         <label><b>$1k - $20k</b> in ad spend / per month</label>
@@ -193,7 +184,7 @@ const PPCPricingGuide = () => {
 
                     <div className={'plan'}>
                         <div className="counts">
-                            {[1, 2, 3].map(item => (
+                            {[1, 2].map(item => (
                                 <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
                                      className="count"/>
                             ))}
@@ -222,7 +213,7 @@ const PPCPricingGuide = () => {
 
                     <div className={'plan'}>
                         <div className="counts">
-                            {[1, 2, 3, 4].map(item => (
+                            {[1, 2, 3].map(item => (
                                 <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
                                      className="count"/>
                             ))}

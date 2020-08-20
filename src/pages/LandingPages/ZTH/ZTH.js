@@ -91,7 +91,7 @@ const ZTHLanding = () => {
     }, [])
 
     return (
-        <div className="landing-zth">
+        <div className="landing-zth  landing-page">
             <Header page={'zth'}/>
 
             <section className={'zth-king-section'}>
@@ -231,7 +231,7 @@ const ZTHLanding = () => {
                         <button
                             className={'btn white link'}>
                             <a
-                                href="http://learn.profitwhales.com/en/articles/4162147-zero-to-hero-campaigns-structure"
+                                href="https://intercom.help/profitwhales/en/articles/4164171-introduction-zero-to-hero-amazon-ppc-campaigns-creator"
                                 target={'_blank'}
                             >
                                 read more about zth

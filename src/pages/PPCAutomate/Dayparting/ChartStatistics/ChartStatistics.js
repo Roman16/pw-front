@@ -50,10 +50,10 @@ const ChartStatistics = ({date}) => {
                     setData([...res.response.points.map(item => {
                         const point = {};
                         point.date = item.date;
-                        point[firstMetric.key] = item.metrics[firstMetric.key].value !== null ? +item.metrics[firstMetric.key].value : null;
+                        point[firstMetric.key] = item.metrics[firstMetric.key].value !== null ? firstMetric.type === 'percent' ? +item.metrics[firstMetric.key].value * 100 : +item.metrics[firstMetric.key].value : null;
 
                         if (secondMetric.key !== 'nothing') {
-                            point[secondMetric.key] = item.metrics[secondMetric.key].value !== null ? +item.metrics[secondMetric.key].value : null;
+                            point[secondMetric.key] = item.metrics[secondMetric.key].value !== null ? secondMetric.type === 'percent' ? +item.metrics[secondMetric.key].value * 100 :  + item.metrics[secondMetric.key].value : null;
                         }
 
                         return (point);

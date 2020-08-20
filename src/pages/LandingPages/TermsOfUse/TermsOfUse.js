@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 const TermsOfUse = () => {
 
     return(
-        <div className="terms-page">
+        <div className="terms-page  landing-page">
             <Header/>
 
             <div className="box">

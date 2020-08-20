@@ -112,7 +112,7 @@ const advertisingStrategyVariations = [
 ]
 
 
-const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, setRowData, updateSettingsHandlerByIdList}) => {
+const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, isAgencyClient, setRowData, updateSettingsHandlerByIdList}) => {
     const [selectedRows, setSelectedRows] = useState([]),
         [selectedAll, setSelectedAll] = useState(false),
         [strategiesDescriptionState, setStrategiesDescriptionState] = useState(false);
@@ -130,6 +130,8 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
         // }, 300)
 
     }
+
+    console.log(isAgencyClient);
 
     const onChangeRow = (value, item, index) => {
         if (products[index][item] !== value) {
@@ -333,16 +335,27 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 width: '100px',
                 render: (props) => (<div style={{textAlign: 'right'}}></div>)
             },
-            {
-                width: '135px',
-                render: (props, item) => (
-                    <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
-                        <span className={'paused'}>Paused</span>}</span>)
-            },
-            {
-                width: '18.571428571428573rem',
-                render: (props) => (<div style={{textAlign: 'right'}}></div>)
-            }
+            ...isAgencyClient ? [
+                    {
+                        width: '135px',
+                        render: (props, item) => (
+                            <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
+                                <span className={'paused'}>Paused</span>}</span>)
+                    },
+                    {
+                        width: '18.571428571428573rem',
+                        render: (props) => (<div style={{textAlign: 'right'}}></div>)
+                    }
+                ]
+                :
+                [
+                    {
+                        width: '135px',
+                        render: (props, item) => (
+                            <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
+                                <span className={'paused'}>Paused</span>}</span>)
+                    },
+                ]
         ];
 
 
@@ -563,48 +576,61 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 <div>{item[TOTAL_CHANGES]}</div>
             )
         },
-        {
-            title: 'Optimization Status',
-            dataIndex: OPTIMIZATION_STATUS,
-            key: OPTIMIZATION_STATUS,
-            width: '135px',
-            render: (index, item) => (
-                <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
-                    <span className={'paused'}>Paused</span>}</span>)
-        },
-        {
-            title: () => <div onClick={switchStrategyDescription}>
-                <span>Advertising <br/> Strategy</span>
+        ...isAgencyClient ? [
+                {
+                    title: 'Optimization Status',
+                    dataIndex: OPTIMIZATION_STATUS,
+                    key: OPTIMIZATION_STATUS,
+                    width: '135px',
+                    render: (index, item) => (
+                        <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
+                            <span className={'paused'}>Paused</span>}</span>)
+                },
+                {
+                    title: () => <div onClick={switchStrategyDescription}>
+                        <span>Advertising <br/> Strategy</span>
 
-                <i className={strategiesDescriptionState ? 'opened' : ''}>
-                    <SVG id={'right-icon'}/>
-                </i>
-            </div>,
-            dataIndex: ADVERTISING_STRATEGY,
-            key: ADVERTISING_STRATEGY,
-            width: '18.571428571428573rem',
-            render: (index, item, indexRow) => (
-                <CustomSelect
-                    getPopupContainer={triggerNode => triggerNode.parentNode}
-                    value={item[ADVERTISING_STRATEGY] || undefined}
-                    onChange={event => onChangeRow(event, ADVERTISING_STRATEGY, indexRow)}
-                    placeholder={'Select a goal'}
-                >
-                    <Option value={null}>
-                        Select a goal
-                    </Option>
+                        <i className={strategiesDescriptionState ? 'opened' : ''}>
+                            <SVG id={'right-icon'}/>
+                        </i>
+                    </div>,
+                    dataIndex: ADVERTISING_STRATEGY,
+                    key: ADVERTISING_STRATEGY,
+                    width: '18.571428571428573rem',
+                    render: (index, item, indexRow) => (
+                        <CustomSelect
+                            getPopupContainer={triggerNode => triggerNode.parentNode}
+                            value={item[ADVERTISING_STRATEGY] || undefined}
+                            onChange={event => onChangeRow(event, ADVERTISING_STRATEGY, indexRow)}
+                            placeholder={'Select a goal'}
+                        >
+                            <Option value={null}>
+                                Select a goal
+                            </Option>
 
-                    {advertisingStrategyVariations.map(item => (
-                        <Option value={item.value}>
-                            <i style={{fill: `#${item.fill}`}}>
-                                <SVG id={item.icon}/>
-                            </i>
-                            {item.label}
-                        </Option>
-                    ))}
-                </CustomSelect>
-            )
-        },
+                            {advertisingStrategyVariations.map(item => (
+                                <Option value={item.value}>
+                                    <i style={{fill: `#${item.fill}`}}>
+                                        <SVG id={item.icon}/>
+                                    </i>
+                                    {item.label}
+                                </Option>
+                            ))}
+                        </CustomSelect>
+                    )
+                }
+            ] :
+            [
+                {
+                    title: 'Optimization Status',
+                    dataIndex: OPTIMIZATION_STATUS,
+                    key: OPTIMIZATION_STATUS,
+                    width: '135px',
+                    render: (index, item) => (
+                        <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
+                            <span className={'paused'}>Paused</span>}</span>)
+                }
+            ]
     ];
 
     return (
@@ -619,7 +645,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             />}
 
 
-            <div className="table-block">
+            <div className={`table-block ${!isAgencyClient && 'not-agency'}`}>
                 <CustomTable
                     key={'table'}
                     rowKey="id"
@@ -643,6 +669,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     processing={processing}
                 />
 
+                {isAgencyClient &&
                 <div className={`strategies-description ${strategiesDescriptionState ? 'opened' : ''}`}>
                     <div className="title">
                         Advertising Strategies
@@ -682,7 +709,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                         ))}
                     </div>
                 </div>
-            </div>
+                }            </div>
         </Fragment>
     );
 }
