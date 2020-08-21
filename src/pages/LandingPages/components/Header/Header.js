@@ -31,6 +31,8 @@ const Header = ({type = 'light', page}) => {
         $(window).scroll(function () {
             const scroll = $(window).scrollTop();
 
+            console.log($(window).scrollTop());
+
             if (scroll >= 400) {
                 $(".header-block").addClass("scrollDown");
             } else {
@@ -51,82 +53,106 @@ const Header = ({type = 'light', page}) => {
     const authorized = !!localStorage.getItem('token');
 
     return (
-        <div className={'header-block'}>
-            {page !== 'zth' && <div className="new-zth">
-                <span>NEW!</span> We launched Zero to Hero tool to create 100% ready-to-use Amazon PPC Campaigns.
+        <>
+            <div className={'header-block'}>
+                {page !== 'zth' && <div className="new-zth">
+                    <span>NEW!</span> We launched Zero to Hero tool to create 100% ready-to-use Amazon PPC Campaigns.
 
-                <button className={'btn white'}>
-                    <Link to={'zero-to-hero-info'}>
-                        Learn More
-                    </Link>
-                </button>
-            </div>}
+                    <button className={'btn white'}>
+                        <Link to={'zero-to-hero-info'}>
+                            Learn More
+                        </Link>
+                    </button>
+                </div>}
 
-            <header className={`not-found-page__header ${type}`} id={'header'}>
-                <div className="container">
-                    <div>
-                        <NavLink to='/' className={'logo-link'}>
-                            <img src={type === 'dark' ? logoWhite : logoDark} alt="Profit Whales" className='logo'/>
-                        </NavLink>
+                <header className={`not-found-page__header ${type}`} id={'header'}>
+                    <div className="container">
+                        <div>
+                            <NavLink to='/' className={'logo-link'}>
+                                <img src={type === 'dark' ? logoWhite : logoDark} alt="Profit Whales" className='logo'/>
+                            </NavLink>
 
-                        <button className='burger-menu-button' onClick={() => switchMenu(!openedMenu)}>
-                            <div/>
-                            <div/>
-                            <div/>
-                        </button>
+                            <div className={`icon ${openedMenu && 'active'}`} onClick={() => switchMenu(!openedMenu)}>
+                                <div className="burger"/>
+                            </div>
 
-                        <nav className={`header-menu ${openedMenu ? 'open' : ''}`}>
-                            <ul className="">
-                                <li className="has-child"><a href="#">Products <SVG id='menu-arrow'/></a>
-                                    <ul className="sub-menu">
-                                        <li><NavLink to='/'>PPC Automate</NavLink></li>
-                                        {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
-                                        <li><NavLink to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
-                                        <li className="soon"><a href='#'>Analytics</a></li>
-                                    </ul>
-                                </li>
-                                <li><NavLink to={'/pricing'}>Pricing</NavLink></li>
-                                <li><NavLink to="/contact-us">Contact us</NavLink></li>
-                                <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
-                                    <ul className="sub-menu">
-                                        <li><a href="https://blog.profitwhales.com/">Blog</a></li>
-                                        <li><a href='https://intercom.help/profitwhales/en' target={'_blank'}>Help
-                                            Center</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li><NavLink to="/videos">How it works</NavLink></li>
-                            </ul>
-                        </nav>
+                            <nav className={`header-menu desc ${openedMenu ? 'open' : ''}`}>
+                                <ul className="">
+                                    <li className="has-child"><a href="#">Products <SVG id='menu-arrow'/></a>
+                                        <ul className="sub-menu">
+                                            <li><NavLink to='/'>PPC Automate</NavLink></li>
+                                            {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
+                                            <li><NavLink to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
+                                            <li className="soon"><a href='#'>Analytics</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><NavLink to={'/pricing'}>Pricing</NavLink></li>
+                                    <li><NavLink to="/contact-us">Contact us</NavLink></li>
+                                    <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
+                                        <ul className="sub-menu">
+                                            <li><a href="https://blog.profitwhales.com/">Blog</a></li>
+                                            <li><a href='https://intercom.help/profitwhales/en' target={'_blank'}>Help
+                                                Center</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><NavLink to="/videos">How it works</NavLink></li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <div className='nav-buttons'>
+                            {/*{!authorized ?*/}
+                            {/*    <Fragment>*/}
+                            {/*        <div onClick={() => history.push('/login')} className='login-link'>LOG IN</div>*/}
+                            {/*        <button*/}
+                            {/*            onClick={() => history.push('/registration')}*/}
+                            {/*            className='btn green-btn register-btn'*/}
+                            {/*        >*/}
+                            {/*            {page === 'zth' ? 'Try it Now' : 'TRY IT FOR FREE'}*/}
+                            {/*        </button>*/}
+                            {/*    </Fragment>*/}
+                            {/*    :*/}
+                            {/*    <button*/}
+                            {/*        onClick={() => history.push('/ppc/optimization')}*/}
+                            {/*        className='btn green-btn login-btn'*/}
+                            {/*    >*/}
+                            {/*        SIGN IN*/}
+                            {/*    </button>*/}
+                            {/*}*/}
+
+                            <Link to={'/login'}>LOG IN</Link>
+
+                            <Link to={'/registration'} className={'btn default register-btn'}>sign up</Link>
+                        </div>
                     </div>
+                </header>
+            </div>
 
-                    <div className='nav-buttons'>
-                        {/*{!authorized ?*/}
-                        {/*    <Fragment>*/}
-                        {/*        <div onClick={() => history.push('/login')} className='login-link'>LOG IN</div>*/}
-                        {/*        <button*/}
-                        {/*            onClick={() => history.push('/registration')}*/}
-                        {/*            className='btn green-btn register-btn'*/}
-                        {/*        >*/}
-                        {/*            {page === 'zth' ? 'Try it Now' : 'TRY IT FOR FREE'}*/}
-                        {/*        </button>*/}
-                        {/*    </Fragment>*/}
-                        {/*    :*/}
-                        {/*    <button*/}
-                        {/*        onClick={() => history.push('/ppc/optimization')}*/}
-                        {/*        className='btn green-btn login-btn'*/}
-                        {/*    >*/}
-                        {/*        SIGN IN*/}
-                        {/*    </button>*/}
-                        {/*}*/}
-
-                        <Link to={'/login'}>LOG IN</Link>
-
-                        <Link to={'/registration'} className={'btn default register-btn'}>sign up</Link>
-                    </div>
-                </div>
-            </header>
-        </div>
+            <nav className={`header-menu mob ${openedMenu ? 'open' : ''}`}>
+                <ul className="">
+                    <li className="has-child"><a href="#">Products <SVG id='menu-arrow'/></a>
+                        <ul className="sub-menu">
+                            <li><NavLink to='/'>PPC Automate</NavLink></li>
+                            {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
+                            <li><NavLink to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
+                            <li className="soon"><a href='#'>Analytics</a></li>
+                        </ul>
+                    </li>
+                    <li><NavLink to={'/pricing'}>Pricing</NavLink></li>
+                    <li><NavLink to="/contact-us">Contact us</NavLink></li>
+                    <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
+                        <ul className="sub-menu">
+                            <li><a href="https://blog.profitwhales.com/">Blog</a></li>
+                            <li><a href='https://intercom.help/profitwhales/en' target={'_blank'}>Help
+                                Center</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><NavLink to="/videos">How it works</NavLink></li>
+                </ul>
+            </nav>
+        </>
     )
 }
 

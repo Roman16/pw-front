@@ -78,7 +78,7 @@ const ContactUs = (props) => {
                                 <p>Don't be shy. If you've got something to create and move forward with Profit
                                     Whales.</p>
                                 <button
-                                    onClick={() => window.open('https://calendly.com/vitalii-pw-success-manager/profit-whales-collaboration')}
+                                    onClick={() => window.open('https://calendly.com/diana-partnership-manager-profit-whales/meeting')}
                                     className='btn green-btn'>Send a proposal
                                 </button>
                             </div>

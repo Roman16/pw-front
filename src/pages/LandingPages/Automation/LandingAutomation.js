@@ -709,7 +709,7 @@ const LandingAutomation = () => {
                                     <SVG id={'right-row'}/>
                                 </a>
 
-                                <Link to={'/demo-call'} target={'_blank'} className={'btn default'}>DEMO</Link>
+                                <Link to={'/demo-call'} target={'_blank'} className={'btn default'}>BOOK A DEMO</Link>
                             </div>
 
                             <div className="image"><img src={underHoodImages.icon1} alt=""/></div>
@@ -1082,9 +1082,7 @@ const LandingAutomation = () => {
                                     <img src={post.image} alt=""/>
                                 </div>
 
-                                <h4>
-                                    {post.title.rendered}
-                                </h4>
+                                <h4 dangerouslySetInnerHTML={{__html: post.title.rendered}}/>
 
                                 <a href={post.link} className={'btn default'} target={'_blank'}>
                                     learn more
@@ -1109,9 +1107,7 @@ const LandingAutomation = () => {
                                         <img src={post.image} alt=""/>
                                     </div>
 
-                                    <h4>
-                                        {post.title.rendered}
-                                    </h4>
+                                    <h4 dangerouslySetInnerHTML={{__html: post.title.rendered}}/>
 
                                     <a href={post.link} className={'btn default'} target={'_blank'}>
                                         learn more

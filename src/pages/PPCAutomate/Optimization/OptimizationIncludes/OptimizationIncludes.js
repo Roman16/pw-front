@@ -11,8 +11,8 @@ const includesList = [
     'Ad Positions Testing',
     'Data-Driven Bid Management',
     'Adding Negative Keywords',
+    'Keywords Indexation Mode',
     'Prevents Search Terms Competition',
-    'Keywords Indexation Mode'
 ];
 
 const options = [
