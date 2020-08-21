@@ -55,7 +55,7 @@ const Footer = () => (
                     <h4>Resources</h4>
 
                     <ul>
-                        <li><a href="/blog" target="_blank">Blog</a></li>
+                        <li><a href="https://blog.profitwhales.com" target="_blank">Blog</a></li>
                         <li>
                             <a
                                 href="https://intercom.help/profitwhales/en/"

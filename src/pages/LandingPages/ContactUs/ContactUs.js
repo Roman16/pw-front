@@ -12,6 +12,15 @@ import checkedIcon from '../../../assets/img/landing-contact-us/checked.svg';
 import ModalWindow from "../../../components/ModalWindow/ModalWindow";
 import {userService} from "../../../services/user.services";
 import {notification} from "../../../components/Notification";
+import contactFormImage from "../../../assets/img/landing-automation/contact-form-image.png";
+import sendProcessingImage from "../../../assets/img/landing-automation/send-processing.svg";
+import thankImage from "../../../assets/img/landing-automation/thank-image.png";
+import {Checkbox, Input, Radio} from "antd";
+import TreeSelect from "../../../components/TreeSelect/TreeSelect";
+import CustomSelect from "../../../components/Select/Select";
+import {SVG} from "../../../utils/icons";
+import {Link} from "react-router-dom";
+import ContactForm from "../components/ContactForm/ContactForm";
 
 const ContactUs = (props) => {
     const [visibleWindow, switchWindow] = useState(false),
@@ -53,61 +62,63 @@ const ContactUs = (props) => {
             <div className="landing-contact-us  landing-page">
                 <Header/>
 
-                <section>
-                    <div className="container">
-                        <div className="title">
-                            <h2>Contact Us</h2>
-                            <p>Have any questions? We’d love to hear from you.</p>
-                        </div>
+                {/*<section>*/}
+                {/*    <div className="container">*/}
+                {/*        <div className="title">*/}
+                {/*            <h2>Contact Us</h2>*/}
+                {/*            <p>Have any questions? We’d love to hear from you.</p>*/}
+                {/*        </div>*/}
 
-                        <div className="row">
-                            <div className='item'>
-                                <img src={callHelpImage} alt=""/>
-                                <h3>How could we help you?</h3>
-                                <p>Our support team is spread across the globe to give you answers fast.</p>
-                                <button onClick={() => {
-                                    window.Intercom('show')
-                                }}
-                                        className='btn green-btn'>Send a request
-                                </button>
-                            </div>
+                {/*        <div className="row">*/}
+                {/*            <div className='item'>*/}
+                {/*                <img src={callHelpImage} alt=""/>*/}
+                {/*                <h3>How could we help you?</h3>*/}
+                {/*                <p>Our support team is spread across the globe to give you answers fast.</p>*/}
+                {/*                <button onClick={() => {*/}
+                {/*                    window.Intercom('show')*/}
+                {/*                }}*/}
+                {/*                        className='btn green-btn'>Send a request*/}
+                {/*                </button>*/}
+                {/*            </div>*/}
 
-                            <div className='item'>
-                                <img src={proposalImage} alt=""/>
-                                <h3>Partnership? Of course, let’s discuss</h3>
-                                <p>Don't be shy. If you've got something to create and move forward with Profit
-                                    Whales.</p>
-                                <button
-                                    onClick={() => window.open('https://calendly.com/vitalii-pw-success-manager/profit-whales-collaboration')}
-                                    className='btn green-btn'>Send a proposal
-                                </button>
-                            </div>
+                {/*            <div className='item'>*/}
+                {/*                <img src={proposalImage} alt=""/>*/}
+                {/*                <h3>Partnership? Of course, let’s discuss</h3>*/}
+                {/*                <p>Don't be shy. If you've got something to create and move forward with Profit*/}
+                {/*                    Whales.</p>*/}
+                {/*                <button*/}
+                {/*                    onClick={() => window.open('https://calendly.com/diana-partnership-manager-profit-whales/meeting')}*/}
+                {/*                    className='btn green-btn'>Send a proposal*/}
+                {/*                </button>*/}
+                {/*            </div>*/}
 
-                            <div className='item'>
-                                <img src={helpCenterImage} alt=""/>
-                                <h3>Software Help Center</h3>
-                                <p>All answers about our software. Click and go through all knowledge that we collected
-                                    for
-                                    you.</p>
-                                {/*<button onClick={openWindowHandler} className='btn green-btn'>Get more info</button>*/}
-                                <button onClick={() => window.open('https://intercom.help/profitwhales/')}
-                                        className='btn green-btn'>Get more info
-                                </button>
+                {/*            <div className='item'>*/}
+                {/*                <img src={helpCenterImage} alt=""/>*/}
+                {/*                <h3>Software Help Center</h3>*/}
+                {/*                <p>All answers about our software. Click and go through all knowledge that we collected*/}
+                {/*                    for*/}
+                {/*                    you.</p>*/}
+                {/*                /!*<button onClick={openWindowHandler} className='btn green-btn'>Get more info</button>*!/*/}
+                {/*                <button onClick={() => window.open('https://intercom.help/profitwhales/')}*/}
+                {/*                        className='btn green-btn'>Get more info*/}
+                {/*                </button>*/}
 
-                                <img src={helpDjoImage} alt="" className='djo'/>
-                            </div>
-                        </div>
+                {/*                <img src={helpDjoImage} alt="" className='djo'/>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
 
-                        <div className="address">
-                            <img src={addressImage} alt=""/>
+                {/*        <div className="address">*/}
+                {/*            <img src={addressImage} alt=""/>*/}
 
-                            <div className="col">
-                                <h4>Just shoot me a message</h4>
-                                <a href="mailto:official@profitwhales.com">official@profitwhales.com</a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                {/*            <div className="col">*/}
+                {/*                <h4>Just shoot me a message</h4>*/}
+                {/*                <a href="mailto:official@profitwhales.com">official@profitwhales.com</a>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</section>*/}
+
+                <ContactForm/>
 
                 <Footer/>
             </div>
