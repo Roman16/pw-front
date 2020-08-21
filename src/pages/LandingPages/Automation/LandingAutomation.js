@@ -48,7 +48,7 @@ const stepsSlider = [
         description: 'User-friendly design that makes easy to navigate your account so you’ll never miss out on what’s important.',
         userName: 'Stan Melrose',
         userMessage: `It was a new company for me... We have started form audit and detailed analysis of our niche. We spent some time to remake and prepare all needed campaigns. After the first 3 weeks, we have launched additional campaigns as SB / SD. <span>We were impressed</span> that our PPC campaigns could <span>work so well</span>. They <span>have improved</span> all our metrics and thanks to software+human control we start focusing on our business.`,
-        caseLink: '',
+        caseLink: 'https://blog.profitwhales.com/studies/why-amazon-ppc-matters',
         img: stepsImages.slide1
     },
     {
@@ -56,15 +56,15 @@ const stepsSlider = [
         description: 'Profit Whales uses proprietary machine learning and algorithm-regulated software. It has already processed over two million real-life Amazon account iterations. And now it is ready to serve your business.',
         userName: 'Alexey Ukhnalev',
         userMessage: `I dreamt about <span> PPC automation in several clicks </span> in an efficient way. In <span>Profit Whales</span> they make it happen. For those who tired of high ACOS, CPC and time spent optimizing AD groups.`,
-        caseLink: '',
+        caseLink: 'https://blog.profitwhales.com/studies/table-tennis-equipment',
         img: stepsImages.slide2
     },
     {
         title: `Keyword Automation`,
         description: 'Harvesting good keywords for a PPC campaign is a daunting task. Profit Whales Automation takes care of that for you. And it keeps testing new ones for active campaigns to achieve optimal performance.',
-        userName: 'Vasily Korobkin, Divelux, CEO',
+        userName: 'Vasily Korobkin, Diving Equipment Brand, CEO',
         userMessage: `Finding a way into the top of page 1 results and directing major demand is <span> an art form of Profit Whales</span>. Our in-house Amazon marketing was adequate, but we needed some external knowledge to break the ice - the guys from Profit Whales are <span>real professionals</span> in regards not only to PPC optimization but also in the field of Amazon itself.`,
-        caseLink: '',
+        caseLink: 'https://blog.profitwhales.com/studies/zero-to-hero',
         img: stepsImages.slide3
     },
     {
@@ -72,7 +72,7 @@ const stepsSlider = [
         description: 'Profit Whales provides a user-friendly dashboard that highlights the most important metrics of your Amazon business, as well as quick, 2-way control tools to stay on top of any situation and stay ahead of competition.',
         userName: 'Lighting Equipment Brand',
         userMessage: `We've decided to use Profit Whales Software because of its <span> user-friendly interface </span> and <span> ready-made full optimization</span>. There wasn’t anything that we have wanted that Profit Whales Team said couldn’t be done with their <span> Automation tool</span>. You indicate your business goal - and <span>the software performs changes by itself</span>.`,
-        caseLink: '',
+        caseLink: 'https://blog.profitwhales.com/studies/lighting-equipment',
         img: stepsImages.slide4
     },
     {
@@ -80,7 +80,7 @@ const stepsSlider = [
         description: 'Every customer is assigned a dedicated manager who is experienced in both Amazon Ads optimization and the clockworks of Profit Whales software.',
         userName: 'Ethan Cooper',
         userMessage: `<span>Amazing company</span>. Loved the <span>support</span> from these guys. They correctly built the structure for my advertising companies.<span>I am also impressed</span>  with their software. <span>Very easy to use</span> and you can set a strategy and not worry about the everyday work with advertising.`,
-        caseLink: '',
+        caseLink: 'https://blog.profitwhales.com/studies/nutritional-supplements',
         img: stepsImages.slide5
     },
 ];
@@ -160,7 +160,6 @@ const commentsList = [
 ];
 
 
-
 const meta = {
     title: 'Profit Whales Amazon PPC Software | Accelerate your Brand',
     description: 'Smart Automated Amazon Advertising Software for Brands to Kick-Start Amazon PPC Optimization with Programmatic Algorithms, Big Data & Data Science',
@@ -174,7 +173,6 @@ const LandingAutomation = () => {
         [blogPosts, setBlogPosts] = useState([]),
         [activeSlide, setActiveSlide] = useState(0),
         [activeComment, setActiveComment] = useState(0);
-
 
 
     const scrollToTop = () => {
@@ -500,9 +498,9 @@ const LandingAutomation = () => {
                                 <p dangerouslySetInnerHTML={{__html: stepsSlider[activeSlide].userMessage}}/>
                             </div>
 
-                            <Link to={stepsSlider[activeSlide].caseLink} className={'btn default'} target={'_blank'}>
+                            <a href={stepsSlider[activeSlide].caseLink} className={'btn default'} target={'_blank'}>
                                 Check My Case
-                            </Link>
+                            </a>
                         </div>
                     </div>
 
@@ -933,9 +931,9 @@ const LandingAutomation = () => {
                             </div>
                         </div>
 
-                        <button className={'btn default'}>
+                        <a href={'#form'} className={'btn default'}>
                             contact us
-                        </button>
+                        </a>
                     </div>
 
                     <div className="trustpilot-block">
@@ -962,19 +960,50 @@ const LandingAutomation = () => {
                     <h2>What’s new at our <span>BLOG</span></h2>
 
                     <div className="posts desc">
-                        {blogPosts.map(post => (
-                            <div className="post">
-                                <div className="image">
-                                    <img src={post.image} alt=""/>
-                                </div>
-
-                                <h4 dangerouslySetInnerHTML={{__html: post.title.rendered}}/>
-
-                                <a href={post.link} className={'btn default'} target={'_blank'}>
-                                    learn more
-                                </a>
+                        <div className="post">
+                            <div className="image">
+                                <img
+                                    src={'https://blog.profitwhales.com/wp-content/uploads/2020/08/Actionable-Amazon-PPC-Checklist.png'}
+                                    alt=""/>
                             </div>
-                        ))}
+
+                            <h4>Actionable Amazon PPC Checklist For Amazon Sellers</h4>
+
+                            <a href='https://blog.profitwhales.com/amazon-ppc-checklist' className={'btn default'}
+                               target={'_blank'}>
+                                learn more
+                            </a>
+                        </div>
+
+                        <div className="post">
+                            <div className="image">
+                                <img
+                                    src={'https://blog.profitwhales.com/wp-content/uploads/2020/08/amazon-keyword-generator.png'}
+                                    alt=""/>
+                            </div>
+
+                            <h4>Zero to Hero Release: create ready-to-go Amazon PPC campaigns</h4>
+
+                            <a href='https://blog.profitwhales.com/amazon-ppc-campaign-structure'
+                               className={'btn default'} target={'_blank'}>
+                                learn more
+                            </a>
+                        </div>
+
+                        <div className="post">
+                            <div className="image">
+                                <img src={'https://blog.profitwhales.com/wp-content/uploads/2020/07/acos-vs-macos.png'}
+                                     alt=""/>
+                            </div>
+
+                            <h4>What is Amazon ACoS? What is MACoS?</h4>
+
+                            <a href='https://blog.profitwhales.com/amazon-acos' className={'btn default'}
+                               target={'_blank'}>
+                                learn more
+                            </a>
+                        </div>
+
                     </div>
 
                     <div className="posts mob">
@@ -987,19 +1016,49 @@ const LandingAutomation = () => {
                             slidesToScroll={1}
 
                         >
-                            {blogPosts.map(post => (
-                                <div className="post">
-                                    <div className="image">
-                                        <img src={post.image} alt=""/>
-                                    </div>
-
-                                    <h4 dangerouslySetInnerHTML={{__html: post.title.rendered}}/>
-
-                                    <a href={post.link} className={'btn default'} target={'_blank'}>
-                                        learn more
-                                    </a>
+                            <div className="post">
+                                <div className="image">
+                                    <img
+                                        src={'https://blog.profitwhales.com/wp-content/uploads/2020/08/Actionable-Amazon-PPC-Checklist.png'}
+                                        alt=""/>
                                 </div>
-                            ))}
+
+                                <h4>Actionable Amazon PPC Checklist For Amazon Sellers</h4>
+
+                                <a href='https://blog.profitwhales.com/amazon-ppc-checklist' className={'btn default'}
+                                   target={'_blank'}>
+                                    learn more
+                                </a>
+                            </div>
+
+                            <div className="post">
+                                <div className="image">
+                                    <img
+                                        src={'https://blog.profitwhales.com/wp-content/uploads/2020/08/amazon-keyword-generator.png'}
+                                        alt=""/>
+                                </div>
+
+                                <h4>Zero to Hero Release: create ready-to-go Amazon PPC campaigns</h4>
+
+                                <a href='https://blog.profitwhales.com/amazon-ppc-campaign-structure'
+                                   className={'btn default'} target={'_blank'}>
+                                    learn more
+                                </a>
+                            </div>
+
+                            <div className="post">
+                                <div className="image">
+                                    <img src={'https://blog.profitwhales.com/wp-content/uploads/2020/07/acos-vs-macos.png'}
+                                         alt=""/>
+                                </div>
+
+                                <h4>What is Amazon ACoS? What is MACoS?</h4>
+
+                                <a href='https://blog.profitwhales.com/amazon-acos' className={'btn default'}
+                                   target={'_blank'}>
+                                    learn more
+                                </a>
+                            </div>
                         </Slider>
                     </div>
                 </div>
