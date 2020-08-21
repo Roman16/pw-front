@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import contactFormImage from "../../../../assets/img/landing-automation/contact-form-image.png";
 import sendProcessingImage from "../../../../assets/img/landing-automation/send-processing.svg";
 import thankImage from "../../../../assets/img/landing-automation/thank-image.png";
@@ -78,7 +78,6 @@ const advertisingStrategyVariations = [
         fill: 'EC7F5C',
         sales: 5,
         acos: 5
-
     },
     {
         label: 'Defend Best Seller Tag',
@@ -95,7 +94,6 @@ const advertisingStrategyVariations = [
         fill: '83FED0',
         sales: 2,
         acos: 1
-
     },
 ];
 
@@ -111,6 +109,22 @@ const ContactForm = () => {
             ...contactFormParams,
             [name]: value
         })
+    };
+
+    const changeMultiSelectHandler = (event) => {
+        const options = event.target.options;
+        let value = [];
+
+        for (let i = 0, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                value.push(options[i].value);
+            }
+        }
+
+        setContactFormParams({
+            ...contactFormParams,
+            active_marketplaces: value
+        });
     };
 
     const submitFormHandler = async (e) => {
@@ -372,8 +386,7 @@ const ContactForm = () => {
 
                             <select
                                 placeholder={'Select by'}
-                                value={contactFormParams.active_marketplaces}
-                                onChange={({target: {value}}) => changeContactFormHandler('active_marketplaces', value)}
+                                onChange={changeMultiSelectHandler}
                                 multiple
                             >
                                 <option value={'ATVPDKIKX0DER'}>USA</option>

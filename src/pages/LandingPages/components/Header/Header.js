@@ -31,8 +31,6 @@ const Header = ({type = 'light', page}) => {
         $(window).scroll(function () {
             const scroll = $(window).scrollTop();
 
-            console.log($(window).scrollTop());
-
             if (scroll >= 400) {
                 $(".header-block").addClass("scrollDown");
             } else {
