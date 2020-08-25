@@ -32,6 +32,10 @@ fbq('track', 'PageView');`
 
             history.push('/login')
         }
+
+        if (localStorage.getItem('token')) {
+            history.push('/ppc/optimization')
+        }
     }, []);
 
     return (
