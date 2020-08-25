@@ -107,7 +107,8 @@ const PPCPricingGuide = () => {
                         <label><b>$50k-100k</b> in ad spend / per month</label>
 
                         <h3>
-                            2,5
+                            <span className={'dollar'}>$</span>
+                            1,000 + 2
                             <span className={'percent'}>%</span>
 
                             <label>monthly <br/> ad spend</label>

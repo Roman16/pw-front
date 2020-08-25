@@ -64,8 +64,8 @@ const PPCPriceSlider = () => {
                     result = ((2.5 / 100) * value) + 500;
                     barLabel.html('<div>$500 + 2,5% ad spend</div>');
                 } else {
-                    result = ((2.5 / 100) * value);
-                    barLabel.html('<div>2,5% ad spend</div>');
+                    result = ((2 / 100) * value + 1000);
+                    barLabel.html('<div>$1,000 + 2% ad spend</div>');
                 }
 
                 sumElement.text(numberMask(result));
