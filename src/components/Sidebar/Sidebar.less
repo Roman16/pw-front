@@ -189,6 +189,10 @@
           margin: 1.5em 0 3em 0;
           padding: 0 2.4em;
 
+          .custom-tooltip {
+            margin: 0;
+          }
+
 
           .top-nav-link {
             font-size: 1rem;
@@ -299,7 +303,8 @@
           }
         }
 
-        .top-nav-item > div:hover > .top-nav-link {
+        .top-nav-item > div:hover > .top-nav-link,
+        .top-nav-item .top-nav-link:hover {
           color: @white;
 
           .link-icon {

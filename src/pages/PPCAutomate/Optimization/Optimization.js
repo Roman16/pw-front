@@ -109,6 +109,13 @@ const Optimization = () => {
         setProcessing(false);
     }
 
+    const updateOptimizationOptions = (options) => {
+        setProduct({
+            ...selectedProduct,
+            ...options
+        })
+    };
+
     async function onSaveTargetAcos(targetAcos) {
         if (!targetAcos || targetAcos === 0 || targetAcos < 0) {
             notification.error({
@@ -175,7 +182,10 @@ const Optimization = () => {
         <Fragment>
             <div className="optimization-page">
                 <OptimizationIncludes
+                    product={selectedProduct}
+                    selectedAll={selectedAll}
                     onShowDrawer={showDrawerHandler}
+                    updateOptimizationOptions={updateOptimizationOptions}
                 />
 
                 <OptimizationChanges

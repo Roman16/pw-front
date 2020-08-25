@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import './Navigation.less';
 import {NavLink} from "react-router-dom";
 import {SVG} from "../../../../utils/icons";
@@ -47,4 +47,4 @@ const Navigation = () => {
     )
 };
 
-export default Navigation;
+export default memo(Navigation);

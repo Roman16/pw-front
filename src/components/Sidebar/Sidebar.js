@@ -162,7 +162,12 @@ const Sidebar = () => {
                         </li>
 
                         {!production && <li className="top-nav-item">
-                            <div>
+                            <InformationTooltip
+                                type={'custom'}
+                                description={<Link to={'/analytics'}>Analytics</Link>}
+                                position={'right'}
+                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
+                            >
                                 <NavLink
                                     className="top-nav-link"
                                     activeClassName="top-nav-link-active"
@@ -176,7 +181,7 @@ const Sidebar = () => {
                                     Analytics
                                 </span>
                                 </NavLink>
-                            </div>
+                            </InformationTooltip>
                         </li>}
 
                         <li className="top-nav-item ppc-automate-link">

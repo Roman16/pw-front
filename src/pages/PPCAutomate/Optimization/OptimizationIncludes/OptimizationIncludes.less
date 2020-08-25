@@ -6,7 +6,6 @@
     list-style: none;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 10px;
     grid-row-gap: 15px;
 
     li {
@@ -16,6 +15,7 @@
       display: flex;
       align-items: center;
       position: relative;
+      padding: 0 10px 0 0;
 
       &::before {
         content: '';
@@ -59,6 +59,14 @@
         width: 100%;
         height: 100%;
       }
+    }
+  }
+
+  .ant-checkbox-group {
+    grid-template-columns: repeat(3, 1fr);
+
+    .ant-checkbox-group-item {
+      width: max-content;
     }
   }
 
