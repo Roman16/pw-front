@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import Navigation from "./components/Navigation/Navigation";
 import Header from "./components/Header/Header";
 
@@ -17,4 +17,4 @@ const Analytics = (props) => {
     )
 };
 
-export default Analytics;
+export default memo(Analytics);

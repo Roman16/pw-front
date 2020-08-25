@@ -13,7 +13,6 @@ import CampaignList from "../components/CampaignList/CampaignList";
 import {userService} from "../services/user.services";
 import PWWindows from "../components/ModalWindow/PWWindows";
 
-
 const ThankPage = React.lazy(() => import('./ZeroToHero/ThankPage/ThankPage'));
 const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'));
 const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/ChooseCampaign'));
@@ -27,6 +26,7 @@ const Dashboard = React.lazy(() => import('./PPCAutomate/Dashboard/Dashboard'));
 
 const Analytics = React.lazy(() => import('./Analytics'));
 const Campaigns = React.lazy(() => import('./Analytics/Campaigns/Campaigns'));
+const AdGroups = React.lazy(() => import('./Analytics/AdGroups/AdGroups'));
 
 const Account = React.lazy(() => import('./Account/Navigation/Navigation'));
 
@@ -242,6 +242,7 @@ const AuthorizedUser = (props) => {
                                     {/*ANALYTICS*/}
                                     {developer && <Analytics>
                                         <ConnectedAmazonRoute exact path="/analytics/campaigns" component={Campaigns}/>
+                                        <ConnectedAmazonRoute exact path="/analytics/ad-groups" component={AdGroups}/>
                                     </Analytics>}
                                     {/*-------------------------------------------*/}
 

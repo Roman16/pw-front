@@ -14,6 +14,7 @@ import {history} from "../../utils/history";
 const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
 
+
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
         [automate, setAutomate] = useState(true),
@@ -160,20 +161,23 @@ const Sidebar = () => {
                             )}
                         </li>
 
-                        {/*<li className="top-nav-item">*/}
-                        {/*    <NavLink*/}
-                        {/*        className="top-nav-link"*/}
-                        {/*        activeClassName="top-nav-link-active"*/}
-                        {/*        exact*/}
-                        {/*        to="/"*/}
-                        {/*        disabled*/}
-                        {/*    >*/}
-                        {/*        <ItemIcon icon="analytics"/>*/}
-                        {/*        <span className="top-span">*/}
-                        {/*            Analytics*/}
-                        {/*        </span>*/}
-                        {/*    </NavLink>*/}
-                        {/*</li>*/}
+                        {!production && <li className="top-nav-item">
+                            <div>
+                                <NavLink
+                                    className="top-nav-link"
+                                    activeClassName="top-nav-link-active"
+                                    to="/analytics"
+                                >
+                                    <div className="link-icon">
+                                        <SVG id='analytics-icon'/>
+                                    </div>
+
+                                    <span className="top-span">
+                                    Analytics
+                                </span>
+                                </NavLink>
+                            </div>
+                        </li>}
 
                         <li className="top-nav-item ppc-automate-link">
                             <div onClick={() => toggleSubMenu('ppc')}>
