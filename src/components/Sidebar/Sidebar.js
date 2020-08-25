@@ -19,8 +19,8 @@ const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
         [automate, setAutomate] = useState(true),
         [subMenuState, setSubMenuState] = useState({
-            zth: true,
-            ppc: true
+            zth: false,
+            ppc: false
         }),
         [regions] = useState(regionsMenu),
         dispatch = useDispatch(),
