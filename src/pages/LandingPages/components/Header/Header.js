@@ -121,13 +121,20 @@ const Header = ({type = 'light', page}) => {
 
                             <Link to={'/login'}>LOG IN</Link>
 
-                            <Link to={'/registration'} className={'btn default register-btn'}>sign up</Link>
+                            <Link to={'/registration'} className={'btn default register-btn'}>start trial</Link>
                         </div>
                     </div>
                 </header>
             </div>
 
             <nav className={`header-menu mob ${openedMenu ? 'open' : ''}`}>
+                <div className="buttons">
+                    <Link to={'/registration'} className={'btn default register-btn'}>start trial</Link>
+
+                    <Link to={'/login'} className={'login-btn'}>LOG IN</Link>
+
+                </div>
+
                 <ul className="">
                     <li className="has-child"><a href="#">Products <SVG id='menu-arrow'/></a>
                         <ul className="sub-menu">
