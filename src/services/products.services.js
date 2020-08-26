@@ -1,6 +1,7 @@
 import api from './request';
 import {productsUrls} from '../constans/api.urls';
 import {productsConstants} from '../constans/actions.type';
+import {optimizationOptions} from '../pages/PPCAutomate/Optimization/OptimizationIncludes/OptimizationIncludes';
 
 export const productsServices = {
     getProducts,
@@ -49,16 +50,16 @@ function getProductDetails(id, cancelToken) {
 }
 
 function updateProductById(product) {
-    return api('post', productsUrls.saveProductData, {
-        ...product,
+    console.log(product);
+    const data = {
         product_id: product.product_id ? product.product_id : product.id,
         status: product.status,
-        optimization_strategy: product.optimization_strategy,
-        add_negative_keywords: true,
-        optimize_keywords: true,
-        create_new_keywords: true,
-        optimize_pats: true,
-        add_negative_pats: true,
-        create_new_pats: true
-    })
+        optimization_strategy: product.optimization_strategy
+    };
+
+    optimizationOptions.forEach(item => {
+        data[item.value] = product[item.value]
+    });
+
+    return api('post', productsUrls.saveProductData, data)
 }

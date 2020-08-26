@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './OptimizationIncludes.less';
 import {useSelector} from "react-redux";
 import {Checkbox} from 'antd';
@@ -16,16 +16,16 @@ const includesList = [
     'Prevents Search Terms Competition',
 ];
 
-const options = [
-    {label: 'Bid Optimization', value: 'BidOptimizationKeywords'},
-    {label: 'Bid Optimization PAT', value: 'BidOptimizationPATs'},
-    {label: 'Active Keywords', value: 'ActivationKeywords'},
-    {label: 'Active PATs', value: 'ActivationPATs'},
-    {label: 'Pause Bleeding Keywords', value: 'PauseBadKeywords'},
-    {label: 'Pause Bleeding PATs', value: 'PauseBadPATs'},
-    {label: 'Remove Duplicates', value: 'RemoveDuplicates'},
-    {label: 'Harvest & Rank New Keywords', value: 'HarvestGoodSearchTerms'},
-    {label: 'Add Bad ST to Negatives', value: 'AddBadSearchTermsToNegatives'},
+export const optimizationOptions = [
+    {label: 'Bid Optimization', value: 'bid_optimization_keywords'},
+    {label: 'Bid Optimization PAT', value: 'bid_optimization_pats'},
+    {label: 'Active Keywords', value: 'activation_keywords'},
+    {label: 'Active PATs', value: 'activation_pats'},
+    {label: 'Pause Bleeding Keywords', value: 'pause_bad_keywords'},
+    {label: 'Pause Bleeding PATs', value: 'pause_bad_pats'},
+    {label: 'Remove Duplicates', value: 'remove_duplicates'},
+    {label: 'Harvest & Rank New Keywords', value: 'harvest_good_search_terms'},
+    {label: 'Add Bad ST to Negatives', value: 'add_bad_search_terms_to_negatives'},
 ];
 
 let timeoutId = null;
@@ -41,33 +41,43 @@ const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll})
     const onChange = async (value) => {
         setActiveParams(value);
 
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(async () => {
-            if (product.status === 'RUNNING') {
+        const params = {};
+
+        optimizationOptions.forEach(item => {
+            params[item.value] = value.includes(item.value)
+        });
+
+        if (product.status === 'RUNNING') {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(async () => {
                 try {
                     await productsServices.updateProductById({
                         ...product,
-                        product_id: selectedAll ? 'all' : product.productId,
-                        ...options.map(item => ({[item.value]: value.includes(item.value)}))
+                        product_id: selectedAll ? 'all' : product.product_id,
+                        ...params
                     });
 
-                    notification.success('Changes saved!')
+                    notification.success({title: 'Changes saved!'})
                 } catch (e) {
                     console.log(e);
                 }
-            } else {
-                updateOptimizationOptions(options.map(item => ({[item.value]: value.includes(item.value)})))
-            }
-            console.log(value);
-        }, 1000);
+                console.log(value);
+            }, 1000);
+        } else {
+            updateOptimizationOptions(params)
+        }
     };
+
+    useEffect(() => {
+        setActiveParams(optimizationOptions.map(item => (product[item.value] && item.value)))
+    }, [product.product_id]);
 
     if (isAgencyUser) {
         return (
             <section className='optimization-includes'>
                 <h3>What do you want to optimize?</h3>
 
-                <Checkbox.Group options={options} onChange={onChange} value={activeParams}/>
+                <Checkbox.Group options={optimizationOptions} onChange={onChange} value={activeParams}/>
             </section>
         )
     } else {

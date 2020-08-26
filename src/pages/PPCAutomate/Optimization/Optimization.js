@@ -74,6 +74,7 @@ const Optimization = () => {
         } else {
             try {
                 await productsServices.updateProductById({
+                    ...selectedProduct,
                     product_id: selectedAll ? 'all' : productId,
                     status: 'RUNNING',
                     optimization_strategy,
@@ -124,6 +125,8 @@ const Optimization = () => {
         } else {
             try {
                 await productsServices.updateProductById({
+                    ...selectedProduct,
+
                     product_id: selectedAll ? 'all' : productId,
                     status: selectedProduct.status,
                     optimization_strategy: selectedProduct.optimization_strategy ? selectedProduct.optimization_strategy : 'AchieveTargetACoS',
@@ -145,6 +148,8 @@ const Optimization = () => {
 
         try {
             await productsServices.updateProductById({
+                ...selectedProduct,
+
                 product_id: selectedAll ? 'all' : productId,
                 status: 'STOPPED',
                 optimization_strategy: selectedProduct.optimization_strategy
