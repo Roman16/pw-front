@@ -10,13 +10,13 @@ const {Search} = Input;
 const CampaignsList = () => {
 
     const columns = [
-        {
-            title: 'Active',
-            dataIndex: 'active',
-            key: 'active',
-            width: '100px',
-            sorter: true
-        },
+        // {
+        //     title: 'Active',
+        //     dataIndex: 'active',
+        //     key: 'active',
+        //     width: '100px',
+        //     sorter: true
+        // },
         {
             title: 'Campaigns',
             dataIndex: 'campaigns',
@@ -60,7 +60,14 @@ const CampaignsList = () => {
             sorter: true
         },
         {
-            title: 'Daily Budget',
+            title: 'End date',
+            dataIndex: 'start_date',
+            key: 'start_date',
+            width: '150px',
+            sorter: true
+        },
+        {
+            title: 'Budget',
             dataIndex: 'daily_budget',
             key: 'daily_budget',
             width: '150px',
@@ -88,7 +95,7 @@ const CampaignsList = () => {
             sorter: true
         },
         {
-            title: 'Spend',
+            title: 'Ad Spend',
             dataIndex: 'spend',
             key: 'spend',
             width: '150px',
@@ -102,16 +109,9 @@ const CampaignsList = () => {
             sorter: true
         },
         {
-            title: 'Orders',
-            dataIndex: 'orders',
-            key: 'orders',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Sales',
-            dataIndex: 'sales',
-            key: 'sales',
+            title: 'Ad Sales',
+            dataIndex: 'ad_sales',
+            key: 'ad_sales',
             width: '150px',
             sorter: true
         },
@@ -123,9 +123,16 @@ const CampaignsList = () => {
             sorter: true
         },
         {
-            title: 'Conversion Rate',
+            title: 'MACoS',
             dataIndex: 'conversion_rate',
             key: 'conversion_rate',
+            width: '150px',
+            sorter: true
+        },
+        {
+            title: 'Ad CVR',
+            dataIndex: 'cpa',
+            key: 'cpa',
             width: '150px',
             sorter: true
         },
@@ -137,10 +144,31 @@ const CampaignsList = () => {
             sorter: true
         },
         {
-            title: 'Profit',
+            title: 'Ad Units',
+            dataIndex: 'cpa',
+            key: 'cpa',
+            width: '150px',
+            sorter: true
+        },
+        {
+            title: 'ROAS',
+            dataIndex: 'cpa',
+            key: 'cpa',
+            width: '150px',
+            sorter: true
+        },
+        {
+            title: 'Sales Share',
+            dataIndex: 'cpa',
+            key: 'cpa',
+            width: '150px',
+            sorter: true
+        },
+        {
+            title: 'Budget Allocation',
             dataIndex: 'profit',
             key: 'profit',
-            width: '150px',
+            width: '250px',
             sorter: true
         },
     ];

@@ -74,6 +74,7 @@ const Optimization = () => {
         } else {
             try {
                 await productsServices.updateProductById({
+                    ...selectedProduct,
                     product_id: selectedAll ? 'all' : productId,
                     status: 'RUNNING',
                     optimization_strategy,
@@ -109,6 +110,13 @@ const Optimization = () => {
         setProcessing(false);
     }
 
+    const updateOptimizationOptions = (options) => {
+        setProduct({
+            ...selectedProduct,
+            ...options
+        })
+    };
+
     async function onSaveTargetAcos(targetAcos) {
         if (!targetAcos || targetAcos === 0 || targetAcos < 0) {
             notification.error({
@@ -117,6 +125,8 @@ const Optimization = () => {
         } else {
             try {
                 await productsServices.updateProductById({
+                    ...selectedProduct,
+
                     product_id: selectedAll ? 'all' : productId,
                     status: selectedProduct.status,
                     optimization_strategy: selectedProduct.optimization_strategy ? selectedProduct.optimization_strategy : 'AchieveTargetACoS',
@@ -138,6 +148,8 @@ const Optimization = () => {
 
         try {
             await productsServices.updateProductById({
+                ...selectedProduct,
+
                 product_id: selectedAll ? 'all' : productId,
                 status: 'STOPPED',
                 optimization_strategy: selectedProduct.optimization_strategy
@@ -175,7 +187,10 @@ const Optimization = () => {
         <Fragment>
             <div className="optimization-page">
                 <OptimizationIncludes
+                    product={selectedProduct}
+                    selectedAll={selectedAll}
                     onShowDrawer={showDrawerHandler}
+                    updateOptimizationOptions={updateOptimizationOptions}
                 />
 
                 <OptimizationChanges

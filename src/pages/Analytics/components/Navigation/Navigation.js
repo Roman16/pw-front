@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import './Navigation.less';
 import {NavLink} from "react-router-dom";
 import {SVG} from "../../../../utils/icons";
@@ -7,8 +7,12 @@ const Navigation = () => {
 
     const menu = [
         {
-            title: 'Overview',
-            url: '/analytics/overview'
+            title: 'Products',
+            url: '/analytics/products'
+        },
+        {
+            title: 'Portfolios',
+            url: '/analytics/portfolios'
         },
         {
             title: 'Campaigns',
@@ -30,6 +34,10 @@ const Navigation = () => {
             title: 'Negative Targeting',
             url: '/analytics/negative-targeting'
         },
+        {
+            title: 'Product Ads',
+            url: '/analytics/product-ads'
+        },
     ];
 
     return (
@@ -39,7 +47,7 @@ const Navigation = () => {
                     <NavLink to={item.url}>
                         {item.title}
 
-                        {index === 0 && <SVG id={'house'}/>}
+                        {/*{index === 0 && <SVG id={'house'}/>}*/}
                     </NavLink>
                 </li>)}
             </ul>
@@ -47,4 +55,4 @@ const Navigation = () => {
     )
 };
 
-export default Navigation;
+export default memo(Navigation);

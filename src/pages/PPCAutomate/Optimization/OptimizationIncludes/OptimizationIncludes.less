@@ -1,16 +1,15 @@
 .optimization-includes {
 
 
-
   ul, .ant-checkbox-group {
     list-style: none;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 10px;
     grid-row-gap: 15px;
+    grid-column-gap: 10px;
 
     li {
-      width: max-content;
+      width: 100%;
       font-size: 1rem;
       color: #343C5A;
       display: flex;
@@ -46,8 +45,17 @@
     }
 
     .ant-checkbox-group-item {
+      width: 100%;
       display: flex;
       align-items: center;
+
+      span:last-child {
+        flex: 1;
+        display: flex;
+        font-size: 1rem;
+        font-weight: 400;
+        color: #343c5a;
+      }
     }
 
     .ant-checkbox {
@@ -62,12 +70,16 @@
     }
   }
 
-  @media (max-width: 1634px) {
+  .ant-checkbox-group {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 1400px) {
     & {
       flex: 1;
       min-width: 100%;
 
-      ul {
+      ul, .ant-checkbox-group {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 

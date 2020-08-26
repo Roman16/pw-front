@@ -1140,7 +1140,7 @@ const files = {
             width: 20,
             height: 20,
             viewBox: [0,0,20,20],
-            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse"><rect width="19" height="19" x=".5" y=".5" fill="#B6B6FB" rx="1.5"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15.1818 1H1V16.8824L8.63636 7.88235L11.9091 11.0588L19 2.58824V19H4.27273"/></g>'
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse"><rect width="19" height="19" x=".5" y=".5" rx="1.5"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15.1818 1H1V16.8824L8.63636 7.88235L11.9091 11.0588L19 2.58824V19H4.27273"/></g>'
         }
     },
     allIds: [

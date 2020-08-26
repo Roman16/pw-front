@@ -1,44 +1,82 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './OptimizationIncludes.less';
 import {useSelector} from "react-redux";
 import {Checkbox} from 'antd';
-
+import {productsServices} from "../../../../services/products.services";
+import {notification} from "../../../../components/Notification";
 
 const includesList = [
     'Adding profitable Search Terms',
-    'Pausing Unprofitable Keywords',
-    'Proper Budget Allocation',
-    'Ad Positions Testing',
-    'Data-Driven Bid Management',
-    'Adding Negative Keywords',
     'Keywords Indexation Mode',
+    'Data-Driven Bid Management',
+    'Proper Budget Allocation',
+    'Adding Negative Keywords',
+    'Ad Positions Testing',
+    'Pausing Unprofitable Keywords',
     'Prevents Search Terms Competition',
 ];
 
-const options = [
-    {label: 'Adding profitable Search', value: 'Apple'},
-    {label: 'Pausing Unprofitable', value: 'Pear'},
-    {label: 'Proper Budget Allocation', value: 'Orange1'},
-    {label: 'Ad Positions Testing', value: 'Orange2'},
-    {label: 'Data-Driven Bid Management', value: 'Orange3'},
+export const optimizationOptions = [
+    {label: 'Bid Optimization Keywords', value: 'bid_optimization_keywords'},
+    {label: 'Bid Optimization PAT', value: 'bid_optimization_pats'},
+    {label: 'Activate Keywords', value: 'activation_keywords'},
+    {label: 'Activate PATs', value: 'activation_pats'},
+    {label: 'Pause Bleeding Keywords', value: 'pause_bad_keywords'},
+    {label: 'Pause Bleeding PATs', value: 'pause_bad_pats'},
+    {label: 'Remove Duplicates', value: 'remove_duplicates'},
+    {label: 'Harvest & Rank New Keywords', value: 'harvest_good_search_terms'},
+    {label: 'Add Bad ST to Negatives', value: 'add_bad_search_terms_to_negatives'},
 ];
 
-const OptimizationIncludes = () => {
+let timeoutId = null;
+
+const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll}) => {
+    const [activeParams, setActiveParams] = useState([]);
 
     const {isAgencyUser} = useSelector(state => ({
         isAgencyUser: state.user.user.is_agency_client
     }));
 
-    const onChange = (value) => {
-        console.log(value);
+
+    const onChange = async (value) => {
+        setActiveParams(value);
+
+        const params = {};
+
+        optimizationOptions.forEach(item => {
+            params[item.value] = value.includes(item.value)
+        });
+
+        if (product.status === 'RUNNING') {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(async () => {
+                try {
+                    await productsServices.updateProductById({
+                        ...product,
+                        product_id: selectedAll ? 'all' : product.product_id,
+                        ...params
+                    });
+
+                    notification.success({title: 'Changes saved!'})
+                } catch (e) {
+                    console.log(e);
+                }
+            }, 1000);
+        } else {
+            updateOptimizationOptions(params)
+        }
     };
 
-    if (false) {
+    useEffect(() => {
+        setActiveParams(optimizationOptions.map(item => (product[item.value] && item.value)))
+    }, [product.product_id]);
+
+    if (isAgencyUser) {
         return (
             <section className='optimization-includes'>
                 <h3>What do you want to optimize?</h3>
 
-                <Checkbox.Group options={options} onChange={onChange}/>
+                <Checkbox.Group options={optimizationOptions} onChange={onChange} value={activeParams}/>
             </section>
         )
     } else {
@@ -52,7 +90,6 @@ const OptimizationIncludes = () => {
             </section>
         )
     }
-
 };
 
 export default OptimizationIncludes;

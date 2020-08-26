@@ -14,12 +14,13 @@ import {history} from "../../utils/history";
 const production = process.env.REACT_APP_ENV === "production";
 const devicePixelRatio = window.devicePixelRatio;
 
+
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
         [automate, setAutomate] = useState(true),
         [subMenuState, setSubMenuState] = useState({
-            zth: true,
-            ppc: true
+            zth: false,
+            ppc: false
         }),
         [regions] = useState(regionsMenu),
         dispatch = useDispatch(),
@@ -160,20 +161,28 @@ const Sidebar = () => {
                             )}
                         </li>
 
-                        {/*<li className="top-nav-item">*/}
-                        {/*    <NavLink*/}
-                        {/*        className="top-nav-link"*/}
-                        {/*        activeClassName="top-nav-link-active"*/}
-                        {/*        exact*/}
-                        {/*        to="/"*/}
-                        {/*        disabled*/}
-                        {/*    >*/}
-                        {/*        <ItemIcon icon="analytics"/>*/}
-                        {/*        <span className="top-span">*/}
-                        {/*            Analytics*/}
-                        {/*        </span>*/}
-                        {/*    </NavLink>*/}
-                        {/*</li>*/}
+                        {!production && <li className="top-nav-item">
+                            <InformationTooltip
+                                type={'custom'}
+                                description={<Link to={'/analytics'}>Analytics</Link>}
+                                position={'right'}
+                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
+                            >
+                                <NavLink
+                                    className="top-nav-link"
+                                    activeClassName="top-nav-link-active"
+                                    to="/analytics"
+                                >
+                                    <div className="link-icon">
+                                        <SVG id='analytics-icon'/>
+                                    </div>
+
+                                    <span className="top-span">
+                                    Analytics
+                                </span>
+                                </NavLink>
+                            </InformationTooltip>
+                        </li>}
 
                         <li className="top-nav-item ppc-automate-link">
                             <div onClick={() => toggleSubMenu('ppc')}>
