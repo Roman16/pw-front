@@ -61,7 +61,6 @@ const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll})
                 } catch (e) {
                     console.log(e);
                 }
-                console.log(value);
             }, 1000);
         } else {
             updateOptimizationOptions(params)
