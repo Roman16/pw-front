@@ -1,13 +1,13 @@
 import React from "react";
-import Metrics from "../../PPCAutomate/Dashboard/Metrics/Metrics";
 import LineChart from "../../PPCAutomate/Dashboard/MainChart/MainChart";
 import CampaignsList from "./CampaignsList/CampaignsList";
+import MainMetrics from "../components/MainMetrics/MainMetrics";
 
 const Campaigns = () => {
 
     return (
         <div className={'campaigns-section'}>
-            <Metrics/>
+            <MainMetrics/>
 
             <LineChart/>
 

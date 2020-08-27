@@ -22,6 +22,7 @@
     "moment-timezone": "^0.5.28",
     "pluralize": "^8.0.0",
     "prop-types": "^15.7.2",
+    "query-string": "^6.13.1",
     "react": "^16.11.0",
     "react-app-rewire-less": "^2.1.3",
     "react-dates": "^21.3.2",
