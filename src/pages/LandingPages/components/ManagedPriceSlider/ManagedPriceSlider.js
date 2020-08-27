@@ -31,8 +31,7 @@ const ManagedPriceSlider = () => {
             <div className="row">
                 <div className="col">
                     <div className="price">
-                        % from ad revenue
-                        <label>/ month</label>
+                        Starts at $5,000
                     </div>
 
                     <button className={'btn default'} onClick={onOpenChat}>
