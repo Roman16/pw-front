@@ -5,6 +5,10 @@ import './CampaignsList.less';
 import {SVG} from "../../../../utils/icons";
 import TableFilters from '../../components/TableFilters/TableFilters';
 
+const demoData = [
+
+]
+
 
 const CampaignsList = () => {
 
