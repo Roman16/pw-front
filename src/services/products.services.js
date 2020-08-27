@@ -50,10 +50,10 @@ function getProductDetails(id, cancelToken) {
 }
 
 function updateProductById(product) {
-    console.log(product);
     const data = {
         product_id: product.product_id ? product.product_id : product.id,
         status: product.status,
+        desired_target_acos:  product.desired_target_acos,
         optimization_strategy: product.optimization_strategy
     };
 
