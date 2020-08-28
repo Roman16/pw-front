@@ -1,14 +1,14 @@
-import {dashboardConstants} from '../constans/actions.type';
+import {analyticsConstants} from '../constans/actions.type';
 
 export const analyticsActions = {
-    setProductsMarginStatus,
+    setMainState,
 };
 
-function setProductsMarginStatus(status) {
+function setMainState(state) {
     return dispatch => {
         dispatch({
-            type: dashboardConstants.SET_PRODUCTS_MARGIN_STATUS,
-            payload: status
+            type: analyticsConstants.SET_MAIN_STATE,
+            payload: state
         });
     };
 }

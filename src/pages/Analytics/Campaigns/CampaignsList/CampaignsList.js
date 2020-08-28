@@ -4,29 +4,33 @@ import Pagination from "../../../../components/Pagination/Pagination";
 import './CampaignsList.less';
 import {SVG} from "../../../../utils/icons";
 import TableFilters from '../../components/TableFilters/TableFilters';
+import {Link} from "react-router-dom";
 
 const demoData = [
+    {
+        id: 123,
+        campaign: 'Test Test'
+    },
 
-]
+    {
+        id: 323,
+        campaign: 'Test Test Test'
+    },
+
+];
 
 
 const CampaignsList = () => {
 
     const columns = [
-        // {
-        //     title: 'Active',
-        //     dataIndex: 'active',
-        //     key: 'active',
-        //     width: '100px',
-        //     sorter: true
-        // },
         {
             title: 'Campaigns',
-            dataIndex: 'campaigns',
-            key: 'campaigns',
+            dataIndex: 'campaign',
+            key: 'campaign',
             width: '200px',
             sorter: true,
-            filter: true
+            filter: true,
+            render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{campaign}</Link>)
         },
         {
             title: 'Status',
@@ -127,13 +131,6 @@ const CampaignsList = () => {
             sorter: true
         },
         {
-            title: 'MACoS',
-            dataIndex: 'conversion_rate',
-            key: 'conversion_rate',
-            width: '150px',
-            sorter: true
-        },
-        {
             title: 'Ad CVR',
             dataIndex: 'cpa',
             key: 'cpa',
@@ -142,6 +139,13 @@ const CampaignsList = () => {
         },
         {
             title: 'CPA',
+            dataIndex: 'cpa',
+            key: 'cpa',
+            width: '150px',
+            sorter: true
+        },
+        {
+            title: 'Ad Orders',
             dataIndex: 'cpa',
             key: 'cpa',
             width: '150px',
@@ -175,6 +179,13 @@ const CampaignsList = () => {
             width: '250px',
             sorter: true
         },
+        {
+            title: 'Ad Profit',
+            dataIndex: 'profit',
+            key: 'profit',
+            width: '250px',
+            sorter: true
+        },
     ];
 
     return (
@@ -186,7 +197,7 @@ const CampaignsList = () => {
             <CustomTable
                 // onChangeSorter={sortChangeHandler}
                 // loading={processing}
-                // dataSource={reportsList}
+                dataSource={demoData}
                 // sorterColumn={sorterColumn}
                 columns={columns}
                 // rowClassName={(item) => !item.viewed && 'new-report'}

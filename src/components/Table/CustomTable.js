@@ -91,6 +91,10 @@ const CustomTable = ({
                 </div>
 
                 <div className="table-body">
+                    {(!loading && (!dataSource || dataSource.length === 0)) && <div className="no-data">
+                        You don’t have any data yet
+                    </div>}
+
                     {dataSource &&
                         dataSource.length > 0 &&
                         dataSource.map((report, index) => (

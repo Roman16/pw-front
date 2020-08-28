@@ -12,13 +12,6 @@ const AdGroupsList = () => {
 
     const columns = [
         {
-            title: 'Active',
-            dataIndex: 'active',
-            key: 'active',
-            width: '100px',
-            sorter: true
-        },
-        {
             title: 'Ad Group',
             dataIndex: 'ad_group',
             key: 'ad_group',
@@ -44,6 +37,112 @@ const AdGroupsList = () => {
 
         {
             title: 'Products',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+
+        {
+            title: 'Impressions',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'Clicks',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'CTR',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'Ad Spend',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'CPC',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'Ad Sales',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'ACoS',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'Ad CVR',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'CPA',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'Ad Orders',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'Ad Units',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'ROAS',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'Sales Share',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'Budget Allocation',
+            dataIndex: 'products',
+            key: 'products',
+            minWidth: '200px',
+            sorter: true
+        },
+        {
+            title: 'Ad Profit',
             dataIndex: 'products',
             key: 'products',
             minWidth: '200px',

@@ -90,5 +90,6 @@ export const zthConstants = {
 //---------- analytics constants-----------
 //--------------------------------------------
 export const analyticsConstants = {
+    SET_MAIN_STATE: 'SET_MAIN_STATE',
 
 };
