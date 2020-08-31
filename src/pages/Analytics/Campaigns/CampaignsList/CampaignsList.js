@@ -5,11 +5,22 @@ import './CampaignsList.less';
 import {SVG} from "../../../../utils/icons";
 import TableFilters from '../../components/TableFilters/TableFilters';
 import {Link} from "react-router-dom";
+import {
+    acosColumn, adCvrColumn, adOrdersColumn, adProfitColumn,
+    adSalesColumn,
+    adSpendColumn, adUnitsColumn, budgetAllocationColumn,
+    clicksColumn, cpaColumn, cpcColumn,
+    ctrColumn,
+    dateColumn,
+    impressionsColumn, roasColumn, salesShareColumn,
+    statusColumn
+} from "../../components/tableColumns";
 
 const demoData = [
     {
         id: 123,
-        campaign: 'Test Test'
+        campaign: 'Test Test',
+        status: true
     },
 
     {
@@ -19,174 +30,117 @@ const demoData = [
 
 ];
 
+const columns = [
+    {
+        title: 'Campaigns',
+        dataIndex: 'campaign',
+        key: 'campaign',
+        width: '200px',
+        sorter: true,
+        filter: true,
+        render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{campaign}</Link>)
+    },
+    {
+        ...statusColumn
+    },
+    {
+        title: 'Type',
+        dataIndex: 'type',
+        key: 'type',
+        width: '200px',
+        sorter: true
+    },
+    {
+        title: 'Portfolio',
+        dataIndex: 'portfolio',
+        key: 'portfolio',
+        width: '150px',
+        sorter: true
+    },
+    {
+        title: 'Campaign bidding strategy',
+        dataIndex: 'bidding_strategy',
+        key: 'bidding_strategy',
+        width: '250px',
+        sorter: true
+    },
+    {
+        title: 'Start date',
+        dataIndex: 'start_date',
+        key: 'start_date',
+        width: '150px',
+        sorter: true,
+        ...dateColumn
+    },
+    {
+        title: 'End date',
+        dataIndex: 'start_date',
+        key: 'start_date',
+        width: '150px',
+        sorter: true,
+        ...dateColumn
+    },
+    {
+        title: 'Budget',
+        dataIndex: 'daily_budget',
+        key: 'daily_budget',
+        width: '150px',
+        sorter: true
+    },
+    {
+        ...impressionsColumn
+    },
+    {
+        ...clicksColumn
+    },
+    {
+        ...ctrColumn
+    },
+    {
+        ...adSpendColumn
+    },
+    {
+        ...cpcColumn
+    },
+    {
+        ...adSalesColumn
+    },
+    {
+        ...acosColumn
+    },
+    {
+        ...adCvrColumn
+    },
+    {
+        ...cpaColumn
+    },
+    {
+        ...adOrdersColumn
+    },
+    {
+        ...adUnitsColumn
+    },
+    {
+        ...roasColumn
+    },
+    {
+        ...salesShareColumn
+    },
+    {
+        ...budgetAllocationColumn
+    },
+    {
+        ...adProfitColumn
+    },
+];
+
 
 const CampaignsList = () => {
 
-    const columns = [
-        {
-            title: 'Campaigns',
-            dataIndex: 'campaign',
-            key: 'campaign',
-            width: '200px',
-            sorter: true,
-            filter: true,
-            render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{campaign}</Link>)
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Type',
-            dataIndex: 'type',
-            key: 'type',
-            width: '200px',
-            sorter: true
-        },
-        {
-            title: 'Portfolio',
-            dataIndex: 'portfolio',
-            key: 'portfolio',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Campaign bidding strategy',
-            dataIndex: 'bidding_strategy',
-            key: 'bidding_strategy',
-            width: '250px',
-            sorter: true
-        },
-        {
-            title: 'Start date',
-            dataIndex: 'start_date',
-            key: 'start_date',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'End date',
-            dataIndex: 'start_date',
-            key: 'start_date',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Budget',
-            dataIndex: 'daily_budget',
-            key: 'daily_budget',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Impressions',
-            dataIndex: 'impressions',
-            key: 'impressions',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Clicks',
-            dataIndex: 'clicks',
-            key: 'clicks',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'CTR',
-            dataIndex: 'ctr',
-            key: 'ctr',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Ad Spend',
-            dataIndex: 'spend',
-            key: 'spend',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'CPC',
-            dataIndex: 'cpc',
-            key: 'cpc',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Ad Sales',
-            dataIndex: 'ad_sales',
-            key: 'ad_sales',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'ACoS',
-            dataIndex: 'acos',
-            key: 'acos',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Ad CVR',
-            dataIndex: 'cpa',
-            key: 'cpa',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'CPA',
-            dataIndex: 'cpa',
-            key: 'cpa',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Ad Orders',
-            dataIndex: 'cpa',
-            key: 'cpa',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Ad Units',
-            dataIndex: 'cpa',
-            key: 'cpa',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'ROAS',
-            dataIndex: 'cpa',
-            key: 'cpa',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Sales Share',
-            dataIndex: 'cpa',
-            key: 'cpa',
-            width: '150px',
-            sorter: true
-        },
-        {
-            title: 'Budget Allocation',
-            dataIndex: 'profit',
-            key: 'profit',
-            width: '250px',
-            sorter: true
-        },
-        {
-            title: 'Ad Profit',
-            dataIndex: 'profit',
-            key: 'profit',
-            width: '250px',
-            sorter: true
-        },
-    ];
+
+    const sortChangeHandler = (column) => {
+        console.log(column);
+    };
 
     return (
         <section className={'campaigns-list'}>
@@ -195,7 +149,7 @@ const CampaignsList = () => {
             />
 
             <CustomTable
-                // onChangeSorter={sortChangeHandler}
+                onChangeSorter={sortChangeHandler}
                 // loading={processing}
                 dataSource={demoData}
                 // sorterColumn={sorterColumn}

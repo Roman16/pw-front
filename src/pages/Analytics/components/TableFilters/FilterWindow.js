@@ -133,9 +133,9 @@ const containsVariations = {
     'spend': numberVariations,
     'sales': numberVariations,
     'acos': numberVariations,
-    'type': [{label: 'Is one of', key: 'one_of'}]
-
-}
+    'type': [{label: 'Is one of', key: 'one_of'}],
+    'campaign': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}]
+};
 
 const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
     const [filterBy, setFilterBy] = useState(),
@@ -158,21 +158,37 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
         'type':
             currentTab === 'targeting-improvements' ? [
                     {title: 'Adjusted bid', key: 'adjusted_bid', value: 'adjusted_bid'},
-                    {title: 'Not profitable keyword / PT', key: 'not_profitable_keyword_pt', value: 'not_profitable_keyword_pt'},
+                    {
+                        title: 'Not profitable keyword / PT',
+                        key: 'not_profitable_keyword_pt',
+                        value: 'not_profitable_keyword_pt'
+                    },
                     {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
                 ] :
                 currentTab === 'search-terms' ? [
                         {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
-                        {title: 'Created negative keyword / PT', key: 'created_negative_keyword_pt', value: 'created_negative_keyword_pt'},
+                        {
+                            title: 'Created negative keyword / PT',
+                            key: 'created_negative_keyword_pt',
+                            value: 'created_negative_keyword_pt'
+                        },
                         {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
                         {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
                         {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
                     ] :
                     [
                         {title: 'Adjusted bid', key: 'adjusted_bid', value: 'adjusted_bid'},
-                        {title: 'Not profitable keyword / PT', key: 'not_profitable_keyword_pt', value: 'not_profitable_keyword_pt'},
+                        {
+                            title: 'Not profitable keyword / PT',
+                            key: 'not_profitable_keyword_pt',
+                            value: 'not_profitable_keyword_pt'
+                        },
                         {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
-                        {title: 'Created negative keyword / PT', key: 'created_negative_keyword_pt', value: 'created_negative_keyword_pt'},
+                        {
+                            title: 'Created negative keyword / PT',
+                            key: 'created_negative_keyword_pt',
+                            value: 'created_negative_keyword_pt'
+                        },
                         {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
                         {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
                         {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},

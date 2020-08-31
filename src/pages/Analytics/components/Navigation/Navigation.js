@@ -63,7 +63,7 @@ export const analyticsNavigation = {
         },
         {
             title: 'Settings',
-            url: '/analytics/settings'
+            url: '/analytics/campaign-settings'
         }
     ]
 };

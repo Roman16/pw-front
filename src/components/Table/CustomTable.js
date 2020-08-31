@@ -1,6 +1,5 @@
 import React, {memo, useEffect, useState} from 'react';
 import {Checkbox, Spin} from 'antd';
-import shortid from 'shortid';
 import './CustomTable.less';
 import {SVG} from "../../utils/icons";
 
@@ -30,7 +29,7 @@ const CustomTable = ({
         } else {
             setCheckedRows([])
         }
-    }
+    };
 
     const checkRowHandler = (id, value) => {
         if (value) {

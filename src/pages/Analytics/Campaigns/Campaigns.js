@@ -1,7 +1,7 @@
-import React from "react";
-import LineChart from "../../PPCAutomate/Dashboard/MainChart/MainChart";
-import CampaignsList from "./CampaignsList/CampaignsList";
-import MainMetrics from "../components/MainMetrics/MainMetrics";
+import React from "react"
+import CampaignsList from "./CampaignsList/CampaignsList"
+import MainMetrics from "../components/MainMetrics/MainMetrics"
+import MainChart from "../components/MainChart/MainChart"
 
 const Campaigns = () => {
 
@@ -9,11 +9,11 @@ const Campaigns = () => {
         <div className={'campaigns-section'}>
             <MainMetrics/>
 
-            <LineChart/>
+            <MainChart/>
 
             <CampaignsList/>
         </div>
     )
-};
+}
 
-export default Campaigns;
+export default Campaigns

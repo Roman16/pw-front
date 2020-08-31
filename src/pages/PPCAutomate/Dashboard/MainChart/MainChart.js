@@ -1,25 +1,25 @@
-import React, {useState, useEffect} from 'react';
-import Header from './ChartHeader';
-import Chart from './LineChart';
-import './MainChart.less';
-import {dashboardActions} from "../../../../actions/dashboard.actions";
-import {dashboardServices} from "../../../../services/dashboard.services";
-import moment from "moment";
-import {useDispatch, useSelector} from "react-redux";
-import {Spin} from "antd";
-import axios from "axios";
+import React, {useState, useEffect} from 'react'
+import Header from './ChartHeader'
+import Chart from './LineChart'
+import './MainChart.less'
+import {dashboardActions} from "../../../../actions/dashboard.actions"
+import {dashboardServices} from "../../../../services/dashboard.services"
+import moment from "moment"
+import {useDispatch, useSelector} from "react-redux"
+import {Spin} from "antd"
+import axios from "axios"
 
-const CancelToken = axios.CancelToken;
-let source = null;
+const CancelToken = axios.CancelToken
+let source = null
 
 
 const MainChart = () => {
-    const [chartData, updateChartData] = useState([]);
-    const [fetching, switchFetch] = useState(false);
-    const [fetchingError, setFetchingError] = useState(false);
-    const [productOptimizationDateList, setProductOptimizationDateList] = useState([]);
+    const [chartData, updateChartData] = useState([])
+    const [fetching, switchFetch] = useState(false)
+    const [fetchingError, setFetchingError] = useState(false)
+    const [productOptimizationDateList, setProductOptimizationDateList] = useState([])
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const {showWeekChart, showDailyChart, selectedRangeDate, activeMetrics, selectedProduct, onlyOptimization, showOptimizationChart} = useSelector(state => ({
         showWeekChart: state.dashboard.showWeekChart == null ? true : state.dashboard.showWeekChart,
@@ -29,9 +29,9 @@ const MainChart = () => {
         activeMetrics: state.dashboard.activeMetrics,
         selectedProduct: state.dashboard.selectedProduct,
         onlyOptimization: state.products.onlyOptimization,
-    }));
+    }))
 
-    let localFetch = false;
+    let localFetch = false
 
     const timeRange = (start, end) => {
         if (start) {
@@ -47,18 +47,18 @@ const MainChart = () => {
                 }
             ))
         }
-    };
+    }
 
-    const handleChangeSwitch = (type, value) => dispatch(dashboardActions.switchChart(type, value));
+    const handleChangeSwitch = (type, value) => dispatch(dashboardActions.switchChart(type, value))
 
     const getChartData = () => {
         if (activeMetrics[0].key || activeMetrics[1].key) {
-            localFetch = true;
+            localFetch = true
 
-            switchFetch(true);
-            setFetchingError(false);
+            switchFetch(true)
+            setFetchingError(false)
 
-            source = CancelToken.source();
+            source = CancelToken.source()
 
             dashboardServices.fetchLineChartData({
                 startDate: selectedRangeDate.startDate,
@@ -70,21 +70,21 @@ const MainChart = () => {
                 cancelToken: source.token
             })
                 .then(res => {
-                    updateChartData(res);
-                    switchFetch(false);
-                    setFetchingError(false);
-                    localFetch = false;
+                    updateChartData(res)
+                    switchFetch(false)
+                    setFetchingError(false)
+                    localFetch = false
                 })
                 .catch((error) => {
                     if (error.message !== undefined) {
-                        setFetchingError(true);
-                        switchFetch(false);
+                        setFetchingError(true)
+                        switchFetch(false)
                     }
                 })
         } else {
             updateChartData([])
         }
-    };
+    }
 
     const getProductOptimizationDetails = (productId) => {
         if (productId) {
@@ -94,21 +94,21 @@ const MainChart = () => {
                 endDate: selectedRangeDate.endDate === 'lifetime' ? 'lifetime' : `${moment(selectedRangeDate.endDate).format('YYYY-MM-DD')}T00:00:00.000Z`,
             })
                 .then(res => {
-                    setProductOptimizationDateList(res.data ? res.data : []);
+                    setProductOptimizationDateList(res.data ? res.data : [])
                 })
         } else {
-            setProductOptimizationDateList([]);
+            setProductOptimizationDateList([])
         }
-    };
+    }
 
     useEffect(() => {
-        getProductOptimizationDetails(selectedProduct);
-    }, [selectedProduct, selectedRangeDate]);
+        getProductOptimizationDetails(selectedProduct)
+    }, [selectedProduct, selectedRangeDate])
 
     useEffect(() => {
-        source && source.cancel();
-        getChartData();
-    }, [activeMetrics, selectedRangeDate, selectedProduct, onlyOptimization]);
+        source && source.cancel()
+        getChartData()
+    }, [activeMetrics, selectedRangeDate, selectedProduct, onlyOptimization])
 
     return (
         <div className='main-chart'>
@@ -156,6 +156,6 @@ const MainChart = () => {
             </div>}
         </div>
     )
-};
+}
 
-export default MainChart;
+export default MainChart
