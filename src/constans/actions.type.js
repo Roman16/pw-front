@@ -85,3 +85,11 @@ export const zthConstants = {
     SET_PAID_BATCH: 'SET_PAID_BATCH',
     CLEAR_SETTINGS: 'CLEAR_SETTINGS',
 };
+
+//--------------------------------------------
+//---------- analytics constants-----------
+//--------------------------------------------
+export const analyticsConstants = {
+    SET_MAIN_STATE: 'SET_MAIN_STATE',
+
+};

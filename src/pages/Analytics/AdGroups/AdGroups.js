@@ -1,17 +1,17 @@
 import React from "react";
-import Metrics from "../../PPCAutomate/Dashboard/Metrics/Metrics";
 import LineChart from "../../PPCAutomate/Dashboard/MainChart/MainChart";
-import CampaignsList from "./CampaignsList/CampaignsList";
+import AdGroupsList from "./AdGroupsList/AdGroupsList";
+import MainMetrics from "../components/MainMetrics/MainMetrics";
 
 const AdGroups = () => {
 
     return (
         <div className={'ad-groups-section'}>
-            <Metrics/>
+            <MainMetrics/>
 
             <LineChart/>
 
-            <CampaignsList/>
+            <AdGroupsList/>
         </div>
     )
 };

@@ -52,7 +52,7 @@ const FilterItem = ({filter, onRemove, onEdit}) => {
     if (filter.filterBy === 'datetime') {
         return (
             <div className="filter-item">
-                {`${moment(filter.value.startDate, 'D-M-YY').format('MMM DD, YYYY')} - ${moment(filter.value.endDate, 'D-M-YY').format('MMM DD, YYYY')}`}
+                {`${moment(filter.value.startDate).format('MMM DD, YYYY')} - ${moment(filter.value.endDate).format('MMM DD, YYYY')}`}
 
                 <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
             </div>

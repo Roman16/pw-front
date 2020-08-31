@@ -23,13 +23,14 @@ const RenderMetricValue = ({value, type}) => {
     }
 };
 
-const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, item, listType, removeMetric, addMetric}) => {
+const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, item, listType, removeMetric, addMetric, disabled}) => {
     const metricInformation = metricsListArray.find(item => item.key === key);
     const {hasMargin} = useSelector(state => ({
         hasMargin: state.dashboard.hasMargin || false
     }));
 
-    return (<div className='metric-item' onClick={() => listType === 'visible' ? removeMetric(item) : addMetric(item)}>
+    return (<div className={`metric-item ${disabled ? 'disabled' : ''}`}
+                 onClick={() => listType === 'visible' ? removeMetric(item) : disabled ? null : addMetric(item)}>
             <div className="title-info">
                 <span title={metricInformation.title} dangerouslySetInnerHTML={{__html: metricInformation.title}}/>
 
@@ -37,7 +38,8 @@ const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, i
                     !hasMargin && <Tooltip getPopupContainer={trigger => trigger.parentNode}
                                            type='warning' description={<ProfitTooltipDescription/>}/>
                     :
-                    metricInformation.info && <Tooltip {...key === 'total_sales' && {'className': 'big-window'}} getPopupContainer={trigger => trigger.parentNode}
+                    metricInformation.info && <Tooltip {...key === 'total_sales' && {'className': 'big-window'}}
+                                                       getPopupContainer={trigger => trigger.parentNode}
                                                        description={metricInformation.info}/>
                 }
 

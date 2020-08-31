@@ -25,8 +25,7 @@ const ProductSettings = React.lazy(() => import('./PPCAutomate/ProductSettings/P
 const Dashboard = React.lazy(() => import('./PPCAutomate/Dashboard/Dashboard'));
 
 const Analytics = React.lazy(() => import('./Analytics'));
-const Campaigns = React.lazy(() => import('./Analytics/Campaigns/Campaigns'));
-const AdGroups = React.lazy(() => import('./Analytics/AdGroups/AdGroups'));
+
 
 const Account = React.lazy(() => import('./Account/Navigation/Navigation'));
 
@@ -240,10 +239,7 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     {/*ANALYTICS*/}
-                                    {developer && <Analytics>
-                                        <ConnectedAmazonRoute exact path="/analytics/campaigns" component={Campaigns}/>
-                                        <ConnectedAmazonRoute exact path="/analytics/ad-groups" component={AdGroups}/>
-                                    </Analytics>}
+                                    {developer && <ConnectedAmazonRoute path="/analytics" component={Analytics}/>}
                                     {/*-------------------------------------------*/}
 
                                     <Route path={'*'} render={() => (

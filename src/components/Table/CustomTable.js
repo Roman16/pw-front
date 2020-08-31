@@ -1,6 +1,5 @@
 import React, {memo, useEffect, useState} from 'react';
 import {Checkbox, Spin} from 'antd';
-import shortid from 'shortid';
 import './CustomTable.less';
 import {SVG} from "../../utils/icons";
 
@@ -30,7 +29,7 @@ const CustomTable = ({
         } else {
             setCheckedRows([])
         }
-    }
+    };
 
     const checkRowHandler = (id, value) => {
         if (value) {
@@ -91,6 +90,10 @@ const CustomTable = ({
                 </div>
 
                 <div className="table-body">
+                    {(!loading && (!dataSource || dataSource.length === 0)) && <div className="no-data">
+                        You don’t have any data yet
+                    </div>}
+
                     {dataSource &&
                         dataSource.length > 0 &&
                         dataSource.map((report, index) => (

@@ -1,0 +1,50 @@
+.analytics-page .main-metrics {
+  grid-template-columns: repeat(6, minmax(190px, 1fr));
+
+  .metric-item {
+    height: 110px;
+
+    .title-info {
+      font-size: 14px;
+    }
+
+    .value {
+      font-size: 24px;
+    }
+
+    .metric-item__description {
+      .label {
+        font-size: 14px;
+      }
+
+      .metric-item__changes > div {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .add-metric .add-metric__button {
+    height: 110px;
+  }
+}
+
+.metrics-modal {
+  .ant-modal-body .hidden-list .metric-item {
+    .value {
+      background: initial;
+    }
+
+    &.disabled {
+      background: rgba(228, 228, 228, 0.45);
+      cursor: auto;
+
+      .add-item {
+        display: none;
+      }
+
+      &:hover {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+}

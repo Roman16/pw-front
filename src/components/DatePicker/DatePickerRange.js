@@ -1,30 +1,30 @@
-import React, {Component} from 'react';
-import {DatePicker as AntDatePicker} from 'antd';
-import moment from 'moment';
-import tz from 'moment-timezone';
+import React, {Component} from 'react'
+import {DatePicker as AntDatePicker} from 'antd'
+import moment from 'moment'
+import tz from 'moment-timezone'
 
-import DateIcon from './DateIcon/DateIcon';
-import './DatePicker.less';
-import {SVG} from "../../utils/icons";
+import DateIcon from './DateIcon/DateIcon'
+import './DatePicker.less'
+import {SVG} from "../../utils/icons"
 
-const {RangePicker} = AntDatePicker;
+const {RangePicker} = AntDatePicker
 
 class DatePicker extends Component {
     handleChange = ([start, end]) => {
-        const {timeRange} = this.props;
+        const {timeRange} = this.props
 
         timeRange(
-            start ? start.format('D-M-YY') : null,
-            end ? end.format('D-M-YY') : null
-        );
-    };
+            start ? start : null,
+            end ? end : null
+        )
+    }
 
     disabledDate = current => {
-        return current && current > moment().tz('America/Los_Angeles').endOf('day');
-    };
+        return current && current > moment().tz('America/Los_Angeles').endOf('day')
+    }
 
     render() {
-        const {defaultValue} = this.props;
+        const {defaultValue} = this.props
 
         return (
             <div className="DatePicker">
@@ -67,12 +67,12 @@ class DatePicker extends Component {
                     getPopupContainer={trigger => trigger.parentNode}
                 />
             </div>
-        );
+        )
     }
 }
 
-DatePicker.propTypes = {};
+DatePicker.propTypes = {}
 
-DatePicker.defaultProps = {};
+DatePicker.defaultProps = {}
 
-export default DatePicker;
+export default DatePicker
