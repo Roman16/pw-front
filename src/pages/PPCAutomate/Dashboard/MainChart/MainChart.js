@@ -33,11 +33,14 @@ const MainChart = () => {
 
     let localFetch = false
 
-    const timeRange = (start, end) => {
-        if (start) {
+    const timeRange = (startDate, endDate) => {
+        if (startDate) {
             dispatch(dashboardActions.selectDateRange({
-                    startDate: moment.tz(`${moment(start, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString(),
-                    endDate: moment.tz(`${moment(end, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
+                    startDate,
+                    endDate
+
+                // startDate: moment.tz(`${moment(start).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString(),
+                //     endDate: moment.tz(`${moment(end).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
                 }
             ))
         } else {

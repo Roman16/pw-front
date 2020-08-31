@@ -65,7 +65,6 @@ const ProductSettingsMain = () => {
             setOnlyOptimization(value)
         }
 
-        setOnlyActive(value);
         setPaginationOptions({
             ...paginationOptions,
             page: 1

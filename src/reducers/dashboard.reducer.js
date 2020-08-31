@@ -1,10 +1,8 @@
 import {dashboardConstants} from '../constans/actions.type'
 import {metricsListArray} from '../pages/PPCAutomate/Dashboard/Metrics/metricsList'
 import moment from 'moment'
-import tx from 'moment-timezone'
 
 let metricClickCount = 0
-
 
 const metricsFromLocalStorage = localStorage.getItem('selectedMetrics') && JSON.parse(localStorage.getItem('selectedMetrics'))
 
@@ -14,10 +12,8 @@ const initialState = {
     showOptimizationChart: true,
     selectedProduct: null,
     selectedRangeDate: {
-        // startDate: moment().add(-29, 'days'),
-        startDate: moment.tz(`${moment(new Date()).add(-29, 'days').format('YYYY-MM-DD')} ${moment(new Date()).add(-29, 'days').startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString(),
-        // endDate: moment()
-        endDate: moment.tz(`${moment()}`, 'America/Los_Angeles').toISOString()
+        startDate: moment().add(-29, 'days'),
+        endDate: moment()
     },
     allMetrics: metricsListArray,
     activeMetrics: metricsFromLocalStorage ? metricsFromLocalStorage.slice(0, 2) : metricsListArray.slice(0, 2),
@@ -25,9 +21,6 @@ const initialState = {
 }
 
 export function dashboard(state = initialState, action) {
-    console.log('R---' + initialState.selectedRangeDate.endDate)
-
-
     switch (action.type) {
         case dashboardConstants.SWITCH_WEEK_CHART:
             return {

@@ -1,6 +1,6 @@
-import api from './request';
-import {reportsUrls} from '../constans/api.urls';
-import moment from "moment";
+import api from './request'
+import {reportsUrls} from '../constans/api.urls'
+import moment from "moment"
 
 export const reasonFilterParams = {
     'adjusted_bid': ['ChangedKeywordBidACoS', 'ChangedKeywordBidImpressions', 'ChangedPATBidACoS', 'ChangedPATBidImpressions', 'RevertLastChangeKeywordNoSales', 'RevertLastChangePATNoSales'],
@@ -15,7 +15,7 @@ export const reasonFilterParams = {
 
 export const reportsServices = {
     getAllReports
-};
+}
 
 function getAllReports(type, options, cancelToken) {
     const {
@@ -24,13 +24,13 @@ function getAllReports(type, options, cancelToken) {
         pageSize = 10,
         filters,
         sorterColumn
-    } = options;
+    } = options
 
-    const parameters = [];
+    const parameters = []
 
     filters.forEach(({filterBy, type, value}) => {
         if (filterBy === 'datetime') {
-            parameters.push(`&datetime:range=${moment.tz(`${moment(value.startDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${moment.tz(`${moment(value.endDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
+            parameters.push(`&datetime:range=${moment.tz(`${moment(value.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${moment.tz(`${moment(value.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
         } else if (filterBy === 'object' || filterBy === 'keyword_pt' || filterBy === 'campaign_name' || filterBy === 'ad_group_name') {
             parameters.push(`&${filterBy === 'keyword_pt' ? 'object' : filterBy}:${type.key}=${value}`)
         } else if (filterBy === 'object_type' || filterBy === 'match_type') {

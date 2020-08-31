@@ -1,18 +1,18 @@
-import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Link, NavLink} from "react-router-dom";
-import shortid from "shortid";
-import {regionsMenu, ppcAutomateMenu} from "./menu";
-import {getClassNames} from "../../utils";
-import logo from "../../assets/img/ProfitWhales-logo-white.svg";
-import "./Sidebar.less";
-import {SVG} from "../../utils/icons";
-import '../../style/variables.less';
-import InformationTooltip from "../Tooltip/Tooltip";
-import {history} from "../../utils/history";
+import React, {useState} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {Link, NavLink} from "react-router-dom"
+import shortid from "shortid"
+import {regionsMenu, ppcAutomateMenu} from "./menu"
+import {getClassNames} from "../../utils"
+import logo from "../../assets/img/ProfitWhales-logo-white.svg"
+import "./Sidebar.less"
+import {SVG} from "../../utils/icons"
+import '../../style/variables.less'
+import InformationTooltip from "../Tooltip/Tooltip"
+import {history} from "../../utils/history"
 
-const production = process.env.REACT_APP_ENV === "production";
-const devicePixelRatio = window.devicePixelRatio;
+const production = process.env.REACT_APP_ENV === "production"
+const devicePixelRatio = window.devicePixelRatio
 
 
 const Sidebar = () => {
@@ -29,29 +29,29 @@ const Sidebar = () => {
             notFirstEntry: state.user.notFirstEntry,
             bootstrapInProgress: state.user.notifications && state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
         })),
-        accountLinks = user.account_links[0];
+        accountLinks = user.account_links[0]
 
 
     const toggleCollapsed = () => {
-        setCollapsed((prevState) => !prevState);
-    };
+        setCollapsed((prevState) => !prevState)
+    }
 
-    const className = getClassNames(collapsed ? "open" : "closed");
+    const className = getClassNames(collapsed ? "open" : "closed")
 
     const activeCountry = regions.map(region =>
         region.countries.find(country => country.active)
-    )[0];
+    )[0]
 
     const handleLogout = () => {
-        history.push('/login/logout');
-    };
+        history.push('/login/logout')
+    }
 
     const toggleSubMenu = (menu) => {
         setSubMenuState({
             ...subMenuState,
             [menu]: !subMenuState[menu]
         })
-    };
+    }
 
     // useEffect(() => {
     //     window.innerWidth < 1132 ? setCollapsed(false) : setCollapsed(true);
@@ -89,24 +89,53 @@ const Sidebar = () => {
                 <nav className="top-nav">
                     <ul className="top-nav-list">
                         <li className="top-nav-item ">
-                            <div onClick={() => toggleSubMenu('zth')} className={'has-child'}>
-                                <NavLink
-                                    className="top-nav-link"
-                                    activeClassName="top-nav-link-active"
-                                    exact
-                                    to="/"
-                                    disabled
-                                >
-                                    <div className="link-icon">
-                                        <SVG id='zth-icon'/>
-                                    </div>
+                            <InformationTooltip
+                                type={'custom'}
+                                description={<ul className="collapsed-automate-list">
+                                    <li className="automate-item">
+                                        <NavLink
+                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                            activeClassName="automate-link-active"
+                                            exact
+                                            to={'/zero-to-hero/campaign'}
+                                        >
+                                            Campaigns Setup
+                                        </NavLink>
+                                    </li>
 
-                                    <span className="top-span">
+                                    <li className="automate-item">
+                                        <NavLink
+                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                            activeClassName="automate-link-active"
+                                            exact
+                                            to={'/zero-to-hero/settings'}
+                                        >
+                                            ZTH Status
+                                        </NavLink>
+                                    </li>
+                                </ul>}
+                                position={'rightTop'}
+                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}
+                            >
+                                <div onClick={() => toggleSubMenu('zth')} className={'has-child'}>
+                                    <NavLink
+                                        className="top-nav-link"
+                                        activeClassName="top-nav-link-active"
+                                        exact
+                                        to="/"
+                                        disabled
+                                    >
+                                        <div className="link-icon">
+                                            <SVG id='zth-icon'/>
+                                        </div>
+
+                                        <span className="top-span">
                                         Zero to Hero
                                         <span className="new-fiches">new</span>
                                 </span>
-                                </NavLink>
-                            </div>
+                                    </NavLink>
+                                </div>
+                            </InformationTooltip>
 
                             <ul className={`automate-list ${subMenuState.zth ? 'opened' : 'closed'}`}>
                                 <li className="automate-item">
@@ -131,34 +160,6 @@ const Sidebar = () => {
                                     </NavLink>
                                 </li>
                             </ul>
-
-                            {!collapsed && (
-                                <div className={`collapsed-automate zth`}>
-                                    <ul className="collapsed-automate-list">
-                                        <li className="automate-item">
-                                            <NavLink
-                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                activeClassName="automate-link-active"
-                                                exact
-                                                to={'/zero-to-hero/campaign'}
-                                            >
-                                                Campaigns Setup
-                                            </NavLink>
-                                        </li>
-
-                                        <li className="automate-item">
-                                            <NavLink
-                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                activeClassName="automate-link-active"
-                                                exact
-                                                to={'/zero-to-hero/settings'}
-                                            >
-                                                ZTH Status
-                                            </NavLink>
-                                        </li>
-                                    </ul>
-                                </div>
-                            )}
                         </li>
 
                         {!production && <li className="top-nav-item">
@@ -185,21 +186,50 @@ const Sidebar = () => {
                         </li>}
 
                         <li className="top-nav-item ppc-automate-link">
-                            <div onClick={() => toggleSubMenu('ppc')}>
-                                <NavLink
-                                    className="top-nav-link"
-                                    activeClassName="top-nav-link-active"
-                                    to="/ppc"
-                                    replace
-                                    disabled
-                                >
-                                    <div className="link-icon">
-                                        <SVG id='ppc-automate-icon'/>
-                                    </div>
+                            <InformationTooltip
+                                type={'custom'}
+                                description={<ul className={`automate-list ${subMenuState.ppc ? 'opened' : 'closed'}`}>
+                                    {ppcAutomateMenu.map(item => (
+                                        <li className="automate-item" key={item.link}>
+                                            <NavLink
+                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                                activeClassName="automate-link-active"
+                                                data-intercom-target={`${item.link}-link`}
+                                                exact
+                                                to={item.soon && (production && user.user.id !== 714) ?
+                                                    '/'
+                                                    :
+                                                    item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization-loading' : `/ppc/${item.link}`}
+                                                onClick={e => {
+                                                    if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
+                                                }}
+                                            >
+                                                {item.title}
+                                                {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
+                                                {item.new && <span className="new-fiches">new</span>}
+                                            </NavLink>
+                                        </li>
+                                    ))}
+                                </ul>}
+                                position={'rightTop'}
+                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}
+                            >
+                                <div onClick={() => toggleSubMenu('ppc')}>
+                                    <NavLink
+                                        className="top-nav-link"
+                                        activeClassName="top-nav-link-active"
+                                        to="/ppc"
+                                        replace
+                                        disabled
+                                    >
+                                        <div className="link-icon">
+                                            <SVG id='ppc-automate-icon'/>
+                                        </div>
 
-                                    <span className="top-span">PPC Automate</span>
-                                </NavLink>
-                            </div>
+                                        <span className="top-span">PPC Automate</span>
+                                    </NavLink>
+                                </div>
+                            </InformationTooltip>
 
                             <ul className={`automate-list ${subMenuState.ppc ? 'opened' : 'closed'}`}>
                                 {ppcAutomateMenu.map(item => (
@@ -224,34 +254,6 @@ const Sidebar = () => {
                                     </li>
                                 ))}
                             </ul>
-
-                            {!collapsed && (
-                                <div className={`collapsed-automate`}>
-                                    <ul className="collapsed-automate-list">
-                                        {ppcAutomateMenu.map(item => (
-                                            <li
-                                                className="automate-item"
-                                                key={shortid.generate()}
-                                                // onClick={displayNone}
-                                            >
-                                                <NavLink
-                                                    className="automate-link"
-                                                    activeClassName="automate-link-active"
-                                                    data-intercom-target={`${item.link}-link`}
-                                                    exact
-                                                    to={(item.soon && (production && user.user.id !== 714)) ? '/' : `/ppc/${item.link}`}
-                                                    onClick={e => {
-                                                        if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
-                                                    }}
-                                                >
-                                                    {item.title}
-                                                    {item.new && <span className="new-fiches">new</span>}
-                                                </NavLink>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
                         </li>
                     </ul>
                 </nav>
@@ -400,7 +402,7 @@ const Sidebar = () => {
                 </nav>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default React.memo(Sidebar);
+export default React.memo(Sidebar)

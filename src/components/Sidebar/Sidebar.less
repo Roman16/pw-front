@@ -304,6 +304,7 @@
         }
 
         .top-nav-item > div:hover > .top-nav-link,
+        .top-nav-item > .custom-tooltip:hover .top-nav-link,
         .top-nav-item .top-nav-link:hover {
           color: @white;
 
@@ -914,6 +915,38 @@ a:focus {
         &:hover {
           color: #fff;
         }
+      }
+    }
+  }
+
+  &.ppc {
+    .ant-popover-inner-content {
+      height: max-content;
+
+      ul {
+        list-style: none;
+        margin: 0;
+
+        li {
+          margin: 1.1em 0;
+          cursor: pointer;
+          position: relative;
+
+
+          a {
+            font-size: 1rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            color: #b6b6fb;
+            white-space: nowrap;
+
+            &.automate-link-active {
+              color: #fff;
+            }
+          }
+        }
+
       }
     }
   }
