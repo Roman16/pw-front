@@ -1,7 +1,6 @@
 import React from "react"
 import CustomTable from "../../../../components/Table/CustomTable"
 import Pagination from "../../../../components/Pagination/Pagination"
-import './CampaignsList.less'
 import {SVG} from "../../../../utils/icons"
 import TableFilters from '../../components/TableFilters/TableFilters'
 import {Link} from "react-router-dom"
@@ -12,83 +11,33 @@ import {
     clicksColumn, cpaColumn, cpcColumn,
     ctrColumn,
     dateColumn,
-    impressionsColumn, roasColumn, salesShareColumn,
+    impressionsColumn, renderNumberField, roasColumn, salesShareColumn,
     statusColumn
 } from "../../components/tableColumns"
 import DateRange from "../../components/DateRange/DateRange"
 
-const demoData = [
-    {
-        id: 123,
-        campaign: 'Test Test',
-        status: true
-    },
-
-    {
-        id: 323,
-        campaign: 'Test Test Test'
-    },
-
-]
-
-const demoTotalData = {
-    campaign: 'Total: 2'
-}
 
 const columns = [
     {
-        title: 'Campaigns',
-        dataIndex: 'campaign',
-        key: 'campaign',
+        title: 'Product',
+        dataIndex: 'product',
+        key: 'product',
         width: '200px',
         sorter: true,
         filter: true,
         render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{campaign}</Link>)
     },
     {
-        ...statusColumn
-    },
-    {
-        title: 'Type',
-        dataIndex: 'type',
-        key: 'type',
+        title: 'SKU/ASIN',
+        dataIndex: 'sku_asin',
+        key: 'sku_asin',
         width: '200px',
         sorter: true
     },
     {
-        title: 'Portfolio',
-        dataIndex: 'portfolio',
-        key: 'portfolio',
-        width: '150px',
-        sorter: true
-    },
-    {
-        title: 'Campaign bidding strategy',
-        dataIndex: 'bidding_strategy',
-        key: 'bidding_strategy',
-        width: '250px',
-        sorter: true
-    },
-    {
-        title: 'Start date',
-        dataIndex: 'start_date',
-        key: 'start_date',
-        width: '150px',
-        sorter: true,
-        ...dateColumn
-    },
-    {
-        title: 'End date',
-        dataIndex: 'start_date',
-        key: 'start_date',
-        width: '150px',
-        sorter: true,
-        ...dateColumn
-    },
-    {
-        title: 'Budget',
-        dataIndex: 'daily_budget',
-        key: 'daily_budget',
+        title: 'Campaigns',
+        dataIndex: 'campaigns',
+        key: 'campaigns',
         width: '150px',
         sorter: true
     },
@@ -101,6 +50,7 @@ const columns = [
     {
         ...ctrColumn
     },
+
     {
         ...adSpendColumn
     },
@@ -114,16 +64,80 @@ const columns = [
         ...acosColumn
     },
     {
+        title: 'MACoS',
+        dataIndex: 'campaigns',
+        key: 'campaigns',
+        width: '150px',
+        sorter: true,
+        ...renderNumberField('percent')
+    },
+    {
         ...adCvrColumn
     },
     {
         ...cpaColumn
     },
     {
-        ...adOrdersColumn
+        title: 'Organic Sales',
+        dataIndex: 'organic_sales',
+        key: 'organic_sales',
+        width: '200px',
+        sorter: true,
+        ...renderNumberField('currency')
     },
     {
         ...adUnitsColumn
+    },
+    {
+        title: 'Total Units',
+        dataIndex: 'total_units',
+        key: 'total_units',
+        width: '200px',
+        sorter: true,
+        ...renderNumberField()
+    },
+    {
+        title: 'Total Units Cleared',
+        dataIndex: 'total_units_cleared',
+        key: 'total_units_cleared',
+        width: '200px',
+        sorter: true,
+        ...renderNumberField()
+    },
+    {
+        title: 'Total Orders',
+        dataIndex: 'total_orders',
+        key: 'total_orders',
+        width: '200px',
+        sorter: true,
+        ...renderNumberField()
+    },
+    {
+        title: 'Total Orders Cleared',
+        dataIndex: 'total_orders_cleared',
+        key: 'total_orders_cleared',
+        width: '200px',
+        sorter: true,
+        ...renderNumberField()
+    },
+    {
+        ...adOrdersColumn
+    },
+    {
+        title: 'Organic Orders',
+        dataIndex: 'organic_orders',
+        key: 'organic_orders',
+        width: '200px',
+        sorter: true,
+        ...renderNumberField()
+    },
+    {
+        title: 'Total Sales',
+        dataIndex: 'total_sales',
+        key: 'total_sales',
+        width: '200px',
+        sorter: true,
+        ...renderNumberField('currency')
     },
     {
         ...roasColumn
@@ -135,12 +149,28 @@ const columns = [
         ...budgetAllocationColumn
     },
     {
+        title: 'Returns',
+        dataIndex: 'returns',
+        key: 'returns',
+        width: '150px',
+        sorter: true,
+        ...renderNumberField()
+    },
+    {
+        title: 'Profit',
+        dataIndex: 'profit',
+        key: 'profit',
+        width: '150px',
+        sorter: true,
+        ...renderNumberField('currency')
+    },
+    {
         ...adProfitColumn
     },
 ]
 
 
-const CampaignsList = () => {
+const ProductsList = () => {
 
 
     const sortChangeHandler = (column) => {
@@ -148,7 +178,7 @@ const CampaignsList = () => {
     }
 
     return (
-        <section className={'campaigns-list list-section'}>
+        <section className={'list-section'}>
             <TableFilters
                 columns={columns}
             />
@@ -156,8 +186,7 @@ const CampaignsList = () => {
             <CustomTable
                 onChangeSorter={sortChangeHandler}
                 // loading={processing}
-                dataSource={demoData}
-                totalDataSource={demoTotalData}
+                // dataSource={demoData}
                 // sorterColumn={sorterColumn}
                 columns={columns}
                 // rowClassName={(item) => !item.viewed && 'new-report'}
@@ -177,4 +206,4 @@ const CampaignsList = () => {
     )
 }
 
-export default CampaignsList
+export default ProductsList

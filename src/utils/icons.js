@@ -1140,7 +1140,13 @@ const files = {
             width: 20,
             height: 20,
             viewBox: [0, 0, 20, 20],
-            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse"><rect width="19" height="19" x=".5" y=".5" rx="1.5"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15.1818 1H1V16.8824L8.63636 7.88235L11.9091 11.0588L19 2.58824V19H4.27273"/></g>'
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse"><rect stroke="none" width="19" height="19" x=".5" y=".5" rx="1.5"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path fill="none"  stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15.1818 1H1V16.8824L8.63636 7.88235L11.9091 11.0588L19 2.58824V19H4.27273"/></g>'
+        },
+        'analytics-icon-sidebar': {
+            width: 20,
+            height: 20,
+            viewBox: [0, 0, 20, 20],
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse"><rect width="20" height="20" fill="white" stroke="none" rx="2"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="none" fill-rule="evenodd" d="M0 1C0 0.447715 0.447715 0 1 0H15.1818C15.7341 0 16.1818 0.447715 16.1818 1C16.1818 1.55228 15.7341 2 15.1818 2H2V14.1581L7.87385 7.23538C8.05295 7.0243 8.31153 6.8969 8.58803 6.88352C8.86452 6.87014 9.1342 6.97197 9.33284 7.16477L11.8332 9.5916L18.2332 1.94634C18.5032 1.62382 18.9461 1.50472 19.3415 1.64834C19.7368 1.79197 20 2.16762 20 2.58824V19C20 19.5523 19.5523 20 19 20H4.27273C3.72044 20 3.27273 19.5523 3.27273 19C3.27273 18.4477 3.72044 18 4.27273 18H18V5.34069L12.6759 11.7007C12.4975 11.9139 12.2383 12.0431 11.9607 12.0575C11.6831 12.0718 11.4121 11.97 11.2126 11.7764L8.70712 9.34461L1.76251 17.5293C1.49117 17.8491 1.04911 17.9656 0.655405 17.8211C0.261699 17.6766 0 17.3018 0 16.8824V1Z" clip-rule="evenodd"/></g>'
         },
         'right-steps-arrow': {
             width: 6,
@@ -1270,6 +1276,7 @@ const files = {
         'percent-icon',
         'account',
         'analytics-icon',
+        'analytics-icon-sidebar',
         'announcements-icon',
         'bar-chart-active',
         'bar-chart-default',

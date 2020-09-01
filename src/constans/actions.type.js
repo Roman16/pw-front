@@ -91,5 +91,7 @@ export const zthConstants = {
 //--------------------------------------------
 export const analyticsConstants = {
     SET_MAIN_STATE: 'SET_MAIN_STATE',
+    SET_CHART_STATE: 'SET_CHART_STATE',
+    SET_DATE_RANGE: 'SET_DATE_RANGE',
 
 };

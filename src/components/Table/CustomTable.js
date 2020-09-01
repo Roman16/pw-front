@@ -1,11 +1,12 @@
-import React, {memo, useEffect, useState} from 'react';
-import {Checkbox, Spin} from 'antd';
-import './CustomTable.less';
-import {SVG} from "../../utils/icons";
+import React, {memo, useEffect, useState} from 'react'
+import {Checkbox, Spin} from 'antd'
+import './CustomTable.less'
+import {SVG} from "../../utils/icons"
 
 const CustomTable = ({
                          columns,
                          dataSource,
+                         totalDataSource,
                          loading,
                          rowClassName,
                          rowClick,
@@ -19,9 +20,9 @@ const CustomTable = ({
                          selectedAll
                      }) => {
 
-    const devicePixelRatio = window.devicePixelRatio;
+    const devicePixelRatio = window.devicePixelRatio
 
-    const [checkedRows, setCheckedRows] = useState([]);
+    const [checkedRows, setCheckedRows] = useState([])
 
     const checkAllRowsHandler = ({target: {checked}}) => {
         if (checked) {
@@ -29,7 +30,7 @@ const CustomTable = ({
         } else {
             setCheckedRows([])
         }
-    };
+    }
 
     const checkRowHandler = (id, value) => {
         if (value) {
@@ -46,7 +47,7 @@ const CustomTable = ({
 
     useEffect(() => {
         if (rowSelection) {
-            rowSelection.onChange(checkedRows);
+            rowSelection.onChange(checkedRows)
         }
     }, [checkedRows])
 
@@ -63,7 +64,7 @@ const CustomTable = ({
                     </div>}
 
                     {columns.map((item, index) => {
-                        const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
+                        const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1}
 
                         return (
                             <div
@@ -95,51 +96,67 @@ const CustomTable = ({
                     </div>}
 
                     {dataSource &&
-                        dataSource.length > 0 &&
-                        dataSource.map((report, index) => (
-                            <>
-                                <div
-                                    className={`table-body__row ${rowClassName && rowClassName(report)} ${(checkedRows.length > 0 && checkedRows.find(item => item === report.id)) || selectedAll ? 'checked-row' : ''}`}
-                                    onClick={() => rowClick && rowClick(report, index)}
-                                >
-                                    {rowSelection && <div className={'table-body__field checkbox-column'}>
-                                        <Checkbox
-                                            checked={(checkedRows.length > 0 && checkedRows.find(item => item === report.id)) || selectedAll}
-                                            onChange={(e) => checkRowHandler(report.id, e.target.checked)}
-                                        />
-                                    </div>}
-
-
-                                    {columns.map((item) => {
-                                        const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
-
-                                        return (
-                                            <div
-                                                className={`table-body__field ${item.align || ''}`}
-                                                style={{...fieldWidth, minWidth: item.minWidth || '0'}}
-                                            >
-                                                {item.render
-                                                    ? item.render(report[item.key], report, index)
-                                                    : report[item.key]}
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-
-                                {expandedRowRender && openedRow === report.id &&
-                                <div
-                                    className={`table-body__row expand-row ${checkedRows.length > 0 && checkedRows.find(item => item === report.id) ? 'checked-row' : ''}`}>
-                                    {expandedRowRender(report)}
+                    dataSource.length > 0 &&
+                    dataSource.map((report, index) => (
+                        <>
+                            <div
+                                className={`table-body__row ${rowClassName && rowClassName(report)} ${(checkedRows.length > 0 && checkedRows.find(item => item === report.id)) || selectedAll ? 'checked-row' : ''}`}
+                                onClick={() => rowClick && rowClick(report, index)}
+                            >
+                                {rowSelection && <div className={'table-body__field checkbox-column'}>
+                                    <Checkbox
+                                        checked={(checkedRows.length > 0 && checkedRows.find(item => item === report.id)) || selectedAll}
+                                        onChange={(e) => checkRowHandler(report.id, e.target.checked)}
+                                    />
                                 </div>}
-                            </>
-                        ))}
+
+
+                                {columns.map((item) => {
+                                    const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1}
+
+                                    return (
+                                        <div
+                                            className={`table-body__field ${item.align || ''}`}
+                                            style={{...fieldWidth, minWidth: item.minWidth || '0'}}
+                                        >
+                                            {item.render
+                                                ? item.render(report[item.key], report, index)
+                                                : report[item.key]}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+
+                            {expandedRowRender && openedRow === report.id &&
+                            <div
+                                className={`table-body__row expand-row ${checkedRows.length > 0 && checkedRows.find(item => item === report.id) ? 'checked-row' : ''}`}>
+                                {expandedRowRender(report)}
+                            </div>}
+                        </>
+                    ))}
                 </div>
             </div>
+
+            {totalDataSource && dataSource.length > 0 && <div className="total-data">
+                {columns.map((item) => {
+                    const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1}
+
+                    return (
+                        <div
+                            className={`table-body__field ${item.align || ''}`}
+                            style={{...fieldWidth, minWidth: item.minWidth || '0'}}
+                        >
+                            {totalDataSource[item.key]}
+                        </div>
+                    )
+                })}
+            </div>}
+
 
             {loading && <div className={'load-data'}><Spin size={'large'}/></div>}
 
         </div>
-    );
-};
+    )
+}
 
-export default memo(CustomTable);
+export default memo(CustomTable)

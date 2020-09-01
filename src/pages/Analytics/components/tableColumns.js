@@ -3,7 +3,7 @@ import moment from "moment";
 import {numberMask} from "../../../utils/numberMask";
 import {round} from "../../../utils/round";
 
-const renderNumberField = (type = 'number') => {
+export const renderNumberField = (type = 'number') => {
     switch (type) {
         case 'number':
             return ({render: (number) => (number && numberMask(number, 0))});

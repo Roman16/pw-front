@@ -165,17 +165,17 @@ const Sidebar = () => {
                         {!production && <li className="top-nav-item">
                             <InformationTooltip
                                 type={'custom'}
-                                description={<Link to={'/analytics/campaigns'}>Analytics</Link>}
+                                description={<Link to={'/analytics/products'}>Analytics</Link>}
                                 position={'right'}
                                 overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                             >
                                 <NavLink
                                     className="top-nav-link"
                                     activeClassName="top-nav-link-active"
-                                    to="/analytics/campaigns"
+                                    to="/analytics/products"
                                 >
                                     <div className="link-icon">
-                                        <SVG id='analytics-icon'/>
+                                        <SVG id='analytics-icon-sidebar'/>
                                     </div>
 
                                     <span className="top-span">

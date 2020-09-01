@@ -28,44 +28,99 @@
       margin: 15px 0 0 0;
     }
 
-    .custom-table {
-      .table-head {
-        .th:first-child {
-          padding-left: 20px;
-        }
+    .list-section {
+      background: #fff;
+      min-height: 180px;
+      height: max-content;
+      max-height: 600px;
+      margin: 15px 0 15px 0;
+
+      box-shadow: @default-section-shadow;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      border-radius: 4px;
+
+      padding: 20px 0 0 0;
+
+
+      .form-group {
+        width: 300px;
+        height: 32px;
+        margin: 0 0 0 20px;
       }
 
-      .table-body {
-        .table-body__row {
-          .table-body__field {
-            font-size: 14px;
+      .custom-table {
+        flex: 1;
+        display: flex;
 
-            a {
-              color: #6D6DF6;
-              font-weight: 500;
+        .table-overflow {
+          flex: 1;
+          //height: 100%;
 
-              &:hover {
-                text-decoration: underline;
+          .no-data {
+            width: max-content;
+            margin: 0 auto;
+          }
+        }
+
+        .table-head {
+          box-shadow: @default-section-shadow;
+        }
+
+        .table-head {
+          .th:first-child {
+            padding-left: 20px;
+          }
+        }
+
+        .table-body {
+          .table-body__row {
+            .table-body__field {
+              font-size: 14px;
+
+              a {
+                color: #6D6DF6;
+                font-weight: 500;
+
+                &:hover {
+                  text-decoration: underline;
+                }
               }
-            }
 
-            &:first-child {
-              padding-left: 20px;
-            }
-
-            .status {
-              &.active {
-                color: #7DD4A1;
+              &:first-child {
+                padding-left: 20px;
               }
 
-              &.inactive {
-                color: #EC7F5C;
+              .status {
+                &.active {
+                  color: #7DD4A1;
+                }
+
+                &.inactive {
+                  color: #EC7F5C;
+                }
               }
             }
           }
         }
+
+        .total-data {
+          background: #F5F5FF;
+
+          .table-body__field {
+            font-weight: 500;
+
+            &:first-child {
+              padding-left: 20px;
+            }
+          }
+        }
       }
+
+
     }
+
   }
 
   .analytics-header {

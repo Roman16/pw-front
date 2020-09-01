@@ -5,6 +5,7 @@ import './AdGroupsList.less';
 import {SVG} from "../../../../utils/icons";
 import {Input} from "antd";
 import TableFilters from "../../components/TableFilters/TableFilters";
+import DateRange from "../../components/DateRange/DateRange"
 
 const {Search} = Input;
 
@@ -152,10 +153,11 @@ const AdGroupsList = () => {
     ];
 
     return (
-        <section className={'campaigns-list'}>
+        <section className={'ad-group-list list-section'}>
             <TableFilters
                 columns={columns}
             />
+
 
             <CustomTable
                 // onChangeSorter={sortChangeHandler}

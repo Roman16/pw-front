@@ -1,19 +1,21 @@
 import React from "react"
-import CampaignsList from "./CampaignsList/CampaignsList"
 import MainMetrics from "../components/MainMetrics/MainMetrics"
 import MainChart from "../components/MainChart/MainChart"
+import ProductList from './ProductsList/ProductsList'
 
-const Campaigns = () => {
+
+const Products = () => {
 
     return (
-        <div className={'campaigns-workplace'}>
+        <div className={'products-workplace'}>
             <MainMetrics/>
 
             <MainChart/>
 
-            <CampaignsList/>
+            <ProductList/>
         </div>
+
     )
 }
 
-export default Campaigns
+export default Products

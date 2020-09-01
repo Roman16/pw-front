@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from "react"
 import './MainChart.less'
+import '../../../PPCAutomate/Dashboard/MainChart/MainChart.less'
 import ChartHeader from "./ChartHeader"
 import Chart from "../../../PPCAutomate/Dashboard/MainChart/LineChart"
 import {dashboardServices} from "../../../../services/dashboard.services"
 import {useDispatch, useSelector} from "react-redux"
+import {analyticsActions} from "../../../../actions/analytics.actions"
+import {Spin} from "antd"
 
 const MainChart = () => {
     const [chartData, updateChartData] = useState([])
@@ -13,11 +16,12 @@ const MainChart = () => {
 
     const dispatch = useDispatch()
 
-    const {showWeekChart, showDailyChart, selectedRangeDate, activeMetrics, selectedProduct, onlyOptimization, showOptimizationChart} = useSelector(state => ({
-        showWeekChart: state.dashboard.showWeekChart == null ? true : state.dashboard.showWeekChart,
-        showDailyChart: state.dashboard.showDailyChart == null ? true : state.dashboard.showDailyChart,
-        showOptimizationChart: state.dashboard.showOptimizationChart == null ? true : state.dashboard.showOptimizationChart,
-        selectedRangeDate: state.dashboard.selectedRangeDate,
+    const {chartState} = useSelector(state => ({
+        chartState: state.analytics.chartState
+    }))
+
+    const { selectedRangeDate, activeMetrics, selectedProduct, onlyOptimization} = useSelector(state => ({
+        selectedRangeDate: state.analytics.selectedRangeDate,
         activeMetrics: state.dashboard.activeMetrics,
         selectedProduct: state.dashboard.selectedProduct,
         onlyOptimization: state.products.onlyOptimization,
@@ -55,24 +59,36 @@ const MainChart = () => {
         }
     }
 
+
+
+    const changeChartStateHandler = (type, value) => {
+        dispatch(analyticsActions.setChartState({[type]: value}))
+    }
+
     useEffect(() => {
         getChartData()
-    }, [])
+    }, [selectedRangeDate, activeMetrics])
 
 
     return <section className={'main-chart'}>
-        <ChartHeader/>
-
+        <ChartHeader
+            chartState={chartState}
+            onChangeState={changeChartStateHandler}
+        />
 
         <Chart
-            showWeekChart={showWeekChart}
-            showDailyChart={showDailyChart}
-            showOptimizationChart={showOptimizationChart}
+            showWeekChart={chartState.showWeekChart}
+            showDailyChart={chartState.showDailyChart}
+            showOptimizationChart={chartState.showOptimizationChart}
             activeMetrics={activeMetrics}
             data={chartData}
             selectedRangeDate={selectedRangeDate}
             productOptimizationDateList={productOptimizationDateList}
         />
+
+        {fetching && <div className="loading">
+            <Spin size="large"/>
+        </div>}
     </section>
 }
 

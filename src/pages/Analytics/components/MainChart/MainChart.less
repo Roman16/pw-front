@@ -1,8 +1,13 @@
+@import "../../../../style/variables.less";
+
 .analytics-page .main-chart {
   height: 320px;
   position: relative;
   display: grid;
   grid-template-rows: max-content 1fr;
+  background: #fff;
+  box-shadow: @default-section-shadow;
+  border-radius: 4px;
 
   .chart-settings {
     display: flex;
@@ -85,5 +90,26 @@
 
   .main-chart-container {
     height: 100%;
+  }
+
+  .loading {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    z-index: 10;
+
+    .btn {
+      height: 2.2857142857142856rem;
+      text-transform: uppercase;
+      font-size: 1.1428571428571428rem;
+      font-weight: 500;
+    }
   }
 }
