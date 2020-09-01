@@ -135,22 +135,23 @@ const CustomTable = ({
                         </>
                     ))}
                 </div>
+
+                {totalDataSource && dataSource.length > 0 && <div className="total-data">
+                    {columns.map((item) => {
+                        const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1}
+
+                        return (
+                            <div
+                                className={`table-body__field ${item.align || ''}`}
+                                style={{...fieldWidth, minWidth: item.minWidth || '0'}}
+                            >
+                                {totalDataSource[item.key]}
+                            </div>
+                        )
+                    })}
+                </div>}
             </div>
 
-            {totalDataSource && dataSource.length > 0 && <div className="total-data">
-                {columns.map((item) => {
-                    const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1}
-
-                    return (
-                        <div
-                            className={`table-body__field ${item.align || ''}`}
-                            style={{...fieldWidth, minWidth: item.minWidth || '0'}}
-                        >
-                            {totalDataSource[item.key]}
-                        </div>
-                    )
-                })}
-            </div>}
 
 
             {loading && <div className={'load-data'}><Spin size={'large'}/></div>}
