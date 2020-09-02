@@ -1,14 +1,17 @@
-import React, {useState} from "react";
-import {SVG} from "../../../../utils/icons";
-import {Input, Popover} from "antd";
-import './TableFilters.less';
-import FilterWindow from "./FilterWindow";
-import CustomSelect from "../../../../components/Select/Select";
+import React, {useState} from "react"
+import {SVG} from "../../../../utils/icons"
+import {Input, Popover} from "antd"
+import './TableFilters.less'
+import FilterWindow from "./FilterWindow"
+import CustomSelect from "../../../../components/Select/Select"
+import DateRange from "../DateRange/DateRange"
+import {useSelector} from "react-redux"
 
-const {Search} = Input;
+const {Search} = Input
 
-const TableFilters = ({columns, filters=[], onChange}) => {
-    const [visibleFilterPopover, setVisibleFilterPopover] = useState(false);
+const TableFilters = ({columns, filters = [], onChange}) => {
+    const [visibleFilterPopover, setVisibleFilterPopover] = useState(false)
+
 
     // const editFilterHandler = (filter) => {
     //     setEditFilter(filter);
@@ -20,9 +23,9 @@ const TableFilters = ({columns, filters=[], onChange}) => {
 
     const resetFiltersHandler = () => {
         onChange([])
-    };
+    }
 
-    const removeFilterHandler = (index) => onChange(filters.filter((item, itemIndex) => itemIndex !== index));
+    const removeFilterHandler = (index) => onChange(filters.filter((item, itemIndex) => itemIndex !== index))
 
 
     return (
@@ -45,7 +48,7 @@ const TableFilters = ({columns, filters=[], onChange}) => {
                         onClose={() => setVisibleFilterPopover(false)}
                         getPopupContainer={trigger => trigger}
                         onAddFilter={(filter) => {
-                            addFilterHandler(filter);
+                            addFilterHandler(filter)
                             setVisibleFilterPopover(false)
                         }}
                     />}
@@ -59,6 +62,8 @@ const TableFilters = ({columns, filters=[], onChange}) => {
                 >
                     <button><SVG id={'filter-icon'}/></button>
                 </Popover>
+
+                <DateRange/>
             </div>
 
             <div className="current-filters">
@@ -67,6 +72,6 @@ const TableFilters = ({columns, filters=[], onChange}) => {
         </div>
 
     )
-};
+}
 
-export default TableFilters;
+export default TableFilters

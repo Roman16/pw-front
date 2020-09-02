@@ -1,8 +1,10 @@
 import React, {Fragment, useState} from "react"
 import {Popover, Switch} from "antd"
 import {SVG} from "../../../../utils/icons"
+import {useDispatch, useSelector} from "react-redux"
+import {analyticsActions} from "../../../../actions/analytics.actions"
 
-const ChartHeader = () => {
+const ChartHeader = ({chartState, onChangeState}) => {
     const [visiblePopover, setVisiblePopover] = useState(undefined)
 
     const OptionsMenu = () => {
@@ -10,8 +12,8 @@ const ChartHeader = () => {
             <div className="switches">
                 <div className='switch-block week-switch'>
                     <Switch
-                        // checked={showWeekChart}
-                        // onChange={e => onChangeSwitch('week', e)}
+                        checked={chartState.showWeekChart}
+                        onChange={e => onChangeState('showWeekChart', e)}
                     />
 
                     <span>7-day average</span>
@@ -19,21 +21,20 @@ const ChartHeader = () => {
 
                 <div className='switch-block daily-switch'>
                     <Switch
-                        // checked={showDailyChart}
-                        // onChange={e => onChangeSwitch('daily', e)}
+                        checked={chartState.showDailyChart}
+                        onChange={e => onChangeState('showDailyChart', e)}
                     />
                     <span>Daily</span>
                 </div>
 
                 <div className='switch-block optimization-switch'>
                     <Switch
-                        // checked={showOptimizationChart}
-                        // onChange={e => onChangeSwitch('optimization', e)}
+                        checked={chartState.showOptimizationChart}
+                        onChange={e => onChangeState('showOptimizationChart', e)}
                     />
                     <span>Optimization status</span>
                 </div>
             </div>
-
         )
     }
 
@@ -86,7 +87,6 @@ const ChartHeader = () => {
                 content={<LegendMenu/>}
                 placement="bottomLeft"
                 overlayClassName={'overlay-legend-popover'}
-                trigger="click"
                 getPopupContainer={(node) => node.parentNode}
                 visible={visiblePopover === 'legend'}
                 onVisibleChange={() => {
@@ -98,10 +98,8 @@ const ChartHeader = () => {
                     legend
                 </button>
             </Popover>
-
         </div>
-
     )
 }
 
-export default ChartHeader
+export default React.memo(ChartHeader)

@@ -1,12 +1,14 @@
-import React from "react";
-import CustomTable from "../../../../components/Table/CustomTable";
-import Pagination from "../../../../components/Pagination/Pagination";
-import './AdGroupsList.less';
-import {SVG} from "../../../../utils/icons";
-import {Input} from "antd";
-import TableFilters from "../../components/TableFilters/TableFilters";
+import React from "react"
+import CustomTable from "../../../../components/Table/CustomTable"
+import Pagination from "../../../../components/Pagination/Pagination"
+import './AdGroupsList.less'
+import {SVG} from "../../../../utils/icons"
+import {Input} from "antd"
+import TableFilters from "../../components/TableFilters/TableFilters"
+import DateRange from "../../components/DateRange/DateRange"
+import TableList from "../../components/TableList/TableList"
 
-const {Search} = Input;
+const {Search} = Input
 
 const AdGroupsList = () => {
 
@@ -149,35 +151,32 @@ const AdGroupsList = () => {
             sorter: true
         },
 
-    ];
+    ]
+
+    const sortChangeHandler = (e) => {
+        console.log(e)
+    }
+    const paginationChangeHandler = (e) => {
+        console.log(e)
+    }
 
     return (
-        <section className={'campaigns-list'}>
+        <section className={'ad-group-list list-section'}>
             <TableFilters
                 columns={columns}
             />
 
-            <CustomTable
-                // onChangeSorter={sortChangeHandler}
-                // loading={processing}
-                // dataSource={reportsList}
-                // sorterColumn={sorterColumn}
+            <TableList
+                sortChangeHandler={sortChangeHandler}
+                data={[]}
+                totalData={[]}
                 columns={columns}
-                // rowClassName={(item) => !item.viewed && 'new-report'}
+                paginationChangeHandler={paginationChangeHandler}
+                fixedColumns={[0]}
             />
 
-
-            {/*<Pagination*/}
-            {/*    onChange={paginationChangeHandler}*/}
-            {/*    page={paginationParams.page}*/}
-            {/*    pageSizeOptions={[25, 50, 100, 200]}*/}
-            {/*    pageSize={paginationParams.pageSize}*/}
-            {/*    totalSize={totalSize}*/}
-            {/*    listLength={reportsList.length}*/}
-            {/*    processing={processing}*/}
-            {/*/>*/}
         </section>
     )
-};
+}
 
-export default AdGroupsList;
+export default AdGroupsList

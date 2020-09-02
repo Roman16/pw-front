@@ -8,6 +8,7 @@ import OptimizationChanges from "./GeneralInformation/OptimizationChanges";
 import OptimizationCondition from "./GeneralInformation/OptimizationCondition";
 import Reports from "./Reports/Reports";
 import Products from "./Products/Products";
+import ChangePassword from "./ChangePassword/ChangePassword"
 
 const AdminPanel = () => {
     const [selectedTab, setSelectedTab] = useState('genInfo');
@@ -123,6 +124,12 @@ const AdminPanel = () => {
                     onClick={() => setSelectedTab('reports')}>
                     Reports
                 </button>
+
+                <button
+                    className={`${selectedTab === 'password' ? 'active' : ''}`}
+                    onClick={() => setSelectedTab('password')}>
+                    Password
+                </button>
                 {/*<button*/}
                 {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
                 {/*    onClick={() => setSelectedTab('products')}>*/}
@@ -170,6 +177,8 @@ const AdminPanel = () => {
             />}
 
             {selectedTab === 'products' && <Products/>}
+
+            {selectedTab === 'password' && <ChangePassword/>}
         </div>
     )
 };
