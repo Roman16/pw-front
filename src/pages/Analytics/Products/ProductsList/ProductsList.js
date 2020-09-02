@@ -15,6 +15,7 @@ import {
     statusColumn
 } from "../../components/tableColumns"
 import DateRange from "../../components/DateRange/DateRange"
+import TableList from "../../components/TableList/TableList"
 
 
 const columns = [
@@ -24,7 +25,6 @@ const columns = [
         key: 'product',
         width: '200px',
         sorter: true,
-        filter: true,
         render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{campaign}</Link>)
     },
     {
@@ -171,9 +171,11 @@ const columns = [
 
 
 const ProductsList = () => {
-
-
     const sortChangeHandler = (column) => {
+        console.log(column)
+    }
+
+    const paginationChangeHandler = (column) => {
         console.log(column)
     }
 
@@ -183,25 +185,14 @@ const ProductsList = () => {
                 columns={columns}
             />
 
-            <CustomTable
-                onChangeSorter={sortChangeHandler}
-                // loading={processing}
-                // dataSource={demoData}
-                // sorterColumn={sorterColumn}
+            <TableList
+                sortChangeHandler={sortChangeHandler}
+                data={[]}
+                totalData={[]}
                 columns={columns}
-                // rowClassName={(item) => !item.viewed && 'new-report'}
+                paginationChangeHandler={paginationChangeHandler}
+                fixedColumns={[0, 1]}
             />
-
-
-            {/*<Pagination*/}
-            {/*    onChange={paginationChangeHandler}*/}
-            {/*    page={paginationParams.page}*/}
-            {/*    pageSizeOptions={[25, 50, 100, 200]}*/}
-            {/*    pageSize={paginationParams.pageSize}*/}
-            {/*    totalSize={totalSize}*/}
-            {/*    listLength={reportsList.length}*/}
-            {/*    processing={processing}*/}
-            {/*/>*/}
         </section>
     )
 }

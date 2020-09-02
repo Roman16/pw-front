@@ -12,6 +12,7 @@ import {analyticsActions} from "../../actions/analytics.actions"
 import Campaigns from "./Campaigns/Campaigns"
 import AdGroups from "./AdGroups/AdGroups"
 import Products from "./Products/Products"
+import Portfolios from "./Portfolios/Portfolios"
 
 const Analytics = (props) => {
     const dispatch = useDispatch()
@@ -44,6 +45,7 @@ const Analytics = (props) => {
                 <Route exact path="/analytics/campaigns" component={Campaigns}/>
                 <Route exact path="/analytics/ad-groups" component={AdGroups}/>
                 <Route exact path="/analytics/products" component={Products}/>
+                <Route exact path="/analytics/portfolios" component={Portfolios}/>
             </section>
         </div>
     )

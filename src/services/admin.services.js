@@ -17,7 +17,8 @@ export const adminServices = {
     generateReport,
 
     fetchUsers,
-    fetchUserProducts
+    fetchUserProducts,
+    changeUserPassword
 };
 
 function checkUserEmail(email) {
@@ -107,5 +108,9 @@ function fetchUsers(data) {
 }
 function fetchUserProducts(id) {
     return api('get', `${adminUrls.userProductsList}?id=${id}`)
+}
+
+function changeUserPassword(data) {
+    return api('post', `${adminUrls.userPassword}`, data)
 }
 

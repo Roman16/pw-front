@@ -83,6 +83,7 @@ export const adminUrls = {
     userReports: 'admin/support-manager/optimization-changes/list',
     usersList: 'admin/support-manager/users',
     userProductsList: 'admin/support-manager/userProducts',
+    userPassword: 'admin/support-manager/force-change-user-password',
 };
 
 export const daypartingUrls = {

@@ -1,7 +1,6 @@
 import React from "react"
 import CustomTable from "../../../../components/Table/CustomTable"
 import Pagination from "../../../../components/Pagination/Pagination"
-import './CampaignsList.less'
 import {SVG} from "../../../../utils/icons"
 import TableFilters from '../../components/TableFilters/TableFilters'
 import {Link} from "react-router-dom"
@@ -12,84 +11,26 @@ import {
     clicksColumn, cpaColumn, cpcColumn,
     ctrColumn,
     dateColumn,
-    impressionsColumn, roasColumn, salesShareColumn,
+    impressionsColumn, renderNumberField, roasColumn, salesShareColumn,
     statusColumn
 } from "../../components/tableColumns"
 import DateRange from "../../components/DateRange/DateRange"
 import TableList from "../../components/TableList/TableList"
 
-const demoData = [
-    {
-        id: 123,
-        campaign: 'Test Test',
-        status: 'active'
-    },
-
-    {
-        id: 323,
-        campaign: 'Test Test Test'
-    },
-
-]
-
-const demoTotalData = {
-    campaign: 'Total: 2'
-}
 
 const columns = [
-    {
-        title: 'Campaign',
-        dataIndex: 'campaign',
-        key: 'campaign',
-        width: '200px',
-        sorter: true,
-        filter: true,
-        render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{campaign}</Link>)
-    },
-    {
-        ...statusColumn
-    },
-    {
-        title: 'Type',
-        dataIndex: 'type',
-        key: 'type',
-        width: '200px',
-        sorter: true
-    },
     {
         title: 'Portfolio',
         dataIndex: 'portfolio',
         key: 'portfolio',
-        width: '150px',
-        sorter: true
-    },
-    {
-        title: 'Campaign bidding strategy',
-        dataIndex: 'bidding_strategy',
-        key: 'bidding_strategy',
-        width: '250px',
-        sorter: true
-    },
-    {
-        title: 'Start date',
-        dataIndex: 'start_date',
-        key: 'start_date',
-        width: '150px',
+        width: '200px',
         sorter: true,
-        ...dateColumn
+        render: (portfolio, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{portfolio}</Link>)
     },
     {
-        title: 'End date',
-        dataIndex: 'start_date',
-        key: 'start_date',
-        width: '150px',
-        sorter: true,
-        ...dateColumn
-    },
-    {
-        title: 'Budget',
-        dataIndex: 'daily_budget',
-        key: 'daily_budget',
+        title: 'Campaigns',
+        dataIndex: 'campaigns',
+        key: 'campaigns',
         width: '150px',
         sorter: true
     },
@@ -141,7 +82,7 @@ const columns = [
 ]
 
 
-const CampaignsList = () => {
+const PortfoliosList = () => {
 
 
     const sortChangeHandler = (column) => {
@@ -153,29 +94,21 @@ const CampaignsList = () => {
     }
 
     return (
-        <section className={'campaigns-list list-section'}>
+        <section className={'list-section'}>
             <TableFilters
                 columns={columns}
             />
 
             <TableList
                 sortChangeHandler={sortChangeHandler}
-                data={demoData}
-                totalData={demoTotalData}
+                data={[]}
+                totalData={[]}
                 columns={columns}
                 paginationChangeHandler={paginationChangeHandler}
                 fixedColumns={[0]}
-                paginationParams={{
-                    page: 1,
-                    pageSizeOptions: [10, 50, 100],
-                    pageSize: 10,
-                    totalSize: 2,
-                    listLength: 2,
-                    processing: false
-                }}
             />
         </section>
     )
 }
 
-export default CampaignsList
+export default PortfoliosList

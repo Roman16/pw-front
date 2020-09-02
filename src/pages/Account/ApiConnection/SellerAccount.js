@@ -1,8 +1,8 @@
-import React, {Fragment, useEffect} from "react";
-import {SVG} from "../../../utils/icons";
-import USAFlag from '../../../assets/img/flags/usa-flag.svg';
-import {history} from "../../../utils/history";
-import {Spin} from "antd";
+import React, {Fragment, useEffect} from "react"
+import {SVG} from "../../../utils/icons"
+import USAFlag from '../../../assets/img/flags/usa-flag.svg'
+import {history} from "../../../utils/history"
+import {Spin} from "antd"
 
 
 const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect, deleteProcessing, sellerId, onReconnect}) => {
@@ -40,6 +40,29 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
         }
     }
 
+    const MWSStatus = () => {
+        if (account.amazon_mws.id && account.amazon_mws.is_connected === false) {
+            return <span style={{color: '#EC7F5C'}}>Canceled</span>
+        } else if (account.amazon_mws.is_connected && account.amazon_mws.id && account.amazon_mws.status === 'IN_PROGRESS') {
+            return <span style={{color: '#f0b849'}}>Verifying</span>
+        } else if (account.amazon_mws.id && account.amazon_mws.status === 'SUCCESS') {
+            return <span style={{color: '#7DD4A1'}}>Success</span>
+        } else if (account.amazon_mws.id && (account.amazon_mws.status === 'FAILED' || account.amazon_mws.status === 'UNAUTHORIZED')) {
+            return <span style={{color: '#EC7F5C'}}>Failed</span>
+        }
+    }
+    const PPCStatus = () => {
+        if (account.amazon_ppc.id && account.amazon_ppc.is_connected === false) {
+            return <span style={{color: '#EC7F5C'}}>Canceled</span>
+        } else if (account.amazon_ppc.is_connected && account.amazon_ppc.id && account.amazon_ppc.status === 'IN_PROGRESS') {
+            return <span style={{color: '#f0b849'}}>Verifying</span>
+        } else if (account.amazon_ppc.id && account.amazon_ppc.status === 'SUCCESS') {
+            return <span style={{color: '#7DD4A1'}}>Success</span>
+        } else if (account.amazon_ppc.id && (account.amazon_ppc.status === 'FAILED' || account.amazon_ppc.status === 'UNAUTHORIZED')) {
+            return <span style={{color: '#EC7F5C'}}>Failed</span>
+        }
+    }
+
     return (
         <Fragment>
             <div className={`seller-account ${opened && 'opened'}`}>
@@ -61,14 +84,7 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                         <h3>MWS Authorization</h3>
 
                         <div className={`account-status`}>
-                            {account.amazon_mws.is_connected && account.amazon_mws.id && account.amazon_mws.status === 'IN_PROGRESS' &&
-                            <span style={{color: '#f0b849'}}>Verifying</span>}
-                            {account.amazon_mws.id && account.amazon_mws.status === 'SUCCESS' &&
-                            <span style={{color: '#7DD4A1'}}>Success</span>}
-                            {account.amazon_mws.id && (account.amazon_mws.status === 'FAILED' || account.amazon_mws.status === 'UNAUTHORIZED') &&
-                            <span style={{color: '#EC7F5C'}}>Failed</span>}
-                            {account.amazon_mws.id && account.amazon_mws.is_connected === false &&
-                            <span style={{color: '#EC7F5C'}}>Canceled</span>}
+                            <MWSStatus/>
                         </div>
 
                         {sellerId && <div className="api-token">
@@ -86,14 +102,7 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
                         <h3>Advertising API</h3>
 
                         <div className={`account-status`}>
-                            {account.amazon_ppc.is_connected && account.amazon_ppc.id && account.amazon_ppc.status === 'IN_PROGRESS' &&
-                            <span style={{color: '#f0b849'}}>Verifying</span>}
-                            {account.amazon_ppc.id && account.amazon_ppc.status === 'SUCCESS' &&
-                            <span style={{color: '#7DD4A1'}}>Success</span>}
-                            {account.amazon_ppc.id && (account.amazon_ppc.status === 'FAILED' || account.amazon_ppc.status === 'UNAUTHORIZED') &&
-                            <span style={{color: '#EC7F5C'}}>Failed</span>}
-                            {account.amazon_ppc.id && account.amazon_ppc.is_connected === false &&
-                            <span style={{color: '#EC7F5C'}}>Canceled</span>}
+                            <PPCStatus/>
                         </div>
 
                         {account.amazon_ppc.id && account.amazon_ppc.account_email && <div className="api-email">
@@ -113,6 +122,6 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
 
         </Fragment>
     )
-};
+}
 
-export default SellerAccount;
+export default SellerAccount
