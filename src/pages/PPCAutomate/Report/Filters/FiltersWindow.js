@@ -1,11 +1,12 @@
-import React, {useState} from "react";
-import CustomSelect from "../../../../components/Select/Select";
-import DatePicker from "../../../../components/DatePicker/DatePickerRange";
-import TreeSelect from "../../../../components/TreeSelect/TreeSelect";
-import {Input, Select} from "antd";
-import InputCurrency from "../../../../components/Inputs/InputCurrency";
+import React, {useState} from "react"
+import CustomSelect from "../../../../components/Select/Select"
+import DatePicker from "../../../../components/DatePicker/DatePickerRange"
+import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
+import {Input, Select} from "antd"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import {dashboardActions} from "../../../../actions/dashboard.actions"
 
-const Option = Select.Option;
+const Option = Select.Option
 
 const numberVariations = [
     {label: 'Greater than', key: 'gt'},
@@ -140,7 +141,7 @@ const containsVariations = {
 const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
     const [filterBy, setFilterBy] = useState(),
         [filterType, setFilterType] = useState(),
-        [filterValue, setFilterValue] = useState();
+        [filterValue, setFilterValue] = useState()
 
 
     const multiSelectVariations = {
@@ -156,46 +157,73 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
             {title: 'PT', key: 'pt', value: 'pt'},
         ],
         'type':
-        currentTab === 'targeting-improvements' ? [
-            {title: 'Adjusted bid', key: 'adjusted_bid', value: 'adjusted_bid'},
-            {title: 'Not profitable keyword / PT', key: 'not_profitable_keyword_pt', value: 'not_profitable_keyword_pt'},
-            {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
-        ] :
-        currentTab === 'search-terms' ? [
-            {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
-            {title: 'Created negative keyword / PT', key: 'created_negative_keyword_pt', value: 'created_negative_keyword_pt'},
-            {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
-            {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
-            {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
-        ] :
-         [
-            {title: 'Adjusted bid', key: 'adjusted_bid', value: 'adjusted_bid'},
-            {title: 'Not profitable keyword / PT', key: 'not_profitable_keyword_pt', value: 'not_profitable_keyword_pt'},
-            {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
-            {title: 'Created negative keyword / PT', key: 'created_negative_keyword_pt', value: 'created_negative_keyword_pt'},
-            {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
-            {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
-            {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
-            {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
-        ]
-    };
+            currentTab === 'targeting-improvements' ? [
+                    {title: 'Adjusted bid', key: 'adjusted_bid', value: 'adjusted_bid'},
+                    {
+                        title: 'Not profitable keyword / PT',
+                        key: 'not_profitable_keyword_pt',
+                        value: 'not_profitable_keyword_pt'
+                    },
+                    {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
+                ] :
+                currentTab === 'search-terms' ? [
+                        {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
+                        {
+                            title: 'Created negative keyword / PT',
+                            key: 'created_negative_keyword_pt',
+                            value: 'created_negative_keyword_pt'
+                        },
+                        {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
+                        {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
+                        {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
+                    ] :
+                    [
+                        {title: 'Adjusted bid', key: 'adjusted_bid', value: 'adjusted_bid'},
+                        {
+                            title: 'Not profitable keyword / PT',
+                            key: 'not_profitable_keyword_pt',
+                            value: 'not_profitable_keyword_pt'
+                        },
+                        {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
+                        {
+                            title: 'Created negative keyword / PT',
+                            key: 'created_negative_keyword_pt',
+                            value: 'created_negative_keyword_pt'
+                        },
+                        {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
+                        {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
+                        {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
+                        {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
+                    ]
+    }
 
     const changeFilterByHandler = (value) => {
-        setFilterBy(value);
+        setFilterBy(value)
         setFilterType(containsVariations[value][0])
         setFilterValue(null)
-    };
+    }
 
     const changeTypeHandler = (value) => {
         setFilterType(containsVariations[filterBy].find(item => item.key === value))
 
     }
-    const changeValueHandler = (value) => {
-        setFilterValue(value)
+    const changeValueHandler = (startDate, endDate) => {
+        if (startDate) {
+            setFilterValue({
+                startDate,
+                endDate
+            })
+        } else {
+            setFilterValue({
+                startDate: 'lifetime',
+                endDate: 'lifetime'
+            })
+        }
+
     }
 
     const submitHandler = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         onAddFilter({
             filterBy: filterBy,
@@ -203,9 +231,9 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
             value: filterValue
         })
 
-        setFilterBy(undefined);
-        setFilterType(undefined);
-        setFilterValue(undefined);
+        setFilterBy(undefined)
+        setFilterType(undefined)
+        setFilterValue(undefined)
     }
 
     return (<form className="filter-variables" onSubmit={submitHandler}>
@@ -246,7 +274,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
             <div className="form-group">
                 {filterBy === 'datetime' &&
                 <DatePicker
-                    timeRange={(startDate, endDate) => changeValueHandler({startDate, endDate})}
+                    timeRange={(startDate, endDate) => changeValueHandler(startDate, endDate)}
                 />}
 
                 {(!filterType ||
@@ -306,4 +334,4 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
     </form>)
 }
 
-export default FilterWindow;
+export default FilterWindow

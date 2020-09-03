@@ -12,8 +12,8 @@ export const dashboardServices = {
     fetchProductOptimizationDetails
 }
 
-const startDateFormatting = (date) => moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
-const endDateFormatting = (date) => moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
+const startDateFormatting = (date) => date === 'lifetime' ? 'lifetime' : moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
+const endDateFormatting = (date) => date === 'lifetime' ? 'lifetime' : moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
 
 function fetchMetricsStatistics({startDate, endDate, selectedProduct, onlyOptimization}) {
     const parameters = [
