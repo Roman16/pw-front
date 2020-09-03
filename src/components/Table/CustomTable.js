@@ -80,7 +80,7 @@ const CustomTable = ({
 
                         return (
                             <div
-                                className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''} ${fixedColumns.includes(index) ? 'fixed' : ''}`}
+                                className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''} ${fixedColumns.includes(index) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === index ? 'with-shadow' : ''}`}
                                 key={`row_${item.dataIndex}_${index}`}
                                 style={{
                                     ...fieldWidth,

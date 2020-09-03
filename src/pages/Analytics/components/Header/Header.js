@@ -1,21 +1,22 @@
-import React, {memo} from "react";
-import './Header.less';
-import {SVG} from "../../../../utils/icons";
-import {analyticsNavigation} from "../Navigation/Navigation";
-import {useDispatch, useSelector} from "react-redux";
-import {history} from "../../../../utils/history";
-import {analyticsActions} from "../../../../actions/analytics.actions";
+import React, {memo} from "react"
+import './Header.less'
+import {SVG} from "../../../../utils/icons"
+import {analyticsNavigation} from "../Navigation/Navigation"
+import {useDispatch, useSelector} from "react-redux"
+import {history} from "../../../../utils/history"
+import {analyticsActions} from "../../../../actions/analytics.actions"
 
 const Header = ({location}) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const {mainState} = useSelector(state => ({
         mainState: state.analytics.mainState
-    }));
+    }))
 
     const setMainState = (state, url) => {
-        dispatch(analyticsActions.setMainState(state));
-        history.push(url);
-    };
+        dispatch(analyticsActions.setMainState(state))
+        history.push(url)
+    }
+
 
     const StepsRender = () => {
         if (mainState.campaignId) {
@@ -49,7 +50,7 @@ const Header = ({location}) => {
                 </li>
             )
         }
-    };
+    }
 
     return (
         <section className="analytics-header">
@@ -65,11 +66,11 @@ const Header = ({location}) => {
                 </ul>
 
                 <h4 className="current-location">
-                    {Object.values(analyticsNavigation).reduce((all, item) => ([...all, ...item])).find(item => item.url === location.pathname).title}
+                    {location.pathname.replace(/\//g, '') !== 'analytics' && Object.values(analyticsNavigation).reduce((all, item) => ([...all, ...item])).find(item => item.url === location.pathname).title}
                 </h4>
             </div>
         </section>
     )
-};
+}
 
-export default memo(Header);
+export default memo(Header)
