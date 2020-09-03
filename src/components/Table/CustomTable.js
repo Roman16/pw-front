@@ -76,7 +76,7 @@ const CustomTable = ({
 
                     {columns.map((item, index) => {
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                            leftStickyPosition = index === 0 ? {left: 0} : (devicePixelRatio === 2 && (columns[index - 1].width.search('em') !== -1)) ? {left: `calc(${columns[index - 1].width} + 1.5em)`} : {left: columns[index - 1].width}
+                            leftStickyPosition = index === 0 ? {left: 0} : (columns[index - 1].width && devicePixelRatio === 2 && (columns[index - 1].width.search('em') !== -1)) ? {left: `calc(${columns[index - 1].width} + 1.5em)`} : {left: columns[index - 1].width}
 
                         return (
                             <div
@@ -126,7 +126,7 @@ const CustomTable = ({
 
                                 {columns.map((item, columnIndex) => {
                                     const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                                        leftStickyPosition = columnIndex === 0 ? {left: 0} : (devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em)`} : {left: columns[columnIndex - 1].width}
+                                        leftStickyPosition = columnIndex === 0 ? {left: 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em)`} : {left: columns[columnIndex - 1].width}
 
                                     return (
                                         <div
@@ -156,7 +156,7 @@ const CustomTable = ({
                 {totalDataSource && dataSource.length > 0 && <div className="total-data">
                     {columns.map((item, columnIndex) => {
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                            leftStickyPosition = columnIndex === 0 ? {left: 0} : (devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em)`} : {left: columns[columnIndex - 1].width}
+                            leftStickyPosition = columnIndex === 0 ? {left: 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em)`} : {left: columns[columnIndex - 1].width}
 
                         return (
                             <div
