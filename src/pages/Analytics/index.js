@@ -13,6 +13,9 @@ import Campaigns from "./Campaigns/Campaigns"
 import AdGroups from "./AdGroups/AdGroups"
 import Products from "./Products/Products"
 import Portfolios from "./Portfolios/Portfolios"
+import CampaignSettings from "./CampaignSettings/CampaignSettings"
+import ProductAds from "./ProductAds/ProductAds"
+import Targetings from "./Targetings/Targetings"
 
 const Analytics = (props) => {
     const dispatch = useDispatch()
@@ -43,9 +46,13 @@ const Analytics = (props) => {
 
             <section className="workplace">
                 <Route exact path="/analytics/campaigns" component={Campaigns}/>
+                <Route exact path="/analytics/campaign-settings" component={CampaignSettings}/>
+
                 <Route exact path="/analytics/ad-groups" component={AdGroups}/>
                 <Route exact path="/analytics/products" component={Products}/>
+                <Route exact path="/analytics/product-ads" component={ProductAds}/>
                 <Route exact path="/analytics/portfolios" component={Portfolios}/>
+                <Route exact path="/analytics/targetings" component={Targetings}/>
             </section>
         </div>
     )

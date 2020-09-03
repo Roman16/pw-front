@@ -127,8 +127,8 @@ export const adOrdersColumn = {
 
 export const adUnitsColumn = {
     title: 'Ad Units',
-    dataIndex: 'ad_units',
-    key: 'ad_units',
+    dataIndex: 'ad_units_ordered',
+    key: 'ad_units_ordered',
     width: '150px',
     sorter: true,
     ...renderNumberField()

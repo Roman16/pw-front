@@ -1,6 +1,5 @@
 import React from "react"
 import TableFilters from '../../components/TableFilters/TableFilters'
-import {Link} from "react-router-dom"
 import {
     acosColumn,
     adCvrColumn,
@@ -17,25 +16,28 @@ import {
     impressionsColumn,
     roasColumn,
     salesShareColumn,
+    statusColumn
 } from "../../components/tableColumns"
 import TableList from "../../components/TableList/TableList"
 
 
 const columns = [
     {
-        title: 'Portfolio',
-        dataIndex: 'portfolio',
-        key: 'portfolio',
+        title: 'Product',
+        dataIndex: 'product',
+        key: 'product',
         width: '200px',
         sorter: true,
-        render: (portfolio, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{portfolio}</Link>)
     },
     {
-        title: 'Campaigns',
-        dataIndex: 'campaigns',
-        key: 'campaigns',
+        title: 'SKU/ASIN',
+        dataIndex: 'sku_asin',
+        key: 'sku_asin',
         width: '150px',
         sorter: true
+    },
+    {
+      ...statusColumn
     },
     {
         ...impressionsColumn
@@ -85,7 +87,7 @@ const columns = [
 ]
 
 
-const PortfoliosList = () => {
+const ProductAdsList = () => {
 
 
     const sortChangeHandler = (column) => {
@@ -114,4 +116,4 @@ const PortfoliosList = () => {
     )
 }
 
-export default PortfoliosList
+export default ProductAdsList

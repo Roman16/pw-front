@@ -1,6 +1,5 @@
 import React from "react"
 import TableFilters from '../../components/TableFilters/TableFilters'
-import {Link} from "react-router-dom"
 import {
     acosColumn,
     adCvrColumn,
@@ -17,23 +16,33 @@ import {
     impressionsColumn,
     roasColumn,
     salesShareColumn,
+    statusColumn
 } from "../../components/tableColumns"
 import TableList from "../../components/TableList/TableList"
 
 
 const columns = [
     {
-        title: 'Portfolio',
-        dataIndex: 'portfolio',
-        key: 'portfolio',
+        title: 'Keyword / PT',
+        dataIndex: 'keyword_pt',
+        key: 'keyword_pt',
         width: '200px',
         sorter: true,
-        render: (portfolio, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{portfolio}</Link>)
     },
     {
-        title: 'Campaigns',
-        dataIndex: 'campaigns',
-        key: 'campaigns',
+        title: 'Match type',
+        dataIndex: 'match_type',
+        key: 'match_type',
+        width: '150px',
+        sorter: true
+    },
+    {
+        ...statusColumn
+    },
+    {
+        title: 'Bid',
+        dataIndex: 'bid',
+        key: 'bid',
         width: '150px',
         sorter: true
     },
@@ -79,13 +88,10 @@ const columns = [
     {
         ...budgetAllocationColumn
     },
-    {
-        ...adProfitColumn
-    },
 ]
 
 
-const PortfoliosList = () => {
+const TargetingsList = () => {
 
 
     const sortChangeHandler = (column) => {
@@ -114,4 +120,4 @@ const PortfoliosList = () => {
     )
 }
 
-export default PortfoliosList
+export default TargetingsList
