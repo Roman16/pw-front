@@ -1,0 +1,188 @@
+.analytics-page .campaign-settings-workplace {
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  padding: 0 0 20px 0;
+  margin: 0 0 15px 0;
+
+  .row {
+    display: flex;
+    border-bottom: 0.5px solid #C9CBD4;
+
+    &:first-child > div {
+      padding: 18px 0 14px 20px;
+    }
+
+    .label {
+      display: flex;
+      align-items: center;
+      width: 35%;
+      padding-left: 20px;
+      font-size: 14px;
+      color: #343C5A;
+      font-weight: 500;
+      border-right: 0.5px solid #C9CBD4;
+    }
+
+    .value {
+      flex: 1;
+      padding: 14px 0 14px 20px;
+    }
+  }
+
+  .custom-select {
+    width: 100%;
+    height: 32px;
+  }
+
+  .name {
+    .form-group {
+      max-width: 330px;
+    }
+  }
+
+  .portfolio {
+    .form-group {
+      max-width: 330px;
+    }
+  }
+
+  .state {
+    .switch-block {
+      display: flex;
+      align-items: center;
+
+      & > span {
+        color: #7DD4A1;
+        margin: 0 0 0 15px;
+      }
+    }
+
+    a {
+      font-size: 12px;
+      text-decoration-line: underline;
+      color: #6D6DF6;
+    }
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 17px;
+    color: #343C5A;
+    margin: 0;
+  }
+
+  .status {
+    color: #7DD4A1;
+  }
+
+  .date {
+    display: flex;
+
+    .pw-date-picker {
+      max-width: 155px;
+      margin: 0 20px 0 0;
+    }
+  }
+
+  .budget {
+    .InputCurrency {
+      max-width: 120px;
+      height: 32px;
+    }
+
+    span {
+      font-size: 14px;
+      line-height: 17px;
+      color: #C9CBD4;
+    }
+  }
+
+  .strategy {
+    .ant-radio-group {
+      width: 70%;
+    }
+
+    .col {
+      margin-bottom: 25px;
+    }
+
+    .recommend-label {
+      background: #7DD4A1;
+      border-radius: 4px;
+      padding: 2px 4px;
+      color: #fff;
+      font-size: 12px;
+      position: absolute;
+      margin: -10px 0 0 5px;
+    }
+
+    label {
+      span {
+        font-size: 14px;
+        color: #343C5A;
+      }
+    }
+
+    .radio-description {
+      margin: 7px 0 0 25px;
+      font-size: 12px;
+      line-height: 14px;
+      color: #656A84;
+    }
+  }
+
+  .bids {
+    display: flex;
+    flex-direction: column;
+
+    .description {
+      font-size: 12px;
+      color: #656A84;
+      margin: 0 0 20px 0;
+
+      a {
+        text-decoration-line: underline;
+        color: #6D6DF6;
+        margin: 0 0 0 5px;
+      }
+    }
+
+    .form-group {
+      width: 40%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 0 20px 0;
+
+      label {
+        font-size: 14px;
+        color: #343C5A;
+      }
+
+      .InputCurrency {
+        width: 120px;
+        height: 32px;
+      }
+
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 40px 60px 20px 0;
+
+    .btn {
+      margin: 0 20px 0 0;
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+}

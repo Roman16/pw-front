@@ -38,9 +38,6 @@ const MainChart = () => {
             dispatch(dashboardActions.selectDateRange({
                     startDate,
                     endDate
-
-                // startDate: moment.tz(`${moment(start).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString(),
-                //     endDate: moment.tz(`${moment(end).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
                 }
             ))
         } else {
