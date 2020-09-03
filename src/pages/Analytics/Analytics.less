@@ -69,12 +69,25 @@
         }
 
         .table-head {
-          .title {
-            font-size: 14px;
+          box-shadow: none;
+          border-top: 0.5px solid #C9CBD4;
+          border-bottom: 2px solid #C9CBD4;
+
+          .th {
+            border-right: 0.5px solid #C9CBD4;
+            padding-left: 12px;
+
+            &:first-child {
+              padding-left: 20px;
+            }
+
+            &:last-child {
+              border: 0;
+            }
           }
 
-          .th:first-child {
-            padding-left: 20px;
+          .title {
+            font-size: 14px;
           }
         }
 
@@ -82,6 +95,16 @@
           .table-body__row {
             .table-body__field {
               font-size: 14px;
+              padding-left: 12px;
+              border-right: 0.5px solid #C9CBD4;
+
+              &:first-child {
+                padding-left: 20px;
+              }
+
+              &:last-child {
+                border: 0;
+              }
 
               a {
                 color: #6D6DF6;
@@ -92,9 +115,6 @@
                 }
               }
 
-              &:first-child {
-                padding-left: 20px;
-              }
 
               .status {
                 &.active {
@@ -111,16 +131,22 @@
 
         .total-data {
           width: max-content;
-          background: #F5F5FF;
+          background: #F8F9FA;
           border-top: 1px solid #c9cbd4;
 
           .table-body__field {
             font-weight: 500;
             color: #343C5A;
             font-size: 14px;
+            padding-left: 12px;
+            border-right: 0.5px solid #C9CBD4;
 
             &:first-child {
               padding-left: 20px;
+            }
+
+            &:last-child {
+              border: 0;
             }
 
             a {

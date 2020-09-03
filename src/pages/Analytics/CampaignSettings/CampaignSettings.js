@@ -81,7 +81,7 @@ const CampaignSettings = () => {
                         <span>Active</span>
                     </div>
 
-                    <a href="#">Archive this campaign</a>
+                    {/*<a href="#">Archive this campaign</a>*/}
                 </div>
             </div>
 
@@ -151,7 +151,7 @@ const CampaignSettings = () => {
                             <Radio value={'legacyForSales'}>
                                 Dynamic bids - down only
 
-                                <span className={'recommend-label'}>Recommended by Profit Whales</span>
+                                {/*<span className={'recommend-label'}>Recommended by Profit Whales</span>*/}
                             </Radio>
 
                             <div className="radio-description down-only">
@@ -221,10 +221,10 @@ const CampaignSettings = () => {
                 </div>
             </div>
 
-            <div className="actions">
-                <button className="btn white">Cancel</button>
-                <button className="btn default">Save Changes</button>
-            </div>
+            {/*<div className="actions">*/}
+            {/*    <button className="btn white">Cancel</button>*/}
+            {/*    <button className="btn default">Save Changes</button>*/}
+            {/*</div>*/}
         </div>
     )
 }

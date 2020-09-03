@@ -1,7 +1,7 @@
 import React, {memo, useEffect} from "react"
 import Navigation from "./components/Navigation/Navigation"
 import Header from "./components/Header/Header"
-import {Route} from "react-router-dom"
+import {Redirect, Route} from "react-router-dom"
 
 import './Analytics.less'
 import {history} from "../../utils/history"
@@ -19,10 +19,6 @@ import Targetings from "./Targetings/Targetings"
 
 const Analytics = (props) => {
     const dispatch = useDispatch()
-
-    if (props.location.pathname === '/analytics') {
-        history.push('/analytics/campaigns')
-    }
 
     useEffect(() => {
         const queryParams = queryString.parse(props.location.search)
@@ -45,6 +41,10 @@ const Analytics = (props) => {
             <Navigation/>
 
             <section className="workplace">
+                <Route exact path="/analytics">
+                    <Redirect to="/analytics/campaigns"/>
+                </Route>
+
                 <Route exact path="/analytics/campaigns" component={Campaigns}/>
                 <Route exact path="/analytics/campaign-settings" component={CampaignSettings}/>
 
