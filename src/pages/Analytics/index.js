@@ -16,6 +16,8 @@ import Portfolios from "./Portfolios/Portfolios"
 import CampaignSettings from "./CampaignSettings/CampaignSettings"
 import ProductAds from "./ProductAds/ProductAds"
 import Targetings from "./Targetings/Targetings"
+import NegativeTargetings from "./NegativeTargetings/NegativeTargetings"
+import Placements from "./Placements/Placements"
 
 const Analytics = (props) => {
     const dispatch = useDispatch()
@@ -53,6 +55,8 @@ const Analytics = (props) => {
                 <Route exact path="/analytics/product-ads" component={ProductAds}/>
                 <Route exact path="/analytics/portfolios" component={Portfolios}/>
                 <Route exact path="/analytics/targetings" component={Targetings}/>
+                <Route exact path="/analytics/negative-targetings" component={NegativeTargetings}/>
+                <Route exact path="/analytics/placements" component={Placements}/>
             </section>
         </div>
     )

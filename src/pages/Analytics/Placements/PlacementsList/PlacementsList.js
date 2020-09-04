@@ -15,34 +15,30 @@ import {
     impressionsColumn,
     roasColumn,
     salesShareColumn,
-    statusColumn
 } from "../../components/tableColumns"
 import TableList from "../../components/TableList/TableList"
 
 const columns = [
     {
-        title: 'Keyword / PT',
-        dataIndex: 'keyword_pt',
-        key: 'keyword_pt',
+        title: 'Placement',
+        dataIndex: 'placement',
+        key: 'placement',
         width: '200px',
         sorter: true,
     },
     {
-        title: 'Match type',
-        dataIndex: 'match_type',
-        key: 'match_type',
-        width: '150px',
-        sorter: true
+        title: 'Campaign bidding strategy',
+        dataIndex: 'campaign_bidding_strategy',
+        key: 'campaign_bidding_strategy',
+        width: '250px',
+        sorter: true,
     },
     {
-        ...statusColumn
-    },
-    {
-        title: 'Bid',
-        dataIndex: 'bid',
-        key: 'bid',
-        width: '150px',
-        sorter: true
+        title: 'Bid adjustment',
+        dataIndex: 'bid_adjustment',
+        key: 'bid_adjustment',
+        width: '200px',
+        sorter: true,
     },
     {
         ...impressionsColumn
@@ -89,7 +85,7 @@ const columns = [
 ]
 
 
-const TargetingsList = () => {
+const PlacementsList = () => {
 
 
     const sortChangeHandler = (column) => {
@@ -118,4 +114,4 @@ const TargetingsList = () => {
     )
 }
 
-export default TargetingsList
+export default PlacementsList

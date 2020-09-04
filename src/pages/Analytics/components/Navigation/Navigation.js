@@ -30,8 +30,8 @@ const menuVariables = {
         url: '/analytics/targetings'
     },
     'negativeTargeting': {
-        title: 'Negative Targeting',
-        url: '/analytics/negative-targeting'
+        title: 'Negative Targetings',
+        url: '/analytics/negative-targetings'
     },
     'productAds': {
         title: 'Product Ads',
