@@ -3,7 +3,7 @@ import TableFilters from '../../components/TableFilters/TableFilters'
 import {
     acosColumn,
     adCvrColumn,
-    adOrdersColumn,
+    adOrdersColumn, adProfitColumn,
     adSalesColumn,
     adSpendColumn,
     adUnitsColumn,
@@ -82,6 +82,9 @@ const columns = [
     {
         ...budgetAllocationColumn
     },
+    {
+        ...adProfitColumn
+    }
 ]
 
 

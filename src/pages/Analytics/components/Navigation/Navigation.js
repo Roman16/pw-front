@@ -62,6 +62,12 @@ export const analyticsNavigation = {
             title: 'Settings',
             url: '/analytics/campaign-settings'
         }
+    ],
+    portfolio: [
+        {
+            title: 'Settings',
+            url: '/analytics/portfolio-settings'
+        }
     ]
 }
 
