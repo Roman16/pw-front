@@ -35,6 +35,7 @@ const PortfolioSettings = () => {
                     <p>
                         Set a budget for a date range or to recur monthly. Your campaigns will stop delivering when your
                         spend reaches the budget cap amount or the budget end date is reached.
+                        <a href="#">Learn more</a>
                     </p>
 
                     <div className="form-group">
