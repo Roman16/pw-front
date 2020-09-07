@@ -207,7 +207,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
         setFilterType(containsVariations[filterBy].find(item => item.key === value))
 
     }
-    const changeValueHandler = (startDate, endDate) => {
+    const changeDateHandler = (startDate, endDate) => {
         if (startDate) {
             setFilterValue({
                 startDate,
@@ -219,7 +219,10 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
                 endDate: 'lifetime'
             })
         }
+    }
 
+    const changeValueHandler = (value) => {
+        setFilterValue(value)
     }
 
     const submitHandler = (e) => {
@@ -274,7 +277,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
             <div className="form-group">
                 {filterBy === 'datetime' &&
                 <DatePicker
-                    timeRange={(startDate, endDate) => changeValueHandler(startDate, endDate)}
+                    timeRange={(startDate, endDate) => changeDateHandler(startDate, endDate)}
                 />}
 
                 {(!filterType ||

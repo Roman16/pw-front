@@ -7,10 +7,23 @@ import {Input} from "antd"
 import TableFilters from "../../components/TableFilters/TableFilters"
 import DateRange from "../../components/DateRange/DateRange"
 import TableList from "../../components/TableList/TableList"
-
-const {Search} = Input
+import {
+    acosColumn, adCvrColumn, adOrdersColumn, adProfitColumn,
+    adSalesColumn,
+    adSpendColumn, adUnitsColumn, budgetAllocationColumn,
+    clicksColumn, cpaColumn,
+    cpcColumn,
+    ctrColumn,
+    impressionsColumn, roasColumn, salesShareColumn
+} from "../../components/tableColumns"
+import {useSelector} from "react-redux"
 
 const AdGroupsList = () => {
+    const {selectedCampaign} = useSelector(state => ({
+        selectedCampaign: state.analytics.mainState.campaignId
+    }))
+
+    console.log(selectedCampaign)
 
     const columns = [
         {
@@ -20,7 +33,13 @@ const AdGroupsList = () => {
             minWidth: '200px',
             sorter: true
         },
-
+        ...selectedCampaign ? [] : [{
+            title: 'Campaign',
+            dataIndex: 'campaign',
+            key: 'campaign',
+            minWidth: '200px',
+            sorter: true
+        }],
         {
             title: 'Default bid',
             dataIndex: 'default_bid',
@@ -46,111 +65,50 @@ const AdGroupsList = () => {
         },
 
         {
-            title: 'Impressions',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...impressionsColumn
         },
         {
-            title: 'Clicks',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...clicksColumn
         },
         {
-            title: 'CTR',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...ctrColumn
         },
         {
-            title: 'Ad Spend',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...adSpendColumn
         },
         {
-            title: 'CPC',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...cpcColumn
         },
         {
-            title: 'Ad Sales',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...adSalesColumn
         },
         {
-            title: 'ACoS',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...acosColumn
         },
         {
-            title: 'Ad CVR',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...adCvrColumn
         },
         {
-            title: 'CPA',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...cpaColumn
         },
         {
-            title: 'Ad Orders',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...adOrdersColumn
         },
         {
-            title: 'Ad Units',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...adUnitsColumn
         },
         {
-            title: 'ROAS',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...roasColumn
         },
         {
-            title: 'Sales Share',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...salesShareColumn
         },
         {
-            title: 'Budget Allocation',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...budgetAllocationColumn
         },
         {
-            title: 'Ad Profit',
-            dataIndex: 'products',
-            key: 'products',
-            minWidth: '200px',
-            sorter: true
+            ...adProfitColumn
         },
-
     ]
 
     const sortChangeHandler = (e) => {

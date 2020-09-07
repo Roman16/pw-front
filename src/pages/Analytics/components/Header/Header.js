@@ -7,6 +7,7 @@ import {history} from "../../../../utils/history"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 
 const Header = ({location}) => {
+    const locationDescription = Object.values(analyticsNavigation).reduce((all, item) => ([...all, ...item])).find(item => item.url === location.pathname)
     const dispatch = useDispatch()
     const {mainState} = useSelector(state => ({
         mainState: state.analytics.mainState
@@ -39,6 +40,24 @@ const Header = ({location}) => {
                     </li>
                 </>
             )
+        } else if (mainState.productId) {
+            return (<>
+                <li onClick={() => setMainState(undefined, '/analytics/products')}>
+                    Products
+
+                    <i>
+                        <SVG id={'right-steps-arrow'}/>
+                    </i>
+                </li>
+
+                <li>
+                    {mainState.productId}
+
+                    <i>
+                        <SVG id={'right-steps-arrow'}/>
+                    </i>
+                </li>
+            </>)
         } else {
             return (
                 <li>
@@ -66,7 +85,7 @@ const Header = ({location}) => {
                 </ul>
 
                 <h4 className="current-location">
-                    {location.pathname.replace(/\//g, '') !== 'analytics' && Object.values(analyticsNavigation).reduce((all, item) => ([...all, ...item])).find(item => item.url === location.pathname).title}
+                    {locationDescription && locationDescription.title}
                 </h4>
             </div>
         </section>

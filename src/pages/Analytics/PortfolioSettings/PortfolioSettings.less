@@ -1,0 +1,139 @@
+.analytics-page .portfolio-settings-workplace {
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  margin: 0 0 15px 0;
+
+  .row {
+    display: flex;
+    border-bottom: 0.5px solid #C9CBD4;
+
+    &:last-child {
+      border: 0;
+
+      & > div {
+        padding: 14px 0 20px 20px;
+      }
+    }
+
+    &:first-child > div {
+      padding: 18px 0 14px 20px;
+    }
+
+    .label {
+      display: flex;
+      align-items: center;
+      width: 35%;
+      padding-left: 20px;
+      font-size: 14px;
+      color: #343C5A;
+      font-weight: 500;
+      border-right: 0.5px solid #C9CBD4;
+    }
+
+    .value {
+      flex: 1;
+      padding: 14px 0 14px 20px;
+    }
+  }
+
+  .custom-select {
+    width: 100%;
+    height: 32px;
+
+    &.ant-select .ant-select-selection__placeholder {
+      margin-top: -10px;
+    }
+
+    .ant-select-selection-selected-value {
+      padding: 0 0 0 11px;
+    }
+  }
+
+  .name {
+    .form-group {
+      max-width: 330px;
+    }
+  }
+
+  .budget-cap {
+    p {
+      width: 60%;
+      font-size: 0.8571428571428571rem;
+      line-height: 1rem;
+      color: #656A84;
+
+      a {
+        text-decoration-line: underline;
+        color: #6D6DF6;
+        margin: 0 0 0 5px;
+      }
+    }
+
+    .form-group {
+      max-width: 330px;
+    }
+  }
+
+  .monthly-budget-cap {
+    .InputCurrency {
+      width: 120px;
+      height: 32px;
+      margin: 0 0 5px 0;
+    }
+
+    span {
+      font-size: 1rem;
+      color: #C9CBD4;
+    }
+  }
+
+  .ends {
+    .ant-radio-group {
+      display: flex;
+      flex-direction: column;
+
+      & > label {
+        display: flex;
+        margin: 0 0 20px 0;
+
+        &:last-child {
+          margin: 0;
+        }
+
+        & > span:last-child {
+          display: flex;
+          align-items: center;
+
+          font-size: 1rem;
+          color: #343C5A;
+
+          .pw-date-picker {
+            margin: 0 0 0 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .date {
+    .form-group {
+      max-width: 155px;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 40px 60px 20px 0;
+
+    .btn {
+      margin: 0 20px 0 0;
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+}
