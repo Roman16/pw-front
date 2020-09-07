@@ -3,7 +3,8 @@ import moment from "moment"
 
 const initialState = {
     mainState: {
-        campaignId: undefined
+        campaignId: undefined,
+        productId: undefined,
     },
     chartState: {
         showWeekChart: true,

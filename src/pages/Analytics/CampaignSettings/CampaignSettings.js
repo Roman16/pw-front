@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import './CampaignSettings.less'
 import {Input, Radio, Select, Switch} from "antd"
 import CustomSelect from "../../../components/Select/Select"
@@ -9,6 +9,10 @@ import InputCurrency from "../../../components/Inputs/InputCurrency"
 const Option = Select.Option
 
 const CampaignSettings = () => {
+
+    const [settingParams, setSettingsParams] = useState({
+
+    })
 
     return (
         <div className={'campaign-settings-workplace'}>

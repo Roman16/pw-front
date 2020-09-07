@@ -33,7 +33,7 @@ const SmallSpend = ({visible}) => {
                         Go To Zero To Hero
                     </Link>
 
-                    <button className={'btn white'}>
+                    <button className={'btn white'} onClick={() => {window.Intercom('show')}}>
                         Talk to our Experts
                     </button>
                 </div>

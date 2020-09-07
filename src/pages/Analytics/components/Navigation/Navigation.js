@@ -63,6 +63,17 @@ export const analyticsNavigation = {
             url: '/analytics/campaign-settings'
         }
     ],
+    product: [
+        {
+            title: 'Overview',
+            url: '/analytics/overview'
+        },
+        menuVariables.campaigns,
+        menuVariables.adGroups,
+        menuVariables.targetings,
+        menuVariables.negativeTargeting,
+        menuVariables.productAds
+    ],
     portfolio: [
         {
             title: 'Settings',
@@ -77,36 +88,40 @@ const Navigation = () => {
         mainState: state.analytics.mainState
     }))
 
-    if (mainState.campaignId) {
-        return (
-            <section className={'navigation'}>
-                <ul>
-                    {analyticsNavigation.campaign.map((item, index) => <li>
-                        <NavLink activeClassName={'active'} to={`${item.url}?campaignId=${mainState.campaignId}`}>
-                            {item.title}
+    const NavigationRender = () => {
+        if (mainState.campaignId) {
+            return (analyticsNavigation.campaign.map((item, index) => <li>
+                <NavLink activeClassName={'active'} to={`${item.url}?campaignId=${mainState.campaignId}`}>
+                    {item.title}
 
-                            {/*{index === 0 && <SVG id={'house'}/>}*/}
-                        </NavLink>
-                    </li>)}
-                </ul>
-            </section>
-        )
-    } else {
-        return (
-            <section className={'navigation'}>
-                <ul>
-                    {analyticsNavigation.account.map((item, index) => <li>
-                        <NavLink activeClassName={'active'} to={item.url}>
-                            {item.title}
+                    {/*{index === 0 && <SVG id={'house'}/>}*/}
+                </NavLink>
+            </li>))
+        } else if (mainState.productId) {
+            return (analyticsNavigation.product.map((item, index) => <li>
+                <NavLink activeClassName={'active'} to={`${item.url}?productId=${mainState.productId}`}>
+                    {item.title}
 
-                            {/*{index === 0 && <SVG id={'house'}/>}*/}
-                        </NavLink>
-                    </li>)}
-                </ul>
-            </section>
-        )
-
+                    {/*{index === 0 && <SVG id={'house'}/>}*/}
+                </NavLink>
+            </li>))
+        } else {
+            return (analyticsNavigation.account.map((item, index) => <li>
+                <NavLink activeClassName={'active'} to={item.url}>
+                    {item.title}
+                </NavLink>
+            </li>))
+        }
     }
+
+    return (
+        <section className={'navigation'}>
+            <ul>
+                <NavigationRender/>
+            </ul>
+        </section>
+
+    )
 
 }
 

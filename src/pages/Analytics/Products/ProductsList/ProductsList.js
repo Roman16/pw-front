@@ -1,20 +1,23 @@
 import React from "react"
-import CustomTable from "../../../../components/Table/CustomTable"
-import Pagination from "../../../../components/Pagination/Pagination"
-import {SVG} from "../../../../utils/icons"
 import TableFilters from '../../components/TableFilters/TableFilters'
 import {Link} from "react-router-dom"
 import {
-    acosColumn, adCvrColumn, adOrdersColumn, adProfitColumn,
+    acosColumn,
+    adCvrColumn,
+    adOrdersColumn,
+    adProfitColumn,
     adSalesColumn,
-    adSpendColumn, adUnitsColumn, budgetAllocationColumn,
-    clicksColumn, cpaColumn, cpcColumn,
+    adSpendColumn,
+    adUnitsColumn,
+    budgetAllocationColumn,
+    clicksColumn,
+    cpaColumn, cpcColumn,
     ctrColumn,
-    dateColumn,
-    impressionsColumn, renderNumberField, roasColumn, salesShareColumn,
-    statusColumn
+    impressionsColumn,
+    renderNumberField,
+    roasColumn,
+    salesShareColumn,
 } from "../../components/tableColumns"
-import DateRange from "../../components/DateRange/DateRange"
 import TableList from "../../components/TableList/TableList"
 
 
@@ -25,7 +28,7 @@ const columns = [
         key: 'product',
         width: '200px',
         sorter: true,
-        render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{campaign}</Link>)
+        render: (product, item) => (<Link to={`/analytics/overview?productId=${item.id}`}>{product}</Link>)
     },
     {
         title: 'SKU/ASIN',
@@ -170,6 +173,25 @@ const columns = [
 ]
 
 
+const demoData = [
+    {
+        id: 123,
+        product: 'Test Test',
+        'sku_asin': 'NEWFWEK433NRE',
+    },
+
+    {
+        id: 323,
+        product: 'Test Test Test',
+        'sku_asin': 'NEWFWEK433NRE',
+    },
+
+]
+
+const demoTotalData = {
+    product: 'Total: 2'
+}
+
 const ProductsList = () => {
     const sortChangeHandler = (column) => {
         console.log(column)
@@ -187,11 +209,20 @@ const ProductsList = () => {
 
             <TableList
                 sortChangeHandler={sortChangeHandler}
-                data={[]}
-                totalData={[]}
+                data={demoData}
+                totalData={demoTotalData}
                 columns={columns}
                 paginationChangeHandler={paginationChangeHandler}
                 fixedColumns={[0, 1]}
+                paginationParams={{
+                    page: 1,
+                    pageSizeOptions: [10, 50, 100],
+                    pageSize: 10,
+                    totalSize: 2,
+                    listLength: 2,
+                    processing: false
+                }}
+
             />
         </section>
     )

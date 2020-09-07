@@ -3,7 +3,7 @@ import CustomTable from "../../../../components/Table/CustomTable"
 import Pagination from "../../../../components/Pagination/Pagination"
 import {useSelector} from "react-redux"
 import _ from 'lodash'
-
+import './TableList.less'
 
 const TableList = ({
                        sortChangeHandler,
@@ -46,10 +46,10 @@ const TableList = ({
             />
 
 
-            <Pagination
+           {paginationParams.totalSize !== 0 && <Pagination
                 onChange={paginationChangeHandler}
                 {...paginationParams}
-            />
+            />}
 
             {/*<Pagination*/}
             {/*    onChange={paginationChangeHandler}*/}
