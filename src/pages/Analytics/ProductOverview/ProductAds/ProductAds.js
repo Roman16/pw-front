@@ -81,7 +81,7 @@ const renderMetricValue = (type, value) => {
 const ProductAds = () => {
 
     return (
-        <section className={'product-ads'}>
+        <section className={'product-ads-section'}>
             <h2>Product Ads</h2>
 
             <div className="metrics-list">
