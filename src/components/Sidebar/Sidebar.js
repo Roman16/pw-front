@@ -60,7 +60,7 @@ const Sidebar = () => {
         localStorage.removeItem('adminToken')
         dispatch(userActions.getUserInfo())
 
-        window.location.reload()
+       history.push('admin-panel/impersonate')
     }
 
     return (

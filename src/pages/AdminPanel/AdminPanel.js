@@ -10,6 +10,8 @@ import Reports from "./Reports/Reports"
 import Products from "./Products/Products"
 import ChangePassword from "./ChangePassword/ChangePassword"
 import Impersonations from "./Impersonations/Impersonations"
+import Campaigns from "../Analytics/Campaigns/Campaigns"
+import {NavLink, Route, Redirect} from "react-router-dom"
 
 const AdminPanel = () => {
     const [selectedTab, setSelectedTab] = useState('genInfo')
@@ -114,29 +116,29 @@ const AdminPanel = () => {
     return (
         <div className="admin-panel">
             <div className="tabs">
-                <button
-                    className={`${selectedTab === 'genInfo' ? 'active' : ''}`}
-                    onClick={() => setSelectedTab('genInfo')}>
+                <NavLink
+                    to={'/admin-panel/general'}
+                >
                     General Information
-                </button>
+                </NavLink>
 
-                <button
-                    className={`${selectedTab === 'reports' ? 'active' : ''}`}
-                    onClick={() => setSelectedTab('reports')}>
+                <NavLink
+                    to={'/admin-panel/reports'}
+                >
                     Reports
-                </button>
+                </NavLink>
 
-                <button
-                    className={`${selectedTab === 'password' ? 'active' : ''}`}
-                    onClick={() => setSelectedTab('password')}>
+                <NavLink
+                    to={'/admin-panel/password'}
+                >
                     Password
-                </button>
+                </NavLink>
 
-                <button
-                    className={`${selectedTab === 'impersonations' ? 'active' : ''}`}
-                    onClick={() => setSelectedTab('impersonations')}>
+                <NavLink
+                    to={'/admin-panel/impersonate'}
+                >
                     Impersonations
-                </button>
+                </NavLink>
 
                 {/*<button*/}
                 {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
@@ -145,7 +147,12 @@ const AdminPanel = () => {
                 {/*</button>*/}
             </div>
 
-            {selectedTab === 'genInfo' && <>
+            {/*{selectedTab === 'products' && <Products/>}*/}
+
+            <Route exact path="/admin-panel" render={() => <Redirect to={'/admin-panel/general'}/>}/>
+
+
+            <Route exact path="/admin-panel/general" render={() => <>
                 <GeneralUserInformation
                     data={userInformation}
                     onCheck={checkUserEmail}
@@ -178,17 +185,13 @@ const AdminPanel = () => {
 
                     onCheck={checkOptimizationConditions}
                 />
-            </>}
+            </>}/>
 
-            {selectedTab === 'reports' && <Reports
+            <Route path="/admin-panel/reports" render={() => <Reports
                 userId={userInformation && userInformation.id}
-            />}
-
-            {selectedTab === 'products' && <Products/>}
-
-            {selectedTab === 'password' && <ChangePassword/>}
-
-            {selectedTab === 'impersonations' && <Impersonations/>}
+            />}/>
+            <Route path="/admin-panel/password" component={ChangePassword}/>
+            <Route path="/admin-panel/impersonate" component={Impersonations}/>
         </div>
     )
 }
