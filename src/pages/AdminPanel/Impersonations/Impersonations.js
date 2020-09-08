@@ -16,7 +16,7 @@ const Impersonations = () => {
 
     const getUserList = async () => {
         try {
-            const res = await adminServices.fetchUsers()
+            const res = await adminServices.fetchUsers(false)
             setUserList(res.result)
         } catch (e) {
             console.log(e)
@@ -74,7 +74,7 @@ const Impersonations = () => {
                 <form className={'form-group'}>
                     <Select
                         showSearch
-                        style={{width: 300}}
+                        style={{width: 350}}
                         placeholder="Select a user"
                         optionFilterProp="children"
                         onChange={onChange}

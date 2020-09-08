@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
-import './OptimizationIncludes.less';
-import {useSelector} from "react-redux";
-import {Checkbox} from 'antd';
-import {productsServices} from "../../../../services/products.services";
-import {notification} from "../../../../components/Notification";
+import React, {useEffect, useState} from "react"
+import './OptimizationIncludes.less'
+import {useSelector} from "react-redux"
+import {Checkbox} from 'antd'
+import {productsServices} from "../../../../services/products.services"
+import {notification} from "../../../../components/Notification"
 
 const includesList = [
     'Adding profitable Search Terms',
@@ -14,7 +14,7 @@ const includesList = [
     'Ad Positions Testing',
     'Pausing Unprofitable Keywords',
     'Prevents Search Terms Competition',
-];
+]
 
 export const optimizationOptions = [
     {label: 'Bid Optimization Keywords', value: 'bid_optimization_keywords'},
@@ -26,52 +26,52 @@ export const optimizationOptions = [
     {label: 'Remove Duplicates', value: 'remove_duplicates'},
     {label: 'Harvest & Rank New Keywords', value: 'harvest_good_search_terms'},
     {label: 'Add Bad ST to Negatives', value: 'add_bad_search_terms_to_negatives'},
-];
+]
 
-let timeoutId = null;
+let timeoutId = null
 
 const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll}) => {
-    const [activeParams, setActiveParams] = useState([]);
+    const [activeParams, setActiveParams] = useState([])
 
     const {isAgencyUser} = useSelector(state => ({
         isAgencyUser: state.user.user.is_agency_client
-    }));
+    }))
 
 
     const onChange = async (value) => {
-        setActiveParams(value);
+        setActiveParams(value)
 
-        const params = {};
+        const params = {}
 
         optimizationOptions.forEach(item => {
             params[item.value] = value.includes(item.value)
-        });
+        })
 
         if (product.status === 'RUNNING') {
-            clearTimeout(timeoutId);
+            clearTimeout(timeoutId)
             timeoutId = setTimeout(async () => {
                 try {
                     await productsServices.updateProductById({
                         ...product,
                         product_id: selectedAll ? 'all' : product.product_id,
                         ...params
-                    });
+                    })
 
                     notification.success({title: 'Changes saved!'})
                 } catch (e) {
-                    console.log(e);
+                    console.log(e)
                 }
-            }, 1000);
+            }, 1000)
         } else {
             updateOptimizationOptions(params)
         }
-    };
+    }
 
     useEffect(() => {
         setActiveParams(optimizationOptions.map(item => (product[item.value] && item.value)))
-    }, [product.product_id]);
+    }, [product.product_id])
 
-    if (isAgencyUser) {
+    if (localStorage.getItem('adminToken')) {
         return (
             <section className='optimization-includes'>
                 <h3>What do you want to optimize?</h3>
@@ -90,6 +90,6 @@ const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll})
             </section>
         )
     }
-};
+}
 
-export default OptimizationIncludes;
+export default OptimizationIncludes
