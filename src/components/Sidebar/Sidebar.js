@@ -11,6 +11,7 @@ import '../../style/variables.less'
 import InformationTooltip from "../Tooltip/Tooltip"
 import {history} from "../../utils/history"
 import {userActions} from "../../actions/user.actions"
+import {notification} from "../Notification"
 
 const production = process.env.REACT_APP_ENV === "production"
 const devicePixelRatio = window.devicePixelRatio
@@ -58,13 +59,8 @@ const Sidebar = () => {
         localStorage.setItem('token', localStorage.getItem('adminToken'))
         localStorage.removeItem('adminToken')
         dispatch(userActions.getUserInfo())
-
+        notification.success({title: 'Success!'})
     }
-
-    // useEffect(() => {
-    //     window.innerWidth < 1132 ? setCollapsed(false) : setCollapsed(true);
-    // }, []);
-
 
     return (
         <>
