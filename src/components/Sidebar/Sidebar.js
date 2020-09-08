@@ -10,6 +10,7 @@ import {SVG} from "../../utils/icons"
 import '../../style/variables.less'
 import InformationTooltip from "../Tooltip/Tooltip"
 import {history} from "../../utils/history"
+import {userActions} from "../../actions/user.actions"
 
 const production = process.env.REACT_APP_ENV === "production"
 const devicePixelRatio = window.devicePixelRatio
@@ -53,45 +54,99 @@ const Sidebar = () => {
         })
     }
 
+    const backToAdmin = () => {
+        localStorage.setItem('token', localStorage.getItem('adminToken'))
+        localStorage.removeItem('adminToken')
+        dispatch(userActions.getUserInfo())
+
+    }
+
     // useEffect(() => {
     //     window.innerWidth < 1132 ? setCollapsed(false) : setCollapsed(true);
     // }, []);
 
 
     return (
-        <div
-            className={`sidebar ${className}`}
-        >
-            <div className="sidebar-header">
-                <i className="sidebar-icon" onClick={toggleCollapsed}>
-                    <SVG id={'menu-icon'}/>
-                </i>
+        <>
+            <div
+                className={`sidebar ${className}`}
+            >
+                <div className="sidebar-header">
+                    <i className="sidebar-icon" onClick={toggleCollapsed}>
+                        <SVG id={'menu-icon'}/>
+                    </i>
 
-                <Link to="/" className="sidebar-logo">
-                    <img className="logo" src={logo} alt="logo"/>
-                </Link>
-            </div>
-
-            <div className="sidebar-menu">
-                <div className="country-active">
-                    <div className="country-active__title">
-                        <SVG id='us-flag'/>
-                        <h5>{activeCountry.name}</h5>
-                    </div>
-
-                    {user.default_accounts && user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
-                        ? <div className="country-active__description">
-                            {user.default_accounts.amazon_mws.seller_id}
-                        </div>
-                        : ""}
+                    <Link to="/" className="sidebar-logo">
+                        <img className="logo" src={logo} alt="logo"/>
+                    </Link>
                 </div>
 
-                <nav className="top-nav">
-                    <ul className="top-nav-list">
-                        <li className="top-nav-item ">
-                            <InformationTooltip
-                                type={'custom'}
-                                description={<ul className="collapsed-automate-list">
+                <div className="sidebar-menu">
+                    <div className="country-active">
+                        <div className="country-active__title">
+                            <SVG id='us-flag'/>
+                            <h5>{activeCountry.name}</h5>
+                        </div>
+
+                        {user.default_accounts && user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
+                            ? <div className="country-active__description">
+                                {user.default_accounts.amazon_mws.seller_id}
+                            </div>
+                            : ""}
+                    </div>
+
+                    <nav className="top-nav">
+                        <ul className="top-nav-list">
+                            <li className="top-nav-item ">
+                                <InformationTooltip
+                                    type={'custom'}
+                                    description={<ul className="collapsed-automate-list">
+                                        <li className="automate-item">
+                                            <NavLink
+                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                                activeClassName="automate-link-active"
+                                                exact
+                                                to={'/zero-to-hero/campaign'}
+                                            >
+                                                Campaigns Setup
+                                            </NavLink>
+                                        </li>
+
+                                        <li className="automate-item">
+                                            <NavLink
+                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                                activeClassName="automate-link-active"
+                                                exact
+                                                to={'/zero-to-hero/settings'}
+                                            >
+                                                ZTH Status
+                                            </NavLink>
+                                        </li>
+                                    </ul>}
+                                    position={'rightTop'}
+                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}
+                                >
+                                    <div onClick={() => toggleSubMenu('zth')} className={'has-child'}>
+                                        <NavLink
+                                            className="top-nav-link"
+                                            activeClassName="top-nav-link-active"
+                                            exact
+                                            to="/"
+                                            disabled
+                                        >
+                                            <div className="link-icon">
+                                                <SVG id='zth-icon'/>
+                                            </div>
+
+                                            <span className="top-span">
+                                        Zero to Hero
+                                        <span className="new-fiches">new</span>
+                                </span>
+                                        </NavLink>
+                                    </div>
+                                </InformationTooltip>
+
+                                <ul className={`automate-list ${subMenuState.zth ? 'opened' : 'closed'}`}>
                                     <li className="automate-item">
                                         <NavLink
                                             className={`automate-link ${automate ? 'visible' : 'hidden'}`}
@@ -113,82 +168,80 @@ const Sidebar = () => {
                                             ZTH Status
                                         </NavLink>
                                     </li>
-                                </ul>}
-                                position={'rightTop'}
-                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}
-                            >
-                                <div onClick={() => toggleSubMenu('zth')} className={'has-child'}>
+                                </ul>
+                            </li>
+
+                            {!production && <li className="top-nav-item">
+                                <InformationTooltip
+                                    type={'custom'}
+                                    description={<Link to={'/analytics/products'}>Analytics</Link>}
+                                    position={'right'}
+                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
+                                >
                                     <NavLink
                                         className="top-nav-link"
                                         activeClassName="top-nav-link-active"
-                                        exact
-                                        to="/"
-                                        disabled
+                                        to="/analytics/products"
                                     >
                                         <div className="link-icon">
-                                            <SVG id='zth-icon'/>
+                                            <SVG id='analytics-icon-sidebar'/>
                                         </div>
 
                                         <span className="top-span">
-                                        Zero to Hero
-                                        <span className="new-fiches">new</span>
-                                </span>
-                                    </NavLink>
-                                </div>
-                            </InformationTooltip>
-
-                            <ul className={`automate-list ${subMenuState.zth ? 'opened' : 'closed'}`}>
-                                <li className="automate-item">
-                                    <NavLink
-                                        className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                        activeClassName="automate-link-active"
-                                        exact
-                                        to={'/zero-to-hero/campaign'}
-                                    >
-                                        Campaigns Setup
-                                    </NavLink>
-                                </li>
-
-                                <li className="automate-item">
-                                    <NavLink
-                                        className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                        activeClassName="automate-link-active"
-                                        exact
-                                        to={'/zero-to-hero/settings'}
-                                    >
-                                        ZTH Status
-                                    </NavLink>
-                                </li>
-                            </ul>
-                        </li>
-
-                        {!production && <li className="top-nav-item">
-                            <InformationTooltip
-                                type={'custom'}
-                                description={<Link to={'/analytics/products'}>Analytics</Link>}
-                                position={'right'}
-                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
-                            >
-                                <NavLink
-                                    className="top-nav-link"
-                                    activeClassName="top-nav-link-active"
-                                    to="/analytics/products"
-                                >
-                                    <div className="link-icon">
-                                        <SVG id='analytics-icon-sidebar'/>
-                                    </div>
-
-                                    <span className="top-span">
                                     Analytics
                                 </span>
-                                </NavLink>
-                            </InformationTooltip>
-                        </li>}
+                                    </NavLink>
+                                </InformationTooltip>
+                            </li>}
 
-                        <li className="top-nav-item ppc-automate-link">
-                            <InformationTooltip
-                                type={'custom'}
-                                description={<ul className={`automate-list ${subMenuState.ppc ? 'opened' : 'closed'}`}>
+                            <li className="top-nav-item ppc-automate-link">
+                                <InformationTooltip
+                                    type={'custom'}
+                                    description={<ul
+                                        className={`automate-list ${subMenuState.ppc ? 'opened' : 'closed'}`}>
+                                        {ppcAutomateMenu.map(item => (
+                                            <li className="automate-item" key={item.link}>
+                                                <NavLink
+                                                    className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                                    activeClassName="automate-link-active"
+                                                    data-intercom-target={`${item.link}-link`}
+                                                    exact
+                                                    to={item.soon && (production && user.user.id !== 714) ?
+                                                        '/'
+                                                        :
+                                                        item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization-loading' : `/ppc/${item.link}`}
+                                                    onClick={e => {
+                                                        if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
+                                                    }}
+                                                >
+                                                    {item.title}
+                                                    {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
+                                                    {item.new && <span className="new-fiches">new</span>}
+                                                </NavLink>
+                                            </li>
+                                        ))}
+                                    </ul>}
+                                    position={'rightTop'}
+                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}
+                                >
+                                    <div onClick={() => toggleSubMenu('ppc')}>
+                                        <NavLink
+                                            className="top-nav-link"
+                                            activeClassName="top-nav-link-active"
+                                            to="/ppc"
+                                            replace
+                                            disabled
+                                        >
+                                            <div className="link-icon">
+                                                <SVG id='ppc-automate-icon'/>
+                                            </div>
+
+                                            <span className="top-span">PPC Automate</span>
+                                        </NavLink>
+                                    </div>
+                                </InformationTooltip>
+
+                                <ul className={`automate-list ${subMenuState.ppc ? 'opened' : 'closed'}`}>
                                     {ppcAutomateMenu.map(item => (
                                         <li className="automate-item" key={item.link}>
                                             <NavLink
@@ -210,198 +263,171 @@ const Sidebar = () => {
                                             </NavLink>
                                         </li>
                                     ))}
-                                </ul>}
-                                position={'rightTop'}
-                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}
-                            >
-                                <div onClick={() => toggleSubMenu('ppc')}>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div className="facebook-link">
+                        <InformationTooltip
+                            type={'custom'}
+                            description={<a href='https://www.facebook.com/groups/profitwhales.software/'
+                                            target="_blank">Join
+                                us on Facebook</a>}
+                            position={'right'}
+                            overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
+                        >
+                            <a href='https://www.facebook.com/groups/profitwhales.software/' target="_blank">
+                                <div className="icon">
+                                    <SVG id='facebook-icon-white'/>
+                                </div>
+
+                                <span className="bottom-span">Join us on Facebook</span>
+                            </a>
+                        </InformationTooltip>
+                    </div>
+
+                    <div className="refer-link">
+                        <InformationTooltip
+                            type={'custom'}
+                            description={<Link to={'/affiliates'} target="_blank">Refer sellers! Get Cash</Link>}
+                            position={'right'}
+                            overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
+                        >
+                            <Link to={'/affiliates'} target="_blank">
+                                <div className="icon">
+                                    <SVG id='refer-icon'/>
+                                </div>
+
+                                {devicePixelRatio === 2 ?
+                                    <span className="bottom-span">Refer sellers! <br/> Get Cash</span>
+                                    :
+                                    <span className="bottom-span">Refer sellers! Get Cash</span>}
+                            </Link>
+                        </InformationTooltip>
+                    </div>
+
+                    <nav className="bottom-nav">
+                        <ul className="bottom-nav-list">
+                            {/*<li className={`bottom-nav-item ${bootstrapInProgress && 'disabled-link'} `}>*/}
+                            {/*    <a*/}
+                            {/*        href={bootstrapInProgress ? '#' : "/ppc/optimization?product_tour_id=108046"}*/}
+                            {/*    >*/}
+                            {/*        <div className="link-icon">*/}
+                            {/*            <SVG id='how-it-works'/>*/}
+                            {/*        </div>*/}
+
+                            {/*        <span className="bottom-span">How it works?</span>*/}
+                            {/*    </a>*/}
+                            {/*</li>*/}
+
+                            <li className="bottom-nav-item">
+                                <InformationTooltip
+                                    type={'custom'}
+                                    description={<NavLink
+                                        className="automate-link"
+                                        activeClassName="automate-link-active"
+                                        exact
+                                        to={`/account/settings`}
+                                    >Account</NavLink>}
+                                    position={'right'}
+                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
+                                >
                                     <NavLink
-                                        className="top-nav-link"
-                                        activeClassName="top-nav-link-active"
-                                        to="/ppc"
-                                        replace
-                                        disabled
+                                        className="automate-link"
+                                        activeClassName="automate-link-active"
+                                        exact
+                                        to={`/account/settings`}
                                     >
                                         <div className="link-icon">
-                                            <SVG id='ppc-automate-icon'/>
+                                            <SVG id='account'/>
+
+                                            {(accountLinks.amazon_mws.status === 'FAILED' ||
+                                                accountLinks.amazon_mws.status === 'UNAUTHORIZED' ||
+                                                accountLinks.amazon_ppc.status === 'FAILED' ||
+                                                accountLinks.amazon_ppc.status === 'UNAUTHORIZED') &&
+                                            <i><SVG id={'notification-icon'}/></i>}
                                         </div>
 
-                                        <span className="top-span">PPC Automate</span>
-                                    </NavLink>
-                                </div>
-                            </InformationTooltip>
-
-                            <ul className={`automate-list ${subMenuState.ppc ? 'opened' : 'closed'}`}>
-                                {ppcAutomateMenu.map(item => (
-                                    <li className="automate-item" key={item.link}>
-                                        <NavLink
-                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                            activeClassName="automate-link-active"
-                                            data-intercom-target={`${item.link}-link`}
-                                            exact
-                                            to={item.soon && (production && user.user.id !== 714) ?
-                                                '/'
-                                                :
-                                                item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization-loading' : `/ppc/${item.link}`}
-                                            onClick={e => {
-                                                if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
-                                            }}
-                                        >
-                                            {item.title}
-                                            {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
-                                            {item.new && <span className="new-fiches">new</span>}
-                                        </NavLink>
-                                    </li>
-                                ))}
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-
-                <div className="facebook-link">
-                    <InformationTooltip
-                        type={'custom'}
-                        description={<a href='https://www.facebook.com/groups/profitwhales.software/' target="_blank">Join
-                            us on Facebook</a>}
-                        position={'right'}
-                        overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
-                    >
-                        <a href='https://www.facebook.com/groups/profitwhales.software/' target="_blank">
-                            <div className="icon">
-                                <SVG id='facebook-icon-white'/>
-                            </div>
-
-                            <span className="bottom-span">Join us on Facebook</span>
-                        </a>
-                    </InformationTooltip>
-                </div>
-
-                <div className="refer-link">
-                    <InformationTooltip
-                        type={'custom'}
-                        description={<Link to={'/affiliates'} target="_blank">Refer sellers! Get Cash</Link>}
-                        position={'right'}
-                        overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
-                    >
-                        <Link to={'/affiliates'} target="_blank">
-                            <div className="icon">
-                                <SVG id='refer-icon'/>
-                            </div>
-
-                            {devicePixelRatio === 2 ? <span className="bottom-span">Refer sellers! <br/> Get Cash</span>
-                                :
-                                <span className="bottom-span">Refer sellers! Get Cash</span>}
-                        </Link>
-                    </InformationTooltip>
-                </div>
-
-                <nav className="bottom-nav">
-                    <ul className="bottom-nav-list">
-                        {/*<li className={`bottom-nav-item ${bootstrapInProgress && 'disabled-link'} `}>*/}
-                        {/*    <a*/}
-                        {/*        href={bootstrapInProgress ? '#' : "/ppc/optimization?product_tour_id=108046"}*/}
-                        {/*    >*/}
-                        {/*        <div className="link-icon">*/}
-                        {/*            <SVG id='how-it-works'/>*/}
-                        {/*        </div>*/}
-
-                        {/*        <span className="bottom-span">How it works?</span>*/}
-                        {/*    </a>*/}
-                        {/*</li>*/}
-
-                        <li className="bottom-nav-item">
-                            <InformationTooltip
-                                type={'custom'}
-                                description={<NavLink
-                                    className="automate-link"
-                                    activeClassName="automate-link-active"
-                                    exact
-                                    to={`/account/settings`}
-                                >Account</NavLink>}
-                                position={'right'}
-                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
-                            >
-                                <NavLink
-                                    className="automate-link"
-                                    activeClassName="automate-link-active"
-                                    exact
-                                    to={`/account/settings`}
-                                >
-                                    <div className="link-icon">
-                                        <SVG id='account'/>
-
-                                        {(accountLinks.amazon_mws.status === 'FAILED' ||
-                                            accountLinks.amazon_mws.status === 'UNAUTHORIZED' ||
-                                            accountLinks.amazon_ppc.status === 'FAILED' ||
-                                            accountLinks.amazon_ppc.status === 'UNAUTHORIZED') &&
-                                        <i><SVG id={'notification-icon'}/></i>}
-                                    </div>
-
-                                    <span className="bottom-span">
+                                        <span className="bottom-span">
                                     Account
-                                        {/*<InformationTooltip type={'warning'} description={'test test test test test test test test  test test test test test test test test test '}/>*/}
+                                            {/*<InformationTooltip type={'warning'} description={'test test test test test test test test  test test test test test test test test test '}/>*/}
                                 </span>
-                                </NavLink>
-                            </InformationTooltip>
-                        </li>
+                                    </NavLink>
+                                </InformationTooltip>
+                            </li>
 
-                        {/*<li className="bottom-nav-item">*/}
-                        {/*    <a*/}
-                        {/*        href="#"*/}
-                        {/*        onClick={() => window.Intercom('show')}*/}
-                        {/*    >*/}
-                        {/*        <img src={expertServiceIcon} alt=""/>*/}
-                        {/*        <span className="bottom-span">Expert Service</span>*/}
-                        {/*    </a>*/}
-                        {/*</li>*/}
+                            {/*<li className="bottom-nav-item">*/}
+                            {/*    <a*/}
+                            {/*        href="#"*/}
+                            {/*        onClick={() => window.Intercom('show')}*/}
+                            {/*    >*/}
+                            {/*        <img src={expertServiceIcon} alt=""/>*/}
+                            {/*        <span className="bottom-span">Expert Service</span>*/}
+                            {/*    </a>*/}
+                            {/*</li>*/}
 
-                        <li className="bottom-nav-item">
-                            <InformationTooltip
-                                type={'custom'}
-                                description={<a
-                                    href="https://intercom.help/profitwhales/en/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                            <li className="bottom-nav-item">
+                                <InformationTooltip
+                                    type={'custom'}
+                                    description={<a
+                                        href="https://intercom.help/profitwhales/en/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Help Center
+                                    </a>}
+                                    position={'right'}
+                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                                 >
-                                    Help Center
-                                </a>}
-                                position={'right'}
-                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
-                            >
-                                <a
-                                    href="https://intercom.help/profitwhales/en"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                    <a
+                                        href="https://intercom.help/profitwhales/en"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <div className="link-icon">
+                                            <SVG id='help-center'/>
+                                        </div>
+
+                                        <span className="bottom-span">Help Center</span>
+                                    </a>
+                                </InformationTooltip>
+                            </li>
+
+                            <li className="bottom-nav-item" onClick={handleLogout}>
+                                <InformationTooltip
+                                    type={'custom'}
+                                    description={<button type="button" onClick={handleLogout}>Log Out</button>}
+                                    position={'right'}
+                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                                 >
-                                    <div className="link-icon">
-                                        <SVG id='help-center'/>
-                                    </div>
+                                    <button type="button" onClick={handleLogout}>
+                                        <div className="link-icon">
+                                            <SVG id='log-out'/>
+                                        </div>
 
-                                    <span className="bottom-span">Help Center</span>
-                                </a>
-                            </InformationTooltip>
-                        </li>
-
-                        <li className="bottom-nav-item" onClick={handleLogout}>
-                            <InformationTooltip
-                                type={'custom'}
-                                description={<button type="button" onClick={handleLogout}>Log Out</button>}
-                                position={'right'}
-                                overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
-                            >
-                                <button type="button" onClick={handleLogout}>
-                                    <div className="link-icon">
-                                        <SVG id='log-out'/>
-                                    </div>
-
-                                    <span className="bottom-span">Log Out</span>
-                                </button>
-                            </InformationTooltip>
-                        </li>
-                    </ul>
-                </nav>
+                                        <span className="bottom-span">Log Out</span>
+                                    </button>
+                                </InformationTooltip>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-        </div>
+
+            {localStorage.getItem('adminToken') && <div className="back-to-admin">
+                <InformationTooltip
+                    type={'custom'}
+                    description={<button type="button" onClick={backToAdmin}>Back to super admin</button>}
+                    position={'right'}
+                    overlayClassName={'back-admin-tooltip'}
+                >
+                    <button type="button" onClick={backToAdmin}>
+                        <SVG id='log-out'/>
+                    </button>
+                </InformationTooltip>
+            </div>}
+        </>
     )
 }
 

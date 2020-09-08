@@ -1,17 +1,16 @@
-import React, {Fragment} from "react";
+import React, {Fragment} from "react"
 import Tooltip from '../../../../components/Tooltip/Tooltip'
-import {ProfitTooltipDescription} from "../ProductBreakdown/ProductsList";
-import {metricsListArray} from "./metricsList";
-import {useSelector} from "react-redux";
-import {round} from "../../../../utils/round";
-import {numberMask} from "../../../../utils/numberMask";
-import {SVG} from "../../../../utils/icons";
-import InformationTooltip from "../../../../components/Tooltip/Tooltip";
-import {Popover} from "antd";
+import {ProfitTooltipDescription} from "../ProductBreakdown/ProductsList"
+import {metricsListArray} from "./metricsList"
+import {useSelector} from "react-redux"
+import {round} from "../../../../utils/round"
+import {numberMask} from "../../../../utils/numberMask"
+import {SVG} from "../../../../utils/icons"
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 
 const DiffTooltip = ({currentValue, diff, type}) => {
     const prevValue = currentValue / ((100 + +diff) / 100),
-        diffValue = Math.abs(round(currentValue, 2) - round(prevValue, 2));
+        diffValue = Math.abs(round(currentValue, 2) - round(prevValue, 2))
 
     return (
         <Fragment>
@@ -28,8 +27,7 @@ const DiffTooltip = ({currentValue, diff, type}) => {
                 /></b>
             </p>
 
-
-            {(type !== 'percent' && +currentValue !== 0) && <p>
+            {(type !== 'percent' && +currentValue > 0 && +prevValue > 0) && <p>
                 ({diff < 0 ? 'down  ' : 'up  '}
 
                 <RenderMetricValue
@@ -46,7 +44,7 @@ const DiffTooltip = ({currentValue, diff, type}) => {
             </p>}
         </Fragment>
     )
-};
+}
 
 const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
     if (diff != null) {
@@ -87,24 +85,17 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                 </InformationTooltip>
 
             )
-        } else if (name === 'profit' || name === 'ad_profit' || name === 'organic_sales' || name === 'total_sales'|| name === 'ad_sales' ) {
-            const diffValue = Math.abs(value - prevValue);
+        } else if (name === 'profit' || name === 'ad_profit' || name === 'organic_sales' || name === 'total_sales' || name === 'ad_sales') {
+            const diffValue = Math.abs(value - prevValue)
 
             return (<InformationTooltip
                 type='custom'
                 overlayClassName={'diff-tooltip'}
-                description={<p>
-                    {`from  `}
-                    {+prevValue === 0 ? '0' : <RenderMetricValue
-                        value={prevValue}
-                        type={'currency'}
-                    />}
-                    {`  to  `}
-                    <b><RenderMetricValue
-                        value={value}
-                        type={'currency'}
-                    /></b>
-                </p>}>
+                description={<DiffTooltip
+                    currentValue={value}
+                    diff={diff}
+                    type={type}
+                />}>
                 <div className='metric-item__changes'>
                     {(value > prevValue) && <div className='upward-changes'>
                         <i>
@@ -158,7 +149,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
             </div>
         )
     }
-};
+}
 
 const RenderMetricValue = ({value, type}) => {
     if (value != null) {
@@ -174,13 +165,13 @@ const RenderMetricValue = ({value, type}) => {
     } else {
         return 'N/A'
     }
-};
+}
 
 
 const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, metric_value, metric_prev_value}, metric, removeSelectedMetric, activeMetrics, onActivateMetric, onDeactivateMetric}) => {
     const {hasMargin} = useSelector(state => ({
         hasMargin: state.dashboard.hasMargin || false
-    }));
+    }))
 
 
     const handleClick = () => {
@@ -189,14 +180,14 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
         } else {
             onActivateMetric(metric)
         }
-    };
+    }
 
     const handleRemoveItem = (e) => {
-        e.stopPropagation();
+        e.stopPropagation()
         removeSelectedMetric(metric)
-    };
+    }
 
-    const metricInformation = metricsListArray.find(item => item.key === key);
+    const metricInformation = metricsListArray.find(item => item.key === key)
 
     return (
         <div className='metric-item' onClick={handleClick}>
@@ -208,7 +199,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
 
             <div className="title-info">
                 <span title={metricInformation.title} dangerouslySetInnerHTML={{__html: metricInformation.title}}/>
-                {key === 'profit' ||  key === 'ad_profit' ?
+                {key === 'profit' || key === 'ad_profit' ?
                     !hasMargin &&
                     <Tooltip
                         type='warning' description={<ProfitTooltipDescription/>}/>
@@ -244,6 +235,6 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
             </div>
         </div>
     )
-};
+}
 
-export default MetricItem;
+export default MetricItem

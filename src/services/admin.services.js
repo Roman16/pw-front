@@ -1,7 +1,7 @@
-import api from './request';
-import {adminUrls} from '../constans/api.urls';
-import moment from "moment";
-import {reasonFilterParams} from "./reports.services";
+import api from './request'
+import {adminUrls} from '../constans/api.urls'
+import moment from "moment"
+import {reasonFilterParams} from "./reports.services"
 
 export const adminServices = {
     checkUserEmail,
@@ -17,9 +17,10 @@ export const adminServices = {
     generateReport,
 
     fetchUsers,
+    impersonateUser,
     fetchUserProducts,
     changeUserPassword
-};
+}
 
 function checkUserEmail(email) {
     return api('get', `${adminUrls.userEmail}?email=${email}`)
@@ -42,7 +43,7 @@ function checkOptimizationJobs({userId, marketplaceId, type, asin, sku}) {
     const parameters = [
         asin ? `&asin=${asin}` : '',
         sku ? `&sku=${sku}` : '',
-    ];
+    ]
 
     if (type === 'marketplace') {
         return api('get', `${adminUrls.optimizationJobsByMarketplace}?user_id=${userId}&marketplace_id=${marketplaceId}${parameters.join('')}`)
@@ -74,7 +75,7 @@ function checkPatsList({userId, profile_id, ad_groups_ids}) {
 }
 
 function checkReports({userId, size, page, sorterColumn, sorterType, startDate, endDate, filters}) {
-    const parameters = [];
+    const parameters = []
 
     filters.forEach(({filterBy, type, value}) => {
         if (filterBy === 'datetime') {
@@ -104,13 +105,18 @@ function generateReport(data) {
 }
 
 function fetchUsers(data) {
-    return api('get', `${adminUrls.usersList}`)
+    return api('get', `${adminUrls.usersList}?page=1&size=1000&is_agency_client=1`)
 }
+
+function impersonateUser(id) {
+    return api('get', `${adminUrls.impersonate(id)}`)
+}
+
 function fetchUserProducts(id) {
     return api('get', `${adminUrls.userProductsList}?id=${id}`)
 }
 
-function changeUserPassword(data) {
-    return api('post', `${adminUrls.userPassword}`, data)
+function changeUserPassword(id, password) {
+    return api('post', `${adminUrls.userPassword(id)}`, password)
 }
 

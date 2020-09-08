@@ -1,15 +1,15 @@
-import React, {useEffect} from 'react';
-import LoginPageForm from './LoginPageForm/LoginPageForm';
-import './LoginPage.less';
-import {history} from "../../../utils/history";
-import logo from '../../../assets/img/ProfitWhales-logo-white.svg';
-import useScript from "../../../utils/hooks/useScript";
-import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {userActions} from "../../../actions/user.actions";
+import React, {useEffect} from 'react'
+import LoginPageForm from './LoginPageForm/LoginPageForm'
+import './LoginPage.less'
+import {history} from "../../../utils/history"
+import logo from '../../../assets/img/ProfitWhales-logo-white.svg'
+import useScript from "../../../utils/hooks/useScript"
+import {Link} from "react-router-dom"
+import {useDispatch} from "react-redux"
+import {userActions} from "../../../actions/user.actions"
 
 const LoginPage = (props) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     useScript({
         funk: `!function(f,b,e,v,n,t,s)
@@ -22,13 +22,14 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2628499780566506');
 fbq('track', 'PageView');`
-    });
+    })
 
     useEffect(() => {
         if (props.match.params.status === 'logout') {
-            localStorage.removeItem('token');
-            localStorage.removeItem('userId');
-            dispatch(userActions.logOut());
+            localStorage.removeItem('token')
+            localStorage.removeItem('adminToken')
+            localStorage.removeItem('userId')
+            dispatch(userActions.logOut())
 
             history.push('/login')
         }
@@ -36,7 +37,7 @@ fbq('track', 'PageView');`
         if (localStorage.getItem('token')) {
             history.push('/ppc/optimization')
         }
-    }, []);
+    }, [])
 
     return (
         <div className="auth-page ">
@@ -62,8 +63,8 @@ fbq('track', 'PageView');`
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
 
-export default LoginPage;
+export default LoginPage

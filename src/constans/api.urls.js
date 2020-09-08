@@ -81,9 +81,10 @@ export const adminUrls = {
     patsList: 'admin/support-manager/optimization-conditions-check/keywords-and-pats',
     report: 'admin/support-manager/report',
     userReports: 'admin/support-manager/optimization-changes/list',
-    usersList: 'admin/support-manager/users',
+    usersList: 'admin/support-manager/user/list',
+    impersonate: userId => `admin/support-manager/user/${userId}/tokens-for-impersonate`,
     userProductsList: 'admin/support-manager/userProducts',
-    userPassword: 'admin/support-manager/force-change-user-password',
+    userPassword: userId => `admin/support-manager/user/${userId}/force-change-user-password`,
 };
 
 export const daypartingUrls = {

@@ -1,65 +1,66 @@
-import React, {useState} from "react";
-import './AdminPanel.less';
-import {adminServices} from "../../services/admin.services";
-import GeneralUserInformation from "./GeneralInformation/UserInformation";
-import AccountLinks from "./GeneralInformation/AccountLinks";
-import OptimizationJobs from "./GeneralInformation/OptimizationJobs";
-import OptimizationChanges from "./GeneralInformation/OptimizationChanges";
-import OptimizationCondition from "./GeneralInformation/OptimizationCondition";
-import Reports from "./Reports/Reports";
-import Products from "./Products/Products";
+import React, {useState} from "react"
+import './AdminPanel.less'
+import {adminServices} from "../../services/admin.services"
+import GeneralUserInformation from "./GeneralInformation/UserInformation"
+import AccountLinks from "./GeneralInformation/AccountLinks"
+import OptimizationJobs from "./GeneralInformation/OptimizationJobs"
+import OptimizationChanges from "./GeneralInformation/OptimizationChanges"
+import OptimizationCondition from "./GeneralInformation/OptimizationCondition"
+import Reports from "./Reports/Reports"
+import Products from "./Products/Products"
 import ChangePassword from "./ChangePassword/ChangePassword"
+import Impersonations from "./Impersonations/Impersonations"
 
 const AdminPanel = () => {
-    const [selectedTab, setSelectedTab] = useState('genInfo');
+    const [selectedTab, setSelectedTab] = useState('genInfo')
 
-    const [userInformation, setUserInformation] = useState(undefined);
-    const [accountLinks, setAccountLinks] = useState(undefined);
-    const [optimizationJobs, setOptimizationJobs] = useState(undefined);
-    const [optimizationChanges, setOptimizationChanges] = useState(undefined);
-    const [userReports, setUserReports] = useState({});
+    const [userInformation, setUserInformation] = useState(undefined)
+    const [accountLinks, setAccountLinks] = useState(undefined)
+    const [optimizationJobs, setOptimizationJobs] = useState(undefined)
+    const [optimizationChanges, setOptimizationChanges] = useState(undefined)
+    const [userReports, setUserReports] = useState({})
 
-    const [adGroupsList, setAdGroupsList] = useState(undefined);
-    const [adGroupsCanBeOptimized, setAdGroupsCanBeOptimized] = useState(undefined);
-    const [patsList, setPatsList] = useState(undefined);
+    const [adGroupsList, setAdGroupsList] = useState(undefined)
+    const [adGroupsCanBeOptimized, setAdGroupsCanBeOptimized] = useState(undefined)
+    const [patsList, setPatsList] = useState(undefined)
 
     const checkUserEmail = (email) => {
         adminServices.checkUserEmail(email)
             .then(res => {
-                setUserInformation(res.data.user);
-                checkAccountLinks({id: res.data.user.id});
-                checkOptimizationJobs({userId: res.data.user.id});
+                setUserInformation(res.data.user)
+                checkAccountLinks({id: res.data.user.id})
+                checkOptimizationJobs({userId: res.data.user.id})
             })
             .catch(error => {
                 if (error.response && error.response.data) {
-                    setUserInformation(error.response.data.message);
+                    setUserInformation(error.response.data.message)
                 }
             })
-    };
+    }
 
     const checkAccountLinks = (data) => {
         adminServices.checkAccountLinks(data)
             .then(res => {
-                setAccountLinks(res.data['linked-accounts']);
+                setAccountLinks(res.data['linked-accounts'])
             })
             .catch(error => {
                 if (error.response && error.response.data) {
-                    setAccountLinks(error.response.data.message);
+                    setAccountLinks(error.response.data.message)
                 }
             })
-    };
+    }
 
     const checkOptimizationJobs = (data) => {
         adminServices.checkOptimizationJobs(data)
             .then(res => {
-                setOptimizationJobs(res.data);
+                setOptimizationJobs(res.data)
             })
             .catch(error => {
                 if (error.response && error.response.data) {
-                    setOptimizationJobs(error.response.data.message);
+                    setOptimizationJobs(error.response.data.message)
                 }
             })
-    };
+    }
 
     const checkOptimizationChanges = (productId, asin, marketplace_id) => {
         adminServices.checkOptimizationChanges({
@@ -69,14 +70,14 @@ const AdminPanel = () => {
             marketplace_id
         })
             .then(res => {
-                setOptimizationChanges(res);
+                setOptimizationChanges(res)
             })
             .catch(error => {
                 if (error.response && error.response.data) {
-                    setOptimizationChanges(error.response.data.message);
+                    setOptimizationChanges(error.response.data.message)
                 }
             })
-    };
+    }
 
     const checkOptimizationConditions = (data) => {
         adminServices.checkAdGroupsList({
@@ -85,7 +86,7 @@ const AdminPanel = () => {
             sku: data.sku
         })
             .then(res => {
-                setAdGroupsList(res.data);
+                setAdGroupsList(res.data)
 
                 if (res.status === 'SUCCESS') {
                     adminServices.checkAdGroupsCanBeOptimized({
@@ -94,21 +95,21 @@ const AdminPanel = () => {
                         sku: data.sku
                     })
                         .then(res => {
-                            setAdGroupsCanBeOptimized(res.data && res.data.result);
+                            setAdGroupsCanBeOptimized(res.data && res.data.result)
                         })
                         .catch(error => {
                             if (error.response && error.response.data) {
-                                setAdGroupsCanBeOptimized(error.response.data.message);
+                                setAdGroupsCanBeOptimized(error.response.data.message)
                             }
                         })
                 }
             })
             .catch(error => {
                 if (error.response && error.response.data) {
-                    setAdGroupsList(error.response.data.message);
+                    setAdGroupsList(error.response.data.message)
                 }
             })
-    };
+    }
 
     return (
         <div className="admin-panel">
@@ -130,6 +131,13 @@ const AdminPanel = () => {
                     onClick={() => setSelectedTab('password')}>
                     Password
                 </button>
+
+                <button
+                    className={`${selectedTab === 'impersonations' ? 'active' : ''}`}
+                    onClick={() => setSelectedTab('impersonations')}>
+                    Impersonations
+                </button>
+
                 {/*<button*/}
                 {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
                 {/*    onClick={() => setSelectedTab('products')}>*/}
@@ -179,9 +187,11 @@ const AdminPanel = () => {
             {selectedTab === 'products' && <Products/>}
 
             {selectedTab === 'password' && <ChangePassword/>}
+
+            {selectedTab === 'impersonations' && <Impersonations/>}
         </div>
     )
-};
+}
 
 
-export default AdminPanel;
+export default AdminPanel

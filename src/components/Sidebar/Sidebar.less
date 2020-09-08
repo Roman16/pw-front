@@ -951,3 +951,43 @@ a:focus {
     }
   }
 }
+
+.back-to-admin {
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+
+
+  z-index: 1000;
+
+  button {
+    width: 60px;
+    height: 60px;
+    background: #7558E8;
+    border-radius: 50%;
+    padding: 0 3px 0 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      fill: #fff;
+      stroke: #fff;
+    }
+  }
+}
+
+.back-admin-tooltip {
+  .ant-popover-inner-content {
+    background: #7558E8;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 4px;
+  }
+
+  .ant-popover-arrow {
+    border-right-color: #7558E8 !important;
+    border-top-color: #7558E8 !important;
+  }
+}
