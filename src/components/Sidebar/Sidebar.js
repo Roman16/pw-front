@@ -59,7 +59,8 @@ const Sidebar = () => {
         localStorage.setItem('token', localStorage.getItem('adminToken'))
         localStorage.removeItem('adminToken')
         dispatch(userActions.getUserInfo())
-        notification.success({title: 'Success!'})
+
+        window.location.reload()
     }
 
     return (
