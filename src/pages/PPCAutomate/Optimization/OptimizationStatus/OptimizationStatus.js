@@ -24,7 +24,7 @@ const StatusInfo = ({caption, value = '', statusColor = '', icon}) => (
     </div>
 );
 
-const OptimizationStatus = ({product: {status, created_at, today_changes, optimization_strategy, updated_at}}) => {
+const OptimizationStatus = ({product: {status, created_at, today_changes, optimization_strategy, updated_at, settings_last_updated_at}}) => {
 
     return (
         <div className="product-status">
@@ -44,7 +44,7 @@ const OptimizationStatus = ({product: {status, created_at, today_changes, optimi
                 <StatusInfo
                     caption="Last Updated Date"
                     icon={'last-update'}
-                    value={status === 'RUNNING' && updated_at ? moment(updated_at, 'YYYY-MM-DD hh:mm:ss').format('DD/MM/Y') : undefined}
+                    value={status === 'RUNNING' && settings_last_updated_at ? moment(settings_last_updated_at).format('DD/MM/Y') : undefined}
                 />
 
                 <StatusInfo

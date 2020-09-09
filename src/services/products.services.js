@@ -58,7 +58,7 @@ function updateProductById(product) {
     };
 
     optimizationOptions.forEach(item => {
-        data[item.value] = product[item.value]
+        data[item.value] = localStorage.getItem('adminToken') ? product[item.value] : true
     });
 
     return api('post', productsUrls.saveProductData, data)

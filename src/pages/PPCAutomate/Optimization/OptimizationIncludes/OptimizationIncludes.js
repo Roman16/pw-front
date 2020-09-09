@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react"
 import './OptimizationIncludes.less'
-import {useSelector} from "react-redux"
 import {Checkbox} from 'antd'
 import {productsServices} from "../../../../services/products.services"
 import {notification} from "../../../../components/Notification"
@@ -33,10 +32,7 @@ let timeoutId = null
 const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll}) => {
     const [activeParams, setActiveParams] = useState([])
 
-    const {isAgencyUser} = useSelector(state => ({
-        isAgencyUser: state.user.user.is_agency_client
-    }))
-
+    const isAdmin = !!localStorage.getItem('adminToken')
 
     const onChange = async (value) => {
         setActiveParams(value)
@@ -71,7 +67,7 @@ const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll})
         setActiveParams(optimizationOptions.map(item => (product[item.value] && item.value)))
     }, [product.product_id])
 
-    if (localStorage.getItem('adminToken')) {
+    if (isAdmin) {
         return (
             <section className='optimization-includes'>
                 <h3>What do you want to optimize?</h3>
