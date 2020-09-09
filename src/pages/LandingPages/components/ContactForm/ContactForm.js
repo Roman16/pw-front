@@ -1,17 +1,18 @@
-import React, {useEffect, useState} from "react";
-import contactFormImage from "../../../../assets/img/landing-automation/contact-form-image.png";
-import sendProcessingImage from "../../../../assets/img/landing-automation/send-processing.svg";
-import thankImage from "../../../../assets/img/landing-automation/thank-image.png";
-import {Checkbox, Input, Radio, Select} from "antd";
-import TreeSelect from "../../../../components/TreeSelect/TreeSelect";
-import CustomSelect from "../../../../components/Select/Select";
-import {SVG} from "../../../../utils/icons";
-import {Link} from "react-router-dom";
-import {notification} from "../../../../components/Notification";
-import {userService} from "../../../../services/user.services";
-import './ContactForm.less';
+import React, {useEffect, useState} from "react"
+import contactFormImage from "../../../../assets/img/landing-automation/contact-form-image.png"
+import sendProcessingImage from "../../../../assets/img/landing-automation/send-processing.svg"
+import thankImage from "../../../../assets/img/landing-automation/thank-image.png"
+import fireImage from "../../../../assets/img/landing-automation/fire.png"
+import {Checkbox, Input, Radio, Select} from "antd"
+import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
+import CustomSelect from "../../../../components/Select/Select"
+import {SVG} from "../../../../utils/icons"
+import {Link} from "react-router-dom"
+import {notification} from "../../../../components/Notification"
+import {userService} from "../../../../services/user.services"
+import './ContactForm.less'
 
-const Option = Select.Option;
+const Option = Select.Option
 
 
 const defaultForm = {
@@ -25,7 +26,7 @@ const defaultForm = {
     main_goal: undefined,
     storefront_name: undefined,
     main_category: undefined,
-};
+}
 
 const advertisingStrategyVariations = [
     {
@@ -95,13 +96,13 @@ const advertisingStrategyVariations = [
         sales: 2,
         acos: 1
     },
-];
+]
 
 
 const ContactForm = () => {
     const [contactFormParams, setContactFormParams] = useState({...defaultForm}),
         [agreeWithTerms, setAgreeWithTerms] = useState(false),
-        [formState, setFormState] = useState(false);
+        [formState, setFormState] = useState(false)
 
 
     const changeContactFormHandler = (name, value) => {
@@ -109,26 +110,26 @@ const ContactForm = () => {
             ...contactFormParams,
             [name]: value
         })
-    };
+    }
 
     const changeMultiSelectHandler = (event) => {
-        const options = event.target.options;
-        let value = [];
+        const options = event.target.options
+        let value = []
 
         for (let i = 0, l = options.length; i < l; i++) {
             if (options[i].selected) {
-                value.push(options[i].value);
+                value.push(options[i].value)
             }
         }
 
         setContactFormParams({
             ...contactFormParams,
             active_marketplaces: value
-        });
-    };
+        })
+    }
 
     const submitFormHandler = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         if (Object.values(contactFormParams).some(item => item == undefined) || !agreeWithTerms) {
             notification.error({title: 'All fields is required!'})
@@ -137,21 +138,21 @@ const ContactForm = () => {
                 await userService.sendContactForm({
                     ...contactFormParams,
                     // active_marketplaces: contactFormParams.active_marketplaces.join(',')
-                });
+                })
 
-                setFormState(true);
-                setAgreeWithTerms(false);
+                setFormState(true)
+                setAgreeWithTerms(false)
             } catch (e) {
-                console.log(e);
+                console.log(e)
             }
         }
-    };
+    }
 
 
     const backToForm = () => {
-        setContactFormParams(defaultForm);
-        setFormState(false);
-    };
+        setContactFormParams(defaultForm)
+        setFormState(false)
+    }
 
     return (
         <>
@@ -164,14 +165,33 @@ const ContactForm = () => {
                     </div>
 
                     <div className={`screen thank-block ${formState && 'active'}`}>
-                        <div className="user-name">
-                            Hey {contactFormParams.first_name}!
-                        </div>
-                        <img src={thankImage} alt=""/>
+                        <div className="text">
+                            <div className="user-name">
+                                Hey {contactFormParams.first_name}!
+                            </div>
 
-                        <button className={'btn'} onClick={backToForm}>
-                            back to form
-                        </button>
+                            <div>
+                                Success!
+
+                                <img src={fireImage} alt=""/>
+                            </div>
+                            <div>
+                                Thank you!
+                            </div>
+
+                            <div>
+                                We received your request form. Our <br/>
+                                specialist will contact you during the day to <br/>
+                                schedule the call and to discuss further <br/>
+                                cooperation.
+                            </div>
+
+                            <button className={'btn'} onClick={backToForm}>
+                                back to form
+                            </button>
+                        </div>
+
+                        <img src={thankImage} alt=""/>
                     </div>
 
                     <form className={`screen ${!formState && 'active'}`} onSubmit={submitFormHandler}>
@@ -495,6 +515,6 @@ const ContactForm = () => {
             </section>
         </>
     )
-};
+}
 
-export default ContactForm;
+export default ContactForm
