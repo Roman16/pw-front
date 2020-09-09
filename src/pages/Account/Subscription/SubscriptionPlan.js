@@ -98,10 +98,11 @@ const SubscriptionPlan = ({
                               disableButton
                           }) => {
 
-    const {mwsConnected, ppcConnected, sellerId} = useSelector(state => ({
+    const {mwsConnected, ppcConnected, sellerId, subscribedProduct} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
-        sellerId: state.user.default_accounts.amazon_mws.seller_id
+        sellerId: state.user.default_accounts.amazon_mws.seller_id,
+        subscribedProduct: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]],
     }));
 
     const [coupon, setCoupon] = useState(null);
@@ -234,7 +235,7 @@ const SubscriptionPlan = ({
                 {(!mwsConnected || !ppcConnected) && <button disabled className={'btn default'}>Subscribe</button>}
 
                 {mwsConnected && ppcConnected && !product.has_access && stripeId &&
-                <button className="btn default on-subscribe" onClick={handleSubscribe} disabled={disableButton}>
+                <button className="btn default on-subscribe" onClick={handleSubscribe} disabled={disableButton || !subscribedProduct.eligible_for_subscription}>
                     {disableButton ? <Spin/> : 'Subscribe'}
                 </button>}
 
