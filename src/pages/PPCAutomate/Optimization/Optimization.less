@@ -5,13 +5,16 @@
   height: max-content;
 
   display: grid;
-  grid-row-gap: 1.42857143rem;
   grid-column-gap: 1.42857143rem;
   grid-template-columns: 1fr 19%;
-  grid-template-areas: 'optimization-includes optimization-changes' 'product-status product-status' 'optimize-strategy optimize-strategy';
+  grid-template-rows: max-content max-content max-content max-content;
+  grid-template-areas: 'optimization-includes optimization-changes' 'product-status product-status' 'campaigns-configuration campaigns-configuration' 'optimize-strategy optimize-strategy';
 
   .optimization-includes {
     grid-area: optimization-includes;
+  }
+  .campaigns-configuration {
+    grid-area: campaigns-configuration;
   }
 
   .optimization-changes {

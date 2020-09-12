@@ -18,10 +18,11 @@ const Chart = () => {
     const [barFetchingError, setBarFetchingError] = useState(false);
     const [pieFetchingError, setPieFetchingError] = useState(false);
 
-    const {selectedRangeDate, selectedProduct} = useSelector(state => ({
+    const {selectedRangeDate, selectedProduct, advertisingType} = useSelector(state => ({
         activeMetrics: state.dashboard.activeMetrics,
         selectedRangeDate: state.dashboard.selectedRangeDate,
         selectedProduct: state.dashboard.selectedProduct,
+        advertisingType: state.dashboard.advertisingType,
     }));
 
     const startDate = selectedRangeDate ? selectedRangeDate.startDate : moment(new Date).format(),
@@ -32,7 +33,7 @@ const Chart = () => {
         switchFetch(true);
         setPieFetchingError(false);
 
-        dashboardServices.fetchPieChartData({startDate, endDate, selectedProduct})
+        dashboardServices.fetchPieChartData({startDate, endDate, selectedProduct, advertisingType})
             .then(res => {
                 switchFetch(false);
                 setPieFetchingError(false);
@@ -49,7 +50,7 @@ const Chart = () => {
         switchFetch(true);
         setBarFetchingError(false);
 
-        dashboardServices.fetchBarChartData({endDate, selectedProduct})
+        dashboardServices.fetchBarChartData({endDate, selectedProduct, advertisingType})
             .then(res => {
                 switchFetch(false);
                 setBarFetchingError(false);
@@ -65,7 +66,7 @@ const Chart = () => {
     useEffect(() => {
         getPieChartData();
         getBarChartData();
-    }, [selectedProduct]);
+    }, [selectedProduct, advertisingType]);
 
     useEffect(() => {
         getPieChartData();

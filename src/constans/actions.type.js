@@ -58,6 +58,7 @@ export const dashboardConstants = {
     RE_SET: 'RE_SET',
     SET_PRODUCTS_MARGIN_STATUS: 'SET_PRODUCTS_MARGIN_STATUS',
     RELOAD_METRICS: 'RELOAD_METRICS',
+    SET_ADVERTISING_TYPE: 'SET_ADVERTISING_TYPE',
 };
 
 //--------------------------------------------

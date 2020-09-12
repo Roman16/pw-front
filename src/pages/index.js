@@ -66,7 +66,7 @@ const AdminRoute = (props) => {
         isSuperAdmin = !!localStorage.getItem('adminToken')
 
 
-    if ((!developer && userId === 714) || (developer) || isSuperAdmin) {
+    if ((!developer && userId === 714) || developer || isSuperAdmin) {
         return <Route {...props} />
     } else {
         return <Redirect to={'/404'}/>

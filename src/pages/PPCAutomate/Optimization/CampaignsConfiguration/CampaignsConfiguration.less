@@ -1,0 +1,76 @@
+.optimization-page .campaigns-configuration {
+  margin-bottom: 1.42857143rem;
+  padding: 0;
+
+  &.closed {
+    .table-block {
+      height: 0;
+      overflow: hidden;
+      transition: .2s ease-in;
+    }
+  }
+
+  &.opened {
+    .section-header {
+      svg {
+        transform: rotate(180deg);
+      }
+    }
+
+    .table-block {
+      height: 350px;
+      overflow: hidden;
+      transition: .2s ease-in;
+    }
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px 15px 20px;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(245, 245, 255, 0.5);
+    }
+
+    h2 {
+      font-weight: 500;
+      font-size: 1.4285714285714286rem;
+      color: #363694;
+      margin: 0;
+    }
+
+    svg {
+      stroke: #343C5A;
+    }
+  }
+
+  .table-block {
+    .table-overflow {
+      min-height: 50px;
+    }
+    .table-head {
+      border-top: 0.5px solid #C9CBD4;
+      border-bottom: 2px solid #C9CBD4;
+
+      & > div {
+        border-left: 0.5px solid #C9CBD4;
+
+        .title {
+          justify-content: center;
+        }
+
+        &:first-child {
+          padding-left: 20px;
+          border: 0;
+
+          .title {
+            justify-content: flex-start;
+          }
+        }
+      }
+    }
+  }
+}

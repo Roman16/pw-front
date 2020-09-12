@@ -21,7 +21,7 @@ const MainChart = () => {
 
     const dispatch = useDispatch()
 
-    const {showWeekChart, showDailyChart, selectedRangeDate, activeMetrics, selectedProduct, onlyOptimization, showOptimizationChart} = useSelector(state => ({
+    const {showWeekChart, showDailyChart, selectedRangeDate, activeMetrics, selectedProduct, onlyOptimization, showOptimizationChart, advertisingType} = useSelector(state => ({
         showWeekChart: state.dashboard.showWeekChart == null ? true : state.dashboard.showWeekChart,
         showDailyChart: state.dashboard.showDailyChart == null ? true : state.dashboard.showDailyChart,
         showOptimizationChart: state.dashboard.showOptimizationChart == null ? true : state.dashboard.showOptimizationChart,
@@ -29,6 +29,7 @@ const MainChart = () => {
         activeMetrics: state.dashboard.activeMetrics,
         selectedProduct: state.dashboard.selectedProduct,
         onlyOptimization: state.products.onlyOptimization,
+        advertisingType: state.dashboard.advertisingType,
     }))
 
     let localFetch = false
@@ -67,7 +68,8 @@ const MainChart = () => {
                 secondMetric: activeMetrics[1] ? activeMetrics[1].key : null,
                 productId: selectedProduct,
                 onlyOptimization: onlyOptimization,
-                cancelToken: source.token
+                cancelToken: source.token,
+                advertisingType
             })
                 .then(res => {
                     updateChartData(res)
@@ -108,7 +110,7 @@ const MainChart = () => {
     useEffect(() => {
         source && source.cancel()
         getChartData()
-    }, [activeMetrics, selectedRangeDate, selectedProduct, onlyOptimization])
+    }, [activeMetrics, selectedRangeDate, selectedProduct, onlyOptimization, advertisingType])
 
     return (
         <div className='main-chart'>

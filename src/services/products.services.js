@@ -10,7 +10,8 @@ export const productsServices = {
     getProductsSettingsList,
     updateProductSettings,
     updateProductSettingsByIdList,
-    updateProductTargetAcos
+    updateProductTargetAcos,
+    getCampaignsBlacklist
 };
 
 function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0, cancelToken}) {
@@ -62,4 +63,8 @@ function updateProductById(product) {
     });
 
     return api('post', productsUrls.saveProductData, data)
+}
+
+function getCampaignsBlacklist(id) {
+    return api('get', `${productsUrls.campaignsBlacklist(id)}`)
 }

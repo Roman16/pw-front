@@ -46,6 +46,7 @@ export const productsUrls = {
     updateSettingsByProducts: 'products/settings/bulk',
     saveProductData: 'ppc-automation/start',
     productDetails: (id) => `products/${id}/details`,
+    campaignsBlacklist: (id) => `ppc-automation/${id}/campaigns-blacklist/list`,
 };
 
 export const reportsUrls = {
@@ -82,9 +83,11 @@ export const adminUrls = {
     report: 'admin/support-manager/report',
     userReports: 'admin/support-manager/optimization-changes/list',
     usersList: 'admin/support-manager/user/list',
-    impersonate: userId => `admin/support-manager/user/${userId}/tokens-for-impersonate`,
+    impersonateById: userId => `admin/support-manager/user/${userId}/tokens-for-impersonate`,
+    impersonateByEmail: `admin/support-manager/tokens-for-impersonate-by-email`,
     userProductsList: 'admin/support-manager/userProducts',
-    userPassword: userId => `admin/support-manager/user/${userId}/force-change-user-password`,
+    userPasswordById: userId => `admin/support-manager/user/${userId}/force-change-user-password`,
+    userPasswordByEmail: `admin/support-manager/force-change-user-password-by-email`,
 };
 
 export const daypartingUrls = {
