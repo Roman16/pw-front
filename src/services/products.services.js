@@ -36,6 +36,7 @@ function updateProductSettings(parameters) {
         'break_even_acos': parameters.break_even_acos,
         'cogs': parameters.cogs,
         'advertising_strategy': parameters.advertising_strategy,
+        'bsr_tracking': parameters.bsr_tracking,
     })
 }
 
