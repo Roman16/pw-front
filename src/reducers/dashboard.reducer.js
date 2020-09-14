@@ -11,7 +11,7 @@ const initialState = {
     showWeekChart: true,
     showDailyChart: true,
     showOptimizationChart: true,
-    advertisingType: 'all',
+    advertisingType: 'sp,sd',
     selectedProduct: null,
     selectedRangeDate: {
         startDate: moment().add(-29, 'days'),

@@ -150,9 +150,9 @@ const ProductBreakdown = () => {
                             getPopupContainer={trigger => trigger.parentNode}
                             optionFilterProp="children"
                         >
-                            <Option value={'all'}>All</Option>
+                            <Option value={'sp,sd'}>All</Option>
                             <Option value={'sp'}>Sponsored Products</Option>
-                            <Option value={'sb'}>Sponsored Brands</Option>
+                            {/*<Option value={'sb'}>Sponsored Brands</Option>*/}
                             <Option value={'sd'}>Sponsored Display</Option>
                         </CustomSelect>
                     </div>

@@ -5,7 +5,6 @@ import CustomTable from "../../../../components/Table/CustomTable"
 import {productsServices} from "../../../../services/products.services"
 import {Checkbox} from "antd"
 import {notification} from "../../../../components/Notification"
-import _ from 'lodash'
 
 let requestSent = false
 
@@ -18,6 +17,10 @@ const CampaignsConfiguration = ({productId, optimizationJobId}) => {
         setJobsList(jobsList.map((item, listIndex) => {
             if (listIndex === index) {
                 item[type] = !value
+
+                if (type === 'dontOptimize' && value) {
+                    item['dontUseMetrics'] = false
+                }
             }
 
             return item
@@ -94,13 +97,16 @@ const CampaignsConfiguration = ({productId, optimizationJobId}) => {
 
     useEffect(() => {
         requestSent = false
+
+        if (!optimizationJobId) {
+            setJobsList([])
+        }
     }, [optimizationJobId])
 
     useEffect(() => {
         if (optimizationJobId && sectionHeightState && !requestSent) {
             getCampaignBlackList()
         }
-
     }, [sectionHeightState, optimizationJobId])
 
     return (
