@@ -202,11 +202,10 @@ const Optimization = () => {
                     product={selectedProduct}
                 />
 
-                {/*{localStorage.getItem('adminToken') && <CampaignsConfiguration/>}*/}
-                <CampaignsConfiguration
+                {localStorage.getItem('adminToken') && <CampaignsConfiguration
                     productId={productId}
                     optimizationJobId={selectedProduct.id}
-                />
+                />}
 
                 <OptimizationStrategy
                     productId={productId}

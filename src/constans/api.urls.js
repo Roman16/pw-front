@@ -46,7 +46,8 @@ export const productsUrls = {
     updateSettingsByProducts: 'products/settings/bulk',
     saveProductData: 'ppc-automation/start',
     productDetails: (id) => `products/${id}/details`,
-    campaignsBlacklist: (id) => `ppc-automation/${id}/campaigns-blacklist/list`,
+    getCampaignsBlacklist: (id) => `ppc-automation/${id}/campaigns-blacklist/list`,
+    updateCampaignsBlacklist: (id) => `ppc-automation/${id}/campaigns-blacklist`,
 };
 
 export const reportsUrls = {
