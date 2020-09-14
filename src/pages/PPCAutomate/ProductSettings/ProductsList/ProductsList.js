@@ -151,6 +151,8 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     })
                 }, 1000)
                 return
+            } else if (item === BSR_TRACKING) {
+                setRowData(value, item, index)
             } else if (item !== NET_MARGIN) {
                 if (value < 0.02 || ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null)) {
                     clearTimeout(minBidManualTimerId)
@@ -336,7 +338,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 width: '100px',
                 render: (props) => (<div style={{textAlign: 'right'}}></div>)
             }, {
-                width: '150px',
+                width: '130px',
                 render: (props) => (<div style={{textAlign: 'right'}}></div>)
             },
             ...isAgencyClient ? [
@@ -581,10 +583,10 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             )
         },
         {
-            title: 'BSR Tracking',
+            title: () => <div style={{width: '100%', textAlign: 'center'}}>BSR Tracking</div>,
             dataIndex: BSR_TRACKING,
             key: BSR_TRACKING,
-            width: '150px',
+            width: '130px',
             align: 'center',
             render: (value, item, indexRow) => (
                 <div className={'checkbox-container'}>
