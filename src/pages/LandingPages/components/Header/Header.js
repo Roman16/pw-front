@@ -1,54 +1,71 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import logoDark from '../../../../assets/img/ProfitWhales-logo-dark.svg';
-import logoWhite from '../../../../assets/img/ProfitWhales-logo-white.svg';
-import {Link, NavLink} from "react-router-dom";
-import './Header.less';
-import {history} from "../../../../utils/history";
-import {SVG} from "../../../../utils/icons";
-import $ from "jquery";
+import React, {Fragment, useEffect, useState} from 'react'
+import logoDark from '../../../../assets/img/ProfitWhales-logo-dark.svg'
+import logoWhite from '../../../../assets/img/ProfitWhales-logo-white.svg'
+import {Link, NavLink} from "react-router-dom"
+import './Header.less'
+import {history} from "../../../../utils/history"
+import {SVG} from "../../../../utils/icons"
+import $ from "jquery"
 
 
 const Header = ({type = 'light', page}) => {
-    const [openedMenu, switchMenu] = useState(false);
+    const [openedMenu, switchMenu] = useState(false)
 
     useEffect(() => {
         document.querySelector('.header-menu').addEventListener('click', () => {
-            switchMenu(false);
-        });
-    }, []);
+            switchMenu(false)
+        })
+    }, [])
 
     useEffect(() => {
         if (openedMenu) {
-            document.querySelector('body').style.overflow = 'hidden';
+            document.querySelector('body').style.overflow = 'hidden'
         } else {
-            document.querySelector('body').style.overflow = 'auto';
+            document.querySelector('body').style.overflow = 'auto'
         }
-    }, [openedMenu]);
+    }, [openedMenu])
 
     useEffect(() => {
-        let lastScrollTop = 0;
+        let lastScrollTop = 0
 
         $(window).scroll(function () {
-            const scroll = $(window).scrollTop();
+            const scroll = $(window).scrollTop()
 
             if (scroll >= 400) {
-                $(".header-block").addClass("scrollDown");
+                $(".header-block").addClass("scrollDown")
             } else {
-                $(".header-block").removeClass("scrollDown");
+                $(".header-block").removeClass("scrollDown")
             }
 
             if (lastScrollTop > scroll) {
-                $(".header-block").addClass("scrollUp");
+                $(".header-block").addClass("scrollUp")
             } else {
-                $(".header-block").removeClass("scrollUp");
+                $(".header-block").removeClass("scrollUp")
             }
 
-            lastScrollTop = scroll;
-        });
+            lastScrollTop = scroll
+        })
 
-    }, []);
 
-    const authorized = !!localStorage.getItem('token');
+        const s = document.createElement('script')
+
+        s.type = 'text/javascript'
+
+        s.async = true
+        s.defer = true
+        s.innerHTML = `var _protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    var _site_hash_code = "43b949f1ad6de536aff7518bc996a99f";
+    var _suid = 8534;`
+
+        document.head.appendChild(s)
+
+        return () => {
+            document.head.removeChild(s)
+        }
+
+    }, [])
+
+    const authorized = !!localStorage.getItem('token')
 
     return (
         <>
@@ -161,4 +178,4 @@ const Header = ({type = 'light', page}) => {
     )
 }
 
-export default Header;
+export default Header
