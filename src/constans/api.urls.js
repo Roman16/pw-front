@@ -113,3 +113,10 @@ export const zthUrls = {
     portfolioList: 'zero-to-hero/portfolio',
     saveBatchSettings: (batchId) =>  `zero-to-hero/batch/${batchId}/setup-settings`
 };
+
+export const analyticsUrls = {
+    adGroupsList: 'analytics/ad-group',
+    productsList: 'analytics/products',
+    campaignsList: 'analytics/campaigns',
+    placementsList: 'analytics/placements',
+};

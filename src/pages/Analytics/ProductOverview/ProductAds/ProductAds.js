@@ -5,6 +5,11 @@ import {round} from "../../../../utils/round"
 
 const metrics = [
     {
+        title: 'Product Ads',
+        key: 'product_ads',
+        type: 'number'
+    },
+    {
         title: 'Impression',
         key: 'impression',
         type: 'number'
@@ -82,14 +87,20 @@ const ProductAds = () => {
 
     return (
         <section className={'product-ads-section'}>
-            <h2>Product Ads</h2>
+            {/*<h2>Product Ads</h2>*/}
 
             <div className="metrics-list">
-                {metrics.map(item => (
+                {metrics.map((item, index) => (
                     <div>
-                        <label htmlFor="">{item.title}</label>
+                        <div className={'title'}>
+                            {item.title}
+                        </div>
 
-                        <p>{renderMetricValue(item.type, 244)}</p>
+                        <div className={'value'}>
+                            {index === 0 && `Total: `}
+
+                            {renderMetricValue(item.type, 244)}
+                        </div>
                     </div>
                 ))}
             </div>

@@ -18,24 +18,6 @@ import {
 import DateRange from "../../components/DateRange/DateRange"
 import TableList from "../../components/TableList/TableList"
 
-const demoData = [
-    {
-        id: 123,
-        campaign: 'Test Test',
-        status: 'active'
-    },
-
-    {
-        id: 323,
-        campaign: 'Test Test Test'
-    },
-
-]
-
-const demoTotalData = {
-    campaign: 'Total: 2'
-}
-
 const columns = [
     {
         title: 'Campaign',
@@ -144,14 +126,6 @@ const columns = [
 const CampaignsList = () => {
 
 
-    const sortChangeHandler = (column) => {
-        console.log(column)
-    }
-
-    const paginationChangeHandler = (column) => {
-        console.log(column)
-    }
-
     return (
         <section className={'campaigns-list list-section'}>
             <TableFilters
@@ -159,20 +133,9 @@ const CampaignsList = () => {
             />
 
             <TableList
-                sortChangeHandler={sortChangeHandler}
-                data={demoData}
-                totalData={demoTotalData}
                 columns={columns}
-                paginationChangeHandler={paginationChangeHandler}
                 fixedColumns={[0]}
-                paginationParams={{
-                    page: 1,
-                    pageSizeOptions: [10, 50, 100],
-                    pageSize: 10,
-                    totalSize: 2,
-                    listLength: 2,
-                    processing: false
-                }}
+                dataService={'fetchCampaignsList'}
             />
         </section>
     )

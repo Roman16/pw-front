@@ -1,35 +1,33 @@
 import React from "react"
 import TableFilters from '../../components/TableFilters/TableFilters'
 import TableList from "../../components/TableList/TableList"
-
-
-const columns = [
-    {
-        title: 'Keyword / PT',
-        dataIndex: 'keyword_pt',
-        key: 'keyword_pt',
-        sorter: true,
-    },
-    {
-        title: 'Match type',
-        dataIndex: 'match_type',
-        key: 'match_type',
-        sorter: true
-    },
-
-]
+import {useSelector} from "react-redux"
+import {Link} from "react-router-dom"
+import {adGroupColumn, campaignColumn} from "../../components/tableColumns"
 
 
 const NegativeTargetingsList = () => {
+    const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
+        selectedCampaign: state.analytics.mainState.campaignId,
+        selectedAdGroup: state.analytics.mainState.adGroupId,
+    }))
 
-
-    const sortChangeHandler = (column) => {
-        console.log(column)
-    }
-
-    const paginationChangeHandler = (column) => {
-        console.log(column)
-    }
+    const columns = [
+        {
+            title: 'Keyword / PT',
+            dataIndex: 'keyword_pt',
+            key: 'keyword_pt',
+            sorter: true,
+        },
+        ...!selectedCampaign ? [campaignColumn] : [],
+        ...!selectedAdGroup ? [adGroupColumn] : [],
+        {
+            title: 'Match type',
+            dataIndex: 'match_type',
+            key: 'match_type',
+            sorter: true
+        },
+    ]
 
     return (
         <section className={'list-section'}>
@@ -38,11 +36,8 @@ const NegativeTargetingsList = () => {
             />
 
             <TableList
-                sortChangeHandler={sortChangeHandler}
-                data={[]}
-                totalData={[]}
                 columns={columns}
-                paginationChangeHandler={paginationChangeHandler}
+                dataService={'fetchNegativeTargetingsList'}
             />
         </section>
     )

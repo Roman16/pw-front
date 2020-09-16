@@ -5,6 +5,7 @@ const initialState = {
     mainState: {
         campaignId: undefined,
         productId: undefined,
+        adGroupId: undefined,
     },
     chartState: {
         showWeekChart: true,

@@ -58,6 +58,24 @@ const Header = ({location}) => {
                     </i>
                 </li>
             </>)
+        } else if (mainState.adGroupId) {
+            return (<>
+                <li onClick={() => setMainState(undefined, '/analytics/ad-groups')}>
+                    Ad Groups
+
+                    <i>
+                        <SVG id={'right-steps-arrow'}/>
+                    </i>
+                </li>
+
+                <li>
+                    {mainState.adGroupId}
+
+                    <i>
+                        <SVG id={'right-steps-arrow'}/>
+                    </i>
+                </li>
+            </>)
         } else {
             return (
                 <li>

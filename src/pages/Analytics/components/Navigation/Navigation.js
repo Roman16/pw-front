@@ -74,6 +74,11 @@ export const analyticsNavigation = {
         menuVariables.negativeTargeting,
         menuVariables.productAds
     ],
+    adGroups: [
+        menuVariables.productAds,
+        menuVariables.targetings,
+        menuVariables.negativeTargeting,
+    ],
     portfolio: [
         {
             title: 'Settings',
@@ -93,16 +98,18 @@ const Navigation = () => {
             return (analyticsNavigation.campaign.map((item, index) => <li>
                 <NavLink activeClassName={'active'} to={`${item.url}?campaignId=${mainState.campaignId}`}>
                     {item.title}
-
-                    {/*{index === 0 && <SVG id={'house'}/>}*/}
                 </NavLink>
             </li>))
         } else if (mainState.productId) {
             return (analyticsNavigation.product.map((item, index) => <li>
                 <NavLink activeClassName={'active'} to={`${item.url}?productId=${mainState.productId}`}>
                     {item.title}
-
-                    {/*{index === 0 && <SVG id={'house'}/>}*/}
+                </NavLink>
+            </li>))
+        } else if (mainState.adGroupId) {
+            return (analyticsNavigation.adGroups.map((item, index) => <li>
+                <NavLink activeClassName={'active'} to={`${item.url}?adGroupId=${mainState.adGroupId}`}>
+                    {item.title}
                 </NavLink>
             </li>))
         } else {

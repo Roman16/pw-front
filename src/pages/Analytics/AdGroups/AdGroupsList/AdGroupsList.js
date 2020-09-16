@@ -1,29 +1,31 @@
 import React from "react"
-import CustomTable from "../../../../components/Table/CustomTable"
-import Pagination from "../../../../components/Pagination/Pagination"
 import './AdGroupsList.less'
-import {SVG} from "../../../../utils/icons"
-import {Input} from "antd"
 import TableFilters from "../../components/TableFilters/TableFilters"
-import DateRange from "../../components/DateRange/DateRange"
 import TableList from "../../components/TableList/TableList"
 import {
-    acosColumn, adCvrColumn, adOrdersColumn, adProfitColumn,
+    budgetAllocationColumn,
+    impressionsColumn,
+    salesShareColumn,
+    adOrdersColumn,
+    adProfitColumn,
     adSalesColumn,
-    adSpendColumn, adUnitsColumn, budgetAllocationColumn,
-    clicksColumn, cpaColumn,
+    adSpendColumn,
+    adUnitsColumn,
+    clicksColumn,
+    adCvrColumn,
+    roasColumn,
+    acosColumn,
+    cpaColumn,
     cpcColumn,
-    ctrColumn,
-    impressionsColumn, roasColumn, salesShareColumn
+    ctrColumn, campaignColumn,
 } from "../../components/tableColumns"
 import {useSelector} from "react-redux"
+import {Link} from "react-router-dom"
 
 const AdGroupsList = () => {
     const {selectedCampaign} = useSelector(state => ({
         selectedCampaign: state.analytics.mainState.campaignId
     }))
-
-    console.log(selectedCampaign)
 
     const columns = [
         {
@@ -31,15 +33,10 @@ const AdGroupsList = () => {
             dataIndex: 'ad_group',
             key: 'ad_group',
             minWidth: '200px',
-            sorter: true
+            sorter: true,
+            render: (adGroup, item) => (<Link to={`/analytics/product-ads?adGroupId=${item.id}`}>{adGroup}</Link>)
         },
-        ...selectedCampaign ? [] : [{
-            title: 'Campaign',
-            dataIndex: 'campaign',
-            key: 'campaign',
-            minWidth: '200px',
-            sorter: true
-        }],
+        ...selectedCampaign ? [] : [campaignColumn],
         {
             title: 'Default bid',
             dataIndex: 'default_bid',
@@ -111,12 +108,6 @@ const AdGroupsList = () => {
         },
     ]
 
-    const sortChangeHandler = (e) => {
-        console.log(e)
-    }
-    const paginationChangeHandler = (e) => {
-        console.log(e)
-    }
 
     return (
         <section className={'ad-group-list list-section'}>
@@ -125,14 +116,10 @@ const AdGroupsList = () => {
             />
 
             <TableList
-                sortChangeHandler={sortChangeHandler}
-                data={[]}
-                totalData={[]}
+                dataService={'fetchAdGroupsList'}
                 columns={columns}
-                paginationChangeHandler={paginationChangeHandler}
                 fixedColumns={[0]}
             />
-
         </section>
     )
 }

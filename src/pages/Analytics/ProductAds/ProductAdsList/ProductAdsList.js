@@ -2,13 +2,13 @@ import React from "react"
 import TableFilters from '../../components/TableFilters/TableFilters'
 import {
     acosColumn,
-    adCvrColumn,
+    adCvrColumn, adGroupColumn,
     adOrdersColumn,
     adProfitColumn,
     adSalesColumn,
     adSpendColumn,
     adUnitsColumn,
-    budgetAllocationColumn,
+    budgetAllocationColumn, campaignColumn,
     clicksColumn,
     cpaColumn,
     cpcColumn,
@@ -19,84 +19,84 @@ import {
     statusColumn
 } from "../../components/tableColumns"
 import TableList from "../../components/TableList/TableList"
+import {useSelector} from "react-redux"
 
 
-const columns = [
-    {
-        title: 'Product',
-        dataIndex: 'product',
-        key: 'product',
-        width: '200px',
-        sorter: true,
-    },
-    {
-        title: 'SKU/ASIN',
-        dataIndex: 'sku_asin',
-        key: 'sku_asin',
-        width: '150px',
-        sorter: true
-    },
-    {
-      ...statusColumn
-    },
-    {
-        ...impressionsColumn
-    },
-    {
-        ...clicksColumn
-    },
-    {
-        ...ctrColumn
-    },
-    {
-        ...adSpendColumn
-    },
-    {
-        ...cpcColumn
-    },
-    {
-        ...adSalesColumn
-    },
-    {
-        ...acosColumn
-    },
-    {
-        ...adCvrColumn
-    },
-    {
-        ...cpaColumn
-    },
-    {
-        ...adOrdersColumn
-    },
-    {
-        ...adUnitsColumn
-    },
-    {
-        ...roasColumn
-    },
-    {
-        ...salesShareColumn
-    },
-    {
-        ...budgetAllocationColumn
-    },
-    {
-        ...adProfitColumn
-    },
-]
 
 
 const ProductAdsList = () => {
+    const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
+        selectedCampaign: state.analytics.mainState.campaignId,
+        selectedAdGroup: state.analytics.mainState.adGroupId,
+    }))
 
 
-    const sortChangeHandler = (column) => {
-        console.log(column)
-    }
-
-    const paginationChangeHandler = (column) => {
-        console.log(column)
-    }
+    const columns = [
+        {
+            title: 'Product',
+            dataIndex: 'product',
+            key: 'product',
+            width: '200px',
+            sorter: true,
+        },
+        {
+            title: 'SKU/ASIN',
+            dataIndex: 'sku_asin',
+            key: 'sku_asin',
+            width: '150px',
+            sorter: true
+        },
+        ...!selectedCampaign ? [campaignColumn] : [],
+        ...!selectedAdGroup ? [adGroupColumn] : [],
+        {
+            ...statusColumn
+        },
+        {
+            ...impressionsColumn
+        },
+        {
+            ...clicksColumn
+        },
+        {
+            ...ctrColumn
+        },
+        {
+            ...adSpendColumn
+        },
+        {
+            ...cpcColumn
+        },
+        {
+            ...adSalesColumn
+        },
+        {
+            ...acosColumn
+        },
+        {
+            ...adCvrColumn
+        },
+        {
+            ...cpaColumn
+        },
+        {
+            ...adOrdersColumn
+        },
+        {
+            ...adUnitsColumn
+        },
+        {
+            ...roasColumn
+        },
+        {
+            ...salesShareColumn
+        },
+        {
+            ...budgetAllocationColumn
+        },
+        {
+            ...adProfitColumn
+        },
+    ]
 
     return (
         <section className={'list-section'}>
@@ -105,11 +105,7 @@ const ProductAdsList = () => {
             />
 
             <TableList
-                sortChangeHandler={sortChangeHandler}
-                data={[]}
-                totalData={[]}
                 columns={columns}
-                paginationChangeHandler={paginationChangeHandler}
                 fixedColumns={[0]}
             />
         </section>

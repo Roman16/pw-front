@@ -8,18 +8,22 @@
   margin: 0 0 15px 15px;
   padding: 4px 0 0 0;
 
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    width: 180px;
+  }
+
   ul {
     list-style: none;
 
     li {
       a {
-        height: 50px;
+        height: 3.5714285714285716rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0 15px 0 28px;
 
-        font-size: 14px;
+        font-size: 1rem;
         color: #656A84;
         font-weight: 500;
         cursor: pointer;
