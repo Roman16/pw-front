@@ -47,20 +47,35 @@ const Header = ({type = 'light', page}) => {
         })
 
 
+        //--------------------------------------------------------------
+        //--------------------------------------------------------------
+        //--------------------------------------------------------------
         const s = document.createElement('script')
-
         s.type = 'text/javascript'
-
         s.async = true
         s.defer = true
         s.innerHTML = `var _protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
     var _site_hash_code = "43b949f1ad6de536aff7518bc996a99f";
     var _suid = 8534;`
-
         document.head.appendChild(s)
+        //--------------------------------------------------------------
+        //--------------------------------------------------------------
+        //--------------------------------------------------------------
+        const s2 = document.createElement('script')
+        s2.type = 'text/javascript'
+        s2.innerHTML = `(function (d,s,i) {
+            var j = d.createElement('script');
+            j.async = true;
+            j.id = 'notifia';
+            j.src = 'https://static.notifia.io/widget.js';
+            j.setAttribute('initialize',i);
+            d.head.appendChild(j);
+        })( document, 'script', 'm6fFjWybVUe61');`
+        document.head.appendChild(s2)
 
         return () => {
             document.head.removeChild(s)
+            document.head.removeChild(s2)
         }
 
     }, [])
