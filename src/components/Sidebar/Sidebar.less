@@ -956,9 +956,14 @@ a:focus {
   position: fixed;
   right: 20px;
   bottom: 100px;
-
-
   z-index: 1000;
+  opacity: .3;
+  transition: .3s ease-in;
+
+  &:hover {
+    opacity: 1;
+    transition: .3s ease-in;
+  }
 
   button {
     width: 60px;
@@ -983,6 +988,13 @@ a:focus {
     color: #fff;
     font-weight: 500;
     border-radius: 4px;
+    width: 120px;
+
+    button {
+      height: max-content;
+      width: max-content;
+      padding: 1px 5px;
+    }
   }
 
   .ant-popover-arrow {
