@@ -1,7 +1,7 @@
-import api from './request';
-import {productsUrls} from '../constans/api.urls';
-import {productsConstants} from '../constans/actions.type';
-import {optimizationOptions} from '../pages/PPCAutomate/Optimization/OptimizationIncludes/OptimizationIncludes';
+import api from './request'
+import {productsUrls} from '../constans/api.urls'
+import {productsConstants} from '../constans/actions.type'
+import {optimizationOptions} from '../pages/PPCAutomate/Optimization/OptimizationIncludes/OptimizationIncludes'
 
 export const productsServices = {
     getProducts,
@@ -10,8 +10,10 @@ export const productsServices = {
     getProductsSettingsList,
     updateProductSettings,
     updateProductSettingsByIdList,
-    updateProductTargetAcos
-};
+    updateProductTargetAcos,
+    getCampaignsBlacklist,
+    updateCampaignsBlacklist,
+}
 
 function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0, cancelToken}) {
     return api('get', `${productsUrls.allProducts}?search_query=${searchStr}&page=${page}&size=${pageSize}&ungroup_variations=${ungroupVariations}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}`, null, null, cancelToken)
@@ -34,6 +36,7 @@ function updateProductSettings(parameters) {
         'break_even_acos': parameters.break_even_acos,
         'cogs': parameters.cogs,
         'advertising_strategy': parameters.advertising_strategy,
+        'bsr_tracking': parameters.bsr_tracking,
     })
 }
 
@@ -53,13 +56,21 @@ function updateProductById(product) {
     const data = {
         product_id: product.product_id ? product.product_id : product.id,
         status: product.status,
-        desired_target_acos:  product.desired_target_acos,
+        desired_target_acos: product.desired_target_acos,
         optimization_strategy: product.optimization_strategy
-    };
+    }
 
     optimizationOptions.forEach(item => {
         data[item.value] = localStorage.getItem('adminToken') ? product[item.value] : true
-    });
+    })
 
     return api('post', productsUrls.saveProductData, data)
+}
+
+function getCampaignsBlacklist(id) {
+    return api('get', `${productsUrls.getCampaignsBlacklist(id)}`)
+}
+
+function updateCampaignsBlacklist(id, data) {
+    return api('post', `${productsUrls.updateCampaignsBlacklist(id)}`, data)
 }

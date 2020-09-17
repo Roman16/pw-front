@@ -1,32 +1,33 @@
-import React, {Fragment, useEffect, useState} from "react";
-import {useSelector, useDispatch} from "react-redux";
-import {Drawer} from "antd";
-import axios from "axios";
+import React, {Fragment, useEffect, useState} from "react"
+import {useSelector, useDispatch} from "react-redux"
+import {Drawer} from "antd"
+import axios from "axios"
 
-import OptimizationStrategy from "./OptimizationStrategy/OptimizationStrategy";
-import OptionsInfo from "./InfoDrawers/OptionInfo/OptionInfo";
-import StrategyInfo from "./InfoDrawers/StrategyInfo/StrategyInfo";
-import OptimizationStatus from "./OptimizationStatus/OptimizationStatus";
-import OptimizationIncludes from "./OptimizationIncludes/OptimizationIncludes";
+import OptimizationStrategy from "./OptimizationStrategy/OptimizationStrategy"
+import OptionsInfo from "./InfoDrawers/OptionInfo/OptionInfo"
+import StrategyInfo from "./InfoDrawers/StrategyInfo/StrategyInfo"
+import OptimizationStatus from "./OptimizationStatus/OptimizationStatus"
+import OptimizationIncludes from "./OptimizationIncludes/OptimizationIncludes"
 
-import {productsServices} from "../../../services/products.services";
-import {notification} from "../../../components/Notification";
-import {productsActions} from "../../../actions/products.actions";
+import {productsServices} from "../../../services/products.services"
+import {notification} from "../../../components/Notification"
+import {productsActions} from "../../../actions/products.actions"
 
-import "./Optimization.less";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import OptimizationChanges from "./OptimizationChanges/OptimizationChanges";
+import "./Optimization.less"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import OptimizationChanges from "./OptimizationChanges/OptimizationChanges"
+import CampaignsConfiguration from "./CampaignsConfiguration/CampaignsConfiguration"
 
-const CancelToken = axios.CancelToken;
-let source = null;
+const CancelToken = axios.CancelToken
+let source = null
 
 const Optimization = () => {
     const [selectedProduct, setProduct] = useState({}),
         [infoType, setInfoType] = useState(false),
-        [processing, setProcessing] = useState(false);
+        [processing, setProcessing] = useState(false)
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const {productId, selectedAll, productList, productsFetching} = useSelector(state => ({
         productId: state.products.selectedProduct.id || null,
@@ -34,37 +35,37 @@ const Optimization = () => {
         productList: state.products.productList,
         productsFetching: state.products.fetching,
         isAgencyUser: state.user.user.is_agency_client
-    }));
+    }))
 
 
     useEffect(() => {
         if ((selectedAll || productId) && productList.length > 0 && !productsFetching) {
-            setProcessing(true);
+            setProcessing(true)
 
             async function fetchProductDetails() {
-                source && source.cancel();
+                source && source.cancel()
 
-                source = CancelToken.source();
+                source = CancelToken.source()
 
                 try {
-                    const res = await productsServices.getProductDetails(selectedAll ? 'all' : productId, source.token);
+                    const res = await productsServices.getProductDetails(selectedAll ? 'all' : productId, source.token)
 
-                    setProduct(res);
+                    setProduct(res)
                     setProcessing(false)
                 } catch (e) {
-                    console.log(e);
+                    console.log(e)
                     setProcessing(false)
                 }
             }
 
-            fetchProductDetails();
+            fetchProductDetails()
         }
 
-    }, [productId, selectedAll]);
+    }, [productId, selectedAll])
 
 
     async function startOptimizationHandler(optimization_strategy, targetAcosValue, netMargin) {
-        setProcessing(true);
+        setProcessing(true)
 
 
         if (optimization_strategy === 'AchieveTargetACoS' && (!targetAcosValue || targetAcosValue === 0 || targetAcosValue < 0)) {
@@ -81,7 +82,7 @@ const Optimization = () => {
                     ...optimization_strategy === 'AchieveTargetACoS' && {
                         desired_target_acos: targetAcosValue
                     }
-                });
+                })
 
                 setProduct({
                     ...selectedProduct,
@@ -91,23 +92,23 @@ const Optimization = () => {
                         product_margin: true,
                         product_margin_value: netMargin,
                     }
-                });
+                })
 
 
                 dispatch(productsActions.updateProduct({
                     id: selectedAll ? 'all' : productId,
                     status: 'RUNNING',
                     optimization_strategy
-                }));
+                }))
 
                 notification.start({title: 'Optimization successfully started'})
             } catch (e) {
-                console.log(e);
+                console.log(e)
             }
         }
 
 
-        setProcessing(false);
+        setProcessing(false)
     }
 
     const updateOptimizationOptions = (options) => {
@@ -115,7 +116,7 @@ const Optimization = () => {
             ...selectedProduct,
             ...options
         })
-    };
+    }
 
     async function onSaveTargetAcos(targetAcos) {
         if (!targetAcos || targetAcos === 0 || targetAcos < 0) {
@@ -131,20 +132,20 @@ const Optimization = () => {
                     status: selectedProduct.status,
                     optimization_strategy: selectedProduct.optimization_strategy ? selectedProduct.optimization_strategy : 'AchieveTargetACoS',
                     desired_target_acos: targetAcos
-                });
+                })
 
                 notification.success({
                     title: 'Saved'
                 })
 
             } catch (e) {
-                console.log(e);
+                console.log(e)
             }
         }
     }
 
     async function stopOptimizationHandler() {
-        setProcessing(true);
+        setProcessing(true)
 
         try {
             await productsServices.updateProductById({
@@ -153,34 +154,34 @@ const Optimization = () => {
                 product_id: selectedAll ? 'all' : productId,
                 status: 'STOPPED',
                 optimization_strategy: selectedProduct.optimization_strategy
-            });
+            })
 
             setProduct({
                 ...selectedProduct,
                 status: 'STOPPED',
                 optimization_strategy: selectedProduct.optimization_strategy
-            });
+            })
 
             dispatch(productsActions.updateProduct({
                 id: selectedAll ? 'all' : selectedProduct.product_id,
                 status: 'STOPPED',
                 optimization_strategy: selectedProduct.optimization_strategy
-            }));
+            }))
 
             notification.error({title: 'The optimization is paused'})
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
 
-        setProcessing(false);
+        setProcessing(false)
     }
 
     function showDrawerHandler(type) {
-        setInfoType(type);
+        setInfoType(type)
     }
 
     function closeDrawerHandler() {
-        setInfoType(false);
+        setInfoType(false)
     }
 
     return (
@@ -200,6 +201,11 @@ const Optimization = () => {
                 <OptimizationStatus
                     product={selectedProduct}
                 />
+
+                {localStorage.getItem('adminToken') && <CampaignsConfiguration
+                    productId={productId}
+                    optimizationJobId={selectedProduct.id}
+                />}
 
                 <OptimizationStrategy
                     productId={productId}
@@ -226,7 +232,7 @@ const Optimization = () => {
                 {infoType === "options" ? <OptionsInfo/> : <StrategyInfo/>}
             </Drawer>
         </Fragment>
-    );
-};
+    )
+}
 
-export default Optimization;
+export default Optimization

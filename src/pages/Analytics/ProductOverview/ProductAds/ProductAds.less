@@ -1,6 +1,6 @@
 .main-pages .main-container .page > .analytics-page .workplace .product-ads-section {
   margin: 15px 0;
-  padding: 20px;
+  //padding: 20px;
 
   h2 {
     font-size: 16px;
@@ -10,21 +10,50 @@
 
   .metrics-list {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-column-gap: 10px;
-    padding-right: 70px;
+    grid-template-columns: repeat(11, 1fr);
+    //padding-right: 70px;
+    min-height: 100px;
 
-    div {
+    & > div {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
+      border-right: 0.5px solid #C9CBD4;
+
+      &:last-child {
+        border: 0;
+      }
+
+      &:first-child {
+        .title, .value {
+          justify-content: flex-start;
+        }
+      }
+
+      div {
+        flex: 1;
+      }
     }
 
-    label {
+    .title {
       font-size: 1rem;
       font-weight: 500;
       color: #343C5A;
-      margin-bottom: 20px;
+      border-bottom: 2px solid #C9CBD4;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 12px;
+    }
+
+    .value {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 12px;
+
+      font-weight: 500;
+      font-size: 1rem;
+      color: #343C5A;
     }
   }
 }

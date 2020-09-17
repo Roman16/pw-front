@@ -1,28 +1,32 @@
-import React, {useState, useEffect} from "react";
-import {Input, Spin, Switch} from "antd";
-import {useDispatch, useSelector} from 'react-redux';
-import {dashboardServices} from '../../../../services/dashboard.services';
-import './ProductBreakdown.less';
-import ProductsList from "./ProductsList";
-import {dashboardActions} from "../../../../actions/dashboard.actions";
-import {productsActions} from "../../../../actions/products.actions";
-import axios from "axios";
-import {SVG} from "../../../../utils/icons";
+import React, {useState, useEffect} from "react"
+import {Input, Select, Spin, Switch} from "antd"
+import {useDispatch, useSelector} from 'react-redux'
+import {dashboardServices} from '../../../../services/dashboard.services'
+import './ProductBreakdown.less'
+import ProductsList from "./ProductsList"
+import {dashboardActions} from "../../../../actions/dashboard.actions"
+import {productsActions} from "../../../../actions/products.actions"
+import axios from "axios"
+import {SVG} from "../../../../utils/icons"
+import CustomSelect from "../../../../components/Select/Select"
+import {countries} from "../../../../utils/countries"
 
-const CancelToken = axios.CancelToken;
-let source = null;
-const Search = Input.Search;
+const CancelToken = axios.CancelToken
+let source = null
+const Search = Input.Search
+const Option = Select.Option
 
-let prevProductId;
+let prevProductId
 
 const ProductBreakdown = () => {
-    const dispatch = useDispatch();
-    const {selectedProduct, selectedRangeDate, onlyOptimization, hasMargin} = useSelector(state => ({
+    const dispatch = useDispatch()
+    const {selectedProduct, advertisingType, selectedRangeDate, onlyOptimization, hasMargin} = useSelector(state => ({
         selectedProduct: state.dashboard.selectedProduct,
+        advertisingType: state.dashboard.advertisingType,
         selectedRangeDate: state.dashboard.selectedRangeDate,
         onlyOptimization: state.products.onlyOptimization,
         hasMargin: state.dashboard.hasMargin || false
-    }));
+    }))
     const [fetchParams, changeFetchParams] = useState({
             page: 1,
             pageSize: 10,
@@ -31,76 +35,81 @@ const ProductBreakdown = () => {
             onlyOptimization: onlyOptimization || false,
             onlyActive: false
         }),
-        [products, updateProductsList] = useState([]);
-    const [fetching, switchFetch] = useState(false);
-    const [fetchingError, setFetchingError] = useState(false);
+        [products, updateProductsList] = useState([])
+    const [fetching, switchFetch] = useState(false)
+    const [fetchingError, setFetchingError] = useState(false)
 
-    let timerIdSearch = null;
+    let timerIdSearch = null
 
     const getProducts = () => {
-        switchFetch(true);
-        setFetchingError(false);
-        source = CancelToken.source();
+        switchFetch(true)
+        setFetchingError(false)
+        source = CancelToken.source()
 
         dashboardServices.fetchProducts({
             ...fetchParams,
             startDate: selectedRangeDate.startDate,
             endDate: selectedRangeDate.endDate,
-            cancelToken: source.token
+            cancelToken: source.token,
+            advertisingType
         })
             .then(res => {
-                switchFetch(false);
+                switchFetch(false)
 
                 if (res.result.length === 1 && selectedProduct !== res.result[0].product.id) {
                     handleSelectProduct(res.result[0].product.id)
                 }
 
-                updateProductsList(res.result);
-                dispatch(dashboardActions.setProductsMarginStatus(res.all_products_has_margin));
+                updateProductsList(res.result)
+                dispatch(dashboardActions.setProductsMarginStatus(res.all_products_has_margin))
                 changeFetchParams({
                     ...fetchParams,
                     totalSize: res.totalSize
-                });
+                })
 
             })
             .catch(error => {
-                switchFetch(false);
+                switchFetch(false)
                 setFetchingError(true)
             })
-    };
+    }
+
+    const changeAdvertisingTypeHandler = (value) => {
+        dispatch(dashboardActions.changeAdvertisingTypeHandler(value))
+    }
 
     const handleChangeSwitch = (type, value) => {
         if (type === 'onlyOptimization') {
-            dispatch(productsActions.showOnlyOptimized(value));
+            dispatch(productsActions.showOnlyOptimized(value))
         }
 
         changeFetchParams({
             ...fetchParams,
             [type]: value,
             page: 1,
-        });
+        })
 
-    };
+    }
 
     const onSearchChange = ({target: {value}}) => {
-        clearTimeout(timerIdSearch);
+        clearTimeout(timerIdSearch)
         timerIdSearch = setTimeout(() => {
             changeFetchParams({
                 ...fetchParams,
                 searchText: value,
                 page: 1
-            });
-        }, 1000);
-    };
+            })
+        }, 1000)
+    }
 
-    const handlePaginationChange = params => changeFetchParams({...fetchParams, ...params});
+    const handlePaginationChange = params => changeFetchParams({...fetchParams, ...params})
 
     const handleSelectProduct = (id) => {
         dispatch(dashboardActions.selectProduct(id))
-    };
+    }
 
     const selectAllProduct = () => {
-        prevProductId = selectedProduct;
+        prevProductId = selectedProduct
         dispatch(dashboardActions.selectProduct(null))
     }
 
@@ -119,9 +128,9 @@ const ProductBreakdown = () => {
     }
 
     useEffect(() => {
-        source && source.cancel();
-        getProducts();
-    }, [fetchParams.page, fetchParams.pageSize, fetchParams.searchText, fetchParams.onlyOptimization,fetchParams.onlyActive, selectedRangeDate]);
+        source && source.cancel()
+        getProducts()
+    }, [fetchParams.page, fetchParams.pageSize, fetchParams.searchText, fetchParams.onlyOptimization, fetchParams.onlyActive, selectedRangeDate, advertisingType])
 
 
     return (
@@ -131,47 +140,68 @@ const ProductBreakdown = () => {
             </div>
 
             <div className="filters">
-                <div className="form-group">
-                    <Search
-                        className="search-field"
-                        placeholder={'Search by product name, ASIN or SKU'}
-                        onChange={onSearchChange}
-                        data-intercom-target='search-field'
-                        suffix={<SVG id={'search'}/>}
-                    />
+                <div className="row">
+                    <div className="form-group type">
+                        <label htmlFor="">Choose Advertising Type:</label>
+
+                        <CustomSelect
+                            onChange={changeAdvertisingTypeHandler}
+                            value={advertisingType}
+                            getPopupContainer={trigger => trigger.parentNode}
+                            optionFilterProp="children"
+                        >
+                            <Option value={'sp,sd'}>All</Option>
+                            <Option value={'sp'}>Sponsored Products</Option>
+                            {/*<Option value={'sb'}>Sponsored Brands</Option>*/}
+                            <Option value={'sd'}>Sponsored Display</Option>
+                        </CustomSelect>
+                    </div>
+
+                    <div className='switch-block'>
+                        <Switch
+                            checked={onlyOptimization}
+                            onChange={(e) => handleChangeSwitch('onlyOptimization', e)}
+                        />
+
+                        On optimization only
+                    </div>
+
+                    <div className='switch-block'>
+                        <Switch
+                            checked={fetchParams.onlyActive}
+                            onChange={(e) => handleChangeSwitch('onlyActive', e)}
+                        />
+
+                        Only active on Amazon
+                    </div>
+
                 </div>
 
-                <div className='switch-block'>
-                    <Switch
-                        checked={onlyOptimization}
-                        onChange={(e) => handleChangeSwitch('onlyOptimization', e)}
-                    />
+                <div className="row">
+                    <div className="form-group">
+                        <Search
+                            className="search-field"
+                            placeholder={'Search by product name, ASIN or SKU'}
+                            onChange={onSearchChange}
+                            data-intercom-target='search-field'
+                            suffix={<SVG id={'search'}/>}
+                        />
+                    </div>
 
-                    On optimization only
-                </div>
-
-                <div className='switch-block'>
-                    <Switch
-                        checked={fetchParams.onlyActive}
-                        onChange={(e) => handleChangeSwitch('onlyActive', e)}
-                    />
-
-                    Only active on Amazon
-                </div>
-
-                <div className="product-selected">
+                    <div className="product-selected">
                     <span>
                        <b>{(!products || products.length === 0) ? '0' : selectedProduct == null ? fetchParams.totalSize || 0 : '1'}</b> selected
                     </span>
 
-                    <div className="select-switch">
-                        <button className={selectedProduct == null && 'active'} onClick={selectAllProduct}>
-                            <SVG id={'all-selected-icon'}/>
-                        </button>
+                        <div className="select-switch">
+                            <button className={selectedProduct == null && 'active'} onClick={selectAllProduct}>
+                                <SVG id={'all-selected-icon'}/>
+                            </button>
 
-                        <button className={selectedProduct !== null && 'active'} onClick={selectPrevProduct}>
-                            <SVG id={'one-selected-icon'}/>
-                        </button>
+                            <button className={selectedProduct !== null && 'active'} onClick={selectPrevProduct}>
+                                <SVG id={'one-selected-icon'}/>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -197,6 +227,6 @@ const ProductBreakdown = () => {
             </div>}
         </div>
     )
-};
+}
 
-export default ProductBreakdown;
+export default ProductBreakdown

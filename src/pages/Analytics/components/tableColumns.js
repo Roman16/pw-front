@@ -2,6 +2,7 @@ import React from "react"
 import moment from "moment"
 import {numberMask} from "../../../utils/numberMask"
 import {round} from "../../../utils/round"
+import {Link} from "react-router-dom"
 
 export const renderNumberField = (type = 'number') => {
     switch (type) {
@@ -168,4 +169,26 @@ export const adProfitColumn = {
     width: '250px',
     sorter: true,
     ...renderNumberField('percent')
+}
+
+export const campaignColumn = {
+    title: 'Campaign',
+    dataIndex: 'campaign',
+    key: 'campaign',
+    minWidth: '200px',
+    sorter: true,
+    render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{campaign}</Link>)
+}
+
+export const adGroupColumn = {
+    title: 'Ad Group',
+    dataIndex: 'ad_group',
+    key: 'ad_group',
+    minWidth: '200px',
+    sorter: true,
+    render: (adGroup, item) => (
+        <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.id}`}>
+            {adGroup}
+        </Link>
+    )
 }

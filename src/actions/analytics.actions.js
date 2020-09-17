@@ -3,7 +3,8 @@ import {analyticsConstants} from '../constans/actions.type'
 export const analyticsActions = {
     setMainState,
     setChartState,
-    setDateRange
+    setDateRange,
+    setLocation
 }
 
 function setMainState(state) {
@@ -28,6 +29,14 @@ function setDateRange(date) {
         dispatch({
             type: analyticsConstants.SET_DATE_RANGE,
             payload: date
+        })
+    }
+}
+function setLocation(key) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.SET_LOCATION,
+            payload: key
         })
     }
 }

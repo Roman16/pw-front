@@ -108,15 +108,17 @@ function fetchUsers(isAgencyClient = true) {
     return api('get', `${adminUrls.usersList}?page=1&size=5000${isAgencyClient ? '&is_agency_client=1' : ''}`)
 }
 
-function impersonateUser(id) {
-    return api('get', `${adminUrls.impersonate(id)}`)
+function impersonateUser(value, type) {
+    return api('get', type === 'email' ? `${adminUrls.impersonateByEmail}?email=${value}` : adminUrls.impersonateById(value))
 }
 
 function fetchUserProducts(id) {
     return api('get', `${adminUrls.userProductsList}?id=${id}`)
 }
 
-function changeUserPassword(id, password) {
-    return api('post', `${adminUrls.userPassword(id)}`, password)
+function changeUserPassword(type, user, password) {
+    return api('post',
+        type === 'email' ? adminUrls.userPasswordByEmail : `${adminUrls.userPasswordById(user)}`,
+        type === 'email' ? {...password, email: user} : password)
 }
 

@@ -12,7 +12,7 @@ const ProductOverview = () => {
 
             <MainChart/>
 
-            <ProductSettings/>
+            {/*<ProductSettings/>*/}
 
             <ProductAds/>
         </div>

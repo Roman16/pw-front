@@ -42,7 +42,9 @@ const Analytics = (props) => {
                 location={props.location}
             />
 
-            <Navigation/>
+            <Navigation
+                location={props.location}
+            />
 
             <section className="workplace">
                 <Route exact path="/analytics">

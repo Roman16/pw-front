@@ -1,16 +1,18 @@
 import React, {useEffect, useState} from "react"
 import {adminServices} from "../../../services/admin.services"
-import {Select} from 'antd'
+import {Input, Select} from 'antd'
 import {history} from "../../../utils/history"
 import {notification} from "../../../components/Notification"
 import {userActions} from "../../../actions/user.actions"
 import {useDispatch} from "react-redux"
+import queryString from "query-string"
 
 const {Option} = Select
 
-const Impersonations = () => {
+const Impersonations = (props) => {
     const [userList, setUserList] = useState([]),
-        [selectedUser, setSelectedUser] = useState(null)
+        [selectedUserId, setSelectedUserId] = useState(null),
+        [selectedUserEmail, setSelectedUserEmail] = useState(null)
 
     const dispatch = useDispatch()
 
@@ -23,8 +25,12 @@ const Impersonations = () => {
         }
     }
 
-    const onChange = (value) => {
-        setSelectedUser(value)
+    const onChange = (type, value) => {
+        if(type === 'id') {
+            setSelectedUserId(value)
+        } else {
+            setSelectedUserEmail(value)
+        }
     }
 
     const updateUserInformation = () => {
@@ -35,7 +41,13 @@ const Impersonations = () => {
         e.preventDefault()
 
         try {
-            const res = await adminServices.impersonateUser(selectedUser)
+            let res
+
+            if(selectedUserEmail) {
+                res = await adminServices.impersonateUser(selectedUserEmail, 'email')
+            } else {
+                 res = await adminServices.impersonateUser(selectedUserId, 'id')
+            }
 
             if (localStorage.getItem('adminToken')) {
                 localStorage.setItem('token', res.access_token)
@@ -64,6 +76,11 @@ const Impersonations = () => {
 
     useEffect(() => {
         getUserList()
+
+
+        if (queryString.parse(props.location.search).logout) {
+
+        }
     }, [])
 
     return (
@@ -74,12 +91,16 @@ const Impersonations = () => {
                 <form className={'form-group'}>
                     <Select
                         showSearch
-                        style={{width: 350}}
+                        style={{width: 350, marginRight: '20px'}}
                         placeholder="Select a user"
                         optionFilterProp="children"
-                        onChange={onChange}
+                        onChange={e => onChange('id', e)}
                         filterOption={(input, option) => {
-                            return `${userList.find(user => user.id === option.props.value).name} ${userList.find(user => user.id === option.props.value).last_name}`.toLowerCase().indexOf(input.toLowerCase()) >= 0 || userList.find(user => user.id === option.props.value).email.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            if (input.length > 2) {
+                                return `${userList.find(user => user.id === option.props.value).name} ${userList.find(user => user.id === option.props.value).last_name}`.toLowerCase().indexOf(input.toLowerCase()) >= 0 || userList.find(user => user.id === option.props.value).email.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            } else {
+                                return true
+                            }
                         }}
                     >
                         {userList.map(user => (
@@ -90,6 +111,18 @@ const Impersonations = () => {
                             </Option>
                         ))}
                     </Select>
+
+                    <span className={'or'}>
+                        or
+                    </span>
+
+                    <Input
+                        style={{width: 350}}
+                        type={'email'}
+                        placeholder="Enter E-mail"
+                        onChange={(e) => onChange('email', e.target.value)}
+
+                    />
 
                     <button type={'button'} className={'btn default'} onClick={impersonateHandler}>Impersonate</button>
 

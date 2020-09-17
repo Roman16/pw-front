@@ -37,7 +37,7 @@ export const userUrls = {
     contacts: 'landings/contact-us',
     freeTrial: 'user/account/subscription/start-free-trial',
     contactForm: 'landings/request-talk-to-experts',
-};
+}
 
 export const productsUrls = {
     allProducts: 'products/list',
@@ -46,14 +46,16 @@ export const productsUrls = {
     updateSettingsByProducts: 'products/settings/bulk',
     saveProductData: 'ppc-automation/start',
     productDetails: (id) => `products/${id}/details`,
-};
+    getCampaignsBlacklist: (id) => `ppc-automation/${id}/campaigns-blacklist/list`,
+    updateCampaignsBlacklist: (id) => `ppc-automation/${id}/campaigns-blacklist`,
+}
 
 export const reportsUrls = {
     lastReports: 'ppc-automation/last-changes',
     allReports: 'ppc-automation/reports-ch',
     downloadReports: 'ppc-automation/reports-ch/download',
     reports: 'ppc-automation/reports'
-};
+}
 
 export const dashboardUrls = {
     allMetricsStatistic: 'ppc-automation/dashboard/metrics/list',
@@ -62,13 +64,14 @@ export const dashboardUrls = {
     barChartData: 'ppc-automation/dashboard/charts/bar-data',
     pieChartData: 'ppc-automation/dashboard/charts/pie-data',
     productOptimizationDetails: 'ppc-automation/dashboard/products/optimization-jobs-log/periods',
-};
+}
 
 export const scannerUrls = {
     scanStatus: 'ppc-scanner/get-scan-status',
     getChanges: 'ppc-scanner/get-changes-table',
     getScanning: 'ppc-scanner/scan-sp-campaigns',
-};
+}
+
 export const adminUrls = {
     userEmail: 'admin/support-manager/user',
     accountLinks: 'admin/support-manager/linked-accounts/list',
@@ -82,10 +85,12 @@ export const adminUrls = {
     report: 'admin/support-manager/report',
     userReports: 'admin/support-manager/optimization-changes/list',
     usersList: 'admin/support-manager/user/list',
-    impersonate: userId => `admin/support-manager/user/${userId}/tokens-for-impersonate`,
+    impersonateById: userId => `admin/support-manager/user/${userId}/tokens-for-impersonate`,
+    impersonateByEmail: `admin/support-manager/tokens-for-impersonate-by-email`,
     userProductsList: 'admin/support-manager/userProducts',
-    userPassword: userId => `admin/support-manager/user/${userId}/force-change-user-password`,
-};
+    userPasswordById: userId => `admin/support-manager/user/${userId}/force-change-user-password`,
+    userPasswordByEmail: `admin/support-manager/force-change-user-password-by-email`,
+}
 
 export const daypartingUrls = {
     campaigns: 'ppc-automation/dayparting/campaigns',
@@ -96,7 +101,7 @@ export const daypartingUrls = {
     getDayParting: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/state` : `ppc-automation/dayparting/campaigns/state`,
     dayParting: (id) => `ppc-automation/dayparting/campaigns/${id}/state`,
     placements: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/placements` : 'ppc-automation/dayparting/campaigns/placements'
-};
+}
 
 export const zthUrls = {
     productsList: 'zero-to-hero/products',
@@ -107,5 +112,16 @@ export const zthUrls = {
     payBatch: (batchId) => `zero-to-hero/batch/${batchId}/make-payment`,
     batchInfo: `zero-to-hero/batch`,
     portfolioList: 'zero-to-hero/portfolio',
-    saveBatchSettings: (batchId) =>  `zero-to-hero/batch/${batchId}/setup-settings`
-};
+    saveBatchSettings: (batchId) => `zero-to-hero/batch/${batchId}/setup-settings`
+}
+
+export const analyticsUrls = {
+    adGroupsList: 'analytics/ad-group',
+    productsList: 'analytics/products',
+    campaignsList: 'analytics/campaigns',
+    placementsList: 'analytics/placements',
+    portfolioList: 'analytics/portfolio',
+    targetingsList: 'analytics/targetings',
+    negativeTargetingsList: 'analytics/negative-targetings',
+    productAdsList: 'analytics/product-ads',
+}

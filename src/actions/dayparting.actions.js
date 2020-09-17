@@ -6,7 +6,8 @@ export const daypartingActions = {
     selectCampaign,
     activateDayparing,
     deactivateDayparing,
-    setCampaignList
+    setCampaignList,
+    copyParams
 };
 
 function getCampaignList(parameters) {
@@ -31,6 +32,12 @@ function setCampaignList(list) {
     return ({
         type: daypartingConstants.SET_CAMPAIGN_LIST,
         payload: list
+    })
+}
+function copyParams(params) {
+    return ({
+        type: daypartingConstants.COPY_PARAMS,
+        payload: params
     })
 }
 

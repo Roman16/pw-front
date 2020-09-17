@@ -3,11 +3,13 @@ import TableFilters from '../../components/TableFilters/TableFilters'
 import {
     acosColumn,
     adCvrColumn,
+    adGroupColumn,
     adOrdersColumn,
     adSalesColumn,
     adSpendColumn,
     adUnitsColumn,
     budgetAllocationColumn,
+    campaignColumn,
     clicksColumn,
     cpaColumn,
     cpcColumn,
@@ -18,87 +20,85 @@ import {
     statusColumn
 } from "../../components/tableColumns"
 import TableList from "../../components/TableList/TableList"
-
-const columns = [
-    {
-        title: 'Keyword / PT',
-        dataIndex: 'keyword_pt',
-        key: 'keyword_pt',
-        width: '200px',
-        sorter: true,
-    },
-    {
-        title: 'Match type',
-        dataIndex: 'match_type',
-        key: 'match_type',
-        width: '150px',
-        sorter: true
-    },
-    {
-        ...statusColumn
-    },
-    {
-        title: 'Bid',
-        dataIndex: 'bid',
-        key: 'bid',
-        width: '150px',
-        sorter: true
-    },
-    {
-        ...impressionsColumn
-    },
-    {
-        ...clicksColumn
-    },
-    {
-        ...ctrColumn
-    },
-    {
-        ...adSpendColumn
-    },
-    {
-        ...cpcColumn
-    },
-    {
-        ...adSalesColumn
-    },
-    {
-        ...acosColumn
-    },
-    {
-        ...adCvrColumn
-    },
-    {
-        ...cpaColumn
-    },
-    {
-        ...adOrdersColumn
-    },
-    {
-        ...adUnitsColumn
-    },
-    {
-        ...roasColumn
-    },
-    {
-        ...salesShareColumn
-    },
-    {
-        ...budgetAllocationColumn
-    },
-]
+import {useSelector} from "react-redux"
 
 
 const TargetingsList = () => {
+    const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
+        selectedCampaign: state.analytics.mainState.campaignId,
+        selectedAdGroup: state.analytics.mainState.adGroupId,
+    }))
 
-
-    const sortChangeHandler = (column) => {
-        console.log(column)
-    }
-
-    const paginationChangeHandler = (column) => {
-        console.log(column)
-    }
+    const columns = [
+        {
+            title: 'Keyword / PT',
+            dataIndex: 'keyword_pt',
+            key: 'keyword_pt',
+            width: '200px',
+            sorter: true,
+        },
+        ...!selectedCampaign ? [campaignColumn] : [],
+        ...!selectedAdGroup ? [adGroupColumn] : [],
+        {
+            title: 'Match type',
+            dataIndex: 'match_type',
+            key: 'match_type',
+            width: '150px',
+            sorter: true
+        },
+        {
+            ...statusColumn
+        },
+        {
+            title: 'Bid',
+            dataIndex: 'bid',
+            key: 'bid',
+            width: '150px',
+            sorter: true
+        },
+        {
+            ...impressionsColumn
+        },
+        {
+            ...clicksColumn
+        },
+        {
+            ...ctrColumn
+        },
+        {
+            ...adSpendColumn
+        },
+        {
+            ...cpcColumn
+        },
+        {
+            ...adSalesColumn
+        },
+        {
+            ...acosColumn
+        },
+        {
+            ...adCvrColumn
+        },
+        {
+            ...cpaColumn
+        },
+        {
+            ...adOrdersColumn
+        },
+        {
+            ...adUnitsColumn
+        },
+        {
+            ...roasColumn
+        },
+        {
+            ...salesShareColumn
+        },
+        {
+            ...budgetAllocationColumn
+        },
+    ]
 
     return (
         <section className={'list-section'}>
@@ -107,11 +107,7 @@ const TargetingsList = () => {
             />
 
             <TableList
-                sortChangeHandler={sortChangeHandler}
-                data={[]}
-                totalData={[]}
                 columns={columns}
-                paginationChangeHandler={paginationChangeHandler}
                 fixedColumns={[0]}
             />
         </section>

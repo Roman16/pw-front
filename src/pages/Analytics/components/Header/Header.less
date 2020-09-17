@@ -10,6 +10,7 @@
     padding: 0 40px;
     box-shadow: @default-section-shadow;
 
+
     .title {
       width: 191px;
       display: flex;
@@ -21,9 +22,19 @@
       }
     }
 
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      height: 66px;
+
+      .title {
+        width: 154px;
+      }
+    }
+
 
     h1 {
       margin: 0;
+      font-size: 1.7142857142857142rem;
+      line-height: 2.0714285714285716rem;
     }
 
     .nav {
@@ -35,8 +46,8 @@
       .steps {
         display: flex;
         align-items: center;
-        font-size: 16px;
-        line-height: 19px;
+        font-size: 1.1428571428571428rem;
+        line-height: 1.3571428571428572rem;
         font-weight: 500;
         color: #656A84;
         list-style: none;
@@ -71,8 +82,8 @@
       }
 
       .current-location {
-        font-size: 24px;
-        line-height: 29px;
+        font-size: 1.7142857142857142rem;
+        line-height: 2.0714285714285716rem;
         color: #656A84;
         margin: 0;
       }

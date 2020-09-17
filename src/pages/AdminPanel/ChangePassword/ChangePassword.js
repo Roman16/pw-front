@@ -10,7 +10,8 @@ const ChangePassword = () => {
             password: '',
             password_confirmation: '',
         }),
-        [selectedUser, setSelectedUser] = useState(null),
+        [selectedUserId, setSelectedUserId] = useState(undefined),
+        [selectedUserEmail, setSelectedUserEmail] = useState(undefined),
         [userList, setUserList] = useState([])
 
     const changeFieldHandler = ({target: {value, name}}) => {
@@ -20,8 +21,12 @@ const ChangePassword = () => {
         })
     }
 
-    const onChangeUser = (id) => {
-        setSelectedUser(id)
+    const onChangeUser = (type, value) => {
+        if (type === 'id') {
+            setSelectedUserId(value)
+        } else {
+            setSelectedUserEmail(value)
+        }
     }
 
     const getUserList = async () => {
@@ -41,15 +46,20 @@ const ChangePassword = () => {
             } else if (params.password !== params.password_confirmation) {
                 notification.error({title: 'Your passwords don’t match!'})
             } else {
-                await adminServices.changeUserPassword(selectedUser, params)
+                if (selectedUserEmail) {
+                    await adminServices.changeUserPassword('email', selectedUserEmail, params)
+                } else {
+                    await adminServices.changeUserPassword('id', selectedUserId, params)
+                }
 
                 notification.success({title: 'Success!'})
 
                 setParams({
-                    email: '',
                     password: '',
                     password_confirmation: '',
                 })
+                setSelectedUserId(undefined)
+                setSelectedUserEmail(undefined)
             }
         } catch (e) {
 
@@ -62,7 +72,7 @@ const ChangePassword = () => {
     }, [])
 
     return (
-        <section className={'user-products-section'}>
+        <section className={'user-products-section change-password'}>
             <h2>Change user password</h2>
 
             <div className="fields">
@@ -72,9 +82,14 @@ const ChangePassword = () => {
                         style={{width: 250}}
                         placeholder="Select a user"
                         optionFilterProp="children"
-                        onChange={onChangeUser}
+                        onChange={e => onChangeUser('id', e)}
+                        value={selectedUserId}
                         filterOption={(input, option) => {
-                            return `${userList.find(user => user.id === option.props.value).name} ${userList.find(user => user.id === option.props.value).last_name}`.toLowerCase().indexOf(input.toLowerCase()) >= 0 || userList.find(user => user.id === option.props.value).email.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            if (input > 2) {
+                                return `${userList.find(user => user.id === option.props.value).name} ${userList.find(user => user.id === option.props.value).last_name}`.toLowerCase().indexOf(input.toLowerCase()) >= 0 || userList.find(user => user.id === option.props.value).email.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            } else {
+                                return true
+                            }
                         }}
                     >
                         {userList.map(user => (
@@ -85,6 +100,15 @@ const ChangePassword = () => {
                             </Option>
                         ))}
                     </Select>
+
+                    <span className="or">or</span>
+
+                    <Input
+                        type="email"
+                        placeholder={`Enter E-mail`}
+                        value={selectedUserEmail}
+                        onChange={e => onChangeUser('email', e.target.value)}
+                    />
 
                     <Input
                         type="password"
@@ -108,7 +132,7 @@ const ChangePassword = () => {
                         okText="Yes"
                         cancelText="No"
                     >
-                        <button className={'btn default'}>Change password</button>
+                        <button className={'btn default'} style={{width: 'max-content'}}>Change password</button>
                     </Popconfirm>
 
                 </form>

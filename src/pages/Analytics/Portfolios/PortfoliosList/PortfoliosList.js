@@ -28,12 +28,12 @@ const columns = [
         key: 'portfolio',
         width: '200px',
         sorter: true,
-        render: (portfolio, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{portfolio}</Link>)
+        render: (portfolio, item) => (<Link to={`/analytics/campaigns?portfolioId=${item.id}`}>{portfolio}</Link>)
     },
     {
         title: 'Campaigns',
-        dataIndex: 'campaigns',
-        key: 'campaigns',
+        dataIndex: 'campaigns_count',
+        key: 'campaigns_count',
         width: '150px',
         sorter: true
     },
@@ -87,15 +87,6 @@ const columns = [
 
 const PortfoliosList = () => {
 
-
-    const sortChangeHandler = (column) => {
-        console.log(column)
-    }
-
-    const paginationChangeHandler = (column) => {
-        console.log(column)
-    }
-
     return (
         <section className={'list-section'}>
             <TableFilters
@@ -103,11 +94,7 @@ const PortfoliosList = () => {
             />
 
             <TableList
-                sortChangeHandler={sortChangeHandler}
-                data={[]}
-                totalData={[]}
                 columns={columns}
-                paginationChangeHandler={paginationChangeHandler}
                 fixedColumns={[0]}
             />
         </section>

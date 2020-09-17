@@ -10,6 +10,7 @@ const initialState = {
     showWeekChart: true,
     showDailyChart: true,
     showOptimizationChart: true,
+    advertisingType: 'sp,sd',
     selectedProduct: null,
     selectedRangeDate: {
         startDate: moment().add(-29, 'days'),
@@ -195,6 +196,12 @@ export function dashboard(state = initialState, action) {
             return {
                 ...state,
                 hasMargin: action.payload
+            }
+
+        case dashboardConstants.SET_ADVERTISING_TYPE:
+            return {
+                ...state,
+                advertisingType: action.payload
             }
 
 

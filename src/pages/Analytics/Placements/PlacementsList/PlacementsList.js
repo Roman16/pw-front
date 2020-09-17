@@ -3,7 +3,8 @@ import TableFilters from '../../components/TableFilters/TableFilters'
 import {
     acosColumn,
     adCvrColumn,
-    adOrdersColumn, adProfitColumn,
+    adOrdersColumn,
+    adProfitColumn,
     adSalesColumn,
     adSpendColumn,
     adUnitsColumn,
@@ -17,87 +18,84 @@ import {
     salesShareColumn,
 } from "../../components/tableColumns"
 import TableList from "../../components/TableList/TableList"
-
-const columns = [
-    {
-        title: 'Placement',
-        dataIndex: 'placement',
-        key: 'placement',
-        width: '200px',
-        sorter: true,
-    },
-    {
-        title: 'Campaign bidding strategy',
-        dataIndex: 'campaign_bidding_strategy',
-        key: 'campaign_bidding_strategy',
-        width: '250px',
-        sorter: true,
-    },
-    {
-        title: 'Bid adjustment',
-        dataIndex: 'bid_adjustment',
-        key: 'bid_adjustment',
-        width: '200px',
-        sorter: true,
-    },
-    {
-        ...impressionsColumn
-    },
-    {
-        ...clicksColumn
-    },
-    {
-        ...ctrColumn
-    },
-    {
-        ...adSpendColumn
-    },
-    {
-        ...cpcColumn
-    },
-    {
-        ...adSalesColumn
-    },
-    {
-        ...acosColumn
-    },
-    {
-        ...adCvrColumn
-    },
-    {
-        ...cpaColumn
-    },
-    {
-        ...adOrdersColumn
-    },
-    {
-        ...adUnitsColumn
-    },
-    {
-        ...roasColumn
-    },
-    {
-        ...salesShareColumn
-    },
-    {
-        ...budgetAllocationColumn
-    },
-    {
-        ...adProfitColumn
-    }
-]
+import {useSelector} from "react-redux"
 
 
 const PlacementsList = () => {
+    const {selectedCampaign} = useSelector(state => ({
+        selectedCampaign: state.analytics.mainState.campaignId,
+    }))
 
 
-    const sortChangeHandler = (column) => {
-        console.log(column)
-    }
+    const columns = [
+        {
+            title: 'Placement',
+            dataIndex: 'placement',
+            key: 'placement',
+            width: '200px',
+            sorter: true,
+        },
+        ...selectedCampaign ? [{
+            title: 'Campaign Bidding Strategy',
+            dataIndex: 'campaign_bidding_strategy',
+            key: 'campaign_bidding_strategy',
+            width: '250px',
+            sorter: true,
+        }] : [],
+        {
+            title: 'Bid Adjustment',
+            dataIndex: 'bid_adjustment',
+            key: 'bid_adjustment',
+            width: '200px',
+            sorter: true,
+        },
+        {
+            ...impressionsColumn
+        },
+        {
+            ...clicksColumn
+        },
+        {
+            ...ctrColumn
+        },
+        {
+            ...adSpendColumn
+        },
+        {
+            ...cpcColumn
+        },
+        {
+            ...adSalesColumn
+        },
+        {
+            ...acosColumn
+        },
+        {
+            ...adCvrColumn
+        },
+        {
+            ...cpaColumn
+        },
+        {
+            ...adOrdersColumn
+        },
+        {
+            ...adUnitsColumn
+        },
+        {
+            ...roasColumn
+        },
+        {
+            ...salesShareColumn
+        },
+        {
+            ...budgetAllocationColumn
+        },
+        {
+            ...adProfitColumn
+        }
+    ]
 
-    const paginationChangeHandler = (column) => {
-        console.log(column)
-    }
 
     return (
         <section className={'list-section'}>
@@ -106,11 +104,7 @@ const PlacementsList = () => {
             />
 
             <TableList
-                sortChangeHandler={sortChangeHandler}
-                data={[]}
-                totalData={[]}
                 columns={columns}
-                paginationChangeHandler={paginationChangeHandler}
                 fixedColumns={[0]}
             />
         </section>

@@ -58,6 +58,7 @@ export const dashboardConstants = {
     RE_SET: 'RE_SET',
     SET_PRODUCTS_MARGIN_STATUS: 'SET_PRODUCTS_MARGIN_STATUS',
     RELOAD_METRICS: 'RELOAD_METRICS',
+    SET_ADVERTISING_TYPE: 'SET_ADVERTISING_TYPE',
 };
 
 //--------------------------------------------
@@ -69,6 +70,7 @@ export const daypartingConstants = {
     SELECT_CAMPAIGN: 'SELECT_CAMPAIGN',
     ACTIVATED_DAYPARTING: 'ACTIVATED_DAYPARTING',
     DEACTIVATED_DAYPARTING: 'DEACTIVATED_DAYPARTING',
+    COPY_PARAMS: 'COPY_PARAMS',
 };
 
 //--------------------------------------------
@@ -93,5 +95,6 @@ export const analyticsConstants = {
     SET_MAIN_STATE: 'SET_MAIN_STATE',
     SET_CHART_STATE: 'SET_CHART_STATE',
     SET_DATE_RANGE: 'SET_DATE_RANGE',
+    SET_LOCATION: 'SET_LOCATION',
 
 };

@@ -12,6 +12,7 @@ export const dashboardActions = {
     selectProduct,
     reSetDashboard,
     setProductsMarginStatus,
+    changeAdvertisingTypeHandler
 };
 
 function getMetricsStatistics(parameters) {
@@ -105,6 +106,14 @@ function setProductsMarginStatus(status) {
         dispatch({
             type: dashboardConstants.SET_PRODUCTS_MARGIN_STATUS,
             payload: status
+        });
+    };
+}
+function changeAdvertisingTypeHandler(data) {
+    return dispatch => {
+        dispatch({
+            type: dashboardConstants.SET_ADVERTISING_TYPE,
+            payload: data
         });
     };
 }

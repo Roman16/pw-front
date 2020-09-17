@@ -20,7 +20,6 @@ import {
 } from "../../components/tableColumns"
 import TableList from "../../components/TableList/TableList"
 
-
 const columns = [
     {
         title: 'Product',
@@ -172,35 +171,7 @@ const columns = [
     },
 ]
 
-
-const demoData = [
-    {
-        id: 123,
-        product: 'Test Test',
-        'sku_asin': 'NEWFWEK433NRE',
-    },
-
-    {
-        id: 323,
-        product: 'Test Test Test',
-        'sku_asin': 'NEWFWEK433NRE',
-    },
-
-]
-
-const demoTotalData = {
-    product: 'Total: 2'
-}
-
 const ProductsList = () => {
-    const sortChangeHandler = (column) => {
-        console.log(column)
-    }
-
-    const paginationChangeHandler = (column) => {
-        console.log(column)
-    }
-
     return (
         <section className={'list-section'}>
             <TableFilters
@@ -208,21 +179,8 @@ const ProductsList = () => {
             />
 
             <TableList
-                sortChangeHandler={sortChangeHandler}
-                data={demoData}
-                totalData={demoTotalData}
                 columns={columns}
-                paginationChangeHandler={paginationChangeHandler}
                 fixedColumns={[0, 1]}
-                paginationParams={{
-                    page: 1,
-                    pageSizeOptions: [10, 50, 100],
-                    pageSize: 10,
-                    totalSize: 2,
-                    listLength: 2,
-                    processing: false
-                }}
-
             />
         </section>
     )
