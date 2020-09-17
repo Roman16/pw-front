@@ -118,6 +118,8 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
         [selectedAll, setSelectedAll] = useState(false),
         [strategiesDescriptionState, setStrategiesDescriptionState] = useState(false)
 
+    const isAdmin = localStorage.getItem('adminToken')
+
 
     const switchStrategyDescription = () => {
         setStrategiesDescriptionState(prevState => !prevState)
@@ -132,7 +134,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
 
     }
 
-    console.log(isAgencyClient)
 
     const onChangeRow = (value, item, index) => {
         if (products[index][item] !== value) {
@@ -337,10 +338,11 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             {
                 width: '100px',
                 render: (props) => (<div style={{textAlign: 'right'}}></div>)
-            }, {
+            },
+            ...isAdmin ? [{
                 width: '130px',
                 render: (props) => (<div style={{textAlign: 'right'}}></div>)
-            },
+            }] : [],
             ...isAgencyClient ? [
                     {
                         width: '135px',
@@ -582,7 +584,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 <div>{item[TOTAL_CHANGES]}</div>
             )
         },
-        {
+        ...isAdmin ? [{
             title: () => <div style={{width: '100%', textAlign: 'center'}}>BSR Tracking</div>,
             dataIndex: BSR_TRACKING,
             key: BSR_TRACKING,
@@ -596,7 +598,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     />
                 </div>
             )
-        },
+        }] : [],
         ...isAgencyClient ? [
                 {
                     title: 'Optimization Status',
