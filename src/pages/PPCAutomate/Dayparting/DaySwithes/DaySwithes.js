@@ -387,22 +387,22 @@ class DaySwitches extends Component {
                             {activeDayparting ? 'Disable Day-parting' : 'Enable Day-parting'}
                         </button>
 
-                        <div className="copy-paste-actions">
-                            <button className={'btn default'} onClick={this.copySettingsHandler}>Copy</button>
+                        {/*<div className="copy-paste-actions">*/}
+                        {/*    <button className={'btn default'} onClick={this.copySettingsHandler}>Copy</button>*/}
 
 
-                            {this.props.copiedParams ? activeDayparting ?
-                                <button className={'btn default'} onClick={this.pasteSettingsHandler}>Paste</button>
-                                :
-                                <InformationTooltip
-                                    type='custom'
-                                    overlayClassName={'diff-tooltip'}
-                                    getPopupContainer={trigger => trigger.parentNode}
-                                    description={!activeDayparting ? 'Enable day-parting first' : 'No copied params'}>
-                                    <button className={'btn default'} disabled>Paste</button>
-                                </InformationTooltip>
-                                : ''}
-                        </div>
+                        {/*    {this.props.copiedParams ? activeDayparting ?*/}
+                        {/*        <button className={'btn default'} onClick={this.pasteSettingsHandler}>Paste</button>*/}
+                        {/*        :*/}
+                        {/*        <InformationTooltip*/}
+                        {/*            type='custom'*/}
+                        {/*            overlayClassName={'diff-tooltip'}*/}
+                        {/*            getPopupContainer={trigger => trigger.parentNode}*/}
+                        {/*            description={!activeDayparting ? 'Enable day-parting first' : 'No copied params'}>*/}
+                        {/*            <button className={'btn default'} disabled>Paste</button>*/}
+                        {/*        </InformationTooltip>*/}
+                        {/*        : ''}*/}
+                        {/*</div>*/}
 
                         <div className='actions'>
                             <div className='disabled-example'>
