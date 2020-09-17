@@ -186,4 +186,9 @@ export const adGroupColumn = {
     key: 'ad_group',
     minWidth: '200px',
     sorter: true,
+    render: (adGroup, item) => (
+        <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.id}`}>
+            {adGroup}
+        </Link>
+    )
 }

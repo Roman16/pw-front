@@ -6,11 +6,13 @@ import _ from 'lodash'
 import './TableList.less'
 import {analyticsServices} from "../../../../services/analytics.services"
 
+String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1)
+}
+
 const TableList = ({
-                       totalData = [],
                        columns,
                        fixedColumns,
-                       dataService,
                    }) => {
 
     const [tableData, setTableData] = useState([]),
@@ -23,8 +25,9 @@ const TableList = ({
             processing: false
         })
 
-    const {metricsValue} = useSelector(state => ({
-        metricsValue: state.dashboard.allMetrics
+    const {metricsValue, locationKey} = useSelector(state => ({
+        metricsValue: state.dashboard.allMetrics,
+        locationKey: state.analytics.location
     }))
 
 
@@ -36,10 +39,11 @@ const TableList = ({
     }
 
 
-    const getList = async () => {
-        try {
-            const res = await analyticsServices[dataService]()
+    const getData = async () => {
+        document.querySelector('.table-overflow').scrollTop = 0
 
+        try {
+            const res = await analyticsServices[`fetch${locationKey.capitalize()}List`]()
             setTableData(res.result)
             setPaginationParams({
                 ...paginationParams,
@@ -51,8 +55,8 @@ const TableList = ({
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getData()
+    }, [locationKey])
 
     return (
         <>

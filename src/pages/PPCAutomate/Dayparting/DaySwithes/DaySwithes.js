@@ -1,27 +1,29 @@
-import React, {Component, Fragment} from 'react';
-import {Spin, Switch} from "antd";
-import moment from "moment";
-import tz from 'moment-timezone';
+import React, {Component, Fragment} from 'react'
+import {Spin, Switch} from "antd"
+import moment from "moment"
+import tz from 'moment-timezone'
 
-import Selection from "@simonwep/selection-js/src/selection";
-import shortid from "shortid";
-import './DaySwitches.less';
-import {daypartingServices} from "../../../../services/dayparting.services";
-import {notification} from "../../../../components/Notification";
-import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
-import {connect} from "react-redux";
-import axios from "axios";
+import Selection from "@simonwep/selection-js/src/selection"
+import shortid from "shortid"
+import './DaySwitches.less'
+import {daypartingServices} from "../../../../services/dayparting.services"
+import {notification} from "../../../../components/Notification"
+import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
+import {connect} from "react-redux"
+import axios from "axios"
 import {productsActions} from '../../../../actions/products.actions'
-import {NavLink} from "react-router-dom";
-import {SVG} from "../../../../utils/icons";
-import {daypartingActions} from "../../../../actions/dayparting.actions";
+import {NavLink} from "react-router-dom"
+import {SVG} from "../../../../utils/icons"
+import {daypartingActions} from "../../../../actions/dayparting.actions"
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {round} from "../../../../utils/round"
 
-const CancelToken = axios.CancelToken;
-let source = null;
+const CancelToken = axios.CancelToken
+let source = null
 
-const timeLineShift = 24 - (moment.tz.zone('America/Los_Angeles').utcOffset(moment().utc()) / 60);
+const timeLineShift = 24 - (moment.tz.zone('America/Los_Angeles').utcOffset(moment().utc()) / 60)
 
-const defaultList = Array.from({length: 168}, () => '1').join('');
+const defaultList = Array.from({length: 168}, () => '1').join('')
 
 const days = [
     'Sun',
@@ -31,9 +33,9 @@ const days = [
     'Thu',
     'Fri',
     'Sat',
-];
+]
 
-const hours = Array.from({length: 24}, (item, index) => index);
+const hours = Array.from({length: 24}, (item, index) => index)
 
 const selection = Selection.create({
     // Class for the selection-area
@@ -45,9 +47,9 @@ const selection = Selection.create({
     // The container is also the boundary in this case
     boundaries: ['.multi-select.enabled'],
     singleClick: false,
-});
+})
 
-let timeoutId = null;
+let timeoutId = null
 
 class DaySwitches extends Component {
     state = {
@@ -58,45 +60,45 @@ class DaySwitches extends Component {
         hasDayparting: false,
         initialState: '',
         fetchingData: false
-    };
+    }
 
-    localFetching = false;
+    localFetching = false
 
 
     deactivateDaypartingHandler = async () => {
         this.setState({
             processing: true
-        });
+        })
 
         try {
-            await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId});
-            this.props.deactivated(this.props.campaignId);
+            await daypartingServices.deactivateDayparting({campaignId: this.props.campaignId})
+            this.props.deactivated(this.props.campaignId)
 
-            notification.success({title: 'Done!'});
+            notification.success({title: 'Done!'})
 
             this.setState({
                 activeDayparting: false,
                 visibleWindow: false
             })
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
 
         setTimeout(() => {
             this.setState({
                 processing: false
-            });
+            })
         }, 500)
-    };
+    }
 
     activateDaypartingHandler = async () => {
         this.setState({
             processing: true
-        });
+        })
 
         try {
             if (this.state.hasDayparting) {
-                await daypartingServices.activateDayparting({campaignId: this.props.campaignId});
+                await daypartingServices.activateDayparting({campaignId: this.props.campaignId})
 
                 this.props.activated(this.props.campaignId)
             } else {
@@ -104,7 +106,7 @@ class DaySwitches extends Component {
                     campaignId: this.props.campaignId,
                     state_encoded_string: defaultList,
                     status: 'ACTIVE'
-                });
+                })
 
                 this.props.activated(this.props.campaignId)
             }
@@ -113,13 +115,13 @@ class DaySwitches extends Component {
                 activeDayparting: true,
             })
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
 
         this.setState({
             processing: false
-        });
-    };
+        })
+    }
 
     switchDayPartingHandler = () => {
         if (this.props.campaignId) {
@@ -132,10 +134,10 @@ class DaySwitches extends Component {
                     visibleWindow: true
                 })
             } else {
-                this.activateDaypartingHandler();
+                this.activateDaypartingHandler()
             }
         }
-    };
+    }
 
     getDaypartingStatus = async () => {
         if (!this.props.fetchingCampaignList) {
@@ -143,18 +145,18 @@ class DaySwitches extends Component {
                 activeDayparting: false,
                 processing: true,
                 fetchingData: true,
-            });
+            })
 
             try {
-                source && source.cancel();
-                source = CancelToken.source();
+                source && source.cancel()
+                source = CancelToken.source()
 
-                this.localFetching = true;
+                this.localFetching = true
 
                 const res = await daypartingServices.getDayPartingParams({
                     campaignId: this.props.campaignId || '',
                     cancelToken: source.token
-                });
+                })
 
 
                 if (res.response[0]) {
@@ -165,7 +167,7 @@ class DaySwitches extends Component {
                         hasDayparting: true,
                         processing: false,
                         fetchingData: false
-                    });
+                    })
                 } else {
                     this.setState({
                         hoursStatus: [...defaultList],
@@ -173,23 +175,23 @@ class DaySwitches extends Component {
                         hasDayparting: false,
                         processing: false,
                         fetchingData: false
-                    });
+                    })
                 }
 
-                this.localFetching = false;
+                this.localFetching = false
             } catch (e) {
                 !this.localFetching && this.setState({
                     processing: false,
                     fetchingData: false
-                });
+                })
 
-                this.localFetching = false;
+                this.localFetching = false
             }
         }
-    };
+    }
 
     handleUpdateStatus = async () => {
-        clearTimeout(timeoutId);
+        clearTimeout(timeoutId)
 
         if (this.props.campaignId) {
             timeoutId = setTimeout(async () => {
@@ -197,18 +199,18 @@ class DaySwitches extends Component {
                     await daypartingServices.updateDayPartingParams({
                         campaignId: this.props.campaignId,
                         state_encoded_string: [...this.state.hoursStatus.slice(timeLineShift, 168), ...this.state.hoursStatus.slice(0, timeLineShift)].join('')
-                    });
-                    notification.success({title: 'Saved'});
-                    timeoutId = null;
+                    })
+                    notification.success({title: 'Saved'})
+                    timeoutId = null
                 } catch (e) {
-                    console.log(e);
+                    console.log(e)
                 }
             }, 1000)
         }
-    };
+    }
 
     forceUpdateStatus = async (id, status) => {
-        clearTimeout(timeoutId);
+        clearTimeout(timeoutId)
 
         if (id) {
             try {
@@ -217,31 +219,31 @@ class DaySwitches extends Component {
                     state_encoded_string: [...status.slice(timeLineShift, 168), ...status.slice(0, timeLineShift)].join('')
                 })
                     .then(() => {
-                        notification.success({title: 'Saved'});
-                        timeoutId = null;
-                    });
+                        notification.success({title: 'Saved'})
+                        timeoutId = null
+                    })
             } catch (e) {
-                console.log(e);
+                console.log(e)
             }
         }
-    };
+    }
 
     handleReset = () => {
         if (defaultList !== this.state.hoursStatus.join('')) {
             this.setState({
                 hoursStatus: [...defaultList]
-            }, this.handleUpdateStatus);
+            }, this.handleUpdateStatus)
         }
-    };
+    }
 
     handleSwitchHour = (index, value) => {
-        let newList = [...this.state.hoursStatus];
-        newList[index] = value === '1' ? '0' : '1';
+        let newList = [...this.state.hoursStatus]
+        newList[index] = value === '1' ? '0' : '1'
 
         this.setState({
             hoursStatus: [...newList]
         }, this.handleUpdateStatus)
-    };
+    }
 
     handleSwitchRow = (row, value) => {
         let newList = this.state.hoursStatus.map((item, index) => {
@@ -250,86 +252,100 @@ class DaySwitches extends Component {
             } else {
                 return item
             }
-        });
+        })
 
         this.setState({
             hoursStatus: [...newList]
         }, this.handleUpdateStatus)
-    };
+    }
 
     handleSwitchColumn = (column, value) => {
         let newList = [...this.state.hoursStatus];
         [0, 1, 2, 3, 4, 5, 6].forEach(item => {
-            newList[24 * item + column] = value ? '1' : '0';
-        });
+            newList[24 * item + column] = value ? '1' : '0'
+        })
 
         this.setState({
             hoursStatus: [...newList]
         }, this.handleUpdateStatus)
-    };
+    }
+
+    copySettingsHandler = () => {
+        this.props.copyParams(this.state.hoursStatus)
+
+        notification.success({title: 'Copied!'})
+    }
+
+    pasteSettingsHandler = () => {
+        if (this.props.copiedParams !== this.state.hoursStatus.join('')) {
+            this.setState({
+                hoursStatus: [...this.props.copiedParams]
+            }, this.handleUpdateStatus)
+        }
+    }
 
     componentDidMount() {
-        let status = 'false';
+        let status = 'false'
 
-        this.getDaypartingStatus();
+        this.getDaypartingStatus()
 
         selection
             .on('start', ({selected}) => {
                 if (selected.length > 0) {
-                    status = selected[0].getAttribute('value');
+                    status = selected[0].getAttribute('value')
                 }
             })
             .on('move', (event) => {
-                const {changed: {removed}, selected} = event;
+                const {changed: {removed}, selected} = event
                 if (selected.length > 0) {
                     if (status === '0') {
                         for (const el of selected) {
-                            el.classList.remove('removed');
-                            el.classList.add('selected');
+                            el.classList.remove('removed')
+                            el.classList.add('selected')
                         }
 
                         if (removed.length > 0) {
                             for (const el of removed) {
-                                el.classList.remove('selected');
+                                el.classList.remove('selected')
                             }
                         }
                     } else {
                         for (const el of selected) {
-                            el.classList.add('removed');
+                            el.classList.add('removed')
                         }
 
                         if (removed.length > 0) {
                             for (const el of removed) {
-                                el.classList.remove('removed');
+                                el.classList.remove('removed')
                             }
                         }
                     }
                 }
             })
             .on('stop', ({selected}) => {
-                let newList = [...this.state.hoursStatus];
+                let newList = [...this.state.hoursStatus]
 
                 for (const el of selected) {
-                    el.classList.remove('removed');
-                    el.classList.remove('selected');
+                    el.classList.remove('removed')
+                    el.classList.remove('selected')
                 }
 
                 if (selected.length > 0) {
                     if (status === '0') {
                         selected.forEach(item => {
-                            newList[item.getAttribute('hourIndex')] = '1';
-                        });
+                            newList[item.getAttribute('hourIndex')] = '1'
+                        })
                     } else {
                         selected.forEach(item => {
-                            newList[item.getAttribute('hourIndex')] = '0';
-                        });
+                            newList[item.getAttribute('hourIndex')] = '0'
+                        })
                     }
                 }
 
                 this.setState({
                     hoursStatus: [...newList]
                 }, this.handleUpdateStatus)
-            });
+            })
     }
 
     componentWillUnmount() {
@@ -355,7 +371,7 @@ class DaySwitches extends Component {
 
 
     render() {
-        const {hoursStatus, activeDayparting, visibleWindow, processing, initialState, fetchingData} = this.state;
+        const {hoursStatus, activeDayparting, visibleWindow, processing, initialState, fetchingData} = this.state
 
         return (
             <Fragment>
@@ -370,6 +386,23 @@ class DaySwitches extends Component {
                         >
                             {activeDayparting ? 'Disable Day-parting' : 'Enable Day-parting'}
                         </button>
+
+                        <div className="copy-paste-actions">
+                            <button className={'btn default'} onClick={this.copySettingsHandler}>Copy</button>
+
+
+                            {this.props.copiedParams ? activeDayparting ?
+                                <button className={'btn default'} onClick={this.pasteSettingsHandler}>Paste</button>
+                                :
+                                <InformationTooltip
+                                    type='custom'
+                                    overlayClassName={'diff-tooltip'}
+                                    getPopupContainer={trigger => trigger.parentNode}
+                                    description={!activeDayparting ? 'Enable day-parting first' : 'No copied params'}>
+                                    <button className={'btn default'} disabled>Paste</button>
+                                </InformationTooltip>
+                                : ''}
+                        </div>
 
                         <div className='actions'>
                             <div className='disabled-example'>
@@ -486,15 +519,17 @@ class DaySwitches extends Component {
 const mapStateToProps = state => ({
     campaignId: state.dayparting.selectedCampaign.id,
     fetchingCampaignList: state.dayparting.processing,
-});
+    copiedParams: state.dayparting.copiedParams,
+})
 
 const mapDispatchToProps = dispatch => ({
     activated: (id) => dispatch(daypartingActions.activateDayparing(id)),
     deactivated: (id) => dispatch(daypartingActions.deactivateDayparing(id)),
-});
+    copyParams: (params) => dispatch(daypartingActions.copyParams(params)),
+})
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(DaySwitches);
+)(DaySwitches)
 

@@ -2,10 +2,12 @@ import {analyticsConstants} from '../constans/actions.type'
 import moment from "moment"
 
 const initialState = {
+    location: 'products',
     mainState: {
         campaignId: undefined,
         productId: undefined,
         adGroupId: undefined,
+        portfolioId: undefined,
     },
     chartState: {
         showWeekChart: true,
@@ -37,6 +39,11 @@ export function analytics(state = initialState, action) {
             return {
                 ...state,
                 selectedRangeDate: action.payload
+            }
+        case analyticsConstants.SET_LOCATION:
+            return {
+                ...state,
+                location: action.payload
             }
 
         default:

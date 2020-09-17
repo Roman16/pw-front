@@ -18,9 +18,34 @@ const Header = ({location}) => {
         history.push(url)
     }
 
-
     const StepsRender = () => {
-        if (mainState.campaignId) {
+        if (mainState.adGroupId && mainState.campaignId) {
+            return (<>
+                <li onClick={() => setMainState(undefined, '/analytics/campaigns')}>
+                    Campaigns
+
+                    <i>
+                        <SVG id={'right-steps-arrow'}/>
+                    </i>
+                </li>
+
+                <li onClick={() => setMainState({campaignId: mainState.campaignId}, `/analytics/ad-groups?campaignId=${mainState.campaignId}`)}>
+                    {mainState.campaignId}
+
+                    <i>
+                        <SVG id={'right-steps-arrow'}/>
+                    </i>
+                </li>
+
+                <li>
+                    {mainState.adGroupId}
+
+                    <i>
+                        <SVG id={'right-steps-arrow'}/>
+                    </i>
+                </li>
+            </>)
+        } else if (mainState.campaignId) {
             return (
                 <>
                     <li onClick={() => setMainState(undefined, '/analytics/campaigns')}>
@@ -58,10 +83,10 @@ const Header = ({location}) => {
                     </i>
                 </li>
             </>)
-        } else if (mainState.adGroupId) {
+        } else if (mainState.portfolioId) {
             return (<>
-                <li onClick={() => setMainState(undefined, '/analytics/ad-groups')}>
-                    Ad Groups
+                <li onClick={() => setMainState(undefined, '/analytics/portfolios')}>
+                    Portfolios
 
                     <i>
                         <SVG id={'right-steps-arrow'}/>
@@ -69,7 +94,7 @@ const Header = ({location}) => {
                 </li>
 
                 <li>
-                    {mainState.adGroupId}
+                    {mainState.portfolioId}
 
                     <i>
                         <SVG id={'right-steps-arrow'}/>

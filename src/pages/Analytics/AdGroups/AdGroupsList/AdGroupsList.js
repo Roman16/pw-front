@@ -17,7 +17,8 @@ import {
     acosColumn,
     cpaColumn,
     cpcColumn,
-    ctrColumn, campaignColumn,
+    ctrColumn,
+    campaignColumn,
 } from "../../components/tableColumns"
 import {useSelector} from "react-redux"
 import {Link} from "react-router-dom"
@@ -34,7 +35,11 @@ const AdGroupsList = () => {
             key: 'ad_group',
             minWidth: '200px',
             sorter: true,
-            render: (adGroup, item) => (<Link to={`/analytics/product-ads?adGroupId=${item.id}`}>{adGroup}</Link>)
+            render: (adGroup, item) => (
+                <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.id}`}>
+                    {adGroup}
+                </Link>
+            )
         },
         ...selectedCampaign ? [] : [campaignColumn],
         {
@@ -44,7 +49,6 @@ const AdGroupsList = () => {
             minWidth: '200px',
             sorter: true
         },
-
         {
             title: 'Total Targets',
             dataIndex: 'total_targets',
@@ -52,7 +56,6 @@ const AdGroupsList = () => {
             minWidth: '200px',
             sorter: true
         },
-
         {
             title: 'Products',
             dataIndex: 'products',
@@ -60,7 +63,6 @@ const AdGroupsList = () => {
             minWidth: '200px',
             sorter: true
         },
-
         {
             ...impressionsColumn
         },
@@ -108,7 +110,6 @@ const AdGroupsList = () => {
         },
     ]
 
-
     return (
         <section className={'ad-group-list list-section'}>
             <TableFilters
@@ -116,7 +117,6 @@ const AdGroupsList = () => {
             />
 
             <TableList
-                dataService={'fetchAdGroupsList'}
                 columns={columns}
                 fixedColumns={[0]}
             />

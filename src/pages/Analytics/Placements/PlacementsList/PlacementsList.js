@@ -106,7 +106,6 @@ const PlacementsList = () => {
             <TableList
                 columns={columns}
                 fixedColumns={[0]}
-                dataService={'fetchPlacementsList'}
             />
         </section>
     )

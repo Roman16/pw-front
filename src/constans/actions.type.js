@@ -70,6 +70,7 @@ export const daypartingConstants = {
     SELECT_CAMPAIGN: 'SELECT_CAMPAIGN',
     ACTIVATED_DAYPARTING: 'ACTIVATED_DAYPARTING',
     DEACTIVATED_DAYPARTING: 'DEACTIVATED_DAYPARTING',
+    COPY_PARAMS: 'COPY_PARAMS',
 };
 
 //--------------------------------------------
@@ -94,5 +95,6 @@ export const analyticsConstants = {
     SET_MAIN_STATE: 'SET_MAIN_STATE',
     SET_CHART_STATE: 'SET_CHART_STATE',
     SET_DATE_RANGE: 'SET_DATE_RANGE',
+    SET_LOCATION: 'SET_LOCATION',
 
 };

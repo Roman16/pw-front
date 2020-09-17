@@ -106,6 +106,8 @@ function Report() {
         source && source.cancel();
         source = CancelToken.source();
 
+        document.querySelector('.table-overflow').scrollTop = 0
+
         try {
             const res = await reportsServices.getAllReports(
                 currentTab,

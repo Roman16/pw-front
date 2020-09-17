@@ -181,7 +181,6 @@ const ProductsList = () => {
             <TableList
                 columns={columns}
                 fixedColumns={[0, 1]}
-                dataService={'fetchProductsList'}
             />
         </section>
     )

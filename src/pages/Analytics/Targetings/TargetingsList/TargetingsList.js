@@ -2,12 +2,14 @@ import React from "react"
 import TableFilters from '../../components/TableFilters/TableFilters'
 import {
     acosColumn,
-    adCvrColumn, adGroupColumn,
+    adCvrColumn,
+    adGroupColumn,
     adOrdersColumn,
     adSalesColumn,
     adSpendColumn,
     adUnitsColumn,
-    budgetAllocationColumn, campaignColumn,
+    budgetAllocationColumn,
+    campaignColumn,
     clicksColumn,
     cpaColumn,
     cpcColumn,
@@ -19,7 +21,6 @@ import {
 } from "../../components/tableColumns"
 import TableList from "../../components/TableList/TableList"
 import {useSelector} from "react-redux"
-import {Link} from "react-router-dom"
 
 
 const TargetingsList = () => {

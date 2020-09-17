@@ -7,7 +7,10 @@ export const analyticsServices = {
     fetchProductsList,
     fetchCampaignsList,
     fetchPlacementsList,
-    fetchNegativeTargetingsList
+    fetchNegativeTargetingsList,
+    fetchTargetingsList,
+    fetchPortfoliosList,
+    fetchProductAdsList,
 }
 
 function fetchAdGroupsList(paginationParams) {
@@ -17,11 +20,15 @@ function fetchAdGroupsList(paginationParams) {
         result: [
             {
                 id: 134,
-                'ad_group': 'Teeest111'
+                'ad_group': 'Teeest111',
+                'campaign': 'Test campaign',
+                'campaignId': 12333
             },
             {
                 id: 334,
-                'ad_group': 'Teeest222'
+                'ad_group': 'Teeest222',
+                'campaign': 'Test campaign 2',
+                'campaignId': 1333
             },
         ],
         totalSize: 2
@@ -104,6 +111,66 @@ function fetchNegativeTargetingsList(paginationParams) {
                 id: 323,
                 keyword_pt: 'Test Test Test',
                 campaign: 'Test Campaign 3'
+            },
+        ],
+        totalSize: 2
+    })
+}
+
+function fetchTargetingsList(paginationParams) {
+    // return api('get', `${analyticsUrls.placementsList}`)
+
+    return ({
+        result: [
+            {
+                id: 123,
+                keyword_pt: 'Test Test',
+
+            },
+
+            {
+                id: 323,
+                keyword_pt: 'Test Test Test',
+            },
+        ],
+        totalSize: 2
+    })
+}
+
+function fetchPortfoliosList(paginationParams) {
+    // return api('get', `${analyticsUrls.placementsList}`)
+
+    return ({
+        result: [
+            {
+                id: 123,
+                portfolio: 'Test Test',
+
+            },
+
+            {
+                id: 323,
+                portfolio: 'Test Test Test',
+            },
+        ],
+        totalSize: 2
+    })
+}
+
+function fetchProductAdsList(paginationParams) {
+    // return api('get', `${analyticsUrls.placementsList}`)
+
+    return ({
+        result: [
+            {
+                id: 123,
+                product: 'Test Test',
+
+            },
+
+            {
+                id: 323,
+                product: 'Test Test Test',
             },
         ],
         totalSize: 2

@@ -124,8 +124,6 @@ const columns = [
 
 
 const CampaignsList = () => {
-
-
     return (
         <section className={'campaigns-list list-section'}>
             <TableFilters
@@ -135,7 +133,6 @@ const CampaignsList = () => {
             <TableList
                 columns={columns}
                 fixedColumns={[0]}
-                dataService={'fetchCampaignsList'}
             />
         </section>
     )

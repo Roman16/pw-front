@@ -2,13 +2,15 @@ import React from "react"
 import TableFilters from '../../components/TableFilters/TableFilters'
 import {
     acosColumn,
-    adCvrColumn, adGroupColumn,
+    adCvrColumn,
+    adGroupColumn,
     adOrdersColumn,
     adProfitColumn,
     adSalesColumn,
     adSpendColumn,
     adUnitsColumn,
-    budgetAllocationColumn, campaignColumn,
+    budgetAllocationColumn,
+    campaignColumn,
     clicksColumn,
     cpaColumn,
     cpcColumn,
@@ -22,14 +24,11 @@ import TableList from "../../components/TableList/TableList"
 import {useSelector} from "react-redux"
 
 
-
-
 const ProductAdsList = () => {
     const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
         selectedCampaign: state.analytics.mainState.campaignId,
         selectedAdGroup: state.analytics.mainState.adGroupId,
     }))
-
 
     const columns = [
         {

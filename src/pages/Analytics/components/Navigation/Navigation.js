@@ -1,44 +1,52 @@
-import React, {memo} from "react"
+import React, {memo, useEffect, useState} from "react"
 import './Navigation.less'
 import {NavLink} from "react-router-dom"
-import {useSelector} from "react-redux"
-
+import {useDispatch, useSelector} from "react-redux"
+import {analyticsActions} from "../../../../actions/analytics.actions"
+import _ from "lodash"
 
 const menuVariables = {
     'products': {
         title: 'Products',
-        url: '/analytics/products'
+        url: '/analytics/products',
+        key: 'products'
     },
     'portfolios': {
         title: 'Portfolios',
-        url: '/analytics/portfolios'
+        url: '/analytics/portfolios',
+        key: 'portfolios'
     },
     'campaigns': {
         title: 'Campaigns',
-        url: '/analytics/campaigns'
+        url: '/analytics/campaigns',
+        key: 'campaigns'
     },
     'placements': {
         title: 'Placements',
-        url: '/analytics/placements'
+        url: '/analytics/placements',
+        key: 'placements'
     },
     'adGroups': {
         title: 'Ad Groups',
-        url: '/analytics/ad-groups'
+        url: '/analytics/ad-groups',
+        key: 'adGroups'
     },
     'targetings': {
         title: 'Targetings',
-        url: '/analytics/targetings'
+        url: '/analytics/targetings',
+        key: 'targetings'
     },
     'negativeTargeting': {
         title: 'Negative Targetings',
-        url: '/analytics/negative-targetings'
+        url: '/analytics/negative-targetings',
+        key: 'negativeTargetings'
     },
     'productAds': {
         title: 'Product Ads',
-        url: '/analytics/product-ads'
+        url: '/analytics/product-ads',
+        key: 'productAds'
     }
 }
-
 
 export const analyticsNavigation = {
     account: [
@@ -60,13 +68,15 @@ export const analyticsNavigation = {
         menuVariables.negativeTargeting,
         {
             title: 'Settings',
-            url: '/analytics/campaign-settings'
+            url: '/analytics/campaign-settings',
+            key: 'campaignSettings'
         }
     ],
     product: [
         {
             title: 'Overview',
-            url: '/analytics/overview'
+            url: '/analytics/overview',
+            key: 'overview'
         },
         menuVariables.campaigns,
         menuVariables.adGroups,
@@ -80,56 +90,58 @@ export const analyticsNavigation = {
         menuVariables.negativeTargeting,
     ],
     portfolio: [
+        menuVariables.campaigns,
+        menuVariables.placements,
+        menuVariables.adGroups,
+        menuVariables.targetings,
+        menuVariables.negativeTargeting,
+        menuVariables.productAds,
         {
             title: 'Settings',
-            url: '/analytics/portfolio-settings'
+            url: '/analytics/portfolio-settings',
+            key: 'portfolioSettings'
         }
     ]
 }
 
-
-const Navigation = () => {
+const Navigation = ({location}) => {
     const {mainState} = useSelector(state => ({
         mainState: state.analytics.mainState
     }))
 
-    const NavigationRender = () => {
-        if (mainState.campaignId) {
-            return (analyticsNavigation.campaign.map((item, index) => <li>
-                <NavLink activeClassName={'active'} to={`${item.url}?campaignId=${mainState.campaignId}`}>
-                    {item.title}
-                </NavLink>
-            </li>))
+    const dispatch = useDispatch()
+
+    const [currentMenu, setCurrentMenu] = useState(analyticsNavigation.account)
+
+    useEffect(() => {
+        if (mainState.adGroupId && mainState.campaignId) {
+            setCurrentMenu(analyticsNavigation.adGroups)
+        } else if (mainState.campaignId) {
+            setCurrentMenu(analyticsNavigation.campaign)
         } else if (mainState.productId) {
-            return (analyticsNavigation.product.map((item, index) => <li>
-                <NavLink activeClassName={'active'} to={`${item.url}?productId=${mainState.productId}`}>
-                    {item.title}
-                </NavLink>
-            </li>))
-        } else if (mainState.adGroupId) {
-            return (analyticsNavigation.adGroups.map((item, index) => <li>
-                <NavLink activeClassName={'active'} to={`${item.url}?adGroupId=${mainState.adGroupId}`}>
-                    {item.title}
-                </NavLink>
-            </li>))
+            setCurrentMenu(analyticsNavigation.product)
+        } else if (mainState.portfolioId) {
+            setCurrentMenu(analyticsNavigation.portfolio)
         } else {
-            return (analyticsNavigation.account.map((item, index) => <li>
-                <NavLink activeClassName={'active'} to={item.url}>
-                    {item.title}
-                </NavLink>
-            </li>))
+            setCurrentMenu(analyticsNavigation.account)
         }
-    }
+    }, [mainState])
+
+    useEffect(() => {
+        dispatch(analyticsActions.setLocation(Object.values(analyticsNavigation).reduce((all, item) => ([...all, ...item])).find(item => item.url === location.pathname).key))
+    }, [location])
 
     return (
         <section className={'navigation'}>
             <ul>
-                <NavigationRender/>
+                {currentMenu.map((item, index) => <li>
+                    <NavLink activeClassName={'active'} to={item.url + location.search}>
+                        {item.title}
+                    </NavLink>
+                </li>)}
             </ul>
         </section>
-
     )
-
 }
 
 export default memo(Navigation)
