@@ -409,7 +409,8 @@ const Sidebar = () => {
                 </div>
             </div>
 
-            {(!production || user.user.id === 714) && <div className="back-to-admin">
+            {(!production || user.user.id === 714 || localStorage.getItem('adminToken')) &&
+            <div className="back-to-admin">
                 <InformationTooltip
                     type={'custom'}
                     description={<button type="button" onClick={backToAdmin}>Admin panel</button>}

@@ -1,18 +1,16 @@
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {dashboardActions} from "../../../../actions/dashboard.actions";
-import {metricsListArray} from "../../../PPCAutomate/Dashboard/Metrics/metricsList";
-import MetricItem from "../../../PPCAutomate/Dashboard/Metrics/MetricItem";
-import AddMetric from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetric";
-import './MainMetrics.less';
-import {SVG} from "../../../../utils/icons";
-import AddMetricModal from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetricModal";
-import MetricModal from "./MetricModal";
+import React, {useEffect, useState} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {dashboardActions} from "../../../../actions/dashboard.actions"
+import {metricsListArray} from "../../../PPCAutomate/Dashboard/Metrics/metricsList"
+import MetricItem from "../../../PPCAutomate/Dashboard/Metrics/MetricItem"
+import AddMetric from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetric"
+import './MainMetrics.less'
+import {SVG} from "../../../../utils/icons"
+import AddMetricModal from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetricModal"
+import MetricModal from "./MetricModal"
 
 const MainMetrics = () => {
-    const dispatch = useDispatch();
-
-    const [visibleModal, switchModal] = useState(false);
+    const dispatch = useDispatch()
 
     const {selectedMetrics, activeMetrics, selectedRangeDate, selectedProduct, onlyOptimization, allMetrics} = useSelector(state => ({
         selectedMetrics: state.dashboard.selectedMetrics,
@@ -21,14 +19,17 @@ const MainMetrics = () => {
         selectedProduct: state.dashboard.selectedProduct,
         onlyOptimization: state.products.onlyOptimization,
         allMetrics: state.dashboard.allMetrics,
+    }))
 
-    }));
+    const [visibleItems, updateVisibleList] = useState(selectedMetrics)
+    const [hiddenItems, updateHiddenList] = useState(allMetrics)
+    const [visibleModal, switchModal] = useState(false)
 
-    const removeSelectedMetric = (metric) => dispatch(dashboardActions.removeSelectedMetric(metric));
+    const removeSelectedMetric = (metric) => dispatch(dashboardActions.removeSelectedMetric(metric))
 
-    const activateMetric = (metric) => dispatch(dashboardActions.activateMetric(metric));
+    const activateMetric = (metric) => dispatch(dashboardActions.activateMetric(metric))
 
-    const deactivateMetric = (metric) => dispatch(dashboardActions.deactivateMetric(metric));
+    const deactivateMetric = (metric) => dispatch(dashboardActions.deactivateMetric(metric))
 
     const getMetricsStatistics = () => {
         dispatch(dashboardActions.getMetricsStatistics({
@@ -36,46 +37,44 @@ const MainMetrics = () => {
             endDate: selectedRangeDate.endDate,
             selectedProduct,
             onlyOptimization
-        }));
-    };
+        }))
+    }
 
 
-    const openModal = () => switchModal(true);
-    const handleCancel = () => switchModal(false);
+    const openModal = () => switchModal(true)
+    const handleCancel = () => switchModal(false)
 
-    const [visibleItems, updateVisibleList] = useState(selectedMetrics);
-    const [hiddenItems, updateHiddenList] = useState(allMetrics);
 
     const metricListFilter = (metric) => {
         return selectedMetrics.every((item) => {
-            return item.key !== metric.key;
-        });
-    };
+            return item.key !== metric.key
+        })
+    }
 
     const addMetric = (item) => {
-        updateVisibleList([...visibleItems, item]);
-        updateHiddenList([...hiddenItems.filter((hiddenMetric) => hiddenMetric.key !== item.key)]);
-    };
+        updateVisibleList([...visibleItems, item])
+        updateHiddenList([...hiddenItems.filter((hiddenMetric) => hiddenMetric.key !== item.key)])
+    }
 
     const removeMetric = (item) => {
-        updateVisibleList([...visibleItems.filter((visibleMetric) => visibleMetric.key !== item.key)]);
-        updateHiddenList([...hiddenItems, item]);
-    };
+        updateVisibleList([...visibleItems.filter((visibleMetric) => visibleMetric.key !== item.key)])
+        updateHiddenList([...hiddenItems, item])
+    }
 
     const handleOk = () => {
-        switchModal(false);
-        dispatch(dashboardActions.updateMetricList(visibleItems));
-    };
+        switchModal(false)
+        dispatch(dashboardActions.updateMetricList(visibleItems))
+    }
 
     useEffect(() => {
-        updateVisibleList(selectedMetrics);
-        updateHiddenList(allMetrics.filter(metricListFilter));
-    }, [selectedMetrics, allMetrics, visibleModal]);
+        updateVisibleList(selectedMetrics)
+        updateHiddenList(allMetrics.filter(metricListFilter))
+    }, [selectedMetrics, allMetrics, visibleModal])
 
 
     useEffect(() => {
-        getMetricsStatistics();
-    }, [selectedRangeDate, selectedProduct, onlyOptimization]);
+        getMetricsStatistics()
+    }, [selectedRangeDate, selectedProduct, onlyOptimization])
 
     return (
         <div className="main-metrics metrics-block">
@@ -92,7 +91,7 @@ const MainMetrics = () => {
                             />
                         )
                     } else {
-                        return '';
+                        return ''
                     }
                 }
             )}
@@ -119,6 +118,6 @@ const MainMetrics = () => {
             </>}
         </div>
     )
-};
+}
 
-export default MainMetrics;
+export default MainMetrics

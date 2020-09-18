@@ -26,7 +26,7 @@ const Impersonations = (props) => {
     }
 
     const onChange = (type, value) => {
-        if(type === 'id') {
+        if (type === 'id') {
             setSelectedUserId(value)
         } else {
             setSelectedUserEmail(value)
@@ -43,10 +43,10 @@ const Impersonations = (props) => {
         try {
             let res
 
-            if(selectedUserEmail) {
+            if (selectedUserEmail) {
                 res = await adminServices.impersonateUser(selectedUserEmail, 'email')
             } else {
-                 res = await adminServices.impersonateUser(selectedUserId, 'id')
+                res = await adminServices.impersonateUser(selectedUserId, 'id')
             }
 
             if (localStorage.getItem('adminToken')) {
@@ -66,21 +66,19 @@ const Impersonations = (props) => {
     }
 
     const logOutHandler = () => {
-        localStorage.setItem('token', localStorage.getItem('adminToken'))
-        localStorage.removeItem('adminToken')
-
         updateUserInformation()
+
+        setTimeout(() => {
+            localStorage.setItem('token', localStorage.getItem('adminToken'))
+            localStorage.removeItem('adminToken')
+            updateUserInformation()
+        }, 500)
 
         notification.success({title: 'Success!'})
     }
 
     useEffect(() => {
         getUserList()
-
-
-        if (queryString.parse(props.location.search).logout) {
-
-        }
     }, [])
 
     return (
