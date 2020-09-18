@@ -3,7 +3,8 @@ import {reportsUrls} from '../constans/api.urls'
 import moment from "moment"
 
 export const reasonFilterParams = {
-    'adjusted_bid': ['ChangedKeywordBidACoS', 'ChangedKeywordBidImpressions', 'ChangedPATBidACoS', 'ChangedPATBidImpressions', 'RevertLastChangeKeywordNoSales', 'RevertLastChangePATNoSales'],
+    'adjusted_bid': ['ChangedKeywordBidACoS', 'ChangedPATBidACoS', 'RevertLastChangeKeywordNoSales', 'RevertLastChangePATNoSales'],
+    'activating_keyword': ['ChangedKeywordBidImpressions', 'ChangedPATBidImpressions'],
     'not_profitable_keyword_pt': ['PausedKeywordHighACoS', 'PausedKeywordNoSales', 'PausedPATHighACoS', 'PausedPATNoSales'],
     'created_keyword_pt': ['CreatedKeywordFromCST', 'CreatedPATFromCST'],
     'created_negative_keyword_pt': ['AddedCreatedKeywordAsNegative', 'AddedCreatedPATAsNegative', 'CreatedNegativeKeywordFromCSTHighACoS', 'CreatedNegativeKeywordFromCSTNoSales', 'CreatedNegativePATFromCSTHighACoS', 'CreatedNegativePATFromCSTNoSales'],

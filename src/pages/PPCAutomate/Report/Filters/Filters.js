@@ -14,6 +14,7 @@ const valueTile = {
     //---------------------------
     //reason
     'adjusted_bid': 'Adjusted bid',
+    'activating_keyword': 'Activating keyword / PT',
     'not_profitable_keyword_pt': 'Not profitable keyword / PT',
     'created_keyword_pt': 'Created keyword / PT',
     'created_negative_keyword_pt': 'Created negative keyword / PT',
