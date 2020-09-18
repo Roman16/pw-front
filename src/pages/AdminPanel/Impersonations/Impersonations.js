@@ -75,9 +75,10 @@ const Impersonations = (props) => {
             await localStorage.setItem('token', localStorage.getItem('adminToken'))
 
             const res = await userService.getUserInfo()
+            localStorage.removeItem('adminToken')
+
             dispatch(userActions.setInformation(res))
 
-            localStorage.removeItem('adminToken')
             notification.success({title: 'Success!'})
         } catch (e) {
 
