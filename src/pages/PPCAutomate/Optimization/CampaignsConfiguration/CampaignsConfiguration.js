@@ -69,11 +69,11 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
     ]
 
     const getCampaignBlackList = async () => {
-        setJobState(true)
 
         try {
             const res = await productsServices.getCampaignsBlacklist(optimizationJobId)
             setJobsList(res.result)
+            setJobState(true)
 
             requestSent = true
         } catch (e) {
