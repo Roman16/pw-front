@@ -4,6 +4,7 @@ import {adminServices} from "../../../services/admin.services"
 import {notification} from "../../../components/Notification"
 
 const {Option} = Select
+let fullUsersList = []
 
 const ChangePassword = () => {
     const [params, setParams] = useState({
@@ -32,7 +33,9 @@ const ChangePassword = () => {
     const getUserList = async () => {
         try {
             const res = await adminServices.fetchUsers()
-            setUserList(res.result)
+
+            setUserList(res.result.slice(0, 10))
+            fullUsersList = res.result
         } catch (e) {
             console.log(e)
         }
@@ -66,6 +69,16 @@ const ChangePassword = () => {
         }
     }
 
+    const searchHandler = (text) => {
+        if (text.length > 2) {
+            setUserList(fullUsersList.filter(user => {
+                return `${user.name} ${user.last_name}`.toLowerCase().indexOf(text.toLowerCase()) >= 0 || user.email.toLowerCase().indexOf(text.toLowerCase()) >= 0
+            }))
+        } else {
+            setUserList(fullUsersList.slice(0, 10))
+        }
+    }
+
 
     useEffect(() => {
         getUserList()
@@ -81,16 +94,11 @@ const ChangePassword = () => {
                         showSearch
                         style={{width: 250}}
                         placeholder="Select a user"
-                        optionFilterProp="children"
+                        optionFilterProp={false}
+                        onSearch={searchHandler}
+                        filterOption={false}
                         onChange={e => onChangeUser('id', e)}
                         value={selectedUserId}
-                        filterOption={(input, option) => {
-                            if (input > 2) {
-                                return `${userList.find(user => user.id === option.props.value).name} ${userList.find(user => user.id === option.props.value).last_name}`.toLowerCase().indexOf(input.toLowerCase()) >= 0 || userList.find(user => user.id === option.props.value).email.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                            } else {
-                                return true
-                            }
-                        }}
                     >
                         {userList.map(user => (
                             <Option value={user.id}>

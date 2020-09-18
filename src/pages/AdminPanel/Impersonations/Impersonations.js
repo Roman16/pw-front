@@ -9,18 +9,22 @@ import queryString from "query-string"
 import {userService} from "../../../services/user.services"
 
 const {Option} = Select
+let fullUsersList = []
 
 const Impersonations = (props) => {
     const [userList, setUserList] = useState([]),
         [selectedUserId, setSelectedUserId] = useState(null),
         [selectedUserEmail, setSelectedUserEmail] = useState(null)
 
+
     const dispatch = useDispatch()
 
     const getUserList = async () => {
         try {
             const res = await adminServices.fetchUsers(false)
-            setUserList(res.result)
+
+            setUserList(res.result.slice(0, 10))
+            fullUsersList = res.result
         } catch (e) {
             console.log(e)
         }
@@ -80,6 +84,16 @@ const Impersonations = (props) => {
         }
     }
 
+    const searchHandler = (text) => {
+        if (text.length > 2) {
+            setUserList(fullUsersList.filter(user => {
+                return `${user.name} ${user.last_name}`.toLowerCase().indexOf(text.toLowerCase()) >= 0 || user.email.toLowerCase().indexOf(text.toLowerCase()) >= 0
+            }))
+        } else {
+            setUserList(fullUsersList.slice(0, 10))
+        }
+    }
+
     useEffect(() => {
         getUserList()
     }, [])
@@ -94,15 +108,10 @@ const Impersonations = (props) => {
                         showSearch
                         style={{width: 350, marginRight: '20px'}}
                         placeholder="Select a user"
-                        optionFilterProp="children"
+                        optionFilterProp={false}
+                        onSearch={searchHandler}
+                        filterOption={false}
                         onChange={e => onChange('id', e)}
-                        filterOption={(input, option) => {
-                            if (input.length > 2) {
-                                return `${userList.find(user => user.id === option.props.value).name} ${userList.find(user => user.id === option.props.value).last_name}`.toLowerCase().indexOf(input.toLowerCase()) >= 0 || userList.find(user => user.id === option.props.value).email.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                            } else {
-                                return true
-                            }
-                        }}
                     >
                         {userList.map(user => (
                             <Option value={user.id}>
@@ -122,7 +131,6 @@ const Impersonations = (props) => {
                         type={'email'}
                         placeholder="Enter E-mail"
                         onChange={(e) => onChange('email', e.target.value)}
-
                     />
 
                     <button type={'button'} className={'btn default'} onClick={impersonateHandler}>Impersonate</button>
