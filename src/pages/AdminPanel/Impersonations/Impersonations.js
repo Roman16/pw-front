@@ -6,6 +6,7 @@ import {notification} from "../../../components/Notification"
 import {userActions} from "../../../actions/user.actions"
 import {useDispatch} from "react-redux"
 import queryString from "query-string"
+import {userService} from "../../../services/user.services"
 
 const {Option} = Select
 
@@ -65,16 +66,18 @@ const Impersonations = (props) => {
         }
     }
 
-    const logOutHandler = () => {
-        updateUserInformation()
+    const logOutHandler = async () => {
+        try {
+            await localStorage.setItem('token', localStorage.getItem('adminToken'))
 
-        setTimeout(() => {
-            localStorage.setItem('token', localStorage.getItem('adminToken'))
+            const res = await userService.getUserInfo()
+            dispatch(userActions.setInformation(res))
+
             localStorage.removeItem('adminToken')
-            updateUserInformation()
-        }, 500)
+            notification.success({title: 'Success!'})
+        } catch (e) {
 
-        notification.success({title: 'Success!'})
+        }
     }
 
     useEffect(() => {
