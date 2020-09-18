@@ -182,7 +182,7 @@ const OptimizationCondition = ({adGroupsList, adGroupsCanBeOptimized, onCheck, u
             {typeof adGroupsList === 'string' && <h2>{adGroupsList}</h2>}
 
             {adGroupsList && <div className="table-block">
-                <h2 className="table-title" onClick={() => openTableHandler('adGroups')}>
+                <h2 className="table-title" onClick={() => openTableHandler(openedTable === 'adGroups' ? null : 'adGroups')}>
                     {typeof adGroupsList === 'object' && adGroupsList.length > 0 ?
                         <i className={'success'}>&#10004;</i> :
                         <i className={'error'}>    &#10006;</i>}
@@ -199,7 +199,7 @@ const OptimizationCondition = ({adGroupsList, adGroupsCanBeOptimized, onCheck, u
             </div>}
 
             {keywordsList && <div className="table-block">
-                <h2 className="table-title" onClick={() => openTableHandler('keywords')}>
+                <h2 className="table-title" onClick={() => openTableHandler(openedTable === 'keywords' ? null : 'keywords')}>
                     {typeof keywordsList === 'object' && keywordsList.length > 0 ?
                         <i className={'success'}>&#10004;</i> :
                         <i className={'error'}>    &#10006;</i>}
@@ -214,7 +214,7 @@ const OptimizationCondition = ({adGroupsList, adGroupsCanBeOptimized, onCheck, u
             </div>}
 
             {patsList && <div className="table-block">
-                <h2 className="table-title" onClick={() => openTableHandler('PATs')}>
+                <h2 className="table-title" onClick={() => openTableHandler(openedTable === 'PATs' ? null : 'PATs')}>
                     {typeof patsList === 'object' && patsList.length > 0 ? <i className={'success'}>&#10004;</i> :
                         <i className={'error'}>    &#10006;</i>}
                     PATs
@@ -228,7 +228,7 @@ const OptimizationCondition = ({adGroupsList, adGroupsCanBeOptimized, onCheck, u
             </div>}
 
             {adGroupsCanBeOptimized && <div className="table-block">
-                <h2 className="table-title" onClick={() => openTableHandler('AdGroupsCanBeOptimized')}>
+                <h2 className="table-title" onClick={() => openTableHandler(openedTable === 'AdGroupsCanBeOptimized' ? null : 'AdGroupsCanBeOptimized')}>
                     {typeof adGroupsCanBeOptimized === 'object' && adGroupsCanBeOptimized.length > 0 ?
                         <i className={'success'}>&#10004;</i> :
                         <i className={'error'}>    &#10006;</i>}

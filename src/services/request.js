@@ -1,49 +1,55 @@
-import axios from 'axios';
-import {loadProgressBar} from 'axios-progress-bar';
-import {notification} from '../components/Notification';
-import {useDispatch} from "react-redux";
+import axios from 'axios'
+import {loadProgressBar} from 'axios-progress-bar'
+import {notification} from '../components/Notification'
+import {useDispatch} from "react-redux"
 
-import {history} from '../utils/history';
-import {userService} from "./user.services";
+import {history} from '../utils/history'
+import {userService} from "./user.services"
 
 const baseUrl =
     // 'http://staging.profitwhales.com';
     process.env.REACT_APP_ENV === 'production'
         ? process.env.REACT_APP_API_PROD || ''
-        : process.env.REACT_APP_API_URL || '';
+        : process.env.REACT_APP_API_URL || ''
 
-let lastError = null;
+let lastError = null
 
 
 function handlerErrors(error) {
     if (lastError !== error) {
-        lastError = error;
+        lastError = error
 
         notification.error({
             title: error,
-        });
+        })
 
         setTimeout(() => {
-            lastError = null;
+            lastError = null
         }, 1000)
     }
 }
 
 
 const api = (method, url, data, type, abortToken) => {
-    loadProgressBar();
+    loadProgressBar()
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token'),
+        adminToken = localStorage.getItem('adminToken')
+
+    const isAdminRequest = url.split('/')[0] === 'admin'
 
     return new Promise((resolve, reject) => {
         axios({
             method: method,
             url: `${baseUrl}/api/${url}`,
-            // timeout: 30000,
             data: data,
             headers: {
                 'Content-Type': type || 'application/json',
-                authorization: token ? `Bearer ${token}` : true
+                authorization: token ?
+                    isAdminRequest ?
+                        adminToken ? `Bearer ${adminToken}` : `Bearer ${token}`
+                        : `Bearer ${token}`
+                    : true
             },
             cancelToken: abortToken
 
@@ -52,11 +58,11 @@ const api = (method, url, data, type, abortToken) => {
                 if (result.status === 208) {
                     resolve({
                         status: 'already'
-                    });
+                    })
                 } else if (result.status === 200 || result.status === 207) {
-                    resolve(result.data);
+                    resolve(result.data)
                 } else {
-                    reject(null);
+                    reject(null)
                 }
             })
             .catch(error => {
@@ -65,20 +71,20 @@ const api = (method, url, data, type, abortToken) => {
                     if (error.response.data.message === 'Incorrect login or password') {
                         handlerErrors(error.response.data.message)
                     } else {
-                        history.push(`/login?redirect=${window.location.pathname}`);
-                        localStorage.clear();
+                        history.push(`/login?redirect=${window.location.pathname}`)
+                        localStorage.clear()
                     }
                 } else if (error.response && error.response.status === 412) {
                     userService.resendConfirmEmail()
                         .then(() => {
-                            history.push('/confirm-email');
+                            history.push('/confirm-email')
                         })
                 } else if (error.response) {
                     if (error.response.status === 500 && (!error.response.data || !error.response.data.message)) {
-                        handlerErrors('Something wrong!');
-                        reject(error);
+                        handlerErrors('Something wrong!')
+                        reject(error)
                     } else if (typeof error.response.data === 'object') {
-                        reject(error);
+                        reject(error)
                         if (error.response.status === 401) {
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
@@ -91,10 +97,10 @@ const api = (method, url, data, type, abortToken) => {
                         }
                     }
                 } else {
-                    reject(error);
+                    reject(error)
                 }
-            });
-    });
-};
+            })
+    })
+}
 
-export default api;
+export default api
