@@ -29,7 +29,7 @@ export const optimizationOptions = [
 
 let timeoutId = null
 
-const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll}) => {
+const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll, optimizationJobId}) => {
     const [activeParams, setActiveParams] = useState([])
 
     const isAdmin = !!localStorage.getItem('adminToken')
@@ -65,6 +65,17 @@ const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll})
 
     useEffect(() => {
         setActiveParams(optimizationOptions.map(item => (product[item.value] && item.value)))
+
+        if (!optimizationJobId) {
+            const params = {}
+
+            optimizationOptions.forEach(item => {
+                params[item.value] = true
+            })
+
+            setActiveParams(optimizationOptions.map(item => item.value))
+            updateOptimizationOptions(params)
+        }
     }, [product.product_id])
 
     if (isAdmin) {

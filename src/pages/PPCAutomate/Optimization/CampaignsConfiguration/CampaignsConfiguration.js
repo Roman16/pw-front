@@ -9,9 +9,10 @@ import {notification} from "../../../../components/Notification"
 let requestSent = false
 
 
-const CampaignsConfiguration = ({productId, optimizationJobId}) => {
+const CampaignsConfiguration = ({optimizationJobId}) => {
     const [sectionHeightState, setSectionHeightState] = useState(false),
-        [jobsList, setJobsList] = useState([])
+        [jobsList, setJobsList] = useState([]),
+        [hasJob, setJobState] = useState(false)
 
     const changeCheckboxHandler = (index, type, value) => {
         setJobsList(jobsList.map((item, listIndex) => {
@@ -68,6 +69,8 @@ const CampaignsConfiguration = ({productId, optimizationJobId}) => {
     ]
 
     const getCampaignBlackList = async () => {
+        setJobState(true)
+
         try {
             const res = await productsServices.getCampaignsBlacklist(optimizationJobId)
             setJobsList(res.result)
@@ -100,6 +103,7 @@ const CampaignsConfiguration = ({productId, optimizationJobId}) => {
 
         if (!optimizationJobId) {
             setJobsList([])
+            setJobState(false)
         }
     }, [optimizationJobId])
 
@@ -122,6 +126,7 @@ const CampaignsConfiguration = ({productId, optimizationJobId}) => {
                     // loading={processing}
                     dataSource={jobsList}
                     columns={columns}
+                    emptyText={!hasJob ? 'Can\'t configure campaigns, start optimization first' : 'No campaigns for optimization, check product ads'}
                 />
 
                 {jobsList.length > 0 && <div className="actions">

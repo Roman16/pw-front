@@ -192,6 +192,7 @@ const Optimization = () => {
                     selectedAll={selectedAll}
                     onShowDrawer={showDrawerHandler}
                     updateOptimizationOptions={updateOptimizationOptions}
+                    optimizationJobId={selectedProduct.id}
                 />
 
                 <OptimizationChanges
