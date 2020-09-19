@@ -70,6 +70,8 @@ const ChangePassword = () => {
     }
 
     const searchHandler = (text) => {
+        setSelectedUserId(undefined)
+
         if (text.length > 2) {
             setUserList(fullUsersList.filter(user => {
                 return `${user.name} ${user.last_name}`.toLowerCase().indexOf(text.toLowerCase()) >= 0 || user.email.toLowerCase().indexOf(text.toLowerCase()) >= 0

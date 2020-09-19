@@ -13,7 +13,7 @@ let fullUsersList = []
 
 const Impersonations = (props) => {
     const [userList, setUserList] = useState([]),
-        [selectedUserId, setSelectedUserId] = useState(null),
+        [selectedUserId, setSelectedUserId] = useState(undefined),
         [selectedUserEmail, setSelectedUserEmail] = useState(null)
 
 
@@ -58,7 +58,6 @@ const Impersonations = (props) => {
                 localStorage.setItem('token', res.access_token)
             } else {
                 localStorage.setItem('adminToken', localStorage.getItem('token'))
-
                 localStorage.setItem('token', res.access_token)
             }
 
@@ -86,6 +85,8 @@ const Impersonations = (props) => {
     }
 
     const searchHandler = (text) => {
+        setSelectedUserId(undefined)
+
         if (text.length > 2) {
             setUserList(fullUsersList.filter(user => {
                 return `${user.name} ${user.last_name}`.toLowerCase().indexOf(text.toLowerCase()) >= 0 || user.email.toLowerCase().indexOf(text.toLowerCase()) >= 0
@@ -113,6 +114,7 @@ const Impersonations = (props) => {
                         onSearch={searchHandler}
                         filterOption={false}
                         onChange={e => onChange('id', e)}
+                        value={selectedUserId}
                     >
                         {userList.map(user => (
                             <Option value={user.id}>
