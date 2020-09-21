@@ -1,9 +1,9 @@
-import React, {useState} from "react";
-import './Filters.less';
-import {SVG} from "../../../../utils/icons";
-import {Popover} from "antd";
-import FilterWindow from "./FiltersWindow";
-import moment from "moment";
+import React, {useState} from "react"
+import './Filters.less'
+import {SVG} from "../../../../utils/icons"
+import {Popover} from "antd"
+import FilterWindow from "./FiltersWindow"
+import moment from "moment"
 
 const valueTile = {
     'keyword': 'Keyword',
@@ -49,74 +49,79 @@ const columnTitle = {
 }
 
 
-const FilterItem = ({filter, onRemove, onEdit}) => {
+const FilterItem = ({filter}) => {
     if (filter.filterBy === 'datetime') {
         return (
-            <div className="filter-item">
+            <>
                 {`${filter.value.startDate === 'lifetime' ? 'lifetime' : moment(filter.value.startDate).format('MMM DD, YYYY')} - ${filter.value.endDate === 'lifetime' ? 'lifetime' : moment(filter.value.endDate).format('MMM DD, YYYY')}`}
-
-                <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
-            </div>
+            </>
         )
     } else if (filter.filterBy === 'object' || filter.filterBy === 'keyword_pt' || filter.filterBy === 'campaign_name' || filter.filterBy === 'ad_group_name') {
         return (
-            <div className="filter-item">
+            <>
                 {`${columnTitle[filter.filterBy]} ${filter.type.key}: ${filter.value}`}
-                <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
-            </div>
+            </>
         )
     } else if (filter.filterBy === 'object_type' || filter.filterBy === 'match_type') {
         return (
-            <div className="filter-item">
+            <>
                 {`${columnTitle[filter.filterBy]} is one of: ${filter.value.map(item => valueTile[item]).join(', ')}`}
-                <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
-            </div>
+            </>
         )
     } else if (filter.filterBy === 'impressions' || filter.filterBy === 'clicks' || filter.filterBy === 'spend' || filter.filterBy === 'sales' || filter.filterBy === 'acos') {
         return (
-            <div className="filter-item">
+            <>
                 {`${columnTitle[filter.filterBy]} ${numberMark[filter.type.key]} ${filter.value}`}
-                <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
-            </div>
+            </>
         )
     } else if (filter.filterBy === 'keyword_id') {
         return (
-            <div className="filter-item" onClick={onEdit}>
+            <>
                 {`${columnTitle[filter.filterBy]} = ${filter.value}`}
-                <i onClick={(e) => {
-                    e.stopPropagation();
-                    onRemove();
-                }}><SVG id={'remove-filter-icon'}/></i>
-            </div>
+            </>
         )
-    }else if (filter.filterBy === 'type') {
+    } else if (filter.filterBy === 'type') {
         return (
-            <div className="filter-item">
+            <>
                 Reason is one of: {filter.value.map(item => valueTile[item]).join(', ')}
-                <i onClick={onRemove}><SVG id={'remove-filter-icon'}/></i>
-            </div>
+            </>
         )
     }
 }
 
 const Filters = ({columns, onChange, filters, currentTab}) => {
     const [visibleFilterPopover, setVisibleFilterPopover] = useState(false),
-        [visibleEditFilterPopover, setVisibleEditFilterPopover] = useState(false),
-        [editFilter, setEditFilter] = useState(null);
+        [indexSelectedFilter, setIndexSelectedFilter] = useState(null),
+        [editFilter, setEditFilter] = useState(undefined)
 
-    const editFilterHandler = (filter) => {
-        setEditFilter(filter);
+    const editFilterHandler = (filter, index) => {
+        setIndexSelectedFilter(index)
+        setEditFilter(filter)
     }
 
     const addFilterHandler = (filter) => {
-        onChange([...filters, filter])
+        if (indexSelectedFilter != null) {
+            onChange([...filters.map((item, index) => {
+                if (index === indexSelectedFilter) {
+                    item = filter
+                }
+
+                return item
+            })])
+        } else {
+            onChange([...filters, filter])
+        }
+
+        setVisibleFilterPopover(false)
+        setIndexSelectedFilter(null)
+        setEditFilter(undefined)
     }
 
     const resetFiltersHandler = () => {
         onChange([])
-    };
+    }
 
-    const removeFilterHandler = (index) => onChange(filters.filter((item, itemIndex) => itemIndex !== index));
+    const removeFilterHandler = (index) => onChange(filters.filter((item, itemIndex) => itemIndex !== index))
 
 
     return (
@@ -124,11 +129,36 @@ const Filters = ({columns, onChange, filters, currentTab}) => {
             <p>Filters: </p>
 
             {filters.map((filter, index) => (
-                <FilterItem
-                    filter={filter}
-                    onRemove={() => removeFilterHandler(index)}
-                    onEdit={() => editFilterHandler(filter)}
-                />
+                <Popover
+                    content={<FilterWindow
+                        filters={filters}
+                        columns={columns}
+                        currentTab={currentTab}
+                        onClose={() => setIndexSelectedFilter(null)}
+                        editFilter={editFilter}
+                        onAddFilter={(filter) => {
+                            addFilterHandler(filter)
+                        }}
+                    />}
+                    destroyTooltipOnHide={true}
+                    placement="bottomLeft"
+                    overlayClassName={'filter-popover'}
+                    trigger="click"
+                    visible={indexSelectedFilter === index}
+                >
+                    <div className="filter-item" onClick={() => editFilterHandler(filter, index)}>
+                        <FilterItem
+                            filter={filter}
+                        />
+
+                        <i onClick={(e) => {
+                            e.stopPropagation()
+                            removeFilterHandler(index)
+                        }}>
+                            <SVG id={'remove-filter-icon'}/>
+                        </i>
+                    </div>
+                </Popover>
             ))}
 
             {((currentTab === 'all-reports' && filters.length < 3) ||
@@ -139,20 +169,23 @@ const Filters = ({columns, onChange, filters, currentTab}) => {
                     columns={columns}
                     currentTab={currentTab}
                     onClose={() => setVisibleFilterPopover(false)}
+                    editFilter={editFilter}
                     onAddFilter={(filter) => {
                         addFilterHandler(filter)
                         setVisibleFilterPopover(false)
                     }}
                 />}
+                destroyTooltipOnHide={true}
                 placement="bottomLeft"
                 overlayClassName={'filter-popover'}
                 trigger="click"
                 visible={visibleFilterPopover}
-                onVisibleChange={() => {
-                    setVisibleFilterPopover(prevState => !prevState)
-                }}
             >
-                <button type={'button'} className={'btn default add-filter'}>
+                <button type={'button'} className={'btn default add-filter'} onClick={() => {
+                    setVisibleFilterPopover(prevState => !prevState)
+                    setIndexSelectedFilter(null)
+                    setEditFilter(undefined)
+                }}>
                     <SVG id={'plus-icon'}/>
                 </button>
             </Popover>}
@@ -162,6 +195,6 @@ const Filters = ({columns, onChange, filters, currentTab}) => {
             </button>}
         </div>
     )
-};
+}
 
-export default Filters;
+export default Filters

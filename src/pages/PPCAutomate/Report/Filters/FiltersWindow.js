@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import CustomSelect from "../../../../components/Select/Select"
 import DatePicker from "../../../../components/DatePicker/DatePickerRange"
 import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
@@ -138,11 +138,19 @@ const containsVariations = {
 
 }
 
-const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
+const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editFilter}) => {
     const [filterBy, setFilterBy] = useState(),
         [filterType, setFilterType] = useState(),
         [filterValue, setFilterValue] = useState()
 
+
+    useEffect(() => {
+        if (editFilter && editFilter.filterBy) {
+            setFilterBy(editFilter.filterBy)
+            setFilterType(editFilter.type)
+            setFilterValue(editFilter.value)
+        }
+    }, [editFilter])
 
     const multiSelectVariations = {
         'object_type': [
@@ -160,12 +168,20 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
             currentTab === 'targeting-improvements' ? [
                     {title: 'Adjusted bid', key: 'adjusted_bid', value: 'adjusted_bid'},
                     {title: 'Activating keyword / PT', key: 'activating_keyword', value: 'activating_keyword'},
-                    {title: 'Not profitable keyword / PT', key: 'not_profitable_keyword_pt', value: 'not_profitable_keyword_pt'},
+                    {
+                        title: 'Not profitable keyword / PT',
+                        key: 'not_profitable_keyword_pt',
+                        value: 'not_profitable_keyword_pt'
+                    },
                     {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
                 ] :
                 currentTab === 'search-terms' ? [
                         {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
-                        {title: 'Created negative keyword / PT', key: 'created_negative_keyword_pt', value: 'created_negative_keyword_pt'},
+                        {
+                            title: 'Created negative keyword / PT',
+                            key: 'created_negative_keyword_pt',
+                            value: 'created_negative_keyword_pt'
+                        },
                         {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
                         {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
                         {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
@@ -173,9 +189,17 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
                     [
                         {title: 'Adjusted bid', key: 'adjusted_bid', value: 'adjusted_bid'},
                         {title: 'Activating keyword / PT', key: 'activating_keyword', value: 'activating_keyword'},
-                        {title: 'Not profitable keyword / PT', key: 'not_profitable_keyword_pt', value: 'not_profitable_keyword_pt'},
+                        {
+                            title: 'Not profitable keyword / PT',
+                            key: 'not_profitable_keyword_pt',
+                            value: 'not_profitable_keyword_pt'
+                        },
                         {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
-                        {title: 'Created negative keyword / PT', key: 'created_negative_keyword_pt', value: 'created_negative_keyword_pt'},
+                        {
+                            title: 'Created negative keyword / PT',
+                            key: 'created_negative_keyword_pt',
+                            value: 'created_negative_keyword_pt'
+                        },
                         {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
                         {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
                         {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
@@ -264,6 +288,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
                 {filterBy === 'datetime' &&
                 <DatePicker
                     timeRange={(startDate, endDate) => changeDateHandler(startDate, endDate)}
+                    defaultValue={filterValue && Object.keys(filterValue).map(key => filterValue[key])}
                 />}
 
                 {(!filterType ||
