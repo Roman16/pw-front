@@ -2,7 +2,7 @@ import React from "react";
 import Tooltip from '../../../../../components/Tooltip/Tooltip';
 import {ProfitTooltipDescription} from "../../ProductBreakdown/ProductsList";
 import {round} from "../../../../../utils/round";
-import {metricsListArray} from "../metricsList";
+import {metricsListArray} from "../../../../../constans/metricsList";
 import {useSelector} from "react-redux";
 import {numberMask} from "../../../../../utils/numberMask";
 import {SVG} from "../../../../../utils/icons";

@@ -1,7 +1,7 @@
 import React from "react";
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
 import ModalMetricItem from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/ModalMetricItem";
-import {metricsListArray} from '../../../PPCAutomate/Dashboard/Metrics/metricsList';
+import {metricsListArray} from '../../../../constans/metricsList';
 
 const MetricModal = ({visibleModal, handleOk, handleCancel, addMetric, removeMetric, visibleItems, hiddenItems}) => {
     return (

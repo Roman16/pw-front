@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {dashboardActions} from '../../../../actions/dashboard.actions';
 import MetricItem from './MetricItem';
 import AddMetric from './AddMetric/AddMetric';
-import {metricsListArray} from './metricsList';
+import {metricsListArray} from '../../../../constans/metricsList';
 
 import './Metrics.less';
 

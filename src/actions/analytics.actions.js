@@ -4,7 +4,8 @@ export const analyticsActions = {
     setMainState,
     setChartState,
     setDateRange,
-    setLocation
+    setLocation,
+    updateMetricsState
 }
 
 function setMainState(state) {
@@ -24,6 +25,7 @@ function setChartState(state) {
         })
     }
 }
+
 function setDateRange(date) {
     return dispatch => {
         dispatch({
@@ -32,11 +34,21 @@ function setDateRange(date) {
         })
     }
 }
+
 function setLocation(key) {
     return dispatch => {
         dispatch({
             type: analyticsConstants.SET_LOCATION,
             payload: key
+        })
+    }
+}
+
+function updateMetricsState(data) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.UPDATE_METRICS_STATE,
+            payload: data
         })
     }
 }

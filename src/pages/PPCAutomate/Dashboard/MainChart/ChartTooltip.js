@@ -1,5 +1,5 @@
 import React from "react";
-import {metricsListArray} from "../Metrics/metricsList";
+import {metricsListArray} from "../../../../constans/metricsList";
 import moment from "moment";
 import {round} from "../../../../utils/round";
 import {numberMask} from "../../../../utils/numberMask";

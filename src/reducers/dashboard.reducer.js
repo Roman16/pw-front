@@ -1,5 +1,5 @@
 import {dashboardConstants} from '../constans/actions.type'
-import {metricsListArray} from '../pages/PPCAutomate/Dashboard/Metrics/metricsList'
+import {metricsListArray} from '../constans/metricsList'
 import moment from 'moment'
 
 let metricClickCount = 0

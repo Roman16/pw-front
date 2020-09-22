@@ -1,7 +1,7 @@
 import React, {Fragment} from "react"
 import Tooltip from '../../../../components/Tooltip/Tooltip'
 import {ProfitTooltipDescription} from "../ProductBreakdown/ProductsList"
-import {metricsListArray} from "./metricsList"
+import {metricsListArray} from "../../../../constans/metricsList"
 import {useSelector} from "react-redux"
 import {round} from "../../../../utils/round"
 import {numberMask} from "../../../../utils/numberMask"

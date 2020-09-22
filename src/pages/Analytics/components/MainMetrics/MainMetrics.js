@@ -1,35 +1,75 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {dashboardActions} from "../../../../actions/dashboard.actions"
-import {metricsListArray} from "../../../PPCAutomate/Dashboard/Metrics/metricsList"
+import {metricsListArray} from "../../../../constans/metricsList"
 import MetricItem from "../../../PPCAutomate/Dashboard/Metrics/MetricItem"
 import AddMetric from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetric"
 import './MainMetrics.less'
 import {SVG} from "../../../../utils/icons"
 import AddMetricModal from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetricModal"
 import MetricModal from "./MetricModal"
+import {analyticsActions} from "../../../../actions/analytics.actions"
+
+
+let metricClickCount = 0
+
 
 const MainMetrics = () => {
     const dispatch = useDispatch()
 
-    const {selectedMetrics, activeMetrics, selectedRangeDate, selectedProduct, onlyOptimization, allMetrics} = useSelector(state => ({
-        selectedMetrics: state.dashboard.selectedMetrics,
-        activeMetrics: state.dashboard.activeMetrics,
-        selectedRangeDate: state.dashboard.selectedRangeDate,
+    const location = useSelector(state => state.analytics.location),
+        metricsState = useSelector(state => state.analytics.metricsState[location]),
+        selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate)
+
+    const allMetrics = metricsState.allMetrics,
+        selectedMetrics = metricsState.selectedMetrics,
+        activeMetrics = metricsState.activeMetrics
+
+    const {selectedProduct, onlyOptimization} = useSelector(state => ({
         selectedProduct: state.dashboard.selectedProduct,
         onlyOptimization: state.products.onlyOptimization,
-        allMetrics: state.dashboard.allMetrics,
     }))
 
     const [visibleItems, updateVisibleList] = useState(selectedMetrics)
-    const [hiddenItems, updateHiddenList] = useState(allMetrics)
+    const [hiddenItems, updateHiddenList] = useState(metricsState.allMetrics)
     const [visibleModal, switchModal] = useState(false)
 
-    const removeSelectedMetric = (metric) => dispatch(dashboardActions.removeSelectedMetric(metric))
+    const removeSelectedMetric = (metric) => dispatch(analyticsActions.updateMetricsState({
+        selectedMetrics: selectedMetrics.filter(item => item.key !== metric.key),
+        activeMetrics: activeMetrics.map(item => item.key !== metric.key && item)
+    }))
 
-    const activateMetric = (metric) => dispatch(dashboardActions.activateMetric(metric))
+    const handleOk = () => {
+        switchModal(false)
+        dispatch(analyticsActions.updateMetricsState({selectedMetrics: visibleItems}))
+    }
 
-    const deactivateMetric = (metric) => dispatch(dashboardActions.deactivateMetric(metric))
+    const activateMetric = (metric) => {
+        let newActiveMetrics = [...activeMetrics]
+        if (!newActiveMetrics[0].key) {
+            metricClickCount = 1
+            newActiveMetrics[0] = metric
+        } else if (!newActiveMetrics[1].key) {
+            metricClickCount = 0
+            newActiveMetrics[1] = metric
+        } else {
+            metricClickCount++
+            newActiveMetrics[(metricClickCount & 1) ? 0 : 1] = metric
+        }
+
+        dispatch(analyticsActions.updateMetricsState({
+            activeMetrics: newActiveMetrics
+        }))
+    }
+
+    const deactivateMetric = (metric) => {
+        let countActiveMetrics = activeMetrics.map(item => item.key).filter(str => str)
+        if (countActiveMetrics.length === 1) metricClickCount = 0
+
+        dispatch(analyticsActions.updateMetricsState({
+            activeMetrics: activeMetrics.map(item => item.key === metric.key ? {} : item)
+        }))
+    }
 
     const getMetricsStatistics = () => {
         dispatch(dashboardActions.getMetricsStatistics({
@@ -43,7 +83,6 @@ const MainMetrics = () => {
 
     const openModal = () => switchModal(true)
     const handleCancel = () => switchModal(false)
-
 
     const metricListFilter = (metric) => {
         return selectedMetrics.every((item) => {
@@ -61,15 +100,11 @@ const MainMetrics = () => {
         updateHiddenList([...hiddenItems, item])
     }
 
-    const handleOk = () => {
-        switchModal(false)
-        dispatch(dashboardActions.updateMetricList(visibleItems))
-    }
 
     useEffect(() => {
         updateVisibleList(selectedMetrics)
         updateHiddenList(allMetrics.filter(metricListFilter))
-    }, [selectedMetrics, allMetrics, visibleModal])
+    }, [metricsState.selectedMetrics, metricsState.allMetrics, visibleModal])
 
 
     useEffect(() => {
@@ -83,9 +118,10 @@ const MainMetrics = () => {
                         return (
                             <MetricItem
                                 key={selected.key}
-                                removeSelectedMetric={removeSelectedMetric}
                                 metric={selected}
                                 activeMetrics={activeMetrics}
+
+                                removeSelectedMetric={removeSelectedMetric}
                                 onActivateMetric={activateMetric}
                                 onDeactivateMetric={deactivateMetric}
                             />
