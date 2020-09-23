@@ -17,6 +17,7 @@ const NegativeTargetingsList = () => {
             dataIndex: 'keyword_pt',
             key: 'keyword_pt',
             sorter: true,
+            locked: true,
         },
         ...!selectedCampaign ? [campaignColumn] : [],
         ...!selectedAdGroup ? [adGroupColumn] : [],
@@ -24,16 +25,13 @@ const NegativeTargetingsList = () => {
             title: 'Match type',
             dataIndex: 'match_type',
             key: 'match_type',
-            sorter: true
+            sorter: true,
+            locked: true,
         },
     ]
 
     return (
         <section className={'list-section'}>
-            <TableFilters
-                columns={columns}
-            />
-
             <TableList
                 columns={columns}
             />

@@ -11,6 +11,7 @@ export const analyticsServices = {
     fetchTargetingsList,
     fetchPortfoliosList,
     fetchProductAdsList,
+    fetchMetricsData
 }
 
 function fetchAdGroupsList(paginationParams) {
@@ -175,4 +176,8 @@ function fetchProductAdsList(paginationParams) {
         ],
         totalSize: 2
     })
+}
+
+function fetchMetricsData({startDate, endDate}) {
+    return api('get', `${analyticsUrls.metricsData}?product_id=all&start_date=lifetime&end_date=lifetime`)
 }

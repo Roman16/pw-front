@@ -10,7 +10,7 @@ export const userConstants = {
     RESET_CHANGES_COUNT: 'RESET_CHANGES_COUNT',
     SET_PPC_STATUS: 'SET_PPC_STATUS',
     SET_BOOTSTRAP: 'SET_BOOTSTRAP'
-};
+}
 
 //--------------------------------------------
 //------------ product constants--------------
@@ -30,7 +30,7 @@ export const productsConstants = {
     SWITCH_STOP_CONFIRM_WINDOW: 'SWITCH_STOP_CONFIRM_WINDOW',
     CAMPAIGN_BUDGET: 'CAMPAIGN_BUDGET',
     SET_FETCHING_STATE: 'SET_FETCHING_STATE'
-};
+}
 
 //--------------------------------------------
 //------------ reports constants--------------
@@ -39,7 +39,7 @@ export const reportsConstants = {
     SET_REPORTS_LIST: 'SET_REPORTS_LIST',
     START_FETCH_REPORTS_LIST: 'START_FETCH_REPORTS_LIST',
     SET_PAGE_SIZE: 'SET_PAGE_SIZE',
-};
+}
 
 //--------------------------------------------
 //------------ dashboard constants--------------
@@ -59,7 +59,7 @@ export const dashboardConstants = {
     SET_PRODUCTS_MARGIN_STATUS: 'SET_PRODUCTS_MARGIN_STATUS',
     RELOAD_METRICS: 'RELOAD_METRICS',
     SET_ADVERTISING_TYPE: 'SET_ADVERTISING_TYPE',
-};
+}
 
 //--------------------------------------------
 //------------ dayparting constants--------------
@@ -71,7 +71,7 @@ export const daypartingConstants = {
     ACTIVATED_DAYPARTING: 'ACTIVATED_DAYPARTING',
     DEACTIVATED_DAYPARTING: 'DEACTIVATED_DAYPARTING',
     COPY_PARAMS: 'COPY_PARAMS',
-};
+}
 
 //--------------------------------------------
 //---------- zero to hero constants-----------
@@ -86,7 +86,7 @@ export const zthConstants = {
     SET_INVALID_FIELD: 'SET_INVALID_FIELD',
     SET_PAID_BATCH: 'SET_PAID_BATCH',
     CLEAR_SETTINGS: 'CLEAR_SETTINGS',
-};
+}
 
 //--------------------------------------------
 //---------- analytics constants-----------
@@ -97,5 +97,7 @@ export const analyticsConstants = {
     SET_DATE_RANGE: 'SET_DATE_RANGE',
     SET_LOCATION: 'SET_LOCATION',
     UPDATE_METRICS_STATE: 'UPDATE_METRICS_STATE',
+    UPDATE_METRICS_DATA: 'UPDATE_METRICS_DATA',
+    SET_COLUMNS_BLACK_LIST: 'SET_COLUMNS_BLACK_LIST',
 
-};
+}

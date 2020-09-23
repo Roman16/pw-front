@@ -1,5 +1,4 @@
 import React from "react"
-import TableFilters from '../../components/TableFilters/TableFilters'
 import {
     acosColumn,
     adCvrColumn,
@@ -36,15 +35,17 @@ const TargetingsList = () => {
             key: 'keyword_pt',
             width: '200px',
             sorter: true,
+            locked: true,
         },
-        ...!selectedCampaign ? [campaignColumn] : [],
-        ...!selectedAdGroup ? [adGroupColumn] : [],
+        ...!selectedCampaign ? [{...campaignColumn, locked: true}] : [],
+        ...!selectedAdGroup ? [{...adGroupColumn, locked: true}] : [],
         {
             title: 'Match type',
             dataIndex: 'match_type',
             key: 'match_type',
             width: '150px',
-            sorter: true
+            sorter: true,
+            locked: true,
         },
         {
             ...statusColumn
@@ -102,10 +103,6 @@ const TargetingsList = () => {
 
     return (
         <section className={'list-section'}>
-            <TableFilters
-                columns={columns}
-            />
-
             <TableList
                 columns={columns}
                 fixedColumns={[0]}

@@ -28,6 +28,7 @@ const columns = [
         key: 'portfolio',
         width: '200px',
         sorter: true,
+        locked: true,
         render: (portfolio, item) => (<Link to={`/analytics/campaigns?portfolioId=${item.id}`}>{portfolio}</Link>)
     },
     {
@@ -35,7 +36,8 @@ const columns = [
         dataIndex: 'campaigns_count',
         key: 'campaigns_count',
         width: '150px',
-        sorter: true
+        sorter: true,
+        locked: true,
     },
     {
         ...impressionsColumn
@@ -89,10 +91,6 @@ const PortfoliosList = () => {
 
     return (
         <section className={'list-section'}>
-            <TableFilters
-                columns={columns}
-            />
-
             <TableList
                 columns={columns}
                 fixedColumns={[0]}

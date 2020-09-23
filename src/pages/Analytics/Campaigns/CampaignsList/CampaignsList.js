@@ -1,21 +1,25 @@
 import React from "react"
-import CustomTable from "../../../../components/Table/CustomTable"
-import Pagination from "../../../../components/Pagination/Pagination"
 import './CampaignsList.less'
-import {SVG} from "../../../../utils/icons"
-import TableFilters from '../../components/TableFilters/TableFilters'
 import {Link} from "react-router-dom"
 import {
-    acosColumn, adCvrColumn, adOrdersColumn, adProfitColumn,
+    acosColumn,
+    adCvrColumn,
+    adOrdersColumn,
+    adProfitColumn,
     adSalesColumn,
-    adSpendColumn, adUnitsColumn, budgetAllocationColumn,
-    clicksColumn, cpaColumn, cpcColumn,
+    adSpendColumn,
+    adUnitsColumn,
+    budgetAllocationColumn,
+    clicksColumn,
+    cpaColumn,
+    cpcColumn,
     ctrColumn,
     dateColumn,
-    impressionsColumn, roasColumn, salesShareColumn,
+    impressionsColumn,
+    roasColumn,
+    salesShareColumn,
     statusColumn
 } from "../../components/tableColumns"
-import DateRange from "../../components/DateRange/DateRange"
 import TableList from "../../components/TableList/TableList"
 
 const columns = [
@@ -26,31 +30,36 @@ const columns = [
         width: '200px',
         sorter: true,
         filter: true,
+        locked: true,
         render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{campaign}</Link>)
     },
     {
-        ...statusColumn
+        ...statusColumn,
+        locked: true,
     },
     {
         title: 'Type',
         dataIndex: 'type',
         key: 'type',
         width: '200px',
-        sorter: true
+        sorter: true,
+        locked: true,
     },
     {
         title: 'Portfolio',
         dataIndex: 'portfolio',
         key: 'portfolio',
         width: '150px',
-        sorter: true
+        sorter: true,
+        locked: true,
     },
     {
         title: 'Campaign bidding strategy',
         dataIndex: 'bidding_strategy',
         key: 'bidding_strategy',
         width: '250px',
-        sorter: true
+        sorter: true,
+        locked: true,
     },
     {
         title: 'Start date',
@@ -126,10 +135,6 @@ const columns = [
 const CampaignsList = () => {
     return (
         <section className={'campaigns-list list-section'}>
-            <TableFilters
-                columns={columns}
-            />
-
             <TableList
                 columns={columns}
                 fixedColumns={[0]}

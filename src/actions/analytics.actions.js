@@ -5,7 +5,9 @@ export const analyticsActions = {
     setChartState,
     setDateRange,
     setLocation,
-    updateMetricsState
+    updateMetricsState,
+    updateMetricsData,
+    updateColumnBlackList,
 }
 
 function setMainState(state) {
@@ -49,6 +51,24 @@ function updateMetricsState(data) {
         dispatch({
             type: analyticsConstants.UPDATE_METRICS_STATE,
             payload: data
+        })
+    }
+}
+
+function updateMetricsData(data) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.UPDATE_METRICS_DATA,
+            payload: data
+        })
+    }
+}
+
+function updateColumnBlackList(columnsList) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.SET_COLUMNS_BLACK_LIST,
+            payload: columnsList
         })
     }
 }

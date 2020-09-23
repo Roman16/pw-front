@@ -5,6 +5,11 @@ import {useSelector} from "react-redux"
 import _ from 'lodash'
 import './TableList.less'
 import {analyticsServices} from "../../../../services/analytics.services"
+import TableFilters from "../TableFilters/TableFilters"
+import {Popover} from "antd"
+import {SVG} from "../../../../utils/icons"
+import DateRange from "../DateRange/DateRange"
+import ColumnsSelect from "../ColumnsSelect/ColumnsSelect"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -27,8 +32,10 @@ const TableList = ({
 
     const {metricsValue, locationKey} = useSelector(state => ({
         metricsValue: state.dashboard.allMetrics,
-        locationKey: state.analytics.location
+        locationKey: state.analytics.location,
     }))
+
+    const columnsBlackList = useSelector(state => state.analytics.columnsBlackList[locationKey] || [])
 
 
     const sortChangeHandler = () => {
@@ -37,7 +44,6 @@ const TableList = ({
     const paginationChangeHandler = () => {
 
     }
-
 
     const getData = async () => {
         document.querySelector('.table-overflow').scrollTop = 0
@@ -60,6 +66,17 @@ const TableList = ({
 
     return (
         <>
+            <TableFilters
+                columns={columns}
+            />
+
+            <ColumnsSelect
+                columns={columns}
+                columnsBlackList={columnsBlackList}
+            />
+
+            <DateRange/>
+
             <CustomTable
                 onChangeSorter={sortChangeHandler}
                 // loading={processing}
@@ -74,11 +91,10 @@ const TableList = ({
                     }
                 }}
                 // sorterColumn={sorterColumn}
-                columns={columns}
+                columns={columns.filter(column => !columnsBlackList.includes(column.key))}
                 fixedColumns={fixedColumns}
                 // rowClassName={(item) => !item.viewed && 'new-report'}
             />
-
 
             {paginationParams.totalSize !== 0 && <Pagination
                 onChange={paginationChangeHandler}
@@ -98,4 +114,4 @@ const TableList = ({
     )
 }
 
-export default TableList
+export default React.memo(TableList)

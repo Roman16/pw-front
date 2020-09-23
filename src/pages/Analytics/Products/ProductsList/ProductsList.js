@@ -26,6 +26,7 @@ const columns = [
         dataIndex: 'product',
         key: 'product',
         width: '200px',
+        locked: true,
         sorter: true,
         render: (product, item) => (<Link to={`/analytics/overview?productId=${item.id}`}>{product}</Link>)
     },
@@ -34,6 +35,7 @@ const columns = [
         dataIndex: 'sku_asin',
         key: 'sku_asin',
         width: '200px',
+        locked: true,
         sorter: true
     },
     {
@@ -41,6 +43,7 @@ const columns = [
         dataIndex: 'campaigns',
         key: 'campaigns',
         width: '150px',
+        locked: true,
         sorter: true
     },
     {
@@ -67,8 +70,8 @@ const columns = [
     },
     {
         title: 'MACoS',
-        dataIndex: 'campaigns',
-        key: 'campaigns',
+        dataIndex: 'MACoS',
+        key: 'MACoS',
         width: '150px',
         sorter: true,
         ...renderNumberField('percent')
@@ -174,10 +177,6 @@ const columns = [
 const ProductsList = () => {
     return (
         <section className={'list-section'}>
-            <TableFilters
-                columns={columns}
-            />
-
             <TableList
                 columns={columns}
                 fixedColumns={[0, 1]}

@@ -29,8 +29,8 @@ const TableFilters = ({columns, filters = [], onChange}) => {
 
 
     return (
-        <div className="list-filters-block">
-            <div className="row">
+        <>
+            <div className="list-filters-block">
                 <div className="form-group">
                     <Search
                         className="search-field"
@@ -62,14 +62,12 @@ const TableFilters = ({columns, filters = [], onChange}) => {
                 >
                     <button><SVG id={'filter-icon'}/></button>
                 </Popover>
-
-                <DateRange/>
             </div>
 
             <div className="current-filters">
 
             </div>
-        </div>
+        </>
 
     )
 }

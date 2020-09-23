@@ -9,6 +9,7 @@ import {SVG} from "../../../../utils/icons"
 import AddMetricModal from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetricModal"
 import MetricModal from "./MetricModal"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import {analyticsServices} from "../../../../services/analytics.services"
 
 
 let metricClickCount = 0
@@ -71,13 +72,18 @@ const MainMetrics = () => {
         }))
     }
 
-    const getMetricsStatistics = () => {
-        dispatch(dashboardActions.getMetricsStatistics({
-            startDate: selectedRangeDate.startDate,
-            endDate: selectedRangeDate.endDate,
-            selectedProduct,
-            onlyOptimization
-        }))
+    const getMetricsStatistics = async () => {
+        try {
+            const res = await analyticsServices.fetchMetricsData({
+                startDate: selectedRangeDate.startDate,
+                endDate: selectedRangeDate.endDate
+            })
+
+            dispatch(analyticsActions.updateMetricsData(res))
+        } catch (e) {
+            console.log(e)
+        }
+
     }
 
 

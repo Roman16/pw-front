@@ -37,13 +37,15 @@ const ProductAdsList = () => {
             key: 'product',
             width: '200px',
             sorter: true,
+            locked: true,
         },
         {
             title: 'SKU/ASIN',
             dataIndex: 'sku_asin',
             key: 'sku_asin',
             width: '150px',
-            sorter: true
+            sorter: true,
+            locked: true,
         },
         ...!selectedCampaign ? [campaignColumn] : [],
         ...!selectedAdGroup ? [adGroupColumn] : [],
@@ -99,10 +101,6 @@ const ProductAdsList = () => {
 
     return (
         <section className={'list-section'}>
-            <TableFilters
-                columns={columns}
-            />
-
             <TableList
                 columns={columns}
                 fixedColumns={[0]}

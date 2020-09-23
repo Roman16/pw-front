@@ -388,6 +388,16 @@ img {
   }
 }
 
+.ant-checkbox-wrapper-disabled {
+  .ant-checkbox {
+    opacity: .6;
+
+    .ant-checkbox-inner {
+      border: 0;
+    }
+  }
+}
+
 .ant-checkbox.ant-checkbox-checked {
   .ant-checkbox-inner {
     background: url(./assets/img/icons/checked-checkbox.svg) no-repeat center center;
@@ -988,13 +998,17 @@ button.white[disabled] {
     border-color: @action-color;
   }
 
-  .ant-checkbox,
-  .ant-checkbox-checked,
-  .ant-checkbox-inner,
-  .ant-checkbox-input {
+  .ant-checkbox {
     font-size: inherit; // 14px
     width: 1.7142857em;
     height: 1.7142857em;
+  }
+
+  .ant-checkbox {
+    .ant-checkbox-input, .ant-checkbox-inner, .ant-checkbox-checked {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   span {

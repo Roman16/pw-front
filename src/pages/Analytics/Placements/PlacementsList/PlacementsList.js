@@ -1,5 +1,4 @@
 import React from "react"
-import TableFilters from '../../components/TableFilters/TableFilters'
 import {
     acosColumn,
     adCvrColumn,
@@ -34,6 +33,7 @@ const PlacementsList = () => {
             key: 'placement',
             width: '200px',
             sorter: true,
+            locked: true,
         },
         ...selectedCampaign ? [{
             title: 'Campaign Bidding Strategy',
@@ -41,6 +41,7 @@ const PlacementsList = () => {
             key: 'campaign_bidding_strategy',
             width: '250px',
             sorter: true,
+            locked: true,
         }] : [],
         {
             title: 'Bid Adjustment',
@@ -48,6 +49,7 @@ const PlacementsList = () => {
             key: 'bid_adjustment',
             width: '200px',
             sorter: true,
+            locked: true,
         },
         {
             ...impressionsColumn
@@ -99,9 +101,6 @@ const PlacementsList = () => {
 
     return (
         <section className={'list-section'}>
-            <TableFilters
-                columns={columns}
-            />
 
             <TableList
                 columns={columns}
