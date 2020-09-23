@@ -1,10 +1,11 @@
 import React, {useState, useRef, useEffect} from "react"
-import {Checkbox, Popover} from "antd"
+import {Checkbox, Input} from "antd"
 import {SVG} from "../../../../utils/icons"
 import {analyticsActions} from "../../../../actions/analytics.actions"
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 
 let enableSwitch = true
+const {Search} = Input
 
 
 const ColumnsSelect = ({columns, columnsBlackList}) => {
@@ -16,13 +17,6 @@ const ColumnsSelect = ({columns, columnsBlackList}) => {
 
     const wrapperRef = useRef(null)
 
-    useEffect(() => {
-        setColumnsState(prevState => prevState.map(column => ({
-            ...column,
-            checked: !columnsBlackList.find(item => item === column.key)
-        })))
-    }, [columnsBlackList])
-
     const changeColumnHandler = (event, column) => {
         if (event) {
             dispatch(analyticsActions.updateColumnBlackList(columnsBlackList.filter(item => item !== column)))
@@ -31,10 +25,13 @@ const ColumnsSelect = ({columns, columnsBlackList}) => {
         }
     }
 
+    const onSearch = (value) => {
+        setColumnsState(columns.filter(column => column.title.toLowerCase().includes(value.toLowerCase())))
+    }
 
     useEffect(() => {
         function handleClickOutside({target}) {
-            if(target.className === 'btn icon' || target.parentNode.className === 'btn icon') {
+            if (target.className === 'btn icon' || target.parentNode.className === 'btn icon') {
 
             } else if (wrapperRef.current && !wrapperRef.current.contains(target) && !popoverState) {
                 enableSwitch = false
@@ -60,6 +57,16 @@ const ColumnsSelect = ({columns, columnsBlackList}) => {
                 </i>
 
                 {popoverState && <div className={'popover-column-select'} ref={wrapperRef}>
+                    <div className="form-group">
+                        <Search
+                            className="search-field"
+                            placeholder={'Search'}
+                            onChange={e => onSearch(e.target.value)}
+                            data-intercom-target='search-field'
+                            suffix={<SVG id={'search'}/>}
+                        />
+                    </div>
+
                     <div className="columns-list">
                         {columnsState.map(column => (
                             <Checkbox
