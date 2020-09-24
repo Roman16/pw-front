@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react'
 import {
     LineChart,
     ComposedChart,
@@ -11,15 +11,15 @@ import {
     ReferenceLine,
 
     ReferenceArea,
-} from 'recharts';
-import ChartTooltip from "./ChartTooltip";
-import moment from "moment";
+} from 'recharts'
+import ChartTooltip from "./ChartTooltip"
+import moment from "moment"
 
 const animationDuration = 1000,
     dashedLineAnimationDuration = 1000,
     animationBegin = 1000,
     animationEasing = 'linear',
-    isAnimationActive = false;
+    isAnimationActive = false
 
 const Chart = ({
                    data,
@@ -31,7 +31,7 @@ const Chart = ({
                    productOptimizationDateList
                }) => {
 
-    const [chartData, setChartData] = useState([]);
+    const [chartData, setChartData] = useState([])
 
     useEffect(() => {
         setChartData(data.map(item => {
@@ -59,10 +59,10 @@ const Chart = ({
                 return ({
                     ...item,
                     date: `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`
-                });
+                })
             }
-        }));
-    }, [data]);
+        }))
+    }, [data])
 
     return (
         <div className='main-chart-container'>
@@ -171,7 +171,7 @@ const Chart = ({
                     })}
                     {/*-----------------------------------*/}
 
-                    {(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line
+                    {activeMetrics.length > 0 && activeMetrics[0].key && showWeekChart && <Line
                         yAxisId="left"
                         type="monotone"
                         dataKey="seven_days_first_metric_value"
@@ -184,22 +184,7 @@ const Chart = ({
                         isAnimationActive={isAnimationActive}
                     />}
 
-                    {/*{(activeMetrics && activeMetrics[0].key && showWeekChart) && <Line*/}
-                    {/*    yAxisId="left"*/}
-                    {/*    type="monotone"*/}
-                    {/*    dataKey="dashed_seven_days_first_metric_value"*/}
-                    {/*    stroke="#82ca9d"*/}
-                    {/*    strokeWidth={3}*/}
-                    {/*    dot={false}*/}
-                    {/*    filter={'url(#dropshadow)'}*/}
-                    {/*    strokeDasharray="7 5"*/}
-                    {/*    animationBegin={animationBegin}*/}
-                    {/*    animationEasing={animationEasing}*/}
-                    {/*    animationDuration={dashedLineAnimationDuration}*/}
-                    {/*    isAnimationActive={isAnimationActive}*/}
-                    {/*/>}*/}
-
-                    {(activeMetrics && activeMetrics[0].key && showDailyChart) && <Line
+                    {(activeMetrics.length > 0 && activeMetrics[0].key && showDailyChart) && <Line
                         yAxisId='left'
                         type="linear"
                         strokeOpacity={0.8}
@@ -212,7 +197,7 @@ const Chart = ({
                         animationDuration={animationDuration}
                         isAnimationActive={isAnimationActive}
                     />}
-                    {(activeMetrics && activeMetrics[0].key && showDailyChart) && <Line
+                    {(activeMetrics.length > 0 && activeMetrics[0].key && showDailyChart) && <Line
                         yAxisId='left'
                         type="linear"
                         strokeOpacity={0.8}
@@ -229,7 +214,7 @@ const Chart = ({
 
                     />}
 
-                    {(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line
+                    {(activeMetrics.length > 1 && activeMetrics[1].key && showWeekChart) && <Line
                         yAxisId="right"
                         type="monotone"
                         dataKey="seven_days_second_metric_value"
@@ -242,22 +227,7 @@ const Chart = ({
                         isAnimationActive={isAnimationActive}
                     />}
 
-                    {/*{(activeMetrics && activeMetrics[1].key && showWeekChart) && <Line*/}
-                    {/*    yAxisId="right"*/}
-                    {/*    type="monotone"*/}
-                    {/*    dataKey="dashed_seven_days_second_metric_value"*/}
-                    {/*    stroke="#8884d8"*/}
-                    {/*    strokeWidth={3}*/}
-                    {/*    dot={false}*/}
-                    {/*    filter={'url(#dropshadow)'}*/}
-                    {/*    strokeDasharray="7 5"*/}
-                    {/*    animationBegin={animationBegin}*/}
-                    {/*    animationEasing={animationEasing}*/}
-                    {/*    animationDuration={dashedLineAnimationDuration}*/}
-                    {/*    isAnimationActive={isAnimationActive}*/}
-                    {/*/>}*/}
-
-                    {(activeMetrics && activeMetrics[1].key && showDailyChart) && <Line
+                    {(activeMetrics.length > 1 && activeMetrics[1].key && showDailyChart) && <Line
                         yAxisId='right'
                         type="linear"
                         strokeOpacity={0.5}
@@ -271,7 +241,7 @@ const Chart = ({
                         isAnimationActive={isAnimationActive}
                     />}
 
-                    {(activeMetrics && activeMetrics[1].key && showDailyChart) && <Line
+                    {(activeMetrics.length > 1 && activeMetrics[1].key && showDailyChart) && <Line
                         yAxisId='right'
                         type="linear"
                         strokeOpacity={0.5}
@@ -290,7 +260,7 @@ const Chart = ({
                 </LineChart>
             </ResponsiveContainer>
         </div>
-    );
-};
+    )
+}
 
-export default Chart;
+export default Chart

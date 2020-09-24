@@ -29,13 +29,17 @@ export const optimizationOptions = [
 
 let timeoutId = null
 
-const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll, optimizationJobId}) => {
+let defaultOptionsValue = optimizationOptions.map(item => item.value)
+
+const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll}) => {
     const [activeParams, setActiveParams] = useState([])
 
     const isAdmin = !!localStorage.getItem('adminToken')
 
     const onChange = async (value) => {
         setActiveParams(value)
+
+        defaultOptionsValue = value
 
         const params = {}
 
@@ -66,14 +70,14 @@ const OptimizationIncludes = ({product, updateOptimizationOptions, selectedAll, 
     useEffect(() => {
         setActiveParams(optimizationOptions.map(item => (product[item.value] && item.value)))
 
-        if (!optimizationJobId) {
+        if (!product.status || product.status !== 'RUNNING') {
             const params = {}
 
             optimizationOptions.forEach(item => {
-                params[item.value] = true
+                params[item.value] = !!defaultOptionsValue.includes(item.value)
             })
 
-            setActiveParams(optimizationOptions.map(item => item.value))
+            setActiveParams(defaultOptionsValue)
             updateOptimizationOptions(params)
         }
     }, [product.product_id])

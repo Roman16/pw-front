@@ -134,7 +134,7 @@ const Sidebar = () => {
 
                                             <span className="top-span">
                                         Zero to Hero
-                                        <span className="new-fiches">new</span>
+                                        {/*<span className="new-fiches">new</span>*/}
                                 </span>
                                         </NavLink>
                                     </div>

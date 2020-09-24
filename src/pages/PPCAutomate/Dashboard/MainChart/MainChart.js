@@ -53,7 +53,7 @@ const MainChart = () => {
     const handleChangeSwitch = (type, value) => dispatch(dashboardActions.switchChart(type, value))
 
     const getChartData = () => {
-        if (activeMetrics[0].key || activeMetrics[1].key) {
+        if (activeMetrics.length > 0 && (activeMetrics[0].key || activeMetrics[1].key)) {
             localFetch = true
 
             switchFetch(true)
@@ -118,8 +118,8 @@ const MainChart = () => {
                 timeRange={timeRange}
                 onChangeSwitch={handleChangeSwitch}
                 selectedRangeDate={selectedRangeDate}
-                firstActiveMetricTitle={activeMetrics[0] && activeMetrics[0].title}
-                secondActiveMetricTitle={activeMetrics[0] && activeMetrics[1].title}
+                firstActiveMetricTitle={activeMetrics.length > 0 && activeMetrics[0].title}
+                secondActiveMetricTitle={activeMetrics.length > 1 && activeMetrics[1].title}
                 showWeekChart={showWeekChart}
                 showDailyChart={showDailyChart}
                 showOptimizationChart={showOptimizationChart}
@@ -136,16 +136,16 @@ const MainChart = () => {
             />
 
             <div className="main-legend">
-                {activeMetrics[0] && activeMetrics[0].title && <div className="first-line">
+                {activeMetrics.length > 0 && activeMetrics[0].title && <div className="first-line">
                     <div className="green-line"/>
 
-                    {activeMetrics[0] && <span dangerouslySetInnerHTML={{__html: activeMetrics[0].title}}/>}
+                    {activeMetrics.length > 0 && <span dangerouslySetInnerHTML={{__html: activeMetrics[0].title}}/>}
                 </div>}
 
-                {activeMetrics[0] && activeMetrics[1].title && <div className="second-line">
+                {activeMetrics.length > 1 && activeMetrics[1].title && <div className="second-line">
                     <div className="violet-line"/>
 
-                    {activeMetrics[0] && <span dangerouslySetInnerHTML={{__html: activeMetrics[1].title}}/>}
+                    {activeMetrics.length > 1 && <span dangerouslySetInnerHTML={{__html: activeMetrics[1].title}}/>}
                 </div>}
             </div>
 

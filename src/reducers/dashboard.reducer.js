@@ -97,24 +97,19 @@ export function dashboard(state = initialState, action) {
             let newActiveMetricsList = [...state.activeMetrics]
 
             if (action.payload.length > 0) {
-                if (action.payload.find(item => item.key === state.activeMetrics[0].key) === undefined &&
-                    action.payload.find(item => item.key === state.activeMetrics[1].key) === undefined) {
+                if (action.payload.length === 1) {
+                    newActiveMetricsList = action.payload.slice(0, 1)
+                } else if(action.payload.length === 2) {
                     newActiveMetricsList = action.payload.slice(0, 2)
-                } else if (action.payload.find(item => item.key === state.activeMetrics[0].key) === undefined
-                    && action.payload.find(item => item.key === state.activeMetrics[1].key) !== undefined
-                    && action.payload[0].key !== state.activeMetrics[1].key) {
+                } else if (action.payload.find(item => item.key === state.activeMetrics[0].key) === undefined && action.payload.find(item => item.key === state.activeMetrics[1].key) === undefined) {
+                    newActiveMetricsList = action.payload.slice(0, 2)
+                } else if (action.payload.find(item => item.key === state.activeMetrics[0].key) === undefined && action.payload.find(item => item.key === state.activeMetrics[1].key) !== undefined && action.payload[0].key !== state.activeMetrics[1].key) {
                     newActiveMetricsList[0] = action.payload[0]
-                } else if (action.payload.find(item => item.key === state.activeMetrics[0].key) === undefined
-                    && action.payload.find(item => item.key === state.activeMetrics[1].key) !== undefined
-                    && action.payload[0].key === state.activeMetrics[1].key) {
+                } else if (action.payload.find(item => item.key === state.activeMetrics[0].key) === undefined && action.payload.find(item => item.key === state.activeMetrics[1].key) !== undefined && action.payload[0].key === state.activeMetrics[1].key) {
                     newActiveMetricsList[0] = action.payload[1] ? action.payload[1] : {}
-                } else if (action.payload.find(item => item.key === state.activeMetrics[1].key) === undefined
-                    && action.payload.find(item => item.key === state.activeMetrics[0].key) !== undefined
-                    && action.payload[0].key !== state.activeMetrics[0].key) {
+                } else if (action.payload.find(item => item.key === state.activeMetrics[1].key) === undefined && action.payload.find(item => item.key === state.activeMetrics[0].key) !== undefined && action.payload[0].key !== state.activeMetrics[0].key) {
                     newActiveMetricsList[1] = action.payload[0]
-                } else if (action.payload.find(item => item.key === state.activeMetrics[1].key) === undefined
-                    && action.payload.find(item => item.key === state.activeMetrics[0].key) !== undefined
-                    && action.payload[0].key === state.activeMetrics[0].key) {
+                } else if (action.payload.find(item => item.key === state.activeMetrics[1].key) === undefined && action.payload.find(item => item.key === state.activeMetrics[0].key) !== undefined && action.payload[0].key === state.activeMetrics[0].key) {
                     newActiveMetricsList[1] = action.payload[1] ? action.payload[1] : {}
                 }
             } else {
