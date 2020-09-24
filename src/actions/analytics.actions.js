@@ -8,6 +8,7 @@ export const analyticsActions = {
     updateMetricsState,
     updateMetricsData,
     updateColumnBlackList,
+    updateFiltersList,
 }
 
 function setMainState(state) {
@@ -69,6 +70,14 @@ function updateColumnBlackList(columnsList) {
         dispatch({
             type: analyticsConstants.SET_COLUMNS_BLACK_LIST,
             payload: columnsList
+        })
+    }
+}
+function updateFiltersList(filters) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.SET_FILTERS_LIST,
+            payload: filters
         })
     }
 }

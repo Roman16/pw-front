@@ -36,6 +36,7 @@ const TableList = ({
     }))
 
     const columnsBlackList = useSelector(state => state.analytics.columnsBlackList[locationKey] || [])
+    const filters = useSelector(state => state.analytics.filters[locationKey] || [])
 
 
     const sortChangeHandler = () => {
@@ -68,6 +69,7 @@ const TableList = ({
         <>
             <TableFilters
                 columns={columns}
+                filters={filters}
             />
 
             <ColumnsSelect

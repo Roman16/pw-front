@@ -19,7 +19,7 @@ import {
     roasColumn,
     salesShareColumn,
     statusColumn
-} from "../../components/tableColumns"
+} from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
 
 const columns = [
@@ -29,8 +29,8 @@ const columns = [
         key: 'campaign',
         width: '200px',
         sorter: true,
-        filter: true,
         locked: true,
+        search: true,
         render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{campaign}</Link>)
     },
     {

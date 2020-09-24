@@ -17,7 +17,7 @@ import {
     renderNumberField,
     roasColumn,
     salesShareColumn,
-} from "../../components/tableColumns"
+} from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
 
 const columns = [
@@ -28,6 +28,7 @@ const columns = [
         width: '200px',
         locked: true,
         sorter: true,
+        search: true,
         render: (product, item) => (<Link to={`/analytics/overview?productId=${item.id}`}>{product}</Link>)
     },
     {

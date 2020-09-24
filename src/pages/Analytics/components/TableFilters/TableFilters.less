@@ -9,19 +9,42 @@
   }
 
   button {
-    margin: 0 0 0 20px;
+    width: 2.2857142857142856rem;
+    height: 2.2857142857142856rem;
+    margin: 0 0 0 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     svg {
+      width: 1.1428571428571428rem;
+      height: 1rem;
       fill: #656A84;
     }
 
     &:hover {
+      background: rgba(109, 109, 246, 0.05);
+
       svg {
         fill: #6D6DF6;
       }
     }
   }
 
+
+
+}
+
+.analytics-page .current-filters {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 20px;
+
+  .filter-item {
+    width: max-content;
+    margin-bottom: 20px;
+  }
 }
 
 .analytics-filter-popover {

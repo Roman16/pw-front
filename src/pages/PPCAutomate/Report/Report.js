@@ -10,6 +10,7 @@ import {targetingImprovements} from "./ReportTable/Tables/targetingImprovements"
 import {searchTerms} from "./ReportTable/Tables/searchTerms";
 import {useSelector} from "react-redux";
 import axios from 'axios';
+import {dateField} from "./ReportTable/Tables/const"
 
 
 const CancelToken = axios.CancelToken;
@@ -153,7 +154,7 @@ function Report() {
 
             <Filters
                 filters={filters}
-                columns={mainTabs[currentTab]}
+                columns={[dateField, ...mainTabs[currentTab]]}
                 currentTab={currentTab}
 
                 onChange={changeFiltersHandler}

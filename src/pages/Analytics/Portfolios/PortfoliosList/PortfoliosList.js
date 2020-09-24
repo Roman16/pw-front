@@ -17,7 +17,7 @@ import {
     impressionsColumn,
     roasColumn,
     salesShareColumn,
-} from "../../components/tableColumns"
+} from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
 
 
@@ -29,6 +29,7 @@ const columns = [
         width: '200px',
         sorter: true,
         locked: true,
+        search: true,
         render: (portfolio, item) => (<Link to={`/analytics/campaigns?portfolioId=${item.id}`}>{portfolio}</Link>)
     },
     {

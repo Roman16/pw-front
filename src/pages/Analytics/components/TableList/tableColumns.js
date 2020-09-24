@@ -1,7 +1,7 @@
 import React from "react"
 import moment from "moment"
-import {numberMask} from "../../../utils/numberMask"
-import {round} from "../../../utils/round"
+import {numberMask} from "../../../../utils/numberMask"
+import {round} from "../../../../utils/round"
 import {Link} from "react-router-dom"
 
 export const renderNumberField = (type = 'number') => {
@@ -42,6 +42,7 @@ export const impressionsColumn = {
     key: 'impressions',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField()
 }
 
@@ -51,6 +52,7 @@ export const clicksColumn = {
     key: 'clicks',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField()
 }
 
@@ -96,6 +98,7 @@ export const acosColumn = {
     key: 'acos',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField('percent')
 }
 
@@ -186,6 +189,7 @@ export const adGroupColumn = {
     key: 'ad_group',
     minWidth: '200px',
     sorter: true,
+    filter: true,
     render: (adGroup, item) => (
         <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.id}`}>
             {adGroup}

@@ -2,30 +2,53 @@ import React, {useState} from "react"
 import {SVG} from "../../../../utils/icons"
 import {Input, Popover} from "antd"
 import './TableFilters.less'
-import FilterWindow from "./FilterWindow"
 import CustomSelect from "../../../../components/Select/Select"
 import DateRange from "../DateRange/DateRange"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
+import {FilterItem} from "../../../PPCAutomate/Report/Filters/FilterItem"
+import {analyticsActions} from "../../../../actions/analytics.actions"
+import FilterWindow from "../../../PPCAutomate/Report/Filters/FiltersWindow"
 
 const {Search} = Input
 
-const TableFilters = ({columns, filters = [], onChange}) => {
-    const [visibleFilterPopover, setVisibleFilterPopover] = useState(false)
+const TableFilters = ({columns, filters = []}) => {
+    const [visibleFilterPopover, setVisibleFilterPopover] = useState(false),
+        [indexSelectedFilter, setIndexSelectedFilter] = useState(null),
+        [editFilter, setEditFilter] = useState(undefined)
 
+    const dispatch = useDispatch()
 
-    // const editFilterHandler = (filter) => {
-    //     setEditFilter(filter);
-    // }
+    const editFilterHandler = (filter, index) => {
+        setIndexSelectedFilter(index)
+        setEditFilter(filter)
+    }
+
+    const updateFilterListHandler = (filters) => {
+        dispatch(analyticsActions.updateFiltersList(filters))
+    }
 
     const addFilterHandler = (filter) => {
-        onChange([...filters, filter])
+        if (indexSelectedFilter != null) {
+            updateFilterListHandler([...filters.map((item, index) => {
+                if (index === indexSelectedFilter) {
+                    item = filter
+                }
+
+                return item
+            })])
+        } else {
+            updateFilterListHandler([...filters, filter])
+        }
+
+        setVisibleFilterPopover(false)
+        setIndexSelectedFilter(null)
+        setEditFilter(undefined)
     }
 
-    const resetFiltersHandler = () => {
-        onChange([])
-    }
+    const resetFiltersHandler = () => updateFilterListHandler([])
 
-    const removeFilterHandler = (index) => onChange(filters.filter((item, itemIndex) => itemIndex !== index))
+
+    const removeFilterHandler = (index) => updateFilterListHandler(filters.filter((item, itemIndex) => itemIndex !== index))
 
 
     return (
@@ -34,7 +57,7 @@ const TableFilters = ({columns, filters = [], onChange}) => {
                 <div className="form-group">
                     <Search
                         className="search-field"
-                        placeholder={'Search'}
+                        placeholder={`Search by ${columns.find(column => column.search).title}`}
                         // onChange={e => onSearch(e.target.value)}
                         data-intercom-target='search-field'
                         suffix={<SVG id={'search'}/>}
@@ -46,26 +69,60 @@ const TableFilters = ({columns, filters = [], onChange}) => {
                         filters={filters}
                         columns={columns}
                         onClose={() => setVisibleFilterPopover(false)}
-                        getPopupContainer={trigger => trigger}
+                        editFilter={editFilter}
                         onAddFilter={(filter) => {
                             addFilterHandler(filter)
                             setVisibleFilterPopover(false)
                         }}
                     />}
+                    destroyTooltipOnHide={true}
                     placement="bottomLeft"
-                    overlayClassName={'analytics-filter-popover'}
+                    overlayClassName={'filter-popover'}
                     trigger="click"
                     visible={visibleFilterPopover}
-                    onVisibleChange={() => {
-                        setVisibleFilterPopover(prevState => !prevState)
-                    }}
                 >
-                    <button><SVG id={'filter-icon'}/></button>
+                    <button
+                        onClick={() => {
+                            setVisibleFilterPopover(prevState => !prevState)
+                            setIndexSelectedFilter(null)
+                            setEditFilter(undefined)
+                        }}
+                    ><SVG id={'filter-icon'}/></button>
                 </Popover>
             </div>
 
-            <div className="current-filters">
+            <div className="current-filters filters-list">
+                {filters.map((filter, index) => (
+                    <Popover
+                        content={<FilterWindow
+                            filters={filters}
+                            columns={columns}
+                            onClose={() => setIndexSelectedFilter(null)}
+                            editFilter={editFilter}
+                            onAddFilter={(filter) => {
+                                addFilterHandler(filter)
+                            }}
+                        />}
+                        destroyTooltipOnHide={true}
+                        placement="bottomLeft"
+                        overlayClassName={'filter-popover'}
+                        trigger="click"
+                        visible={indexSelectedFilter === index}
+                    >
+                        <div className="filter-item" onClick={() => editFilterHandler(filter, index)}>
+                            <FilterItem
+                                filter={filter}
+                            />
 
+                            <i onClick={(e) => {
+                                e.stopPropagation()
+                                removeFilterHandler(index)
+                            }}>
+                                <SVG id={'remove-filter-icon'}/>
+                            </i>
+                        </div>
+                    </Popover>
+                ))}
             </div>
         </>
 

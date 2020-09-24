@@ -18,7 +18,7 @@ import {
     cpcColumn,
     ctrColumn,
     campaignColumn,
-} from "../../components/tableColumns"
+} from "../../components/TableList/tableColumns"
 import {useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 
@@ -35,6 +35,7 @@ const AdGroupsList = () => {
             minWidth: '200px',
             sorter: true,
             locked: true,
+            search: true,
             render: (adGroup, item) => (
                 <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.id}`}>
                     {adGroup}

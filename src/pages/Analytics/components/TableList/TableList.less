@@ -60,12 +60,17 @@
       //position: relative;
 
       i {
-        width: 32px;
-        height: 32px;
+        width: 2.2857142857142856rem;
+        height: 2.2857142857142856rem;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 50%;
+
+        svg {
+          width: 1.4285714285714286rem;
+          height: 1.4285714285714286rem;
+        }
 
         &:hover {
           background: rgba(109, 109, 246, 0.05);
@@ -89,6 +94,12 @@
       border-radius: 4px;
 
       z-index: 1000;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        top: 55px;
+
+        right: 200px;
+      }
 
       &::after {
         content: '';
@@ -136,8 +147,12 @@
           margin: 0 0 10px 0;
 
           .ant-checkbox {
-            width: 18px;
-            height: 18px;
+            width: 1.2857142857142858rem;
+            height: 1.2857142857142858rem;
+          }
+
+          span {
+            font-size: 1rem;
           }
         }
       }

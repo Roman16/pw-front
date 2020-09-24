@@ -2,7 +2,7 @@ import React from "react"
 import TableFilters from '../../components/TableFilters/TableFilters'
 import TableList from "../../components/TableList/TableList"
 import {useSelector} from "react-redux"
-import {adGroupColumn, campaignColumn} from "../../components/tableColumns"
+import {adGroupColumn, campaignColumn} from "../../components/TableList/tableColumns"
 
 
 const NegativeTargetingsList = () => {
@@ -18,6 +18,7 @@ const NegativeTargetingsList = () => {
             key: 'keyword_pt',
             sorter: true,
             locked: true,
+            search: true,
         },
         ...!selectedCampaign ? [campaignColumn] : [],
         ...!selectedAdGroup ? [adGroupColumn] : [],

@@ -17,7 +17,7 @@ import {
     roasColumn,
     salesShareColumn,
     statusColumn
-} from "../../components/tableColumns"
+} from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
 import {useSelector} from "react-redux"
 
@@ -36,6 +36,7 @@ const TargetingsList = () => {
             width: '200px',
             sorter: true,
             locked: true,
+            search: true,
         },
         ...!selectedCampaign ? [{...campaignColumn, locked: true}] : [],
         ...!selectedAdGroup ? [{...adGroupColumn, locked: true}] : [],

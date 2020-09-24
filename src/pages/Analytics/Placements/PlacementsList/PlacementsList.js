@@ -15,7 +15,7 @@ import {
     impressionsColumn,
     roasColumn,
     salesShareColumn,
-} from "../../components/tableColumns"
+} from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
 import {useSelector} from "react-redux"
 
@@ -34,6 +34,7 @@ const PlacementsList = () => {
             width: '200px',
             sorter: true,
             locked: true,
+            search: true,
         },
         ...selectedCampaign ? [{
             title: 'Campaign Bidding Strategy',

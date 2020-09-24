@@ -10,7 +10,8 @@ const metricsWithoutOrganic = metricsListArray.filter(
     metricsForTargetingsPanel = metricsWithoutOrganic.filter(metric => metric.key !== 'ad_profit')
 
 const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState') && JSON.parse(localStorage.getItem('analyticsMetricsState')),
-    columnsBlackListFromLocalStorage = localStorage.getItem('columnsBlackList') && JSON.parse(localStorage.getItem('columnsBlackList'))
+    columnsBlackListFromLocalStorage = localStorage.getItem('columnsBlackList') && JSON.parse(localStorage.getItem('columnsBlackList')),
+    filtersListFromLocalStorage = localStorage.getItem('filtersList') && JSON.parse(localStorage.getItem('filtersList'))
 
 
 const initialState = {
@@ -69,6 +70,16 @@ const initialState = {
         showOptimizationChart: true
     },
     columnsBlackList: columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {
+        'products': [],
+        'portfolios': [],
+        'campaigns': [],
+        'placements': [],
+        'adGroups': [],
+        'targetings': [],
+        'negativeTargetings': [],
+        'productAds': []
+    },
+    filters: filtersListFromLocalStorage ? filtersListFromLocalStorage : {
         'products': [],
         'portfolios': [],
         'campaigns': [],
@@ -163,6 +174,20 @@ export function analytics(state = initialState, action) {
                 ...state,
                 columnsBlackList: {
                     ...state.columnsBlackList,
+                    [state.location]: action.payload
+                }
+            }
+
+        case analyticsConstants.SET_FILTERS_LIST:
+            localStorage.setItem('filtersList', JSON.stringify({
+                ...state.filters,
+                [state.location]: action.payload
+            }))
+
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
                     [state.location]: action.payload
                 }
             }

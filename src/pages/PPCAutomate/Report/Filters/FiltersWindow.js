@@ -259,8 +259,8 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     onChange={changeFilterByHandler}
                     getPopupContainer={trigger => trigger.parentNode}
                 >
-                    <Option value={'datetime'}
-                            disabled={filters.find(item => item.filterBy === 'datetime')}>Date</Option>
+                    {/*<Option value={'datetime'}*/}
+                    {/*        disabled={filters.find(item => item.filterBy === 'datetime')}>Date</Option>*/}
                     {columns.map(column => (column.filter &&
                         <Option value={column.dataIndex}
                                 disabled={filters.find(item => item.filterBy === column.dataIndex)}>{column.title}</Option>
