@@ -30,7 +30,7 @@ const ProductFilters = ({
             </div>
 
             <div className="row">
-                {pathname !== '/ppc/scanner' && <div className="product-selected">
+                {pathname !== '/ppc/scanner' && pathname !== '/ppc/optimization' &&  <div className="product-selected">
                     <div className="select-switch">
                         <button
                             className={selectedAll && 'active'}

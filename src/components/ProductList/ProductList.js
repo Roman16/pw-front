@@ -98,7 +98,10 @@ const ProductList = ({pathname}) => {
     };
 
     useEffect(() => {
-        if (pathname === '/ppc/scanner') {
+        if(pathname === '/ppc/optimization' && selectedAll) {
+            dispatch(productsActions.fetchProductDetails(productList[0]));
+            selectAllHandler(false);
+        } else if (pathname === '/ppc/scanner') {
             selectAllHandler(false);
             setUngroupVariations(1);
         } else if (prevPathname === '/ppc/scanner' && pathname !== '/ppc/scanner') {
