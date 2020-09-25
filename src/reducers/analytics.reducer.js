@@ -2,12 +2,20 @@ import {analyticsConstants} from '../constans/actions.type'
 import moment from "moment"
 import {metricsListArray} from "../constans/metricsList"
 
-const metricsWithoutOrganic = metricsListArray.filter(
-    metric => metric.key !== 'macos' &&
-        metric.key !== 'organic_sales' &&
-        metric.key !== 'organic_orders'
-    ),
-    metricsForTargetingsPanel = metricsWithoutOrganic.filter(metric => metric.key !== 'ad_profit')
+// const metricsWithoutOrganic = metricsListArray.filter(
+//     metric => metric.key !== 'total_orders' &&
+//         metric.key !== 'total_orders_pure' &&
+//         metric.key !== 'organic_orders' &&
+//         metric.key !== 'total_sales' &&
+//         metric.key !== 'organic_sales' &&
+//         metric.key !== 'total_units' &&
+//         metric.key !== 'total_units_pure' &&
+//         metric.key !== 'profit' &&
+//         metric.key !== 'macos' &&
+//         metric.key !== 'returns' &&
+//         metric.key !== 'returns_units'
+//     ),
+//     metricsForTargetingsPanel = metricsWithoutOrganic.filter(metric => metric.key !== 'ad_profit')
 
 const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState') && JSON.parse(localStorage.getItem('analyticsMetricsState')),
     columnsBlackListFromLocalStorage = localStorage.getItem('columnsBlackList') && JSON.parse(localStorage.getItem('columnsBlackList')),
@@ -22,48 +30,7 @@ const initialState = {
         adGroupId: undefined,
         portfolioId: undefined,
     },
-    metricsState: metricsStateFromLocalStorage ? metricsStateFromLocalStorage : {
-        'products': {
-            allMetrics: metricsListArray,
-            activeMetrics: metricsListArray.slice(0, 2),
-            selectedMetrics: metricsListArray.slice(0, 5)
-        },
-        'portfolios': {
-            allMetrics: metricsWithoutOrganic,
-            activeMetrics: metricsWithoutOrganic.slice(0, 2),
-            selectedMetrics: metricsWithoutOrganic.slice(0, 5)
-        },
-        'campaigns': {
-            allMetrics: metricsWithoutOrganic,
-            activeMetrics: metricsWithoutOrganic.slice(0, 2),
-            selectedMetrics: metricsWithoutOrganic.slice(0, 5)
-        },
-        'placements': {
-            allMetrics: metricsWithoutOrganic,
-            activeMetrics: metricsWithoutOrganic.slice(0, 2),
-            selectedMetrics: metricsWithoutOrganic.slice(0, 5)
-        },
-        'adGroups': {
-            allMetrics: metricsWithoutOrganic,
-            activeMetrics: metricsWithoutOrganic.slice(0, 2),
-            selectedMetrics: metricsWithoutOrganic.slice(0, 5)
-        },
-        'targetings': {
-            allMetrics: metricsForTargetingsPanel,
-            activeMetrics: metricsForTargetingsPanel.slice(0, 2),
-            selectedMetrics: metricsForTargetingsPanel.slice(0, 5)
-        },
-        'negativeTargetings': {
-            allMetrics: metricsWithoutOrganic,
-            activeMetrics: metricsWithoutOrganic.slice(0, 2),
-            selectedMetrics: metricsWithoutOrganic.slice(0, 5)
-        },
-        'productAds': {
-            allMetrics: metricsWithoutOrganic,
-            activeMetrics: metricsWithoutOrganic.slice(0, 2),
-            selectedMetrics: metricsWithoutOrganic.slice(0, 5)
-        },
-    },
+    metricsState: metricsStateFromLocalStorage ? metricsStateFromLocalStorage : undefined,
     chartState: {
         showWeekChart: true,
         showDailyChart: true,
@@ -122,45 +89,17 @@ export function analytics(state = initialState, action) {
                 location: action.payload
             }
 
-        case analyticsConstants.UPDATE_METRICS_DATA:
-            return {
-                ...state,
-                metricsState: {
-                    ...state.metricsState,
-                    [state.location]: {
-                        ...state.metricsState[state.location],
-
-                        allMetrics: state.metricsState[state.location].allMetrics.map(item => ({
-                            ...item,
-                            ...(action.payload && action.payload.length > 0 && action.payload.find(metric => metric.metric_key === item.key))
-                        })),
-
-                        selectedMetrics: state.metricsState[state.location].selectedMetrics.map(item => ({
-                            ...item,
-                            ...action.payload.find(metric => metric.metric_key === item.key) || {}
-                        }))
-                    }
-                }
-            }
-
-
         case analyticsConstants.UPDATE_METRICS_STATE:
             localStorage.setItem('analyticsMetricsState', JSON.stringify({
                 ...state.metricsState,
-                [state.location]: {
-                    ...state.metricsState[state.location],
-                    ...action.payload
-                }
+                [state.location]: action.payload
             }))
 
             return {
                 ...state,
                 metricsState: {
                     ...state.metricsState,
-                    [state.location]: {
-                        ...state.metricsState[state.location],
-                        ...action.payload
-                    }
+                    [state.location]: action.payload
                 }
             }
 

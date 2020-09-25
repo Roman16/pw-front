@@ -17,7 +17,7 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    campaignColumn,
+    campaignColumn, statusColumn,
 } from "../../components/TableList/tableColumns"
 import {useSelector} from "react-redux"
 import {Link} from "react-router-dom"
@@ -43,6 +43,7 @@ const AdGroupsList = () => {
             )
         },
         ...selectedCampaign ? [] : [{...campaignColumn, locked: true}],
+        {...statusColumn, locked: true},
         {
             title: 'Default bid',
             dataIndex: 'default_bid',
@@ -57,7 +58,6 @@ const AdGroupsList = () => {
             key: 'total_targets',
             minWidth: '200px',
             sorter: true,
-            locked: true,
         },
         {
             title: 'Products',
@@ -65,53 +65,22 @@ const AdGroupsList = () => {
             key: 'products',
             minWidth: '200px',
             sorter: true,
-            locked: true,
         },
-        {
-            ...impressionsColumn
-        },
-        {
-            ...clicksColumn
-        },
-        {
-            ...ctrColumn
-        },
-        {
-            ...adSpendColumn
-        },
-        {
-            ...cpcColumn
-        },
-        {
-            ...adSalesColumn
-        },
-        {
-            ...acosColumn
-        },
-        {
-            ...adCvrColumn
-        },
-        {
-            ...cpaColumn
-        },
-        {
-            ...adOrdersColumn
-        },
-        {
-            ...adUnitsColumn
-        },
-        {
-            ...roasColumn
-        },
-        {
-            ...salesShareColumn
-        },
-        {
-            ...budgetAllocationColumn
-        },
-        {
-            ...adProfitColumn
-        },
+        impressionsColumn,
+        clicksColumn,
+        ctrColumn,
+        adSpendColumn,
+        cpcColumn,
+        adSalesColumn,
+        acosColumn,
+        adCvrColumn,
+        cpaColumn,
+        adOrdersColumn,
+        adUnitsColumn,
+        roasColumn,
+        salesShareColumn,
+        budgetAllocationColumn,
+        adProfitColumn,
     ]
 
     return (

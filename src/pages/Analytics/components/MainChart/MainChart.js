@@ -29,7 +29,7 @@ const MainChart = () => {
 
 
     const getChartData = () => {
-        if (activeMetrics[0].key || activeMetrics[1].key) {
+        if (activeMetrics.length > 0 && (activeMetrics[0].key || activeMetrics[1].key)) {
 
             switchFetch(true)
             setFetchingError(false)

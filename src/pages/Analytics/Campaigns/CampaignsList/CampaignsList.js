@@ -46,18 +46,18 @@ const columns = [
         locked: true,
     },
     {
-        title: 'Portfolio',
-        dataIndex: 'portfolio',
-        key: 'portfolio',
+        title: 'Budget',
+        dataIndex: 'daily_budget',
+        key: 'daily_budget',
         width: '150px',
         sorter: true,
         locked: true,
     },
     {
-        title: 'Campaign bidding strategy',
-        dataIndex: 'bidding_strategy',
-        key: 'bidding_strategy',
-        width: '250px',
+        title: 'Portfolio',
+        dataIndex: 'portfolio',
+        key: 'portfolio',
+        width: '150px',
         sorter: true,
         locked: true,
     },
@@ -78,57 +78,27 @@ const columns = [
         ...dateColumn
     },
     {
-        title: 'Budget',
-        dataIndex: 'daily_budget',
-        key: 'daily_budget',
-        width: '150px',
-        sorter: true
+        title: 'Campaign bidding strategy',
+        dataIndex: 'bidding_strategy',
+        key: 'bidding_strategy',
+        width: '250px',
+        sorter: true,
     },
-    {
-        ...impressionsColumn
-    },
-    {
-        ...clicksColumn
-    },
-    {
-        ...ctrColumn
-    },
-    {
-        ...adSpendColumn
-    },
-    {
-        ...cpcColumn
-    },
-    {
-        ...adSalesColumn
-    },
-    {
-        ...acosColumn
-    },
-    {
-        ...adCvrColumn
-    },
-    {
-        ...cpaColumn
-    },
-    {
-        ...adOrdersColumn
-    },
-    {
-        ...adUnitsColumn
-    },
-    {
-        ...roasColumn
-    },
-    {
-        ...salesShareColumn
-    },
-    {
-        ...budgetAllocationColumn
-    },
-    {
-        ...adProfitColumn
-    },
+        impressionsColumn,
+        clicksColumn,
+        ctrColumn,
+        adSpendColumn,
+        cpcColumn,
+        adSalesColumn,
+        acosColumn,
+        adCvrColumn,
+        cpaColumn,
+        adOrdersColumn,
+        adUnitsColumn,
+        roasColumn,
+        salesShareColumn,
+        budgetAllocationColumn,
+        adProfitColumn,
 ]
 
 

@@ -118,7 +118,7 @@ const Header = ({location}) => {
         <section className="analytics-header">
             <div className="title">
                 <SVG id={'analytics-icon'}/>
-                <h1>All Products</h1>
+                <h1>Analytics</h1>
             </div>
 
 

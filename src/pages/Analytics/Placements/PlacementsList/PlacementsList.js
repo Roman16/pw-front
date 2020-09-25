@@ -52,51 +52,22 @@ const PlacementsList = () => {
             sorter: true,
             locked: true,
         },
-        {
-            ...impressionsColumn
-        },
-        {
-            ...clicksColumn
-        },
-        {
-            ...ctrColumn
-        },
-        {
-            ...adSpendColumn
-        },
-        {
-            ...cpcColumn
-        },
-        {
-            ...adSalesColumn
-        },
-        {
-            ...acosColumn
-        },
-        {
-            ...adCvrColumn
-        },
-        {
-            ...cpaColumn
-        },
-        {
-            ...adOrdersColumn
-        },
-        {
-            ...adUnitsColumn
-        },
-        {
-            ...roasColumn
-        },
-        {
-            ...salesShareColumn
-        },
-        {
-            ...budgetAllocationColumn
-        },
-        {
-            ...adProfitColumn
-        }
+
+            impressionsColumn,
+            clicksColumn,
+            ctrColumn,
+            adSpendColumn,
+            cpcColumn,
+            adSalesColumn,
+            acosColumn,
+            adCvrColumn,
+            cpaColumn,
+            adOrdersColumn,
+            adUnitsColumn,
+            roasColumn,
+            salesShareColumn,
+            budgetAllocationColumn,
+            adProfitColumn
     ]
 
 

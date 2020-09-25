@@ -35,6 +35,7 @@ const NegativeTargetingsList = () => {
         <section className={'list-section'}>
             <TableList
                 columns={columns}
+                columnSelect={false}
             />
         </section>
     )

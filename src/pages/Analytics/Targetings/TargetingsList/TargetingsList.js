@@ -49,7 +49,8 @@ const TargetingsList = () => {
             locked: true,
         },
         {
-            ...statusColumn
+            ...statusColumn,
+            locked: true,
         },
         {
             title: 'Bid',
@@ -58,48 +59,20 @@ const TargetingsList = () => {
             width: '150px',
             sorter: true
         },
-        {
-            ...impressionsColumn
-        },
-        {
-            ...clicksColumn
-        },
-        {
-            ...ctrColumn
-        },
-        {
-            ...adSpendColumn
-        },
-        {
-            ...cpcColumn
-        },
-        {
-            ...adSalesColumn
-        },
-        {
-            ...acosColumn
-        },
-        {
-            ...adCvrColumn
-        },
-        {
-            ...cpaColumn
-        },
-        {
-            ...adOrdersColumn
-        },
-        {
-            ...adUnitsColumn
-        },
-        {
-            ...roasColumn
-        },
-        {
-            ...salesShareColumn
-        },
-        {
-            ...budgetAllocationColumn
-        },
+            impressionsColumn,
+            clicksColumn,
+            ctrColumn,
+            adSpendColumn,
+            cpcColumn,
+            adSalesColumn,
+            acosColumn,
+            adCvrColumn,
+            cpaColumn,
+            adOrdersColumn,
+            adUnitsColumn,
+            roasColumn,
+            salesShareColumn,
+            budgetAllocationColumn
     ]
 
     return (

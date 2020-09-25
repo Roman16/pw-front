@@ -1,5 +1,4 @@
 import React from "react"
-import TableFilters from '../../components/TableFilters/TableFilters'
 import {
     acosColumn,
     adCvrColumn,
@@ -48,56 +47,27 @@ const ProductAdsList = () => {
             sorter: true,
             locked: true,
         },
-        ...!selectedCampaign ? [campaignColumn] : [],
-        ...!selectedAdGroup ? [adGroupColumn] : [],
+        ...!selectedCampaign ? [{...campaignColumn, locked: true}] : [],
+        ...!selectedAdGroup ? [{...adGroupColumn, locked: true}] : [],
         {
-            ...statusColumn
+            ...statusColumn,
+            locked: true,
         },
-        {
-            ...impressionsColumn
-        },
-        {
-            ...clicksColumn
-        },
-        {
-            ...ctrColumn
-        },
-        {
-            ...adSpendColumn
-        },
-        {
-            ...cpcColumn
-        },
-        {
-            ...adSalesColumn
-        },
-        {
-            ...acosColumn
-        },
-        {
-            ...adCvrColumn
-        },
-        {
-            ...cpaColumn
-        },
-        {
-            ...adOrdersColumn
-        },
-        {
-            ...adUnitsColumn
-        },
-        {
-            ...roasColumn
-        },
-        {
-            ...salesShareColumn
-        },
-        {
-            ...budgetAllocationColumn
-        },
-        {
-            ...adProfitColumn
-        },
+        impressionsColumn,
+        clicksColumn,
+        ctrColumn,
+        adSpendColumn,
+        cpcColumn,
+        adSalesColumn,
+        acosColumn,
+        adCvrColumn,
+        cpaColumn,
+        adOrdersColumn,
+        adUnitsColumn,
+        roasColumn,
+        salesShareColumn,
+        budgetAllocationColumn,
+        adProfitColumn
     ]
 
     return (

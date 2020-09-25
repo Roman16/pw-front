@@ -1,5 +1,4 @@
 import React from "react"
-import TableFilters from '../../components/TableFilters/TableFilters'
 import {Link} from "react-router-dom"
 import {
     acosColumn,
@@ -44,31 +43,15 @@ const columns = [
         dataIndex: 'campaigns',
         key: 'campaigns',
         width: '150px',
-        locked: true,
         sorter: true
     },
-    {
-        ...impressionsColumn
-    },
-    {
-        ...clicksColumn
-    },
-    {
-        ...ctrColumn
-    },
-
-    {
-        ...adSpendColumn
-    },
-    {
-        ...cpcColumn
-    },
-    {
-        ...adSalesColumn
-    },
-    {
-        ...acosColumn
-    },
+    impressionsColumn,
+    clicksColumn,
+    ctrColumn,
+    adSpendColumn,
+    cpcColumn,
+    adSalesColumn,
+    acosColumn,
     {
         title: 'MACoS',
         dataIndex: 'MACoS',
@@ -77,12 +60,8 @@ const columns = [
         sorter: true,
         ...renderNumberField('percent')
     },
-    {
-        ...adCvrColumn
-    },
-    {
-        ...cpaColumn
-    },
+    adCvrColumn,
+    cpaColumn,
     {
         title: 'Organic Sales',
         dataIndex: 'organic_sales',
@@ -91,9 +70,7 @@ const columns = [
         sorter: true,
         ...renderNumberField('currency')
     },
-    {
-        ...adUnitsColumn
-    },
+    adUnitsColumn,
     {
         title: 'Total Units',
         dataIndex: 'total_units',
@@ -126,9 +103,7 @@ const columns = [
         sorter: true,
         ...renderNumberField()
     },
-    {
-        ...adOrdersColumn
-    },
+    adOrdersColumn,
     {
         title: 'Organic Orders',
         dataIndex: 'organic_orders',
@@ -145,15 +120,9 @@ const columns = [
         sorter: true,
         ...renderNumberField('currency')
     },
-    {
-        ...roasColumn
-    },
-    {
-        ...salesShareColumn
-    },
-    {
-        ...budgetAllocationColumn
-    },
+    roasColumn,
+    salesShareColumn,
+    budgetAllocationColumn,
     {
         title: 'Returns',
         dataIndex: 'returns',
@@ -170,9 +139,7 @@ const columns = [
         sorter: true,
         ...renderNumberField('currency')
     },
-    {
-        ...adProfitColumn
-    },
+    adProfitColumn
 ]
 
 const ProductsList = () => {

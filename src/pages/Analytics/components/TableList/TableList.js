@@ -18,6 +18,7 @@ String.prototype.capitalize = function () {
 const TableList = ({
                        columns,
                        fixedColumns,
+                       columnSelect = true
                    }) => {
 
     const [tableData, setTableData] = useState([]),
@@ -72,10 +73,10 @@ const TableList = ({
                 filters={filters}
             />
 
-            <ColumnsSelect
+            {columnSelect && <ColumnsSelect
                 columns={columns}
                 columnsBlackList={columnsBlackList}
-            />
+            />}
 
             <DateRange/>
 
