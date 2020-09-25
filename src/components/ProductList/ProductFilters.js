@@ -1,8 +1,8 @@
-import React from "react";
-import {Input, Switch} from "antd";
-import {SVG} from "../../utils/icons";
+import React from "react"
+import {Input, Switch} from "antd"
+import {SVG} from "../../utils/icons"
 
-const {Search} = Input;
+const {Search} = Input
 
 
 const ProductFilters = ({
@@ -30,15 +30,15 @@ const ProductFilters = ({
             </div>
 
             <div className="row">
-                {pathname !== '/ppc/scanner' && pathname !== '/ppc/optimization' &&  <div className="product-selected">
+                {pathname !== '/ppc/scanner' && <div className="product-selected">
                     <div className="select-switch">
-                        <button
+                        {pathname !== '/ppc/optimization' && <button
                             className={selectedAll && 'active'}
                             onClick={() => onSelectAll(true)}
                         >
                             <SVG id={'all-selected-icon'}/>
                         </button>
-
+                        }
                         <button
                             className={!selectedAll && selectedProduct.id !== null && 'active'}
                             onClick={onSelectLastProduct}
@@ -62,6 +62,6 @@ const ProductFilters = ({
             </div>
         </div>
     )
-};
+}
 
-export default ProductFilters;
+export default ProductFilters
