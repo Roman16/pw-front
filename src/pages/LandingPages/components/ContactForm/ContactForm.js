@@ -28,7 +28,7 @@ const defaultForm = {
     main_category: undefined,
 }
 
-const advertisingStrategyVariations = [
+export const advertisingStrategyVariations = [
     {
         label: 'ACoS Targeting',
         value: 'acos_targeting',
