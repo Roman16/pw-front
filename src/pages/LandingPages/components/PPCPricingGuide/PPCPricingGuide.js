@@ -17,32 +17,35 @@ const PPCPricingGuide = () => {
                 <h2>Our Simple Pricing Guide</h2>
 
                 <div className="pricing-plans desc">
-                    {/*<div className={'plan'}>*/}
-                    {/*    <div className="counts">*/}
-                    {/*        <div style={{width: '8px', height: '8px'}}/>*/}
-                    {/*    </div>*/}
-
-                    {/*    <h4>Startup</h4>*/}
-
-                    {/*    <label><b>{'< $1k'}</b>in ad spend / per month</label>*/}
-
-                    {/*    <h3>*/}
-                    {/*        <span className={'dollar'}>$</span>*/}
-                    {/*        69*/}
-                    {/*    </h3>*/}
-
-                    {/*    <p>*/}
-                    {/*        Start growing your business with our Starter plan*/}
-                    {/*    </p>*/}
-
-                    {/*    <Link to={'registration'} className={'btn default link'}>*/}
-                    {/*        START FREE*/}
-                    {/*    </Link>*/}
-                    {/*</div>*/}
-
                     <div className={'plan'}>
                         <div className="counts">
                             <div style={{width: '8px', height: '8px'}}/>
+                        </div>
+
+                        <h4>Startup</h4>
+
+                        <label><b>{'< $1k'}</b> in ad spend / per month</label>
+
+                        <h3>
+                            <span className={'dollar'}>$</span>
+                            99
+                        </h3>
+
+                        <p>
+                            Start growing your business with our Starter plan
+                        </p>
+
+                        <Link to={'registration'} className={'btn default link'}>
+                            START FREE
+                        </Link>
+                    </div>
+
+                    <div className={'plan'}>
+                        <div className="counts">
+                            {[1, 2].map(item => (
+                                <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
+                                     className="count"/>
+                            ))}
                         </div>
                         <h4>Grind</h4>
 
@@ -67,7 +70,7 @@ const PPCPricingGuide = () => {
 
                     <div className={'plan'}>
                         <div className="counts">
-                            {[1, 2].map(item => (
+                            {[1, 2,3].map(item => (
                                 <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
                                      className="count"/>
                             ))}
@@ -96,7 +99,7 @@ const PPCPricingGuide = () => {
 
                     <div className={'plan'}>
                         <div className="counts">
-                            {[1, 2, 3].map(item => (
+                            {[1, 2, 3,4].map(item => (
                                 <div style={{width: `${8 + item * 3}px`, height: `${8 + item * 3}px`}}
                                      className="count"/>
                             ))}

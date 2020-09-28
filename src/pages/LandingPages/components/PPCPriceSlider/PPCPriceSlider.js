@@ -40,10 +40,10 @@ const PPCPriceSlider = () => {
             max_postfix: "+",
             postfix: "  / month",
             onStart: function () {
-                $('.slider-container .slider .irs .irs-bar').html('$ 280');
+                $('.slider-container .slider .irs .irs-bar').html('$ 99');
                 setTimeout(() => {
-                    $('.irs-single').html('$ 1,000 / month');
-                    $('.slider .irs-handle').html('<div> $250 + 3% ad spend</div>');
+                    $('.irs-single').html('< $ 1,000 / month');
+                    $('.slider .irs-handle').html('<div> $ 99</div>');
 
                 }, 1)
             },
@@ -56,8 +56,11 @@ const PPCPriceSlider = () => {
 
 
                 barTooltip.html(`$ ${numberMask(value, 2)} / month`);
-
-                if (value >= 1000 && value < 20000) {
+                if(value === 1000) {
+                    $('.irs-single').html('< $ 1,000 / month');
+                    result = 99;
+                    barLabel.html('<div>$99</div>');
+                }else if (value > 1000 && value < 20000) {
                     result = ((3 / 100) * value) + 250;
                     barLabel.html('<div>$250 + 3% ad spend</div>');
                 } else if (value >= 20000 && value < 50000) {
@@ -93,7 +96,7 @@ const PPCPriceSlider = () => {
                 <div className="sum">
                     <div className="result-sum">
                         <span className={'dollar'}>$</span>
-                        <span id={'result-sum'}>280</span>
+                        <span id={'result-sum'}>99</span>
                     </div>
 
                     <p>Estimated price per month based on your <br/> 30-day Amazon Ad Spend.

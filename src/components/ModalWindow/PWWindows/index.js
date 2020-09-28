@@ -22,9 +22,11 @@ const PWWindows = ({pathname}) => {
     useEffect(() => {
         if (user.notifications.account_bootstrap.bootstrap_in_progress || (!subscribedProduct.has_access && subscribedProduct.has_pending_payment_tx)) {
             setVisibleWindow('loadingAmazon')
-        } else if (!subscribedProduct.eligible_for_subscription) {
-            setVisibleWindow('smallSpend')
-        } else if (user.user.free_trial_available) {
+        }
+        // else if (!subscribedProduct.eligible_for_subscription) {
+        //     setVisibleWindow('smallSpend')
+        // }
+        else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')
         } else if (!user.user.free_trial_available && !subscribedProduct.has_access && !subscribedProduct.has_pending_payment_tx) {
             setVisibleWindow('expiredSubscription')
@@ -54,9 +56,9 @@ const PWWindows = ({pathname}) => {
                 onClose={closeWindowHandler}
             />}
 
-            {pathname.includes('/ppc/') && <SmallSpend
-                visible={visibleWindow === 'smallSpend'}
-            />}
+            {/*{pathname.includes('/ppc/') && <SmallSpend*/}
+            {/*    visible={visibleWindow === 'smallSpend'}*/}
+            {/*/>}*/}
 
             <ReportsChangesCountWindow
                 visible={visibleWindow === 'newReportsCount'}
