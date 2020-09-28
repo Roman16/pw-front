@@ -1,175 +1,198 @@
-import React, {useState, Fragment, useEffect} from "react";
-import './ContactUs.less';
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
+import React, {Fragment, useEffect} from "react"
+import './ContactUs.less'
+import Header from "../components/Header/Header"
+import Footer from "../components/Footer/Footer"
 
-import callHelpImage from '../../../assets/img/landing-contact-us/call-help.svg';
-import proposalImage from '../../../assets/img/landing-contact-us/proposal.svg';
-import helpCenterImage from '../../../assets/img/landing-contact-us/help-center.svg';
-import addressImage from '../../../assets/img/landing-contact-us/address-image.svg';
-import helpDjoImage from '../../../assets/img/landing-contact-us/helpDjo.svg';
-import checkedIcon from '../../../assets/img/landing-contact-us/checked.svg';
-import ModalWindow from "../../../components/ModalWindow/ModalWindow";
-import {userService} from "../../../services/user.services";
-import {notification} from "../../../components/Notification";
-import contactFormImage from "../../../assets/img/landing-automation/contact-form-image.png";
-import sendProcessingImage from "../../../assets/img/landing-automation/send-processing.svg";
-import thankImage from "../../../assets/img/landing-automation/thank-image.png";
-import {Checkbox, Input, Radio} from "antd";
-import TreeSelect from "../../../components/TreeSelect/TreeSelect";
-import CustomSelect from "../../../components/Select/Select";
-import {SVG} from "../../../utils/icons";
-import {Link} from "react-router-dom";
-import ContactForm from "../components/ContactForm/ContactForm";
+import supportTeamImage from '../../../assets/img/landing-contact-us/support-team.png'
+import casesImage from '../../../assets/img/landing-contact-us/cases-image.svg'
+import mapImage from '../../../assets/img/landing-contact-us/location-map.svg'
+import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png'
+import trustpilotLogo from '../../../assets/img/landing-contact-us/trustpilot-logo.svg'
+import starsIcon from '../../../assets/img/landing-contact-us/stars.svg'
+import {SVG} from "../../../utils/icons"
+import {Link} from "react-router-dom"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faFacebookSquare, faLinkedin, faYoutube} from "@fortawesome/free-brands-svg-icons"
+import PreFooter from "./PreFooter"
 
 const ContactUs = (props) => {
-    const [visibleWindow, switchWindow] = useState(false),
-        [completed, setStatus] = useState(false),
-        [formValue, setForm] = useState({});
-
-    function openWindowHandler() {
-        switchWindow(true)
-    }
-
-    async function submitFormHandler(e) {
-        e.preventDefault();
-
-        try {
-            await userService.sendContacts(formValue);
-            setStatus(true);
-            // switchWindow(false);
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    function inputChangeHandler({target: {value, name}}) {
-        setForm({
-            ...formValue,
-            [name]: value
-        })
+    const showIntercom = () => {
+        window.Intercom('show')
     }
 
     useEffect(() => {
         if (props.match.params.status === 'chat') {
-            window.Intercom('show')
+            showIntercom()
         }
-    }, []);
+    }, [])
 
 
     return (
-        <Fragment>
-            <div className="landing-contact-us  landing-page">
-                <Header/>
+        <div className="landing-contact-us  landing-page">
+            <Header/>
 
-                {/*<section>*/}
-                {/*    <div className="container">*/}
-                {/*        <div className="title">*/}
-                {/*            <h2>Contact Us</h2>*/}
-                {/*            <p>Have any questions? We’d love to hear from you.</p>*/}
-                {/*        </div>*/}
+            <section className={'pre-header'}>
+                <div className="container">
+                    <h2>We’d love <span>to hear</span> from you</h2>
+                    <p>
+                        Whether you have a question about features, trials, pricing, demo, or anything else, our
+                        team is
+                        <br/>
+                        ready to answer all your questions
+                    </p>
 
-                {/*        <div className="row">*/}
-                {/*            <div className='item'>*/}
-                {/*                <img src={callHelpImage} alt=""/>*/}
-                {/*                <h3>How could we help you?</h3>*/}
-                {/*                <p>Our support team is spread across the globe to give you answers fast.</p>*/}
-                {/*                <button onClick={() => {*/}
-                {/*                    window.Intercom('show')*/}
-                {/*                }}*/}
-                {/*                        className='btn green-btn'>Send a request*/}
-                {/*                </button>*/}
-                {/*            </div>*/}
+                    <img src={supportTeamImage} alt="" className={'support-team'}/>
 
-                {/*            <div className='item'>*/}
-                {/*                <img src={proposalImage} alt=""/>*/}
-                {/*                <h3>Partnership? Of course, let’s discuss</h3>*/}
-                {/*                <p>Don't be shy. If you've got something to create and move forward with Profit*/}
-                {/*                    Whales.</p>*/}
-                {/*                <button*/}
-                {/*                    onClick={() => window.open('https://calendly.com/diana-partnership-manager-profit-whales/meeting')}*/}
-                {/*                    className='btn green-btn'>Send a proposal*/}
-                {/*                </button>*/}
-                {/*            </div>*/}
+                    <p>
+                        We are an official partner on the <br/> Amazon Service Provider Network
+                    </p>
 
-                {/*            <div className='item'>*/}
-                {/*                <img src={helpCenterImage} alt=""/>*/}
-                {/*                <h3>Software Help Center</h3>*/}
-                {/*                <p>All answers about our software. Click and go through all knowledge that we collected*/}
-                {/*                    for*/}
-                {/*                    you.</p>*/}
-                {/*                /!*<button onClick={openWindowHandler} className='btn green-btn'>Get more info</button>*!/*/}
-                {/*                <button onClick={() => window.open('https://intercom.help/profitwhales/')}*/}
-                {/*                        className='btn green-btn'>Get more info*/}
-                {/*                </button>*/}
+                    <img src={amazonSpnWhiteLogo} alt="" className={'spn-logo'}/>
+                </div>
+            </section>
 
-                {/*                <img src={helpDjoImage} alt="" className='djo'/>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
 
-                {/*        <div className="address">*/}
-                {/*            <img src={addressImage} alt=""/>*/}
+            <section className={'topic-list'}>
+                <div className="container">
+                    <div className="location">
+                        <ul>
+                            <li><i><SVG id={'clock'}/></i> 10:00 - 10:00 EST</li>
+                            <li><i><SVG id={'email'}/></i> official@profitwhales.com</li>
+                            <li><i><SVG id={'location'}/></i> Yevhena Konovaltsia St, <br/> 32G, Kyiv, 02000</li>
+                        </ul>
 
-                {/*            <div className="col">*/}
-                {/*                <h4>Just shoot me a message</h4>*/}
-                {/*                <a href="mailto:official@profitwhales.com">official@profitwhales.com</a>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</section>*/}
+                        <img src={mapImage} alt=""/>
 
-                <ContactForm/>
-
-                <Footer/>
-            </div>
-
-            <ModalWindow
-                className={'contact-us-window'}
-                visible={visibleWindow}
-                handleCancel={() => switchWindow(false)}
-                footer={false}
-                destroyOnClose={true}
-            >
-                {completed ?
-                    <div className="message-set-out">
-                        <img src={checkedIcon} alt=""/>
-                        <h2>Thank you for letter</h2>
-
-                        <p>We’ll reach you within 24 hours.</p>
-
-                        <button className='btn green-btn' onClick={() => {
-                            switchWindow(false);
-                            setStatus(false)
-                        }}>Done
-                        </button>
+                        <a href="https://goo.gl/maps/1uc4tbaxkyLESaeB9" target={'_blank'}>
+                            Look at Google Map
+                            <SVG id={'right-row'}/>
+                        </a>
                     </div>
-                    :
 
-                    <form onSubmit={submitFormHandler}>
-                        <h2>Fill the form: </h2>
-                        <div className="input-group">
-                            <label htmlFor="">First & Last Name</label>
-                            <input type="text" name='first_name' onChange={inputChangeHandler}/>
-                        </div>
+                    <div className="topics">
+                        <h3>
+                            Please <span>select a topic below</span> <br/> related to your inquiry.
+                        </h3>
 
-                        <div className="input-group email-block">
-                            <label htmlFor="">E-mail</label>
-                            <input type="email" name='email' required onChange={inputChangeHandler}/>
-                            <span>@</span>
-                        </div>
+                        <Link to={'/help-support'}>
+                            <h4>
+                                Help & Support
+                            </h4>
+                            <p>
+                                Looking for support? Get in touch! Always humans, never bots.
+                            </p>
+                            <i><SVG id={'right-icon'}/></i>
+                        </Link>
 
-                        <div className="input-group">
-                            <label htmlFor="">Comment</label>
-                            <textarea name='comment' required onChange={inputChangeHandler}/>
-                        </div>
+                        <Link to={'/book-a-demo'}>
+                            <h4>
+                                Book a Demo
+                            </h4>
+                            <p>
+                                I do what I love. Profit Whales do the rest
+                            </p>
+                            <i><SVG id={'right-icon'}/></i>
+                        </Link>
 
-                        <button className='btn green-btn'>send</button>
-                    </form>
-                }
+                        <Link to={'#'}>
+                            <h4>
+                                Advertising Audit
+                            </h4>
+                            <p>
+                                Let's work together to create game-changing experiences
+                            </p>
+                            <i><SVG id={'right-icon'}/></i>
+                        </Link>
 
-            </ModalWindow>
-        </Fragment>
+                        <Link to={'/partners'}>
+                            <h4>
+                                Become a Partner
+                            </h4>
+                            <p>
+                                Earn Up to 25% Commission on Referrals and Unlock Exclusive Partner Benefits
+                            </p>
+                            <i><SVG id={'right-icon'}/></i>
+                        </Link>
+                    </div>
+
+                    <div className="social">
+                        <a href="https://www.facebook.com/profitwhales/" className="i-fb" target="_blank"
+                           title="Facebook">
+                            <FontAwesomeIcon icon={faFacebookSquare}/>
+                        </a>
+                        <a href="https://www.linkedin.com/company/profitwhales/" className="i-in"
+                           target="_blank"
+                           title="LinkedIn">
+                            <FontAwesomeIcon icon={faLinkedin}/>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCtUreqMG_C_P8Ymqa-LJ2Yg" className="you"
+                           target="_blank"
+                           title="Youtube">
+                            <FontAwesomeIcon icon={faYoutube}/>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section className={'trustpilot-section'}>
+                <div className="container">
+                    <a
+                        href="https://www.trustpilot.com/review/profitwhales.com"
+                        target={'_blank'}
+                    >
+                        <img src={trustpilotLogo} alt="" className={'logo'}/>
+                    </a>
+
+                    <img src={starsIcon} alt=""/>
+
+                    <p>
+                        Our customers rate us as <b>excellent</b>.
+                        <a
+                            href="https://www.trustpilot.com/review/profitwhales.com"
+                            target={'_blank'}
+                        >
+                            Check out reviews
+                        </a>
+                    </p>
+                </div>
+            </section>
+
+            <section className={'cases-section'}>
+                <div className="container">
+                    <div className="col">
+                        <h2>
+                            Check <span>Cases</span>
+                        </h2>
+
+                        <p>
+                            Read why the most forward-thinking brands <br/> trust Profit Whales
+                        </p>
+
+                        <a
+                            className={'btn default'}
+                            href={'https://blog.profitwhales.com/case-studies/'}
+                            target={'_blank'}
+                        >
+                            see more cases
+                        </a>
+                    </div>
+
+                    <div className="image">
+                        <a
+                            href={'https://blog.profitwhales.com/case-studies/'}
+                            target={'_blank'}
+                        >
+                            <img src={casesImage} alt=""/>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <PreFooter/>
+
+            <Footer/>
+        </div>
     )
-};
+}
 
-export default ContactUs;
+export default ContactUs
