@@ -310,7 +310,7 @@ const BookDemo = () => {
                                 </Checkbox>
 
                                 <div className="actions">
-                                    <button type={'button'} className={'btn default'} onClick={() => setFormStep(2)}>
+                                    <button type={'button'} className={'btn default'} onClick={() => setFormStep(1)}>
                                         back
                                     </button>
 

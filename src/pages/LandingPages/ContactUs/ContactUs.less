@@ -1007,7 +1007,7 @@
     }
 
     .col {
-      //width: 50%;
+      width: 50%;
 
       h2 {
         text-align: left;
@@ -1048,7 +1048,7 @@
     }
 
     .image {
-      width: 82%;
+      width: 45%;
     }
   }
 
@@ -1264,6 +1264,7 @@
           text-transform: uppercase;
           font-size: 21px;
           font-weight: 500;
+          margin-top: 20px;
         }
 
         .btn.default {
@@ -1292,6 +1293,7 @@
           font-weight: 500;
           font-size: 21px;
           text-transform: uppercase;
+          margin-top: 20px;
         }
 
         .white {
@@ -1366,6 +1368,144 @@
       line-height: 29px;
       text-align: center;
       color: #4B5271;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .pre-header {
+      .container {
+        flex-direction: column-reverse;
+        align-items: center;
+      }
+
+      .image {
+        width: 80%;
+        margin: 0 0 48px;
+      }
+
+      .col {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h2, p {
+          text-align: center;
+        }
+
+        .btn {
+          margin: 48px auto;
+        }
+
+        img {
+          margin: 0 auto;
+        }
+      }
+    }
+
+    .contact-form-section {
+      .container {
+        flex-direction: column-reverse;
+      }
+
+      .contact-form-block {
+        width: 100%;
+        margin: -208px auto 64px;
+      }
+
+      .col {
+        width: 100%;
+      }
+    }
+
+    .ihor-tag {
+      h4 {
+        br {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .pre-header {
+      padding: 32px 0 160px;
+
+      .image {
+        width: 100%;
+      }
+
+      .col {
+        h2 {
+          margin-bottom: 24px;
+        }
+
+        p {
+          font-size: 16px;
+          line-height: 19px;
+
+          br {
+            display: block;
+          }
+
+          a {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            font-weight: 500;
+            margin: 10px 0 0;
+          }
+        }
+
+        .btn, img {
+          display: none;
+        }
+      }
+    }
+
+    .contact-form-section {
+      padding-bottom: 80px;
+
+      .contact-form-block {
+        padding: 49px 32px;
+        min-height: 630px;
+
+        h3 {
+          font-size: 32px;
+          line-height: 38px;
+          margin-bottom: 31px;
+        }
+      }
+
+      .col {
+        h2 {
+          margin-bottom: 40px;
+        }
+
+        p {
+          font-size: 21px;
+          line-height: 25px;
+          margin-bottom: 32px;
+
+          b {
+            font-size: 24px;
+            line-height: 29px;
+          }
+        }
+      }
+    }
+
+    .ihor-tag {
+      h4 {
+        font-size: 21px;
+        line-height: 25px;
+        margin: 32px 0 48px;
+      }
+
+      label {
+        font-size: 21px;
+        line-height: 25px;
+      }
     }
   }
 }
