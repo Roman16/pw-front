@@ -53,7 +53,7 @@ const PPCPricingGuide = () => {
 
                         <h3>
                             <span className={'dollar'}>$</span>
-                            250 + 3
+                            100 + 3
                             <span className={'percent'}>%</span>
 
                             <label>monthly <br/> ad spend</label>
@@ -82,7 +82,7 @@ const PPCPricingGuide = () => {
 
                         <h3>
                             <span className={'dollar'}>$</span>
-                            500 + 2,5
+                            200 + 2,5
                             <span className={'percent'}>%</span>
 
                             <label>monthly <br/> ad spend</label>
@@ -111,7 +111,7 @@ const PPCPricingGuide = () => {
 
                         <h3>
                             <span className={'dollar'}>$</span>
-                            1,000 + 2
+                            500 + 2
                             <span className={'percent'}>%</span>
 
                             <label>monthly <br/> ad spend</label>

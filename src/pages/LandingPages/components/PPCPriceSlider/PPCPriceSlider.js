@@ -61,14 +61,14 @@ const PPCPriceSlider = () => {
                     result = 99;
                     barLabel.html('<div>$99</div>');
                 }else if (value > 1000 && value < 20000) {
-                    result = ((3 / 100) * value) + 250;
-                    barLabel.html('<div>$250 + 3% ad spend</div>');
+                    result = ((3 / 100) * value) + 100;
+                    barLabel.html('<div>$100 + 3% ad spend</div>');
                 } else if (value >= 20000 && value < 50000) {
-                    result = ((2.5 / 100) * value) + 500;
-                    barLabel.html('<div>$500 + 2,5% ad spend</div>');
+                    result = ((2.5 / 100) * value) + 200;
+                    barLabel.html('<div>$200 + 2,5% ad spend</div>');
                 } else {
-                    result = ((2 / 100) * value + 1000);
-                    barLabel.html('<div>$1,000 + 2% ad spend</div>');
+                    result = ((2 / 100) * value + 500);
+                    barLabel.html('<div>$500 + 2% ad spend</div>');
                 }
 
                 sumElement.text(numberMask(result));
