@@ -15,9 +15,6 @@ const PricingOld = React.lazy(() => import('../pages/LandingPages/PricingOld/Pri
 const PPCScanner = React.lazy(() => import('../pages/LandingPages/PPCScanner/PPCScanner'));
 const DemoCall = React.lazy(() => import('../pages/LandingPages/DemoCall/DemoCall'));
 const ContactUs = React.lazy(() => import('../pages/LandingPages/ContactUs/ContactUs'));
-const HelpSupport = React.lazy(() => import('../pages/LandingPages/ContactUs/HelpSupport'));
-const BookDemo = React.lazy(() => import('../pages/LandingPages/ContactUs/BookDemo'));
-const Partners = React.lazy(() => import('../pages/LandingPages/ContactUs/Partners'));
 const PrivacyPolicy = React.lazy(() => import('../pages/LandingPages/PrivacyPolicy/PrivacyPolicy'));
 const TermsOfUse = React.lazy(() => import('../pages/LandingPages/TermsOfUse/TermsOfUse'));
 const Video = React.lazy(() => import('../pages/LandingPages/Video/Video'));
@@ -49,9 +46,6 @@ const routers = () => {
                     <Route exact path="/thank-you" component={ThankYou}/>
                     <Route exact path="/demo-call" component={DemoCall}/>
                     <Route exact path="/contact-us/:status?" component={ContactUs}/>
-                    <Route exact path="/help-support" component={HelpSupport}/>
-                    <Route exact path="/partners" component={Partners}/>
-                    <Route exact path="/book-a-demo" component={BookDemo}/>
                     <Route exact path="/policy" component={PrivacyPolicy}/>
                     <Route exact path="/terms-and-conditions" component={TermsOfUse}/>
                     <Route exact path="/videos/:block?" component={Video}/>
