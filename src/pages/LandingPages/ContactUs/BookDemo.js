@@ -12,12 +12,57 @@ import CustomSelect from "../../../components/Select/Select"
 import {SVG} from "../../../utils/icons"
 import {advertisingStrategyVariations} from '../components/ContactForm/ContactForm'
 import {Link} from "react-router-dom"
+import {notification} from "../../../components/Notification"
+import {userService} from "../../../services/user.services"
 
 const Option = Select.Option
 
+const defaultForm = {
+    first_name: undefined,
+    last_name: undefined,
+    email: undefined,
+    active_marketplaces: undefined,
+    avg_monthly_ad_sales: undefined,
+    avg_monthly_ad_spend: undefined,
+    is_has_brand_registry: 'yes',
+    main_goal: undefined,
+    storefront_name: undefined,
+    main_category: undefined,
+    communication_channel: undefined
+}
+
 
 const BookDemo = () => {
-    const [formStep, setFormStep] = useState(0)
+    const [formStep, setFormStep] = useState(0),
+        [contactFormParams, setContactFormParams] = useState({...defaultForm}),
+        [agreeWithTerms, setAgreeWithTerms] = useState(false)
+
+    const changeContactFormHandler = (name, value) => {
+        setContactFormParams({
+            ...contactFormParams,
+            [name]: value
+        })
+    }
+
+    const submitFormHandler = async (e) => {
+        e.preventDefault()
+
+        if (Object.values(contactFormParams).some(item => item == undefined) || !agreeWithTerms) {
+            notification.error({title: 'All fields is required!'})
+        } else {
+            try {
+                await userService.sendContactForm({
+                    ...contactFormParams,
+                    // active_marketplaces: contactFormParams.active_marketplaces.join(',')
+                })
+
+                setFormStep(3)
+                setAgreeWithTerms(false)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
 
     return (
         <div className="landing-contact-us book-demo  landing-page">
@@ -95,12 +140,16 @@ const BookDemo = () => {
                                         <label htmlFor="">First Name</label>
                                         <Input
                                             placeholder={'First Name'}
+                                            value={contactFormParams.first_name}
+                                            onChange={({target: {value}}) => changeContactFormHandler('first_name', value)}
                                         />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="">Last Name</label>
                                         <Input
                                             placeholder={'Last Name'}
+                                            value={contactFormParams.last_name}
+                                            onChange={({target: {value}}) => changeContactFormHandler('last_name', value)}
                                         />
                                     </div>
                                 </div>
@@ -109,6 +158,8 @@ const BookDemo = () => {
                                     <label htmlFor="">E-mail</label>
                                     <Input
                                         placeholder={'E-mail'}
+                                        value={contactFormParams.email}
+                                        onChange={({target: {value}}) => changeContactFormHandler('email', value)}
                                     />
                                 </div>
 
@@ -116,8 +167,9 @@ const BookDemo = () => {
                                     <label htmlFor="">Do you have brand registry?</label>
 
                                     <Radio.Group
-                                        // value={campaigns.bidding_strategy}
-                                        // onChange={({target: {value}}) => changeBrandHandler({bidding_strategy: value})}
+                                        defaultValue={'yes'}
+                                        value={contactFormParams.is_has_brand_registry}
+                                        onChange={(e) => changeContactFormHandler('is_has_brand_registry', e.target.value)}
                                     >
                                         <Radio value={'yes'}>
                                             Yes
@@ -150,8 +202,8 @@ const BookDemo = () => {
                                     <CustomSelect
                                         placeholder={'Select by'}
                                         getPopupContainer={triggerNode => triggerNode.parentNode}
-                                        // value={contactFormParams.avg_monthly_ad_sales}
-                                        // onChange={(value) => changeContactFormHandler('avg_monthly_ad_sales', value)}
+                                        value={contactFormParams.avg_monthly_ad_sales}
+                                        onChange={(value) => changeContactFormHandler('avg_monthly_ad_sales', value)}
                                     >
                                         <Option value={'below_50k'}>below $50,000</Option>
                                         <Option value={'50_200k'}>$50k - $200k</Option>
@@ -166,8 +218,8 @@ const BookDemo = () => {
                                     <CustomSelect
                                         placeholder={'Select by'}
                                         getPopupContainer={triggerNode => triggerNode.parentNode}
-                                        // value={contactFormParams.avg_monthly_ad_spend}
-                                        // onChange={(value) => changeContactFormHandler('avg_monthly_ad_spend', value)}
+                                        value={contactFormParams.avg_monthly_ad_spend}
+                                        onChange={(value) => changeContactFormHandler('avg_monthly_ad_spend', value)}
                                     >
                                         <Option value={'below_10k'}>below 10k</Option>
                                         <Option value={'10_30k'}>10-30k</Option>
@@ -185,8 +237,8 @@ const BookDemo = () => {
                                     <CustomSelect
                                         placeholder={'Select by'}
                                         getPopupContainer={triggerNode => triggerNode.parentNode}
-                                        // value={contactFormParams.main_goal}
-                                        // onChange={(value) => changeContactFormHandler('main_goal', value)}
+                                        value={contactFormParams.main_goal}
+                                        onChange={(value) => changeContactFormHandler('main_goal', value)}
                                     >
                                         {advertisingStrategyVariations.map(item => (
                                             <Option value={item.value}>
@@ -224,8 +276,8 @@ const BookDemo = () => {
                                     <Input
                                         type="text"
                                         placeholder={'Enter your Storefront Name'}
-                                        // value={contactFormParams.storefront_name}
-                                        // onChange={({target: {value}}) => changeContactFormHandler('storefront_name', value)}
+                                        value={contactFormParams.storefront_name}
+                                        onChange={({target: {value}}) => changeContactFormHandler('storefront_name', value)}
                                     />
                                 </div>
 
@@ -234,8 +286,8 @@ const BookDemo = () => {
                                     <Input
                                         type="text"
                                         placeholder={'Enter your main category'}
-                                        // value={contactFormParams.main_category}
-                                        // onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
+                                        value={contactFormParams.main_category}
+                                        onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
                                     />
                                 </div>
 
@@ -244,8 +296,8 @@ const BookDemo = () => {
                                     <Input
                                         type="text"
                                         placeholder={'The best communication channel to reach you:'}
-                                        // value={contactFormParams.main_category}
-                                        // onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
+                                        value={contactFormParams.communication_channel}
+                                        onChange={({target: {value}}) => changeContactFormHandler('communication_channel', value)}
                                     />
                                 </div>
 
@@ -262,7 +314,7 @@ const BookDemo = () => {
                                         back
                                     </button>
 
-                                    <button type={'button'} className={'btn green'} onClick={() => setFormStep(3)}>
+                                    <button type={'button'} className={'btn green'} onClick={submitFormHandler}>
                                         next
                                     </button>
                                 </div>

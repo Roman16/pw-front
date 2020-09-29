@@ -291,9 +291,11 @@ const ContactForm = () => {
                             <div className="form-group">
                                 <label htmlFor="">Do you have brand registry?</label>
 
-                                <Radio.Group defaultValue={'yes'}
-                                             value={contactFormParams.is_has_brand_registry}
-                                             onChange={(e) => changeContactFormHandler('is_has_brand_registry', e.target.value)}>
+                                <Radio.Group
+                                    defaultValue={'yes'}
+                                    value={contactFormParams.is_has_brand_registry}
+                                    onChange={(e) => changeContactFormHandler('is_has_brand_registry', e.target.value)}
+                                >
                                     <Radio value={true}>
                                         Yes
                                     </Radio>
