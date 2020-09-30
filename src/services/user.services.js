@@ -45,7 +45,8 @@ export const userService = {
     startFreeTrial,
 
     getBlogPosts,
-    sendContactForm
+    sendContactForm,
+    sendFormToPartnerSupport
 };
 
 function login(user) {
@@ -212,6 +213,10 @@ function sendContacts(data) {
 }
 
 function sendContactForm(data) {
+    return api('post', `${userUrls.contactForm}`, data);
+}
+
+function sendFormToPartnerSupport(data) {
     return api('post', `${userUrls.contactForm}`, data);
 }
 

@@ -9,6 +9,8 @@ import dianaAvatar from '../../../assets/img/landing-contact-us/diana-avatar.png
 import {logoList} from '../../../assets/img/landing-contact-us/logo'
 import {Link} from "react-router-dom"
 import {Checkbox, Input} from "antd"
+import {notification} from "../../../components/Notification"
+import {userService} from "../../../services/user.services"
 
 const CheckIcon = () => <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="16" cy="16" r="16" fill="#83FED0"/>
@@ -16,9 +18,44 @@ const CheckIcon = () => <svg width="32" height="32" viewBox="0 0 32 32" fill="no
           stroke-linejoin="round"/>
 </svg>
 
+const defaultForm = {
+    size_agency: '',
+    name: '',
+    campaign_name: '',
+    email: ''
+}
 
 const Partners = () => {
-    const [formStep, setFormStep] = useState(0)
+    const [formStep, setFormStep] = useState(0),
+        [openedList, setOpenedList] = useState(),
+        [formParams, setFormParams] = useState({...defaultForm}),
+        [agreeWithTerms, setAgreeWithTerms] = useState(false)
+
+    const changeContactFormHandler = ({target: {value, name}}) => {
+        setFormParams({
+            ...formParams,
+            [name]: value
+        })
+    }
+
+    const formSubmitHandler = async (e) => {
+        e.preventDefault()
+
+
+        if (agreeWithTerms) {
+            notification.error({title: 'All fields is required!'})
+        } else {
+            try {
+                await userService.sendFormToPartnerSupport(formParams)
+
+                setFormStep(1)
+                setFormParams({...defaultForm})
+                setAgreeWithTerms(false)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
 
     return (
         <div className="landing-contact-us partners  landing-page">
@@ -35,7 +72,7 @@ const Partners = () => {
                             Earn Up to 25% Commission on Referrals and Unlock Exclusive Partner Benefits
                         </p>
 
-                        <a href="" className={'btn default'}>
+                        <a href="#form" className={'btn default'}>
                             apply now
 
                             <SVG id={'right-row'}/>
@@ -98,8 +135,8 @@ const Partners = () => {
                     </h2>
 
                     <ul>
-                        <li>
-                            <div className={'title'}>
+                        <li className={`${openedList === 0 ? 'opened' : ''}`}>
+                            <div className={'title'} onClick={() => setOpenedList(0)}>
                                 <svg width="80" height="80" viewBox="0 0 80 80" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -137,6 +174,10 @@ const Partners = () => {
                                 </svg>
 
                                 <h3> Content <br/> Collaborations</h3>
+
+                                <i>
+                                    <SVG id={'select-icon'}/>
+                                </i>
                             </div>
 
                             <ul>
@@ -159,8 +200,8 @@ const Partners = () => {
                             </ul>
                         </li>
 
-                        <li>
-                            <div className={'title'}>
+                        <li className={`${openedList === 1 ? 'opened' : ''}`}>
+                            <div className={'title'} onClick={() => setOpenedList(1)}>
                                 <svg width="80" height="80" viewBox="0 0 80 80" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="80"
@@ -199,6 +240,10 @@ const Partners = () => {
                                 <h3>
                                     Podcast <span>/</span>Webinar <br/> <span>/</span>Interview invitations
                                 </h3>
+
+                                <i>
+                                    <SVG id={'select-icon'}/>
+                                </i>
                             </div>
 
                             <ul>
@@ -229,8 +274,8 @@ const Partners = () => {
                             </ul>
                         </li>
 
-                        <li>
-                            <div className={'title'}>
+                        <li className={`${openedList === 2 ? 'opened' : ''}`}>
+                            <div className={'title'} onClick={() => setOpenedList(2)}>
                                 <svg width="80" height="80" viewBox="0 0 80 80" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -277,6 +322,10 @@ const Partners = () => {
                                 <h3>
                                     Write for our <br/> blog
                                 </h3>
+
+                                <i>
+                                    <SVG id={'select-icon'}/>
+                                </i>
                             </div>
 
                             <ul>
@@ -327,7 +376,7 @@ const Partners = () => {
                                 Apply for the Profit Whales <br/> <b>Partner Program</b>
                             </p>
 
-                            <button className={'btn default'}>Apply now</button>
+                            <a href={'#form'} className={'btn default'}>Apply now</a>
                         </div>
 
                         <div>
@@ -367,19 +416,21 @@ const Partners = () => {
                         </div>
                     </div>
 
-                    {formStep === 0 && <div className="form-block">
+                    {formStep === 0 && <div className="form-block" id={'form'}>
                         <h4>Join Our <span>partner program</span></h4>
                         <h3>Let’s talk</h3>
 
-                        <form action="">
+                        <form onSubmit={formSubmitHandler}>
                             <div className="row">
                                 <div className="form-group">
                                     <label htmlFor="">Your Name</label>
                                     <Input
                                         type="text"
                                         placeholder={'Your Name'}
-                                        // value={contactFormParams.main_category}
-                                        // onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
+                                        required
+                                        value={formParams.name}
+                                        name={'name'}
+                                        onChange={changeContactFormHandler}
                                     />
                                 </div>
                                 <div className="form-group">
@@ -387,8 +438,10 @@ const Partners = () => {
                                     <Input
                                         type="text"
                                         placeholder={'Your E-mail'}
-                                        // value={contactFormParams.main_category}
-                                        // onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
+                                        required
+                                        value={formParams.email}
+                                        name={'email'}
+                                        onChange={changeContactFormHandler}
                                     />
                                 </div>
                             </div>
@@ -399,8 +452,10 @@ const Partners = () => {
                                     <Input
                                         type="text"
                                         placeholder={'Your Company Name'}
-                                        // value={contactFormParams.main_category}
-                                        // onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
+                                        required
+                                        value={formParams.company_name}
+                                        name={'company_name'}
+                                        onChange={changeContactFormHandler}
                                     />
                                 </div>
                                 <div className="form-group">
@@ -408,14 +463,15 @@ const Partners = () => {
                                     <Input
                                         type="text"
                                         placeholder={'Size of agency'}
-                                        // value={contactFormParams.main_category}
-                                        // onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
+                                        value={formParams.size_agency}
+                                        name={'size_agency'}
+                                        onChange={changeContactFormHandler}
                                     />
                                 </div>
                             </div>
 
                             <Checkbox
-                                // onChange={({target: {checked}}) => setAgreeWithTerms(checked)}
+                                onChange={({target: {checked}}) => setAgreeWithTerms(checked)}
                             >
                                 Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms
                                 and
@@ -447,10 +503,17 @@ const Partners = () => {
                         <h5>
                             Speak soon
 
-                            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M30 15C30 23.2842 23.2842 30 15 30C6.71667 30 0 23.2842 0 15C0 6.71667 6.71667 0 15 0C23.2842 0 30 6.71667 30 15Z" fill="#FFCC4D"/>
-                                <path d="M9.58333 16.6667C10.7339 16.6667 11.6667 15.3609 11.6667 13.75C11.6667 12.1392 10.7339 10.8334 9.58333 10.8334C8.43274 10.8334 7.5 12.1392 7.5 13.75C7.5 15.3609 8.43274 16.6667 9.58333 16.6667Z" fill="#664500"/>
-                                <path d="M23.7145 14.8308C23.6645 14.7183 22.4653 12.0833 20.0003 12.0833C17.5362 12.0833 16.3362 14.7183 16.2862 14.8308C16.2508 14.9148 16.2439 15.008 16.2663 15.0964C16.2887 15.1847 16.3393 15.2633 16.4104 15.3203C16.4816 15.3773 16.5693 15.4096 16.6604 15.4122C16.7515 15.4148 16.841 15.3877 16.9153 15.3349C16.9253 15.3274 17.967 14.5833 20.0003 14.5833C22.022 14.5833 23.062 15.3174 23.0853 15.3341C23.1589 15.3905 23.2493 15.4206 23.3421 15.4196C23.4348 15.4186 23.5245 15.3866 23.5969 15.3287C23.6693 15.2708 23.7203 15.1902 23.7416 15.1C23.7629 15.0097 23.7533 14.915 23.7145 14.8308ZM4.99949 10.3816C4.8448 10.3814 4.69321 10.3382 4.56169 10.2568C4.43016 10.1754 4.32389 10.059 4.25478 9.92057C4.18567 9.78217 4.15645 9.62727 4.17038 9.47321C4.18431 9.31915 4.24085 9.17201 4.33366 9.04826C7.05199 5.42326 10.6803 5.38159 10.8337 5.38159C11.0547 5.38115 11.2668 5.46852 11.4234 5.62449C11.58 5.78046 11.6682 5.99225 11.6687 6.21326C11.6691 6.43427 11.5817 6.64641 11.4258 6.803C11.2698 6.9596 11.058 7.04782 10.837 7.04826C10.707 7.04993 7.86283 7.11993 5.66616 10.0483C5.58876 10.152 5.48816 10.2362 5.37239 10.2941C5.25663 10.3519 5.12892 10.3819 4.99949 10.3816ZM24.1678 12.1524C24.0383 12.1527 23.9105 12.1227 23.7946 12.0648C23.6787 12.0069 23.5779 11.9228 23.5003 11.8191C21.3403 8.93826 17.6995 9.62993 17.6637 9.63576C17.4472 9.67852 17.2227 9.63371 17.0392 9.51115C16.8558 9.38859 16.7284 9.1983 16.6851 8.98198C16.6417 8.76566 16.6859 8.54098 16.808 8.3572C16.93 8.17342 17.12 8.04554 17.3362 8.00159C17.5287 7.96243 22.0503 7.10826 24.8328 10.8183C24.9258 10.942 24.9826 11.0891 24.9967 11.2432C25.0107 11.3973 24.9816 11.5523 24.9126 11.6908C24.8436 11.8293 24.7373 11.9459 24.6058 12.0274C24.4742 12.1089 24.3226 12.1522 24.1678 12.1524ZM19.3787 19.6474C19.301 19.6025 19.2111 19.5831 19.1218 19.5921C19.0325 19.6011 18.9483 19.6379 18.8812 19.6974C18.8728 19.7041 18.037 20.4166 15.0003 20.4166C11.9662 20.4166 11.1287 19.7049 11.1287 19.7049C11.0642 19.6407 10.9804 19.5994 10.8902 19.5873C10.8001 19.5751 10.7084 19.5928 10.6292 19.6377C10.55 19.6826 10.4877 19.7521 10.4518 19.8358C10.4159 19.9194 10.4084 20.0124 10.4303 20.1008C10.4387 20.1374 11.3837 23.7499 15.0003 23.7499C18.617 23.7499 19.562 20.1374 19.5712 20.1008C19.5918 20.0145 19.5843 19.924 19.5496 19.8424C19.515 19.7608 19.455 19.6924 19.3787 19.6474Z" fill="#664500"/>
+                            <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M30 15C30 23.2842 23.2842 30 15 30C6.71667 30 0 23.2842 0 15C0 6.71667 6.71667 0 15 0C23.2842 0 30 6.71667 30 15Z"
+                                    fill="#FFCC4D"/>
+                                <path
+                                    d="M9.58333 16.6667C10.7339 16.6667 11.6667 15.3609 11.6667 13.75C11.6667 12.1392 10.7339 10.8334 9.58333 10.8334C8.43274 10.8334 7.5 12.1392 7.5 13.75C7.5 15.3609 8.43274 16.6667 9.58333 16.6667Z"
+                                    fill="#664500"/>
+                                <path
+                                    d="M23.7145 14.8308C23.6645 14.7183 22.4653 12.0833 20.0003 12.0833C17.5362 12.0833 16.3362 14.7183 16.2862 14.8308C16.2508 14.9148 16.2439 15.008 16.2663 15.0964C16.2887 15.1847 16.3393 15.2633 16.4104 15.3203C16.4816 15.3773 16.5693 15.4096 16.6604 15.4122C16.7515 15.4148 16.841 15.3877 16.9153 15.3349C16.9253 15.3274 17.967 14.5833 20.0003 14.5833C22.022 14.5833 23.062 15.3174 23.0853 15.3341C23.1589 15.3905 23.2493 15.4206 23.3421 15.4196C23.4348 15.4186 23.5245 15.3866 23.5969 15.3287C23.6693 15.2708 23.7203 15.1902 23.7416 15.1C23.7629 15.0097 23.7533 14.915 23.7145 14.8308ZM4.99949 10.3816C4.8448 10.3814 4.69321 10.3382 4.56169 10.2568C4.43016 10.1754 4.32389 10.059 4.25478 9.92057C4.18567 9.78217 4.15645 9.62727 4.17038 9.47321C4.18431 9.31915 4.24085 9.17201 4.33366 9.04826C7.05199 5.42326 10.6803 5.38159 10.8337 5.38159C11.0547 5.38115 11.2668 5.46852 11.4234 5.62449C11.58 5.78046 11.6682 5.99225 11.6687 6.21326C11.6691 6.43427 11.5817 6.64641 11.4258 6.803C11.2698 6.9596 11.058 7.04782 10.837 7.04826C10.707 7.04993 7.86283 7.11993 5.66616 10.0483C5.58876 10.152 5.48816 10.2362 5.37239 10.2941C5.25663 10.3519 5.12892 10.3819 4.99949 10.3816ZM24.1678 12.1524C24.0383 12.1527 23.9105 12.1227 23.7946 12.0648C23.6787 12.0069 23.5779 11.9228 23.5003 11.8191C21.3403 8.93826 17.6995 9.62993 17.6637 9.63576C17.4472 9.67852 17.2227 9.63371 17.0392 9.51115C16.8558 9.38859 16.7284 9.1983 16.6851 8.98198C16.6417 8.76566 16.6859 8.54098 16.808 8.3572C16.93 8.17342 17.12 8.04554 17.3362 8.00159C17.5287 7.96243 22.0503 7.10826 24.8328 10.8183C24.9258 10.942 24.9826 11.0891 24.9967 11.2432C25.0107 11.3973 24.9816 11.5523 24.9126 11.6908C24.8436 11.8293 24.7373 11.9459 24.6058 12.0274C24.4742 12.1089 24.3226 12.1522 24.1678 12.1524ZM19.3787 19.6474C19.301 19.6025 19.2111 19.5831 19.1218 19.5921C19.0325 19.6011 18.9483 19.6379 18.8812 19.6974C18.8728 19.7041 18.037 20.4166 15.0003 20.4166C11.9662 20.4166 11.1287 19.7049 11.1287 19.7049C11.0642 19.6407 10.9804 19.5994 10.8902 19.5873C10.8001 19.5751 10.7084 19.5928 10.6292 19.6377C10.55 19.6826 10.4877 19.7521 10.4518 19.8358C10.4159 19.9194 10.4084 20.0124 10.4303 20.1008C10.4387 20.1374 11.3837 23.7499 15.0003 23.7499C18.617 23.7499 19.562 20.1374 19.5712 20.1008C19.5918 20.0145 19.5843 19.924 19.5496 19.8424C19.515 19.7608 19.455 19.6924 19.3787 19.6474Z"
+                                    fill="#664500"/>
                             </svg>
                         </h5>
                     </div>}
