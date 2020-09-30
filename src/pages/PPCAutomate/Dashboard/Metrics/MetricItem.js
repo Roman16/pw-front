@@ -173,12 +173,11 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
         hasMargin: state.dashboard.hasMargin || false
     }))
 
-
     const handleClick = () => {
         if (activeMetrics.find(item => item.key === key)) {
-            onDeactivateMetric(metric)
+            onDeactivateMetric(metric, activeMetrics.findIndex(item => item.key === key))
         } else {
-            onActivateMetric(metric)
+            onActivateMetric(metric, activeMetrics.findIndex(item => item.key === key))
         }
     }
 
@@ -191,11 +190,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
 
     return (
         <div className='metric-item' onClick={handleClick}>
-            {activeMetrics && <Fragment>
-                {(activeMetrics[0] && activeMetrics[0].key === key) && <div className='active-metric green'></div>}
-                {(activeMetrics[1] && activeMetrics[1].key === key) && <div className='active-metric violet'></div>}
-            </Fragment>}
-
+            {activeMetrics.length > 0 && <div className={`active-metric position-${activeMetrics.findIndex(item => item.key === key)}`}/>}
 
             <div className="title-info">
                 <span title={metricInformation.title} dangerouslySetInnerHTML={{__html: metricInformation.title}}/>

@@ -1,25 +1,22 @@
 import {analyticsConstants} from '../constans/actions.type'
 import moment from "moment"
-import {metricsListArray} from "../constans/metricsList"
-
-// const metricsWithoutOrganic = metricsListArray.filter(
-//     metric => metric.key !== 'total_orders' &&
-//         metric.key !== 'total_orders_pure' &&
-//         metric.key !== 'organic_orders' &&
-//         metric.key !== 'total_sales' &&
-//         metric.key !== 'organic_sales' &&
-//         metric.key !== 'total_units' &&
-//         metric.key !== 'total_units_pure' &&
-//         metric.key !== 'profit' &&
-//         metric.key !== 'macos' &&
-//         metric.key !== 'returns' &&
-//         metric.key !== 'returns_units'
-//     ),
-//     metricsForTargetingsPanel = metricsWithoutOrganic.filter(metric => metric.key !== 'ad_profit')
+import _ from 'lodash'
 
 const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState') && JSON.parse(localStorage.getItem('analyticsMetricsState')),
-    columnsBlackListFromLocalStorage = localStorage.getItem('columnsBlackList') && JSON.parse(localStorage.getItem('columnsBlackList')),
-    filtersListFromLocalStorage = localStorage.getItem('filtersList') && JSON.parse(localStorage.getItem('filtersList'))
+    columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
+    filtersListFromLocalStorage = localStorage.getItem('analyticsFiltersList') && JSON.parse(localStorage.getItem('analyticsFiltersList')),
+    chartStateFromLocalStorage = localStorage.getItem('analyticsChartState') && JSON.parse(localStorage.getItem('analyticsChartState'))
+
+const workplacesList = {
+    'products': [],
+    'portfolios': [],
+    'campaigns': [],
+    'placements': [],
+    'adGroups': [],
+    'targetings': [],
+    'negativeTargetings': [],
+    'productAds': []
+}
 
 
 const initialState = {
@@ -31,31 +28,14 @@ const initialState = {
         portfolioId: undefined,
     },
     metricsState: metricsStateFromLocalStorage ? metricsStateFromLocalStorage : undefined,
-    chartState: {
+    chartState: chartStateFromLocalStorage ? chartStateFromLocalStorage : _.mapValues(workplacesList, () => ({
         showWeekChart: true,
         showDailyChart: true,
-        showOptimizationChart: true
-    },
-    columnsBlackList: columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {
-        'products': [],
-        'portfolios': [],
-        'campaigns': [],
-        'placements': [],
-        'adGroups': [],
-        'targetings': [],
-        'negativeTargetings': [],
-        'productAds': []
-    },
-    filters: filtersListFromLocalStorage ? filtersListFromLocalStorage : {
-        'products': [],
-        'portfolios': [],
-        'campaigns': [],
-        'placements': [],
-        'adGroups': [],
-        'targetings': [],
-        'negativeTargetings': [],
-        'productAds': []
-    },
+        showOptimizationChart: true,
+        selectFourMetrics: false
+    })),
+    columnsBlackList: columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : workplacesList,
+    filters: filtersListFromLocalStorage ? filtersListFromLocalStorage : workplacesList,
     selectedRangeDate: {
         startDate: moment().add(-29, 'days'),
         endDate: moment()
@@ -72,9 +52,17 @@ export function analytics(state = initialState, action) {
             }
 
         case analyticsConstants.SET_CHART_STATE:
+            localStorage.setItem('analyticsChartState', JSON.stringify({
+                ...state.chartState,
+                [state.location]: action.payload
+            }))
+
             return {
                 ...state,
-                chartState: {...state.chartState, ...action.payload}
+                chartState: {
+                    ...state.chartState,
+                    [state.location]: action.payload
+                }
             }
 
         case analyticsConstants.SET_DATE_RANGE:
@@ -104,7 +92,7 @@ export function analytics(state = initialState, action) {
             }
 
         case analyticsConstants.SET_COLUMNS_BLACK_LIST:
-            localStorage.setItem('columnsBlackList', JSON.stringify({
+            localStorage.setItem('analyticsColumnsBlackList', JSON.stringify({
                 ...state.columnsBlackList,
                 [state.location]: action.payload
             }))
@@ -118,7 +106,7 @@ export function analytics(state = initialState, action) {
             }
 
         case analyticsConstants.SET_FILTERS_LIST:
-            localStorage.setItem('filtersList', JSON.stringify({
+            localStorage.setItem('analyticsFiltersList', JSON.stringify({
                 ...state.filters,
                 [state.location]: action.payload
             }))

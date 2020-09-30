@@ -4,8 +4,21 @@ import {SVG} from "../../../../utils/icons"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 
-const ChartHeader = ({chartState, onChangeState}) => {
+const ChartHeader = ({chartState, selectedMetrics, activeMetrics}) => {
     const [visiblePopover, setVisiblePopover] = useState(undefined)
+
+    const dispatch = useDispatch()
+
+    const onChangeState = (name, value) => {
+        dispatch(analyticsActions.setChartState({...chartState, [name]: value}))
+
+        if (name === 'selectFourMetrics' && !value) {
+            dispatch(analyticsActions.updateMetricsState({
+                selectedMetrics: selectedMetrics,
+                activeMetrics: [...activeMetrics.splice(0, 2)]
+            }))
+        }
+    }
 
     const OptionsMenu = () => {
         return (
@@ -33,6 +46,14 @@ const ChartHeader = ({chartState, onChangeState}) => {
                         onChange={e => onChangeState('showOptimizationChart', e)}
                     />
                     <span>Optimization status</span>
+                </div>
+
+                <div className='switch-block optimization-switch'>
+                    <Switch
+                        checked={chartState.selectFourMetrics}
+                        onChange={e => onChangeState('selectFourMetrics', e)}
+                    />
+                    <span>Allow select up to 4 metrics</span>
                 </div>
             </div>
         )
@@ -86,6 +107,7 @@ const ChartHeader = ({chartState, onChangeState}) => {
             <Popover
                 content={<LegendMenu/>}
                 placement="bottomLeft"
+                trigger="click"
                 overlayClassName={'overlay-legend-popover'}
                 getPopupContainer={(node) => node.parentNode}
                 visible={visiblePopover === 'legend'}
