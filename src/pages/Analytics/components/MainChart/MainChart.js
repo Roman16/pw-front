@@ -70,7 +70,6 @@ const MainChart = () => {
         <ChartHeader
             chartState={chartState}
             activeMetrics={activeMetrics}
-            selectedMetrics={selectedMetrics}
         />
 
         <Chart

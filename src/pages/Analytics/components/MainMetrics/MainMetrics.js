@@ -63,11 +63,7 @@ const MainMetrics = () => {
     }
 
     const updateMetricsState = (data) => {
-        dispatch(analyticsActions.updateMetricsState({
-            selectedMetrics: selectedMetrics,
-            activeMetrics: activeMetrics,
-            ...data
-        }))
+        dispatch(analyticsActions.updateMetricsState(data))
     }
 
     const getMetricsStatistics = async () => {

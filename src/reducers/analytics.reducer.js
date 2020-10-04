@@ -7,7 +7,7 @@ const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState
     columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
     filtersListFromLocalStorage = localStorage.getItem('analyticsFiltersList') && JSON.parse(localStorage.getItem('analyticsFiltersList')),
     chartStateFromLocalStorage = localStorage.getItem('analyticsChartState') && JSON.parse(localStorage.getItem('analyticsChartState')),
-    rangeDateFromLocalStorage = localStorage.getItem('rangeDate') && JSON.parse(localStorage.getItem('rangeDate'))
+    rangeDateFromLocalStorage = localStorage.getItem('analyticsRangeDate') && JSON.parse(localStorage.getItem('analyticsRangeDate'))
 
 const workplacesList = {
     'products': [],
@@ -93,7 +93,7 @@ export function analytics(state = initialState, action) {
 
         case analyticsConstants.SET_DATE_RANGE:
             console.log(action.payload)
-            localStorage.setItem('rangeDate', JSON.stringify(action.payload))
+            localStorage.setItem('analyticsRangeDate', JSON.stringify(action.payload))
 
             return {
                 ...state,
@@ -109,14 +109,20 @@ export function analytics(state = initialState, action) {
         case analyticsConstants.UPDATE_METRICS_STATE:
             localStorage.setItem('analyticsMetricsState', JSON.stringify({
                 ...state.metricsState,
-                [state.location]: action.payload
+                [state.location]: {
+                    ...state.metricsState[state.location],
+                    ...action.payload
+                }
             }))
 
             return {
                 ...state,
                 metricsState: {
                     ...state.metricsState,
-                    [state.location]: action.payload
+                    [state.location]: {
+                        ...state.metricsState[state.location],
+                        ...action.payload
+                    }
                 }
             }
 

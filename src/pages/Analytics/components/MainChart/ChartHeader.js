@@ -1,10 +1,10 @@
 import React, {Fragment, useState} from "react"
 import {Popover, Switch} from "antd"
 import {SVG} from "../../../../utils/icons"
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 
-const ChartHeader = ({chartState, selectedMetrics, activeMetrics}) => {
+const ChartHeader = ({chartState, activeMetrics}) => {
     const [visiblePopover, setVisiblePopover] = useState(undefined)
 
     const dispatch = useDispatch()
@@ -14,7 +14,6 @@ const ChartHeader = ({chartState, selectedMetrics, activeMetrics}) => {
 
         if (name === 'selectFourMetrics' && !value) {
             dispatch(analyticsActions.updateMetricsState({
-                selectedMetrics: selectedMetrics,
                 activeMetrics: [...activeMetrics.splice(0, 2)]
             }))
         }
