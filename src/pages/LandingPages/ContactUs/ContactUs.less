@@ -106,6 +106,14 @@
         svg {
           stroke: #6D6DF6;
           margin-left: 10px;
+          transition: .2s;
+        }
+
+        &:hover {
+          svg {
+            transition: .2s;
+            margin-left: 20px;
+          }
         }
       }
     }
@@ -135,26 +143,9 @@
         display: flex;
         flex-direction: column;
         position: relative;
-        padding: 18px 20px 18px 0;
+        padding: 18px 50px 18px 0;
         border-bottom: 0.5px solid #7C8A95;
 
-        &::before {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 0;
-          height: 100%;
-          background: #83FED0;
-          transition: .2s;
-        }
-
-        &:hover {
-          &::before {
-            width: 100%;
-            transition: .2s;
-          }
-        }
 
         h4 {
           font-size: 24px;
@@ -179,9 +170,19 @@
           bottom: 0;
           display: flex;
           align-items: center;
+          margin-right: 30px;
+          transition: .2s;
 
           svg {
             stroke: #7C8A95;
+          }
+        }
+
+
+        &:hover {
+          i {
+            margin-right: 5px;
+            transition: .2s;
           }
         }
       }
