@@ -26,9 +26,9 @@ const MainChart = () => {
         chartState: state.analytics.chartState[location]
     }))
 
-    const allMetrics = location === 'targetings' ? [...metricsForTargetingsPanel] : location === 'products' ? [...metricsListArray] : [...metricsWithoutOrganic],
-        selectedMetrics = metricsState ? metricsState.selectedMetrics : allMetrics.slice(0, 5),
-        activeMetrics = metricsState ? metricsState.activeMetrics : allMetrics.slice(0, 2)
+    const allMetrics = metricsState.allMetrics,
+        selectedMetrics = allMetrics.selectedMetrics,
+        activeMetrics = metricsState.activeMetrics
 
 
     const getChartData = () => {

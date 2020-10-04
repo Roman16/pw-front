@@ -2,6 +2,7 @@ import React from "react"
 import DatePicker from "../../../../components/DatePicker/DatePickerRange"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import moment from "moment"
 
 const DateRange = () => {
     const dispatch = useDispatch()
@@ -17,7 +18,8 @@ const DateRange = () => {
     return (
         <DatePicker
             timeRange={changeDateHandler}
-            defaultValue={selectedDate.startDate === 'lifetime' ? null : [selectedDate.startDate, selectedDate.endDate]}
+            // value={selectedDate.startDate === 'lifetime' ? null : [moment(selectedDate.startDate), moment(selectedDate.endDate)]}
+            defaultValue={selectedDate.startDate === 'lifetime' ? null : [moment(selectedDate.startDate), moment(selectedDate.endDate)]}
         />
     )
 }

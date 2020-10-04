@@ -113,6 +113,10 @@ const Navigation = ({location}) => {
 
     const [currentMenu, setCurrentMenu] = useState(analyticsNavigation.account)
 
+    const setLocation = (key) => {
+        dispatch(analyticsActions.setLocation(key))
+    }
+
     useEffect(() => {
         if (mainState.adGroupId && mainState.campaignId) {
             setCurrentMenu(analyticsNavigation.adGroups)
@@ -135,7 +139,7 @@ const Navigation = ({location}) => {
         <section className={'navigation'}>
             <ul>
                 {currentMenu.map((item, index) => <li>
-                    <NavLink activeClassName={'active'} to={item.url + location.search}>
+                    <NavLink activeClassName={'active'} to={item.url + location.search} onClick={() => setLocation(item.key)}>
                         {item.title}
                     </NavLink>
                 </li>)}

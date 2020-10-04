@@ -14,21 +14,6 @@ import _ from 'lodash'
 
 let activeMetricIndexTurn = [0, 1]
 
-export const metricsWithoutOrganic = metricsListArray.filter(
-    metric => metric.key !== 'total_orders' &&
-        metric.key !== 'total_orders_pure' &&
-        metric.key !== 'organic_orders' &&
-        metric.key !== 'total_sales' &&
-        metric.key !== 'organic_sales' &&
-        metric.key !== 'total_units' &&
-        metric.key !== 'total_units_pure' &&
-        metric.key !== 'profit' &&
-        metric.key !== 'macos' &&
-        metric.key !== 'returns' &&
-        metric.key !== 'returns_units'
-)
-export const metricsForTargetingsPanel = metricsWithoutOrganic.filter(metric => metric.key !== 'ad_profit')
-
 const MainMetrics = () => {
     const dispatch = useDispatch()
 
@@ -37,9 +22,9 @@ const MainMetrics = () => {
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         selectFourMetrics = useSelector(state => state.analytics.chartState[location].selectFourMetrics)
 
-    const allMetrics = location === 'targetings' ? [...metricsForTargetingsPanel] : location === 'products' ? [...metricsListArray] : [...metricsWithoutOrganic],
-        selectedMetrics = metricsState ? metricsState.selectedMetrics : allMetrics.slice(0, 5),
-        activeMetrics = metricsState ? metricsState.activeMetrics : allMetrics.slice(0, 2)
+    const allMetrics = metricsState.allMetrics,
+        selectedMetrics = metricsState.selectedMetrics,
+        activeMetrics = metricsState.activeMetrics
 
 
     const [visibleItems, updateVisibleList] = useState(selectedMetrics)
