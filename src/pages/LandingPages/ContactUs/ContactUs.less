@@ -146,13 +146,18 @@
         padding: 18px 50px 18px 0;
         border-bottom: 0.5px solid #7C8A95;
 
+        &:last-child {
+          border: 0;
+        }
+
 
         h4 {
           font-size: 24px;
           line-height: 29px;
-          color: #6D6DF6;
+          color: #17175A;
           margin-bottom: 12px;
           z-index: 10;
+          transition: .2s;
         }
 
         p {
@@ -180,6 +185,11 @@
 
 
         &:hover {
+          h4 {
+            color: #6D6DF6;
+            transition: .2s;
+          }
+
           i {
             margin-right: 5px;
             transition: .2s;
@@ -689,6 +699,10 @@
           display: flex;
           justify-content: center;
           text-align: center;
+
+          &:hover {
+            color: #fff;
+          }
         }
       }
     }
@@ -771,6 +785,24 @@
 
       li {
         display: flex;
+
+        &:nth-child(1) {
+          i {
+            color: #4867AA;
+          }
+        }
+
+        &:nth-child(2) {
+          i {
+            color: #0A66C2;
+          }
+        }
+
+        &:nth-child(3) {
+          i {
+            color: #1DA1F2;
+          }
+        }
       }
 
       a {
@@ -789,8 +821,9 @@
         i {
           font-size: 50px;
           margin: 0 20px 0 0;
-          color: #4867AA;
         }
+
+
 
         &:hover {
           background: #6D6DF6;
@@ -828,19 +861,34 @@
         align-items: center;
         justify-content: space-between;
         border-bottom: 0.5px solid #7C8A95;
-        padding: 10px 0;
-
+        padding: 10px 80px 10px 0;
+        position: relative;
         font-size: 24px;
         line-height: 29px;
-        font-weight: 500;
+        font-weight: 400;
         color: #6D6DF6;
 
+        &:nth-child(7),
+        &:nth-child(8) {
+          border: 0;
+        }
+
         svg {
+          position: absolute;
+          right: 30px;
           min-width: 33px;
           width: 33px;
           height: 24px;
-          stroke: #6D6DF6;
-          margin: 0 0 0 20px;
+          transition: .2s;
+        }
+
+        &:hover {
+          font-weight: 500;
+
+          svg {
+            right: 0;
+            transition: .2s;
+          }
         }
       }
     }

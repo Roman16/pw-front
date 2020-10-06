@@ -272,7 +272,15 @@ const HelpSupport = () => {
                                 target={'_blank'}
                             >
                                 {item.title}
-                                <SVG id={'right-row'}/>
+
+                                <svg width="34" height="24" viewBox="0 0 34 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="34" height="24">
+                                        <rect width="33.6" height="24" fill="#C4C4C4"/>
+                                    </mask>
+                                    <g mask="url(#mask0)">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M21.1745 1.30573C21.7788 0.73913 22.7281 0.769751 23.2947 1.37412L32.2947 10.9741C32.8356 11.5511 32.8356 12.449 32.2947 13.0259L23.2947 22.6259C22.7281 23.2303 21.7788 23.2609 21.1745 22.6943C20.5701 22.1277 20.5395 21.1785 21.1061 20.5741L27.738 13.5L2.40039 13.5C1.57196 13.5 0.90039 12.8285 0.90039 12C0.90039 11.1716 1.57196 10.5 2.40039 10.5L27.738 10.5L21.1061 3.42594C20.5395 2.82157 20.5701 1.87232 21.1745 1.30573Z" fill="#6D6DF6"/>
+                                    </g>
+                                </svg>
                             </a>
                         ))}
 
