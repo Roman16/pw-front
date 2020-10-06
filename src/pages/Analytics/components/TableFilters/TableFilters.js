@@ -16,7 +16,7 @@ const TableFilters = ({columns, filters = []}) => {
     const [visibleFilterPopover, setVisibleFilterPopover] = useState(false),
         [indexSelectedFilter, setIndexSelectedFilter] = useState(null),
         [editFilter, setEditFilter] = useState(undefined),
-        [searchValue, setSearchValue] = useState(filters.find(filter => filter.filterBy === 'search') ? filters.find(filter => filter.filterBy === 'search').value : undefined)
+        [searchValue, setSearchValue] = useState(filters.find(filter => filter.type === 'search') ? filters.find(filter => filter.type === 'search').value : undefined)
 
     const dispatch = useDispatch()
 
@@ -49,11 +49,11 @@ const TableFilters = ({columns, filters = []}) => {
 
 
     const searchHandler = ({target: {value}}) => {
-        const filterIndex = _.findIndex(filters, {filterBy: 'search'})
+        const filterIndex = _.findIndex(filters, {type: 'search'})
 
         const filter = {
-            filterBy: 'search',
-            // type: filterType,
+            filterBy: columns.find(column => column.search).dataIndex,
+            type: 'search',
             value: value
         }
 
@@ -117,7 +117,7 @@ const TableFilters = ({columns, filters = []}) => {
 
             <div className="current-filters filters-list">
                 {filters.map((filter, index) => (
-                    filter.filterBy !== 'search' && <Popover
+                    filter.type !== 'search' && <Popover
                         content={<FilterWindow
                             filters={filters}
                             columns={columns}

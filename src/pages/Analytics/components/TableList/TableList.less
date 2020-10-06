@@ -5,7 +5,6 @@
   .list-section {
     max-width: 100%;
     height: max-content;
-    max-height: 600px;
     margin: 15px 0 15px 0;
     position: relative;
     overflow: hidden;
@@ -17,15 +16,24 @@
 
     padding: 20px 0 0 0;
 
-    display: grid;
-    grid-template-areas: 'filters columns date' 'currentFilters currentFilters currentFilters' 'table table table' 'pagination pagination pagination';
-    grid-template-columns: 1fr max-content max-content;
+    display: flex;
+    flex-direction: column;
 
     .form-group {
       width: 300px;
       height: 2.2857142857142856rem;
       margin: 0 0 0 20px;
     }
+
+
+    .section-header {
+      display: grid;
+      grid-template-areas: 'filters columns date' 'currentFilters currentFilters currentFilters';
+      grid-template-columns: 1fr max-content max-content;
+      justify-content: space-between;
+    }
+
+
 
     .list-filters-block {
       grid-area: filters;
@@ -169,8 +177,13 @@
     }
 
     .custom-table {
-      flex: 1;
       display: flex;
+      flex: 1;
+      max-height: 400px;
+
+      .load-data {
+        padding-top: 40px;
+      }
 
       .table-overflow {
         flex: 1;

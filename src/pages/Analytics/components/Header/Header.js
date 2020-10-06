@@ -13,15 +13,16 @@ const Header = ({location}) => {
         mainState: state.analytics.mainState
     }))
 
-    const setMainState = (state, url) => {
+    const setMainState = (state, url, location) => {
         dispatch(analyticsActions.setMainState(state))
+        dispatch(analyticsActions.setLocation(location))
         history.push(url)
     }
 
     const StepsRender = () => {
         if (mainState.adGroupId && mainState.campaignId) {
             return (<>
-                <li onClick={() => setMainState(undefined, '/analytics/campaigns')}>
+                <li onClick={() => setMainState(undefined, '/analytics/campaigns', 'campaigns')}>
                     Campaigns
 
                     <i>

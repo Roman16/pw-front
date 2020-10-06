@@ -6,7 +6,7 @@ import {Redirect, Route} from "react-router-dom"
 import './Analytics.less'
 import {history} from "../../utils/history"
 import queryString from "query-string"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../actions/analytics.actions"
 
 import Campaigns from "./Campaigns/Campaigns"
@@ -24,6 +24,8 @@ import ProductOverview from "./ProductOverview/ProductOverview"
 const Analytics = (props) => {
     const dispatch = useDispatch()
 
+    const location = useSelector(state => state.analytics.location)
+
     useEffect(() => {
         const queryParams = queryString.parse(props.location.search)
 
@@ -33,7 +35,7 @@ const Analytics = (props) => {
     }, [props.location.search])
 
     useEffect(() => {
-        document.querySelector('.workplace').scrollTop = 0
+        // document.querySelector('.workplace').scrollTop = 0
     }, [props.location])
 
     return (
@@ -46,7 +48,7 @@ const Analytics = (props) => {
                 location={props.location}
             />
 
-            <section className="workplace">
+            {location && <section className="workplace">
                 <Route exact path="/analytics">
                     <Redirect to="/analytics/campaigns"/>
                 </Route>
@@ -64,6 +66,7 @@ const Analytics = (props) => {
                 <Route exact path="/analytics/negative-targetings" component={NegativeTargetings}/>
                 <Route exact path="/analytics/placements" component={Placements}/>
             </section>
+            }
         </div>
     )
 }

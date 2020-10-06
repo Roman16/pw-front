@@ -38,7 +38,7 @@ export const metricsForTargetingsPanel = metricsWithoutOrganic.filter(metric => 
 
 
 const initialState = {
-    location: 'products',
+    location: undefined,
     mainState: {
         campaignId: undefined,
         productId: undefined,

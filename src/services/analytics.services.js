@@ -1,5 +1,7 @@
 import api from "./request"
 import {analyticsUrls} from "../constans/api.urls"
+import moment from "moment"
+import {reasonFilterParams} from "./reports.services"
 
 
 export const analyticsServices = {
@@ -14,11 +16,29 @@ export const analyticsServices = {
     fetchMetricsData
 }
 
+
+const urlGenerator = (url, pagination, sorting, filters) => {
+    const parameters = []
+
+    if (sorting.type && sorting.column) {
+        parameters.push(`&order_by:${sorting.type}=${sorting.column}`)
+    }
+
+    filters.forEach(({filterBy, type, value}) => {
+        if (type === 'search' && value) {
+            parameters.push(`&${filterBy}:search=${value}`)
+        }
+    })
+
+
+    return `${analyticsUrls[url]}?page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
+}
+
 function fetchAdGroupsList(paginationParams) {
     // return api('get', `${analyticsUrls.adGroupsList}`)
 
     return ({
-        result: [
+        response: [
             {
                 id: 134,
                 'ad_group': 'Teeest111',
@@ -32,7 +52,7 @@ function fetchAdGroupsList(paginationParams) {
                 'campaignId': 1333
             },
         ],
-        totalSize: 2
+        total_count: 2
     })
 }
 
@@ -40,7 +60,7 @@ function fetchProductsList(paginationParams) {
     // return api('get', `${analyticsUrls.productsList}`)
 
     return ({
-        result: [
+        response: [
             {
                 id: 123,
                 product: 'Test Test',
@@ -53,35 +73,21 @@ function fetchProductsList(paginationParams) {
                 'sku_asin': 'NEWFWEK433NRE',
             },
         ],
-        totalSize: 2
+        total_count: 2
     })
 }
 
-function fetchCampaignsList(paginationParams) {
-    // return api('get', `${analyticsUrls.campaignsList}`)
+function fetchCampaignsList(paginationParams, sortingParams = {}, filters = []) {
+    console.log(filters)
 
-    return ({
-        result: [
-            {
-                id: 123,
-                campaign: 'Test Test',
-                status: 'active'
-            },
-
-            {
-                id: 323,
-                campaign: 'Test Test Test'
-            },
-        ],
-        totalSize: 2
-    })
+    return api('get', urlGenerator('campaignsList', paginationParams, sortingParams, filters))
 }
 
 function fetchPlacementsList(paginationParams) {
     // return api('get', `${analyticsUrls.placementsList}`)
 
     return ({
-        result: [
+        response: [
             {
                 id: 123,
                 placement: 'Test Test',
@@ -92,7 +98,7 @@ function fetchPlacementsList(paginationParams) {
                 placement: 'Test Test Test'
             },
         ],
-        totalSize: 2
+        total_count: 2
     })
 }
 
@@ -100,7 +106,7 @@ function fetchNegativeTargetingsList(paginationParams) {
     // return api('get', `${analyticsUrls.placementsList}`)
 
     return ({
-        result: [
+        response: [
             {
                 id: 123,
                 keyword_pt: 'Test Test',
@@ -114,7 +120,7 @@ function fetchNegativeTargetingsList(paginationParams) {
                 campaign: 'Test Campaign 3'
             },
         ],
-        totalSize: 2
+        total_count: 2
     })
 }
 
@@ -122,7 +128,7 @@ function fetchTargetingsList(paginationParams) {
     // return api('get', `${analyticsUrls.placementsList}`)
 
     return ({
-        result: [
+        response: [
             {
                 id: 123,
                 keyword_pt: 'Test Test',
@@ -134,7 +140,7 @@ function fetchTargetingsList(paginationParams) {
                 keyword_pt: 'Test Test Test',
             },
         ],
-        totalSize: 2
+        total_count: 2
     })
 }
 
@@ -142,7 +148,7 @@ function fetchPortfoliosList(paginationParams) {
     // return api('get', `${analyticsUrls.placementsList}`)
 
     return ({
-        result: [
+        response: [
             {
                 id: 123,
                 portfolio: 'Test Test',
@@ -154,7 +160,7 @@ function fetchPortfoliosList(paginationParams) {
                 portfolio: 'Test Test Test',
             },
         ],
-        totalSize: 2
+        total_count: 2
     })
 }
 
@@ -162,7 +168,7 @@ function fetchProductAdsList(paginationParams) {
     // return api('get', `${analyticsUrls.placementsList}`)
 
     return ({
-        result: [
+        response: [
             {
                 id: 123,
                 product: 'Test Test',
@@ -174,7 +180,7 @@ function fetchProductAdsList(paginationParams) {
                 product: 'Test Test Test',
             },
         ],
-        totalSize: 2
+        total_count: 2
     })
 }
 

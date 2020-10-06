@@ -21,69 +21,80 @@ import {
     statusColumn
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
+import {useDispatch} from "react-redux"
+import {analyticsActions} from "../../../../actions/analytics.actions"
 
-const columns = [
-    {
-        title: 'Campaign',
-        dataIndex: 'campaign',
-        key: 'campaign',
-        width: '200px',
-        sorter: true,
-        locked: true,
-        search: true,
-        render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{campaign}</Link>)
-    },
-    {
-        ...statusColumn,
-        locked: true,
-    },
-    {
-        title: 'Type',
-        dataIndex: 'type',
-        key: 'type',
-        width: '200px',
-        sorter: true,
-        locked: true,
-    },
-    {
-        title: 'Budget',
-        dataIndex: 'daily_budget',
-        key: 'daily_budget',
-        width: '150px',
-        sorter: true,
-        locked: true,
-    },
-    {
-        title: 'Portfolio',
-        dataIndex: 'portfolio',
-        key: 'portfolio',
-        width: '150px',
-        sorter: true,
-        locked: true,
-    },
-    {
-        title: 'Start date',
-        dataIndex: 'start_date',
-        key: 'start_date',
-        width: '150px',
-        sorter: true,
-        ...dateColumn
-    },
-    {
-        title: 'End date',
-        dataIndex: 'start_date',
-        key: 'start_date',
-        width: '150px',
-        sorter: true,
-        ...dateColumn
-    },
-    {
-        title: 'Campaign bidding strategy',
-        dataIndex: 'bidding_strategy',
-        key: 'bidding_strategy',
-        width: '250px',
-        sorter: true,
-    },
+
+const CampaignsList = () => {
+    const dispatch = useDispatch()
+
+    const openCampaign = () => {
+        dispatch(analyticsActions.setLocation('adGroups'))
+    }
+
+    const columns = [
+        {
+            title: 'Campaign',
+            dataIndex: 'name',
+            key: 'name',
+            width: '200px',
+            sorter: true,
+            locked: true,
+            search: true,
+            render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+                                               onClick={openCampaign}>{campaign}</Link>)
+        },
+        {
+            ...statusColumn,
+            locked: true,
+        },
+        {
+            title: 'Type',
+            dataIndex: 'type',
+            key: 'type',
+            width: '200px',
+            sorter: true,
+            locked: true,
+        },
+        {
+            title: 'Budget',
+            dataIndex: 'daily_budget',
+            key: 'daily_budget',
+            width: '150px',
+            sorter: true,
+            locked: true,
+        },
+        {
+            title: 'Portfolio',
+            dataIndex: 'portfolio',
+            key: 'portfolio',
+            width: '150px',
+            sorter: true,
+            locked: true,
+        },
+        {
+            title: 'Start date',
+            dataIndex: 'start_date',
+            key: 'start_date',
+            width: '150px',
+            sorter: true,
+            ...dateColumn
+        },
+        {
+            title: 'End date',
+            dataIndex: 'start_date',
+            key: 'start_date',
+            width: '150px',
+            sorter: true,
+            ...dateColumn
+        },
+        {
+            title: 'Campaign bidding strategy',
+            dataIndex: 'bidding_strategy',
+            key: 'bidding_strategy',
+            width: '250px',
+            sorter: true,
+        },
         impressionsColumn,
         clicksColumn,
         ctrColumn,
@@ -99,10 +110,8 @@ const columns = [
         salesShareColumn,
         budgetAllocationColumn,
         adProfitColumn,
-]
+    ]
 
-
-const CampaignsList = () => {
     return (
         <section className={'campaigns-list list-section'}>
             <TableList
