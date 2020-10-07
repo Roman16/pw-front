@@ -38,7 +38,7 @@
       align-items: center;
       background-color: #fff;
       border-bottom: 1px solid #c9cbd4;
-      z-index: 20;
+      z-index: 200;
 
       & > div {
         font-size: 1rem; // 14px
@@ -50,6 +50,7 @@
         &.fixed {
           position: sticky;
           background: #fff;
+          z-index: 1000;
         }
 
         &:first-child {
@@ -192,6 +193,7 @@
           &.fixed {
             position: sticky;
             background: #fff;
+            z-index: 100;
           }
 
           .title-info {
@@ -249,6 +251,9 @@
 
   .total-data {
     display: flex;
+    position: sticky;
+    bottom: 0;
+    z-index: 140;
 
     .table-body__field {
       padding: 1.0714286em 0.5714286em;
@@ -312,7 +317,7 @@
     justify-content: center;
     align-items: center;
     background: rgba(245, 245, 255, 0.5);
-    z-index: 10;
+    z-index: 150;
   }
 }
 

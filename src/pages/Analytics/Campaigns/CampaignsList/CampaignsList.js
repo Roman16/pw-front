@@ -23,6 +23,7 @@ import {
 import TableList from "../../components/TableList/TableList"
 import {useDispatch} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
 
 
 const CampaignsList = () => {
@@ -50,40 +51,43 @@ const CampaignsList = () => {
         },
         {
             title: 'Type',
-            dataIndex: 'type',
-            key: 'type',
+            dataIndex: 'targetingType',
+            key: 'targetingType',
             width: '200px',
             sorter: true,
             locked: true,
+            render: (type) => <span className={'type'}>{type}</span>
         },
         {
             title: 'Budget',
-            dataIndex: 'daily_budget',
-            key: 'daily_budget',
+            dataIndex: 'dailyBudget',
+            key: 'dailyBudget',
             width: '150px',
             sorter: true,
             locked: true,
+            noTotal: true,
+            render: (budget) => <InputCurrency disabled value={budget}/>
         },
         {
             title: 'Portfolio',
-            dataIndex: 'portfolio',
-            key: 'portfolio',
+            dataIndex: 'portfolioName',
+            key: 'portfolioName',
             width: '150px',
             sorter: true,
             locked: true,
         },
         {
             title: 'Start date',
-            dataIndex: 'start_date',
-            key: 'start_date',
+            dataIndex: 'startDate',
+            key: 'startDate',
             width: '150px',
             sorter: true,
             ...dateColumn
         },
         {
             title: 'End date',
-            dataIndex: 'start_date',
-            key: 'start_date',
+            dataIndex: 'endDate',
+            key: 'endDate',
             width: '150px',
             sorter: true,
             ...dateColumn

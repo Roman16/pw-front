@@ -232,6 +232,7 @@
 
             &:last-child {
               border: 0;
+              justify-content: flex-start;
             }
 
             a {
@@ -252,6 +253,23 @@
               &.inactive {
                 color: #EC7F5C;
               }
+
+              &.paused {
+                color: #EEBB81;
+              }
+
+              &.archived {
+                color: #343C5A;
+              }
+            }
+
+            .type {
+              text-transform: capitalize;
+            }
+
+            .InputCurrency {
+              height: 2.2857142857142856rem;
+              z-index: 1;
             }
           }
         }

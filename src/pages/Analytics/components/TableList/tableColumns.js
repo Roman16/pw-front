@@ -23,11 +23,13 @@ export const renderNumberField = (type = 'number') => {
 
 export const statusColumn = {
     title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
+    dataIndex: 'state',
+    key: 'state',
     width: '150px',
     render: (status, item) => (<>{status === 'active' && <span className={'status active'}>Active</span>}
         {status === 'inactive' && <span className={'status inactive'}>Inactive</span>}
+        {status === 'paused' && <span className={'status paused'}>Paused</span>}
+        {status === 'archived' && <span className={'status archived'}>Archived</span>}
     </>),
     sorter: true
 }
@@ -167,11 +169,11 @@ export const budgetAllocationColumn = {
 
 export const adProfitColumn = {
     title: 'Ad Profit',
-    dataIndex: 'ad_profit',
-    key: 'ad_profit',
-    width: '250px',
+    dataIndex: 'profit',
+    key: 'profit',
+    width: '150px',
     sorter: true,
-    ...renderNumberField('percent')
+    ...renderNumberField('currency')
 }
 
 export const campaignColumn = {
