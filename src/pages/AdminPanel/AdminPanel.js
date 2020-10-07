@@ -12,6 +12,7 @@ import ChangePassword from "./ChangePassword/ChangePassword"
 import Impersonations from "./Impersonations/Impersonations"
 import Campaigns from "../Analytics/Campaigns/Campaigns"
 import {NavLink, Route, Redirect} from "react-router-dom"
+import ZTH from "./ZTH/ZTH"
 
 const AdminPanel = () => {
     const [selectedTab, setSelectedTab] = useState('genInfo')
@@ -140,6 +141,12 @@ const AdminPanel = () => {
                     Impersonations
                 </NavLink>
 
+                <NavLink
+                    to={'/admin-panel/zth'}
+                >
+                    Zero to Hero
+                </NavLink>
+
                 {/*<button*/}
                 {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
                 {/*    onClick={() => setSelectedTab('products')}>*/}
@@ -192,6 +199,7 @@ const AdminPanel = () => {
             />}/>
             <Route path="/admin-panel/password" component={ChangePassword}/>
             <Route path="/admin-panel/impersonate" component={Impersonations}/>
+            <Route path="/admin-panel/zth" component={ZTH}/>
         </div>
     )
 }
