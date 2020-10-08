@@ -5,9 +5,8 @@
   .list-section {
     max-width: 100%;
     height: max-content;
+    max-height: calc(100vh - 110px);
     margin: 15px 0 15px 0;
-    position: relative;
-    overflow: hidden;
     box-shadow: @default-section-shadow;
     background: #fff;
 
@@ -34,7 +33,6 @@
     }
 
 
-
     .list-filters-block {
       grid-area: filters;
     }
@@ -49,10 +47,6 @@
 
     .DatePicker {
       grid-area: date;
-    }
-
-    .custom-table {
-      grid-area: table;
     }
 
     .pw-pagination {
@@ -177,9 +171,10 @@
     }
 
     .custom-table {
+      height: inherit;
       display: flex;
       flex: 1;
-      max-height: 400px;
+      overflow: hidden;
 
       .load-data {
         padding-top: 40px;
@@ -225,6 +220,8 @@
             //font-size: 14px;
             padding-left: 12px;
             border-right: 0.5px solid #C9CBD4;
+            padding-top: 5px;
+            padding-bottom: 5px;
 
             &:first-child {
               padding-left: 20px;
@@ -237,7 +234,10 @@
 
             a {
               color: #6D6DF6;
-              font-weight: 500;
+              width: 100%;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
 
               &:hover {
                 text-decoration: underline;
@@ -288,6 +288,8 @@
           font-size: 1rem;
           padding-left: 12px;
           border-right: 0.5px solid #C9CBD4;
+          padding-top: 10px;
+          padding-bottom: 10px;
 
           &:first-child {
             padding-left: 20px;
@@ -308,6 +310,13 @@
 
     .pw-pagination {
       padding-left: 20px;
+      min-height: 40px;
+      height: 40px;
+    }
+
+
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+      max-height: calc(100vh - 96px);
     }
   }
 }

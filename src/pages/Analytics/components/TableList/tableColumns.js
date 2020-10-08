@@ -7,13 +7,13 @@ import {Link} from "react-router-dom"
 export const renderNumberField = (type = 'number') => {
     switch (type) {
         case 'number':
-            return ({render: (number) => (number && numberMask(number, 0))})
+            return ({render: (number) => (number && number !== null ? numberMask(number, 0) : '-')})
 
         case 'percent':
-            return ({render: (number) => (number && `${round(number, 2)}%`)})
+            return ({render: (number) => (number && number !== null ? `${round(number, 2)}%` : '-')})
 
         case 'currency':
-            return ({render: (number) => (number && `$${numberMask(number, 2)}`)})
+            return ({render: (number) => (number && number !== null ? `$${numberMask(number, 2)}` : '-')})
 
         default:
             return ({})
@@ -162,7 +162,7 @@ export const budgetAllocationColumn = {
     title: 'Budget Allocation',
     dataIndex: 'budget_allocation',
     key: 'budget_allocation',
-    width: '250px',
+    width: '200px',
     sorter: true,
     ...renderNumberField('percent')
 }

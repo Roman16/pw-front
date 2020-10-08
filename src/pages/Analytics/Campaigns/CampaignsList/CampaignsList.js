@@ -14,7 +14,6 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    dateColumn,
     impressionsColumn,
     roasColumn,
     salesShareColumn,
@@ -24,6 +23,8 @@ import TableList from "../../components/TableList/TableList"
 import {useDispatch} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import DatePicker from "../../../../components/DatePicker/DatePicker"
+import moment from "moment"
 
 
 const CampaignsList = () => {
@@ -38,12 +39,17 @@ const CampaignsList = () => {
             title: 'Campaign',
             dataIndex: 'name',
             key: 'name',
-            width: '200px',
+            width: '250px',
             sorter: true,
             locked: true,
             search: true,
-            render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
-                                               onClick={openCampaign}>{campaign}</Link>)
+            render: (campaign, item) => (<Link
+                to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+                onClick={openCampaign}
+                title={campaign}
+            >
+                {campaign}
+            </Link>)
         },
         {
             ...statusColumn,
@@ -53,7 +59,7 @@ const CampaignsList = () => {
             title: 'Type',
             dataIndex: 'targetingType',
             key: 'targetingType',
-            width: '200px',
+            width: '150px',
             sorter: true,
             locked: true,
             render: (type) => <span className={'type'}>{type}</span>
@@ -62,7 +68,7 @@ const CampaignsList = () => {
             title: 'Budget',
             dataIndex: 'dailyBudget',
             key: 'dailyBudget',
-            width: '150px',
+            width: '120px',
             sorter: true,
             locked: true,
             noTotal: true,
@@ -75,6 +81,16 @@ const CampaignsList = () => {
             width: '150px',
             sorter: true,
             locked: true,
+            render: (portfolio, item) => (
+                <Link
+                    // to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+                    to={`#`}
+                    title={portfolio}
+                    // onClick={openCampaign}
+                >
+                    {portfolio}
+                </Link>
+            )
         },
         {
             title: 'Start date',
@@ -82,7 +98,8 @@ const CampaignsList = () => {
             key: 'startDate',
             width: '150px',
             sorter: true,
-            ...dateColumn
+            noTotal: true,
+            render: (date) => <DatePicker format={'DD.MM.YYYY'} defaultValue={date && moment(date)} disabled/>
         },
         {
             title: 'End date',
@@ -90,7 +107,8 @@ const CampaignsList = () => {
             key: 'endDate',
             width: '150px',
             sorter: true,
-            ...dateColumn
+            noTotal: true,
+            render: (date) => <DatePicker format={'DD.MM.YYYY'} defaultValue={date && moment(date)} disabled/>
         },
         {
             title: 'Campaign bidding strategy',
