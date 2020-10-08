@@ -87,7 +87,7 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             width: '100px',
             render: (dontUseMetrics, item, index) => {
                 return (
-                    <InputCurrency/>
+                    <InputCurrency  disabled={!item.dontOptimize}/>
                 )
             }
         },
@@ -98,7 +98,7 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             width: '100px',
             render: (dontUseMetrics, item, index) => {
                 return (
-                    <InputCurrency/>
+                    <InputCurrency  disabled={!item.dontOptimize}/>
                 )
             }
         },
@@ -106,11 +106,12 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             title: 'Target ACoS',
             dataIndex: 'target_acos',
             key: 'target_acos',
-            width: '140px',
+            width: '120px',
             render: (dontUseMetrics, item, index) => {
                 return (
                     <InputCurrency
                         typeIcon={'percent'}
+                        disabled={!item.dontOptimize}
                     />
                 )
             }
@@ -123,14 +124,14 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             render: (dontUseMetrics, item, index) => {
                 return (
                     <>
-                        <Checkbox/>
+                        <Checkbox  disabled={!item.dontOptimize}/>
 
                         <TreeSelect
-                            getPopupContainer={triggerNode => triggerNode.parentNode}
+                            // getPopupContainer={triggerNode => triggerNode.parentNode}
                             treeCheckable={true}
                             showSearch={false}
                             placeholder={'Type'}
-
+                            disabled={!item.dontOptimize}
                             // value={filterValue}
                             treeData={multiSelectVariations}
 
