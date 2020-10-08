@@ -2,6 +2,8 @@ import React from 'react';
 import {InputNumber} from 'antd';
 import './InputCurrency.less';
 import {SVG} from "../../utils/icons";
+import {string} from "prop-types"
+import InformationTooltip from "../Tooltip/Tooltip"
 
 const Dollar = ({typeIcon}) => (
     <span className={`Dollar ${typeIcon}`}>{typeIcon === 'percent' ? <SVG id={'percent-icon'}/> :
@@ -31,5 +33,9 @@ const InputCurrency = ({
 //typeIcon:
 //percent -> %
 //other -> $
+
+InputCurrency.propTypes = {
+    typeIcon: string,
+};
 
 export default React.memo(InputCurrency);

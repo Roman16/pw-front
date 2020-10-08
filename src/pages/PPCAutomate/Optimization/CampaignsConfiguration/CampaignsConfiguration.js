@@ -5,9 +5,23 @@ import CustomTable from "../../../../components/Table/CustomTable"
 import {productsServices} from "../../../../services/products.services"
 import {Checkbox} from "antd"
 import {notification} from "../../../../components/Notification"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
 
 let requestSent = false
 
+const multiSelectVariations = [
+    {title: 'Select All', key: 'all', value: 'all'},
+    {title: 'Bid Optimization PAT', key: 'bid_optimization_pat', value: 'bid_optimization_pat'},
+    {title: 'Pause Bleeding Keywords', key: 'pause_bleeding_keywords', value: 'pause_bleeding_keywords'},
+    {title: 'Bid Optimization Keywords', key: 'bid_optimization_keywords', value: 'bid_optimization_keywords'},
+    {title: 'Harvest & Rank New Keywords', key: 'harvest_rank_new_keywords', value: 'harvest_rank_new_keywords'},
+    {title: 'Add Bad ST to Negatives', key: 'add_bad_negatives', value: 'add_bad_negatives'},
+    {title: 'Activate Keywords', key: 'activate_keywords', value: 'activate_keywords'},
+    {title: 'Remove Duplicates', key: 'remove_duplicates', value: 'remove_duplicates'},
+    {title: 'Pause Bleeding PATs', key: 'pause_bleeding', value: 'pause_bleeding'},
+    {title: 'Activate PATs', key: 'activate_pats', value: 'activate_pats'},
+]
 
 const CampaignsConfiguration = ({optimizationJobId}) => {
     const [sectionHeightState, setSectionHeightState] = useState(false),
@@ -39,7 +53,7 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             title: 'Optimize',
             dataIndex: 'dontOptimize',
             key: 'dontOptimize',
-            width: '150px',
+            width: '100px',
             render: (dontOptimize, item, index) => {
 
                 return (
@@ -54,7 +68,7 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             title: 'Use for PPC Metrics',
             dataIndex: 'dontUseMetrics',
             key: 'dontUseMetrics',
-            width: '250px',
+            width: '150px',
             render: (dontUseMetrics, item, index) => {
 
                 return (
@@ -63,6 +77,66 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
                         disabled={!item.dontOptimize}
                         onChange={(e) => changeCheckboxHandler(index, 'dontUseMetrics', e.target.checked)}
                     />
+                )
+            }
+        },
+        {
+            title: 'Min Bid',
+            dataIndex: 'min_bid',
+            key: 'min_bid',
+            width: '100px',
+            render: (dontUseMetrics, item, index) => {
+                return (
+                    <InputCurrency/>
+                )
+            }
+        },
+        {
+            title: 'Max Bid',
+            dataIndex: 'max_bid',
+            key: 'max_bid',
+            width: '100px',
+            render: (dontUseMetrics, item, index) => {
+                return (
+                    <InputCurrency/>
+                )
+            }
+        },
+        {
+            title: 'Target ACoS',
+            dataIndex: 'target_acos',
+            key: 'target_acos',
+            width: '140px',
+            render: (dontUseMetrics, item, index) => {
+                return (
+                    <InputCurrency
+                        typeIcon={'percent'}
+                    />
+                )
+            }
+        },
+        {
+            title: 'Custom Optimization Parts',
+            dataIndex: 'custom_optimization_parts',
+            key: 'custom_optimization_parts',
+            width: '240px',
+            render: (dontUseMetrics, item, index) => {
+                return (
+                    <>
+                        <Checkbox/>
+
+                        <TreeSelect
+                            getPopupContainer={triggerNode => triggerNode.parentNode}
+                            treeCheckable={true}
+                            showSearch={false}
+                            placeholder={'Type'}
+
+                            // value={filterValue}
+                            treeData={multiSelectVariations}
+
+                            // onChange={changeValueHandler}
+                        />
+                    </>
                 )
             }
         },

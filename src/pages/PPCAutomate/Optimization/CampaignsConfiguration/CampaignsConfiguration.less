@@ -21,6 +21,10 @@
       height: 350px;
       overflow: hidden;
       transition: .2s ease-in;
+
+      .table-overflow {
+        height: 100%;
+      }
     }
   }
 
@@ -66,8 +70,15 @@
       & > div {
         border-left: 0.5px solid #C9CBD4;
 
+        &:nth-child(2),
+        &:nth-child(3) {
+          .title {
+            justify-content: center;
+          }
+        }
+
         .title {
-          justify-content: center;
+          justify-content: flex-start;
         }
 
         &:first-child {
