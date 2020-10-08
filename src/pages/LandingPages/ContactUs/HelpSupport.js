@@ -157,7 +157,7 @@ const HelpSupport = () => {
                                 </svg>
                             </i>
 
-                            <h4>Joing the Network!</h4>
+                            <h4>Join the Network!</h4>
 
                             <a
                                 href="https://www.facebook.com/groups/profitwhales.software"
