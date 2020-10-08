@@ -99,7 +99,7 @@ const CampaignsList = () => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            render: (date) => <DatePicker format={'DD.MM.YYYY'} defaultValue={date && moment(date)} disabled/>
+            render: (date) => <DatePicker format={'DD.MM.YYYY'} placeholder={'No start date'} defaultValue={date && moment(date)} disabled/>
         },
         {
             title: 'End date',
@@ -108,7 +108,7 @@ const CampaignsList = () => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            render: (date) => <DatePicker format={'DD.MM.YYYY'} defaultValue={date && moment(date)} disabled/>
+            render: (date) => <DatePicker format={'DD.MM.YYYY'} placeholder={'No end date'} defaultValue={date && moment(date)} disabled/>
         },
         {
             title: 'Campaign bidding strategy',
