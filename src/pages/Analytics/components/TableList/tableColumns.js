@@ -10,10 +10,10 @@ export const renderNumberField = (type = 'number') => {
             return ({render: (number) => (number && number !== null ? numberMask(number, 0) : '-')})
 
         case 'percent':
-            return ({render: (number) => (number && number !== null ? `${round(number, 2)}%` : '-')})
+            return ({render: (number) => (number && number !== null ? `${round(number * 100, 2)}%` : '-')})
 
         case 'currency':
-            return ({render: (number) => (number && number !== null ? `$${numberMask(number, 2)}` : '-')})
+            return ({render: (number) => (number && number !== null ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-')})
 
         default:
             return ({})
@@ -69,8 +69,8 @@ export const ctrColumn = {
 
 export const adSpendColumn = {
     title: 'Ad Spend',
-    dataIndex: 'spend',
-    key: 'spend',
+    dataIndex: 'cost',
+    key: 'cost',
     width: '150px',
     sorter: true,
     ...renderNumberField('currency')
@@ -124,8 +124,8 @@ export const cpaColumn = {
 
 export const adOrdersColumn = {
     title: 'Ad Orders',
-    dataIndex: 'ad_orders',
-    key: 'ad_orders',
+    dataIndex: 'ordered_quantity',
+    key: 'ordered_quantity',
     width: '150px',
     sorter: true,
     ...renderNumberField()

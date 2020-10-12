@@ -8,7 +8,7 @@ import spnLogo from '../../../assets/img/logo/amazon-spn-logo-dark.png'
 import advertisingLogo from '../../../assets/img/logo/amazon-advertising-logo-dark.png'
 import preHeaderImage from '../../../assets/img/landing-contact-us/personalized-demo.png'
 import avatar from '../../../assets/img/landing-contact-us/ihor-avatar.png'
-import {Checkbox, Input, Radio, Select} from "antd"
+import {Checkbox, Input, Radio, Select, Spin} from "antd"
 import CustomSelect from "../../../components/Select/Select"
 import {SVG} from "../../../utils/icons"
 import {advertisingStrategyVariations} from '../components/ContactForm/ContactForm'
@@ -23,7 +23,6 @@ const defaultForm = {
     first_name: undefined,
     last_name: undefined,
     email: undefined,
-    active_marketplaces: undefined,
     avg_monthly_ad_sales: undefined,
     avg_monthly_ad_spend: undefined,
     is_has_brand_registry: 'yes',
@@ -38,7 +37,8 @@ const BookDemo = () => {
     const [formStep, setFormStep] = useState(0),
         [contactFormParams, setContactFormParams] = useState({...defaultForm}),
         [agreeWithTerms, setAgreeWithTerms] = useState(false),
-        [visibleWindow, setVisibleWindow] = useState(false)
+        [visibleWindow, setVisibleWindow] = useState(false),
+        [processing, setProcessing] = useState(false)
 
     const changeContactFormHandler = (name, value) => {
         setContactFormParams({
@@ -49,15 +49,13 @@ const BookDemo = () => {
 
     const submitFormHandler = async (e) => {
         e.preventDefault()
-
+        setProcessing(true)
+        console.log(contactFormParams)
         if (Object.values(contactFormParams).some(item => item == undefined) || !agreeWithTerms) {
             notification.error({title: 'All fields is required!'})
         } else {
             try {
-                await userService.sendContactForm({
-                    ...contactFormParams,
-                    // active_marketplaces: contactFormParams.active_marketplaces.join(',')
-                })
+                await userService.sendContactForm(contactFormParams)
 
                 setFormStep(3)
                 setAgreeWithTerms(false)
@@ -65,6 +63,8 @@ const BookDemo = () => {
                 console.log(e)
             }
         }
+
+        setProcessing(false)
     }
 
     return (
@@ -97,7 +97,8 @@ const BookDemo = () => {
                         </a>
 
                         <div className="logos">
-                            <p>We are an official partner on the Amazon Service Provider Network and Amazon Advertising</p>
+                            <p>We are an official partner on the Amazon Service Provider Network and Amazon
+                                Advertising</p>
                             <img src={spnLogo} alt="" className={'spn'}/>
                             <img src={advertisingLogo} alt="" className={'advertising'}/>
                         </div>
@@ -313,7 +314,7 @@ const BookDemo = () => {
                                 </div>
 
                                 <Checkbox
-                                    // onChange={({target: {checked}}) => setAgreeWithTerms(checked)}
+                                    onChange={({target: {checked}}) => setAgreeWithTerms(checked)}
                                 >
                                     Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms
                                     and
@@ -325,8 +326,10 @@ const BookDemo = () => {
                                         back
                                     </button>
 
-                                    <button type={'button'} className={'btn green'} onClick={submitFormHandler}>
+                                    <button type={'button'} className={'btn green'} disabled={processing} onClick={submitFormHandler}>
                                         next
+
+                                        {processing && <Spin/>}
                                     </button>
                                 </div>
                             </form>
@@ -347,7 +350,8 @@ const BookDemo = () => {
                             </i>
 
                             <h3 className={'user-name'}>
-                                <span> Name Surname, </span> let’s get your project underway!
+                                <span> {`${contactFormParams.first_name} ${contactFormParams.last_name}`}, </span> let’s
+                                get your project underway!
                             </h3>
 
                             <p>

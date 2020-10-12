@@ -30,8 +30,9 @@ import moment from "moment"
 const CampaignsList = () => {
     const dispatch = useDispatch()
 
-    const openCampaign = () => {
-        dispatch(analyticsActions.setLocation('adGroups'))
+    const setStateHandler = (location, state) => {
+        dispatch(analyticsActions.setLocation(location))
+        dispatch(analyticsActions.setMainState(state))
     }
 
     const columns = [
@@ -45,7 +46,7 @@ const CampaignsList = () => {
             search: true,
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
-                onClick={openCampaign}
+                onClick={() => setStateHandler('adGroups', {name: item.name, campaignId: item.campaignId})}
                 title={campaign}
             >
                 {campaign}
@@ -83,10 +84,9 @@ const CampaignsList = () => {
             locked: true,
             render: (portfolio, item) => (
                 <Link
-                    // to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
-                    to={`#`}
+                    to={`/analytics/campaigns?portfolioId=${item.portfolioId}`}
                     title={portfolio}
-                    // onClick={openCampaign}
+                    onClick={() => setStateHandler('campaigns')}
                 >
                     {portfolio}
                 </Link>
@@ -99,7 +99,8 @@ const CampaignsList = () => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            render: (date) => <DatePicker format={'DD.MM.YYYY'} placeholder={'No start date'} defaultValue={date && moment(date)} disabled/>
+            render: (date) => <DatePicker format={'DD.MM.YYYY'} placeholder={'No start date'}
+                                          defaultValue={date && moment(date)} disabled/>
         },
         {
             title: 'End date',
@@ -108,7 +109,8 @@ const CampaignsList = () => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            render: (date) => <DatePicker format={'DD.MM.YYYY'} placeholder={'No end date'} defaultValue={date && moment(date)} disabled/>
+            render: (date) => <DatePicker format={'DD.MM.YYYY'} placeholder={'No end date'}
+                                          defaultValue={date && moment(date)} disabled/>
         },
         {
             title: 'Campaign bidding strategy',

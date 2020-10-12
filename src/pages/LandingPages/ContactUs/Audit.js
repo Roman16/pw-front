@@ -15,13 +15,58 @@ import videoBg from '../../../assets/img/landing-contact-us/video-bg.png'
 import emoji from '../../../assets/img/landing-contact-us/emoji.png'
 import spnLogo from '../../../assets/img/logo/amazon-spn-logo-dark.png'
 import advertisingLogo from '../../../assets/img/logo/amazon-advertising-logo-dark.png'
-import {Checkbox, Input, Radio} from "antd"
+import {Checkbox, Input, Radio, Spin} from "antd"
 import {Link} from "react-router-dom"
+import {notification} from "../../../components/Notification"
+import {userService} from "../../../services/user.services"
 
 const Audit = () => {
     const [formStep, setFormStep] = useState(1),
         [goals, setGoals] = useState(),
-        [annualSales, setAnnualSales] = useState()
+        [annualSales, setAnnualSales] = useState(),
+        [contactFormParams, setContactFormParams] = useState({
+            first_name: undefined,
+            last_name: undefined,
+            email: undefined,
+            is_has_brand_registry: 'yes',
+            storefront_name: undefined,
+            main_category: undefined,
+            communication_channel: undefined
+        }),
+        [agreeWithTerms, setAgreeWithTerms] = useState(false),
+        [processing, setProcessing] = useState(false)
+
+
+    const changeContactFormHandler = (name, value) => {
+        setContactFormParams({
+            ...contactFormParams,
+            [name]: value
+        })
+    }
+
+    const submitFormHandler = async (e) => {
+        e.preventDefault()
+        setProcessing(true)
+
+        if (Object.values(contactFormParams).some(item => item == undefined) || !agreeWithTerms || !goals || !annualSales) {
+            notification.error({title: 'All fields is required!'})
+        } else {
+            try {
+                await userService.sendContactForm({
+                    ...contactFormParams,
+                    main_goal: goals,
+                    avg_monthly_ad_sales: annualSales
+                })
+
+                setFormStep(5)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
+        setProcessing(false)
+    }
+
 
     return (
         <div className="landing-contact-us landing-page audit">
@@ -280,27 +325,27 @@ const Audit = () => {
                             <h2>What are your annual sales on Amazon?</h2>
 
                             <ul>
-                                <li onClick={() => setAnnualSales('<6')}
-                                    className={`${annualSales === '<6' ? 'selected' : ''}`}>
+                                <li onClick={() => setAnnualSales('annual_figures_below_6')}
+                                    className={`${annualSales === 'annual_figures_below_6' ? 'selected' : ''}`}>
                                     <h4>{'<6'}</h4>
 
                                     <h5>{'<6 Figures'}</h5>
                                 </li>
 
-                                <li onClick={() => setAnnualSales('6')}
-                                    className={`${annualSales === '6' ? 'selected' : ''}`}>
+                                <li onClick={() => setAnnualSales('annual_figures_6')}
+                                    className={`${annualSales === 'annual_figures_6' ? 'selected' : ''}`}>
                                     <h4>6</h4>
                                     <h5>6 Figures</h5>
                                 </li>
 
-                                <li onClick={() => setAnnualSales('7')}
-                                    className={`${annualSales === '7' ? 'selected' : ''}`}>
+                                <li onClick={() => setAnnualSales('annual_figures_7')}
+                                    className={`${annualSales === 'annual_figures_7' ? 'selected' : ''}`}>
                                     <h4>7</h4>
                                     <h5>7 Figures</h5>
                                 </li>
 
-                                <li onClick={() => setAnnualSales('8')}
-                                    className={`${annualSales === '8' ? 'selected' : ''}`}>
+                                <li onClick={() => setAnnualSales('annual_figures_8')}
+                                    className={`${annualSales === 'annual_figures_8' ? 'selected' : ''}`}>
                                     <h4>8</h4>
                                     <h5>8 Figures</h5>
                                 </li>
@@ -321,24 +366,36 @@ const Audit = () => {
 
                             <div className="form-group">
                                 <label htmlFor="">First Name</label>
-                                <Input placeholder={'First Name'}/>
+                                <Input
+                                    placeholder={'First Name'}
+                                    value={contactFormParams.first_name}
+                                    onChange={({target: {value}}) => changeContactFormHandler('first_name', value)}
+                                />
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="">Last Name</label>
-                                <Input placeholder={'Last Name'}/>
+                                <Input
+                                    placeholder={'Last Name'}
+                                    value={contactFormParams.last_name}
+                                    onChange={({target: {value}}) => changeContactFormHandler('last_name', value)}
+                                />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="">E-mail</label>
-                                <Input placeholder={'E-mail'}/>
+                                <Input
+                                    placeholder={'E-mail'}
+                                    value={contactFormParams.email}
+                                    onChange={({target: {value}}) => changeContactFormHandler('email', value)}
+                                />
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="">Do you have brand registry?</label>
                                 <Radio.Group
                                     defaultValue={'yes'}
-                                    // value={contactFormParams.is_has_brand_registry}
-                                    // onChange={(e) => changeContactFormHandler('is_has_brand_registry', e.target.value)}
+                                    value={contactFormParams.is_has_brand_registry}
+                                    onChange={(e) => changeContactFormHandler('is_has_brand_registry', e.target.value)}
                                 >
                                     <Radio value={'yes'}>
                                         Yes
@@ -365,21 +422,36 @@ const Audit = () => {
 
                             <div className="form-group">
                                 <label htmlFor="">Enter your Storefront Name</label>
-                                <Input placeholder={'Enter your Storefront Name'}/>
+                                <Input
+                                    type="text"
+                                    placeholder={'Enter your Storefront Name'}
+                                    value={contactFormParams.storefront_name}
+                                    onChange={({target: {value}}) => changeContactFormHandler('storefront_name', value)}
+                                />
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="">Enter your main category</label>
-                                <Input placeholder={'Enter your main category'}/>
+                                <Input
+                                    type="text"
+                                    placeholder={'Enter your main category'}
+                                    value={contactFormParams.main_category}
+                                    onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}
+                                />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="">The best communication channel to reach you:</label>
-                                <Input placeholder={'The best communication channel to reach you:'}/>
+                                <Input
+                                    type="text"
+                                    placeholder={'The best communication channel to reach you:'}
+                                    value={contactFormParams.communication_channel}
+                                    onChange={({target: {value}}) => changeContactFormHandler('communication_channel', value)}
+                                />
                             </div>
 
                             <div className="form-group">
                                 <Checkbox
-                                    // onChange={({target: {checked}}) => setAgreeWithTerms(checked)}
+                                    onChange={({target: {checked}}) => setAgreeWithTerms(checked)}
                                 >
                                     Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms
                                     and
@@ -389,7 +461,10 @@ const Audit = () => {
 
                             <div className="actions">
                                 <button className={'btn inherit'} onClick={() => setFormStep(3)}>BACK</button>
-                                <button className={'btn default'} onClick={() => setFormStep(5)}>NEXT</button>
+                                <button className={'btn default'} disabled={processing} onClick={submitFormHandler}>
+                                    NEXT
+                                    {processing && <Spin />}
+                                </button>
                             </div>
 
                             <div className="progress-bar step-4"/>

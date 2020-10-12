@@ -1,5 +1,4 @@
 import React from "react"
-import TableFilters from '../../components/TableFilters/TableFilters'
 import {Link} from "react-router-dom"
 import {
     acosColumn,
