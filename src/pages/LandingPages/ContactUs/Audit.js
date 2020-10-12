@@ -4,9 +4,13 @@ import PreFooter from "./PreFooter"
 import Footer from "../components/Footer/Footer"
 import './ContactUs.less'
 import vitalii from '../../../assets/img/landing-contact-us/audit-vitalii.png'
+import vitaliiMob from '../../../assets/img/landing-contact-us/audit-vitalii-mob.png'
 import lanaAvatar from '../../../assets/img/landing-contact-us/lana-avatar.png'
 import video from '../../../assets/img/landing-contact-us/pdf-audit-prev.mp4'
 import auditDescription from '../../../assets/img/landing-contact-us/audit-description.png'
+import chart from '../../../assets/img/landing-contact-us/audit-chart.png'
+import AlexeyUkhnalevAvatar from '../../../assets/img/landing-contact-us/AlexeyUkhnalev.png'
+import EthanCooperAvatar from '../../../assets/img/landing-contact-us/EthanCooper.png'
 import videoBg from '../../../assets/img/landing-contact-us/video-bg.png'
 import emoji from '../../../assets/img/landing-contact-us/emoji.png'
 import spnLogo from '../../../assets/img/logo/amazon-spn-logo-dark.png'
@@ -15,14 +19,18 @@ import {Checkbox, Input, Radio} from "antd"
 import {Link} from "react-router-dom"
 
 const Audit = () => {
-    const [formStep, setFormStep] = useState(1)
+    const [formStep, setFormStep] = useState(1),
+        [goals, setGoals] = useState(),
+        [annualSales, setAnnualSales] = useState()
 
     return (
         <div className="landing-contact-us landing-page audit">
             <Header/>
 
             <section className={'pre-header'}>
-                <img src={vitalii} alt=""/>
+                <img src={vitalii} alt="" className={'desc'}/>
+                <img src={vitaliiMob} alt="" className={'mob'}/>
+
                 <div className="container">
                     <div className="vitalii-description">
                         <h1>HELLO</h1>
@@ -32,7 +40,7 @@ const Audit = () => {
                         <h3>I’m Vitalii</h3>
                         <p>Amazon Expert</p>
 
-                        <a href="#">
+                        <a href="https://www.linkedin.com/in/vitaliikhyzhniak/" target={'_blank'}>
                             <svg width="31" height="24" viewBox="0 0 31 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -46,6 +54,7 @@ const Audit = () => {
                         </a>
                     </div>
 
+
                     <div className="col">
                         <h2>
                             <span> Get</span> Your Amazon <br/> Advertising Campaigns <br/> Review <span>Today</span>
@@ -53,12 +62,12 @@ const Audit = () => {
 
                         <p>Every Audit is Completed By a Qualified Human</p>
 
-                        <a href="#">See Case studies</a>
+                        <a href="#client-cases">See Case studies</a>
                     </div>
                 </div>
             </section>
 
-            <section className={'advertising-goals'}>
+            <section className={'advertising-goals'} id={'form'}>
                 <div className="container">
                     <div className="steps">
                         {formStep === 1 && <div className="step step-1">
@@ -83,8 +92,9 @@ const Audit = () => {
                             <h2>What are your advertising goals?</h2>
 
                             <ul>
-                                <li>
-                                    <i>
+                                <li onClick={() => setGoals('ProfitGrowth')}
+                                    className={`${goals === 'ProfitGrowth' ? 'selected' : ''}`}>
+                                    <i className={'default'}>
                                         <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <rect x="0.436127" width="76" height="76" fill="white"/>
@@ -106,12 +116,35 @@ const Audit = () => {
                                                 fill="white"/>
                                         </svg>
                                     </i>
+                                    <i className="selected">
+                                        <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="0.436035" width="76" height="76" fill="#6D6DF6"/>
+                                            <path
+                                                d="M65.3527 38.7917V61.7501C65.3527 62.6245 64.6438 63.3334 63.7694 63.3334H54.2694C53.3949 63.3334 52.686 62.6245 52.686 61.7501V38.7917C52.686 37.9173 53.3949 37.2084 54.2694 37.2084H63.7694C64.6438 37.2084 65.3527 37.9173 65.3527 38.7917Z"
+                                                fill="#83FED0" fill-opacity="0.3"/>
+                                            <path
+                                                d="M22.6027 38.7917V61.7501C22.6027 62.6245 21.8938 63.3334 21.0194 63.3334H11.5194C10.6449 63.3334 9.93604 62.6245 9.93604 61.7501V38.7917C9.93604 37.9173 10.6449 37.2084 11.5194 37.2084H21.0194C21.8938 37.2084 22.6027 37.9173 22.6027 38.7917Z"
+                                                fill="#83FED0" fill-opacity="0.3"/>
+                                            <path
+                                                d="M51.1027 45.9168V61.7502C51.1027 62.6246 50.3938 63.3335 49.5194 63.3335H40.0194C39.1449 63.3335 38.436 62.6246 38.436 61.7502V45.9168C38.436 45.0424 39.1449 44.3335 40.0194 44.3335H49.5194C50.3938 44.3335 51.1027 45.0424 51.1027 45.9168Z"
+                                                fill="#83FED0" fill-opacity="0.3"/>
+                                            <path
+                                                d="M36.8527 45.9168V61.7502C36.8527 62.6246 36.1438 63.3335 35.2694 63.3335H25.7694C24.8949 63.3335 24.186 62.6246 24.186 61.7502V45.9168C24.186 45.0424 24.8949 44.3335 25.7694 44.3335H35.2694C36.1438 44.3335 36.8527 45.0424 36.8527 45.9168Z"
+                                                fill="#83FED0" fill-opacity="0.3"/>
+                                            <circle cx="37.6444" cy="26.1251" r="13.4583" fill="#83FED0"/>
+                                            <path
+                                                d="M43.1861 28.8976C43.1861 24.8412 35.1958 25.1061 35.1958 22.6569C35.1958 21.4715 36.4075 20.8926 37.8131 20.8926C40.1767 20.8926 40.5976 22.3138 41.6682 22.3138C42.4263 22.3138 42.7912 21.867 42.7912 21.3663C42.7912 20.2026 40.9061 19.3217 39.0983 19.0166V17.8936C39.0983 17.5572 38.9555 17.2345 38.7013 16.9966C38.4472 16.7588 38.1025 16.6251 37.743 16.6251C37.3836 16.6251 37.0389 16.7588 36.7847 16.9966C36.5306 17.2345 36.3878 17.5572 36.3878 17.8936V19.0563C34.4167 19.4761 32.7214 20.7556 32.7214 22.8415C32.7214 26.7377 40.7106 26.5802 40.7106 29.3169C40.7106 30.2649 39.6141 31.213 37.8131 31.213C35.1122 31.213 34.2122 29.502 33.1151 29.502C32.5807 29.502 32.1028 29.9228 32.1028 30.5573C32.1028 31.5651 33.9077 32.778 36.3895 33.1169L36.3878 33.1249V34.3923C36.398 34.7225 36.5453 35.036 36.7984 35.2662C37.0516 35.4963 37.3906 35.6251 37.7436 35.6251C38.0966 35.6251 38.4356 35.4963 38.6888 35.2662C38.9419 35.036 39.0892 34.7225 39.0994 34.3923V33.1249C39.0994 33.1101 39.0915 33.0984 39.0904 33.0852C41.3235 32.695 43.1861 31.3325 43.1861 28.8976Z"
+                                                fill="#6D6DF6"/>
+                                        </svg>
+                                    </i>
 
                                     <h3>Profit Growth</h3>
                                 </li>
 
-                                <li>
-                                    <i>
+                                <li onClick={() => setGoals('ProductLaunch')}
+                                    className={`${goals === 'ProductLaunch' ? 'selected' : ''}`}>
+                                    <i className={'default'}>
                                         <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <rect x="0.431732" width="76" height="76" fill="white"/>
@@ -123,12 +156,25 @@ const Audit = () => {
                                                 fill="#6D6DF6" fill-opacity="0.3"/>
                                         </svg>
                                     </i>
+                                    <i className="selected">
+                                        <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="0.431641" width="76" height="76" fill="#6D6DF6"/>
+                                            <path
+                                                d="M40.137 11.6082C40.1349 11.6066 40.133 11.6047 40.1315 11.6026C39.8503 11.4259 39.5254 11.3313 39.1934 11.3295C38.8613 11.3276 38.5354 11.4186 38.2523 11.5921C35.963 12.9834 33.5466 16.3571 31.6229 20.8498C29.6863 25.3801 28.571 30.3242 28.5747 34.4234C28.5712 35.7327 28.6595 37.0406 28.839 38.3375C27.3983 39.6547 26.3799 41.0658 25.8031 42.5355C23.8066 47.6704 26.8042 52.7047 28.1819 54.6246C28.377 54.8981 28.6325 55.123 28.9286 55.2816C29.2248 55.4402 29.5535 55.5283 29.8893 55.5392C30.225 55.55 30.5588 55.4832 30.8645 55.3439C31.1702 55.2047 31.4397 54.9968 31.6519 54.7364L31.66 54.7284L35.1985 50.3228C35.2541 50.3685 35.306 50.4093 35.3529 50.4476C35.8879 50.8805 36.5555 51.1165 37.2438 51.1157L41.122 51.117C41.8103 51.1187 42.4781 50.8831 43.0129 50.45L43.1599 50.3315L46.6948 54.7309L46.7028 54.7389C46.8943 54.9746 47.133 55.1678 47.4035 55.3061C47.674 55.4443 47.9703 55.5247 48.2736 55.5419C48.5769 55.5591 48.8804 55.5128 49.1648 55.406C49.4492 55.2992 49.7081 55.1343 49.9251 54.9217C50.0111 54.8359 50.0898 54.7431 50.1604 54.6444C51.5518 52.7195 54.5598 47.6995 52.5398 42.5497C51.9661 41.0905 50.9521 39.6849 49.5207 38.3634C49.7047 37.0644 49.7955 35.7539 49.7924 34.442C49.8029 30.3236 48.7185 25.398 46.8152 20.9282C44.9212 16.4788 42.4856 13.081 40.137 11.6082ZM44.3252 29.0193C44.3258 30.0347 44.0251 31.0274 43.4613 31.8718C42.8976 32.7163 42.096 33.3746 41.158 33.7634C40.22 34.1522 39.1878 34.2541 38.1919 34.0561C37.196 33.8582 36.2812 33.3693 35.5633 32.6513C34.8453 31.9333 34.3564 31.0185 34.1584 30.0226C33.9605 29.0268 34.0624 27.9945 34.4512 27.0566C34.84 26.1186 35.4982 25.317 36.3427 24.7532C37.1872 24.1894 38.1799 23.8888 39.1953 23.8893C39.8704 23.8842 40.5397 24.0134 41.1644 24.2694C41.7891 24.5254 42.3567 24.9031 42.8341 25.3805C43.3115 25.8579 43.6891 26.4254 43.9451 27.0501C44.2011 27.6748 44.3303 28.3442 44.3252 29.0193Z"
+                                                fill="#83FED0"/>
+                                            <path
+                                                d="M41.4258 51.8652C41.1572 52.0745 40.9743 52.3747 40.9114 52.7094C40.7867 53.3739 40.657 54.0371 40.5168 54.6973C40.2333 56.0331 38.3412 56.0775 37.9849 54.7591L37.4383 52.7119C37.3887 52.4477 37.2639 52.2034 37.0789 52.0084C36.8939 51.8133 36.6566 51.6758 36.3954 51.6122C36.1342 51.5487 35.8602 51.5618 35.6063 51.6501C35.3524 51.7383 35.1293 51.8979 34.9638 52.1098C34.2364 53.0478 33.8416 54.2012 33.8417 55.3883C33.8423 55.841 33.843 57.2163 36.0945 60.2077C36.7422 61.0659 37.4338 61.8902 38.1664 62.6772C38.2949 62.8125 38.4492 62.9206 38.6201 62.9953C38.7911 63.07 38.9753 63.1097 39.1618 63.112C39.3483 63.1144 39.5335 63.0794 39.7063 63.0091C39.8791 62.9387 40.036 62.8345 40.1679 62.7026L40.1926 62.6779C40.9261 61.8905 41.6186 61.066 42.2675 60.2077C44.5197 57.2144 44.5197 55.8385 44.5197 55.3865C44.5224 54.1964 44.1231 53.0403 43.3865 52.1055C43.1583 51.8137 42.8236 51.6245 42.4559 51.5795C42.0882 51.5344 41.7177 51.6372 41.4258 51.8652Z"
+                                                fill="#83FED0" fill-opacity="0.3"/>
+                                        </svg>
+                                    </i>
 
                                     <h3>Product Launch</h3>
                                 </li>
 
-                                <li>
-                                    <i>
+                                <li onClick={() => setGoals('GetDefendBestsellerTag')}
+                                    className={`${goals === 'GetDefendBestsellerTag' ? 'selected' : ''}`}>
+                                    <i className={'default'}>
                                         <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <rect x="0.427307" width="76" height="76" fill="white"/>
@@ -140,12 +186,25 @@ const Audit = () => {
                                                 fill="#6D6DF6"/>
                                         </svg>
                                     </i>
+                                    <i className="selected">
+                                        <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="0.427246" width="76" height="76" fill="#6D6DF6"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M38.9145 12.7892C38.5946 12.7088 38.2597 12.7088 37.9398 12.7892L20.3609 17.2059C19.5422 17.4116 18.9439 18.1105 18.8393 18.9481C17.5475 29.298 13.6466 38.1945 19.0237 46.957C22.7397 53.0121 29.3074 55.8879 37.1167 62.2429C37.8779 62.8623 38.9764 62.8623 39.7376 62.2429C47.5471 55.888 54.1165 53.0121 57.8306 46.957C63.2077 38.1945 59.3068 29.298 58.015 18.9481C57.9104 18.1105 57.3121 17.4116 56.4934 17.2059L38.9145 12.7892Z"
+                                                  fill="#83FED0" fill-opacity="0.3"/>
+                                            <path
+                                                d="M38.0692 22.8933C38.2159 22.596 38.6399 22.596 38.7866 22.8933L42.0575 29.5208C42.1157 29.6389 42.2284 29.7207 42.3586 29.7396L49.6725 30.8024C50.0006 30.8501 50.1316 31.2533 49.8942 31.4847L44.6018 36.6435C44.5076 36.7354 44.4646 36.8678 44.4868 36.9975L45.7362 44.2819C45.7922 44.6087 45.4492 44.8578 45.1558 44.7036L38.614 41.2644C38.4975 41.2031 38.3583 41.2031 38.2418 41.2644L31.7 44.7036C31.4066 44.8578 31.0636 44.6087 31.1196 44.2819L32.369 36.9975C32.3912 36.8678 32.3482 36.7354 32.254 36.6435L26.9616 31.4847C26.7242 31.2533 26.8552 30.8501 27.1832 30.8024L34.4972 29.7396C34.6274 29.7207 34.7401 29.6389 34.7983 29.5208L38.0692 22.8933Z"
+                                                fill="#83FED0"/>
+                                        </svg>
+                                    </i>
 
                                     <h3>Get/Defend Bestseller Tag</h3>
                                 </li>
 
-                                <li>
-                                    <i>
+                                <li onClick={() => setGoals('OrganicSalesGrowth')}
+                                    className={`${goals === 'OrganicSalesGrowth' ? 'selected' : ''}`}>
+                                    <i className={'default'}>
                                         <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <rect x="0.427368" width="76" height="76" fill="white"/>
@@ -158,12 +217,26 @@ const Audit = () => {
                                                 stroke-linejoin="round"/>
                                         </svg>
                                     </i>
+                                    <i className="selected">
+                                        <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="0.427246" width="76" height="76" fill="#6D6DF6"/>
+                                            <path
+                                                d="M21.3194 12.6667C6.42236 28.0153 15.1123 39.3762 21.3194 43.138C18.1595 36.8181 19.2504 27.3381 20.1908 23.3881C20.567 27.7143 21.7709 37.2695 23.5765 40.8809C32.605 31.2881 29.2193 18.8739 21.3194 12.6667Z"
+                                                fill="#83FED0" fill-opacity="0.3"/>
+                                            <path
+                                                d="M63.8629 42.5736C34.0687 24.5166 25.1154 39.1879 24.3631 48.7807C28.8773 41.445 39.0345 39.188 49.1916 42.5736C29.4417 41.445 22.1059 57.245 20.4131 58.9379C18.7202 60.6307 18.7202 62.8879 19.8488 63.4521C20.9774 64.0164 23.2345 64.0164 24.3631 61.195C25.2659 58.9379 27.3726 55.7403 28.313 54.4236C35.0844 58.9379 53.7058 59.5022 63.8629 42.5736Z"
+                                                fill="#83FED0" stroke="#83FED0" stroke-linecap="round"
+                                                stroke-linejoin="round"/>
+                                        </svg>
+                                    </i>
 
                                     <h3>Organic Sales Growth</h3>
                                 </li>
 
-                                <li>
-                                    <i>
+                                <li onClick={() => setGoals('RevenueGrowth')}
+                                    className={`${goals === 'RevenueGrowth' ? 'selected' : ''}`}>
+                                    <i className={'default'}>
                                         <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <rect x="0.427368" width="76" height="76" fill="white"/>
@@ -173,6 +246,18 @@ const Audit = () => {
                                             <path
                                                 d="M31.7215 31.2942H27.2509C26.0607 31.2942 25.3508 29.9677 26.011 28.9774L36.4423 13.3303C37.0322 12.4456 38.3323 12.4456 38.9222 13.3303L49.3535 28.9774C50.0138 29.9677 49.3038 31.2942 48.1136 31.2942H43.643V61.8432C43.643 62.6662 42.9759 63.3334 42.1528 63.3334H33.2117C32.3887 63.3334 31.7215 62.6662 31.7215 61.8432V31.2942Z"
                                                 fill="#6D6DF6"/>
+                                        </svg>
+                                    </i>
+                                    <i className="selected">
+                                        <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="0.427246" width="76" height="76" fill="#6D6DF6"/>
+                                            <path
+                                                d="M31.7212 31.2942H27.2506C26.0604 31.2942 25.3505 29.9677 26.0107 28.9774L36.4421 13.3303C37.0319 12.4456 38.3321 12.4456 38.9219 13.3303L49.3533 28.9774C50.0135 29.9677 49.3036 31.2942 48.1134 31.2942H43.6428V61.8432C43.6428 62.6662 42.9756 63.3334 42.1526 63.3334H33.2114C32.3884 63.3334 31.7212 62.6662 31.7212 61.8432V31.2942ZM25.0153 40.9805V61.8432C25.0153 62.6662 24.3481 63.3334 23.5251 63.3334H14.5839C13.7609 63.3334 13.0938 62.6662 13.0938 61.8432V40.9805C13.0938 40.1575 13.7609 39.4903 14.5839 39.4903H23.5251C24.3481 39.4903 25.0153 40.1575 25.0153 40.9805ZM62.2702 49.9216V61.8432C62.2702 62.6662 61.6031 63.3334 60.78 63.3334H51.8389C51.0159 63.3334 50.3487 62.6662 50.3487 61.8432V49.9216C50.3487 49.0986 51.0159 48.4314 51.8389 48.4314H60.78C61.6031 48.4314 62.2702 49.0986 62.2702 49.9216Z"
+                                                fill="#83FED0" fill-opacity="0.3"/>
+                                            <path
+                                                d="M31.7213 31.2942H27.2508C26.0605 31.2942 25.3506 29.9677 26.0108 28.9774L36.4422 13.3303C37.0321 12.4456 38.3322 12.4456 38.922 13.3303L49.3534 28.9774C50.0136 29.9677 49.3037 31.2942 48.1135 31.2942H43.6429V61.8432C43.6429 62.6662 42.9757 63.3334 42.1527 63.3334H33.2115C32.3885 63.3334 31.7213 62.6662 31.7213 61.8432V31.2942Z"
+                                                fill="#83FED0"/>
                                         </svg>
                                     </i>
 
@@ -195,23 +280,27 @@ const Audit = () => {
                             <h2>What are your annual sales on Amazon?</h2>
 
                             <ul>
-                                <li>
+                                <li onClick={() => setAnnualSales('<6')}
+                                    className={`${annualSales === '<6' ? 'selected' : ''}`}>
                                     <h4>{'<6'}</h4>
 
                                     <h5>{'<6 Figures'}</h5>
                                 </li>
 
-                                <li>
+                                <li onClick={() => setAnnualSales('6')}
+                                    className={`${annualSales === '6' ? 'selected' : ''}`}>
                                     <h4>6</h4>
                                     <h5>6 Figures</h5>
                                 </li>
 
-                                <li>
+                                <li onClick={() => setAnnualSales('7')}
+                                    className={`${annualSales === '7' ? 'selected' : ''}`}>
                                     <h4>7</h4>
                                     <h5>7 Figures</h5>
                                 </li>
 
-                                <li>
+                                <li onClick={() => setAnnualSales('8')}
+                                    className={`${annualSales === '8' ? 'selected' : ''}`}>
                                     <h4>8</h4>
                                     <h5>8 Figures</h5>
                                 </li>
@@ -495,9 +584,10 @@ const Audit = () => {
                                 human
                                 involvement is required to best identify potential concerns and opportunities.
                             </p>
-                            <button className={'btn green'}>get a free audit</button>
+
+                            <a href={'#form'} className={'btn green'}>get a free audit</a>
                         </div>
-                        
+
                         <div className="image">
                             <img src={auditDescription} alt=""/>
                         </div>
@@ -512,7 +602,131 @@ const Audit = () => {
                         campaigns from a Qualified Expert. <span>For free.</span>
                     </h3>
 
-                    <button className={'btn default'}>get a free audit</button>
+                    <a href={'#form'} className={'btn default'}>get a free audit</a>
+                </div>
+            </section>
+
+            <section className="free-account-audit">
+                <div className="container">
+                    <h2>How To Get Your <span>Free PPC Account Audit?</span></h2>
+
+                    <ul>
+                        <li>
+                            <a href={'#form'}>
+                                <span>
+                                    1
+                                </span>
+                                Get in touch
+                            </a>
+                            <p>
+                                Submit your request for a free audit using the form below.
+                            </p>
+                        </li>
+
+                        <li>
+                            <a href={'#form'}>
+                                <span>
+                                    2
+                                </span>
+                                Let our expert know your objectives
+                            </a>
+                            <p>
+                                One of our PPC experts will get in touch to get a better understanding of your business.
+                            </p>
+                        </li>
+
+                        <li>
+                            <a href={'#form'}>
+                                <span>
+                                    3
+                                </span>
+                                Share your account access
+                            </a>
+                            <p>
+                                Send us a link request to view your campaigns.
+                            </p>
+                        </li>
+
+                        <li>
+                            <a href={'#form'}>
+                                <span>
+                                    4
+                                </span>
+                                We review your account
+                            </a>
+                            <p>
+                                We conduct the full review of your advertising structure and approach
+                            </p>
+                        </li>
+
+                        <li>
+                            <a href={'#form'}>
+                                <span>
+                                    5
+                                </span>
+                                We present our findings
+                            </a>
+                            <p>
+                                You get user-friendly PDF file with actionable information so you can take action.
+                            </p>
+                        </li>
+                    </ul>
+
+                    <div className="description">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM11.6235 4.11768C12.1734 4.1177 12.6212 4.26598 12.9668 4.56446C13.3124 4.86298 13.4854 5.25664 13.4854 5.74366C13.4854 6.23072 13.3124 6.6229 12.9668 6.9214C12.6212 7.21992 12.1734 7.36966 11.6235 7.36964C11.0737 7.36966 10.6259 7.21992 10.2803 6.9214C9.95036 6.6229 9.78516 6.23072 9.78516 5.74366C9.78516 5.25664 9.95036 4.86298 10.2803 4.56446C10.6259 4.26596 11.0737 4.1177 11.6235 4.11768ZM13.3433 9.37208L13.8149 9.91408C13.5636 10.5739 13.437 11.3043 13.437 12.1055V17.8799C13.437 18.0841 13.4539 18.2247 13.4854 18.3032C13.5325 18.3818 13.6344 18.4605 13.7915 18.5391C14.0743 18.7119 14.4897 18.8771 15.0396 19.0342L14.8755 19.8823C13.5244 19.7409 12.5733 19.6714 12.0234 19.6714C11.4736 19.6714 10.5317 19.7409 9.1963 19.8823L9.00734 19.0342C9.57292 18.9085 9.98976 18.7511 10.2569 18.5625C10.4925 18.4211 10.6099 18.1941 10.6099 17.8799V11.9883C10.6099 11.4384 10.3969 11.1636 9.97268 11.1636L9.14798 11.3277L8.96048 10.3858C9.52606 10.1501 10.2718 9.92164 11.1988 9.70168C12.1257 9.48172 12.8405 9.37208 13.3433 9.37208Z"
+                                fill="white"/>
+                        </svg>
+
+                        Audits available in 3-5 business days.
+                    </div>
+                </div>
+            </section>
+
+            <section className="client-cases" id={'client-cases'}>
+                <div className="container">
+                    <a href={'https://blog.profitwhales.com/studies/why-amazon-ppc-matters/'} target={'_blank'}
+                       className="image">
+                        <img src={chart} alt=""/>
+                    </a>
+
+                    <ul className="cases">
+                        <li>
+                            <div className="row">
+                                <img src={AlexeyUkhnalevAvatar} alt=""/>
+
+                                <div className="col">
+                                    <h4>Alexey Ukhnalev</h4>
+                                    <p>
+                                        I dreamt about PPC automation in several clicks in an efficient way. In Profit
+                                        Whales they make it happen. For those who tired of high ACOS, CPC and time spent
+                                        optimizing AD groups.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <button className={'btn default'}>Check My Case</button>
+                        </li>
+
+                        <li>
+                            <div className="row">
+                                <img src={EthanCooperAvatar} alt=""/>
+
+                                <div className="col">
+                                    <h4> Ethan Cooper</h4>
+                                    <p>
+                                        Amazing company. Loved the support from these guys. They correctly built the
+                                        structure for my advertising companies. I am also impressed with their software.
+                                        Very easy to use and you can set a strategy and not worry about the everyday
+                                        work with advertising.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <button className={'btn default'}>Check My Case</button>
+                        </li>
+                    </ul>
                 </div>
             </section>
 

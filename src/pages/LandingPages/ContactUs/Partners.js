@@ -118,9 +118,9 @@ const Partners = () => {
                                     d="M4.59563 22.2867C4.59563 22.2867 3.6064 22.3285 2.47169 21.7011C1.33699 21.0738 0.573242 20.0427 0.573242 20.0427"
                                     stroke="#444444" stroke-miterlimit="10" stroke-linecap="round"/>
                             </svg>
-                            I’m the <b>Profit Whales Partner Program</b> gate keeper, and to join our program, you
-                            simply
-                            have to fill in the Form, and i’ll reach out shortly.
+                            I’m the <b>Profit Whales Partner Program’s</b> gatekeeper, and to join our program, you
+                            simply have
+                            to fill in the form, and I’ll reach out shortly.
                         </p>
                     </div>
                 </div>
@@ -391,7 +391,8 @@ const Partners = () => {
                                 Already a Profit Whales Partner? <br/> Sign in here.
                             </p>
 
-                            <Link to={'/login'} className={'btn default'}>log in</Link>
+                            <a href={'https://profitwhales.tapfiliate.com/login'} target={'_blank'}
+                               className={'btn default'}>log in</a>
                         </div>
                     </div>
                 </div>

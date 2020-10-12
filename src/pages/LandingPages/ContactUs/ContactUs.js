@@ -8,6 +8,7 @@ import casesImage from '../../../assets/img/landing-contact-us/cases-image.svg'
 import mapImage from '../../../assets/img/landing-contact-us/location-map.svg'
 import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png'
 import trustpilotLogo from '../../../assets/img/landing-contact-us/trustpilot-logo.svg'
+import amazonAdvertisingLogo from '../../../assets/img/logo/amazon-advertising-white.png'
 import starsIcon from '../../../assets/img/landing-contact-us/stars.svg'
 import {SVG} from "../../../utils/icons"
 import {Link} from "react-router-dom"
@@ -44,10 +45,14 @@ const ContactUs = (props) => {
                     <img src={supportTeamImage} alt="" className={'support-team'}/>
 
                     <p>
-                        We are an official partner on the <br/> Amazon Service Provider Network
+                        We are an official partner on the Amazon Service Provider <br/> Network and Amazon Advertising
                     </p>
 
-                    <img src={amazonSpnWhiteLogo} alt="" className={'spn-logo'}/>
+                    <div className="logos">
+                        <img src={amazonSpnWhiteLogo} alt="" className={'spn-logo'}/>
+
+                        <img src={amazonAdvertisingLogo} alt="" className={'advertising-logo'}/>
+                    </div>
                 </div>
             </section>
 

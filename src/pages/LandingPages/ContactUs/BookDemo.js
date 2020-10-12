@@ -5,6 +5,7 @@ import PreFooter from "./PreFooter"
 import Footer from "../components/Footer/Footer"
 
 import spnLogo from '../../../assets/img/logo/amazon-spn-logo-dark.png'
+import advertisingLogo from '../../../assets/img/logo/amazon-advertising-logo-dark.png'
 import preHeaderImage from '../../../assets/img/landing-contact-us/personalized-demo.png'
 import avatar from '../../../assets/img/landing-contact-us/ihor-avatar.png'
 import {Checkbox, Input, Radio, Select} from "antd"
@@ -14,6 +15,7 @@ import {advertisingStrategyVariations} from '../components/ContactForm/ContactFo
 import {Link} from "react-router-dom"
 import {notification} from "../../../components/Notification"
 import {userService} from "../../../services/user.services"
+import ModalWindow from "../../../components/ModalWindow/ModalWindow"
 
 const Option = Select.Option
 
@@ -35,7 +37,8 @@ const defaultForm = {
 const BookDemo = () => {
     const [formStep, setFormStep] = useState(0),
         [contactFormParams, setContactFormParams] = useState({...defaultForm}),
-        [agreeWithTerms, setAgreeWithTerms] = useState(false)
+        [agreeWithTerms, setAgreeWithTerms] = useState(false),
+        [visibleWindow, setVisibleWindow] = useState(false)
 
     const changeContactFormHandler = (name, value) => {
         setContactFormParams({
@@ -81,15 +84,24 @@ const BookDemo = () => {
                             demo below to get your introduction to Profit Whales.
                             <br/>
                             <br/>
-                            Can’t wait to talk? <a href="https://youtu.be/Xm9uKq9-7b0" target={'_blank'}>Watch Vitalii’s
-                            pre-recorded product demo.</a>
+                            Can’t wait to talk?
+                            <a
+                                onClick={() => setVisibleWindow(true)}
+                                target={'_blank'}>
+                                Watch Vitalii’s pre-recorded product demo.
+                            </a>
                         </p>
 
                         <a href={'https://youtu.be/Xm9uKq9-7b0'} target={'_blank'} className="btn default">
                             see profit whals in action
                         </a>
 
-                        <img src={spnLogo} alt=""/>
+                        <div className="logos">
+                            <p>We are an official partner on the Amazon Service Provider Network and Amazon Advertising</p>
+                            <img src={spnLogo} alt="" className={'spn'}/>
+                            <img src={advertisingLogo} alt="" className={'advertising'}/>
+                        </div>
+
                     </div>
 
                     <div className="image">
@@ -121,9 +133,8 @@ const BookDemo = () => {
 
                         <p>
                             <b>Get Insights From Amazon Experts</b><br/>
-                            At Profit Whales, we understand the needs of our clients very clearly. Whatever the goals
-                            are, we will create a custom advertising strategy aligned with the overall brand strategy to
-                            achieve the highest profitability with maximum efficiency.
+                            At Profit Whales, we do love to help other sellers even if they are not our clients. So you
+                            can expect the real help from our qualified experts right on the live call.
                         </p>
                     </div>
 
@@ -406,6 +417,18 @@ const BookDemo = () => {
             <PreFooter/>
 
             <Footer/>
+
+            <ModalWindow
+                visible={visibleWindow}
+                handleCancel={() => setVisibleWindow(false)}
+                footer={false}
+                destroyOnClose={true}
+                className={'video-modal'}
+            >
+                <iframe src="https://www.youtube.com/embed/Xm9uKq9-7b0" frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen/>
+            </ModalWindow>
         </div>
     )
 }
