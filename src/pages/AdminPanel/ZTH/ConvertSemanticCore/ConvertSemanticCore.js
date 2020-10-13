@@ -13,13 +13,12 @@ const ConvertSemanticCore = () => {
 
 
             <div className="step step-1">
-                <div className="form-group">
+                <div className="form-group semantic-url">
                     <label htmlFor="">Semantic data url:</label>
                     <Input
                         placeholder={'Enter url'}
                     />
                 </div>
-                <br/>
                 <button className={'btn default'}>
                     Load spreadsheet
                 </button>

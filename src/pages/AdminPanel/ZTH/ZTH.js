@@ -13,8 +13,6 @@ const ZTH = () => {
 
     return (
         <section className={'user-products-section zth'}>
-            <h2>Zero To Hero</h2>
-
             <div className="version-description">
                 <p>Zero to Hero version: <b>2020-09-18</b></p>
                 <p>Latest markup version: <b>28</b></p>

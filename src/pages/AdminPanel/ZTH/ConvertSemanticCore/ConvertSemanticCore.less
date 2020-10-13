@@ -9,9 +9,26 @@
     grid-row-gap: 10px;
     grid-column-gap: 30px;
     margin-bottom: 20px;
+  }
 
-    .form-group {
+  .form-group {
+    width: 100%;
+    margin-bottom: 20px;
+
+    .custom-select {
       width: 100%;
     }
   }
+
+  .cols-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 30px;
+  }
+
+
+  .product-name, .campaign-strategy, .semantic-url {
+    width: 49%;
+  }
+
 }

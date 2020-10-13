@@ -137,8 +137,8 @@ const Audit = () => {
                             <h2>What are your advertising goals?</h2>
 
                             <ul>
-                                <li onClick={() => setGoals('ProfitGrowth')}
-                                    className={`${goals === 'ProfitGrowth' ? 'selected' : ''}`}>
+                                <li onClick={() => setGoals('product_growth')}
+                                    className={`${goals === 'product_growth' ? 'selected' : ''}`}>
                                     <i className={'default'}>
                                         <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
@@ -187,8 +187,8 @@ const Audit = () => {
                                     <h3>Profit Growth</h3>
                                 </li>
 
-                                <li onClick={() => setGoals('ProductLaunch')}
-                                    className={`${goals === 'ProductLaunch' ? 'selected' : ''}`}>
+                                <li onClick={() => setGoals('product_launch')}
+                                    className={`${goals === 'product_launch' ? 'selected' : ''}`}>
                                     <i className={'default'}>
                                         <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
@@ -217,8 +217,8 @@ const Audit = () => {
                                     <h3>Product Launch</h3>
                                 </li>
 
-                                <li onClick={() => setGoals('GetDefendBestsellerTag')}
-                                    className={`${goals === 'GetDefendBestsellerTag' ? 'selected' : ''}`}>
+                                <li onClick={() => setGoals('get_defend_bestseller_tag')}
+                                    className={`${goals === 'get_defend_bestseller_tag' ? 'selected' : ''}`}>
                                     <i className={'default'}>
                                         <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
@@ -247,8 +247,8 @@ const Audit = () => {
                                     <h3>Get/Defend Bestseller Tag</h3>
                                 </li>
 
-                                <li onClick={() => setGoals('OrganicSalesGrowth')}
-                                    className={`${goals === 'OrganicSalesGrowth' ? 'selected' : ''}`}>
+                                <li onClick={() => setGoals('organic_sales_growth')}
+                                    className={`${goals === 'organic_sales_growth' ? 'selected' : ''}`}>
                                     <i className={'default'}>
                                         <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
@@ -279,8 +279,8 @@ const Audit = () => {
                                     <h3>Organic Sales Growth</h3>
                                 </li>
 
-                                <li onClick={() => setGoals('RevenueGrowth')}
-                                    className={`${goals === 'RevenueGrowth' ? 'selected' : ''}`}>
+                                <li onClick={() => setGoals('revenue_growth')}
+                                    className={`${goals === 'revenue_growth' ? 'selected' : ''}`}>
                                     <i className={'default'}>
                                         <svg width="77" height="76" viewBox="0 0 77 76" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
@@ -480,15 +480,15 @@ const Audit = () => {
                                 </svg>
                             </div>
 
-                            <h3><span>Name Surname</span>, let’s get your <br/> project underway!</h3>
+                            <h3><span>{`${contactFormParams.first_name} ${contactFormParams.last_name}`}</span>, let’s get your <br/> project underway!</h3>
 
                             <p>Expect a reply between 8am CST - 6:30pm CST Monday through Friday</p>
 
                             <h4>Check out our cases:</h4>
 
                             <div className="actions">
-                                <a href={'#'} className={'btn default'}>CASE 1</a>
-                                <a href={'#'} className={'btn white'}>CASE 2</a>
+                                <a target={'_blank'} href={'https://blog.profitwhales.com/studies/why-amazon-ppc-matters/'} className={'btn default'}>CASE 1</a>
+                                <a target={'_blank'} href={'https://blog.profitwhales.com/studies/lighting-equipment/'} className={'btn white'}>CASE 2</a>
                             </div>
                         </div>}
                     </div>

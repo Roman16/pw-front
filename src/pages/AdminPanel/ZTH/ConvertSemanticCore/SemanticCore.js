@@ -1,5 +1,7 @@
 import React from "react"
 import {Input, Select, Checkbox} from "antd"
+import CustomSelect from "../../../../components/Select/Select"
+import Variations from "./Variations"
 
 const Option = Select.Option
 
@@ -56,7 +58,7 @@ const SemanticCore = () => {
     return (
         <div className={'semantic-core'}>
             <div className="container-fluid semantic-core">
-                <div className="form-group">
+                <div className="form-group product-name">
                     <label>Product name:</label>
                     <Input
                         placeholder="Enter product name"
@@ -80,14 +82,14 @@ const SemanticCore = () => {
 
                 {/*</div>*/}
 
-                <div className="form-group">
+                <div className="form-group campaign-strategy">
                     <label htmlFor="campaignsCompressionStrategy">Choose campaign compression strategy:</label>
 
-                    <Select className="form-control">
+                    <CustomSelect className="form-control">
                         <Option value={'wide'}>Wide</Option>
                         <Option value={'simple'}>Simple</Option>
                         <Option value={'compact'}>Compact</Option>
-                    </Select>
+                    </CustomSelect>
                 </div>
             </div>
 
@@ -100,7 +102,7 @@ const SemanticCore = () => {
                     </div>
                 </div>
 
-                <div className="row">
+                <div className="row cols-4">
                     <div className="form-group">
                         <label htmlFor="{{'exactBidNumber-' +sheetData.id}}">Exact bid:</label>
                         <Input
@@ -113,21 +115,21 @@ const SemanticCore = () => {
 
                     <div className="form-group">
                         <label htmlFor="{{'exactBidSelect-' + sheetData.id}}">Choose base exact bid:</label>
-                        <Select className="form-control">
+                        <CustomSelect className="form-control">
                             <Option value={'wide'}>Wide</Option>
                             <Option value={'simple'}>Simple</Option>
                             <Option value={'compact'}>Compact</Option>
-                        </Select>
+                        </CustomSelect>
 
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="{{'ppcPlan-' + sheetData.id}}">Choose PPC plan for campaign budgets:</label>
-                        <Select className="form-control">
+                        <CustomSelect className="form-control">
                             <Option value={'wide'}>Wide</Option>
                             <Option value={'simple'}>Simple</Option>
                             <Option value={'compact'}>Compact</Option>
-                        </Select>
+                        </CustomSelect>
 
                     </div>
                 </div>
@@ -192,10 +194,7 @@ const SemanticCore = () => {
                 ))}
             </div>
 
-            <div className="variations">
-                <h2>Variations</h2>
-                <button className={'btn default'}>Add new variation</button>
-            </div>
+            <Variations/>
 
             <div className="themes">
                 <h2>Themes</h2>
