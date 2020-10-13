@@ -28,7 +28,7 @@ const Audit = () => {
             first_name: undefined,
             last_name: undefined,
             email: undefined,
-            is_has_brand_registry: 'yes',
+            is_has_brand_registry: true,
             storefront_name: undefined,
             main_category: undefined,
             communication_channel: undefined
@@ -393,15 +393,15 @@ const Audit = () => {
                             <div className="form-group">
                                 <label htmlFor="">Do you have brand registry?</label>
                                 <Radio.Group
-                                    defaultValue={'yes'}
+                                    defaultValue={true}
                                     value={contactFormParams.is_has_brand_registry}
                                     onChange={(e) => changeContactFormHandler('is_has_brand_registry', e.target.value)}
                                 >
-                                    <Radio value={'yes'}>
+                                    <Radio value={true}>
                                         Yes
                                     </Radio>
 
-                                    <Radio value={'no'}>
+                                    <Radio value={false}>
                                         No
                                     </Radio>
                                 </Radio.Group>

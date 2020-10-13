@@ -25,7 +25,7 @@ const defaultForm = {
     email: undefined,
     avg_monthly_ad_sales: undefined,
     avg_monthly_ad_spend: undefined,
-    is_has_brand_registry: 'yes',
+    is_has_brand_registry: true,
     main_goal: undefined,
     storefront_name: undefined,
     main_category: undefined,
@@ -179,15 +179,15 @@ const BookDemo = () => {
                                     <label htmlFor="">Do you have brand registry?</label>
 
                                     <Radio.Group
-                                        defaultValue={'yes'}
+                                        defaultValue={true}
                                         value={contactFormParams.is_has_brand_registry}
                                         onChange={(e) => changeContactFormHandler('is_has_brand_registry', e.target.value)}
                                     >
-                                        <Radio value={'yes'}>
+                                        <Radio value={true}>
                                             Yes
                                         </Radio>
 
-                                        <Radio value={'no'}>
+                                        <Radio value={false}>
                                             No
                                         </Radio>
                                     </Radio.Group>

@@ -27,6 +27,9 @@ const ConvertSemanticCore = () => {
             <div className="step step-2">
                 Select sheets to convert:
 
+                <br/>
+                <br/>
+
                 <h2>Semantic core sheets</h2>
 
                 <Tabs type="card">

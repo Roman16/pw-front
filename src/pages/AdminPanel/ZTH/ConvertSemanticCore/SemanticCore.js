@@ -2,6 +2,8 @@ import React from "react"
 import {Input, Select, Checkbox} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import Variations from "./Variations"
+import Themes from "./Themes"
+import GenerateBulk from "./GenerateBulk"
 
 const Option = Select.Option
 
@@ -196,13 +198,18 @@ const SemanticCore = () => {
 
             <Variations/>
 
-            <div className="themes">
-                <h2>Themes</h2>
-                <button className={'btn default'}>Add new theme</button>
-            </div>
+            <br/>
+            <br/>
 
+            <Themes/>
 
-            <h2>Generate bulk upload for campaign types:</h2>
+            <br/>
+            <br/>
+
+            <GenerateBulk/>
+
+            <br/>
+            <br/>
 
             <button className={'btn default'}>
                 Convert semantics
