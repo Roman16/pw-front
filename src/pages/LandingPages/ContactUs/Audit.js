@@ -781,7 +781,7 @@ const Audit = () => {
                                 </div>
                             </div>
 
-                            <button className={'btn default'}>Check My Case</button>
+                            <a target={'_blank'} href={'https://blog.profitwhales.com/studies/table-tennis-equipment/'} className={'btn default'}>Check My Case</a>
                         </li>
 
                         <li>
@@ -799,7 +799,7 @@ const Audit = () => {
                                 </div>
                             </div>
 
-                            <button className={'btn default'}>Check My Case</button>
+                            <a target={'_blank'} href={'https://blog.profitwhales.com/studies/nutritional-supplements/'} className={'btn default'}>Check My Case</a>
                         </li>
                     </ul>
                 </div>
