@@ -11,7 +11,7 @@ import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
 let requestSent = false
 
 const multiSelectVariations = [
-    {title: 'Select All', key: 'all', value: 'all'},
+    // {title: 'Select All', key: 'all', value: 'all'},
     {title: 'Bid Optimization PAT', key: 'bid_optimization_pat', value: 'bid_optimization_pat'},
     {title: 'Pause Bleeding Keywords', key: 'pause_bleeding_keywords', value: 'pause_bleeding_keywords'},
     {title: 'Bid Optimization Keywords', key: 'bid_optimization_keywords', value: 'bid_optimization_keywords'},
@@ -23,18 +23,60 @@ const multiSelectVariations = [
     {title: 'Activate PATs', key: 'activate_pats', value: 'activate_pats'},
 ]
 
+let lastError
+
 const CampaignsConfiguration = ({optimizationJobId}) => {
     const [sectionHeightState, setSectionHeightState] = useState(false),
         [jobsList, setJobsList] = useState([]),
         [hasJob, setJobState] = useState(false)
 
-    const changeCheckboxHandler = (index, type, value) => {
+    const showNotification = (text) => {
+        if (lastError !== text) {
+            lastError = text
+
+            notification.error({title: text})
+
+            setTimeout(() => {
+                lastError = null
+            }, 2000)
+        }
+    }
+
+    const changeSettingsHandler = (index, name, value, label) => {
         setJobsList(jobsList.map((item, listIndex) => {
             if (listIndex === index) {
-                item[type] = !value
+                if (name === 'dont_optimize' || name === 'dont_use_metrics') {
+                    item[name] = !value
+                } else if (name === 'min_bid') {
+                    if (value === '' || value == null) {
+                        item[name] = null
+                    } else if (value > jobsList[index].max_bid) {
+                        showNotification('Min Bid should be less than Max Bid')
+                        item[name] = jobsList[index].max_bid - 0.01
+                    } else if (value < 0.002) {
+                        showNotification('Bids should be greater than or equal to 0.02$')
+                        item[name] = 0.002
+                    } else {
+                        item[name] = value
+                    }
+                } else if (name === 'max_bid') {
+                    if (value === '' || value == null) {
+                        item[name] = null
+                    } else if (value < 0.002) {
+                        showNotification('Bids should be greater than or equal to 0.02$')
+                        item[name] = 0.002
+                    } else if (value < jobsList[index].min_bid) {
+                        showNotification('Max Bid should be greater than Min Bid')
+                        item[name] = jobsList[index].min_bid + 0.01
+                    } else {
+                        item[name] = value
+                    }
+                } else {
+                    item[name] = value
+                }
 
-                if (type === 'dontOptimize' && value) {
-                    item['dontUseMetrics'] = false
+                if (name === 'dont_optimize' && value) {
+                    item['dont_use_metrics'] = false
                 }
             }
 
@@ -51,31 +93,30 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
         },
         {
             title: 'Optimize',
-            dataIndex: 'dontOptimize',
-            key: 'dontOptimize',
+            dataIndex: 'dont_optimize',
+            key: 'dont_optimize',
             width: '100px',
-            render: (dontOptimize, item, index) => {
-
+            render: (dont_optimize, item, index) => {
+                console.log(dont_optimize)
                 return (
                     <Checkbox
-                        checked={!dontOptimize}
-                        onChange={(e) => changeCheckboxHandler(index, 'dontOptimize', e.target.checked)}
+                        checked={!dont_optimize}
+                        onChange={(e) => changeSettingsHandler(index, 'dont_optimize', e.target.checked)}
                     />
                 )
             }
         },
         {
             title: 'Use for PPC Metrics',
-            dataIndex: 'dontUseMetrics',
-            key: 'dontUseMetrics',
+            dataIndex: 'dont_use_metrics',
+            key: 'dont_use_metrics',
             width: '150px',
             render: (dontUseMetrics, item, index) => {
-
                 return (
                     <Checkbox
                         checked={!dontUseMetrics}
-                        disabled={!item.dontOptimize}
-                        onChange={(e) => changeCheckboxHandler(index, 'dontUseMetrics', e.target.checked)}
+                        disabled={!item.dont_optimize}
+                        onChange={(e) => changeSettingsHandler(index, 'dont_use_metrics', e.target.checked)}
                     />
                 )
             }
@@ -85,9 +126,13 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             dataIndex: 'min_bid',
             key: 'min_bid',
             width: '100px',
-            render: (dontUseMetrics, item, index) => {
+            render: (min_bid, item, index) => {
                 return (
-                    <InputCurrency  disabled={!item.dontOptimize}/>
+                    <InputCurrency
+                        disabled={item.dont_optimize}
+                        value={min_bid}
+                        onChange={(value) => changeSettingsHandler(index, 'min_bid', value)}
+                    />
                 )
             }
         },
@@ -96,46 +141,43 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             dataIndex: 'max_bid',
             key: 'max_bid',
             width: '100px',
-            render: (dontUseMetrics, item, index) => {
-                return (
-                    <InputCurrency  disabled={!item.dontOptimize}/>
-                )
-            }
-        },
-        {
-            title: 'Target ACoS',
-            dataIndex: 'target_acos',
-            key: 'target_acos',
-            width: '120px',
-            render: (dontUseMetrics, item, index) => {
+            render: (max_bid, item, index) => {
                 return (
                     <InputCurrency
-                        typeIcon={'percent'}
-                        disabled={!item.dontOptimize}
+                        disabled={item.dont_optimize}
+                        value={max_bid}
+                        onChange={(value) => changeSettingsHandler(index, 'max_bid', value)}
                     />
                 )
             }
         },
         {
             title: 'Custom Optimization Parts',
-            dataIndex: 'custom_optimization_parts',
-            key: 'custom_optimization_parts',
+            dataIndex: 'optimization_parts',
+            key: 'optimization_parts',
             width: '240px',
-            render: (dontUseMetrics, item, index) => {
+            render: (optimization_parts, item, index) => {
                 return (
                     <>
-                        <Checkbox  disabled={!item.dontOptimize}/>
+                        <Checkbox
+                            disabled={item.dont_optimize}
+                            checked={item.enable_optimization_parts}
+                            onChange={(e) => changeSettingsHandler(index, 'enable_optimization_parts', e.target.checked)}
+
+                        />
 
                         <TreeSelect
-                            // getPopupContainer={triggerNode => triggerNode.parentNode}
+                            getPopupContainer={triggerNode => triggerNode.parentNode}
                             treeCheckable={true}
                             showSearch={false}
                             placeholder={'Type'}
-                            disabled={!item.dontOptimize}
-                            // value={filterValue}
+                            disabled={item.dont_optimize || !item.enable_optimization_parts}
+                            value={optimization_parts}
                             treeData={multiSelectVariations}
-
-                            // onChange={changeValueHandler}
+                            onSelect={e => {
+                                console.log(e)
+                            }}
+                            onChange={(e, label) => changeSettingsHandler(index, 'optimization_parts', e, label)}
                         />
                     </>
                 )
@@ -143,11 +185,15 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
         },
     ]
 
-    const getCampaignBlackList = async () => {
-
+    const getCampaignsSettings = async () => {
         try {
-            const res = await productsServices.getCampaignsBlacklist(optimizationJobId)
-            setJobsList(res.result)
+            const res = await productsServices.getCampaignsSettings(optimizationJobId)
+            setJobsList(res.result.map(campaign => ({
+                ...campaign.custom_settings,
+                campaignName: campaign.campaignName,
+                campaign_id: campaign.campaignId,
+                enable_optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts)
+            })))
             setJobState(true)
 
             requestSent = true
@@ -158,19 +204,22 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
 
     const saveConfigurationHandler = async () => {
         try {
-            const dont_optimize_ids = jobsList.filter(item => item.dontOptimize).map(item => item.campaignId),
-                dont_use_metrics_ids = jobsList.filter(item => item.dontUseMetrics).map(item => item.campaignId)
+            const custom_campaigns_settings = jobsList.map(item => ({
+                    campaign_id: item.campaign_id,
+                    dont_optimize: item.dont_optimize,
+                    dont_use_metrics: item.dont_use_metrics,
+                    optimization_parts: !item.enable_optimization_parts || item.optimization_parts.length === 0 ? null : item.optimization_parts,
+                    ...item.min_bid && {min_bid: item.min_bid},
+                    ...item.max_bid && {max_bid: item.max_bid}
+                }
+            ))
 
-            await productsServices.updateCampaignsBlacklist(optimizationJobId, {
-                dont_optimize_ids,
-                dont_use_metrics_ids
-            })
+            await productsServices.updateCampaignsBlacklist(optimizationJobId, custom_campaigns_settings)
 
             notification.success({title: 'Success!'})
         } catch (e) {
             console.log(e)
         }
-
     }
 
     useEffect(() => {
@@ -184,9 +233,11 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
 
     useEffect(() => {
         if (optimizationJobId && sectionHeightState && !requestSent) {
-            getCampaignBlackList()
+            getCampaignsSettings()
         }
     }, [sectionHeightState, optimizationJobId])
+
+    console.log(jobsList)
 
     return (
         <section className={`campaigns-configuration ${sectionHeightState ? 'opened' : 'closed'}`}>
@@ -205,7 +256,7 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
                 />
 
                 {jobsList.length > 0 && <div className="actions">
-                    <button className={'btn white'} onClick={getCampaignBlackList}>
+                    <button className={'btn white'} onClick={getCampaignsSettings}>
                         Reset
                     </button>
 

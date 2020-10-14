@@ -128,9 +128,27 @@
           .pw-tree-select {
             width: 100%;
             height: 2.2857142857142856rem;
+            overflow: hidden;
+
+            .ant-select-selection__rendered {
+              flex-direction: row;
+              flex-wrap: nowrap;
+
+              li {
+                min-width: max-content;
+              }
+            }
 
             svg {
               stroke: #000;
+            }
+
+            .ant-select-dropdown {
+              right: 0;
+              left: inherit !important;
+              height: 200px;
+              width: 250px;
+              z-index: 1000;
             }
           }
 

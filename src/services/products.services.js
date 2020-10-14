@@ -11,7 +11,7 @@ export const productsServices = {
     updateProductSettings,
     updateProductSettingsByIdList,
     updateProductTargetAcos,
-    getCampaignsBlacklist,
+    getCampaignsSettings,
     updateCampaignsBlacklist,
 }
 
@@ -67,10 +67,10 @@ function updateProductById(product) {
     return api('post', productsUrls.saveProductData, data)
 }
 
-function getCampaignsBlacklist(id) {
-    return api('get', `${productsUrls.getCampaignsBlacklist(id)}`)
+function getCampaignsSettings(id) {
+    return api('get', `${productsUrls.campaignsSettingList(id)}`)
 }
 
 function updateCampaignsBlacklist(id, data) {
-    return api('post', `${productsUrls.updateCampaignsBlacklist(id)}`, data)
+    return api('post', `${productsUrls.campaignsSettingList(id)}`, data)
 }
