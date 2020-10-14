@@ -506,11 +506,14 @@ const Audit = () => {
 
                     <div className="row">
                         <div className="video">
-                            <img src={videoBg} alt=""/>
-
                             <video autoPlay={'autoplay'} loop={true}>
                                 <source src={video} type="video/mp4"/>
                             </video>
+
+                            <div className="home-line"/>
+                            <div className="volume-up"/>
+                            <div className="volume-down"/>
+                            <div className="block-btn"/>
                         </div>
 
                         <div className="arrow">
