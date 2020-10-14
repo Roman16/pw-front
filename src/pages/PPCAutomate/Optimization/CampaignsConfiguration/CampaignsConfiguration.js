@@ -11,16 +11,13 @@ import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
 let requestSent = false
 
 const multiSelectVariations = [
-    // {title: 'Select All', key: 'all', value: 'all'},
-    {title: 'Bid Optimization PAT', key: 'bid_optimization_pat', value: 'bid_optimization_pat'},
-    {title: 'Pause Bleeding Keywords', key: 'pause_bleeding_keywords', value: 'pause_bleeding_keywords'},
     {title: 'Bid Optimization Keywords', key: 'bid_optimization_keywords', value: 'bid_optimization_keywords'},
-    {title: 'Harvest & Rank New Keywords', key: 'harvest_rank_new_keywords', value: 'harvest_rank_new_keywords'},
-    {title: 'Add Bad ST to Negatives', key: 'add_bad_negatives', value: 'add_bad_negatives'},
+    {title: 'Bid Optimization PAT', key: 'bid_optimization_pat', value: 'bid_optimization_pat'},
     {title: 'Activate Keywords', key: 'activate_keywords', value: 'activate_keywords'},
-    {title: 'Remove Duplicates', key: 'remove_duplicates', value: 'remove_duplicates'},
-    {title: 'Pause Bleeding PATs', key: 'pause_bleeding', value: 'pause_bleeding'},
     {title: 'Activate PATs', key: 'activate_pats', value: 'activate_pats'},
+    {title: 'Pause Bleeding Keywords', key: 'pause_bleeding_keywords', value: 'pause_bleeding_keywords'},
+    {title: 'Pause Bleeding PATs', key: 'pause_bleeding_pats', value: 'pause_bleeding_pats'},
+    {title: 'Remove Duplicates', key: 'remove_duplicates', value: 'remove_duplicates'},
 ]
 
 let lastError
