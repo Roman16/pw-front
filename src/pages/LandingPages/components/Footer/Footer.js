@@ -1,13 +1,13 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faFacebookSquare, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons";
+import React from 'react'
+import {Link} from 'react-router-dom'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faFacebookSquare, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons"
 
-import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg';
-import appStoreLogo from '../../../../assets/img/logo/amazon-app-store-logo-dark.png';
-import spnLogo from '../../../../assets/img/logo/amazon-spn-logo-dark.png';
+import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg'
+import spnLogo from '../../../../assets/img/logo/amazon-spn-logo-dark.png'
+import advertisingLogo from '../../../../assets/img/logo/amazon-advertising-logo-dark.png'
 
-import './Footer.less';
+import './Footer.less'
 
 const Footer = () => (
     <footer className='not-found-page__footer'>
@@ -33,8 +33,8 @@ const Footer = () => (
             </div>
 
             <p className={'description'}>
-                Amazon Advertising Automation Software powered by Science and Data with the mission to build long-term
-                relationships with Sellers and Brands on Amazon Marketplace.
+                Amazon Advertising Agency powered by technology with the mission to build long-term relationships with
+                Sellers and Brands on Amazon Marketplace.
             </p>
 
             <div className="menu">
@@ -87,9 +87,9 @@ const Footer = () => (
             <div className="row">
                 <label>Profit Whales © 2020 All Right Reserved</label>
 
-                <img src={spnLogo} alt="" className={'amazon-spn-logo'}/>
+                <img src={advertisingLogo} alt="" className={'amazon-advertising-logo'}/>
 
-                {/*<img src={appStoreLogo} alt="" className={'amazon-appstore-logo'}/>*/}
+                <img src={spnLogo} alt="" className={'amazon-spn-logo'}/>
 
                 <ul className="social-icons">
                     <li>
@@ -122,6 +122,6 @@ const Footer = () => (
             </div>
         </div>
     </footer>
-);
+)
 
-export default Footer;
+export default Footer

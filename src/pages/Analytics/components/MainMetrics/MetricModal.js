@@ -4,7 +4,6 @@ import ModalMetricItem from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/Mo
 import {metricsListArray} from '../../../../constans/metricsList';
 
 const MetricModal = ({visibleModal, handleOk, handleCancel, addMetric, removeMetric, visibleItems, hiddenItems}) => {
-    console.log(hiddenItems)
     return (
         <ModalWindow
             className='metrics-modal'

@@ -167,7 +167,7 @@ const CustomTable = ({
                                     minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
                                 }}
                             >
-                                {item.render
+                                {(item.render && !item.noTotal)
                                     ? item.render(totalDataSource[item.key], item, columnIndex)
                                     : totalDataSource[item.key]}
                             </div>

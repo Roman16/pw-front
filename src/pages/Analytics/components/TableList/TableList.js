@@ -6,8 +6,6 @@ import _ from 'lodash'
 import './TableList.less'
 import {analyticsServices} from "../../../../services/analytics.services"
 import TableFilters from "../TableFilters/TableFilters"
-import {Popover} from "antd"
-import {SVG} from "../../../../utils/icons"
 import DateRange from "../DateRange/DateRange"
 import ColumnsSelect from "../ColumnsSelect/ColumnsSelect"
 
@@ -22,14 +20,13 @@ const TableList = ({
                    }) => {
 
     const [tableData, setTableData] = useState([]),
+        [fetchingStatus, setFetchingStatus] = useState(false),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
-            pageSizeOptions: [10, 50, 100],
-            pageSize: 10,
+            pageSize: 25,
             totalSize: 0,
-            listLength: 0,
-            processing: false
-        })
+        }),
+        [sorterColumn, setSorterColumn] = useState()
 
     const {metricsValue, locationKey} = useSelector(state => ({
         metricsValue: state.dashboard.allMetrics,
@@ -40,23 +37,55 @@ const TableList = ({
     const filters = useSelector(state => state.analytics.filters[locationKey] || [])
 
 
-    const sortChangeHandler = () => {
+    const sortChangeHandler = (column) => {
 
+        if (sorterColumn && sorterColumn.column === column) {
+            if (sorterColumn.type === 'desc') {
+                setSorterColumn({
+                    column: column,
+                    type: 'asc'
+                })
+            } else if (sorterColumn.type === 'asc') {
+                setSorterColumn({
+                    column: null,
+                    type: 'desc'
+                })
+            }
+        } else {
+            setSorterColumn({
+                column: column,
+                type: 'desc'
+            })
+        }
+
+        setPaginationParams({
+            ...paginationParams,
+            page: 1,
+        })
     }
-    const paginationChangeHandler = () => {
 
+    const paginationChangeHandler = (params) => {
+        setPaginationParams(prevState => ({
+            ...prevState,
+            ...params
+        }))
     }
 
     const getData = async () => {
         document.querySelector('.table-overflow').scrollTop = 0
 
+        setFetchingStatus(true)
+
         try {
-            const res = await analyticsServices[`fetch${locationKey.capitalize()}List`]()
-            setTableData(res.result)
+            const res = await analyticsServices[`fetch${locationKey.capitalize()}List`](paginationParams, sorterColumn, filters)
+            setTableData(res.response)
+
             setPaginationParams({
                 ...paginationParams,
-                totalSize: res.totalSize
+                totalSize: res.total_count
             })
+
+            setFetchingStatus(false)
         } catch (e) {
 
         }
@@ -64,25 +93,27 @@ const TableList = ({
 
     useEffect(() => {
         getData()
-    }, [locationKey])
+    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, filters])
 
     return (
         <>
-            <TableFilters
-                columns={columns}
-                filters={filters}
-            />
+            <div className="section-header">
+                <TableFilters
+                    columns={columns}
+                    filters={filters}
+                />
 
-            {columnSelect && <ColumnsSelect
-                columns={columns}
-                columnsBlackList={columnsBlackList}
-            />}
+                {columnSelect && <ColumnsSelect
+                    columns={columns}
+                    columnsBlackList={columnsBlackList}
+                />}
 
-            <DateRange/>
+                <DateRange/>
+            </div>
 
             <CustomTable
                 onChangeSorter={sortChangeHandler}
-                // loading={processing}
+                loading={fetchingStatus}
                 dataSource={tableData}
                 totalDataSource={{
                     ..._.chain(metricsValue)
@@ -93,7 +124,7 @@ const TableList = ({
                         [columns[0].dataIndex]: `Total: ${paginationParams.totalSize}`
                     }
                 }}
-                // sorterColumn={sorterColumn}
+                sorterColumn={sorterColumn}
                 columns={columns.filter(column => !columnsBlackList.includes(column.key))}
                 fixedColumns={fixedColumns}
                 // rowClassName={(item) => !item.viewed && 'new-report'}
@@ -101,18 +132,13 @@ const TableList = ({
 
             {paginationParams.totalSize !== 0 && <Pagination
                 onChange={paginationChangeHandler}
+
+                pageSizeOptions={[25, 50, 100]}
+                listLength={tableData.length}
+                processing={fetchingStatus}
+
                 {...paginationParams}
             />}
-
-            {/*<Pagination*/}
-            {/*    onChange={paginationChangeHandler}*/}
-            {/*    page={paginationParams.page}*/}
-            {/*    pageSizeOptions={[25, 50, 100, 200]}*/}
-            {/*    pageSize={paginationParams.pageSize}*/}
-            {/*    totalSize={totalSize}*/}
-            {/*    listLength={reportsList.length}*/}
-            {/*    processing={processing}*/}
-            {/*/>*/}
         </>
     )
 }

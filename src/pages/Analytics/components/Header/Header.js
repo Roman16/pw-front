@@ -1,10 +1,11 @@
-import React, {memo} from "react"
+import React, {memo, useEffect, useState} from "react"
 import './Header.less'
 import {SVG} from "../../../../utils/icons"
 import {analyticsNavigation} from "../Navigation/Navigation"
 import {useDispatch, useSelector} from "react-redux"
 import {history} from "../../../../utils/history"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import {analyticsServices} from "../../../../services/analytics.services"
 
 const Header = ({location}) => {
     const locationDescription = Object.values(analyticsNavigation).reduce((all, item) => ([...all, ...item])).find(item => item.url === location.pathname)
@@ -13,15 +14,38 @@ const Header = ({location}) => {
         mainState: state.analytics.mainState
     }))
 
-    const setMainState = (state, url) => {
+    const [name, setName] = useState(mainState.name)
+
+    const setMainState = (state, url, location) => {
         dispatch(analyticsActions.setMainState(state))
+        dispatch(analyticsActions.setLocation(location))
         history.push(url)
     }
+
+    const getStateInformation = async () => {
+        try {
+            const res = await analyticsServices.getCampaignInformation(mainState.campaignId)
+
+            setName(res.response.name)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        if (mainState.name) {
+            setName(mainState.name)
+        }
+
+        if (mainState.campaignId) {
+            getStateInformation()
+        }
+    }, [mainState])
 
     const StepsRender = () => {
         if (mainState.adGroupId && mainState.campaignId) {
             return (<>
-                <li onClick={() => setMainState(undefined, '/analytics/campaigns')}>
+                <li onClick={() => setMainState(undefined, '/analytics/campaigns', 'campaigns')}>
                     Campaigns
 
                     <i>
@@ -57,7 +81,7 @@ const Header = ({location}) => {
                     </li>
 
                     <li>
-                        {mainState.campaignId}
+                        {name}
 
                         <i>
                             <SVG id={'right-steps-arrow'}/>

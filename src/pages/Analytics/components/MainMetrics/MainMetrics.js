@@ -12,33 +12,19 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import {analyticsServices} from "../../../../services/analytics.services"
 import _ from 'lodash'
 
-let metricClickCount = 0
-
-const metricsWithoutOrganic = metricsListArray.filter(
-    metric => metric.key !== 'total_orders' &&
-        metric.key !== 'total_orders_pure' &&
-        metric.key !== 'organic_orders' &&
-        metric.key !== 'total_sales' &&
-        metric.key !== 'organic_sales' &&
-        metric.key !== 'total_units' &&
-        metric.key !== 'total_units_pure' &&
-        metric.key !== 'profit' &&
-        metric.key !== 'macos' &&
-        metric.key !== 'returns' &&
-        metric.key !== 'returns_units'
-    ),
-    metricsForTargetingsPanel = metricsWithoutOrganic.filter(metric => metric.key !== 'ad_profit')
+let activeMetricIndexTurn = [0, 1]
 
 const MainMetrics = () => {
     const dispatch = useDispatch()
 
     const location = useSelector(state => state.analytics.location),
         metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location]),
-        selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate)
+        selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
+        selectFourMetrics = useSelector(state => state.analytics.chartState[location].selectFourMetrics)
 
-    const allMetrics = location === 'targetings' ? metricsForTargetingsPanel : location === 'products' ? metricsListArray : metricsWithoutOrganic,
-        selectedMetrics = metricsState ? metricsState.selectedMetrics : allMetrics.slice(0, 5),
-        activeMetrics = metricsState ? metricsState.activeMetrics : allMetrics.slice(0, 2)
+    const allMetrics = metricsState.allMetrics,
+        selectedMetrics = metricsState.selectedMetrics,
+        activeMetrics = metricsState.activeMetrics
 
 
     const [visibleItems, updateVisibleList] = useState(selectedMetrics)
@@ -58,25 +44,18 @@ const MainMetrics = () => {
 
     const activateMetric = (metric) => {
         let newActiveMetrics = [...activeMetrics]
-        if (!newActiveMetrics[0].key) {
-            metricClickCount = 1
-            newActiveMetrics[0] = metric
-        } else if (!newActiveMetrics[1].key) {
-            metricClickCount = 0
-            newActiveMetrics[1] = metric
-        } else {
-            metricClickCount++
-            newActiveMetrics[(metricClickCount & 1) ? 0 : 1] = metric
-        }
+
+        newActiveMetrics[activeMetricIndexTurn[0]] = metric
 
         updateMetricsState({
             activeMetrics: newActiveMetrics
         })
+
+        activeMetricIndexTurn = [...activeMetricIndexTurn.slice(1), activeMetricIndexTurn[0]]
     }
 
-    const deactivateMetric = (metric) => {
-        let countActiveMetrics = activeMetrics.map(item => item.key).filter(str => str)
-        if (countActiveMetrics.length === 1) metricClickCount = 0
+    const deactivateMetric = (metric, index) => {
+        activeMetricIndexTurn = [index, ...activeMetricIndexTurn]
 
         updateMetricsState({
             activeMetrics: activeMetrics.map(item => item.key === metric.key ? {} : item)
@@ -84,12 +63,7 @@ const MainMetrics = () => {
     }
 
     const updateMetricsState = (data) => {
-        dispatch(analyticsActions.updateMetricsState({
-            selectedMetrics: selectedMetrics,
-            activeMetrics: activeMetrics,
-            ...data
-        }))
-
+        dispatch(analyticsActions.updateMetricsState(data))
     }
 
     const getMetricsStatistics = async () => {
@@ -103,9 +77,7 @@ const MainMetrics = () => {
         } catch (e) {
             console.log(e)
         }
-
     }
-
 
     const openModal = () => switchModal(true)
     const handleCancel = () => switchModal(false)
@@ -126,7 +98,6 @@ const MainMetrics = () => {
         updateHiddenList([...hiddenItems, item])
     }
 
-
     useEffect(() => {
         updateVisibleList(selectedMetrics)
         updateHiddenList(allMetrics.filter(metricListFilter))
@@ -136,6 +107,14 @@ const MainMetrics = () => {
     useEffect(() => {
         getMetricsStatistics()
     }, [selectedRangeDate])
+
+    useEffect(() => {
+        if (selectFourMetrics) {
+            activeMetricIndexTurn = [2, 3, ...activeMetricIndexTurn]
+        } else {
+            activeMetricIndexTurn = [0, 1]
+        }
+    }, [selectFourMetrics])
 
     return (
         <div className="main-metrics metrics-block">

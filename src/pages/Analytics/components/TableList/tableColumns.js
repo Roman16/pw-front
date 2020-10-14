@@ -7,13 +7,13 @@ import {Link} from "react-router-dom"
 export const renderNumberField = (type = 'number') => {
     switch (type) {
         case 'number':
-            return ({render: (number) => (number && numberMask(number, 0))})
+            return ({render: (number) => (number && number !== null ? numberMask(number, 0) : '-')})
 
         case 'percent':
-            return ({render: (number) => (number && `${round(number, 2)}%`)})
+            return ({render: (number) => (number && number !== null ? `${round(number * 100, 2)}%` : '-')})
 
         case 'currency':
-            return ({render: (number) => (number && `$${numberMask(number, 2)}`)})
+            return ({render: (number) => (number && number !== null ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-')})
 
         default:
             return ({})
@@ -23,11 +23,13 @@ export const renderNumberField = (type = 'number') => {
 
 export const statusColumn = {
     title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
+    dataIndex: 'state',
+    key: 'state',
     width: '150px',
     render: (status, item) => (<>{status === 'active' && <span className={'status active'}>Active</span>}
         {status === 'inactive' && <span className={'status inactive'}>Inactive</span>}
+        {status === 'paused' && <span className={'status paused'}>Paused</span>}
+        {status === 'archived' && <span className={'status archived'}>Archived</span>}
     </>),
     sorter: true
 }
@@ -67,8 +69,8 @@ export const ctrColumn = {
 
 export const adSpendColumn = {
     title: 'Ad Spend',
-    dataIndex: 'spend',
-    key: 'spend',
+    dataIndex: 'cost',
+    key: 'cost',
     width: '150px',
     sorter: true,
     ...renderNumberField('currency')
@@ -122,8 +124,8 @@ export const cpaColumn = {
 
 export const adOrdersColumn = {
     title: 'Ad Orders',
-    dataIndex: 'ad_orders',
-    key: 'ad_orders',
+    dataIndex: 'ordered_quantity',
+    key: 'ordered_quantity',
     width: '150px',
     sorter: true,
     ...renderNumberField()
@@ -160,18 +162,18 @@ export const budgetAllocationColumn = {
     title: 'Budget Allocation',
     dataIndex: 'budget_allocation',
     key: 'budget_allocation',
-    width: '250px',
+    width: '200px',
     sorter: true,
     ...renderNumberField('percent')
 }
 
 export const adProfitColumn = {
     title: 'Ad Profit',
-    dataIndex: 'ad_profit',
-    key: 'ad_profit',
-    width: '250px',
+    dataIndex: 'profit',
+    key: 'profit',
+    width: '150px',
     sorter: true,
-    ...renderNumberField('percent')
+    ...renderNumberField('currency')
 }
 
 export const campaignColumn = {
