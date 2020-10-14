@@ -97,7 +97,6 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             key: 'dont_optimize',
             width: '100px',
             render: (dont_optimize, item, index) => {
-                console.log(dont_optimize)
                 return (
                     <Checkbox
                         checked={!dont_optimize}
@@ -174,9 +173,6 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
                             disabled={item.dont_optimize || !item.enable_optimization_parts}
                             value={optimization_parts}
                             treeData={multiSelectVariations}
-                            onSelect={e => {
-                                console.log(e)
-                            }}
                             onChange={(e, label) => changeSettingsHandler(index, 'optimization_parts', e, label)}
                         />
                     </>
@@ -236,8 +232,6 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             getCampaignsSettings()
         }
     }, [sectionHeightState, optimizationJobId])
-
-    console.log(jobsList)
 
     return (
         <section className={`campaigns-configuration ${sectionHeightState ? 'opened' : 'closed'}`}>
