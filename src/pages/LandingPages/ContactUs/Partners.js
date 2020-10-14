@@ -118,9 +118,9 @@ const Partners = () => {
                                     d="M4.59563 22.2867C4.59563 22.2867 3.6064 22.3285 2.47169 21.7011C1.33699 21.0738 0.573242 20.0427 0.573242 20.0427"
                                     stroke="#444444" stroke-miterlimit="10" stroke-linecap="round"/>
                             </svg>
-                            I’m the <b>Profit Whales Partner Program’s</b> gatekeeper, and to join our program, you
-                            simply have
-                            to fill in the form, and I’ll reach out shortly.
+
+                            I’m the <b>Profit Whales Partner Program</b> gatekeeper, and to join our program, you simply
+                            have to fill out this form, and I’ll reach out shortly.
                         </p>
                     </div>
                 </div>
@@ -249,7 +249,7 @@ const Partners = () => {
                             <ul>
                                 <li>
                                     <CheckIcon/>
-                                    20% Monthly Recurring Commission
+                                    20% Monthly Recurring Commissions
                                 </li>
                                 <li>
                                     <CheckIcon/>
@@ -331,7 +331,7 @@ const Partners = () => {
                             <ul>
                                 <li>
                                     <CheckIcon/>
-                                    15% Monthly Recurring Commission
+                                    15% Monthly Recurring Commissions
                                 </li>
                                 <li>
                                     <CheckIcon/>
@@ -412,14 +412,14 @@ const Partners = () => {
 
                             <div className="col">
                                 <h5>Diana, Partnership Manager</h5>
-                                <p>Apply to become a partner by <br/> filling in the form. </p>
+                                <p>Apply to become a partner by <br/> filling out the form. </p>
                             </div>
                         </div>
                     </div>
 
                     {formStep === 0 && <div className="form-block" id={'form'}>
                         <h4>Join Our <span>partner program</span></h4>
-                        <h3>Let’s talk</h3>
+                        <h3>let’s talk</h3>
 
                         <form onSubmit={formSubmitHandler}>
                             <div className="row">
@@ -496,9 +496,9 @@ const Partners = () => {
                         <img src={dianaAvatar} alt=""/>
 
                         <p>
-                            I’ve received your request to become a partner, and <br/>
-                            I’ll send you an email shortly, so don’t forget to <br/>
-                            check your inbox.
+                            We’ve received your request to become a partner, and <br/>
+                            we’ll send you an email shortly, so don’t forget to <br/>
+                            check your inbox. Speak soon!
                         </p>
 
                         <h5>

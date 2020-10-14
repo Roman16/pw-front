@@ -45,7 +45,7 @@ const ContactUs = (props) => {
                     <img src={supportTeamImage} alt="" className={'support-team'}/>
 
                     <p>
-                        We are an official partner on the Amazon Service Provider <br/> Network and Amazon Advertising
+                        We are an official partner on the Amazon Service Provider <br/> Network and with Amazon Advertising.
                     </p>
 
                     <div className="logos">
@@ -94,7 +94,7 @@ const ContactUs = (props) => {
                                 Book a Demo
                             </h4>
                             <p>
-                                I do what I love. Profit Whales do the rest
+                                I do what I love. Profit Whales does the rest.
                             </p>
                             <i><SVG id={'right-icon'}/></i>
                         </Link>
@@ -114,7 +114,7 @@ const ContactUs = (props) => {
                                 Become a Partner
                             </h4>
                             <p>
-                                Earn Up to 25% Commission on Referrals and Unlock Exclusive Partner Benefits
+                                Earn up to 25% commission on referrals and unlock exclusive partner benefits.
                             </p>
                             <i><SVG id={'right-icon'}/></i>
                         </Link>
@@ -156,7 +156,7 @@ const ContactUs = (props) => {
                             href="https://www.trustpilot.com/review/profitwhales.com"
                             target={'_blank'}
                         >
-                            Check out reviews
+                            Check out our reviews
                         </a>
                     </p>
                 </div>

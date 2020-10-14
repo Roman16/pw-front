@@ -102,10 +102,10 @@ const Audit = () => {
 
                     <div className="col">
                         <h2>
-                            <span> Get</span> Your Amazon <br/> Advertising Campaigns <br/> Review <span>Today</span>
+                            <span> Get</span> Your Amazon <br/> Advertising Campaigns <br/> Reviews <span>Today</span>
                         </h2>
 
-                        <p>Every Audit is Completed By a Qualified Human</p>
+                        <p>Every Audit is Completed by a Real Live Person</p>
 
                         <a href="#client-cases">See Case studies</a>
                     </div>
@@ -463,7 +463,7 @@ const Audit = () => {
                                 <button className={'btn inherit'} onClick={() => setFormStep(3)}>BACK</button>
                                 <button className={'btn default'} disabled={processing} onClick={submitFormHandler}>
                                     NEXT
-                                    {processing && <Spin />}
+                                    {processing && <Spin/>}
                                 </button>
                             </div>
 
@@ -480,15 +480,19 @@ const Audit = () => {
                                 </svg>
                             </div>
 
-                            <h3><span>{`${contactFormParams.first_name} ${contactFormParams.last_name}`}</span>, let’s get your <br/> project underway!</h3>
+                            <h3><span>{`${contactFormParams.first_name} ${contactFormParams.last_name}`}</span>, let’s
+                                get your <br/> project underway!</h3>
 
                             <p>Expect a reply between 8am CST - 6:30pm CST Monday through Friday</p>
 
                             <h4>Check out our cases:</h4>
 
                             <div className="actions">
-                                <a target={'_blank'} href={'https://blog.profitwhales.com/studies/why-amazon-ppc-matters/'} className={'btn default'}>CASE 1</a>
-                                <a target={'_blank'} href={'https://blog.profitwhales.com/studies/lighting-equipment/'} className={'btn white'}>CASE 2</a>
+                                <a target={'_blank'}
+                                   href={'https://blog.profitwhales.com/studies/why-amazon-ppc-matters/'}
+                                   className={'btn default'}>CASE 1</a>
+                                <a target={'_blank'} href={'https://blog.profitwhales.com/studies/lighting-equipment/'}
+                                   className={'btn white'}>CASE 2</a>
                             </div>
                         </div>}
                     </div>
@@ -658,9 +662,8 @@ const Audit = () => {
                         <div className="col">
                             <h3>This is not an automated, <br/> computer-generated audit.</h3>
                             <p>
-                                We recognize and embrace the value of artificial intelligence, but find that actual
-                                human
-                                involvement is required to best identify potential concerns and opportunities.
+                                We recognize and embrace the value of artificial intelligence, but we find that actual
+                                human involvement is required to best identify potential concerns and opportunities.
                             </p>
 
                             <a href={'#form'} className={'btn green'}>get a free audit</a>
@@ -706,10 +709,10 @@ const Audit = () => {
                                 <span>
                                     2
                                 </span>
-                                Let our expert know your objectives
+                                Let our experts know your objectives
                             </a>
                             <p>
-                                One of our PPC experts will get in touch to get a better understanding of your business.
+                                One of our PPC experts will be in touch to get a better understanding of your business.
                             </p>
                         </li>
 
@@ -733,7 +736,7 @@ const Audit = () => {
                                 We review your account
                             </a>
                             <p>
-                                We conduct the full review of your advertising structure and approach
+                                We conduct a full review of your advertising structure and approach.
                             </p>
                         </li>
 
@@ -745,7 +748,7 @@ const Audit = () => {
                                 We present our findings
                             </a>
                             <p>
-                                You get user-friendly PDF file with actionable information so you can take action.
+                                You receive a user-friendly PDF file with practical information so you can take action.
                             </p>
                         </li>
                     </ul>
@@ -784,7 +787,8 @@ const Audit = () => {
                                 </div>
                             </div>
 
-                            <a target={'_blank'} href={'https://blog.profitwhales.com/studies/table-tennis-equipment/'} className={'btn default'}>Check My Case</a>
+                            <a target={'_blank'} href={'https://blog.profitwhales.com/studies/table-tennis-equipment/'}
+                               className={'btn default'}>Check My Case</a>
                         </li>
 
                         <li>
@@ -802,7 +806,8 @@ const Audit = () => {
                                 </div>
                             </div>
 
-                            <a target={'_blank'} href={'https://blog.profitwhales.com/studies/nutritional-supplements/'} className={'btn default'}>Check My Case</a>
+                            <a target={'_blank'} href={'https://blog.profitwhales.com/studies/nutritional-supplements/'}
+                               className={'btn default'}>Check My Case</a>
                         </li>
                     </ul>
                 </div>

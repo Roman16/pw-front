@@ -205,8 +205,7 @@ const HelpSupport = () => {
             <section className={'work-time'}>
                 <div className="container">
                     <h3>
-                        We’re ready to help since <span>Monday to <br/>
-                        Friday: 10 am - 10 pm EET</span>
+                        We’re ready to help, <span>Monday to Friday <br/> between 10 am - 10 pm EET</span>
                     </h3>
 
                     <div className="avatars">

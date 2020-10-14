@@ -497,15 +497,28 @@
         margin: 0;
       }
 
+      .logos {
+        flex-direction: column;
+        align-items: center;
+
+        img.spn-logo {
+          width: 141px;
+          height: 28px;
+          margin-bottom: 10px;
+        }
+
+        img.advertising-logo {
+          width: 229px;
+          height: 34px;
+        }
+      }
+
       img.support-team {
         width: 100%;
         margin: 32px 0 64px;
       }
 
-      img.spn-logo {
-        width: 141px;
-        height: 28px;
-      }
+
     }
 
     .topic-list {
@@ -1025,6 +1038,18 @@
 
       p {
         font-size: 18px;
+      }
+
+      .avatars div {
+        img {
+          width: 80px;
+          min-width: 80px;
+          height: 80px;
+        }
+
+        h4 {
+          font-size: 26px;
+        }
       }
     }
 
@@ -1725,6 +1750,7 @@
 
     .support-block {
       width: 458px;
+      height: max-content;
       box-sizing: border-box;
       background: #83FED0;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
@@ -3161,9 +3187,10 @@
       margin-top: 30px;
 
       video {
-        width: 100%;
+        width: 101%;
         height: 102%;
         margin-top: -8px;
+        margin-left: -2px;
       }
 
       div {
@@ -3190,6 +3217,7 @@
       .volume-up {
         top: 30px;
       }
+
       .volume-down {
         top: 70px;
       }
@@ -3385,6 +3413,18 @@
         display: flex;
         flex-direction: column;
 
+        &:first-child {
+          a {
+            pointer-events: auto;
+            transition: .2s;
+
+            &:hover {
+              background: #E0E0F9;
+              transition: .2s;
+            }
+          }
+        }
+
         a {
           height: 64px;
           display: flex;
@@ -3396,6 +3436,7 @@
           line-height: 25px;
           font-weight: 500;
           color: #6D6DF6;
+          pointer-events: none;
 
           span {
             height: 64px;
@@ -3583,6 +3624,30 @@
       z-index: 100;
       position: relative;
 
+      .step-1 {
+        ul {
+          li {
+            width: 28%;
+            i {
+              padding: 15px !important;
+            }
+
+            &.selected {
+              background: none;
+
+              i {
+                background: #6D6DF6;
+                border-radius: 4px;
+              }
+
+              h3 {
+                color: #17175a;
+              }
+            }
+          }
+        }
+      }
+
       .step-2 ul {
         width: 100%;
         grid-template-columns: 1fr 1fr;
@@ -3605,6 +3670,12 @@
 
       .video {
         width: 100%;
+
+        video {
+          width: 102%;
+          margin-top: -8px;
+          margin-left: -4px;
+        }
       }
 
       .description {
@@ -3630,6 +3701,11 @@
 
         .col {
           width: 100%;
+          align-items: center;
+
+          h3, p {
+            text-align: center;
+          }
         }
       }
     }

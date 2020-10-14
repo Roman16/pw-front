@@ -80,8 +80,9 @@ const BookDemo = () => {
                         </h2>
 
                         <p>
-                            Tell us what you want to achieve with Profit Whales and we’ll show you how. Book a free live
-                            demo below to get your introduction to Profit Whales.
+                            Tell us what you want to achieve with Profit Whales, and we’ll show you how. Book a free,
+                            live demo below for your introduction to Profit Whales.
+
                             <br/>
                             <br/>
                             Can’t wait to talk?
@@ -128,14 +129,14 @@ const BookDemo = () => {
                             <b> See Our Products in Action</b><br/>
                             We can keep writing about how amazing our products and features are, but it’s nothing
                             compared to seeing them in action. Let us show you how you can use Profit Whales to
-                            structure, optimize your Amazon PPC Campaigns, so you can turn Ad Spend into Ad Investment
+                            structure and optimize your Amazon PPC Campaigns so you can turn Ad Spend into Ad Investment
                             and Accelerate your Amazon Business Growth with our top features.
                         </p>
 
                         <p>
                             <b>Get Insights From Amazon Experts</b><br/>
-                            At Profit Whales, we do love to help other sellers even if they are not our clients. So you
-                            can expect the real help from our qualified experts right on the live call.
+                            At Profit Whales, we love to help other sellers, even if they are not our clients. So you
+                            can expect real help from our qualified experts directly from live calls.
                         </p>
                     </div>
 
@@ -326,7 +327,8 @@ const BookDemo = () => {
                                         back
                                     </button>
 
-                                    <button type={'button'} className={'btn green'} disabled={processing} onClick={submitFormHandler}>
+                                    <button type={'button'} className={'btn green'} disabled={processing}
+                                            onClick={submitFormHandler}>
                                         next
 
                                         {processing && <Spin/>}
