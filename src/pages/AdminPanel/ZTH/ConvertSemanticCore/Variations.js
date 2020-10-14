@@ -1,9 +1,18 @@
 import React, {useState} from "react"
 import {Tabs} from 'antd'
+import {HotColumn, HotTable} from "@handsontable/react"
 
 const {TabPane} = Tabs
 
 let newTabIndex = 0
+
+const data = [
+    {
+        url: 'Auto',
+        sku: 'true'
+    },
+]
+
 
 const Variations = () => {
     const [tabs, setTabs] = useState([
@@ -47,7 +56,25 @@ const Variations = () => {
             >
                 {tabs.map(pane => (
                     <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>
-                        {pane.content}
+                        <HotTable
+                            data={data}
+                            stretchH={'all'}
+                            licenseKey={'non-commercial-and-evaluation'}
+                            colWidths={[5, 1]}
+                            height="50"
+                            rowHeaders={true}
+                        >
+                            <HotColumn
+                                data={"url"}
+                                title="URL"
+                            />
+
+                            <HotColumn
+                                data={"sku"}
+                                title="SKU"
+                            />
+                        </HotTable>
+
                     </TabPane>
                 ))}
             </Tabs>

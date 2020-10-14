@@ -3,20 +3,6 @@ import {HotTable, HotColumn} from '@handsontable/react'
 
 const GenerateBulk = () => {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     const data = [
         {
             campaignType: 'Auto',
@@ -113,7 +99,7 @@ const GenerateBulk = () => {
                     data={"generateBulkUpload"}
                     type={"checkbox"}
                     title="Generate"
-                    className="'htCenter'"
+                    className="htCenter"
                 />
             </HotTable>
         </div>

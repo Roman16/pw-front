@@ -4,6 +4,7 @@ import {NavLink, Route} from "react-router-dom"
 import {history} from "../../../utils/history"
 import './ZTH.less'
 import ConvertSemanticCore from "./ConvertSemanticCore/ConvertSemanticCore"
+import Jobs from "./Jobs/Jobs"
 
 const ZTH = () => {
 
@@ -33,12 +34,13 @@ const ZTH = () => {
                     Convert Semantic Core
                 </NavLink>
 
-                <NavLink to={'/admin-panel/zth/zth-jobs'}>
+                <NavLink to={'/admin-panel/zth/jobs'}>
                     Zero to Hero Jobs
                 </NavLink>
             </div>
 
             <Route path="/admin-panel/zth/convert" component={ConvertSemanticCore}/>
+            <Route path="/admin-panel/zth/jobs" component={Jobs}/>
         </section>
     )
 }

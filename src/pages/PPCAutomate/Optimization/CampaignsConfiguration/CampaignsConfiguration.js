@@ -210,7 +210,7 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
                 }
             ))
 
-            await productsServices.updateCampaignsBlacklist(optimizationJobId, custom_campaigns_settings)
+            await productsServices.updateCampaignsBlacklist(optimizationJobId, {custom_campaigns_settings})
 
             notification.success({title: 'Success!'})
         } catch (e) {
