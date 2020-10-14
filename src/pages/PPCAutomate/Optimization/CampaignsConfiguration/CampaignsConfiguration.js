@@ -202,8 +202,8 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
         try {
             const custom_campaigns_settings = jobsList.map(item => ({
                     campaign_id: item.campaign_id,
-                    dont_optimize: item.dont_optimize,
-                    dont_use_metrics: item.dont_use_metrics,
+                    dont_optimize: item.dont_optimize || false,
+                    dont_use_metrics: item.dont_use_metrics || false,
                     optimization_parts: !item.enable_optimization_parts || item.optimization_parts.length === 0 ? null : item.optimization_parts,
                     ...item.min_bid && {min_bid: item.min_bid},
                     ...item.max_bid && {max_bid: item.max_bid}
