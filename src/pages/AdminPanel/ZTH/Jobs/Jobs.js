@@ -1,5 +1,8 @@
 import React from "react"
 import CustomTable from "../../../../components/Table/CustomTable"
+import './Jobs.less'
+import {Input, Tabs} from "antd"
+import SemanticCore from "../ConvertSemanticCore/SemanticCore"
 
 const columns = [
     {
@@ -72,11 +75,12 @@ const columns = [
 
 const Jobs = () => {
     return(
-        <CustomTable
-            // loading={processing}
-            columns={columns}
-        />
-
+        <section className={'zth-jobs'}>
+            <CustomTable
+                // loading={processing}
+                columns={columns}
+            />
+        </section>
     )
 }
 

@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Tabs} from 'antd'
 import {HotColumn, HotTable} from "@handsontable/react"
 
@@ -41,6 +41,11 @@ const Variations = () => {
         setTabs(tabs.filter((item) => item.key !== targetKey))
     }
 
+   const  handleHOTChange = (changes, source) => {
+        console.log(changes);
+        console.log(source);
+    }
+
 
     return (
         <div className="variations">
@@ -63,6 +68,7 @@ const Variations = () => {
                             colWidths={[5, 1]}
                             height="50"
                             rowHeaders={true}
+                            afterChange={handleHOTChange}
                         >
                             <HotColumn
                                 data={"url"}

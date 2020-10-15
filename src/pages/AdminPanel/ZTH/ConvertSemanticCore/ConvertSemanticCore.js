@@ -24,6 +24,8 @@ const ConvertSemanticCore = () => {
                 </button>
             </div>
 
+            <br/>
+
             <div className="step step-2">
                 Select sheets to convert:
 
