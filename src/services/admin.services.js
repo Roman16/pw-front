@@ -2,6 +2,9 @@ import api from './request'
 import {adminUrls} from '../constans/api.urls'
 import moment from "moment"
 import {reasonFilterParams} from "./reports.services"
+import axios from "axios"
+import {history} from "../utils/history"
+import {userService} from "./user.services"
 
 export const adminServices = {
     checkUserEmail,
@@ -19,7 +22,9 @@ export const adminServices = {
     fetchUsers,
     impersonateUser,
     fetchUserProducts,
-    changeUserPassword
+    changeUserPassword,
+
+    zthVersionInformation
 }
 
 function checkUserEmail(email) {
@@ -120,5 +125,39 @@ function changeUserPassword(type, user, password) {
     return api('post',
         type === 'email' ? adminUrls.userPasswordByEmail : `${adminUrls.userPasswordById(user)}`,
         type === 'email' ? {...password, email: user} : password)
+}
+
+//----------------------------
+
+const zthRequest = (method, url, data) => {
+    const baseUrl = 'https://front1.profitwhales.com/api/agency-server/api/v1/',
+        token = localStorage.getItem('token'),
+        adminToken = localStorage.getItem('adminToken'),
+        zthToken = localStorage.getItem('zthToken')
+
+    const config = {
+        method: method,
+        url: baseUrl + url,
+        headers: {
+            'Authorization': adminToken ? `Bearer ${adminToken}` : `Bearer ${token}`,
+        }
+    }
+
+
+    return new Promise((resolve, reject) => {
+        axios(config)
+            .then(function (response) {
+                resolve(response.data)
+            })
+            .catch(function (error) {
+                reject(error)
+            })
+    })
+}
+
+function zthVersionInformation() {
+    return zthRequest('get', `${adminUrls.zthVersion}`)
+
+
 }
 

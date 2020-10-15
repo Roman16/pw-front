@@ -5,29 +5,30 @@ import {history} from "../../../utils/history"
 import './ZTH.less'
 import ConvertSemanticCore from "./ConvertSemanticCore/ConvertSemanticCore"
 import Jobs from "./Jobs/Jobs"
+import {adminServices} from "../../../services/admin.services"
+import TokenBlock from "./TokenBlock/TokenBlock"
 
 const ZTH = () => {
 
+    const getVersionInformation = async () => {
+        try {
+            const res = await adminServices.zthVersionInformation()
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     useEffect(() => {
-        history.push('/admin-panel/zth/convert')
+        if(history.location.pathname === '/admin-panel/zth' || history.location.pathname === '/admin-panel/zth/') {
+            history.push('/admin-panel/zth/convert')
+        }
+
+        getVersionInformation()
     }, [])
 
     return (
         <section className={'user-products-section zth'}>
-            <div className="version-description">
-                <p>Zero to Hero version: <b>2020-09-18</b></p>
-                <p>Latest markup version: <b>28</b></p>
-                <p>Lowest compatible version: <b>28</b></p>
-
-                <a href="#">Link to latest template</a>
-            </div>
-
-            <div className="api-token form-group">
-                <label htmlFor="">API Token</label>
-                <Input
-                    placeholder={'Enter API Token'}
-                />
-            </div>
+            <TokenBlock/>
 
             <div className="tabs">
                 <NavLink to={'/admin-panel/zth/convert'}>

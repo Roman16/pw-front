@@ -89,6 +89,7 @@ export const adminUrls = {
     userProductsList: 'admin/support-manager/userProducts',
     userPasswordById: userId => `admin/support-manager/user/${userId}/force-change-user-password`,
     userPasswordByEmail: `admin/support-manager/force-change-user-password-by-email`,
+    zthVersion: 'zero-to-hero/get-version'
 }
 
 export const daypartingUrls = {

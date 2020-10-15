@@ -12,7 +12,7 @@ let requestSent = false
 
 const multiSelectVariations = [
     {title: 'Bid Optimization Keywords', key: 'bid_optimization_keywords', value: 'bid_optimization_keywords'},
-    {title: 'Bid Optimization PAT', key: 'bid_optimization_pat', value: 'bid_optimization_pat'},
+    {title: 'Bid Optimization PAT', key: 'bid_optimization_pats', value: 'bid_optimization_pats'},
     {title: 'Activate Keywords', key: 'activate_keywords', value: 'activate_keywords'},
     {title: 'Activate PATs', key: 'activate_pats', value: 'activate_pats'},
     {title: 'Pause Bleeding Keywords', key: 'pause_bleeding_keywords', value: 'pause_bleeding_keywords'},
