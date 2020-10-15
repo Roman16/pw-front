@@ -11,7 +11,6 @@ import auditDescription from '../../../assets/img/landing-contact-us/audit-descr
 import chart from '../../../assets/img/landing-contact-us/audit-chart.png'
 import AlexeyUkhnalevAvatar from '../../../assets/img/landing-contact-us/AlexeyUkhnalev.png'
 import EthanCooperAvatar from '../../../assets/img/landing-contact-us/EthanCooper.png'
-import videoBg from '../../../assets/img/landing-contact-us/video-bg.png'
 import emoji from '../../../assets/img/landing-contact-us/emoji.png'
 import spnLogo from '../../../assets/img/logo/amazon-spn-logo-dark.png'
 import advertisingLogo from '../../../assets/img/logo/amazon-advertising-logo-dark.png'
