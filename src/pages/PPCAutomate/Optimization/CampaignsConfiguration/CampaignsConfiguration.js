@@ -68,6 +68,10 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
                     } else {
                         item[name] = value
                     }
+                } else if (name === 'optimization_parts') {
+                    if (value.length > 0) {
+                        item[name] = value
+                    }
                 } else {
                     item[name] = value
                 }
@@ -185,7 +189,8 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
                 ...campaign.custom_settings,
                 campaignName: campaign.campaignName,
                 campaign_id: campaign.campaignId,
-                enable_optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts)
+                enable_optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts),
+                optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.optimization_parts : multiSelectVariations.map(item => item.value)
             })))
             setJobState(true)
 
@@ -201,7 +206,7 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
                     campaign_id: item.campaign_id,
                     dont_optimize: item.dont_optimize || false,
                     dont_use_metrics: item.dont_use_metrics || false,
-                    optimization_parts: !item.enable_optimization_parts || item.optimization_parts.length === 0 ? null : item.optimization_parts,
+                    optimization_parts: (!item.enable_optimization_parts || item.optimization_parts.length === 0) ? null : item.optimization_parts,
                     ...item.min_bid && {min_bid: item.min_bid},
                     ...item.max_bid && {max_bid: item.max_bid}
                 }
