@@ -14,6 +14,9 @@ import Campaigns from "../Analytics/Campaigns/Campaigns"
 import {NavLink, Route, Redirect} from "react-router-dom"
 import ZTH from "./ZTH/ZTH"
 
+const developer = process.env.REACT_APP_ENV === "developer"
+
+
 const AdminPanel = () => {
     const [selectedTab, setSelectedTab] = useState('genInfo')
 
@@ -141,11 +144,11 @@ const AdminPanel = () => {
                     Impersonations
                 </NavLink>
 
-                <NavLink
+                {developer && <NavLink
                     to={'/admin-panel/zth'}
                 >
                     Zero to Hero
-                </NavLink>
+                </NavLink>}
 
                 {/*<button*/}
                 {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
