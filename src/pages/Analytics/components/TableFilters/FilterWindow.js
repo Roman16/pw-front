@@ -182,7 +182,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Auto', key: 'auto', value: 'auto'},
         ],
         'state': [
-            {title: 'Active', key: 'active', value: 'active'},
+            {title: 'Enabled', key: 'enabled', value: 'enabled'},
             {title: 'Inactive', key: 'inactive', value: 'inactive'},
             {title: 'Paused', key: 'paused', value: 'paused'},
             {title: 'Archived', key: 'archived', value: 'archived'},

@@ -11,7 +11,7 @@ const valueTile = {
     //---------------------------
     'auto': 'Auto',
     'manual': 'Manual',
-    'active': 'Active',
+    'enabled': 'Enabled',
     'inactive': 'Inactive',
     'paused': 'Paused',
     'archived': 'Archived',

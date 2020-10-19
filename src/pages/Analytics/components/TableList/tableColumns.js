@@ -26,7 +26,7 @@ export const statusColumn = {
     dataIndex: 'state',
     key: 'state',
     width: '150px',
-    render: (status, item) => (<>{status === 'active' && <span className={'status active'}>Active</span>}
+    render: (status, item) => (<>{status === 'enabled' && <span className={'status active'}>Enabled</span>}
         {status === 'inactive' && <span className={'status inactive'}>Inactive</span>}
         {status === 'paused' && <span className={'status paused'}>Paused</span>}
         {status === 'archived' && <span className={'status archived'}>Archived</span>}
