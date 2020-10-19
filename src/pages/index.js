@@ -34,6 +34,7 @@ const ApiConnection = React.lazy(() => import('./Account/ApiConnection/ApiConnec
 const Subscription = React.lazy(() => import('./Account/Subscription/Subscription'))
 const Home = React.lazy(() => import('./Home/Home'))
 const Scanner = React.lazy(() => import('./PPCAutomate/Scanner/Scanner'))
+const ListingTracking = React.lazy(() => import('./Notifications/ListingTracking/ListingTracking'))
 const Dayparting = React.lazy(() => import('./PPCAutomate/Dayparting/Dayparting'))
 const AdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'))
 const FullJourney = React.lazy(() => import('./authentication/AccountBinding/FullJourney/FullJourney'))
@@ -238,6 +239,9 @@ const AuthorizedUser = (props) => {
                                     <ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>
 
                                     <ConnectedAmazonRoute exact path="/zero-to-hero/settings" component={Settings}/>
+                                    {/*-------------------------------------------*/}
+                                    <ConnectedAmazonRoute exact path="/notifications/listing-tracking" component={ListingTracking}/>
+
                                     {/*-------------------------------------------*/}
 
                                     {/*ANALYTICS*/}

@@ -91,7 +91,7 @@ const Jobs = () => {
 
     const getData = async () => {
         try {
-            const res = adminServices.fetchZthJobs()
+            const res = await adminServices.fetchZthJobs()
 
             console.log(res)
         } catch (e) {

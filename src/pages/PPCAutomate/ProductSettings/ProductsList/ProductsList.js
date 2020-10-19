@@ -584,21 +584,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 <div>{item[TOTAL_CHANGES]}</div>
             )
         },
-        ...isAdmin ? [{
-            title: () => <div style={{width: '100%', textAlign: 'center'}}>BSR Tracking</div>,
-            dataIndex: BSR_TRACKING,
-            key: BSR_TRACKING,
-            width: '130px',
-            align: 'center',
-            render: (value, item, indexRow) => (
-                <div className={'checkbox-container'}>
-                    <Checkbox
-                        checked={value}
-                        onChange={e => onChangeRow(e.target.checked, BSR_TRACKING, indexRow)}
-                    />
-                </div>
-            )
-        }] : [],
         ...isAgencyClient ? [
                 {
                     title: 'Optimization Status',
