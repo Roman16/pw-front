@@ -1130,6 +1130,12 @@ const files = {
             viewBox: [0, 0, 17, 12],
             data: '<mask xmlns = "http://www.w3.org/2000/svg" id = "a" width = "17" height = "12" x = "0" y = "0" maskUnits = " userSpaceOnUse "> <path fill =" # C4C4C4 "d =" M0 0H16.8V12H0z "/> </mask> <g xmlns =" ​​http://www.w3.org/2000/svg "mask =" url (# a) "> <path stroke-linecap =" round "stroke-linejoin =" round "stroke-width =" 2 "d =" M11.0992 1.2002L15.5992 6.0002M15.5992 6.0002L11. 0992 10.8002M15.5992 6.0002L1.19922 6.0002 "/> </g> '
         },
+        'notification-menu-icon': {
+            width: 20,
+            height: 20,
+            viewBox: [0,0,20,20],
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="20" height="20" x="0" y="0" maskUnits="userSpaceOnUse"><path fill="#C4C4C4" d="M0 0H20V20H0z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="none" fill-rule="evenodd" d="M11.0224 3H2C0.895431 3 0 3.89543 0 5V18C0 19.1046 0.89543 20 2 20H15C16.1046 20 17 19.1046 17 18V8.97758C16.8353 8.99242 16.6685 9 16.5 9C15.98 9 15.4768 8.92783 15 8.79297V18H2L2 5H11.207C11.0722 4.52317 11 4.02001 11 3.5C11 3.33146 11.0076 3.16468 11.0224 3Z" clip-rule="evenodd"/><circle cx="16.5" cy="3.5" r="3.5" stroke="none"/></g>'
+        },
         'house': {
             width: 16,
             height: 15,
@@ -1192,6 +1198,7 @@ const files = {
         }
     },
     allIds: [
+        'notification-menu-icon',
         'clock',
         'email',
         'location',

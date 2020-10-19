@@ -9,6 +9,7 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import {Spin} from "antd"
 import {metricsListArray} from "../../../../constans/metricsList"
 import {metricsForTargetingsPanel, metricsWithoutOrganic} from "../MainMetrics/MainMetrics"
+import {analyticsServices} from "../../../../services/analytics.services"
 
 const MainChart = () => {
     const [chartData, updateChartData] = useState([])
@@ -31,11 +32,13 @@ const MainChart = () => {
         activeMetrics = metricsState.activeMetrics
 
 
-    const getChartData = () => {
+    const getChartData = async () => {
         if (activeMetrics.length > 0 && (activeMetrics[0].key || activeMetrics[1].key)) {
             switchFetch(true)
             setFetchingError(false)
 
+           // const res = await analyticsServices.fetchChartData(location)
+           //  console.log(res)
 
             dashboardServices.fetchLineChartData({
                 startDate: selectedRangeDate.startDate,

@@ -298,7 +298,7 @@ const Sidebar = () => {
                                             disabled
                                         >
                                             <div className="link-icon">
-                                                <SVG id='zth-icon'/>
+                                                <SVG id='notification-menu-icon'/>
                                             </div>
 
                                             <span className="top-span">
