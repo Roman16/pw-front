@@ -63,6 +63,7 @@ const CampaignsList = () => {
             width: '150px',
             sorter: true,
             locked: true,
+            filter: true,
             render: (type) => <span className={'type'}>{type}</span>
         },
         {
@@ -73,6 +74,7 @@ const CampaignsList = () => {
             sorter: true,
             locked: true,
             noTotal: true,
+            filter: true,
             render: (budget) => <InputCurrency disabled value={budget}/>
         },
         {
@@ -82,11 +84,15 @@ const CampaignsList = () => {
             width: '150px',
             sorter: true,
             locked: true,
+            filter: true,
             render: (portfolio, item) => (
                 <Link
                     to={`/analytics/campaigns?portfolioId=${item.portfolioId}`}
                     title={portfolio}
-                    onClick={() => setStateHandler('campaigns')}
+                    onClick={() => setStateHandler('campaigns', {
+                        name: item.portfolioName,
+                        portfolioId: item.portfolioId
+                    })}
                 >
                     {portfolio}
                 </Link>

@@ -28,9 +28,11 @@ const TableList = ({
         }),
         [sorterColumn, setSorterColumn] = useState()
 
-    const {metricsValue, locationKey} = useSelector(state => ({
+    const {metricsValue, locationKey, mainState, selectedRangeDate} = useSelector(state => ({
         metricsValue: state.dashboard.allMetrics,
         locationKey: state.analytics.location,
+        mainState: state.analytics.mainState,
+        selectedRangeDate: state.analytics.selectedRangeDate,
     }))
 
     const columnsBlackList = useSelector(state => state.analytics.columnsBlackList[locationKey] || [])
@@ -77,7 +79,23 @@ const TableList = ({
         setFetchingStatus(true)
 
         try {
-            const res = await analyticsServices[`fetch${locationKey.capitalize()}List`](paginationParams, sorterColumn, filters)
+
+            const filtersWithState = [
+                ...filters,
+                ...Object.keys(mainState).map(key => ({
+                    filterBy: key,
+                    type: 'eq',
+                    value: mainState[key]
+                })).filter(item => !!item.value),
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+
+
+            const res = await analyticsServices[`fetch${locationKey.capitalize()}List`](paginationParams, sorterColumn, filtersWithState)
             setTableData(res.response)
 
             setPaginationParams({
@@ -93,7 +111,7 @@ const TableList = ({
 
     useEffect(() => {
         getData()
-    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, filters])
+    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, filters, mainState, selectedRangeDate])
 
     return (
         <>

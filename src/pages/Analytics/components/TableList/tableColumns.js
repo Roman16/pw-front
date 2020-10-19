@@ -31,7 +31,8 @@ export const statusColumn = {
         {status === 'paused' && <span className={'status paused'}>Paused</span>}
         {status === 'archived' && <span className={'status archived'}>Archived</span>}
     </>),
-    sorter: true
+    sorter: true,
+    filter: true,
 }
 
 export const dateColumn = {
@@ -64,6 +65,7 @@ export const ctrColumn = {
     key: 'ctr',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField('percent')
 }
 
@@ -73,6 +75,7 @@ export const adSpendColumn = {
     key: 'cost',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField('currency')
 }
 
@@ -82,6 +85,7 @@ export const cpcColumn = {
     key: 'cpc',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField('currency')
 }
 
@@ -110,6 +114,7 @@ export const adCvrColumn = {
     key: 'conversion_rate',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField('percent')
 }
 
@@ -119,6 +124,7 @@ export const cpaColumn = {
     key: 'cpa',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField('currency')
 }
 
@@ -128,6 +134,7 @@ export const adOrdersColumn = {
     key: 'ordered_quantity',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField()
 }
 
@@ -146,6 +153,7 @@ export const roasColumn = {
     key: 'roas',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField('percent')
 }
 
@@ -155,6 +163,7 @@ export const salesShareColumn = {
     key: 'sales_share',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField('percent')
 }
 
@@ -164,6 +173,7 @@ export const budgetAllocationColumn = {
     key: 'budget_allocation',
     width: '200px',
     sorter: true,
+    filter: true,
     ...renderNumberField('percent')
 }
 
@@ -173,6 +183,7 @@ export const adProfitColumn = {
     key: 'profit',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField('currency')
 }
 

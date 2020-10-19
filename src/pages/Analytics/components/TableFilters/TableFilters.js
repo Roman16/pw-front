@@ -7,7 +7,7 @@ import DateRange from "../DateRange/DateRange"
 import {useDispatch, useSelector} from "react-redux"
 import {FilterItem} from "../../../PPCAutomate/Report/Filters/FilterItem"
 import {analyticsActions} from "../../../../actions/analytics.actions"
-import FilterWindow from "../../../PPCAutomate/Report/Filters/FiltersWindow"
+import FilterWindow from "./FilterWindow"
 import _ from 'lodash'
 
 const {Search} = Input

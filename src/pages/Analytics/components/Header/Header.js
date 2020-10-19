@@ -54,7 +54,7 @@ const Header = ({location}) => {
                 </li>
 
                 <li onClick={() => setMainState({campaignId: mainState.campaignId}, `/analytics/ad-groups?campaignId=${mainState.campaignId}`)}>
-                    {mainState.campaignId}
+                    {name}
 
                     <i>
                         <SVG id={'right-steps-arrow'}/>
