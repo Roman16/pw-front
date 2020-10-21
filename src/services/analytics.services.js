@@ -197,7 +197,7 @@ function fetchMetricsData({startDate, endDate}) {
 }
 
 function fetchChartData(location, metrics) {
-    return api('get', `${analyticsUrls.chartData(location)}?metric[]=itemPrice`)
+    return api('get', `${analyticsUrls.chartData(location)}?metric[]=clicks`)
 }
 
 function getCampaignInformation(id) {

@@ -146,8 +146,11 @@ const containsVariations = {
     'dailyBudget': numberVariations,
     'cost': numberVariations,
     'roas': numberVariations,
+    'attributedUnitsOrdered30d': numberVariations,
+    'attributedSales30d': numberVariations,
     'type': [{label: 'Is one of', key: 'one_of'}],
     'state': [{label: 'Is one of', key: 'one_of'}],
+    'bidding_strategy': [{label: 'Is one of', key: 'one_of'}],
     'campaign': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}]
 }
 
@@ -186,6 +189,11 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Inactive', key: 'inactive', value: 'inactive'},
             {title: 'Paused', key: 'paused', value: 'paused'},
             {title: 'Archived', key: 'archived', value: 'archived'},
+        ],
+        'bidding_strategy': [
+            {title: 'legacyForSales', key: 'legacyForSales', value: 'legacyForSales'},
+            {title: 'autoForSales', key: 'autoForSales', value: 'autoForSales'},
+            {title: 'manual', key: 'manual', value: 'manual'},
         ],
         'type':
             currentTab === 'targeting-improvements' ? [
@@ -311,6 +319,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
 
                 {(filterBy === 'clicks' ||
                     filterBy === 'ordered_quantity' ||
+                    filterBy === 'attributedUnitsOrdered30d' ||
                     filterBy === 'impressions') &&
                 <Input
                     disabled={!filterBy}
@@ -339,6 +348,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'cpc' ||
                     filterBy === 'cost' ||
                     filterBy === 'profit' ||
+                    filterBy === 'attributedSales30d' ||
                     filterBy === 'dailyBudget' ||
                     filterBy === 'sales'
                 ) &&

@@ -64,6 +64,9 @@ const columnTitle = {
     'dailyBudget': 'Budget',
     'targetingType': 'Type',
     'budget_allocation': 'Budget Allocation',
+    'attributedUnitsOrdered30d': 'Ad Units',
+    'attributedSales30d': 'Ad Sales',
+    'bidding_strategy': 'Campaign bidding strategy',
 }
 
 
@@ -91,16 +94,18 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'spend' ||
         filter.filterBy === 'sales' ||
         filter.filterBy === 'sales_share' ||
-        filter.filterBy === 'acos'||
-        filter.filterBy === 'roas'||
-        filter.filterBy === 'cpa'||
-        filter.filterBy === 'cpc'||
-        filter.filterBy === 'cost'||
-        filter.filterBy === 'ctr'||
-        filter.filterBy === 'conversion_rate'||
-        filter.filterBy === 'budget_allocation'||
-        filter.filterBy === 'dailyBudget'||
-        filter.filterBy === 'ordered_quantity'||
+        filter.filterBy === 'acos' ||
+        filter.filterBy === 'roas' ||
+        filter.filterBy === 'cpa' ||
+        filter.filterBy === 'cpc' ||
+        filter.filterBy === 'cost' ||
+        filter.filterBy === 'ctr' ||
+        filter.filterBy === 'conversion_rate' ||
+        filter.filterBy === 'attributedUnitsOrdered30d' ||
+        filter.filterBy === 'attributedSales30d' ||
+        filter.filterBy === 'budget_allocation' ||
+        filter.filterBy === 'dailyBudget' ||
+        filter.filterBy === 'ordered_quantity' ||
         filter.filterBy === 'profit') {
         return (
             <>
@@ -113,7 +118,7 @@ export const FilterItem = ({filter}) => {
                 {`${columnTitle[filter.filterBy]} = ${filter.value}`}
             </>
         )
-    } else if (filter.type.key === 'one_of' ) {
+    } else if (filter.type.key === 'one_of') {
         return (
             <>
                 {columnTitle[filter.filterBy]} is one of: {filter.value.map(item => valueTile[item]).join(', ')}

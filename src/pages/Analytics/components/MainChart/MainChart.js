@@ -4,11 +4,8 @@ import '../../../PPCAutomate/Dashboard/MainChart/MainChart.less'
 import ChartHeader from "./ChartHeader"
 import Chart from "./Chart"
 import {dashboardServices} from "../../../../services/dashboard.services"
-import {useDispatch, useSelector} from "react-redux"
-import {analyticsActions} from "../../../../actions/analytics.actions"
+import { useSelector} from "react-redux"
 import {Spin} from "antd"
-import {metricsListArray} from "../../../../constans/metricsList"
-import {metricsForTargetingsPanel, metricsWithoutOrganic} from "../MainMetrics/MainMetrics"
 import {analyticsServices} from "../../../../services/analytics.services"
 
 const MainChart = () => {
@@ -17,7 +14,6 @@ const MainChart = () => {
     const [fetchingError, setFetchingError] = useState(false)
     const [productOptimizationDateList, setProductOptimizationDateList] = useState([])
 
-    const dispatch = useDispatch()
 
     const location = useSelector(state => state.analytics.location)
 
@@ -37,8 +33,8 @@ const MainChart = () => {
             switchFetch(true)
             setFetchingError(false)
 
-           // const res = await analyticsServices.fetchChartData(location)
-           //  console.log(res)
+           const res = await analyticsServices.fetchChartData(location)
+            console.log(res)
 
             dashboardServices.fetchLineChartData({
                 startDate: selectedRangeDate.startDate,

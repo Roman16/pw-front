@@ -91,10 +91,11 @@ export const cpcColumn = {
 
 export const adSalesColumn = {
     title: 'Ad Sales',
-    dataIndex: 'ad_sales',
-    key: 'ad_sales',
+    dataIndex: 'attributedSales30d',
+    key: 'attributedSales30d',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField('currency')
 }
 
@@ -140,10 +141,11 @@ export const adOrdersColumn = {
 
 export const adUnitsColumn = {
     title: 'Ad Units',
-    dataIndex: 'ad_units_ordered',
-    key: 'ad_units_ordered',
+    dataIndex: 'attributedUnitsOrdered30d',
+    key: 'attributedUnitsOrdered30d',
     width: '150px',
     sorter: true,
+    filter: true,
     ...renderNumberField()
 }
 

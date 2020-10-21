@@ -124,6 +124,13 @@ const CampaignsList = () => {
             key: 'bidding_strategy',
             width: '250px',
             sorter: true,
+            filter: true,
+            render: (text) => <>
+                {text === 'legacyForSales' && 'Legacy For Sales'}
+                {text === 'autoForSales' && 'Auto For Sales'}
+                {text === 'manual' && 'Manual'}
+                {(text !== 'manual' && text !== 'autoForSales' && text !== 'autoForSales') && text}
+            </>
         },
         impressionsColumn,
         clicksColumn,
