@@ -66,10 +66,12 @@ const Chart = ({
         //     }
         // }))
 
-        setChartData(data.map(item => ({
-            ...item,
-            eventDate: `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`
-        })))
+        if(data) {
+            setChartData(data.map(item => ({
+                ...item,
+                eventDate: `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`
+            })))
+        }
     }, [data])
 
     return (
@@ -113,7 +115,7 @@ const Chart = ({
                         tickFormatter={(date) => moment(date).format('MMM DD')}
                     />
 
-                    {activeMetrics.map((item, index) => (
+                    {activeMetrics && activeMetrics.map((item, index) => (
                         <YAxis
                             yAxisId={`YAxis-${index}`}
                             orientation={!!((index) % 2) ? 'right' : 'left'}
@@ -178,7 +180,7 @@ const Chart = ({
                     {/*---------------------------general line-----------------------*/}
                     {/*--------------------------------------------------------------*/}
 
-                    {activeMetrics.map((metric, index) => (
+                    {activeMetrics && activeMetrics.map((metric, index) => (
                         showWeekChart && <Line
                             yAxisId={`YAxis-${index}`}
                             type="monotone"
@@ -193,7 +195,7 @@ const Chart = ({
                         />
                     ))}
 
-                    {activeMetrics.map((metric, index) => (
+                    {activeMetrics && activeMetrics.map((metric, index) => (
                         showDailyChart && <Line
                             yAxisId={`YAxis-${index}`}
                             type="linear"
