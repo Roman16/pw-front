@@ -2,6 +2,7 @@ import api from "./request"
 import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
 import {reasonFilterParams} from "./reports.services"
+import {endDateFormatting, startDateFormatting} from "./dashboard.services"
 
 
 export const analyticsServices = {
@@ -193,11 +194,11 @@ function fetchProductAdsList(paginationParams) {
 }
 
 function fetchMetricsData({startDate, endDate}) {
-    return api('get', `${analyticsUrls.metricsData}?product_id=all&start_date=lifetime&end_date=lifetime`)
+    return api('get', `${analyticsUrls.metricsData}?product_id=all&start_date=${startDateFormatting(startDate)}&end_date=${endDateFormatting(endDate)}`)
 }
 
-function fetchChartData(location, metrics) {
-    return api('get', `${analyticsUrls.chartData(location)}?metric[]=clicks`)
+function fetchChartData(location, metrics, date) {
+    return api('get', `${analyticsUrls.chartData(location)}?${metrics.map(item => `metric[]=${item.key}`).join('&')}`)
 }
 
 function getCampaignInformation(id) {

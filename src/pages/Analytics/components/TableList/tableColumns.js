@@ -53,7 +53,7 @@ export const clicksColumn = {
     title: 'Clicks',
     dataIndex: 'clicks',
     key: 'clicks',
-    width: '150px',
+    minWidth: '80px',
     sorter: true,
     filter: true,
     ...renderNumberField()
@@ -63,7 +63,7 @@ export const ctrColumn = {
     title: 'CTR',
     dataIndex: 'ctr',
     key: 'ctr',
-    width: '150px',
+    minWidth: '80px',
     sorter: true,
     filter: true,
     ...renderNumberField('percent')
@@ -73,7 +73,7 @@ export const adSpendColumn = {
     title: 'Ad Spend',
     dataIndex: 'cost',
     key: 'cost',
-    width: '150px',
+    minWidth: '90px',
     sorter: true,
     filter: true,
     ...renderNumberField('currency')
@@ -83,7 +83,7 @@ export const cpcColumn = {
     title: 'CPC',
     dataIndex: 'cpc',
     key: 'cpc',
-    width: '150px',
+    minWidth: '80px',
     sorter: true,
     filter: true,
     ...renderNumberField('currency')
@@ -93,7 +93,7 @@ export const adSalesColumn = {
     title: 'Ad Sales',
     dataIndex: 'attributedSales30d',
     key: 'attributedSales30d',
-    width: '150px',
+    minWidth: '100px',
     sorter: true,
     filter: true,
     ...renderNumberField('currency')
@@ -103,7 +103,7 @@ export const acosColumn = {
     title: 'ACoS',
     dataIndex: 'acos',
     key: 'acos',
-    width: '150px',
+    minWidth: '90px',
     sorter: true,
     filter: true,
     ...renderNumberField('percent')
@@ -113,7 +113,7 @@ export const adCvrColumn = {
     title: 'Ad CVR',
     dataIndex: 'conversion_rate',
     key: 'conversion_rate',
-    width: '150px',
+    minWidth: '90px',
     sorter: true,
     filter: true,
     ...renderNumberField('percent')
@@ -123,7 +123,7 @@ export const cpaColumn = {
     title: 'CPA',
     dataIndex: 'cpa',
     key: 'cpa',
-    width: '150px',
+    minWidth: '90px',
     sorter: true,
     filter: true,
     ...renderNumberField('currency')
@@ -131,9 +131,9 @@ export const cpaColumn = {
 
 export const adOrdersColumn = {
     title: 'Ad Orders',
-    dataIndex: 'ordered_quantity',
-    key: 'ordered_quantity',
-    width: '150px',
+    dataIndex: 'attributedConversions30d',
+    key: 'attributedConversions30d',
+    minWidth: '100px',
     sorter: true,
     filter: true,
     ...renderNumberField()
@@ -143,7 +143,7 @@ export const adUnitsColumn = {
     title: 'Ad Units',
     dataIndex: 'attributedUnitsOrdered30d',
     key: 'attributedUnitsOrdered30d',
-    width: '150px',
+    minWidth: '100px',
     sorter: true,
     filter: true,
     ...renderNumberField()
@@ -153,7 +153,7 @@ export const roasColumn = {
     title: 'ROAS',
     dataIndex: 'roas',
     key: 'roas',
-    width: '150px',
+    minWidth: '90px',
     sorter: true,
     filter: true,
     ...renderNumberField('percent')
@@ -163,7 +163,7 @@ export const salesShareColumn = {
     title: 'Sales Share',
     dataIndex: 'sales_share',
     key: 'sales_share',
-    width: '150px',
+    width: '130px',
     sorter: true,
     filter: true,
     ...renderNumberField('percent')
@@ -173,7 +173,7 @@ export const budgetAllocationColumn = {
     title: 'Budget Allocation',
     dataIndex: 'budget_allocation',
     key: 'budget_allocation',
-    width: '200px',
+    width: '170px',
     sorter: true,
     filter: true,
     ...renderNumberField('percent')
@@ -181,9 +181,9 @@ export const budgetAllocationColumn = {
 
 export const adProfitColumn = {
     title: 'Ad Profit',
-    dataIndex: 'profit',
-    key: 'profit',
-    width: '150px',
+    dataIndex: 'ad_profit',
+    key: 'ad_profit',
+    width: '100px',
     sorter: true,
     filter: true,
     ...renderNumberField('currency')

@@ -136,8 +136,10 @@ const containsVariations = {
     'sales': numberVariations,
     'acos': numberVariations,
     'profit': numberVariations,
+    'ad_profit': numberVariations,
     'budget_allocation': numberVariations,
     'ordered_quantity': numberVariations,
+    'attributedConversions30d': numberVariations,
     'sales_share': numberVariations,
     'cpa': numberVariations,
     'conversion_rate': numberVariations,
@@ -318,7 +320,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 />}
 
                 {(filterBy === 'clicks' ||
-                    filterBy === 'ordered_quantity' ||
+                    filterBy === 'attributedConversions30d' ||
                     filterBy === 'attributedUnitsOrdered30d' ||
                     filterBy === 'impressions') &&
                 <Input
@@ -348,6 +350,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'cpc' ||
                     filterBy === 'cost' ||
                     filterBy === 'profit' ||
+                    filterBy === 'ad_profit' ||
                     filterBy === 'attributedSales30d' ||
                     filterBy === 'dailyBudget' ||
                     filterBy === 'sales'

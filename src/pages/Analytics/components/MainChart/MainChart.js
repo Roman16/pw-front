@@ -17,7 +17,7 @@ const MainChart = () => {
 
     const location = useSelector(state => state.analytics.location)
 
-    const {selectedRangeDate, metricsState, selectedProduct, onlyOptimization, chartState} = useSelector(state => ({
+    const {selectedRangeDate, metricsState, chartState} = useSelector(state => ({
         selectedRangeDate: state.analytics.selectedRangeDate,
         metricsState: state.analytics.metricsState && state.analytics.metricsState[location],
         chartState: state.analytics.chartState[location]
@@ -29,32 +29,23 @@ const MainChart = () => {
 
 
     const getChartData = async () => {
-        if (activeMetrics.length > 0 && (activeMetrics[0].key || activeMetrics[1].key)) {
+        if (activeMetrics.length > 0) {
             switchFetch(true)
             setFetchingError(false)
 
-           const res = await analyticsServices.fetchChartData(location)
-            console.log(res)
+            try {
+                const res = await analyticsServices.fetchChartData(location, activeMetrics, selectedRangeDate)
 
-            dashboardServices.fetchLineChartData({
-                startDate: selectedRangeDate.startDate,
-                endDate: selectedRangeDate.endDate,
-                firstMetric: activeMetrics[0] ? activeMetrics[0].key : null,
-                secondMetric: activeMetrics[1] ? activeMetrics[1].key : null,
-                productId: selectedProduct,
-                onlyOptimization: onlyOptimization,
-            })
-                .then(res => {
-                    updateChartData(res)
+                updateChartData(res.response)
+                switchFetch(false)
+                setFetchingError(false)
+            } catch (e) {
+                if (e.message !== undefined) {
+                    setFetchingError(true)
                     switchFetch(false)
-                    setFetchingError(false)
-                })
-                .catch((error) => {
-                    if (error.message !== undefined) {
-                        setFetchingError(true)
-                        switchFetch(false)
-                    }
-                })
+                }
+            }
+
         } else {
             updateChartData([])
         }

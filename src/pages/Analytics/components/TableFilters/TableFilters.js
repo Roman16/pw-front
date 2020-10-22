@@ -99,9 +99,10 @@ const TableFilters = ({columns, filters = []}) => {
                             setVisibleFilterPopover(false)
                         }}
                     />}
+                    getPopupContainer={(node) => node.parentNode}
                     destroyTooltipOnHide={true}
                     placement="bottomLeft"
-                    overlayClassName={'filter-popover'}
+                    overlayClassName={'filter-popover analytics-filter-popover'}
                     trigger="click"
                     visible={visibleFilterPopover}
                 >
@@ -127,9 +128,10 @@ const TableFilters = ({columns, filters = []}) => {
                                 addFilterHandler(filter)
                             }}
                         />}
+                        getPopupContainer={(node) => node.parentNode}
                         destroyTooltipOnHide={true}
                         placement="bottomLeft"
-                        overlayClassName={'filter-popover'}
+                        overlayClassName={'filter-popover analytics-filter-popover'}
                         trigger="click"
                         visible={indexSelectedFilter === index}
                     >
