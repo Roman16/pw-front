@@ -73,7 +73,7 @@ export const adSpendColumn = {
     title: 'Ad Spend',
     dataIndex: 'cost',
     key: 'cost',
-    minWidth: '90px',
+    minWidth: '130px',
     sorter: true,
     filter: true,
     ...renderNumberField('currency')
@@ -93,7 +93,7 @@ export const adSalesColumn = {
     title: 'Ad Sales',
     dataIndex: 'attributedSales30d',
     key: 'attributedSales30d',
-    minWidth: '100px',
+    minWidth: '130px',
     sorter: true,
     filter: true,
     ...renderNumberField('currency')
@@ -133,7 +133,7 @@ export const adOrdersColumn = {
     title: 'Ad Orders',
     dataIndex: 'attributedConversions30d',
     key: 'attributedConversions30d',
-    minWidth: '100px',
+    minWidth: '130px',
     sorter: true,
     filter: true,
     ...renderNumberField()
@@ -143,7 +143,7 @@ export const adUnitsColumn = {
     title: 'Ad Units',
     dataIndex: 'attributedUnitsOrdered30d',
     key: 'attributedUnitsOrdered30d',
-    minWidth: '100px',
+    minWidth: '130px',
     sorter: true,
     filter: true,
     ...renderNumberField()

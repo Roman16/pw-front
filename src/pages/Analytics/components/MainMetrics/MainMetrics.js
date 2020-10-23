@@ -73,7 +73,10 @@ const MainMetrics = () => {
                 endDate: selectedRangeDate.endDate
             })
 
-            setMetricsData(res)
+            setMetricsData(Object.keys(res.response).map(item => ({
+                key: item,
+                ...res.response[item]
+            })))
         } catch (e) {
             console.log(e)
         }

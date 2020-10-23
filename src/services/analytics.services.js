@@ -198,7 +198,7 @@ function fetchMetricsData({startDate, endDate}) {
 }
 
 function fetchChartData(location, metrics, date) {
-    return api('get', `${analyticsUrls.chartData(location)}?${metrics.map(item => `metric[]=${item.key}`).join('&')}`)
+    return api('get', `${analyticsUrls.chartData(location)}?${metrics.filter(item => !!item.key).map(item => `metric[]=${item.key}`).join('&')}`)
 }
 
 function getCampaignInformation(id) {

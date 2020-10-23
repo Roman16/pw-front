@@ -125,7 +125,7 @@ export const analyticsUrls = {
     targetingsList: 'analytics/targetings',
     negativeTargetingsList: 'analytics/negative-targetings',
     productAdsList: 'analytics/product-ads',
-    metricsData: 'ppc-automation/dashboard/metrics/list',
+    metricsData: 'analytics/campaigns/metrics',
     chartData: location => `analytics/${location}/charts`,
     campaignInformation: id => `analytics/campaigns/${id}/details`,
 }
