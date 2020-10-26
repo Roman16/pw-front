@@ -1,7 +1,7 @@
 import {analyticsConstants} from '../constans/actions.type'
 import moment from "moment"
 import _ from 'lodash'
-import {metricsListArray} from "../constans/metricsList"
+import {analyticsMetricsListArray} from "../pages/Analytics/components/MainMetrics/metricsList"
 
 const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState') && JSON.parse(localStorage.getItem('analyticsMetricsState')),
     columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
@@ -21,7 +21,7 @@ const workplacesList = {
 }
 
 
-export const metricsWithoutOrganic = metricsListArray.filter(
+export const metricsWithoutOrganic = analyticsMetricsListArray.filter(
     metric => metric.key !== 'total_orders' &&
         metric.key !== 'total_orders_pure' &&
         metric.key !== 'organic_orders' &&
@@ -46,7 +46,7 @@ const initialState = {
         portfolioId: undefined,
     },
     metricsState: metricsStateFromLocalStorage ? metricsStateFromLocalStorage : _.mapValues(workplacesList, (value, key) => {
-        const allAvailableMetrics = key === 'targetings' ? [...metricsForTargetingsPanel] : key === 'products' ? [...metricsListArray] : [...metricsWithoutOrganic]
+        const allAvailableMetrics = key === 'targetings' ? [...metricsForTargetingsPanel] : key === 'products' ? [...analyticsMetricsListArray] : [...metricsWithoutOrganic]
 
         return ({
             allMetrics: allAvailableMetrics,

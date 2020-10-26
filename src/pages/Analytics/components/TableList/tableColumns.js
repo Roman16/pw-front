@@ -53,7 +53,7 @@ export const clicksColumn = {
     title: 'Clicks',
     dataIndex: 'clicks',
     key: 'clicks',
-    minWidth: '80px',
+    minWidth: '90px',
     sorter: true,
     filter: true,
     ...renderNumberField()
@@ -63,7 +63,7 @@ export const ctrColumn = {
     title: 'CTR',
     dataIndex: 'ctr',
     key: 'ctr',
-    minWidth: '80px',
+    minWidth: '90px',
     sorter: true,
     filter: true,
     ...renderNumberField('percent')
@@ -83,7 +83,7 @@ export const cpcColumn = {
     title: 'CPC',
     dataIndex: 'cpc',
     key: 'cpc',
-    minWidth: '80px',
+    minWidth: '90px',
     sorter: true,
     filter: true,
     ...renderNumberField('currency')
@@ -113,7 +113,7 @@ export const adCvrColumn = {
     title: 'Ad CVR',
     dataIndex: 'conversion_rate',
     key: 'conversion_rate',
-    minWidth: '90px',
+    minWidth: '120px',
     sorter: true,
     filter: true,
     ...renderNumberField('percent')

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {dashboardActions} from "../../../../actions/dashboard.actions"
-import {metricsListArray} from "../../../../constans/metricsList"
-import MetricItem from "../../../PPCAutomate/Dashboard/Metrics/MetricItem"
+import {analyticsMetricsListArray} from "./metricsList"
+import MetricItem from "./MetricItem"
 import AddMetric from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetric"
 import './MainMetrics.less'
 import {SVG} from "../../../../utils/icons"
@@ -25,7 +25,6 @@ const MainMetrics = () => {
     const allMetrics = metricsState.allMetrics,
         selectedMetrics = metricsState.selectedMetrics,
         activeMetrics = metricsState.activeMetrics
-
 
     const [visibleItems, updateVisibleList] = useState(selectedMetrics)
     const [hiddenItems, updateHiddenList] = useState(allMetrics.filter(metric => !selectedMetrics.find(i => i.key === metric.key)))
@@ -74,8 +73,10 @@ const MainMetrics = () => {
             })
 
             setMetricsData(Object.keys(res.response).map(item => ({
-                key: item,
-                ...res.response[item]
+                metric_key: item,
+                metric_diff: res.response[item].value_diff,
+                metric_value: res.response[item].value,
+                metric_prev_value: res.response[item].value_prev
             })))
         } catch (e) {
             console.log(e)
@@ -122,7 +123,7 @@ const MainMetrics = () => {
     return (
         <div className="main-metrics metrics-block">
             {selectedMetrics.length > 0 && selectedMetrics.map(selected => {
-                    if (metricsListArray.find(item => item.key === selected.key)) {
+                    if (analyticsMetricsListArray.find(item => item.key === selected.key)) {
                         return (
                             <MetricItem
                                 key={selected.key}

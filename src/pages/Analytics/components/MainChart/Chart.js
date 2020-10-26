@@ -1,7 +1,6 @@
-import React, {Fragment, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     LineChart,
-    ComposedChart,
     Line,
     XAxis,
     YAxis,
@@ -9,7 +8,6 @@ import {
     Tooltip,
     ResponsiveContainer,
     ReferenceLine,
-
     ReferenceArea,
 } from 'recharts'
 import ChartTooltip from "./ChartTooltip"
@@ -66,11 +64,20 @@ const Chart = ({
         //     }
         // }))
 
-        if(data) {
-            setChartData(data.map(item => ({
-                ...item,
-                eventDate: `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`
-            })))
+        if (data) {
+            setChartData(data.map(item => {
+                activeMetrics.forEach(metric => {
+                    item[metric.key] = +item[metric.key]
+                    item[`${metric.key}_7d`] = +item[`${metric.key}_7d`]
+
+                })
+
+                return ({
+                    ...item,
+                    eventDate: `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`
+                })
+
+            }))
         }
     }, [data])
 
@@ -180,11 +187,12 @@ const Chart = ({
                     {/*---------------------------general line-----------------------*/}
                     {/*--------------------------------------------------------------*/}
 
+                    {/*---------------------------7-day line-----------------------*/}
                     {activeMetrics && activeMetrics.map((metric, index) => (
-                        showWeekChart && <Line
+                        <Line
                             yAxisId={`YAxis-${index}`}
                             type="monotone"
-                            dataKey={`${metric.key}_7d`}
+                            dataKey={`${activeMetrics[index].key}_7d`}
                             stroke={chartColors[index]}
                             strokeWidth={3}
                             dot={false}
@@ -195,6 +203,7 @@ const Chart = ({
                         />
                     ))}
 
+                    {/*---------------------------daily line-----------------------*/}
                     {activeMetrics && activeMetrics.map((metric, index) => (
                         showDailyChart && <Line
                             yAxisId={`YAxis-${index}`}

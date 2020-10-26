@@ -20,6 +20,7 @@ const Marketing = React.lazy(() => import('./ZeroToHero/Marketing/Marketing'))
 const CreatingCampaign = React.lazy(() => import('./ZeroToHero/CreatingCampaign/CreatingCampaign'))
 const Settings = React.lazy(() => import('./ZeroToHero/Settings/Settings'))
 const Optimization = React.lazy(() => import('./PPCAutomate/Optimization/Optimization'))
+const OptimizationFormAdmin = React.lazy(() => import('./PPCAutomate/OptimizationForAdmin/OptimizationForAdmin'))
 const Report = React.lazy(() => import('./PPCAutomate/Report/Report'))
 const ProductSettings = React.lazy(() => import('./PPCAutomate/ProductSettings/ProductSettings'))
 const Dashboard = React.lazy(() => import('./PPCAutomate/Dashboard/Dashboard'))
@@ -58,6 +59,7 @@ function throttle(func, delay) {
 }
 
 const developer = process.env.REACT_APP_ENV === "developer"
+const isSuperAdmin = !!localStorage.getItem('adminToken')
 
 
 const AdminRoute = (props) => {
@@ -166,7 +168,11 @@ const AuthorizedUser = (props) => {
                                             if (bootstrapInProgress) {
                                                 return (<Redirect to={'/ppc/optimization-loading'}/>)
                                             } else {
-                                                return (<Optimization/>)
+                                                if(!!localStorage.getItem('adminToken')) {
+                                                    return (<OptimizationFormAdmin/>)
+                                                } else {
+                                                    return (<Optimization/>)
+                                                }
                                             }
                                         }}
                                     />
