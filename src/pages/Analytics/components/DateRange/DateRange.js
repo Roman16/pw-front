@@ -12,13 +12,13 @@ const DateRange = () => {
 
 
     const changeDateHandler = (startDate, endDate) => {
-        dispatch(analyticsActions.setDateRange({startDate, endDate}))
+        dispatch(analyticsActions.setDateRange({startDate: startDate || 'lifetime', endDate: endDate || 'lifetime'}))
     }
 
     return (
         <DatePicker
             timeRange={changeDateHandler}
-            // value={selectedDate.startDate === 'lifetime' ? null : [moment(selectedDate.startDate), moment(selectedDate.endDate)]}
+            placeholder={'lifetime'}
             defaultValue={selectedDate.startDate === 'lifetime' ? null : [moment(selectedDate.startDate), moment(selectedDate.endDate)]}
         />
     )

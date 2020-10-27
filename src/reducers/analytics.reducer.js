@@ -14,7 +14,7 @@ const workplacesList = {
     'portfolios': [],
     'campaigns': [],
     'placements': [],
-    'adGroups': [],
+    'ad-groups': [],
     'targetings': [],
     'negativeTargetings': [],
     'productAds': []
@@ -44,6 +44,7 @@ const initialState = {
         productId: undefined,
         adGroupId: undefined,
         portfolioId: undefined,
+        name: {}
     },
     metricsState: metricsStateFromLocalStorage ? metricsStateFromLocalStorage : _.mapValues(workplacesList, (value, key) => {
         const allAvailableMetrics = key === 'targetings' ? [...metricsForTargetingsPanel] : key === 'products' ? [...analyticsMetricsListArray] : [...metricsWithoutOrganic]

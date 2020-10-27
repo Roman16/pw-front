@@ -163,7 +163,7 @@ export const salesShareColumn = {
     title: 'Sales Share',
     dataIndex: 'sales_share',
     key: 'sales_share',
-    width: '130px',
+    minWidth: '130px',
     sorter: true,
     filter: true,
     ...renderNumberField('percent')
@@ -173,7 +173,7 @@ export const budgetAllocationColumn = {
     title: 'Budget Allocation',
     dataIndex: 'budget_allocation',
     key: 'budget_allocation',
-    width: '170px',
+    minWidth: '170px',
     sorter: true,
     filter: true,
     ...renderNumberField('percent')
@@ -183,7 +183,7 @@ export const adProfitColumn = {
     title: 'Ad Profit',
     dataIndex: 'ad_profit',
     key: 'ad_profit',
-    width: '100px',
+    minWidth: '100px',
     sorter: true,
     filter: true,
     ...renderNumberField('currency')
@@ -191,11 +191,10 @@ export const adProfitColumn = {
 
 export const campaignColumn = {
     title: 'Campaign',
-    dataIndex: 'campaign',
-    key: 'campaign',
-    minWidth: '200px',
+    dataIndex: 'campaignName',
+    key: 'campaignName',
+    width: '200px',
     sorter: true,
-    render: (campaign, item) => (<Link to={`/analytics/ad-groups?campaignId=${item.id}`}>{campaign}</Link>)
 }
 
 export const adGroupColumn = {

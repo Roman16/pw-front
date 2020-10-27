@@ -189,7 +189,7 @@ const Chart = ({
 
                     {/*---------------------------7-day line-----------------------*/}
                     {activeMetrics && activeMetrics.map((metric, index) => (
-                        <Line
+                        showWeekChart && <Line
                             yAxisId={`YAxis-${index}`}
                             type="monotone"
                             dataKey={`${activeMetrics[index].key}_7d`}

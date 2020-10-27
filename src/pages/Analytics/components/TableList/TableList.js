@@ -28,12 +28,13 @@ const TableList = ({
         }),
         [sorterColumn, setSorterColumn] = useState()
 
-    const {metricsValue, locationKey, mainState, selectedRangeDate} = useSelector(state => ({
-        metricsValue: state.dashboard.allMetrics,
+    const {locationKey, mainState, selectedRangeDate} = useSelector(state => ({
         locationKey: state.analytics.location,
         mainState: state.analytics.mainState,
         selectedRangeDate: state.analytics.selectedRangeDate,
     }))
+
+    const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[locationKey])
 
     const columnsBlackList = useSelector(state => state.analytics.columnsBlackList[locationKey] || [])
     const filters = useSelector(state => state.analytics.filters[locationKey] || [])
@@ -79,7 +80,6 @@ const TableList = ({
         setFetchingStatus(true)
 
         try {
-
             const filtersWithState = [
                 ...filters,
                 ...Object.keys(mainState).map(key => ({
@@ -95,8 +95,10 @@ const TableList = ({
             ]
 
 
-            const res = await analyticsServices[`fetch${locationKey.capitalize()}List`](paginationParams, sorterColumn, filtersWithState)
-            setTableData(res.response)
+            const res = await analyticsServices.fetchTableData(locationKey,paginationParams, sorterColumn, filtersWithState)
+            if(res.response) {
+                setTableData(res.response)
+            }
 
             setPaginationParams({
                 ...paginationParams,
@@ -134,7 +136,7 @@ const TableList = ({
                 loading={fetchingStatus}
                 dataSource={tableData}
                 totalDataSource={{
-                    ..._.chain(metricsValue)
+                    ..._.chain(metricsState.allMetrics)
                         .keyBy('key')
                         .mapValues('metric_value')
                         .value(),

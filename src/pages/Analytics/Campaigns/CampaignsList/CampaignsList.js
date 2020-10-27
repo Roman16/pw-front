@@ -46,7 +46,7 @@ const CampaignsList = () => {
             search: true,
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
-                onClick={() => setStateHandler('adGroups', {name: item.name, campaignId: item.campaignId})}
+                onClick={() => setStateHandler('ad-groups', {name: {campaignName: item.name}, campaignId: item.campaignId})}
                 title={campaign}
             >
                 {campaign}
@@ -129,7 +129,7 @@ const CampaignsList = () => {
                 {text === 'legacyForSales' && 'Legacy For Sales'}
                 {text === 'autoForSales' && 'Auto For Sales'}
                 {text === 'manual' && 'Manual'}
-                {(text !== 'manual' && text !== 'autoForSales' && text !== 'autoForSales') && text}
+                {(text !== 'manual' && text !== 'autoForSales' && text !== 'legacyForSales') && text}
             </>
         },
         impressionsColumn,

@@ -117,15 +117,16 @@ export const zthUrls = {
 }
 
 export const analyticsUrls = {
-    adGroupsList: 'analytics/ad-group',
+    tableData: location => `analytics/${location}`,
+    campaignsTableList: 'analytics/campaigns',
+
     productsList: 'analytics/products',
-    campaignsList: 'analytics/campaigns',
     placementsList: 'analytics/placements',
     portfolioList: 'analytics/portfolio',
     targetingsList: 'analytics/targetings',
     negativeTargetingsList: 'analytics/negative-targetings',
     productAdsList: 'analytics/product-ads',
-    metricsData: 'analytics/campaigns/metrics',
+    metricsData: location =>  `analytics/${location}/metrics`,
     chartData: location => `analytics/${location}/charts`,
-    campaignInformation: id => `analytics/campaigns/${id}/details`,
+    campaignInformation: (state, id) => `analytics/${state}/${id}/details`,
 }

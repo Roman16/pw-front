@@ -54,7 +54,7 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                     </div>
 
                     {activeMetrics.map((metric, index) => (
-                        <div className="week-value" style={{color: chartColors[index]}}>
+                        metric.key && <div className="week-value" style={{color: chartColors[index]}}>
                             <i style={{fill: chartColors[index]}}><SVG id='chart-tooltip-line'/></i>
                             {payload[0] && getChartValue(payload[0].payload, `${metric.key}_7d`, metric)}
                         </div>
@@ -67,7 +67,7 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                     </div>
 
                     {activeMetrics.map((metric, index) => (
-                        <div className="daily-value" style={{color: chartColors[index]}}>
+                        metric.key &&  <div className="daily-value" style={{color: chartColors[index]}}>
                             <i style={{fill: chartColors[index], stroke: chartColors[index]}}>
                                 <SVG id='chart-tooltip-daily'/>
                             </i>

@@ -156,7 +156,7 @@ const RenderMetricValue = ({value, type}) => {
         if (type === 'currency') {
             return (`$${Math.round(value).toString().length > 4 ? numberMask(value) : numberMask(value, 2)}`)
         } else if (type === 'percent') {
-            return (`${numberMask(value, 2)}%`)
+            return (`${numberMask(value * 100, 2)}%`)
         } else if (type === 'number') {
             return (numberMask(value))
         } else if (type === 'roas') {

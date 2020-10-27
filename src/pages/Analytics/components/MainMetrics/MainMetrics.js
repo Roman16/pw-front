@@ -69,8 +69,10 @@ const MainMetrics = () => {
         try {
             const res = await analyticsServices.fetchMetricsData({
                 startDate: selectedRangeDate.startDate,
-                endDate: selectedRangeDate.endDate
+                endDate: selectedRangeDate.endDate,
+                locationKey: location
             })
+
 
             setMetricsData(Object.keys(res.response).map(item => ({
                 metric_key: item,
@@ -78,6 +80,16 @@ const MainMetrics = () => {
                 metric_value: res.response[item].value,
                 metric_prev_value: res.response[item].value_prev
             })))
+
+            updateMetricsState({
+                allMetrics: allMetrics.map(metric => ({
+                    ...metric,
+                    metric_key: metric.key,
+                    metric_diff: res.response[metric.key].value_diff,
+                    metric_value: res.response[metric.key].value,
+                    metric_prev_value: res.response[metric.key].value_prev
+                }))
+            })
         } catch (e) {
             console.log(e)
         }
