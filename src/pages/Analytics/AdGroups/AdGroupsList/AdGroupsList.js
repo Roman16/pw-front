@@ -48,7 +48,7 @@ const AdGroupsList = () => {
             render: (adGroup, item) => (
                 <Link
                     to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
-                    onClick={() => setStateHandler('ad-groups', {
+                    onClick={() => setStateHandler('products', {
                         name: {
                             campaignName: item.campaignName,
                             adGroupName: item.name
