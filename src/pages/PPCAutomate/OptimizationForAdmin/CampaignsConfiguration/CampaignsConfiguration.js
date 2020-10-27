@@ -96,7 +96,7 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             title: 'Optimize',
             dataIndex: 'dont_optimize',
             key: 'dont_optimize',
-            width: '100px',
+            width: '120px',
             render: (dont_optimize, item, index) => {
                 return (
                     <Checkbox
@@ -125,7 +125,7 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             title: 'Min Bid',
             dataIndex: 'min_bid',
             key: 'min_bid',
-            width: '100px',
+            width: '130px',
             render: (min_bid, item, index) => {
                 return (
                     <InputCurrency
@@ -140,7 +140,7 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             title: 'Max Bid',
             dataIndex: 'max_bid',
             key: 'max_bid',
-            width: '100px',
+            width: '130px',
             render: (max_bid, item, index) => {
                 return (
                     <InputCurrency
@@ -155,7 +155,7 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             title: 'Custom Optimization Parts',
             dataIndex: 'optimization_parts',
             key: 'optimization_parts',
-            width: '240px',
+            width: '260px',
             render: (optimization_parts, item, index) => {
                 return (
                     <>

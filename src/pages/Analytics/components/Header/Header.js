@@ -24,16 +24,16 @@ const Header = ({location}) => {
 
     const getStateInformation = async () => {
         try {
-            Object.keys(mainState).filter(item => item !== 'name').forEach((key) => {
-                analyticsServices.fetchStateInformation(key, mainState.campaignId)
-                    .then(res => {
-                        setStateName({
-                            ...stateName,
-                            [`${key.split('Id')[0]}Name`]: res.response.name
-                        })
-                    })
+            const idArr = Object.keys(mainState).filter(item => item !== 'name')
+            const res = await Promise.all(idArr.map((key) => analyticsServices.fetchStateInformation(key, mainState[key])))
+
+            let stateNameValue = {}
+
+            idArr.forEach((key, index) => {
+                stateNameValue[`${key.split('Id')[0]}Name`] = res[index].response.name
             })
 
+            setStateName(stateNameValue)
         } catch (e) {
             console.log(e)
         }
@@ -54,7 +54,9 @@ const Header = ({location}) => {
             getStateInformation()
         }
     }, [mainState])
-    
+
+    console.log(stateName)
+
     const StepsRender = () => {
         if (mainState.adGroupId && mainState.campaignId) {
             return (<>

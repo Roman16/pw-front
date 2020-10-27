@@ -4,6 +4,7 @@ import {productsServices} from "../../../services/products.services"
 import {useSelector} from "react-redux"
 import OptimizationVariations from "./OptimizationVariations/OptimizationVariations"
 import CampaignsConfiguration from "./CampaignsConfiguration/CampaignsConfiguration"
+import OptimizationSettings from "./OptimizationSettings/OptimizationSettings"
 
 const OptimizationForAdmin = () => {
     const [productInformation, setProductInformation] = useState({})
@@ -35,6 +36,10 @@ const OptimizationForAdmin = () => {
             <OptimizationVariations
                 product={productInformation}
                 updateOptimizationOptions={() => {}}
+            />
+
+            <OptimizationSettings
+                product={productInformation}
             />
 
             <CampaignsConfiguration

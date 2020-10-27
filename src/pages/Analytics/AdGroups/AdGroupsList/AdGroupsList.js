@@ -52,7 +52,7 @@ const AdGroupsList = () => {
                         name: {
                             campaignName: item.campaignName,
                             adGroupName: item.name
-                        }, campaignId: item.campaignId, adGroupId: item.id
+                        }, campaignId: item.campaignId, adGroupId: item.adGroupId
                     })}
                 >
                     {adGroup}
