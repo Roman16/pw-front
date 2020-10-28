@@ -69,7 +69,9 @@ const AdGroupsList = () => {
                     name: {campaignName: item.campaignName},
                     campaignId: item.campaignId
                 })}
-            >{campaign}</Link>)
+            >
+                {campaign}
+            </Link>)
         }],
         {...statusColumn, locked: true},
         {
@@ -80,6 +82,7 @@ const AdGroupsList = () => {
             sorter: true,
             locked: true,
             noTotal: true,
+            filter: true,
             render: (bid) => <InputCurrency value={bid} disabled/>
         },
         {

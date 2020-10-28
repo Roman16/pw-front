@@ -72,7 +72,9 @@ const OptimizationVariations = ({product, updateOptimizationOptions, selectedAll
 
     return (
         <section className='optimization-variations'>
-            <h2>What do you want to optimize?</h2>
+            <div className="section-header">
+                <h2>What do you want to optimize?</h2>
+            </div>
 
             <Checkbox.Group options={optimizationOptions} onChange={onChange} value={activeParams}/>
         </section>

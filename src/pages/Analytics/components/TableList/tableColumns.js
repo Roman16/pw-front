@@ -195,6 +195,7 @@ export const campaignColumn = {
     key: 'campaignName',
     width: '200px',
     sorter: true,
+    filter: true,
 }
 
 export const adGroupColumn = {

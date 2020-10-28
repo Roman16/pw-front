@@ -67,6 +67,8 @@ const columnTitle = {
     'attributedUnitsOrdered30d': 'Ad Units',
     'attributedSales30d': 'Ad Sales',
     'bidding_strategy': 'Campaign bidding strategy',
+    'campaignName': 'Campaign',
+    'defaultBid': 'Default bid',
 }
 
 
@@ -77,7 +79,7 @@ export const FilterItem = ({filter}) => {
                 {`${filter.value.startDate === 'lifetime' ? 'lifetime' : moment(filter.value.startDate).format('MMM DD, YYYY')} - ${filter.value.endDate === 'lifetime' ? 'lifetime' : moment(filter.value.endDate).format('MMM DD, YYYY')}`}
             </>
         )
-    } else if (filter.filterBy === 'object' || filter.filterBy === 'keyword_pt' || filter.filterBy === 'portfolioName' || filter.filterBy === 'campaign_name' || filter.filterBy === 'ad_group_name') {
+    } else if (filter.filterBy === 'object' || filter.filterBy === 'campaignName' || filter.filterBy === 'keyword_pt' || filter.filterBy === 'portfolioName' || filter.filterBy === 'campaign_name' || filter.filterBy === 'ad_group_name') {
         return (
             <>
                 {`${columnTitle[filter.filterBy]} ${filter.type.key}: ${filter.value}`}
@@ -105,6 +107,7 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'attributedSales30d' ||
         filter.filterBy === 'budget_allocation' ||
         filter.filterBy === 'dailyBudget' ||
+        filter.filterBy === 'defaultBid' ||
         filter.filterBy === 'ordered_quantity' ||
         filter.filterBy === 'profit') {
         return (

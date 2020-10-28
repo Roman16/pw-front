@@ -8,10 +8,14 @@ import {analyticsServices} from "../../../../services/analytics.services"
 import TableFilters from "../TableFilters/TableFilters"
 import DateRange from "../DateRange/DateRange"
 import ColumnsSelect from "../ColumnsSelect/ColumnsSelect"
+import axios from "axios"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
 }
+
+const CancelToken = axios.CancelToken
+let source = null
 
 const TableList = ({
                        columns,
@@ -79,6 +83,9 @@ const TableList = ({
 
         setFetchingStatus(true)
 
+        source && source.cancel()
+        source = CancelToken.source()
+
         try {
             const filtersWithState = [
                 ...filters,
@@ -95,7 +102,7 @@ const TableList = ({
             ]
 
 
-            const res = await analyticsServices.fetchTableData(locationKey,paginationParams, sorterColumn, filtersWithState)
+            const res = await analyticsServices.fetchTableData(locationKey,paginationParams, sorterColumn, filtersWithState, source.token)
             if(res.response) {
                 setTableData(res.response)
             }

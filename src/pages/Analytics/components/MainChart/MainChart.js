@@ -4,9 +4,14 @@ import '../../../PPCAutomate/Dashboard/MainChart/MainChart.less'
 import ChartHeader from "./ChartHeader"
 import Chart from "./Chart"
 import {dashboardServices} from "../../../../services/dashboard.services"
-import { useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 import {Spin} from "antd"
 import {analyticsServices} from "../../../../services/analytics.services"
+import axios from "axios"
+
+
+const CancelToken = axios.CancelToken
+let source = null
 
 const MainChart = () => {
     const [chartData, updateChartData] = useState([])
@@ -17,11 +22,15 @@ const MainChart = () => {
 
     const location = useSelector(state => state.analytics.location)
 
-    const {selectedRangeDate, metricsState, chartState} = useSelector(state => ({
+    const {selectedRangeDate, metricsState, chartState, filters, mainState} = useSelector(state => ({
         selectedRangeDate: state.analytics.selectedRangeDate,
         metricsState: state.analytics.metricsState && state.analytics.metricsState[location],
-        chartState: state.analytics.chartState[location]
+        chartState: state.analytics.chartState[location],
+        filters: state.analytics.filters[location] || [],
+        mainState: state.analytics.mainState,
+
     }))
+
 
     const allMetrics = metricsState.allMetrics,
         selectedMetrics = allMetrics.selectedMetrics,
@@ -29,12 +38,29 @@ const MainChart = () => {
 
 
     const getChartData = async () => {
-        if (activeMetrics.length > 0) {
+        if (activeMetrics.filter(metric => !!metric.key).length > 0) {
             switchFetch(true)
             setFetchingError(false)
 
+            source && source.cancel()
+            source = CancelToken.source()
+
             try {
-                const res = await analyticsServices.fetchChartData(location, activeMetrics, selectedRangeDate)
+                const filtersWithState = [
+                    ...filters,
+                    ...Object.keys(mainState).map(key => ({
+                        filterBy: key,
+                        type: 'eq',
+                        value: mainState[key]
+                    })).filter(item => !!item.value),
+                    {
+                        filterBy: 'datetime',
+                        type: 'range',
+                        value: selectedRangeDate
+                    },
+                ]
+
+                const res = await analyticsServices.fetchChartData(location, activeMetrics, selectedRangeDate, filtersWithState, source.token)
 
                 updateChartData(res.response)
                 switchFetch(false)
@@ -54,7 +80,7 @@ const MainChart = () => {
 
     useEffect(() => {
         getChartData()
-    }, [selectedRangeDate, metricsState])
+    }, [selectedRangeDate, metricsState.activeMetrics, filters, mainState])
 
     return <section className={'main-chart'}>
         <ChartHeader

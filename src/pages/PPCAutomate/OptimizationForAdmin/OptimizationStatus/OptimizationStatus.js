@@ -20,7 +20,7 @@ const OptimizationStatus = ({product: {status = '', created_at, today_changes, o
 
                 <div>
                     <h5>Total Changes</h5>
-                    <h4>{status === 'RUNNING' && today_changes}</h4>
+                    <h4>{today_changes !== null ? today_changes : <hr/>}</h4>
                 </div>
             </li>
 
@@ -38,7 +38,8 @@ const OptimizationStatus = ({product: {status = '', created_at, today_changes, o
 
                 <div>
                     <h5>Start Date</h5>
-                    <h4>{status === 'RUNNING' && created_at ? moment(created_at).format('DD.MM.YYYY') : undefined}</h4>
+                    <h4>{status === 'RUNNING' ? created_at ? moment(created_at).format('DD.MM.YYYY') : undefined :
+                        <hr/>}</h4>
                 </div>
             </li>
 
@@ -47,7 +48,8 @@ const OptimizationStatus = ({product: {status = '', created_at, today_changes, o
 
                 <div>
                     <h5>Last Updated Date</h5>
-                    <h4>{status === 'RUNNING' && settings_last_updated_at ? moment(settings_last_updated_at).format('DD.MM.YYYY') : undefined}</h4>
+                    <h4>{status === 'RUNNING' ? settings_last_updated_at ? moment(settings_last_updated_at).format('DD.MM.YYYY') : undefined :
+                        <hr/>}</h4>
                 </div>
             </li>
 
@@ -56,7 +58,7 @@ const OptimizationStatus = ({product: {status = '', created_at, today_changes, o
 
                 <div>
                     <h5>Today Changes</h5>
-                    <h4>{status === 'RUNNING' && today_changes}</h4>
+                    <h4>{status === 'RUNNING' ? today_changes : <hr/>}</h4>
                 </div>
             </li>
             <li>
@@ -64,7 +66,7 @@ const OptimizationStatus = ({product: {status = '', created_at, today_changes, o
 
                 <div>
                     <h5>Current Strategy</h5>
-                    <h4>{status === 'RUNNING' ? strategies[optimization_strategy] : undefined}</h4>
+                    <h4>{strategies[optimization_strategy] || <hr/>}</h4>
                 </div>
             </li>
         </ul>
