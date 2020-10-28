@@ -213,7 +213,7 @@ function sendContacts(data) {
 }
 
 function sendContactForm(data) {
-    return api('post', `${userUrls.contactForm}`, data);
+    return api('post', `${userUrls.contactForm}`, {...data, page_url: window.location.href});
 }
 
 function sendFormToPartnerSupport(data) {
