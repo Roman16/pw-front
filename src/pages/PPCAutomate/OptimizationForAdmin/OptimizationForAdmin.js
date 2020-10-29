@@ -37,6 +37,14 @@ const OptimizationForAdmin = () => {
         }
     }
 
+    const updateProductInformationHandler = (name, value) => {
+        setProductInformation({
+            ...productInformation,
+            [name]: value
+        })
+
+    }
+
     useEffect(() => {
         if (productId) getProductInformation()
     }, [productId])
@@ -51,6 +59,7 @@ const OptimizationForAdmin = () => {
             <OptimizationSettings
                 product={productInformation}
                 ifDisabled={productInformation.optimization_strategy == null}
+                onUpdateField={updateProductInformationHandler}
             />
 
             <OptimizationVariations

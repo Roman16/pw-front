@@ -35,7 +35,7 @@ const strategies = [
 ]
 
 
-const OptimizationSettings = ({product, ifDisabled}) => {
+const OptimizationSettings = ({product, ifDisabled, onUpdateField}) => {
     console.log(product)
 
     return (
@@ -51,7 +51,7 @@ const OptimizationSettings = ({product, ifDisabled}) => {
                         <a>Read more</a>
                     </div>
 
-                    <CustomSelect value={product.optimization_strategy}>
+                    <CustomSelect value={product.optimization_strategy} onChange={(value) => onUpdateField('optimization_strategy', value)}>
                         <Option value={null}>Choose Strategy</Option>
                         {strategies.map(item => (
                             <Option value={item.key}>{item.name}</Option>
