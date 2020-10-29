@@ -6,6 +6,11 @@ import OptimizationVariations from "./OptimizationVariations/OptimizationVariati
 import CampaignsConfiguration from "./CampaignsConfiguration/CampaignsConfiguration"
 import OptimizationSettings from "./OptimizationSettings/OptimizationSettings"
 import SaveChanges from "./SaveChanges/SaveChanges"
+import axios from "axios"
+
+
+const CancelToken = axios.CancelToken
+let source = null
 
 const OptimizationForAdmin = () => {
     const [productInformation, setProductInformation] = useState({})
@@ -16,9 +21,17 @@ const OptimizationForAdmin = () => {
 
 
     const getProductInformation = async () => {
+        source && source.cancel()
+        source = CancelToken.source()
+
         try {
-            const res = await productsServices.getProductDetails(productId)
+            const res = await productsServices.getProductDetails(productId, source.token)
+            if (res.status === 'STOPPED') {
+                res.optimization_strategy = null
+            }
+
             setProductInformation(res)
+
         } catch (e) {
             console.log(e)
         }
@@ -29,18 +42,21 @@ const OptimizationForAdmin = () => {
     }, [productId])
 
     return (
-        <div className="optimization-for-admin-page">
+        <div
+            className={`optimization-for-admin-page ${productInformation.optimization_strategy == null ? 'disabled' : ''}`}>
             <OptimizationStatus
                 product={productInformation}
             />
 
             <OptimizationSettings
                 product={productInformation}
+                ifDisabled={productInformation.optimization_strategy == null}
             />
 
             <OptimizationVariations
                 product={productInformation}
-                updateOptimizationOptions={() => {}}
+                updateOptimizationOptions={() => {
+                }}
             />
 
             <CampaignsConfiguration

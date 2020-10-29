@@ -55,6 +55,7 @@ const columnTitle = {
     'acos': 'ACoS',
     'keyword_id': 'Keyword ID',
     'profit': 'Ad Profit',
+    'ad_profit': 'Ad Profit',
     'cost': 'Ad Spend',
     'ctr': 'CTR',
     'portfolioName': 'Portfolio',
@@ -66,6 +67,7 @@ const columnTitle = {
     'budget_allocation': 'Budget Allocation',
     'attributedUnitsOrdered30d': 'Ad Units',
     'attributedSales30d': 'Ad Sales',
+    'attributedConversions30d': 'Ad Orders',
     'bidding_strategy': 'Campaign bidding strategy',
     'campaignName': 'Campaign',
     'defaultBid': 'Default bid',
@@ -104,11 +106,13 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'ctr' ||
         filter.filterBy === 'conversion_rate' ||
         filter.filterBy === 'attributedUnitsOrdered30d' ||
+        filter.filterBy === 'attributedConversions30d' ||
         filter.filterBy === 'attributedSales30d' ||
         filter.filterBy === 'budget_allocation' ||
         filter.filterBy === 'dailyBudget' ||
         filter.filterBy === 'defaultBid' ||
         filter.filterBy === 'ordered_quantity' ||
+        filter.filterBy === 'ad_profit' ||
         filter.filterBy === 'profit') {
         return (
             <>

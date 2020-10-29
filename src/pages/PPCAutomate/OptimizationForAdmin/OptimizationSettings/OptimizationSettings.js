@@ -35,7 +35,7 @@ const strategies = [
 ]
 
 
-const OptimizationSettings = ({product}) => {
+const OptimizationSettings = ({product, ifDisabled}) => {
     console.log(product)
 
     return (
@@ -52,6 +52,7 @@ const OptimizationSettings = ({product}) => {
                     </div>
 
                     <CustomSelect value={product.optimization_strategy}>
+                        <Option value={null}>Choose Strategy</Option>
                         {strategies.map(item => (
                             <Option value={item.key}>{item.name}</Option>
                         ))}
@@ -61,7 +62,10 @@ const OptimizationSettings = ({product}) => {
                 <div className="form-group">
                     <div className="label">Min Bid (Manual Campaign)</div>
 
-                    <InputCurrency value={product.min_manual_bid}/>
+                    <InputCurrency
+                        disabled={ifDisabled}
+                        value={product.min_manual_bid}
+                    />
                 </div>
             </div>
 
@@ -83,7 +87,10 @@ const OptimizationSettings = ({product}) => {
                 <div className="form-group">
                     <div className="label">Max Bid (Manual Campaign)</div>
 
-                    <InputCurrency value={product.max_manual_bid}/>
+                    <InputCurrency
+                        disabled={ifDisabled}
+                        value={product.max_manual_bid}
+                    />
                 </div>
             </div>
 
@@ -94,13 +101,17 @@ const OptimizationSettings = ({product}) => {
                     <InputCurrency
                         typeIcon={'percent'}
                         value={product.product_margin_value}
+                        disabled={ifDisabled}
                     />
                 </div>
 
                 <div className="form-group">
                     <div className="label">Min Bid (Auto Campaign)</div>
 
-                    <InputCurrency value={product.min_auto_bid}/>
+                    <InputCurrency
+                        disabled={ifDisabled}
+                        value={product.min_auto_bid}
+                    />
                 </div>
             </div>
 
@@ -108,13 +119,17 @@ const OptimizationSettings = ({product}) => {
                 <div className="form-group">
                     <div className="label">Product Price</div>
 
-                    <p className={'product-price'}>{product.item_price && `$${product.item_price} `}(retrieved from Amazon)</p>
+                    <p className={'product-price'}>{product.item_price && `$${product.item_price} `}(retrieved from
+                        Amazon)</p>
                 </div>
 
                 <div className="form-group">
                     <div className="label">Max Bid (Auto Campaign)</div>
 
-                    <InputCurrency value={product.max_auto_bid}/>
+                    <InputCurrency
+                        disabled={ifDisabled}
+                        value={product.max_auto_bid}
+                    />
                 </div>
             </div>
 
@@ -124,7 +139,11 @@ const OptimizationSettings = ({product}) => {
 
                     <InputCurrency
                         value={product.item_price_from_user}
+                        disabled={ifDisabled}
                     />
+                </div>
+                <div className="form-group">
+
                 </div>
             </div>
 

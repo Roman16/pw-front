@@ -82,3 +82,57 @@
     }
   }
 }
+
+.disabled .optimization-settings-section {
+
+  .form-group {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #C9CBD4;
+      opacity: 0.2;
+      border-radius: 4px;
+      z-index: 100;
+    }
+
+    .label {
+      color: #C9CBD4;
+
+      a {
+
+      }
+    }
+
+    p, h4 {
+      color: #C9CBD4;
+    }
+
+    .InputCurrency {
+      .Dollar {
+        svg {
+          filter: grayscale(100%);
+          opacity: .3;
+        }
+      }
+    }
+  }
+
+  .row:nth-child(2) {
+    .form-group:nth-child(1) {
+      &::before {
+        display: none;
+      }
+
+      .label {
+        color: #343C5A;
+      }
+    }
+  }
+
+}

@@ -18,7 +18,7 @@ const filtersHandler = (filters) => {
 
     filters.forEach(({filterBy, type, value}) => {
         if (type === 'search' && value) {
-            parameters.push(`&${filterBy}:search=${value}`)
+            parameters.push(`&${filterBy}:contains=${value}`)
         } else if (filterBy === 'datetime') {
             parameters.push(`&datetime:range=${value.startDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${value.endDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
         } else if (type.key === 'one_of') {

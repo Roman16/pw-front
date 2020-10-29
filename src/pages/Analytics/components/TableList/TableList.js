@@ -102,8 +102,8 @@ const TableList = ({
             ]
 
 
-            const res = await analyticsServices.fetchTableData(locationKey,paginationParams, sorterColumn, filtersWithState, source.token)
-            if(res.response) {
+            const res = await analyticsServices.fetchTableData(locationKey, paginationParams, sorterColumn, filtersWithState, source.token)
+            if (res.response) {
                 setTableData(res.response)
             }
 
@@ -120,7 +120,15 @@ const TableList = ({
 
     useEffect(() => {
         getData()
-    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, filters, mainState, selectedRangeDate])
+    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate])
+
+    useEffect(() => {
+        setPaginationParams({
+            ...paginationParams,
+            page: 1
+        })
+        getData()
+    }, [filters])
 
     return (
         <>

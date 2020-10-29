@@ -42,7 +42,7 @@ const Partners = () => {
         e.preventDefault()
 
 
-        if (agreeWithTerms) {
+        if (!agreeWithTerms) {
             notification.error({title: 'All fields is required!'})
         } else {
             try {
@@ -454,7 +454,7 @@ const Partners = () => {
                                         type="text"
                                         placeholder={'Your Company Name'}
                                         required
-                                        value={formParams.company_name}
+                                        value={formParams.campaign_name}
                                         name={'company_name'}
                                         onChange={changeContactFormHandler}
                                     />
@@ -479,7 +479,7 @@ const Partners = () => {
                                 Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
                             </Checkbox>
 
-                            <button className={'btn'} type={'button'} onClick={() => setFormStep(1)}>
+                            <button className={'btn'}>
                                 Get in touch
                             </button>
                         </form>

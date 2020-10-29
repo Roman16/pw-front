@@ -147,11 +147,13 @@ export function analytics(state = initialState, action) {
                 [state.location]: action.payload
             }))
 
-            return {
-                ...state,
-                filters: {
-                    ...state.filters,
-                    [state.location]: action.payload
+            if (JSON.stringify(action.payload) !== JSON.stringify(state.filters[state.location])) {
+                return {
+                    ...state,
+                    filters: {
+                        ...state.filters,
+                        [state.location]: action.payload
+                    }
                 }
             }
 
