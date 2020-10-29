@@ -21,7 +21,7 @@ const CheckIcon = () => <svg width="32" height="32" viewBox="0 0 32 32" fill="no
 const defaultForm = {
     size_agency: '',
     name: '',
-    campaign_name: '',
+    company_name: '',
     email: ''
 }
 
@@ -454,8 +454,8 @@ const Partners = () => {
                                         type="text"
                                         placeholder={'Your Company Name'}
                                         required
-                                        value={formParams.campaign_name}
-                                        name={'campaign_name'}
+                                        value={formParams.company_name}
+                                        name={'company_name'}
                                         onChange={changeContactFormHandler}
                                     />
                                 </div>
