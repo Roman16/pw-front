@@ -217,7 +217,7 @@ function sendContactForm(data) {
 }
 
 function sendFormToPartnerSupport(data) {
-    return api('post', `${userUrls.contactForm}`, data);
+    return api('post', `${userUrls.contactForm}`, {...data, page_url: window.location.href})
 }
 
 //-------------------------------------
