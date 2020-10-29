@@ -455,7 +455,7 @@ const Partners = () => {
                                         placeholder={'Your Company Name'}
                                         required
                                         value={formParams.campaign_name}
-                                        name={'company_name'}
+                                        name={'campaign_name'}
                                         onChange={changeContactFormHandler}
                                     />
                                 </div>
