@@ -17,58 +17,7 @@ export const optimizationOptions = [
     {label: 'Add Bad ST to Negatives', value: 'add_bad_search_terms_to_negatives'},
 ]
 
-let timeoutId = null
-
-let defaultOptionsValue = optimizationOptions.map(item => item.value)
-
-const OptimizationVariations = ({product, updateOptimizationOptions, selectedAll}) => {
-    const [activeParams, setActiveParams] = useState([])
-
-    const onChange = async (value) => {
-        setActiveParams(value)
-
-        defaultOptionsValue = value
-
-        const params = {}
-
-        optimizationOptions.forEach(item => {
-            params[item.value] = value.includes(item.value)
-        })
-
-        // if (product.status === 'RUNNING') {
-        //     clearTimeout(timeoutId)
-        //     timeoutId = setTimeout(async () => {
-        //         try {
-        //             await productsServices.updateProductById({
-        //                 ...product,
-        //                 product_id: selectedAll ? 'all' : product.product_id,
-        //                 ...params
-        //             })
-        //
-        //             notification.success({title: 'Changes saved!'})
-        //         } catch (e) {
-        //             console.log(e)
-        //         }
-        //     }, 1000)
-        // } else {
-        //     updateOptimizationOptions(params)
-        // }
-    }
-
-    useEffect(() => {
-        setActiveParams(optimizationOptions.map(item => (product[item.value] && item.value)))
-
-        if (!product.status || product.status !== 'RUNNING') {
-            const params = {}
-
-            optimizationOptions.forEach(item => {
-                params[item.value] = !!defaultOptionsValue.includes(item.value)
-            })
-
-            setActiveParams(defaultOptionsValue)
-            updateOptimizationOptions(params)
-        }
-    }, [product.product_id])
+const OptimizationVariations = ({product, onUpdateField}) => {
 
     return (
         <section className='optimization-variations'>
@@ -76,7 +25,16 @@ const OptimizationVariations = ({product, updateOptimizationOptions, selectedAll
                 <h2>What do you want to optimize?</h2>
             </div>
 
-            <Checkbox.Group options={optimizationOptions} onChange={onChange} value={activeParams}/>
+            <div className="variation-list">
+                {optimizationOptions.map(item => (
+                    <Checkbox
+                        onChange={(e) => onUpdateField(item.value, e.target.checked)}
+                        checked={product[item.value]}
+                    >
+                        {item.label}
+                    </Checkbox>
+                ))}
+            </div>
         </section>
     )
 }

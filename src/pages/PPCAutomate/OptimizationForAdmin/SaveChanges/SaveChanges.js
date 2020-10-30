@@ -5,7 +5,7 @@ import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmAction
 import {productsActions} from "../../../../actions/products.actions"
 import {Spin} from "antd"
 
-const SaveChanges = ({product, hasChanges, onStart, onRevert, onUpdate, processing}) => {
+const SaveChanges = ({product, hasChanges, onStart, onRevert, processing}) => {
     const dispatch = useDispatch()
 
     const dontShowStartNotificationAgain = useSelector(state => state.products.dontShowStartNotificationAgain)
@@ -49,7 +49,7 @@ const SaveChanges = ({product, hasChanges, onStart, onRevert, onUpdate, processi
                         <button
                             className={'btn white'}
                             disabled={processing}
-                            onClick={onUpdate}
+                            onClick={onStart}
                         >
                             Save Changes
 

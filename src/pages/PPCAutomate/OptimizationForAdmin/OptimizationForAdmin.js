@@ -10,7 +10,9 @@ import axios from "axios"
 import StrategiesDescription from "./StrategiesDescription/StrategiesDescription"
 import {productsActions} from "../../../actions/products.actions"
 import {notification} from "../../../components/Notification"
-
+import {Spin} from "antd"
+import {Prompt} from "react-router-dom"
+import {optimizationOptions} from './OptimizationVariations/OptimizationVariations'
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -21,9 +23,11 @@ const OptimizationForAdmin = () => {
     const [productInformation, setProductInformation] = useState({}),
         [visibleDrawer, setVisibleDrawer] = useState(false),
         [stopProcessing, setStopProcessing] = useState(false),
-        [startProcessing, setStartProcessing] = useState(false)
+        [productProcessing, setProductProcessing] = useState(false)
 
     const dispatch = useDispatch()
+
+    document.querySelector('ed')
 
     const {productId} = useSelector(state => ({
         productId: state.products.selectedProduct.id || null,
@@ -34,16 +38,24 @@ const OptimizationForAdmin = () => {
         source && source.cancel()
         source = CancelToken.source()
 
+        setProductProcessing(true)
+
         try {
             const res = await productsServices.getProductDetails(productId, source.token)
             if (res.status === 'STOPPED') {
                 res.optimization_strategy = null
+
+                optimizationOptions.forEach(item => {
+                    res[item.value] = true
+                })
             }
             productInformationFromRequest = {...res}
             setProductInformation(res)
         } catch (e) {
             console.log(e)
         }
+
+        setProductProcessing(false)
     }
 
     const updateProductInformationHandler = (name, value) => {
@@ -60,29 +72,24 @@ const OptimizationForAdmin = () => {
         setStopProcessing(true)
 
         try {
-            await productsServices.updateProductById({
-                ...productInformation,
-                optimization_strategy: 'AchieveTargetACoS',
-                product_id: productId,
-                status: 'STOPPED',
-            })
-
-            productInformationFromRequest = {
+            const product = {
                 ...productInformation,
                 status: 'STOPPED',
                 optimization_strategy: null
             }
 
+            await productsServices.updateProductById({
+                ...product,
+                optimization_strategy: 'AchieveTargetACoS',
+            })
+
+            productInformationFromRequest = product
+            setProductInformation(product)
+
             dispatch(productsActions.updateProduct({
                 id: productInformation.product_id,
                 status: 'STOPPED',
             }))
-
-            setProductInformation({
-                ...productInformation,
-                status: 'STOPPED',
-                optimization_strategy: null
-            })
 
             notification.error({title: 'The optimization is paused'})
         } catch (e) {
@@ -93,67 +100,49 @@ const OptimizationForAdmin = () => {
     }
 
     const startOptimizationHandler = async () => {
-        setStartProcessing(true)
+        setProductProcessing(true)
 
-        try {
-            await productsServices.updateProductById({
-                ...productInformation,
-                product_id: productId,
-                status: 'RUNNING',
-            })
+        if (productInformation.optimization_strategy !== null) {
+            if (productInformation.desired_target_acos) {
+                try {
+                    const product = {
+                        ...productInformation,
+                        status: 'RUNNING'
+                    }
 
-            productInformationFromRequest = {
-                ...productInformation,
-                status: 'RUNNING',
-            }
+                    await productsServices.updateProductSettingsById(product)
 
-            setProductInformation({
-                ...productInformation,
-                status: 'RUNNING',
-            })
+                    await productsServices.updateProductById(product)
+                    setProductInformation(product)
 
-            dispatch(productsActions.updateProduct({
-                id: productId,
-                status: 'RUNNING',
-            }))
+                    dispatch(productsActions.updateProduct({
+                        id: productInformation.product_id,
+                        status: 'RUNNING',
+                    }))
 
-            notification.start({title: 'Optimization successfully started'})
-        } catch (e) {
-            console.log(e)
-        }
 
-        setStartProcessing(false)
-    }
+                    notification.start({title: productInformationFromRequest.status === 'RUNNING' ? 'Changes saved!' : 'Optimization successfully started'})
 
-    const updateInformationHandler = async () => {
-        setStartProcessing(true)
-
-        if(productInformation.optimization_strategy !== null) {
-            try {
-                const product = {
-                    ...productInformation,
-                    product_id: productId,
-                    status: 'RUNNING'
+                    productInformationFromRequest = product
+                } catch (e) {
+                    console.log(e)
                 }
-
-                await productsServices.updateProductById(product)
-                productInformationFromRequest = product
-                setProductInformation(product)
-                dispatch(productsActions.updateProduct(product))
-
-            } catch (e) {
-                console.log(e)
+            } else {
+                notification.error({title: 'Net Margin is required field!'})
             }
         } else {
             stopOptimizationHandler()
         }
-        setStartProcessing(false)
+
+        setProductProcessing(false)
     }
 
 
     useEffect(() => {
         if (productId) getProductInformation()
     }, [productId])
+
+    const hasChanges = JSON.stringify(productInformationFromRequest) !== JSON.stringify(productInformation)
 
     return (
         <div
@@ -165,30 +154,29 @@ const OptimizationForAdmin = () => {
             <OptimizationSettings
                 product={productInformation}
                 isDisabled={productInformation.optimization_strategy == null}
-                onUpdateField={updateProductInformationHandler}
-                onShowDescription={() => setVisibleDrawer(true)}
-                onStop={stopOptimizationHandler}
                 processing={stopProcessing}
+
+                onUpdateField={updateProductInformationHandler}
+                onStop={stopOptimizationHandler}
+                onShowDescription={() => setVisibleDrawer(true)}
             />
 
             <OptimizationVariations
                 product={productInformation}
-                updateOptimizationOptions={() => {
-                }}
+                onUpdateField={updateProductInformationHandler}
             />
 
             <CampaignsConfiguration
                 productId={productId}
                 optimizationJobId={productInformation.id}
+                isDisabled={productInformation.optimization_strategy == null}
             />
 
             <SaveChanges
                 product={productInformation}
-                hasChanges={JSON.stringify(productInformationFromRequest) !== JSON.stringify(productInformation)}
-                processing={startProcessing}
+                hasChanges={hasChanges}
                 onRevert={revertInformationHandler}
                 onStart={startOptimizationHandler}
-                onUpdate={updateInformationHandler}
             />
 
             <StrategiesDescription
@@ -196,6 +184,13 @@ const OptimizationForAdmin = () => {
                 onClose={() => setVisibleDrawer(false)}
             />
 
+
+            {productProcessing && <div className="page-loader"><Spin size={'large'}/></div>}
+
+            <Prompt
+                when={hasChanges}
+                message="Are you sure? The current scanning results will be lost"
+            />
         </div>
     )
 }

@@ -22,7 +22,7 @@ const multiSelectVariations = [
 
 let lastError
 
-const CampaignsConfiguration = ({optimizationJobId}) => {
+const CampaignsConfiguration = ({optimizationJobId, isDisabled}) => {
     const [sectionHeightState, setSectionHeightState] = useState(false),
         [jobsList, setJobsList] = useState([]),
         [hasJob, setJobState] = useState(false)
@@ -38,6 +38,12 @@ const CampaignsConfiguration = ({optimizationJobId}) => {
             }, 2000)
         }
     }
+
+    useEffect(() => {
+        if(isDisabled) {
+            setSectionHeightState(false)
+        }
+    }, [isDisabled])
 
     const changeSettingsHandler = (index, name, value, label) => {
         setJobsList(jobsList.map((item, listIndex) => {

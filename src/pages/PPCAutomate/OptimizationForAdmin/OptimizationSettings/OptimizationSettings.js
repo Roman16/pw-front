@@ -118,7 +118,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         <div className="label">Enter your target ACoS</div>
 
                         <InputCurrency
-                            value={product.desired_target_acos}
+                            value={product.c}
                             typeIcon={'percent'}
                             disabled={product.optimization_strategy !== 'AchieveTargetACoS'}
                             onChange={(value) => onUpdateField('desired_target_acos', value)}
@@ -167,8 +167,8 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                     <div className="form-group">
                         <div className="label">Product Price</div>
 
-                        <p className={'product-price'}>{product.item_price && `$${product.item_price} `}(retrieved from
-                            Amazon)</p>
+                        <p className={'product-price'}>
+                            {product.item_price !== null && `$${product.item_price} `}(retrieved from Amazon)</p>
                     </div>
 
                     <div className="form-group">
