@@ -1,10 +1,14 @@
 .optimization-for-admin-page {
   padding-bottom: 0 !important;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .save-changes-section {
   min-height: 72px;
-  display: flex;
   align-items: center;
   justify-content: space-between;
   background: #6D6DF6;
@@ -12,8 +16,15 @@
   padding: 0 80px 0 1.4285714285714286rem;
   position: sticky;
   bottom: 0;
-  z-index: 1000;
+  z-index: 100;
   transition: .2s;
+  box-sizing: border-box;
+  margin-top: auto;
+  display: none;
+
+  &.visible {
+    display: flex;
+  }
 
   p {
     font-size: 1.4285714285714286rem;
@@ -31,6 +42,18 @@
     font-weight: 600;
     height: 3.4285714285714284rem;
     padding: 0 2.857142857142857rem;
+
+    .ant-spin {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
   }
 
   .white {
@@ -40,6 +63,6 @@
 }
 
 .disabled .save-changes-section {
-  bottom: -80px;
-  transition: .2s;
+  //bottom: -80px;
+  //transition: .2s;
 }

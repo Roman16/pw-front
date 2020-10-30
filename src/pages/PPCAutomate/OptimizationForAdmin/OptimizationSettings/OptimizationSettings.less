@@ -17,6 +17,33 @@
       color: #363694;
       margin: 0;
     }
+
+    .btn {
+      height: 2.2857142857142856rem;
+      font-size: 0.8571428571428571rem;
+      font-weight: 600;
+      padding: 0 15px;
+      background: #343C5A;
+
+      &:hover {
+        background: #232B46;
+      }
+
+      &:disabled {
+        background: #C9CBD4;
+      }
+
+      & > i {
+        width: 1.4285714285714286rem;
+        height: 1.4285714285714286rem;
+        margin: 0 10px 0 0;
+        padding: 1px 0 0 0;
+
+        .ant-spin-dot-item {
+          background: #fff;
+        }
+      }
+    }
   }
 
   .row {
