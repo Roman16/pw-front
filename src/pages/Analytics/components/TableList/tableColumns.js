@@ -206,8 +206,8 @@ export const adGroupColumn = {
     sorter: true,
     filter: true,
     render: (adGroup, item) => (
-        <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.id}`}>
-            {adGroup}
+        <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupName}`}>
+            {item.adGroupName}
         </Link>
     )
 }

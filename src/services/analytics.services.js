@@ -23,6 +23,8 @@ const filtersHandler = (filters) => {
             parameters.push(`&datetime:range=${value.startDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${value.endDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
         } else if (type.key === 'one_of') {
             parameters.push(`&${filterBy}:in=${value}`)
+        } else if (filterBy === 'budget_allocation' || filterBy === 'sales_share' || filterBy === 'roas' || filterBy === 'conversion_rate' || filterBy === 'acos' || filterBy === 'ctr' || filterBy === 'ctr') {
+            parameters.push(`&${filterBy}:${type.key}=${value / 100}`)
         } else if (typeof type === 'object') {
             parameters.push(`&${filterBy}:${type.key}=${value}`)
         } else if (filterBy !== 'name') {

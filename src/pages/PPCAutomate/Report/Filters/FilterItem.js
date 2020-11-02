@@ -25,7 +25,9 @@ const valueTile = {
     'duplicate_keyword_pt': 'Duplicate keyword / PT',
     'created_campaign': 'Created campaign',
     'created_ad_group': 'Created ad group',
-    'created_product_ad': 'Created product ad'
+    'created_product_ad': 'Created product ad',
+    'legacyForSales': 'Legacy For Sales',
+    'autoForSales': 'Auto For Sales',
 }
 
 const numberMark = {

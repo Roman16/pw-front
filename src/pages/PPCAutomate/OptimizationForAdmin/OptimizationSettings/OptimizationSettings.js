@@ -3,16 +3,13 @@ import './OptimizationSettings.less'
 import CustomSelect from "../../../../components/Select/Select"
 import {Select, Spin} from "antd"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
-import acosTargetingImage from "../../../../assets/img/optimization/acos-targeting.png"
-import productLaunchImage from "../../../../assets/img/optimization/product-launch.png"
-import organicSalesGrowthImage from "../../../../assets/img/optimization/organic-sales-growth.png"
-import revenueGrowthImage from "../../../../assets/img/optimization/revenue-growth.png"
-import profitablePpcImage from "../../../../assets/img/optimization/profitable-ppc.png"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faStop} from "@fortawesome/free-solid-svg-icons"
 import {useDispatch, useSelector} from "react-redux"
 import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup"
 import {productsActions} from "../../../../actions/products.actions"
+import {SVG} from "../../../../utils/icons"
+import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
@@ -20,22 +17,32 @@ const strategies = [
     {
         name: 'ACoS Targeting',
         key: 'AchieveTargetACoS',
+        icon: 'acos-targeting',
+        fill: '#EC7F5C'
     },
     {
         name: 'Product Launch',
         key: 'LaunchProduct',
+        icon: 'product-launch',
+        fill: '#6D6DF6'
     },
     {
         name: 'Organic Sales Growth',
         key: 'BoostOverallProfit',
+        icon: 'organic-sales-growth-icon',
+        fill: '#7DD4A1'
     },
     {
         name: 'Revenue Growth',
         key: 'GrowOverallSales',
+        icon: 'revenue-growth-icon',
+        fill: '#F0B849'
     },
     {
         name: 'Profitable PPC',
         key: 'BoostPPCProfit',
+        icon: 'profitable-ppc-icon',
+        fill: '#4DBEE1'
     },
 ]
 
@@ -47,7 +54,6 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
 
     const [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false),
         [showAgainWindow, setShowAgainWindow] = useState(dontShowStopWindowAgain)
-
 
     const stopOptimizationHandler = () => {
         dispatch(productsActions.dontShowWindowAgain({
@@ -79,9 +85,9 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         disabled={product.status === 'STOPPED' || processing}
                         onClick={confirmStopOptimization}
                     >
-                       <i>
-                           {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faStop}/>}
-                       </i>
+                        <i>
+                            {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faStop}/>}
+                        </i>
                         Stop Optimization
                     </button>
                 </div>
@@ -93,11 +99,20 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                             <a onClick={onShowDescription}>Read more</a>
                         </div>
 
-                        <CustomSelect value={product.optimization_strategy}
-                                      onChange={(value) => onUpdateField('optimization_strategy', value)}>
-                            <Option value={null}>Choose Strategy</Option>
+                        <CustomSelect
+                            getPopupContainer={trigger => trigger.parentNode}
+                            value={product.optimization_strategy}
+                            onChange={(value) => onUpdateField('optimization_strategy', value)}
+                        >
+                            <Option value={null}>No Optimization</Option>
                             {strategies.map(item => (
-                                <Option value={item.key}>{item.name}</Option>
+                                <Option value={item.key}>
+                                    <i style={{fill: `${item.fill}`}}>
+                                        <SVG id={item.icon}/>
+                                    </i>
+
+                                    {item.name}
+                                </Option>
                             ))}
                         </CustomSelect>
                     </div>

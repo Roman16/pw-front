@@ -10,7 +10,7 @@ import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
 
 let requestSent = false
 
-const multiSelectVariations = [
+export const multiSelectVariations = [
     {title: 'Bid Optimization Keywords', key: 'bid_optimization_keywords', value: 'bid_optimization_keywords'},
     {title: 'Bid Optimization PAT', key: 'bid_optimization_pats', value: 'bid_optimization_pats'},
     {title: 'Activate Keywords', key: 'activate_keywords', value: 'activate_keywords'},
@@ -22,62 +22,22 @@ const multiSelectVariations = [
 
 let lastError
 
-const CampaignsConfiguration = ({optimizationJobId, isDisabled}) => {
+const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, jobsList, onUpdate}) => {
     const [sectionHeightState, setSectionHeightState] = useState(false),
-        [jobsList, setJobsList] = useState([]),
         [hasJob, setJobState] = useState(false)
 
-    const showNotification = (text) => {
-        if (lastError !== text) {
-            lastError = text
-
-            notification.error({title: text})
-
-            setTimeout(() => {
-                lastError = null
-            }, 2000)
-        }
-    }
 
     useEffect(() => {
-        if(isDisabled) {
+        if (isDisabled) {
             setSectionHeightState(false)
         }
     }, [isDisabled])
 
     const changeSettingsHandler = (index, name, value, label) => {
-        setJobsList(jobsList.map((item, listIndex) => {
+        onUpdate(jobsList.map((item, listIndex) => {
             if (listIndex === index) {
                 if (name === 'dont_optimize' || name === 'dont_use_metrics') {
                     item[name] = !value
-                } else if (name === 'min_bid') {
-                    if (value === '' || value == null) {
-                        item[name] = null
-                    } else if (value > jobsList[index].max_bid) {
-                        showNotification('Min Bid should be less than Max Bid')
-                        item[name] = jobsList[index].max_bid - 0.01
-                    } else if (value < 0.002) {
-                        showNotification('Bids should be greater than or equal to 0.02$')
-                        item[name] = 0.002
-                    } else {
-                        item[name] = value
-                    }
-                } else if (name === 'max_bid') {
-                    if (value === '' || value == null) {
-                        item[name] = null
-                    } else if (value < 0.002) {
-                        showNotification('Bids should be greater than or equal to 0.02$')
-                        item[name] = 0.002
-                    } else if (value < jobsList[index].min_bid) {
-                        showNotification('Max Bid should be greater than Min Bid')
-                        item[name] = jobsList[index].min_bid + 0.01
-                    } else {
-                        item[name] = value
-                    }
-                } else if (name === 'optimization_parts') {
-                    if (value.length > 0) {
-                        item[name] = value
-                    }
                 } else {
                     item[name] = value
                 }
@@ -188,49 +148,17 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled}) => {
         },
     ]
 
-    const getCampaignsSettings = async () => {
-        try {
-            const res = await productsServices.getCampaignsSettings(optimizationJobId)
-            setJobsList(res.result.map(campaign => ({
-                ...campaign.custom_settings,
-                campaignName: campaign.campaignName,
-                campaign_id: campaign.campaignId,
-                enable_optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts),
-                optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.optimization_parts : multiSelectVariations.map(item => item.value)
-            })))
-            setJobState(true)
-
-            requestSent = true
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    const saveConfigurationHandler = async () => {
-        try {
-            const custom_campaigns_settings = jobsList.map(item => ({
-                    campaign_id: item.campaign_id,
-                    dont_optimize: item.dont_optimize || false,
-                    dont_use_metrics: item.dont_use_metrics || false,
-                    optimization_parts: (!item.enable_optimization_parts || item.optimization_parts.length === 0) ? null : item.optimization_parts,
-                    ...item.min_bid && {min_bid: item.min_bid},
-                    ...item.max_bid && {max_bid: item.max_bid}
-                }
-            ))
-
-            await productsServices.updateCampaignsBlacklist(optimizationJobId, {custom_campaigns_settings})
-
-            notification.success({title: 'Success!'})
-        } catch (e) {
-            console.log(e)
-        }
+    const getCampaignsSettings = () => {
+        getSettings()
+        setJobState(true)
+        requestSent = true
     }
 
     useEffect(() => {
         requestSent = false
 
         if (!optimizationJobId) {
-            setJobsList([])
+            onUpdate([])
             setJobState(false)
         }
     }, [optimizationJobId])

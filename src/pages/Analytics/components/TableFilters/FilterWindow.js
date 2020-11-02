@@ -195,9 +195,9 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Archived', key: 'archived', value: 'archived'},
         ],
         'bidding_strategy': [
-            {title: 'legacyForSales', key: 'legacyForSales', value: 'legacyForSales'},
-            {title: 'autoForSales', key: 'autoForSales', value: 'autoForSales'},
-            {title: 'manual', key: 'manual', value: 'manual'},
+            {title: 'Legacy For Sales', key: 'legacyForSales', value: 'legacyForSales'},
+            {title: 'Auto For Sales', key: 'autoForSales', value: 'autoForSales'},
+            {title: 'Manual', key: 'manual', value: 'manual'},
         ],
         'type':
             currentTab === 'targeting-improvements' ? [
