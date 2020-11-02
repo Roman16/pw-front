@@ -14,6 +14,7 @@ import {Spin} from "antd"
 import {Prompt} from "react-router-dom"
 import {optimizationOptions} from './OptimizationVariations/OptimizationVariations'
 import {multiSelectVariations} from './CampaignsConfiguration/CampaignsConfiguration'
+import _ from 'lodash'
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -63,21 +64,21 @@ const OptimizationForAdmin = () => {
         try {
             const res = await productsServices.getCampaignsSettings(productInformation.id)
 
-            campaignSettingsFromRequest = res.result.map(campaign => ({
+            campaignSettingsFromRequest = _.orderBy(res.result.map(campaign => ({
                 ...campaign.custom_settings,
                 campaignName: campaign.campaignName,
                 campaign_id: campaign.campaignId,
                 enable_optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts),
                 optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.optimization_parts : multiSelectVariations.map(item => item.value)
-            }))
+            })), ['campaignName'], ['asc'])
 
-            setCampaignSettings(res.result.map(campaign => ({
+            setCampaignSettings(_.orderBy(res.result.map(campaign => ({
                 ...campaign.custom_settings,
                 campaignName: campaign.campaignName,
                 campaign_id: campaign.campaignId,
                 enable_optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts),
                 optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.optimization_parts : multiSelectVariations.map(item => item.value)
-            })))
+            })), ['campaignName'], ['asc']))
         } catch (e) {
             console.log(e)
         }
