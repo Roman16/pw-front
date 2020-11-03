@@ -11,7 +11,7 @@ const NegativeTargetings = () => {
 
             {/*<MainChart/>*/}
 
-            <NegativeTargetingsList/>
+            <NegativeTargetingsList dateRange={false}/>
         </div>
     )
 }

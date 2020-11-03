@@ -20,7 +20,8 @@ let source = null
 const TableList = ({
                        columns,
                        fixedColumns,
-                       columnSelect = true
+                       columnSelect = true,
+                       dateRange = true
                    }) => {
 
     const [tableData, setTableData] = useState([]),
@@ -143,7 +144,7 @@ const TableList = ({
                     columnsBlackList={columnsBlackList}
                 />}
 
-                <DateRange/>
+                {dateRange && <DateRange/>}
             </div>
 
             <CustomTable
