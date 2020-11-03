@@ -2,11 +2,12 @@ import React, {useEffect, useState} from "react"
 import './CampaignsConfiguration.less'
 import {SVG} from "../../../../utils/icons"
 import CustomTable from "../../../../components/Table/CustomTable"
-import {productsServices} from "../../../../services/products.services"
-import {Checkbox} from "antd"
-import {notification} from "../../../../components/Notification"
+import {Checkbox, Input} from "antd"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
+import _ from "lodash"
+
+const {Search} = Input
 
 let requestSent = false
 
@@ -20,11 +21,11 @@ export const multiSelectVariations = [
     {title: 'Remove Duplicates', key: 'remove_duplicates', value: 'remove_duplicates'},
 ]
 
-let lastError
 
 const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, jobsList, onUpdate}) => {
     const [sectionHeightState, setSectionHeightState] = useState(false),
-        [hasJob, setJobState] = useState(false)
+        [hasJob, setJobState] = useState(false),
+        [searchText, setSearchText] = useState()
 
 
     useEffect(() => {
@@ -33,9 +34,9 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, job
         }
     }, [isDisabled])
 
-    const changeSettingsHandler = (index, name, value, label) => {
+    const changeSettingsHandler = (id, name, value, label) => {
         onUpdate(jobsList.map((item, listIndex) => {
-            if (listIndex === index) {
+            if (item.campaign_id === id) {
                 if (name === 'dont_optimize' || name === 'dont_use_metrics') {
                     item[name] = !value
                 } else {
@@ -67,7 +68,7 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, job
                 return (
                     <Checkbox
                         checked={!dont_optimize}
-                        onChange={(e) => changeSettingsHandler(index, 'dont_optimize', e.target.checked)}
+                        onChange={(e) => changeSettingsHandler(item.campaign_id, 'dont_optimize', e.target.checked)}
                     />
                 )
             }
@@ -82,7 +83,7 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, job
                     <Checkbox
                         checked={!dontUseMetrics}
                         disabled={!item.dont_optimize}
-                        onChange={(e) => changeSettingsHandler(index, 'dont_use_metrics', e.target.checked)}
+                        onChange={(e) => changeSettingsHandler(item.campaign_id, 'dont_use_metrics', e.target.checked)}
                     />
                 )
             }
@@ -97,7 +98,7 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, job
                     <InputCurrency
                         disabled={item.dont_optimize}
                         value={min_bid}
-                        onChange={(value) => changeSettingsHandler(index, 'min_bid', value)}
+                        onChange={(value) => changeSettingsHandler(item.campaign_id, 'min_bid', value)}
                     />
                 )
             }
@@ -112,7 +113,7 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, job
                     <InputCurrency
                         disabled={item.dont_optimize}
                         value={max_bid}
-                        onChange={(value) => changeSettingsHandler(index, 'max_bid', value)}
+                        onChange={(value) => changeSettingsHandler(item.campaign_id, 'max_bid', value)}
                     />
                 )
             }
@@ -128,7 +129,7 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, job
                         <Checkbox
                             disabled={item.dont_optimize}
                             checked={item.enable_optimization_parts}
-                            onChange={(e) => changeSettingsHandler(index, 'enable_optimization_parts', e.target.checked)}
+                            onChange={(e) => changeSettingsHandler(item.campaign_id, 'enable_optimization_parts', e.target.checked)}
 
                         />
 
@@ -140,7 +141,7 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, job
                             disabled={item.dont_optimize || !item.enable_optimization_parts}
                             value={optimization_parts}
                             treeData={multiSelectVariations}
-                            onChange={(e, label) => changeSettingsHandler(index, 'optimization_parts', e, label)}
+                            onChange={(e, label) => changeSettingsHandler(item.campaign_id, 'optimization_parts', e, label)}
                         />
                     </>
                 )
@@ -169,6 +170,7 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, job
         }
     }, [sectionHeightState, optimizationJobId])
 
+
     return (
         <section className={`campaigns-configuration ${sectionHeightState ? 'opened' : 'closed'}`}>
             <div className="section-header" onClick={() => setSectionHeightState(prevState => !prevState)}>
@@ -178,9 +180,20 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, job
             </div>
 
             <div className={`table-block`}>
+                <div className="form-group">
+                    <Search
+                        className="search-field"
+                        placeholder={`Search by campaign name`}
+                        onPressEnter={e => setSearchText(e.target.value)}
+                        onBlur={e => setSearchText(e.target.value)}
+                        data-intercom-target='search-field'
+                        suffix={<SVG id={'search'}/>}
+                    />
+                </div>
+
                 <CustomTable
                     // loading={processing}
-                    dataSource={jobsList}
+                    dataSource={_.orderBy(searchText ? _.filter(jobsList, (item) => _.includes(item.campaignName.toLowerCase(), searchText.toLowerCase())) : jobsList, ['campaignName'], ['asc'])}
                     columns={columns}
                     emptyText={!hasJob ? 'Can\'t configure campaigns, start optimization first' : 'No campaigns for optimization, check product ads'}
                 />

@@ -22,6 +22,7 @@ import TableList from "../../components/TableList/TableList"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
 
 
 const TargetingsList = () => {
@@ -42,14 +43,16 @@ const TargetingsList = () => {
             title: 'Keyword / PT',
             dataIndex: 'calculatedTargetingText',
             key: 'calculatedTargetingText',
-            width: '200px',
+            width: '400px',
             sorter: true,
             locked: true,
             search: true,
+            render: text => <span className={'overflow-text'} title={text}>{text}</span>
         },
         ...!selectedCampaign ? [{
             ...campaignColumn,
             locked: true,
+            width: '250px',
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
                 title={campaign}
@@ -65,12 +68,13 @@ const TargetingsList = () => {
             title: 'Ad Group',
             dataIndex: 'ad_group',
             key: 'ad_group',
-            minWidth: '200px',
+            width: '250px',
             sorter: true,
             filter: true,
             locked: true,
             render: (adGroup, item) => (
                 <Link
+                    title={item.adGroupName}
                     onClick={() => setStateHandler('products', {
                         name: {
                             campaignName: item.campaignName,
@@ -99,7 +103,9 @@ const TargetingsList = () => {
             dataIndex: 'bid',
             key: 'bid',
             width: '150px',
-            sorter: true
+            sorter: true,
+            noTotal: true,
+            render: (bid) => <InputCurrency disabled value={bid}/>
         },
         impressionsColumn,
         clicksColumn,

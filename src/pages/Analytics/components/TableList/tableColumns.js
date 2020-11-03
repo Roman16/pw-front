@@ -193,7 +193,7 @@ export const campaignColumn = {
     title: 'Campaign',
     dataIndex: 'campaignName',
     key: 'campaignName',
-    width: '200px',
+    width: '350px',
     sorter: true,
     filter: true,
 }

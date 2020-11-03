@@ -40,7 +40,7 @@ const CampaignsList = () => {
             title: 'Campaign',
             dataIndex: 'name',
             key: 'name',
-            width: '250px',
+            width: '350px',
             sorter: true,
             locked: true,
             search: true,

@@ -64,21 +64,21 @@ const OptimizationForAdmin = () => {
         try {
             const res = await productsServices.getCampaignsSettings(productInformation.id)
 
-            campaignSettingsFromRequest = _.orderBy(res.result.map(campaign => ({
+            campaignSettingsFromRequest = res.result.map(campaign => ({
                 ...campaign.custom_settings,
                 campaignName: campaign.campaignName,
                 campaign_id: campaign.campaignId,
                 enable_optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts),
                 optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.optimization_parts : multiSelectVariations.map(item => item.value)
-            })), ['campaignName'], ['asc'])
+            }))
 
-            setCampaignSettings(_.orderBy(res.result.map(campaign => ({
+            setCampaignSettings(res.result.map(campaign => ({
                 ...campaign.custom_settings,
                 campaignName: campaign.campaignName,
                 campaign_id: campaign.campaignId,
                 enable_optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts),
                 optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.optimization_parts : multiSelectVariations.map(item => item.value)
-            })), ['campaignName'], ['asc']))
+            })))
         } catch (e) {
             console.log(e)
         }
@@ -102,6 +102,11 @@ const OptimizationForAdmin = () => {
 
     const bidValidator = () => {
         const product = productInformation
+
+        if(product.optimization_strategy === 'AchieveTargetACoS' && product.desired_target_acos == null) {
+            showNotification('Target ACoS is required field!')
+            return false
+        }
 
         if (product.min_manual_bid) {
             if (product.max_manual_bid && product.min_manual_bid > product.max_manual_bid) {
@@ -167,7 +172,10 @@ const OptimizationForAdmin = () => {
 
     }
 
-    const revertInformationHandler = () => setProductInformation({...productInformationFromRequest})
+    const revertInformationHandler = () => {
+        setProductInformation({...productInformationFromRequest})
+        setCampaignSettings([...campaignSettingsFromRequest.map(item => ({...item}))])
+    }
 
     const stopOptimizationHandler = async () => {
         setStopProcessing(true)
@@ -204,7 +212,7 @@ const OptimizationForAdmin = () => {
         setProductProcessing(true)
 
         if (productInformation.optimization_strategy !== null) {
-            if (productInformation.desired_target_acos) {
+            if (productInformation.product_margin_value) {
                 if (bidValidator() && campaignValidator()) {
                     try {
                         const product = {
@@ -222,7 +230,7 @@ const OptimizationForAdmin = () => {
                             }
                         ))
 
-                        if(campaignSettings.length > 0) {
+                        if (campaignSettings.length > 0) {
                             await productsServices.updateCampaignsBlacklist(productInformation.id, {custom_campaigns_settings})
                         }
 

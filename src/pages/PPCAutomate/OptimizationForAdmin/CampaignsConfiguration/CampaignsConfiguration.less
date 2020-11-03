@@ -17,6 +17,8 @@
   &.opened {
     height: max-content;
     max-height: 100vh;
+    display: flex;
+    flex-direction: column;
 
     .section-header {
       svg {
@@ -27,11 +29,12 @@
     .table-block {
       overflow: hidden;
       transition: .2s ease-in;
-      min-height: 110px;
+      min-height: 170px;
 
       .table-overflow {
         height: 100%;
       }
+
     }
   }
 
@@ -62,9 +65,19 @@
   .table-block {
     display: flex;
     flex-direction: column;
+    flex: 1;
+
+
+    .form-group {
+      width: 30%;
+      height: 2.2857142857142856rem;
+      margin: 10px 0 1.4285714285714286rem 1.4285714285714286rem;
+    }
 
     .custom-table {
-      height: 100%;
+      height: initial;
+      flex: 1;
+      overflow: hidden;
     }
 
     .table-overflow {

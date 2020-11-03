@@ -39,7 +39,7 @@ const menuVariables = {
     'negativeTargeting': {
         title: 'Negative Targetings',
         url: '/analytics/negative-targetings',
-        key: 'negativeTargetings'
+        key: 'negative-targetings'
     },
     'productAds': {
         title: 'Product Ads',

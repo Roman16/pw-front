@@ -7,9 +7,9 @@ const NegativeTargetings = () => {
 
     return (
         <div className={'negative-targetings-workplace'}>
-            <MainMetrics/>
+            {/*<MainMetrics/>*/}
 
-            <MainChart/>
+            {/*<MainChart/>*/}
 
             <NegativeTargetingsList/>
         </div>

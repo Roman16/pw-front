@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from "react"
+import React, {useState} from "react"
 import './OptimizationSettings.less'
 import CustomSelect from "../../../../components/Select/Select"
 import {Select, Spin} from "antd"
@@ -9,7 +9,6 @@ import {useDispatch, useSelector} from "react-redux"
 import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup"
 import {productsActions} from "../../../../actions/products.actions"
 import {SVG} from "../../../../utils/icons"
-import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
@@ -133,7 +132,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         <div className="label">Enter your target ACoS</div>
 
                         <InputCurrency
-                            value={product.c}
+                            value={product.desired_target_acos}
                             typeIcon={'percent'}
                             disabled={product.optimization_strategy !== 'AchieveTargetACoS'}
                             onChange={(value) => onUpdateField('desired_target_acos', value)}
