@@ -103,7 +103,7 @@ const OptimizationForAdmin = () => {
     const bidValidator = () => {
         const product = productInformation
 
-        if(product.optimization_strategy === 'AchieveTargetACoS' && product.desired_target_acos == null) {
+        if (product.optimization_strategy === 'AchieveTargetACoS' && product.desired_target_acos == null) {
             showNotification('Target ACoS is required field!')
             return false
         }
