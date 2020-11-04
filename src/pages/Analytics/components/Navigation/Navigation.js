@@ -44,7 +44,7 @@ const menuVariables = {
     'productAds': {
         title: 'Product Ads',
         url: '/analytics/product-ads',
-        key: 'productAds'
+        key: 'product-ads'
     }
 }
 

@@ -17,7 +17,7 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    campaignColumn, statusColumn,
+    campaignColumn, statusColumn, renderNumberField,
 } from "../../components/TableList/tableColumns"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
@@ -88,17 +88,19 @@ const AdGroupsList = () => {
         },
         {
             title: 'Total Targets',
-            dataIndex: 'total_targets',
-            key: 'total_targets',
+            dataIndex: 'targetings_count',
+            key: 'targetings_count',
             width: '200px',
             sorter: true,
+            ...renderNumberField()
         },
         {
             title: 'Products',
-            dataIndex: 'products',
-            key: 'products',
+            dataIndex: 'product_ads_count',
+            key: 'product_ads_count',
             width: '200px',
             sorter: true,
+            ...renderNumberField()
         },
         impressionsColumn,
         clicksColumn,
