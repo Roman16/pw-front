@@ -23,9 +23,9 @@ import TableList from "../../components/TableList/TableList"
 const columns = [
     {
         title: 'Portfolio',
-        dataIndex: 'portfolio',
-        key: 'portfolio',
-        width: '200px',
+        dataIndex: 'portfolioName',
+        key: 'portfolioName',
+        width: '250px',
         sorter: true,
         locked: true,
         search: true,

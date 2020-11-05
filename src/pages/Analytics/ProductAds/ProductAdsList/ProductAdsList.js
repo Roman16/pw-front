@@ -23,6 +23,7 @@ import TableList from "../../components/TableList/TableList"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import {numberMask} from "../../../../utils/numberMask"
 
 
 const ProductAdsList = () => {
@@ -43,16 +44,17 @@ const ProductAdsList = () => {
             title: 'Product',
             dataIndex: 'product_name',
             key: 'product_name',
-            width: '250px',
+            width: '350px',
             sorter: true,
             locked: true,
             search: true,
-            render: (name, item) => <div className="product">
-                <img src={item.product_image} alt=""/>
+            noTotal: true,
+            render: (name, item) => <div className="product-field">
+                {item.product_image && <img src={item.product_image} alt=""/>}
 
                 <div className="col">
-                    <h4>{item.product_name}</h4>
-                    <p>{item.product_price}</p>
+                    <h4 title={item.product_name}>{item.product_name}</h4>
+                    <p>{item.product_price !== null && `$${numberMask(item.product_price, 2)}`}</p>
                 </div>
             </div>
         },
