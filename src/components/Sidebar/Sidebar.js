@@ -175,7 +175,7 @@ const Sidebar = () => {
                                 </ul>
                             </li>
 
-                            {!production && <li className="top-nav-item">
+                            {isAdmin && <li className="top-nav-item">
                                 <InformationTooltip
                                     type={'custom'}
                                     description={<Link to={'/analytics/products'}>Analytics</Link>}

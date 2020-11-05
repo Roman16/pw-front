@@ -132,6 +132,8 @@ const AuthorizedUser = (props) => {
             })
     }, [])
 
+    const isSuperAdmin = !!localStorage.getItem('adminToken')
+
     if (loadingUserInformation) {
         return (
             <RouteLoader/>
@@ -168,7 +170,7 @@ const AuthorizedUser = (props) => {
                                             if (bootstrapInProgress) {
                                                 return (<Redirect to={'/ppc/optimization-loading'}/>)
                                             } else {
-                                                if(!!localStorage.getItem('adminToken')) {
+                                                if(isSuperAdmin) {
                                                     return (<OptimizationFormAdmin/>)
                                                 } else {
                                                     return (<Optimization/>)
@@ -251,7 +253,7 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     {/*ANALYTICS*/}
-                                    <ConnectedAmazonRoute path="/analytics" component={Analytics}/>
+                                    {isSuperAdmin && <ConnectedAmazonRoute path="/analytics" component={Analytics}/>}
                                     {/*-------------------------------------------*/}
 
                                     <Route path={'*'} render={() => (
