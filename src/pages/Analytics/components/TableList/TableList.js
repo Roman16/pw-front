@@ -8,15 +8,20 @@ import {analyticsServices} from "../../../../services/analytics.services"
 import TableFilters from "../TableFilters/TableFilters"
 import DateRange from "../DateRange/DateRange"
 import ColumnsSelect from "../ColumnsSelect/ColumnsSelect"
+import axios from "axios"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
 }
 
+const CancelToken = axios.CancelToken
+let source = null
+
 const TableList = ({
                        columns,
                        fixedColumns,
-                       columnSelect = true
+                       columnSelect = true,
+                       dateRange = true
                    }) => {
 
     const [tableData, setTableData] = useState([]),
@@ -28,10 +33,13 @@ const TableList = ({
         }),
         [sorterColumn, setSorterColumn] = useState()
 
-    const {metricsValue, locationKey} = useSelector(state => ({
-        metricsValue: state.dashboard.allMetrics,
+    const {locationKey, mainState, selectedRangeDate} = useSelector(state => ({
         locationKey: state.analytics.location,
+        mainState: state.analytics.mainState,
+        selectedRangeDate: state.analytics.selectedRangeDate,
     }))
+
+    const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[locationKey])
 
     const columnsBlackList = useSelector(state => state.analytics.columnsBlackList[locationKey] || [])
     const filters = useSelector(state => state.analytics.filters[locationKey] || [])
@@ -76,9 +84,29 @@ const TableList = ({
 
         setFetchingStatus(true)
 
+        source && source.cancel()
+        source = CancelToken.source()
+
         try {
-            const res = await analyticsServices[`fetch${locationKey.capitalize()}List`](paginationParams, sorterColumn, filters)
-            setTableData(res.response)
+            const filtersWithState = [
+                ...filters,
+                ...Object.keys(mainState).map(key => ({
+                    filterBy: key,
+                    type: 'eq',
+                    value: mainState[key]
+                })).filter(item => !!item.value),
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+
+
+            const res = await analyticsServices.fetchTableData(locationKey, paginationParams, sorterColumn, filtersWithState, source.token)
+            if (res.response) {
+                setTableData(res.response)
+            }
 
             setPaginationParams({
                 ...paginationParams,
@@ -93,7 +121,15 @@ const TableList = ({
 
     useEffect(() => {
         getData()
-    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, filters])
+    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate])
+
+    useEffect(() => {
+        setPaginationParams({
+            ...paginationParams,
+            page: 1
+        })
+        getData()
+    }, [filters])
 
     return (
         <>
@@ -108,7 +144,7 @@ const TableList = ({
                     columnsBlackList={columnsBlackList}
                 />}
 
-                <DateRange/>
+                {dateRange && <DateRange/>}
             </div>
 
             <CustomTable
@@ -116,7 +152,7 @@ const TableList = ({
                 loading={fetchingStatus}
                 dataSource={tableData}
                 totalDataSource={{
-                    ..._.chain(metricsValue)
+                    ..._.chain(metricsState.allMetrics)
                         .keyBy('key')
                         .mapValues('metric_value')
                         .value(),

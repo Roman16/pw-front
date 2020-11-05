@@ -90,7 +90,8 @@ export const adminUrls = {
     userProductsList: 'admin/support-manager/userProducts',
     userPasswordById: userId => `admin/support-manager/user/${userId}/force-change-user-password`,
     userPasswordByEmail: `admin/support-manager/force-change-user-password-by-email`,
-    zthVersion: 'zero-to-hero/get-version'
+    zthVersion: 'zero-to-hero/get-version',
+    zthJobs: 'zero-to-hero/jobs',
 }
 
 export const daypartingUrls = {
@@ -117,14 +118,16 @@ export const zthUrls = {
 }
 
 export const analyticsUrls = {
-    adGroupsList: 'analytics/ad-group',
+    tableData: location => `analytics/${location}`,
+    campaignsTableList: 'analytics/campaigns',
+
     productsList: 'analytics/products',
-    campaignsList: 'analytics/campaigns',
     placementsList: 'analytics/placements',
     portfolioList: 'analytics/portfolio',
     targetingsList: 'analytics/targetings',
     negativeTargetingsList: 'analytics/negative-targetings',
     productAdsList: 'analytics/product-ads',
-    metricsData: 'ppc-automation/dashboard/metrics/list',
-    campaignInformation: id => `analytics/campaigns/${id}/details`,
+    metricsData: location =>  `analytics/${location}/metrics`,
+    chartData: location => `analytics/${location}/charts`,
+    campaignInformation: (state, id) => `analytics/${state}/${id}/details`,
 }

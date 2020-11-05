@@ -7,7 +7,7 @@ import DateRange from "../DateRange/DateRange"
 import {useDispatch, useSelector} from "react-redux"
 import {FilterItem} from "../../../PPCAutomate/Report/Filters/FilterItem"
 import {analyticsActions} from "../../../../actions/analytics.actions"
-import FilterWindow from "../../../PPCAutomate/Report/Filters/FiltersWindow"
+import FilterWindow from "./FilterWindow"
 import _ from 'lodash'
 
 const {Search} = Input
@@ -99,9 +99,10 @@ const TableFilters = ({columns, filters = []}) => {
                             setVisibleFilterPopover(false)
                         }}
                     />}
+                    getPopupContainer={(node) => node.parentNode}
                     destroyTooltipOnHide={true}
                     placement="bottomLeft"
-                    overlayClassName={'filter-popover'}
+                    overlayClassName={'filter-popover analytics-filter-popover'}
                     trigger="click"
                     visible={visibleFilterPopover}
                 >
@@ -127,9 +128,10 @@ const TableFilters = ({columns, filters = []}) => {
                                 addFilterHandler(filter)
                             }}
                         />}
+                        getPopupContainer={(node) => node.parentNode}
                         destroyTooltipOnHide={true}
                         placement="bottomLeft"
-                        overlayClassName={'filter-popover'}
+                        overlayClassName={'filter-popover analytics-filter-popover'}
                         trigger="click"
                         visible={indexSelectedFilter === index}
                     >

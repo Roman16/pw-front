@@ -1,10 +1,10 @@
-import api from './request';
-import axios from 'axios';
-import {userUrls} from '../constans/api.urls';
+import api from './request'
+import axios from 'axios'
+import {userUrls} from '../constans/api.urls'
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
-    : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+    : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
 
 export const userService = {
     login,
@@ -47,55 +47,55 @@ export const userService = {
     getBlogPosts,
     sendContactForm,
     sendFormToPartnerSupport
-};
+}
 
 function login(user) {
-    return api('post', userUrls.login, user);
+    return api('post', userUrls.login, user)
 }
 
 function loginWithAmazon(user) {
-    return api('post', userUrls.loginAmazon, user);
+    return api('post', userUrls.loginAmazon, user)
 }
 
 function regist(user) {
-    return api('post', userUrls.regist, user);
+    return api('post', userUrls.regist, user)
 }
 
 
 function sendEmailForResetPassword(email) {
-    return api('post', userUrls.resetEmail, email);
+    return api('post', userUrls.resetEmail, email)
 }
 
 function checkResetToken({userId, token}) {
-    return api('get', `${userUrls.checkToken}/${userId}/${token}`);
+    return api('get', `${userUrls.checkToken}/${userId}/${token}`)
 }
 
 function changeUserPassword({userId, token, newPassword}) {
-    return api('post', `${userUrls.resetPassword}/${userId}/${token}`, newPassword);
+    return api('post', `${userUrls.resetPassword}/${userId}/${token}`, newPassword)
 }
 
 function resendConfirmEmail() {
-    return api('post', userUrls.resendEmail);
+    return api('post', userUrls.resendEmail)
 }
 
 function confirmEmail({token}) {
-    return api('post', `${userUrls.confirmEmail}/${token}`, {token});
+    return api('post', `${userUrls.confirmEmail}/${token}`, {token})
 }
 
 function getUserInfo() {
-    return api('get', userUrls.allInfo);
+    return api('get', userUrls.allInfo)
 }
 
 function setMWS(data) {
-    return api('post', userUrls.mws, data);
+    return api('post', userUrls.mws, data)
 }
 
 function unsetMWS(id) {
-    return api('post', userUrls.deleteMws, id);
+    return api('post', userUrls.deleteMws, id)
 }
 
 function unsetPPC(id) {
-    return api('post', userUrls.deleteLwa, id);
+    return api('post', userUrls.deleteLwa, id)
 }
 
 function updateInformation({name, last_name, email, private_label_seller}) {
@@ -103,11 +103,11 @@ function updateInformation({name, last_name, email, private_label_seller}) {
         name,
         last_name,
         private_label_seller: private_label_seller ? 1 : 0
-    });
+    })
 }
 
 function updatePhoto(data) {
-    return api('post', userUrls.updatePhoto, data);
+    return api('post', userUrls.updatePhoto, data)
 }
 
 function changePassword({current_password, new_password, password_confirmation}) {
@@ -115,19 +115,19 @@ function changePassword({current_password, new_password, password_confirmation})
         current_password,
         password_confirmation,
         password: new_password
-    });
+    })
 }
 
 //-------------------------------------
 //-------------company-----------------
 function fetchCompanyInformation(cardId) {
-    return api('get', userUrls.companyInformation(cardId));
+    return api('get', userUrls.companyInformation(cardId))
 }
 
 function updateCompanyInformation(cardId, company) {
-    const data = company;
-    Object.keys(data).forEach((key) => (data[key] == null || data[key] === "") && delete data[key]);
-    return api('post', userUrls.companyInformation(cardId), data);
+    const data = company
+    Object.keys(data).forEach((key) => (data[key] == null || data[key] === "") && delete data[key])
+    return api('post', userUrls.companyInformation(cardId), data)
 }
 
 //-------------------------------------
@@ -135,85 +135,85 @@ function updateCompanyInformation(cardId, company) {
 //-------------------------------------
 //-------------payment-----------------
 function fetchBillingInformation() {
-    return api('get', userUrls.paymentMethodList);
+    return api('get', userUrls.paymentMethodList)
 }
 
 function addPaymentMethod(data) {
-    return api('post', userUrls.addPaymentMethod, data);
+    return api('post', userUrls.addPaymentMethod, data)
 }
 
 function updatePaymentMethod(card) {
-    const data = card;
-    Object.keys(data).forEach((key) => (data[key] == null || data[key] === "") && delete data[key]);
-    return api('post', userUrls.updatePaymentMethod(data.id), data);
+    const data = card
+    Object.keys(data).forEach((key) => (data[key] == null || data[key] === "") && delete data[key])
+    return api('post', userUrls.updatePaymentMethod(data.id), data)
 }
 
 function setDefaultPaymentMethod(id) {
-    return api('post', userUrls.setDefaultPaymentMethod(id));
+    return api('post', userUrls.setDefaultPaymentMethod(id))
 }
 
 function deletePaymentMethod(id) {
-    return api('post', userUrls.deletePaymentMethod(id));
+    return api('post', userUrls.deletePaymentMethod(id))
 }
 
 function fetchBillingHistory({page, pageSize}) {
-    return api('get', `${userUrls.paymentHistoryList}?page=${page}&size=${pageSize}`);
+    return api('get', `${userUrls.paymentHistoryList}?page=${page}&size=${pageSize}`)
 }
 
 function confirmPayment(data) {
-    return api('post', userUrls.confirm, data);
+    return api('post', userUrls.confirm, data)
 }
 
 //-------------------------------
 function startFreeTrial() {
-    return api('post', `${userUrls.freeTrial}`);
+    return api('post', `${userUrls.freeTrial}`)
 }
 
 //-------------------------------------
 //-------------subscription---------
 function getSubscription() {
-    return api('get', userUrls.subscriptionList);
+    return api('get', userUrls.subscriptionList)
 }
 
 function subscribe(data) {
-    return api('post', userUrls.subscribe(data.subscription_id), data);
+    return api('post', userUrls.subscribe(data.subscription_id), data)
 }
 
 function reactivateSubscription(data) {
-    return api('post', userUrls.reactivate(data.subscription_id), data);
+    return api('post', userUrls.reactivate(data.subscription_id), data)
 }
 
 function cancelSubscription(data) {
-    return api('post', userUrls.cancel(data.subscription_id), data);
+    return api('post', userUrls.cancel(data.subscription_id), data)
 }
 
 function updateSubscriptionStatus() {
-    return api('post', userUrls.updateStatus);
+    return api('post', userUrls.updateStatus)
 }
 
 function applyCoupon(id, planId, coupon) {
-    return api('post', `${userUrls.coupon(id)}?coupon_code=${coupon}&subscription_plan_id=${planId}`);
+    return api('post', `${userUrls.coupon(id)}?coupon_code=${coupon}&subscription_plan_id=${planId}`)
 }
 
 function getCouponStatus(coupon) {
-    return api('post', `${userUrls.couponStatus}?coupon_code=${coupon}`);
+    return api('post', `${userUrls.couponStatus}?coupon_code=${coupon}`)
 }
 
 //-------------------------------------
 function ebookOnSubscribe(email) {
-    return api('post', `${userUrls.ebookSubscribe}`, email);
+    return api('post', `${userUrls.ebookSubscribe}`, email)
 }
 
 function onSubscribe(email) {
-    return api('post', `${userUrls.userSubscribe}`, email);
+    return api('post', `${userUrls.userSubscribe}`, email)
 }
 
 function sendContacts(data) {
-    return api('post', `${userUrls.contacts}`, data);
+    return api('post', `${userUrls.contacts}`, data)
 }
 
 function sendContactForm(data) {
-    return api('post', `${userUrls.contactForm}`, {...data, page_url: window.location.href});
+    return api('post', `${userUrls.contactForm}`, {...data, page_url: window.location.href})
 }
 
 function sendFormToPartnerSupport(data) {
@@ -224,11 +224,12 @@ function sendFormToPartnerSupport(data) {
 function getStripeAvailableCountries() {
     return axios.get(`https://api.stripe.com/v1/country_specs?limit=100`, {
         headers: {'Authorization': `Bearer ${stripeKey}`}
-    });
+    })
 }
+
 //-------------------------------------
 function getBlogPosts() {
-    return axios.get(`https://blog.profitwhales.com/wp-json/wp/v2/posts?per_page=3`);
+    return axios.get(`https://blog.profitwhales.com/wp-json/wp/v2/posts?per_page=3`)
 }
 
 

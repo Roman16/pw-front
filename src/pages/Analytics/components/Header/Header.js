@@ -14,7 +14,7 @@ const Header = ({location}) => {
         mainState: state.analytics.mainState
     }))
 
-    const [name, setName] = useState(mainState.name)
+    const [stateName, setStateName] = useState(mainState.name)
 
     const setMainState = (state, url, location) => {
         dispatch(analyticsActions.setMainState(state))
@@ -24,17 +24,30 @@ const Header = ({location}) => {
 
     const getStateInformation = async () => {
         try {
-            const res = await analyticsServices.getCampaignInformation(mainState.campaignId)
+            const idArr = Object.keys(mainState).filter(item => item !== 'name')
+            const res = await Promise.all(idArr.map((key) => analyticsServices.fetchStateInformation(key, mainState[key])))
 
-            setName(res.response.name)
+            let stateNameValue = {}
+
+            idArr.forEach((key, index) => {
+                stateNameValue[`${key.split('Id')[0]}Name`] = res[index].response.name
+            })
+
+            setStateName(stateNameValue)
         } catch (e) {
             console.log(e)
         }
     }
 
+    const goToDefaultPage = () => {
+        dispatch(analyticsActions.setMainState(undefined))
+        dispatch(analyticsActions.setLocation('products'))
+        history.push('/analytics/products')
+    }
+
     useEffect(() => {
         if (mainState.name) {
-            setName(mainState.name)
+            setStateName(mainState.name)
         }
 
         if (mainState.campaignId) {
@@ -53,8 +66,11 @@ const Header = ({location}) => {
                     </i>
                 </li>
 
-                <li onClick={() => setMainState({campaignId: mainState.campaignId}, `/analytics/ad-groups?campaignId=${mainState.campaignId}`)}>
-                    {mainState.campaignId}
+                <li onClick={() => setMainState({
+                    campaignId: mainState.campaignId,
+                    name: {campaignName: stateName.campaignName}
+                }, `/analytics/ad-groups?campaignId=${mainState.campaignId}`, 'ad-groups')}>
+                    {stateName.campaignName}
 
                     <i>
                         <SVG id={'right-steps-arrow'}/>
@@ -62,7 +78,7 @@ const Header = ({location}) => {
                 </li>
 
                 <li>
-                    {mainState.adGroupId}
+                    {stateName.adGroupName}
 
                     <i>
                         <SVG id={'right-steps-arrow'}/>
@@ -81,7 +97,7 @@ const Header = ({location}) => {
                     </li>
 
                     <li>
-                        {name}
+                        {stateName.campaignName}
 
                         <i>
                             <SVG id={'right-steps-arrow'}/>
@@ -140,7 +156,7 @@ const Header = ({location}) => {
 
     return (
         <section className="analytics-header">
-            <div className="title">
+            <div className="title" onClick={goToDefaultPage}>
                 <SVG id={'analytics-icon'}/>
                 <h1>Analytics</h1>
             </div>

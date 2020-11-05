@@ -1,0 +1,235 @@
+.optimization-settings-section {
+  background: #FFFFFF;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  margin-bottom: 10px;
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2857142857142858rem 1.4285714285714286rem;
+    border-bottom: 2px solid #C9CBD4;
+
+    h2 {
+      font-size: 1.4285714285714286rem;
+      line-height: 1.4285714285714286rem;
+      color: #363694;
+      margin: 0;
+    }
+
+    .btn {
+      height: 2.2857142857142856rem;
+      font-size: 0.8571428571428571rem;
+      font-weight: 600;
+      padding: 0 15px;
+      background: #343C5A;
+
+      &:hover {
+        background: #232B46;
+      }
+
+      &:disabled {
+        background: #C9CBD4;
+      }
+
+      & > i {
+        width: 1.4285714285714286rem;
+        height: 1.4285714285714286rem;
+        margin: 0 10px 0 0;
+        padding: 1px 0 0 0;
+
+        .ant-spin-dot-item {
+          background: #fff;
+        }
+      }
+    }
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 0.5px solid #C9CBD4;
+
+    &:last-child {
+      border: 0;
+    }
+  }
+
+  .form-group {
+    display: flex;
+    align-items: stretch;
+    padding: 0 1.4285714285714286rem;
+
+    &:first-child {
+      border-right: 2px solid #C9CBD4;
+    }
+
+    .label {
+      width: 40%;
+      min-width: 220px;
+      min-height: 100%;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #343C5A;
+      padding-right: 30px;
+      margin: 0 20px 0 0;
+      border-right: 0.5px solid #C9CBD4;
+      display: flex;
+      align-items: center;
+
+      a {
+        font-weight: 400;
+        font-size: 12px;
+        text-decoration-line: underline;
+        color: #6D6DF6;
+        margin: 2px 0 0 5px;
+      }
+    }
+
+    h4 {
+      font-size: 0.8571428571428571rem;
+      color: #656A84;
+      margin: auto 0 auto 1.4285714285714286rem;
+    }
+
+    .product-price {
+      font-size: 1rem;
+      color: #343C5A;
+      margin: auto 0;
+    }
+
+    .InputCurrency, .custom-select {
+      height: 2.2857142857142856rem;
+      margin: 9px 0;
+      width: 30%;
+
+      input {
+        font-size: 1rem;
+      }
+    }
+
+    .ant-select-selection-selected-value {
+      i {
+        display: flex;
+        align-items: center;
+        margin: 0 5px 0 0;
+      }
+    }
+
+    .ant-select-dropdown {
+      li {
+        display: flex;
+        align-items: center;
+
+        i {
+          margin: 0 5px 0 0;
+          display: flex;
+          align-items: center;
+          fill: #C9CBD4 !important;
+        }
+
+        &:nth-child(2):hover {
+          i {
+            fill: #EC7F5C !important;
+          }
+        }
+
+        &:nth-child(3):hover {
+          i {
+            fill: #6D6DF6 !important;
+          }
+        }
+
+        &:nth-child(4):hover {
+          i {
+            fill: #7DD4A1 !important;
+          }
+        }
+
+        &:nth-child(5):hover {
+          i {
+            fill: #F0B849 !important;
+          }
+        }
+
+        &:nth-child(6):hover {
+          i {
+            fill: #4DBEE1 !important;
+          }
+        }
+
+      }
+    }
+
+    .InputCurrency {
+      max-width: 120px;
+    }
+  }
+
+
+  @media (max-width: 1400px) {
+    .row {
+      grid-template-columns: 60% 40%;
+    }
+
+    .form-group {
+      .label {
+        width: 30%;
+        min-width: 150px;
+      }
+    }
+  }
+}
+
+.disabled .optimization-settings-section {
+  .form-group {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #C9CBD4;
+      opacity: 0.2;
+      border-radius: 4px;
+      z-index: 100;
+    }
+
+    .label {
+      color: #C9CBD4;
+
+      a {
+
+      }
+    }
+
+    p, h4 {
+      color: #C9CBD4;
+    }
+
+    .InputCurrency {
+      .Dollar {
+        svg {
+          filter: grayscale(100%);
+          opacity: .3;
+        }
+      }
+    }
+  }
+
+  .row:nth-child(2) {
+    .form-group:nth-child(1) {
+      &::before {
+        display: none;
+      }
+
+      .label {
+        color: #343C5A;
+      }
+    }
+  }
+}

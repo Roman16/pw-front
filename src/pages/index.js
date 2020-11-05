@@ -20,6 +20,7 @@ const Marketing = React.lazy(() => import('./ZeroToHero/Marketing/Marketing'))
 const CreatingCampaign = React.lazy(() => import('./ZeroToHero/CreatingCampaign/CreatingCampaign'))
 const Settings = React.lazy(() => import('./ZeroToHero/Settings/Settings'))
 const Optimization = React.lazy(() => import('./PPCAutomate/Optimization/Optimization'))
+const OptimizationFormAdmin = React.lazy(() => import('./PPCAutomate/OptimizationForAdmin/OptimizationForAdmin'))
 const Report = React.lazy(() => import('./PPCAutomate/Report/Report'))
 const ProductSettings = React.lazy(() => import('./PPCAutomate/ProductSettings/ProductSettings'))
 const Dashboard = React.lazy(() => import('./PPCAutomate/Dashboard/Dashboard'))
@@ -34,6 +35,7 @@ const ApiConnection = React.lazy(() => import('./Account/ApiConnection/ApiConnec
 const Subscription = React.lazy(() => import('./Account/Subscription/Subscription'))
 const Home = React.lazy(() => import('./Home/Home'))
 const Scanner = React.lazy(() => import('./PPCAutomate/Scanner/Scanner'))
+const ListingTracking = React.lazy(() => import('./Notifications/ListingTracking/ListingTracking'))
 const Dayparting = React.lazy(() => import('./PPCAutomate/Dayparting/Dayparting'))
 const AdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'))
 const FullJourney = React.lazy(() => import('./authentication/AccountBinding/FullJourney/FullJourney'))
@@ -57,6 +59,7 @@ function throttle(func, delay) {
 }
 
 const developer = process.env.REACT_APP_ENV === "developer"
+const isSuperAdmin = !!localStorage.getItem('adminToken')
 
 
 const AdminRoute = (props) => {
@@ -129,6 +132,8 @@ const AuthorizedUser = (props) => {
             })
     }, [])
 
+    const isSuperAdmin = !!localStorage.getItem('adminToken')
+
     if (loadingUserInformation) {
         return (
             <RouteLoader/>
@@ -165,7 +170,11 @@ const AuthorizedUser = (props) => {
                                             if (bootstrapInProgress) {
                                                 return (<Redirect to={'/ppc/optimization-loading'}/>)
                                             } else {
-                                                return (<Optimization/>)
+                                                if(isSuperAdmin) {
+                                                    return (<OptimizationFormAdmin/>)
+                                                } else {
+                                                    return (<Optimization/>)
+                                                }
                                             }
                                         }}
                                     />
@@ -239,9 +248,12 @@ const AuthorizedUser = (props) => {
 
                                     <ConnectedAmazonRoute exact path="/zero-to-hero/settings" component={Settings}/>
                                     {/*-------------------------------------------*/}
+                                    <ConnectedAmazonRoute exact path="/notifications/listing-tracking" component={ListingTracking}/>
+
+                                    {/*-------------------------------------------*/}
 
                                     {/*ANALYTICS*/}
-                                    {developer && <ConnectedAmazonRoute path="/analytics" component={Analytics}/>}
+                                    {isSuperAdmin && <ConnectedAmazonRoute path="/analytics" component={Analytics}/>}
                                     {/*-------------------------------------------*/}
 
                                     <Route path={'*'} render={() => (

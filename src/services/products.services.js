@@ -13,6 +13,7 @@ export const productsServices = {
     updateProductTargetAcos,
     getCampaignsSettings,
     updateCampaignsBlacklist,
+    updateProductSettingsById
 }
 
 function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0, cancelToken}) {
@@ -37,6 +38,18 @@ function updateProductSettings(parameters) {
         'cogs': parameters.cogs,
         'advertising_strategy': parameters.advertising_strategy,
         'bsr_tracking': parameters.bsr_tracking,
+    })
+}
+
+function updateProductSettingsById(parameters) {
+    return api('post', `${productsUrls.updateSettings}/${parameters.product_id}`, {
+        'product_margin_value': parameters.product_margin_value,
+        'item_price': parameters.item_price,
+        'item_price_from_user': parameters.item_price_from_user,
+        'min_bid_manual_campaign': parameters.min_manual_bid,
+        'max_bid_manual_campaign': parameters.max_manual_bid,
+        'min_bid_auto_campaign': parameters.min_auto_bid,
+        'max_bid_auto_campaign': parameters.max_auto_bid,
     })
 }
 

@@ -112,11 +112,11 @@ const Header = ({type = 'light', page}) => {
                                         <ul className="sub-menu">
                                             <li><NavLink to='/'>PPC Automate</NavLink></li>
                                             {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
-                                            <li><NavLink to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
+                                            <li className="soon"><NavLink disabled to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
                                             <li className="soon"><a href='#'>Analytics</a></li>
                                         </ul>
                                     </li>
-                                    <li><NavLink to={'/pricing'}>Pricing</NavLink></li>
+                                    {/*<li><NavLink to={'/pricing'}>Pricing</NavLink></li>*/}
                                     <li><NavLink to="/contact-us">Contact us</NavLink></li>
                                     <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
                                         <ul className="sub-menu">
@@ -126,7 +126,7 @@ const Header = ({type = 'light', page}) => {
                                             </li>
                                         </ul>
                                     </li>
-                                    <li><NavLink to="/videos">How it works</NavLink></li>
+                                    {/*<li><NavLink to="/videos">How it works</NavLink></li>*/}
                                 </ul>
                             </nav>
                         </div>
@@ -172,11 +172,11 @@ const Header = ({type = 'light', page}) => {
                         <ul className="sub-menu">
                             <li><NavLink to='/'>PPC Automate</NavLink></li>
                             {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
-                            <li><NavLink to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
+                            <li className="soon"><NavLink disabled to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
                             <li className="soon"><a href='#'>Analytics</a></li>
                         </ul>
                     </li>
-                    <li><NavLink to={'/pricing'}>Pricing</NavLink></li>
+                    {/*<li><NavLink to={'/pricing'}>Pricing</NavLink></li>*/}
                     <li><NavLink to="/contact-us">Contact us</NavLink></li>
                     <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
                         <ul className="sub-menu">
@@ -186,7 +186,7 @@ const Header = ({type = 'light', page}) => {
                             </li>
                         </ul>
                     </li>
-                    <li><NavLink to="/videos">How it works</NavLink></li>
+                    {/*<li><NavLink to="/videos">How it works</NavLink></li>*/}
                 </ul>
             </nav>
         </>

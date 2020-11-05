@@ -40,13 +40,13 @@ const CampaignsList = () => {
             title: 'Campaign',
             dataIndex: 'name',
             key: 'name',
-            width: '250px',
+            width: '350px',
             sorter: true,
             locked: true,
             search: true,
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
-                onClick={() => setStateHandler('adGroups', {name: item.name, campaignId: item.campaignId})}
+                onClick={() => setStateHandler('ad-groups', {name: {campaignName: item.name}, campaignId: item.campaignId})}
                 title={campaign}
             >
                 {campaign}
@@ -63,6 +63,7 @@ const CampaignsList = () => {
             width: '150px',
             sorter: true,
             locked: true,
+            filter: true,
             render: (type) => <span className={'type'}>{type}</span>
         },
         {
@@ -73,6 +74,7 @@ const CampaignsList = () => {
             sorter: true,
             locked: true,
             noTotal: true,
+            filter: true,
             render: (budget) => <InputCurrency disabled value={budget}/>
         },
         {
@@ -82,11 +84,15 @@ const CampaignsList = () => {
             width: '150px',
             sorter: true,
             locked: true,
+            filter: true,
             render: (portfolio, item) => (
                 <Link
                     to={`/analytics/campaigns?portfolioId=${item.portfolioId}`}
                     title={portfolio}
-                    onClick={() => setStateHandler('campaigns')}
+                    onClick={() => setStateHandler('campaigns', {
+                        name: item.portfolioName,
+                        portfolioId: item.portfolioId
+                    })}
                 >
                     {portfolio}
                 </Link>
@@ -118,6 +124,13 @@ const CampaignsList = () => {
             key: 'bidding_strategy',
             width: '250px',
             sorter: true,
+            filter: true,
+            render: (text) => <>
+                {text === 'legacyForSales' && 'Legacy For Sales'}
+                {text === 'autoForSales' && 'Auto For Sales'}
+                {text === 'manual' && 'Manual'}
+                {(text !== 'manual' && text !== 'autoForSales' && text !== 'legacyForSales') && text}
+            </>
         },
         impressionsColumn,
         clicksColumn,

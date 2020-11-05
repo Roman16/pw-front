@@ -1,8 +1,8 @@
-import React from "react"
+import React, {useEffect} from "react"
 import CustomTable from "../../../../components/Table/CustomTable"
 import './Jobs.less'
-import {Input, Tabs} from "antd"
-import SemanticCore from "../ConvertSemanticCore/SemanticCore"
+import {adminServices} from "../../../../services/admin.services"
+import moment from "moment"
 
 const columns = [
     {
@@ -13,68 +13,97 @@ const columns = [
     },
     {
         title: 'Scheduled At',
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'createdAt',
+        key: 'createdAt',
         minWidth: '150px',
+        render: date => moment.utc(date).local().format('ddd MMM DD YYYY HH:mm:ss')
     },
     {
         title: 'Updated At',
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'updatedAt',
+        key: 'updatedAt',
         minWidth: '150px',
+        render: date => moment.utc(date).local().format('ddd MMM DD YYYY HH:mm:ss')
     },
     {
         title: 'Title',
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'title',
+        key: 'title',
         minWidth: '250px',
     },
     {
         title: 'Status',
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'status',
+        key: 'status',
         minWidth: '100px',
+        render: status => (
+            <>
+                {status === 'DONE' && <span style={{color: 'green'}}>DONE</span>}
+                {status === 'FAILED' && <span style={{color: 'red'}}>FAILED</span>}
+            </>
+        )
     },
     {
         title: 'Google Spreadsheet URL',
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'googleSpreadsheetUrl',
+        key: 'googleSpreadsheetUrl',
         minWidth: '200px',
+        render: link => (
+            link ? <a target={'_blank'} href={link}>Open</a> : <span>No Link</span>
+        )
     },
     {
         title: 'Input Parameters',
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'inputParametersLinkElement',
+        key: 'inputParametersLinkElement',
         minWidth: '150px',
+        render: (input, item) => (
+            <a onclick="${this._saveInputParametersForJobFuncName}(${jobData.id})">Download</a>
+        )
     },
     {
         title: 'Product Report',
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'productReportLinkElement',
+        key: 'productReportLinkElement',
         minWidth: '150px',
     },
     {
         title: 'Search Term Report',
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'searchTermLinkElement',
+        key: 'searchTermLinkElement',
         minWidth: '150px',
     },
     {
         title: 'Actions',
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'restartJobButton',
+        key: 'restartJobButton',
         minWidth: '100px',
     },
     {
         title: 'Error',
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'errorText',
+        key: 'errorText',
         minWidth: '100px',
     },
 ]
 
 const Jobs = () => {
-    return(
+
+    const getData = async () => {
+        try {
+            const res = await adminServices.fetchZthJobs()
+
+            console.log(res)
+        } catch (e) {
+
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    return (
         <section className={'zth-jobs'}>
             <CustomTable
                 // loading={processing}

@@ -43,12 +43,12 @@ const Footer = () => (
 
                     <ul>
                         <li><Link to={'/'}>PPC Optimization</Link></li>
-                        <li><Link to={'/zero-to-hero-info'}>Zero To Hero</Link></li>
+                        {/*<li><Link to={'/zero-to-hero-info'}>Zero To Hero</Link></li>*/}
                     </ul>
                 </div>
 
                 <div className="col">
-                    <h4><Link to={'/pricing'}>Pricing</Link></h4>
+                    {/*<h4><Link to={'/pricing'}>Pricing</Link></h4>*/}
                 </div>
 
                 <div className="col">
@@ -69,7 +69,7 @@ const Footer = () => (
                 </div>
 
                 <div className="col">
-                    <h4><Link to={'/videos'}>How it works</Link></h4>
+                    {/*<h4><Link to={'/videos'}>How it works</Link></h4>*/}
                 </div>
 
                 <div className="col">

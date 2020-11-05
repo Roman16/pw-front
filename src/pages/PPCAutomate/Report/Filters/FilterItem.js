@@ -9,6 +9,13 @@ const valueTile = {
     'ad_group': 'Ad Group',
     'product_ad': 'Product Ad',
     //---------------------------
+    'auto': 'Auto',
+    'manual': 'Manual',
+    'enabled': 'Enabled',
+    'inactive': 'Inactive',
+    'paused': 'Paused',
+    'archived': 'Archived',
+    //---------------------------
     //reason
     'adjusted_bid': 'Adjusted bid',
     'activating_keyword': 'Activating keyword / PT',
@@ -18,7 +25,9 @@ const valueTile = {
     'duplicate_keyword_pt': 'Duplicate keyword / PT',
     'created_campaign': 'Created campaign',
     'created_ad_group': 'Created ad group',
-    'created_product_ad': 'Created product ad'
+    'created_product_ad': 'Created product ad',
+    'legacyForSales': 'Legacy For Sales',
+    'autoForSales': 'Auto For Sales',
 }
 
 const numberMark = {
@@ -40,9 +49,31 @@ const columnTitle = {
     'impressions': 'Impressions',
     'clicks': 'Clicks',
     'spend': 'Spend',
+    'roas': 'ROAS',
+    'sales_share': 'Sales Share',
     'sales': 'Sales',
+    'ordered_quantity': 'Ad Orders',
+    'cpa': 'CPA',
     'acos': 'ACoS',
     'keyword_id': 'Keyword ID',
+    'profit': 'Ad Profit',
+    'ad_profit': 'Ad Profit',
+    'cost': 'Ad Spend',
+    'ctr': 'CTR',
+    'portfolioName': 'Portfolio',
+    'conversion_rate': 'Ad CVR',
+    'cpc': 'CPC',
+    'type': 'Reason',
+    'dailyBudget': 'Budget',
+    'targetingType': 'Type',
+    'budget_allocation': 'Budget Allocation',
+    'attributedUnitsOrdered30d': 'Ad Units',
+    'attributedSales30d': 'Ad Sales',
+    'attributedConversions30d': 'Ad Orders',
+    'bidding_strategy': 'Campaign bidding strategy',
+    'campaignName': 'Campaign',
+    'defaultBid': 'Default bid',
+    'adGroupName': 'Ad Group',
 }
 
 
@@ -53,7 +84,7 @@ export const FilterItem = ({filter}) => {
                 {`${filter.value.startDate === 'lifetime' ? 'lifetime' : moment(filter.value.startDate).format('MMM DD, YYYY')} - ${filter.value.endDate === 'lifetime' ? 'lifetime' : moment(filter.value.endDate).format('MMM DD, YYYY')}`}
             </>
         )
-    } else if (filter.filterBy === 'object' || filter.filterBy === 'keyword_pt' || filter.filterBy === 'campaign_name' || filter.filterBy === 'ad_group_name') {
+    } else if (filter.filterBy === 'object' || filter.filterBy === 'campaignName'|| filter.filterBy === 'adGroupName' || filter.filterBy === 'keyword_pt' || filter.filterBy === 'portfolioName' || filter.filterBy === 'campaign_name' || filter.filterBy === 'ad_group_name') {
         return (
             <>
                 {`${columnTitle[filter.filterBy]} ${filter.type.key}: ${filter.value}`}
@@ -65,7 +96,27 @@ export const FilterItem = ({filter}) => {
                 {`${columnTitle[filter.filterBy]} is one of: ${filter.value.map(item => valueTile[item]).join(', ')}`}
             </>
         )
-    } else if (filter.filterBy === 'impressions' || filter.filterBy === 'clicks' || filter.filterBy === 'spend' || filter.filterBy === 'sales' || filter.filterBy === 'acos') {
+    } else if (filter.filterBy === 'impressions' ||
+        filter.filterBy === 'clicks' ||
+        filter.filterBy === 'spend' ||
+        filter.filterBy === 'sales' ||
+        filter.filterBy === 'sales_share' ||
+        filter.filterBy === 'acos' ||
+        filter.filterBy === 'roas' ||
+        filter.filterBy === 'cpa' ||
+        filter.filterBy === 'cpc' ||
+        filter.filterBy === 'cost' ||
+        filter.filterBy === 'ctr' ||
+        filter.filterBy === 'conversion_rate' ||
+        filter.filterBy === 'attributedUnitsOrdered30d' ||
+        filter.filterBy === 'attributedConversions30d' ||
+        filter.filterBy === 'attributedSales30d' ||
+        filter.filterBy === 'budget_allocation' ||
+        filter.filterBy === 'dailyBudget' ||
+        filter.filterBy === 'defaultBid' ||
+        filter.filterBy === 'ordered_quantity' ||
+        filter.filterBy === 'ad_profit' ||
+        filter.filterBy === 'profit') {
         return (
             <>
                 {`${columnTitle[filter.filterBy]} ${numberMark[filter.type.key]} ${filter.value}`}
@@ -77,10 +128,10 @@ export const FilterItem = ({filter}) => {
                 {`${columnTitle[filter.filterBy]} = ${filter.value}`}
             </>
         )
-    } else if (filter.filterBy === 'type') {
+    } else if (filter.type.key === 'one_of') {
         return (
             <>
-                Reason is one of: {filter.value.map(item => valueTile[item]).join(', ')}
+                {columnTitle[filter.filterBy]} is one of: {filter.value.map(item => valueTile[item]).join(', ')}
             </>
         )
     }

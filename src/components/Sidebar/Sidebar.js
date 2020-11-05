@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Link, NavLink} from "react-router-dom"
 import {regionsMenu, ppcAutomateMenu} from "./menu"
@@ -17,9 +17,11 @@ const devicePixelRatio = window.devicePixelRatio
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
         [automate, setAutomate] = useState(true),
+        [isAdmin, setAdminStatus] = useState(false),
         [subMenuState, setSubMenuState] = useState({
             zth: false,
-            ppc: false
+            ppc: false,
+            notifications: false
         }),
         [regions] = useState(regionsMenu),
         dispatch = useDispatch(),
@@ -59,6 +61,14 @@ const Sidebar = () => {
             history.push('/admin-panel/general')
         }
     }
+
+    useEffect(() => {
+        if(localStorage.getItem('adminToken')) {
+            setAdminStatus(true)
+        } else {
+            setAdminStatus(false)
+        }
+    }, [user])
 
     return (
         <>
@@ -134,7 +144,7 @@ const Sidebar = () => {
 
                                             <span className="top-span">
                                         Zero to Hero
-                                        {/*<span className="new-fiches">new</span>*/}
+                                                {/*<span className="new-fiches">new</span>*/}
                                 </span>
                                         </NavLink>
                                     </div>
@@ -165,7 +175,7 @@ const Sidebar = () => {
                                 </ul>
                             </li>
 
-                            {!production && <li className="top-nav-item">
+                            {isAdmin && <li className="top-nav-item">
                                 <InformationTooltip
                                     type={'custom'}
                                     description={<Link to={'/analytics/products'}>Analytics</Link>}
@@ -259,6 +269,59 @@ const Sidebar = () => {
                                     ))}
                                 </ul>
                             </li>
+
+
+                            {isAdmin && <li className="top-nav-item ">
+                                <InformationTooltip
+                                    type={'custom'}
+                                    description={<ul className="collapsed-automate-list">
+                                        <li className="automate-item">
+                                            <NavLink
+                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                                activeClassName="automate-link-active"
+                                                exact
+                                                to={'/notifications/listing-tracking'}
+                                            >
+                                                Listing Tracking
+                                            </NavLink>
+                                        </li>
+                                    </ul>}
+                                    position={'rightTop'}
+                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}
+                                >
+                                    <div onClick={() => toggleSubMenu('notifications')} className={'has-child'}>
+                                        <NavLink
+                                            className="top-nav-link"
+                                            activeClassName="top-nav-link-active"
+                                            to="/notifications"
+                                            replace
+                                            disabled
+                                        >
+                                            <div className="link-icon">
+                                                <SVG id='notification-menu-icon'/>
+                                            </div>
+
+                                            <span className="top-span">
+                                                 Notifications
+                                            </span>
+                                        </NavLink>
+                                    </div>
+                                </InformationTooltip>
+
+                                <ul className={`automate-list ${subMenuState.notifications ? 'opened' : 'closed'}`}>
+                                    <li className="automate-item">
+                                        <NavLink
+                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                            activeClassName="automate-link-active"
+                                            exact
+                                            to={'/notifications/listing-tracking'}
+                                        >
+                                            Listing Tracking
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            </li>
+                            }
                         </ul>
                     </nav>
 

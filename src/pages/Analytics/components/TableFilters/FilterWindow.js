@@ -1,11 +1,11 @@
-import React, {useState} from "react";
-import CustomSelect from "../../../../components/Select/Select";
-import DatePicker from "../../../../components/DatePicker/DatePickerRange";
-import TreeSelect from "../../../../components/TreeSelect/TreeSelect";
-import {Input, Select} from "antd";
-import InputCurrency from "../../../../components/Inputs/InputCurrency";
+import React, {useEffect, useState} from "react"
+import CustomSelect from "../../../../components/Select/Select"
+import DatePicker from "../../../../components/DatePicker/DatePickerRange"
+import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
+import {Input, Select} from "antd"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
 
-const Option = Select.Option;
+const Option = Select.Option
 
 const numberVariations = [
     {label: 'Greater than', key: 'gt'},
@@ -123,24 +123,54 @@ const reasonList = [
 const containsVariations = {
     'datetime': [{label: 'In', key: 'in'}],
     'object': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
+    'campaignName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
+    'adGroupName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'object_type': [{label: 'Is one of', key: 'one_of'}],
     'keyword_pt': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'match_type': [{label: 'Is one of', key: 'one_of'}],
+    'targetingType': [{label: 'Is one of', key: 'one_of'}],
     'campaign_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
+    'portfolioName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'ad_group_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'impressions': numberVariations,
     'clicks': numberVariations,
     'spend': numberVariations,
     'sales': numberVariations,
     'acos': numberVariations,
+    'profit': numberVariations,
+    'ad_profit': numberVariations,
+    'budget_allocation': numberVariations,
+    'ordered_quantity': numberVariations,
+    'attributedConversions30d': numberVariations,
+    'sales_share': numberVariations,
+    'cpa': numberVariations,
+    'conversion_rate': numberVariations,
+    'cpc': numberVariations,
+    'ctr': numberVariations,
+    'dailyBudget': numberVariations,
+    'cost': numberVariations,
+    'roas': numberVariations,
+    'defaultBid': numberVariations,
+    'attributedUnitsOrdered30d': numberVariations,
+    'attributedSales30d': numberVariations,
     'type': [{label: 'Is one of', key: 'one_of'}],
+    'state': [{label: 'Is one of', key: 'one_of'}],
+    'bidding_strategy': [{label: 'Is one of', key: 'one_of'}],
     'campaign': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}]
-};
+}
 
-const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
+const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editFilter}) => {
     const [filterBy, setFilterBy] = useState(),
         [filterType, setFilterType] = useState(),
-        [filterValue, setFilterValue] = useState();
+        [filterValue, setFilterValue] = useState()
+
+    useEffect(() => {
+        if (editFilter && editFilter.filterBy) {
+            setFilterBy(editFilter.filterBy)
+            setFilterType(editFilter.type)
+            setFilterValue(editFilter.value)
+        }
+    }, [editFilter])
 
 
     const multiSelectVariations = {
@@ -154,6 +184,21 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
         'match_type': [
             {title: 'Keyword', key: 'keyword', value: 'keyword'},
             {title: 'PT', key: 'pt', value: 'pt'},
+        ],
+        'targetingType': [
+            {title: 'Manual', key: 'manual', value: 'manual'},
+            {title: 'Auto', key: 'auto', value: 'auto'},
+        ],
+        'state': [
+            {title: 'Enabled', key: 'enabled', value: 'enabled'},
+            {title: 'Inactive', key: 'inactive', value: 'inactive'},
+            {title: 'Paused', key: 'paused', value: 'paused'},
+            {title: 'Archived', key: 'archived', value: 'archived'},
+        ],
+        'bidding_strategy': [
+            {title: 'Legacy For Sales', key: 'legacyForSales', value: 'legacyForSales'},
+            {title: 'Auto For Sales', key: 'autoForSales', value: 'autoForSales'},
+            {title: 'Manual', key: 'manual', value: 'manual'},
         ],
         'type':
             currentTab === 'targeting-improvements' ? [
@@ -194,13 +239,13 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
                         {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
                         {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
                     ]
-    };
+    }
 
     const changeFilterByHandler = (value) => {
-        setFilterBy(value);
+        setFilterBy(value)
         setFilterType(containsVariations[value][0])
         setFilterValue(null)
-    };
+    }
 
     const changeTypeHandler = (value) => {
         setFilterType(containsVariations[filterBy].find(item => item.key === value))
@@ -211,7 +256,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
     }
 
     const submitHandler = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         onAddFilter({
             filterBy: filterBy,
@@ -219,10 +264,10 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
             value: filterValue
         })
 
-        setFilterBy(undefined);
-        setFilterType(undefined);
-        setFilterValue(undefined);
-    };
+        setFilterBy(undefined)
+        setFilterType(undefined)
+        setFilterValue(undefined)
+    }
 
     return (<form className="filter-variables" onSubmit={submitHandler}>
         <div className="row">
@@ -266,6 +311,9 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
                 {(!filterType ||
                     filterBy === 'object' ||
                     filterBy === 'keyword_pt' ||
+                    filterBy === 'campaignName' ||
+                    filterBy === 'adGroupName' ||
+                    filterBy === 'portfolioName' ||
                     filterBy === 'campaign_name' ||
                     filterBy === 'ad_group_name'
                 ) &&
@@ -276,27 +324,46 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
                     onChange={(e) => changeValueHandler(e.target.value)}
                 />}
 
-                {(filterBy === 'clicks' || filterBy === 'impressions') &&
+                {(filterBy === 'clicks' ||
+                    filterBy === 'attributedConversions30d' ||
+                    filterBy === 'attributedUnitsOrdered30d' ||
+                    filterBy === 'impressions') &&
                 <Input
                     disabled={!filterBy}
                     value={filterValue}
-                    placeholder={'Type'}
+                    placeholder={'Enter number'}
                     type={'number'}
                     onChange={(e) => changeValueHandler(e.target.value)}
                 />}
 
-                {(filterBy === 'acos') &&
+                {(filterBy === 'acos' ||
+                    filterBy === 'sales_share' ||
+                    filterBy === 'conversion_rate' ||
+                    filterBy === 'roas' ||
+                    filterBy === 'ctr' ||
+                    filterBy === 'budget_allocation'
+                ) &&
                 <InputCurrency
                     typeIcon='percent'
-                    placeholder={'Type'}
+                    placeholder={'Enter number'}
                     value={filterValue}
                     onChange={changeValueHandler}
                 />}
 
-                {(filterBy === 'spend' || filterBy === 'sales') &&
+                {(filterBy === 'spend' ||
+                    filterBy === 'cpa' ||
+                    filterBy === 'cpc' ||
+                    filterBy === 'cost' ||
+                    filterBy === 'profit' ||
+                    filterBy === 'ad_profit' ||
+                    filterBy === 'defaultBid' ||
+                    filterBy === 'attributedSales30d' ||
+                    filterBy === 'dailyBudget' ||
+                    filterBy === 'sales'
+                ) &&
                 <InputCurrency
                     value={filterValue}
-                    placeholder={'Type'}
+                    placeholder={'Enter number'}
                     onChange={changeValueHandler}
                 />}
 
@@ -320,4 +387,4 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab}) => {
     </form>)
 }
 
-export default FilterWindow;
+export default FilterWindow

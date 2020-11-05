@@ -1,0 +1,137 @@
+.strategies-description-drawer {
+  .ant-drawer-body {
+    padding: 0;
+  }
+
+  .header-block {
+    position: sticky;
+    top: 0;
+    min-height: 3.9285714285714284rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.4285714285714286rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    background: #fff;
+    z-index: 10;
+    cursor: pointer;
+
+    h2 {
+      font-size: 20px;
+      color: #363694;
+      margin: 0;
+    }
+
+    i {
+      transform: rotate(-90deg);
+
+      svg {
+        stroke: #343C5A;
+      }
+    }
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+    li {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 1.4285714285714286rem 1.4285714285714286rem 1.4285714285714286rem;
+      border-bottom: 0.5px solid #C9CBD4;
+
+      &:last-child {
+        border: 0;
+      }
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    i {
+      margin: 0 8px 0 0;
+    }
+
+    b {
+      font-size: 1rem;
+      line-height: 1.2142857142857142rem;
+      color: #343C5A;
+      margin-bottom: 2px;
+    }
+
+    .sales, .acos {
+      font-size: 0.8571428571428571rem;
+      color: #343C5A;
+      display: flex;
+      align-items: center;
+
+      .starts {
+        display: flex;
+        align-items: flex-end;
+        margin: 0 0 0 10px;
+
+        div {
+          background: #C9CBD4;
+          border-radius: 1px;
+          margin: 0 4px 0 0;
+
+          &:last-child {
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    .sales {
+      margin: 0 20px 0 0;
+    }
+
+    p {
+      font-size: 0.8571428571428571rem;
+      line-height: 1rem;
+      color: #656A84;
+      margin-bottom: 1.4285714285714286rem;
+    }
+
+    .values {
+      display: flex;
+      justify-content: space-between;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .ant-progress-inner {
+          width: 3.357142857142857rem !important;
+          height: 3.357142857142857rem !important;
+        }
+
+        .ant-progress-text {
+          font-size: 1.1428571428571428rem;
+          font-weight: 600;
+          text-align: center;
+          color: #343C5A;
+        }
+
+        label {
+          font-size: 0.8571428571428571rem;
+          font-weight: 600;
+          text-align: center;
+          color: #343C5A;
+          margin: 5px 0 0 0;
+        }
+      }
+    }
+  }
+}

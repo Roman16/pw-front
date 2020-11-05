@@ -5,8 +5,8 @@
   .list-section {
     max-width: 100%;
     height: max-content;
-    max-height: calc(100vh - 110px);
-    margin: 15px 0 15px 0;
+    max-height: calc(100vh - 100px);
+    margin: 0 0 10px 0;
     box-shadow: @default-section-shadow;
     background: #fff;
     position: relative;
@@ -222,6 +222,7 @@
             border-right: 0.5px solid #C9CBD4;
             padding-top: 5px;
             padding-bottom: 5px;
+            color: #343C5A;
 
             &:first-child {
               padding-left: 20px;
@@ -245,14 +246,21 @@
               }
             }
 
+            .overflow-text {
+              width: 100%;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+            }
+
 
             .status {
               &.active {
-                color: #7DD4A1;
+                color: #259B25;
               }
 
               &.inactive {
-                color: #EC7F5C;
+                color: #D66744;
               }
 
               &.paused {
@@ -260,7 +268,7 @@
               }
 
               &.archived {
-                color: #343C5A;
+                color: #656A84;
               }
             }
 

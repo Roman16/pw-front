@@ -29,7 +29,7 @@ const menuVariables = {
     'adGroups': {
         title: 'Ad Groups',
         url: '/analytics/ad-groups',
-        key: 'adGroups'
+        key: 'ad-groups'
     },
     'targetings': {
         title: 'Targetings',
@@ -39,12 +39,12 @@ const menuVariables = {
     'negativeTargeting': {
         title: 'Negative Targetings',
         url: '/analytics/negative-targetings',
-        key: 'negativeTargetings'
+        key: 'negative-targetings'
     },
     'productAds': {
         title: 'Product Ads',
         url: '/analytics/product-ads',
-        key: 'productAds'
+        key: 'product-ads'
     }
 }
 
