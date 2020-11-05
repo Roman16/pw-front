@@ -148,7 +148,7 @@ const OptimizationForAdmin = () => {
     const campaignValidator = () => {
         for (let campaign of campaignSettings) {
             if (campaign.min_bid) {
-                if (campaign.min_bid > campaign.max_bid) {
+                if (campaign.max_bid && campaign.min_bid > campaign.max_bid) {
                     showNotification('Min Bid should be less than Max Bid')
                     return false
                     break
