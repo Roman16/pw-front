@@ -47,7 +47,14 @@ const ProductAdsList = () => {
             sorter: true,
             locked: true,
             search: true,
-            render: (name) => <span title={name} className={'overflow-text'}>{name}</span>
+            render: (name, item) => <div className="product">
+                <img src={item.product_image} alt=""/>
+
+                <div className="col">
+                    <h4>{item.product_name}</h4>
+                    <p>{item.product_price}</p>
+                </div>
+            </div>
         },
         {
             title: 'SKU/ASIN',

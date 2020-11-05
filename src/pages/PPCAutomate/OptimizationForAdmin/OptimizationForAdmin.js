@@ -69,7 +69,7 @@ const OptimizationForAdmin = () => {
                 campaignName: campaign.campaignName,
                 campaign_id: campaign.campaignId,
                 enable_optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts),
-                optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.optimization_parts : multiSelectVariations.map(item => item.value)
+                optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.custom_settings.optimization_parts : multiSelectVariations.map(item => item.value)
             }))
 
             setCampaignSettings(res.result.map(campaign => ({
@@ -77,7 +77,7 @@ const OptimizationForAdmin = () => {
                 campaignName: campaign.campaignName,
                 campaign_id: campaign.campaignId,
                 enable_optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts),
-                optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.optimization_parts : multiSelectVariations.map(item => item.value)
+                optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.custom_settings.optimization_parts : multiSelectVariations.map(item => item.value)
             })))
         } catch (e) {
             console.log(e)
@@ -85,7 +85,7 @@ const OptimizationForAdmin = () => {
     }
 
     const updateCampaignSettingsHandler = (data) => {
-        setCampaignSettings(data)
+        setCampaignSettings([...data.map(item => ({...item}))])
     }
 
     const showNotification = (text) => {
@@ -108,35 +108,35 @@ const OptimizationForAdmin = () => {
             return false
         }
 
-        if (product.min_manual_bid) {
-            if (product.max_manual_bid && product.min_manual_bid > product.max_manual_bid) {
+        if (product.min_bid_manual_campaign) {
+            if (product.max_bid_manual_campaign && product.min_bid_manual_campaign > product.max_bid_manual_campaign) {
                 showNotification('Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)')
                 return false
-            } else if (product.min_manual_bid < 0.02) {
+            } else if (product.min_bid_manual_campaign < 0.02) {
                 showNotification('Bids should be greater than or equal to 0.02$')
                 return false
             }
         }
 
-        if (product.max_manual_bid) {
-            if (product.max_manual_bid < 0.02) {
+        if (product.max_bid_manual_campaign) {
+            if (product.max_bid_manual_campaign < 0.02) {
                 showNotification('Bids should be greater than or equal to 0.02$')
                 return false
             }
         }
 
-        if (product.min_auto_bid) {
-            if (product.max_auto_bid && product.min_auto_bid > product.max_auto_bid) {
+        if (product.min_bid_auto_campaign) {
+            if (product.max_bid_auto_campaign && product.min_bid_auto_campaign > product.max_bid_auto_campaign) {
                 showNotification('Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)')
                 return false
-            } else if (product.min_auto_bid < 0.02) {
+            } else if (product.min_bid_auto_campaign < 0.02) {
                 showNotification('Bids should be greater than or equal to 0.02$')
                 return false
             }
         }
 
-        if (product.max_auto_bid) {
-            if (product.max_manual_bid < 0.02) {
+        if (product.max_bid_auto_campaign) {
+            if (product.max_bid_auto_campaign < 0.02) {
                 showNotification('Bids should be greater than or equal to 0.02$')
                 return false
             }
@@ -220,15 +220,18 @@ const OptimizationForAdmin = () => {
                             status: 'RUNNING'
                         }
 
-                        const custom_campaigns_settings = campaignSettings.map(item => ({
-                                campaign_id: item.campaign_id,
-                                dont_optimize: item.dont_optimize || false,
-                                dont_use_metrics: item.dont_use_metrics || false,
-                                optimization_parts: (!item.enable_optimization_parts || item.optimization_parts.length === 0) ? null : item.optimization_parts,
-                                ...item.min_bid && {min_bid: item.min_bid},
-                                ...item.max_bid && {max_bid: item.max_bid}
+
+                        const custom_campaigns_settings = campaignSettings.map(item => {
+                                return ({
+                                    campaign_id: item.campaign_id,
+                                    dont_optimize: item.dont_optimize || false,
+                                    dont_use_metrics: item.dont_use_metrics || false,
+                                    optimization_parts: (!item.enable_optimization_parts || item.optimization_parts.length === 0) ? null : item.optimization_parts,
+                                    ...item.min_bid && {min_bid: item.min_bid},
+                                    ...item.max_bid && {max_bid: item.max_bid}
+                                })
                             }
-                        ))
+                        )
 
                         if (campaignSettings.length > 0) {
                             await productsServices.updateCampaignsBlacklist(productInformation.id, {custom_campaigns_settings})
