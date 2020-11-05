@@ -124,6 +124,7 @@ const containsVariations = {
     'datetime': [{label: 'In', key: 'in'}],
     'object': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'campaignName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
+    'adGroupName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'object_type': [{label: 'Is one of', key: 'one_of'}],
     'keyword_pt': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'match_type': [{label: 'Is one of', key: 'one_of'}],
@@ -311,6 +312,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'object' ||
                     filterBy === 'keyword_pt' ||
                     filterBy === 'campaignName' ||
+                    filterBy === 'adGroupName' ||
                     filterBy === 'portfolioName' ||
                     filterBy === 'campaign_name' ||
                     filterBy === 'ad_group_name'

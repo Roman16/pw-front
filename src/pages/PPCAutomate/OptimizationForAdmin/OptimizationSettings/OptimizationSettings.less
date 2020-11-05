@@ -67,6 +67,7 @@
 
     .label {
       width: 40%;
+      min-width: 220px;
       min-height: 100%;
       font-weight: 600;
       font-size: 1rem;
@@ -165,10 +166,23 @@
       max-width: 120px;
     }
   }
+
+
+  @media (max-width: 1400px) {
+    .row {
+      grid-template-columns: 60% 40%;
+    }
+
+    .form-group {
+      .label {
+        width: 30%;
+        min-width: 150px;
+      }
+    }
+  }
 }
 
 .disabled .optimization-settings-section {
-
   .form-group {
     position: relative;
 
@@ -218,5 +232,4 @@
       }
     }
   }
-
 }

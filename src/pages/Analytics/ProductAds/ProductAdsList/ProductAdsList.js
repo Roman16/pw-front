@@ -41,12 +41,13 @@ const ProductAdsList = () => {
     const columns = [
         {
             title: 'Product',
-            dataIndex: 'product',
-            key: 'product',
+            dataIndex: 'product_name',
+            key: 'product_name',
             width: '250px',
             sorter: true,
             locked: true,
             search: true,
+            render: (name) => <span title={name} className={'overflow-text'}>{name}</span>
         },
         {
             title: 'SKU/ASIN',

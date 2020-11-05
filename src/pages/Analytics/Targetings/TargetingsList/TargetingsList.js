@@ -66,8 +66,8 @@ const TargetingsList = () => {
         }] : [],
         ...!selectedAdGroup ? [{
             title: 'Ad Group',
-            dataIndex: 'ad_group',
-            key: 'ad_group',
+            dataIndex: 'adGroupName',
+            key: 'adGroupName',
             width: '250px',
             sorter: true,
             filter: true,

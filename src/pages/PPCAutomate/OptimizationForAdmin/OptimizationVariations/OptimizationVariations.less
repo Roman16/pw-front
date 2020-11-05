@@ -51,7 +51,6 @@
 
   @media (max-width: 1400px) {
     & {
-      flex: 1;
       min-width: 100%;
 
       ul, .ant-checkbox-group {
@@ -76,6 +75,13 @@
           overflow-wrap: break-word;
         }
       }
+    }
+  }
+
+
+  @media (max-width: 1400px) {
+    .variation-list {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 }

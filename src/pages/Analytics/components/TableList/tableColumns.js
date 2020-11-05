@@ -200,8 +200,8 @@ export const campaignColumn = {
 
 export const adGroupColumn = {
     title: 'Ad Group',
-    dataIndex: 'ad_group',
-    key: 'ad_group',
+    dataIndex: 'adGroupName',
+    key: 'adGroupName',
     minWidth: '200px',
     sorter: true,
     filter: true,

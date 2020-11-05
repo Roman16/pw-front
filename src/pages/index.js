@@ -251,7 +251,7 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     {/*ANALYTICS*/}
-                                    {developer && <ConnectedAmazonRoute path="/analytics" component={Analytics}/>}
+                                    <ConnectedAmazonRoute path="/analytics" component={Analytics}/>
                                     {/*-------------------------------------------*/}
 
                                     <Route path={'*'} render={() => (
