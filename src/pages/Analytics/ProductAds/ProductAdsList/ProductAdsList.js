@@ -23,6 +23,7 @@ import TableList from "../../components/TableList/TableList"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import {numberMask} from "../../../../utils/numberMask"
 
 
 const ProductAdsList = () => {
@@ -43,11 +44,26 @@ const ProductAdsList = () => {
             title: 'Product',
             dataIndex: 'product_name',
             key: 'product_name',
-            width: '250px',
+            width: '350px',
             sorter: true,
             locked: true,
             search: true,
-            render: (name) => <span title={name} className={'overflow-text'}>{name}</span>
+            noTotal: true,
+            render: (name, item) => <Link
+                to={`/analytics/overview?productId=${item.product_id}`}
+                className="product-field"
+                onClick={() => setStateHandler('ad-groups', {
+                    name: {productName: name},
+                    productId: item.product_id
+                })}
+            >
+                {item.product_image && <img src={item.product_image} alt=""/>}
+
+                <div className="col">
+                    <h4 title={item.product_name}>{item.product_name}</h4>
+                    <p>{item.product_price !== null && `$${numberMask(item.product_price, 2)}`}</p>
+                </div>
+            </Link>
         },
         {
             title: 'SKU/ASIN',
@@ -66,6 +82,7 @@ const ProductAdsList = () => {
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
                 title={campaign}
+                className={'state-link'}
                 onClick={() => setStateHandler('ad-groups', {
                     name: {campaignName: item.campaignName},
                     campaignId: item.campaignId
@@ -80,14 +97,16 @@ const ProductAdsList = () => {
             width: '250px',
             render: (adGroup, item) => (
                 <Link
+                    to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
                     title={item.adGroupName}
+                    className={'state-link'}
                     onClick={() => setStateHandler('products', {
                         name: {
                             campaignName: item.campaignName,
                             adGroupName: item.adGroupName
                         }, campaignId: item.campaignId, adGroupId: item.adGroupId
                     })}
-                    to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}>
+                >
                     {item.adGroupName}
                 </Link>
             )

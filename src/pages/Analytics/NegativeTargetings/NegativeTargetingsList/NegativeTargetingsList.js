@@ -34,6 +34,7 @@ const NegativeTargetingsList = () => {
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
                 title={campaign}
+                className={'state-link'}
                 onClick={() => setStateHandler('ad-groups', {
                     name: {campaignName: item.campaignName},
                     campaignId: item.campaignId
@@ -48,6 +49,7 @@ const NegativeTargetingsList = () => {
                 <Link
                     to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
                     title={item.adGroupName}
+                    className={'state-link'}
                     onClick={() => setStateHandler('products', {
                         name: {
                             campaignName: item.campaignName,

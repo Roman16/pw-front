@@ -121,8 +121,8 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
 
                         <InputCurrency
                             disabled={isDisabled}
-                            value={product.min_manual_bid}
-                            onChange={(value) => onUpdateField('min_manual_bid', value)}
+                            value={product.min_bid_manual_campaign}
+                            onChange={(value) => onUpdateField('min_bid_manual_campaign', value)}
                         />
                     </div>
                 </div>
@@ -148,8 +148,8 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
 
                         <InputCurrency
                             disabled={isDisabled}
-                            value={product.max_manual_bid}
-                            onChange={(value) => onUpdateField('max_manual_bid', value)}
+                            value={product.max_bid_manual_campaign}
+                            onChange={(value) => onUpdateField('max_bid_manual_campaign', value)}
                         />
                     </div>
                 </div>
@@ -171,8 +171,8 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
 
                         <InputCurrency
                             disabled={isDisabled}
-                            value={product.min_auto_bid}
-                            onChange={(value) => onUpdateField('min_auto_bid', value)}
+                            value={product.min_bid_auto_campaign}
+                            onChange={(value) => onUpdateField('min_bid_auto_campaign', value)}
                         />
                     </div>
                 </div>
@@ -190,8 +190,8 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
 
                         <InputCurrency
                             disabled={isDisabled}
-                            value={product.max_auto_bid}
-                            onChange={(value) => onUpdateField('max_auto_bid', value)}
+                            value={product.max_bid_auto_campaign}
+                            onChange={(value) => onUpdateField('max_bid_auto_campaign', value)}
                         />
                     </div>
                 </div>

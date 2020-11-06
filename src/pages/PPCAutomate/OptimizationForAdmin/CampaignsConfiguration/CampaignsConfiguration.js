@@ -35,6 +35,7 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, job
     }, [isDisabled])
 
     const changeSettingsHandler = (id, name, value, label) => {
+
         onUpdate(jobsList.map((item, listIndex) => {
             if (item.campaign_id === id) {
                 if (name === 'dont_optimize' || name === 'dont_use_metrics') {
@@ -194,6 +195,7 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, job
                 <CustomTable
                     // loading={processing}
                     dataSource={_.orderBy(searchText ? _.filter(jobsList, (item) => _.includes(item.campaignName.toLowerCase(), searchText.toLowerCase())) : jobsList, ['campaignName'], ['asc'])}
+                    // dataSource={jobsList}
                     columns={columns}
                     emptyText={!hasJob ? 'Can\'t configure campaigns, start optimization first' : 'No campaigns for optimization, check product ads'}
                 />

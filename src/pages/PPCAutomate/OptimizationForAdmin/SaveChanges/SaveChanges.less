@@ -1,6 +1,7 @@
 .optimization-for-admin-page {
   padding-bottom: 0 !important;
   min-height: 100%;
+  max-height: 100vh;
   min-width: 720px;
   display: flex;
   flex-direction: column;
@@ -70,11 +71,9 @@
 }
 
 .page-loader {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: fixed;
+  width: 80%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
