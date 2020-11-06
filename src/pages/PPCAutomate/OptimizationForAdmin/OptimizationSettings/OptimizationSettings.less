@@ -10,6 +10,7 @@
     justify-content: space-between;
     padding: 1.2857142857142858rem 1.4285714285714286rem;
     border-bottom: 2px solid #C9CBD4;
+    min-height: 5rem;
 
     h2 {
       font-size: 1.4285714285714286rem;
@@ -47,6 +48,7 @@
   }
 
   .row {
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     border-bottom: 0.5px solid #C9CBD4;
@@ -107,6 +109,10 @@
       input {
         font-size: 1rem;
       }
+    }
+
+    .custom-select {
+      min-width: 180px;
     }
 
     .ant-select-selection-selected-value {

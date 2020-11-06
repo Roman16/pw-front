@@ -79,16 +79,16 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                 <div className="section-header">
                     <h2>Settings</h2>
 
-                    <button
+                    {product.status !== 'STOPPED' && <button
                         className={'btn default '}
-                        disabled={product.status === 'STOPPED' || processing}
+                        disabled={processing}
                         onClick={confirmStopOptimization}
                     >
                         <i>
                             {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faStop}/>}
                         </i>
                         Stop Optimization
-                    </button>
+                    </button>}
                 </div>
 
                 <div className="row">
