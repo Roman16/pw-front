@@ -49,6 +49,7 @@ const AdGroupsList = () => {
                 <Link
                     to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
                     title={item.name}
+                    className={'state-link'}
                     onClick={() => setStateHandler('products', {
                         name: {
                             campaignName: item.campaignName,
@@ -65,6 +66,7 @@ const AdGroupsList = () => {
             locked: true,
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+                className={'state-link'}
                 title={campaign}
                 onClick={() => setStateHandler('ad-groups', {
                     name: {campaignName: item.campaignName},

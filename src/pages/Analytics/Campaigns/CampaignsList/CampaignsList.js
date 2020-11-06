@@ -20,7 +20,7 @@ import {
     statusColumn
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
@@ -29,6 +29,9 @@ import moment from "moment"
 
 const CampaignsList = () => {
     const dispatch = useDispatch()
+    const {selectedPortfolio} = useSelector(state => ({
+        selectedPortfolio: state.analytics.mainState.portfolioId,
+    }))
 
     const setStateHandler = (location, state) => {
         dispatch(analyticsActions.setLocation(location))
@@ -46,7 +49,11 @@ const CampaignsList = () => {
             search: true,
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
-                onClick={() => setStateHandler('ad-groups', {name: {campaignName: item.name}, campaignId: item.campaignId})}
+                className={'state-link'}
+                onClick={() => setStateHandler('ad-groups', {
+                    name: {campaignName: item.name},
+                    campaignId: item.campaignId
+                })}
                 title={campaign}
             >
                 {campaign}
@@ -77,7 +84,7 @@ const CampaignsList = () => {
             filter: true,
             render: (budget) => <InputCurrency disabled value={budget}/>
         },
-        {
+        ...!selectedPortfolio ? [{
             title: 'Portfolio',
             dataIndex: 'portfolioName',
             key: 'portfolioName',
@@ -89,6 +96,7 @@ const CampaignsList = () => {
                 <Link
                     to={`/analytics/campaigns?portfolioId=${item.portfolioId}`}
                     title={portfolio}
+                    className={'state-link'}
                     onClick={() => setStateHandler('campaigns', {
                         name: item.portfolioName,
                         portfolioId: item.portfolioId
@@ -97,7 +105,7 @@ const CampaignsList = () => {
                     {portfolio}
                 </Link>
             )
-        },
+        }] : [],
         {
             title: 'Start date',
             dataIndex: 'startDate',

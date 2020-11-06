@@ -10,6 +10,7 @@ const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState
     rangeDateFromLocalStorage = localStorage.getItem('analyticsRangeDate') && JSON.parse(localStorage.getItem('analyticsRangeDate'))
 
 const workplacesList = {
+    'overview': [],
     'products': [],
     'portfolios': [],
     'campaigns': [],

@@ -50,7 +50,7 @@ const Header = ({location}) => {
             setStateName(mainState.name)
         }
 
-        if (mainState.campaignId) {
+        if (mainState.campaignId || mainState.productId || mainState.portfolioId) {
             getStateInformation()
         }
     }, [mainState])
@@ -115,8 +115,8 @@ const Header = ({location}) => {
                     </i>
                 </li>
 
-                <li>
-                    {mainState.productId}
+                <li title={stateName.productName && stateName.productName.length > 30 && stateName.productName}>
+                    {stateName.productName && stateName.productName.length > 30 ? `${stateName.productName.slice(0, 30)}...` : stateName.productName}
 
                     <i>
                         <SVG id={'right-steps-arrow'}/>
@@ -134,7 +134,7 @@ const Header = ({location}) => {
                 </li>
 
                 <li>
-                    {mainState.portfolioId}
+                    {stateName.portfolioName}
 
                     <i>
                         <SVG id={'right-steps-arrow'}/>
