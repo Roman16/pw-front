@@ -163,21 +163,6 @@ const AuthorizedUser = (props) => {
                         <div className="page">
                             <Suspense fallback={<RouteLoader/>}>
                                 <Switch>
-                                    {/*<ConnectedAmazonRoute*/}
-                                    {/*    exact*/}
-                                    {/*    path="/ppc/optimization"*/}
-                                    {/*    render={() => {*/}
-                                    {/*        if (bootstrapInProgress) {*/}
-                                    {/*            return (<Redirect to={'/ppc/optimization-loading'}/>)*/}
-                                    {/*        } else {*/}
-                                    {/*            if(isSuperAdmin) {*/}
-                                    {/*                return (<OptimizationFormAdmin/>)*/}
-                                    {/*            } else {*/}
-                                    {/*                return (<Optimization/>)*/}
-                                    {/*            }*/}
-                                    {/*        }*/}
-                                    {/*    }}*/}
-                                    {/*/>*/}
                                     <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/optimization"
@@ -185,7 +170,11 @@ const AuthorizedUser = (props) => {
                                             if (bootstrapInProgress) {
                                                 return (<Redirect to={'/ppc/optimization-loading'}/>)
                                             } else {
-                                                return (<Optimization/>)
+                                                if(isSuperAdmin) {
+                                                    return (<OptimizationFormAdmin/>)
+                                                } else {
+                                                    return (<Optimization/>)
+                                                }
                                             }
                                         }}
                                     />
