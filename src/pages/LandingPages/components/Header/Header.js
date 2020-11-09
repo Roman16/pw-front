@@ -112,7 +112,7 @@ const Header = ({type = 'light', page}) => {
                                         <ul className="sub-menu">
                                             <li><NavLink to='/'>PPC Automate</NavLink></li>
                                             {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
-                                            <li className="soon"><NavLink disabled to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
+                                            <li><NavLink to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
                                             <li className="soon"><a href='#'>Analytics</a></li>
                                         </ul>
                                     </li>
@@ -172,7 +172,7 @@ const Header = ({type = 'light', page}) => {
                         <ul className="sub-menu">
                             <li><NavLink to='/'>PPC Automate</NavLink></li>
                             {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
-                            <li className="soon"><NavLink disabled to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
+                            <li><NavLink to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
                             <li className="soon"><a href='#'>Analytics</a></li>
                         </ul>
                     </li>
