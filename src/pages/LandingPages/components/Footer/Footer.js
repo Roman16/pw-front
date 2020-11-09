@@ -43,7 +43,7 @@ const Footer = () => (
 
                     <ul>
                         <li><Link to={'/'}>PPC Optimization</Link></li>
-                        {/*<li><Link to={'/zero-to-hero-info'}>Zero To Hero</Link></li>*/}
+                        <li><Link to={'/zero-to-hero-info'}>Zero To Hero</Link></li>
                     </ul>
                 </div>
 
