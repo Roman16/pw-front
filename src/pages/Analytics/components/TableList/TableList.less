@@ -27,7 +27,7 @@
 
     .section-header {
       display: grid;
-      grid-template-areas: 'filters columns date' 'currentFilters currentFilters currentFilters';
+      grid-template-areas: 'filters switch columns date' 'currentFilters currentFilters currentFilters currentFilters';
       grid-template-columns: 1fr max-content max-content;
       justify-content: space-between;
     }
@@ -35,6 +35,10 @@
 
     .list-filters-block {
       grid-area: filters;
+    }
+
+    .switch-products-type {
+      grid-area: switch;
     }
 
     .current-filters {
@@ -77,6 +81,20 @@
         &:hover {
           background: rgba(109, 109, 246, 0.05);
         }
+      }
+    }
+
+
+    .switch-products-type {
+      height: 2.2857143em;
+      display: flex;
+      align-items: center;
+      margin: 0 20px 0 0;
+
+      label {
+        font-size: 1rem;
+        margin: 0 0 0 10px;
+        color: #343c5a;
       }
     }
 
@@ -247,7 +265,7 @@
             }
 
             .overflow-text {
-              width: 100%;
+              max-width: 100%;
               text-overflow: ellipsis;
               overflow: hidden;
               white-space: nowrap;

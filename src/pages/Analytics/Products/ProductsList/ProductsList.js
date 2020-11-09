@@ -18,6 +18,7 @@ import {
     salesShareColumn,
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
+import {Switch} from "antd"
 
 const columns = [
     {
@@ -142,12 +143,22 @@ const columns = [
     adProfitColumn
 ]
 
+const ChangeProductsRequest = () => {
+
+    return(<div className={'switch-products-type'}>
+        <Switch/>
+
+        <label htmlFor="">Only parents</label>
+    </div>)
+}
+
 const ProductsList = () => {
     return (
         <section className={'list-section'}>
             <TableList
                 columns={columns}
                 fixedColumns={[0, 1]}
+                moreActions={<ChangeProductsRequest/>}
             />
         </section>
     )

@@ -5,6 +5,8 @@ import {useDispatch, useSelector} from "react-redux"
 import {adGroupColumn, campaignColumn} from "../../components/TableList/tableColumns"
 import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
 
 
 const NegativeTargetingsList = () => {
@@ -28,6 +30,17 @@ const NegativeTargetingsList = () => {
             sorter: true,
             locked: true,
             search: true,
+            render: (text, item) => <>
+                <span className={'overflow-text'} title={text}>
+                    {text}
+                </span>
+
+                {item.calculatedTargetingMatchType === 'auto' && <InformationTooltip
+                    title={text}
+                    description={automatePatDescription[text]}
+                />}
+            </>
+
         },
         ...!selectedCampaign ? [{
             ...campaignColumn,

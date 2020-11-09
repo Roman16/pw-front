@@ -20,7 +20,12 @@ const CancelToken = axios.CancelToken
 let source = null
 
 let productInformationFromRequest = {},
-    campaignSettingsFromRequest = []
+    campaignSettingsFromRequest = [],
+    defaultOptimizationVariations = {}
+
+optimizationOptions.forEach(item => {
+    defaultOptimizationVariations[item.value] = true
+})
 
 const OptimizationForAdmin = () => {
     const [productInformation, setProductInformation] = useState({}),
@@ -51,8 +56,17 @@ const OptimizationForAdmin = () => {
                     res[item.value] = true
                 })
             }
-            productInformationFromRequest = {...res}
-            setProductInformation(res)
+            productInformationFromRequest = {
+                ...res,
+                ...res.status === 'STOPPED' && defaultOptimizationVariations,
+                product_id: productId
+
+            }
+            setProductInformation({
+                ...res,
+                ...res.status === 'STOPPED' && defaultOptimizationVariations,
+                product_id: productId
+            })
         } catch (e) {
             console.log(e)
         }
@@ -69,7 +83,7 @@ const OptimizationForAdmin = () => {
                 campaignName: campaign.campaignName,
                 campaign_id: campaign.campaignId,
                 enable_optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts),
-                optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.custom_settings.optimization_parts : multiSelectVariations.map(item => item.value)
+                optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.custom_settings.optimization_parts : multiSelectVariations.map(item => item.value),
             }))
 
             setCampaignSettings(res.result.map(campaign => ({
@@ -77,7 +91,7 @@ const OptimizationForAdmin = () => {
                 campaignName: campaign.campaignName,
                 campaign_id: campaign.campaignId,
                 enable_optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts),
-                optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.custom_settings.optimization_parts : multiSelectVariations.map(item => item.value)
+                optimization_parts: !!(campaign.custom_settings && campaign.custom_settings.optimization_parts) ? campaign.custom_settings.optimization_parts : multiSelectVariations.map(item => item.value),
             })))
         } catch (e) {
             console.log(e)
@@ -97,7 +111,6 @@ const OptimizationForAdmin = () => {
             ...productInformation,
             [name]: value
         })
-
     }
 
     const bidValidator = () => {
@@ -251,6 +264,10 @@ const OptimizationForAdmin = () => {
 
                         productInformationFromRequest = product
                         campaignSettingsFromRequest = campaignSettings
+
+                        optimizationOptions.forEach(item => {
+                            defaultOptimizationVariations[item.value] = product[item.value]
+                        })
                     } catch (e) {
                         console.log(e)
                     }
