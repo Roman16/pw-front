@@ -14,10 +14,11 @@
       height: 20px;
       display: flex;
       align-items: center;
+      padding-bottom: 2px;
     }
 
     .custom-select {
-      margin: 0 10px;
+      margin: 0 0 0 10px;
 
 
       .ant-select-selection {
@@ -52,8 +53,10 @@
     height: 20px;
     line-height: 20px;
     font-size: 1rem;
-    margin: 0 0 0 60px;
+    margin: 0 0 0 20px;
     color: #343C5A;
+    display: flex;
+    align-items: center;
 
     span {
       margin: 0 5px;
@@ -61,7 +64,7 @@
   }
 
   .pagination-actions {
-    margin: 0 0 0 20px;
+    margin: 1px 0 0 20px;
     display: flex;
     align-items: center;
 
@@ -73,35 +76,29 @@
       align-items: center;
 
       svg {
-        width: 1rem;
-        height: 0.5714285714285714rem;
+        stroke: #343C5A;
 
-        use {
-          stroke: #343C5A;
-        }
+        width: 0.8571428571428571rem;
+        height: 0.8571428571428571rem;
       }
 
       &.prev-page {
         margin: 0 10px 0 0;
 
         svg {
-          transform: rotate(90deg);
+          transform: rotate(180deg);
         }
       }
 
-      &.next-page {
-        svg {
-          transform: rotate(-90deg);
-        }
+      &.first-page {
+        transform: rotate(180deg);
       }
 
       &[disabled] {
         cursor: initial;
 
         svg {
-          use {
-            stroke: #C9CBD4;
-          }
+          stroke: #C9CBD4;
         }
       }
     }

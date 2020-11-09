@@ -21,7 +21,8 @@ const TableList = ({
                        columns,
                        fixedColumns,
                        columnSelect = true,
-                       dateRange = true
+                       dateRange = true,
+                       moreActions
                    }) => {
 
     const [tableData, setTableData] = useState([]),
@@ -139,6 +140,8 @@ const TableList = ({
                     filters={filters}
                 />
 
+                {moreActions}
+
                 {columnSelect && <ColumnsSelect
                     columns={columns}
                     columnsBlackList={columnsBlackList}
@@ -170,6 +173,7 @@ const TableList = ({
                 onChange={paginationChangeHandler}
 
                 pageSizeOptions={[25, 50, 100]}
+                showQuickJumper={true}
                 listLength={tableData.length}
                 processing={fetchingStatus}
 

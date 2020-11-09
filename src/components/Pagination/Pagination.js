@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import './Pagination.less';
-import {Select} from "antd";
-import CustomSelect from "../Select/Select";
+import React, {useEffect, useState} from "react"
+import './Pagination.less'
+import {Select} from "antd"
+import CustomSelect from "../Select/Select"
 import PT from 'prop-types'
-import {SVG} from "../../utils/icons";
+import {SVG} from "../../utils/icons"
 
-const Option = Select.Option;
+const Option = Select.Option
 
 const Pagination = ({
                         onChange,
@@ -14,13 +14,14 @@ const Pagination = ({
                         pageSize,
                         totalSize,
                         listLength,
-                        processing
+                        processing,
+                        showQuickJumper=false
                     }) => {
     const [paginationParams, setPaginationParams] = useState({
         page,
         pageSize,
         listLength
-    });
+    })
 
     useEffect(() => {
         if (!processing) {
@@ -47,6 +48,19 @@ const Pagination = ({
                 pageSize
             })
         }
+    }
+
+    const goFirstPage = () => {
+        onChange({
+            page: 1,
+            pageSize
+        })
+    }
+    const goLastPage = () => {
+        onChange({
+            page: Math.ceil(totalSize / pageSize),
+            pageSize
+        })
     }
 
     const goNextPage = () => {
@@ -79,16 +93,24 @@ const Pagination = ({
             <div className='items-count'>
                 <b>{listLength ? ((paginationParams.page - 1) * paginationParams.pageSize) + 1 : '0'} - {paginationParams.listLength && paginationParams.page * paginationParams.pageSize - paginationParams.pageSize + paginationParams.listLength}</b>
                 <span>of</span>
-                <b>{totalSize}</b>
+                <b>{totalSize || 0}</b>
             </div>
 
             <div className="pagination-actions">
+               {showQuickJumper && <button
+                    className={'first-page'}
+                    disabled={page === 1}
+                    onClick={goFirstPage}
+                >
+                    <SVG id={'quick-jumper-icon'}/>
+                </button>}
+
                 <button
                     className={'prev-page'}
                     disabled={page === 1}
                     onClick={goPrevPage}
                 >
-                    <SVG id={'select-icon'}/>
+                    <SVG id={'change-page-icon'}/>
                 </button>
 
                 <button
@@ -96,12 +118,20 @@ const Pagination = ({
                     disabled={page >= Math.ceil(totalSize / pageSize)}
                     onClick={goNextPage}
                 >
-                    <SVG id={'select-icon'}/>
+                    <SVG id={'change-page-icon'}/>
                 </button>
+
+               {showQuickJumper && <button
+                    className={'last-page'}
+                    disabled={page >= Math.ceil(totalSize / pageSize)}
+                    onClick={goLastPage}
+                >
+                    <SVG id={'quick-jumper-icon'}/>
+                </button>}
             </div>
         </div>
     )
-};
+}
 
 Pagination.PT = {
     page: PT.number,
@@ -112,4 +142,4 @@ Pagination.PT = {
     listLength: PT.number
 }
 
-export default Pagination;
+export default Pagination

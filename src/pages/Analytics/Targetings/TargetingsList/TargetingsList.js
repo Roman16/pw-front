@@ -23,6 +23,16 @@ import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+
+export const automatePatDescription = {
+    'Close match': 'Sponsored Products target that shows your ad to shoppers who use search terms closely related to your products.',
+    'Loose match': 'Sponsored Products target that shows your ad to shoppers who use search terms loosely related to your products.',
+    'Substitutes': 'Sponsored Products target that shows your ad to shoppers who view the detail pages of products similar to yours.',
+    'Complements': 'Sponsored Products target that shows your ad to shoppers who view the detail pages of products that complement your product.',
+    'Product views': 'Sponsored Display target that shows your ad to shoppers who viewed the detail pages of your advertised products.',
+    'Similar product views': 'Sponsored Display target that shows your ad to shoppers who viewed the detail pages of products similar to yours.',
+}
 
 
 const TargetingsList = () => {
@@ -47,7 +57,16 @@ const TargetingsList = () => {
             sorter: true,
             locked: true,
             search: true,
-            render: text => <span className={'overflow-text'} title={text}>{text}</span>
+            render: (text, item) => <>
+                <span className={'overflow-text'} title={text}>
+                    {text}
+                </span>
+
+                {item.calculatedTargetingMatchType === 'auto' && <InformationTooltip
+                    title={text}
+                    description={automatePatDescription[text]}
+                />}
+            </>
         },
         ...!selectedCampaign ? [{
             ...campaignColumn,
@@ -103,8 +122,8 @@ const TargetingsList = () => {
         },
         {
             title: 'Bid',
-            dataIndex: 'bid',
-            key: 'bid',
+            dataIndex: 'calculatedBid',
+            key: 'calculatedBid',
             width: '150px',
             sorter: true,
             noTotal: true,
