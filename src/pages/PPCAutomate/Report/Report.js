@@ -1,27 +1,32 @@
-import React, {useEffect, useState} from 'react';
-import ReportTable from './ReportTable/ReportTable';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Tabs from "./Tabs/Tabs";
-import Filters from "./Filters/Filters";
-import {reportsServices} from "../../../services/reports.services";
-import {allReports} from "./ReportTable/Tables/allReports";
-import {targetingImprovements} from "./ReportTable/Tables/targetingImprovements";
-import {searchTerms} from "./ReportTable/Tables/searchTerms";
-import {useSelector} from "react-redux";
-import axios from 'axios';
+import React, {useEffect, useState} from 'react'
+import ReportTable from './ReportTable/ReportTable'
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import Tabs from "./Tabs/Tabs"
+import Filters from "./Filters/Filters"
+import {reportsServices} from "../../../services/reports.services"
+import {allReports} from "./ReportTable/Tables/allReports"
+import {targetingImprovements} from "./ReportTable/Tables/targetingImprovements"
+import {searchTerms} from "./ReportTable/Tables/searchTerms"
+import {useSelector} from "react-redux"
+import axios from 'axios'
 import {dateField} from "./ReportTable/Tables/const"
 
 
-const CancelToken = axios.CancelToken;
-let source = null;
+const CancelToken = axios.CancelToken
+let source = null
 
 function Report() {
     const [currentTab, setCurrentTab] = useState('all-reports'),
         [reportsList, setReportsList] = useState([]),
         [changesCounts, setChangesCounts] = useState({}),
         [processing, setProcessing] = useState(false),
-        [filters, setFilters] = useState([]),
+        [filters, setFilters] = useState(localStorage.getItem('reportFilters') ?
+            JSON.parse(localStorage.getItem('reportFilters')) : {
+                'all-reports': [],
+                'targeting-improvements': [],
+                'search-terms': []
+            }),
         [sorterColumn, setSorterColumn] = useState({
             column: 'datetime',
             type: 'desc'
@@ -30,7 +35,7 @@ function Report() {
         [paginationParams, setPaginationParams] = useState({
             page: 1,
             pageSize: 25,
-        });
+        })
 
     const {productId, selectedAll, productsFetching} = useSelector(state => ({
         productId: state.products.selectedProduct.id || null,
@@ -38,31 +43,30 @@ function Report() {
         productsFetching: state.products.fetching,
     }))
 
-    const paginationChangeHandler = (params) => setPaginationParams(params);
+    const paginationChangeHandler = (params) => setPaginationParams(params)
 
     const changeTabHandler = (tab) => {
-        setCurrentTab(tab);
+        setCurrentTab(tab)
         setPaginationParams({
             ...paginationParams,
             page: 1,
             totalSize: 0
-        });
-        setFilters([]);
-        setTotalSize(0);
-        setReportsList([]);
+        })
+        setTotalSize(0)
+        setReportsList([])
         setSorterColumn({
             column: 'datetime',
             type: 'desc'
-        });
+        })
 
-        document.querySelector('.table-overflow').scroll(0, 0);
+        document.querySelector('.table-overflow').scroll(0, 0)
     }
 
     const sortChangeHandler = (column) => {
         setPaginationParams({
             ...paginationParams,
             page: 1,
-        });
+        })
 
         if (sorterColumn && sorterColumn.column === column) {
             if (sorterColumn.type === 'desc') {
@@ -84,28 +88,31 @@ function Report() {
         }
     }
 
-    const changeFiltersHandler = (filters) => {
+    const changeFiltersHandler = (data) => {
         setPaginationParams({
             ...paginationParams,
             page: 1,
-        });
+        })
 
-        setFilters(filters)
+        setFilters({...filters, [currentTab]: data})
     }
 
-    const addFilterHandler = (filter) => {
+    const addFilterHandler = (data) => {
         setPaginationParams({
             ...paginationParams,
             page: 1,
-        });
+        })
 
-        setFilters([...filters, filter])
+        setFilters({
+            ...filters,
+            [currentTab]: [...filters[currentTab], data]
+        })
     }
 
     const fetchReportsList = async () => {
-        setProcessing(true);
-        source && source.cancel();
-        source = CancelToken.source();
+        setProcessing(true)
+        source && source.cancel()
+        source = CancelToken.source()
 
         document.querySelector('.table-overflow').scrollTop = 0
 
@@ -116,34 +123,39 @@ function Report() {
                     id: selectedAll ? 'all' : productId,
                     ...paginationParams,
                     sorterColumn,
-                    filters
+                    filters: filters[currentTab]
                 },
                 source.token
-            );
+            )
 
-            setReportsList(res.data);
-            setChangesCounts(res.counts);
+            setReportsList(res.data)
+            setChangesCounts(res.counts)
 
             setTotalSize(res.total_size)
         } catch (e) {
-            console.log(e);
-            setReportsList([]);
+            console.log(e)
+            setReportsList([])
             setTotalSize(0)
         }
 
-        setProcessing(false);
-    };
+        setProcessing(false)
+    }
+
+    useEffect(() => {
+        localStorage.setItem('reportFilters', JSON.stringify(filters))
+
+    }, [filters])
 
     useEffect(() => {
         if ((productId !== null || selectedAll) && !productsFetching)
-            fetchReportsList();
+            fetchReportsList()
     }, [productId, currentTab, selectedAll, paginationParams, sorterColumn, filters])
 
     const mainTabs = {
         'all-reports': allReports(),
         "targeting-improvements": targetingImprovements(),
         "search-terms": searchTerms(),
-    };
+    }
 
     return (
         <div className="product-main basic-container reports-page">
@@ -153,7 +165,7 @@ function Report() {
             />
 
             <Filters
-                filters={filters}
+                filters={filters[currentTab]}
                 columns={[dateField, ...mainTabs[currentTab]]}
                 currentTab={currentTab}
 
@@ -168,14 +180,14 @@ function Report() {
                 columns={mainTabs[currentTab]}
                 sorterColumn={sorterColumn}
                 totalSize={totalSize}
-                filteredById={filters && filters.find(item => item.filterBy === 'keyword_id')}
+                filteredById={filters[currentTab].length > 0 && filters[currentTab].find(item => item.filterBy === 'keyword_id')}
 
                 paginationChangeHandler={paginationChangeHandler}
                 sortChangeHandler={sortChangeHandler}
                 addFilterHandler={addFilterHandler}
             />
         </div>
-    );
+    )
 }
 
-export default React.memo(Report);
+export default React.memo(Report)

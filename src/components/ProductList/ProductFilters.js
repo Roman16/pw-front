@@ -1,9 +1,10 @@
-import React from "react"
+import React, {useState} from "react"
 import {Input, Switch} from "antd"
 import {SVG} from "../../utils/icons"
 
 const {Search} = Input
 
+let timeoutId
 
 const ProductFilters = ({
                             pathname,
@@ -14,8 +15,20 @@ const ProductFilters = ({
                             onSelectAll,
                             onSelectLastProduct,
                             onSearch,
-                            onShowOnlyOnOptimization
+                            onShowOnlyOnOptimization,
+                            searchStr
                         }) => {
+
+    const [search, setSearch] = useState(searchStr)
+
+    const changeSearchHandler = (value) => {
+        setSearch(value)
+
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            onSearch(value)
+        }, 500)
+    }
 
     return (
         <div className="products-filters">
@@ -23,7 +36,8 @@ const ProductFilters = ({
                 <Search
                     className="search-field"
                     placeholder={'Search by product name, ASIN or SKU'}
-                    onChange={e => onSearch(e.target.value)}
+                    onChange={e => changeSearchHandler(e.target.value)}
+                    value={search}
                     data-intercom-target='search-field'
                     suffix={<SVG id={'search'}/>}
                 />
