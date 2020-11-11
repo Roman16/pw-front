@@ -115,6 +115,7 @@ const ProductsList = () => {
             width: '150px',
             sorter: true,
             noTotal: true,
+            filter: true,
             ...renderNumberField()
         },
         impressionsColumn,
@@ -130,6 +131,7 @@ const ProductsList = () => {
             key: 'macos',
             width: '100px',
             sorter: true,
+            filter: true,
             ...renderNumberField('percent')
         },
         adCvrColumn,
@@ -140,6 +142,7 @@ const ProductsList = () => {
             key: 'organic_sales',
             width: '180px',
             sorter: true,
+            filter: true,
             ...renderNumberField('currency')
         },
         adUnitsColumn,
@@ -149,6 +152,7 @@ const ProductsList = () => {
             key: 'total_ordered_quantity',
             width: '150px',
             sorter: true,
+            filter: true,
             ...renderNumberField()
         },
         {
@@ -157,6 +161,7 @@ const ProductsList = () => {
             key: 'total_ordered_quantity_cleared',
             width: '200px',
             sorter: true,
+            filter: true,
             ...renderNumberField()
         },
         {
@@ -165,6 +170,7 @@ const ProductsList = () => {
             key: 'total_orders_count',
             width: '150px',
             sorter: true,
+            filter: true,
             ...renderNumberField()
         },
         {
@@ -173,6 +179,7 @@ const ProductsList = () => {
             key: 'total_orders_count_cleared',
             width: '200px',
             sorter: true,
+            filter: true,
             ...renderNumberField()
         },
         adOrdersColumn,
@@ -182,6 +189,7 @@ const ProductsList = () => {
             key: 'organic_orders_count',
             width: '200px',
             sorter: true,
+            filter: true,
             ...renderNumberField()
         },
         {
@@ -190,6 +198,7 @@ const ProductsList = () => {
             key: 'total_sales',
             width: '200px',
             sorter: true,
+            filter: true,
             ...renderNumberField('currency')
         },
         roasColumn,
@@ -201,6 +210,7 @@ const ProductsList = () => {
             key: 'total_returns_quantity',
             width: '150px',
             sorter: true,
+            filter: true,
             ...renderNumberField()
         },
         {
@@ -209,6 +219,7 @@ const ProductsList = () => {
             key: 'profit',
             width: '150px',
             sorter: true,
+            filter: true,
             ...renderNumberField('currency')
         },
         adProfitColumn
