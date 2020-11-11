@@ -103,7 +103,6 @@ const TableList = ({
                 },
             ]
 
-
             const res = await analyticsServices.fetchTableData(locationKey, paginationParams, sorterColumn, filtersWithState, source.token)
             if (res.response) {
                 setTableData(res.response)

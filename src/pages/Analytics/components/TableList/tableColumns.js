@@ -10,7 +10,7 @@ export const renderNumberField = (type = 'number') => {
             return ({render: (number) => (number && number !== null ? numberMask(number, 0) : '-')})
 
         case 'percent':
-            return ({render: (number) => (number && number !== null ? `${round(number * 100, 2)}%` : '-')})
+            return ({render: (number) => (number && number !== null ? `${round(+number * 100, 2)}%` : '-')})
 
         case 'currency':
             return ({render: (number) => (number && number !== null ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-')})
@@ -103,7 +103,7 @@ export const acosColumn = {
     title: 'ACoS',
     dataIndex: 'acos',
     key: 'acos',
-    minWidth: '90px',
+    minWidth: '100px',
     sorter: true,
     filter: true,
     ...renderNumberField('percent')

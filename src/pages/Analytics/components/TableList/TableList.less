@@ -27,7 +27,7 @@
 
     .section-header {
       display: grid;
-      grid-template-areas: 'filters switch columns date' 'currentFilters currentFilters currentFilters currentFilters';
+      grid-template-areas: 'filters columns switch date' 'currentFilters currentFilters currentFilters currentFilters';
       grid-template-columns: 1fr max-content max-content;
       justify-content: space-between;
     }
@@ -86,15 +86,11 @@
 
 
     .switch-products-type {
-      height: 2.2857143em;
-      display: flex;
-      align-items: center;
       margin: 0 20px 0 0;
 
-      label {
-        font-size: 1rem;
-        margin: 0 0 0 10px;
-        color: #343c5a;
+      .custom-select {
+        width: 175px;
+        height: 2.2857143em;
       }
     }
 

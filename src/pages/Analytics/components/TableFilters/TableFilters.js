@@ -118,7 +118,7 @@ const TableFilters = ({columns, filters = []}) => {
 
             <div className="current-filters filters-list">
                 {filters.map((filter, index) => (
-                    filter.type !== 'search' && <Popover
+                    filter.type !== 'search' && filter.filterBy !== 'productView' && <Popover
                         content={<FilterWindow
                             filters={filters}
                             columns={columns}
