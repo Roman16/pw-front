@@ -42,9 +42,9 @@ const ProductAdsList = () => {
     const columns = [
         {
             title: 'Product',
-            dataIndex: 'product_name',
-            key: 'product_name',
-            width: '350px',
+            dataIndex: 'product_name_sku_asin',
+            key: 'product_name_sku_asin',
+            width: '300px',
             sorter: true,
             locked: true,
             search: true,
@@ -53,11 +53,11 @@ const ProductAdsList = () => {
                 to={`/analytics/overview?productId=${item.product_id}`}
                 className="product-field"
                 onClick={() => setStateHandler('ad-groups', {
-                    name: {productName: name},
+                    name: {productName: item.product_name},
                     productId: item.product_id
                 })}
             >
-                {item.product_image && <img src={item.product_image} alt=""/>}
+                {item.product_image && <div className={'image'}><img src={item.product_image} alt=""/></div>}
 
                 <div className="col">
                     <h4 title={item.product_name}>{item.product_name}</h4>
@@ -69,11 +69,14 @@ const ProductAdsList = () => {
             title: 'SKU/ASIN',
             dataIndex: 'sku_asin',
             key: 'sku_asin',
-            width: '250px',
+            width: '180px',
             sorter: true,
             locked: true,
             noTotal: true,
-            render: (text, item) => <div><b>SKU:</b> {item.sku} <br/> <b>ASIN:</b> {item.asin}</div>
+            render: (text, item) => <div className={'sku-asin'}>
+                <div title={item.sku}><b>SKU:</b> {item.sku}</div>
+                <div title={item.asin}><b>ASIN:</b> {item.asin}</div>
+            </div>
         },
         ...!selectedCampaign ? [{
             ...campaignColumn,

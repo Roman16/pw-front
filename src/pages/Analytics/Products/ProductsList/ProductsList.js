@@ -18,12 +18,13 @@ import {
     salesShareColumn,
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
-import {Select} from "antd"
+import {Dropdown, Select} from "antd"
 import {numberMask} from "../../../../utils/numberMask"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import CustomSelect from "../../../../components/Select/Select"
 import _ from 'lodash'
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 
 const Option = Select.Option
 
@@ -61,6 +62,11 @@ const ChangeProductsRequest = () => {
             <Option value={'regular'}>Regular view</Option>
             <Option value={'parent'}>Parents view</Option>
         </CustomSelect>
+
+        <InformationTooltip
+            getPopupContainer={triggerNode => triggerNode.parentNode}
+            title={'Product view'}
+        />
     </div>)
 }
 
@@ -75,9 +81,9 @@ const ProductsList = () => {
     const columns = [
         {
             title: 'Product',
-            dataIndex: 'product',
-            key: 'product',
-            width: '350px',
+            dataIndex: 'product_name_sku_asin',
+            key: 'product_name_sku_asin',
+            width: '300px',
             locked: true,
             sorter: true,
             search: true,
@@ -86,11 +92,11 @@ const ProductsList = () => {
                 to={`/analytics/overview?productId=${item.product_id}`}
                 className="product-field"
                 onClick={() => setStateHandler('ad-groups', {
-                    name: {productName: name},
+                    name: {productName: item.product_name},
                     productId: item.product_id
                 })}
             >
-                {item.product_image && <img src={item.product_image} alt=""/>}
+                {item.product_image && <div className={'image'}><img src={item.product_image} alt=""/></div>}
 
                 <div className="col">
                     <h4 title={item.product_name}>{item.product_name}</h4>
@@ -102,11 +108,14 @@ const ProductsList = () => {
             title: 'SKU/ASIN',
             dataIndex: 'sku_asin',
             key: 'sku_asin',
-            width: '250px',
+            width: '180px',
             locked: true,
             sorter: true,
             noTotal: true,
-            render: (text, item) => <div><b>SKU:</b> {item.sku} <br/> <b>ASIN:</b> {item.asin}</div>
+            render: (text, item) => <div className={'sku-asin'}>
+                <div title={item.sku}><b>SKU:</b> {item.sku}</div>
+                <div title={item.asin}><b>ASIN:</b> {item.asin}</div>
+            </div>
         },
         {
             title: 'Campaigns',

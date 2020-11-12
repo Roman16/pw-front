@@ -153,10 +153,10 @@ export const roasColumn = {
     title: 'ROAS',
     dataIndex: 'roas',
     key: 'roas',
-    minWidth: '90px',
+    minWidth: '120px',
     sorter: true,
     filter: true,
-    ...renderNumberField('percent')
+    render: (roas) => `${(roas !== null ? `${round(+roas, 2)}x` : '-')}`
 }
 
 export const salesShareColumn = {

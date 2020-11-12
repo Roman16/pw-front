@@ -12,6 +12,7 @@ import {
 } from 'recharts'
 import ChartTooltip from "./ChartTooltip"
 import moment from "moment"
+import _ from "lodash"
 
 const animationDuration = 1000,
     dashedLineAnimationDuration = 1000,
@@ -29,10 +30,11 @@ const Chart = ({
                    showDailyChart,
                    showOptimizationChart,
                    selectedRangeDate,
-                   productOptimizationDateList
+                   productOptimizationDateList,
                }) => {
 
     const [chartData, setChartData] = useState([])
+
 
     useEffect(() => {
         // setChartData(data.map(item => {
@@ -64,22 +66,38 @@ const Chart = ({
         //     }
         // }))
 
-        if (data) {
-            setChartData(data.map(item => {
-                activeMetrics.forEach(metric => {
-                    item[metric.key] = +item[metric.key]
-                    item[`${metric.key}_7d`] = +item[`${metric.key}_7d`]
+        const start = moment(selectedRangeDate.startDate),
+            end = moment(selectedRangeDate.endDate)
 
-                })
+        let next = start,
+            dateArr = []
 
-                return ({
-                    ...item,
-                    eventDate: `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`
-                })
+        while (!next.isAfter(end)) {
 
-            }))
+            let event = {
+                eventDate: next.format('YYYY-MM-DD'),
+            }
+
+            activeMetrics.forEach(metric => {
+                event[metric.key] = 0
+                event[`${metric.key}_7d`] = 0
+            })
+
+            dateArr.push(event)
+
+            next = start.add(1, 'days')
         }
+
+
+        setChartData(dateArr.map(item => {
+            return {
+                ...item,
+                ..._.find(data, {eventDate: item.eventDate}),
+                eventDate: `${moment(item.eventDate)}`,
+            }
+        }))
     }, [data])
+
 
     return (
         <div className='main-chart-container'>
