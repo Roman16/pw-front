@@ -103,7 +103,7 @@ export const FilterItem = ({filter}) => {
     } else if (filter.filterBy === 'object_type' || filter.filterBy === 'match_type') {
         return (
             <>
-                {`${columnTitle[filter.filterBy]} is one of: ${filter.value.map(item => valueTile[item]).join(', ')}`}
+                {`${columnTitle[filter.filterBy]} ${filter.type.key}: ${filter.value.map(item => valueTile[item]).join(', ')}`}
             </>
         )
     } else if (filter.filterBy === 'impressions' ||

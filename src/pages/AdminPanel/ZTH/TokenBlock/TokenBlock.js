@@ -23,7 +23,6 @@ const TokenBlock = () => {
 
     useEffect(() => {
         getVersionInformation()
-
     }, [])
 
     return (

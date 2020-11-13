@@ -29,9 +29,11 @@ function getAllReports(type, options, cancelToken) {
 
     const parameters = []
 
-    filters.forEach(({filterBy, type, value}) => {
+    filters.forEach(({filterBy, type, value, requestValue = []}) => {
         if (filterBy === 'datetime') {
             parameters.push(`&datetime:range=${value.startDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${value.endDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
+        } else if (type.key === 'except') {
+            parameters.push(`&type:in=${requestValue.join(',')}`)
         } else if (filterBy === 'object' || filterBy === 'keyword_pt' || filterBy === 'campaign_name' || filterBy === 'ad_group_name') {
             parameters.push(`&${filterBy === 'keyword_pt' ? 'object' : filterBy}:${type.key}=${value}`)
         } else if (filterBy === 'object_type' || filterBy === 'match_type') {

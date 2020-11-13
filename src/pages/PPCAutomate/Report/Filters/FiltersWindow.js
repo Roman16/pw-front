@@ -5,6 +5,7 @@ import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
 import {Input, Select} from "antd"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {dashboardActions} from "../../../../actions/dashboard.actions"
+import _ from 'lodash'
 
 const Option = Select.Option
 
@@ -124,9 +125,9 @@ const reasonList = [
 const containsVariations = {
     'datetime': [{label: 'In', key: 'in'}],
     'object': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'object_type': [{label: 'Is one of', key: 'one_of'}],
+    'object_type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'keyword_pt': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'match_type': [{label: 'Is one of', key: 'one_of'}],
+    'match_type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'campaign_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'ad_group_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'impressions': numberVariations,
@@ -134,7 +135,7 @@ const containsVariations = {
     'spend': numberVariations,
     'sales': numberVariations,
     'acos': numberVariations,
-    'type': [{label: 'Is one of', key: 'one_of'}]
+    'type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}]
 
 }
 
@@ -238,10 +239,13 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
     const submitHandler = (e) => {
         e.preventDefault()
 
+        const arr = [...multiSelectVariations[filterBy]]
+
         onAddFilter({
             filterBy: filterBy,
             type: filterType,
-            value: filterValue
+            value: filterValue,
+            ...filterType.key === 'except' && {requestValue: arr.filter((item) => !filterValue.some((key) => item.key === key)).map(item => item.key)}
         })
 
         setFilterBy(undefined)
@@ -328,7 +332,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     onChange={changeValueHandler}
                 />}
 
-                {filterBy && filterType.key === 'one_of' &&
+                {filterBy && (filterType.key === 'one_of' || filterType.key === 'except') &&
                 <TreeSelect
                     treeData={multiSelectVariations[filterBy]}
                     getPopupContainer={triggerNode => triggerNode.parentNode}
