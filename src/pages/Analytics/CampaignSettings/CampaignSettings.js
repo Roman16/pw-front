@@ -1,18 +1,33 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import './CampaignSettings.less'
 import {Input, Radio, Select, Switch} from "antd"
 import CustomSelect from "../../../components/Select/Select"
 import DatePicker from "../../../components/DatePicker/DatePicker"
 import InputCurrency from "../../../components/Inputs/InputCurrency"
+import {useSelector} from "react-redux"
+import {analyticsServices} from "../../../services/analytics.services"
 
 
 const Option = Select.Option
 
 const CampaignSettings = () => {
+    const mainState = useSelector(state => state.analytics.mainState)
 
-    const [settingParams, setSettingsParams] = useState({
+    const [settingParams, setSettingsParams] = useState({})
 
-    })
+    const getCampaignInformation = async () => {
+        try {
+            const res = await analyticsServices.fetchStateInformation('campaignId', mainState.campaignId)
+            setSettingsParams(res.response)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        getCampaignInformation()
+    }, [])
+
 
     return (
         <div className={'campaign-settings-workplace'}>
@@ -26,6 +41,7 @@ const CampaignSettings = () => {
                         <Input
                             disabled
                             placeholder={'Campaign Name'}
+                            value={settingParams.name}
                         />
                     </div>
                 </div>
@@ -37,7 +53,7 @@ const CampaignSettings = () => {
                 </div>
 
                 <div className="value">
-                    JF5GHHB6656
+                    {settingParams.campaignId || '-'}
                 </div>
             </div>
 
@@ -65,7 +81,7 @@ const CampaignSettings = () => {
                 </div>
 
                 <div className="value">
-                    Sponsored Products
+                    {settingParams.campaignType}
                 </div>
             </div>
 

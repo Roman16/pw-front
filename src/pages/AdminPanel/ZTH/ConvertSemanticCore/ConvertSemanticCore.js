@@ -34,11 +34,7 @@ const ConvertSemanticCore = () => {
 
                 <h2>Semantic core sheets</h2>
 
-                <Tabs type="card">
-                    <TabPane tab="Tab 1" key="1">
-                        <SemanticCore/>
-                    </TabPane>
-                </Tabs>
+                <SemanticCore/>
             </div>
 
         </section>

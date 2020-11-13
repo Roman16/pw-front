@@ -79,8 +79,8 @@ const Chart = ({
             }
 
             activeMetrics.forEach(metric => {
-                event[metric.key] = 0
-                event[`${metric.key}_7d`] = 0
+                event[metric.key] = null
+                event[`${metric.key}_7d`] = null
             })
 
             dateArr.push(event)

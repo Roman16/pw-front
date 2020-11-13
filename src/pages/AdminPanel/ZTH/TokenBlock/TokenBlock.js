@@ -3,7 +3,7 @@ import {Input} from "antd"
 import {adminServices} from "../../../../services/admin.services"
 
 const TokenBlock = () => {
-    const [token, setToken] = useState(localStorage.getItem('zthToken')),
+    const [token, setToken] = useState(localStorage.getItem('zthToken') !== null ? localStorage.getItem('zthToken') : ''),
         [version, setVersion] = useState()
 
 
@@ -41,7 +41,7 @@ const TokenBlock = () => {
 
                 <Input
                     placeholder={'Enter API Token'}
-                    value={token}
+                    value={token || ''}
                     onChange={e => setToken(e.target.value)}
                 />
             </div>

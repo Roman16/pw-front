@@ -60,9 +60,9 @@ function fetchChartData(location, metrics, date, filters = [], cancelToken) {
 function fetchStateInformation(state, id) {
     const stateParams = {
         campaignId: 'campaigns',
-        productId: 'product',
+        productId: 'products',
         adGroupId: 'ad-groups',
-        portfolioId: 'portfolio',
+        portfolioId: 'portfolios',
     }
     return api('get', `${analyticsUrls.campaignInformation(stateParams[state], id)}`)
 }

@@ -42,8 +42,8 @@ const ProductAdsList = () => {
     const columns = [
         {
             title: 'Product',
-            dataIndex: 'product_name_sku_asin',
-            key: 'product_name_sku_asin',
+            dataIndex: 'product_name',
+            key: 'product_name',
             width: '300px',
             sorter: true,
             locked: true,
