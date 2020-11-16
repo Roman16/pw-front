@@ -13,7 +13,7 @@ import {
     cpaColumn, cpcColumn,
     ctrColumn,
     impressionsColumn,
-    renderNumberField,
+    renderNumberField, RenderProduct,
     roasColumn,
     salesShareColumn,
 } from "../../components/TableList/tableColumns"
@@ -25,6 +25,7 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import CustomSelect from "../../../../components/Select/Select"
 import _ from 'lodash'
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {SVG} from "../../../../utils/icons"
 
 const Option = Select.Option
 
@@ -78,6 +79,7 @@ const ProductsList = () => {
         dispatch(analyticsActions.setMainState(state))
     }
 
+
     const columns = [
         {
             title: 'Product',
@@ -88,21 +90,10 @@ const ProductsList = () => {
             sorter: true,
             search: true,
             noTotal: true,
-            render: (name, item) => <Link
-                to={`/analytics/overview?productId=${item.product_id}`}
-                className="product-field"
-                onClick={() => setStateHandler('ad-groups', {
-                    name: {productName: item.product_name},
-                    productId: item.product_id
-                })}
-            >
-                {item.product_image && <div className={'image'}><img src={item.product_image} alt=""/></div>}
-
-                <div className="col">
-                    <h4 title={item.product_name}>{item.product_name}</h4>
-                    <p>{item.product_price !== null && `$${numberMask(item.product_price, 2)}`}</p>
-                </div>
-            </Link>
+            render: (name, item) => <RenderProduct
+                product={item}
+                setState={setStateHandler}
+            />
         },
         {
             title: 'SKU/ASIN',

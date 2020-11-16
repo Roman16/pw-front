@@ -3,7 +3,7 @@ import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
 import {reasonFilterParams} from "./reports.services"
 import {endDateFormatting, startDateFormatting} from "./dashboard.services"
-
+import _ from 'lodash'
 
 export const analyticsServices = {
     fetchTableData,
@@ -42,7 +42,12 @@ const urlGenerator = (url, pagination, sorting, filters) => {
         parameters.push(`&order_by:${sorting.type}=${sorting.column}`)
     }
 
-    return `${url}?page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}${filtersHandler(filters)}`
+    if (_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent') {
+        return `${analyticsUrls.tableData('products-parents')}?page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}${filtersHandler(_.reject(filters, {filterBy: 'productView'}))}`
+    } else {
+        return `${url}?page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}${filtersHandler(filters)}`
+    }
+
 }
 
 function fetchTableData(locationKey, paginationParams, sortingParams = {}, filters = [], cancelToken) {

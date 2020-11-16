@@ -3,6 +3,9 @@ import moment from "moment"
 import {numberMask} from "../../../../utils/numberMask"
 import {round} from "../../../../utils/round"
 import {Link} from "react-router-dom"
+import {SVG} from "../../../../utils/icons"
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {Popover} from "antd"
 
 export const renderNumberField = (type = 'number') => {
     switch (type) {
@@ -37,6 +40,99 @@ export const statusColumn = {
 
 export const dateColumn = {
     render: (date) => (date && moment(date).format('DD.MM.YYYY')),
+}
+// export const RenderProduct = ({product, setState}) => {
+//     const tableHeight = document.querySelector('.list-section') ? document.querySelector('.list-section').offsetHeight : 600
+//
+//     return (<div className="product-field">
+//     {product.product_image && <div className={'image'}><img src={product.product_image} alt=""/></div>}
+//
+//     <div className="col">
+//         <Link
+//             to={`/analytics/overview?productId=${product.product_id}`}
+//             onClick={() => setState('ad-groups', {
+//                 name: {productName: product.product_name},
+//                 productId: product.product_id
+//             })}
+//         >
+//             <h4 title={product.product_name}>{product.product_name}</h4>
+//         </Link>
+//         <p>{product.product_price !== null && `$${numberMask(product.product_price, 2)}`}</p>
+//     </div>
+//
+//     {product.childs_sku_array && product.childs_sku_array.length > 0 && <div className={'has-child'}>
+//         <i> <SVG id={'home-icon'}/></i>
+//
+//         <div className="child-list" style={{height: `${tableHeight / 3.5}px`}}>
+//             <div className="header">
+//                 <div>
+//                     Child product <b>({product.childs_sku_array.length})</b>
+//                 </div>
+//
+//                 <div>
+//                     SKU
+//                 </div>
+//             </div>
+//
+//             <ul>
+//                 {product.childs_sku_array.map(product => (
+//                     <li>
+//                         <label htmlFor="">Child product</label>
+//                         <a href="">{product}</a>
+//                     </li>
+//                 ))}
+//             </ul>
+//         </div>
+//     </div>}
+// </div>)}
+
+export const RenderProduct = ({product, setState}) => {
+
+    return (
+        <div className="product-field">
+            {product.product_image && <div className={'image'}><img src={product.product_image} alt=""/></div>}
+
+            <div className="col">
+                <Link
+                    to={`/analytics/overview?productId=${product.product_id}`}
+                    onClick={() => setState('ad-groups', {
+                        name: {productName: product.product_name},
+                        productId: product.product_id
+                    })}
+                >
+                    <h4 title={product.product_name}>{product.product_name}</h4>
+                </Link>
+                <p>{product.product_price !== null && `$${numberMask(product.product_price, 2)}`}</p>
+            </div>
+
+            {product.childs_sku_array && product.childs_sku_array.length > 0 && <Popover
+                placement="bottom"
+                overlayClassName={'product-child-popover'}
+                content={<div className="child-list">
+                    <div className="header">
+                        <div>
+                            Child product <b>({product.childs_sku_array.length})</b>
+                        </div>
+
+                        <div>
+                            SKU
+                        </div>
+                    </div>
+
+                    <ul>
+                        {product.childs_sku_array.map(product => (
+                            <li>
+                                <label htmlFor="">Child product</label>
+                                <a href="#">{product}</a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>}
+            >
+                <i> <SVG id={'home-icon'}/></i>
+            </Popover>}
+        </div>
+    )
 }
 
 export const impressionsColumn = {

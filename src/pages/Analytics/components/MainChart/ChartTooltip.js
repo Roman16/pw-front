@@ -17,7 +17,7 @@ const days = [
 
 const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payload, chartColors}) => {
     const getChartValue = (payload, key, metric) => {
-        if (payload[key]) {
+        if (payload[key] !== null) {
             if (metric.type === 'percent') {
                 return round(+payload[key] * 100, 2) + '%'
             } else if (metric.type === 'currency') {
