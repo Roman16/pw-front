@@ -55,11 +55,15 @@ function fetchTableData(locationKey, paginationParams, sortingParams = {}, filte
 }
 
 function fetchMetricsData({startDate, endDate, locationKey, filters}, cancelToken) {
-    return api('get', `${analyticsUrls.metricsData(locationKey)}?start_date=${startDateFormatting(startDate)}&end_date=${endDateFormatting(endDate)}${filtersHandler(filters.filter(item => item.filterBy !== 'datetime'))}`, null, null, cancelToken)
+    const key = (_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent') ? 'products-parents' : locationKey
+
+    return api('get', `${analyticsUrls.metricsData(key)}?start_date=${startDateFormatting(startDate)}&end_date=${endDateFormatting(endDate)}${filtersHandler(filters.filter(item => item.filterBy !== 'datetime' && item.filterBy !== 'productView'))}`, null, null, cancelToken)
 }
 
 function fetchChartData(location, metrics, date, filters = [], cancelToken) {
-    return api('get', `${analyticsUrls.chartData(location)}?${metrics.filter(item => !!item.key).map(item => `metric[]=${item.key}`).join('&')}&start_date=${startDateFormatting(date.startDate)}&end_date=${endDateFormatting(date.endDate)}${filtersHandler(filters.filter(item => item.filterBy !== 'datetime'))}`, null, null, cancelToken)
+    const key = (_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent') ? 'products-parents' : location
+
+    return api('get', `${analyticsUrls.chartData(key)}?${metrics.filter(item => !!item.key).map(item => `metric[]=${item.key}`).join('&')}&start_date=${startDateFormatting(date.startDate)}&end_date=${endDateFormatting(date.endDate)}${filtersHandler(filters.filter(item => item.filterBy !== 'datetime' && item.filterBy !== 'productView'))}`, null, null, cancelToken)
 }
 
 function fetchStateInformation(state, id) {
