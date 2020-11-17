@@ -9,6 +9,7 @@
   grid-row-gap: 10px;
   grid-template-rows: max-content 1fr;
   grid-template-columns: max-content 1fr;
+  overflow-x: hidden;
 
   .navigation {
     grid-area: nav;
@@ -17,8 +18,16 @@
   .workplace {
     grid-area: workplace;
     width: 100%;
-    overflow-x: hidden;
-    padding: 0 10px 0 10px;
+    overflow-x: auto;
+    padding: 0 10px 0 0;
+
+    & > div {
+      width: max-content;
+      max-width: 85.8vw;
+      min-width: 1220px;
+      display: flex;
+      flex-direction: column;
+    }
 
     .metrics-block {
       grid-gap: 10px;
@@ -29,6 +38,7 @@
     }
 
     section {
+      width: 100%;
       background: #fff;
       border-radius: 4px;
       box-shadow: @default-section-shadow;

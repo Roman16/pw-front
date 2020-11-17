@@ -1,8 +1,6 @@
 import api from "./request"
 import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
-import {reasonFilterParams} from "./reports.services"
-import {endDateFormatting, startDateFormatting} from "./dashboard.services"
 import _ from 'lodash'
 
 export const analyticsServices = {
@@ -17,10 +15,10 @@ const filtersHandler = (filters) => {
     const parameters = []
 
     filters.forEach(({filterBy, type, value}) => {
-        if (type === 'search' && value) {
+        if (filterBy === 'datetime') {
+            parameters.unshift(`?datetime:range=${value.startDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${value.endDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
+        } else if (type === 'search' && value) {
             parameters.push(`&${filterBy}:contains=${value}`)
-        } else if (filterBy === 'datetime') {
-            parameters.push(`&datetime:range=${value.startDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${value.endDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
         } else if (type.key === 'one_of') {
             parameters.push(`&${filterBy}:in=${value}`)
         } else if (filterBy === 'budget_allocation' || filterBy === 'sales_share' || filterBy === 'roas' || filterBy === 'conversion_rate' || filterBy === 'acos' || filterBy === 'ctr' || filterBy === 'ctr') {
@@ -43,9 +41,9 @@ const urlGenerator = (url, pagination, sorting, filters) => {
     }
 
     if (_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent') {
-        return `${analyticsUrls.tableData('products-parents')}?page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}${filtersHandler(_.reject(filters, {filterBy: 'productView'}))}`
+        return `${analyticsUrls.tableData('products-parents')}${filtersHandler(_.reject(filters, {filterBy: 'productView'}))}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
     } else {
-        return `${url}?page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}${filtersHandler(filters)}`
+        return `${url}${filtersHandler(filters)}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
     }
 
 }
@@ -61,7 +59,7 @@ function fetchMetricsData({startDate, endDate, locationKey, filters}, cancelToke
     else key = locationKey
 
 
-    return api('get', `${analyticsUrls.metricsData(key)}?start_date=${startDateFormatting(startDate)}&end_date=${endDateFormatting(endDate)}${filtersHandler(filters.filter(item => item.filterBy !== 'datetime' && item.filterBy !== 'productView'))}`, null, null, cancelToken)
+    return api('get', `${analyticsUrls.metricsData(key)}${filtersHandler(filters.filter(item => item.filterBy !== 'productView'))}`, null, null, cancelToken)
 }
 
 function fetchChartData(location, metrics, date, filters = [], cancelToken) {
@@ -70,7 +68,7 @@ function fetchChartData(location, metrics, date, filters = [], cancelToken) {
     else if (location === 'overview') key = 'products'
     else key = location
 
-    return api('get', `${analyticsUrls.chartData(key)}?${metrics.filter(item => !!item.key).map(item => `metric[]=${item.key}`).join('&')}&start_date=${startDateFormatting(date.startDate)}&end_date=${endDateFormatting(date.endDate)}${filtersHandler(filters.filter(item => item.filterBy !== 'datetime' && item.filterBy !== 'productView'))}`, null, null, cancelToken)
+    return api('get', `${analyticsUrls.chartData(key)}${filtersHandler(filters.filter(item => item.filterBy !== 'productView'))}&${metrics.filter(item => !!item.key).map(item => `metric[]=${item.key}`).join('&')}`, null, null, cancelToken)
 }
 
 function fetchStateInformation(state, id) {
