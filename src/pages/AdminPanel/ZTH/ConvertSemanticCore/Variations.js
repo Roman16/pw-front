@@ -61,6 +61,17 @@ const Variations = () => {
             >
                 {tabs.map(pane => (
                     <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>
+                        <div className="actions row">
+                            <button className="btn default">
+                                Copy themes
+                            </button>
+
+                            <button className="btn default">
+                                Paste themes
+                            </button>
+                        </div>
+
+
                         <HotTable
                             data={data}
                             stretchH={'all'}
@@ -80,7 +91,6 @@ const Variations = () => {
                                 title="SKU"
                             />
                         </HotTable>
-
                     </TabPane>
                 ))}
             </Tabs>

@@ -318,7 +318,7 @@ const LandingAutomation = () => {
 
                     <div className="row">
                         <div className="demo">
-                            <Link to={'/demo-call'} className={''} target={'_blank'}>
+                            <Link to={'/book-a-demo'} className={''} target={'_blank'}>
                                 <span>REQUEST</span>
 
                                 <div className="icon">
@@ -593,7 +593,7 @@ const LandingAutomation = () => {
                                     <SVG id={'right-row'}/>
                                 </a>
 
-                                <Link to={'/demo-call'} target={'_blank'} className={'btn default'}>BOOK A DEMO</Link>
+                                <Link to={'/audit'} target={'_blank'} className={'btn default'}>BOOK A DEMO</Link>
                             </div>
 
                             <div className="image"><img src={underHoodImages.icon1} alt=""/></div>
@@ -865,95 +865,95 @@ const LandingAutomation = () => {
                 <img src={dataDrivenImage} alt=""/>
             </section>
 
-            <section className={'user-comments'}>
-                <div className="container">
-                    <h2><span>Trusted</span> the world over</h2>
+            {/*<section className={'user-comments'}>*/}
+            {/*    <div className="container">*/}
+            {/*        <h2><span>Trusted</span> the world over</h2>*/}
 
-                    <div className="users">
-                        <Slider
-                            dots={false}
-                            infinite={true}
-                            focusOnSelect={true}
-                            speed={500}
-                            slidesToShow={3}
-                            slidesToScroll={1}
-                            afterChange={(index) => {
-                                setActiveComment(index)
-                            }}
-                            responsive={[
-                                {
-                                    breakpoint: 800,
-                                    settings: {
-                                        slidesToShow: 2,
-                                    }
-                                },
-                                {
-                                    breakpoint: 600,
-                                    settings: {
-                                        slidesToShow: 1,
-                                        slidesToScroll: 1,
-                                    }
-                                }
-                            ]}
+            {/*        <div className="users">*/}
+            {/*            <Slider*/}
+            {/*                dots={false}*/}
+            {/*                infinite={true}*/}
+            {/*                focusOnSelect={true}*/}
+            {/*                speed={500}*/}
+            {/*                slidesToShow={3}*/}
+            {/*                slidesToScroll={1}*/}
+            {/*                afterChange={(index) => {*/}
+            {/*                    setActiveComment(index)*/}
+            {/*                }}*/}
+            {/*                responsive={[*/}
+            {/*                    {*/}
+            {/*                        breakpoint: 800,*/}
+            {/*                        settings: {*/}
+            {/*                            slidesToShow: 2,*/}
+            {/*                        }*/}
+            {/*                    },*/}
+            {/*                    {*/}
+            {/*                        breakpoint: 600,*/}
+            {/*                        settings: {*/}
+            {/*                            slidesToShow: 1,*/}
+            {/*                            slidesToScroll: 1,*/}
+            {/*                        }*/}
+            {/*                    }*/}
+            {/*                ]}*/}
 
-                        >
-                            {commentsList.map((item, index) => (
-                                <div className="user">
-                                    <div className="avatar">
-                                        {index === 2 ?
-                                            <SVG id='account'/>
-                                            :
-                                            <img src={avatars[item.name.replace(/ /g, "")]} alt=""/>
-                                        }
-                                    </div>
+            {/*            >*/}
+            {/*                {commentsList.map((item, index) => (*/}
+            {/*                    <div className="user">*/}
+            {/*                        <div className="avatar">*/}
+            {/*                            {index === 2 ?*/}
+            {/*                                <SVG id='account'/>*/}
+            {/*                                :*/}
+            {/*                                <img src={avatars[item.name.replace(/ /g, "")]} alt=""/>*/}
+            {/*                            }*/}
+            {/*                        </div>*/}
 
-                                    <h4 className={index === activeComment && 'active-user'}>{item.name}</h4>
-                                </div>
-                            ))}
-                        </Slider>
+            {/*                        <h4 className={index === activeComment && 'active-user'}>{item.name}</h4>*/}
+            {/*                    </div>*/}
+            {/*                ))}*/}
+            {/*            </Slider>*/}
 
-                        <div className="slider desc">
-                            <div className="bar"/>
-                        </div>
-                        <div className="slider mob">
-                            <div className="bar" style={{marginLeft: `${7.14 * activeComment}%`}}/>
-                        </div>
-                    </div>
+            {/*            <div className="slider desc">*/}
+            {/*                <div className="bar"/>*/}
+            {/*            </div>*/}
+            {/*            <div className="slider mob">*/}
+            {/*                <div className="bar" style={{marginLeft: `${7.14 * activeComment}%`}}/>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
 
-                    <div className="comment">
-                        <div className="row">
-                            <p className="comment-text">
-                                {commentsList[activeComment].comment}
-                            </p>
+            {/*        <div className="comment">*/}
+            {/*            <div className="row">*/}
+            {/*                <p className="comment-text">*/}
+            {/*                    {commentsList[activeComment].comment}*/}
+            {/*                </p>*/}
 
-                            <div className="stars">
-                                <Rate disabled value={commentsList[activeComment].rate}/>
-                            </div>
-                        </div>
+            {/*                <div className="stars">*/}
+            {/*                    <Rate disabled value={commentsList[activeComment].rate}/>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
 
-                        <a href={'#form'} className={'btn default'}>
-                            contact us
-                        </a>
-                    </div>
+            {/*            <a href={'#form'} className={'btn default'}>*/}
+            {/*                contact us*/}
+            {/*            </a>*/}
+            {/*        </div>*/}
 
-                    <div className="trustpilot-block">
-                        <h3>
-                            Don’t take our word for it
-                        </h3>
+            {/*        <div className="trustpilot-block">*/}
+            {/*            <h3>*/}
+            {/*                Don’t take our word for it*/}
+            {/*            </h3>*/}
 
-                        <p>
-                            Check our customer reviews on Trustpilot!
-                        </p>
+            {/*            <p>*/}
+            {/*                Check our customer reviews on Trustpilot!*/}
+            {/*            </p>*/}
 
-                        <a href="https://www.trustpilot.com/review/profitwhales.com" target={'_blank'}
-                           className={'btn'}>
-                            <img src={trustpilotLogo} alt=""/>
+            {/*            <a href="https://www.trustpilot.com/review/profitwhales.com" target={'_blank'}*/}
+            {/*               className={'btn'}>*/}
+            {/*                <img src={trustpilotLogo} alt=""/>*/}
 
-                            Trustpilot
-                        </a>
-                    </div>
-                </div>
-            </section>
+            {/*                Trustpilot*/}
+            {/*            </a>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
 
             <section className={'new-blog-posts'}>
                 <div className="container">

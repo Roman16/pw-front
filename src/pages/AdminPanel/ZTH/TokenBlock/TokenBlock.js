@@ -29,8 +29,8 @@ const TokenBlock = () => {
         <>
             <div className="version-description">
                 <p>Zero to Hero version: <b>{version}</b></p>
-                <p>Latest markup version: <b>28</b></p>
-                <p>Lowest compatible version: <b>28</b></p>
+                <p>Latest markup version: <b>{version}</b></p>
+                <p>Lowest compatible version: <b>{version}</b></p>
 
                 <a href="#">Link to latest template</a>
             </div>
