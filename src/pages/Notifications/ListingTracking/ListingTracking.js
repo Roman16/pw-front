@@ -9,66 +9,64 @@ import axios from "axios"
 import '../../PPCAutomate/ProductSettings/ProductSettings.less'
 
 
-const CancelToken = axios.CancelToken;
-let source = null;
+const CancelToken = axios.CancelToken
+let source = null
 
-let timerId = null;
+let timerId = null
 
-let editableRow = null;
+let editableRow = null
 
 
 const ListingTracking = () => {
     const [productsList, setProductsList] = useState([]),
-        [searchStr, setSearchStr] = useState(''),
         [totalSize, setTotalSize] = useState(0),
-        [onlyActive, setOnlyActive] = useState(false),
-        [onlyOptimization, setOnlyOptimization] = useState(false),
+        [requestParams, setRequestParams] = useState({
+            searchStr: '',
+            onlyActive: false,
+            onlyOptimization: false
+        }),
         [processing, setProcessing] = useState(false),
         [paginationOptions, setPaginationOptions] = useState({
             page: 1,
             pageSize: 10
-        });
+        })
 
     const {isAgencyClient} = useSelector(state => ({
             isAgencyClient: state.user.user.is_agency_client
         }
-    ));
+    ))
 
     const fetchProducts = async () => {
         if (processing && source) {
-            source.cancel();
+            source.cancel()
         }
 
-        source = CancelToken.source();
+        source = CancelToken.source()
 
-        setProcessing(true);
+        setProcessing(true)
 
         const {result, totalSize} = await productsServices.getProductsSettingsList({
             ...paginationOptions,
-            searchStr,
-            onlyActive,
-            onlyOptimization,
+            ...requestParams,
             cancelToken: source.token
-        });
+        })
 
-        setProductsList(result || []);
-        setTotalSize(totalSize);
-        setProcessing(false);
-    };
+        setProductsList(result || [])
+        setTotalSize(totalSize)
+        setProcessing(false)
+    }
 
-    const changeSwitchHandler = (type, value) => {
-        if (type === 'active') {
-            setOnlyActive(value);
-
-        } else if (type === 'optimization') {
-            setOnlyOptimization(value)
-        }
+    const changeSwitchHandler = (name, value) => {
+        setRequestParams(prevState => ({
+            ...prevState,
+            [name]: value
+        }))
 
         setPaginationOptions({
             ...paginationOptions,
             page: 1
         })
-    };
+    }
 
     const updateSettingsHandlerById = async (data) => {
         try {
@@ -76,18 +74,18 @@ const ListingTracking = () => {
 
             notification.success({
                 title: 'Changes saved'
-            });
+            })
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
-    };
+    }
 
     const updateSettingsHandlerByIdList = async (data) => {
         try {
             await productsServices.updateProductSettingsByIdList({
                 [data.field]: data[data.field],
                 ...data.product_id && {product_id: data.product_id}
-            });
+            })
 
             if (data.product_id) {
                 const newList = [...productsList.map(item => {
@@ -95,35 +93,36 @@ const ListingTracking = () => {
                         item[data.field] = data[data.field]
                     }
 
-                    return item;
-                })];
+                    return item
+                })]
 
-                setProductsList([...newList]);
+                setProductsList([...newList])
             } else {
                 const newList = [...productsList.map(item => {
-                    item[data.field] = data[data.field];
+                    item[data.field] = data[data.field]
 
-                    return item;
-                })];
+                    return item
+                })]
 
-                setProductsList([...newList]);
+                setProductsList([...newList])
             }
 
             notification.success({
                 title: 'Changes saved'
-            });
+            })
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
-    };
+    }
 
-    const changeSearchHandler = debounce(500, false, str => {
-        setSearchStr(str);
+    const changeSearchHandler = searchStr => {
+        setRequestParams(prevState => ({...prevState, searchStr}))
+
         setPaginationOptions({
             ...paginationOptions,
             page: 1
         })
-    });
+    }
 
     const setRowData = (value, item, index) => {
         const newList = productsList.map((product, productIndex) => {
@@ -133,41 +132,42 @@ const ListingTracking = () => {
 
             return (product)
         })
-        setProductsList(newList);
+        setProductsList(newList)
 
 
-        clearTimeout(timerId);
+        clearTimeout(timerId)
         timerId = setTimeout(() => {
-            updateSettingsHandlerById(productsList[index]);
-            editableRow = null;
-        }, 2000);
+            updateSettingsHandlerById(productsList[index])
+            editableRow = null
+        }, 2000)
 
         if (editableRow !== null && editableRow !== index) {
-            updateSettingsHandlerById(productsList[editableRow]);
-            clearTimeout(timerId);
+            updateSettingsHandlerById(productsList[editableRow])
+            clearTimeout(timerId)
         }
 
-        editableRow = index;
-    };
+        editableRow = index
+    }
 
     const changePaginationHandler = (params) => {
         setPaginationOptions(params)
     }
 
     useEffect(() => {
-        fetchProducts();
+        fetchProducts()
 
         return (() => {
             if (editableRow !== null) {
-                updateSettingsHandlerById(productsList[editableRow]);
+                updateSettingsHandlerById(productsList[editableRow])
             }
         })
     }, [paginationOptions])
-    return(
+    return (
         <div className="product-settings-page">
             <Filters
                 onChangeSearch={changeSearchHandler}
                 onChangeSwitch={changeSwitchHandler}
+                requestParams={requestParams}
             />
 
             <ProductsList

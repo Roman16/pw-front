@@ -3,7 +3,7 @@ import {Input} from "antd"
 import {adminServices} from "../../../../services/admin.services"
 
 const TokenBlock = () => {
-    const [token, setToken] = useState(localStorage.getItem('zthToken')),
+    const [token, setToken] = useState(localStorage.getItem('zthToken') !== null ? localStorage.getItem('zthToken') : ''),
         [version, setVersion] = useState()
 
 
@@ -23,15 +23,14 @@ const TokenBlock = () => {
 
     useEffect(() => {
         getVersionInformation()
-
     }, [])
 
     return (
         <>
             <div className="version-description">
                 <p>Zero to Hero version: <b>{version}</b></p>
-                <p>Latest markup version: <b>28</b></p>
-                <p>Lowest compatible version: <b>28</b></p>
+                <p>Latest markup version: <b>{version}</b></p>
+                <p>Lowest compatible version: <b>{version}</b></p>
 
                 <a href="#">Link to latest template</a>
             </div>
@@ -41,7 +40,7 @@ const TokenBlock = () => {
 
                 <Input
                     placeholder={'Enter API Token'}
-                    value={token}
+                    value={token || ''}
                     onChange={e => setToken(e.target.value)}
                 />
             </div>

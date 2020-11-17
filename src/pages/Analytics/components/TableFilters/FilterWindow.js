@@ -142,12 +142,22 @@ const containsVariations = {
     'budget_allocation': numberVariations,
     'ordered_quantity': numberVariations,
     'attributedConversions30d': numberVariations,
+    'organic_sales': numberVariations,
+    'total_ordered_quantity': numberVariations,
     'sales_share': numberVariations,
+    'total_ordered_quantity_cleared': numberVariations,
+    'total_orders_count': numberVariations,
     'cpa': numberVariations,
     'conversion_rate': numberVariations,
     'cpc': numberVariations,
+    'campaigns_count': numberVariations,
     'ctr': numberVariations,
     'dailyBudget': numberVariations,
+    'total_orders_count_cleared': numberVariations,
+    'organic_orders_count': numberVariations,
+    'total_returns_quantity': numberVariations,
+    'total_sales': numberVariations,
+    'macos': numberVariations,
     'cost': numberVariations,
     'roas': numberVariations,
     'defaultBid': numberVariations,
@@ -325,8 +335,15 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 />}
 
                 {(filterBy === 'clicks' ||
+                    filterBy === 'total_ordered_quantity' ||
+                    filterBy === 'total_orders_count' ||
+                    filterBy === 'total_orders_count_cleared' ||
+                    filterBy === 'total_ordered_quantity_cleared' ||
+                    filterBy === 'organic_orders_count' ||
+                    filterBy === 'total_returns_quantity' ||
                     filterBy === 'attributedConversions30d' ||
                     filterBy === 'attributedUnitsOrdered30d' ||
+                    filterBy === 'campaigns_count' ||
                     filterBy === 'impressions') &&
                 <Input
                     disabled={!filterBy}
@@ -340,6 +357,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'sales_share' ||
                     filterBy === 'conversion_rate' ||
                     filterBy === 'roas' ||
+                    filterBy === 'macos' ||
                     filterBy === 'ctr' ||
                     filterBy === 'budget_allocation'
                 ) &&
@@ -355,8 +373,10 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'cpc' ||
                     filterBy === 'cost' ||
                     filterBy === 'profit' ||
+                    filterBy === 'total_sales' ||
                     filterBy === 'ad_profit' ||
                     filterBy === 'defaultBid' ||
+                    filterBy === 'organic_sales' ||
                     filterBy === 'attributedSales30d' ||
                     filterBy === 'dailyBudget' ||
                     filterBy === 'sales'

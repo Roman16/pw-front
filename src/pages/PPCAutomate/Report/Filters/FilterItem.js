@@ -74,6 +74,16 @@ const columnTitle = {
     'campaignName': 'Campaign',
     'defaultBid': 'Default bid',
     'adGroupName': 'Ad Group',
+    'campaigns_count': 'Сampaigns',
+    'macos': 'MACoS',
+    'organic_sales': 'Organic Sales',
+    'total_ordered_quantity': 'Total Units',
+    'total_ordered_quantity_cleared': 'Total Units Cleared',
+    'total_orders_count': 'Total Orders',
+    'total_orders_count_cleared': 'Total Orders Cleared',
+    'organic_orders_count': 'Organic Orders',
+    'total_sales': 'Total Sales',
+    'total_returns_quantity': 'Returns',
 }
 
 
@@ -93,7 +103,7 @@ export const FilterItem = ({filter}) => {
     } else if (filter.filterBy === 'object_type' || filter.filterBy === 'match_type') {
         return (
             <>
-                {`${columnTitle[filter.filterBy]} is one of: ${filter.value.map(item => valueTile[item]).join(', ')}`}
+                {`${columnTitle[filter.filterBy]} ${filter.type.key}: ${filter.value.map(item => valueTile[item]).join(', ')}`}
             </>
         )
     } else if (filter.filterBy === 'impressions' ||
@@ -101,20 +111,30 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'spend' ||
         filter.filterBy === 'sales' ||
         filter.filterBy === 'sales_share' ||
+        filter.filterBy === 'total_returns_quantity' ||
         filter.filterBy === 'acos' ||
+        filter.filterBy === 'campaigns_count' ||
         filter.filterBy === 'roas' ||
         filter.filterBy === 'cpa' ||
         filter.filterBy === 'cpc' ||
         filter.filterBy === 'cost' ||
         filter.filterBy === 'ctr' ||
+        filter.filterBy === 'total_ordered_quantity' ||
+        filter.filterBy === 'total_ordered_quantity_cleared' ||
+        filter.filterBy === 'total_orders_count' ||
         filter.filterBy === 'conversion_rate' ||
         filter.filterBy === 'attributedUnitsOrdered30d' ||
         filter.filterBy === 'attributedConversions30d' ||
         filter.filterBy === 'attributedSales30d' ||
         filter.filterBy === 'budget_allocation' ||
         filter.filterBy === 'dailyBudget' ||
+        filter.filterBy === 'macos' ||
+        filter.filterBy === 'organic_sales' ||
         filter.filterBy === 'defaultBid' ||
         filter.filterBy === 'ordered_quantity' ||
+        filter.filterBy === 'organic_orders_count' ||
+        filter.filterBy === 'total_sales' ||
+        filter.filterBy === 'total_orders_count_cleared' ||
         filter.filterBy === 'ad_profit' ||
         filter.filterBy === 'profit') {
         return (

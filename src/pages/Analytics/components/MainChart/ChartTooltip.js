@@ -1,5 +1,4 @@
 import React from "react"
-import {metricsListArray} from "../../../../constans/metricsList"
 import moment from "moment"
 import {round} from "../../../../utils/round"
 import {numberMask} from "../../../../utils/numberMask"
@@ -18,13 +17,13 @@ const days = [
 
 const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payload, chartColors}) => {
     const getChartValue = (payload, key, metric) => {
-        if (payload) {
+        if (payload[key] !== null) {
             if (metric.type === 'percent') {
-                return round(payload[key], 2) + '%'
+                return round(+payload[key] * 100, 2) + '%'
             } else if (metric.type === 'currency') {
                 return '$' + numberMask(payload[key], 2)
             } else if (metric.type === 'roas') {
-                return `${round(payload[key], 2)}x`
+                return payload[key] !== null && `${round(payload[key], 2)}x`
             } else {
                 return numberMask(payload[key])
             }

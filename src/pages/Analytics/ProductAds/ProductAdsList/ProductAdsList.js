@@ -14,7 +14,7 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    impressionsColumn,
+    impressionsColumn, RenderProduct,
     roasColumn,
     salesShareColumn,
     statusColumn
@@ -23,8 +23,6 @@ import TableList from "../../components/TableList/TableList"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
-import {numberMask} from "../../../../utils/numberMask"
-
 
 const ProductAdsList = () => {
     const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
@@ -44,36 +42,28 @@ const ProductAdsList = () => {
             title: 'Product',
             dataIndex: 'product_name',
             key: 'product_name',
-            width: '350px',
+            width: '300px',
             sorter: true,
             locked: true,
             search: true,
             noTotal: true,
-            render: (name, item) => <Link
-                to={`/analytics/overview?productId=${item.product_id}`}
-                className="product-field"
-                onClick={() => setStateHandler('ad-groups', {
-                    name: {productName: name},
-                    productId: item.product_id
-                })}
-            >
-                {item.product_image && <img src={item.product_image} alt=""/>}
-
-                <div className="col">
-                    <h4 title={item.product_name}>{item.product_name}</h4>
-                    <p>{item.product_price !== null && `$${numberMask(item.product_price, 2)}`}</p>
-                </div>
-            </Link>
+            render: (name, item) => <RenderProduct
+                product={item}
+                setState={setStateHandler}
+            />
         },
         {
             title: 'SKU/ASIN',
             dataIndex: 'sku_asin',
             key: 'sku_asin',
-            width: '250px',
+            width: '180px',
             sorter: true,
             locked: true,
             noTotal: true,
-            render: (text, item) => <div><b>SKU:</b> {item.sku} <br/> <b>ASIN:</b> {item.asin}</div>
+            render: (text, item) => <div className={'sku-asin'}>
+                <div title={item.sku}><b>SKU:</b> {item.sku}</div>
+                <div title={item.asin}><b>ASIN:</b> {item.asin}</div>
+            </div>
         },
         ...!selectedCampaign ? [{
             ...campaignColumn,

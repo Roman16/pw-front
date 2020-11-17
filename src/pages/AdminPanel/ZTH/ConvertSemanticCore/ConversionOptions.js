@@ -1,7 +1,11 @@
 import React from "react"
-import {HotTable, HotColumn} from '@handsontable/react'
+import {Checkbox, Select} from "antd"
+import {HotColumn, HotTable} from "@handsontable/react"
+import CustomSelect from "../../../../components/Select/Select"
 
-const GenerateBulk = () => {
+const Option = Select.Option
+
+const ConversionOptions = () => {
 
     const data = [
         {
@@ -77,10 +81,19 @@ const GenerateBulk = () => {
             generateBulkUpload: true
         },
     ]
-
     return (
-        <div className={'generate-bulk'}>
-            <h2>Generate bulk upload for campaign types:</h2>
+        <div className={'conversion-options'}>
+            <h2>Conversion options</h2>
+            <h3>Select advertising types to convert</h3>
+
+            <Checkbox>Convert Sponsored Products Semantic core</Checkbox>
+            <br/>
+            <br/>
+            <Checkbox>Convert Sponsored Display Semantic Core (not available for Amazon Bulk Upload files)</Checkbox>
+            <br/>
+            <br/>
+
+            <h3>Generate bulk upload for campaign types:</h3>
 
             <HotTable
                 data={data}
@@ -102,8 +115,33 @@ const GenerateBulk = () => {
                     className="htCenter"
                 />
             </HotTable>
+
+            <div className="form-group  w-25">
+                <label htmlFor="">Campaigns status in Bulk Upload</label>
+                <CustomSelect>
+                    <Option value={1}>Enabled</Option>
+                </CustomSelect>
+            </div>
+
+            <div className="form-group  w-25">
+                <label htmlFor="">Output type</label>
+                <CustomSelect>
+                    <Option value={1}>xlsx</Option>
+                </CustomSelect>
+            </div>
+
+            <div className="form-group w-25">
+                <label htmlFor="">Convert for marketplace</label>
+                <CustomSelect>
+                    <Option value={1}>USA</Option>
+                </CustomSelect>
+            </div>
+
+            <div className="form-group w-25">
+                <Checkbox>Save as Amazon Bulk Upload</Checkbox>
+            </div>
         </div>
     )
 }
 
-export default GenerateBulk
+export default ConversionOptions

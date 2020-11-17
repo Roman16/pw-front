@@ -1,10 +1,21 @@
-import React from "react";
-import {SVG} from "../../../../utils/icons";
-import {Input, Switch} from "antd";
+import React, {useState} from "react"
+import {SVG} from "../../../../utils/icons"
+import {Input, Switch} from "antd"
 
-const {Search} = Input;
+const {Search} = Input
+let timeoutId
 
-const Filters = ({onChangeSearch, onChangeSwitch}) => {
+const Filters = ({onChangeSearch, onChangeSwitch, requestParams}) => {
+    const [searchStr, setSearchStr] = useState(requestParams.searchStr)
+
+    const changeSearchHandler = (value) => {
+        setSearchStr(value)
+
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            onChangeSearch(value)
+        }, 500)
+    }
 
     return (
         <div className="filters">
@@ -12,7 +23,8 @@ const Filters = ({onChangeSearch, onChangeSwitch}) => {
                 <Search
                     className="search-field"
                     placeholder={'Search'}
-                    onChange={e => onChangeSearch(e.target.value)}
+                    onChange={e => changeSearchHandler(e.target.value)}
+                    value={searchStr}
                     data-intercom-target='search-field'
                     suffix={<SVG id={'search'}/>}
                 />
@@ -20,7 +32,8 @@ const Filters = ({onChangeSearch, onChangeSwitch}) => {
 
             <div className='switch-block'>
                 <Switch
-                    onChange={(e) => onChangeSwitch('active', e)}
+                    checked={requestParams.onlyActive}
+                    onChange={(e) => onChangeSwitch('onlyActive', e)}
                 />
 
                 <label htmlFor="">
@@ -30,7 +43,8 @@ const Filters = ({onChangeSearch, onChangeSwitch}) => {
 
             <div className='switch-block'>
                 <Switch
-                    onChange={(e) => onChangeSwitch('optimization', e)}
+                    checked={requestParams.onlyOptimization}
+                    onChange={(e) => onChangeSwitch('onlyOptimization', e)}
                 />
 
                 <label htmlFor="">
@@ -39,6 +53,6 @@ const Filters = ({onChangeSearch, onChangeSwitch}) => {
             </div>
         </div>
     )
-};
+}
 
-export default Filters;
+export default Filters

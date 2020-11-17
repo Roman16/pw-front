@@ -13,146 +13,219 @@ import {
     cpaColumn, cpcColumn,
     ctrColumn,
     impressionsColumn,
-    renderNumberField,
+    renderNumberField, RenderProduct,
     roasColumn,
     salesShareColumn,
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
-import {Switch} from "antd"
+import {Dropdown, Select} from "antd"
+import {numberMask} from "../../../../utils/numberMask"
+import {useDispatch, useSelector} from "react-redux"
+import {analyticsActions} from "../../../../actions/analytics.actions"
+import CustomSelect from "../../../../components/Select/Select"
+import _ from 'lodash'
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {SVG} from "../../../../utils/icons"
 
-const columns = [
-    {
-        title: 'Product',
-        dataIndex: 'product',
-        key: 'product',
-        width: '200px',
-        locked: true,
-        sorter: true,
-        search: true,
-        render: (product, item) => (<Link to={`/analytics/overview?productId=${item.id}`}>{product}</Link>)
-    },
-    {
-        title: 'SKU/ASIN',
-        dataIndex: 'sku_asin',
-        key: 'sku_asin',
-        width: '200px',
-        locked: true,
-        sorter: true
-    },
-    {
-        title: 'Campaigns',
-        dataIndex: 'campaigns',
-        key: 'campaigns',
-        width: '150px',
-        sorter: true
-    },
-    impressionsColumn,
-    clicksColumn,
-    ctrColumn,
-    adSpendColumn,
-    cpcColumn,
-    adSalesColumn,
-    acosColumn,
-    {
-        title: 'MACoS',
-        dataIndex: 'MACoS',
-        key: 'MACoS',
-        width: '150px',
-        sorter: true,
-        ...renderNumberField('percent')
-    },
-    adCvrColumn,
-    cpaColumn,
-    {
-        title: 'Organic Sales',
-        dataIndex: 'organic_sales',
-        key: 'organic_sales',
-        width: '200px',
-        sorter: true,
-        ...renderNumberField('currency')
-    },
-    adUnitsColumn,
-    {
-        title: 'Total Units',
-        dataIndex: 'total_units',
-        key: 'total_units',
-        width: '200px',
-        sorter: true,
-        ...renderNumberField()
-    },
-    {
-        title: 'Total Units Cleared',
-        dataIndex: 'total_units_cleared',
-        key: 'total_units_cleared',
-        width: '200px',
-        sorter: true,
-        ...renderNumberField()
-    },
-    {
-        title: 'Total Orders',
-        dataIndex: 'total_orders',
-        key: 'total_orders',
-        width: '200px',
-        sorter: true,
-        ...renderNumberField()
-    },
-    {
-        title: 'Total Orders Cleared',
-        dataIndex: 'total_orders_cleared',
-        key: 'total_orders_cleared',
-        width: '200px',
-        sorter: true,
-        ...renderNumberField()
-    },
-    adOrdersColumn,
-    {
-        title: 'Organic Orders',
-        dataIndex: 'organic_orders',
-        key: 'organic_orders',
-        width: '200px',
-        sorter: true,
-        ...renderNumberField()
-    },
-    {
-        title: 'Total Sales',
-        dataIndex: 'total_sales',
-        key: 'total_sales',
-        width: '200px',
-        sorter: true,
-        ...renderNumberField('currency')
-    },
-    roasColumn,
-    salesShareColumn,
-    budgetAllocationColumn,
-    {
-        title: 'Returns',
-        dataIndex: 'returns',
-        key: 'returns',
-        width: '150px',
-        sorter: true,
-        ...renderNumberField()
-    },
-    {
-        title: 'Profit',
-        dataIndex: 'profit',
-        key: 'profit',
-        width: '150px',
-        sorter: true,
-        ...renderNumberField('currency')
-    },
-    adProfitColumn
-]
+const Option = Select.Option
 
 const ChangeProductsRequest = () => {
+    const dispatch = useDispatch()
 
-    return(<div className={'switch-products-type'}>
-        <Switch/>
+    const locationKey = useSelector(state => state.analytics.location)
+    const filters = useSelector(state => state.analytics.filters[locationKey] || [])
 
-        <label htmlFor="">Only parents</label>
+    const changeTypeHandler = (value) => {
+        if (_.find(filters, {filterBy: 'productView'})) {
+            dispatch(analyticsActions.updateFiltersList([...filters.map(filter => {
+                if (filter.filterBy === 'productView') {
+                    filter = {
+                        filterBy: 'productView',
+                        type: 'type',
+                        value: value
+                    }
+                }
+                return filter
+            })]))
+        } else {
+            dispatch(analyticsActions.updateFiltersList([...filters, {
+                filterBy: 'productView',
+                type: 'type',
+                value: value
+            }]))
+        }
+    }
+
+    return (<div className={'switch-products-type'}>
+        <CustomSelect
+            value={_.find(filters, {filterBy: 'productView'}) ? _.find(filters, {filterBy: 'productView'}).value : 'regular'}
+            onChange={changeTypeHandler}>
+            <Option value={'regular'}>Regular view</Option>
+            <Option value={'parent'}>Parents view</Option>
+        </CustomSelect>
+
+        <InformationTooltip
+            getPopupContainer={triggerNode => triggerNode.parentNode}
+            title={'Product view'}
+        />
     </div>)
 }
 
 const ProductsList = () => {
+    const dispatch = useDispatch()
+
+    const setStateHandler = (location, state) => {
+        dispatch(analyticsActions.setLocation(location))
+        dispatch(analyticsActions.setMainState(state))
+    }
+
+
+    const columns = [
+        {
+            title: 'Product',
+            dataIndex: 'product_name_sku_asin',
+            key: 'product_name_sku_asin',
+            width: '300px',
+            locked: true,
+            sorter: true,
+            search: true,
+            noTotal: true,
+            render: (name, item) => <RenderProduct
+                product={item}
+                setState={setStateHandler}
+            />
+        },
+        {
+            title: 'SKU/ASIN',
+            dataIndex: 'sku_asin',
+            key: 'sku_asin',
+            width: '180px',
+            locked: true,
+            sorter: true,
+            noTotal: true,
+            render: (text, item) => <div className={'sku-asin'}>
+                <div title={item.sku}><b>SKU:</b> {item.sku}</div>
+                <div title={item.asin}><b>ASIN:</b> {item.asin}</div>
+            </div>
+        },
+        {
+            title: 'Campaigns',
+            dataIndex: 'campaigns_count',
+            key: 'campaigns_count',
+            width: '150px',
+            sorter: true,
+            noTotal: true,
+            filter: true,
+            ...renderNumberField()
+        },
+        impressionsColumn,
+        clicksColumn,
+        ctrColumn,
+        adSpendColumn,
+        cpcColumn,
+        adSalesColumn,
+        acosColumn,
+        {
+            title: 'MACoS',
+            dataIndex: 'macos',
+            key: 'macos',
+            width: '100px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField('percent')
+        },
+        adCvrColumn,
+        cpaColumn,
+        {
+            title: 'Organic Sales',
+            dataIndex: 'organic_sales',
+            key: 'organic_sales',
+            width: '180px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField('currency')
+        },
+        adUnitsColumn,
+        {
+            title: 'Total Units',
+            dataIndex: 'total_ordered_quantity',
+            key: 'total_ordered_quantity',
+            width: '150px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField()
+        },
+        {
+            title: 'Total Units Cleared',
+            dataIndex: 'total_ordered_quantity_cleared',
+            key: 'total_ordered_quantity_cleared',
+            width: '200px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField()
+        },
+        {
+            title: 'Total Orders',
+            dataIndex: 'total_orders_count',
+            key: 'total_orders_count',
+            width: '150px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField()
+        },
+        {
+            title: 'Total Orders Cleared',
+            dataIndex: 'total_orders_count_cleared',
+            key: 'total_orders_count_cleared',
+            width: '200px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField()
+        },
+        adOrdersColumn,
+        {
+            title: 'Organic Orders',
+            dataIndex: 'organic_orders_count',
+            key: 'organic_orders_count',
+            width: '200px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField()
+        },
+        {
+            title: 'Total Sales',
+            dataIndex: 'total_sales',
+            key: 'total_sales',
+            width: '200px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField('currency')
+        },
+        roasColumn,
+        salesShareColumn,
+        budgetAllocationColumn,
+        {
+            title: 'Returns',
+            dataIndex: 'total_returns_quantity',
+            key: 'total_returns_quantity',
+            width: '150px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField()
+        },
+        {
+            title: 'Profit',
+            dataIndex: 'profit',
+            key: 'profit',
+            width: '150px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField('currency')
+        },
+        adProfitColumn
+    ]
+
+
     return (
         <section className={'list-section'}>
             <TableList

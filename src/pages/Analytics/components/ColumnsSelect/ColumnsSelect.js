@@ -56,7 +56,11 @@ const ColumnsSelect = ({columns, columnsBlackList}) => {
                     <SVG id={'table-columns'}/>
                 </i>
 
-                {popoverState && <div className={'popover-column-select'} ref={wrapperRef}>
+                {popoverState && <div
+                    style={{height: `${(document.querySelector('.list-section') ? document.querySelector('.list-section').offsetHeight : 600) / 1.5}px`}}
+                    className={'popover-column-select'}
+                    ref={wrapperRef}
+                >
                     <div className="form-group">
                         <Search
                             className="search-field"

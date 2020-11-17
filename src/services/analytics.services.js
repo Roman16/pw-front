@@ -3,7 +3,7 @@ import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
 import {reasonFilterParams} from "./reports.services"
 import {endDateFormatting, startDateFormatting} from "./dashboard.services"
-
+import _ from 'lodash'
 
 export const analyticsServices = {
     fetchTableData,
@@ -42,7 +42,12 @@ const urlGenerator = (url, pagination, sorting, filters) => {
         parameters.push(`&order_by:${sorting.type}=${sorting.column}`)
     }
 
-    return `${url}?page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}${filtersHandler(filters)}`
+    if (_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent') {
+        return `${analyticsUrls.tableData('products-parents')}?page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}${filtersHandler(_.reject(filters, {filterBy: 'productView'}))}`
+    } else {
+        return `${url}?page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}${filtersHandler(filters)}`
+    }
+
 }
 
 function fetchTableData(locationKey, paginationParams, sortingParams = {}, filters = [], cancelToken) {
@@ -50,19 +55,30 @@ function fetchTableData(locationKey, paginationParams, sortingParams = {}, filte
 }
 
 function fetchMetricsData({startDate, endDate, locationKey, filters}, cancelToken) {
-    return api('get', `${analyticsUrls.metricsData(locationKey)}?start_date=${startDateFormatting(startDate)}&end_date=${endDateFormatting(endDate)}${filtersHandler(filters.filter(item => item.filterBy !== 'datetime'))}`, null, null, cancelToken)
+    let key = ''
+    if (_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent') key = 'products-parents'
+    else if (locationKey === 'overview') key = 'products'
+    else key = locationKey
+
+
+    return api('get', `${analyticsUrls.metricsData(key)}?start_date=${startDateFormatting(startDate)}&end_date=${endDateFormatting(endDate)}${filtersHandler(filters.filter(item => item.filterBy !== 'datetime' && item.filterBy !== 'productView'))}`, null, null, cancelToken)
 }
 
 function fetchChartData(location, metrics, date, filters = [], cancelToken) {
-    return api('get', `${analyticsUrls.chartData(location)}?${metrics.filter(item => !!item.key).map(item => `metric[]=${item.key}`).join('&')}&start_date=${startDateFormatting(date.startDate)}&end_date=${endDateFormatting(date.endDate)}${filtersHandler(filters.filter(item => item.filterBy !== 'datetime'))}`, null, null, cancelToken)
+    let key = ''
+    if (_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent') key = 'products-parents'
+    else if (location === 'overview') key = 'products'
+    else key = location
+
+    return api('get', `${analyticsUrls.chartData(key)}?${metrics.filter(item => !!item.key).map(item => `metric[]=${item.key}`).join('&')}&start_date=${startDateFormatting(date.startDate)}&end_date=${endDateFormatting(date.endDate)}${filtersHandler(filters.filter(item => item.filterBy !== 'datetime' && item.filterBy !== 'productView'))}`, null, null, cancelToken)
 }
 
 function fetchStateInformation(state, id) {
     const stateParams = {
         campaignId: 'campaigns',
-        productId: 'product',
+        productId: 'products',
         adGroupId: 'ad-groups',
-        portfolioId: 'portfolio',
+        portfolioId: 'portfolios',
     }
     return api('get', `${analyticsUrls.campaignInformation(stateParams[state], id)}`)
 }
