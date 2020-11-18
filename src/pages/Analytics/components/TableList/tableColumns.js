@@ -86,10 +86,15 @@ export const RenderProduct = ({product, isParent = false}) => {
                     </div>
 
                     <ul>
-                        {product.childs_sku_array.map(product => (
+                        {product.childs_sku_array.map((sku, index) => (
                             <li>
-                                <label htmlFor="">Child product</label>
-                                <a href="#">{product}</a>
+                                <label
+                                    htmlFor=""
+                                    title={product.childs_product_name_array[index]}
+                                >
+                                    {product.childs_product_name_array[index]}
+                                </label>
+                                <a href="#">{sku}</a>
                             </li>
                         ))}
                     </ul>

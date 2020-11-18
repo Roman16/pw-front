@@ -28,6 +28,7 @@ const Analytics = (props) => {
 
     useEffect(() => {
         const queryParams = queryString.parse(props.location.search)
+        if (queryParams.isParent) delete queryParams.isParent
 
         if (Object.keys(queryParams).length !== 0) {
             dispatch(analyticsActions.setMainState(queryParams))

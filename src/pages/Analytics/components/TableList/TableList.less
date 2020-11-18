@@ -421,6 +421,10 @@
 
       div {
         flex: 1;
+
+        &:first-child {
+          margin: 0 10px 0 0;
+        }
       }
     }
 
@@ -442,6 +446,11 @@
         font-size: 0.8571428571428571rem;
         color: #38454F;
         box-sizing: border-box;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        margin: 0 10px 0 0;
       }
 
       a {

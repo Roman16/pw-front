@@ -16,7 +16,7 @@ const filtersHandler = (filters) => {
 
     filters.forEach(({filterBy, type, value}) => {
         if (filterBy === 'datetime') {
-            parameters.unshift(`?datetime:range=${value.startDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${value.endDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
+            parameters.unshift(`?datetime:range=${value.startDate === 'lifetime' ? '' : moment.tz(`${moment(value.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${value.endDate === 'lifetime' ? '' : moment.tz(`${moment(value.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
         } else if (type === 'search' && value) {
             parameters.push(`&${filterBy}:contains=${value}`)
         } else if (type.key === 'one_of') {
@@ -49,6 +49,7 @@ const urlGenerator = (url, pagination, sorting, filters) => {
 }
 
 function fetchTableData(locationKey, paginationParams, sortingParams = {}, filters = [], cancelToken) {
+    console.log(filters)
     return api('get', urlGenerator(analyticsUrls.tableData(locationKey), paginationParams, sortingParams, filters), null, null, cancelToken)
 }
 

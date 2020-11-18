@@ -37,65 +37,40 @@ const Chart = ({
 
 
     useEffect(() => {
-        // setChartData(data.map(item => {
-        //     if (`${moment().tz('America/Los_Angeles').format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz('America/Los_Angeles').subtract(1, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz('America/Los_Angeles').subtract(2, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`) {
-        //         return ({
-        //             date: `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`,
-        //             daily_first_metric_value: null,
-        //             daily_second_metric_value: null,
-        //             seven_days_second_metric_value: item.seven_days_second_metric_value,
-        //             seven_days_first_metric_value: item.seven_days_first_metric_value,
-        //
-        //
-        //             dashed_daily_first_metric_value: item.daily_first_metric_value,
-        //             dashed_daily_second_metric_value: item.daily_second_metric_value,
-        //         })
-        //     } else if (`${moment().tz('America/Los_Angeles').subtract(3, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`) {
-        //         return ({
-        //             ...item,
-        //             date: `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`,
-        //             dashed_daily_first_metric_value: item.daily_first_metric_value,
-        //             dashed_daily_second_metric_value: item.daily_second_metric_value,
-        //         })
-        //
-        //     } else {
-        //         return ({
-        //             ...item,
-        //             date: `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`
-        //         })
-        //     }
-        // }))
+        if (selectedRangeDate.startDate === 'lifetime') {
+            setChartData([...data])
+        } else {
+            const start = moment(selectedRangeDate.startDate),
+                end = moment(selectedRangeDate.endDate)
 
-        const start = moment(selectedRangeDate.startDate),
-            end = moment(selectedRangeDate.endDate)
+            let next = start,
+                dateArr = []
 
-        let next = start,
-            dateArr = []
+            while (!next.isAfter(end)) {
 
-        while (!next.isAfter(end)) {
+                let event = {
+                    eventDate: next.format('YYYY-MM-DD'),
+                }
 
-            let event = {
-                eventDate: next.format('YYYY-MM-DD'),
+                activeMetrics.forEach(metric => {
+                    event[metric.key] = null
+                    event[`${metric.key}_7d`] = null
+                })
+
+                dateArr.push(event)
+
+                next = start.add(1, 'days')
             }
 
-            activeMetrics.forEach(metric => {
-                event[metric.key] = null
-                event[`${metric.key}_7d`] = null
-            })
 
-            dateArr.push(event)
-
-            next = start.add(1, 'days')
+            setChartData(dateArr.map(item => {
+                return {
+                    ...item,
+                    ..._.find(data, {eventDate: item.eventDate}),
+                    eventDate: `${moment(item.eventDate)}`,
+                }
+            }))
         }
-
-
-        setChartData(dateArr.map(item => {
-            return {
-                ...item,
-                ..._.find(data, {eventDate: item.eventDate}),
-                eventDate: `${moment(item.eventDate)}`,
-            }
-        }))
     }, [data])
 
 
