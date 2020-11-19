@@ -153,7 +153,7 @@ const Header = ({type = 'light', page}) => {
 
                             <Link to={'/login'}>LOG IN</Link>
 
-                            <Link to={'/registration'} className={'btn default register-btn'}>start trial</Link>
+                            {/*<Link to={'/registration'} className={'btn default register-btn'}>start trial</Link>*/}
                         </div>
                     </div>
                 </header>
@@ -161,7 +161,7 @@ const Header = ({type = 'light', page}) => {
 
             <nav className={`header-menu mob ${openedMenu ? 'open' : ''}`}>
                 <div className="buttons">
-                    <Link to={'/registration'} className={'btn default register-btn'}>start trial</Link>
+                    {/*<Link to={'/registration'} className={'btn default register-btn'}>start trial</Link>*/}
 
                     <Link to={'/login'} className={'login-btn'}>LOG IN</Link>
 

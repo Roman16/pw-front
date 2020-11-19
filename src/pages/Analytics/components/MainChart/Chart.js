@@ -37,40 +37,41 @@ const Chart = ({
 
 
     useEffect(() => {
-        if (selectedRangeDate.startDate === 'lifetime') {
-            setChartData([...data])
-        } else {
-            const start = moment(selectedRangeDate.startDate),
-                end = moment(selectedRangeDate.endDate)
+        setChartData([...data])
 
-            let next = start,
-                dateArr = []
-
-            while (!next.isAfter(end)) {
-
-                let event = {
-                    eventDate: next.format('YYYY-MM-DD'),
-                }
-
-                activeMetrics.forEach(metric => {
-                    event[metric.key] = null
-                    event[`${metric.key}_7d`] = null
-                })
-
-                dateArr.push(event)
-
-                next = start.add(1, 'days')
-            }
-
-
-            setChartData(dateArr.map(item => {
-                return {
-                    ...item,
-                    ..._.find(data, {eventDate: item.eventDate}),
-                    eventDate: `${moment(item.eventDate)}`,
-                }
-            }))
-        }
+        // if (selectedRangeDate.startDate === 'lifetime') {
+        //     setChartData([...data])
+        // } else {
+        //     const start = moment(selectedRangeDate.startDate),
+        //         end = moment(selectedRangeDate.endDate)
+        //
+        //     let next = start,
+        //         dateArr = []
+        //
+        //     while (!next.isAfter(end)) {
+        //
+        //         let event = {
+        //             eventDate: next.format('YYYY-MM-DD'),
+        //         }
+        //
+        //         activeMetrics.forEach(metric => {
+        //             event[metric.key] = null
+        //             event[`${metric.key}_7d`] = null
+        //         })
+        //
+        //         dateArr.push(event)
+        //
+        //         next = start.add(1, 'days')
+        //     }
+        //
+        //     setChartData(dateArr.map(item => {
+        //         return {
+        //             ...item,
+        //             ..._.find(data, {eventDate: item.eventDate}),
+        //             eventDate: `${moment(item.eventDate)}`,
+        //         }
+        //     }))
+        // }
     }, [data])
 
 
