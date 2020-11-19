@@ -88,6 +88,7 @@ const NegativeTargetingsList = () => {
             <TableList
                 columns={columns}
                 columnSelect={false}
+                dateRange={false}
             />
         </section>
     )

@@ -8,6 +8,9 @@ const SemanticInformation = () => {
 
     return(
         <div className="core-information">
+            <br/>
+            <br/>
+
             <h2>Semantic Core Information</h2>
 
             <div className="row">Template version: <b>33</b></div>
@@ -28,9 +31,9 @@ const SemanticInformation = () => {
                 <label htmlFor="campaignsCompressionStrategy">Choose campaign compression strategy:</label>
 
                 <CustomSelect className="form-control">
-                    <Option value={'wide'}>Wide</Option>
-                    <Option value={'simple'}>Simple</Option>
-                    <Option value={'compact'}>Compact</Option>
+                    <Option value={'Wide'}>Wide</Option>
+                    <Option value={'Simple'}>Simple</Option>
+                    <Option value={'Compact'}>Compact</Option>
                 </CustomSelect>
             </div>
         </div>

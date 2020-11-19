@@ -119,21 +119,29 @@ const ConversionOptions = () => {
             <div className="form-group  w-25">
                 <label htmlFor="">Campaigns status in Bulk Upload</label>
                 <CustomSelect>
-                    <Option value={1}>Enabled</Option>
+                    <Option value={'Enabled'}>Enabled</Option>
+                    <Option value={'Paused'}>Paused</Option>
                 </CustomSelect>
             </div>
 
             <div className="form-group  w-25">
                 <label htmlFor="">Output type</label>
-                <CustomSelect>
-                    <Option value={1}>xlsx</Option>
+                <CustomSelect
+                    name={'FileExtension'}
+                >
+                    <Option value={'xls'}>xls</Option>
+                    <Option value={'xlsx'}>xlsx</Option>
+                    <Option value={'csv'}>csv</Option>
                 </CustomSelect>
             </div>
 
             <div className="form-group w-25">
                 <label htmlFor="">Convert for marketplace</label>
-                <CustomSelect>
-                    <Option value={1}>USA</Option>
+                <CustomSelect
+                    name={'MarketplaceType'}
+                >
+                    <Option value={'USA'}>USA</Option>
+                    <Option value={'Europe'}>Europe</Option>
                 </CustomSelect>
             </div>
 

@@ -4,14 +4,18 @@ import {adminServices} from "../../../../services/admin.services"
 
 const TokenBlock = () => {
     const [token, setToken] = useState(localStorage.getItem('zthToken') !== null ? localStorage.getItem('zthToken') : ''),
-        [version, setVersion] = useState()
+        [versionInfo, setVersionInfo] = useState({
+            zeroToHeroServiceVersion: '',
+            latestZeroToHeroTemplateVersion: '',
+            lowestCompatibleZeroToHeroTemplateVersion: '',
+            linkToLatestZeroToHeroTemplate: '',
+        })
 
 
     const getVersionInformation = async () => {
         try {
             const res = await adminServices.zthVersionInformation()
-
-            setVersion(res.version)
+            setVersionInfo(res)
         } catch (e) {
             console.log(e)
         }
@@ -28,11 +32,13 @@ const TokenBlock = () => {
     return (
         <>
             <div className="version-description">
-                <p>Zero to Hero version: <b>{version}</b></p>
-                <p>Latest markup version: <b>{version}</b></p>
-                <p>Lowest compatible version: <b>{version}</b></p>
+                <p>Zero to Hero version: <b>{versionInfo.zeroToHeroServiceVersion}</b></p>
+                <p>Latest markup version: <b>{versionInfo.latestZeroToHeroTemplateVersion}</b></p>
+                <p>Lowest compatible version: <b>{versionInfo.lowestCompatibleZeroToHeroTemplateVersion}</b></p>
 
-                <a href="#">Link to latest template</a>
+                <a target={'_blank'} href={versionInfo.linkToLatestZeroToHeroTemplate}>
+                    Link to latest template
+                </a>
             </div>
 
             <div className="api-token form-group">

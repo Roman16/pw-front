@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {Tabs} from 'antd'
 import {HotColumn, HotTable} from "@handsontable/react"
+import Themes from "./Themes"
 
 const {TabPane} = Tabs
 
@@ -75,11 +76,13 @@ const Variations = () => {
                         <HotTable
                             data={data}
                             stretchH={'all'}
+                            colHeaders={true}
+                            rowHeaders={true}
                             licenseKey={'non-commercial-and-evaluation'}
                             colWidths={[5, 1]}
-                            height="50"
-                            rowHeaders={true}
+                            height="200"
                             afterChange={handleHOTChange}
+                            minSpareRows={1}
                         >
                             <HotColumn
                                 data={"url"}
@@ -91,6 +94,11 @@ const Variations = () => {
                                 title="SKU"
                             />
                         </HotTable>
+
+                        <br/>
+                        <br/>
+
+                        <Themes/>
                     </TabPane>
                 ))}
             </Tabs>

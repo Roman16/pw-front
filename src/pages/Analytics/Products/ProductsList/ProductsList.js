@@ -208,8 +208,17 @@ const ProductsList = () => {
         },
         {
             title: 'Profit',
-            dataIndex: 'profit',
-            key: 'profit',
+            dataIndex: 'organic_profit',
+            key: 'organic_profit',
+            width: '150px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField('currency')
+        },
+        {
+            title: 'Gross Profit',
+            dataIndex: 'organic_profit_gross',
+            key: 'organic_profit_gross',
             width: '150px',
             sorter: true,
             filter: true,

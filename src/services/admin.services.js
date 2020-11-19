@@ -25,7 +25,9 @@ export const adminServices = {
     changeUserPassword,
 
     zthVersionInformation,
-    fetchZthJobs
+    fetchZthJobs,
+    fetchSemanticInformation,
+    fetchExactBids,
 }
 
 function checkUserEmail(email) {
@@ -142,7 +144,8 @@ const zthRequest = (method, url, data) => {
         headers: {
             'Authorization': adminToken ? `Bearer ${adminToken}` : `Bearer ${token}`,
             'X-PW-Agency-ZTH-API-Token': zthToken,
-        }
+        },
+        data: data
     }
 
 
@@ -161,7 +164,14 @@ function zthVersionInformation() {
     return zthRequest('get', `${adminUrls.zthVersion}`)
 }
 
-function fetchZthJobs() {
-    return zthRequest('get', `${adminUrls.zthJobs}?limit=200&offset=0&title=`)
+function fetchZthJobs({page, title, limit}) {
+    return zthRequest('get', `${adminUrls.zthJobs}?limit=${limit}&offset=${(page - 1) * limit}&title=${title}`)
+}
+
+function fetchSemanticInformation(url) {
+    return zthRequest('post', `${adminUrls.semanticInfo}`, url)
+}
+function fetchExactBids() {
+    return zthRequest('get', `${adminUrls.exactBids}`)
 }
 

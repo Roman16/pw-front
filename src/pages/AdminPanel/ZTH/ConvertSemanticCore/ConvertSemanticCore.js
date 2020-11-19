@@ -1,63 +1,64 @@
-import React from "react"
-import {Input, Tabs} from "antd"
+import React, {useState} from "react"
+import {Input} from "antd"
 import './ConvertSemanticCore.less'
-import CustomSelect from "../../../../components/Select/Select"
 import SemanticInformation from "./SemanticInformation"
 import CampaignsBids from "./CampaignsBids"
 import Variations from "./Variations"
-import Themes from "./Themes"
 import ConversionOptions from "./ConversionOptions"
-
-const {TabPane} = Tabs
+import {adminServices} from "../../../../services/admin.services"
 
 const ConvertSemanticCore = () => {
+    const [semanticInformation, setSemanticInformation] = useState(),
+        [semanticUrl, setSemanticUrl] = useState('')
+
+
+    const loadSemanticInformation = async (e) => {
+        e.preventDefault()
+
+        try {
+            const res = await adminServices.fetchSemanticInformation({url: semanticUrl})
+            console.log(res)
+        } catch (e) {
+            console.log(e)
+        }
+
+        setSemanticInformation(true)
+    }
 
     return (
         <section className={'convert-semantic-core'}>
             <h2>Convert Semantic Core</h2>
 
 
-            <div className="step step-1">
+            <form className="step step-1" onSubmit={loadSemanticInformation}>
                 <div className="form-group semantic-url">
                     <label htmlFor="">Semantic data url:</label>
                     <Input
                         placeholder={'Enter url'}
+                        onChange={({target: {value}}) => setSemanticUrl(value)}
+                        required
                     />
                 </div>
 
                 <button className={'btn default'}>
                     Load spreadsheet
                 </button>
-            </div>
+            </form>
 
-            <br/>
-            <br/>
+            {semanticInformation && <>
+                <SemanticInformation/>
 
-            <SemanticInformation/>
+                <CampaignsBids/>
 
-            <CampaignsBids/>
+                <Variations/>
 
-            <br/>
-            <br/>
+                <ConversionOptions/>
 
-            <Variations/>
+                <button className={'btn default'}>
+                    Convert semantics
+                </button>
+            </>}
 
-            <br/>
-            <br/>
-
-            <Themes/>
-
-            <br/>
-            <br/>
-
-            <ConversionOptions/>
-
-            <br/>
-            <br/>
-
-            <button className={'btn default'}>
-                Convert semantics
-            </button>
         </section>
     )
 }

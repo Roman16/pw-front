@@ -84,6 +84,8 @@ const columnTitle = {
     'organic_orders_count': 'Organic Orders',
     'total_sales': 'Total Sales',
     'total_returns_quantity': 'Returns',
+    'organic_profit': 'Profit',
+    'organic_profit_gross': 'Gross Profit',
 }
 
 
@@ -136,6 +138,8 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'total_sales' ||
         filter.filterBy === 'total_orders_count_cleared' ||
         filter.filterBy === 'ad_profit' ||
+        filter.filterBy === 'organic_profit' ||
+        filter.filterBy === 'organic_profit_gross' ||
         filter.filterBy === 'profit') {
         return (
             <>

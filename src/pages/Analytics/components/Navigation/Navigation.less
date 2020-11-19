@@ -1,12 +1,16 @@
 @import "../../../../style/variables.less";
 
 .analytics-page .navigation {
-  width: max-content;
+  width: 170px;
   background: #fff;
   box-shadow: @default-section-shadow;
   border-radius: 4px;
   margin: 0 10px 10px 10px;
   padding: 4px 0 0 0;
+
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    width: 140px;
+  }
 
   ul {
     list-style: none;

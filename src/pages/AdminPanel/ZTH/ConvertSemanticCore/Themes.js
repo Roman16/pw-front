@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {Tabs} from "antd"
+import {Input, Tabs} from "antd"
 import {HotColumn, HotTable} from "@handsontable/react"
 
 const {TabPane} = Tabs
@@ -54,13 +54,31 @@ const Themes = () => {
             >
                 {tabs.map(pane => (
                     <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>
+                        <div className="row">
+                            <div className="form-group">
+                                <label htmlFor="">Theme name:</label>
+                                <Input
+                                    placeholder={'Enter theme name'}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="">Theme value:</label>
+                                <Input
+                                    placeholder={'Enter theme value'}
+                                />
+                            </div>
+                        </div>
+
+
                         <HotTable
                             data={data}
-                            stretchH={'all'}
+                            stretchH="all"
                             licenseKey={'non-commercial-and-evaluation'}
                             colWidths={[5, 1]}
-                            height="50"
+                            height="200"
                             rowHeaders={true}
+                            minSpareRows={1}
                         >
                             <HotColumn
                                 data={"value"}
@@ -72,7 +90,6 @@ const Themes = () => {
                     </TabPane>
                 ))}
             </Tabs>
-
         </div>
     )
 }
