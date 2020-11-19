@@ -138,6 +138,8 @@ const containsVariations = {
     'sales': numberVariations,
     'acos': numberVariations,
     'profit': numberVariations,
+    'organic_profit': numberVariations,
+    'organic_profit_gross': numberVariations,
     'ad_profit': numberVariations,
     'budget_allocation': numberVariations,
     'ordered_quantity': numberVariations,
@@ -373,6 +375,8 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'cpc' ||
                     filterBy === 'cost' ||
                     filterBy === 'profit' ||
+                    filterBy === 'organic_profit' ||
+                    filterBy === 'organic_profit_gross' ||
                     filterBy === 'total_sales' ||
                     filterBy === 'ad_profit' ||
                     filterBy === 'defaultBid' ||

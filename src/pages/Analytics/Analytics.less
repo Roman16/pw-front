@@ -9,6 +9,7 @@
   grid-row-gap: 10px;
   grid-template-rows: max-content 1fr;
   grid-template-columns: max-content 1fr;
+  overflow-x: hidden;
 
   .navigation {
     grid-area: nav;
@@ -17,11 +18,12 @@
   .workplace {
     grid-area: workplace;
     width: 100%;
-    overflow-x: hidden;
-    padding: 0 10px 0 10px;
+    overflow-x: auto;
+    padding: 0 10px 0 0;
 
     .metrics-block {
       grid-gap: 10px;
+      min-width: 87.14285714285714rem;
     }
 
     .main-chart {
@@ -29,6 +31,8 @@
     }
 
     section {
+      width: 100%;
+      min-width: 87.14285714285714rem;
       background: #fff;
       border-radius: 4px;
       box-shadow: @default-section-shadow;

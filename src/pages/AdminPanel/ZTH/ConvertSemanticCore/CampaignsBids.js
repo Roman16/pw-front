@@ -1,6 +1,8 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {Checkbox, Input, Select} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
+import {adminServices} from "../../../../services/admin.services"
+import {getBidsTemplate} from './bidsProviderService'
 
 const Option = Select.Option
 
@@ -55,6 +57,35 @@ const campaignBudgetsKeys = [
 
 
 const CampaignsBids = () => {
+    const [bidsConfig, setBidsConfig] = useState(),
+        [exactBid, setExactBid] = useState(),
+        [bidsTemplate, setBidsTemplate] = useState({
+            campaigns: {},
+            adGroups: {}
+        })
+
+    const loadExactBidVariations = async () => {
+        try {
+            const res = await adminServices.fetchExactBids()
+
+            setBidsConfig(res)
+            setExactBid(1)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const mapBidsTemplate = () => {
+        setBidsTemplate(getBidsTemplate(exactBid, bidsConfig))
+    }
+
+    useEffect(() => {
+        loadExactBidVariations()
+    }, [])
+
+    useEffect(() => {
+        if(bidsConfig) mapBidsTemplate()
+    }, [exactBid])
 
     return (
         <div>
@@ -65,19 +96,25 @@ const CampaignsBids = () => {
             <div className="row cols-4">
                 <div className="form-group">
                     <label htmlFor="{{'exactBidSelect-' + sheetData.id}}">Choose base exact bid:</label>
-                    <CustomSelect className="form-control">
-                        <Option value={'wide'}>Wide</Option>
-                        <Option value={'simple'}>Simple</Option>
-                        <Option value={'compact'}>Compact</Option>
+                    <CustomSelect
+                        value={exactBid}
+                        onChange={value => setExactBid(value)}
+                        getPopupContainer={trigger => trigger.parentNode}
+                        className="form-control"
+                    >
+                        {bidsConfig && bidsConfig.predefinedExactBids.map(bid => <Option value={bid}>{bid}</Option>)}
                     </CustomSelect>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="{{'ppcPlan-' + sheetData.id}}">Choose PPC plan for campaign budgets:</label>
-                    <CustomSelect className="form-control">
-                        <Option value={'wide'}>Wide</Option>
-                        <Option value={'simple'}>Simple</Option>
-                        <Option value={'compact'}>Compact</Option>
+                    <CustomSelect
+                        getPopupContainer={trigger => trigger.parentNode}
+                        className="form-control"
+                    >
+                        <Option value={'Low'}>Low</Option>
+                        <Option value={'Medium'}>Medium</Option>
+                        <Option value={'High'}>High</Option>
                     </CustomSelect>
                 </div>
 
@@ -102,9 +139,11 @@ const CampaignsBids = () => {
                             {key}:
                         </label>
                         <Input
+                            disabled={true}
                             placeholder="Enter number"
                             type=" number"
                             className=" form-control"
+                            value={bidsTemplate.campaigns[key] && bidsTemplate.campaigns[key].bid}
                         />
                     </div>
                 ))}
@@ -119,9 +158,11 @@ const CampaignsBids = () => {
                             {key}:
                         </label>
                         <Input
+                            disabled={true}
                             placeholder="Enter number"
                             type=" number"
                             className=" form-control"
+                            value={bidsTemplate.adGroups[key] && bidsTemplate.adGroups[key].bid}
                         />
                     </div>
                 ))}

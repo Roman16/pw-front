@@ -56,10 +56,10 @@ fbq('track', 'PageView');`
                         location={props.location}
                     />
 
-                    <div className="redirect-link">
-                        Don’t have an account?
-                        <Link to={'/registration'}>SIGN UP</Link>
-                    </div>
+                    {/*<div className="redirect-link">*/}
+                    {/*    Don’t have an account?*/}
+                    {/*    <Link to={'/registration'}>SIGN UP</Link>*/}
+                    {/*</div>*/}
                 </div>
             </div>
         </div>

@@ -91,7 +91,9 @@ export const adminUrls = {
     userPasswordById: userId => `admin/support-manager/user/${userId}/force-change-user-password`,
     userPasswordByEmail: `admin/support-manager/force-change-user-password-by-email`,
     zthVersion: 'zero-to-hero/get-service-information',
-    zthJobs: 'zero-to-hero/jobs',
+    zthJobs: 'zero-to-hero/upload-jobs',
+    semanticInfo: 'zero-to-hero/parse-semantic-data',
+    exactBids: 'zero-to-hero/get-bids-provider-config',
 }
 
 export const daypartingUrls = {

@@ -1,5 +1,4 @@
 import React from "react"
-import {Link} from "react-router-dom"
 import {
     acosColumn,
     adCvrColumn,
@@ -19,13 +18,11 @@ import {
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
 import {Dropdown, Select} from "antd"
-import {numberMask} from "../../../../utils/numberMask"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import CustomSelect from "../../../../components/Select/Select"
 import _ from 'lodash'
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
-import {SVG} from "../../../../utils/icons"
 
 const Option = Select.Option
 
@@ -72,13 +69,9 @@ const ChangeProductsRequest = () => {
 }
 
 const ProductsList = () => {
-    const dispatch = useDispatch()
 
-    const setStateHandler = (location, state) => {
-        dispatch(analyticsActions.setLocation(location))
-        dispatch(analyticsActions.setMainState(state))
-    }
 
+    const filters = useSelector(state => state.analytics.filters['products'])
 
     const columns = [
         {
@@ -92,7 +85,7 @@ const ProductsList = () => {
             noTotal: true,
             render: (name, item) => <RenderProduct
                 product={item}
-                setState={setStateHandler}
+                isParent={_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent'}
             />
         },
         {
@@ -215,8 +208,17 @@ const ProductsList = () => {
         },
         {
             title: 'Profit',
-            dataIndex: 'profit',
-            key: 'profit',
+            dataIndex: 'organic_profit',
+            key: 'organic_profit',
+            width: '150px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField('currency')
+        },
+        {
+            title: 'Gross Profit',
+            dataIndex: 'organic_profit_gross',
+            key: 'organic_profit_gross',
             width: '150px',
             sorter: true,
             filter: true,

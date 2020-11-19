@@ -1,17 +1,19 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import './ProductAds.less'
 import {numberMask} from "../../../../utils/numberMask"
 import {round} from "../../../../utils/round"
+import {analyticsServices} from "../../../../services/analytics.services"
+import {useSelector} from "react-redux"
 
 const metrics = [
-    {
-        title: 'Product Ads',
-        key: 'product_ads',
-        type: 'number'
-    },
+    // {
+    //     title: 'Product Ads',
+    //     key: 'product_ads',
+    //     type: 'number'
+    // },
     {
         title: 'Impression',
-        key: 'impression',
+        key: 'impressions',
         type: 'number'
     },
     {
@@ -36,7 +38,7 @@ const metrics = [
     },
     {
         title: 'Conversion',
-        key: 'conversion',
+        key: 'conversion_rate',
         type: 'number'
     },
     {
@@ -73,7 +75,7 @@ const renderMetricValue = (type, value) => {
             break
 
         case 'percent':
-            return `${round(value, 2)}%`
+            return `${round(+value * 100, 2)}%`
             break
 
         default:
@@ -84,6 +86,42 @@ const renderMetricValue = (type, value) => {
 
 
 const ProductAds = () => {
+    const [metricsData, setMetricsData] = useState([])
+
+    const filters = useSelector(state => state.analytics.filters.overview),
+        productId = useSelector(state => state.analytics.mainState.productId),
+        selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate)
+
+    const getData = async () => {
+        try {
+            const filtersWithState = [
+                ...filters,
+                {
+                    filterBy: 'productId',
+                    type: 'eq',
+                    value: productId
+                },
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+
+            const res = await analyticsServices.fetchTableData('products', {page: 1, pageSize: 10}, {}, filtersWithState)
+            console.log(res)
+            if (res.response && res.response[0]) {
+                setMetricsData(res.response[0])
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
 
     return (
         <section className={'product-ads-section'}>
@@ -97,9 +135,9 @@ const ProductAds = () => {
                         </div>
 
                         <div className={'value'}>
-                            {index === 0 && `Total: `}
+                            {/*{index === 0 && `Total: `}*/}
 
-                            {renderMetricValue(item.type, 244)}
+                            {metricsData[item.key] == null ? '-' : renderMetricValue(item.type, metricsData[item.key])}
                         </div>
                     </div>
                 ))}

@@ -1,8 +1,12 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import CustomTable from "../../../../components/Table/CustomTable"
 import './Jobs.less'
 import {adminServices} from "../../../../services/admin.services"
 import moment from "moment"
+import CustomSelect from "../../../../components/Select/Select"
+import {Input, Select} from "antd"
+
+const Option = Select.Option
 
 const columns = [
     {
@@ -87,11 +91,18 @@ const columns = [
     },
 ]
 
+let timeoutId
+
 const Jobs = () => {
+    const [requestParams, setRequestParams] = useState({
+        page: 1,
+        limit: 200,
+        title: ''
+    })
 
     const getData = async () => {
         try {
-            const res = await adminServices.fetchZthJobs()
+            const res = await adminServices.fetchZthJobs(requestParams)
 
             console.log(res)
         } catch (e) {
@@ -99,12 +110,39 @@ const Jobs = () => {
         }
     }
 
+    const changeTitleFieldHandler = ({target: {value}}) => {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            setRequestParams(prevState => ({
+                ...prevState,
+                page: 1,
+                title: value
+            }))
+        }, 500)
+    }
+
     useEffect(() => {
         getData()
-    }, [])
+    }, [requestParams])
 
     return (
         <section className={'zth-jobs'}>
+            <div className="pagination">
+                <div className="form-group">
+                    <label htmlFor="">Page:</label>
+                    <CustomSelect>
+                        <Option value={'1'}>1</Option>
+                    </CustomSelect>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="">Search in Title:</label>
+                    <Input
+                        onChange={changeTitleFieldHandler}
+                    />
+                </div>
+            </div>
+
             <CustomTable
                 // loading={processing}
                 columns={columns}
