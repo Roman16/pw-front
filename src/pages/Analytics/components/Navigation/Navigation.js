@@ -21,11 +21,11 @@ const menuVariables = {
         url: '/analytics/campaigns',
         key: 'campaigns'
     },
-    'placements': {
-        title: 'Placements',
-        url: '/analytics/placements',
-        key: 'placements'
-    },
+    // 'placements': {
+    //     title: 'Placements',
+    //     url: '/analytics/placements',
+    //     key: 'placements'
+    // },
     'adGroups': {
         title: 'Ad Groups',
         url: '/analytics/ad-groups',
@@ -53,7 +53,7 @@ export const analyticsNavigation = {
         menuVariables.products,
         menuVariables.portfolios,
         menuVariables.campaigns,
-        menuVariables.placements,
+        // menuVariables.placements,
         menuVariables.adGroups,
         menuVariables.targetings,
         menuVariables.negativeTargeting,
@@ -62,7 +62,7 @@ export const analyticsNavigation = {
 
     campaign: [
         menuVariables.adGroups,
-        menuVariables.placements,
+        // menuVariables.placements,
         menuVariables.productAds,
         menuVariables.targetings,
         menuVariables.negativeTargeting,
@@ -91,7 +91,7 @@ export const analyticsNavigation = {
     ],
     portfolio: [
         menuVariables.campaigns,
-        menuVariables.placements,
+        // menuVariables.placements,
         menuVariables.adGroups,
         menuVariables.targetings,
         menuVariables.negativeTargeting,

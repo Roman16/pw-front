@@ -1,7 +1,7 @@
 // import {BidsProviderServiceConfig} from '../../../../src/infrastructure/services/bids-provider-service'
 // import {BidsTemplate, PPCPlan, BudgetsTemplate} from '../../../../src/shared'
 
-const CampaignType = {
+export const CampaignType = {
     // Campaign types for 'Compact' compression
 
     Auto: 'Auto',
@@ -39,7 +39,7 @@ const CampaignType = {
     SDCategories: 'SDCategories',
 }
 
-const AdGroupType = {
+export const AdGroupType = {
     // Auto
     AutoTargeting: 'AutoTargeting',
 
@@ -119,20 +119,20 @@ export function getBidsTemplate(exactBid, templates) {
     return newTemplate
 }
 
-function getBudgetsTemplateForExactBid(exactBid, ppcPlan, budgetMultiplier = 1) {
-    const baseBudget = this._config.baseBudgetsCoefficients[ppcPlan] * exactBid
-    return this._getBudgetsTemplate(baseBudget, budgetMultiplier)
+export function getBudgetsTemplateForExactBid(exactBid, ppcPlan, budgetMultiplier = 1, config) {
+    const baseBudget = config.baseBudgetsCoefficients[ppcPlan] * exactBid
+    return _getBudgetsTemplate(baseBudget, budgetMultiplier, config)
 }
 
-function _getBudgetsTemplate(baseBudget, budgetMultiplier) {
+function _getBudgetsTemplate(baseBudget, budgetMultiplier, config) {
     // force creation of empty bids template to fill it later
     // const newTemplate = {} as BudgetsTemplate
     const newTemplate = {}
 
     Object.keys(CampaignType).forEach((x) => {
-        const rawBudgetForCampaign = baseBudget * this._config.budgetsTemplate[x] * budgetMultiplier
-        const normalizedCampaignBudget = this._roundByDivider(this._roundTo(rawBudgetForCampaign, 0), this._config.roundBudgetsTo)
-        newTemplate[x] = normalizedCampaignBudget <= 0 ? this._config.roundBudgetsTo : normalizedCampaignBudget
+        const rawBudgetForCampaign = baseBudget * config.budgetsTemplate[x] * budgetMultiplier
+        const normalizedCampaignBudget = _roundByDivider(_roundTo(rawBudgetForCampaign, 0), config.roundBudgetsTo)
+        newTemplate[x] = normalizedCampaignBudget <= 0 ? config.roundBudgetsTo : normalizedCampaignBudget
     })
 
     return newTemplate

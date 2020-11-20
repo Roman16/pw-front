@@ -2,67 +2,19 @@ import React, {useEffect, useState} from "react"
 import {Checkbox, Input, Select} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import {adminServices} from "../../../../services/admin.services"
-import {getBidsTemplate} from './bidsProviderService'
+import {AdGroupType, CampaignType, getBidsTemplate, getBudgetsTemplateForExactBid} from './bidsProviderService'
 
 const Option = Select.Option
-
-
-const campaignBidsKeys = [
-    'AutoCTA',
-    'AutoNegative',
-    'TPK',
-    'DPK',
-    'Broad',
-    'CloseVariants',
-    'Variations',
-    'ExactSimple',
-    'ExactOther',
-    'Misspellings',
-]
-
-const adGroupBidsKeys = [
-    'ExactLowAcos',
-    'ExactMediumAcos',
-    'ExactHighAcos',
-    'PhraseLowAcos',
-    'PhraseMediumAcos',
-    'PhraseHighAcos',
-    'MyBrand',
-    'CompetingBrands',
-    'KeywordsWithBrands',
-    'TopPerformingASINs',
-    'PerformingASINs',
-    'RiskASINs',
-    'SuggestedASINs',
-    'SuggestedCategories',
-]
-
-const campaignBudgetsKeys = [
-    'AutoCTA',
-    'AutoNegative',
-    'TPK',
-    'DPK',
-    'Broad',
-    'CloseVariants',
-    'Variations',
-    'ExactSimple',
-    'ExactOther',
-    'STESTP',
-    'Misspellings',
-    'Brands',
-    'TPA',
-    'ASINs',
-    'Categories',
-]
-
 
 const CampaignsBids = () => {
     const [bidsConfig, setBidsConfig] = useState(),
         [exactBid, setExactBid] = useState(),
-        [bidsTemplate, setBidsTemplate] = useState({
-            campaigns: {},
-            adGroups: {}
-        })
+        [ppcPlan, setPpcPlan] = useState('High'),
+        [budgetMultiplier, setBudgetMultiplier] = useState(1),
+        [bidsTemplate, setBidsTemplate] = useState({campaigns: {}, adGroups: {}}),
+        [budgetTemplate, setBudgetTemplate] = useState({}),
+        [manuallyExactBid, setManuallyExactBid] = useState(false),
+        [manuallyBudgets, setManuallyBudgets] = useState(false)
 
     const loadExactBidVariations = async () => {
         try {
@@ -75,8 +27,25 @@ const CampaignsBids = () => {
         }
     }
 
-    const mapBidsTemplate = () => {
+    const mapBidsTemplates = () => {
         setBidsTemplate(getBidsTemplate(exactBid, bidsConfig))
+    }
+
+    const mapBudgetTemplates = () => {
+        setBudgetTemplate(getBudgetsTemplateForExactBid(exactBid, ppcPlan, budgetMultiplier, bidsConfig))
+    }
+
+    const changeBidHandler = (type, key, value) => {
+        setBidsTemplate(prevState => ({
+            ...prevState,
+            [type]: {
+                ...prevState[type],
+                [key]: {
+                    shouldBeApplied: true,
+                    bid: value
+                }
+            }
+        }))
     }
 
     useEffect(() => {
@@ -84,32 +53,57 @@ const CampaignsBids = () => {
     }, [])
 
     useEffect(() => {
-        if(bidsConfig) mapBidsTemplate()
+        if (bidsConfig) {
+            mapBidsTemplates()
+            mapBudgetTemplates()
+        }
     }, [exactBid])
 
+    useEffect(() => {
+        if (bidsConfig) {
+            mapBudgetTemplates()
+        }
+    }, [ppcPlan, budgetMultiplier])
+
     return (
-        <div>
+        <div className={'bids-budgets-section'}>
             <h2>Campaigns Bids and Budgets</h2>
-            <Checkbox>Set bids manually</Checkbox>
-            <br/>
-            <br/>
+            <Checkbox onChange={({target: {checked}}) => setManuallyExactBid(checked)}>
+                Set bids manually
+            </Checkbox>
+
             <div className="row cols-4">
-                <div className="form-group">
-                    <label htmlFor="{{'exactBidSelect-' + sheetData.id}}">Choose base exact bid:</label>
-                    <CustomSelect
-                        value={exactBid}
-                        onChange={value => setExactBid(value)}
-                        getPopupContainer={trigger => trigger.parentNode}
-                        className="form-control"
-                    >
-                        {bidsConfig && bidsConfig.predefinedExactBids.map(bid => <Option value={bid}>{bid}</Option>)}
-                    </CustomSelect>
-                </div>
+                {manuallyExactBid ? <div className="form-group">
+                        <label htmlFor="{{'exactBidSelect-' + sheetData.id}}">Exact bid:</label>
+                        <Input
+                            placeholder=" Enter number"
+                            id="{{'exactBidNumber-' +sheetData.id}}"
+                            type="text"
+                            className="form-control"
+                            onChange={({target: {value}}) => setExactBid(+value)}
+                            value={exactBid}
+                        />
+                    </div>
+                    :
+                    <div className="form-group">
+                        <label htmlFor="{{'exactBidSelect-' + sheetData.id}}">Choose base exact bid:</label>
+                        <CustomSelect
+                            value={exactBid}
+                            onChange={value => setExactBid(value)}
+                            getPopupContainer={trigger => trigger.parentNode}
+                            className="form-control"
+                        >
+                            {bidsConfig && bidsConfig.predefinedExactBids.map(bid => <Option
+                                value={bid}>{bid}</Option>)}
+                        </CustomSelect>
+                    </div>}
 
                 <div className="form-group">
                     <label htmlFor="{{'ppcPlan-' + sheetData.id}}">Choose PPC plan for campaign budgets:</label>
                     <CustomSelect
                         getPopupContainer={trigger => trigger.parentNode}
+                        onChange={value => setPpcPlan(value)}
+                        value={ppcPlan}
                         className="form-control"
                     >
                         <Option value={'Low'}>Low</Option>
@@ -125,25 +119,32 @@ const CampaignsBids = () => {
                         id="{{'exactBidNumber-' +sheetData.id}}"
                         type="text"
                         className="form-control"
+                        onChange={({target: {value}}) => setBudgetMultiplier(+value)}
+                        value={budgetMultiplier}
                     />
                 </div>
             </div>
 
+            <Checkbox onChange={({target: {checked}}) => setManuallyBudgets(checked)}>
+                Set bids and budgets manually
+            </Checkbox>
 
             <h3>Campaign bids:</h3>
 
             <div className="bids-fields-list">
-                {campaignBidsKeys.map(key => (
+                {Object.keys(CampaignType).map(key => (
+                    bidsTemplate.campaigns[key] && bidsTemplate.campaigns[key].shouldBeApplied &&
                     <div className="col-sm-3 form-group">
                         <label>
                             {key}:
                         </label>
                         <Input
-                            disabled={true}
                             placeholder="Enter number"
                             type=" number"
                             className=" form-control"
-                            value={bidsTemplate.campaigns[key] && bidsTemplate.campaigns[key].bid}
+                            disabled={!manuallyBudgets}
+                            value={bidsTemplate.campaigns[key].bid}
+                            onChange={({target: {value}}) => changeBidHandler('campaigns', key, value)}
                         />
                     </div>
                 ))}
@@ -152,17 +153,19 @@ const CampaignsBids = () => {
             <h3>Ad group bids:</h3>
 
             <div className="bids-fields-list">
-                {adGroupBidsKeys.map(key => (
+                {Object.keys(AdGroupType).map(key => (
+                    bidsTemplate.adGroups[key] && bidsTemplate.adGroups[key].shouldBeApplied &&
                     <div className="col-sm-3 form-group">
                         <label>
                             {key}:
                         </label>
                         <Input
-                            disabled={true}
                             placeholder="Enter number"
                             type=" number"
                             className=" form-control"
-                            value={bidsTemplate.adGroups[key] && bidsTemplate.adGroups[key].bid}
+                            disabled={!manuallyBudgets}
+                            value={bidsTemplate.adGroups[key].bid}
+                            onChange={({target: {value}}) => changeBidHandler('adGroups', key, value)}
                         />
                     </div>
                 ))}
@@ -171,7 +174,7 @@ const CampaignsBids = () => {
             <h3>Campaign daily budgets:</h3>
 
             <div className="bids-fields-list">
-                {campaignBudgetsKeys.map(key => (
+                {Object.keys(CampaignType).map(key => (
                     <div className="col-sm-3 form-group">
                         <label>
                             {key}:
@@ -180,6 +183,12 @@ const CampaignsBids = () => {
                             placeholder="Enter number"
                             type=" number"
                             className=" form-control"
+                            disabled={!manuallyBudgets}
+                            value={budgetTemplate[key]}
+                            onChange={({target: {value}}) => setBudgetTemplate(prevState => ({
+                                ...prevState,
+                                [key]: value
+                            }))}
                         />
                     </div>
                 ))}
