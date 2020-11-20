@@ -5,6 +5,7 @@ import {adminServices} from "../../../../services/admin.services"
 import moment from "moment"
 import CustomSelect from "../../../../components/Select/Select"
 import {Input, Select} from "antd"
+import Pagination from "../../../../components/Pagination/Pagination"
 
 const Option = Select.Option
 
@@ -94,17 +95,22 @@ const columns = [
 let timeoutId
 
 const Jobs = () => {
-    const [requestParams, setRequestParams] = useState({
-        page: 1,
-        limit: 200,
-        title: ''
-    })
+    const [jobsList, setJobsList] = useState([]),
+        [totalSize, setTotalSize] = useState(0),
+        [processing, setProcessing] = useState(false),
+        [requestParams, setRequestParams] = useState({
+            title: '',
+            page: 1,
+            pageSize: 50,
+            totalSize: 0,
+        })
 
     const getData = async () => {
         try {
             const res = await adminServices.fetchZthJobs(requestParams)
 
-            console.log(res)
+            setTotalSize(res.totalCount)
+            setJobsList(res.jobs)
         } catch (e) {
 
         }
@@ -127,25 +133,28 @@ const Jobs = () => {
 
     return (
         <section className={'zth-jobs'}>
-            <div className="pagination">
-                <div className="form-group">
-                    <label htmlFor="">Page:</label>
-                    <CustomSelect>
-                        <Option value={'1'}>1</Option>
-                    </CustomSelect>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="">Search in Title:</label>
-                    <Input
-                        onChange={changeTitleFieldHandler}
-                    />
-                </div>
+            <div className="form-group">
+                <Input
+                    placeholder={'Search in Title'}
+                    onChange={changeTitleFieldHandler}
+                />
             </div>
 
             <CustomTable
-                // loading={processing}
+                loading={processing}
                 columns={columns}
+                dataSource={jobsList}
+            />
+
+            <Pagination
+                onChange={(data) => setRequestParams(prevState => ({...prevState, ...data}))}
+
+                pageSizeOptions={[50, 100]}
+                showQuickJumper={true}
+                listLength={jobsList.length}
+                processing={processing}
+
+                {...requestParams}
             />
         </section>
     )

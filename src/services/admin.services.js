@@ -5,6 +5,7 @@ import {reasonFilterParams} from "./reports.services"
 import axios from "axios"
 import {history} from "../utils/history"
 import {userService} from "./user.services"
+import {notification} from "../components/Notification"
 
 export const adminServices = {
     checkUserEmail,
@@ -148,13 +149,13 @@ const zthRequest = (method, url, data) => {
         data: data
     }
 
-
     return new Promise((resolve, reject) => {
         axios(config)
             .then(function (response) {
                 resolve(response.data)
             })
             .catch(function (error) {
+                notification.error({title: 'Error'})
                 reject(error)
             })
     })
@@ -164,8 +165,8 @@ function zthVersionInformation() {
     return zthRequest('get', `${adminUrls.zthVersion}`)
 }
 
-function fetchZthJobs({page, title, limit}) {
-    return zthRequest('get', `${adminUrls.zthJobs}?limit=${limit}&offset=${(page - 1) * limit}&title=${title}`)
+function fetchZthJobs({page, title, pageSize}) {
+    return zthRequest('get', `${adminUrls.zthJobs}?limit=${pageSize}&offset=${(page - 1) * pageSize}&title=${title}`)
 }
 
 function fetchSemanticInformation(url) {

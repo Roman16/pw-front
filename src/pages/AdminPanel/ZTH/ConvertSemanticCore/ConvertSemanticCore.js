@@ -46,17 +46,15 @@ const ConvertSemanticCore = () => {
             </form>
 
             {semanticInformation && <>
-                <SemanticInformation/>
+                <SemanticInformation
+                    semantic={semanticInformation.semanticData}
+                />
 
                 <CampaignsBids/>
 
                 <Variations/>
 
                 <ConversionOptions/>
-
-                <button className={'btn default'}>
-                    Convert semantics
-                </button>
             </>}
 
         </section>

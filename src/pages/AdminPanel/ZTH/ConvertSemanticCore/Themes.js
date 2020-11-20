@@ -70,6 +70,7 @@ const Themes = () => {
                             </div>
                         </div>
 
+                        <h4>Related theme values:</h4>
 
                         <HotTable
                             data={data}
