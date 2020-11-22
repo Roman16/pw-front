@@ -63,7 +63,8 @@ const ChangeProductsRequest = () => {
 
         <InformationTooltip
             getPopupContainer={triggerNode => triggerNode.parentNode}
-            title={'Product view'}
+            title={'Regular&Parent View'}
+            description={'Regular View is showing statistics on an SKU level.  Parent View designed to showcase mixed statistics from all Parent variations.'}
         />
     </div>)
 }

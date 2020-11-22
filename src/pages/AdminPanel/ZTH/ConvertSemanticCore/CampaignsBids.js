@@ -2,17 +2,18 @@ import React, {useEffect, useState} from "react"
 import {Checkbox, Input, Select} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import {adminServices} from "../../../../services/admin.services"
-import {AdGroupType, CampaignType, getBidsTemplate, getBudgetsTemplateForExactBid} from './bidsProviderService'
+import {getBidsTemplate, getBudgetsTemplateForExactBid} from './bidsProviderService'
+import {AdGroupType, CampaignType} from './constans'
 
 const Option = Select.Option
 
-const CampaignsBids = () => {
+const CampaignsBids = ({onChange}) => {
     const [bidsConfig, setBidsConfig] = useState(),
         [exactBid, setExactBid] = useState(),
         [ppcPlan, setPpcPlan] = useState('High'),
         [budgetMultiplier, setBudgetMultiplier] = useState(1),
         [bidsTemplate, setBidsTemplate] = useState({campaigns: {}, adGroups: {}}),
-        [budgetTemplate, setBudgetTemplate] = useState({}),
+        [budgetsTemplate, setBudgetsTemplate] = useState({}),
         [manuallyExactBid, setManuallyExactBid] = useState(false),
         [manuallyBudgets, setManuallyBudgets] = useState(false)
 
@@ -31,8 +32,8 @@ const CampaignsBids = () => {
         setBidsTemplate(getBidsTemplate(exactBid, bidsConfig))
     }
 
-    const mapBudgetTemplates = () => {
-        setBudgetTemplate(getBudgetsTemplateForExactBid(exactBid, ppcPlan, budgetMultiplier, bidsConfig))
+    const mapBudgetsTemplates = () => {
+        setBudgetsTemplate(getBudgetsTemplateForExactBid(exactBid, ppcPlan, budgetMultiplier, bidsConfig))
     }
 
     const changeBidHandler = (type, key, value) => {
@@ -55,15 +56,22 @@ const CampaignsBids = () => {
     useEffect(() => {
         if (bidsConfig) {
             mapBidsTemplates()
-            mapBudgetTemplates()
+            mapBudgetsTemplates()
         }
     }, [exactBid])
 
     useEffect(() => {
         if (bidsConfig) {
-            mapBudgetTemplates()
+            mapBudgetsTemplates()
         }
     }, [ppcPlan, budgetMultiplier])
+
+    useEffect(() => {
+        onChange({
+            bidsTemplate,
+            budgetsTemplate
+        })
+    }, [bidsTemplate, budgetsTemplate])
 
     return (
         <div className={'bids-budgets-section'}>
@@ -184,8 +192,8 @@ const CampaignsBids = () => {
                             type=" number"
                             className=" form-control"
                             disabled={!manuallyBudgets}
-                            value={budgetTemplate[key]}
-                            onChange={({target: {value}}) => setBudgetTemplate(prevState => ({
+                            value={budgetsTemplate[key]}
+                            onChange={({target: {value}}) => setBudgetsTemplate(prevState => ({
                                 ...prevState,
                                 [key]: value
                             }))}
@@ -197,4 +205,4 @@ const CampaignsBids = () => {
     )
 }
 
-export default CampaignsBids
+export default React.memo(CampaignsBids)

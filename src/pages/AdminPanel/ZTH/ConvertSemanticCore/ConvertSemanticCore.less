@@ -14,6 +14,45 @@
     color: rgba(0, 0, 0, 0.65);
   }
 
+  .custom-table {
+    border: 1px solid #c9cbd4;
+    margin-bottom: 20px;
+
+    .table-head {
+      background: #f0f0f0;
+
+      .th {
+        padding: 0;
+        border-right: 1px solid #c9cbd4;
+
+        &:last-child {
+          border: 0;
+        }
+      }
+
+      .title {
+        justify-content: center;
+      }
+    }
+
+    .table-body {
+      .table-body__row {
+        .table-body__field {
+          padding: 5px;
+          border-right: 1px solid #c9cbd4;
+
+          &:last-child {
+            border: 0;
+            justify-content: center;
+
+
+          }
+        }
+      }
+    }
+  }
+
+
   .ant-checkbox {
     width: 16px;
     height: 16px;
@@ -88,6 +127,75 @@
   .variations {
     margin-bottom: 40px;
 
+    .custom-table {
+      max-height: 300px;
+
+      .table-body {
+        .table-body__row {
+          .table-body__field {
+            padding: 0;
+
+            &:first-child {
+              justify-content: center;
+              font-weight: 500;
+              background: #fff;
+            }
+
+            textarea {
+              border: 0;
+              width: 100%;
+              min-height: 30px;
+              height: 30px;
+              resize: none;
+              border-radius: 0;
+
+              &:focus {
+                box-shadow: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
+
+    .list-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      grid-column-gap: 5px;
+      grid-row-gap: 10px;
+      border-bottom: 1px solid #f0f0f0;
+
+      li {
+        display: flex;
+        align-items: center;
+        padding: 5px 10px;
+        border: 1px solid #f0f0f0;
+        border-bottom-color: transparent;
+        border-radius: 4px 4px 0 0;
+        background: #fafafa;
+        font-size: 14px;
+        cursor: pointer;
+
+        &.active {
+          background: #fff;
+          color: #6D6DF6;
+          cursor: default;
+        }
+
+        &:hover {
+          color: #6D6DF6;
+        }
+
+        button {
+          display: flex;
+          align-items: center;
+          margin: 0 0 0 10px;
+        }
+      }
+    }
+
     .themes {
       padding-left: 20px;
 
@@ -112,41 +220,6 @@
 
     .custom-table {
       width: max-content;
-      border: 1px solid #c9cbd4;
-      margin-bottom: 20px;
-
-      .table-head {
-        background: #f0f0f0;
-
-        .th {
-          padding: 5px;
-          border-right: 1px solid #c9cbd4;
-
-          &:last-child {
-            border: 0;
-          }
-        }
-
-        .title {
-          justify-content: center;
-        }
-      }
-
-      .table-body {
-        .table-body__row {
-          .table-body__field {
-            padding: 5px;
-            border-right: 1px solid #c9cbd4;
-
-            &:last-child {
-              border: 0;
-              justify-content: center;
-
-
-            }
-          }
-        }
-      }
     }
 
     .submit {

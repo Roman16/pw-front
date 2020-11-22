@@ -74,8 +74,6 @@ const api = (method, url, data, type, abortToken) => {
                         if (window.location.pathname !== 'login') {
                             history.push(`/login?redirect=${window.location.pathname}`)
                         }
-
-                        localStorage.clear()
                     }
                 } else if (error.response && error.response.status === 412) {
                     userService.resendConfirmEmail()
