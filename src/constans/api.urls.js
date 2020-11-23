@@ -94,6 +94,8 @@ export const adminUrls = {
     zthJobs: 'zero-to-hero/upload-jobs',
     semanticInfo: 'zero-to-hero/parse-semantic-data',
     exactBids: 'zero-to-hero/get-bids-provider-config',
+    convertSemantic: 'zero-to-hero/convert-semantic-data',
+    uploadSemantic: 'zero-to-hero/upload',
 }
 
 export const daypartingUrls = {

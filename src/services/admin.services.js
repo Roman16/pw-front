@@ -114,7 +114,7 @@ function generateReport(data) {
 }
 
 function fetchUsers(isAgencyClient = true) {
-    return api('get', `${adminUrls.usersList}?page=1&size=5000${isAgencyClient ? '&is_agency_client=1' : ''}`)
+    return api('get', `${adminUrls.usersList}?page=1&size=50000${isAgencyClient ? '&is_agency_client=1' : ''}`)
 }
 
 function impersonateUser(value, type) {
@@ -174,5 +174,9 @@ function fetchSemanticInformation(url) {
 }
 function fetchExactBids() {
     return zthRequest('get', `${adminUrls.exactBids}`)
+}
+
+function convertSemantic(data) {
+    return zthRequest('post', `${adminUrls.convertSemantic}`, data)
 }
 

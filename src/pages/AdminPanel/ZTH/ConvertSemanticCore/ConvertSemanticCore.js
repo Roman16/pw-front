@@ -6,6 +6,7 @@ import CampaignsBids from "./CampaignsBids"
 import Variations from "./Variations"
 import ConversionOptions from "./ConversionOptions"
 import {adminServices} from "../../../../services/admin.services"
+import {notification} from "../../../../components/Notification"
 
 //
 // interface ConvertSemanticDataRequest {
@@ -44,7 +45,9 @@ const ConvertSemanticCore = () => {
     const [semanticInformation, setSemanticInformation] = useState(),
         [semanticUrl, setSemanticUrl] = useState('https://docs.google.com/spreadsheets/d/1osHmhbyXGx5dbziIuh2NV5sUHOKKSG9ynyW3rGeM_A4/edit#gid=277769766'),
         [loadingInformation, setLoadingInformation] = useState(false),
-        [semanticData, setSemanticData] = useState({})
+        [semanticData, setSemanticData] = useState({}),
+        [uploadProcessing, setUploadProcessing] = useState(false),
+        [convertProcessing, setConvertProcessing] = useState(false)
 
     const changeUploadDataHandler = (value) => {
         setSemanticData({
@@ -103,14 +106,55 @@ const ConvertSemanticCore = () => {
         setLoadingInformation(false)
     }
 
-    const convertSemanticHandler = () => {
-        console.log(semanticData)
+    const convertSemanticHandler = async () => {
+        setConvertProcessing(true)
+
+        setTimeout(() => {
+            console.log('CONVERT:')
+            console.log(semanticData)
+            notification.success({title: 'Success!'})
+            setConvertProcessing(false)
+        }, 3000)
+
+        // try {
+        //     const res = await adminServices.convertSemantic(semanticData)
+        //
+        //     console.log(res)
+        //     notification.success({title: 'Success!'})
+        // } catch (e) {
+        //     console.log(e)
+        // }
+    }
+    const uploadSemanticHandler = (userId) => {
+        setUploadProcessing(true)
+
+        const requestData = {
+            url: semanticData.url,
+            userId: 0,
+            conversionOptions: {
+                converter: {...semanticData.conversionOptions.converter},
+                productInformation: {...semanticData.conversionOptions.productInformation},
+                upload: {...semanticData.conversionOptions.upload},
+                zeroToHero: {...semanticData.conversionOptions.zeroToHero},
+            }
+        }
+
+        delete requestData.convertToAmazonBulkUpload
+        delete requestData.conversionOptions.converter.convertForMarketplace
+        delete requestData.conversionOptions.converter.generateBulkUploadForCampaignTypes
+
+        setTimeout(() => {
+            console.log('UPLOAD:')
+            console.log('User id:' + userId)
+            console.log(requestData)
+            notification.success({title: 'Success!'})
+            setUploadProcessing(false)
+        }, 3000)
     }
 
     return (
         <section className={'convert-semantic-core'}>
             <h2>Convert Semantic Core</h2>
-
 
             <form className="step step-1" onSubmit={loadSemanticInformation}>
                 <div className="form-group semantic-url">
@@ -148,7 +192,10 @@ const ConvertSemanticCore = () => {
                 <ConversionOptions
                     semanticData={semanticData}
                     onChange={(data) => setSemanticData(data)}
+                    uploadProcessing={uploadProcessing}
+                    convertProcessing={convertProcessing}
                     onConvert={convertSemanticHandler}
+                    onUpload={uploadSemanticHandler}
                 />
             </>}
 

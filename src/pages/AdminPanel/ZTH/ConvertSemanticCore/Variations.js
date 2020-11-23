@@ -50,9 +50,7 @@ const Variations = ({semanticData, onChange}) => {
         newTabIndex++
         setVariations([...variations, {
             sku: '',
-            themeValues: [{
-                relatedValues: []
-            }]
+            themeValues: [{name: '', value: '', relatedValues: []}]
         }])
     }
 
