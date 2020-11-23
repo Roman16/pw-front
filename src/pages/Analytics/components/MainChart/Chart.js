@@ -35,9 +35,19 @@ const Chart = ({
 
     const [chartData, setChartData] = useState([])
 
-
     useEffect(() => {
-        setChartData([...data])
+        setChartData([...data.map(item => {
+            let event = {
+                eventDate: item.eventDate,
+            }
+
+            activeMetrics.forEach(metric => {
+                event[metric.key] = metric.type === 'percent' ? item[metric.key] * 100 : item[metric.key]
+                event[`${metric.key}_7d`] = metric.type === 'percent' ? item[`${metric.key}_7d`] * 100 : item[`${metric.key}_7d`]
+            })
+
+            return event
+        })])
 
         // if (selectedRangeDate.startDate === 'lifetime') {
         //     setChartData([...data])
@@ -73,7 +83,6 @@ const Chart = ({
         //     }))
         // }
     }, [data])
-
 
     return (
         <div className='main-chart-container'>

@@ -17,7 +17,7 @@ import {
     salesShareColumn,
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
-import {Dropdown, Select} from "antd"
+import {Select} from "antd"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import CustomSelect from "../../../../components/Select/Select"
@@ -63,15 +63,13 @@ const ChangeProductsRequest = () => {
 
         <InformationTooltip
             getPopupContainer={triggerNode => triggerNode.parentNode}
-            title={'Regular&Parent View'}
-            description={'Regular View is showing statistics on an SKU level.  Parent View designed to showcase mixed statistics from all Parent variations.'}
+            title={'Regular & Parents View'}
+            description={'Regular View is showing statistics on SKU level. Parents View is designed to showcase aggregated statistics for Parent products.'}
         />
     </div>)
 }
 
 const ProductsList = () => {
-
-
     const filters = useSelector(state => state.analytics.filters['products'])
 
     const columns = [
