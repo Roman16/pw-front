@@ -68,7 +68,7 @@ function fetchChartData(location, metrics, date, filters = [], cancelToken) {
     else if (location === 'overview') key = 'products'
     else key = location
 
-    return api('get', `${analyticsUrls.chartData(key)}${filtersHandler(filters.filter(item => item.filterBy !== 'productView'))}&${metrics.filter(item => !!item.key).map(item => `metric[]=${item.key}`).join('&')}`, null, null, cancelToken)
+    return api('get', `${analyticsUrls.chartData(key)}${filtersHandler(filters.filter(item => item.filterBy !== 'productView'))}&${metrics.filter(item => !!item).map(item => `metric[]=${item}`).join('&')}`, null, null, cancelToken)
 }
 
 function fetchStateInformation(state, id) {

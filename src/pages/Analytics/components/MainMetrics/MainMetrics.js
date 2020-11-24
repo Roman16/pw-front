@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {dashboardActions} from "../../../../actions/dashboard.actions"
 import {analyticsAvailableMetricsList} from "./metricsList"
 import MetricItem from "./MetricItem"
 import AddMetric from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetric"
@@ -29,20 +28,19 @@ const MainMetrics = ({allMetrics}) => {
         mainState = useSelector(state => state.analytics.mainState),
         metricsData = useSelector(state => state.analytics.metricsData)
 
-
-    const selectedMetrics = metricsState.selectedMetrics,
-        activeMetrics = metricsState.activeMetrics
-
-    console.log(allMetrics)
+    const selectedMetrics = metricsState.selectedMetrics || allMetrics.slice(0, 5),
+        activeMetrics = metricsState.activeMetrics || allMetrics.slice(0, 2)
 
     const [visibleItems, updateVisibleList] = useState(selectedMetrics)
-    const [hiddenItems, updateHiddenList] = useState(allMetrics.filter(metric => !selectedMetrics.find(i => i.key === metric.key)))
+    const [hiddenItems, updateHiddenList] = useState(allMetrics.filter(metric => !selectedMetrics.includes(metric)))
     const [visibleModal, switchModal] = useState(false)
 
-    const removeSelectedMetric = (metric) => updateMetricsState({
-        selectedMetrics: selectedMetrics.filter(item => item.key !== metric.key),
-        activeMetrics: activeMetrics.map(item => item.key !== metric.key && item)
-    })
+    const removeSelectedMetric = (metric) => {
+        updateMetricsState({
+            selectedMetrics: selectedMetrics.filter(item => item !== metric),
+            activeMetrics: activeMetrics.map(item => item !== metric && item)
+        })
+    }
 
     const handleOk = () => {
         switchModal(false)
@@ -65,7 +63,7 @@ const MainMetrics = ({allMetrics}) => {
         activeMetricIndexTurn = [index, ...activeMetricIndexTurn]
 
         updateMetricsState({
-            activeMetrics: activeMetrics.map(item => item.key === metric.key ? {} : item)
+            activeMetrics: activeMetrics.map(item => item === metric ? null : item)
         })
     }
 
@@ -109,17 +107,17 @@ const MainMetrics = ({allMetrics}) => {
 
     const metricListFilter = (metric) => {
         return selectedMetrics.every((item) => {
-            return item.key !== metric.key
+            return item !== metric
         })
     }
 
     const addMetric = (item) => {
         updateVisibleList([...visibleItems, item])
-        updateHiddenList([...hiddenItems.filter((hiddenMetric) => hiddenMetric.key !== item.key)])
+        updateHiddenList([...hiddenItems.filter((hiddenMetric) => hiddenMetric !== item)])
     }
 
     const removeMetric = (item) => {
-        updateVisibleList([...visibleItems.filter((visibleMetric) => visibleMetric.key !== item.key)])
+        updateVisibleList([...visibleItems.filter((visibleMetric) => visibleMetric !== item)])
         updateHiddenList([...hiddenItems, item])
     }
 
@@ -141,19 +139,24 @@ const MainMetrics = ({allMetrics}) => {
         }
     }, [selectFourMetrics])
 
+    if (selectedMetrics) {
+        if (typeof selectedMetrics[0] === 'object') {
+            localStorage.removeItem('analyticsMetricsState')
+        }
+    }
+
     return (
         <div className="main-metrics metrics-block">
-            {selectedMetrics.length > 0 && selectedMetrics.map(selected => {
-                    if (analyticsAvailableMetricsList.find(item => item.key === selected.key)) {
+            {selectedMetrics.length > 0 && selectedMetrics.map(selectedKey => {
+                    if (_.find(analyticsAvailableMetricsList, {key: selectedKey})) {
                         return (
                             <MetricItem
-                                key={selected.key}
+                                key={selectedKey}
                                 metric={{
-                                    ...selected,
-                                    ...metricsData[selected.key]
+                                    ..._.find(analyticsAvailableMetricsList, {key: selectedKey}),
+                                    ...metricsData[selectedKey]
                                 }}
                                 activeMetrics={activeMetrics}
-
                                 removeSelectedMetric={removeSelectedMetric}
                                 onActivateMetric={activateMetric}
                                 onDeactivateMetric={deactivateMetric}
@@ -180,8 +183,10 @@ const MainMetrics = ({allMetrics}) => {
                         handleCancel={handleCancel}
                         addMetric={addMetric}
                         removeMetric={removeMetric}
-                        visibleItems={_.values(_.merge(_.keyBy(visibleItems, 'key'), _.keyBy(metricsData, 'metric_key'))).filter(item => item.title)}
-                        hiddenItems={_.values(_.merge(_.keyBy(hiddenItems, 'key'), _.keyBy(metricsData, 'metric_key'))).filter(item => item.title)}
+                        metricsData={metricsData}
+
+                        visibleItems={visibleItems}
+                        hiddenItems={hiddenItems}
                     />
                 </div>
             </>}

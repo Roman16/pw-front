@@ -32,9 +32,8 @@ const initialState = {
     metricsData: {},
     metricsState: metricsStateFromLocalStorage ? metricsStateFromLocalStorage : _.mapValues(workplacesList, (value, key) => {
         return ({
-            allMetrics: [],
-            selectedMetrics: [],
-            activeMetrics: [],
+            selectedMetrics: undefined,
+            activeMetrics: undefined,
         })
     }),
     chartState: chartStateFromLocalStorage ? chartStateFromLocalStorage : _.mapValues(workplacesList, () => ({

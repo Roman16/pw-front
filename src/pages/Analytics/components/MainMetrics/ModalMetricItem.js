@@ -1,7 +1,6 @@
 import React from "react";
 import Tooltip from '../../../../components/Tooltip/Tooltip';
 import {round} from "../../../../utils/round";
-import {analyticsAvailableMetricsList} from "./metricsList";
 import {useSelector} from "react-redux";
 import {numberMask} from "../../../../utils/numberMask";
 import {SVG} from "../../../../utils/icons";
@@ -23,24 +22,23 @@ const RenderMetricValue = ({value, type}) => {
     }
 };
 
-const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, item, listType, removeMetric, addMetric, disabled}) => {
-    const metricInformation = analyticsAvailableMetricsList.find(item => item.key === key);
+const ModalMetricItem = ({item: {title, info, key, value, type, label}, listType, removeMetric, addMetric, disabled}) => {
     const {hasMargin} = useSelector(state => ({
         hasMargin: state.dashboard.hasMargin || false
     }));
 
     return (<div className={`metric-item ${disabled ? 'disabled' : ''}`}
-                 onClick={() => listType === 'visible' ? removeMetric(item) : disabled ? null : addMetric(item)}>
+                 onClick={() => listType === 'visible' ? removeMetric(key) : disabled ? null : addMetric(key)}>
             <div className="title-info">
-                <span title={metricInformation.title} dangerouslySetInnerHTML={{__html: metricInformation.title}}/>
+                <span title={title} dangerouslySetInnerHTML={{__html: title}}/>
 
                 {key === 'profit' || key === 'ad_profit' ?
                     !hasMargin && <Tooltip getPopupContainer={trigger => trigger.parentNode}
                                            type='warning' description={<ProfitTooltipDescription/>}/>
                     :
-                    metricInformation.info && <Tooltip {...key === 'total_sales' && {'className': 'big-window'}}
+                    info && <Tooltip {...key === 'total_sales' && {'className': 'big-window'}}
                                                        getPopupContainer={trigger => trigger.parentNode}
-                                                       description={metricInformation.info}/>
+                                                       description={info}/>
                 }
 
                 {listType === 'hidden' && <div className="add-item">
@@ -54,7 +52,7 @@ const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, i
 
             <div className="value">
                 <RenderMetricValue
-                    value={metric_value}
+                    value={value}
                     type={type}
                 />
             </div>

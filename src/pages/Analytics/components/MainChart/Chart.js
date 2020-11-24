@@ -12,11 +12,10 @@ import {
 } from 'recharts'
 import ChartTooltip from "./ChartTooltip"
 import moment from "moment"
+import {analyticsAvailableMetricsList} from '../MainMetrics/metricsList'
 import _ from "lodash"
 
 const animationDuration = 1000,
-    dashedLineAnimationDuration = 1000,
-    animationBegin = 1000,
     animationEasing = 'linear',
     isAnimationActive = false
 
@@ -42,8 +41,12 @@ const Chart = ({
             }
 
             activeMetrics.forEach(metric => {
-                event[metric.key] = metric.type === 'percent' ? item[metric.key] * 100 : item[metric.key]
-                event[`${metric.key}_7d`] = metric.type === 'percent' ? item[`${metric.key}_7d`] * 100 : item[`${metric.key}_7d`]
+                if(metric) {
+                    const metricType = _.find(analyticsAvailableMetricsList, {key: metric}).type
+
+                    event[metric] = metricType === 'percent' ? item[metric] * 100 : item[metric]
+                    event[`${metric}_7d`] = metricType === 'percent' ? item[`${metric}_7d`] * 100 : item[`${metric}_7d`]
+                }
             })
 
             return event
@@ -138,7 +141,7 @@ const Chart = ({
                         isAnimationActive={false}
                         content={
                             <ChartTooltip
-                                activeMetrics={activeMetrics}
+                                activeMetrics={activeMetrics.map(key => _.find(analyticsAvailableMetricsList, {key: key}))}
                                 showWeekChart={showWeekChart}
                                 showDailyChart={showDailyChart}
                                 chartColors={chartColors}
@@ -195,7 +198,7 @@ const Chart = ({
                         showWeekChart && <Line
                             yAxisId={`YAxis-${index}`}
                             type="monotone"
-                            dataKey={`${activeMetrics[index].key}_7d`}
+                            dataKey={`${metric}_7d`}
                             stroke={chartColors[index]}
                             strokeWidth={3}
                             dot={false}
@@ -212,7 +215,7 @@ const Chart = ({
                             yAxisId={`YAxis-${index}`}
                             type="linear"
                             strokeOpacity={0.8}
-                            dataKey={`${metric.key}`}
+                            dataKey={`${metric}`}
                             stroke={chartColors[index]}
                             strokeWidth={2}
                             activeDot={{r: 5}}

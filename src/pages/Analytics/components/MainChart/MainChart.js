@@ -13,7 +13,7 @@ import axios from "axios"
 const CancelToken = axios.CancelToken
 let source = null
 
-const MainChart = () => {
+const MainChart = ({allMetrics}) => {
     const [chartData, updateChartData] = useState([])
     const [fetching, switchFetch] = useState(false)
     const [fetchingError, setFetchingError] = useState(false)
@@ -32,13 +32,11 @@ const MainChart = () => {
     }))
 
 
-    const allMetrics = metricsState.allMetrics,
-        selectedMetrics = allMetrics.selectedMetrics,
-        activeMetrics = metricsState.activeMetrics
+    const activeMetrics = metricsState.activeMetrics || allMetrics.slice(0, 2)
 
 
     const getChartData = async () => {
-        if (activeMetrics.filter(metric => !!metric.key).length > 0) {
+        if (activeMetrics.filter(metric => !!metric).length > 0) {
             switchFetch(true)
             setFetchingError(false)
 

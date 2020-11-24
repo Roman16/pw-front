@@ -1,15 +1,19 @@
 import React from "react"
 import MainChart from "../components/MainChart/MainChart"
 import PortfoliosList from './PortfoliosList/PortfoliosList'
-import Metrics from "./Metrics/Metrics"
+import MainMetrics from "../components/MainMetrics/MainMetrics"
+import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
 
 const Portfolios = () => {
+    const availableMetrics = [...metricsKeysWithoutOrganic]
 
     return (
         <div className={'portfolios-workplace'}>
-            <Metrics/>
+            <MainMetrics
+                allMetrics={availableMetrics}
+            />
 
-            <MainChart/>
+            <MainChart allMetrics={availableMetrics}/>
 
             <PortfoliosList/>
         </div>
