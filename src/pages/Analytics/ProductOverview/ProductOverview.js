@@ -6,6 +6,7 @@ import _ from "lodash"
 import {analyticsActions} from "../../../actions/analytics.actions"
 import {useDispatch, useSelector} from "react-redux"
 import queryString from 'query-string'
+import ProductMetrics from "./ProductMetrics/ProductMetrics"
 
 const ProductOverview = () => {
     const filters = useSelector(state => state.analytics.filters.overview || [])
@@ -42,7 +43,7 @@ const ProductOverview = () => {
 
             {/*<ProductSettings/>*/}
 
-            <ProductAds/>
+            <ProductMetrics/>
         </div>
 
     )

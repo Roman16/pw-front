@@ -22,6 +22,8 @@ const TableList = ({
                        fixedColumns,
                        columnSelect = true,
                        dateRange = true,
+                       showFilters = true,
+                       showPagination = true,
                        moreActions
                    }) => {
 
@@ -134,10 +136,10 @@ const TableList = ({
     return (
         <>
             <div className="section-header">
-                <TableFilters
+                {showFilters && <TableFilters
                     columns={columns}
                     filters={filters}
-                />
+                />}
 
                 {moreActions}
 
@@ -168,7 +170,7 @@ const TableList = ({
                 // rowClassName={(item) => !item.viewed && 'new-report'}
             />
 
-            {paginationParams.totalSize !== 0 && <Pagination
+            {paginationParams.totalSize !== 0 && showPagination && <Pagination
                 onChange={paginationChangeHandler}
 
                 pageSizeOptions={[25, 50, 100]}
