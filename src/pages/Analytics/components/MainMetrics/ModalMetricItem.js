@@ -1,7 +1,7 @@
 import React from "react";
 import Tooltip from '../../../../components/Tooltip/Tooltip';
 import {round} from "../../../../utils/round";
-import {analyticsMetricsListArray} from "./metricsList";
+import {analyticsAvailableMetricsList} from "./metricsList";
 import {useSelector} from "react-redux";
 import {numberMask} from "../../../../utils/numberMask";
 import {SVG} from "../../../../utils/icons";
@@ -24,7 +24,7 @@ const RenderMetricValue = ({value, type}) => {
 };
 
 const ModalMetricItem = ({item: {title, info, key, metric_value, type, label}, item, listType, removeMetric, addMetric, disabled}) => {
-    const metricInformation = analyticsMetricsListArray.find(item => item.key === key);
+    const metricInformation = analyticsAvailableMetricsList.find(item => item.key === key);
     const {hasMargin} = useSelector(state => ({
         hasMargin: state.dashboard.hasMargin || false
     }));

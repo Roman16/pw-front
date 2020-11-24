@@ -1,7 +1,6 @@
 import {analyticsConstants} from '../constans/actions.type'
 import moment from "moment"
 import _ from 'lodash'
-import {analyticsMetricsListArray} from "../pages/Analytics/components/MainMetrics/metricsList"
 
 const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState') && JSON.parse(localStorage.getItem('analyticsMetricsState')),
     columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
@@ -21,23 +20,6 @@ const workplacesList = {
     'product-ads': []
 }
 
-
-export const metricsWithoutOrganic = analyticsMetricsListArray.filter(
-    metric => metric.key !== 'total_orders' &&
-        metric.key !== 'total_orders_pure' &&
-        metric.key !== 'organic_orders' &&
-        metric.key !== 'total_sales' &&
-        metric.key !== 'organic_sales' &&
-        metric.key !== 'total_units' &&
-        metric.key !== 'total_units_pure' &&
-        metric.key !== 'profit' &&
-        metric.key !== 'macos' &&
-        metric.key !== 'returns' &&
-        metric.key !== 'returns_units'
-)
-export const metricsForTargetingsPanel = metricsWithoutOrganic.filter(metric => metric.key !== 'ad_profit')
-
-
 const initialState = {
     location: undefined,
     mainState: {
@@ -47,13 +29,12 @@ const initialState = {
         portfolioId: undefined,
         name: {}
     },
+    metricsData: {},
     metricsState: metricsStateFromLocalStorage ? metricsStateFromLocalStorage : _.mapValues(workplacesList, (value, key) => {
-        const allAvailableMetrics = key === 'targetings' ? [...metricsForTargetingsPanel] : key === 'products' ? [...analyticsMetricsListArray] : [...metricsWithoutOrganic]
-
         return ({
-            allMetrics: allAvailableMetrics,
-            selectedMetrics: allAvailableMetrics.slice(0, 5),
-            activeMetrics: allAvailableMetrics.slice(0, 2),
+            allMetrics: [],
+            selectedMetrics: [],
+            activeMetrics: [],
         })
     }),
     chartState: chartStateFromLocalStorage ? chartStateFromLocalStorage : _.mapValues(workplacesList, () => ({
@@ -106,6 +87,12 @@ export function analytics(state = initialState, action) {
             return {
                 ...state,
                 location: action.payload
+            }
+
+        case analyticsConstants.SET_METRICS_DATA:
+            return {
+                ...state,
+                metricsData: action.payload
             }
 
         case analyticsConstants.UPDATE_METRICS_STATE:

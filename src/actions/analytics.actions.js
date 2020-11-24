@@ -6,6 +6,7 @@ export const analyticsActions = {
     setDateRange,
     setLocation,
     updateMetricsState,
+    setMetricsData,
     updateColumnBlackList,
     updateFiltersList,
 }
@@ -50,6 +51,14 @@ function updateMetricsState(data) {
     return dispatch => {
         dispatch({
             type: analyticsConstants.UPDATE_METRICS_STATE,
+            payload: data
+        })
+    }
+}
+function setMetricsData(data) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.SET_METRICS_DATA,
             payload: data
         })
     }

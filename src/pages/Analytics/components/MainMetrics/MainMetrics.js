@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {dashboardActions} from "../../../../actions/dashboard.actions"
-import {analyticsMetricsListArray} from "./metricsList"
+import {analyticsAvailableMetricsList} from "./metricsList"
 import MetricItem from "./MetricItem"
 import AddMetric from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetric"
 import './MainMetrics.less'
@@ -18,7 +18,7 @@ let activeMetricIndexTurn = [0, 1]
 const CancelToken = axios.CancelToken
 let source = null
 
-const MainMetrics = () => {
+const MainMetrics = ({allMetrics}) => {
     const dispatch = useDispatch()
 
     const location = useSelector(state => state.analytics.location),
@@ -26,17 +26,18 @@ const MainMetrics = () => {
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         selectFourMetrics = useSelector(state => state.analytics.chartState[location].selectFourMetrics),
         filters = useSelector(state => state.analytics.filters[location] || []),
-        mainState = useSelector(state => state.analytics.mainState)
+        mainState = useSelector(state => state.analytics.mainState),
+        metricsData = useSelector(state => state.analytics.metricsData)
 
 
-    const allMetrics = metricsState.allMetrics,
-        selectedMetrics = metricsState.selectedMetrics,
+    const selectedMetrics = metricsState.selectedMetrics,
         activeMetrics = metricsState.activeMetrics
+
+    console.log(allMetrics)
 
     const [visibleItems, updateVisibleList] = useState(selectedMetrics)
     const [hiddenItems, updateHiddenList] = useState(allMetrics.filter(metric => !selectedMetrics.find(i => i.key === metric.key)))
     const [visibleModal, switchModal] = useState(false)
-    const [metricsData, setMetricsData] = useState([])
 
     const removeSelectedMetric = (metric) => updateMetricsState({
         selectedMetrics: selectedMetrics.filter(item => item.key !== metric.key),
@@ -92,28 +93,12 @@ const MainMetrics = () => {
             ]
 
             const res = await analyticsServices.fetchMetricsData({
-                startDate: selectedRangeDate.startDate,
-                endDate: selectedRangeDate.endDate,
+                ...selectedRangeDate,
                 locationKey: location,
                 filters: filtersWithState
             }, source.token)
 
-            setMetricsData(Object.keys(res.response).map(item => ({
-                metric_key: item,
-                metric_diff: res.response[item].value_diff,
-                metric_value: res.response[item].value,
-                metric_prev_value: res.response[item].value_prev
-            })))
-
-            updateMetricsState({
-                allMetrics: allMetrics.map(metric => ({
-                    ...metric,
-                    metric_key: metric.key,
-                    metric_diff: res.response[metric.key].value_diff,
-                    metric_value: res.response[metric.key].value,
-                    metric_prev_value: res.response[metric.key].value_prev
-                }))
-            })
+            dispatch(analyticsActions.setMetricsData(res.response))
         } catch (e) {
             console.log(e)
         }
@@ -159,11 +144,14 @@ const MainMetrics = () => {
     return (
         <div className="main-metrics metrics-block">
             {selectedMetrics.length > 0 && selectedMetrics.map(selected => {
-                    if (analyticsMetricsListArray.find(item => item.key === selected.key)) {
+                    if (analyticsAvailableMetricsList.find(item => item.key === selected.key)) {
                         return (
                             <MetricItem
                                 key={selected.key}
-                                metric={{...selected, ...metricsData.find(i => i.metric_key === selected.key)}}
+                                metric={{
+                                    ...selected,
+                                    ...metricsData[selected.key]
+                                }}
                                 activeMetrics={activeMetrics}
 
                                 removeSelectedMetric={removeSelectedMetric}

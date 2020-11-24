@@ -1,7 +1,7 @@
 import React from "react";
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
 import ModalMetricItem from "./ModalMetricItem";
-import {analyticsMetricsListArray} from './metricsList';
+import {analyticsAvailableMetricsList} from './metricsList';
 
 const MetricModal = ({visibleModal, handleOk, handleCancel, addMetric, removeMetric, visibleItems, hiddenItems}) => {
     return (
@@ -18,7 +18,7 @@ const MetricModal = ({visibleModal, handleOk, handleCancel, addMetric, removeMet
 
             <div className='visible-list'>
                 {visibleItems.length > 0 ? visibleItems.map((item, index) => {
-                        if (analyticsMetricsListArray.find(metric => metric.key === item.key)) {
+                        if (analyticsAvailableMetricsList.find(metric => metric.key === item.key)) {
                             return (
                                 <ModalMetricItem
                                     key={`visible-${item.key}`}

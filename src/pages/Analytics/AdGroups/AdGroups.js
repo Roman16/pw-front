@@ -1,13 +1,13 @@
 import React from "react"
 import AdGroupsList from "./AdGroupsList/AdGroupsList"
-import MainMetrics from "../components/MainMetrics/MainMetrics"
 import MainChart from "../components/MainChart/MainChart"
+import Metrics from "./Metrics/Metrics"
 
 const AdGroups = () => {
 
     return (
         <div className={'ad-groups-workplace'}>
-            <MainMetrics/>
+            <Metrics/>
 
             <MainChart/>
 

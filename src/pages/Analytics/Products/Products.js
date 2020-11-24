@@ -1,14 +1,13 @@
 import React from "react"
-import MainMetrics from "../components/MainMetrics/MainMetrics"
 import MainChart from "../components/MainChart/MainChart"
 import ProductList from './ProductsList/ProductsList'
-
+import Metrics from "./Metrics/Metrics"
 
 const Products = () => {
 
     return (
         <div className={'products-workplace'}>
-            <MainMetrics/>
+            <Metrics/>
 
             <MainChart/>
 

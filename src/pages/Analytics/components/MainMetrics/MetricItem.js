@@ -1,6 +1,6 @@
 import React, {Fragment} from "react"
 import Tooltip from '../../../../components/Tooltip/Tooltip'
-import {analyticsMetricsListArray} from "./metricsList"
+import {analyticsAvailableMetricsList} from "./metricsList"
 import {useSelector} from "react-redux"
 import {round} from "../../../../utils/round"
 import {numberMask} from "../../../../utils/numberMask"
@@ -168,7 +168,23 @@ const RenderMetricValue = ({value, type}) => {
 }
 
 
-const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, metric_value, metric_prev_value}, metric, removeSelectedMetric, activeMetrics, onActivateMetric, onDeactivateMetric}) => {
+const MetricItem = ({
+                        metric: {
+                            title,
+                            info = '',
+                            key,
+                            label,
+                            type,
+                            metric_diff,
+                            metric_value,
+                            metric_prev_value
+                        },
+                        metric,
+                        removeSelectedMetric,
+                        activeMetrics,
+                        onActivateMetric,
+                        onDeactivateMetric
+                    }) => {
     const {hasMargin} = useSelector(state => ({
         hasMargin: state.dashboard.hasMargin || false
     }))
@@ -186,11 +202,12 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
         removeSelectedMetric(metric)
     }
 
-    const metricInformation = analyticsMetricsListArray.find(item => item.key === key)
+    const metricInformation = analyticsAvailableMetricsList.find(item => item.key === key)
 
     return (
         <div className='metric-item' onClick={handleClick}>
-            {activeMetrics.length > 0 && <div className={`active-metric position-${activeMetrics.findIndex(item => item.key === key)}`}/>}
+            {activeMetrics.length > 0 &&
+            <div className={`active-metric position-${activeMetrics.findIndex(item => item.key === key)}`}/>}
 
             <div className="title-info">
                 <span title={metricInformation.title} dangerouslySetInnerHTML={{__html: metricInformation.title}}/>

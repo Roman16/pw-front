@@ -1,13 +1,13 @@
 import React from "react"
 import CampaignsList from "./CampaignsList/CampaignsList"
-import MainMetrics from "../components/MainMetrics/MainMetrics"
 import MainChart from "../components/MainChart/MainChart"
+import Metrics from "./Metrics/Metrics"
 
 const Campaigns = () => {
 
     return (
         <div className={'campaigns-workplace'}>
-            <MainMetrics/>
+            <Metrics/>
 
             <MainChart/>
 

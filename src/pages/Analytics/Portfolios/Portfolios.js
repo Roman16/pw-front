@@ -1,13 +1,13 @@
 import React from "react"
-import MainMetrics from "../components/MainMetrics/MainMetrics"
 import MainChart from "../components/MainChart/MainChart"
 import PortfoliosList from './PortfoliosList/PortfoliosList'
+import Metrics from "./Metrics/Metrics"
 
 const Portfolios = () => {
 
     return (
         <div className={'portfolios-workplace'}>
-            <MainMetrics/>
+            <Metrics/>
 
             <MainChart/>
 
