@@ -7,7 +7,9 @@ import {SVG} from "../../../../utils/icons";
 import {ProfitTooltipDescription} from "../../../PPCAutomate/Dashboard/ProductBreakdown/ProductsList"
 
 const RenderMetricValue = ({value, type}) => {
-    if (value != null) {
+
+    if (value != null && !isNaN(value)) {
+        value = +value
         if (type === 'currency') {
             return (`$${Math.round(value).toString().length > 4 ? numberMask(value) : numberMask(value, 2)}`)
         } else if (type === 'percent') {
@@ -16,16 +18,22 @@ const RenderMetricValue = ({value, type}) => {
             return (numberMask(value))
         } else if (type === 'roas') {
             return (`${round(value, 2)}x`)
+        } else {
+            console.log(type)
+
+            return ''
         }
     } else {
         return 'N/A'
     }
 };
 
-const ModalMetricItem = ({item: {title, info, key, value, type, label}, listType, removeMetric, addMetric, disabled}) => {
+const ModalMetricItem = ({item: {title, info, key, value, type, label}, listType, removeMetric, addMetric, disabled, item}) => {
     const {hasMargin} = useSelector(state => ({
         hasMargin: state.dashboard.hasMargin || false
     }));
+
+    console.log(item)
 
     return (<div className={`metric-item ${disabled ? 'disabled' : ''}`}
                  onClick={() => listType === 'visible' ? removeMetric(key) : disabled ? null : addMetric(key)}>

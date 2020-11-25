@@ -71,6 +71,7 @@ const CampaignsList = () => {
             sorter: true,
             locked: true,
             filter: true,
+            noTotal: true,
             render: (type) => <span className={'type'}>{type}</span>
         },
         {
@@ -92,6 +93,7 @@ const CampaignsList = () => {
             sorter: true,
             locked: true,
             filter: true,
+            noTotal: true,
             render: (portfolio, item) => (
                 <Link
                     to={`/analytics/campaigns?portfolioId=${item.portfolioId}`}
@@ -133,6 +135,7 @@ const CampaignsList = () => {
             width: '250px',
             sorter: true,
             filter: true,
+            noTotal: true,
             render: (text) => <>
                 {text === 'legacyForSales' && 'Legacy For Sales'}
                 {text === 'autoForSales' && 'Auto For Sales'}

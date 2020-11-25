@@ -44,6 +44,7 @@ const NegativeTargetingsList = () => {
         },
         ...!selectedCampaign ? [{
             ...campaignColumn,
+            noTotal: true,
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
                 title={campaign}
@@ -58,6 +59,7 @@ const NegativeTargetingsList = () => {
         }] : [],
         ...!selectedAdGroup ? [{
             ...adGroupColumn,
+            noTotal: true,
             render: (adGroup, item) => (
                 <Link
                     to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
@@ -80,6 +82,7 @@ const NegativeTargetingsList = () => {
             key: 'calculatedTargetingMatchType',
             sorter: true,
             locked: true,
+            noTotal: true,
         },
     ]
 

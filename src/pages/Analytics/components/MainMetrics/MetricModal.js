@@ -54,18 +54,20 @@ const MetricModal = ({
             <div className='hidden-list__title'>Hidden</div>
 
             <div className='hidden-list'>
-                {hiddenItems.map((key) => (
-                    <ModalMetricItem
-                        key={`hidden-${key}`}
-                        item={{
-                            ...metricsData[key],
-                            ..._.find(analyticsAvailableMetricsList, {key: key})
-                        }}
-                        addMetric={addMetric}
-                        listType='hidden'
-                        disabled={visibleItems.length >= 6}
-                    />
-                ))}
+                {hiddenItems.map((key) => {
+                    return (
+                        <ModalMetricItem
+                            key={`hidden-${key}`}
+                            item={{
+                                ...metricsData[key],
+                                ..._.find(analyticsAvailableMetricsList, {key: key})
+                            }}
+                            addMetric={addMetric}
+                            listType='hidden'
+                            disabled={visibleItems.length >= 6}
+                        />
+                    )
+                })}
             </div>
         </ModalWindow>
     )

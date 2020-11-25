@@ -39,6 +39,7 @@ export const statusColumn = {
     </>),
     sorter: true,
     filter: true,
+    noTotal: true,
 }
 
 export const dateColumn = {
@@ -246,11 +247,29 @@ export const budgetAllocationColumn = {
     ...renderNumberField('percent')
 }
 
+export const netProfitColumn = {
+    title: 'Net Profit',
+    dataIndex: 'total_profit',
+    key: 'total_profit',
+    minWidth: '120px',
+    sorter: true,
+    filter: true,
+    ...renderNumberField('currency')
+}
+export const grossProfitColumn = {
+    title: 'Gross Profit',
+    dataIndex: 'total_profit_gross',
+    key: 'total_profit_gross',
+    minWidth: '150px',
+    sorter: true,
+    filter: true,
+    ...renderNumberField('currency')
+}
 export const adProfitColumn = {
-    title: 'Ad Profit',
+    title: 'Net Ad Profit',
     dataIndex: 'ad_profit',
     key: 'ad_profit',
-    minWidth: '100px',
+    minWidth: '150px',
     sorter: true,
     filter: true,
     ...renderNumberField('currency')
@@ -263,6 +282,7 @@ export const campaignColumn = {
     width: '350px',
     sorter: true,
     filter: true,
+    noTotal: true,
 }
 
 export const adGroupColumn = {
@@ -272,6 +292,7 @@ export const adGroupColumn = {
     minWidth: '200px',
     sorter: true,
     filter: true,
+    noTotal: true,
     render: (adGroup, item) => (
         <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupName}`}>
             {item.adGroupName}

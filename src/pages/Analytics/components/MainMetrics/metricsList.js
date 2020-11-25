@@ -8,19 +8,21 @@ export const metricKeys = {
     'cpc': 'cpc',
     'total_orders': 'total_orders_count',
     'total_orders_pure': 'total_orders_count_cleared',
-    'attributedConversions30d': 'attributedConversions30d',
+    'ad_orders': 'attributedConversions30d',
     'organic_orders': 'organic_orders_count',
     'total_sales': 'total_sales',
-    'attributedSales30d': 'attributedSales30d',
+    'ad_sales': 'attributedSales30d',
+    'avg_sale_price': 'total_sales_avg_price',
     'organic_sales': 'organic_sales',
-    'attributedUnitsOrdered30d': 'attributedUnitsOrdered30d',
+    'ad_units': 'attributedUnitsOrdered30d',
     'total_units': 'total_ordered_quantity',
     'total_units_pure': 'total_ordered_quantity_cleared',
     'acos': 'acos',
     'conversion_rate': 'conversion_rate',
     'cpa': 'cpa',
-    'profit': 'total_profit',
-    'ad_profit': 'ad_profit',
+    'net_profit': 'total_profit',
+    'gross_profit': 'total_profit_gross',
+    'net_ad_profit': 'ad_profit',
     'macos': 'macos',
     'roas': 'roas',
     'sales_share': 'sales_share',
@@ -37,7 +39,9 @@ export const metricsKeysWithoutOrganic = Object.values(_.pickBy(metricKeys, func
         key !== 'organic_sales' &&
         key !== 'total_units' &&
         key !== 'total_units_pure' &&
-        key !== 'profit' &&
+        key !== 'net_profit' &&
+        key !== 'gross_profit' &&
+        key !== 'avg_sale_price' &&
         key !== 'macos' &&
         key !== 'returns' &&
         key !== 'returns_units'
@@ -95,7 +99,7 @@ export const analyticsAvailableMetricsList = [
     },
     {
         title: 'Ad Orders',
-        key: metricKeys['attributedConversions30d'],
+        key: metricKeys['ad_orders'],
         label: 'Total',
         type: 'number'
     },
@@ -115,17 +119,16 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         label: 'Total',
         type: 'currency'
     },
-    // {
-    //     title: 'Total Sales Cleared',
-    //     key: 'total_sales_pure',
-    //     info: 'Total Sales Cleared = Total Sales - Organic Sales',
-    //     label: 'Total',
-    //     type: 'currency'
-    // },
     {
         title: 'Ad Sales',
-        key: metricKeys['attributedSales30d'],
+        key: metricKeys['ad_sales'],
         label: 'Total',
+        type: 'currency'
+    },
+    {
+        title: 'Avg. Sale Price',
+        key: metricKeys['avg_sale_price'],
+        label: 'Average',
         type: 'currency'
     },
     {
@@ -136,7 +139,7 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
     },
     {
         title: 'Ad Units',
-        key: metricKeys['attributedUnitsOrdered30d'],
+        key: metricKeys['ad_units'],
         label: 'Total',
         type: 'number'
     },
@@ -175,14 +178,20 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'currency'
     },
     {
-        title: 'Profit',
-        key: metricKeys['profit'],
+        title: 'Net Profit',
+        key: metricKeys['net_profit'],
         label: 'Total',
         type: 'currency'
     },
     {
-        title: 'Ad Profit',
-        key: metricKeys['ad_profit'],
+        title: 'Gross Profit',
+        key: metricKeys['gross_profit'],
+        label: 'Total',
+        type: 'currency'
+    },
+    {
+        title: 'Net Ad Profit',
+        key: metricKeys['net_ad_profit'],
         label: 'Total',
         type: 'currency'
     },
@@ -194,12 +203,6 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         label: 'Average',
         type: 'percent'
     },
-    // {
-    //     title: 'ROI',
-    //     key: 'roi',
-    //     label: 'Average',
-    //     type: 'number'
-    // },
     {
         title: 'ROAS',
         info: 'Return On Advertising Spend, (ROAS), is a marketing metric that measures the efficacy of a digital advertising campaign. ROAS helps online businesses evaluate which methods are working and how they can improve future advertising efforts.',
@@ -213,6 +216,7 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         label: 'Average',
         type: 'percent'
     },
+
     {
         title: 'Budget Allocation',
         key: metricKeys['budget_allocation'],
@@ -232,5 +236,3 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'number'
     },
 ]
-
-

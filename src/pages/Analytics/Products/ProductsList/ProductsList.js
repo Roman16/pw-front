@@ -10,8 +10,8 @@ import {
     budgetAllocationColumn,
     clicksColumn,
     cpaColumn, cpcColumn,
-    ctrColumn,
-    impressionsColumn,
+    ctrColumn, grossProfitColumn,
+    impressionsColumn, netProfitColumn,
     renderNumberField, RenderProduct,
     roasColumn,
     salesShareColumn,
@@ -56,6 +56,7 @@ const ChangeProductsRequest = () => {
     return (<div className={'switch-products-type'}>
         <CustomSelect
             value={_.find(filters, {filterBy: 'productView'}) ? _.find(filters, {filterBy: 'productView'}).value : 'regular'}
+            getPopupContainer={trigger => trigger.parentNode}
             onChange={changeTypeHandler}>
             <Option value={'regular'}>Regular view</Option>
             <Option value={'parent'}>Parents view</Option>
@@ -81,7 +82,6 @@ const ProductsList = () => {
             locked: true,
             sorter: true,
             search: true,
-            noTotal: true,
             render: (name, item) => <RenderProduct
                 product={item}
                 isParent={_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent'}
@@ -206,23 +206,16 @@ const ProductsList = () => {
             ...renderNumberField()
         },
         {
-            title: 'Profit',
-            dataIndex: 'organic_profit',
-            key: 'organic_profit',
+            title: 'Avg. Sale Price',
+            dataIndex: 'total_sales_avg_price',
+            key: 'total_sales_avg_price',
             width: '150px',
             sorter: true,
             filter: true,
             ...renderNumberField('currency')
         },
-        {
-            title: 'Gross Profit',
-            dataIndex: 'organic_profit_gross',
-            key: 'organic_profit_gross',
-            width: '150px',
-            sorter: true,
-            filter: true,
-            ...renderNumberField('currency')
-        },
+        netProfitColumn,
+        grossProfitColumn,
         adProfitColumn
     ]
 
