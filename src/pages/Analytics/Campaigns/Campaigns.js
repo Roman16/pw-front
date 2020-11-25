@@ -1,15 +1,19 @@
 import React from "react"
 import CampaignsList from "./CampaignsList/CampaignsList"
-import MainMetrics from "../components/MainMetrics/MainMetrics"
 import MainChart from "../components/MainChart/MainChart"
+import MainMetrics from "../components/MainMetrics/MainMetrics"
+import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
 
 const Campaigns = () => {
+    const availableMetrics = [...metricsKeysWithoutOrganic]
 
     return (
         <div className={'campaigns-workplace'}>
-            <MainMetrics/>
+            <MainMetrics
+                allMetrics={availableMetrics}
+            />
 
-            <MainChart/>
+            <MainChart allMetrics={availableMetrics}/>
 
             <CampaignsList/>
         </div>

@@ -203,7 +203,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
         ],
         'state': [
             {title: 'Enabled', key: 'enabled', value: 'enabled'},
-            {title: 'Inactive', key: 'inactive', value: 'inactive'},
             {title: 'Paused', key: 'paused', value: 'paused'},
             {title: 'Archived', key: 'archived', value: 'archived'},
         ],
@@ -368,6 +367,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     placeholder={'Enter number'}
                     value={filterValue}
                     onChange={changeValueHandler}
+                    step={0.01}
                 />}
 
                 {(filterBy === 'spend' ||
@@ -389,6 +389,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     value={filterValue}
                     placeholder={'Enter number'}
                     onChange={changeValueHandler}
+                    step={0.01}
                 />}
 
                 {filterBy && filterType.key === 'one_of' &&
@@ -406,7 +407,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
 
         <div className="buttons">
             <button type={'button'} className="btn white" onClick={onClose}>Cancel</button>
-            <button className="btn default" disabled={!filterValue}>Add Filter</button>
+            <button className="btn default" disabled={filterValue == undefined}>Add Filter</button>
         </div>
     </form>)
 }

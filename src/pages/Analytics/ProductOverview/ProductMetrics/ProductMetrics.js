@@ -10,96 +10,17 @@ import {
     budgetAllocationColumn,
     clicksColumn,
     cpaColumn, cpcColumn,
-    ctrColumn, grossProfitColumn,
-    impressionsColumn, netProfitColumn,
-    renderNumberField, RenderProduct,
+    ctrColumn,
+    impressionsColumn,
+    renderNumberField,
     roasColumn,
     salesShareColumn,
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
-import {Select} from "antd"
-import {useDispatch, useSelector} from "react-redux"
-import {analyticsActions} from "../../../../actions/analytics.actions"
-import CustomSelect from "../../../../components/Select/Select"
-import _ from 'lodash'
-import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import './ProductMetrics.less'
 
-const Option = Select.Option
-
-const ChangeProductsRequest = () => {
-    const dispatch = useDispatch()
-
-    const locationKey = useSelector(state => state.analytics.location)
-    const filters = useSelector(state => state.analytics.filters[locationKey] || [])
-
-    const changeTypeHandler = (value) => {
-        if (_.find(filters, {filterBy: 'productView'})) {
-            dispatch(analyticsActions.updateFiltersList([...filters.map(filter => {
-                if (filter.filterBy === 'productView') {
-                    filter = {
-                        filterBy: 'productView',
-                        type: 'type',
-                        value: value
-                    }
-                }
-                return filter
-            })]))
-        } else {
-            dispatch(analyticsActions.updateFiltersList([...filters, {
-                filterBy: 'productView',
-                type: 'type',
-                value: value
-            }]))
-        }
-    }
-
-    return (<div className={'switch-products-type'}>
-        <CustomSelect
-            value={_.find(filters, {filterBy: 'productView'}) ? _.find(filters, {filterBy: 'productView'}).value : 'regular'}
-            getPopupContainer={trigger => trigger.parentNode}
-            onChange={changeTypeHandler}>
-            <Option value={'regular'}>Regular view</Option>
-            <Option value={'parent'}>Parents view</Option>
-        </CustomSelect>
-
-        <InformationTooltip
-            getPopupContainer={triggerNode => triggerNode.parentNode}
-            title={'Regular & Parents View'}
-            description={'Regular View is showing statistics on SKU level. Parents View is designed to showcase aggregated statistics for Parent products.'}
-        />
-    </div>)
-}
-
-const ProductsList = () => {
-    const filters = useSelector(state => state.analytics.filters['products'])
-
+const ProductMetrics = () => {
     const columns = [
-        {
-            title: 'Product',
-            dataIndex: 'product_name_sku_asin',
-            key: 'product_name_sku_asin',
-            width: '300px',
-            locked: true,
-            sorter: true,
-            search: true,
-            render: (name, item) => <RenderProduct
-                product={item}
-                isParent={_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent'}
-            />
-        },
-        {
-            title: 'SKU/ASIN',
-            dataIndex: 'sku_asin',
-            key: 'sku_asin',
-            width: '180px',
-            locked: true,
-            sorter: true,
-            noTotal: true,
-            render: (text, item) => <div className={'sku-asin'}>
-                <div title={item.sku}><b>SKU:</b> {item.sku}</div>
-                <div title={item.asin}><b>ASIN:</b> {item.asin}</div>
-            </div>
-        },
         {
             title: 'Campaigns',
             dataIndex: 'campaigns_count',
@@ -206,16 +127,23 @@ const ProductsList = () => {
             ...renderNumberField()
         },
         {
-            title: 'Avg. Sale Price',
-            dataIndex: 'total_sales_avg_price',
-            key: 'total_sales_avg_price',
+            title: 'Profit',
+            dataIndex: 'organic_profit',
+            key: 'organic_profit',
             width: '150px',
             sorter: true,
             filter: true,
             ...renderNumberField('currency')
         },
-        netProfitColumn,
-        grossProfitColumn,
+        {
+            title: 'Gross Profit',
+            dataIndex: 'organic_profit_gross',
+            key: 'organic_profit_gross',
+            width: '150px',
+            sorter: true,
+            filter: true,
+            ...renderNumberField('currency')
+        },
         adProfitColumn
     ]
 
@@ -224,11 +152,12 @@ const ProductsList = () => {
         <section className={'list-section'}>
             <TableList
                 columns={columns}
-                fixedColumns={[0, 1]}
-                moreActions={<ChangeProductsRequest/>}
+                showFilters={false}
+                showPagination={false}
+                showTotal={false}
             />
         </section>
     )
 }
 
-export default ProductsList
+export default ProductMetrics

@@ -40,10 +40,10 @@ const urlGenerator = (url, pagination, sorting, filters) => {
         parameters.push(`&order_by:${sorting.type}=${sorting.column}`)
     }
 
-    if (_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent') {
-        return `${analyticsUrls.tableData('products-parents')}${filtersHandler(_.reject(filters, {filterBy: 'productView'}))}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
+    if (_.find(filters, {filterBy: 'productView'})) {
+        return `${analyticsUrls.tableData(_.find(filters, {filterBy: 'productView'}).value === 'parent' ? 'products-parents' : 'products')}${filtersHandler(_.reject(filters, {filterBy: 'productView'}))}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
     } else {
-        return `${url}${filtersHandler(filters)}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
+        return `${url}${filtersHandler(_.reject(filters, {filterBy: 'productView'}))}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
     }
 
 }
@@ -68,7 +68,7 @@ function fetchChartData(location, metrics, date, filters = [], cancelToken) {
     else if (location === 'overview') key = 'products'
     else key = location
 
-    return api('get', `${analyticsUrls.chartData(key)}${filtersHandler(filters.filter(item => item.filterBy !== 'productView'))}&${metrics.filter(item => !!item.key).map(item => `metric[]=${item.key}`).join('&')}`, null, null, cancelToken)
+    return api('get', `${analyticsUrls.chartData(key)}${filtersHandler(filters.filter(item => item.filterBy !== 'productView'))}&${metrics.filter(item => !!item).map(item => `metric[]=${item}`).join('&')}`, null, null, cancelToken)
 }
 
 function fetchStateInformation(state, id) {

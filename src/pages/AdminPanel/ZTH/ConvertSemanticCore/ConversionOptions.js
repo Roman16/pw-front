@@ -1,89 +1,97 @@
-import React, {useState} from "react"
-import {Checkbox, Select} from "antd"
-import {HotColumn, HotTable} from "@handsontable/react"
+import React, {useEffect, useState} from "react"
+import {Checkbox, Select, Spin} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import CustomTable from "../../../../components/Table/CustomTable"
 import {Radio} from 'antd'
+import _ from 'lodash'
+import {CampaignType} from "./constans"
+import ConfirmUploadWindow from "./ConfirmUploadWindow"
+import {adminServices} from "../../../../services/admin.services"
 
 const Option = Select.Option
 
-const data = [
-    {
-        campaignType: 'Auto',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'ExactPhrase',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'PAT',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'AutoCTA',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'AutoNegative',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'TPK',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'DPK',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'Broad',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'CloseVariants',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'Variations',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'ExactSimple',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'ExactOther',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'STESTP',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'Misspellings',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'Brands',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'TPA',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'ASINs',
-        generateBulkUpload: true
-    },
-    {
-        campaignType: 'Categories',
-        generateBulkUpload: true
-    },
-]
+const data = Object.keys(CampaignType).map(key => ({
+    campaignType: key,
+    generateBulkUpload: true
+}))
 
-const ConversionOptions = () => {
-    const [actionType, setActionType] = useState('convert')
+let fullUsersList = []
+
+const ConversionOptions = ({semanticData, onConvert, uploadProcessing,convertProcessing, onUpload, onChange}) => {
+    const [actionType, setActionType] = useState('convert'),
+        [visibleConfirm, setVisibleConfirm] = useState(false),
+        [usersList, setUsersList] = useState([]),
+        [selectedUserId, setSelectedUserId] = useState(),
+        [bulkUploadOptions, setBulkUploadOptions] = useState([...data])
+
+    const getUsersList = async () => {
+        try {
+            const res = await adminServices.fetchUsers()
+
+            setUsersList(res.result.slice(0, 10))
+            fullUsersList = res.result
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const searchHandler = (text) => {
+        setSelectedUserId(undefined)
+
+        if (text.length > 2) {
+            setUsersList(fullUsersList.filter(user => {
+                return `${user.name} ${user.last_name}`.toLowerCase().indexOf(text.toLowerCase()) >= 0 || user.email.toLowerCase().indexOf(text.toLowerCase()) >= 0
+            }))
+        } else {
+            setUsersList(fullUsersList.slice(0, 10))
+        }
+    }
+
+    const changeBulkUploadOptionsHandler = (campaignType, value) => {
+        setBulkUploadOptions(bulkUploadOptions.map(item => {
+            if (campaignType === item.campaignType) item.generateBulkUpload = value
+
+            return item
+        }))
+    }
+
+    const changeConversionOptionsHandler = (object, name, value) => {
+        onChange({
+            ...semanticData,
+            ...object ? {
+                    conversionOptions: {
+                        ...semanticData.conversionOptions,
+                        [object]: {
+                            ...semanticData.conversionOptions[object],
+                            [name]: value
+                        }
+                    }
+                }
+                :
+                {[name]: value}
+        })
+    }
+
+    useEffect(() => {
+        onChange({
+            ...semanticData,
+            conversionOptions: {
+                ...semanticData.conversionOptions,
+                converter: {
+                    ...semanticData.conversionOptions.converter,
+                    generateBulkUploadForCampaignTypes: _.filter(bulkUploadOptions, {generateBulkUpload: true}).map(item => item.campaignType)
+                }
+            }
+        })
+    }, [bulkUploadOptions])
+
+    useEffect(() => {
+        getUsersList()
+    }, [])
+
+    useEffect(() => {
+        if (!uploadProcessing) setVisibleConfirm(false)
+    }, [uploadProcessing])
 
     const columns = [
         {
@@ -97,101 +105,141 @@ const ConversionOptions = () => {
             dataIndex: 'generateBulkUpload',
             key: 'generateBulkUpload',
             width: '150px',
-            render: (checked) => <Checkbox checked={checked}/>
+            render: (checked, item) => <Checkbox
+                checked={checked}
+                onChange={({target: {checked}}) => changeBulkUploadOptionsHandler(item.campaignType, checked)}
+            />
         },
     ]
 
     return (
-        <div className={'conversion-options'}>
-            <Radio.Group onChange={({target: {value}}) => setActionType(value)} value={actionType}>
-                <Radio value={'convert'}>Convert to Bulk Upload File</Radio>
-                <Radio value={'upload'}>Upload to AmazonAccount</Radio>
-            </Radio.Group>
+        <>
+            <div className={'conversion-options'}>
+                <Radio.Group onChange={({target: {value}}) => setActionType(value)} value={actionType}>
+                    <Radio value={'convert'}>Convert to Bulk Upload File</Radio>
+                    <Radio value={'upload'}>Upload to AmazonAccount</Radio>
+                </Radio.Group>
 
-            <h2>Conversion options</h2>
-            <h3>Select advertising types to convert</h3>
+                <h2>Conversion options</h2>
+                <h3>Select advertising types to convert</h3>
 
-            <Checkbox>Convert Sponsored Products Semantic core</Checkbox>
-            <br/>
-            <br/>
-            <Checkbox>Convert Sponsored Display Semantic Core (not available for Amazon Bulk Upload files)</Checkbox>
-            <br/>
-            <br/>
+                <Checkbox
+                    checked={semanticData.conversionOptions.zeroToHero.createSponsoredProductsSemanticCore}
+                    onChange={({target: {checked}}) => changeConversionOptionsHandler('zeroToHero', 'createSponsoredProductsSemanticCore', checked)}
+                >
+                    Convert Sponsored Products Semantic core
+                </Checkbox>
+                <br/>
+                <br/>
+                <Checkbox
+                    checked={semanticData.conversionOptions.zeroToHero.createSponsoredDisplaySemanticCore}
+                    onChange={({target: {checked}}) => changeConversionOptionsHandler('zeroToHero', 'createSponsoredDisplaySemanticCore', checked)}
+                >
+                    Convert Sponsored Display Semantic Core (not available for Amazon Bulk Upload files)
+                </Checkbox>
+                <br/>
+                <br/>
 
-            <h3>Generate bulk upload for campaign types:</h3>
+                <h3>Generate bulk upload for campaign types:</h3>
 
-            {actionType === 'convert' && <CustomTable
-                columns={columns}
-                dataSource={data}
-            />}
+                {actionType === 'convert' && <CustomTable
+                    columns={columns}
+                    dataSource={data}
+                />}
 
-            <div className="form-group  w-25">
-                <label htmlFor="">Campaigns status in Bulk Upload</label>
-                <CustomSelect>
-                    <Option value={'Enabled'}>Enabled</Option>
-                    <Option value={'Paused'}>Paused</Option>
-                </CustomSelect>
+                <div className="form-group  w-25">
+                    <label htmlFor="">Campaigns status in Bulk Upload</label>
+                    <CustomSelect
+                        value={semanticData.conversionOptions.converter.campaignsStatus}
+                        onChange={value => changeConversionOptionsHandler('converter', 'campaignsStatus', value)}
+                    >
+                        <Option value={'Enabled'}>Enabled</Option>
+                        <Option value={'Paused'}>Paused</Option>
+                    </CustomSelect>
+                </div>
+
+                {actionType === 'convert' && <>
+                    <div className="form-group  w-25">
+                        <label htmlFor="">Output type</label>
+                        <CustomSelect
+                            value={semanticData.conversionOptions.saver.saveBulkUploadAs}
+                            onChange={value => changeConversionOptionsHandler('saver', 'saveBulkUploadAs', value)}
+                        >
+                            <Option value={'xls'}>xls</Option>
+                            <Option value={'xlsx'}>xlsx</Option>
+                            <Option value={'csv'}>csv</Option>
+                        </CustomSelect>
+                    </div>
+
+                    <div className="form-group w-25">
+                        <label htmlFor="">Convert for marketplace</label>
+                        <CustomSelect
+                            value={semanticData.conversionOptions.converter.convertForMarketplace}
+                            onChange={value => changeConversionOptionsHandler('converter', 'convertForMarketplace', value)}
+                        >
+                            <Option value={'USA'}>USA</Option>
+                            <Option value={'Europe'}>Europe</Option>
+                        </CustomSelect>
+                    </div>
+
+                    <div className="form-group w-25">
+                        <Checkbox
+                            checked={semanticData.convertToAmazonBulkUpload}
+                            onChange={({target: {checked}}) => changeConversionOptionsHandler(undefined, 'convertToAmazonBulkUpload', checked)}
+                        >
+                            Save as Amazon Bulk Upload
+                        </Checkbox>
+                    </div>
+                </>}
+
+                {actionType === 'upload' && <div className="form-group  w-25 users">
+                    <label htmlFor="">Select a user</label>
+
+                    <CustomSelect
+                        showSearch
+                        optionFilterProp={false}
+                        onSearch={searchHandler}
+                        filterOption={false}
+                        onChange={value => setSelectedUserId(value)}
+                        value={selectedUserId}
+                    >
+                        {usersList.map(user => (
+                            <Option value={user.id}>
+                                <b>{`${user.name} ${user.last_name}`}</b>
+                                <br/>
+                                <span>{user.email}</span>
+                            </Option>
+                        ))}
+                    </CustomSelect>
+                </div>}
+
+                {actionType === 'convert' ?
+                    <button disabled={convertProcessing} className={'btn default submit'} onClick={onConvert}>
+                        Convert semantics
+
+                        {convertProcessing && <Spin size={'small'}/>}
+                    </button>
+                    :
+                    <button
+                        disabled={!selectedUserId}
+                        className={'btn default submit'} onClick={() => setVisibleConfirm(true)}
+                    >
+                        Upload semantics
+                    </button>
+                }
             </div>
 
-            {actionType === 'convert' && <>
-                <div className="form-group  w-25">
-                    <label htmlFor="">Output type</label>
-                    <CustomSelect
-                        name={'FileExtension'}
-                    >
-                        <Option value={'xls'}>xls</Option>
-                        <Option value={'xlsx'}>xlsx</Option>
-                        <Option value={'csv'}>csv</Option>
-                    </CustomSelect>
-                </div>
+            <ConfirmUploadWindow
+                visible={visibleConfirm}
+                user={_.find(usersList, {id: selectedUserId})}
+                semanticName={semanticData.conversionOptions.productInformation.productName}
+                uploadProcessing={uploadProcessing}
 
-                <div className="form-group w-25">
-                    <label htmlFor="">Convert for marketplace</label>
-                    <CustomSelect
-                        name={'MarketplaceType'}
-                    >
-                        <Option value={'USA'}>USA</Option>
-                        <Option value={'Europe'}>Europe</Option>
-                    </CustomSelect>
-                </div>
-
-                <div className="form-group w-25">
-                    <Checkbox>Save as Amazon Bulk Upload</Checkbox>
-                </div>
-            </>}
-
-            {actionType === 'upload' && <div className="form-group  w-25">
-                <label htmlFor="">Select a user</label>
-
-                <CustomSelect
-                    showSearch
-                    optionFilterProp={false}
-                    // onSearch={searchHandler}
-                    filterOption={false}
-                    // onChange={e => onChange('id', e)}
-                    // value={selectedUserId}
-                >
-                    {/*{userList.map(user => (*/}
-                    {/*    <Option value={user.id}>*/}
-                    {/*        <b>{`${user.name} ${user.last_name}`}</b>*/}
-                    {/*        <br/>*/}
-                    {/*        {user.email}*/}
-                    {/*    </Option>*/}
-                    {/*))}*/}
-                </CustomSelect>
-            </div>}
-
-            {actionType === 'convert' ?
-                <button className={'btn default submit'}>
-                    Convert semantics
-                </button>
-                :
-                <button className={'btn default submit'}>
-                    Upload semantics
-                </button>
-            }
-        </div>
+                onSubmit={() => onUpload(selectedUserId)}
+                onCancel={() => setVisibleConfirm(false)}
+            />
+        </>
     )
 }
 
-export default ConversionOptions
+export default React.memo(ConversionOptions)

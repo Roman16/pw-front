@@ -17,30 +17,34 @@ String.prototype.capitalize = function () {
 const CancelToken = axios.CancelToken
 let source = null
 
+let fullResponse = []
+
 const TableList = ({
                        columns,
                        fixedColumns,
                        columnSelect = true,
                        dateRange = true,
-                       moreActions
+                       showFilters = true,
+                       showPagination = true,
+                       moreActions,
+                       showTotal = true
                    }) => {
 
     const [tableData, setTableData] = useState([]),
         [fetchingStatus, setFetchingStatus] = useState(false),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
-            pageSize: 25,
+            pageSize: 30,
             totalSize: 0,
         }),
         [sorterColumn, setSorterColumn] = useState()
 
-    const {locationKey, mainState, selectedRangeDate} = useSelector(state => ({
+    const {locationKey, mainState, selectedRangeDate, metricsData} = useSelector(state => ({
         locationKey: state.analytics.location,
         mainState: state.analytics.mainState,
         selectedRangeDate: state.analytics.selectedRangeDate,
+        metricsData: state.analytics.metricsData
     }))
-
-    const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[locationKey])
 
     const columnsBlackList = useSelector(state => state.analytics.columnsBlackList[locationKey] || [])
     const filters = useSelector(state => state.analytics.filters[locationKey] || [])
@@ -104,14 +108,18 @@ const TableList = ({
             ]
 
             const res = await analyticsServices.fetchTableData(locationKey, paginationParams, sorterColumn, filtersWithState, source.token)
-            if (res.response) {
-                setTableData(res.response)
-            }
 
             setPaginationParams({
                 ...paginationParams,
                 totalSize: res.total_count
             })
+
+            if (res.response) {
+                setTableData(res.response.slice(0, 30))
+                fullResponse = res.response
+            }
+
+
 
             setFetchingStatus(false)
         } catch (e) {
@@ -123,6 +131,16 @@ const TableList = ({
         getData()
     }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate])
 
+    const scrollHandler = (e) => {
+        if(e.target.scrollTop > 1500) {
+            setTableData(fullResponse.slice(0, 500))
+        } else if(e.target.scrollTop > 1000) {
+            setTableData(fullResponse.slice(0, 200))
+        } else if(e.target.scrollTop > 500) {
+            setTableData(fullResponse.slice(0, 100))
+        }
+    }
+
     useEffect(() => {
         setPaginationParams({
             ...paginationParams,
@@ -131,13 +149,14 @@ const TableList = ({
         getData()
     }, [filters])
 
+
     return (
         <>
             <div className="section-header">
-                <TableFilters
+                {showFilters && <TableFilters
                     columns={columns}
                     filters={filters}
-                />
+                />}
 
                 {moreActions}
 
@@ -153,27 +172,25 @@ const TableList = ({
                 onChangeSorter={sortChangeHandler}
                 loading={fetchingStatus}
                 dataSource={tableData}
-                totalDataSource={{
-                    ..._.chain(metricsState.allMetrics)
-                        .keyBy('key')
-                        .mapValues('metric_value')
-                        .value(),
-                    ...{
-                        [columns[0].dataIndex]: `Total: ${paginationParams.totalSize}`
+                {...showTotal && {
+                    totalDataSource: {
+                        ..._.mapValues(metricsData, (value) => (+value.value)),
+                        ...{[columns[0].dataIndex]: `Total: ${paginationParams.totalSize}`}
                     }
                 }}
                 sorterColumn={sorterColumn}
                 columns={columns.filter(column => !columnsBlackList.includes(column.key))}
                 fixedColumns={fixedColumns}
+                onScroll={scrollHandler}
                 // rowClassName={(item) => !item.viewed && 'new-report'}
             />
 
-            {paginationParams.totalSize !== 0 && <Pagination
+            {paginationParams.totalSize !== 0 && showPagination && <Pagination
                 onChange={paginationChangeHandler}
 
-                pageSizeOptions={[25, 50, 100]}
+                pageSizeOptions={[10, 30, 50, 100, 200, 500]}
                 showQuickJumper={true}
-                listLength={tableData.length}
+                listLength={fullResponse.length}
                 processing={fetchingStatus}
 
                 {...paginationParams}

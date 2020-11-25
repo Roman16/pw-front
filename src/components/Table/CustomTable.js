@@ -20,7 +20,8 @@ const CustomTable = ({
                          openedRow,
                          selectedAll,
                          emptyText,
-                         fixedColumns = []
+                         fixedColumns = [],
+                         onScroll
                      }) => {
 
     const devicePixelRatio = window.devicePixelRatio
@@ -49,6 +50,8 @@ const CustomTable = ({
     }
 
     const scrollHandler = (e) => {
+        onScroll(e)
+
         if (e.target.scrollLeft > 5) {
             setScrolling(true)
         } else {
@@ -167,9 +170,7 @@ const CustomTable = ({
                                     minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
                                 }}
                             >
-                                {(item.render && !item.noTotal)
-                                    ? item.render(totalDataSource[item.key], item, columnIndex)
-                                    : totalDataSource[item.key]}
+                                {!item.noTotal && (item.render && columnIndex !== 0 ? item.render(totalDataSource[item.key], item, columnIndex) : totalDataSource[item.key])}
                             </div>
                         )
                     })}

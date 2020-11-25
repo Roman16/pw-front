@@ -1,22 +1,44 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {Input, Select} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 
 const Option = Select.Option
 
-const SemanticInformation = ({semantic = {}}) => {
+const SemanticInformation = ({semanticInfo = {}, semanticData = {}, onChange}) => {
+    const [productName, setProductName] = useState(semanticData.conversionOptions.productInformation.productName),
+        [campaignsCompressionStrategy, setCampaignsCompressionStrategy] = useState(semanticData.conversionOptions.zeroToHero.campaignsCompressionStrategy)
 
-    return(
+
+    useEffect(() => {
+        onChange({
+            ...semanticData,
+            conversionOptions: {
+                ...semanticData.conversionOptions,
+                productInformation: {
+                    ...semanticData.conversionOptions.productInformation,
+                    productName
+                },
+                zeroToHero: {
+                    ...semanticData.conversionOptions.zeroToHero,
+                    campaignsCompressionStrategy
+                }
+            }
+        })
+
+    }, [productName, campaignsCompressionStrategy])
+
+    return (
         <div className="core-information">
             <br/>
             <br/>
 
             <h2>Semantic Core Information</h2>
 
-            <div className="row">Template version: <b>{semantic.markupVersion}</b></div>
+            <div>Template version: <b>{`  ${semanticInfo.markupVersion}`}</b></div>
             <br/>
-            <div className="row">Zero to Hero version used: <b>{semantic.zeroToHeroVersion}</b></div>
+            <div>Zero to Hero version used: <b>{`  ${semanticInfo.zeroToHeroVersion}`}</b></div>
             <br/>
+
             <div className="form-group product-name">
                 <label>Product name:</label>
                 <Input
@@ -24,14 +46,19 @@ const SemanticInformation = ({semantic = {}}) => {
                     id="{{'product-name-' + sheetData.id}}"
                     type="text"
                     className="form-control"
-                    value={semantic.productName}
+                    value={productName}
+                    onChange={({target: {value}}) => setProductName(value)}
                 />
             </div>
 
             <div className="form-group campaign-strategy">
                 <label htmlFor="campaignsCompressionStrategy">Choose campaign compression strategy:</label>
 
-                <CustomSelect className="form-control" value={semantic.campaignsCompressionStrategy}>
+                <CustomSelect
+                    className="form-control"
+                    value={campaignsCompressionStrategy}
+                    onChange={value => setCampaignsCompressionStrategy(value)}
+                >
                     <Option value={'Wide'}>Wide</Option>
                     <Option value={'Simple'}>Simple</Option>
                     <Option value={'Compact'}>Compact</Option>
@@ -42,4 +69,4 @@ const SemanticInformation = ({semantic = {}}) => {
     )
 }
 
-export default SemanticInformation
+export default React.memo(SemanticInformation)

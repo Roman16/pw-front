@@ -71,6 +71,7 @@ const TargetingsList = () => {
         ...!selectedCampaign ? [{
             ...campaignColumn,
             locked: true,
+            noTotal: true,
             width: '250px',
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
@@ -92,6 +93,7 @@ const TargetingsList = () => {
             sorter: true,
             filter: true,
             locked: true,
+            noTotal: true,
             render: (adGroup, item) => (
                 <Link
                     to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
@@ -115,6 +117,7 @@ const TargetingsList = () => {
             width: '150px',
             sorter: true,
             locked: true,
+            noTotal: true,
         },
         {
             ...statusColumn,

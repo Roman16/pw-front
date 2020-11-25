@@ -1,6 +1,5 @@
 import React, {Fragment} from "react"
 import Tooltip from '../../../../components/Tooltip/Tooltip'
-import {analyticsMetricsListArray} from "./metricsList"
 import {useSelector} from "react-redux"
 import {round} from "../../../../utils/round"
 import {numberMask} from "../../../../utils/numberMask"
@@ -8,15 +7,14 @@ import {SVG} from "../../../../utils/icons"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {ProfitTooltipDescription} from "../../../PPCAutomate/Dashboard/ProductBreakdown/ProductsList"
 
-const DiffTooltip = ({currentValue, diff, type}) => {
-    const prevValue = currentValue / ((100 + +diff) / 100),
-        diffValue = Math.abs(round(currentValue, 2) - round(prevValue, 2))
+const DiffTooltip = ({currentValue, diff, type, prevValue}) => {
+    const diffValue = Math.abs(round(currentValue - prevValue, 2))
 
     return (
         <Fragment>
             <p>
                 {`from  `}
-                {+currentValue === 0 ? '0' : <RenderMetricValue
+                {+prevValue === 0 ? '0' : <RenderMetricValue
                     value={prevValue}
                     type={type}
                 />}
@@ -48,6 +46,10 @@ const DiffTooltip = ({currentValue, diff, type}) => {
 
 const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
     if (diff != null) {
+        value = +value
+        prevValue = +prevValue
+        diff = +diff
+
         if (diff === 0) {
             return (
                 <div className='metric-item__changes'>
@@ -64,6 +66,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                     overlayClassName={'diff-tooltip'}
                     description={<DiffTooltip
                         currentValue={value}
+                        prevValue={prevValue}
                         diff={diff}
                         type={type}
                     />}>
@@ -72,14 +75,14 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                             <i style={{transform: 'rotate(180deg)'}}>
                                 <SVG style={{transform: 'rotate(180deg)'}} id='downward-metric-changes'/>
                             </i>
-                            {round(Math.abs(+diff), 2)}%
+                            {round(Math.abs(+diff * 100), 2)}%
                         </div>}
                         {(diff <= 0) && <div className='upward-changes'>
                             <i style={{transform: 'rotate(180deg)'}}>
                                 <SVG id='upward-metric-changes'/>
                             </i>
 
-                            {round(Math.abs(+diff), 2)}%
+                            {round(Math.abs(+diff * 100), 2)}%
                         </div>}
                     </div>
                 </InformationTooltip>
@@ -93,6 +96,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                 overlayClassName={'diff-tooltip'}
                 description={<DiffTooltip
                     currentValue={value}
+                    prevValue={prevValue}
                     diff={diff}
                     type={type}
                 />}>
@@ -119,6 +123,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                     overlayClassName={'diff-tooltip'}
                     description={<DiffTooltip
                         currentValue={value}
+                        prevValue={prevValue}
                         diff={diff}
                         type={type}
                     />}>
@@ -128,13 +133,13 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                             <i>
                                 <SVG id='upward-metric-changes'/>
                             </i>
-                            {round(Math.abs(+diff), 2)}%
+                            {round(Math.abs(+diff * 100), 2)}%
                         </div>}
                         {(diff <= 0) && <div className='downward-changes'>
                             <i>
                                 <SVG id='downward-metric-changes'/>
                             </i>
-                            {round(Math.abs(+diff), 2)}%
+                            {round(Math.abs(+diff * 100), 2)}%
                         </div>}
                     </div>
                 </InformationTooltip>
@@ -152,15 +157,16 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
 }
 
 const RenderMetricValue = ({value, type}) => {
-    if (value != null) {
+    if (value != null && !isNaN(value)) {
+        const number = +value
         if (type === 'currency') {
-            return (`$${Math.round(value).toString().length > 4 ? numberMask(value) : numberMask(value, 2)}`)
+            return (`$${Math.round(number).toString().length > 4 ? numberMask(number) : numberMask(number, 2)}`)
         } else if (type === 'percent') {
-            return (`${round(+value * 100, 2)}%`)
+            return (`${round(number * 100, 2)}%`)
         } else if (type === 'number') {
-            return (numberMask(value))
+            return (numberMask(number))
         } else if (type === 'roas') {
-            return (`${round(value, 2)}x`)
+            return (`${round(number, 2)}x`)
         }
     } else {
         return 'N/A'
@@ -168,41 +174,54 @@ const RenderMetricValue = ({value, type}) => {
 }
 
 
-const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, metric_value, metric_prev_value}, metric, removeSelectedMetric, activeMetrics, onActivateMetric, onDeactivateMetric}) => {
+const MetricItem = ({
+                        metric: {
+                            title,
+                            info = '',
+                            key,
+                            label,
+                            type,
+                            value_diff,
+                            value,
+                            value_prev
+                        },
+                        removeSelectedMetric,
+                        activeMetrics,
+                        onActivateMetric,
+                        onDeactivateMetric
+                    }) => {
     const {hasMargin} = useSelector(state => ({
         hasMargin: state.dashboard.hasMargin || false
     }))
 
     const handleClick = () => {
-        if (activeMetrics.find(item => item.key === key)) {
-            onDeactivateMetric(metric, activeMetrics.findIndex(item => item.key === key))
+        if (activeMetrics.includes(key)) {
+            onDeactivateMetric(key, activeMetrics.findIndex(item => item === key))
         } else {
-            onActivateMetric(metric, activeMetrics.findIndex(item => item.key === key))
+            onActivateMetric(key, activeMetrics.findIndex(item => item === key))
         }
     }
 
     const handleRemoveItem = (e) => {
         e.stopPropagation()
-        removeSelectedMetric(metric)
+        removeSelectedMetric(key)
     }
-
-    const metricInformation = analyticsMetricsListArray.find(item => item.key === key)
 
     return (
         <div className='metric-item' onClick={handleClick}>
-            {activeMetrics.length > 0 && <div className={`active-metric position-${activeMetrics.findIndex(item => item.key === key)}`}/>}
+            {activeMetrics.length > 0 &&
+            <div className={`active-metric position-${activeMetrics.findIndex(item => item === key)}`}/>}
 
             <div className="title-info">
-                <span title={metricInformation.title} dangerouslySetInnerHTML={{__html: metricInformation.title}}/>
-                {key === 'profit' || key === 'ad_profit' ?
-                    !hasMargin &&
-                    <Tooltip
-                        type='warning' description={<ProfitTooltipDescription/>}/>
-                    :
-                    metricInformation.info &&
-                    <Tooltip
-                        description={metricInformation.info}/>
-                }
+                <span title={title} dangerouslySetInnerHTML={{__html: title}}/>
+                {/*{key === 'profit' || key === 'ad_profit' ?*/}
+                {/*    !hasMargin &&*/}
+                {/*    <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>*/}
+                {/*    :*/}
+                {/*    info && <Tooltip description={info}/>*/}
+                {/*} */}
+
+                {info && <Tooltip description={info}/>}
 
                 <div className="close" onClick={handleRemoveItem}>
                     <SVG id='remove-filter-icon'/>
@@ -211,7 +230,7 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
 
             <div className="value">
                 <RenderMetricValue
-                    value={metric_value}
+                    value={value}
                     type={type}
                 />
             </div>
@@ -221,11 +240,11 @@ const MetricItem = ({metric: {title, info = '', key, label, type, metric_diff, m
                 <div className='label'>{label}</div>
 
                 <RenderMetricChanges
-                    value={metric_value}
-                    diff={metric_diff}
+                    value={value}
+                    diff={value_diff}
+                    prevValue={value_prev}
                     type={type}
                     name={key}
-                    prevValue={metric_prev_value}
                 />
             </div>
         </div>

@@ -1,43 +1,62 @@
 import React, {useState} from "react"
-import {Input, Tabs} from "antd"
-import {HotColumn, HotTable} from "@handsontable/react"
+import {Input} from "antd"
+import {SVG} from "../../../../utils/icons"
+import CustomTable from "../../../../components/Table/CustomTable"
 
-const {TabPane} = Tabs
+const TextArea = Input.TextArea
 
-let newTabIndex = 0
-
-const data = [
-    {
-        value: 'Auto',
-    },
-]
-
-const Themes = () => {
-    const [tabs, setTabs] = useState([
-            {
-                title: 'Tab 1',
-                content: 'Content of Tab 1',
-                key: 0,
-                closable: false,
-            },
-        ]),
-        [activeKey, setActiveKey] = useState('0')
-
-    const onEdit = (targetKey, action) => {
-        if (action === 'remove') {
-            remove(targetKey)
-        }
-    }
+const Themes = ({themes, setThemes}) => {
+    const [activeThemeIndex, setActiveThemeIndex] = useState(0)
 
     const add = () => {
-        newTabIndex++
-        setTabs([...tabs, {title: 'New Tab', content: 'Content of new Tab', key: `${newTabIndex}`}])
+        setThemes([...themes, {name: '', value: '', relatedValues: []}])
     }
 
-    const remove = targetKey => {
-        setActiveKey('0')
-        setTabs(tabs.filter((item) => item.key !== targetKey))
+    const removeThemeHandler = (e, index) => {
+        e.stopPropagation()
+
+        if (index === activeThemeIndex) setActiveThemeIndex(0)
+        setThemes([...themes.filter((item, i) => i !== index)])
     }
+
+    const changeThemeRelatedValue = (index, value) => {
+        setThemes(themes.map((theme, i) => {
+            if (activeThemeIndex === i) {
+                theme.relatedValues[index] = value
+            }
+
+            return theme
+        }))
+    }
+
+    const changeThemeHandler = (name, value) => {
+        setThemes(themes.map((theme, index) => {
+            if (activeThemeIndex === index) {
+                theme[name] = value
+            }
+            return theme
+        }))
+    }
+
+    const columns = [
+        {
+            title: '',
+            dataIndex: 'index',
+            key: 'index',
+            width: '50px',
+            render: (i, item, index) => index + 1
+        },
+        {
+            title: 'Value',
+            dataIndex: 'value',
+            key: 'value',
+            render: (url, item, index) => <TextArea
+                autoSize
+                value={url}
+                onChange={({target: {value}}) => changeThemeRelatedValue(index, value)}
+            />
+        },
+    ]
 
     return (
         <div className="themes">
@@ -45,54 +64,49 @@ const Themes = () => {
             <button className={'btn default'} onClick={add}>Add new theme</button>
             <br/>
 
-            <Tabs
-                type="editable-card"
-                onChange={(key) => setActiveKey(key)}
-                onEdit={onEdit}
-                activeKey={`${activeKey}`}
-                hideAdd
-            >
-                {tabs.map(pane => (
-                    <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>
-                        <div className="row">
-                            <div className="form-group">
-                                <label htmlFor="">Theme name:</label>
-                                <Input
-                                    placeholder={'Enter theme name'}
-                                />
-                            </div>
+            <ul className="themes-list list-tabs">
+                {themes.map((theme, index) => (<li
+                    onClick={() => setActiveThemeIndex(index)}
+                    className={index === activeThemeIndex && 'active'}
+                >
+                    {theme.theme ? `${theme.theme}${theme.value && ':'} ${theme.value}` : 'New Theme'}
 
-                            <div className="form-group">
-                                <label htmlFor="">Theme value:</label>
-                                <Input
-                                    placeholder={'Enter theme value'}
-                                />
-                            </div>
-                        </div>
+                    <button onClick={(e) => removeThemeHandler(e, index)}>
+                        <SVG id={'close-icon'}/>
+                    </button>
+                </li>))}
+            </ul>
 
-                        <h4>Related theme values:</h4>
 
-                        <HotTable
-                            data={data}
-                            stretchH="all"
-                            licenseKey={'non-commercial-and-evaluation'}
-                            colWidths={[5, 1]}
-                            height="200"
-                            rowHeaders={true}
-                            minSpareRows={1}
-                        >
-                            <HotColumn
-                                data={"value"}
-                                title="Value"
-                            />
+            {themes[activeThemeIndex] && <>
+                <div className="row">
+                    <div className="form-group">
+                        <label htmlFor="">Theme name:</label>
+                        <Input
+                            placeholder={'Enter theme name'}
+                            value={themes[activeThemeIndex].theme}
+                            onChange={({target: {value}}) => changeThemeHandler('theme', value)}
+                        />
+                    </div>
 
-                        </HotTable>
+                    <div className="form-group">
+                        <label htmlFor="">Theme value:</label>
+                        <Input
+                            placeholder={'Enter theme value'}
+                            value={themes[activeThemeIndex].value}
+                            onChange={({target: {value}}) => changeThemeHandler('value', value)}
+                        />
+                    </div>
+                </div>
 
-                    </TabPane>
-                ))}
-            </Tabs>
+                <h4>Related theme values:</h4>
+                <CustomTable
+                    columns={columns}
+                    dataSource={[...themes[activeThemeIndex].relatedValues, ''].map(value => ({value}))}
+                />
+            </>}
         </div>
     )
 }
 
-export default Themes
+export default React.memo(Themes)

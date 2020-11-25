@@ -19,7 +19,7 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
     const getChartValue = (payload, key, metric) => {
         if (payload[key] !== null) {
             if (metric.type === 'percent') {
-                return round(+payload[key] * 100, 2) + '%'
+                return round(+payload[key], 2) + '%'
             } else if (metric.type === 'currency') {
                 return '$' + numberMask(payload[key], 2)
             } else if (metric.type === 'roas') {
@@ -40,7 +40,7 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                         {days[moment(label).weekday()] + ', ' + moment(label).format('DD MMM YY')}
                     </div>
 
-                    {activeMetrics.map(metric => (
+                    {activeMetrics.map((metric = {title: ''}) => (
                         <div className='name'>
                             <span dangerouslySetInnerHTML={{__html: metric.title}}/>
                         </div>
@@ -53,7 +53,7 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                     </div>
 
                     {activeMetrics.map((metric, index) => (
-                        metric.key && <div className="week-value" style={{color: chartColors[index]}}>
+                        metric && metric.key && <div className="week-value" style={{color: chartColors[index]}}>
                             <i style={{fill: chartColors[index]}}><SVG id='chart-tooltip-line'/></i>
                             {payload[0] && getChartValue(payload[0].payload, `${metric.key}_7d`, metric)}
                         </div>
@@ -66,7 +66,7 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                     </div>
 
                     {activeMetrics.map((metric, index) => (
-                        metric.key &&  <div className="daily-value" style={{color: chartColors[index]}}>
+                        metric && metric.key &&  <div className="daily-value" style={{color: chartColors[index]}}>
                             <i style={{fill: chartColors[index], stroke: chartColors[index]}}>
                                 <SVG id='chart-tooltip-daily'/>
                             </i>
