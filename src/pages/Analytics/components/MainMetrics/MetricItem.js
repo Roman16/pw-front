@@ -46,6 +46,10 @@ const DiffTooltip = ({currentValue, diff, type, prevValue}) => {
 
 const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
     if (diff != null) {
+        value = +value
+        prevValue = +prevValue
+        diff = +diff
+
         if (diff === 0) {
             return (
                 <div className='metric-item__changes'>
@@ -154,14 +158,15 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
 
 const RenderMetricValue = ({value, type}) => {
     if (value != null && !isNaN(value)) {
+        const number = +value
         if (type === 'currency') {
-            return (`$${Math.round(value).toString().length > 4 ? numberMask(value) : numberMask(value, 2)}`)
+            return (`$${Math.round(number).toString().length > 4 ? numberMask(number) : numberMask(number, 2)}`)
         } else if (type === 'percent') {
-            return (`${round(+value * 100, 2)}%`)
+            return (`${round(number * 100, 2)}%`)
         } else if (type === 'number') {
-            return (numberMask(value))
+            return (numberMask(number))
         } else if (type === 'roas') {
-            return (`${round(value, 2)}x`)
+            return (`${round(number, 2)}x`)
         }
     } else {
         return 'N/A'
@@ -223,7 +228,7 @@ const MetricItem = ({
 
             <div className="value">
                 <RenderMetricValue
-                    value={+value}
+                    value={value}
                     type={type}
                 />
             </div>
@@ -233,9 +238,9 @@ const MetricItem = ({
                 <div className='label'>{label}</div>
 
                 <RenderMetricChanges
-                    value={+value}
-                    diff={+value_diff}
-                    prevValue={+value_prev}
+                    value={value}
+                    diff={value_diff}
+                    prevValue={value_prev}
                     type={type}
                     name={key}
                 />

@@ -32,7 +32,7 @@ const MainMetrics = ({allMetrics}) => {
         activeMetrics = metricsState.activeMetrics || allMetrics.slice(0, 2)
 
     const [visibleItems, updateVisibleList] = useState(selectedMetrics)
-    const [hiddenItems, updateHiddenList] = useState(allMetrics.filter(metric => !selectedMetrics.includes(metric)))
+    const [hiddenItems, updateHiddenList] = useState([])
     const [visibleModal, switchModal] = useState(false)
 
     const removeSelectedMetric = (metric) => {
@@ -99,17 +99,12 @@ const MainMetrics = ({allMetrics}) => {
             dispatch(analyticsActions.setMetricsData(res.response))
         } catch (e) {
             console.log(e)
+            dispatch(analyticsActions.setMetricsData({}))
         }
     }
 
     const openModal = () => switchModal(true)
     const handleCancel = () => switchModal(false)
-
-    const metricListFilter = (metric) => {
-        return selectedMetrics.every((item) => {
-            return item !== metric
-        })
-    }
 
     const addMetric = (item) => {
         updateVisibleList([...visibleItems, item])
@@ -123,8 +118,8 @@ const MainMetrics = ({allMetrics}) => {
 
     useEffect(() => {
         updateVisibleList(selectedMetrics)
-        updateHiddenList(allMetrics.filter(metricListFilter))
-    }, [metricsState, metricsState, visibleModal])
+        updateHiddenList([...allMetrics.filter(metric => !selectedMetrics.includes(metric))])
+    }, [metricsState, visibleModal])
 
 
     useEffect(() => {

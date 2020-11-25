@@ -24,7 +24,8 @@ const TableList = ({
                        dateRange = true,
                        showFilters = true,
                        showPagination = true,
-                       moreActions
+                       moreActions,
+                       showTotal = true
                    }) => {
 
     const [tableData, setTableData] = useState([]),
@@ -36,10 +37,11 @@ const TableList = ({
         }),
         [sorterColumn, setSorterColumn] = useState()
 
-    const {locationKey, mainState, selectedRangeDate} = useSelector(state => ({
+    const {locationKey, mainState, selectedRangeDate, metricsData} = useSelector(state => ({
         locationKey: state.analytics.location,
         mainState: state.analytics.mainState,
         selectedRangeDate: state.analytics.selectedRangeDate,
+        metricsData: state.analytics.metricsData
     }))
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[locationKey])
@@ -133,6 +135,9 @@ const TableList = ({
         getData()
     }, [filters])
 
+
+    console.log()
+
     return (
         <>
             <div className="section-header">
@@ -155,13 +160,10 @@ const TableList = ({
                 onChangeSorter={sortChangeHandler}
                 loading={fetchingStatus}
                 dataSource={tableData}
-                totalDataSource={{
-                    ..._.chain(metricsState.allMetrics)
-                        .keyBy('key')
-                        .mapValues('metric_value')
-                        .value(),
-                    ...{
-                        [columns[0].dataIndex]: `Total: ${paginationParams.totalSize}`
+                {...showTotal && {
+                    totalDataSource: {
+                        ..._.mapValues(metricsData, (value) => (+value.value)),
+                        ...{[columns[0].dataIndex]: `Total: ${paginationParams.totalSize}`}
                     }
                 }}
                 sorterColumn={sorterColumn}

@@ -44,8 +44,8 @@ const Chart = ({
                 if(metric) {
                     const metricType = _.find(analyticsAvailableMetricsList, {key: metric}).type
 
-                    event[metric] = metricType === 'percent' ? item[metric] * 100 : item[metric]
-                    event[`${metric}_7d`] = metricType === 'percent' ? item[`${metric}_7d`] * 100 : item[`${metric}_7d`]
+                    event[metric] = metricType === 'percent' ? +item[metric] * 100 : +item[metric]
+                    event[`${metric}_7d`] = metricType === 'percent' ? +item[`${metric}_7d`] * 100 : +item[`${metric}_7d`]
                 }
             })
 

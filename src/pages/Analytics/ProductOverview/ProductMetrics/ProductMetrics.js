@@ -12,20 +12,12 @@ import {
     cpaColumn, cpcColumn,
     ctrColumn,
     impressionsColumn,
-    renderNumberField, RenderProduct,
+    renderNumberField,
     roasColumn,
     salesShareColumn,
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
-import {Select} from "antd"
-import {useDispatch, useSelector} from "react-redux"
-import {analyticsActions} from "../../../../actions/analytics.actions"
-import CustomSelect from "../../../../components/Select/Select"
-import _ from 'lodash'
-import InformationTooltip from "../../../../components/Tooltip/Tooltip"
-
-const Option = Select.Option
-
+import './ProductMetrics.less'
 
 const ProductMetrics = () => {
     const columns = [
@@ -162,6 +154,7 @@ const ProductMetrics = () => {
                 columns={columns}
                 showFilters={false}
                 showPagination={false}
+                showTotal={false}
             />
         </section>
     )

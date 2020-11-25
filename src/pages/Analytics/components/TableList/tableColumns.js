@@ -13,13 +13,13 @@ import _ from "lodash"
 export const renderNumberField = (type = 'number') => {
     switch (type) {
         case 'number':
-            return ({render: (number) => (number && number !== null ? numberMask(number, 0) : '-')})
+            return ({render: (number) => (number !== null && number !== undefined ? numberMask(number, 0) : '-')})
 
         case 'percent':
-            return ({render: (number) => (number && number !== null ? `${round(+number * 100, 2)}%` : '-')})
+            return ({render: (number) => (number !== null && number !== undefined ? `${round(+number * 100, 2)}%` : '-')})
 
         case 'currency':
-            return ({render: (number) => (number && number !== null ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-')})
+            return ({render: (number) => (number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-')})
 
         default:
             return ({})
@@ -60,10 +60,10 @@ export const RenderProduct = ({product, isParent = false}) => {
 
             <div className="col">
                 <Link
-                    to={`/analytics/overview?productId=${product.product_id}&isParent=${isParent}`}
+                    to={`/analytics/overview?productId=${product.productId}&isParent=${isParent}`}
                     onClick={() => setStateHandler('ad-groups', {
                         name: {productName: product.product_name},
-                        productId: product.product_id
+                        productId: product.productId
                     })}
                 >
                     <h4 title={product.product_name}>{product.product_name}</h4>

@@ -6,16 +6,16 @@ export const metricKeys = {
     'ctr': 'ctr',
     'cost': 'cost',
     'cpc': 'cpc',
-    'total_orders': 'total_ordered_quantity',
-    'total_orders_pure': 'total_ordered_quantity_cleared',
+    'total_orders': 'total_orders_count',
+    'total_orders_pure': 'total_orders_count_cleared',
     'attributedConversions30d': 'attributedConversions30d',
     'organic_orders': 'organic_orders_count',
     'total_sales': 'total_sales',
     'attributedSales30d': 'attributedSales30d',
     'organic_sales': 'organic_sales',
     'attributedUnitsOrdered30d': 'attributedUnitsOrdered30d',
-    'total_units': 'total_units',
-    'total_units_pure': 'total_units_pure',
+    'total_units': 'total_ordered_quantity',
+    'total_units_pure': 'total_ordered_quantity_cleared',
     'acos': 'acos',
     'conversion_rate': 'conversion_rate',
     'cpa': 'cpa',
@@ -25,8 +25,8 @@ export const metricKeys = {
     'roas': 'roas',
     'sales_share': 'sales_share',
     'budget_allocation': 'budget_allocation',
-    'returns': 'returns',
-    'returns_units': 'returns_units',
+    'returns': 'total_returns_count',
+    'returns_units': 'total_returns_quantity',
 }
 
 export const metricsKeysWithoutOrganic = Object.values(_.pickBy(metricKeys, function (value, key) {
@@ -141,7 +141,7 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'number'
     },
     {
-        title: 'Total units',
+        title: 'Total Units',
         key: metricKeys['total_units'],
         label: 'Total',
         type: 'number'
