@@ -214,12 +214,14 @@ const MetricItem = ({
 
             <div className="title-info">
                 <span title={title} dangerouslySetInnerHTML={{__html: title}}/>
-                {key === 'profit' || key === 'ad_profit' ?
-                    !hasMargin &&
-                    <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>
-                    :
-                    info && <Tooltip description={info}/>
-                }
+                {/*{key === 'profit' || key === 'ad_profit' ?*/}
+                {/*    !hasMargin &&*/}
+                {/*    <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>*/}
+                {/*    :*/}
+                {/*    info && <Tooltip description={info}/>*/}
+                {/*} */}
+
+                {info && <Tooltip description={info}/>}
 
                 <div className="close" onClick={handleRemoveItem}>
                     <SVG id='remove-filter-icon'/>

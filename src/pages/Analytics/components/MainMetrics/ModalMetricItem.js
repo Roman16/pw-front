@@ -40,11 +40,16 @@ const ModalMetricItem = ({item: {title, info, key, value, type, label}, listType
             <div className="title-info">
                 <span title={title} dangerouslySetInnerHTML={{__html: title}}/>
 
-                {key === 'profit' || key === 'ad_profit' ?
-                    !hasMargin && <Tooltip getPopupContainer={trigger => trigger.parentNode}
-                                           type='warning' description={<ProfitTooltipDescription/>}/>
-                    :
-                    info && <Tooltip {...key === 'total_sales' && {'className': 'big-window'}}
+                {/*{key === 'profit' || key === 'ad_profit' ?*/}
+                {/*    !hasMargin && <Tooltip getPopupContainer={trigger => trigger.parentNode}*/}
+                {/*                           type='warning' description={<ProfitTooltipDescription/>}/>*/}
+                {/*    :*/}
+                {/*    info && <Tooltip {...key === 'total_sales' && {'className': 'big-window'}}*/}
+                {/*                                       getPopupContainer={trigger => trigger.parentNode}*/}
+                {/*                                       description={info}/>*/}
+                {/*}  */}
+
+                { info && <Tooltip {...key === 'total_sales' && {'className': 'big-window'}}
                                                        getPopupContainer={trigger => trigger.parentNode}
                                                        description={info}/>
                 }
