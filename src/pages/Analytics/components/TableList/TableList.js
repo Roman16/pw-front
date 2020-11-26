@@ -156,6 +156,7 @@ const TableList = ({
                 {showFilters && <TableFilters
                     columns={columns}
                     filters={filters}
+                    locationKey={locationKey}
                 />}
 
                 {moreActions}

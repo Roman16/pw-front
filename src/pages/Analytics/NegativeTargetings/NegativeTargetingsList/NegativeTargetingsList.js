@@ -2,7 +2,7 @@ import React from "react"
 import TableFilters from '../../components/TableFilters/TableFilters'
 import TableList from "../../components/TableList/TableList"
 import {useDispatch, useSelector} from "react-redux"
-import {adGroupColumn, campaignColumn} from "../../components/TableList/tableColumns"
+import {adGroupColumn, campaignColumn, matchTypeColumn} from "../../components/TableList/tableColumns"
 import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
@@ -76,14 +76,7 @@ const NegativeTargetingsList = () => {
                 </Link>
             )
         }] : [],
-        {
-            title: 'Match type',
-            dataIndex: 'calculatedTargetingMatchType',
-            key: 'calculatedTargetingMatchType',
-            sorter: true,
-            locked: true,
-            noTotal: true,
-        },
+        matchTypeColumn
     ]
 
     return (

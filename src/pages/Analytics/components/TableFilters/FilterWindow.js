@@ -125,13 +125,16 @@ const containsVariations = {
     'object': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'campaignName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'adGroupName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'object_type': [{label: 'Is one of', key: 'one_of'}],
     'keyword_pt': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'match_type': [{label: 'Is one of', key: 'one_of'}],
-    'targetingType': [{label: 'Is one of', key: 'one_of'}],
     'campaign_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'portfolioName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'ad_group_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
+
+    'object_type': [{label: 'Is one of', key: 'one_of'}],
+    'match_type': [{label: 'Is one of', key: 'one_of'}],
+    'targetingType': [{label: 'Is one of', key: 'one_of'}],
+    'calculatedTargetingMatchType': [{label: 'Is one of', key: 'one_of'}],
+
     'impressions': numberVariations,
     'clicks': numberVariations,
     'spend': numberVariations,
@@ -171,7 +174,7 @@ const containsVariations = {
     'campaign': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}]
 }
 
-const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editFilter}) => {
+const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editFilter, locationKey}) => {
     const [filterBy, setFilterBy] = useState(),
         [filterType, setFilterType] = useState(),
         [filterValue, setFilterValue] = useState()
@@ -205,6 +208,23 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Enabled', key: 'enabled', value: 'enabled'},
             {title: 'Paused', key: 'paused', value: 'paused'},
             {title: 'Archived', key: 'archived', value: 'archived'},
+        ],
+        'calculatedTargetingMatchType': [
+            {title: 'Auto', key: 'auto', value: 'auto'},
+            {title: 'ASIN', key: 'asin', value: 'asin'},
+            {title: 'Brand', key: 'brand', value: 'brand'},
+            {title: 'Category', key: 'category', value: 'category'},
+
+            ...locationKey === 'targetings' ? [
+                    {title: 'Exact', key: 'exact', value: 'exact'},
+                    {title: 'Phrase', key: 'phrase', value: 'phrase'},
+                    {title: 'Broad', key: 'broad', value: 'broad'}
+                ]
+                :
+                [
+                    {title: 'Negative Exact', key: 'negativeExact', value: 'negativeExact'},
+                    {title: 'Negative Phrase', key: 'negativePhrase', value: 'negativePhrase'}
+                ]
         ],
         'bidding_strategy': [
             {title: 'Legacy For Sales', key: 'legacyForSales', value: 'legacyForSales'},

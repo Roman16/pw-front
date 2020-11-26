@@ -13,7 +13,7 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    impressionsColumn,
+    impressionsColumn, matchTypeColumn,
     roasColumn,
     salesShareColumn,
     statusColumn
@@ -110,15 +110,7 @@ const TargetingsList = () => {
                 </Link>
             )
         }] : [],
-        {
-            title: 'Match type',
-            dataIndex: 'calculatedTargetingMatchType',
-            key: 'calculatedTargetingMatchType',
-            width: '150px',
-            sorter: true,
-            locked: true,
-            noTotal: true,
-        },
+        matchTypeColumn,
         {
             ...statusColumn,
             locked: true,

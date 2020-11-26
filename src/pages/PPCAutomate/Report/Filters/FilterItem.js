@@ -2,7 +2,7 @@ import React from "react"
 import moment from "moment"
 import './Filters.less'
 
-const valueTile = {
+export const valueTile = {
     'keyword': 'Keyword',
     'pt': 'PT',
     'campaign': 'Campaign',
@@ -15,6 +15,14 @@ const valueTile = {
     'inactive': 'Inactive',
     'paused': 'Paused',
     'archived': 'Archived',
+    'asin': 'ASIN',
+    'brand': 'Brand',
+    'category': 'Category',
+    'exact': 'Exact',
+    'phrase': 'Phrase',
+    'broad': 'Broad',
+    'negativeExact': 'Negative Exact',
+    'negativePhrase': 'Negative Phrase',
     //---------------------------
     //reason
     'adjusted_bid': 'Adjusted bid',
@@ -86,6 +94,7 @@ const columnTitle = {
     'total_returns_quantity': 'Returns',
     'organic_profit': 'Profit',
     'organic_profit_gross': 'Gross Profit',
+    'calculatedTargetingMatchType': 'Match type',
 }
 
 
@@ -96,7 +105,7 @@ export const FilterItem = ({filter}) => {
                 {`${filter.value.startDate === 'lifetime' ? 'lifetime' : moment(filter.value.startDate).format('MMM DD, YYYY')} - ${filter.value.endDate === 'lifetime' ? 'lifetime' : moment(filter.value.endDate).format('MMM DD, YYYY')}`}
             </>
         )
-    } else if (filter.filterBy === 'object' || filter.filterBy === 'campaignName'|| filter.filterBy === 'adGroupName' || filter.filterBy === 'keyword_pt' || filter.filterBy === 'portfolioName' || filter.filterBy === 'campaign_name' || filter.filterBy === 'ad_group_name') {
+    } else if (filter.filterBy === 'object' || filter.filterBy === 'campaignName' || filter.filterBy === 'adGroupName' || filter.filterBy === 'keyword_pt' || filter.filterBy === 'portfolioName' || filter.filterBy === 'campaign_name' || filter.filterBy === 'ad_group_name') {
         return (
             <>
                 {`${columnTitle[filter.filterBy]} ${filter.type.key}: ${filter.value}`}

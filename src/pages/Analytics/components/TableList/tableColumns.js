@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import _ from "lodash"
 import defaultProductImage from '../../../../assets/img/default-product-image.svg'
+import {valueTile} from "../../../PPCAutomate/Report/Filters/FilterItem"
 
 export const renderNumberField = (type = 'number') => {
     switch (type) {
@@ -57,22 +58,25 @@ export const RenderProduct = ({product, isParent = false}) => {
 
     return (
         <div className="product-field">
-           <div className={'image'}>
-                <img src={!product.product_image && product.product_id === 0 ? defaultProductImage : product.product_image} alt=""/>
+            <div className={'image'}>
+                <img
+                    src={!product.product_image && product.product_id === 0 ? defaultProductImage : product.product_image}
+                    alt=""/>
             </div>
 
-            {!product.product_image && product.product_id === 0 ? <h3 className={'not-found'}>Product not found</h3> : <div className="col">
-                <Link
-                    to={`/analytics/overview?productId=${product.productId}&isParent=${isParent}`}
-                    onClick={() => setStateHandler('ad-groups', {
-                        name: {productName: product.product_name},
-                        productId: product.productId
-                    })}
-                >
-                    <h4 title={product.product_name}>{product.product_name}</h4>
-                </Link>
-                <p>{product.product_price !== null && `$${numberMask(product.product_price, 2)}`}</p>
-            </div>}
+            {!product.product_image && product.product_id === 0 ? <h3 className={'not-found'}>Product not found</h3> :
+                <div className="col">
+                    <Link
+                        to={`/analytics/overview?productId=${product.productId}&isParent=${isParent}`}
+                        onClick={() => setStateHandler('ad-groups', {
+                            name: {productName: product.product_name},
+                            productId: product.productId
+                        })}
+                    >
+                        <h4 title={product.product_name}>{product.product_name}</h4>
+                    </Link>
+                    <p>{product.product_price !== null && `$${numberMask(product.product_price, 2)}`}</p>
+                </div>}
 
             {product.childs_sku_array && product.childs_sku_array.length > 0 && <Popover
                 placement="bottom"
@@ -292,6 +296,18 @@ export const campaignColumn = {
     sorter: true,
     filter: true,
     noTotal: true,
+}
+
+export const matchTypeColumn = {
+    title: 'Match type',
+    dataIndex: 'calculatedTargetingMatchType',
+    key: 'calculatedTargetingMatchType',
+    width: '150px',
+    sorter: true,
+    locked: true,
+    noTotal: true,
+    filter: true,
+    render: (type) => valueTile[type]
 }
 
 export const adGroupColumn = {

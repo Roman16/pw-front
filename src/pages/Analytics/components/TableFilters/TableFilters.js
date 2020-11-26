@@ -12,7 +12,7 @@ import _ from 'lodash'
 
 const {Search} = Input
 
-const TableFilters = ({columns, filters = []}) => {
+const TableFilters = ({columns, filters = [], locationKey}) => {
     const [visibleFilterPopover, setVisibleFilterPopover] = useState(false),
         [indexSelectedFilter, setIndexSelectedFilter] = useState(null),
         [editFilter, setEditFilter] = useState(undefined),
@@ -57,7 +57,9 @@ const TableFilters = ({columns, filters = []}) => {
             value: value
         }
 
-        if (filterIndex !== -1) {
+        if (filterIndex === -1 && !value) {
+            return false
+        } else if (filterIndex !== -1) {
             updateFilterListHandler([...filters.map((item, index) => {
                 if (index === filterIndex) {
                     item = filter
@@ -94,6 +96,7 @@ const TableFilters = ({columns, filters = []}) => {
                         columns={columns}
                         onClose={() => setVisibleFilterPopover(false)}
                         editFilter={editFilter}
+                        locationKey={locationKey}
                         onAddFilter={(filter) => {
                             addFilterHandler(filter)
                             setVisibleFilterPopover(false)
