@@ -22,7 +22,7 @@ const filtersHandler = (filters) => {
             parameters.push(`&${filterBy}:contains=${value}`)
         } else if (type.key === 'one_of') {
             parameters.push(`&${filterBy}:in=${value}`)
-        } else if (filterBy === 'budget_allocation' || filterBy === 'sales_share' || filterBy === 'roas' || filterBy === 'conversion_rate' || filterBy === 'acos' || filterBy === 'ctr' || filterBy === 'ctr') {
+        } else if (filterBy === 'budget_allocation' || filterBy === 'sales_share' || filterBy === 'conversion_rate' || filterBy === 'acos' || filterBy === 'ctr' || filterBy === 'ctr') {
             parameters.push(`&${filterBy}:${type.key}=${value / 100}`)
         } else if (typeof type === 'object') {
             parameters.push(`&${filterBy}:${type.key}=${value}`)

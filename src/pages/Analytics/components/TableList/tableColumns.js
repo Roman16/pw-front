@@ -246,7 +246,6 @@ export const salesShareColumn = {
     key: 'sales_share',
     minWidth: '130px',
     sorter: true,
-    filter: true,
     ...renderNumberField('percent')
 }
 
@@ -256,7 +255,6 @@ export const budgetAllocationColumn = {
     key: 'budget_allocation',
     minWidth: '170px',
     sorter: true,
-    filter: true,
     ...renderNumberField('percent')
 }
 

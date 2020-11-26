@@ -364,6 +364,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'total_returns_quantity' ||
                     filterBy === 'attributedConversions30d' ||
                     filterBy === 'attributedUnitsOrdered30d' ||
+                    filterBy === 'roas' ||
                     filterBy === 'campaigns_count' ||
                     filterBy === 'impressions') &&
                 <Input
@@ -377,7 +378,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 {(filterBy === 'acos' ||
                     filterBy === 'sales_share' ||
                     filterBy === 'conversion_rate' ||
-                    filterBy === 'roas' ||
                     filterBy === 'macos' ||
                     filterBy === 'ctr' ||
                     filterBy === 'budget_allocation'
