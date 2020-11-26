@@ -127,6 +127,7 @@ const TableFilters = ({columns, filters = [], locationKey}) => {
                             columns={columns}
                             onClose={() => setIndexSelectedFilter(null)}
                             editFilter={editFilter}
+                            locationKey={locationKey}
                             onAddFilter={(filter) => {
                                 addFilterHandler(filter)
                             }}
