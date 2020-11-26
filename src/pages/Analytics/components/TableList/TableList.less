@@ -269,6 +269,7 @@
 
             .sku-asin {
               width: 100%;
+              font-size: 1rem;
 
               div {
                 max-width: 100%;
@@ -317,6 +318,13 @@
                   color: #343C5A;
                   margin: 0;
                 }
+              }
+
+              .not-found {
+                display: flex;
+                align-items: center;
+                font-size: 1rem;
+                margin: 0;
               }
 
               i {
@@ -441,24 +449,37 @@
       display: flex;
       padding: 3px 0;
 
-      label {
-        flex: 1;
-        font-size: 0.8571428571428571rem;
-        color: #38454F;
-        box-sizing: border-box;
-        width: 100%;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        margin: 0 10px 0 0;
-      }
-
       a {
-        flex: 1;
+        width: 100%;
         font-size: 0.8571428571428571rem;
         color: #6D6DF6;
+        display: flex;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+        div {
+          flex: 1;
+
+          &:first-child {
+            width: 100%;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 10px 0 0;
+          }
+        }
       }
     }
+  }
+
+  p {
+    font-size: 0.8571428571428571rem;
+    color: #656A84;
+    border-top: 1px solid #F5F5FF;
+    padding-top: 8px;
+    margin: 0;
   }
 
 }

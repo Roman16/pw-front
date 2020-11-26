@@ -9,6 +9,7 @@ import {Popover} from "antd"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import _ from "lodash"
+import defaultProductImage from '../../../../assets/img/default-product-image.svg'
 
 export const renderNumberField = (type = 'number') => {
     switch (type) {
@@ -52,14 +53,15 @@ export const RenderProduct = ({product, isParent = false}) => {
     const setStateHandler = (location, state) => {
         dispatch(analyticsActions.setLocation(location))
         dispatch(analyticsActions.setMainState(state))
-
     }
 
     return (
         <div className="product-field">
-            {product.product_image && <div className={'image'}><img src={product.product_image} alt=""/></div>}
+           <div className={'image'}>
+                <img src={!product.product_image && product.product_id === 0 ? defaultProductImage : product.product_image} alt=""/>
+            </div>
 
-            <div className="col">
+            {!product.product_image && product.product_id === 0 ? <h3 className={'not-found'}>Product not found</h3> : <div className="col">
                 <Link
                     to={`/analytics/overview?productId=${product.productId}&isParent=${isParent}`}
                     onClick={() => setStateHandler('ad-groups', {
@@ -70,7 +72,7 @@ export const RenderProduct = ({product, isParent = false}) => {
                     <h4 title={product.product_name}>{product.product_name}</h4>
                 </Link>
                 <p>{product.product_price !== null && `$${numberMask(product.product_price, 2)}`}</p>
-            </div>
+            </div>}
 
             {product.childs_sku_array && product.childs_sku_array.length > 0 && <Popover
                 placement="bottom"
@@ -78,27 +80,34 @@ export const RenderProduct = ({product, isParent = false}) => {
                 content={<div className="child-list">
                     <div className="header">
                         <div>
-                            Child product <b>({product.childs_sku_array.length})</b>
-                        </div>
-
-                        <div>
-                            SKU
+                            Child products <b>({product.childs_sku_array.length})</b>
                         </div>
                     </div>
 
                     <ul>
-                        {product.childs_sku_array.map((sku, index) => (
+                        {[...product.childs_sku_array.slice(0, 5)].map((sku, index) => (
                             <li>
-                                <label
-                                    htmlFor=""
-                                    title={product.childs_product_name_array[index]}
+                                <Link
+                                    to={`/analytics/overview?productId=${product.childs_product_id_array[index]}&isParent=${false}`}
+                                    onClick={() => setStateHandler('ad-groups', {
+                                        name: {productName: product.childs_product_name_array[index]},
+                                        productId: product.childs_product_id_array[index]
+                                    })}
                                 >
-                                    {product.childs_product_name_array[index]}
-                                </label>
-                                <a href="#">{sku}</a>
+                                    <div
+                                        className={'name'}
+                                        title={product.childs_product_name_array[index]}
+                                    >
+                                        {product.childs_product_name_array[index]}
+                                    </div>
+
+                                    <div className={'sku'}>{sku}</div>
+                                </Link>
                             </li>
                         ))}
                     </ul>
+
+                    {product.childs_sku_array.length > 5 && <p>And others</p>}
                 </div>}
             >
                 <i> <SVG id={'home-icon'}/></i>

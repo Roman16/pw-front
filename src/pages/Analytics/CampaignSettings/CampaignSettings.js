@@ -15,17 +15,17 @@ const CampaignSettings = () => {
 
     const [settingParams, setSettingsParams] = useState({})
 
-    const getCampaignInformation = async () => {
+    const getSettingsDetails = async () => {
         try {
-            const res = await analyticsServices.fetchStateInformation('campaignId', mainState.campaignId)
-            setSettingsParams(res.response)
+            const res = await analyticsServices.fetchSettingsDetails('campaigns', mainState.campaignId)
+            setSettingsParams({...res.response, id: mainState.campaignId})
         } catch (e) {
             console.log(e)
         }
     }
 
     useEffect(() => {
-        getCampaignInformation()
+        getSettingsDetails()
     }, [])
 
 
@@ -53,7 +53,7 @@ const CampaignSettings = () => {
                 </div>
 
                 <div className="value">
-                    {settingParams.campaignId || '-'}
+                    {settingParams.id || '-'}
                 </div>
             </div>
 
@@ -64,12 +64,14 @@ const CampaignSettings = () => {
 
                 <div className="value portfolio">
                     <div className="form-group">
-                        <CustomSelect
-                            disabled
-                            placeholder={'Select existing portfolio'}
-                        >
-                            <Option value={'1'}>1</Option>
-                        </CustomSelect>
+                        {/*<CustomSelect*/}
+                        {/*    disabled*/}
+                        {/*    placeholder={'Select existing portfolio'}*/}
+                        {/*>*/}
+                        {/*    <Option value={'1'}>1</Option>*/}
+                        {/*</CustomSelect>*/}
+
+                        <Input disabled value={settingParams.portfolioName}/>
                     </div>
 
                 </div>
@@ -93,12 +95,12 @@ const CampaignSettings = () => {
                 <div className="value state">
                     <div className='switch-block'>
                         <Switch
-                            checked={true}
+                            checked={settingParams.state !== 'paused'}
                             disabled
                             // onChange={e => onChangeSwitch('week', e)}
                         />
 
-                        <span>Active</span>
+                        {settingParams.state !== 'paused' ? <span className={'active'}>Active</span> : <span className={'paused'}>Paused</span>}
                     </div>
 
                     {/*<a href="#">Archive this campaign</a>*/}
@@ -140,19 +142,19 @@ const CampaignSettings = () => {
 
                 <div className="value budget">
                     <div className="form-group">
-                        <InputCurrency disabled/>
+                        <InputCurrency disabled value={settingParams.budget}/>
                     </div>
                     <span>Daily</span>
                 </div>
             </div>
 
-            <div className="row">
+            <div className="row targeting">
                 <div className="label">
                     Campaign targeting
                 </div>
 
                 <div className="value">
-                    <p>Manual Targeting</p>
+                    {settingParams.targetingType && <p>{settingParams.targetingType} Targeting</p>}
                 </div>
             </div>
 
@@ -164,7 +166,7 @@ const CampaignSettings = () => {
                 <div className="value strategy">
                     <Radio.Group
                         disabled
-                        // value={campaigns.bidding_strategy}
+                        value={settingParams.bidding_strategy}
                         // onChange={({target: {value}}) => changeBrandHandler({bidding_strategy: value})}
                     >
                         <div className="col">

@@ -7,7 +7,8 @@ export const analyticsServices = {
     fetchTableData,
     fetchMetricsData,
     fetchChartData,
-    fetchStateInformation
+    fetchStateInformation,
+    fetchSettingsDetails
 }
 
 
@@ -78,5 +79,9 @@ function fetchStateInformation(state, id) {
         adGroupId: 'ad-groups',
         portfolioId: 'portfolios',
     }
-    return api('get', `${analyticsUrls.campaignInformation(stateParams[state], id)}`)
+    return api('get', `${analyticsUrls.stateInformation(stateParams[state], id)}`)
+}
+
+function fetchSettingsDetails(page, id) {
+    return api('get', `${analyticsUrls.settingsDetails(page,id)}`)
 }

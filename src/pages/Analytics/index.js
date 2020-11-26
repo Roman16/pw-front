@@ -33,11 +33,8 @@ const Analytics = (props) => {
         if (Object.keys(queryParams).length !== 0) {
             dispatch(analyticsActions.setMainState(queryParams))
         }
-    }, [props.location.search])
+    }, [])
 
-    useEffect(() => {
-        // document.querySelector('.workplace').scrollTop = 0
-    }, [props.location])
 
     return (
         <div className="analytics-page">
