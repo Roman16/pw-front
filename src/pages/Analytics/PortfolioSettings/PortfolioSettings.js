@@ -1,16 +1,35 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Input, Radio, Select} from "antd"
 import CustomSelect from "../../../components/Select/Select"
 import InputCurrency from "../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../components/DatePicker/DatePicker"
 import './PortfolioSettings.less'
+import {analyticsServices} from "../../../services/analytics.services"
+import {useSelector} from "react-redux"
+import moment from "moment"
 
 const Option = Select.Option
 
 const PortfolioSettings = () => {
+    const mainState = useSelector(state => state.analytics.mainState)
+
     const [settingParams, setSettingsParams] = useState({
         budget_cup: 'recurring_monthly'
     })
+
+
+    const getSettingsDetails = async () => {
+        try {
+            const res = await analyticsServices.fetchSettingsDetails('portfolios', mainState.portfolioId)
+            setSettingsParams(res.response)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        getSettingsDetails()
+    }, [])
 
     return (
         <div className={'portfolio-settings-workplace'}>
@@ -24,6 +43,7 @@ const PortfolioSettings = () => {
                         <Input
                             disabled
                             placeholder={'Portfolio Name'}
+                            value={settingParams.name}
                         />
                     </div>
                 </div>
@@ -44,7 +64,7 @@ const PortfolioSettings = () => {
                     <div className="form-group">
                         <CustomSelect
                             value={settingParams.budget_cup}
-                            onChange={(value) => setSettingsParams({budget_cup: value})}
+                            onChange={(value) => setSettingsParams({...settingParams, budget_cup: value})}
                             placeholder={'Recurring monthly'}
                         >
                             <Option value={'recurring_monthly'}>Recurring monthly</Option>
@@ -63,7 +83,10 @@ const PortfolioSettings = () => {
 
                     <div className="value monthly-budget-cap">
                         <div className="form-group">
-                            <InputCurrency disabled/>
+                            <InputCurrency
+                                disabled
+                                value={settingParams.budget_amount}
+                            />
                         </div>
 
                         <span>Restarts on the 1st of each month.</span>
@@ -79,7 +102,7 @@ const PortfolioSettings = () => {
                     <div className="value ends">
                         <Radio.Group
                             disabled
-                            // value={campaigns.bidding_strategy}
+                            value={settingParams.eventDate ? 'autoForSales' : 'legacyForSales'}
                             // onChange={({target: {value}}) => changeBrandHandler({bidding_strategy: value})}
                         >
                             <Radio value={'legacyForSales'}>
@@ -92,6 +115,7 @@ const PortfolioSettings = () => {
                                 <DatePicker
                                     showToday={false}
                                     disabled
+                                    value={settingParams.eventDate && moment(settingParams.eventDate, 'YYYY-MM-DD')}
                                 />
                             </Radio>
                         </Radio.Group>
@@ -109,7 +133,10 @@ const PortfolioSettings = () => {
 
                     <div className="value monthly-budget-cap">
                         <div className="form-group">
-                            <InputCurrency disabled/>
+                            <InputCurrency
+                                disabled
+                                value={settingParams.budget_amount}
+                            />
                         </div>
 
                         <span>Restarts on the 1st of each month.</span>
@@ -124,7 +151,8 @@ const PortfolioSettings = () => {
 
                     <div className="value date">
                         <div className="form-group">
-                           <DatePicker disabled/>
+                            <DatePicker disabled
+                                        value={settingParams.budget_startDate && moment(settingParams.budget_startDate, 'YYYY-MM-DD')}/>
                         </div>
                     </div>
                 </div>
@@ -137,7 +165,9 @@ const PortfolioSettings = () => {
 
                     <div className="value date">
                         <div className="form-group">
-                           <DatePicker disabled/>
+                            <DatePicker disabled
+                                        value={settingParams.budget_endDate && moment(settingParams.budget_endDate, 'YYYY-MM-DD')}/>
+
                         </div>
                     </div>
                 </div>

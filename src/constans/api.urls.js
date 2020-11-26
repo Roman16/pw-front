@@ -133,5 +133,6 @@ export const analyticsUrls = {
     productAdsList: 'analytics/product-ads',
     metricsData: location =>  `analytics/${location}/metrics`,
     chartData: location => `analytics/${location}/charts`,
-    campaignInformation: (state, id) => `analytics/${state}/${id}/details`,
+    stateInformation: (state, id) => `analytics/${state}/${id}/details`,
+    settingsDetails: (page, id) => `analytics/${page}/${id}/settings`,
 }

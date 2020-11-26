@@ -9,6 +9,7 @@
   .row {
     display: flex;
     border-bottom: 0.5px solid #C9CBD4;
+    min-height: 50px;
 
     &:last-child {
       border: 0;
@@ -66,8 +67,14 @@
       align-items: center;
 
       & > span {
-        color: #7DD4A1;
         margin: 0 0 0 15px;
+
+        &.active {
+          color: #7DD4A1;
+        }
+        &.paused {
+          color: #EEBB81;
+        }
       }
     }
 
@@ -95,6 +102,12 @@
     .pw-date-picker {
       max-width: 155px;
       margin: 0 20px 0 0;
+    }
+  }
+
+  .targeting {
+    p {
+      text-transform: capitalize;
     }
   }
 
