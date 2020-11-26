@@ -24,7 +24,6 @@ const Header = ({location}) => {
 
     const getStateInformation = async () => {
         try {
-            console.log(mainState)
             const idArr = Object.keys(mainState).filter(item => item !== 'name')
             const res = await Promise.all(idArr.map((key) => analyticsServices.fetchStateInformation(key, mainState[key])))
 
