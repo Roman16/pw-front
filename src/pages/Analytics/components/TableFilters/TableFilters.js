@@ -121,7 +121,10 @@ const TableFilters = ({columns, filters = [], locationKey}) => {
                             setIndexSelectedFilter(null)
                             setEditFilter(undefined)
                         }}
-                    ><i><SVG id={'filter-icon'}/></i> Add Filter</button>
+                    >
+                        <i><SVG id={'filter-icon'}/></i>
+                        <span>Add Filter</span>
+                    </button>
                 </Popover>
             </div>
 
