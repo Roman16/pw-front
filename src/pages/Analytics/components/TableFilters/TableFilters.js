@@ -47,6 +47,12 @@ const TableFilters = ({columns, filters = [], locationKey}) => {
         setEditFilter(undefined)
     }
 
+    const resetHandler = () => {
+        updateFilterListHandler([])
+        setIndexSelectedFilter(null)
+        setEditFilter(undefined)
+    }
+
 
     const searchHandler = ({target: {value}}) => {
         const filterIndex = _.findIndex(filters, {type: 'search'})
@@ -115,7 +121,7 @@ const TableFilters = ({columns, filters = [], locationKey}) => {
                             setIndexSelectedFilter(null)
                             setEditFilter(undefined)
                         }}
-                    ><SVG id={'filter-icon'}/></button>
+                    ><i><SVG id={'filter-icon'}/></i> Add Filter</button>
                 </Popover>
             </div>
 
@@ -153,6 +159,8 @@ const TableFilters = ({columns, filters = [], locationKey}) => {
                         </div>
                     </Popover>
                 ))}
+
+                {filters.filter(filter => filter.type !== 'search').length > 0 && <button className={'reset-filters'} onClick={resetHandler}>Reset</button>}
             </div>
         </>
 

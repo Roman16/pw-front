@@ -65,7 +65,7 @@ const columnTitle = {
     'acos': 'ACoS',
     'keyword_id': 'Keyword ID',
     'profit': 'Ad Profit',
-    'ad_profit': 'Ad Profit',
+    'ad_profit': 'Net Ad Profit',
     'cost': 'Ad Spend',
     'ctr': 'CTR',
     'portfolioName': 'Portfolio',
@@ -95,6 +95,9 @@ const columnTitle = {
     'organic_profit': 'Profit',
     'organic_profit_gross': 'Gross Profit',
     'calculatedTargetingMatchType': 'Match type',
+    'total_sales_avg_price': 'Avg. Sale Price',
+    'total_profit': 'Net Profit',
+    'total_profit_gross': 'Gross Profit',
 }
 
 
@@ -147,8 +150,11 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'total_sales' ||
         filter.filterBy === 'total_orders_count_cleared' ||
         filter.filterBy === 'ad_profit' ||
+        filter.filterBy === 'total_sales_avg_price' ||
         filter.filterBy === 'organic_profit' ||
         filter.filterBy === 'organic_profit_gross' ||
+        filter.filterBy === 'total_profit' ||
+        filter.filterBy === 'total_profit_gross' ||
         filter.filterBy === 'profit') {
         return (
             <>

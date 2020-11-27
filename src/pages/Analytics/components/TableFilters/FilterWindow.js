@@ -168,6 +168,9 @@ const containsVariations = {
     'defaultBid': numberVariations,
     'attributedUnitsOrdered30d': numberVariations,
     'attributedSales30d': numberVariations,
+    'total_sales_avg_price': numberVariations,
+    'total_profit_gross': numberVariations,
+    'total_profit': numberVariations,
     'type': [{label: 'Is one of', key: 'one_of'}],
     'state': [{label: 'Is one of', key: 'one_of'}],
     'bidding_strategy': [{label: 'Is one of', key: 'one_of'}],
@@ -401,6 +404,9 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'ad_profit' ||
                     filterBy === 'defaultBid' ||
                     filterBy === 'organic_sales' ||
+                    filterBy === 'total_sales_avg_price' ||
+                    filterBy === 'total_profit' ||
+                    filterBy === 'total_profit_gross' ||
                     filterBy === 'attributedSales30d' ||
                     filterBy === 'dailyBudget' ||
                     filterBy === 'sales'

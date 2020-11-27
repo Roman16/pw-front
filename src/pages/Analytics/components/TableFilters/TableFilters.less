@@ -8,32 +8,44 @@
     align-items: center;
   }
 
-  button {
-    width: 2.2857142857142856rem;
-    height: 2.2857142857142856rem;
-    margin: 0 0 0 15px;
-    border-radius: 50%;
+ & >  button {
+
     display: flex;
     align-items: center;
-    justify-content: center;
+    color: #656A84;
+    font-size: 1rem;
+    font-weight: 500;
 
-    svg {
-      width: 1.1428571428571428rem;
-      height: 1rem;
-      fill: #656A84;
+    i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin: 0 5px 0 15px;
+      width: 2.2857142857142856rem;
+      height: 2.2857142857142856rem;
+      border-radius: 50%;
+
+      svg {
+        width: 1.1428571428571428rem;
+        height: 1rem;
+        fill: #656A84;
+      }
     }
 
+
     &:hover {
-      background: rgba(109, 109, 246, 0.05);
+      color: #6D6DF6;
+
+      i {
+        background: rgba(109, 109, 246, 0.05);
+      }
 
       svg {
         fill: #6D6DF6;
       }
     }
   }
-
-
-
 }
 
 .analytics-page .current-filters {
@@ -45,10 +57,28 @@
     width: max-content;
     margin-bottom: 20px;
   }
+
+  .reset-filters {
+    height: 2.28571429rem;
+    margin-bottom: 10px;
+    color: #656A84;
+    font-size: 1rem;
+    font-weight: 500;
+
+    &:hover {
+      color: #6D6DF6;
+    }
+  }
 }
 
 .analytics-filter-popover {
   z-index: 100000;
+  padding-left: 15px;
+
+  .ant-popover-arrow {
+    display: none;
+  }
+
   .ant-popover-inner-content {
     max-width: max-content;
   }
@@ -63,7 +93,7 @@
 
     .form-group {
       height: 2.28571429rem;
-      width: 150px;
+      width: 200px;
       margin: 0 15px 0 0;
 
       &:last-child {

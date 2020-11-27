@@ -1188,7 +1188,7 @@ const files = {
             width: 20,
             height: 20,
             viewBox: [0, 0, 20, 20],
-            data: '<rect xmlns="http://www.w3.org/2000/svg" width="18" height="18" x="1" y="1" stroke="#6D6DF6" fill="none" stroke-width="2" rx="1"/><path xmlns="http://www.w3.org/2000/svg" stroke="#6D6DF6" fill="none" stroke-width="2" d="M1 18V2C1 1.44772 1.44772 1 2 1H18C18.5523 1 19 1.44772 19 2V18C19 18.5523 18.5523 19 18 19H2C1.44772 19 1 18.5523 1 18Z"/><path xmlns="http://www.w3.org/2000/svg" fill="#6D6DF6" d="M1 2H19V5H1z"/><path xmlns="http://www.w3.org/2000/svg" stroke="#6D6DF6" fill="none" stroke-width="2" d="M7 4V18.5"/><path xmlns="http://www.w3.org/2000/svg" stroke="#6D6DF6" fill="none" stroke-width="2" d="M13 4V18.5"/>'
+            data: '<rect xmlns="http://www.w3.org/2000/svg" width="18" height="18" x="1" y="1" fill="none" stroke-width="2" rx="1"/><path xmlns="http://www.w3.org/2000/svg"  fill="none" stroke-width="2" d="M1 18V2C1 1.44772 1.44772 1 2 1H18C18.5523 1 19 1.44772 19 2V18C19 18.5523 18.5523 19 18 19H2C1.44772 19 1 18.5523 1 18Z"/><path xmlns="http://www.w3.org/2000/svg"  stroke="none" d="M1 2H19V5H1z"/><path xmlns="http://www.w3.org/2000/svg"  fill="none" stroke-width="2" d="M7 4V18.5"/><path xmlns="http://www.w3.org/2000/svg"  fill="none" stroke-width="2" d="M13 4V18.5"/>'
         },
         'clock': {
             width: 31,
