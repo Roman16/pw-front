@@ -130,10 +130,7 @@ const containsVariations = {
     'portfolioName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
     'ad_group_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
 
-    'object_type': [{label: 'Is one of', key: 'one_of'}],
-    'match_type': [{label: 'Is one of', key: 'one_of'}],
-    'targetingType': [{label: 'Is one of', key: 'one_of'}],
-    'calculatedTargetingMatchType': [{label: 'Is one of', key: 'one_of'}],
+
 
     'impressions': numberVariations,
     'clicks': numberVariations,
@@ -171,9 +168,18 @@ const containsVariations = {
     'total_sales_avg_price': numberVariations,
     'total_profit_gross': numberVariations,
     'total_profit': numberVariations,
-    'type': [{label: 'Is one of', key: 'one_of'}],
-    'state': [{label: 'Is one of', key: 'one_of'}],
-    'bidding_strategy': [{label: 'Is one of', key: 'one_of'}],
+    'targetings_count': numberVariations,
+    'product_ads_count': numberVariations,
+    'calculatedBid': numberVariations,
+
+    'type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'state': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'bidding_strategy': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'object_type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'match_type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'targetingType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'calculatedTargetingMatchType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+
     'campaign': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}]
 }
 
@@ -213,7 +219,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Archived', key: 'archived', value: 'archived'},
         ],
         'calculatedTargetingMatchType': [
-            {title: 'Auto', key: 'auto', value: 'auto'},
             {title: 'ASIN', key: 'asin', value: 'asin'},
             {title: 'Brand', key: 'brand', value: 'brand'},
             {title: 'Category', key: 'category', value: 'category'},
@@ -291,11 +296,13 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
 
     const submitHandler = (e) => {
         e.preventDefault()
+        const arr = filterType.key === 'except' ? [...multiSelectVariations[filterBy]] : []
 
         onAddFilter({
             filterBy: filterBy,
             type: filterType,
-            value: filterValue
+            value: filterValue,
+            ...filterType.key === 'except' && {requestValue: arr.filter((item) => !filterValue.some((key) => item.key === key)).map(item => item.key)}
         })
 
         setFilterBy(undefined)
@@ -368,6 +375,9 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'attributedConversions30d' ||
                     filterBy === 'attributedUnitsOrdered30d' ||
                     filterBy === 'roas' ||
+                    filterBy === 'targetings_count' ||
+                    filterBy === 'product_ads_count' ||
+                    filterBy === 'campaigns_count' ||
                     filterBy === 'campaigns_count' ||
                     filterBy === 'impressions') &&
                 <Input
@@ -409,6 +419,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'total_profit_gross' ||
                     filterBy === 'attributedSales30d' ||
                     filterBy === 'dailyBudget' ||
+                    filterBy === 'calculatedBid' ||
                     filterBy === 'sales'
                 ) &&
                 <InputCurrency
@@ -418,7 +429,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     step={0.01}
                 />}
 
-                {filterBy && filterType.key === 'one_of' &&
+                {filterBy && (filterType.key === 'one_of' || filterType.key === 'except') &&
                 <TreeSelect
                     treeData={multiSelectVariations[filterBy]}
                     getPopupContainer={triggerNode => triggerNode.parentNode}

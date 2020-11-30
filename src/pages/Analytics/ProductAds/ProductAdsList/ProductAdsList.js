@@ -46,7 +46,6 @@ const ProductAdsList = () => {
             sorter: true,
             locked: true,
             search: true,
-            noTotal: true,
             render: (name, item) => <RenderProduct
                 product={item}
                 setState={setStateHandler}

@@ -122,6 +122,7 @@ const TargetingsList = () => {
             width: '150px',
             sorter: true,
             noTotal: true,
+            filter: true,
             render: (bid) => <InputCurrency disabled value={bid}/>
         },
         impressionsColumn,

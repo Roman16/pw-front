@@ -20,21 +20,37 @@ import NegativeTargetings from "./NegativeTargetings/NegativeTargetings"
 import Placements from "./Placements/Placements"
 import PortfolioSettings from "./PortfolioSettings/PortfolioSettings"
 import ProductOverview from "./ProductOverview/ProductOverview"
+import {debounce} from "throttle-debounce"
+import $ from 'jquery'
 
 const Analytics = (props) => {
     const dispatch = useDispatch()
 
     const location = useSelector(state => state.analytics.location)
 
+    const setState = debounce(100, false, state => {
+        dispatch(analyticsActions.setMainState(state))
+    })
+
     useEffect(() => {
         const queryParams = queryString.parse(props.location.search)
         if (queryParams.isParent) delete queryParams.isParent
 
         if (Object.keys(queryParams).length !== 0) {
-            dispatch(analyticsActions.setMainState(queryParams))
+            setState(queryParams)
         }
-    }, [])
 
+        window.addEventListener('popstate', function (event) {
+            const queryParams = queryString.parse(event.target.location.search)
+            if (queryParams.isParent) delete queryParams.isParent
+
+            if (Object.keys(queryParams).length !== 0) {
+                setState(queryParams)
+            } else {
+                setState({})
+            }
+        }, false)
+    }, [])
 
     return (
         <div className="analytics-page">

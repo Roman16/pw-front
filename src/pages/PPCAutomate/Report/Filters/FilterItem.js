@@ -98,6 +98,10 @@ const columnTitle = {
     'total_sales_avg_price': 'Avg. Sale Price',
     'total_profit': 'Net Profit',
     'total_profit_gross': 'Gross Profit',
+    'state': 'Status',
+    'targetings_count': 'Total Targets',
+    'product_ads_count': 'Products',
+    'calculatedBid': 'Bid',
 }
 
 
@@ -155,6 +159,9 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'organic_profit_gross' ||
         filter.filterBy === 'total_profit' ||
         filter.filterBy === 'total_profit_gross' ||
+        filter.filterBy === 'targetings_count' ||
+        filter.filterBy === 'calculatedBid' ||
+        filter.filterBy === 'product_ads_count' ||
         filter.filterBy === 'profit') {
         return (
             <>
@@ -171,6 +178,12 @@ export const FilterItem = ({filter}) => {
         return (
             <>
                 {columnTitle[filter.filterBy]} is one of: {filter.value.map(item => valueTile[item]).join(', ')}
+            </>
+        )
+    } else if (filter.type.key === 'except') {
+        return (
+            <>
+                {columnTitle[filter.filterBy]} except: {filter.value.map(item => valueTile[item]).join(', ')}
             </>
         )
     }

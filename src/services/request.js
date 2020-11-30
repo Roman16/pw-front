@@ -72,6 +72,7 @@ const api = (method, url, data, type, abortToken) => {
                         handlerErrors(error.response.data.message)
                     } else {
                         localStorage.removeItem('token')
+                        localStorage.removeItem('adminToken')
                         history.push(`/login?redirect=${window.location.pathname}`)
                     }
                 } else if (error.response && error.response.status === 412) {

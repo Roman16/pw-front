@@ -239,7 +239,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
     const submitHandler = (e) => {
         e.preventDefault()
 
-        const arr = [...multiSelectVariations[filterBy]]
+        const arr = filterType.key === 'except' ?  [...multiSelectVariations[filterBy]] : []
 
         onAddFilter({
             filterBy: filterBy,

@@ -15,9 +15,11 @@ export const analyticsServices = {
 const filtersHandler = (filters) => {
     const parameters = []
 
-    filters.forEach(({filterBy, type, value}) => {
+    filters.forEach(({filterBy, type, value, requestValue}) => {
         if (filterBy === 'datetime') {
             parameters.unshift(`?datetime:range=${value.startDate === 'lifetime' ? '' : moment.tz(`${moment(value.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${value.endDate === 'lifetime' ? '' : moment.tz(`${moment(value.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
+        } else if (type.key === 'except') {
+            parameters.push(`&type:in=${requestValue.join(',')}`)
         } else if (type === 'search' && value) {
             parameters.push(`&${filterBy}:contains=${value}`)
         } else if (type.key === 'one_of') {
@@ -83,5 +85,5 @@ function fetchStateInformation(state, id) {
 }
 
 function fetchSettingsDetails(page, id) {
-    return api('get', `${analyticsUrls.settingsDetails(page,id)}`)
+    return api('get', `${analyticsUrls.settingsDetails(page, id)}`)
 }
