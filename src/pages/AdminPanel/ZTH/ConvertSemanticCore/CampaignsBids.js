@@ -86,7 +86,7 @@ const CampaignsBids = ({onChange}) => {
                         <Input
                             placeholder=" Enter number"
                             id="{{'exactBidNumber-' +sheetData.id}}"
-                            type="text"
+                            type="number"
                             className="form-control"
                             onChange={({target: {value}}) => setExactBid(+value)}
                             value={exactBid}
@@ -125,7 +125,7 @@ const CampaignsBids = ({onChange}) => {
                     <Input
                         placeholder=" Enter number"
                         id="{{'exactBidNumber-' +sheetData.id}}"
-                        type="text"
+                        type="number"
                         className="form-control"
                         onChange={({target: {value}}) => setBudgetMultiplier(+value)}
                         value={budgetMultiplier}
@@ -148,11 +148,11 @@ const CampaignsBids = ({onChange}) => {
                         </label>
                         <Input
                             placeholder="Enter number"
-                            type=" number"
+                            type="number"
                             className=" form-control"
                             disabled={!manuallyBudgets}
                             value={bidsTemplate.campaigns[key].bid}
-                            onChange={({target: {value}}) => changeBidHandler('campaigns', key, value)}
+                            onChange={({target: {value}}) => changeBidHandler('campaigns', key, +value)}
                         />
                     </div>
                 ))}
@@ -169,11 +169,11 @@ const CampaignsBids = ({onChange}) => {
                         </label>
                         <Input
                             placeholder="Enter number"
-                            type=" number"
+                            type="number"
                             className=" form-control"
                             disabled={!manuallyBudgets}
                             value={bidsTemplate.adGroups[key].bid}
-                            onChange={({target: {value}}) => changeBidHandler('adGroups', key, value)}
+                            onChange={({target: {value}}) => changeBidHandler('adGroups', key, +value)}
                         />
                     </div>
                 ))}
@@ -189,13 +189,13 @@ const CampaignsBids = ({onChange}) => {
                         </label>
                         <Input
                             placeholder="Enter number"
-                            type=" number"
+                            type="number"
                             className=" form-control"
                             disabled={!manuallyBudgets}
                             value={budgetsTemplate[key]}
                             onChange={({target: {value}}) => setBudgetsTemplate(prevState => ({
                                 ...prevState,
-                                [key]: value
+                                [key]: +value
                             }))}
                         />
                     </div>

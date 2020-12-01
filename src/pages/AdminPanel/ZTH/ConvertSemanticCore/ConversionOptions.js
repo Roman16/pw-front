@@ -10,14 +10,20 @@ import {adminServices} from "../../../../services/admin.services"
 
 const Option = Select.Option
 
-const data = Object.keys(CampaignType).map(key => ({
-    campaignType: key,
-    generateBulkUpload: true
-}))
+const data = Object.keys(CampaignType).filter(item => item !== 'SDRemarketing' &&
+    item !== 'SDTPA' &&
+    item !== 'SDPA' &&
+    item !== 'SDRA' &&
+    item !== 'SDSA' &&
+    item !== 'SDCategories')
+    .map(key => ({
+        campaignType: key,
+        generateBulkUpload: true
+    }))
 
 let fullUsersList = []
 
-const ConversionOptions = ({semanticData, onConvert, uploadProcessing,convertProcessing, onUpload, onChange}) => {
+const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertProcessing, onUpload, onChange}) => {
     const [actionType, setActionType] = useState('convert'),
         [visibleConfirm, setVisibleConfirm] = useState(false),
         [usersList, setUsersList] = useState([]),
@@ -115,19 +121,20 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing,convertPro
     return (
         <>
             <div className={'conversion-options'}>
+                <h2>Select Operation</h2>
                 <Radio.Group onChange={({target: {value}}) => setActionType(value)} value={actionType}>
                     <Radio value={'convert'}>Convert to Bulk Upload File</Radio>
                     <Radio value={'upload'}>Upload to AmazonAccount</Radio>
                 </Radio.Group>
 
-                <h2>Conversion options</h2>
+                <h2>{actionType === 'convert' ? 'Conversion' : 'Upload'} options</h2>
                 <h3>Select advertising types to convert</h3>
 
                 <Checkbox
                     checked={semanticData.conversionOptions.zeroToHero.createSponsoredProductsSemanticCore}
                     onChange={({target: {checked}}) => changeConversionOptionsHandler('zeroToHero', 'createSponsoredProductsSemanticCore', checked)}
                 >
-                    Convert Sponsored Products Semantic core
+                    {actionType === 'convert' ? 'Convert' : 'Upload'} Sponsored Products Semantic core
                 </Checkbox>
                 <br/>
                 <br/>
@@ -135,20 +142,25 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing,convertPro
                     checked={semanticData.conversionOptions.zeroToHero.createSponsoredDisplaySemanticCore}
                     onChange={({target: {checked}}) => changeConversionOptionsHandler('zeroToHero', 'createSponsoredDisplaySemanticCore', checked)}
                 >
-                    Convert Sponsored Display Semantic Core (not available for Amazon Bulk Upload files)
+                    {actionType === 'convert' ? 'Convert' : 'Upload'} Sponsored Display Semantic
+                    Core {actionType === 'convert' && '(not available for Amazon Bulk Upload files)'}
                 </Checkbox>
                 <br/>
                 <br/>
 
-                <h3>Generate bulk upload for campaign types:</h3>
+                {actionType === 'convert' && <>
+                    <h3>Generate bulk upload for campaign types:</h3>
 
-                {actionType === 'convert' && <CustomTable
-                    columns={columns}
-                    dataSource={data}
-                />}
+                    <CustomTable
+                        columns={columns}
+                        dataSource={data}
+                    />
+                </>}
 
                 <div className="form-group  w-25">
-                    <label htmlFor="">Campaigns status in Bulk Upload</label>
+                    <label htmlFor="">
+                        Campaigns status {actionType === 'convert' ? 'in Bulk Upload ' : 'after upload'}
+                    </label>
                     <CustomSelect
                         value={semanticData.conversionOptions.converter.campaignsStatus}
                         onChange={value => changeConversionOptionsHandler('converter', 'campaignsStatus', value)}
@@ -182,14 +194,14 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing,convertPro
                         </CustomSelect>
                     </div>
 
-                    <div className="form-group w-25">
-                        <Checkbox
-                            checked={semanticData.convertToAmazonBulkUpload}
-                            onChange={({target: {checked}}) => changeConversionOptionsHandler(undefined, 'convertToAmazonBulkUpload', checked)}
-                        >
-                            Save as Amazon Bulk Upload
-                        </Checkbox>
-                    </div>
+                    {/*<div className="form-group w-25">*/}
+                    {/*    <Checkbox*/}
+                    {/*        checked={semanticData.convertToAmazonBulkUpload}*/}
+                    {/*        onChange={({target: {checked}}) => changeConversionOptionsHandler(undefined, 'convertToAmazonBulkUpload', checked)}*/}
+                    {/*    >*/}
+                    {/*        Save as Amazon Bulk Upload*/}
+                    {/*    </Checkbox>*/}
+                    {/*</div>*/}
                 </>}
 
                 {actionType === 'upload' && <div className="form-group  w-25 users">

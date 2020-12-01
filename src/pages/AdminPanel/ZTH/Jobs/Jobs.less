@@ -2,7 +2,7 @@
   min-height: 150px;
 
 
-  .form-group {
+  & > .form-group {
     margin-bottom: 20px;
 
     input {
@@ -10,4 +10,62 @@
       margin: 0;
     }
   }
+
+  .custom-table {
+    max-width: 100%;
+    border: 1px solid #c9cbd4;
+    margin: 20px 0;
+    min-height: 80px;
+
+    .table-head {
+      background: #f0f0f0;
+
+      .th {
+        padding: 0;
+        border-right: 1px solid #c9cbd4;
+
+        &:last-child {
+          border: 0;
+        }
+      }
+
+      .title {
+        justify-content: center;
+      }
+    }
+
+    .table-body {
+      .table-body__row {
+        .table-body__field {
+          padding: 5px;
+          border-right: 1px solid #c9cbd4;
+
+          .google-url {
+            max-width: 100%;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            color: #6D6DF6;
+            cursor: pointer;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          &:last-child {
+            border: 0;
+            justify-content: center;
+
+
+          }
+        }
+      }
+    }
+  }
+
+  .custom-select {
+    width: max-content;
+  }
+
 }

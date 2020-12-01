@@ -94,7 +94,6 @@ const AdGroupsList = () => {
             key: 'targetings_count',
             width: '200px',
             sorter: true,
-            filter: true,
             noTotal: true,
             ...renderNumberField()
         },
@@ -104,7 +103,6 @@ const AdGroupsList = () => {
             key: 'product_ads_count',
             width: '200px',
             sorter: true,
-            filter: true,
             noTotal: true,
             ...renderNumberField()
         },

@@ -60,11 +60,11 @@ export const RenderProduct = ({product, isParent = false}) => {
         <div className="product-field">
             <div className={'image'}>
                 <img
-                    src={!product.product_image && product.product_id === 0 ? defaultProductImage : product.product_image}
+                    src={!product.product_name && (product.product_id === 0 || product.product_id == null) ? defaultProductImage : product.product_image}
                     alt=""/>
             </div>
 
-            {!product.product_image && product.product_id === 0 ? <h3 className={'not-found'}>Product not found</h3> :
+            {!product.product_name && (product.product_id === 0 || product.product_id == null) ? <h3 className={'not-found'}>Product not found</h3> :
                 <div className="col">
                     <Link
                         to={`/analytics/overview?productId=${product.productId}&isParent=${isParent}`}

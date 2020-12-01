@@ -29,6 +29,7 @@ export const adminServices = {
     fetchZthJobs,
     fetchSemanticInformation,
     fetchExactBids,
+    convertSemantic
 }
 
 function checkUserEmail(email) {

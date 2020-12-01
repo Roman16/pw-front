@@ -107,7 +107,6 @@ const ProductsList = () => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            filter: true,
             ...renderNumberField()
         },
         impressionsColumn,

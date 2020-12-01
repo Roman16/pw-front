@@ -4,15 +4,21 @@ import Themes from "./Themes"
 import {SVG} from "../../../../utils/icons"
 import CustomTable from "../../../../components/Table/CustomTable"
 
-
-let newTabIndex = 0
-
-const TextArea = Input.TextArea
-
 let copiedThemes
 
+const getASINFromListing = (url) => {
+    const reg = new RegExp('^(http[s]?://)?([\\w.-]+)(:[0-9]+)?/([\\w-%]+/)?(dp|gp/product|exec/obidos/asin)/(\\w+/)?(\\w{10})(.*)?$')
+    const result = reg.exec(url)
+    if (result && result[7]) {
+        const asin = result[7] ?? ''
+        return asin.trim().toUpperCase()
+    } else {
+        return ''
+    }
+}
+
 const Variations = ({semanticData, onChange}) => {
-    const [variations, setVariations] = useState(semanticData.conversionOptions.productInformation.variations || []),
+    const [variations, setVariations] = useState([]),
         [activeVariationIndex, setActiveVariationIndex] = useState(0)
 
     const columns = [
@@ -27,10 +33,9 @@ const Variations = ({semanticData, onChange}) => {
             title: 'URL',
             dataIndex: 'listingUrl',
             key: 'listingUrl',
-            render: (url) => <TextArea
-                autoSize
+            render: (url, item, index) => <Input
                 value={url}
-                onChange={({target: {value}}) => changeVariationHandler('listingUrl', value)}
+                onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
             />
         },
         {
@@ -38,19 +43,18 @@ const Variations = ({semanticData, onChange}) => {
             dataIndex: 'sku',
             key: 'sku',
             width: '300px',
-            render: (sku) => <TextArea
-                autoSize
+            render: (sku, item, index) => <Input
                 value={sku}
-                onChange={({target: {value}}) => changeVariationHandler('sku', value)}
+                onChange={({target: {value}}) => changeVariationHandler('sku', value, index)}
             />
         },
     ]
 
     const add = () => {
-        newTabIndex++
         setVariations([...variations, {
             sku: '',
-            themeValues: [{name: '', value: '', relatedValues: []}]
+            listingUrlsSKUs: [],
+            themeValues: [{theme: '', value: '', relatedValues: []}]
         }])
     }
 
@@ -61,14 +65,28 @@ const Variations = ({semanticData, onChange}) => {
         setVariations([...variations.filter((item, i) => i !== index)])
     }
 
-    const changeVariationHandler = (name, value) => {
+    const changeVariationHandler = (name, value, indexChangedRow) => {
         setVariations(variations.map((variation, index) => {
             if (index === activeVariationIndex) {
-                variation[name] = value
+                variation.listingUrlsSKUs[indexChangedRow] = {
+                    ...variation.listingUrlsSKUs[indexChangedRow],
+                    [name]: value
+                }
             }
 
             return variation
         }))
+    }
+
+    const setVariationThemes = (themes) => {
+        setVariations(variations.map((variation, index) => {
+            if (index === activeVariationIndex) {
+                variation.themeValues = themes
+            }
+
+            return variation
+        }))
+
     }
 
     const pasteThemesHandler = () => {
@@ -82,13 +100,27 @@ const Variations = ({semanticData, onChange}) => {
     }
 
     useEffect(() => {
+        setVariations(semanticData.conversionOptions.productInformation.variations.map(item => ({
+            ...item,
+            listingUrlsSKUs: [{
+                listingUrl: item.listingUrl,
+                sku: item.sku
+            }]
+        })))
+    }, [])
+
+    useEffect(() => {
         onChange({
             ...semanticData,
             conversionOptions: {
                 ...semanticData.conversionOptions,
                 productInformation: {
                     ...semanticData.conversionOptions.productInformation,
-                    variations: variations
+                    variations: variations.reduce((result, variation) => result.concat(variation.listingUrlsSKUs.map(item => ({
+                        listingUrl: item.listingUrl,
+                        sku: item.sku,
+                        themeValues: variation.themeValues
+                    }))), [])
                 }
             }
         })
@@ -105,7 +137,10 @@ const Variations = ({semanticData, onChange}) => {
                     onClick={() => setActiveVariationIndex(index)}
                     className={index === activeVariationIndex && 'active'}
                 >
-                    {variation.listingUrl ? `'${variation.asin}' ASIN${variation.themeValues.map(theme => theme.value).filter(item => !!item).length > 0 && ':'} ${variation.themeValues.map(theme => theme.value).filter(item => !!item).join(', ')}` : 'Empty Variation'}
+
+                    <VariationName
+                        variation={variation}
+                    />
 
                     <button onClick={(e) => removeVariationHandler(e, index)}>
                         <SVG id={'close-icon'}/>
@@ -129,21 +164,57 @@ const Variations = ({semanticData, onChange}) => {
 
             <CustomTable
                 columns={columns}
-                dataSource={[{
-                    listingUrl: variations[activeVariationIndex].listingUrl,
-                    sku: variations[activeVariationIndex].sku
-                }]}
+                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {}]}
             />
 
             <br/>
 
             <Themes
                 themes={variations[activeVariationIndex] && variations[activeVariationIndex].themeValues}
-                setThemes={(value) => changeVariationHandler('themeValues', value)}
+                setThemes={(value) => setVariationThemes(value)}
             />
 
         </div>
     )
 }
+
+const VariationName = ({variation}) => {
+    const getListingUrls = () => {
+        return variation.listingUrlsSKUs.map(x => x.listingUrl).filter(x => x && x.length > 0)
+    }
+
+    const getSKUs = () => {
+        return variation.listingUrlsSKUs.map(x => x.sku).filter(x => x && x.length > 0)
+    }
+
+    const getThemeValues = () => {
+        return variation.themeValues.map(x => x.value).filter(x => x && x.length > 0)
+    }
+
+    const urls = getListingUrls()
+    const skus = getSKUs()
+
+    if (urls.length > 0) {
+        if (urls.length === 1) {
+            const asin = getASINFromListing(urls[0])
+            if (!asin) {
+                return `Wrong listing url`
+            } else {
+                return `'${asin}' ASIN: ${getThemeValues().join(', ')}`.trim()
+            }
+        } else {
+            return `${urls.length} ASINs: ${getThemeValues().join(', ')}`.trim()
+        }
+    } else if (skus.length > 0) {
+        if (skus.length === 1) {
+            return `'${skus[0]}' SKU: ${getThemeValues().join(', ')}`.trim()
+        } else {
+            return `${skus.length} SKUs: ${getThemeValues().join(', ')}`.trim()
+        }
+    } else {
+        return 'Empty Variation'
+    }
+}
+
 
 export default React.memo(Variations)

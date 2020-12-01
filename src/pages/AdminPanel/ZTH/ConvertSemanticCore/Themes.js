@@ -3,13 +3,11 @@ import {Input} from "antd"
 import {SVG} from "../../../../utils/icons"
 import CustomTable from "../../../../components/Table/CustomTable"
 
-const TextArea = Input.TextArea
-
-const Themes = ({themes, setThemes}) => {
+const Themes = ({themes = [], setThemes}) => {
     const [activeThemeIndex, setActiveThemeIndex] = useState(0)
 
     const add = () => {
-        setThemes([...themes, {name: '', value: '', relatedValues: []}])
+        setThemes([...themes, {theme: '', value: '', relatedValues: []}])
     }
 
     const removeThemeHandler = (e, index) => {
@@ -50,8 +48,7 @@ const Themes = ({themes, setThemes}) => {
             title: 'Value',
             dataIndex: 'value',
             key: 'value',
-            render: (url, item, index) => <TextArea
-                autoSize
+            render: (url, item, index) => <Input
                 value={url}
                 onChange={({target: {value}}) => changeThemeRelatedValue(index, value)}
             />

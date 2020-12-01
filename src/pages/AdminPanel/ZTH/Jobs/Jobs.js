@@ -7,88 +7,75 @@ import CustomSelect from "../../../../components/Select/Select"
 import {Input, Select} from "antd"
 import Pagination from "../../../../components/Pagination/Pagination"
 
-const Option = Select.Option
-
 const columns = [
     {
         title: 'ID',
         dataIndex: 'id',
         key: 'id',
-        minWidth: '50px',
+        width: '50px',
     },
     {
         title: 'Scheduled At',
         dataIndex: 'createdAt',
         key: 'createdAt',
-        minWidth: '150px',
+        width: '200px',
         render: date => moment.utc(date).local().format('ddd MMM DD YYYY HH:mm:ss')
     },
     {
         title: 'Updated At',
         dataIndex: 'updatedAt',
         key: 'updatedAt',
-        minWidth: '150px',
+        width: '200px',
         render: date => moment.utc(date).local().format('ddd MMM DD YYYY HH:mm:ss')
+    },
+    {
+        title: 'User Id',
+        dataIndex: 'userId',
+        key: 'userId',
+        width: '100px',
+    },
+    {
+        title: 'User Email',
+        dataIndex: 'userEmail',
+        key: 'userEmail',
+        width: '200px',
+    },
+    {
+        title: 'Username',
+        dataIndex: 'userName',
+        key: 'userName',
+        width: '200px',
     },
     {
         title: 'Title',
         dataIndex: 'title',
         key: 'title',
-        minWidth: '250px',
+        width: '150px',
     },
     {
         title: 'Status',
         dataIndex: 'status',
         key: 'status',
-        minWidth: '100px',
-        render: status => (
-            <>
-                {status === 'DONE' && <span style={{color: 'green'}}>DONE</span>}
-                {status === 'FAILED' && <span style={{color: 'red'}}>FAILED</span>}
-            </>
-        )
+        width: '150px',
     },
     {
-        title: 'Google Spreadsheet URL',
+        title: 'SC URL',
         dataIndex: 'googleSpreadsheetUrl',
         key: 'googleSpreadsheetUrl',
-        minWidth: '200px',
-        render: link => (
-            link ? <a target={'_blank'} href={link}>Open</a> : <span>No Link</span>
-        )
+        width: '150px',
+        render: url => <span className={'google-url'} title={url}>{url}</span>
     },
     {
-        title: 'Input Parameters',
-        dataIndex: 'inputParametersLinkElement',
-        key: 'inputParametersLinkElement',
-        minWidth: '150px',
-        render: (input, item) => (
-            <a onclick="${this._saveInputParametersForJobFuncName}(${jobData.id})">Download</a>
-        )
-    },
-    {
-        title: 'Product Report',
-        dataIndex: 'productReportLinkElement',
-        key: 'productReportLinkElement',
-        minWidth: '150px',
-    },
-    {
-        title: 'Search Term Report',
-        dataIndex: 'searchTermLinkElement',
-        key: 'searchTermLinkElement',
-        minWidth: '150px',
-    },
-    {
-        title: 'Actions',
-        dataIndex: 'restartJobButton',
-        key: 'restartJobButton',
-        minWidth: '100px',
+        title: 'Parameters',
+        dataIndex: 'parameters',
+        key: 'parameters',
+        width: '100px',
     },
     {
         title: 'Error',
         dataIndex: 'errorText',
         key: 'errorText',
-        minWidth: '100px',
+        width: '150px',
     },
 ]
 

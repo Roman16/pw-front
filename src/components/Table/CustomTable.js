@@ -50,7 +50,7 @@ const CustomTable = ({
     }
 
     const scrollHandler = (e) => {
-        onScroll(e)
+        onScroll && onScroll(e)
 
         if (e.target.scrollLeft > 5) {
             setScrolling(true)

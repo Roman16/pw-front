@@ -7,7 +7,7 @@ import Variations from "./Variations"
 import ConversionOptions from "./ConversionOptions"
 import {adminServices} from "../../../../services/admin.services"
 import {notification} from "../../../../components/Notification"
-
+import {saveFile} from "../../../../utils/saveFile"
 //
 // interface ConvertSemanticDataRequest {
 //     url: string;
@@ -43,7 +43,7 @@ import {notification} from "../../../../components/Notification"
 
 const ConvertSemanticCore = () => {
     const [semanticInformation, setSemanticInformation] = useState(),
-        [semanticUrl, setSemanticUrl] = useState('https://docs.google.com/spreadsheets/d/1osHmhbyXGx5dbziIuh2NV5sUHOKKSG9ynyW3rGeM_A4/edit#gid=277769766'),
+        [semanticUrl, setSemanticUrl] = useState(),
         [loadingInformation, setLoadingInformation] = useState(false),
         [semanticData, setSemanticData] = useState({}),
         [uploadProcessing, setUploadProcessing] = useState(false),
@@ -59,7 +59,6 @@ const ConvertSemanticCore = () => {
         })
     }
 
-
     const loadSemanticInformation = async (e) => {
         e.preventDefault()
         setSemanticInformation(undefined)
@@ -72,7 +71,7 @@ const ConvertSemanticCore = () => {
             setSemanticData({
                 url: semanticUrl,
                 convertToXLSXWorkBook: false,
-                convertToAmazonBulkUpload: false,
+                convertToAmazonBulkUpload: true,
                 conversionOptions: {
                     converter: {
                         useInputParametersProductName: true,
@@ -84,13 +83,13 @@ const ConvertSemanticCore = () => {
                         variations: semanticData.variations
                     },
                     saver: {
-                        saveBulkUploadAs: 'xls'
+                        saveBulkUploadAs: 'xlsx'
                     },
                     zeroToHero: {
                         campaignsCompressionStrategy: semanticData.campaignsCompressionStrategy,
                         ppcPlan: semanticData.ppcPlan,
-                        createSponsoredProductsSemanticCore: false,
-                        createSponsoredDisplaySemanticCore: false
+                        createSponsoredProductsSemanticCore: true,
+                        createSponsoredDisplaySemanticCore: true
                     }
                 }
             })
@@ -109,21 +108,20 @@ const ConvertSemanticCore = () => {
     const convertSemanticHandler = async () => {
         setConvertProcessing(true)
 
-        setTimeout(() => {
-            console.log('CONVERT:')
-            console.log(semanticData)
-            notification.success({title: 'Success!'})
-            setConvertProcessing(false)
-        }, 3000)
+        try {
+            const res = await adminServices.convertSemantic(semanticData)
 
-        // try {
-        //     const res = await adminServices.convertSemantic(semanticData)
-        //
-        //     console.log(res)
-        //     notification.success({title: 'Success!'})
-        // } catch (e) {
-        //     console.log(e)
-        // }
+            res.bulkUploadDocuments && res.bulkUploadDocuments.forEach(doc => {
+                saveFile(doc, semanticData.conversionOptions.saver.saveBulkUploadAs)
+            })
+
+            setConvertProcessing(false)
+            notification.success({title: 'Success!'})
+        } catch (e) {
+            console.log(e)
+            setConvertProcessing(false)
+            notification.error({title: 'Error!'})
+        }
     }
     const uploadSemanticHandler = (userId) => {
         setUploadProcessing(true)
@@ -202,5 +200,6 @@ const ConvertSemanticCore = () => {
         </section>
     )
 }
+
 
 export default ConvertSemanticCore

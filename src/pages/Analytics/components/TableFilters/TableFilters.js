@@ -48,7 +48,8 @@ const TableFilters = ({columns, filters = [], locationKey}) => {
     }
 
     const resetHandler = () => {
-        updateFilterListHandler([])
+        const productViewFilter = _.find(filters, {filterBy: 'productView'})
+        updateFilterListHandler(productViewFilter ? [productViewFilter] : [])
         setIndexSelectedFilter(null)
         setEditFilter(undefined)
     }
@@ -163,7 +164,9 @@ const TableFilters = ({columns, filters = [], locationKey}) => {
                     </Popover>
                 ))}
 
-                {filters.filter(filter => filter.type !== 'search').length > 0 && <button className={'reset-filters'} onClick={resetHandler}>Reset</button>}
+                {filters.filter(filter => (filter.type !== 'search' && filter.filterBy !== 'productView')).length > 0 &&
+                <button className={'reset-filters'} onClick={resetHandler}>Reset</button>
+                }
             </div>
         </>
 

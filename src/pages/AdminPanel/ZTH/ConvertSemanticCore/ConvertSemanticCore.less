@@ -144,7 +144,7 @@
               background: #fff;
             }
 
-            textarea {
+            input {
               border: 0;
               width: 100%;
               min-height: 30px;
@@ -218,7 +218,13 @@
 
   .conversion-options {
     .ant-radio-group {
+      display: flex;
+      flex-direction: column;
       margin-bottom: 20px;
+
+      .ant-radio-wrapper:first-child {
+        margin-bottom: 20px;
+      }
     }
 
     .custom-table {
