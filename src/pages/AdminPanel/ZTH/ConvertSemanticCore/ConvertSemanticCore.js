@@ -76,7 +76,8 @@ const ConvertSemanticCore = () => {
                     converter: {
                         useInputParametersProductName: true,
                         campaignsStatus: 'Enabled',
-                        convertForMarketplace: 'USA'
+                        convertForMarketplace: 'USA',
+                        semanticCoreUrls: [semanticUrl]
                     },
                     productInformation: {
                         productName: semanticData.productName,
