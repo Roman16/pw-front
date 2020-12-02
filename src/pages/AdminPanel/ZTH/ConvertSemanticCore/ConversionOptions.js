@@ -138,7 +138,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                 <h2>Select Operation</h2>
                 <Radio.Group onChange={({target: {value}}) => setActionType(value)} value={actionType}>
                     <Radio value={'convert'}>Convert to Bulk Upload File</Radio>
-                    <Radio value={'upload'}>Upload to AmazonAccount</Radio>
+                    <Radio value={'upload'}>Upload to Amazon Account</Radio>
                 </Radio.Group>
 
                 <h2>{actionType === 'convert' ? 'Conversion' : 'Upload'} options</h2>
