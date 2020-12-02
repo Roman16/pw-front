@@ -144,11 +144,11 @@ const AdminPanel = () => {
                     Impersonations
                 </NavLink>
 
-                {developer && <NavLink
+                <NavLink
                     to={'/admin-panel/zth'}
                 >
                     Zero to Hero
-                </NavLink>}
+                </NavLink>
 
                 {/*<button*/}
                 {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
