@@ -143,6 +143,8 @@ const ConvertSemanticCore = () => {
                 }
             }
 
+            console.log('User id:' + userId)
+
             const res = await adminServices.uploadSemantic(requestData)
             setUploadProcessing(false)
             notification.success({title: 'Success!'})
