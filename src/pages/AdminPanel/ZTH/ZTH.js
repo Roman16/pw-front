@@ -29,7 +29,7 @@ const ZTH = () => {
                 </NavLink>
 
                 <NavLink to={'/admin-panel/zth/jobs'}>
-                    Zero to Hero Jobs
+                    ZTH Upload Jobs
                 </NavLink>
             </div>
 
