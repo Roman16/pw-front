@@ -96,7 +96,6 @@ const Jobs = () => {
             title: '',
             page: 1,
             pageSize: 50,
-            totalSize: 0,
         })
 
     const getData = async () => {
@@ -151,8 +150,8 @@ const Jobs = () => {
                 showQuickJumper={true}
                 listLength={jobsList.length}
                 processing={processing}
-
                 {...requestParams}
+                totalSize={totalSize}
             />
         </section>
     )
