@@ -7,7 +7,7 @@ import {AdGroupType, CampaignType} from './constans'
 
 const Option = Select.Option
 
-const CampaignsBids = ({onChange}) => {
+const CampaignsBids = ({onChange, semanticData}) => {
     const [bidsConfig, setBidsConfig] = useState(),
         [exactBid, setExactBid] = useState(),
         [ppcPlan, setPpcPlan] = useState('High'),
@@ -102,7 +102,9 @@ const CampaignsBids = ({onChange}) => {
                             className="form-control"
                         >
                             {bidsConfig && bidsConfig.predefinedExactBids.map(bid => <Option
-                                value={bid}>{bid}</Option>)}
+                                value={bid}>
+                                {bid}
+                            </Option>)}
                         </CustomSelect>
                     </div>}
 
@@ -182,24 +184,41 @@ const CampaignsBids = ({onChange}) => {
             <h3>Campaign daily budgets:</h3>
 
             <div className="bids-fields-list">
-                {Object.keys(CampaignType).map(key => (
-                    <div className="col-sm-3 form-group">
-                        <label>
-                            {key}:
-                        </label>
-                        <Input
-                            placeholder="Enter number"
-                            type="number"
-                            className=" form-control"
-                            disabled={!manuallyBudgets}
-                            value={budgetsTemplate[key]}
-                            onChange={({target: {value}}) => setBudgetsTemplate(prevState => ({
-                                ...prevState,
-                                [key]: +value
-                            }))}
-                        />
-                    </div>
-                ))}
+                {Object.keys(CampaignType)
+                    .filter(item => {
+                        if (semanticData.conversionOptions.zeroToHero.campaignsCompressionStrategy === 'Compact') {
+                            return item === 'Auto' ||
+                                item === 'ExactPhrase' ||
+                                item === 'PAT' ||
+                                item === 'Broad' ||
+                                item === 'SDRemarketing' ||
+                                item === 'SDTPA' ||
+                                item === 'SDPA' ||
+                                item === 'SDRA' ||
+                                item === 'SDSA' ||
+                                item === 'SDCategories'
+                        } else {
+                            return item !== 'Auto' && item !== 'ExactPhrase' && item !== 'PAT'
+                        }
+                    })
+                    .map(key => (
+                        <div className="col-sm-3 form-group">
+                            <label>
+                                {key}:
+                            </label>
+                            <Input
+                                placeholder="Enter number"
+                                type="number"
+                                className=" form-control"
+                                disabled={!manuallyBudgets}
+                                value={budgetsTemplate[key]}
+                                onChange={({target: {value}}) => setBudgetsTemplate(prevState => ({
+                                    ...prevState,
+                                    [key]: +value
+                                }))}
+                            />
+                        </div>
+                    ))}
             </div>
         </div>
     )

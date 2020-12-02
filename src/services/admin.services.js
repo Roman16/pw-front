@@ -29,7 +29,8 @@ export const adminServices = {
     fetchZthJobs,
     fetchSemanticInformation,
     fetchExactBids,
-    convertSemantic
+    convertSemantic,
+    uploadSemantic,
 }
 
 function checkUserEmail(email) {
@@ -173,11 +174,16 @@ function fetchZthJobs({page, title, pageSize}) {
 function fetchSemanticInformation(url) {
     return zthRequest('post', `${adminUrls.semanticInfo}`, url)
 }
+
 function fetchExactBids() {
     return zthRequest('get', `${adminUrls.exactBids}`)
 }
 
 function convertSemantic(data) {
     return zthRequest('post', `${adminUrls.convertSemantic}`, data)
+}
+
+function uploadSemantic(data) {
+    return zthRequest('post', `${adminUrls.uploadSemantic}`, {...data, userId: 0})
 }
 

@@ -14,7 +14,7 @@ const PortfolioSettings = () => {
     const mainState = useSelector(state => state.analytics.mainState)
 
     const [settingParams, setSettingsParams] = useState({
-        budget_cup: 'recurring_monthly'
+        budget_policy: ''
     })
 
 
@@ -28,8 +28,10 @@ const PortfolioSettings = () => {
     }
 
     useEffect(() => {
-        getSettingsDetails()
-    }, [])
+        if(mainState.portfolioId) {
+            getSettingsDetails()
+        }
+    }, [mainState])
 
     return (
         <div className={'portfolio-settings-workplace'}>
@@ -63,19 +65,20 @@ const PortfolioSettings = () => {
 
                     <div className="form-group">
                         <CustomSelect
-                            value={settingParams.budget_cup}
-                            onChange={(value) => setSettingsParams({...settingParams, budget_cup: value})}
+                            disabled
+                            value={settingParams.budget_policy}
+                            onChange={(value) => setSettingsParams({...settingParams, budget_policy: value})}
                             placeholder={'Recurring monthly'}
                         >
-                            <Option value={'recurring_monthly'}>Recurring monthly</Option>
-                            <Option value={'date_range'}>Date range</Option>
-                            <Option value={'no_budget_cap'}>No budget cap</Option>
+                            <Option value={'MonthlyRecurring'}>Recurring monthly</Option>
+                            <Option value={'dateRange'}>Date range</Option>
+                            <Option value={''}>No budget cap</Option>
                         </CustomSelect>
                     </div>
                 </div>
             </div>
 
-            {settingParams.budget_cup === 'recurring_monthly' && <>
+            {settingParams.budget_policy === 'MonthlyRecurring' && <>
                 <div className="row">
                     <div className="label">
                         Monthly Budget Cap
@@ -102,7 +105,7 @@ const PortfolioSettings = () => {
                     <div className="value ends">
                         <Radio.Group
                             disabled
-                            value={settingParams.eventDate ? 'autoForSales' : 'legacyForSales'}
+                            value={settingParams.budget_endDate ? 'autoForSales' : 'legacyForSales'}
                             // onChange={({target: {value}}) => changeBrandHandler({bidding_strategy: value})}
                         >
                             <Radio value={'legacyForSales'}>
@@ -115,7 +118,7 @@ const PortfolioSettings = () => {
                                 <DatePicker
                                     showToday={false}
                                     disabled
-                                    value={settingParams.eventDate && moment(settingParams.eventDate, 'YYYY-MM-DD')}
+                                    value={settingParams.budget_endDate && moment(settingParams.budget_endDate, 'YYYYMMDD')}
                                 />
                             </Radio>
                         </Radio.Group>
@@ -125,7 +128,7 @@ const PortfolioSettings = () => {
             </>}
 
 
-            {settingParams.budget_cup === 'date_range' && <>
+            {settingParams.budget_policy === 'dateRange' && <>
                 <div className="row">
                     <div className="label">
                         Date Range Budget Cap
@@ -152,7 +155,7 @@ const PortfolioSettings = () => {
                     <div className="value date">
                         <div className="form-group">
                             <DatePicker disabled
-                                        value={settingParams.budget_startDate && moment(settingParams.budget_startDate, 'YYYY-MM-DD')}/>
+                                        value={settingParams.budget_startDate && moment(settingParams.budget_startDate, 'YYYYMMDD')}/>
                         </div>
                     </div>
                 </div>
@@ -166,7 +169,7 @@ const PortfolioSettings = () => {
                     <div className="value date">
                         <div className="form-group">
                             <DatePicker disabled
-                                        value={settingParams.budget_endDate && moment(settingParams.budget_endDate, 'YYYY-MM-DD')}/>
+                                        value={settingParams.budget_endDate && moment(settingParams.budget_endDate, 'YYYYMMDD')}/>
 
                         </div>
                     </div>

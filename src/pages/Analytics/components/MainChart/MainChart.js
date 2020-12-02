@@ -32,7 +32,7 @@ const MainChart = ({allMetrics}) => {
     }))
 
 
-    const activeMetrics = metricsState.activeMetrics || allMetrics.slice(0, 2)
+    const activeMetrics =  metricsState.activeMetrics || allMetrics.slice(0, 2)
 
 
     const getChartData = async () => {

@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react"
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import {Spin} from "antd"
 
+let intervalId
+
 const ConfirmUploadWindow = ({
                                  visible,
                                  semanticName,
@@ -15,15 +17,23 @@ const ConfirmUploadWindow = ({
                                  onSubmit,
                                  onCancel
                              }) => {
-    const [disableSubmit, setDisabledSubmit] = useState(true)
+    const [disableSubmit, setDisabledSubmit] = useState(true),
+        [disableInterval, setDisableInterval] = useState(3)
 
     useEffect(() => {
         if (visible) {
             setTimeout(() => {
                 setDisabledSubmit(false)
             }, 3000)
+
+            intervalId = setInterval(() => {
+                setDisableInterval(prevState => --prevState)
+            }, 1000)
         } else {
+            clearInterval(intervalId)
             setDisabledSubmit(true)
+            setDisableInterval(3)
+
         }
     }, [visible])
 
@@ -45,7 +55,7 @@ const ConfirmUploadWindow = ({
 
             <div className="actions">
                 <button className={'btn white'} disabled={disableSubmit || uploadProcessing} onClick={onSubmit}>
-                    Yes
+                    I'm sure {disableInterval > 0 && `(${disableInterval})`}
                     {uploadProcessing && <Spin size={'small'}/>}
                 </button>
 

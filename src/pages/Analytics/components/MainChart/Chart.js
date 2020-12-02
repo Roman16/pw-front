@@ -24,7 +24,7 @@ const chartColors = ['#82ca9d', '#8884d8', '#DD7703', '#4DBEE1']
 
 const Chart = ({
                    data,
-                   activeMetrics,
+                   activeMetrics = [],
                    showWeekChart,
                    showDailyChart,
                    showOptimizationChart,

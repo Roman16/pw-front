@@ -124,31 +124,32 @@ const ConvertSemanticCore = () => {
             notification.error({title: 'Error!'})
         }
     }
-    const uploadSemanticHandler = (userId) => {
+    const uploadSemanticHandler = async (userId) => {
         setUploadProcessing(true)
 
-        const requestData = {
-            url: semanticData.url,
-            userId: 0,
-            conversionOptions: {
-                converter: {...semanticData.conversionOptions.converter},
-                productInformation: {...semanticData.conversionOptions.productInformation},
-                upload: {...semanticData.conversionOptions.upload},
-                zeroToHero: {...semanticData.conversionOptions.zeroToHero},
+        try {
+            const requestData = {
+                url: semanticData.url,
+                userId: 0,
+                conversionOptions: {
+                    converter: {
+                        useInputParametersProductName: true, // <- should always be true
+                        campaignsStatus: semanticData.conversionOptions.converter.campaignsStatus,
+                        semanticCoreUrls: semanticData.conversionOptions.converter.semanticCoreUrls
+                    },
+                    productInformation: {...semanticData.conversionOptions.productInformation},
+                    upload: {...semanticData.conversionOptions.upload},
+                    zeroToHero: {...semanticData.conversionOptions.zeroToHero},
+                }
             }
-        }
 
-        delete requestData.convertToAmazonBulkUpload
-        delete requestData.conversionOptions.converter.convertForMarketplace
-        delete requestData.conversionOptions.converter.generateBulkUploadForCampaignTypes
-
-        setTimeout(() => {
-            console.log('UPLOAD:')
-            console.log('User id:' + userId)
-            console.log(requestData)
-            notification.success({title: 'Success!'})
+            const res = await adminServices.uploadSemantic(requestData)
             setUploadProcessing(false)
-        }, 3000)
+            notification.success({title: 'Success!'})
+        } catch (e) {
+            console.log(e)
+            setUploadProcessing(false)
+        }
     }
 
     return (
@@ -180,6 +181,7 @@ const ConvertSemanticCore = () => {
                 />
 
                 <CampaignsBids
+                    semanticData={semanticData}
                     onChange={changeUploadDataHandler}
                 />
 

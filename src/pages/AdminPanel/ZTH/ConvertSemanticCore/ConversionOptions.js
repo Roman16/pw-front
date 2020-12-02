@@ -41,6 +41,20 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
         }
     }
 
+    const switchAllOptions = () => {
+        if (_.some(bulkUploadOptions, {generateBulkUpload: true})) {
+            setBulkUploadOptions(bulkUploadOptions.map(item => ({
+                ...item,
+                generateBulkUpload: false
+            })))
+        } else {
+            setBulkUploadOptions(bulkUploadOptions.map(item => ({
+                ...item,
+                generateBulkUpload: true
+            })))
+        }
+    }
+
     const searchHandler = (text) => {
         setSelectedUserId(undefined)
 
@@ -112,7 +126,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
             key: 'generateBulkUpload',
             width: '150px',
             render: (checked, item) => <Checkbox
-                checked={checked}
+                checked={!!checked}
                 onChange={({target: {checked}}) => changeBulkUploadOptionsHandler(item.campaignType, checked)}
             />
         },
@@ -151,9 +165,15 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                 {actionType === 'convert' && <>
                     <h3>Generate bulk upload for campaign types:</h3>
 
+                    <button className="btn default" onClick={switchAllOptions}>
+                        {_.some(bulkUploadOptions, {generateBulkUpload: true}) ? 'Disable' : 'Enable'} all
+                    </button>
+
+                    <br/>
+
                     <CustomTable
                         columns={columns}
-                        dataSource={data}
+                        dataSource={bulkUploadOptions}
                     />
                 </>}
 
