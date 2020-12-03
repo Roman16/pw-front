@@ -170,11 +170,7 @@ const AuthorizedUser = (props) => {
                                             if (bootstrapInProgress) {
                                                 return (<Redirect to={'/ppc/optimization-loading'}/>)
                                             } else {
-                                                if(isSuperAdmin) {
-                                                    return (<OptimizationFormAdmin/>)
-                                                } else {
-                                                    return (<Optimization/>)
-                                                }
+                                                return (<OptimizationFormAdmin/>)
                                             }
                                         }}
                                     />
@@ -254,7 +250,7 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     {/*ANALYTICS*/}
-                                    {isSuperAdmin && <ConnectedAmazonRoute path="/analytics" component={Analytics}/>}
+                                    <ConnectedAmazonRoute path="/analytics" component={Analytics}/>
                                     {/*-------------------------------------------*/}
 
                                     <Route path={'*'} render={() => (

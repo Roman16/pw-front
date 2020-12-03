@@ -63,7 +63,7 @@ const Sidebar = () => {
     }
 
     useEffect(() => {
-        if(localStorage.getItem('adminToken')) {
+        if (localStorage.getItem('adminToken')) {
             setAdminStatus(true)
         } else {
             setAdminStatus(false)
@@ -175,7 +175,7 @@ const Sidebar = () => {
                                 </ul>
                             </li>
 
-                            {isAdmin && <li className="top-nav-item">
+                            <li className="top-nav-item">
                                 <InformationTooltip
                                     type={'custom'}
                                     description={<Link to={'/analytics/products'}>Analytics</Link>}
@@ -192,11 +192,11 @@ const Sidebar = () => {
                                         </div>
 
                                         <span className="top-span">
-                                    Analytics
-                                </span>
+                                            Analytics
+                                         </span>
                                     </NavLink>
                                 </InformationTooltip>
-                            </li>}
+                            </li>
 
                             <li className="top-nav-item ppc-automate-link">
                                 <InformationTooltip
@@ -271,57 +271,57 @@ const Sidebar = () => {
                             </li>
 
 
-                            {isAdmin && <li className="top-nav-item ">
-                                <InformationTooltip
-                                    type={'custom'}
-                                    description={<ul className="collapsed-automate-list">
-                                        <li className="automate-item">
-                                            <NavLink
-                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                activeClassName="automate-link-active"
-                                                exact
-                                                to={'/notifications/listing-tracking'}
-                                            >
-                                                Listing Tracking
-                                            </NavLink>
-                                        </li>
-                                    </ul>}
-                                    position={'rightTop'}
-                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}
-                                >
-                                    <div onClick={() => toggleSubMenu('notifications')} className={'has-child'}>
-                                        <NavLink
-                                            className="top-nav-link"
-                                            activeClassName="top-nav-link-active"
-                                            to="/notifications"
-                                            replace
-                                            disabled
-                                        >
-                                            <div className="link-icon">
-                                                <SVG id='notification-menu-icon'/>
-                                            </div>
+                            {/*{isAdmin && <li className="top-nav-item ">*/}
+                            {/*    <InformationTooltip*/}
+                            {/*        type={'custom'}*/}
+                            {/*        description={<ul className="collapsed-automate-list">*/}
+                            {/*            <li className="automate-item">*/}
+                            {/*                <NavLink*/}
+                            {/*                    className={`automate-link ${automate ? 'visible' : 'hidden'}`}*/}
+                            {/*                    activeClassName="automate-link-active"*/}
+                            {/*                    exact*/}
+                            {/*                    to={'/notifications/listing-tracking'}*/}
+                            {/*                >*/}
+                            {/*                    Listing Tracking*/}
+                            {/*                </NavLink>*/}
+                            {/*            </li>*/}
+                            {/*        </ul>}*/}
+                            {/*        position={'rightTop'}*/}
+                            {/*        overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}*/}
+                            {/*    >*/}
+                            {/*        <div onClick={() => toggleSubMenu('notifications')} className={'has-child'}>*/}
+                            {/*            <NavLink*/}
+                            {/*                className="top-nav-link"*/}
+                            {/*                activeClassName="top-nav-link-active"*/}
+                            {/*                to="/notifications"*/}
+                            {/*                replace*/}
+                            {/*                disabled*/}
+                            {/*            >*/}
+                            {/*                <div className="link-icon">*/}
+                            {/*                    <SVG id='notification-menu-icon'/>*/}
+                            {/*                </div>*/}
 
-                                            <span className="top-span">
-                                                 Notifications
-                                            </span>
-                                        </NavLink>
-                                    </div>
-                                </InformationTooltip>
+                            {/*                <span className="top-span">*/}
+                            {/*                     Notifications*/}
+                            {/*                </span>*/}
+                            {/*            </NavLink>*/}
+                            {/*        </div>*/}
+                            {/*    </InformationTooltip>*/}
 
-                                <ul className={`automate-list ${subMenuState.notifications ? 'opened' : 'closed'}`}>
-                                    <li className="automate-item">
-                                        <NavLink
-                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                            activeClassName="automate-link-active"
-                                            exact
-                                            to={'/notifications/listing-tracking'}
-                                        >
-                                            Listing Tracking
-                                        </NavLink>
-                                    </li>
-                                </ul>
-                            </li>
-                            }
+                            {/*    <ul className={`automate-list ${subMenuState.notifications ? 'opened' : 'closed'}`}>*/}
+                            {/*        <li className="automate-item">*/}
+                            {/*            <NavLink*/}
+                            {/*                className={`automate-link ${automate ? 'visible' : 'hidden'}`}*/}
+                            {/*                activeClassName="automate-link-active"*/}
+                            {/*                exact*/}
+                            {/*                to={'/notifications/listing-tracking'}*/}
+                            {/*            >*/}
+                            {/*                Listing Tracking*/}
+                            {/*            </NavLink>*/}
+                            {/*        </li>*/}
+                            {/*    </ul>*/}
+                            {/*</li>*/}
+                            {/*}*/}
                         </ul>
                     </nav>
 

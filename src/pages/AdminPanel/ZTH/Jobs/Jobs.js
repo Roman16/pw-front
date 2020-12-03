@@ -3,8 +3,12 @@ import CustomTable from "../../../../components/Table/CustomTable"
 import './Jobs.less'
 import {adminServices} from "../../../../services/admin.services"
 import moment from "moment"
-import {Input} from "antd"
+import {Input, Select} from "antd"
 import Pagination from "../../../../components/Pagination/Pagination"
+import {saveInputParameters} from "../../../../utils/saveFile"
+import CustomSelect from "../../../../components/Select/Select"
+
+const Option = Select.Option
 
 const columns = [
     {
@@ -17,21 +21,23 @@ const columns = [
         title: 'Scheduled At',
         dataIndex: 'createdAt',
         key: 'createdAt',
-        width: '200px',
-        render: date => moment.utc(date).local().format('ddd MMM DD YYYY HH:mm:ss')
+        width: '150px',
+        render: date => <span>{moment.utc(date).local().format('ddd MMM DD')}
+            <br/> {moment.utc(date).local().format('YYYY HH:mm:ss')}</span>
     },
     {
         title: 'Updated At',
         dataIndex: 'updatedAt',
         key: 'updatedAt',
-        width: '200px',
-        render: date => moment.utc(date).local().format('ddd MMM DD YYYY HH:mm:ss')
+        width: '150px',
+        render: date => <span>{moment.utc(date).local().format('ddd MMM DD')}
+            <br/> {moment.utc(date).local().format('YYYY HH:mm:ss')}</span>
     },
     {
         title: 'User Id',
         dataIndex: 'userId',
         key: 'userId',
-        width: '100px',
+        width: '80px',
     },
     {
         title: 'User Email',
@@ -49,13 +55,13 @@ const columns = [
         title: 'Title',
         dataIndex: 'title',
         key: 'title',
-        width: '150px',
+        width: '250px',
     },
     {
         title: 'Status',
         dataIndex: 'status',
         key: 'status',
-        width: '100px',
+        width: '80px',
         render: status => (<>
                 {status === 'DONE' && <span style={{color: '#259B25'}}>DONE</span>}
                 {(status === 'ERROR' || status === 'FAILED') && <span style={{color: '#D66744'}}>{status}</span>}
@@ -68,20 +74,22 @@ const columns = [
         title: 'SC URL',
         dataIndex: 'googleSpreadsheetUrl',
         key: 'googleSpreadsheetUrl',
-        width: '150px',
-        render: url => <a href={url} target={'_blank'} className={'google-url'} title={url}>{url}</a>
+        width: '100px',
+        render: url => <a href={url} target={'_blank'} className={'google-url'} title={url}>Open</a>
     },
     {
         title: 'Parameters',
         dataIndex: 'inputParameters',
         key: 'inputParameters',
         width: '100px',
-        render: parameters => Object.keys(parameters).length > 0 && <button>Save</button>
+        render: parameters => Object.keys(parameters).length > 0 &&
+            <button onClick={() => saveInputParameters(parameters)}>Save</button>
     },
     {
         title: 'Error',
         dataIndex: 'errorText',
         key: 'errorText',
+        minWidth: '200px',
         render: (errorText, item) => item.status === 'ERROR' && errorText
     },
 ]
@@ -95,7 +103,8 @@ const Jobs = () => {
         [requestParams, setRequestParams] = useState({
             title: '',
             page: 1,
-            pageSize: 50,
+            pageSize: 200,
+            status: ''
         })
 
     const getData = async () => {
@@ -130,11 +139,28 @@ const Jobs = () => {
 
     return (
         <section className={'zth-jobs'}>
-            <div className="form-group">
-                <Input
-                    placeholder={'Search in Title'}
-                    onChange={changeTitleFieldHandler}
-                />
+            <div className="filters">
+                <div className="form-group">
+                    <Input
+                        placeholder={'Search in Title'}
+                        onChange={changeTitleFieldHandler}
+                    />
+                </div>
+
+                <div className="form-group">
+                  <CustomSelect
+                      placeholder={'Filter by status'}
+                      onChange={(value) => setRequestParams(prevState => ({...prevState, status: value}))}
+                  >
+                      <Option value={''}>No Filter</Option>
+                      <Option value={'PENDING'}>PENDING</Option>
+                      <Option value={'IN_PROGRESS'}>IN PROGRESS</Option>
+                      <Option value={'DONE'}>DONE</Option>
+                      <Option value={'FAILED'}>FAILED</Option>
+                      <Option value={'ERROR'}>ERROR</Option>
+                  </CustomSelect>
+                </div>
+
             </div>
 
             <CustomTable
