@@ -19,7 +19,7 @@ const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/Choo
 const Marketing = React.lazy(() => import('./ZeroToHero/Marketing/Marketing'))
 const CreatingCampaign = React.lazy(() => import('./ZeroToHero/CreatingCampaign/CreatingCampaign'))
 const Settings = React.lazy(() => import('./ZeroToHero/Settings/Settings'))
-const Optimization = React.lazy(() => import('./PPCAutomate/Optimization/Optimization'))
+// const Optimization = React.lazy(() => import('./PPCAutomate/Optimization/Optimization'))
 const OptimizationFormAdmin = React.lazy(() => import('./PPCAutomate/OptimizationForAdmin/OptimizationForAdmin'))
 const Report = React.lazy(() => import('./PPCAutomate/Report/Report'))
 const ProductSettings = React.lazy(() => import('./PPCAutomate/ProductSettings/ProductSettings'))
@@ -180,7 +180,7 @@ const AuthorizedUser = (props) => {
                                         path="/ppc/optimization-loading"
                                         render={() => {
                                             if (bootstrapInProgress) {
-                                                return (<Optimization/>)
+                                                return (<OptimizationFormAdmin/>)
                                             } else {
                                                 return (<Redirect to={'/ppc/optimization'}/>)
                                             }
