@@ -115,8 +115,8 @@ const TableList = ({
             })
 
             if (res.response) {
-                setTableData(res.response.slice(0, 30))
-                fullResponse = res.response
+                setTableData(res.response)
+                // fullResponse = res.response
             }
 
 
@@ -131,15 +131,15 @@ const TableList = ({
         getData()
     }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate])
 
-    const scrollHandler = (e) => {
-        if(e.target.scrollTop > 1500) {
-            setTableData(fullResponse.slice(0, 500))
-        } else if(e.target.scrollTop > 1000) {
-            setTableData(fullResponse.slice(0, 200))
-        } else if(e.target.scrollTop > 500) {
-            setTableData(fullResponse.slice(0, 100))
-        }
-    }
+    // const scrollHandler = (e) => {
+    //     if(e.target.scrollTop > 1500) {
+    //         setTableData(fullResponse.slice(0, 500))
+    //     } else if(e.target.scrollTop > 1000) {
+    //         setTableData(fullResponse.slice(0, 200))
+    //     } else if(e.target.scrollTop > 500) {
+    //         setTableData(fullResponse.slice(0, 100))
+    //     }
+    // }
 
     useEffect(() => {
         setPaginationParams({
@@ -182,14 +182,14 @@ const TableList = ({
                 sorterColumn={sorterColumn}
                 columns={columns.filter(column => !columnsBlackList.includes(column.key))}
                 fixedColumns={fixedColumns}
-                onScroll={scrollHandler}
+                // onScroll={scrollHandler}
                 // rowClassName={(item) => !item.viewed && 'new-report'}
             />
 
             {paginationParams.totalSize !== 0 && showPagination && <Pagination
                 onChange={paginationChangeHandler}
 
-                pageSizeOptions={[10, 30, 50, 100, 200, 500]}
+                pageSizeOptions={[10, 30, 50, 100, 200]}
                 showQuickJumper={true}
                 listLength={fullResponse.length}
                 processing={fetchingStatus}

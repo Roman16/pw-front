@@ -36,15 +36,29 @@ const MainMetrics = ({allMetrics}) => {
     const [visibleModal, switchModal] = useState(false)
 
     const removeSelectedMetric = (metric) => {
-        updateMetricsState({
-            selectedMetrics: selectedMetrics.filter(item => item !== metric),
-            activeMetrics: activeMetrics.map(item => item !== metric && item)
-        })
+        if (activeMetrics.includes(metric)) {
+            updateMetricsState({
+                selectedMetrics: selectedMetrics.filter(item => item !== metric),
+                activeMetrics: activeMetrics.map(item => item !== metric && item)
+            })
+        } else {
+            updateMetricsState({
+                selectedMetrics: selectedMetrics.filter(item => item !== metric),
+            })
+        }
     }
 
     const handleOk = () => {
         switchModal(false)
-        updateMetricsState({selectedMetrics: visibleItems})
+        console.log()
+        if (_.intersectionWith(hiddenItems, activeMetrics, _.isEqual).length > 0) {
+            updateMetricsState({
+                selectedMetrics: visibleItems,
+                activeMetrics: activeMetrics.map(item => visibleItems.includes(item) ? item : null)
+            })
+        } else {
+            updateMetricsState({selectedMetrics: visibleItems})
+        }
     }
 
     const activateMetric = (metric) => {

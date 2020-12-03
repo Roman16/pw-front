@@ -99,7 +99,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         </div>
 
                         <CustomSelect
-                            getPopupContainer={trigger => trigger.parentNode}
+                            getPopupContainer={trigger => trigger}
                             value={product.optimization_strategy}
                             onChange={(value) => onUpdateField('optimization_strategy', value)}
                         >

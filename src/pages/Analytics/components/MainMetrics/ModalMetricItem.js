@@ -33,8 +33,6 @@ const ModalMetricItem = ({item: {title, info, key, value, type, label}, listType
         hasMargin: state.dashboard.hasMargin || false
     }));
 
-    console.log(item)
-
     return (<div className={`metric-item ${disabled ? 'disabled' : ''}`}
                  onClick={() => listType === 'visible' ? removeMetric(key) : disabled ? null : addMetric(key)}>
             <div className="title-info">

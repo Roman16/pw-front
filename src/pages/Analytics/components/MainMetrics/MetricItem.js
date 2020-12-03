@@ -6,8 +6,9 @@ import {numberMask} from "../../../../utils/numberMask"
 import {SVG} from "../../../../utils/icons"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {ProfitTooltipDescription} from "../../../PPCAutomate/Dashboard/ProductBreakdown/ProductsList"
+import {metricKeys} from "./metricsList"
 
-const DiffTooltip = ({currentValue, diff, type, prevValue}) => {
+const DiffTooltip = ({currentValue, diff, type, prevValue, percentRow = true}) => {
     const diffValue = Math.abs(round(currentValue - prevValue, 2))
 
     return (
@@ -25,7 +26,7 @@ const DiffTooltip = ({currentValue, diff, type, prevValue}) => {
                 /></b>
             </p>
 
-            {(type !== 'percent' && +currentValue > 0 && +prevValue > 0) && <p>
+            {(type !== 'percent' && +currentValue > 0 && +prevValue > 0 && percentRow) && <p>
                 ({diff < 0 ? 'down  ' : 'up  '}
 
                 <RenderMetricValue
@@ -88,7 +89,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                 </InformationTooltip>
 
             )
-        } else if (name === 'profit' || name === 'ad_profit' || name === 'organic_sales' || name === 'total_sales' || name === 'ad_sales') {
+        } else if (name === 'profit' || name === metricKeys['net_profit'] || name === metricKeys['gross_profit'] || name === metricKeys['net_ad_profit'] || name === 'organic_sales' || name === 'total_sales' || name === 'ad_sales') {
             const diffValue = Math.abs(value - prevValue)
 
             return (<InformationTooltip
@@ -99,6 +100,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                     prevValue={prevValue}
                     diff={diff}
                     type={type}
+                    percentRow={false}
                 />}>
                 <div className='metric-item__changes'>
                     {(value > prevValue) && <div className='upward-changes'>
