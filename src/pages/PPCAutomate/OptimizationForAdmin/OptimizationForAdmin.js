@@ -31,6 +31,7 @@ const OptimizationForAdmin = () => {
     const [productInformation, setProductInformation] = useState({}),
         [visibleDrawer, setVisibleDrawer] = useState(false),
         [stopProcessing, setStopProcessing] = useState(false),
+        [saveProcessing, setSaveProcessing] = useState(false),
         [productProcessing, setProductProcessing] = useState(false),
         [campaignSettings, setCampaignSettings] = useState([])
 
@@ -222,7 +223,7 @@ const OptimizationForAdmin = () => {
     }
 
     const startOptimizationHandler = async () => {
-        setProductProcessing(true)
+        setSaveProcessing(true)
 
         if (productInformation.optimization_strategy !== null) {
             if (productInformation.product_margin_value) {
@@ -279,7 +280,7 @@ const OptimizationForAdmin = () => {
             stopOptimizationHandler()
         }
 
-        setProductProcessing(false)
+        setSaveProcessing(false)
     }
 
 
@@ -287,59 +288,62 @@ const OptimizationForAdmin = () => {
         if (productId) getProductInformation()
     }, [productId])
 
-    const hasChanges = (JSON.stringify(productInformationFromRequest) !== JSON.stringify(productInformation)) || (JSON.stringify(campaignSettingsFromRequest) !== JSON.stringify(campaignSettings))
+    const hasChanges = productInformation.id ? (JSON.stringify(productInformationFromRequest) !== JSON.stringify(productInformation)) || (JSON.stringify(campaignSettingsFromRequest) !== JSON.stringify(campaignSettings)) : false
 
     return (
-        <div
-            className={`optimization-for-admin-page ${productInformation.optimization_strategy == null ? 'disabled' : ''}`}>
-            <OptimizationStatus
-                product={productInformation}
-            />
+        <>
+            <div
+                className={`optimization-for-admin-page ${productInformation.optimization_strategy == null ? 'disabled' : ''}`}>
+                <OptimizationStatus
+                    product={productInformation}
+                />
 
-            <OptimizationSettings
-                product={productInformation}
-                isDisabled={productInformation.optimization_strategy == null}
-                processing={stopProcessing}
+                <OptimizationSettings
+                    product={productInformation}
+                    isDisabled={productInformation.optimization_strategy == null}
+                    processing={stopProcessing}
 
-                onUpdateField={updateProductInformationHandler}
-                onStop={stopOptimizationHandler}
-                onShowDescription={() => setVisibleDrawer(true)}
-            />
+                    onUpdateField={updateProductInformationHandler}
+                    onStop={stopOptimizationHandler}
+                    onShowDescription={() => setVisibleDrawer(true)}
+                />
 
-            <OptimizationVariations
-                product={productInformation}
-                onUpdateField={updateProductInformationHandler}
-            />
+                <OptimizationVariations
+                    product={productInformation}
+                    onUpdateField={updateProductInformationHandler}
+                />
 
-            <CampaignsConfiguration
-                productId={productId}
-                optimizationJobId={productInformation.id}
-                isDisabled={productInformation.optimization_strategy == null}
-                jobsList={campaignSettings}
-                getSettings={getCampaignSettings}
-                onUpdate={updateCampaignSettingsHandler}
-            />
+                <CampaignsConfiguration
+                    productId={productId}
+                    optimizationJobId={productInformation.id}
+                    isDisabled={productInformation.optimization_strategy == null}
+                    jobsList={campaignSettings}
+                    getSettings={getCampaignSettings}
+                    onUpdate={updateCampaignSettingsHandler}
+                />
 
-            <SaveChanges
-                product={productInformation}
-                hasChanges={hasChanges}
-                onRevert={revertInformationHandler}
-                onStart={startOptimizationHandler}
-            />
+                <SaveChanges
+                    product={productInformation}
+                    hasChanges={hasChanges}
+                    onRevert={revertInformationHandler}
+                    onStart={startOptimizationHandler}
+                />
 
-            <StrategiesDescription
-                visible={visibleDrawer}
-                onClose={() => setVisibleDrawer(false)}
-            />
+                <StrategiesDescription
+                    visible={visibleDrawer}
+                    onClose={() => setVisibleDrawer(false)}
+                />
 
+                {productProcessing && <div className="save-loader"><Spin size={'large'}/></div>}
+            </div>
 
-            {productProcessing && <div className="page-loader"><Spin size={'large'}/></div>}
+            {saveProcessing && <div className="page-loader"><Spin size={'large'}/></div>}
 
             <Prompt
                 when={hasChanges}
                 message="Are you sure? The current scanning results will be lost"
             />
-        </div>
+        </>
     )
 }
 
