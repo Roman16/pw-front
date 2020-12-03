@@ -2,11 +2,22 @@ import _ from "lodash"
 import XLSX from "xlsx"
 
 export const saveFile = (file, type) => {
-    if(type === 'csv') {
+    if (type === 'csv') {
         saveAsCsv(file)
-    } else if(type === 'xls' || type === 'xlsx') {
+    } else if (type === 'xls' || type === 'xlsx') {
         saveAsExcel(file, type)
     }
+}
+
+export const saveInputParameters = (objs) => {
+    const textFile = _makeTextFile(JSON.stringify(objs, null, 2))
+    const link = document.createElement('a')
+    link.download = `input-parameters.json`
+    link.href = textFile
+    const el = document.querySelector('body')
+    el.appendChild(link)
+    link.click()
+    el.removeChild(link)
 }
 
 

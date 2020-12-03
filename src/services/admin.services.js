@@ -167,8 +167,9 @@ function zthVersionInformation() {
     return zthRequest('get', `${adminUrls.zthVersion}`)
 }
 
-function fetchZthJobs({page, title, pageSize}) {
-    return zthRequest('get', `${adminUrls.zthJobs}?limit=${pageSize}&offset=${(page - 1) * pageSize}&title=${title}`)
+function fetchZthJobs({page, title, pageSize, status}) {
+
+    return zthRequest('get', `${adminUrls.zthJobs}?limit=${pageSize}&offset=${(page - 1) * pageSize}${title && `&title=${title}`}${status && `&status=${status}`}`)
 }
 
 function fetchSemanticInformation(url) {
