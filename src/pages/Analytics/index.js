@@ -50,6 +50,11 @@ const Analytics = (props) => {
                 setState({})
             }
         }, false)
+
+        return (() => {
+            dispatch(analyticsActions.setMainState(undefined))
+            dispatch(analyticsActions.setLocation('products'))
+        })
     }, [])
 
     return (
