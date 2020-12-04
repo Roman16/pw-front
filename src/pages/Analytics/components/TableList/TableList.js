@@ -191,7 +191,7 @@ const TableList = ({
 
                 pageSizeOptions={[10, 30, 50, 100, 200]}
                 showQuickJumper={true}
-                listLength={fullResponse.length}
+                listLength={tableData.length}
                 processing={fetchingStatus}
 
                 {...paginationParams}
