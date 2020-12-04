@@ -17,7 +17,7 @@ const workplacesList = {
     'ad-groups': [],
     'targetings': [],
     'negative-targetings': [],
-    'product-ads': []
+    'product-ads': [],
 }
 
 const initialState = {
