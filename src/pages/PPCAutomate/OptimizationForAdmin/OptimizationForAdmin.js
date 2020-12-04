@@ -288,7 +288,7 @@ const OptimizationForAdmin = () => {
         if (productId) getProductInformation()
     }, [productId])
 
-    const hasChanges = productInformation.id ? (JSON.stringify(productInformationFromRequest) !== JSON.stringify(productInformation)) || (JSON.stringify(campaignSettingsFromRequest) !== JSON.stringify(campaignSettings)) : false
+    const hasChanges = (JSON.stringify(productInformationFromRequest) !== JSON.stringify(productInformation)) || (JSON.stringify(campaignSettingsFromRequest) !== JSON.stringify(campaignSettings))
 
     return (
         <>
