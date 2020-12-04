@@ -30,7 +30,8 @@ const ProductSettingsMain = () => {
             }),
         [paginationOptions, setPaginationOptions] = useState({
             page: 1,
-            pageSize: 10
+            pageSize: localStorage.getItem('productsSettingsPageSize') ?
+                +localStorage.getItem('productsSettingsPageSize') : 10
         })
 
     const {isAgencyClient} = useSelector(state => ({
@@ -153,6 +154,8 @@ const ProductSettingsMain = () => {
 
     const changePaginationHandler = (params) => {
         setPaginationOptions(params)
+
+        localStorage.setItem('productsSettingsPageSize', params.pageSize)
     }
 
     useEffect(() => {

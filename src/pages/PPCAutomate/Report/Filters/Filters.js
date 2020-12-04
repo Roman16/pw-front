@@ -77,7 +77,7 @@ const Filters = ({columns, onChange, filters, currentTab}) => {
                 </Popover>
             ))}
 
-            {((currentTab === 'all-reports' && filters.length < 3) ||
+            {((currentTab === 'all-reports' && filters.length < 4) ||
                 (currentTab === 'targeting-improvements' && filters.length < 10) ||
                 (currentTab === 'search-terms' && filters.length < 7)) && <Popover
                 content={<FilterWindow
