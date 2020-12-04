@@ -20,7 +20,9 @@ const MainChart = ({allMetrics}) => {
     const [productOptimizationDateList, setProductOptimizationDateList] = useState([])
 
 
-    const location = useSelector(state => state.analytics.location)
+    let location = useSelector(state => state.analytics.location)
+    location = location === 'campaignSettings' ? 'campaigns' : location
+    location = location === 'portfolioSettings' ? 'portfolios' : location
 
     const {selectedRangeDate, metricsState, chartState, filters, mainState} = useSelector(state => ({
         selectedRangeDate: state.analytics.selectedRangeDate,
@@ -32,7 +34,7 @@ const MainChart = ({allMetrics}) => {
     }))
 
 
-    const activeMetrics =  metricsState.activeMetrics || allMetrics.slice(0, 2)
+    const activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : allMetrics.slice(0, 2)
 
 
     const getChartData = async () => {

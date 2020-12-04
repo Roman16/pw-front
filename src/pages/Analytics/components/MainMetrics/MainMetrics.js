@@ -20,8 +20,11 @@ let source = null
 const MainMetrics = ({allMetrics}) => {
     const dispatch = useDispatch()
 
-    const location = useSelector(state => state.analytics.location),
-        metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location]),
+    let location = useSelector(state => state.analytics.location)
+    location = location === 'campaignSettings' ? 'campaigns' : location
+    location = location === 'portfolioSettings' ? 'portfolios' : location
+
+    const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location]),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         selectFourMetrics = useSelector(state => state.analytics.chartState[location].selectFourMetrics),
         filters = useSelector(state => state.analytics.filters[location] || []),
