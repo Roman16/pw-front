@@ -19,7 +19,7 @@ import _ from 'lodash'
 const CancelToken = axios.CancelToken
 let source = null
 
-let productInformationFromRequest = {},
+let productInformationFromRequest = null,
     campaignSettingsFromRequest = [],
     defaultOptimizationVariations = {}
 
@@ -286,9 +286,13 @@ const OptimizationForAdmin = () => {
 
     useEffect(() => {
         if (productId) getProductInformation()
+
+        return () => {
+            productInformationFromRequest = null
+        }
     }, [productId])
 
-    const hasChanges = (JSON.stringify(productInformationFromRequest) !== JSON.stringify(productInformation)) || (JSON.stringify(campaignSettingsFromRequest) !== JSON.stringify(campaignSettings))
+    const hasChanges = productInformationFromRequest !== null ? ((JSON.stringify(productInformationFromRequest) !== JSON.stringify(productInformation)) || (JSON.stringify(campaignSettingsFromRequest) !== JSON.stringify(campaignSettings))) : false
 
     return (
         <>
