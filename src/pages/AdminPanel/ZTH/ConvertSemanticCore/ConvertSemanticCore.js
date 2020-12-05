@@ -130,7 +130,7 @@ const ConvertSemanticCore = () => {
         try {
             const requestData = {
                 url: semanticData.url,
-                userId: 0,
+                userId: userId,
                 conversionOptions: {
                     converter: {
                         useInputParametersProductName: true, // <- should always be true
@@ -142,8 +142,6 @@ const ConvertSemanticCore = () => {
                     zeroToHero: {...semanticData.conversionOptions.zeroToHero},
                 }
             }
-
-            console.log('User id:' + userId)
 
             const res = await adminServices.uploadSemantic(requestData)
             setUploadProcessing(false)

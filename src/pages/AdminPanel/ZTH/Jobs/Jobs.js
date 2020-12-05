@@ -150,6 +150,7 @@ const Jobs = () => {
                 <div className="form-group">
                   <CustomSelect
                       placeholder={'Filter by status'}
+                      getPopupContainer={trigger => trigger}
                       onChange={(value) => setRequestParams(prevState => ({...prevState, status: value}))}
                   >
                       <Option value={''}>No Filter</Option>

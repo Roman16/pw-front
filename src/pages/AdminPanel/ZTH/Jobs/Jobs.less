@@ -5,6 +5,7 @@
   flex-direction: column;
   flex-wrap: nowrap;
   margin-bottom: 0;
+  color: #000;
 
   .filters {
     display: flex;
@@ -13,11 +14,17 @@
     input {
       width: 250px;
       margin: 0 20px 0 0;
+      color: #000;
+      height: 2.2857142857142856rem;
     }
 
     .custom-select {
       width: 250px;
+      height: 2.2857142857142856rem;
 
+      .ant-select-selection__placeholder {
+        font-size: 1rem;
+      }
     }
   }
 
@@ -34,6 +41,7 @@
         padding: 0;
         border-right: 1px solid #c9cbd4;
         justify-content: center;
+        color: #000;
 
         &:last-child {
           border: 0;
@@ -51,6 +59,7 @@
           padding: 5px;
           border-right: 1px solid #c9cbd4;
           justify-content: center;
+          color: #000;
 
           .google-url {
             max-width: 100%;
@@ -86,6 +95,12 @@
 
   .custom-select {
     width: max-content;
+  }
+
+  .pw-pagination {
+    label {
+      color: #000;
+    }
   }
 
 }

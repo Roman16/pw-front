@@ -185,6 +185,6 @@ function convertSemantic(data) {
 }
 
 function uploadSemantic(data) {
-    return zthRequest('post', `${adminUrls.uploadSemantic}`, {...data, userId: 0})
+    return zthRequest('post', `${adminUrls.uploadSemantic}`, data)
 }
 

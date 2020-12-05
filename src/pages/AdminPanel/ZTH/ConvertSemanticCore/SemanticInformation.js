@@ -58,6 +58,7 @@ const SemanticInformation = ({semanticInfo = {}, semanticData = {}, onChange}) =
                     className="form-control"
                     value={campaignsCompressionStrategy}
                     onChange={value => setCampaignsCompressionStrategy(value)}
+                    getPopupContainer={trigger => trigger}
                 >
                     <Option value={'Wide'}>Wide</Option>
                     <Option value={'Simple'}>Simple</Option>
