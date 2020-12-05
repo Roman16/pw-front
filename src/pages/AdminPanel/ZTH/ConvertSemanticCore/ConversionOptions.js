@@ -182,6 +182,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                         Campaigns status {actionType === 'convert' ? 'in Bulk Upload ' : 'after upload'}
                     </label>
                     <CustomSelect
+                        getPopupContainer={trigger => trigger}
                         value={semanticData.conversionOptions.converter.campaignsStatus}
                         onChange={value => changeConversionOptionsHandler('converter', 'campaignsStatus', value)}
                     >
@@ -194,6 +195,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                     <div className="form-group  w-25">
                         <label htmlFor="">Output type</label>
                         <CustomSelect
+                            getPopupContainer={trigger => trigger}
                             value={semanticData.conversionOptions.saver.saveBulkUploadAs}
                             onChange={value => changeConversionOptionsHandler('saver', 'saveBulkUploadAs', value)}
                         >
@@ -206,6 +208,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                     <div className="form-group w-25">
                         <label htmlFor="">Convert for marketplace</label>
                         <CustomSelect
+                            getPopupContainer={trigger => trigger}
                             value={semanticData.conversionOptions.converter.convertForMarketplace}
                             onChange={value => changeConversionOptionsHandler('converter', 'convertForMarketplace', value)}
                         >
@@ -234,6 +237,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                         filterOption={false}
                         onChange={value => setSelectedUserId(value)}
                         value={selectedUserId}
+                        getPopupContainer={trigger => trigger}
                     >
                         {usersList.map(user => (
                             <Option value={user.id}>

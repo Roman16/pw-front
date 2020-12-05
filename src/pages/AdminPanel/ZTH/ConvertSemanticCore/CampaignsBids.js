@@ -98,7 +98,7 @@ const CampaignsBids = ({onChange, semanticData}) => {
                         <CustomSelect
                             value={exactBid}
                             onChange={value => setExactBid(value)}
-                            getPopupContainer={trigger => trigger.parentNode}
+                            getPopupContainer={trigger => trigger}
                             className="form-control"
                         >
                             {bidsConfig && bidsConfig.predefinedExactBids.map(bid => <Option
@@ -111,7 +111,7 @@ const CampaignsBids = ({onChange, semanticData}) => {
                 <div className="form-group">
                     <label htmlFor="{{'ppcPlan-' + sheetData.id}}">Choose PPC plan for campaign budgets:</label>
                     <CustomSelect
-                        getPopupContainer={trigger => trigger.parentNode}
+                        getPopupContainer={trigger => trigger}
                         onChange={value => setPpcPlan(value)}
                         value={ppcPlan}
                         className="form-control"

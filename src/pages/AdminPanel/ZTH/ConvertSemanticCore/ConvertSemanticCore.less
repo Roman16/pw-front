@@ -3,18 +3,24 @@
   flex-wrap: nowrap;
 
   h3 {
-    font-size: 18px;
+    font-size: 1.2857142857142858rem;
   }
 
   h4 {
-    font-size: 14px;
+    font-size: 1rem;
     margin-bottom: 5px;
     color: rgba(0, 0, 0, 0.65);
   }
 
   .btn {
-    height: 32px;
-    font-size: 14px;
+    height: 2.2857142857142856rem;
+    font-size: 1rem;
+  }
+
+  .ant-checkbox-wrapper {
+    span {
+      font-size: 1rem;
+    }
   }
 
   .custom-table {
@@ -27,6 +33,7 @@
       .th {
         padding: 0;
         border-right: 1px solid #c9cbd4;
+        color: #000;
 
         &:last-child {
           border: 0;
@@ -35,7 +42,7 @@
 
       .title {
         justify-content: center;
-        font-size: 14px !important;
+        font-size: 1rem !important;
       }
     }
 
@@ -44,7 +51,7 @@
         .table-body__field {
           padding: 5px;
           border-right: 1px solid #c9cbd4;
-          font-size: 14px !important;
+          font-size: 1rem !important;
 
           &:last-child {
             border: 0;
@@ -84,9 +91,10 @@
 
     .custom-select {
       width: 100%;
+      height: 2.2857142857142856rem;
 
       .ant-select-selection-selected-value {
-        font-size: 14px;
+        color: #000;
       }
     }
 
@@ -96,6 +104,11 @@
 
     input {
       min-width: 100px;
+      color: #000;
+
+      &:disabled {
+        color: rgba(0, 0, 0, 0.25);
+      }
     }
   }
 
@@ -155,6 +168,8 @@
               height: 30px;
               resize: none;
               border-radius: 0;
+              color: #000;
+              font-size: 1rem;
 
               &:focus {
                 box-shadow: none;
@@ -182,7 +197,7 @@
         border-bottom-color: transparent;
         border-radius: 4px 4px 0 0;
         background: #fafafa;
-        font-size: 14px;
+        font-size: 1rem;
         cursor: pointer;
 
         &.active {
@@ -226,6 +241,10 @@
       flex-direction: column;
       margin-bottom: 20px;
 
+      span {
+        font-size: 1rem;
+      }
+
       .ant-radio-wrapper:first-child {
         margin-bottom: 20px;
       }
@@ -250,8 +269,8 @@
     }
 
     .submit {
-      height: 42px;
-      font-size: 18px;
+      height: 3rem;
+      font-size: 1.2857142857142858rem;
       font-weight: 500;
       padding: 0 40px;
 
@@ -293,7 +312,7 @@
 
       .btn {
         height: 32px;
-        font-size: 14px;
+        font-size: 1rem;
 
         .ant-spin {
           position: absolute;
