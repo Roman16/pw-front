@@ -118,12 +118,6 @@ export const FilterItem = ({filter}) => {
                 {`${columnTitle[filter.filterBy]} ${filter.type.key}: ${filter.value}`}
             </>
         )
-    } else if (filter.filterBy === 'match_type') {
-        return (
-            <>
-                {`${columnTitle[filter.filterBy]} ${filter.type.key}: ${filter.value.map(item => valueTile[item]).join(', ')}`}
-            </>
-        )
     } else if (filter.filterBy === 'impressions' ||
         filter.filterBy === 'clicks' ||
         filter.filterBy === 'spend' ||
