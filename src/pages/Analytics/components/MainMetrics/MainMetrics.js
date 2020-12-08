@@ -40,6 +40,11 @@ const MainMetrics = ({allMetrics}) => {
 
     const removeSelectedMetric = (metric) => {
         if (activeMetrics.includes(metric)) {
+            const index = activeMetrics.findIndex(item => item === metric)
+            if (activeMetricIndexTurn[1] === index) activeMetricIndexTurn.splice(1, 1)
+
+            activeMetricIndexTurn = [index, ...activeMetricIndexTurn]
+
             updateMetricsState({
                 selectedMetrics: selectedMetrics.filter(item => item !== metric),
                 activeMetrics: activeMetrics.map(item => item !== metric && item)
@@ -53,7 +58,6 @@ const MainMetrics = ({allMetrics}) => {
 
     const handleOk = () => {
         switchModal(false)
-        console.log()
         if (_.intersectionWith(hiddenItems, activeMetrics, _.isEqual).length > 0) {
             updateMetricsState({
                 selectedMetrics: visibleItems,
@@ -73,10 +77,12 @@ const MainMetrics = ({allMetrics}) => {
             activeMetrics: newActiveMetrics
         })
 
-        activeMetricIndexTurn = [...activeMetricIndexTurn.slice(1), activeMetricIndexTurn[0]]
+        activeMetricIndexTurn = [...activeMetricIndexTurn.filter(i => i !== activeMetricIndexTurn[0]), activeMetricIndexTurn[0]]
     }
 
     const deactivateMetric = (metric, index) => {
+        if (activeMetricIndexTurn[1] === index) activeMetricIndexTurn.splice(1, 1)
+
         activeMetricIndexTurn = [index, ...activeMetricIndexTurn]
 
         updateMetricsState({
@@ -150,6 +156,14 @@ const MainMetrics = ({allMetrics}) => {
             activeMetricIndexTurn = [0, 1]
         }
     }, [selectFourMetrics])
+
+    useEffect(() => {
+        if (selectFourMetrics) {
+            activeMetricIndexTurn = [0, 1, 2, 3]
+        } else {
+            activeMetricIndexTurn = [0, 1]
+        }
+    }, [])
 
     if (selectedMetrics) {
         if (typeof selectedMetrics[0] === 'object') {

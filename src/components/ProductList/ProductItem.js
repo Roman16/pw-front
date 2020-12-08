@@ -1,7 +1,10 @@
-import React from 'react';
-import {func, bool, string} from 'prop-types';
-import {SVG} from "../../utils/icons";
-import InformationTooltip from "../Tooltip/Tooltip";
+import React from 'react'
+import {func, bool, string} from 'prop-types'
+import {SVG} from "../../utils/icons"
+import InformationTooltip from "../Tooltip/Tooltip"
+import noImage from '../../assets/img/no-image-available.svg'
+
+export const amazonDefaultImageUrl = 'https://images-na.ssl-images-amazon.com/images/I/01RmK+J4pJL._SL75_.gif'
 
 const ProductItem = ({
                          product: {id, asin, name, sku, image_url, under_optimization, has_optimization_results, variations},
@@ -14,9 +17,9 @@ const ProductItem = ({
                      }) => {
 
     const switchList = (e) => {
-        e.stopPropagation();
+        e.stopPropagation()
         onOpenChild(id)
-    };
+    }
 
     return (
         <div
@@ -26,7 +29,7 @@ const ProductItem = ({
             <div className={`product-information ${openedProduct === id && 'opened-child-list'}`}>
                 <div className="image-block">
                     <div className="image">
-                        <img src={image_url} alt=""/>
+                        <img src={image_url === amazonDefaultImageUrl ? noImage : image_url} alt=""/>
                     </div>
                 </div>
 
@@ -117,8 +120,8 @@ const ProductItem = ({
                 ))}
             </div>}
         </div>
-    );
-};
+    )
+}
 
 ProductItem.propTypes = {
     isActive: bool,
@@ -128,7 +131,7 @@ ProductItem.propTypes = {
     sku: string,
     imageUrl: string,
     underOptimization: bool
-};
+}
 
 ProductItem.defaultProps = {
     isActive: false,
@@ -139,6 +142,6 @@ ProductItem.defaultProps = {
     sku: null,
     imageUrl: null,
     underOptimization: false
-};
+}
 
-export default ProductItem;
+export default ProductItem
