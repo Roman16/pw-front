@@ -58,7 +58,16 @@ const MainMetrics = ({allMetrics}) => {
 
     const handleOk = () => {
         switchModal(false)
+
         if (_.intersectionWith(hiddenItems, activeMetrics, _.isEqual).length > 0) {
+            activeMetrics.forEach((activeMetric, index) => {
+                if (hiddenItems.includes(activeMetric)) {
+                    if (activeMetricIndexTurn[1] === index) activeMetricIndexTurn.splice(1, 1)
+
+                    activeMetricIndexTurn = [index, ...activeMetricIndexTurn]
+                }
+            })
+
             updateMetricsState({
                 selectedMetrics: visibleItems,
                 activeMetrics: activeMetrics.map(item => visibleItems.includes(item) ? item : null)
@@ -77,7 +86,12 @@ const MainMetrics = ({allMetrics}) => {
             activeMetrics: newActiveMetrics
         })
 
-        activeMetricIndexTurn = [...activeMetricIndexTurn.filter(i => i !== activeMetricIndexTurn[0]), activeMetricIndexTurn[0]]
+        if (activeMetricIndexTurn[activeMetricIndexTurn.length - 1] === activeMetricIndexTurn[0]) {
+            activeMetricIndexTurn.splice(activeMetricIndexTurn.length - 1, 1)
+        }
+
+        activeMetricIndexTurn = [...activeMetricIndexTurn, activeMetricIndexTurn[0]]
+        activeMetricIndexTurn.shift()
     }
 
     const deactivateMetric = (metric, index) => {
@@ -170,6 +184,8 @@ const MainMetrics = ({allMetrics}) => {
             localStorage.removeItem('analyticsMetricsState')
         }
     }
+
+    // console.log(activeMetricIndexTurn)
 
     return (
         <div className="main-metrics metrics-block">
