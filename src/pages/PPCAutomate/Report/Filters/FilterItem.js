@@ -30,6 +30,8 @@ export const valueTile = {
     'not_profitable_keyword_pt': 'Not profitable keyword / PT',
     'created_keyword_pt': 'Created keyword / PT',
     'created_negative_keyword_pt': 'Created negative keyword / PT',
+    'negated_profitable_keyword_pt': 'Negated not profitable keyword / PT',
+    'negated_keyword_pt_prevent_competition': 'Negated keyword / PT to prevent competition',
     'duplicate_keyword_pt': 'Duplicate keyword / PT',
     'created_campaign': 'Created campaign',
     'created_ad_group': 'Created ad group',

@@ -12,6 +12,7 @@ import axios from "axios"
 
 const CancelToken = axios.CancelToken
 let source = null
+let prevActiveMetrics = []
 
 const MainChart = ({allMetrics}) => {
     const [chartData, updateChartData] = useState([])
@@ -79,7 +80,10 @@ const MainChart = ({allMetrics}) => {
 
 
     useEffect(() => {
-        getChartData()
+        if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(metricsState.activeMetrics.filter(item => item !== null))) {
+            getChartData()
+            prevActiveMetrics = [...metricsState.activeMetrics]
+        }
     }, [selectedRangeDate, metricsState.activeMetrics, filters, mainState])
 
     return <section className={'main-chart'}>
@@ -92,7 +96,7 @@ const MainChart = ({allMetrics}) => {
             showWeekChart={chartState.showWeekChart}
             showDailyChart={chartState.showDailyChart}
             showOptimizationChart={chartState.showOptimizationChart}
-            activeMetrics={activeMetrics}
+            activeMetrics={activeMetrics.filter(item => item !== null)}
             data={chartData}
             selectedRangeDate={selectedRangeDate}
             productOptimizationDateList={productOptimizationDateList}

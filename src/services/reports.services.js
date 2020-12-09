@@ -8,6 +8,8 @@ export const reasonFilterParams = {
     'not_profitable_keyword_pt': ['PausedKeywordHighACoS', 'PausedKeywordNoSales', 'PausedPATHighACoS', 'PausedPATNoSales'],
     'created_keyword_pt': ['CreatedKeywordFromCST', 'CreatedPATFromCST'],
     'created_negative_keyword_pt': ['AddedCreatedKeywordAsNegative', 'AddedCreatedPATAsNegative', 'CreatedNegativeKeywordFromCSTHighACoS', 'CreatedNegativeKeywordFromCSTNoSales', 'CreatedNegativePATFromCSTHighACoS', 'CreatedNegativePATFromCSTNoSales'],
+    'negated_profitable_keyword_pt': ['CreatedNegativeKeywordFromCSTHighACoS', 'CreatedNegativeKeywordFromCSTNoSales', 'CreatedNegativePATFromCSTHighACoS', 'CreatedNegativePATFromCSTNoSales'],
+    'negated_keyword_pt_prevent_competition': ['AddedCreatedKeywordAsNegative', 'AddedCreatedPATAsNegative'],
     'duplicate_keyword_pt': ['PausedKeywordDuplicateFromCustomerSearchTerm', 'PausedKeywordDuplicateOfPAT', 'PausedKeywordDuplicate', 'PausedPATDuplicate'],
     'created_campaign': ['CreatedCampaign'],
     'created_ad_group': ['CreatedAdGroup'],

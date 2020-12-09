@@ -205,7 +205,7 @@ const Subscription = () => {
                 setCardsList(res)
             });
 
-        interval = setInterval(handleUpdateSubscriptionStatus, 1000 * 60);
+        // interval = setInterval(handleUpdateSubscriptionStatus, 1000 * 60);
 
         return () => {
             clearInterval(interval);

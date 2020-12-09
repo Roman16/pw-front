@@ -167,7 +167,7 @@ const Jobs = () => {
             <CustomTable
                 loading={processing}
                 columns={columns}
-                dataSource={jobsList}
+                dataSource={[...jobsList, ...jobsList]}
             />
 
             <Pagination
