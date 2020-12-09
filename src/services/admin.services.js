@@ -136,8 +136,12 @@ function changeUserPassword(type, user, password) {
 //----------------------------
 
 const zthRequest = (method, url, data) => {
-    const baseUrl = 'https://front1.profitwhales.com/api/agency-server/api/v1/',
-        token = localStorage.getItem('token'),
+    const baseUrl =
+        process.env.REACT_APP_ENV === 'production'
+            ? `${process.env.REACT_APP_API_PROD}/api/agency-server/api/v1/` || ''
+            : `${process.env.REACT_APP_API_URL}/api/agency-server/api/v1/` || ''
+
+    const token = localStorage.getItem('token'),
         adminToken = localStorage.getItem('adminToken'),
         zthToken = localStorage.getItem('zthToken')
 
@@ -157,7 +161,7 @@ const zthRequest = (method, url, data) => {
                 resolve(response.data)
             })
             .catch(function (error) {
-                if(error.response && error.response.data) {
+                if (error.response && error.response.data) {
                     notification.error({title: error.response.data.errorMessage})
                 } else {
                     notification.error({title: 'Error!'})
