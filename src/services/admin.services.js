@@ -161,7 +161,7 @@ const zthRequest = (method, url, data) => {
                 resolve(response.data)
             })
             .catch(function (error) {
-                if (error.response && error.response.data) {
+                if (error.response && error.response.data && error.response.data.errorMessage) {
                     notification.error({title: error.response.data.errorMessage})
                 } else {
                     notification.error({title: 'Error!'})
