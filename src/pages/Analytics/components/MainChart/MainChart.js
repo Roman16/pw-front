@@ -78,11 +78,15 @@ const MainChart = ({allMetrics}) => {
         }
     }
 
+    useEffect(() => {
+        prevActiveMetrics = []
+    }, [mainState])
+
 
     useEffect(() => {
-        if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(metricsState.activeMetrics.filter(item => item !== null))) {
+        if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
             getChartData()
-            prevActiveMetrics = [...metricsState.activeMetrics]
+            prevActiveMetrics = [...activeMetrics]
         }
     }, [selectedRangeDate, metricsState.activeMetrics, filters, mainState])
 
