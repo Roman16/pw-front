@@ -1,6 +1,5 @@
 .admin-panel section.zth-jobs {
   min-height: 150px;
-  max-height: 100vh;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -30,9 +29,13 @@
 
   .custom-table {
     max-width: 100%;
+    max-height: 75vh;
     border: 1px solid #c9cbd4;
     margin: 20px 0 10px 0;
-    min-height: 120px;
+
+    .load-data {
+      padding: 25px 0 0 0;
+    }
 
     .table-head {
       background: #f0f0f0;
@@ -54,11 +57,14 @@
     }
 
     .table-body {
+      min-height: 45px;
+
       .table-body__row {
         .table-body__field {
           padding: 5px;
           border-right: 1px solid #c9cbd4;
           justify-content: center;
+          text-align: center;
           color: #000;
 
           .google-url {

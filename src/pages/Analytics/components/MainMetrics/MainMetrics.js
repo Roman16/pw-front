@@ -16,6 +16,7 @@ let activeMetricIndexTurn = [0, 1]
 
 const CancelToken = axios.CancelToken
 let source = null
+let prevActivatedIndex = undefined
 
 const MainMetrics = ({allMetrics}) => {
     const dispatch = useDispatch()
@@ -40,9 +41,11 @@ const MainMetrics = ({allMetrics}) => {
 
     const removeSelectedMetric = (metric) => {
         if (activeMetrics.includes(metric)) {
+            activeMetricIndexTurn = selectFourMetrics ? [0, 1, 2, 3] : [0, 1]
+
             updateMetricsState({
                 selectedMetrics: selectedMetrics.filter(item => item !== metric),
-                activeMetrics: activeMetrics.map(item => item !== metric && item)
+                activeMetrics: activeMetrics.map(item => item !== metric ? item : null)
             })
         } else {
             updateMetricsState({
@@ -53,35 +56,19 @@ const MainMetrics = ({allMetrics}) => {
 
     const handleOk = () => {
         switchModal(false)
-        console.log()
+
         if (_.intersectionWith(hiddenItems, activeMetrics, _.isEqual).length > 0) {
+            activeMetricIndexTurn = selectFourMetrics ? [0, 1, 2, 3] : [0, 1]
+
             updateMetricsState({
                 selectedMetrics: visibleItems,
                 activeMetrics: activeMetrics.map(item => visibleItems.includes(item) ? item : null)
             })
+
+            activeMetricIndexTurn = selectFourMetrics ? [0, 1, 2, 3] : [0, 1]
         } else {
             updateMetricsState({selectedMetrics: visibleItems})
         }
-    }
-
-    const activateMetric = (metric) => {
-        let newActiveMetrics = [...activeMetrics]
-
-        newActiveMetrics[activeMetricIndexTurn[0]] = metric
-
-        updateMetricsState({
-            activeMetrics: newActiveMetrics
-        })
-
-        activeMetricIndexTurn = [...activeMetricIndexTurn.slice(1), activeMetricIndexTurn[0]]
-    }
-
-    const deactivateMetric = (metric, index) => {
-        activeMetricIndexTurn = [index, ...activeMetricIndexTurn]
-
-        updateMetricsState({
-            activeMetrics: activeMetrics.map(item => item === metric ? null : item)
-        })
     }
 
     const updateMetricsState = (data) => {
@@ -123,6 +110,45 @@ const MainMetrics = ({allMetrics}) => {
     const openModal = () => switchModal(true)
     const handleCancel = () => switchModal(false)
 
+    const activateMetric = (metric) => {
+        let newActiveMetrics = [...activeMetrics]
+
+        const emptyIndex = newActiveMetrics.findIndex(item => item == null) === -1 ? false : newActiveMetrics.findIndex(item => item == null)
+
+        if (emptyIndex !== false) {
+            newActiveMetrics[emptyIndex] = metric
+            prevActivatedIndex = emptyIndex
+        } else {
+            if (prevActivatedIndex === 0) {
+                prevActivatedIndex = undefined
+
+                newActiveMetrics[1] = metric
+
+                if (selectFourMetrics) {
+                    activeMetricIndexTurn = [2, 3, 0, 1]
+                } else {
+                    activeMetricIndexTurn = [0, 1]
+                }
+            } else {
+                newActiveMetrics[activeMetricIndexTurn[0]] = metric
+                activeMetricIndexTurn = [...activeMetricIndexTurn, activeMetricIndexTurn[0]]
+                activeMetricIndexTurn.shift()
+            }
+        }
+
+        updateMetricsState({
+            activeMetrics: newActiveMetrics
+        })
+    }
+
+    const deactivateMetric = (metric) => {
+        activeMetricIndexTurn = selectFourMetrics ? [0, 1, 2, 3] : [0, 1]
+
+        updateMetricsState({
+            activeMetrics: activeMetrics.map(item => item === metric ? null : item)
+        })
+    }
+
     const addMetric = (item) => {
         updateVisibleList([...visibleItems, item])
         updateHiddenList([...hiddenItems.filter((hiddenMetric) => hiddenMetric !== item)])
@@ -138,24 +164,37 @@ const MainMetrics = ({allMetrics}) => {
         updateHiddenList([...allMetrics.filter(metric => !selectedMetrics.includes(metric))])
     }, [metricsState, visibleModal])
 
-
     useEffect(() => {
         getMetricsStatistics()
     }, [selectedRangeDate, filters, mainState])
 
     useEffect(() => {
         if (selectFourMetrics) {
-            activeMetricIndexTurn = [2, 3, ...activeMetricIndexTurn]
+            activeMetricIndexTurn = [0, 1, 2, 3]
+            if (activeMetrics.length === 2) {
+                updateMetricsState({activeMetrics: [...activeMetrics, null, null]})
+            }
+        } else {
+            activeMetricIndexTurn = [0, 1]
+            updateMetricsState({activeMetrics: activeMetrics.slice(0, 2)})
+        }
+    }, [selectFourMetrics])
+
+    useEffect(() => {
+        if (selectFourMetrics) {
+            activeMetricIndexTurn = [0, 1, 2, 3]
         } else {
             activeMetricIndexTurn = [0, 1]
         }
-    }, [selectFourMetrics])
+    }, [])
 
     if (selectedMetrics) {
         if (typeof selectedMetrics[0] === 'object') {
             localStorage.removeItem('analyticsMetricsState')
         }
     }
+
+    // console.log(activeMetricIndexTurn)
 
     return (
         <div className="main-metrics metrics-block">

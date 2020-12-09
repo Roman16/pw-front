@@ -1,12 +1,9 @@
-import React, {Fragment, useState, useEffect} from "react";
+import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import {Input, Spin, Table} from "antd";
-import ppcIcon from "../../../assets/img/icons/ppc-automate-subscription-logo.svg";
 import moment from "moment";
 import {numberMask} from "../../../utils/numberMask";
-import {history} from "../../../utils/history";
 import {useSelector} from "react-redux";
-import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import {SVG} from "../../../utils/icons";
 
 const CouponField = ({applyCoupon, setCoupon, product}) => {

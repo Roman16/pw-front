@@ -1,19 +1,21 @@
-import React, {useState} from "react";
-import CustomTable from "../../../components/Table/CustomTable";
-import moment from "moment";
-import Pagination from "../../../components/Pagination/Pagination";
-import {SVG} from "../../../utils/icons";
-import {history} from "../../../utils/history";
-import {zthActions} from "../../../actions/zth.actions";
-import {useDispatch} from "react-redux";
-import InformationTooltip from "../../../components/Tooltip/Tooltip";
+import React, {useState} from "react"
+import CustomTable from "../../../components/Table/CustomTable"
+import moment from "moment"
+import Pagination from "../../../components/Pagination/Pagination"
+import {SVG} from "../../../utils/icons"
+import {history} from "../../../utils/history"
+import {zthActions} from "../../../actions/zth.actions"
+import {useDispatch} from "react-redux"
+import InformationTooltip from "../../../components/Tooltip/Tooltip"
+import {amazonDefaultImageUrl} from "../../../components/ProductList/ProductItem"
+import noImage from '../../../assets/img/no-image-available.svg'
 
 
 const ProductItem = ({product, openedProduct, onOpenVariations}) => {
     return (
         <div className='product-block'>
             <div className="image">
-                <img src={product.image_url} alt=""/>
+                <img src={product.image_url === amazonDefaultImageUrl ? noImage : product.image_url} alt=""/>
             </div>
 
             <div className="col">
@@ -62,7 +64,7 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
 
         </div>
     )
-};
+}
 
 const jobStatus = ({job}) => {
     if (job) {
@@ -112,7 +114,7 @@ const jobStatus = ({job}) => {
             )
         }
     }
-};
+}
 
 const jobIssues = ({job, batch}) => {
     if (job) {
@@ -141,26 +143,26 @@ const jobIssues = ({job, batch}) => {
             )
         }
     }
-};
+}
 
 const ProductsList = ({productsList, selectedTab, paginationOptions, processing, totalSize, onChangePagination}) => {
-    const [openedProduct, setOpenedProduct] = useState(null);
+    const [openedProduct, setOpenedProduct] = useState(null)
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const openProductVariationsHandler = (id) => {
         setOpenedProduct(prevState => prevState === id ? null : id)
-    };
+    }
 
     const goOptimizationPage = () => {
         history.push('/ppc/optimization')
-    };
+    }
 
     const createZthHandler = (product) => {
-        dispatch(zthActions.addProducts([product]));
+        dispatch(zthActions.addProducts([product]))
 
         history.push('/zero-to-hero/creating')
-    };
+    }
 
     const expandedRowRender = (product) => {
         const columns = {
@@ -251,14 +253,14 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     }
                 },
             ]
-        };
+        }
 
 
         return (
             product.variations.map((productVariation, index) => (
                     <div>
                         {columns[selectedTab].map((item, index) => {
-                                const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1};
+                                const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1}
 
                                 return (
                                     <div
@@ -276,7 +278,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 )
             )
         )
-    };
+    }
 
 
     const defaultColumns = [
@@ -291,7 +293,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 onOpenVariations={openProductVariationsHandler}
             />)
         }
-    ];
+    ]
     const columns = {
         'zth-products': [
             ...defaultColumns,
@@ -410,7 +412,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 )
             },
         ]
-    };
+    }
 
     return (
         <>
@@ -435,6 +437,6 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
             />
         </>
     )
-};
+}
 
-export default ProductsList;
+export default ProductsList

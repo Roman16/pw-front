@@ -1,5 +1,7 @@
 import React from "react";
 import {SVG} from "../../../../utils/icons";
+import {amazonDefaultImageUrl} from "../../../../components/ProductList/ProductItem"
+import noImage from "../../../../assets/img/no-image-available.svg"
 
 const ProductItem = ({
                          type,
@@ -21,7 +23,7 @@ const ProductItem = ({
             <div className={`product-item ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`}
                  onClick={() => !isDisabled && onSelect && onSelect(product, isSelected)}>
                 <div className="photo">
-                    <img src={product.image_url} alt=""/>
+                    <img src={product.image_url === amazonDefaultImageUrl ? noImage : product.image_url} alt=""/>
                 </div>
 
                 <div className="col">

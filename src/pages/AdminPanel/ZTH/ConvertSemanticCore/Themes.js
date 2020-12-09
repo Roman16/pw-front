@@ -1,9 +1,9 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Input} from "antd"
 import {SVG} from "../../../../utils/icons"
 import CustomTable from "../../../../components/Table/CustomTable"
 
-const Themes = ({themes = [], setThemes}) => {
+const Themes = ({themes = [], setThemes, variationIndex}) => {
     const [activeThemeIndex, setActiveThemeIndex] = useState(0)
 
     const add = () => {
@@ -35,6 +35,10 @@ const Themes = ({themes = [], setThemes}) => {
             return theme
         }))
     }
+
+    useEffect(() => {
+        setActiveThemeIndex(0)
+    }, [variationIndex])
 
     const columns = [
         {

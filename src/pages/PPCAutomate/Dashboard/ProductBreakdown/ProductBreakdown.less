@@ -72,6 +72,7 @@
 
     .switch-block {
       margin: 0 15px 0 0;
+
       button {
         margin: 0 10px 0 0;
       }
@@ -229,9 +230,17 @@
               font-size: 1rem;
 
               .image {
+                min-width: 4.642857142857143rem;
+                width: 4.642857142857143rem;
+                height: 4.642857142857143rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
                 img {
-                  max-width: 4.642857142857143rem;
-                  max-height: 4.642857142857143rem;
+                  object-fit: contain;
+                  width: 100%;
+                  height: 100%;
                 }
               }
 
@@ -265,6 +274,7 @@
                   div {
                     display: flex;
                     font-weight: 500;
+
                     span:last-child {
                       display: block;
                       font-weight: 400;

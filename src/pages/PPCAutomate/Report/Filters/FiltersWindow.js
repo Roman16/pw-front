@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import CustomSelect from "../../../../components/Select/Select"
 import DatePicker from "../../../../components/DatePicker/DatePickerRange"
 import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
@@ -144,6 +144,21 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
         [filterType, setFilterType] = useState(),
         [filterValue, setFilterValue] = useState()
 
+    const wrapperRef = useRef(null)
+
+
+    useEffect(() => {
+        function handleClickOutside({target}) {
+            if (wrapperRef.current && !wrapperRef.current.contains(target)) {
+                onClose()
+            }
+        }
+
+        document.addEventListener("click", handleClickOutside, true)
+        return () => {
+            document.removeEventListener("click", handleClickOutside)
+        }
+    }, [wrapperRef])
 
     useEffect(() => {
         if (editFilter && editFilter.filterBy) {
@@ -178,11 +193,8 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 ] :
                 currentTab === 'search-terms' ? [
                         {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
-                        {
-                            title: 'Created negative keyword / PT',
-                            key: 'created_negative_keyword_pt',
-                            value: 'created_negative_keyword_pt'
-                        },
+                        {title: 'Negated not profitable keyword / PT', key: 'negated_profitable_keyword_pt', value: 'negated_profitable_keyword_pt'},
+                        {title: 'Negated keyword / PT to prevent competition', key: 'negated_keyword_pt_prevent_competition', value: 'negated_keyword_pt_prevent_competition'},
                         {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
                         {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
                         {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
@@ -196,11 +208,8 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                             value: 'not_profitable_keyword_pt'
                         },
                         {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
-                        {
-                            title: 'Created negative keyword / PT',
-                            key: 'created_negative_keyword_pt',
-                            value: 'created_negative_keyword_pt'
-                        },
+                        {title: 'Negated not profitable keyword / PT', key: 'negated_profitable_keyword_pt', value: 'negated_profitable_keyword_pt'},
+                        {title: 'Negated keyword / PT to prevent competition', key: 'negated_keyword_pt_prevent_competition', value: 'negated_keyword_pt_prevent_competition'},
                         {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
                         {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
                         {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
@@ -253,7 +262,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
         setFilterValue(undefined)
     }
 
-    return (<form className="filter-variables" onSubmit={submitHandler}>
+    return (<form className="filter-variables" onSubmit={submitHandler} ref={wrapperRef}>
         <div className="row">
             <div className="form-group">
                 <CustomSelect

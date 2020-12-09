@@ -116,11 +116,17 @@ const Variations = ({semanticData, onChange}) => {
                 ...semanticData.conversionOptions,
                 productInformation: {
                     ...semanticData.conversionOptions.productInformation,
-                    variations: variations.reduce((result, variation) => result.concat(variation.listingUrlsSKUs.map(item => ({
-                        listingUrl: item.listingUrl,
-                        sku: item.sku,
-                        themeValues: variation.themeValues
-                    }))), [])
+                    variations: variations
+                        .reduce((result, variation) => result.concat(variation.listingUrlsSKUs.map(item => ({
+                            listingUrl: item.listingUrl,
+                            sku: item.sku,
+                            themeValues: variation.themeValues
+                        }))), [])
+                        .filter(variation => variation.sku || variation.listingUrl)
+                        .map(variation => {
+                            variation.themeValues = variation.themeValues.filter(theme => theme.theme && theme.value)
+                            return variation
+                        })
                 }
             }
         })
@@ -171,6 +177,7 @@ const Variations = ({semanticData, onChange}) => {
 
             <Themes
                 themes={variations[activeVariationIndex] && variations[activeVariationIndex].themeValues}
+                variationIndex={activeVariationIndex}
                 setThemes={(value) => setVariationThemes(value)}
             />
 

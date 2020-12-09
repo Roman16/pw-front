@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import CustomSelect from "../../../../components/Select/Select"
 import DatePicker from "../../../../components/DatePicker/DatePickerRange"
 import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
@@ -131,7 +131,6 @@ const containsVariations = {
     'ad_group_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
 
 
-
     'impressions': numberVariations,
     'clicks': numberVariations,
     'spend': numberVariations,
@@ -188,6 +187,9 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
         [filterType, setFilterType] = useState(),
         [filterValue, setFilterValue] = useState()
 
+    const wrapperRef = useRef(null)
+
+
     useEffect(() => {
         if (editFilter && editFilter.filterBy) {
             setFilterBy(editFilter.filterBy)
@@ -196,6 +198,18 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
         }
     }, [editFilter])
 
+    useEffect(() => {
+        function handleClickOutside({target}) {
+            if (wrapperRef.current && !wrapperRef.current.contains(target)) {
+                onClose()
+            }
+        }
+
+        document.addEventListener("click", handleClickOutside, true)
+        return () => {
+            document.removeEventListener("click", handleClickOutside)
+        }
+    }, [wrapperRef])
 
     const multiSelectVariations = {
         'object_type': [
@@ -310,7 +324,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
         setFilterValue(undefined)
     }
 
-    return (<form className="filter-variables" onSubmit={submitHandler}>
+    return (<form className="filter-variables" onSubmit={submitHandler} ref={wrapperRef}>
         <div className="row">
             <div className="form-group">
                 <CustomSelect
