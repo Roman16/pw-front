@@ -1,0 +1,90 @@
+.audit-registration-page .user-comments {
+  width: 440px;
+  height: 100%;
+  list-style: none;
+  margin: 0 0 0 40px;
+  overflow: auto;
+  padding: 0 24px 0 0;
+  position: relative;
+
+  &.start {
+    mask-image: linear-gradient(180deg, #C4C4C4 0%, #C4C4C4 76.73%, rgba(196, 196, 196, 0) 100%);
+  }
+
+  &.progress {
+    mask-image: linear-gradient(180deg, rgba(196, 196, 196, 0) 0%, #C4C4C4 22.92%, #C4C4C4 76.73%, rgba(196, 196, 196, 0) 100%);
+  }
+
+  &.finished {
+    mask-image: linear-gradient(180deg, rgba(196, 196, 196, 0) 0%, #C4C4C4 22.92%, #C4C4C4 76.73%, #C4C4C4 100%);
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    background: rgba(255, 255, 255, 0.21);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 20px;
+    border-radius: 10px;
+    background: #83FED0;
+  }
+
+  li {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #FFFFFF;
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+
+    &:last-child {
+      border: 0;
+      margin: 0;
+    }
+
+    p {
+      font-size: 13px;
+      line-height: 17px;
+      color: #FFFFFF;
+      margin-bottom: 13px;
+
+      span {
+        background: #83FED0;
+        color: #6D6DF6;
+      }
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+
+      img {
+        min-width: 39px;
+        width: 39px;
+        height: 39px;
+        margin: 0 12px 0 0;
+      }
+
+      h3 {
+        font-size: 13px;
+        line-height: 17px;
+        color: #FFFFFF;
+        margin: 0;
+
+        span {
+          font-weight: 400;
+        }
+      }
+
+      .btn {
+        height: 40px;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: capitalize;
+        color: #6D6DF6;
+        margin: 0 0 0 auto;
+      }
+    }
+  }
+}
