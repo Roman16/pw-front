@@ -63,7 +63,7 @@ const routers = () => {
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
                     {/*<Route exact path="/registration/:tag" component={RegistrationPage}/>*/}
-                    <Route exact path="/registration" component={AuditRegistration}/>
+                    {/*<Route exact path="/registration" component={AuditRegistration}/>*/}
                     <Route exact path="/confirm-email/:token?" component={ConfirmEmailPage}/>
                     <Route exact path="/reset-password/:userId?/:token?" component={ResetPassword}/>
                     <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
