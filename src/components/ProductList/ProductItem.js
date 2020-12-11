@@ -4,6 +4,7 @@ import {SVG} from "../../utils/icons"
 import InformationTooltip from "../Tooltip/Tooltip"
 import noImage from '../../assets/img/no-image-available.svg'
 
+// default product image urls
 export const amazonDefaultImageUrl = 'https://images-na.ssl-images-amazon.com/images/I/01RmK+J4pJL._SL75_.gif'
 
 const ProductItem = ({

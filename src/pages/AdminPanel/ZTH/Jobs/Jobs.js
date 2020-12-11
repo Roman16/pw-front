@@ -61,12 +61,12 @@ const columns = [
         title: 'Status',
         dataIndex: 'status',
         key: 'status',
-        width: '80px',
+        width: '110px',
         render: status => (<>
-                {status === 'DONE' && <span style={{color: '#259B25'}}>DONE</span>}
-                {(status === 'ERROR' || status === 'FAILED') && <span style={{color: '#D66744'}}>{status}</span>}
-                {status === 'IN_PROGRESS' && <span style={{color: '#EEBB81'}}>IN PROGRESS</span>}
-                {status === 'PENDING' && <span style={{color: '#656A84'}}>PENDING</span>}
+                {status === 'DONE' && <span style={{color: 'green'}}>DONE</span>}
+                {(status === 'ERROR' || status === 'FAILED') && <span style={{color: 'red'}}>{status}</span>}
+                {status === 'IN_PROGRESS' && <span style={{color: 'blue'}}>IN PROGRESS</span>}
+                {status === 'PENDING' && <span style={{color: 'orange'}}>PENDING</span>}
             </>
         )
     },
@@ -161,8 +161,11 @@ const Jobs = () => {
                       <Option value={'ERROR'}>ERROR</Option>
                   </CustomSelect>
                 </div>
-
             </div>
+
+            <button className={'btn default refresh'} onClick={getData}>
+                Refresh
+            </button>
 
             <CustomTable
                 loading={processing}

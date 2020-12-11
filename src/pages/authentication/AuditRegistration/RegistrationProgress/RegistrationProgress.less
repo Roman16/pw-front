@@ -1,0 +1,168 @@
+.audit-registration-page .registration-progress {
+  width: 300px;
+  background: #fff;
+  padding: 48px 48px 25px;
+  border-radius: 4px 0 0 4px;
+  list-style: none;
+
+  &.mob {
+    display: none;
+  }
+
+  .ant-steps {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ant-steps-item-icon {
+    border: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: inherit;
+    width: 25px;
+    height: 25px;
+
+    .ant-steps-icon {
+      display: flex;
+      width: 9px;
+      height: 9px;
+      background: #C9CBD4;
+      border-radius: 50%;
+      font-size: 1px;
+      margin: 2px auto 0 auto;
+      text-indent: -9999px;
+    }
+  }
+
+  .ant-steps-item-container {
+    .ant-steps-item-tail {
+      padding: 0;
+      margin: 10px 0 0 0;
+      left: 12px;
+
+      &::after {
+        width: 100%;
+        background: #C9CBD4;
+      }
+    }
+  }
+
+
+  .ant-steps-item-content {
+    width: max-content;
+
+    .ant-steps-item-title {
+      font-size: 16px;
+      line-height: 19px;
+      color: #C9CBD4;
+      font-weight: 400;
+      margin: 3px 0 0 0;
+    }
+  }
+
+
+  .ant-steps-item-active {
+    .ant-steps-item-tail {
+      &::after {
+        background: #C9CBD4;
+      }
+    }
+
+    .ant-steps-item-icon {
+      background: #6D6DF6;
+
+      .ant-steps-icon {
+        background: #fff;
+      }
+    }
+
+    .ant-steps-item-title {
+      color: #6D6DF6;
+    }
+
+  }
+
+  .ant-steps-item-finish {
+    .ant-steps-item-tail {
+      width: 3px;
+      left: 11px;
+
+      &::after {
+        background: #6D6DF6;
+      }
+    }
+
+    .ant-steps-item-icon {
+      background: #6D6DF6 url(../../../../assets/img/icons/checked-checkbox.svg) no-repeat 60% center;
+      background-size: 70%;
+
+      .ant-steps-icon {
+        display: none;
+      }
+    }
+
+    .ant-steps-item-title {
+      color: #6D6DF6;
+    }
+  }
+
+  @media (max-width: 1300px) {
+    width: max-content;
+    padding: 20px 20px 5px;
+  }
+
+  @media (max-width: 800px) {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+
+    &.desc {
+      display: none;
+    }
+
+    &.mob {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+
+      .progress-block {
+        position: relative;
+        margin: 0 20px 0 0;
+
+        .ant-progress {
+          .ant-progress-inner {
+            width: 48px !important;
+            height: 48px !important;
+          }
+        }
+
+        .step {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          font-size: 12px;
+          font-weight: 500;
+          color: #7C8A95;
+
+          span {
+            color: #6D6DF6;
+            margin: 0 3px 0 0;
+          }
+        }
+      }
+
+      h2 {
+        font-size: 21px;
+        color: #6D6DF6;
+        margin: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,169 @@
+.audit-registration-page .user-comments {
+  &.mob {
+    display: none;
+  }
+
+  &.desc {
+    width: 440px;
+    height: 100%;
+    list-style: none;
+    margin: 0 0 0 40px;
+    overflow: auto;
+    padding: 0 20px 0 0;
+    position: relative;
+  }
+
+
+  &.start {
+    mask-image: linear-gradient(180deg, #C4C4C4 0%, #C4C4C4 76.73%, rgba(196, 196, 196, 0) 100%);
+  }
+
+  &.progress {
+    mask-image: linear-gradient(180deg, rgba(196, 196, 196, 0) 0%, #C4C4C4 22.92%, #C4C4C4 76.73%, rgba(196, 196, 196, 0) 100%);
+  }
+
+  &.finished {
+    mask-image: linear-gradient(180deg, rgba(196, 196, 196, 0) 0%, #C4C4C4 22.92%, #C4C4C4 76.73%, #C4C4C4 100%);
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    background: rgba(255, 255, 255, 0.21);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 20px;
+    border-radius: 10px;
+    background: #83FED0;
+  }
+
+  li {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #FFFFFF;
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+
+    &:last-child {
+      border: 0;
+      margin: 0;
+    }
+  }
+
+  p {
+    font-size: 13px;
+    line-height: 17px;
+    color: #FFFFFF;
+    margin-bottom: 13px;
+    text-align: justify;
+
+    span {
+      background: #83FED0;
+      color: #6D6DF6;
+    }
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+
+    img {
+      min-width: 39px;
+      width: 39px;
+      height: 39px;
+      margin: 0 12px 0 0;
+    }
+
+    h3 {
+      font-size: 13px;
+      line-height: 17px;
+      color: #FFFFFF;
+      margin: 0 auto 0 0;
+
+      span {
+        font-weight: 400;
+      }
+    }
+
+    .btn {
+      min-height: 40px;
+      width: max-content;
+      height: max-content;
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: capitalize;
+      color: #6D6DF6;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 1300px) {
+    width: 32%;
+    margin: 0 0 0 20px;
+  }
+
+  @media (max-width: 800px) {
+    &.desc {
+      display: none;
+    }
+
+    &.mob {
+      width: 100%;
+      display: block;
+      margin: 60px 0 0 0;
+
+      .row h3 {
+        width: 28%;
+        word-break: break-word;
+      }
+
+      .slick-list {
+        overflow: hidden;
+      }
+
+      .slick-track {
+        display: flex;
+
+        .slick-slide {
+          .slide-item {
+            padding: 0 10px;
+          }
+        }
+      }
+
+      .slick-dots {
+        display: flex !important;
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 20px 0 0 0;
+
+        li {
+          flex: 1;
+          padding: 0;
+          margin: 0;
+          border: 0;
+
+          &.slick-active {
+            button {
+              background: #83FED0;
+              border-radius: 10px;
+            }
+          }
+
+          button {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 0;
+            text-indent: -9999px;
+
+            &:focus {
+              outline: none;
+              border: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
