@@ -149,7 +149,9 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
 
     useEffect(() => {
         function handleClickOutside({target}) {
-            if (wrapperRef.current && !wrapperRef.current.contains(target)) {
+            if (target.className === 'btn icon' || target.parentNode.className === 'btn icon') {
+
+            } else if (wrapperRef.current && !wrapperRef.current.contains(target)) {
                 onClose()
             }
         }
@@ -193,8 +195,16 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 ] :
                 currentTab === 'search-terms' ? [
                         {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
-                        {title: 'Negated not profitable keyword / PT', key: 'negated_profitable_keyword_pt', value: 'negated_profitable_keyword_pt'},
-                        {title: 'Negated keyword / PT to prevent competition', key: 'negated_keyword_pt_prevent_competition', value: 'negated_keyword_pt_prevent_competition'},
+                        {
+                            title: 'Negated not profitable keyword / PT',
+                            key: 'negated_profitable_keyword_pt',
+                            value: 'negated_profitable_keyword_pt'
+                        },
+                        {
+                            title: 'Negated keyword / PT to prevent competition',
+                            key: 'negated_keyword_pt_prevent_competition',
+                            value: 'negated_keyword_pt_prevent_competition'
+                        },
                         {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
                         {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
                         {title: 'Created product ad', key: 'created_product_ad', value: 'created_product_ad'},
@@ -208,8 +218,16 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                             value: 'not_profitable_keyword_pt'
                         },
                         {title: 'Created keyword / PT', key: 'created_keyword_pt', value: 'created_keyword_pt'},
-                        {title: 'Negated not profitable keyword / PT', key: 'negated_profitable_keyword_pt', value: 'negated_profitable_keyword_pt'},
-                        {title: 'Negated keyword / PT to prevent competition', key: 'negated_keyword_pt_prevent_competition', value: 'negated_keyword_pt_prevent_competition'},
+                        {
+                            title: 'Negated not profitable keyword / PT',
+                            key: 'negated_profitable_keyword_pt',
+                            value: 'negated_profitable_keyword_pt'
+                        },
+                        {
+                            title: 'Negated keyword / PT to prevent competition',
+                            key: 'negated_keyword_pt_prevent_competition',
+                            value: 'negated_keyword_pt_prevent_competition'
+                        },
                         {title: 'Duplicate keyword / PT', key: 'duplicate_keyword_pt', value: 'duplicate_keyword_pt'},
                         {title: 'Created campaign', key: 'created_campaign', value: 'created_campaign'},
                         {title: 'Created ad group', key: 'created_ad_group', value: 'created_ad_group'},
@@ -248,7 +266,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
     const submitHandler = (e) => {
         e.preventDefault()
 
-        const arr = filterType.key === 'except' ?  [...multiSelectVariations[filterBy]] : []
+        const arr = filterType.key === 'except' ? [...multiSelectVariations[filterBy]] : []
 
         onAddFilter({
             filterBy: filterBy,
@@ -300,6 +318,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             <div className="form-group">
                 {filterBy === 'datetime' &&
                 <DatePicker
+                    // getPopupContainer={trigger => document.querySelector('.filter-variables')}
                     timeRange={(startDate, endDate) => changeDateHandler(startDate, endDate)}
                     defaultValue={filterValue && Object.keys(filterValue).map(key => filterValue[key])}
                 />}
