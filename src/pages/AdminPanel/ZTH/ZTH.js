@@ -9,15 +9,9 @@ import {adminServices} from "../../../services/admin.services"
 import TokenBlock from "./TokenBlock/TokenBlock"
 
 const ZTH = () => {
-
-
-
-    useEffect(() => {
-        if(history.location.pathname === '/admin-panel/zth' || history.location.pathname === '/admin-panel/zth/') {
-            history.push('/admin-panel/zth/convert')
-        }
-
-    }, [])
+    if(history.location.pathname === '/admin-panel/zth' || history.location.pathname === '/admin-panel/zth/') {
+        history.push('/admin-panel/zth/convert')
+    }
 
     return (
         <section className={'user-products-section zth'}>
