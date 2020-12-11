@@ -7,6 +7,8 @@ import LightingEquipmentBrandAvatar
     from "../../../../assets/img/audit-registration/user-avatars/LightingEquipmentBrand.png"
 
 import './UserComments.less'
+import Slider from "react-slick"
+import commentIcon from "../../../../assets/img/landing-pricing/comment-icon.svg"
 
 const comments = [
     {
@@ -44,8 +46,27 @@ const comments = [
 
 let intervalId = null
 
-const UserComments = () => {
+const CommentItem = ({comment}) => (
+    <>
+        <p dangerouslySetInnerHTML={{__html: comment.comment}}/>
+
+        <div className="row">
+            <img src={comment.userAvatar} alt=""/>
+
+            <h3>
+                {comment.userName}
+                {comment.userRole && <><br/> <span>{comment.userRole}</span></>}
+            </h3>
+
+            <a href={comment.caseLink} target={'_blank'} className={'btn white'}>Check My Case</a>
+        </div>
+    </>
+)
+
+const UserComments = ({currentStep}) => {
     const refId = useRef(null)
+
+    let sliderRef
 
     const [intervalIteration, setIntervalIteration] = useState(0),
         [listState, setListState] = useState('start')
@@ -78,25 +99,39 @@ const UserComments = () => {
         }
     }
 
+    useEffect(() => {
+        sliderRef && currentStep !== 0 && sliderRef.slickNext()
+    }, [currentStep])
+
     return (
-        <ul className={`${listState} user-comments`} ref={refId} onScroll={scrollHandler}>
-            {comments.map(item => (
-                <li>
-                    <p dangerouslySetInnerHTML={{__html: item.comment}}/>
+        <>
+            <ul className={`${listState} user-comments desc`} ref={refId} onScroll={scrollHandler}>
+                {comments.map(item => (
+                    <li>
+                        <CommentItem comment={item}/>
+                    </li>
+                ))}
+            </ul>
 
-                    <div className="row">
-                        <img src={item.userAvatar} alt=""/>
+            <div className="user-comments mob">
+                <Slider
+                    ref={c => (sliderRef = c)}
+                    dots={true}
+                    infinite={true}
+                    arrows={false}
+                    speed={500}
+                    slidesToShow={1}
+                    slidesToScroll={1}
+                >
+                    {comments.map((item, index) => (
+                        <div className="slide-item">
+                            <CommentItem comment={item}/>
+                        </div>
+                    ))}
+                </Slider>
+            </div>
 
-                        <h3>
-                            {item.userName}
-                            {item.userRole && <><br/> <span>{item.userRole}</span></>}
-                        </h3>
-
-                        <a href={item.caseLink} target={'_blank'} className={'btn white'}>Check My Case</a>
-                    </div>
-                </li>
-            ))}
-        </ul>
+        </>
     )
 }
 

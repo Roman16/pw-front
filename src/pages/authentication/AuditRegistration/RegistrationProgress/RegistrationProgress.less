@@ -5,6 +5,10 @@
   border-radius: 4px 0 0 4px;
   list-style: none;
 
+  &.mob {
+    display: none;
+  }
+
   .ant-steps {
     height: 100%;
     display: flex;
@@ -55,6 +59,7 @@
       line-height: 19px;
       color: #C9CBD4;
       font-weight: 400;
+      margin: 3px 0 0 0;
     }
   }
 
@@ -101,6 +106,63 @@
 
     .ant-steps-item-title {
       color: #6D6DF6;
+    }
+  }
+
+  @media (max-width: 1300px) {
+    width: max-content;
+    padding: 20px 20px 5px;
+  }
+
+  @media (max-width: 800px) {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+
+    &.desc {
+      display: none;
+    }
+
+    &.mob {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+
+      .progress-block {
+        position: relative;
+        margin: 0 20px 0 0;
+
+        .ant-progress {
+          .ant-progress-inner {
+            width: 48px !important;
+            height: 48px !important;
+          }
+        }
+
+        .step {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          font-size: 12px;
+          font-weight: 500;
+          color: #7C8A95;
+
+          span {
+            color: #6D6DF6;
+            margin: 0 3px 0 0;
+          }
+        }
+      }
+
+      h2 {
+        font-size: 21px;
+        color: #6D6DF6;
+        margin: 0;
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import './AuditRegistration.less'
 import logo from '../../../assets/img/ProfitWhales-logo-white.svg'
 import {history} from "../../../utils/history"
@@ -9,6 +9,7 @@ import RegistrationProgress from "./RegistrationProgress/RegistrationProgress"
 import RegistrationForm from "./RegistrationForm/RegistrationForm"
 
 const AuditRegistration = () => {
+    const [currentStep, setCurrentStep] = useState(0)
 
     return (
         <div className="audit-registration-page">
@@ -30,9 +31,11 @@ const AuditRegistration = () => {
             </div>
 
             <div className="row">
-                <RegistrationForm/>
+                <RegistrationForm
+                    setStep={value => setCurrentStep(value)}
+                />
 
-                <UserComments/>
+                <UserComments currentStep={currentStep}/>
             </div>
 
             <div className="registration-footer">

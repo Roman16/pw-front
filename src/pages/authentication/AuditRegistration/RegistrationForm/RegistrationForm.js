@@ -1,10 +1,12 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import RegistrationProgress from "../RegistrationProgress/RegistrationProgress"
 import {advertisingStrategyVariations} from '../../../LandingPages/components/ContactForm/ContactForm'
 import {SVG} from "../../../../utils/icons"
 import './RegistrationForm.less'
 import {Checkbox, Input, Radio} from "antd"
 import {Link} from "react-router-dom"
+import {notification} from "../../../../components/Notification"
+import {userService} from "../../../../services/user.services"
 
 const defaultForm = {
     first_name: undefined,
@@ -17,6 +19,7 @@ const defaultForm = {
     main_goal: undefined,
     storefront_name: undefined,
     main_category: undefined,
+    communication_channel: undefined,
     amount_products: undefined,
 }
 
@@ -88,7 +91,7 @@ const marketplaceVariations = [
     },
     {
         label: 'Europe',
-        value: '???',
+        value: 'A13V1IB3VIYZZH',
         icon: 'eu'
     },
 ]
@@ -120,7 +123,7 @@ const amountProductsVariations = [
     },
 ]
 
-const RegistrationForm = () => {
+const RegistrationForm = ({setStep}) => {
     const [currentStep, setCurrentStep] = useState(0),
         [formParams, setFormParams] = useState({...defaultForm}),
         [agreeWithTerms, setAgreeWithTerms] = useState(false)
@@ -131,6 +134,41 @@ const RegistrationForm = () => {
             [name]: value
         }))
     }
+
+    const onNextStep = () => {
+        if (currentStep === 0 && !formParams.main_goal) {
+            notification.error({title: 'Select your advertising goals'})
+        } else if (currentStep === 1 && !formParams.avg_monthly_ad_spend) {
+            notification.error({title: 'Select your average monthly ad spend'})
+        } else if (currentStep === 2 && !formParams.avg_monthly_ad_sales) {
+            notification.error({title: 'Select your average monthly sales'})
+        } else if (currentStep === 3 && !formParams.active_marketplaces) {
+            notification.error({title: 'Select your marketplace'})
+        } else if (currentStep === 4 && !formParams.amount_products) {
+            notification.error({title: 'Select your products count'})
+        } else if (currentStep === 5 && (!formParams.first_name || !formParams.last_name || !formParams.email)) {
+            notification.error({title: 'All fields is required'})
+        } else {
+            setCurrentStep(prevState => prevState + 1)
+        }
+    }
+
+    const sendFormHandler = async () => {
+        if (!agreeWithTerms) {
+            notification.error({title: 'Please accept Terms and Conditions to continue'})
+        } else {
+            try {
+                await userService.sendContactForm({...formParams, active_marketplaces: [formParams.active_marketplaces]})
+                setCurrentStep(prevState => prevState + 1)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
+
+    useEffect(() => {
+        setStep(currentStep)
+    }, [currentStep])
 
     return (
         <>
@@ -158,7 +196,7 @@ const RegistrationForm = () => {
                     </ul>
 
                     <div className="actions">
-                        <button className="btn default" onClick={() => setCurrentStep(1)}>
+                        <button className="btn default" onClick={onNextStep}>
                             Get a Free Audit
                         </button>
                     </div>
@@ -183,7 +221,7 @@ const RegistrationForm = () => {
                             Back
                         </button>
 
-                        <button className="btn default" onClick={() => setCurrentStep(prevState => prevState + 1)}>
+                        <button className="btn default" onClick={onNextStep}>
                             Next
                         </button>
                     </div>
@@ -208,7 +246,7 @@ const RegistrationForm = () => {
                             Back
                         </button>
 
-                        <button className="btn default" onClick={() => setCurrentStep(prevState => prevState + 1)}>
+                        <button className="btn default" onClick={onNextStep}>
                             Next
                         </button>
                     </div>
@@ -236,7 +274,7 @@ const RegistrationForm = () => {
                             Back
                         </button>
 
-                        <button className="btn default" onClick={() => setCurrentStep(prevState => prevState + 1)}>
+                        <button className="btn default" onClick={onNextStep}>
                             Next
                         </button>
                     </div>
@@ -261,7 +299,7 @@ const RegistrationForm = () => {
                             Back
                         </button>
 
-                        <button className="btn default" onClick={() => setCurrentStep(prevState => prevState + 1)}>
+                        <button className="btn default" onClick={onNextStep}>
                             Next
                         </button>
                     </div>
@@ -318,7 +356,7 @@ const RegistrationForm = () => {
                             Back
                         </button>
 
-                        <button className="btn default" onClick={() => setCurrentStep(prevState => prevState + 1)}>
+                        <button className="btn default" onClick={onNextStep}>
                             Next
                         </button>
                     </div>
@@ -353,9 +391,10 @@ const RegistrationForm = () => {
 
                     <div className="form-group checkbox">
                         <Checkbox onChange={({target: {checked}}) => setAgreeWithTerms(checked)}>
-                            Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms
-                            and
-                            Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
+                            Yes, I agree to Profit Whales
+                            <Link to={'/terms-and-conditions'} target={'_blank'}>Terms and Conditions</Link>
+                            &
+                            <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
                         </Checkbox>
                     </div>
 
@@ -364,7 +403,7 @@ const RegistrationForm = () => {
                             Back
                         </button>
 
-                        <button className="btn default" onClick={() => setCurrentStep(prevState => prevState + 1)}>
+                        <button className="btn default" onClick={sendFormHandler}>
                             Confirm
                         </button>
                     </div>
