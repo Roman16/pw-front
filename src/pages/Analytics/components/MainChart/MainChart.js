@@ -88,11 +88,11 @@ const MainChart = ({allMetrics}) => {
             getChartData()
             prevActiveMetrics = [...activeMetrics]
         }
-    }, [metricsState.activeMetrics, filters, mainState])
+    }, [metricsState.activeMetrics])
 
     useEffect(() => {
         getChartData()
-    }, [selectedRangeDate])
+    }, [selectedRangeDate, filters, mainState])
 
     return <section className={'main-chart'}>
         <ChartHeader
