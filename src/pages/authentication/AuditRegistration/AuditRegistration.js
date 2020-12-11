@@ -19,7 +19,7 @@ const AuditRegistration = () => {
 
             <div className="registration-description">
                 <h1>
-                    <span>Get</span> Your Amazon Advertising Campaigns <span>Reviews Today</span>
+                    <span>Get</span> Your Amazon Advertising Campaigns <span>Review Today</span>
                 </h1>
 
                 <p>
