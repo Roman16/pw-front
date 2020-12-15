@@ -154,7 +154,7 @@ const TableFilters = ({columns, filters = [], locationKey}) => {
                                 filter={filter}
                             />
 
-                            <i onClick={(e) => {
+                            <i className={'icon'} onClick={(e) => {
                                 e.stopPropagation()
                                 removeFilterHandler(index)
                             }}>
