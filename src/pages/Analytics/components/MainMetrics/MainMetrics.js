@@ -18,10 +18,9 @@ const CancelToken = axios.CancelToken
 let source = null
 let prevActivatedIndex = undefined
 
-const MainMetrics = ({allMetrics}) => {
+const MainMetrics = ({allMetrics, location}) => {
     const dispatch = useDispatch()
 
-    let location = useSelector(state => state.analytics.location)
     location = location === 'campaignSettings' ? 'campaigns' : location
     location = location === 'portfolioSettings' ? 'portfolios' : location
 
@@ -72,6 +71,7 @@ const MainMetrics = ({allMetrics}) => {
     }
 
     const updateMetricsState = (data) => {
+        console.log(data)
         dispatch(analyticsActions.updateMetricsState(data))
     }
 
@@ -178,6 +178,7 @@ const MainMetrics = ({allMetrics}) => {
             activeMetricIndexTurn = [0, 1]
             updateMetricsState({activeMetrics: activeMetrics.slice(0, 2)})
         }
+
     }, [selectFourMetrics])
 
     useEffect(() => {
@@ -193,8 +194,6 @@ const MainMetrics = ({allMetrics}) => {
             localStorage.removeItem('analyticsMetricsState')
         }
     }
-
-    // console.log(activeMetricIndexTurn)
 
     return (
         <div className="main-metrics metrics-block">

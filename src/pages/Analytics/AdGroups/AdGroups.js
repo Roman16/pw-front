@@ -6,10 +6,14 @@ import MainMetrics from "../components/MainMetrics/MainMetrics"
 
 const AdGroups = () => {
     const availableMetrics = [...metricsKeysWithoutOrganic]
+    const location = 'ad-groups'
 
     return (
         <div className={'ad-groups-workplace'}>
-            <MainMetrics allMetrics={availableMetrics}/>
+            <MainMetrics
+                allMetrics={availableMetrics}
+                location={location}
+            />
 
             <MainChart allMetrics={availableMetrics}/>
 
