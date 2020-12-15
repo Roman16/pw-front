@@ -11,7 +11,7 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import _ from "lodash"
 import defaultProductImage from '../../../../assets/img/default-product-image.svg'
 import {valueTile} from "../../../PPCAutomate/Report/Filters/FilterItem"
-import {amazonDefaultImageUrl} from "../../../../components/ProductList/ProductItem"
+import {amazonDefaultImageUrls} from "../../../../components/ProductList/ProductItem"
 import noImage from "../../../../assets/img/no-image-available.svg"
 
 export const renderNumberField = (type = 'number') => {
@@ -61,7 +61,7 @@ export const RenderProduct = ({product, isParent = false}) => {
     return (
         <div className="product-field">
             <div className={'image'}>
-                {product.product_image === amazonDefaultImageUrl ? <img src={noImage} alt=""/> :
+                {amazonDefaultImageUrls.includes(product.product_image) ? <img src={noImage} alt=""/> :
                     <img
                         src={!product.product_name && (product.product_id === 0 || product.product_id == null) ? defaultProductImage : product.product_image}
                         alt=""/>}

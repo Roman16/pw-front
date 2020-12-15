@@ -6,6 +6,7 @@ import tz from 'moment-timezone'
 import DateIcon from './DateIcon/DateIcon'
 import './DatePicker.less'
 import {SVG} from "../../utils/icons"
+import CustomSelect from "../Select/Select"
 
 const {RangePicker} = AntDatePicker
 
@@ -64,6 +65,7 @@ class DatePicker extends Component {
                     onChange={this.handleChange}
                     disabledDate={this.disabledDate}
                     defaultValue={defaultValue}
+                    getCalendarContainer={(trigger) => trigger.parentNode}
                     getPopupContainer={trigger => trigger.parentNode}
                 />
             </div>

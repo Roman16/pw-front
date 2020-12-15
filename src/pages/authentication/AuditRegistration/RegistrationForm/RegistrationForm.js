@@ -7,6 +7,7 @@ import {Checkbox, Input, Radio} from "antd"
 import {Link} from "react-router-dom"
 import {notification} from "../../../../components/Notification"
 import {userService} from "../../../../services/user.services"
+import moment from "moment"
 
 const defaultForm = {
     first_name: undefined,
@@ -20,8 +21,19 @@ const defaultForm = {
     storefront_name: undefined,
     main_category: undefined,
     communication_channel: undefined,
-    amount_products: undefined,
+    amazon_number_of_active_products: undefined,
 }
+
+
+const weakDays = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+]
 
 const monthlyAdSpendVariations = [
     {
@@ -144,7 +156,7 @@ const RegistrationForm = ({setStep}) => {
             notification.error({title: 'Select your average monthly sales'})
         } else if (currentStep === 3 && !formParams.active_marketplaces) {
             notification.error({title: 'Select your marketplace'})
-        } else if (currentStep === 4 && !formParams.amount_products) {
+        } else if (currentStep === 4 && !formParams.amazon_number_of_active_products) {
             notification.error({title: 'Select your products count'})
         } else if (currentStep === 5 && (!formParams.first_name || !formParams.last_name || !formParams.email)) {
             notification.error({title: 'All fields is required'})
@@ -158,7 +170,10 @@ const RegistrationForm = ({setStep}) => {
             notification.error({title: 'Please accept Terms and Conditions to continue'})
         } else {
             try {
-                await userService.sendContactForm({...formParams, active_marketplaces: [formParams.active_marketplaces]})
+                await userService.sendContactForm({
+                    ...formParams,
+                    active_marketplaces: [formParams.active_marketplaces]
+                })
                 setCurrentStep(prevState => prevState + 1)
             } catch (e) {
                 console.log(e)
@@ -286,8 +301,8 @@ const RegistrationForm = ({setStep}) => {
                     <ul className={'button-list products'}>
                         {amountProductsVariations.map(item => (
                             <li
-                                className={formParams.amount_products === item.value ? 'active' : ''}
-                                onClick={() => changeFormHandler('amount_products', item.value)}
+                                className={formParams.amazon_number_of_active_products === item.value ? 'active' : ''}
+                                onClick={() => changeFormHandler('amazon_number_of_active_products', item.value)}
                             >
                                 {item.label}
                             </li>
@@ -424,8 +439,11 @@ const RegistrationForm = ({setStep}) => {
                     </h2>
 
                     <p className={'response-time'}>
-                        Expect a reply between 8am CST - <br/> 6:30pm CST Monday through Friday
+                        Expect a reply between {`${moment().format('hh')}:00 ${moment().format('A')}`} CST
+                        - <br/>{`${moment().add(1, 'hours').format('hh')}:00 ${moment().add(1, 'hours').format('A')}`} CST
+                        on {weakDays[moment().add(1, 'days').day()]}
                     </p>
+
 
                     <div className="actions">
                         <Link to={'/'} className="btn default">

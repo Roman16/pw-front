@@ -5,7 +5,7 @@ import InformationTooltip from "../Tooltip/Tooltip"
 import noImage from '../../assets/img/no-image-available.svg'
 
 // default product image urls
-export const amazonDefaultImageUrl = 'https://images-na.ssl-images-amazon.com/images/I/01RmK+J4pJL._SL75_.gif'
+export const amazonDefaultImageUrls = ['https://images-na.ssl-images-amazon.com/images/I/01RmK+J4pJL._SL75_.gif', '/img/products/product-1.png']
 
 const ProductItem = ({
                          product: {id, asin, name, sku, image_url, under_optimization, has_optimization_results, variations},
@@ -30,7 +30,7 @@ const ProductItem = ({
             <div className={`product-information ${openedProduct === id && 'opened-child-list'}`}>
                 <div className="image-block">
                     <div className="image">
-                        <img src={image_url === amazonDefaultImageUrl ? noImage : image_url} alt=""/>
+                        <img src={amazonDefaultImageUrls.includes(image_url) ? noImage : image_url} alt=""/>
                     </div>
                 </div>
 

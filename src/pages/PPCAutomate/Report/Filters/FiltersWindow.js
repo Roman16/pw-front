@@ -280,7 +280,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
         setFilterValue(undefined)
     }
 
-    return (<form className="filter-variables" onSubmit={submitHandler} ref={wrapperRef}>
+    return (<form className="filter-variables" id={'reports-filter-window'} onSubmit={submitHandler} ref={wrapperRef}>
         <div className="row">
             <div className="form-group">
                 <CustomSelect
@@ -318,7 +318,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             <div className="form-group">
                 {filterBy === 'datetime' &&
                 <DatePicker
-                    // getPopupContainer={trigger => document.querySelector('.filter-variables')}
+                    getPopupContainer={trigger => document.querySelector('.filter-variables')}
                     timeRange={(startDate, endDate) => changeDateHandler(startDate, endDate)}
                     defaultValue={filterValue && Object.keys(filterValue).map(key => filterValue[key])}
                 />}
