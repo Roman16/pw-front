@@ -1,8 +1,10 @@
 import React, {useState, useRef, useEffect} from "react"
-import {Checkbox, Input} from "antd"
+import {Checkbox, Input, Popover} from "antd"
 import {SVG} from "../../../../utils/icons"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {useDispatch} from "react-redux"
+import FilterWindow from "../TableFilters/FilterWindow"
+import {FilterItem} from "../../../PPCAutomate/Report/Filters/FilterItem"
 
 let enableSwitch = true
 const {Search} = Input
@@ -47,43 +49,91 @@ const ColumnsSelect = ({columns, columnsBlackList}) => {
     }, [wrapperRef])
 
 
+    // return (
+    //     <>
+    //         <button className={'columns-select'}>
+    //             <i
+    //                 className={'btn icon'}
+    //                 onClick={() => setPopoverState(prevState => !prevState)}>
+    //                 <SVG id={'table-columns'}/>
+    //             </i>
+    //
+    //             {popoverState && <div
+    //                 style={{height: `${(document.querySelector('.list-section') ? document.querySelector('.list-section').offsetHeight : 600) / 1.5}px`}}
+    //                 className={'popover-column-select'}
+    //                 ref={wrapperRef}
+    //             >
+    //                 <div className="form-group">
+    //                     <Search
+    //                         className="search-field"
+    //                         placeholder={'Search'}
+    //                         onChange={e => onSearch(e.target.value)}
+    //                         data-intercom-target='search-field'
+    //                         suffix={<SVG id={'search'}/>}
+    //                     />
+    //                 </div>
+    //
+    //                 <div className="columns-list">
+    //                     {columnsState.map(column => (
+    //                         <Checkbox
+    //                             disabled={column.locked}
+    //                             checked={!columnsBlackList.find(key => key === column.key)}
+    //                             onChange={(e) => changeColumnHandler(e.target.checked, column.key)}
+    //                         >
+    //                             {column.title}
+    //                         </Checkbox>
+    //                     ))}
+    //                 </div>
+    //             </div>}
+    //         </button>
+    //
+    //     </>
+    // )
     return (
         <>
-            <button className={'columns-select'}>
-                <i
-                    className={'btn icon'}
-                    onClick={() => setPopoverState(prevState => !prevState)}>
-                    <SVG id={'table-columns'}/>
-                </i>
+            <Popover
+                content={
+                    <div
+                        style={{height: `${(document.querySelector('.list-section') ? document.querySelector('.list-section').offsetHeight : 600) / 1.5}px`}}
+                        ref={wrapperRef}
+                    >
+                        <div className="form-group">
+                            <Search
+                                className="search-field"
+                                placeholder={'Search'}
+                                onChange={e => onSearch(e.target.value)}
+                                data-intercom-target='search-field'
+                                suffix={<SVG id={'search'}/>}
+                            />
+                        </div>
 
-                {popoverState && <div
-                    style={{height: `${(document.querySelector('.list-section') ? document.querySelector('.list-section').offsetHeight : 600) / 1.5}px`}}
-                    className={'popover-column-select'}
-                    ref={wrapperRef}
-                >
-                    <div className="form-group">
-                        <Search
-                            className="search-field"
-                            placeholder={'Search'}
-                            onChange={e => onSearch(e.target.value)}
-                            data-intercom-target='search-field'
-                            suffix={<SVG id={'search'}/>}
-                        />
+                        <div className="columns-list">
+                            {columnsState.map(column => (
+                                <Checkbox
+                                    disabled={column.locked}
+                                    checked={!columnsBlackList.find(key => key === column.key)}
+                                    onChange={(e) => changeColumnHandler(e.target.checked, column.key)}
+                                >
+                                    {column.title}
+                                </Checkbox>
+                            ))}
+                        </div>
                     </div>
-
-                    <div className="columns-list">
-                        {columnsState.map(column => (
-                            <Checkbox
-                                disabled={column.locked}
-                                checked={!columnsBlackList.find(key => key === column.key)}
-                                onChange={(e) => changeColumnHandler(e.target.checked, column.key)}
-                            >
-                                {column.title}
-                            </Checkbox>
-                        ))}
-                    </div>
-                </div>}
-            </button>
+                }
+                getPopupContainer={(node) => node}
+                destroyTooltipOnHide={true}
+                placement="bottomRight"
+                overlayClassName={'popover-column-select'}
+                trigger="click"
+            >
+                <button className={'columns-select'}>
+                    <i
+                        className={'btn icon'}
+                        onClick={() => setPopoverState(prevState => !prevState)}>
+                        <SVG id={'table-columns'}/>
+                    </i>
+                </button>
+            </Popover>
 
         </>
     )
