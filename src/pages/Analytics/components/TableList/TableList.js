@@ -135,11 +135,11 @@ const TableList = ({
             if (res.response) {
                 setTableData(res.response)
             }
+            setFetchingStatus(false)
+
         } catch (e) {
 
         }
-
-        setFetchingStatus(false)
     }
 
     useEffect(() => {
