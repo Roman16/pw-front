@@ -164,7 +164,7 @@ const TableList = ({
 
 
     return (
-        <div>
+        <div className={'table-section'}>
             <div className="section-header">
                 {showFilters && <TableFilters
                     columns={columns}

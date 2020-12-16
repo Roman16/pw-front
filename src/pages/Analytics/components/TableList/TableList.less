@@ -14,7 +14,7 @@
     background: none;
     box-shadow: none;
 
-    & > div {
+    & > .table-section {
       max-width: 100%;
       height: max-content;
       //max-height: calc(100vh - 100px);
@@ -32,18 +32,17 @@
       flex-direction: column;
     }
 
-
-    .form-group {
-      width: 300px;
-      height: 2.2857142857142856rem;
-      margin: 0 0 0 20px;
-    }
-
     .section-header {
       display: grid;
       grid-template-areas: 'filters columns switch date' 'currentFilters currentFilters currentFilters currentFilters';
       grid-template-columns: 1fr max-content max-content;
       justify-content: space-between;
+
+      .search-block {
+        width: 300px;
+        height: 2.2857142857142856rem;
+        margin: 0 0 0 20px;
+      }
 
       .ant-popover {
         span {
