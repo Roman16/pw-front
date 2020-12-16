@@ -84,7 +84,7 @@ const TableFilters = ({columns, filters = [], locationKey}) => {
     return (
         <>
             <div className="list-filters-block">
-                <div className="form-group">
+                <div className="form-group search-block">
                     <Search
                         className="search-field"
                         placeholder={`Search by ${columns.find(column => column.search).title}`}
