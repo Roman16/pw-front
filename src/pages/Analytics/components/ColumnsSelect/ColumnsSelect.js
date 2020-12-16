@@ -6,11 +6,12 @@ import {useDispatch} from "react-redux"
 
 const {Search} = Input
 
-const ColumnsSelect = ({columns, columnsBlackList}) => {
+const ColumnsSelect = ({columns, columnsBlackList, onChangeBlackList}) => {
     return (
         <>
             <Popover
-                content={<ColumnList columns={columns} columnsBlackList={columnsBlackList}/>}
+                content={<ColumnList columns={columns} columnsBlackList={columnsBlackList}
+                                     onChangeBlackList={onChangeBlackList}/>}
                 getPopupContainer={(node) => node.parentNode}
                 destroyTooltipOnHide={true}
                 placement="bottomRight"
@@ -28,9 +29,8 @@ const ColumnsSelect = ({columns, columnsBlackList}) => {
     )
 }
 
-const ColumnList = ({columns, columnsBlackList}) => {
+const ColumnList = ({columns, columnsBlackList, onChangeBlackList}) => {
     const [columnsState, setColumnsState] = useState(columns)
-    const dispatch = useDispatch()
 
     const onSearch = (value) => {
         setColumnsState(columns.filter(column => column.title.toLowerCase().includes(value.toLowerCase())))
@@ -38,9 +38,9 @@ const ColumnList = ({columns, columnsBlackList}) => {
 
     const changeColumnHandler = (event, column) => {
         if (event) {
-            dispatch(analyticsActions.updateColumnBlackList(columnsBlackList.filter(item => item !== column)))
+            onChangeBlackList(columnsBlackList.filter(item => item !== column))
         } else {
-            dispatch(analyticsActions.updateColumnBlackList([...columnsBlackList, column]))
+            onChangeBlackList([...columnsBlackList, column])
         }
     }
 

@@ -71,7 +71,6 @@ const MainMetrics = ({allMetrics, location}) => {
     }
 
     const updateMetricsState = (data) => {
-        console.log(data)
         dispatch(analyticsActions.updateMetricsState(data))
     }
 

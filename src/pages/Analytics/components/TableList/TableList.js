@@ -17,7 +17,6 @@ String.prototype.capitalize = function () {
 const CancelToken = axios.CancelToken
 let source = null
 
-let fullResponse = []
 
 const TableList = ({
                        columns,
@@ -30,14 +29,19 @@ const TableList = ({
                        showTotal = true
                    }) => {
 
+    const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
+        sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') && JSON.parse(localStorage.getItem('analyticsSorterColumn'))
+
     const [tableData, setTableData] = useState([]),
         [fetchingStatus, setFetchingStatus] = useState(false),
+        [columnsBlackList, setColumnsBlackList] = useState(columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {}),
+        [sorterColumn, setSorterColumn] = useState(sorterColumnFromLocalStorage ? sorterColumnFromLocalStorage : {}),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
             pageSize: 30,
             totalSize: 0,
-        }),
-        [sorterColumn, setSorterColumn] = useState()
+        })
+
 
     const {locationKey, mainState, selectedRangeDate, metricsData} = useSelector(state => ({
         locationKey: state.analytics.location,
@@ -46,26 +50,33 @@ const TableList = ({
         metricsData: state.analytics.metricsData
     }))
 
-    const columnsBlackList = useSelector(state => state.analytics.columnsBlackList[locationKey] || [])
-    const filters = useSelector(state => state.analytics.filters[locationKey] || [])
+    const localColumnBlackList = columnsBlackList[locationKey] || [],
+        localSorterColumn = sorterColumn[locationKey] || undefined,
+        filters = useSelector(state => state.analytics.filters[locationKey] || [])
 
 
     const sortChangeHandler = (column) => {
+        const setColumn = (data) => {
+            setSorterColumn({
+                ...sorterColumn,
+                [locationKey]: data
+            })
+        }
 
-        if (sorterColumn && sorterColumn.column === column) {
-            if (sorterColumn.type === 'desc') {
-                setSorterColumn({
+        if (localSorterColumn && localSorterColumn.column === column) {
+            if (localSorterColumn.type === 'desc') {
+                setColumn({
                     column: column,
                     type: 'asc'
                 })
-            } else if (sorterColumn.type === 'asc') {
-                setSorterColumn({
+            } else if (localSorterColumn.type === 'asc') {
+                setColumn({
                     column: null,
                     type: 'desc'
                 })
             }
         } else {
-            setSorterColumn({
+            setColumn({
                 column: column,
                 type: 'desc'
             })
@@ -74,6 +85,13 @@ const TableList = ({
         setPaginationParams({
             ...paginationParams,
             page: 1,
+        })
+    }
+
+    const changeBlackListHandler = (list) => {
+        setColumnsBlackList({
+            ...columnsBlackList,
+            [locationKey]: list
         })
     }
 
@@ -107,7 +125,7 @@ const TableList = ({
                 },
             ]
 
-            const res = await analyticsServices.fetchTableData(locationKey, paginationParams, sorterColumn, filtersWithState, source.token)
+            const res = await analyticsServices.fetchTableData(locationKey, paginationParams, localSorterColumn, filtersWithState, source.token)
 
             setPaginationParams({
                 ...paginationParams,
@@ -120,7 +138,6 @@ const TableList = ({
             }
 
 
-
             setFetchingStatus(false)
         } catch (e) {
 
@@ -131,16 +148,6 @@ const TableList = ({
         getData()
     }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate])
 
-    // const scrollHandler = (e) => {
-    //     if(e.target.scrollTop > 1500) {
-    //         setTableData(fullResponse.slice(0, 500))
-    //     } else if(e.target.scrollTop > 1000) {
-    //         setTableData(fullResponse.slice(0, 200))
-    //     } else if(e.target.scrollTop > 500) {
-    //         setTableData(fullResponse.slice(0, 100))
-    //     }
-    // }
-
     useEffect(() => {
         setPaginationParams({
             ...paginationParams,
@@ -148,6 +155,14 @@ const TableList = ({
         })
         getData()
     }, [filters])
+
+    useEffect(() => {
+        localStorage.setItem('analyticsColumnsBlackList', JSON.stringify(columnsBlackList))
+    }, [columnsBlackList])
+
+    useEffect(() => {
+        localStorage.setItem('analyticsSorterColumn', JSON.stringify(sorterColumn))
+    }, [sorterColumn])
 
 
     return (
@@ -163,7 +178,8 @@ const TableList = ({
 
                 {columnSelect && <ColumnsSelect
                     columns={columns}
-                    columnsBlackList={columnsBlackList}
+                    columnsBlackList={localColumnBlackList}
+                    onChangeBlackList={changeBlackListHandler}
                 />}
 
                 {dateRange && <DateRange/>}
@@ -179,11 +195,9 @@ const TableList = ({
                         ...{[columns[0].dataIndex]: `Total: ${paginationParams.totalSize}`}
                     }
                 }}
-                sorterColumn={sorterColumn}
-                columns={columns.filter(column => !columnsBlackList.includes(column.key))}
+                sorterColumn={localSorterColumn}
+                columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
                 fixedColumns={fixedColumns}
-                // onScroll={scrollHandler}
-                // rowClassName={(item) => !item.viewed && 'new-report'}
             />
 
             {paginationParams.totalSize !== 0 && showPagination && <Pagination
