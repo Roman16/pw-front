@@ -134,6 +134,22 @@ export const impressionsColumn = {
     ...renderNumberField()
 }
 
+export const skuAsinColumn = {
+    title: 'SKU/ASIN',
+    dataIndex: 'sku_asin',
+    key: 'sku_asin',
+    width: '180px',
+    locked: true,
+    sorter: true,
+    noTotal: true,
+    render: (text, item) => <div className={'sku-asin'}>
+        <div title={item.sku}><b>SKU:</b> {item.sku}</div>
+        <div title={item.asin}><b>ASIN:</b>
+            <a target={'_blank'} href={`https://www.amazon.com/dp/${item.asin}`}>{item.asin}</a>
+        </div>
+    </div>
+}
+
 export const clicksColumn = {
     title: 'Clicks',
     dataIndex: 'clicks',

@@ -134,14 +134,12 @@ const TableList = ({
 
             if (res.response) {
                 setTableData(res.response)
-                // fullResponse = res.response
             }
-
-
-            setFetchingStatus(false)
         } catch (e) {
 
         }
+
+        setFetchingStatus(false)
     }
 
     useEffect(() => {
@@ -166,7 +164,7 @@ const TableList = ({
 
 
     return (
-        <>
+        <div>
             <div className="section-header">
                 {showFilters && <TableFilters
                     columns={columns}
@@ -210,7 +208,7 @@ const TableList = ({
 
                 {...paginationParams}
             />}
-        </>
+        </div>
     )
 }
 
