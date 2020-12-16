@@ -97,28 +97,27 @@ const CampaignSettings = () => {
 
             <div className="row">
                 <div className="label">
-                    Active/Paused
+                    Status
                 </div>
 
                 <div className="value state">
-                    <div className='switch-block'>
-                        <Switch
-                            checked={settingParams.state !== 'paused'}
-                            disabled
-                            // onChange={e => onChangeSwitch('week', e)}
-                        />
+                    {settingParams.state === 'archived' ? <span className={'archived'}>Archived</span> :
+                        <div className='switch-block'>
+                            <Switch
+                                checked={settingParams.state !== 'paused'}
+                                disabled
+                                // onChange={e => onChangeSwitch('week', e)}
+                            />
 
-                        {settingParams.state !== 'paused' ? <span className={'active'}>Active</span> :
-                            <span className={'paused'}>Paused</span>}
-                    </div>
-
-                    {/*<a href="#">Archive this campaign</a>*/}
+                            {settingParams.state !== 'paused' ? <span className={'active'}>Active</span> :
+                                <span className={'paused'}>Paused</span>}
+                        </div>}
                 </div>
             </div>
 
             <div className="row">
                 <div className="label">
-                    Status
+                    Serving Status
                 </div>
 
                 <div className="value status">
@@ -196,7 +195,8 @@ const CampaignSettings = () => {
                                 </Radio>
 
                                 <div className="radio-description down-only">
-                                    Amazon will lower your bids in real time when your ad may be less likely to convert to a
+                                    Amazon will lower your bids in real time when your ad may be less likely to convert
+                                    to a
                                     sale. Any campaigns created before January 2019 used this setting.
                                 </div>
                             </div>
@@ -207,8 +207,10 @@ const CampaignSettings = () => {
                                 </Radio>
 
                                 <div className="radio-description up-down">
-                                    Amazon will raise your bids (by a maximum of 100%) in real time when your ad may be more
-                                    likely to convert to a sale, and lower your bids when less likely to convert to a sale.
+                                    Amazon will raise your bids (by a maximum of 100%) in real time when your ad may be
+                                    more
+                                    likely to convert to a sale, and lower your bids when less likely to convert to a
+                                    sale.
                                 </div>
                             </div>
 
@@ -218,7 +220,8 @@ const CampaignSettings = () => {
                                 </Radio>
 
                                 <div className="radio-description">
-                                    Amazon will use your exact bid and any manual adjustments you set, and won’t change your
+                                    Amazon will use your exact bid and any manual adjustments you set, and won’t change
+                                    your
                                     bids based on likelihood of sale.
                                 </div>
                             </div>
@@ -246,7 +249,7 @@ const CampaignSettings = () => {
                             <InputCurrency
                                 disabled
                                 typeIcon={'percent'}
-                                value={settingParams.bidding_adjustments_predicate.includes('placementTop') ? settingParams.bidding_adjustments_percentage[_.findIndex(settingParams.bidding_adjustments_predicate, 'placementTop')]: undefined}
+                                value={settingParams.bidding_adjustments_predicate.includes('placementTop') ? settingParams.bidding_adjustments_percentage[_.findIndex(settingParams.bidding_adjustments_predicate, 'placementTop')] : undefined}
                             />
                         </div>
 

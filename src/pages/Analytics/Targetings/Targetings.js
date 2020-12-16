@@ -7,11 +7,12 @@ import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
 
 const Targetings = () => {
     const availableMetrics = _.filter([...metricsKeysWithoutOrganic], v => v !== 'ad_profit')
-
+const location = 'targetings'
     return (
         <div className={'targetings-workplace'}>
             <MainMetrics
                 allMetrics={availableMetrics}
+                location={location}
             />
 
             <MainChart allMetrics={availableMetrics}/>

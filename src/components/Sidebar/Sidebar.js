@@ -9,6 +9,7 @@ import {SVG} from "../../utils/icons"
 import '../../style/variables.less'
 import InformationTooltip from "../Tooltip/Tooltip"
 import {history} from "../../utils/history"
+import {analyticsActions} from "../../actions/analytics.actions"
 
 const production = process.env.REACT_APP_ENV === "production"
 const devicePixelRatio = window.devicePixelRatio
@@ -52,6 +53,11 @@ const Sidebar = () => {
             ...subMenuState,
             [menu]: !subMenuState[menu]
         })
+    }
+
+    const setAnalyticState = () => {
+        dispatch(analyticsActions.setMainState(undefined))
+        dispatch(analyticsActions.setLocation('products'))
     }
 
     const backToAdmin = () => {
@@ -178,7 +184,7 @@ const Sidebar = () => {
                             <li className="top-nav-item">
                                 <InformationTooltip
                                     type={'custom'}
-                                    description={<Link to={'/analytics/products'}>Analytics</Link>}
+                                    description={<Link onClick={setAnalyticState} to={'/analytics/products'}>Analytics</Link>}
                                     position={'right'}
                                     overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                                 >
@@ -186,6 +192,7 @@ const Sidebar = () => {
                                         className="top-nav-link"
                                         activeClassName="top-nav-link-active"
                                         to="/analytics/products"
+                                        onClick={setAnalyticState}
                                     >
                                         <div className="link-icon">
                                             <SVG id='analytics-icon-sidebar'/>

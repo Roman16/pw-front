@@ -6,10 +6,12 @@ import {metricKeys} from "../components/MainMetrics/metricsList"
 
 const Products = () => {
     const availableMetrics = Object.values(metricKeys)
+    const location = 'products'
 
     return (
         <div className={'products-workplace'}>
             <MainMetrics
+                location={location}
                 allMetrics={availableMetrics}
             />
 

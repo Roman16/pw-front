@@ -5,10 +5,11 @@ import PlacementsList from "./PlacementsList/PlacementsList"
 import PlacementsStatistics from "./PlacementsStatistics/PlacementsStatistics"
 
 const Placements = () => {
+    const location = 'placements'
 
     return (
         <div className={'placements-workplace'}>
-            <MainMetrics/>
+            <MainMetrics location={location}/>
 
             <MainChart/>
 

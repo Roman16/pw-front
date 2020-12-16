@@ -6,11 +6,13 @@ import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
 
 const ProductAds = () => {
     const availableMetrics = [...metricsKeysWithoutOrganic]
+    const location = 'product-ads'
 
     return (
         <div className={'product-ads-workplace'}>
             <MainMetrics
                 allMetrics={availableMetrics}
+                location={location}
             />
             <MainChart  allMetrics={availableMetrics}/>
 

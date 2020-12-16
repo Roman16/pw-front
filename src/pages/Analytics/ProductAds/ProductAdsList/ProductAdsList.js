@@ -16,7 +16,7 @@ import {
     ctrColumn,
     impressionsColumn, RenderProduct,
     roasColumn,
-    salesShareColumn,
+    salesShareColumn, skuAsinColumn,
     statusColumn
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
@@ -51,19 +51,7 @@ const ProductAdsList = () => {
                 setState={setStateHandler}
             />
         },
-        {
-            title: 'SKU/ASIN',
-            dataIndex: 'sku_asin',
-            key: 'sku_asin',
-            width: '180px',
-            sorter: true,
-            locked: true,
-            noTotal: true,
-            render: (text, item) => <div className={'sku-asin'}>
-                <div title={item.sku}><b>SKU:</b> {item.sku}</div>
-                <div title={item.asin}><b>ASIN:</b> {item.asin}</div>
-            </div>
-        },
+        skuAsinColumn,
         ...!selectedCampaign ? [{
             ...campaignColumn,
             locked: true,

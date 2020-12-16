@@ -3,7 +3,6 @@ import moment from "moment"
 import _ from 'lodash'
 
 const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState') && JSON.parse(localStorage.getItem('analyticsMetricsState')),
-    columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
     filtersListFromLocalStorage = localStorage.getItem('analyticsFiltersList') && JSON.parse(localStorage.getItem('analyticsFiltersList')),
     chartStateFromLocalStorage = localStorage.getItem('analyticsChartState') && JSON.parse(localStorage.getItem('analyticsChartState')),
     rangeDateFromLocalStorage = localStorage.getItem('analyticsRangeDate') && JSON.parse(localStorage.getItem('analyticsRangeDate'))
@@ -42,7 +41,6 @@ const initialState = {
         showOptimizationChart: true,
         selectFourMetrics: false
     })),
-    columnsBlackList: columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : workplacesList,
     filters: filtersListFromLocalStorage ? filtersListFromLocalStorage : workplacesList,
     selectedRangeDate: rangeDateFromLocalStorage ? rangeDateFromLocalStorage : {
         startDate: moment().add(-29, 'days').toISOString(),
@@ -111,20 +109,6 @@ export function analytics(state = initialState, action) {
                         ...state.metricsState[state.location],
                         ...action.payload
                     }
-                }
-            }
-
-        case analyticsConstants.SET_COLUMNS_BLACK_LIST:
-            localStorage.setItem('analyticsColumnsBlackList', JSON.stringify({
-                ...state.columnsBlackList,
-                [state.location]: action.payload
-            }))
-
-            return {
-                ...state,
-                columnsBlackList: {
-                    ...state.columnsBlackList,
-                    [state.location]: action.payload
                 }
             }
 

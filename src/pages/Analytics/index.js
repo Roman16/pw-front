@@ -21,7 +21,6 @@ import Placements from "./Placements/Placements"
 import PortfolioSettings from "./PortfolioSettings/PortfolioSettings"
 import ProductOverview from "./ProductOverview/ProductOverview"
 import {debounce} from "throttle-debounce"
-import $ from 'jquery'
 
 const Analytics = (props) => {
     const dispatch = useDispatch()

@@ -200,7 +200,9 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
 
     useEffect(() => {
         function handleClickOutside({target}) {
-            if (wrapperRef.current && !wrapperRef.current.contains(target)) {
+            if (target.className === 'icon' || target.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.parentNode.className === 'ant-popover-open') {
+
+            } else if (wrapperRef.current && !wrapperRef.current.contains(target)) {
                 onClose()
             }
         }
@@ -210,6 +212,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             document.removeEventListener("click", handleClickOutside)
         }
     }, [wrapperRef])
+
 
     const multiSelectVariations = {
         'object_type': [

@@ -1,40 +1,40 @@
-import React, {Suspense} from 'react';
-import {Router, Route, Switch, Redirect} from 'react-router-dom';
-import {history} from '../utils/history';
-import RouteLoader from "../components/RouteLoader/RouteLoader";
-import PPCRedirect from "../pages/authentication/AccountBinding/components/ConnectPpc/PPCRedirect";
+import React, {Suspense} from 'react'
+import {Router, Route, Switch, Redirect} from 'react-router-dom'
+import {history} from '../utils/history'
+import RouteLoader from "../components/RouteLoader/RouteLoader"
+import PPCRedirect from "../pages/authentication/AccountBinding/components/ConnectPpc/PPCRedirect"
 
-const LandingZTH = React.lazy(() => import('../pages/LandingPages/ZTH/ZTH'));
-const LandingAutomation = React.lazy(() => import('../pages/LandingPages/Automation/LandingAutomation'));
-const LandingAffiliates = React.lazy(() => import('../pages/LandingPages/Affiliates/LandingAffiliates'));
-const Ebook = React.lazy(() => import('../pages/LandingPages/Ebook/Ebook'));
-const ThankYou = React.lazy(() => import('../pages/LandingPages/Ebook/ThankYou'));
-const AboutUs = React.lazy(() => import('../pages/LandingPages/AboutUs/AboutUs'));
-const Pricing = React.lazy(() => import('../pages/LandingPages/Pricing/Pricing'));
-const PricingOld = React.lazy(() => import('../pages/LandingPages/PricingOld/PricingOld'));
-const PPCScanner = React.lazy(() => import('../pages/LandingPages/PPCScanner/PPCScanner'));
-const DemoCall = React.lazy(() => import('../pages/LandingPages/DemoCall/DemoCall'));
-const ContactUs = React.lazy(() => import('../pages/LandingPages/ContactUs/ContactUs'));
-const HelpSupport = React.lazy(() => import('../pages/LandingPages/ContactUs/HelpSupport'));
-const BookDemo = React.lazy(() => import('../pages/LandingPages/ContactUs/BookDemo'));
-const Partners = React.lazy(() => import('../pages/LandingPages/ContactUs/Partners'));
-const Audit = React.lazy(() => import('../pages/LandingPages/ContactUs/Audit'));
-const PrivacyPolicy = React.lazy(() => import('../pages/LandingPages/PrivacyPolicy/PrivacyPolicy'));
-const TermsOfUse = React.lazy(() => import('../pages/LandingPages/TermsOfUse/TermsOfUse'));
-const Video = React.lazy(() => import('../pages/LandingPages/Video/Video'));
-const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFound'));
+const LandingZTH = React.lazy(() => import('../pages/LandingPages/ZTH/ZTH'))
+const LandingAutomation = React.lazy(() => import('../pages/LandingPages/Automation/LandingAutomation'))
+const LandingAffiliates = React.lazy(() => import('../pages/LandingPages/Affiliates/LandingAffiliates'))
+const Ebook = React.lazy(() => import('../pages/LandingPages/Ebook/Ebook'))
+const ThankYou = React.lazy(() => import('../pages/LandingPages/Ebook/ThankYou'))
+const AboutUs = React.lazy(() => import('../pages/LandingPages/AboutUs/AboutUs'))
+const Pricing = React.lazy(() => import('../pages/LandingPages/Pricing/Pricing'))
+const PricingOld = React.lazy(() => import('../pages/LandingPages/PricingOld/PricingOld'))
+const PPCScanner = React.lazy(() => import('../pages/LandingPages/PPCScanner/PPCScanner'))
+const DemoCall = React.lazy(() => import('../pages/LandingPages/DemoCall/DemoCall'))
+const ContactUs = React.lazy(() => import('../pages/LandingPages/ContactUs/ContactUs'))
+const HelpSupport = React.lazy(() => import('../pages/LandingPages/ContactUs/HelpSupport'))
+const BookDemo = React.lazy(() => import('../pages/LandingPages/ContactUs/BookDemo'))
+const Partners = React.lazy(() => import('../pages/LandingPages/ContactUs/Partners'))
+const Audit = React.lazy(() => import('../pages/LandingPages/ContactUs/Audit'))
+const PrivacyPolicy = React.lazy(() => import('../pages/LandingPages/PrivacyPolicy/PrivacyPolicy'))
+const TermsOfUse = React.lazy(() => import('../pages/LandingPages/TermsOfUse/TermsOfUse'))
+const Video = React.lazy(() => import('../pages/LandingPages/Video/Video'))
+const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFound'))
 
-const AuthorizedUser = React.lazy(() => import('../pages'));
+const AuthorizedUser = React.lazy(() => import('../pages'))
 
-const LoginPage = React.lazy(() => import('../pages/authentication/LoginPage/LoginPage'));
-const RegistrationPage = React.lazy(() => import('../pages/authentication/RegistrationPage/RegistrationPage'));
-const AuditRegistration = React.lazy(() => import('../pages/authentication/AuditRegistration/AuditRegistration'));
-const ConfirmEmailPage = React.lazy(() => import('../pages/authentication/RegistrationPage/ConfirmEmailPage/ConfirmEmailPage'));
-const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPassword/ResetPassword'));
-const LoginWithAmazon = React.lazy(() => import('../pages/authentication/LoginWithAmazon/LoginWithAmazon'));
-const ThankPage = React.lazy(() => import('../pages/authentication/AccountBinding/ThankPage/ThankPage'));
+const LoginPage = React.lazy(() => import('../pages/authentication/LoginPage/LoginPage'))
+const RegistrationPage = React.lazy(() => import('../pages/authentication/RegistrationPage/RegistrationPage'))
+const AuditRegistration = React.lazy(() => import('../pages/authentication/AuditRegistration/AuditRegistration'))
+const ConfirmEmailPage = React.lazy(() => import('../pages/authentication/RegistrationPage/ConfirmEmailPage/ConfirmEmailPage'))
+const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPassword/ResetPassword'))
+const LoginWithAmazon = React.lazy(() => import('../pages/authentication/LoginWithAmazon/LoginWithAmazon'))
+const ThankPage = React.lazy(() => import('../pages/authentication/AccountBinding/ThankPage/ThankPage'))
 
-const developer = process.env.REACT_APP_ENV === "developer";
+const developer = process.env.REACT_APP_ENV === "developer"
 
 
 const routers = () => {
@@ -63,7 +63,13 @@ const routers = () => {
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
                     {/*<Route exact path="/registration/:tag" component={RegistrationPage}/>*/}
-                    {/*<Route exact path="/registration" component={AuditRegistration}/>*/}
+                    <Route exact path="/registration/:tag?" render={(props) => {
+                        if(props.match.params.tag && props.match.params.tag === 'from-agency') {
+                            return (<RegistrationPage {...props}/>)
+                        } else {
+                            return (<AuditRegistration/>)
+                        }
+                    }}/>
                     <Route exact path="/confirm-email/:token?" component={ConfirmEmailPage}/>
                     <Route exact path="/reset-password/:userId?/:token?" component={ResetPassword}/>
                     <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
@@ -83,7 +89,7 @@ const routers = () => {
                 </Switch>
             </Router>
         </Suspense>
-    );
-};
+    )
+}
 
-export default React.memo(routers);
+export default React.memo(routers)

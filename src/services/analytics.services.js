@@ -28,7 +28,7 @@ const filtersHandler = (filters) => {
             parameters.push(`&${filterBy}:${type.key}=${value / 100}`)
         } else if (typeof type === 'object') {
             parameters.push(`&${filterBy}:${type.key}=${value}`)
-        } else if (filterBy !== 'name') {
+        } else if (filterBy !== 'name' && type !== 'search') {
             parameters.push(`&${filterBy}:${type}=${value}`)
         }
     })

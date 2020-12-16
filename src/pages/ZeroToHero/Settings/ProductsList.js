@@ -7,7 +7,7 @@ import {history} from "../../../utils/history"
 import {zthActions} from "../../../actions/zth.actions"
 import {useDispatch} from "react-redux"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
-import {amazonDefaultImageUrl} from "../../../components/ProductList/ProductItem"
+import {amazonDefaultImageUrls} from "../../../components/ProductList/ProductItem"
 import noImage from '../../../assets/img/no-image-available.svg'
 
 
@@ -15,7 +15,7 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
     return (
         <div className='product-block'>
             <div className="image">
-                <img src={product.image_url === amazonDefaultImageUrl ? noImage : product.image_url} alt=""/>
+                <img src={amazonDefaultImageUrls.includes(product.image_url) ? noImage : product.image_url} alt=""/>
             </div>
 
             <div className="col">

@@ -14,7 +14,7 @@ import {
     impressionsColumn, netProfitColumn,
     renderNumberField, RenderProduct,
     roasColumn,
-    salesShareColumn,
+    salesShareColumn, skuAsinColumn,
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
 import {Select} from "antd"
@@ -87,19 +87,7 @@ const ProductsList = () => {
                 isParent={_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent'}
             />
         },
-        {
-            title: 'SKU/ASIN',
-            dataIndex: 'sku_asin',
-            key: 'sku_asin',
-            width: '180px',
-            locked: true,
-            sorter: true,
-            noTotal: true,
-            render: (text, item) => <div className={'sku-asin'}>
-                <div title={item.sku}><b>SKU:</b> {item.sku}</div>
-                <div title={item.asin}><b>ASIN:</b> {item.asin}</div>
-            </div>
-        },
+        skuAsinColumn,
         {
             title: 'Campaigns',
             dataIndex: 'campaigns_count',

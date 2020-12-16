@@ -51,12 +51,48 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
         prevValue = +prevValue
         diff = +diff
 
-        if (diff === 0) {
+        if (name === 'profit' || name === metricKeys['net_profit'] || name === metricKeys['gross_profit'] || name === metricKeys['net_ad_profit'] || name === 'organic_sales' || name === 'total_sales' || name === 'ad_sales') {
+            const diffValue = Math.abs(value - prevValue)
+
+            return (<InformationTooltip
+                type='custom'
+                overlayClassName={'diff-tooltip'}
+                description={<DiffTooltip
+                    currentValue={value}
+                    prevValue={prevValue}
+                    diff={diff}
+                    type={type}
+                    percentRow={false}
+                />}>
+                <div className='metric-item__changes'>
+                    {(value > prevValue) && <div className='upward-changes'>
+                        <i>
+                            <SVG id='upward-metric-changes'/>
+                        </i>
+                        ${numberMask(diffValue, 2)}
+                    </div>}
+
+                    {(value < prevValue) && <div className='downward-changes'>
+                        <i>
+                            <SVG id='downward-metric-changes'/>
+                        </i>
+                        ${numberMask(diffValue, 2)}
+                    </div>}
+
+                    {diffValue === 0 && <div className='down-changes'>
+                        <div className='horizontal-line-icon'/>
+
+                        $0
+                    </div>}
+                </div>
+            </InformationTooltip>)
+        } else if (diff === 0) {
             return (
                 <div className='metric-item__changes'>
                     <div className='down-changes'>
+                        <div className='horizontal-line-icon'/>
+
                         0%
-                        <div className='horizontal-line-icon'></div>
                     </div>
                 </div>
             )
@@ -89,35 +125,6 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                 </InformationTooltip>
 
             )
-        } else if (name === 'profit' || name === metricKeys['net_profit'] || name === metricKeys['gross_profit'] || name === metricKeys['net_ad_profit'] || name === 'organic_sales' || name === 'total_sales' || name === 'ad_sales') {
-            const diffValue = Math.abs(value - prevValue)
-
-            return (<InformationTooltip
-                type='custom'
-                overlayClassName={'diff-tooltip'}
-                description={<DiffTooltip
-                    currentValue={value}
-                    prevValue={prevValue}
-                    diff={diff}
-                    type={type}
-                    percentRow={false}
-                />}>
-                <div className='metric-item__changes'>
-                    {(value > prevValue) && <div className='upward-changes'>
-                        <i>
-                            <SVG id='upward-metric-changes'/>
-                        </i>
-                        ${numberMask(diffValue, 2)}
-                    </div>}
-
-                    {(value <= prevValue) && <div className='downward-changes'>
-                        <i>
-                            <SVG id='downward-metric-changes'/>
-                        </i>
-                        ${numberMask(diffValue, 2)}
-                    </div>}
-                </div>
-            </InformationTooltip>)
         } else {
             return (
                 <InformationTooltip

@@ -1,11 +1,10 @@
 import React, {useState} from "react"
 import './AuditRegistration.less'
-import logo from '../../../assets/img/ProfitWhales-logo-white.svg'
+import logo from '../../../assets/img/logo/pw-agensy-white.svg'
 import {history} from "../../../utils/history"
 import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png'
 import advertisingWhiteLogo from '../../../assets/img/logo/amazon-advertising-white.png'
 import UserComments from "./UserComments/UserComments"
-import RegistrationProgress from "./RegistrationProgress/RegistrationProgress"
 import RegistrationForm from "./RegistrationForm/RegistrationForm"
 
 const AuditRegistration = () => {
