@@ -38,7 +38,7 @@ function getAllReports(type, options, cancelToken) {
             if(filterBy === 'type') {
                 parameters.push(`&type:in=${requestValue.map(item => reasonFilterParams[item].join(',')).join(',')}`)
             } else {
-                parameters.push(`&type:in=${requestValue.join(',')}`)
+                parameters.push(`&${filterBy}:in=${requestValue.join(',')}`)
             }
         } else if (filterBy === 'object' || filterBy === 'keyword_pt' || filterBy === 'campaign_name' || filterBy === 'ad_group_name') {
             parameters.push(`&${filterBy === 'keyword_pt' ? 'object' : filterBy}:${type.key}=${value}`)
