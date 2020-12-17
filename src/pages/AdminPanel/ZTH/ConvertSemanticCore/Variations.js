@@ -86,13 +86,12 @@ const Variations = ({semanticData, onChange}) => {
 
             return variation
         }))
-
     }
 
     const pasteThemesHandler = () => {
         setVariations(variations.map((variation, index) => {
             if (index === activeVariationIndex && copiedThemes) {
-                variation.themeValues = copiedThemes
+                variation.themeValues = [...copiedThemes.map(item => ({...item}))]
             }
 
             return variation
