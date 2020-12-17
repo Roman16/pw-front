@@ -267,7 +267,7 @@ const TableList = ({
             {paginationParams.totalSize !== 0 && showPagination && <Pagination
                 {...paginationParams}
 
-                pageSizeOptions={[10, 30, 50, 100, 200]}
+                pageSizeOptions={[10, 30, 50, 100, 200, 500]}
                 showQuickJumper={true}
                 listLength={tableData.length}
                 processing={fetchingStatus}
