@@ -39,7 +39,7 @@ const initialState = {
         showWeekChart: true,
         showDailyChart: true,
         showOptimizationChart: true,
-        selectFourMetrics: false
+        selectFourMetrics: false,
     })),
     filters: filtersListFromLocalStorage ? filtersListFromLocalStorage : workplacesList,
     selectedRangeDate: rangeDateFromLocalStorage ? rangeDateFromLocalStorage : {

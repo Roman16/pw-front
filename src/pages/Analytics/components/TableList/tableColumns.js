@@ -116,6 +116,18 @@ export const RenderProduct = ({product, isParent = false}) => {
                     </ul>
 
                     {product.childs_sku_array.length > 5 && <p>And others</p>}
+
+
+                    <Link
+                        to={`/analytics/overview?productId=${product.productId}&isParent=${true}`}
+                        className={'see-all-link'}
+                        onClick={() => setStateHandler('ad-groups', {
+                            name: {productName: product.product_name},
+                            productId: product.productId
+                        })}
+                    >
+                        See all
+                    </Link>
                 </div>}
             >
                 <i> <SVG id={'home-icon'}/></i>

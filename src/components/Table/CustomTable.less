@@ -103,6 +103,7 @@
 
             svg {
               opacity: 0;
+              transform: rotate(180deg);
 
               use {
                 stroke: #C9CBD4;
@@ -115,6 +116,12 @@
 
                 use {
                   stroke: #6D6DF6;
+                }
+              }
+
+              &.desc {
+                svg {
+                  transform: rotate(0deg);
                 }
               }
 

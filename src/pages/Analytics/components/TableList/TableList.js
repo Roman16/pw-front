@@ -9,6 +9,11 @@ import TableFilters from "../TableFilters/TableFilters"
 import DateRange from "../DateRange/DateRange"
 import ColumnsSelect from "../ColumnsSelect/ColumnsSelect"
 import axios from "axios"
+import {Popover, Switch} from "antd"
+import {SVG} from "../../../../utils/icons"
+import TableOptions from "./TableOptions"
+import moment from "moment"
+import preciseDiff from "moment-precise-range-plugin"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -30,12 +35,14 @@ const TableList = ({
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
-        sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') && JSON.parse(localStorage.getItem('analyticsSorterColumn'))
+        sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') && JSON.parse(localStorage.getItem('analyticsSorterColumn')),
+        tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') && JSON.parse(localStorage.getItem('analyticsTableOptions'))
 
     const [tableData, setTableData] = useState([]),
         [fetchingStatus, setFetchingStatus] = useState(false),
         [columnsBlackList, setColumnsBlackList] = useState(columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {}),
         [sorterColumn, setSorterColumn] = useState(sorterColumnFromLocalStorage ? sorterColumnFromLocalStorage : {}),
+        [tableOptions, setTableOptions] = useState(tableOptionsFromLocalStorage ? tableOptionsFromLocalStorage : {}),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
             pageSize: 30,
@@ -52,6 +59,7 @@ const TableList = ({
 
     const localColumnBlackList = columnsBlackList[locationKey] || [],
         localSorterColumn = sorterColumn[locationKey] || undefined,
+        localTableOptions = tableOptions[locationKey] || {comparePreviousPeriod: false},
         filters = useSelector(state => state.analytics.filters[locationKey] || [])
 
 
@@ -64,27 +72,35 @@ const TableList = ({
         }
 
         if (localSorterColumn && localSorterColumn.column === column) {
-            if (localSorterColumn.type === 'desc') {
+            if (localSorterColumn.type === 'asc') {
                 setColumn({
                     column: column,
-                    type: 'asc'
+                    type: 'desc'
+
                 })
-            } else if (localSorterColumn.type === 'asc') {
+            } else if (localSorterColumn.type === 'desc') {
                 setColumn({
                     column: null,
-                    type: 'desc'
+                    type: 'asc'
                 })
             }
         } else {
             setColumn({
                 column: column,
-                type: 'desc'
+                type: 'asc'
             })
         }
 
         setPaginationParams({
             ...paginationParams,
             page: 1,
+        })
+    }
+
+    const changeTableOptionsHandler = (value) => {
+        setTableOptions({
+            ...tableOptions,
+            [locationKey]: value
         })
     }
 
@@ -142,6 +158,42 @@ const TableList = ({
         }
     }
 
+    const getPreviousPeriodData = async () => {
+        // source && source.cancel()
+        // source = CancelToken.source()
+
+        const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
+
+        try {
+            const filtersWithState = [
+                ...filters,
+                ...Object.keys(mainState).map(key => ({
+                    filterBy: key,
+                    type: 'eq',
+                    value: mainState[key]
+                })).filter(item => !!item.value),
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: {
+                        startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
+                        endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                    }
+                },
+            ]
+
+            const res = await analyticsServices.fetchTableData(locationKey, paginationParams, localSorterColumn, filtersWithState)
+
+            if (res.response) {
+                console.log(res.response)
+            }
+            setFetchingStatus(false)
+
+        } catch (e) {
+
+        }
+    }
+
     useEffect(() => {
         getData()
     }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate])
@@ -162,6 +214,14 @@ const TableList = ({
         localStorage.setItem('analyticsSorterColumn', JSON.stringify(sorterColumn))
     }, [sorterColumn])
 
+    useEffect(() => {
+        localStorage.setItem('analyticsTableOptions', JSON.stringify(tableOptions))
+
+        if(localTableOptions.comparePreviousPeriod) {
+            getPreviousPeriodData()
+        }
+    }, [tableOptions])
+
 
     return (
         <div className={'table-section'}>
@@ -174,6 +234,11 @@ const TableList = ({
 
                 {moreActions}
 
+                <TableOptions
+                    options={localTableOptions}
+                    onChange={changeTableOptionsHandler}
+                />
+
                 {columnSelect && <ColumnsSelect
                     columns={columns}
                     columnsBlackList={localColumnBlackList}
@@ -184,7 +249,6 @@ const TableList = ({
             </div>
 
             <CustomTable
-                onChangeSorter={sortChangeHandler}
                 loading={fetchingStatus}
                 dataSource={tableData}
                 {...showTotal && {
@@ -196,17 +260,19 @@ const TableList = ({
                 sorterColumn={localSorterColumn}
                 columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
                 fixedColumns={fixedColumns}
+
+                onChangeSorter={sortChangeHandler}
             />
 
             {paginationParams.totalSize !== 0 && showPagination && <Pagination
-                onChange={paginationChangeHandler}
+                {...paginationParams}
 
                 pageSizeOptions={[10, 30, 50, 100, 200]}
                 showQuickJumper={true}
                 listLength={tableData.length}
                 processing={fetchingStatus}
 
-                {...paginationParams}
+                onChange={paginationChangeHandler}
             />}
         </div>
     )

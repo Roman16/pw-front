@@ -29,7 +29,7 @@ function Report() {
             }),
         [sorterColumn, setSorterColumn] = useState({
             column: 'datetime',
-            type: 'desc'
+            type: 'asc'
         }),
         [totalSize, setTotalSize] = useState(0),
         [paginationParams, setPaginationParams] = useState({
@@ -56,7 +56,7 @@ function Report() {
         setReportsList([])
         setSorterColumn({
             column: 'datetime',
-            type: 'desc'
+            type: 'asc'
         })
 
         document.querySelector('.table-overflow').scroll(0, 0)
@@ -69,21 +69,21 @@ function Report() {
         })
 
         if (sorterColumn && sorterColumn.column === column) {
-            if (sorterColumn.type === 'desc') {
+            if (sorterColumn.type === 'asc') {
                 setSorterColumn({
                     column: column,
-                    type: 'asc'
+                    type: 'desc'
                 })
-            } else if (sorterColumn.type === 'asc') {
+            } else if (sorterColumn.type === 'desc') {
                 setSorterColumn({
                     column: null,
-                    type: 'desc'
+                    type: 'asc'
                 })
             }
         } else {
             setSorterColumn({
                 column: column,
-                type: 'desc'
+                type: 'asc'
             })
         }
     }

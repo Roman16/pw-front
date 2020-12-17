@@ -53,7 +53,7 @@ function getAllReports(type, options, cancelToken) {
         }
     })
 
-    if (sorterColumn.type) {
+    if (sorterColumn.column !== null) {
         parameters.push(`&order_by:${sorterColumn.type}=${sorterColumn.column}`)
     }
 
