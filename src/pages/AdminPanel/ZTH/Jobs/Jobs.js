@@ -83,14 +83,14 @@ const columns = [
         key: 'inputParameters',
         width: '100px',
         render: parameters => Object.keys(parameters).length > 0 &&
-            <button onClick={() => saveInputParameters(parameters)}>Save</button>
+            <button onClick={() => saveInputParameters(parameters)}>Download</button>
     },
     {
         title: 'Error',
         dataIndex: 'errorText',
         key: 'errorText',
         minWidth: '200px',
-        render: (errorText, item) => item.status === 'ERROR' && errorText
+        render: (errorText, item) => (item.status === 'ERROR' || item.status === 'FAILED') && errorText
     },
 ]
 
