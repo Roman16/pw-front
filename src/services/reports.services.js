@@ -40,6 +40,12 @@ function getAllReports(type, options, cancelToken) {
             } else {
                 parameters.push(`&${filterBy}:in=${requestValue.join(',')}`)
             }
+        } else if(type.key === 'one_of') {
+            if(filterBy === 'type') {
+                parameters.push(`&type:in=${value.map(item => reasonFilterParams[item].join(',')).join(',')}`)
+            } else {
+                parameters.push(`&${filterBy}:in=${value.join(',')}`)
+            }
         } else if (filterBy === 'object' || filterBy === 'keyword_pt' || filterBy === 'campaign_name' || filterBy === 'ad_group_name') {
             parameters.push(`&${filterBy === 'keyword_pt' ? 'object' : filterBy}:${type.key}=${value}`)
         } else if (filterBy === 'object_type' || filterBy === 'match_type') {
