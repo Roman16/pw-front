@@ -51,8 +51,8 @@ const urlGenerator = (url, pagination, sorting, filters) => {
 
 }
 
-function fetchTableData(locationKey, paginationParams, sortingParams = {}, filters = [], cancelToken) {
-    return api('get', urlGenerator(analyticsUrls.tableData(locationKey), paginationParams, sortingParams, filters), null, null, cancelToken)
+function fetchTableData(locationKey, paginationParams, sortingParams = {}, filters = [], cancelToken, idList = '') {
+    return api('get', urlGenerator(analyticsUrls.tableData(locationKey), paginationParams, sortingParams, filters) + idList, null, null, cancelToken)
 }
 
 function fetchMetricsData({startDate, endDate, locationKey, filters}, cancelToken) {

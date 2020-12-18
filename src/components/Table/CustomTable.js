@@ -93,7 +93,7 @@ const CustomTable = ({
                                 }}
                                 onClick={() => item.sorter && onChangeSorter(item.key)}
                             >
-                                <div className={`title ${item.align || ''}`}>
+                                <div className={`title ${item.align ? `align-${item.align}` : ''}`}>
                                     {typeof item.title === 'function' ? item.title() : item.title}
 
                                     {item.sorter && <div
@@ -134,14 +134,14 @@ const CustomTable = ({
 
                                     return (
                                         <div
-                                            className={`table-body__field ${item.align || ''} ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}`}
+                                            className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''}`}
                                             style={{
                                                 ...fieldWidth,
                                                 minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
                                             }}
                                         >
                                             {item.render
-                                                ? item.render(report[item.key], report, index)
+                                                ? item.render(report[item.key], report, index, item.dataIndex)
                                                 : report[item.key]}
                                         </div>
                                     )

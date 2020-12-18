@@ -12,10 +12,10 @@ const TableOptions = ({options, onChange}) => {
     }
 
     return (<Popover
+        trigger="click"
         placement="bottomRight"
         overlayClassName={'table-options-popover'}
         getPopupContainer={(node) => node.parentNode}
-        trigger="click"
         content={<div className="switches">
             <div className='switch-block optimization-switch'>
                 <Switch
@@ -26,11 +26,14 @@ const TableOptions = ({options, onChange}) => {
             </div>
         </div>}
     >
-        <button className={'table-options'}>
-            <SVG id={'options-icon'}/>
+        <button className={'table-options icon-btn'}>
+            <i>
+                <SVG id={'options-icon'}/>
+            </i>
+
             options
         </button>
     </Popover>)
 }
 
-export default TableOptions
+export default React.memo(TableOptions)

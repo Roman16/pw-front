@@ -7,6 +7,7 @@ import {SVG} from "../../../../utils/icons"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {ProfitTooltipDescription} from "../../../PPCAutomate/Dashboard/ProductBreakdown/ProductsList"
 import {metricKeys} from "./metricsList"
+import {Popover} from "antd"
 
 const DiffTooltip = ({currentValue, diff, type, prevValue, percentRow = true}) => {
     const diffValue = Math.abs(round(currentValue - prevValue, 2))
@@ -45,7 +46,7 @@ const DiffTooltip = ({currentValue, diff, type, prevValue, percentRow = true}) =
     )
 }
 
-const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
+export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopupContainer = false}) => {
     if (diff != null) {
         value = +value
         prevValue = +prevValue
@@ -57,6 +58,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
             return (<InformationTooltip
                 type='custom'
                 overlayClassName={'diff-tooltip'}
+                {...getPopupContainer && {getPopupContainer: (node) => node.parentNode}}
                 description={<DiffTooltip
                     currentValue={value}
                     prevValue={prevValue}
@@ -101,6 +103,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                 <InformationTooltip
                     type='custom'
                     overlayClassName={'diff-tooltip'}
+                    {...getPopupContainer && {getPopupContainer: (node) => node.parentNode}}
                     description={<DiffTooltip
                         currentValue={value}
                         prevValue={prevValue}
@@ -130,6 +133,7 @@ const RenderMetricChanges = ({value, prevValue, diff, type, name}) => {
                 <InformationTooltip
                     type='custom'
                     overlayClassName={'diff-tooltip'}
+                    {...getPopupContainer && {getPopupContainer: (node) => node.parentNode}}
                     description={<DiffTooltip
                         currentValue={value}
                         prevValue={prevValue}

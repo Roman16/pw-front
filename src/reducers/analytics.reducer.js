@@ -21,6 +21,7 @@ const workplacesList = {
 
 const initialState = {
     location: undefined,
+    visibleChart: localStorage.getItem('analyticsViewChart') || true,
     mainState: {
         campaignId: undefined,
         productId: undefined,
@@ -72,12 +73,19 @@ export function analytics(state = initialState, action) {
             }
 
         case analyticsConstants.SET_DATE_RANGE:
-            console.log(action.payload)
             localStorage.setItem('analyticsRangeDate', JSON.stringify(action.payload))
 
             return {
                 ...state,
                 selectedRangeDate: action.payload
+            }
+
+        case analyticsConstants.SET_CHART_VIEW:
+            localStorage.setItem('analyticsViewChart', JSON.stringify(action.payload))
+
+            return {
+                ...state,
+                visibleChart: action.payload
             }
 
         case analyticsConstants.SET_LOCATION:

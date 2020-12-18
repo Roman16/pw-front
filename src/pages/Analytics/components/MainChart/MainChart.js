@@ -25,12 +25,13 @@ const MainChart = ({allMetrics}) => {
     location = location === 'campaignSettings' ? 'campaigns' : location
     location = location === 'portfolioSettings' ? 'portfolios' : location
 
-    const {selectedRangeDate, metricsState, chartState, filters, mainState} = useSelector(state => ({
+    const {selectedRangeDate, metricsState, chartState, filters, mainState, visibleChart} = useSelector(state => ({
         selectedRangeDate: state.analytics.selectedRangeDate,
         metricsState: state.analytics.metricsState && state.analytics.metricsState[location],
         chartState: state.analytics.chartState[location],
         filters: state.analytics.filters[location] || [],
         mainState: state.analytics.mainState,
+        visibleChart: state.analytics.visibleChart,
 
     }))
 
@@ -94,12 +95,11 @@ const MainChart = ({allMetrics}) => {
         getChartData()
     }, [selectedRangeDate, filters, mainState])
 
-    return <section className={'main-chart'}>
-        <ChartHeader
-            chartState={chartState}
-            activeMetrics={activeMetrics}
-        />
+    useEffect(() => {
 
+    }, [])
+
+    return <section className={`main-chart ${visibleChart ? 'visible' : 'hidden'}`}>
         <Chart
             showWeekChart={chartState.showWeekChart}
             showDailyChart={chartState.showDailyChart}
@@ -108,6 +108,11 @@ const MainChart = ({allMetrics}) => {
             data={chartData}
             selectedRangeDate={selectedRangeDate}
             productOptimizationDateList={productOptimizationDateList}
+        />
+
+        <ChartHeader
+            chartState={chartState}
+            activeMetrics={activeMetrics}
         />
 
         {fetching && <div className="loading">

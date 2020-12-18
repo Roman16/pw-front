@@ -7,13 +7,14 @@ import './TableList.less'
 import {analyticsServices} from "../../../../services/analytics.services"
 import TableFilters from "../TableFilters/TableFilters"
 import DateRange from "../DateRange/DateRange"
-import ColumnsSelect from "../ColumnsSelect/ColumnsSelect"
+import ColumnsSelect from "./ColumnsSelect"
 import axios from "axios"
 import {Popover, Switch} from "antd"
 import {SVG} from "../../../../utils/icons"
 import TableOptions from "./TableOptions"
 import moment from "moment"
 import preciseDiff from "moment-precise-range-plugin"
+import SwitchChartVisible from "./SwitchChartVisisble"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -21,6 +22,17 @@ String.prototype.capitalize = function () {
 
 const CancelToken = axios.CancelToken
 let source = null
+
+const idKey = {
+    'products': 'product',
+    'portfolios': 'portfolio',
+    'campaigns': 'campaign',
+    'placements': 'placement',
+    'ad-groups': 'adGroup',
+    'targetings': 'targeting',
+    'negative-targetings': 'targeting',
+    'product-ads': 'ad',
+}
 
 
 const TableList = ({
@@ -150,6 +162,10 @@ const TableList = ({
 
             if (res.response) {
                 setTableData(res.response)
+
+                if (localTableOptions.comparePreviousPeriod) {
+                    getPreviousPeriodData(res.response.map(item => item[`${idKey[locationKey]}Id`]))
+                }
             }
             setFetchingStatus(false)
 
@@ -158,9 +174,9 @@ const TableList = ({
         }
     }
 
-    const getPreviousPeriodData = async () => {
-        // source && source.cancel()
-        // source = CancelToken.source()
+    const getPreviousPeriodData = async (idList) => {
+        source && source.cancel()
+        source = CancelToken.source()
 
         const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
 
@@ -182,13 +198,20 @@ const TableList = ({
                 },
             ]
 
-            const res = await analyticsServices.fetchTableData(locationKey, paginationParams, localSorterColumn, filtersWithState)
+            const res = await analyticsServices.fetchTableData(locationKey, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[locationKey]}Id:in=${idList.join(',')}`)
 
             if (res.response) {
-                console.log(res.response)
-            }
-            setFetchingStatus(false)
+                setTableData(prevState => {
 
+                    return prevState.map(item => ({
+                        ...item,
+                        compareWithPrevious: true,
+                        ..._.mapKeys(_.find(res.response, {[`${idKey[locationKey]}Id`]: item[`${idKey[locationKey]}Id`]}), (value, key) => {
+                            return `${key}_prev`
+                        })
+                    }))
+                })
+            }
         } catch (e) {
 
         }
@@ -196,7 +219,7 @@ const TableList = ({
 
     useEffect(() => {
         getData()
-    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate])
+    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate, tableOptions])
 
     useEffect(() => {
         setPaginationParams({
@@ -216,12 +239,7 @@ const TableList = ({
 
     useEffect(() => {
         localStorage.setItem('analyticsTableOptions', JSON.stringify(tableOptions))
-
-        if(localTableOptions.comparePreviousPeriod) {
-            getPreviousPeriodData()
-        }
     }, [tableOptions])
-
 
     return (
         <div className={'table-section'}>
@@ -234,18 +252,20 @@ const TableList = ({
 
                 {moreActions}
 
-                <TableOptions
-                    options={localTableOptions}
-                    onChange={changeTableOptionsHandler}
-                />
-
                 {columnSelect && <ColumnsSelect
                     columns={columns}
                     columnsBlackList={localColumnBlackList}
                     onChangeBlackList={changeBlackListHandler}
                 />}
 
+                <TableOptions
+                    options={localTableOptions}
+                    onChange={changeTableOptionsHandler}
+                />
+
                 {dateRange && <DateRange/>}
+
+                <SwitchChartVisible/>
             </div>
 
             <CustomTable

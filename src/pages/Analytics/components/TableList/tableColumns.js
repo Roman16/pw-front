@@ -13,21 +13,39 @@ import defaultProductImage from '../../../../assets/img/default-product-image.sv
 import {valueTile} from "../../../PPCAutomate/Report/Filters/FilterItem"
 import {amazonDefaultImageUrls} from "../../../../components/ProductList/ProductItem"
 import noImage from "../../../../assets/img/no-image-available.svg"
+import {RenderMetricChanges} from "../MainMetrics/MetricItem"
 
 export const renderNumberField = (type = 'number') => {
-    switch (type) {
-        case 'number':
-            return ({render: (number) => (number !== null && number !== undefined ? numberMask(number, 0) : '-')})
+    const Value = ({number}) => {
+        switch (type) {
+            case 'number':
+                return ((number !== null && number !== undefined ? numberMask(number, 0) : '-'))
 
-        case 'percent':
-            return ({render: (number) => (number !== null && number !== undefined ? `${round(+number * 100, 2)}%` : '-')})
+            case 'percent':
+                return ((number !== null && number !== undefined ? `${round(+number * 100, 2)}%` : '-'))
 
-        case 'currency':
-            return ({render: (number) => (number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-')})
+            case 'roas':
+                return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
 
-        default:
-            return ({})
+            case 'currency':
+                return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
+        }
     }
+
+    return ({
+        render: (number, item, array, dataIndex) => (<div className={'metric-value'}>
+            <Value number={number}/>
+
+            {item.compareWithPrevious && <RenderMetricChanges
+                value={number}
+                prevValue={item[`${dataIndex}_prev`]}
+                diff={+item[`${dataIndex}_prev`] === 0 ? null : (+number - +item[`${dataIndex}_prev`]) / +item[`${dataIndex}_prev`]}
+                type={type}
+                name={dataIndex}
+                getPopupContainer={true}
+            />}
+        </div>)
+    })
 }
 
 
@@ -143,6 +161,7 @@ export const impressionsColumn = {
     width: '150px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField()
 }
 
@@ -169,6 +188,7 @@ export const clicksColumn = {
     minWidth: '90px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField()
 }
 
@@ -179,6 +199,7 @@ export const ctrColumn = {
     minWidth: '90px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField('percent')
 }
 
@@ -189,6 +210,7 @@ export const adSpendColumn = {
     minWidth: '130px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField('currency')
 }
 
@@ -199,6 +221,7 @@ export const cpcColumn = {
     minWidth: '90px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField('currency')
 }
 
@@ -209,6 +232,7 @@ export const adSalesColumn = {
     minWidth: '130px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField('currency')
 }
 
@@ -219,6 +243,7 @@ export const acosColumn = {
     minWidth: '100px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField('percent')
 }
 
@@ -229,6 +254,7 @@ export const adCvrColumn = {
     minWidth: '120px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField('percent')
 }
 
@@ -239,6 +265,7 @@ export const cpaColumn = {
     minWidth: '90px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField('currency')
 }
 
@@ -249,6 +276,7 @@ export const adOrdersColumn = {
     minWidth: '130px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField()
 }
 
@@ -259,6 +287,7 @@ export const adUnitsColumn = {
     minWidth: '130px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField()
 }
 
@@ -269,7 +298,8 @@ export const roasColumn = {
     minWidth: '120px',
     sorter: true,
     filter: true,
-    render: (roas) => `${(roas !== null ? `${round(+roas, 2)}x` : '-')}`
+    align: 'right',
+    ...renderNumberField('roas')
 }
 
 export const salesShareColumn = {
@@ -278,6 +308,7 @@ export const salesShareColumn = {
     key: 'sales_share',
     minWidth: '130px',
     sorter: true,
+    align: 'right',
     ...renderNumberField('percent')
 }
 
@@ -287,6 +318,7 @@ export const budgetAllocationColumn = {
     key: 'budget_allocation',
     minWidth: '170px',
     sorter: true,
+    align: 'right',
     ...renderNumberField('percent')
 }
 
@@ -297,6 +329,7 @@ export const netProfitColumn = {
     minWidth: '120px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField('currency')
 }
 export const grossProfitColumn = {
@@ -306,6 +339,7 @@ export const grossProfitColumn = {
     minWidth: '150px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField('currency')
 }
 export const adProfitColumn = {
@@ -315,6 +349,7 @@ export const adProfitColumn = {
     minWidth: '150px',
     sorter: true,
     filter: true,
+    align: 'right',
     ...renderNumberField('currency')
 }
 
@@ -337,6 +372,7 @@ export const matchTypeColumn = {
     locked: true,
     noTotal: true,
     filter: true,
+    align: 'right',
     render: (type) => valueTile[type]
 }
 
