@@ -336,11 +336,12 @@
       .table-overflow {
         flex: 1;
         //height: 100%;
-        min-height: 120px;
+        min-height: 100px;
 
         .no-data {
           width: max-content;
           margin: 0 auto;
+          padding: 15px 0;
         }
       }
 
@@ -369,9 +370,10 @@
       }
 
       .table-body {
-        position: relative;
 
         .table-body__row {
+          position: relative;
+
           .table-body__field {
             //font-size: 14px;
             padding-left: 12px;
@@ -596,6 +598,20 @@
 
     @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
       max-height: calc(100vh - 84px);
+    }
+  }
+
+  .product-overview-workplace {
+    .list-section {
+      .table-section {
+        .custom-table {
+          .table-body {
+            .table-body__row {
+              height: 100%;
+            }
+          }
+        }
+      }
     }
   }
 }
