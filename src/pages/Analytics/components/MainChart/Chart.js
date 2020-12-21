@@ -41,7 +41,7 @@ const Chart = ({
             }
 
             activeMetrics.forEach(metric => {
-                if(metric) {
+                if (metric) {
                     const metricType = _.find(analyticsAvailableMetricsList, {key: metric}).type
 
                     event[metric] = metricType === 'percent' ? +item[metric] * 100 : +item[metric]
@@ -129,7 +129,7 @@ const Chart = ({
                     />
 
                     {activeMetrics && activeMetrics.map((item, index) => (
-                        <YAxis
+                        item !== null && <YAxis
                             yAxisId={`YAxis-${index}`}
                             orientation={!!((index) % 2) ? 'right' : 'left'}
                             stroke={chartColors[index]}

@@ -104,7 +104,7 @@ const MainChart = ({allMetrics}) => {
             showWeekChart={chartState.showWeekChart}
             showDailyChart={chartState.showDailyChart}
             showOptimizationChart={chartState.showOptimizationChart}
-            activeMetrics={activeMetrics.filter(item => item !== null)}
+            activeMetrics={activeMetrics}
             data={chartData}
             selectedRangeDate={selectedRangeDate}
             productOptimizationDateList={productOptimizationDateList}
