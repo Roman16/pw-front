@@ -126,7 +126,6 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                         </div>}
                     </div>
                 </InformationTooltip>
-
             )
         } else {
             return (

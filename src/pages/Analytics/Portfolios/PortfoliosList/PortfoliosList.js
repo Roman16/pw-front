@@ -60,7 +60,8 @@ const PortfoliosList = () => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            ...renderNumberField()
+            align: 'right',
+            ...renderNumberField('number', false)
         },
         impressionsColumn,
         clicksColumn,

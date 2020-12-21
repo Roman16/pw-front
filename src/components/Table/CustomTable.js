@@ -164,7 +164,7 @@ const CustomTable = ({
 
                         return (
                             <div
-                                className={`table-body__field ${item.align || ''} ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}`}
+                                className={`table-body__field ${item.align || ''} ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''} ${item.align ? `align-${item.align}` : ''}`}
                                 style={{
                                     ...fieldWidth,
                                     minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition

@@ -16,7 +16,7 @@ import noImage from "../../../../assets/img/no-image-available.svg"
 import {RenderMetricChanges} from "../MainMetrics/MetricItem"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
 
-export const renderNumberField = (type = 'number') => {
+export const renderNumberField = (type = 'number', showDiff = true) => {
     const Value = ({number}) => {
         switch (type) {
             case 'number':
@@ -37,7 +37,7 @@ export const renderNumberField = (type = 'number') => {
         render: (number, item, array, dataIndex) => (<div className={'metric-value'}>
             <Value number={number}/>
 
-            {item.compareWithPrevious && <RenderMetricChanges
+            {item.compareWithPrevious && showDiff && <RenderMetricChanges
                 value={number}
                 prevValue={item[`${dataIndex}_prev`]}
                 diff={+item[`${dataIndex}_prev`] === 0 ? null : (+number - +item[`${dataIndex}_prev`]) / +item[`${dataIndex}_prev`]}
@@ -377,7 +377,6 @@ export const matchTypeColumn = {
     locked: true,
     noTotal: true,
     filter: true,
-    align: 'right',
     render: (type) => valueTile[type]
 }
 
