@@ -14,6 +14,7 @@ import {valueTile} from "../../../PPCAutomate/Report/Filters/FilterItem"
 import {amazonDefaultImageUrls} from "../../../../components/ProductList/ProductItem"
 import noImage from "../../../../assets/img/no-image-available.svg"
 import {RenderMetricChanges} from "../MainMetrics/MetricItem"
+import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
 
 export const renderNumberField = (type = 'number') => {
     const Value = ({number}) => {
@@ -176,7 +177,11 @@ export const skuAsinColumn = {
     render: (text, item) => <div className={'sku-asin'}>
         <div title={item.sku}><b>SKU:</b> {item.sku}</div>
         <div title={item.asin}><b>ASIN:</b>
-            <a target={'_blank'} href={`https://www.amazon.com/dp/${item.asin}`}>{item.asin}</a>
+            <a target={'_blank'}
+               href={`https://www.amazon.${item.marketplaceId ? marketplaceIdValues[item.marketplaceId].domain : 'com'}/dp/${item.asin}`}
+            >
+                {item.asin}
+            </a>
         </div>
     </div>
 }

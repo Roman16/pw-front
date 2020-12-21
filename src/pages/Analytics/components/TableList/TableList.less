@@ -34,7 +34,7 @@
 
     .section-header {
       display: grid;
-      grid-template-areas: 'filters columns tableOptions  switch date switchChartVisible' 'currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters';
+      grid-template-areas: 'filters columns expandWorkplace tableOptions  switch date switchChartVisible' 'currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters';
       grid-template-columns: 1fr max-content max-content;
       justify-content: space-between;
 
@@ -69,6 +69,10 @@
 
     .columns-select {
       grid-area: columns;
+    }
+
+    .expand-workplace {
+      grid-area: expandWorkplace;
     }
 
     .switch-chart-visible {
@@ -152,6 +156,14 @@
           background: rgba(109, 109, 246, 0.05);
           border-radius: 50%;
         }
+      }
+    }
+
+    .expand-workplace {
+        svg {
+          path {
+           transition: .2s;
+          }
       }
     }
 

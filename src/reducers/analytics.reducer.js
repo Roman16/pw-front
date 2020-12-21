@@ -22,6 +22,7 @@ const workplacesList = {
 const initialState = {
     location: undefined,
     visibleChart: localStorage.getItem('analyticsViewChart') || true,
+    visibleNavigation: true,
     mainState: {
         campaignId: undefined,
         productId: undefined,
@@ -88,10 +89,23 @@ export function analytics(state = initialState, action) {
                 visibleChart: action.payload
             }
 
-        case analyticsConstants.SET_LOCATION:
+        case analyticsConstants.SET_WORKPLACE_VIEW:
             return {
                 ...state,
-                location: action.payload
+                visibleChart: action.payload,
+                visibleNavigation: action.payload,
+            }
+
+        case analyticsConstants.SET_LOCATION:
+            if (state.visibleNavigation === false) localStorage.setItem('analyticsViewChart', JSON.stringify(true))
+
+            return {
+                ...state,
+                location: action.payload,
+                ...state.visibleNavigation === false && {
+                    visibleNavigation: true,
+                    visibleChart: true
+                }
             }
 
         case analyticsConstants.SET_METRICS_DATA:

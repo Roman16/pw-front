@@ -14,6 +14,8 @@ import axios from "axios"
 
 let activeMetricIndexTurn = [0, 1]
 
+const availableMetricsCount = 12
+
 const CancelToken = axios.CancelToken
 let source = null
 let prevActivatedIndex = undefined
@@ -217,7 +219,7 @@ const MainMetrics = ({allMetrics, location}) => {
                 }
             )}
 
-            {selectedMetrics.length < 6 && <>
+            {selectedMetrics.length < availableMetricsCount && <>
                 <div className='add-metric'>
                     <button className="btn add-metric__button" onClick={openModal}>
                         <span className='blue'><SVG id='plus-blue'/></span>
@@ -233,6 +235,7 @@ const MainMetrics = ({allMetrics, location}) => {
                         addMetric={addMetric}
                         removeMetric={removeMetric}
                         metricsData={metricsData}
+                        availableMetricsCount={availableMetricsCount}
 
                         visibleItems={visibleItems}
                         hiddenItems={hiddenItems}

@@ -92,7 +92,7 @@ const Chart = ({
             <ResponsiveContainer height='100%' width='100%'>
                 <LineChart
                     data={chartData}
-                    margin={{top: 30, bottom: 20}}
+                    margin={{top: 30, bottom: 20,left: 10, right: 10}}
                 >
                     {/*----------------------------------------------------------------*/}
                     {/*filters*/}
