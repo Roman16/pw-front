@@ -129,7 +129,7 @@ const Chart = ({
                     />
 
                     {activeMetrics && activeMetrics.map((item, index) => (
-                        <YAxis
+                        item !== null && <YAxis
                             yAxisId={`YAxis-${index}`}
                             orientation={!!((index) % 2) ? 'right' : 'left'}
                             stroke={chartColors[index]}
