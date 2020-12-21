@@ -15,6 +15,8 @@ const ProductOverview = () => {
 
     const availableMetrics = Object.values(metricKeys)
 
+    const location = 'overview'
+
 
     useEffect(() => {
         const isParent = queryString.parse(window.location.search).isParent === 'false' ? 'regular' : 'parent'
@@ -41,7 +43,10 @@ const ProductOverview = () => {
 
     return (
         <div className={'product-overview-workplace'}>
-            <MainMetrics allMetrics={availableMetrics}/>
+            <MainMetrics
+                location={location}
+                allMetrics={availableMetrics}
+            />
 
             <MainChart allMetrics={availableMetrics}/>
 
