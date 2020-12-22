@@ -88,12 +88,11 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                     </div>}
                 </div>
             </InformationTooltip>)
-        } else if (diff === 0) {
+        } else if (diff === 0 || round(Math.abs(+diff * 100), 2) === 0) {
             return (
                 <div className='metric-item__changes'>
                     <div className='down-changes'>
                         <div className='horizontal-line-icon'/>
-
                         0%
                     </div>
                 </div>
@@ -128,6 +127,9 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                 </InformationTooltip>
             )
         } else {
+            if (name === 'budget_allocation') {
+                console.log()
+            }
             return (
                 <InformationTooltip
                     type='custom'

@@ -131,7 +131,6 @@
         width: 32px;
         height: 32px;
         cursor: pointer;
-        padding: 0 0 3px 0;
 
         svg {
           width: 16px;
@@ -141,12 +140,15 @@
         }
 
         &.visible {
+          padding: 0 0 3px 0;
+
           svg {
             transform: rotate(180deg);
           }
         }
 
         &.hidden {
+          padding: 0;
           svg {
             transform: rotate(0deg);
           }
@@ -420,6 +422,16 @@
                     align-items: center;
                     margin: 0 3px 0 0;
                   }
+                }
+              }
+
+              .down-changes {
+                .horizontal-line-icon {
+                  display: inline-block;
+                  background: #000;
+                  width: 5px;
+                  height: 1px;
+                  margin: 0 3px 0 0;
                 }
               }
 

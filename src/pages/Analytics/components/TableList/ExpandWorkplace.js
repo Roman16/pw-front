@@ -9,6 +9,7 @@ const ExpandWorkplace = () => {
 
     const expandWorkplaceHandler = () => {
         dispatch(analyticsActions.expandWorkplace(!visibleNavigation))
+        dispatch(analyticsActions.switchChartView(!visibleNavigation))
     }
 
     return (
@@ -52,7 +53,7 @@ const ExpandWorkplace = () => {
                 </svg>
             </i>
 
-            expand
+            {visibleNavigation ? 'expand' : 'collapse'}
         </button>
 
     )

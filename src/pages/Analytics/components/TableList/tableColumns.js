@@ -34,7 +34,8 @@ export const renderNumberField = (type = 'number', showDiff = true) => {
     }
 
     return ({
-        render: (number, item, array, dataIndex) => (<div className={'metric-value'}>
+        render: (number, item, array, dataIndex) => {
+            return(<div className={'metric-value'}>
             <Value number={number}/>
 
             {item.compareWithPrevious && showDiff && <RenderMetricChanges
@@ -45,7 +46,7 @@ export const renderNumberField = (type = 'number', showDiff = true) => {
                 name={dataIndex}
                 getPopupContainer={true}
             />}
-        </div>)
+        </div>)}
     })
 }
 
