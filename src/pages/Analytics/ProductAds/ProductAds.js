@@ -14,9 +14,14 @@ const ProductAds = () => {
                 allMetrics={availableMetrics}
                 location={location}
             />
-            <MainChart  allMetrics={availableMetrics}/>
+            <MainChart
+                location={location}
+                allMetrics={availableMetrics}
+            />
 
-            <ProductAdsList/>
+            <ProductAdsList
+                location={location}
+            />
         </div>
     )
 }

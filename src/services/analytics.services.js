@@ -43,35 +43,36 @@ const urlGenerator = (url, pagination, sorting, filters) => {
         parameters.push(`&order_by:${sorting.type}=${sorting.column}`)
     }
 
-    if (_.find(filters, {filterBy: 'productView'})) {
-        return `${analyticsUrls.tableData(_.find(filters, {filterBy: 'productView'}).value === 'parent' ? 'products-parents' : 'products')}${filtersHandler(_.reject(filters, {filterBy: 'productView'}))}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
-    } else {
-        return `${url}${filtersHandler(_.reject(filters, {filterBy: 'productView'}))}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
-    }
+    return `${url}${filtersHandler(filters)}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
 
 }
 
 function fetchTableData(locationKey, paginationParams, sortingParams = {}, filters = [], cancelToken, idList = '') {
-    return api('get', urlGenerator(analyticsUrls.tableData(locationKey), paginationParams, sortingParams, filters) + idList, null, null, cancelToken)
+    let key = ''
+    if (locationKey === 'products-regular') key = 'products'
+    else if (locationKey === 'overview') key = 'products'
+    else key = locationKey
+
+    return api('get', urlGenerator(analyticsUrls.tableData(key), paginationParams, sortingParams, filters) + idList, null, null, cancelToken)
 }
 
 function fetchMetricsData({startDate, endDate, locationKey, filters}, cancelToken) {
     let key = ''
-    if (_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent') key = 'products-parents'
+    if (locationKey === 'products-regular') key = 'products'
     else if (locationKey === 'overview') key = 'products'
     else key = locationKey
 
 
-    return api('get', `${analyticsUrls.metricsData(key)}${filtersHandler(filters.filter(item => item.filterBy !== 'productView'))}`, null, null, cancelToken)
+    return api('get', `${analyticsUrls.metricsData(key)}${filtersHandler(filters)}`, null, null, cancelToken)
 }
 
 function fetchChartData(location, metrics, date, filters = [], cancelToken) {
     let key = ''
-    if (_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent') key = 'products-parents'
+    if (location === 'products-regular') key = 'products'
     else if (location === 'overview') key = 'products'
     else key = location
 
-    return api('get', `${analyticsUrls.chartData(key)}${filtersHandler(filters.filter(item => item.filterBy !== 'productView'))}&${metrics.filter(item => !!item).map(item => `metric[]=${item}`).join('&')}`, null, null, cancelToken)
+    return api('get', `${analyticsUrls.chartData(key)}${filtersHandler(filters)}&${metrics.filter(item => !!item).map(item => `metric[]=${item}`).join('&')}`, null, null, cancelToken)
 }
 
 function fetchStateInformation(state, id) {

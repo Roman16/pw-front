@@ -9,7 +9,8 @@ const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState
 
 const workplacesList = {
     'overview': [],
-    'products': [],
+    'products-regular': [],
+    'products-parents': [],
     'portfolios': [],
     'campaigns': [],
     'placements': [],

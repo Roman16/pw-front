@@ -9,7 +9,7 @@ import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
 
 
-const NegativeTargetingsList = () => {
+const NegativeTargetingsList = ({location}) => {
     const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
         selectedCampaign: state.analytics.mainState.campaignId,
         selectedAdGroup: state.analytics.mainState.adGroupId,
@@ -85,6 +85,7 @@ const NegativeTargetingsList = () => {
                 columns={columns}
                 columnSelect={false}
                 dateRange={false}
+                location={location}
             />
         </section>
     )

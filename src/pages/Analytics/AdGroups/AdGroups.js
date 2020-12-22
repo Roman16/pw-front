@@ -15,9 +15,14 @@ const AdGroups = () => {
                 location={location}
             />
 
-            <MainChart allMetrics={availableMetrics}/>
+            <MainChart
+                location={location}
+                allMetrics={availableMetrics}
+            />
 
-            <AdGroupsList/>
+            <AdGroupsList
+                location={location}
+            />
         </div>
     )
 }

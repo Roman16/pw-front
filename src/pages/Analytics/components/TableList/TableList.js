@@ -37,6 +37,7 @@ const idKey = {
 
 
 const TableList = ({
+                       location,
                        columns,
                        fixedColumns,
                        columnSelect = true,
@@ -44,7 +45,7 @@ const TableList = ({
                        showFilters = true,
                        showPagination = true,
                        moreActions,
-                       showTotal = true
+                       showTotal = true,
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
@@ -63,24 +64,23 @@ const TableList = ({
         })
 
 
-    const {locationKey, mainState, selectedRangeDate, metricsData} = useSelector(state => ({
-        locationKey: state.analytics.location,
+    const {mainState, selectedRangeDate, metricsData} = useSelector(state => ({
         mainState: state.analytics.mainState,
         selectedRangeDate: state.analytics.selectedRangeDate,
         metricsData: state.analytics.metricsData
     }))
 
-    const localColumnBlackList = columnsBlackList[locationKey] || [],
-        localSorterColumn = sorterColumn[locationKey] || undefined,
-        localTableOptions = tableOptions[locationKey] || {comparePreviousPeriod: false},
-        filters = useSelector(state => state.analytics.filters[locationKey] || [])
+    const localColumnBlackList = columnsBlackList[location] || [],
+        localSorterColumn = sorterColumn[location] || undefined,
+        localTableOptions = tableOptions[location] || {comparePreviousPeriod: false},
+        filters = useSelector(state => state.analytics.filters[location] || [])
 
 
     const sortChangeHandler = (column) => {
         const setColumn = (data) => {
             setSorterColumn({
                 ...sorterColumn,
-                [locationKey]: data
+                [location]: data
             })
         }
 
@@ -113,14 +113,14 @@ const TableList = ({
     const changeTableOptionsHandler = (value) => {
         setTableOptions({
             ...tableOptions,
-            [locationKey]: value
+            [location]: value
         })
     }
 
     const changeBlackListHandler = (list) => {
         setColumnsBlackList({
             ...columnsBlackList,
-            [locationKey]: list
+            [location]: list
         })
     }
 
@@ -154,7 +154,7 @@ const TableList = ({
                 },
             ]
 
-            const res = await analyticsServices.fetchTableData(locationKey, paginationParams, localSorterColumn, filtersWithState, source.token)
+            const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token)
 
             setPaginationParams({
                 ...paginationParams,
@@ -165,7 +165,7 @@ const TableList = ({
                 setTableData(res.response)
 
                 if (localTableOptions.comparePreviousPeriod) {
-                    getPreviousPeriodData(res.response.map(item => item[`${idKey[locationKey]}Id`]))
+                    getPreviousPeriodData(res.response.map(item => item[`${idKey[location]}Id`]))
                 }
             }
             setFetchingStatus(false)
@@ -199,7 +199,7 @@ const TableList = ({
                 },
             ]
 
-            const res = await analyticsServices.fetchTableData(locationKey, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[locationKey]}Id:in=${idList.join(',')}`)
+            const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
 
             if (res.response) {
                 setTableData(prevState => {
@@ -207,7 +207,7 @@ const TableList = ({
                     return prevState.map(item => ({
                         ...item,
                         compareWithPrevious: true,
-                        ..._.mapKeys(_.find(res.response, {[`${idKey[locationKey]}Id`]: item[`${idKey[locationKey]}Id`]}), (value, key) => {
+                        ..._.mapKeys(_.find(res.response, {[`${idKey[location]}Id`]: item[`${idKey[location]}Id`]}), (value, key) => {
                             return `${key}_prev`
                         })
                     }))
@@ -220,7 +220,7 @@ const TableList = ({
 
     useEffect(() => {
         getData()
-    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate, tableOptions])
+    }, [location, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate, tableOptions])
 
     useEffect(() => {
         setPaginationParams({
@@ -248,7 +248,7 @@ const TableList = ({
                 {showFilters && <TableFilters
                     columns={columns}
                     filters={filters}
-                    locationKey={locationKey}
+                    locationKey={location}
                 />}
 
                 {moreActions}

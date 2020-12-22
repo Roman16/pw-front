@@ -23,7 +23,7 @@ import {useDispatch} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 
 
-const PortfoliosList = () => {
+const PortfoliosList = ({location}) => {
     const dispatch = useDispatch()
 
     const setStateHandler = (location, state) => {
@@ -85,6 +85,7 @@ const PortfoliosList = () => {
             <TableList
                 columns={columns}
                 fixedColumns={[0]}
+                location={location}
             />
         </section>
     )

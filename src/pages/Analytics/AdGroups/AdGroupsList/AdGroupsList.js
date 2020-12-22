@@ -24,7 +24,7 @@ import {Link} from "react-router-dom"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 
-const AdGroupsList = () => {
+const AdGroupsList = ({location}) => {
     const {selectedCampaign} = useSelector(state => ({
         selectedCampaign: state.analytics.mainState.campaignId
     }))
@@ -128,6 +128,7 @@ const AdGroupsList = () => {
             <TableList
                 columns={columns}
                 fixedColumns={[0]}
+                location={location}
             />
         </section>
     )

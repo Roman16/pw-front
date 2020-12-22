@@ -1,14 +1,14 @@
 import React, {memo, useEffect, useState} from "react"
 import './Header.less'
 import {SVG} from "../../../../utils/icons"
-import {analyticsNavigation} from "../Navigation/Navigation"
+import {allMenuItems} from "../Navigation/Navigation"
 import {useDispatch, useSelector} from "react-redux"
 import {history} from "../../../../utils/history"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {analyticsServices} from "../../../../services/analytics.services"
 
 const Header = ({location}) => {
-    const locationDescription = Object.values(analyticsNavigation).reduce((all, item) => ([...all, ...item])).find(item => item.url === location.pathname)
+    const locationDescription = allMenuItems.find(item => item.url === location.pathname)
     const dispatch = useDispatch()
     const {mainState} = useSelector(state => ({
         mainState: state.analytics.mainState

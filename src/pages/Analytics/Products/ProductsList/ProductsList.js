@@ -17,60 +17,10 @@ import {
     salesShareColumn, skuAsinColumn,
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
-import {Select} from "antd"
-import {useDispatch, useSelector} from "react-redux"
-import {analyticsActions} from "../../../../actions/analytics.actions"
-import CustomSelect from "../../../../components/Select/Select"
+import {useSelector} from "react-redux"
 import _ from 'lodash'
-import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 
-const Option = Select.Option
-
-const ChangeProductsRequest = () => {
-    const dispatch = useDispatch()
-
-    const locationKey = useSelector(state => state.analytics.location)
-    const filters = useSelector(state => state.analytics.filters[locationKey] || [])
-
-    const changeTypeHandler = (value) => {
-        if (_.find(filters, {filterBy: 'productView'})) {
-            dispatch(analyticsActions.updateFiltersList([...filters.map(filter => {
-                if (filter.filterBy === 'productView') {
-                    filter = {
-                        filterBy: 'productView',
-                        type: 'type',
-                        value: value
-                    }
-                }
-                return filter
-            })]))
-        } else {
-            dispatch(analyticsActions.updateFiltersList([...filters, {
-                filterBy: 'productView',
-                type: 'type',
-                value: value
-            }]))
-        }
-    }
-
-    return (<div className={'switch-products-type'}>
-        <CustomSelect
-            value={_.find(filters, {filterBy: 'productView'}) ? _.find(filters, {filterBy: 'productView'}).value : 'regular'}
-            getPopupContainer={trigger => trigger.parentNode}
-            onChange={changeTypeHandler}>
-            <Option value={'regular'}>Regular view</Option>
-            <Option value={'parent'}>Parents view</Option>
-        </CustomSelect>
-
-        <InformationTooltip
-            getPopupContainer={triggerNode => triggerNode.parentNode}
-            title={'Regular & Parents View'}
-            description={'Regular View is showing statistics on SKU level. Parents View is designed to showcase aggregated statistics for Parent products.'}
-        />
-    </div>)
-}
-
-const ProductsList = () => {
+const ProductsList = ({location}) => {
     const filters = useSelector(state => state.analytics.filters['products'])
 
     const columns = [
@@ -223,7 +173,7 @@ const ProductsList = () => {
             <TableList
                 columns={columns}
                 fixedColumns={[0, 1]}
-                moreActions={<ChangeProductsRequest/>}
+                location={location}
             />
         </section>
     )
