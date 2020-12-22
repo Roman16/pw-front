@@ -190,7 +190,8 @@ const AuthorizedUser = (props) => {
                                     <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/dashboard"
-                                        component={Dashboard}
+                                        // component={Dashboard}
+                                        render={() => <Redirect to={'/analytics/products'}/>}
                                     />
 
                                     <ConnectedAmazonRoute

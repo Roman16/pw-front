@@ -141,7 +141,7 @@ const Chart = ({
                         />
                     ))}
 
-                    <Tooltip
+                    {activeMetrics.filter(item => item !== null).length !== 0 && <Tooltip
                         isAnimationActive={false}
                         content={
                             <ChartTooltip
@@ -150,7 +150,7 @@ const Chart = ({
                                 showDailyChart={showDailyChart}
                                 chartColors={chartColors}
                             />
-                        }/>
+                        }/>}
 
 
                     {/* Optimization line*/}
