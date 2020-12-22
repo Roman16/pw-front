@@ -7,8 +7,15 @@ import './TableList.less'
 import {analyticsServices} from "../../../../services/analytics.services"
 import TableFilters from "../TableFilters/TableFilters"
 import DateRange from "../DateRange/DateRange"
-import ColumnsSelect from "../ColumnsSelect/ColumnsSelect"
+import ColumnsSelect from "./ColumnsSelect"
 import axios from "axios"
+import {Popover, Switch} from "antd"
+import {SVG} from "../../../../utils/icons"
+import TableOptions from "./TableOptions"
+import moment from "moment"
+import preciseDiff from "moment-precise-range-plugin"
+import SwitchChartVisible from "./SwitchChartVisisble"
+import ExpandWorkplace from "./ExpandWorkplace"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -16,6 +23,17 @@ String.prototype.capitalize = function () {
 
 const CancelToken = axios.CancelToken
 let source = null
+
+const idKey = {
+    'products': 'product',
+    'portfolios': 'portfolio',
+    'campaigns': 'campaign',
+    'placements': 'placement',
+    'ad-groups': 'adGroup',
+    'targetings': 'targeting',
+    'negative-targetings': 'targeting',
+    'product-ads': 'ad',
+}
 
 
 const TableList = ({
@@ -30,12 +48,14 @@ const TableList = ({
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
-        sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') && JSON.parse(localStorage.getItem('analyticsSorterColumn'))
+        sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') && JSON.parse(localStorage.getItem('analyticsSorterColumn')),
+        tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') && JSON.parse(localStorage.getItem('analyticsTableOptions'))
 
     const [tableData, setTableData] = useState([]),
         [fetchingStatus, setFetchingStatus] = useState(false),
         [columnsBlackList, setColumnsBlackList] = useState(columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {}),
         [sorterColumn, setSorterColumn] = useState(sorterColumnFromLocalStorage ? sorterColumnFromLocalStorage : {}),
+        [tableOptions, setTableOptions] = useState(tableOptionsFromLocalStorage ? tableOptionsFromLocalStorage : {}),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
             pageSize: 30,
@@ -52,6 +72,7 @@ const TableList = ({
 
     const localColumnBlackList = columnsBlackList[locationKey] || [],
         localSorterColumn = sorterColumn[locationKey] || undefined,
+        localTableOptions = tableOptions[locationKey] || {comparePreviousPeriod: false},
         filters = useSelector(state => state.analytics.filters[locationKey] || [])
 
 
@@ -64,27 +85,35 @@ const TableList = ({
         }
 
         if (localSorterColumn && localSorterColumn.column === column) {
-            if (localSorterColumn.type === 'desc') {
+            if (localSorterColumn.type === 'asc') {
                 setColumn({
                     column: column,
-                    type: 'asc'
+                    type: 'desc'
+
                 })
-            } else if (localSorterColumn.type === 'asc') {
+            } else if (localSorterColumn.type === 'desc') {
                 setColumn({
                     column: null,
-                    type: 'desc'
+                    type: 'asc'
                 })
             }
         } else {
             setColumn({
                 column: column,
-                type: 'desc'
+                type: 'asc'
             })
         }
 
         setPaginationParams({
             ...paginationParams,
             page: 1,
+        })
+    }
+
+    const changeTableOptionsHandler = (value) => {
+        setTableOptions({
+            ...tableOptions,
+            [locationKey]: value
         })
     }
 
@@ -134,6 +163,10 @@ const TableList = ({
 
             if (res.response) {
                 setTableData(res.response)
+
+                if (localTableOptions.comparePreviousPeriod) {
+                    getPreviousPeriodData(res.response.map(item => item[`${idKey[locationKey]}Id`]))
+                }
             }
             setFetchingStatus(false)
 
@@ -142,9 +175,52 @@ const TableList = ({
         }
     }
 
+    const getPreviousPeriodData = async (idList) => {
+        source && source.cancel()
+        source = CancelToken.source()
+
+        const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
+
+        try {
+            const filtersWithState = [
+                ...filters,
+                ...Object.keys(mainState).map(key => ({
+                    filterBy: key,
+                    type: 'eq',
+                    value: mainState[key]
+                })).filter(item => !!item.value),
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: {
+                        startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
+                        endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                    }
+                },
+            ]
+
+            const res = await analyticsServices.fetchTableData(locationKey, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[locationKey]}Id:in=${idList.join(',')}`)
+
+            if (res.response) {
+                setTableData(prevState => {
+
+                    return prevState.map(item => ({
+                        ...item,
+                        compareWithPrevious: true,
+                        ..._.mapKeys(_.find(res.response, {[`${idKey[locationKey]}Id`]: item[`${idKey[locationKey]}Id`]}), (value, key) => {
+                            return `${key}_prev`
+                        })
+                    }))
+                })
+            }
+        } catch (e) {
+
+        }
+    }
+
     useEffect(() => {
         getData()
-    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate])
+    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate, tableOptions])
 
     useEffect(() => {
         setPaginationParams({
@@ -162,6 +238,9 @@ const TableList = ({
         localStorage.setItem('analyticsSorterColumn', JSON.stringify(sorterColumn))
     }, [sorterColumn])
 
+    useEffect(() => {
+        localStorage.setItem('analyticsTableOptions', JSON.stringify(tableOptions))
+    }, [tableOptions])
 
     return (
         <div className={'table-section'}>
@@ -180,11 +259,19 @@ const TableList = ({
                     onChangeBlackList={changeBlackListHandler}
                 />}
 
+                <ExpandWorkplace/>
+
+                <TableOptions
+                    options={localTableOptions}
+                    onChange={changeTableOptionsHandler}
+                />
+
                 {dateRange && <DateRange/>}
+
+                <SwitchChartVisible/>
             </div>
 
             <CustomTable
-                onChangeSorter={sortChangeHandler}
                 loading={fetchingStatus}
                 dataSource={tableData}
                 {...showTotal && {
@@ -196,17 +283,19 @@ const TableList = ({
                 sorterColumn={localSorterColumn}
                 columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
                 fixedColumns={fixedColumns}
+
+                onChangeSorter={sortChangeHandler}
             />
 
             {paginationParams.totalSize !== 0 && showPagination && <Pagination
-                onChange={paginationChangeHandler}
+                {...paginationParams}
 
-                pageSizeOptions={[10, 30, 50, 100, 200]}
+                pageSizeOptions={[10, 30, 50, 100, 200, 500]}
                 showQuickJumper={true}
                 listLength={tableData.length}
                 processing={fetchingStatus}
 
-                {...paginationParams}
+                onChange={paginationChangeHandler}
             />}
         </div>
     )

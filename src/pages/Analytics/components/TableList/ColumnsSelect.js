@@ -8,24 +8,25 @@ const {Search} = Input
 
 const ColumnsSelect = ({columns, columnsBlackList, onChangeBlackList}) => {
     return (
-        <>
-            <Popover
-                content={<ColumnList columns={columns} columnsBlackList={columnsBlackList}
-                                     onChangeBlackList={onChangeBlackList}/>}
-                getPopupContainer={(node) => node.parentNode}
-                destroyTooltipOnHide={true}
-                placement="bottomRight"
-                overlayClassName={'popover-column-select'}
-                trigger="click"
-            >
-                <button className={'columns-select'}>
-                    <i className={'btn icon'}>
-                        <SVG id={'table-columns'}/>
-                    </i>
-                </button>
-            </Popover>
-
-        </>
+        <Popover
+            trigger="click"
+            placement="bottomRight"
+            getPopupContainer={(node) => node.parentNode}
+            destroyTooltipOnHide={true}
+            overlayClassName={'popover-column-select'}
+            content={<ColumnList
+                columns={columns}
+                columnsBlackList={columnsBlackList}
+                onChangeBlackList={onChangeBlackList}
+            />}
+        >
+            <button className={'columns-select icon-btn'}>
+                <i className={'btn icon'}>
+                    <SVG id={'table-columns'}/>
+                </i>
+                columns
+            </button>
+        </Popover>
     )
 }
 

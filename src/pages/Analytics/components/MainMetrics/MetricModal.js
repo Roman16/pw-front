@@ -12,7 +12,8 @@ const MetricModal = ({
                          removeMetric,
                          metricsData,
                          visibleItems,
-                         hiddenItems
+                         hiddenItems,
+                         availableMetricsCount
                      }) => {
     return (
         <ModalWindow
@@ -64,7 +65,7 @@ const MetricModal = ({
                             }}
                             addMetric={addMetric}
                             listType='hidden'
-                            disabled={visibleItems.length >= 6}
+                            disabled={visibleItems.length >= availableMetricsCount}
                         />
                     )
                 })}

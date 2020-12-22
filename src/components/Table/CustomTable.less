@@ -81,7 +81,7 @@
           align-items: center;
           font-weight: 500;
 
-          &.right {
+          &.align-right {
             flex-direction: row-reverse;
 
             .sorter-buttons {
@@ -103,6 +103,7 @@
 
             svg {
               opacity: 0;
+              transform: rotate(180deg);
 
               use {
                 stroke: #C9CBD4;
@@ -115,6 +116,12 @@
 
                 use {
                   stroke: #6D6DF6;
+                }
+              }
+
+              &.desc {
+                svg {
+                  transform: rotate(0deg);
                 }
               }
 
@@ -169,7 +176,7 @@
         }
 
         .table-body__field {
-          &.right {
+          &.align-right {
             display: flex;
             flex-direction: row-reverse;
           }
@@ -258,6 +265,11 @@
     .table-body__field {
       padding: 1.0714286em 0.5714286em;
       font-size: 14px;
+
+      &.align-right {
+        display: flex;
+        flex-direction: row-reverse;
+      }
 
       &.fixed {
         position: sticky;

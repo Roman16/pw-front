@@ -95,7 +95,8 @@ const ProductsList = () => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            ...renderNumberField()
+            align: 'right',
+            ...renderNumberField('number', false)
         },
         impressionsColumn,
         clicksColumn,
@@ -111,6 +112,7 @@ const ProductsList = () => {
             width: '100px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField('percent')
         },
         adCvrColumn,
@@ -122,6 +124,7 @@ const ProductsList = () => {
             width: '180px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField('currency')
         },
         adUnitsColumn,
@@ -132,6 +135,7 @@ const ProductsList = () => {
             width: '150px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField()
         },
         {
@@ -141,6 +145,7 @@ const ProductsList = () => {
             width: '200px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField()
         },
         {
@@ -150,6 +155,7 @@ const ProductsList = () => {
             width: '150px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField()
         },
         {
@@ -159,6 +165,7 @@ const ProductsList = () => {
             width: '200px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField()
         },
         adOrdersColumn,
@@ -169,6 +176,7 @@ const ProductsList = () => {
             width: '200px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField()
         },
         {
@@ -178,6 +186,7 @@ const ProductsList = () => {
             width: '200px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField('currency')
         },
         roasColumn,
@@ -190,6 +199,7 @@ const ProductsList = () => {
             width: '150px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField()
         },
         {
@@ -199,6 +209,7 @@ const ProductsList = () => {
             width: '150px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField('currency')
         },
         netProfitColumn,

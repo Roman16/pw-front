@@ -8,6 +8,8 @@ export const analyticsActions = {
     updateMetricsState,
     setMetricsData,
     updateFiltersList,
+    switchChartView,
+    expandWorkplace
 }
 
 function setMainState(state) {
@@ -69,6 +71,24 @@ function updateFiltersList(filters) {
         dispatch({
             type: analyticsConstants.SET_FILTERS_LIST,
             payload: filters
+        })
+    }
+}
+
+function switchChartView(value) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.SET_CHART_VIEW,
+            payload: value
+        })
+    }
+}
+
+function expandWorkplace(value) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.SET_WORKPLACE_VIEW,
+            payload: value
         })
     }
 }

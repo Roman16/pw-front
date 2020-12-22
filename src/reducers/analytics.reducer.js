@@ -21,6 +21,8 @@ const workplacesList = {
 
 const initialState = {
     location: undefined,
+    visibleChart: localStorage.getItem('analyticsViewChart') ? JSON.parse(localStorage.getItem('analyticsViewChart')) : true,
+    visibleNavigation: true,
     mainState: {
         campaignId: undefined,
         productId: undefined,
@@ -39,7 +41,7 @@ const initialState = {
         showWeekChart: true,
         showDailyChart: true,
         showOptimizationChart: true,
-        selectFourMetrics: false
+        selectFourMetrics: false,
     })),
     filters: filtersListFromLocalStorage ? filtersListFromLocalStorage : workplacesList,
     selectedRangeDate: rangeDateFromLocalStorage ? rangeDateFromLocalStorage : {
@@ -72,7 +74,6 @@ export function analytics(state = initialState, action) {
             }
 
         case analyticsConstants.SET_DATE_RANGE:
-            console.log(action.payload)
             localStorage.setItem('analyticsRangeDate', JSON.stringify(action.payload))
 
             return {
@@ -80,10 +81,28 @@ export function analytics(state = initialState, action) {
                 selectedRangeDate: action.payload
             }
 
-        case analyticsConstants.SET_LOCATION:
+        case analyticsConstants.SET_CHART_VIEW:
+            localStorage.setItem('analyticsViewChart', JSON.stringify(action.payload))
+
             return {
                 ...state,
-                location: action.payload
+                visibleChart: action.payload
+            }
+
+        case analyticsConstants.SET_WORKPLACE_VIEW:
+            return {
+                ...state,
+                visibleChart: action.payload,
+                visibleNavigation: action.payload,
+            }
+
+        case analyticsConstants.SET_LOCATION:
+            if (state.visibleNavigation === false) localStorage.setItem('analyticsViewChart', JSON.stringify(true))
+
+            return {
+                ...state,
+                location: action.payload,
+                visibleNavigation: true,
             }
 
         case analyticsConstants.SET_METRICS_DATA:

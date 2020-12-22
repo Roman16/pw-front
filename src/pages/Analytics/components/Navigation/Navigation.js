@@ -105,9 +105,9 @@ export const analyticsNavigation = {
 }
 
 const Navigation = ({location}) => {
-    const {mainState} = useSelector(state => ({
-        mainState: state.analytics.mainState
-    }))
+    const mainState = useSelector(state => state.analytics.mainState)
+    const visibleNavigation = useSelector(state => state.analytics.visibleNavigation)
+
 
     const dispatch = useDispatch()
 
@@ -136,10 +136,11 @@ const Navigation = ({location}) => {
     }, [location])
 
     return (
-        <section className={'navigation'}>
+        <section className={`navigation ${visibleNavigation ? 'visible' : 'hidden'}`}>
             <ul>
                 {currentMenu.map((item, index) => <li>
-                    <NavLink activeClassName={'active'} to={item.url + location.search} onClick={() => setLocation(item.key)}>
+                    <NavLink activeClassName={'active'} to={item.url + location.search}
+                             onClick={() => setLocation(item.key)}>
                         {item.title}
                     </NavLink>
                 </li>)}

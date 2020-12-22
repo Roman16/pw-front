@@ -45,6 +45,7 @@ const ProductMetrics = () => {
             width: '100px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField('percent')
         },
         adCvrColumn,
@@ -56,6 +57,7 @@ const ProductMetrics = () => {
             width: '180px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField('currency')
         },
         adUnitsColumn,
@@ -66,6 +68,7 @@ const ProductMetrics = () => {
             width: '150px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField()
         },
         {
@@ -75,6 +78,7 @@ const ProductMetrics = () => {
             width: '200px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField()
         },
         {
@@ -84,6 +88,7 @@ const ProductMetrics = () => {
             width: '150px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField()
         },
         {
@@ -93,6 +98,7 @@ const ProductMetrics = () => {
             width: '200px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField()
         },
         adOrdersColumn,
@@ -103,6 +109,7 @@ const ProductMetrics = () => {
             width: '200px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField()
         },
         {
@@ -112,6 +119,7 @@ const ProductMetrics = () => {
             width: '200px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField('currency')
         },
         roasColumn,
@@ -124,6 +132,7 @@ const ProductMetrics = () => {
             width: '150px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField()
         },
         {
@@ -133,6 +142,7 @@ const ProductMetrics = () => {
             width: '150px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField('currency')
         },
         {
@@ -142,6 +152,7 @@ const ProductMetrics = () => {
             width: '150px',
             sorter: true,
             filter: true,
+            align: 'right',
             ...renderNumberField('currency')
         },
         adProfitColumn
