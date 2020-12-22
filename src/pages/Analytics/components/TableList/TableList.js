@@ -266,7 +266,7 @@ const TableList = ({
                     onChange={changeTableOptionsHandler}
                 />
 
-                {dateRange && <DateRange/>}
+                {dateRange && <DateRange tableOptions={localTableOptions}/>}
 
                 <SwitchChartVisible/>
             </div>

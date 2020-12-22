@@ -63,7 +63,7 @@ const Impersonations = (props) => {
 
             updateUserInformation()
 
-            history.push('/ppc/dashboard')
+            history.push('/ppc/optimization')
         } catch (e) {
             console.log(e)
         }

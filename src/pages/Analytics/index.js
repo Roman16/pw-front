@@ -67,9 +67,7 @@ const Analytics = (props) => {
             />
 
             {location && <section className="workplace">
-                <Route exact path="/analytics">
-                    <Redirect to="/analytics/campaigns"/>
-                </Route>
+                <Route exact path="/analytics" render={() => <Redirect to="/analytics/campaigns"/>}/>
 
                 <Route exact path="/analytics/campaigns" component={Campaigns}/>
                 <Route exact path="/analytics/campaign-settings" component={CampaignSettings}/>

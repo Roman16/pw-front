@@ -79,7 +79,7 @@
       grid-area: switchChartVisible;
     }
 
-    .DatePicker {
+    .datepicker-block {
       grid-area: date;
     }
 
@@ -149,6 +149,7 @@
 
         &.hidden {
           padding: 0;
+
           svg {
             transform: rotate(0deg);
           }
@@ -162,10 +163,10 @@
     }
 
     .expand-workplace {
-        svg {
-          path {
-           transition: .2s;
-          }
+      svg {
+        path {
+          transition: .2s;
+        }
       }
     }
 
@@ -321,8 +322,36 @@
     }
 
 
-    .DatePicker {
+    .datepicker-block {
+      height: 2.2857143em;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
       margin: 0 20px 20px 0;
+      transition: .2s;
+
+
+      .compare-date {
+        font-size: 1rem;
+        margin-top: -20px;
+        transition: .2s;
+        color: #656A84;
+      }
+
+
+      &.compare {
+        margin-top: -10px;
+
+        .compare-date {
+          margin: 0;
+        }
+      }
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        &.compare {
+          margin-top: -4px;
+        }
+      }
     }
 
     .custom-table {

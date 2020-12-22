@@ -92,7 +92,6 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
             return (
                 <div className='metric-item__changes'>
                     <div className='down-changes'>
-                        <div className='horizontal-line-icon'/>
                         0%
                     </div>
                 </div>
