@@ -27,6 +27,16 @@ const Analytics = (props) => {
 
     const location = useSelector(state => state.analytics.location)
 
+    const localStorageVersion = '20_1'
+
+    if(!localStorage.getItem('analyticsLocalStorageVersion') || localStorage.getItem('analyticsLocalStorageVersion') !== localStorageVersion) {
+        localStorage.removeItem('analyticsMetricsState')
+        localStorage.removeItem('analyticsFiltersList')
+        localStorage.removeItem('analyticsChartState')
+
+        localStorage.setItem('analyticsLocalStorageVersion', localStorageVersion)
+    }
+
     const setState = debounce(100, false, state => {
         dispatch(analyticsActions.setMainState(state))
     })

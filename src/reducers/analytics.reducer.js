@@ -27,20 +27,6 @@ const defaultChartOptionsValues = {
     selectFourMetrics: false,
 }
 
-if (metricsStateFromLocalStorage['products-regular'] == undefined) {
-    metricsStateFromLocalStorage['products-regular'] = {}
-    metricsStateFromLocalStorage['products-parents'] = {}
-
-    if (filtersListFromLocalStorage) {
-        filtersListFromLocalStorage['products-parents'] = {}
-        filtersListFromLocalStorage['products-regular'] = {}
-    }
-
-    if (chartStateFromLocalStorage) {
-        chartStateFromLocalStorage['products-parents'] = {...defaultChartOptionsValues}
-        chartStateFromLocalStorage['products-regular'] = {...defaultChartOptionsValues}
-    }
-}
 
 const initialState = {
     location: undefined,

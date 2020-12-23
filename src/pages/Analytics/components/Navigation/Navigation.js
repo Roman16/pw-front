@@ -214,12 +214,12 @@ const Navigation = ({location}) => {
                                          onClick={() => setLocation(subItem.key)}>
                                     {subItem.title}
 
-                                    {subItem.description && <InformationTooltip
-                                        getPopupContainer={(node) => node.parentNode}
-                                        position="right"
-                                        title={subItem.description.title}
-                                        description={subItem.description.text}
-                                    />}
+                                    {/*{subItem.description && <InformationTooltip*/}
+                                    {/*    getPopupContainer={(node) => node.parentNode}*/}
+                                    {/*    position="right"*/}
+                                    {/*    title={subItem.description.title}*/}
+                                    {/*    description={subItem.description.text}*/}
+                                    {/*/>}*/}
                                 </NavLink>
                             </li>
                         ))}
