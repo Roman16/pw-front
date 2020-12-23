@@ -34,7 +34,7 @@ const ProductsList = ({location}) => {
             search: true,
             render: (name, item) => <RenderProduct
                 product={item}
-                isParent={_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent'}
+                isParent={location === 'products-parents'}
             />
         },
         skuAsinColumn,

@@ -67,24 +67,44 @@
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          margin: 0 0 0 auto;
+          margin: 0 -5px 0 auto;
           display: flex;
           align-items: center;
           justify-content: center;
+          padding: 2px 0 0 0;
+          z-index: 10;
 
           svg {
             width: 12px;
             height: 8px;
             stroke: #343C5A;
+            transition: .2s;
           }
 
           &:hover {
             background: rgba(109, 109, 246, 0.05);
           }
+
+          &.opened {
+            padding: 0 0 2px 0;
+
+            svg {
+              transform: rotate(180deg);
+            }
+          }
         }
       }
 
       .sub-menu {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.15s ease-out;
+
+        &.opened {
+          max-height: 130px;
+          transition: max-height 0.25s ease-in;
+        }
+
         li {
           display: flex;
           align-items: center;
@@ -111,9 +131,19 @@
                 background: #6D6DF6;
               }
             }
+
+            .custom-tooltip {
+              margin: 0 0 0 auto;
+            }
           }
         }
       }
+    }
+  }
+
+  .ant-popover {
+    .ant-popover-title, .ant-popover-inner-content {
+      font-size: 1rem;
     }
   }
 }

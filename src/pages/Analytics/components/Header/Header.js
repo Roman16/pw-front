@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {history} from "../../../../utils/history"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {analyticsServices} from "../../../../services/analytics.services"
+import queryString from "query-string"
 
 const Header = ({location}) => {
     const locationDescription = allMenuItems.find(item => item.url === location.pathname)
@@ -54,6 +55,7 @@ const Header = ({location}) => {
             getStateInformation()
         }
     }, [mainState])
+
 
     const StepsRender = () => {
         if (mainState.adGroupId && mainState.campaignId) {
@@ -107,7 +109,18 @@ const Header = ({location}) => {
             )
         } else if (mainState.productId) {
             return (<>
-                <li onClick={() => setMainState(undefined, '/analytics/products')}>
+                <li onClick={() => {
+                    const queryParams = queryString.parse(history.location.search)
+                    let url = ''
+
+                    if (queryParams.isParent === 'true') {
+                        url = '/analytics/products/parents'
+                    } else {
+                        url = '/analytics/products/regular'
+                    }
+
+                    setMainState(undefined, url)
+                }}>
                     Products
 
                     <i>

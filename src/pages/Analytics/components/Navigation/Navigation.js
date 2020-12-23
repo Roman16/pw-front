@@ -5,6 +5,8 @@ import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import _ from 'lodash'
 import {SVG} from "../../../../utils/icons"
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {Popover} from "antd"
 
 const menuVariables = {
     'products': {
@@ -16,11 +18,19 @@ const menuVariables = {
                 title: 'Regular View',
                 url: '/analytics/products/regular',
                 key: 'products-regular',
+                description: {
+                    title: 'Regular View',
+                    text: 'Regular View is showing statistics on SKU level.'
+                }
             },
             {
                 title: 'Parents View',
                 url: '/analytics/products/parents',
                 key: 'products-parents',
+                description: {
+                    title: 'Parents View',
+                    text: 'Parents View is designed to showcase aggregated statistics for Parent products.\n'
+                }
             }
         ]
     },
@@ -133,6 +143,8 @@ export const analyticsNavigation = {
 }
 
 const Navigation = ({location}) => {
+    const [openedSubMenu, setOpenedSubMenu] = useState('products')
+
     const mainState = useSelector(state => state.analytics.mainState)
     const visibleNavigation = useSelector(state => state.analytics.visibleNavigation)
 
@@ -143,6 +155,14 @@ const Navigation = ({location}) => {
 
     const setLocation = (key) => {
         dispatch(analyticsActions.setLocation(key))
+    }
+
+    const switchSubMenuHandler = (e, menu) => {
+        e.preventDefault()
+        e.stopPropagation()
+
+        if (menu === openedSubMenu) setOpenedSubMenu(null)
+        else setOpenedSubMenu(menu)
     }
 
     useEffect(() => {
@@ -160,9 +180,6 @@ const Navigation = ({location}) => {
     }, [mainState])
 
     useEffect(() => {
-
-
-
         if (allMenuItems.find(item => item.url === location.pathname)) {
             dispatch(analyticsActions.setLocation(allMenuItems.find(item => item.url === location.pathname).key))
         }
@@ -172,21 +189,38 @@ const Navigation = ({location}) => {
         <section className={`navigation ${visibleNavigation ? 'visible' : 'hidden'}`}>
             <ul>
                 {currentMenu.map((item, index) => <li>
-                    <NavLink activeClassName={'active'} to={item.url + location.search}
-                             onClick={() => setLocation(item.key)}>
+                    <NavLink
+                        activeClassName={'active'}
+                        to={item.url + location.search}
+                        onClick={(e) => {
+                            setLocation(item.key)
+                            if (item.subMenu) setOpenedSubMenu(item.key)
+                        }}
+                    >
                         {item.title}
 
-                        {item.subMenu && <i className={'btn icon-btn switch-sub-menu'}>
+                        {item.subMenu &&
+                        <i
+                            className={`btn icon-btn switch-sub-menu ${item.key === openedSubMenu ? 'opened' : ''}`}
+                            onClick={(e) => switchSubMenuHandler(e, item.key)}
+                        >
                             <SVG id={'select-icon'}/>
                         </i>}
                     </NavLink>
 
-                    {item.subMenu && <ul className={'sub-menu'}>
+                    {item.subMenu && <ul className={`sub-menu ${item.key === openedSubMenu ? 'opened' : ''}`}>
                         {item.subMenu.map(subItem => (
                             <li>
                                 <NavLink activeClassName={'active'} to={subItem.url + location.search}
                                          onClick={() => setLocation(subItem.key)}>
                                     {subItem.title}
+
+                                    {subItem.description && <InformationTooltip
+                                        getPopupContainer={(node) => node.parentNode}
+                                        position="right"
+                                        title={subItem.description.title}
+                                        description={subItem.description.text}
+                                    />}
                                 </NavLink>
                             </li>
                         ))}
