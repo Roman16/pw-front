@@ -148,7 +148,6 @@ const Navigation = ({location}) => {
     const mainState = useSelector(state => state.analytics.mainState)
     const visibleNavigation = useSelector(state => state.analytics.visibleNavigation)
 
-
     const dispatch = useDispatch()
 
     const [currentMenu, setCurrentMenu] = useState(analyticsNavigation.account)

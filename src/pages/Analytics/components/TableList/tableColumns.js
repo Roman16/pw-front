@@ -15,6 +15,7 @@ import {amazonDefaultImageUrls} from "../../../../components/ProductList/Product
 import noImage from "../../../../assets/img/no-image-available.svg"
 import {RenderMetricChanges} from "../MainMetrics/MetricItem"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
+import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
 
 export const renderNumberField = (type = 'number', showDiff = true) => {
     const Value = ({number}) => {
@@ -35,18 +36,19 @@ export const renderNumberField = (type = 'number', showDiff = true) => {
 
     return ({
         render: (number, item, array, dataIndex) => {
-            return(<div className={'metric-value'}>
-            <Value number={number}/>
+            return (<div className={'metric-value'}>
+                <Value number={number}/>
 
-            {item.compareWithPrevious && showDiff && <RenderMetricChanges
-                value={number}
-                prevValue={item[`${dataIndex}_prev`]}
-                diff={+item[`${dataIndex}_prev`] === 0 ? null : (+number - +item[`${dataIndex}_prev`]) / +item[`${dataIndex}_prev`]}
-                type={type}
-                name={dataIndex}
-                getPopupContainer={true}
-            />}
-        </div>)}
+                {item.compareWithPrevious && showDiff && <RenderMetricChanges
+                    value={number}
+                    prevValue={item[`${dataIndex}_prev`]}
+                    diff={+item[`${dataIndex}_prev`] === 0 ? null : (+number - +item[`${dataIndex}_prev`]) / +item[`${dataIndex}_prev`]}
+                    type={type}
+                    name={dataIndex}
+                    getPopupContainer={true}
+                />}
+            </div>)
+        }
     })
 }
 
@@ -154,6 +156,34 @@ export const RenderProduct = ({product, isParent = false}) => {
             </Popover>}
         </div>
     )
+}
+
+export const keywordPTColumn = {
+    render: (text, item) => {
+        if (item.calculatedTargetingMatchType === 'asin' || item.calculatedTargetingMatchType === 'negativeAsin' || item.calculatedTargetingMatchType === 'negativeASIN') {
+            const asin = text.replace('asin="', '').replace('"', '')
+
+            return (<div className="asin-link"><span>ASIN: </span>
+                <a
+                    href={`https://www.amazon.com/dp/${asin}`}
+                    target={'_blank'}
+                >
+                    <span> {asin}</span>
+                </a>
+            </div>)
+        } else {
+            return (<>
+                    <span className={'overflow-text'} title={text}>
+                        {text}
+                     </span>
+
+                {item.calculatedTargetingMatchType === 'auto' && <InformationTooltip
+                    title={text}
+                    description={automatePatDescription[text]}
+                />}
+            </>)
+        }
+    }
 }
 
 export const impressionsColumn = {

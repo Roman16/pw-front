@@ -2,7 +2,7 @@ import React from "react"
 import TableFilters from '../../components/TableFilters/TableFilters'
 import TableList from "../../components/TableList/TableList"
 import {useDispatch, useSelector} from "react-redux"
-import {adGroupColumn, campaignColumn, matchTypeColumn} from "../../components/TableList/tableColumns"
+import {adGroupColumn, campaignColumn, keywordPTColumn, matchTypeColumn} from "../../components/TableList/tableColumns"
 import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
@@ -30,17 +30,7 @@ const NegativeTargetingsList = ({location}) => {
             sorter: true,
             locked: true,
             search: true,
-            render: (text, item) => <>
-                <span className={'overflow-text'} title={text}>
-                    {text}
-                </span>
-
-                {item.calculatedTargetingMatchType === 'auto' && <InformationTooltip
-                    title={text}
-                    description={automatePatDescription[text]}
-                />}
-            </>
-
+            ...keywordPTColumn
         },
         ...!selectedCampaign ? [{
             ...campaignColumn,

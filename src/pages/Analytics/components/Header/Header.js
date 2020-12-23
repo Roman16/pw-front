@@ -11,9 +11,9 @@ import queryString from "query-string"
 const Header = ({location}) => {
     const locationDescription = allMenuItems.find(item => item.url === location.pathname)
     const dispatch = useDispatch()
-    const {mainState} = useSelector(state => ({
-        mainState: state.analytics.mainState
-    }))
+    const mainState = useSelector(state => state.analytics.mainState)
+
+    const visibleNavigation = useSelector(state => state.analytics.visibleNavigation)
 
     const [stateName, setStateName] = useState(mainState.name)
 
@@ -168,7 +168,7 @@ const Header = ({location}) => {
     }
 
     return (
-        <section className="analytics-header">
+        <section className={`analytics-header  ${visibleNavigation ? 'visible' : 'hidden'}`}>
             <div className="title" onClick={goToDefaultPage}>
                 <SVG id={'analytics-icon'}/>
                 <h1>Analytics</h1>

@@ -13,7 +13,7 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    impressionsColumn, matchTypeColumn,
+    impressionsColumn, keywordPTColumn, matchTypeColumn,
     roasColumn,
     salesShareColumn,
     statusColumn
@@ -57,16 +57,7 @@ const TargetingsList = ({location}) => {
             sorter: true,
             locked: true,
             search: true,
-            render: (text, item) => <>
-                <span className={'overflow-text'} title={text}>
-                    {text}
-                </span>
-
-                {item.calculatedTargetingMatchType === 'auto' && <InformationTooltip
-                    title={text}
-                    description={automatePatDescription[text]}
-                />}
-            </>
+            ...keywordPTColumn
         },
         ...!selectedCampaign ? [{
             ...campaignColumn,
