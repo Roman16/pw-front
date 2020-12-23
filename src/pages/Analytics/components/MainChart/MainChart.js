@@ -95,7 +95,8 @@ const MainChart = ({allMetrics, location}) => {
         <Chart
             showWeekChart={chartState.showWeekChart}
             showDailyChart={chartState.showDailyChart}
-            showOptimizationChart={chartState.showOptimizationChart}
+            // showOptimizationChart={chartState.showOptimizationChart}
+            showOptimizationChart={false}
             activeMetrics={activeMetrics}
             data={chartData}
             selectedRangeDate={selectedRangeDate}
