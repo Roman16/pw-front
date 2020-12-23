@@ -56,30 +56,6 @@ const Analytics = (props) => {
         })
     }, [])
 
-    const clearLocal = () => {
-        localStorage.removeItem('analyticsMetricsState')
-        localStorage.removeItem('analyticsChartState')
-        localStorage.removeItem('analyticsFiltersList')
-    }
-
-    if (localStorage.getItem('analyticsMetricsState')) {
-        if (JSON.parse(localStorage.getItem('analyticsMetricsState'))['regular-products'] == undefined) {
-            clearLocal()
-        }
-    }
-
-    if (localStorage.getItem('analyticsChartState')) {
-        if (JSON.parse(localStorage.getItem('analyticsChartState'))['regular-products'] == undefined) {
-            clearLocal()
-        }
-    }
-
-    if (localStorage.getItem('analyticsFiltersList')) {
-        if (JSON.parse(localStorage.getItem('analyticsFiltersList'))['regular-products'] == undefined) {
-            clearLocal()
-        }
-    }
-
     return (
         <div className="analytics-page">
             <Header

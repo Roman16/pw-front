@@ -20,6 +20,17 @@ const workplacesList = {
     'product-ads': [],
 }
 
+if (metricsStateFromLocalStorage['products-regular'] == undefined) {
+    metricsStateFromLocalStorage['products-regular'] = {}
+    metricsStateFromLocalStorage['products-parents'] = {}
+
+    filtersListFromLocalStorage['products-parents'] = {}
+    filtersListFromLocalStorage['products-regular'] = {}
+
+    chartStateFromLocalStorage['products-parents'] = {}
+    chartStateFromLocalStorage['products-regular'] = {}
+}
+
 const initialState = {
     location: undefined,
     visibleChart: localStorage.getItem('analyticsViewChart') ? JSON.parse(localStorage.getItem('analyticsViewChart')) : true,
