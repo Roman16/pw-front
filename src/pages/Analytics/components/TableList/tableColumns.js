@@ -168,7 +168,7 @@ export const keywordPTColumn = {
                     href={`https://www.amazon.com/dp/${asin}`}
                     target={'_blank'}
                 >
-                    <span> {asin}</span>
+                    {asin}
                 </a>
             </div>)
         } else {
