@@ -15,9 +15,14 @@ const Campaigns = () => {
                 location={location}
             />
 
-            <MainChart allMetrics={availableMetrics}/>
+            <MainChart
+                location={location}
+                allMetrics={availableMetrics}
+            />
 
-            <CampaignsList/>
+            <CampaignsList
+                location={location}
+            />
         </div>
     )
 }

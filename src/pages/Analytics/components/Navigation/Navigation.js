@@ -3,13 +3,26 @@ import './Navigation.less'
 import {NavLink} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
-import _ from "lodash"
+import _ from 'lodash'
+import {SVG} from "../../../../utils/icons"
 
 const menuVariables = {
     'products': {
         title: 'Products',
         url: '/analytics/products',
-        key: 'products'
+        key: 'products',
+        subMenu: [
+            {
+                title: 'Regular View',
+                url: '/analytics/products/regular',
+                key: 'products-regular',
+            },
+            {
+                title: 'Parents View',
+                url: '/analytics/products/parents',
+                key: 'products-parents',
+            }
+        ]
     },
     'portfolios': {
         title: 'Portfolios',
@@ -45,8 +58,35 @@ const menuVariables = {
         title: 'Product Ads',
         url: '/analytics/product-ads',
         key: 'product-ads'
-    }
+    },
+    'campaignSettings': {
+        title: 'Settings',
+        url: '/analytics/campaign-settings',
+        key: 'campaignSettings'
+    },
+    'portfolioSettings': {
+        title: 'Settings',
+        url: '/analytics/portfolio-settings',
+        key: 'portfolioSettings'
+    },
+    'productOverview': {
+        title: 'Overview',
+        url: '/analytics/overview',
+        key: 'overview'
+    },
 }
+
+export const allMenuItems = []
+
+Object.values(menuVariables).forEach(item => {
+    if (item.subMenu) {
+        item.subMenu.forEach(subItem => {
+            allMenuItems.push(subItem)
+        })
+    }
+
+    allMenuItems.push(item)
+})
 
 export const analyticsNavigation = {
     account: [
@@ -66,18 +106,10 @@ export const analyticsNavigation = {
         menuVariables.productAds,
         menuVariables.targetings,
         menuVariables.negativeTargeting,
-        {
-            title: 'Settings',
-            url: '/analytics/campaign-settings',
-            key: 'campaignSettings'
-        }
+        menuVariables.campaignSettings,
     ],
     product: [
-        {
-            title: 'Overview',
-            url: '/analytics/overview',
-            key: 'overview'
-        },
+        menuVariables.productOverview,
         menuVariables.campaigns,
         menuVariables.adGroups,
         menuVariables.targetings,
@@ -96,11 +128,7 @@ export const analyticsNavigation = {
         menuVariables.targetings,
         menuVariables.negativeTargeting,
         menuVariables.productAds,
-        {
-            title: 'Settings',
-            url: '/analytics/portfolio-settings',
-            key: 'portfolioSettings'
-        }
+        menuVariables.portfolioSettings,
     ]
 }
 
@@ -132,7 +160,12 @@ const Navigation = ({location}) => {
     }, [mainState])
 
     useEffect(() => {
-        dispatch(analyticsActions.setLocation(Object.values(analyticsNavigation).reduce((all, item) => ([...all, ...item])).find(item => item.url === location.pathname).key))
+
+
+
+        if (allMenuItems.find(item => item.url === location.pathname)) {
+            dispatch(analyticsActions.setLocation(allMenuItems.find(item => item.url === location.pathname).key))
+        }
     }, [location])
 
     return (
@@ -142,7 +175,22 @@ const Navigation = ({location}) => {
                     <NavLink activeClassName={'active'} to={item.url + location.search}
                              onClick={() => setLocation(item.key)}>
                         {item.title}
+
+                        {item.subMenu && <i className={'btn icon-btn switch-sub-menu'}>
+                            <SVG id={'select-icon'}/>
+                        </i>}
                     </NavLink>
+
+                    {item.subMenu && <ul className={'sub-menu'}>
+                        {item.subMenu.map(subItem => (
+                            <li>
+                                <NavLink activeClassName={'active'} to={subItem.url + location.search}
+                                         onClick={() => setLocation(subItem.key)}>
+                                    {subItem.title}
+                                </NavLink>
+                            </li>
+                        ))}
+                    </ul>}
                 </li>)}
             </ul>
         </section>

@@ -29,6 +29,7 @@
 
     li {
       min-width: max-content;
+
       a {
         height: 3.5714285714285716rem;
         display: flex;
@@ -60,6 +61,57 @@
 
         &:hover {
           background: rgba(245, 245, 255, 0.7);
+        }
+
+        .switch-sub-menu {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          margin: 0 0 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          svg {
+            width: 12px;
+            height: 8px;
+            stroke: #343C5A;
+          }
+
+          &:hover {
+            background: rgba(109, 109, 246, 0.05);
+          }
+        }
+      }
+
+      .sub-menu {
+        li {
+          display: flex;
+          align-items: center;
+
+          a {
+            width: 100%;
+            justify-content: flex-start;
+
+            &::before {
+              content: '';
+              width: 6px;
+              min-width: 6px;
+              height: 6px;
+              border-radius: 50%;
+              margin: 0 10px 0 0;
+              background: #C9CBD4;
+            }
+
+            &.active {
+              border-left: none;
+              padding-left: 20px;
+
+              &::before {
+                background: #6D6DF6;
+              }
+            }
+          }
         }
       }
     }

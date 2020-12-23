@@ -28,7 +28,7 @@ const MainMetrics = ({allMetrics, location}) => {
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location]),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
-        selectFourMetrics = useSelector(state => state.analytics.chartState[location].selectFourMetrics),
+        selectFourMetrics = useSelector(state => state.analytics.chartState[location].selectFourMetrics || false),
         filters = useSelector(state => state.analytics.filters[location] || []),
         mainState = useSelector(state => state.analytics.mainState),
         metricsData = useSelector(state => state.analytics.metricsData)

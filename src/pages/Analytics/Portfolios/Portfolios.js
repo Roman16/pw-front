@@ -15,9 +15,14 @@ const Portfolios = () => {
                 location={location}
             />
 
-            <MainChart allMetrics={availableMetrics}/>
+            <MainChart
+                location={location}
+                allMetrics={availableMetrics}
+            />
 
-            <PortfoliosList/>
+            <PortfoliosList
+                location={location}
+            />
         </div>
     )
 }

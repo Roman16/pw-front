@@ -35,7 +35,7 @@ export const automatePatDescription = {
 }
 
 
-const TargetingsList = () => {
+const TargetingsList = ({location}) => {
     const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
         selectedCampaign: state.analytics.mainState.campaignId,
         selectedAdGroup: state.analytics.mainState.adGroupId,
@@ -146,6 +146,7 @@ const TargetingsList = () => {
             <TableList
                 columns={columns}
                 fixedColumns={[0]}
+                location={location}
             />
         </section>
     )

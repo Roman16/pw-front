@@ -9,7 +9,8 @@ const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState
 
 const workplacesList = {
     'overview': [],
-    'products': [],
+    'products-regular': [],
+    'products-parents': [],
     'portfolios': [],
     'campaigns': [],
     'placements': [],
@@ -17,6 +18,28 @@ const workplacesList = {
     'targetings': [],
     'negative-targetings': [],
     'product-ads': [],
+}
+
+const defaultChartOptionsValues = {
+    showWeekChart: true,
+    showDailyChart: true,
+    showOptimizationChart: true,
+    selectFourMetrics: false,
+}
+
+if (metricsStateFromLocalStorage['products-regular'] == undefined) {
+    metricsStateFromLocalStorage['products-regular'] = {}
+    metricsStateFromLocalStorage['products-parents'] = {}
+
+    if (filtersListFromLocalStorage) {
+        filtersListFromLocalStorage['products-parents'] = {}
+        filtersListFromLocalStorage['products-regular'] = {}
+    }
+
+    if (chartStateFromLocalStorage) {
+        chartStateFromLocalStorage['products-parents'] = {...defaultChartOptionsValues}
+        chartStateFromLocalStorage['products-regular'] = {...defaultChartOptionsValues}
+    }
 }
 
 const initialState = {
@@ -37,12 +60,7 @@ const initialState = {
             activeMetrics: undefined,
         })
     }),
-    chartState: chartStateFromLocalStorage ? chartStateFromLocalStorage : _.mapValues(workplacesList, () => ({
-        showWeekChart: true,
-        showDailyChart: true,
-        showOptimizationChart: true,
-        selectFourMetrics: false,
-    })),
+    chartState: chartStateFromLocalStorage ? chartStateFromLocalStorage : _.mapValues(workplacesList, () => ({...defaultChartOptionsValues})),
     filters: filtersListFromLocalStorage ? filtersListFromLocalStorage : workplacesList,
     selectedRangeDate: rangeDateFromLocalStorage ? rangeDateFromLocalStorage : {
         startDate: moment().add(-29, 'days').toISOString(),

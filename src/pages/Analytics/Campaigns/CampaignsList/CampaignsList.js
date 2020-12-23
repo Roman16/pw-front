@@ -27,7 +27,7 @@ import DatePicker from "../../../../components/DatePicker/DatePicker"
 import moment from "moment"
 
 
-const CampaignsList = () => {
+const CampaignsList = ({location}) => {
     const dispatch = useDispatch()
     const {selectedPortfolio} = useSelector(state => ({
         selectedPortfolio: state.analytics.mainState.portfolioId,
@@ -165,6 +165,7 @@ const CampaignsList = () => {
             <TableList
                 columns={columns}
                 fixedColumns={[0]}
+                location={location}
             />
         </section>
     )
