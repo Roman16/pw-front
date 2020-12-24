@@ -8,6 +8,7 @@ import Footer from "../components/Footer/Footer";
 import {stepsImages} from "../../../assets/img/landing-automation/steps";
 import {Checkbox, Input, Modal, Radio, Rate, Select} from "antd";
 import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png';
+import amazonAdvertisingWhiteLogo from '../../../assets/img/logo/amazon-advertising-white.png';
 import exampleSoftImage from '../../../assets/img/landing-automation/example-soft.png';
 import exampleAmazonImage from '../../../assets/img/landing-automation/example-amazon-screen.png';
 import whiteWhale from '../../../assets/img/landing-automation/white-whale.png';
@@ -308,11 +309,12 @@ const LandingAutomation = () => {
                     </h2>
 
 
-                    <a href={'#form'} className={'btn'}>
+                    <Link to={'/contact-us'} className={'btn'}>
                         Let’s talk
-                    </a>
+                    </Link>
 
                     <img src={amazonSpnWhiteLogo} alt="" className={'spn-logo'}/>
+                    <img src={amazonAdvertisingWhiteLogo} alt="" className={'advertising-logo'}/>
 
                     <img src={exampleSoftImage} alt="" className={'example-soft-image'}/>
 

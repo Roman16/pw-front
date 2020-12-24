@@ -9,7 +9,7 @@ import {notification} from "../../../../components/Notification"
 import {userService} from "../../../../services/user.services"
 import moment from "moment"
 
-const defaultForm = {
+export const defaultForm = {
     first_name: undefined,
     last_name: undefined,
     email: undefined,
@@ -35,7 +35,7 @@ const weakDays = [
     'Saturday',
 ]
 
-const monthlyAdSpendVariations = [
+export const monthlyAdSpendVariations = [
     {
         label: 'below $10k',
         value: 'below_10k'
@@ -62,7 +62,7 @@ const monthlyAdSpendVariations = [
     },
 ]
 
-const monthlySalesVariations = [
+export const monthlySalesVariations = [
     {
         label: 'below $50k',
         value: 'below_50k'
@@ -85,7 +85,7 @@ const monthlySalesVariations = [
     },
 ]
 
-const marketplaceVariations = [
+export const marketplaceVariations = [
     {
         label: 'United States',
         value: 'ATVPDKIKX0DER',
@@ -108,7 +108,7 @@ const marketplaceVariations = [
     },
 ]
 
-const amountProductsVariations = [
+export const amountProductsVariations = [
     {
         label: '1-5',
         value: '1_5'

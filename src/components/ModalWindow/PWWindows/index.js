@@ -23,8 +23,8 @@ const PWWindows = ({pathname}) => {
         if (user.notifications.account_bootstrap.bootstrap_in_progress || (!subscribedProduct.has_access && subscribedProduct.has_pending_payment_tx)) {
             setVisibleWindow('loadingAmazon')
         }
-        // else if (!subscribedProduct.eligible_for_subscription) {
-        //     setVisibleWindow('smallSpend')
+            // else if (!subscribedProduct.eligible_for_subscription) {
+            //     setVisibleWindow('smallSpend')
         // }
         else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')
@@ -39,19 +39,20 @@ const PWWindows = ({pathname}) => {
 
     return (
         <>
-            {(pathname.includes('/ppc/') || pathname.includes('/zero-to-hero')) && <LoadingAmazonAccount
+            {(pathname.includes('/ppc/') || pathname.includes('/zero-to-hero') || pathname.includes('/analytics')) &&
+            <LoadingAmazonAccount
                 visible={visibleWindow === 'loadingAmazon'}
                 lastName={user.user.last_name}
                 firstName={user.user.name}
                 productList={productList}
             />}
 
-            {pathname.includes('/ppc/') && <SubscriptionNotificationWindow
+            {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <SubscriptionNotificationWindow
                 visible={visibleWindow === 'expiredSubscription'}
                 onClose={closeWindowHandler}
             />}
 
-            {pathname.includes('/ppc/') && <StartFreeTrialWindow
+            {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <StartFreeTrialWindow
                 visible={visibleWindow === 'freeTrial'}
                 onClose={closeWindowHandler}
             />}

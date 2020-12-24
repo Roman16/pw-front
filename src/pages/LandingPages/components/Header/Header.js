@@ -3,10 +3,53 @@ import logoDark from '../../../../assets/img/ProfitWhales-logo-dark.svg'
 import logoWhite from '../../../../assets/img/ProfitWhales-logo-white.svg'
 import {Link, NavLink} from "react-router-dom"
 import './Header.less'
-import {history} from "../../../../utils/history"
 import {SVG} from "../../../../utils/icons"
 import $ from "jquery"
+import {Popover} from "antd"
+import SmartBar from "./SmartBar"
 
+const menu = [
+    {
+        title: 'Why Profit Whales?',
+        subMenu: [
+            {
+                title: 'PPC Automate',
+                link: '/',
+                icon: 'ppc-automate-icon'
+            },
+            {
+                title: 'Zero To Hero',
+                link: 'zero-to-hero-info',
+                icon: 'zth-icon'
+            }
+        ]
+    },
+    {
+        title: 'Contact Us',
+        link: 'contact-us'
+    },
+    {
+        title: 'Learn',
+        subMenu: [
+            {
+                title: 'BLOG',
+                outsideLink: 'https://blog.profitwhales.com/',
+            },
+            {
+                title: 'Case Studies',
+                outsideLink: 'https://blog.profitwhales.com/',
+            },
+            {
+                title: 'Podcast',
+                outsideLink: 'https://blog.profitwhales.com/',
+            }
+        ]
+    },
+    {
+        title: 'Help Center',
+        outsideLink: 'https://intercom.help/profitwhales/en',
+    }
+]
 
 const Header = ({type = 'light', page}) => {
     const [openedMenu, switchMenu] = useState(false)
@@ -47,30 +90,30 @@ const Header = ({type = 'light', page}) => {
         })
 
 
-        //--------------------------------------------------------------
-        //--------------------------------------------------------------
-        //--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
         const s = document.createElement('script')
         s.type = 'text/javascript'
         s.async = true
         s.defer = true
         s.innerHTML = `var _protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-    var _site_hash_code = "43b949f1ad6de536aff7518bc996a99f";
-    var _suid = 8534;`
+var _site_hash_code = "43b949f1ad6de536aff7518bc996a99f";
+var _suid = 8534;`
         document.head.appendChild(s)
-        //--------------------------------------------------------------
-        //--------------------------------------------------------------
-        //--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
         const s2 = document.createElement('script')
         s2.type = 'text/javascript'
         s2.innerHTML = `(function (d,s,i) {
-            var j = d.createElement('script');
-            j.async = true;
-            j.id = 'notifia';
-            j.src = 'https://static.notifia.io/widget.js';
-            j.setAttribute('initialize',i);
-            d.head.appendChild(j);
-        })( document, 'script', 'm6fFjWybVUe61');`
+var j = d.createElement('script');
+j.async = true;
+j.id = 'notifia';
+j.src = 'https://static.notifia.io/widget.js';
+j.setAttribute('initialize',i);
+d.head.appendChild(j);
+})( document, 'script', 'm6fFjWybVUe61');`
         document.head.appendChild(s2)
 
         return () => {
@@ -80,80 +123,78 @@ const Header = ({type = 'light', page}) => {
 
     }, [])
 
-    const authorized = !!localStorage.getItem('token')
-
     return (
         <>
             <div className={'header-block'}>
-                {page !== 'zth' && <div className="new-zth">
-                    <span>NEW!</span> We launched Zero to Hero tool to create 100% ready-to-use Amazon PPC Campaigns.
+                <SmartBar/>
 
-                    <button className={'btn white'}>
-                        <Link to={'zero-to-hero-info'}>
-                            Learn More
-                        </Link>
-                    </button>
-                </div>}
-
-                <header className={`not-found-page__header ${type}`} id={'header'}>
+                <header className={`not-found-page__header desc ${type}`} id={'header'}>
                     <div className="container">
                         <div>
+                            <div className={`icon burger-button ${openedMenu && 'active'}`}
+                                 onClick={() => switchMenu(!openedMenu)}>
+                                <div className="burger"/>
+                            </div>
+
                             <NavLink to='/' className={'logo-link'}>
                                 <img src={type === 'dark' ? logoWhite : logoDark} alt="Profit Whales" className='logo'/>
                             </NavLink>
 
-                            <div className={`icon ${openedMenu && 'active'}`} onClick={() => switchMenu(!openedMenu)}>
-                                <div className="burger"/>
-                            </div>
-
-                            <nav className={`header-menu desc ${openedMenu ? 'open' : ''}`}>
-                                <ul className="">
-                                    <li className="has-child"><a href="#">Products <SVG id='menu-arrow'/></a>
-                                        <ul className="sub-menu">
-                                            <li><NavLink to='/'>PPC Automate</NavLink></li>
-                                            {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
-                                            <li><NavLink to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
-                                            <li className="soon"><a href='#'>Analytics</a></li>
-                                        </ul>
-                                    </li>
-                                    {/*<li><NavLink to={'/pricing'}>Pricing</NavLink></li>*/}
-                                    <li><NavLink to="/contact-us">Contact us</NavLink></li>
-                                    <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
-                                        <ul className="sub-menu">
-                                            <li><a href="https://blog.profitwhales.com/">Blog</a></li>
-                                            <li><a href='https://intercom.help/profitwhales/en' target={'_blank'}>Help
-                                                Center</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    {/*<li><NavLink to="/videos">How it works</NavLink></li>*/}
+                            <nav className={`header-menu`}>
+                                <ul>
+                                    {menu.map(menuItem => {
+                                        if (menuItem.subMenu) {
+                                            return (<li className="has-child">
+                                                    <Popover
+                                                        placement="bottom"
+                                                        getPopupContainer={trigger => trigger.parentNode}
+                                                        overlayClassName={'sub-menu'}
+                                                        content={<ul>
+                                                            {menuItem.subMenu.map(subMenuItem => (
+                                                                <li>
+                                                                    {subMenuItem.outsideLink ?
+                                                                        <a target={'_blank'}
+                                                                           href={subMenuItem.outsideLink}>
+                                                                            {subMenuItem.title}
+                                                                        </a>
+                                                                        :
+                                                                        <NavLink to={subMenuItem.link}>
+                                                                            {subMenuItem.icon &&
+                                                                            <SVG id={subMenuItem.icon}/>}
+                                                                            {subMenuItem.title}
+                                                                        </NavLink>
+                                                                    }
+                                                                </li>
+                                                            ))}
+                                                        </ul>}
+                                                    >
+                                                        <a href="#">
+                                                            {menuItem.title}
+                                                            <SVG id='menu-arrow'/>
+                                                        </a>
+                                                    </Popover>
+                                                </li>
+                                            )
+                                        } else {
+                                            return (<li>
+                                                {menuItem.outsideLink ?
+                                                    <a target={'_blank'}
+                                                       href={menuItem.outsideLink}>
+                                                        {menuItem.title}
+                                                    </a>
+                                                    :
+                                                    <NavLink to={menuItem.link}>
+                                                        {menuItem.title}
+                                                    </NavLink>}
+                                            </li>)
+                                        }
+                                    })}
                                 </ul>
                             </nav>
                         </div>
 
                         <div className='nav-buttons'>
-                            {/*{!authorized ?*/}
-                            {/*    <Fragment>*/}
-                            {/*        <div onClick={() => history.push('/login')} className='login-link'>LOG IN</div>*/}
-                            {/*        <button*/}
-                            {/*            onClick={() => history.push('/registration')}*/}
-                            {/*            className='btn green-btn register-btn'*/}
-                            {/*        >*/}
-                            {/*            {page === 'zth' ? 'Try it Now' : 'TRY IT FOR FREE'}*/}
-                            {/*        </button>*/}
-                            {/*    </Fragment>*/}
-                            {/*    :*/}
-                            {/*    <button*/}
-                            {/*        onClick={() => history.push('/ppc/optimization')}*/}
-                            {/*        className='btn green-btn login-btn'*/}
-                            {/*    >*/}
-                            {/*        SIGN IN*/}
-                            {/*    </button>*/}
-                            {/*}*/}
-
-                            <Link to={'/login'}>LOG IN</Link>
-
-                            {/*<Link to={'/registration'} className={'btn default register-btn'}>start trial</Link>*/}
+                            <Link to={'/registration'} className={'btn default register-btn'}>GET A FREE AUDIT</Link>
                         </div>
                     </div>
                 </header>
@@ -161,32 +202,51 @@ const Header = ({type = 'light', page}) => {
 
             <nav className={`header-menu mob ${openedMenu ? 'open' : ''}`}>
                 <div className="buttons">
-                    {/*<Link to={'/registration'} className={'btn default register-btn'}>start trial</Link>*/}
-
+                    <Link to={'/registration'} className={'btn default register-btn'}>GET A FREE AUDIT</Link>
                     <Link to={'/login'} className={'login-btn'}>LOG IN</Link>
-
                 </div>
 
-                <ul className="">
-                    <li className="has-child"><a href="#">Products <SVG id='menu-arrow'/></a>
-                        <ul className="sub-menu">
-                            <li><NavLink to='/'>PPC Automate</NavLink></li>
-                            {/*<li><Link to='/scanner'>PPC Scanner</Link></li>*/}
-                            <li><NavLink to={'/zero-to-hero-info'}>Zero To Hero</NavLink></li>
-                            <li className="soon"><a href='#'>Analytics</a></li>
-                        </ul>
-                    </li>
-                    {/*<li><NavLink to={'/pricing'}>Pricing</NavLink></li>*/}
-                    <li><NavLink to="/contact-us">Contact us</NavLink></li>
-                    <li className="has-child"><a href="#">Resources <SVG id='menu-arrow'/></a>
-                        <ul className="sub-menu">
-                            <li><a href="https://blog.profitwhales.com/">Blog</a></li>
-                            <li><a href='https://intercom.help/profitwhales/en' target={'_blank'}>Help
-                                Center</a>
-                            </li>
-                        </ul>
-                    </li>
-                    {/*<li><NavLink to="/videos">How it works</NavLink></li>*/}
+                <ul>
+                    {menu.map(menuItem => {
+                        if (menuItem.subMenu) {
+                            return (<li className="has-child">
+                                    <a href="#">
+                                        {menuItem.title}
+                                        <SVG id='menu-arrow'/>
+                                    </a>
+
+                                    <ul className={'sub-menu'}>
+                                        {menuItem.subMenu.map(subMenuItem => (
+                                            <li>
+                                                {subMenuItem.outsideLink ?
+                                                    <a target={'_blank'}
+                                                       href={subMenuItem.outsideLink}>
+                                                        {subMenuItem.title}
+                                                    </a>
+                                                    :
+                                                    <NavLink to={subMenuItem.link}>
+                                                        {subMenuItem.title}
+                                                    </NavLink>
+                                                }
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </li>
+                            )
+                        } else {
+                            return (<li>
+                                {menuItem.outsideLink ?
+                                    <a target={'_blank'}
+                                       href={menuItem.outsideLink}>
+                                        {menuItem.title}
+                                    </a>
+                                    :
+                                    <NavLink to={menuItem.link}>
+                                        {menuItem.title}
+                                    </NavLink>}
+                            </li>)
+                        }
+                    })}
                 </ul>
             </nav>
         </>
