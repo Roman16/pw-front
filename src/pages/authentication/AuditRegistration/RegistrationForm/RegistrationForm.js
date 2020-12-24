@@ -25,7 +25,7 @@ export const defaultForm = {
 }
 
 
-const weakDays = [
+export const weakDays = [
     'Sunday',
     'Monday',
     'Tuesday',

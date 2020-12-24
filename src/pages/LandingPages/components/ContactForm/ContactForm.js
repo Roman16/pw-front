@@ -9,12 +9,13 @@ import {
     amountProductsVariations, defaultForm,
     marketplaceVariations,
     monthlyAdSpendVariations,
-    monthlySalesVariations
+    monthlySalesVariations, weakDays
 } from "../../../authentication/AuditRegistration/RegistrationForm/RegistrationForm"
 
 import avatar1 from '../../../../assets/img/landing-contact-us/support-avatar-1.png'
 import avatar2 from '../../../../assets/img/landing-contact-us/support-avatar-2.png'
 import avatar3 from '../../../../assets/img/landing-contact-us/support-avatar-3.png'
+import moment from "moment"
 
 export const advertisingStrategyVariations = [
     {
@@ -139,27 +140,31 @@ const ContactForm = () => {
         <>
             <section className={'contact-form desc'} id={'form'}>
                 <div className="container">
-                    <h2>
-                        Get Your <span> Amazon Advertising Campaigns <br/> Review</span> Today
-                    </h2>
+                    {currentStep !== 7 && <>
+                        <h2>
+                            Get Your <span> Amazon Advertising Campaigns <br/> Review</span> Today
+                        </h2>
 
-                    <p className={'form-description'}>
-                        This is not an automated, computer-generated audit. <br/>
-                        We recognize and embrace the value of artificial intelligence, but we find <br/> that actual human
-                        involvement is required to best identify potential concerns and opportunities.
-                    </p>
+                        <p className={'form-description'}>
+                            This is not an automated, computer-generated audit. <br/>
+                            We recognize and embrace the value of artificial intelligence, but we find <br/> that actual
+                            human
+                            involvement is required to best identify potential concerns and opportunities.
+                        </p>
 
-                    <div className="team-avatars">
-                        <img src={avatar1} alt=""/>
-                        <img src={avatar2} alt=""/>
-                        <img src={avatar3} alt=""/>
-                    </div>
+                        <div className="team-avatars">
+                            <img src={avatar1} alt=""/>
+                            <img src={avatar2} alt=""/>
+                            <img src={avatar3} alt=""/>
+                        </div>
+                    </>}
 
-                    <form action="">
+
+                    <div className={'form'}>
                         {currentStep === 0 && <>
                             <h2>What are your advertising goals?</h2>
 
-                            <ul className={'button-list'}>
+                            <ul className={'button-list goals'}>
                                 {advertisingStrategyVariations.map(item => (
                                     <li
                                         className={formParams.main_goal === item.value ? 'active' : ''}
@@ -169,7 +174,7 @@ const ContactForm = () => {
                                             <SVG id={item.icon}/>
                                         </i>
 
-                                        {item.label}
+                                        <div>{item.label}</div>
                                     </li>
                                 ))}
                             </ul>
@@ -185,11 +190,17 @@ const ContactForm = () => {
                             <h2>What is your Average Monthly Ad Spend?</h2>
 
                             <ul className={'button-list spend'}>
-                                {monthlyAdSpendVariations.map(item => (
+                                {monthlyAdSpendVariations.map((item, index) => (
                                     <li
                                         className={formParams.avg_monthly_ad_spend === item.value ? 'active' : ''}
                                         onClick={() => changeFormHandler('avg_monthly_ad_spend', item.value)}
                                     >
+                                        <div className="steps">
+                                            {index < 5 && Array(index + 1).fill(0).map((item, i) => <div
+                                                style={{maxWidth: `${8 + i * 3}px`, height: `${8 + i * 3}px`}}
+                                                className="index"/>)}
+                                        </div>
+
                                         {item.label}
                                     </li>
                                 ))}
@@ -211,11 +222,17 @@ const ContactForm = () => {
                             <h2>What are your Average Monthly Sales?</h2>
 
                             <ul className={'button-list sales'}>
-                                {monthlySalesVariations.map(item => (
+                                {monthlySalesVariations.map((item, index) => (
                                     <li
                                         className={formParams.avg_monthly_ad_sales === item.value ? 'active' : ''}
                                         onClick={() => changeFormHandler('avg_monthly_ad_sales', item.value)}
                                     >
+                                        <div className="steps">
+                                            {index < 5 && Array(index + 1).fill(0).map((item, i) => <div
+                                                style={{maxWidth: `${8 + i * 3}px`, height: `${8 + i * 3}px`}}
+                                                className="index"/>)}
+                                        </div>
+
                                         {item.label}
                                     </li>
                                 ))}
@@ -266,11 +283,17 @@ const ContactForm = () => {
                             <h2>What amount of products do you have?</h2>
 
                             <ul className={'button-list products'}>
-                                {amountProductsVariations.map(item => (
+                                {amountProductsVariations.map((item, index) => (
                                     <li
                                         className={formParams.amazon_number_of_active_products === item.value ? 'active' : ''}
                                         onClick={() => changeFormHandler('amazon_number_of_active_products', item.value)}
                                     >
+                                        <div className="steps">
+                                            {Array(index + 1).fill(0).map((item, i) => <div
+                                                style={{maxWidth: `${8 + i * 3}px`, height: `${8 + i * 3}px`}}
+                                                className="index"/>)}
+                                        </div>
+
                                         {item.label}
                                     </li>
                                 ))}
@@ -405,171 +428,48 @@ const ContactForm = () => {
                             </i>
 
                             <h2>
-                                <span>{formParams.first_name} {formParams.last_name},</span><br/>
-                                you'll get your Audit in <br/> 5 business days!
+                                <span>{formParams.first_name} {formParams.last_name}</span>, let’s get your <br/>
+                                project underway!
+
                             </h2>
 
-                            <div className="actions">
-                                <Link to={'/'} className="btn default">
-                                    Back to site
-                                </Link>
+                            <p className={'response-time'}>
+                                Expect a reply between {`${moment().format('hh')}:00 ${moment().format('A')}`} CST
+                                - {`${moment().add(1, 'hours').format('hh')}:00 ${moment().add(1, 'hours').format('A')}`} CST
+                                on {weakDays[moment().add(1, 'days').day()]}
+                            </p>
+
+
+                            <div className="cases">
+                                <h3>Check out our cases:</h3>
+
+                                <div className="links">
+                                    <a
+                                        target={'_blank'}
+                                        href={'https://blog.profitwhales.com/studies/why-amazon-ppc-matters/'}
+                                        className={'btn default'}
+                                    >
+                                        CASE 1
+                                    </a>
+
+                                    <a
+                                        target={'_blank'}
+                                        href={'https://blog.profitwhales.com/studies/lighting-equipment/'}
+                                        className={'btn white'}
+                                    >
+                                        CASE 2
+                                    </a>
+                                </div>
                             </div>
                         </>}
-                    </form>
+                    </div>
+
+                    <div className={`progress-bar step-${currentStep}`}>
+                        <div className="bar" style={{width: `${currentStep * 16.67}%`}}/>
+                    </div>
                 </div>
             </section>
 
-
-            {/*<section className={'contact-form mob'} id={'form'}>*/}
-            {/*    <div className="container">*/}
-            {/*        <h3>Talk With Our Experts</h3>*/}
-
-            {/*        <img src={contactFormImage} alt=""/>*/}
-
-            {/*        <form action="" onSubmit={submitFormHandler}>*/}
-
-            {/*            <div className="form-group">*/}
-            {/*                <label htmlFor="">First Name</label>*/}
-            {/*                <Input*/}
-            {/*                    type="text"*/}
-            {/*                    placeholder={'First Name'}*/}
-            {/*                    value={contactFormParams.first_name}*/}
-            {/*                    onChange={({target: {value}}) => changeContactFormHandler('first_name', value)}*/}
-            {/*                />*/}
-            {/*            </div>*/}
-
-            {/*            <div className="form-group">*/}
-            {/*                <label htmlFor="">Last Name</label>*/}
-            {/*                <Input*/}
-            {/*                    type="text"*/}
-            {/*                    placeholder={'Last Name'}*/}
-            {/*                    value={contactFormParams.last_name}*/}
-            {/*                    onChange={({target: {value}}) => changeContactFormHandler('last_name', value)}*/}
-            {/*                />*/}
-            {/*            </div>*/}
-
-            {/*            <div className="form-group">*/}
-            {/*                <label htmlFor="">E-mail</label>*/}
-            {/*                <Input*/}
-            {/*                    type="email"*/}
-            {/*                    placeholder={'E-mail'}*/}
-            {/*                    value={contactFormParams.email}*/}
-            {/*                    onChange={({target: {value}}) => changeContactFormHandler('email', value)}*/}
-            {/*                />*/}
-            {/*            </div>*/}
-
-            {/*            <div className="form-group">*/}
-            {/*                <label htmlFor="">Select your active amazon marketplaces</label>*/}
-
-            {/*                <select*/}
-            {/*                    placeholder={'Select by'}*/}
-            {/*                    onChange={changeMultiSelectHandler}*/}
-            {/*                    multiple*/}
-            {/*                >*/}
-            {/*                    <option value={'ATVPDKIKX0DER'}>USA</option>*/}
-            {/*                    <option value={'A2EUQ1WTGCTBG2'}>CA</option>*/}
-            {/*                    <option value={'A1F83G8C2ARO7P'}>UK</option>*/}
-            {/*                    <option value={'A1PA6795UKMFR9'}>DE</option>*/}
-            {/*                    <option value={'A13V1IB3VIYZZH'}>FR</option>*/}
-            {/*                </select>*/}
-            {/*            </div>*/}
-
-            {/*            <div className="form-group">*/}
-            {/*                <label htmlFor="">Average Monthly Sales</label>*/}
-
-            {/*                <select*/}
-            {/*                    placeholder={'Select by'}*/}
-            {/*                    value={contactFormParams.avg_monthly_ad_sales}*/}
-            {/*                    onChange={({target: {value}}) => changeContactFormHandler('avg_monthly_ad_sales', value)}*/}
-            {/*                >*/}
-            {/*                    <option value={'below_50k'}>below $50,000</option>*/}
-            {/*                    <option value={'50_200k'}>$50k - $200k</option>*/}
-            {/*                    <option value={'200_500k'}>$200k - $500k</option>*/}
-            {/*                    <option value={'500_1000k'}>$500k - $1m</option>*/}
-            {/*                    <option value={'over_1m'}>over $1m</option>*/}
-            {/*                </select>*/}
-            {/*            </div>*/}
-
-            {/*            <div className="form-group">*/}
-            {/*                <label htmlFor="">Average Monthly Ad Spend</label>*/}
-            {/*                <select*/}
-            {/*                    placeholder={'Select by'}*/}
-            {/*                    value={contactFormParams.avg_monthly_ad_spend}*/}
-            {/*                    onChange={({target: {value}}) => changeContactFormHandler('avg_monthly_ad_spend', value)}*/}
-            {/*                >*/}
-            {/*                    <option value={'below_10k'}>below 10k</option>*/}
-            {/*                    <option value={'10_30k'}>10-30k</option>*/}
-            {/*                    <option value={'30_60k'}>30-60k</option>*/}
-            {/*                    <option value={'60_100k'}>60-100k</option>*/}
-            {/*                    <option value={'over_100k'}>over $100k</option>*/}
-            {/*                    <option value={'no_ads'}>no ads</option>*/}
-            {/*                </select>*/}
-            {/*            </div>*/}
-
-            {/*            <div className="form-group">*/}
-            {/*                <label htmlFor="">Do you have brand registry?</label>*/}
-
-            {/*                <Radio.Group defaultValue={'yes'}*/}
-            {/*                             value={contactFormParams.is_has_brand_registry}*/}
-            {/*                             onChange={(e) => changeContactFormHandler('is_has_brand_registry', e.target.value)}>*/}
-            {/*                    <Radio value={true}>*/}
-            {/*                        Yes*/}
-            {/*                    </Radio>*/}
-
-            {/*                    <Radio value={false}>*/}
-            {/*                        No*/}
-            {/*                    </Radio>*/}
-            {/*                </Radio.Group>*/}
-            {/*            </div>*/}
-
-            {/*            <div className="form-group">*/}
-            {/*                <label htmlFor="">What is your main goal?</label>*/}
-
-            {/*                <select*/}
-            {/*                    placeholder={'Select by'}*/}
-            {/*                    value={contactFormParams.main_goal}*/}
-            {/*                    onChange={({target: {value}}) => changeContactFormHandler('main_goal', value)}*/}
-            {/*                >*/}
-            {/*                    <option value={''}>Select by</option>*/}
-            {/*                    {advertisingStrategyVariations.map(item => (*/}
-            {/*                        <option value={item.value}>*/}
-            {/*                            {item.label}*/}
-            {/*                        </option>*/}
-            {/*                    ))}*/}
-            {/*                </select>*/}
-            {/*            </div>*/}
-
-            {/*            <div className="form-group">*/}
-            {/*                <label htmlFor="">Enter your Brand name</label>*/}
-            {/*                <Input*/}
-            {/*                    type="text"*/}
-            {/*                    placeholder={'Enter your Brand name'}*/}
-            {/*                    value={contactFormParams.storefront_name}*/}
-            {/*                    onChange={({target: {value}}) => changeContactFormHandler('storefront_name', value)}*/}
-            {/*                />*/}
-            {/*            </div>*/}
-
-            {/*            <div className="form-group">*/}
-            {/*                <label htmlFor="">Enter your main Brand category</label>*/}
-            {/*                <Input*/}
-            {/*                    type="text"*/}
-            {/*                    placeholder={'Enter your main Brand category'}*/}
-            {/*                    value={contactFormParams.main_category}*/}
-            {/*                    onChange={({target: {value}}) => changeContactFormHandler('main_category', value)}*/}
-            {/*                />*/}
-            {/*            </div>*/}
-
-            {/*            <Checkbox onChange={({target: {checked}}) => setAgreeWithTerms(checked)}>*/}
-            {/*                Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms and*/}
-            {/*                Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>*/}
-            {/*            </Checkbox>*/}
-
-            {/*            <button className={'btn'}>*/}
-            {/*                Request Demo*/}
-            {/*            </button>*/}
-            {/*        </form>*/}
-            {/*    </div>*/}
-            {/*</section>*/}
         </>
     )
 }
