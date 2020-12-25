@@ -2,6 +2,7 @@ import React from "react"
 import {Link} from "react-router-dom"
 
 const SmartBar = () => {
+    const email = 'official@profitwhales.com'
     return (
         <div className="smart-bar">
             <div className="container">
@@ -18,7 +19,7 @@ const SmartBar = () => {
                         +18143519477
                     </a>
 
-                    <a href={'mailto:info@profitwhales.agency'} className="email">
+                    <a href={`mailto:${email}`} className="email">
                         <i>
                             <svg width="19" height="12" viewBox="0 0 19 12" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +28,7 @@ const SmartBar = () => {
                                     fill="white"/>
                             </svg>
                         </i>
-                        info@profitwhales.agency
+                        {email}
                     </a>
 
                     <a href={'https://goo.gl/maps/tb9N3fFTe197WgFK9'} target={'_blank'} className="location">

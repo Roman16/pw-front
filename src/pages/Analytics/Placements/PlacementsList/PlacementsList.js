@@ -20,7 +20,7 @@ import TableList from "../../components/TableList/TableList"
 import {useSelector} from "react-redux"
 
 
-const PlacementsList = () => {
+const PlacementsList = ({location}) => {
     const {selectedCampaign} = useSelector(state => ({
         selectedCampaign: state.analytics.mainState.campaignId,
     }))
@@ -29,19 +29,21 @@ const PlacementsList = () => {
     const columns = [
         {
             title: 'Placement',
-            dataIndex: 'placement',
-            key: 'placement',
+            dataIndex: 'placementName',
+            key: 'placementName',
             width: '200px',
             sorter: true,
             locked: true,
             search: true,
+            render: (text) => <span title={text} className={'overflow-text'}>{text}</span>
         },
         ...selectedCampaign ? [{
             title: 'Campaign Bidding Strategy',
-            dataIndex: 'campaign_bidding_strategy',
-            key: 'campaign_bidding_strategy',
+            dataIndex: 'bidding_strategy',
+            key: 'bidding_strategy',
             width: '250px',
             sorter: true,
+            noTotal: true,
             locked: true,
         }] : [],
         {
@@ -51,6 +53,7 @@ const PlacementsList = () => {
             width: '200px',
             sorter: true,
             locked: true,
+            noTotal: true,
         },
 
             impressionsColumn,
@@ -77,6 +80,7 @@ const PlacementsList = () => {
             <TableList
                 columns={columns}
                 fixedColumns={[0]}
+                location={location}
             />
         </section>
     )

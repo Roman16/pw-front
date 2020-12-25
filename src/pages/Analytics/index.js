@@ -83,7 +83,7 @@ const Analytics = (props) => {
                 <Route exact path="/analytics/portfolio-settings" component={PortfolioSettings}/>
                 <Route exact path="/analytics/targetings" component={Targetings}/>
                 <Route exact path="/analytics/negative-targetings" component={NegativeTargetings}/>
-                {/*<Route exact path="/analytics/placements" component={Placements}/>*/}
+                <Route exact path="/analytics/placements" component={Placements}/>
             </section>
         </div>
     )
