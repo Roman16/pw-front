@@ -37,11 +37,11 @@ const menu = [
             },
             {
                 title: 'Case Studies',
-                outsideLink: 'https://blog.profitwhales.com/',
+                outsideLink: 'https://blog.profitwhales.com/case-studies/',
             },
             {
                 title: 'Podcast',
-                outsideLink: 'https://blog.profitwhales.com/',
+                outsideLink: 'https://blog.profitwhales.com/podcasts/',
             }
         ]
     },

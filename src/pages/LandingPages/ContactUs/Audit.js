@@ -102,7 +102,7 @@ const Audit = () => {
 
                     <div className="col">
                         <h2>
-                            <span> Get</span> Your Amazon <br/> Advertising Campaigns <br/> Reviews <span>Today</span>
+                            <span>Get</span> Your Amazon <br/> Advertising Campaigns <br/> Review <span>Today</span>
                         </h2>
 
                         <p>Every Audit is Completed by a Real Live Person</p>

@@ -31,7 +31,7 @@ const SmartBar = () => {
                         {email}
                     </a>
 
-                    <a href={'https://goo.gl/maps/tb9N3fFTe197WgFK9'} target={'_blank'} className="location">
+                    <a href={'https://goo.gl/maps/c5iFucpi8GkcfEAK9'} target={'_blank'} className="location">
                         <i>
                             <svg width="12" height="15" viewBox="0 0 12 15" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +40,7 @@ const SmartBar = () => {
                                       fill="white"/>
                             </svg>
                         </i>
-                        Coral Springs, FL 33065
+                        201 AVENTURA, FL 33160
                     </a>
                 </div>
 

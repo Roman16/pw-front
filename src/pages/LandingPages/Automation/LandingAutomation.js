@@ -1,46 +1,46 @@
-import React, {useEffect, useState} from "react";
-import $ from 'jquery';
+import React, {useEffect, useState} from "react"
+import $ from 'jquery'
 
-import './LandingAutomation.less';
-import DocumentMeta from 'react-document-meta';
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
-import {stepsImages} from "../../../assets/img/landing-automation/steps";
-import {Checkbox, Input, Modal, Radio, Rate, Select} from "antd";
-import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png';
-import amazonAdvertisingWhiteLogo from '../../../assets/img/logo/amazon-advertising-white.png';
-import exampleSoftImage from '../../../assets/img/landing-automation/example-soft.png';
-import exampleAmazonImage from '../../../assets/img/landing-automation/example-amazon-screen.png';
-import whiteWhale from '../../../assets/img/landing-automation/white-whale.png';
-import pwStructureImage from '../../../assets/img/landing-automation/pw-structure.png';
-import pwStructureMobImage from '../../../assets/img/landing-automation/pw-structure-mob.png';
-import vitaliiAvatar from '../../../assets/img/landing-automation/vitalii-avatar.png';
-import basketImage from '../../../assets/img/landing-automation/basket.png';
-import {underHoodImages} from '../../../assets/img/landing-automation/under-hood';
-import dataDrivenImage from '../../../assets/img/landing-automation/data-driven-image.png';
-import contactFormImage from '../../../assets/img/landing-automation/contact-form-image.png';
-import sendProcessingImage from '../../../assets/img/landing-automation/send-processing.svg';
-import thankImage from '../../../assets/img/landing-automation/thank-image.png';
-import {avatars} from '../../../assets/img/landing-automation/commentAvatars';
-import {casesAvatars} from '../../../assets/img/landing-automation/casesAvatar';
-import trustpilotLogo from '../../../assets/img/landing-automation/trustpilot-logo.svg';
-import {Link} from "react-router-dom";
-import {SVG} from "../../../utils/icons";
-import CustomSelect from "../../../components/Select/Select";
-import {userService} from "../../../services/user.services";
+import './LandingAutomation.less'
+import DocumentMeta from 'react-document-meta'
+import Header from "../components/Header/Header"
+import Footer from "../components/Footer/Footer"
+import {stepsImages} from "../../../assets/img/landing-automation/steps"
+import {Checkbox, Input, Modal, Radio, Rate, Select} from "antd"
+import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png'
+import amazonAdvertisingWhiteLogo from '../../../assets/img/logo/amazon-advertising-white.png'
+import exampleSoftImage from '../../../assets/img/landing-automation/example-soft.png'
+import exampleAmazonImage from '../../../assets/img/landing-automation/example-amazon-screen.png'
+import whiteWhale from '../../../assets/img/landing-automation/white-whale.png'
+import pwStructureImage from '../../../assets/img/landing-automation/pw-structure.png'
+import pwStructureMobImage from '../../../assets/img/landing-automation/pw-structure-mob.png'
+import vitaliiAvatar from '../../../assets/img/landing-automation/vitalii-avatar.png'
+import basketImage from '../../../assets/img/landing-automation/basket.png'
+import {underHoodImages} from '../../../assets/img/landing-automation/under-hood'
+import dataDrivenImage from '../../../assets/img/landing-automation/data-driven-image.png'
+import contactFormImage from '../../../assets/img/landing-automation/contact-form-image.png'
+import sendProcessingImage from '../../../assets/img/landing-automation/send-processing.svg'
+import thankImage from '../../../assets/img/landing-automation/thank-image.png'
+import {avatars} from '../../../assets/img/landing-automation/commentAvatars'
+import {casesAvatars} from '../../../assets/img/landing-automation/casesAvatar'
+import trustpilotLogo from '../../../assets/img/landing-automation/trustpilot-logo.svg'
+import {Link} from "react-router-dom"
+import {SVG} from "../../../utils/icons"
+import CustomSelect from "../../../components/Select/Select"
+import {userService} from "../../../services/user.services"
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 
-import axios from 'axios';
-import Slider from "react-slick";
-import {notification} from "../../../components/Notification";
-import TreeSelect from "../../../components/TreeSelect/TreeSelect";
-import ContactForm from "../components/ContactForm/ContactForm";
+import axios from 'axios'
+import Slider from "react-slick"
+import {notification} from "../../../components/Notification"
+import TreeSelect from "../../../components/TreeSelect/TreeSelect"
+import ContactForm from "../components/ContactForm/ContactForm"
 
-const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
+const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY
 
-const Option = Select.Option;
+const Option = Select.Option
 
 
 const stepsSlider = [
@@ -84,7 +84,7 @@ const stepsSlider = [
         caseLink: 'https://blog.profitwhales.com/studies/nutritional-supplements',
         img: stepsImages.slide5
     },
-];
+]
 
 const commentsList = [
     {
@@ -158,7 +158,7 @@ const commentsList = [
         rate: 5,
         comment: '“Working with Profit Whales is pure value. They added me over 3,000 in Ad sales on the next day. I love that Profit Whales focusing on all types of advertising like Sponsored Brands, Sponsored Display, and Sponsored Products. Highly recommended for those who are looking to double or even triple their business with Amazon Advertising.“'
     },
-];
+]
 
 
 const meta = {
@@ -167,95 +167,95 @@ const meta = {
     meta: {
         charset: 'utf-8',
     }
-};
+}
 
 const LandingAutomation = () => {
     const [visibleVideoWindow, switchWindow] = useState(false),
         [blogPosts, setBlogPosts] = useState([]),
         [activeSlide, setActiveSlide] = useState(0),
-        [activeComment, setActiveComment] = useState(0);
+        [activeComment, setActiveComment] = useState(0)
 
 
     const scrollToTop = () => {
-        $("html, body").animate({scrollTop: 0}, "slow");
-    };
+        $("html, body").animate({scrollTop: 0}, "slow")
+    }
 
     const getLastBlogPosts = async () => {
         try {
-            let posts = [];
+            let posts = []
 
             const getImage = async (url) => {
-                const res = await axios.get(url);
-                return res.data.guid.rendered;
-            };
+                const res = await axios.get(url)
+                return res.data.guid.rendered
+            }
 
-            const {data} = await userService.getBlogPosts();
+            const {data} = await userService.getBlogPosts()
 
-            posts = data;
+            posts = data
 
             posts = await Promise.all(posts.map(async (post) => {
-                const image = await getImage(post._links['wp:featuredmedia'][0].href);
+                const image = await getImage(post._links['wp:featuredmedia'][0].href)
                 return {
                     ...post,
                     image: image
-                };
-            }));
+                }
+            }))
 
 
-            setBlogPosts(posts);
+            setBlogPosts(posts)
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
-    };
+    }
 
     //---------------------------------------
     //---------------------------------------
 
     useEffect(() => {
-        getLastBlogPosts();
+        getLastBlogPosts()
 
         //----------------------------------------------------------------------
         //----------------------------------------------------------------------
         $(window).scroll(function () {
             const scroll = $(window).scrollTop(),
                 documentHeight = $(document).height(),
-                windowHeight = $(window).height();
+                windowHeight = $(window).height()
 
             if (scroll >= 400) {
-                $(".scroll-to-top").addClass("visible");
+                $(".scroll-to-top").addClass("visible")
             } else {
-                $(".scroll-to-top").removeClass("visible");
+                $(".scroll-to-top").removeClass("visible")
             }
 
             if (scroll === documentHeight - windowHeight) {
-                $(".scroll-to-top").addClass("focus");
+                $(".scroll-to-top").addClass("focus")
             } else {
-                $(".scroll-to-top").removeClass("focus");
+                $(".scroll-to-top").removeClass("focus")
             }
         });
         //----------------------------------------------------------------------
         //----------------------------------------------------------------------
 
         (function (t, a, p) {
-            t.TapfiliateObject = a;
+            t.TapfiliateObject = a
             t[a] = t[a] || function () {
                 (t[a].q = t[a].q || []).push(arguments)
             }
-        })(window, 'tap');
+        })(window, 'tap')
 
-        window.tap('create', tapfiliateKey, {integration: "javascript"});
+        window.tap('create', tapfiliateKey, {integration: "javascript"})
         // window.tap('click', {referral_code: ''});
-        window.tap('detect');
+        window.tap('detect')
 
 
         //----------------------------------------------------------------------
         //----------------------------------------------------------------------
 
-        const s = document.createElement('script');
+        const s = document.createElement('script')
 
-        s.type = 'text/javascript';
+        s.type = 'text/javascript'
 
-        s.async = true;
+        s.async = true
         s.innerHTML = `!function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function () {
@@ -275,18 +275,18 @@ const LandingAutomation = () => {
     }(window, document, 'script',
         'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '2628499780566506');
-    fbq('track', 'PageView');`;
+    fbq('track', 'PageView');`
 
 
-        document.head.appendChild(s);
+        document.head.appendChild(s)
 
         return () => {
-            document.querySelector('html').classList.remove('not-retina');
-            document.querySelector('body').classList.add('hide-mc-modal');
+            document.querySelector('html').classList.remove('not-retina')
+            document.querySelector('body').classList.add('hide-mc-modal')
 
-            document.head.removeChild(s);
+            document.head.removeChild(s)
         }
-    }, []);
+    }, [])
 
 
     return (
@@ -321,10 +321,10 @@ const LandingAutomation = () => {
                     <div className="row">
                         <div className="demo">
                             <Link to={'/book-a-demo'} className={''} target={'_blank'}>
-                                <span>REQUEST</span>
+                                <span>GET A FREE </span>
 
                                 <div className="icon">
-                                    DEMO
+                                    AUDIT
                                 </div>
                             </Link>
                         </div>
@@ -341,15 +341,15 @@ const LandingAutomation = () => {
                         {/*    </div>*/}
                         {/*</div>*/}
 
-                        <div className="start">
-                            <Link to={'/registration'}>
-                                <div className="icon">
-                                    start
-                                </div>
+                        {/*<div className="start">*/}
+                        {/*    <Link to={'/registration'}>*/}
+                        {/*        <div className="icon">*/}
+                        {/*            start*/}
+                        {/*        </div>*/}
 
-                                <span>14-DAY TRIAL</span>
-                            </Link>
-                        </div>
+                        {/*        <span>14-DAY TRIAL</span>*/}
+                        {/*    </Link>*/}
+                        {/*</div>*/}
 
                     </div>
 
@@ -476,13 +476,13 @@ const LandingAutomation = () => {
                             ))}
                         </div>
 
-                        <a href={'https://youtu.be/Xm9uKq9-7b0'} className={'demo-link'} target={'_blank'}>
-                            <div className={'icon'}>
-                                <SVG id={'play-icon'}/>
-                            </div>
+                        {/*<a href={'https://youtu.be/Xm9uKq9-7b0'} className={'demo-link'} target={'_blank'}>*/}
+                        {/*    <div className={'icon'}>*/}
+                        {/*        <SVG id={'play-icon'}/>*/}
+                        {/*    </div>*/}
 
-                            Watch product demo
-                        </a>
+                        {/*    Watch product demo*/}
+                        {/*</a>*/}
 
                         <div className="image">
                             <img src={stepsSlider[activeSlide].img} alt=""/>
@@ -529,13 +529,13 @@ const LandingAutomation = () => {
                             ))}
                         </Slider>
 
-                        <a href={'https://youtu.be/Xm9uKq9-7b0'} className={'demo-link'} target={'_blank'}>
-                            <div className={'icon'}>
-                                <SVG id={'play-icon'}/>
-                            </div>
+                        {/*<a href={'https://youtu.be/Xm9uKq9-7b0'} className={'demo-link'} target={'_blank'}>*/}
+                        {/*    <div className={'icon'}>*/}
+                        {/*        <SVG id={'play-icon'}/>*/}
+                        {/*    </div>*/}
 
-                            Watch product demo
-                        </a>
+                        {/*    Watch product demo*/}
+                        {/*</a>*/}
                     </div>
                 </div>
             </section>
@@ -552,7 +552,7 @@ const LandingAutomation = () => {
                         Free Audit of your Amazon Ad Spend, see how you can get higher ROAS on your Ad Investments
                     </p>
 
-                    <Link to={'/demo-call'} href={'#form'} className={'btn'}>
+                    <Link to={'/audit'} target={'_blank'} className={'btn'}>
                         Get a free audit
                     </Link>
                 </div>
@@ -563,47 +563,81 @@ const LandingAutomation = () => {
                 <div className="container">
                     <div className="list">
                         <div>
+                            <div className="image"><img src={underHoodImages.icon10} alt=""/></div>
+
                             <div className="description">
-                                <h3>
-                                    <span>  Create ready-to-go <br/> Amazon PPC campaigns</span> <br/> using Zero to
-                                    Hero Tool
-                                </h3>
+                                <h3><span>Programmatic algorithms <br/> + Human Brains</span></h3>
 
                                 <p>
-                                    It takes just a few minutes to set up! We’ve made this part easy, intuitive, and for
-                                    any level user.
+                                    We have it all: neural network, sensitive algorithms, and a dashboard that provides
+                                    essential information and tools right under the manager's fingertips. But it's the
+                                    human brains behind this setup that makes the difference for our customers.
                                 </p>
 
                                 <p>
-
-                                    Zero to Hero is excellent at quickly gathering lots of relevant
-                                    keywords and target ASINs that will start driving sales right away. No need for a
-                                    warm-up period (normally associated with manually creating new PPC campaigns).
+                                    <b>Customer Support</b><br/>
+                                    Our dedicated managers are pros at using our software and other means to
+                                    provide businesses with the best Amazon sales possible. They stand vigilant and are
+                                    ready to guide, interfere, or override any automated software's decision to ensure
+                                    cutting-edge PPC performance for all and every business that entrusts us with their
+                                    Amazon advertising. With lots of optimization routines out of the way, they have
+                                    more time to focus on key business metrics and manage your PPC faster and more
+                                    effectively.
                                 </p>
 
                                 <p>
-                                    Zero to Hero takes a few minutes to do its work. Come back shortly after and check
-                                    on
-                                    your Seller Central Campaigns Manager to see the new campaigns already up and
-                                    running!
+                                    <b>Developer team</b><br/>
+                                    Our development team has completed its 31st major update
+                                    of Profit Whales software, but we know that there is still room for further
+                                    fine-tuning and improvement. Amazon evolves and adapts — and so do we. That is why
+                                    all our client businesses can rest assured that we will provide them with the best
+                                    PPC performance now, and we will continue to do so in the future.
                                 </p>
 
-                                <a
-                                    href={'https://intercom.help/profitwhales/en/articles/4164171-introduction-zero-to-hero-amazon-ppc-campaigns-creator'}
-                                    target={'_blank'}>
-                                    Learn more about Zero to Hero
-                                    <SVG id={'right-row'}/>
-                                </a>
-
-                                <Link to={'/audit'} target={'_blank'} className={'btn default'}>BOOK A DEMO</Link>
+                                <a href="#form" className={'btn default'}>Let’s talk</a>
                             </div>
-
-                            <div className="image"><img src={underHoodImages.icon1} alt=""/></div>
                         </div>
 
-                        <div>
-                            <div className="image"><img src={underHoodImages.icon2} alt=""/></div>
+                        {/*<div>*/}
+                        {/*    <div className="description">*/}
+                        {/*        <h3>*/}
+                        {/*            <span>  Create ready-to-go <br/> Amazon PPC campaigns</span> <br/> using Zero to*/}
+                        {/*            Hero Tool*/}
+                        {/*        </h3>*/}
 
+                        {/*        <p>*/}
+                        {/*            It takes just a few minutes to set up! We’ve made this part easy, intuitive, and for*/}
+                        {/*            any level user.*/}
+                        {/*        </p>*/}
+
+                        {/*        <p>*/}
+
+                        {/*            Zero to Hero is excellent at quickly gathering lots of relevant*/}
+                        {/*            keywords and target ASINs that will start driving sales right away. No need for a*/}
+                        {/*            warm-up period (normally associated with manually creating new PPC campaigns).*/}
+                        {/*        </p>*/}
+
+                        {/*        <p>*/}
+                        {/*            Zero to Hero takes a few minutes to do its work. Come back shortly after and check*/}
+                        {/*            on*/}
+                        {/*            your Seller Central Campaigns Manager to see the new campaigns already up and*/}
+                        {/*            running!*/}
+                        {/*        </p>*/}
+
+                        {/*        <a*/}
+                        {/*            href={'https://intercom.help/profitwhales/en/articles/4164171-introduction-zero-to-hero-amazon-ppc-campaigns-creator'}*/}
+                        {/*            target={'_blank'}>*/}
+                        {/*            Learn more about Zero to Hero*/}
+                        {/*            <SVG id={'right-row'}/>*/}
+                        {/*        </a>*/}
+
+                        {/*        <Link to={'/audit'} target={'_blank'} className={'btn default'}>GET A FREE AUDIT</Link>*/}
+                        {/*    </div>*/}
+
+                        {/*    <div className="image"><img src={underHoodImages.icon1} alt=""/></div>*/}
+                        {/*</div>*/}
+
+                        <div>
                             <div className="description">
                                 <h3>
                                     <span> Patented Profit Whales <br/> PPC campaign structure </span> <br/> For Every
@@ -631,9 +665,13 @@ const LandingAutomation = () => {
                                     <SVG id={'right-row'}/>
                                 </a>
                             </div>
+
+                            <div className="image"><img src={underHoodImages.icon2} alt=""/></div>
                         </div>
 
                         <div>
+                            <div className="image"><img src={underHoodImages.icon3} alt=""/></div>
+
                             <div className="description">
                                 <h3>
                                     <span>Goal-driven algorithms</span>
@@ -657,34 +695,6 @@ const LandingAutomation = () => {
                                     Learn more about algorithms
                                     <SVG id={'right-row'}/>
                                 </a>
-                            </div>
-
-                            <div className="image"><img src={underHoodImages.icon3} alt=""/></div>
-                        </div>
-
-                        <div>
-                            <div className="image"><img src={underHoodImages.icon4} alt=""/></div>
-
-                            <div className="description">
-                                <h3><span>Algorithmic bid <br/> optimization</span></h3>
-
-                                <p>
-                                    Keyword level optimization is based on profitability, organic and PPC position, and
-                                    other factors.
-                                </p>
-
-                                <p>
-                                    Bid optimization is usually a large chunk of a PPC optimization
-                                    routine, and it’s all about increasing or decreasing bids based on recent
-                                    performance history.
-                                </p>
-
-                                <p>
-                                    Profit Whales automated optimization ensures that your product
-                                    is always positioned at a bid’s “sweet spot.” Our smart bidding algorithm allows it
-                                    to arrive there much faster than under manual optimization, giving our experts time
-                                    to do the job that machines can’t.
-                                </p>
                             </div>
                         </div>
 
@@ -726,77 +736,8 @@ const LandingAutomation = () => {
                         </div>
 
                         <div>
-                            <div className="image"><img src={underHoodImages.icon6} alt=""/></div>
+                            <div className="image"><img src={underHoodImages.icon9} alt=""/></div>
 
-                            <div className="description">
-                                <h3><span>Product-level Metrics</span></h3>
-
-                                <p>
-                                    Log in to immediately see your individual product or account level profitability
-                                    over any given period, changes in advertising effectiveness, etc.
-                                </p>
-
-                                <p>
-                                    Our interface
-                                    allows for the ability to group key metrics from across all advertising boards (for
-                                    example, all the keywords from different ad groups) to quickly find the most
-                                    significant deviations and take immediate actions to stay on top of any situation.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="description">
-                                <h3><span>Track the impact of ads on your organic sales</span></h3>
-
-                                <p>
-                                    This is our favorite part! It’s well known across all Amazon Sellers that an
-                                    intelligent and well-guided Sponsored Ads Campaigns (be it Sponsored Product,
-                                    Display, or Sponsored Brands) is capable of boosting product sales both from Ads
-                                    themselves and from organic search.
-                                </p>
-
-                                <p>
-                                    This happens because Amazon’s search algorithm
-                                    values products that show better and consistent sales (regardless of their source).
-                                    And of course, our dashboard readily provides the business with up-to-date
-                                    information on the total impact the advertising campaigns have on both ad sales —
-                                    and organic sales.
-                                </p>
-                            </div>
-
-                            <div className="image"><img src={underHoodImages.icon7} alt=""/></div>
-                        </div>
-
-                        <div>
-                            <div className="image"><img src={underHoodImages.icon8} alt=""/></div>
-
-                            <div className="description">
-                                <h3><span>Find the best hours for <br/> your Ads</span></h3>
-
-                                <p>
-                                    Dayparting is yet another tool that we use. Make sure that your ads will show with
-                                    greater accuracy and save your ad’s budget until high-demand hours with the best
-                                    CTR.
-                                </p>
-
-                                <p>
-                                    Our experts also benefit from the insights into when your product's demand
-                                    peaks. This better understanding of buyers allows our managers to fine-tune your
-                                    product and advertising by gathering information about when and where they'll have
-                                    the most impact on your business.
-                                </p>
-
-                                <a
-                                    href={'https://intercom.help/profitwhales/en/articles/3815260-day-parting-tool'}
-                                    target={'_blank'}>
-                                    Learn more about Dayparting
-                                    <SVG id={'right-row'}/>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div>
                             <div className="description">
                                 <h3><span>Clear executive reporting <br/> system + Email reports</span></h3>
 
@@ -814,45 +755,105 @@ const LandingAutomation = () => {
                                     copy emailed to you every week and every month.
                                 </p>
                             </div>
-
-                            <div className="image"><img src={underHoodImages.icon9} alt=""/></div>
                         </div>
 
-                        <div>
-                            <div className="image"><img src={underHoodImages.icon10} alt=""/></div>
 
-                            <div className="description">
-                                <h3><span>Programmatic algorithms <br/> + Human Brains</span></h3>
+                        {/*<div>*/}
+                        {/*    <div className="image"><img src={underHoodImages.icon4} alt=""/></div>*/}
 
-                                <p>
-                                    We have it all: neural network, sensitive algorithms, and a dashboard that provides
-                                    essential information and tools right under the manager's fingertips. But it's the
-                                    human brains behind this setup that makes the difference for our customers.
-                                </p>
+                        {/*    <div className="description">*/}
+                        {/*        <h3><span>Algorithmic bid <br/> optimization</span></h3>*/}
 
-                                <p>
-                                    <b>Customer Support</b><br/>
-                                    Our dedicated managers are pros at using our software and other means to
-                                    provide businesses with the best Amazon sales possible. They stand vigilant and are
-                                    ready to guide, interfere, or override any automated software's decision to ensure
-                                    cutting-edge PPC performance for all and every business that entrusts us with their
-                                    Amazon advertising. With lots of optimization routines out of the way, they have
-                                    more time to focus on key business metrics and manage your PPC faster and more
-                                    effectively.
-                                </p>
+                        {/*        <p>*/}
+                        {/*            Keyword level optimization is based on profitability, organic and PPC position, and*/}
+                        {/*            other factors.*/}
+                        {/*        </p>*/}
 
-                                <p>
-                                    <b>Developer team</b><br/>
-                                    Our development team has completed its 31st major update
-                                    of Profit Whales software, but we know that there is still room for further
-                                    fine-tuning and improvement. Amazon evolves and adapts — and so do we. That is why
-                                    all our client businesses can rest assured that we will provide them with the best
-                                    PPC performance now, and we will continue to do so in the future.
-                                </p>
+                        {/*        <p>*/}
+                        {/*            Bid optimization is usually a large chunk of a PPC optimization*/}
+                        {/*            routine, and it’s all about increasing or decreasing bids based on recent*/}
+                        {/*            performance history.*/}
+                        {/*        </p>*/}
 
-                                <a href="#form" className={'btn default'}>Let’s talk</a>
-                            </div>
-                        </div>
+                        {/*        <p>*/}
+                        {/*            Profit Whales automated optimization ensures that your product*/}
+                        {/*            is always positioned at a bid’s “sweet spot.” Our smart bidding algorithm allows it*/}
+                        {/*            to arrive there much faster than under manual optimization, giving our experts time*/}
+                        {/*            to do the job that machines can’t.*/}
+                        {/*        </p>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+
+                        {/*<div>*/}
+                        {/*    <div className="image"><img src={underHoodImages.icon6} alt=""/></div>*/}
+
+                        {/*    <div className="description">*/}
+                        {/*        <h3><span>Product-level Metrics</span></h3>*/}
+
+                        {/*        <p>*/}
+                        {/*            Log in to immediately see your individual product or account level profitability*/}
+                        {/*            over any given period, changes in advertising effectiveness, etc.*/}
+                        {/*        </p>*/}
+
+                        {/*        <p>*/}
+                        {/*            Our interface*/}
+                        {/*            allows for the ability to group key metrics from across all advertising boards (for*/}
+                        {/*            example, all the keywords from different ad groups) to quickly find the most*/}
+                        {/*            significant deviations and take immediate actions to stay on top of any situation.*/}
+                        {/*        </p>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+
+                        {/*<div>*/}
+                        {/*    <div className="description">*/}
+                        {/*        <h3><span>Track the impact of ads on your organic sales</span></h3>*/}
+
+                        {/*        <p>*/}
+                        {/*            This is our favorite part! It’s well known across all Amazon Sellers that an*/}
+                        {/*            intelligent and well-guided Sponsored Ads Campaigns (be it Sponsored Product,*/}
+                        {/*            Display, or Sponsored Brands) is capable of boosting product sales both from Ads*/}
+                        {/*            themselves and from organic search.*/}
+                        {/*        </p>*/}
+
+                        {/*        <p>*/}
+                        {/*            This happens because Amazon’s search algorithm*/}
+                        {/*            values products that show better and consistent sales (regardless of their source).*/}
+                        {/*            And of course, our dashboard readily provides the business with up-to-date*/}
+                        {/*            information on the total impact the advertising campaigns have on both ad sales —*/}
+                        {/*            and organic sales.*/}
+                        {/*        </p>*/}
+                        {/*    </div>*/}
+
+                        {/*    <div className="image"><img src={underHoodImages.icon7} alt=""/></div>*/}
+                        {/*</div>*/}
+
+                        {/*<div>*/}
+                        {/*    <div className="image"><img src={underHoodImages.icon8} alt=""/></div>*/}
+
+                        {/*    <div className="description">*/}
+                        {/*        <h3><span>Find the best hours for <br/> your Ads</span></h3>*/}
+
+                        {/*        <p>*/}
+                        {/*            Dayparting is yet another tool that we use. Make sure that your ads will show with*/}
+                        {/*            greater accuracy and save your ad’s budget until high-demand hours with the best*/}
+                        {/*            CTR.*/}
+                        {/*        </p>*/}
+
+                        {/*        <p>*/}
+                        {/*            Our experts also benefit from the insights into when your product's demand*/}
+                        {/*            peaks. This better understanding of buyers allows our managers to fine-tune your*/}
+                        {/*            product and advertising by gathering information about when and where they'll have*/}
+                        {/*            the most impact on your business.*/}
+                        {/*        </p>*/}
+
+                        {/*        <a*/}
+                        {/*            href={'https://intercom.help/profitwhales/en/articles/3815260-day-parting-tool'}*/}
+                        {/*            target={'_blank'}>*/}
+                        {/*            Learn more about Dayparting*/}
+                        {/*            <SVG id={'right-row'}/>*/}
+                        {/*        </a>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
                 </div>
             </section>
@@ -965,7 +966,7 @@ const LandingAutomation = () => {
                         <div className="post">
                             <div className="image">
                                 <img
-                                    src={'https://blog.profitwhales.com/wp-content/uploads/2020/08/Actionable-Amazon-PPC-Checklist.png'}
+                                    src={'https://blog.profitwhales.com/wp-content/uploads/2020/08/Actionable-Amazon-PPC-Checklist-main.png'}
                                     alt=""/>
                             </div>
 
@@ -980,7 +981,7 @@ const LandingAutomation = () => {
                         <div className="post">
                             <div className="image">
                                 <img
-                                    src={'https://blog.profitwhales.com/wp-content/uploads/2020/08/amazon-keyword-generator.png'}
+                                    src={'https://blog.profitwhales.com/wp-content/uploads/2020/08/amazon-keyword-generator.jpg'}
                                     alt=""/>
                             </div>
 
@@ -994,7 +995,7 @@ const LandingAutomation = () => {
 
                         <div className="post">
                             <div className="image">
-                                <img src={'https://blog.profitwhales.com/wp-content/uploads/2020/07/acos-vs-macos.png'}
+                                <img src={'https://blog.profitwhales.com/wp-content/uploads/2020/07/acos-vs-macos.jpg'}
                                      alt=""/>
                             </div>
 
@@ -1050,8 +1051,9 @@ const LandingAutomation = () => {
 
                             <div className="post">
                                 <div className="image">
-                                    <img src={'https://blog.profitwhales.com/wp-content/uploads/2020/07/acos-vs-macos.png'}
-                                         alt=""/>
+                                    <img
+                                        src={'https://blog.profitwhales.com/wp-content/uploads/2020/07/acos-vs-macos.png'}
+                                        alt=""/>
                                 </div>
 
                                 <h4>What is Amazon ACoS? What is MACoS?</h4>
@@ -1093,7 +1095,7 @@ const LandingAutomation = () => {
 
         </div>
     )
-};
+}
 
 
-export default LandingAutomation;
+export default LandingAutomation

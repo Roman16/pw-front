@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import './ZTH.less';
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
-import {SVG} from "../../../utils/icons";
-import OurCases from "../components/OurCases/OurCases";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import React, {useEffect, useState} from "react"
+import './ZTH.less'
+import Header from "../components/Header/Header"
+import Footer from "../components/Footer/Footer"
+import {SVG} from "../../../utils/icons"
+import OurCases from "../components/OurCases/OurCases"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 
 import zthKingImage from '../../../assets/img/landing-zth/zth-king.svg'
 import amazonStoreLogo from '../../../assets/img/logo/amazon-app-store-logo.svg'
@@ -20,12 +20,13 @@ import caseImage from '../../../assets/img/landing-zth/cases-image.png'
 import caseImageMob from '../../../assets/img/landing-zth/cases-image_mob.png'
 import kingOnTronImage from '../../../assets/img/landing-zth/king-on-tron.png'
 import x10SuccessImage from '../../../assets/img/landing-zth/x10-success.svg'
-import {Link} from "react-router-dom";
-import ZTHPriceSlider from "../components/ZTHPriceSlider/ZTHPriceSlider";
-import ZTHPricingGuide from "../components/ZTHPricingGuide/ZTHPricingGuide";
-import amazonAppStoreLogo from "../../../assets/img/logo/amazon-app-store-logo-dark.png";
+import {Link} from "react-router-dom"
+import ZTHPriceSlider from "../components/ZTHPriceSlider/ZTHPriceSlider"
+import ZTHPricingGuide from "../components/ZTHPricingGuide/ZTHPricingGuide"
+import amazonAppStoreLogo from "../../../assets/img/logo/amazon-app-store-logo-dark.png"
+import ContactForm from "../components/ContactForm/ContactForm"
 
-const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY;
+const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY
 
 
 const setupDescription = [
@@ -61,7 +62,7 @@ const setupDescription = [
         ppc: 'The common structure that all other sellers use',
         zth: 'Patented Profit Whales PPC Campaign Structure',
     },
-];
+]
 
 const includesList = [
     'One-minute campaigns setup with our data-driven algorithms and you ready to go.',
@@ -72,22 +73,22 @@ const includesList = [
 
     'Save time&money by starting with the most relevant keywords in your niche without getting them from auto campaigns.',
     'More than five campaigns and 30-200 ad groups that have their own goal.'
-];
+]
 
 const ZTHLanding = () => {
-    const [setupType, setSetupType] = useState('zth');
+    const [setupType, setSetupType] = useState('zth')
 
     useEffect(() => {
         (function (t, a, p) {
-            t.TapfiliateObject = a;
+            t.TapfiliateObject = a
             t[a] = t[a] || function () {
                 (t[a].q = t[a].q || []).push(arguments)
             }
-        })(window, 'tap');
+        })(window, 'tap')
 
-        window.tap('create', tapfiliateKey, {integration: "javascript"});
+        window.tap('create', tapfiliateKey, {integration: "javascript"})
         // window.tap('click', {referral_code: ''});
-        window.tap('detect');
+        window.tap('detect')
     }, [])
 
     return (
@@ -112,19 +113,16 @@ const ZTHLanding = () => {
                         <div className="action">
                             <div className="row">
                                 <button className="btn default link">
-                                    <a
-                                        href="https://calendly.com/lana_profit_whales/15min"
-                                        target={'_blank'}
-                                    >
+                                    <Link to={'/contact-us'}>
                                         LET’S TALK
-                                    </a>
+                                    </Link>
                                 </button>
 
                                 <span>or</span>
 
                                 <button className="btn white link">
                                     <Link to={'/registration'}>
-                                        TRY IT NOW
+                                        GET A FREE AUDIT
                                     </Link>
                                 </button>
                             </div>
@@ -159,9 +157,12 @@ const ZTHLanding = () => {
                             campaign, that works best with Amazon’s algorithms.
                         </p>
                         <button className={'btn default link'}>
-                            <Link to={'/registration'}>
-                                TRY NOW
-                            </Link>
+                            <a
+                                href={'https://intercom.help/profitwhales/en/articles/4472761-sponsored-products-campaigns-structure'}
+                                target={'_blank'}
+                            >
+                                Learn more
+                            </a>
                         </button>
                     </div>
 
@@ -361,63 +362,65 @@ const ZTHLanding = () => {
                 <img src={kingOnTronImage} alt="" className={'king-on-tron'}/>
             </section>
 
-            <section className="plans">
-                <div className="container">
-                    <h2>Simple Plan</h2>
-                    <p>
-                        No contracts. Few minutes setup. Post payment support.
-                    </p>
+            {/*<section className="plans">*/}
+            {/*    <div className="container">*/}
+            {/*        <h2>Simple Plan</h2>*/}
+            {/*        <p>*/}
+            {/*            No contracts. Few minutes setup. Post payment support.*/}
+            {/*        </p>*/}
 
-                    <div className="actions">
-                        <div>
-                            <SVG id={'zth-icon'}/>
-                            Zero To Hero
+            {/*        <div className="actions">*/}
+            {/*            <div>*/}
+            {/*                <SVG id={'zth-icon'}/>*/}
+            {/*                Zero To Hero*/}
 
-                            <div>Create Ads</div>
-                        </div>
+            {/*                <div>Create Ads</div>*/}
+            {/*            </div>*/}
 
-                        <div className="col">
-                            <label htmlFor="">
-                                X10 Of Your Success
-                            </label>
+            {/*            <div className="col">*/}
+            {/*                <label htmlFor="">*/}
+            {/*                    X10 Of Your Success*/}
+            {/*                </label>*/}
 
-                            <img src={x10SuccessImage} alt=""/>
-                        </div>
+            {/*                <img src={x10SuccessImage} alt=""/>*/}
+            {/*            </div>*/}
 
-                        <Link to={'/'} target={'_blank'}>
-                            <SVG id={'ppc-automate-icon'}/>
-                            PPC Automation
-                            <div>Automate Ads</div>
-                        </Link>
-                    </div>
+            {/*            <Link to={'/'} target={'_blank'}>*/}
+            {/*                <SVG id={'ppc-automate-icon'}/>*/}
+            {/*                PPC Automation*/}
+            {/*                <div>Automate Ads</div>*/}
+            {/*            </Link>*/}
+            {/*        </div>*/}
 
-                    <ZTHPriceSlider/>
-                </div>
-            </section>
+            {/*        <ZTHPriceSlider/>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
 
-            <ZTHPricingGuide/>
+            {/*<ZTHPricingGuide/>*/}
 
 
-            <section className={'waiting-action'}>
-                <div className="container">
-                    <div className="col">
-                        <h2>What are you waiting for?</h2>
-                        <p>
-                            Create professionaly structured Amazon Advertising <br/> Campaigns in a few clicks
-                        </p>
-                    </div>
+            {/*<section className={'waiting-action'}>*/}
+            {/*    <div className="container">*/}
+            {/*        <div className="col">*/}
+            {/*            <h2>What are you waiting for?</h2>*/}
+            {/*            <p>*/}
+            {/*                Create professionaly structured Amazon Advertising <br/> Campaigns in a few clicks*/}
+            {/*            </p>*/}
+            {/*        </div>*/}
 
-                    <button className={'btn white link'}>
-                        <Link to={'/registration'}>
-                            create campaigns
-                        </Link>
-                    </button>
-                </div>
-            </section>
+            {/*        <button className={'btn white link'}>*/}
+            {/*            <Link to={'/registration'}>*/}
+            {/*                create campaigns*/}
+            {/*            </Link>*/}
+            {/*        </button>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
+
+            <ContactForm/>
 
             <Footer/>
         </div>
     )
-};
+}
 
-export default ZTHLanding;
+export default ZTHLanding

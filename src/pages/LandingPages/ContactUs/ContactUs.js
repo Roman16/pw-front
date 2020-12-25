@@ -63,12 +63,13 @@ const ContactUs = (props) => {
                         <ul>
                             <li><i><SVG id={'clock'}/></i> 10:00 - 10:00 EST</li>
                             <li><i><SVG id={'email'}/></i> official@profitwhales.com</li>
-                            <li><i><SVG id={'location'}/></i> Yevhena Konovaltsia St, <br/> 32G, Kyiv, 02000</li>
+                            <li><i><SVG id={'location'}/></i> 15805 BISCAYNE BLVD. <br/> 201
+                                AVENTURA, FL 33160</li>
                         </ul>
 
                         <img src={mapImage} alt=""/>
 
-                        <a href="https://goo.gl/maps/1uc4tbaxkyLESaeB9" target={'_blank'}>
+                        <a href="https://goo.gl/maps/c5iFucpi8GkcfEAK9" target={'_blank'}>
                             Look at Google Map
                             <SVG id={'right-row'}/>
                         </a>
@@ -139,28 +140,28 @@ const ContactUs = (props) => {
                 </div>
             </section>
 
-            <section className={'trustpilot-section'}>
-                <div className="container">
-                    <a
-                        href="https://www.trustpilot.com/review/profitwhales.com"
-                        target={'_blank'}
-                    >
-                        <img src={trustpilotLogo} alt="" className={'logo'}/>
-                    </a>
+            {/*<section className={'trustpilot-section'}>*/}
+            {/*    <div className="container">*/}
+            {/*        <a*/}
+            {/*            href="https://www.trustpilot.com/review/profitwhales.com"*/}
+            {/*            target={'_blank'}*/}
+            {/*        >*/}
+            {/*            <img src={trustpilotLogo} alt="" className={'logo'}/>*/}
+            {/*        </a>*/}
 
-                    <img src={starsIcon} alt=""/>
+            {/*        <img src={starsIcon} alt=""/>*/}
 
-                    <p>
-                        Our customers rate us as <b>excellent</b>.
-                        <a
-                            href="https://www.trustpilot.com/review/profitwhales.com"
-                            target={'_blank'}
-                        >
-                            Check out our reviews
-                        </a>
-                    </p>
-                </div>
-            </section>
+            {/*        <p>*/}
+            {/*            Our customers rate us as <b>excellent</b>.*/}
+            {/*            <a*/}
+            {/*                href="https://www.trustpilot.com/review/profitwhales.com"*/}
+            {/*                target={'_blank'}*/}
+            {/*            >*/}
+            {/*                Check out our reviews*/}
+            {/*            </a>*/}
+            {/*        </p>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
 
             <section className={'cases-section'}>
                 <div className="container">
