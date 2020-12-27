@@ -37,15 +37,16 @@ const idKey = {
 
 
 const TableList = ({
-                       location,
                        columns,
-                       fixedColumns,
-                       columnSelect = true,
-                       dateRange = true,
-                       showFilters = true,
-                       showPagination = true,
+                       location,
                        moreActions,
+                       fixedColumns,
+                       showPagination = true,
+                       columnSelect = true,
+                       showFilters = true,
+                       searchField = true,
                        showTotal = true,
+                       dateRange = true,
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
@@ -249,6 +250,7 @@ const TableList = ({
                     columns={columns}
                     filters={filters}
                     locationKey={location}
+                    searchField={searchField}
                 />}
 
                 {moreActions}

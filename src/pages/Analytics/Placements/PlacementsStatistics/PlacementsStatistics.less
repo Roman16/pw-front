@@ -3,15 +3,22 @@
 .placements-workplace {
   .placements-area-statistics {
     width: 100%;
-    height: 304px;
     display: flex;
     flex-direction: column;
     position: relative;
     background: #fff;
-    margin: 0 0 10px;
     border-radius: 4px;
     padding: 20px;
     box-shadow: @default-section-shadow;
+
+    &.visible {
+      height: 320px;
+      margin-bottom: 10px;
+    }
+
+    &.hidden {
+     display: none;
+    }
 
     .section-header {
       display: flex;

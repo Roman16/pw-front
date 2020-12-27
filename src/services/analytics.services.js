@@ -8,7 +8,15 @@ export const analyticsServices = {
     fetchMetricsData,
     fetchChartData,
     fetchStateInformation,
-    fetchSettingsDetails
+    fetchSettingsDetails,
+    fetchPlacementStatistic
+}
+
+const stateIdValues = {
+    campaignId: 'campaigns',
+    productId: 'products',
+    adGroupId: 'ad-groups',
+    portfolioId: 'portfolios',
 }
 
 
@@ -62,7 +70,6 @@ function fetchMetricsData({startDate, endDate, locationKey, filters}, cancelToke
     else if (locationKey === 'overview') key = 'products'
     else key = locationKey
 
-
     return api('get', `${analyticsUrls.metricsData(key)}${filtersHandler(filters)}`, null, null, cancelToken)
 }
 
@@ -76,15 +83,13 @@ function fetchChartData(location, metrics, date, filters = [], cancelToken) {
 }
 
 function fetchStateInformation(state, id) {
-    const stateParams = {
-        campaignId: 'campaigns',
-        productId: 'products',
-        adGroupId: 'ad-groups',
-        portfolioId: 'portfolios',
-    }
-    return api('get', `${analyticsUrls.stateInformation(stateParams[state], id)}`)
+    return api('get', `${analyticsUrls.stateInformation(stateIdValues[state], id)}`)
 }
 
 function fetchSettingsDetails(page, id) {
     return api('get', `${analyticsUrls.settingsDetails(page, id)}`)
+}
+
+function fetchPlacementStatistic(metric, date, cancelToken) {
+    return api('get', `${analyticsUrls.placementStatistic}`, null, null, cancelToken)
 }

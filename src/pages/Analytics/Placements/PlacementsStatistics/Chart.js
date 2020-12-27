@@ -121,7 +121,7 @@ const Chart = ({processing, chartData = []}) => {
                 stackOffset="expand"
                 isAnimationActive={false}
                 margin={{
-                    top: 10, right: 5, left: -15, bottom: 0,
+                    top: 10, right: 0, left: -10, bottom: -20,
                 }}
             >
                 <defs>

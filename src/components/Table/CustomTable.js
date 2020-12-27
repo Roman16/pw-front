@@ -107,6 +107,25 @@ const CustomTable = ({
                     })}
                 </div>
 
+                {totalDataSource && dataSource.length > 0 && <div className="total-data">
+                    {columns.map((item, columnIndex) => {
+                        const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
+                            leftStickyPosition = columnIndex === 0 ? {left: 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em)`} : {left: columns[columnIndex - 1].width}
+
+                        return (
+                            <div
+                                className={`table-body__field ${item.align || ''} ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''} ${item.align ? `align-${item.align}` : ''}`}
+                                style={{
+                                    ...fieldWidth,
+                                    minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
+                                }}
+                            >
+                                {!item.noTotal && (item.render && columnIndex !== 0 ? item.render(totalDataSource[item.key], item, columnIndex) : totalDataSource[item.key])}
+                            </div>
+                        )
+                    })}
+                </div>}
+
                 <div className="table-body">
                     {(!loading && (!dataSource || dataSource.length === 0)) && <div className="no-data">
                         {emptyText ? emptyText : 'You don’t have any data yet'}
@@ -156,25 +175,6 @@ const CustomTable = ({
                         </>
                     ))}
                 </div>
-
-                {totalDataSource && dataSource.length > 0 && <div className="total-data">
-                    {columns.map((item, columnIndex) => {
-                        const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                            leftStickyPosition = columnIndex === 0 ? {left: 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em)`} : {left: columns[columnIndex - 1].width}
-
-                        return (
-                            <div
-                                className={`table-body__field ${item.align || ''} ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''} ${item.align ? `align-${item.align}` : ''}`}
-                                style={{
-                                    ...fieldWidth,
-                                    minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
-                                }}
-                            >
-                                {!item.noTotal && (item.render && columnIndex !== 0 ? item.render(totalDataSource[item.key], item, columnIndex) : totalDataSource[item.key])}
-                            </div>
-                        )
-                    })}
-                </div>}
             </div>
 
 

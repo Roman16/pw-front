@@ -52,10 +52,12 @@ const LegendMenu = () => {
 }
 
 
-const SectionHeader = () => {
+const SectionHeader = ({selectedMetric, onChange}) => {
     return (<div className="section-header">
         <CustomSelect
             getPopupContainer={(node) => node.parentNode}
+            value={selectedMetric}
+            onChange={value => onChange(value)}
         >
             {availableMetrics.map(metric => (
                 <Option value={metric.key}>{metric.title}</Option>

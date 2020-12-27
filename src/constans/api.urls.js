@@ -131,6 +131,7 @@ export const analyticsUrls = {
     targetingsList: 'analytics/targetings',
     negativeTargetingsList: 'analytics/negative-targetings',
     productAdsList: 'analytics/product-ads',
+    placementStatistic: 'analytics/placement-statistic',
     metricsData: location =>  `analytics/${location}/metrics`,
     chartData: location => `analytics/${location}/charts`,
     stateInformation: (state, id) => `analytics/${state}/${id}/details`,

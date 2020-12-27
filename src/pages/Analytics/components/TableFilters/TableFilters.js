@@ -12,7 +12,7 @@ import _ from 'lodash'
 
 const {Search} = Input
 
-const TableFilters = ({columns, filters = [], locationKey}) => {
+const TableFilters = ({columns, filters = [], locationKey, searchField}) => {
     const [visibleFilterPopover, setVisibleFilterPopover] = useState(false),
         [indexSelectedFilter, setIndexSelectedFilter] = useState(null),
         [editFilter, setEditFilter] = useState(undefined),
@@ -84,7 +84,7 @@ const TableFilters = ({columns, filters = [], locationKey}) => {
     return (
         <>
             <div className="list-filters-block">
-                <div className="form-group search-block">
+                {searchField && <div className="form-group search-block">
                     <Search
                         className="search-field"
                         placeholder={`Search by ${columns.find(column => column.search).title}`}
@@ -95,7 +95,7 @@ const TableFilters = ({columns, filters = [], locationKey}) => {
                         data-intercom-target='search-field'
                         suffix={<SVG id={'search'}/>}
                     />
-                </div>
+                </div>}
 
                 <Popover
                     content={<FilterWindow
