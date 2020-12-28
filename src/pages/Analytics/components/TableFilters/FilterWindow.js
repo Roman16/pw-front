@@ -178,6 +178,7 @@ const containsVariations = {
     'match_type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'targetingType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'calculatedTargetingMatchType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'placementName': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
 
     'campaign': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}]
 }
@@ -255,6 +256,12 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Legacy For Sales', key: 'legacyForSales', value: 'legacyForSales'},
             {title: 'Auto For Sales', key: 'autoForSales', value: 'autoForSales'},
             {title: 'Manual', key: 'manual', value: 'manual'},
+        ],
+        'placementName': [
+            {title: 'Top of Search on-Amazon', key: 'Top of Search on-Amazon', value: 'Top of Search on-Amazon'},
+            {title: 'Detail Page on-Amazon', key: 'Detail Page on-Amazon', value: 'Detail Page on-Amazon'},
+            {title: 'Other on-Amazon', key: 'Other on-Amazon', value: 'Other on-Amazon'},
+            {title: 'Remarketing off-Amazon', key: 'Remarketing off-Amazon', value: 'Remarketing off-Amazon'},
         ],
         'type':
             currentTab === 'targeting-improvements' ? [

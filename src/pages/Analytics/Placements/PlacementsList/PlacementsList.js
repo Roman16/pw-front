@@ -38,7 +38,7 @@ const PlacementsList = ({location}) => {
             width: '200px',
             sorter: true,
             locked: true,
-            search: true,
+            filter: true,
             render: (text) => <span title={text} className={'overflow-text'}>{text}</span>
         },
         ...selectedCampaign ? [

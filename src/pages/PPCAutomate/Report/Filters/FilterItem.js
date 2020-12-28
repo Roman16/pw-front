@@ -38,6 +38,11 @@ export const valueTile = {
     'created_product_ad': 'Created product ad',
     'legacyForSales': 'Legacy For Sales',
     'autoForSales': 'Auto For Sales',
+//
+    'Top of Search on-Amazon': 'Top of Search on-Amazon',
+    'Detail Page on-Amazon': 'Detail Page on-Amazon',
+    'Other on-Amazon': 'Other on-Amazon',
+    'Remarketing off-Amazon': 'Remarketing off-Amazon',
 }
 
 const numberMark = {
@@ -104,6 +109,7 @@ const columnTitle = {
     'targetings_count': 'Total Targets',
     'product_ads_count': 'Products',
     'calculatedBid': 'Bid',
+    'placementName': 'Placement',
 }
 
 
