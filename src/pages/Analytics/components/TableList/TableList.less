@@ -120,6 +120,16 @@
       }
     }
 
+    .segment-filter {
+      &.active {
+        color: #6D6DF6;
+
+        svg {
+          stroke: #6D6DF6;
+        }
+      }
+    }
+
     .popover-segment-filter {
       top: 53px !important;
 
@@ -141,8 +151,14 @@
           color: #38454F;
           cursor: pointer;
 
+
           &:hover {
             background: rgba(245, 245, 255, 0.45);
+          }
+
+          &.active {
+            padding: 0 18px 0 14px;
+            border-left: 4px solid #6D6DF6;
           }
         }
       }

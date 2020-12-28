@@ -19,15 +19,23 @@ const stateIdValues = {
     portfolioId: 'portfolios',
 }
 
+const dateRangeToIso = (dateRange) => {
+    return `${dateRange.startDate === 'lifetime' ? '' : moment.tz(`${moment(dateRange.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${dateRange.endDate === 'lifetime' ? '' : moment.tz(`${moment(dateRange.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`
+}
+
 
 const filtersHandler = (filters) => {
     const parameters = []
 
     filters.forEach(({filterBy, type, value, requestValue}) => {
         if (filterBy === 'datetime') {
-            parameters.unshift(`?datetime:range=${value.startDate === 'lifetime' ? '' : moment.tz(`${moment(value.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${value.endDate === 'lifetime' ? '' : moment.tz(`${moment(value.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
+            parameters.unshift(`?datetime:range=${dateRangeToIso(value)}`)
         } else if (type.key === 'except') {
             parameters.push(`&type:in=${requestValue.join(',')}`)
+        } else if (filterBy === 'segment') {
+            if (value !== null) {
+                parameters.push(`&segment_by:eq=${value}`)
+            }
         } else if (type === 'search' && value) {
             parameters.push(`&${filterBy}:contains=${value}`)
         } else if (type.key === 'one_of') {
@@ -90,6 +98,14 @@ function fetchSettingsDetails(page, id) {
     return api('get', `${analyticsUrls.settingsDetails(page, id)}`)
 }
 
-function fetchPlacementStatistic(metric, date, cancelToken) {
-    return api('get', `${analyticsUrls.placementStatistic}`, null, null, cancelToken)
+function fetchPlacementStatistic(metric, date, mainState, cancelToken) {
+    const stateValues = []
+
+    Object.keys(mainState).forEach(key => {
+        if (mainState[key] && key !== 'name') {
+            stateValues.push(`${key}:eq=${mainState[key]}`)
+        }
+    })
+
+    return api('get', `${analyticsUrls.placementStatistic}?metric[]=${metric}&datetime:range=${dateRangeToIso(date)}${stateValues.length > 0 ? '&' + stateValues.join('&') : ''}`, null, null, cancelToken)
 }

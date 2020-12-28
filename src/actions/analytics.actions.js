@@ -9,7 +9,8 @@ export const analyticsActions = {
     setMetricsData,
     updateFiltersList,
     switchChartView,
-    expandWorkplace
+    expandWorkplace,
+    setSegmentValue
 }
 
 function setMainState(state) {
@@ -88,6 +89,15 @@ function expandWorkplace(value) {
     return dispatch => {
         dispatch({
             type: analyticsConstants.SET_WORKPLACE_VIEW,
+            payload: value
+        })
+    }
+}
+
+function setSegmentValue(value) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.SET_SEGMENT_VALUE,
             payload: value
         })
     }

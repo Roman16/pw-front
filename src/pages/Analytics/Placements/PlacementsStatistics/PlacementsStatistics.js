@@ -1,19 +1,9 @@
 import React, {useEffect, useState, Fragment} from 'react'
-import {
-    AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
-} from 'recharts'
-import moment from "moment"
-import {daypartingServices} from "../../../../services/dayparting.services"
 import {useSelector} from "react-redux"
 import axios from "axios"
-import {round} from "../../../../utils/round"
-import {Spin} from "antd"
-import {SVG} from "../../../../utils/icons"
-import {numberMask} from "../../../../utils/numberMask"
 import './PlacementsStatistics.less'
 import SectionHeader from "./SectionHeader"
 import Chart from "./Chart"
-import {analytics} from "../../../../reducers/analytics.reducer"
 import {analyticsServices} from "../../../../services/analytics.services"
 
 const CancelToken = axios.CancelToken
@@ -39,8 +29,8 @@ const PlacementsStatistics = () => {
         source = CancelToken.source()
 
         try {
-           const res = await analyticsServices.fetchPlacementStatistic(selectedMetric, selectedRangeDate, source.token)
-
+           const res = await analyticsServices.fetchPlacementStatistic(selectedMetric, selectedRangeDate,mainState, source.token)
+            setChartData(res.response)
         } catch (e) {
             console.log(e)
         }
@@ -61,7 +51,9 @@ const PlacementsStatistics = () => {
             />
 
             <Chart
+                data={chartData}
                 processing={processing}
+                selectedMetric={selectedMetric}
             />
         </div>
     )

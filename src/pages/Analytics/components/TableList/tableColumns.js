@@ -17,27 +17,29 @@ import {RenderMetricChanges} from "../MainMetrics/MetricItem"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
 import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
 
-export const renderNumberField = (type = 'number', showDiff = true) => {
-    const Value = ({number}) => {
-        switch (type) {
-            case 'number':
-                return ((number !== null && number !== undefined ? numberMask(number, 0) : '-'))
+export const RenderMetricValue = ({number, type}) => {
+    switch (type) {
+        case 'number':
+            return ((number !== null && number !== undefined ? numberMask(number, 0) : '-'))
 
-            case 'percent':
-                return ((number !== null && number !== undefined ? `${round(+number * 100, 2)}%` : '-'))
+        case 'percent':
+            return ((number !== null && number !== undefined ? `${round(+number * 100, 2)}%` : '-'))
 
-            case 'roas':
-                return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
+        case 'roas':
+            return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
 
-            case 'currency':
-                return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
-        }
+        case 'currency':
+            return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
     }
+}
+
+
+export const renderNumberField = (type = 'number', showDiff = true) => {
 
     return ({
         render: (number, item, array, dataIndex) => {
             return (<div className={'metric-value'}>
-                <Value number={number}/>
+                <RenderMetricValue number={number} type={type}/>
 
                 {item.compareWithPrevious && showDiff && <RenderMetricChanges
                     value={number}

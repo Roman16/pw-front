@@ -1,10 +1,15 @@
 import React from "react"
 import {Popover} from "antd"
+import {useDispatch, useSelector} from "react-redux"
+import {analyticsActions} from "../../../../actions/analytics.actions"
 
 const SegmentFilter = () => {
+    const dispatch = useDispatch()
+
+    const placementSegment = useSelector(state => state.analytics.placementSegment)
 
     const setSegmentHandler = (value) => {
-
+        dispatch(analyticsActions.setSegmentValue(value))
     }
 
     return (
@@ -15,11 +20,19 @@ const SegmentFilter = () => {
             destroyTooltipOnHide={true}
             overlayClassName={'popover-segment-filter'}
             content={<ul>
-                <li onClick={() => setSegmentHandler(null)}>None</li>
-                <li onClick={() => setSegmentHandler('advertising_type')}>Advertising Type</li>
+                <li onClick={() => setSegmentHandler(null)} className={placementSegment === null ? 'active' : ''}>
+                    None
+                </li>
+                <li onClick={() => setSegmentHandler('advertisingType')}
+                    className={placementSegment === 'advertisingType' ? 'active' : ''}
+                >
+                    Advertising Type
+                </li>
             </ul>}
         >
-            <button className={'segment-filter icon-btn'}>
+            <button
+                className={`segment-filter icon-btn ${(placementSegment !== null) ? 'active' : ''}`}
+            >
                 <i className={'btn icon'}>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20"

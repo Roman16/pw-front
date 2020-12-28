@@ -26,6 +26,8 @@ let source = null
 
 const idKey = {
     'products': 'product',
+    'products-regular': 'product',
+    'products-parents': 'product',
     'portfolios': 'portfolio',
     'campaigns': 'campaign',
     'placements': 'placement',
@@ -65,10 +67,11 @@ const TableList = ({
         })
 
 
-    const {mainState, selectedRangeDate, metricsData} = useSelector(state => ({
+    const {mainState, selectedRangeDate, metricsData, placementSegment} = useSelector(state => ({
         mainState: state.analytics.mainState,
         selectedRangeDate: state.analytics.selectedRangeDate,
-        metricsData: state.analytics.metricsData
+        metricsData: state.analytics.metricsData,
+        placementSegment: state.analytics.placementSegment,
     }))
 
     const localColumnBlackList = columnsBlackList[location] || [],
@@ -155,6 +158,14 @@ const TableList = ({
                 },
             ]
 
+            if (location === 'placements') {
+                filtersWithState.push({
+                    filterBy: 'segment',
+                    type: 'eq',
+                    value: placementSegment
+                })
+            }
+
             const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token)
 
             setPaginationParams({
@@ -200,6 +211,8 @@ const TableList = ({
                 },
             ]
 
+            console.log(location)
+
             const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
 
             if (res.response) {
@@ -229,7 +242,7 @@ const TableList = ({
             page: 1
         })
         getData()
-    }, [filters])
+    }, [filters, placementSegment])
 
     useEffect(() => {
         localStorage.setItem('analyticsColumnsBlackList', JSON.stringify(columnsBlackList))

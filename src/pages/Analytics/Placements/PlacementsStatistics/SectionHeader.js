@@ -2,41 +2,42 @@ import React, {Fragment} from "react"
 import CustomSelect from "../../../../components/Select/Select"
 import {Popover, Select} from "antd"
 import {SVG} from "../../../../utils/icons"
+import {metricKeys} from "../../components/MainMetrics/metricsList"
 
 const Option = Select.Option
 
 const availableMetrics = [
     {
         title: 'Impressions',
-        key: 'impressions'
+        key: metricKeys.impressions
     },
     {
         title: 'Clicks',
-        key: 'clicks'
+        key: metricKeys.clicks
     },
     {
         title: 'Ad Spend',
-        key: 'cost'
+        key: metricKeys.cost
     },
     {
         title: 'Ad Sales',
-        key: 'attributedSales30d',
+        key: metricKeys.ad_sales,
     },
     {
         title: 'Ad Orders',
-        key: 'attributedConversions30d',
+        key: metricKeys.ad_orders,
     },
     {
         title: 'Ad Units',
-        key: 'attributedUnitsOrdered30d',
+        key: metricKeys.ad_units,
     },
     {
         title: 'Sales Share',
-        key: 'sales_share',
+        key: metricKeys.sales_share,
     },
     {
         title: 'Budget Allocation',
-        key: 'budget_allocation',
+        key: metricKeys.budget_allocation,
     },
 ]
 
@@ -44,9 +45,9 @@ const LegendMenu = () => {
     return (
         <ul className='chart-legend'>
             <li>Top of Search</li>
-            <li>Product Pages</li>
-            <li>Rest of Search</li>
+            <li>Detail Page</li>
             <li>Other</li>
+            <li>Remarketing</li>
         </ul>
     )
 }

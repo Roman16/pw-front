@@ -31,6 +31,7 @@ const defaultChartOptionsValues = {
 const initialState = {
     location: undefined,
     visibleChart: localStorage.getItem('analyticsViewChart') ? JSON.parse(localStorage.getItem('analyticsViewChart')) : true,
+    placementSegment: null,
     visibleNavigation: true,
     mainState: {
         campaignId: undefined,
@@ -149,6 +150,12 @@ export function analytics(state = initialState, action) {
                         [state.location]: action.payload
                     }
                 }
+            }
+
+        case analyticsConstants.SET_SEGMENT_VALUE:
+            return {
+                ...state,
+                placementSegment: action.payload
             }
 
 
