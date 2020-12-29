@@ -53,7 +53,7 @@ const PlacementsList = ({location}) => {
             })
         } else {
             if (response.length > 0) {
-                return Object.values(chartAreaKeys).map(key => _.find(response, {'placementName': key}))
+                return Object.values(chartAreaKeys).map(key => _.find(response, {'placementName': key}) || undefined).filter(item => item)
             } else {
                 return []
             }
@@ -66,7 +66,7 @@ const PlacementsList = ({location}) => {
             dataIndex: 'placementName',
             key: 'placementName',
             width: '250px',
-            sorter: true,
+            sorter: false,
             locked: true,
             filter: true,
             render: (text) => <span title={text} className={'overflow-text'}>{text}</span>
@@ -77,35 +77,41 @@ const PlacementsList = ({location}) => {
                 dataIndex: 'bidding_strategy',
                 key: 'bidding_strategy',
                 width: '250px',
-                sorter: true,
+                sorter: false,
                 noTotal: true,
                 locked: true,
+                render: (text) => <>
+                    {text === 'legacyForSales' && 'Legacy For Sales'}
+                    {text === 'autoForSales' && 'Auto For Sales'}
+                    {text === 'manual' && 'Manual'}
+                    {(text !== 'manual' && text !== 'autoForSales' && text !== 'legacyForSales') && text}
+                </>
             },
             {
                 title: 'Bid Adjustment',
                 dataIndex: 'bid_adjustment',
                 key: 'bid_adjustment',
-                width: '200px',
-                sorter: true,
+                width: '150px',
+                sorter: false,
                 locked: true,
                 noTotal: true,
                 render: () => <InputCurrency disabled/>
             }
         ] : [],
-        impressionsColumn,
-        clicksColumn,
-        ctrColumn,
-        adSpendColumn,
-        cpcColumn,
-        adSalesColumn,
-        acosColumn,
-        adCvrColumn,
-        cpaColumn,
-        adOrdersColumn,
-        adUnitsColumn,
-        roasColumn,
-        salesShareColumn,
-        budgetAllocationColumn,
+        {...impressionsColumn, sorter: false},
+        {...clicksColumn, sorter: false},
+        {...ctrColumn, sorter: false},
+        {...adSpendColumn, sorter: false},
+        {...cpcColumn, sorter: false},
+        {...adSalesColumn, sorter: false},
+        {...acosColumn, sorter: false},
+        {...adCvrColumn, sorter: false},
+        {...cpaColumn, sorter: false},
+        {...adOrdersColumn, sorter: false},
+        {...adUnitsColumn, sorter: false},
+        {...roasColumn, sorter: false},
+        {...salesShareColumn, sorter: false},
+        {...budgetAllocationColumn, sorter: false},
     ]
 
     const expandedRowRender = (props) => {
@@ -168,9 +174,9 @@ const PlacementsList = ({location}) => {
                 fixedColumns={[0]}
                 location={location}
                 searchField={false}
-                moreActions={showGroupAdvertising ? <SegmentFilter placementSegment={placementSegment}/> : undefined}
+                moreActions={(showGroupAdvertising) ? <SegmentFilter placementSegment={placementSegment}/> : undefined}
                 responseFilter={placementResponseFilter}
-                expandedRowRender={showGroupAdvertising ? expandedRowRender : undefined}
+                expandedRowRender={(placementSegment === 'advertisingType' && showGroupAdvertising) ? expandedRowRender : undefined}
             />
         </section>
     )

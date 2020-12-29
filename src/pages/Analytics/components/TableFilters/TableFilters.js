@@ -66,6 +66,8 @@ const TableFilters = ({columns, filters = [], locationKey, searchField}) => {
 
         if (filterIndex === -1 && !value) {
             return false
+        } else if(filters[filterIndex] && filters[filterIndex].value === value) {
+            return false
         } else if (filterIndex !== -1) {
             updateFilterListHandler([...filters.map((item, index) => {
                 if (index === filterIndex) {

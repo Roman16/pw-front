@@ -169,7 +169,7 @@ const Navigation = ({location}) => {
         if (mainState.adGroupId && mainState.campaignId) {
             setCurrentMenu(analyticsNavigation.adGroups)
         } else if (mainState.campaignId) {
-            if(stateDetails.campaignType && stateDetails.campaignType === 'SponsoredDisplay') {
+            if(stateDetails.advertisingType && stateDetails.advertisingType === 'SponsoredDisplay') {
                 setCurrentMenu([...analyticsNavigation.campaign.filter(item => item.key !== 'placements')])
             } else {
                 setCurrentMenu(analyticsNavigation.campaign)
