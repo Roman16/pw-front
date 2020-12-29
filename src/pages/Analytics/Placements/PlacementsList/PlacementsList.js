@@ -95,7 +95,7 @@ const PlacementsList = ({location}) => {
                 sorter: false,
                 locked: true,
                 noTotal: true,
-                render: () => <InputCurrency disabled/>
+                render: (bid_adjustment) => <InputCurrency disabled value={bid_adjustment[0].match(/\d+/g).map(Number)[0]}/>
             }
         ] : [],
         {...impressionsColumn, sorter: false},

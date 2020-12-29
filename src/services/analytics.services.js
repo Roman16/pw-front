@@ -31,7 +31,7 @@ const filtersHandler = (filters) => {
         if (filterBy === 'datetime') {
             parameters.unshift(`?datetime:range=${dateRangeToIso(value)}`)
         } else if (type.key === 'except') {
-            parameters.push(`&type:in=${requestValue.join(',')}`)
+            parameters.push(`&${filterBy}:in=${requestValue.join(',')}`)
         } else if (filterBy === 'segment') {
             if (value !== null && !_.find(filters,{filterBy: "campaignId"})) {
                 parameters.push(`&segment_by:eq=${value}`)

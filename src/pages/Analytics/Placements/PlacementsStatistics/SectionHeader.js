@@ -32,14 +32,14 @@ const availableMetrics = [
         title: 'Ad Units',
         key: metricKeys.ad_units,
     },
-    {
-        title: 'Sales Share',
-        key: metricKeys.sales_share,
-    },
-    {
-        title: 'Budget Allocation',
-        key: metricKeys.budget_allocation,
-    },
+    // {
+    //     title: 'Sales Share',
+    //     key: metricKeys.sales_share,
+    // },
+    // {
+    //     title: 'Budget Allocation',
+    //     key: metricKeys.budget_allocation,
+    // },
 ]
 
 const LegendMenu = () => {
