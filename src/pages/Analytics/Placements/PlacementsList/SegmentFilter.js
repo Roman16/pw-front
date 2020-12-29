@@ -1,12 +1,10 @@
 import React from "react"
 import {Popover} from "antd"
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 
-const SegmentFilter = () => {
+const SegmentFilter = ({placementSegment}) => {
     const dispatch = useDispatch()
-
-    const placementSegment = useSelector(state => state.analytics.placementSegment)
 
     const setSegmentHandler = (value) => {
         dispatch(analyticsActions.setSegmentValue(value))

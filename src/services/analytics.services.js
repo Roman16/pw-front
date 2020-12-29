@@ -33,7 +33,7 @@ const filtersHandler = (filters) => {
         } else if (type.key === 'except') {
             parameters.push(`&type:in=${requestValue.join(',')}`)
         } else if (filterBy === 'segment') {
-            if (value !== null) {
+            if (value !== null && !_.find(filters,{filterBy: "campaignId"})) {
                 parameters.push(`&segment_by:eq=${value}`)
             }
         } else if (type === 'search' && value) {

@@ -38,6 +38,10 @@ const CampaignsList = ({location}) => {
         dispatch(analyticsActions.setMainState(state))
     }
 
+    const setStateDetails = (data) => {
+        dispatch(analyticsActions.setStateDetails(data))
+    }
+
     const columns = [
         {
             title: 'Campaign',
@@ -50,10 +54,13 @@ const CampaignsList = ({location}) => {
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
                 className={'state-link'}
-                onClick={() => setStateHandler('ad-groups', {
-                    name: {campaignName: item.name},
-                    campaignId: item.campaignId
-                })}
+                onClick={() => {
+                    setStateHandler('ad-groups', {
+                        name: {campaignName: item.name},
+                        campaignId: item.campaignId
+                    })
+                    setStateDetails(item)
+                }}
                 title={campaign}
             >
                 {campaign}

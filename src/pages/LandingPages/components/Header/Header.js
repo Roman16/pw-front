@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react'
-import logoDark from '../../../../assets/img/ProfitWhales-logo-dark.svg'
-import logoWhite from '../../../../assets/img/ProfitWhales-logo-white.svg'
+import logoDark from '../../../../assets/img/logo/pw-agensy-dark.svg'
+import logoWhite from '../../../../assets/img/logo/pw-agensy-white.svg'
 import {Link, NavLink} from "react-router-dom"
 import './Header.less'
 import {SVG} from "../../../../utils/icons"
@@ -32,7 +32,7 @@ const menu = [
         title: 'Learn',
         subMenu: [
             {
-                title: 'BLOG',
+                title: 'Blog',
                 outsideLink: 'https://blog.profitwhales.com/',
             },
             {

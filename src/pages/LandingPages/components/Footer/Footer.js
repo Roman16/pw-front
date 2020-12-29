@@ -39,7 +39,7 @@ const Footer = () => (
 
             <div className="menu">
                 <div className="col">
-                    <h4>Products</h4>
+                    <h4>Why Profit Whales?</h4>
 
                     <ul>
                         <li><Link to={'/'}>PPC Optimization</Link></li>

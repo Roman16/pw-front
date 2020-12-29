@@ -147,6 +147,7 @@ const Navigation = ({location}) => {
 
     const mainState = useSelector(state => state.analytics.mainState)
     const visibleNavigation = useSelector(state => state.analytics.visibleNavigation)
+    const stateDetails = useSelector(state => state.analytics.stateDetails)
 
     const dispatch = useDispatch()
 
@@ -168,7 +169,11 @@ const Navigation = ({location}) => {
         if (mainState.adGroupId && mainState.campaignId) {
             setCurrentMenu(analyticsNavigation.adGroups)
         } else if (mainState.campaignId) {
-            setCurrentMenu(analyticsNavigation.campaign)
+            if(stateDetails.campaignType && stateDetails.campaignType === 'SponsoredDisplay') {
+                setCurrentMenu([...analyticsNavigation.campaign.filter(item => item.key !== 'placements')])
+            } else {
+                setCurrentMenu(analyticsNavigation.campaign)
+            }
         } else if (mainState.productId) {
             setCurrentMenu(analyticsNavigation.product)
         } else if (mainState.portfolioId) {
@@ -176,7 +181,7 @@ const Navigation = ({location}) => {
         } else {
             setCurrentMenu(analyticsNavigation.account)
         }
-    }, [mainState])
+    }, [mainState, stateDetails])
 
     useEffect(() => {
         if (allMenuItems.find(item => item.url === location.pathname)) {

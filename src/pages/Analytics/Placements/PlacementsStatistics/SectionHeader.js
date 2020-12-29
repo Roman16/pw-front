@@ -3,6 +3,7 @@ import CustomSelect from "../../../../components/Select/Select"
 import {Popover, Select} from "antd"
 import {SVG} from "../../../../utils/icons"
 import {metricKeys} from "../../components/MainMetrics/metricsList"
+import {chartAreaKeys} from "./Chart"
 
 const Option = Select.Option
 
@@ -44,10 +45,7 @@ const availableMetrics = [
 const LegendMenu = () => {
     return (
         <ul className='chart-legend'>
-            <li>Top of Search</li>
-            <li>Detail Page</li>
-            <li>Other</li>
-            <li>Remarketing</li>
+            {Object.values(chartAreaKeys).map(item => <li>{item}</li>)}
         </ul>
     )
 }

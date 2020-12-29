@@ -49,6 +49,8 @@ const TableList = ({
                        searchField = true,
                        showTotal = true,
                        dateRange = true,
+                       responseFilter = false,
+                       expandedRowRender
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
@@ -174,10 +176,14 @@ const TableList = ({
             })
 
             if (res.response) {
-                setTableData(res.response)
+                if (responseFilter) {
+                    setTableData(responseFilter(res.response))
+                } else {
+                    setTableData(res.response)
+                }
 
                 if (localTableOptions.comparePreviousPeriod) {
-                    getPreviousPeriodData(res.response.map(item => item[`${idKey[location]}Id`]))
+                    getPreviousPeriodData(res.response.map(item => item[`${idKey[location]}Id`]), responseFilter)
                 }
             }
             setFetchingStatus(false)
@@ -187,7 +193,7 @@ const TableList = ({
         }
     }
 
-    const getPreviousPeriodData = async (idList) => {
+    const getPreviousPeriodData = async (idList, responseFilter) => {
         source && source.cancel()
         source = CancelToken.source()
 
@@ -211,20 +217,30 @@ const TableList = ({
                 },
             ]
 
-            console.log(location)
-
             const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
 
             if (res.response) {
                 setTableData(prevState => {
 
-                    return prevState.map(item => ({
-                        ...item,
-                        compareWithPrevious: true,
-                        ..._.mapKeys(_.find(res.response, {[`${idKey[location]}Id`]: item[`${idKey[location]}Id`]}), (value, key) => {
-                            return `${key}_prev`
-                        })
-                    }))
+                    if (responseFilter) {
+                        return responseFilter(prevState.map(item => {
+                            return ({
+                                ...item,
+                                compareWithPrevious: true,
+                                ..._.mapKeys(_.find(res.response, {placementName: item.placementName}), (value, key) => {
+                                    return `${key}_prev`
+                                })
+                            })
+                        }))
+                    } else {
+                        return prevState.map(item => ({
+                            ...item,
+                            compareWithPrevious: true,
+                            ..._.mapKeys(_.find(res.response, {[`${idKey[location]}Id`]: item[`${idKey[location]}Id`]}), (value, key) => {
+                                return `${key}_prev`
+                            })
+                        }))
+                    }
                 })
             }
         } catch (e) {
@@ -298,7 +314,7 @@ const TableList = ({
                 sorterColumn={localSorterColumn}
                 columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
                 fixedColumns={fixedColumns}
-
+                expandedRowRender={expandedRowRender}
                 onChangeSorter={sortChangeHandler}
             />
 

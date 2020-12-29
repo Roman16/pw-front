@@ -3,7 +3,6 @@ import {
     acosColumn,
     adCvrColumn,
     adOrdersColumn,
-    adProfitColumn,
     adSalesColumn,
     adSpendColumn,
     adUnitsColumn,
@@ -19,23 +18,54 @@ import {
 import TableList from "../../components/TableList/TableList"
 import {useSelector} from "react-redux"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
-import {Popover} from "antd"
-import {SVG} from "../../../../utils/icons"
 import SegmentFilter from "./SegmentFilter"
+import _ from 'lodash'
+import {chartAreaKeys} from "../PlacementsStatistics/Chart"
 
+const advertisingOrder = ['SponsoredProducts', 'SponsoredBrands'],
+    advertisingTitle = {
+        SponsoredProducts: 'Sponsored Products',
+        SponsoredBrands: 'Sponsored Brands',
+    }
 
 const PlacementsList = ({location}) => {
-    const {selectedCampaign} = useSelector(state => ({
+    const {selectedCampaign, placementSegment, mainState} = useSelector(state => ({
         selectedCampaign: state.analytics.mainState.campaignId,
+        placementSegment: state.analytics.placementSegment,
+        mainState: state.analytics.mainState
     }))
 
+    const showGroupAdvertising = mainState.campaignId == undefined || mainState.campaignId == null
+
+
+    const placementResponseFilter = (response) => {
+        if (placementSegment === 'advertisingType' && showGroupAdvertising) {
+            return Object.values(chartAreaKeys).map(key => {
+                const advertisingGroup = advertisingOrder.map(advertisingKey => _.find(response, item => item.placementName === key && item.advertisingType === advertisingKey))
+
+                return ({
+                    advertisingGroup,
+                    ..._.mapValues(_.find(response, {placementName: key}), (value, key) => _.reduce(advertisingGroup, (total, current) => {
+                        return +total[key] + +current[key]
+                    })),
+                    placementName: key,
+                })
+            })
+        } else {
+            if (response.length > 0) {
+                return Object.values(chartAreaKeys).map(key => _.find(response, {'placementName': key}))
+            } else {
+                return []
+            }
+        }
+    }
 
     const columns = [
         {
             title: 'Placement',
             dataIndex: 'placementName',
             key: 'placementName',
-            width: '200px',
+            width: '250px',
             sorter: true,
             locked: true,
             filter: true,
@@ -78,6 +108,59 @@ const PlacementsList = ({location}) => {
         budgetAllocationColumn,
     ]
 
+    const expandedRowRender = (props) => {
+        const columns = [
+            {
+                width: '250px',
+                dataIndex: 'advertisingType',
+                render: (text) => advertisingTitle[text]
+            },
+            ...selectedCampaign ? [
+                {
+                    width: '250px',
+                },
+                {
+                    width: '200px',
+                }
+            ] : [],
+            impressionsColumn,
+            clicksColumn,
+            ctrColumn,
+            adSpendColumn,
+            cpcColumn,
+            adSalesColumn,
+            acosColumn,
+            adCvrColumn,
+            cpaColumn,
+            adOrdersColumn,
+            adUnitsColumn,
+            roasColumn,
+            salesShareColumn,
+            budgetAllocationColumn,
+        ]
+
+
+        return (
+            props.advertisingGroup && props.advertisingGroup.map(advertisingItem => (
+                    <div>
+                        {columns.map((item, index) => {
+                                const fieldWidth = item.width ? ({width: item.width}) : {flex: 1}
+
+                                return (
+                                    <div
+                                        className={`table-body__field ${item.align || ''}`}
+                                        style={{...fieldWidth, minWidth: item.minWidth || '0'}}
+                                    >
+                                        {item.render(advertisingItem[item.dataIndex], advertisingItem)}
+                                    </div>
+                                )
+                            }
+                        )}
+                    </div>
+                )
+            )
+        )
+    }
 
     return (
         <section className={'list-section'}>
@@ -86,12 +169,13 @@ const PlacementsList = ({location}) => {
                 fixedColumns={[0]}
                 location={location}
                 searchField={false}
-                moreActions={<SegmentFilter/>}
+                moreActions={showGroupAdvertising ? <SegmentFilter placementSegment={placementSegment}/> : undefined}
+                responseFilter={placementResponseFilter}
+                expandedRowRender={showGroupAdvertising ? expandedRowRender : undefined}
             />
         </section>
     )
 }
-
 
 
 export default PlacementsList

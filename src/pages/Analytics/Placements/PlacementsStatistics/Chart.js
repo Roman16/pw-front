@@ -6,6 +6,7 @@ import {days} from "../../components/MainChart/ChartTooltip"
 import _ from 'lodash'
 import {RenderMetricValue} from "../../components/TableList/tableColumns"
 import {analyticsAvailableMetricsList} from "../../components/MainMetrics/metricsList"
+import {round} from "../../../../utils/round"
 
 
 const chartColors = [
@@ -28,17 +29,29 @@ const chartColors = [
 
 ]
 
-const chartAreaKeys = {
+export const chartAreaKeys = {
     topSearch: 'Top of Search on-Amazon',
     detailPage: 'Detail Page on-Amazon',
     other: 'Other on-Amazon',
     remarketing: 'Remarketing off-Amazon',
 }
 
-const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`
+const toPercent = (decimal, fixed = 0) => `${round((decimal * 100), fixed)}%`
+
+const getPercent = (value, total) => {
+    const ratio = total > 0 ? value / total : 0
+
+    return toPercent(ratio, 2)
+}
 
 const ChartTooltip = ({payload, label, selectedMetric}) => {
     if (payload && payload.length > 0) {
+        let total = 0
+
+        Object.values(chartAreaKeys).forEach(key => {
+            total = total + +payload[0].payload[key]
+        })
+
         return (
             <div className='area-chart-tooltip'>
                 <div className='area-chart-tooltip-header'>
@@ -59,6 +72,13 @@ const ChartTooltip = ({payload, label, selectedMetric}) => {
                                 number={payload[0].payload[name]}
                                 type={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
                             />
+                        </div>)}
+                    </div>
+
+                    <div className="col percent">
+                        {Object.values(chartAreaKeys).map((name) => <div
+                            style={{color: _.find(payload, {dataKey: name}).stroke}}>
+                            {getPercent(payload[0].payload[name], total)}
                         </div>)}
                     </div>
                 </div>
@@ -93,7 +113,7 @@ const Chart = ({processing, data = [], selectedMetric}) => {
                 stackOffset="expand"
                 isAnimationActive={false}
                 margin={{
-                    top: 10, right: 0, left: -10, bottom: 10,
+                    top: 5, right: 0, left: -10, bottom: 5,
                 }}
             >
                 <defs>

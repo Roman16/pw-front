@@ -1,4 +1,4 @@
-import React, {useEffect, useState, Fragment} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useSelector} from "react-redux"
 import axios from "axios"
 import './PlacementsStatistics.less'
@@ -11,10 +11,10 @@ let source = null
 
 const PlacementsStatistics = () => {
     const [chartData, setChartData] = useState([]),
-        [selectedMetric, setSelectedMetric] = useState('impressions'),
+        [selectedMetric, setSelectedMetric] = useState(localStorage.getItem('placementActiveMetric') || 'impressions'),
         [processing, setProcessing] = useState(false)
 
-    const {selectedRangeDate, mainState,visibleChart} = useSelector(state => ({
+    const {selectedRangeDate, mainState, visibleChart} = useSelector(state => ({
         selectedRangeDate: state.analytics.selectedRangeDate,
         mainState: state.analytics.mainState,
         visibleChart: state.analytics.visibleChart,
@@ -29,7 +29,7 @@ const PlacementsStatistics = () => {
         source = CancelToken.source()
 
         try {
-           const res = await analyticsServices.fetchPlacementStatistic(selectedMetric, selectedRangeDate,mainState, source.token)
+            const res = await analyticsServices.fetchPlacementStatistic(selectedMetric, selectedRangeDate, mainState, source.token)
             setChartData(res.response)
         } catch (e) {
             console.log(e)
@@ -41,6 +41,10 @@ const PlacementsStatistics = () => {
     useEffect(() => {
         fetchData()
     }, [selectedMetric, selectedRangeDate, mainState])
+
+    useEffect(() => {
+        localStorage.setItem('placementActiveMetric', selectedMetric)
+    }, [selectedMetric])
 
 
     return (

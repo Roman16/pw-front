@@ -320,7 +320,7 @@ const LandingAutomation = () => {
 
                     <div className="row">
                         <div className="demo">
-                            <Link to={'/book-a-demo'} className={''} target={'_blank'}>
+                            <Link to={'/audit'} className={''} target={'_blank'}>
                                 <span>GET A FREE </span>
 
                                 <div className="icon">

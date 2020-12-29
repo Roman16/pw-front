@@ -181,7 +181,7 @@ const ContactForm = () => {
 
                             <div className="actions">
                                 <button className="btn default" onClick={onNextStep}>
-                                    request a demo
+                                    GET A FREE AUDIT
                                 </button>
                             </div>
                         </>}

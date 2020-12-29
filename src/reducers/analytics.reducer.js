@@ -31,7 +31,7 @@ const defaultChartOptionsValues = {
 const initialState = {
     location: undefined,
     visibleChart: localStorage.getItem('analyticsViewChart') ? JSON.parse(localStorage.getItem('analyticsViewChart')) : true,
-    placementSegment: null,
+    placementSegment: localStorage.getItem('placementSegmentValue') ? JSON.parse(localStorage.getItem('placementSegmentValue')) : null,
     visibleNavigation: true,
     mainState: {
         campaignId: undefined,
@@ -40,6 +40,7 @@ const initialState = {
         portfolioId: undefined,
         name: {}
     },
+    stateDetails: {},
     metricsData: {},
     metricsState: metricsStateFromLocalStorage ? metricsStateFromLocalStorage : _.mapValues(workplacesList, (value, key) => {
         return ({
@@ -153,9 +154,17 @@ export function analytics(state = initialState, action) {
             }
 
         case analyticsConstants.SET_SEGMENT_VALUE:
+            localStorage.setItem('placementSegmentValue', JSON.stringify(action.payload))
+
             return {
                 ...state,
                 placementSegment: action.payload
+            }
+
+        case analyticsConstants.SET_STATE_DETAILS:
+            return {
+                ...state,
+                stateDetails: action.payload
             }
 
 
