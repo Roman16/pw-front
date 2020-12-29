@@ -66,23 +66,25 @@ const Analytics = (props) => {
                 location={props.location}
             />
 
-            {location && <section className="workplace">
+            <section className="workplace">
                 <Route exact path="/analytics" render={() => <Redirect to="/analytics/campaigns"/>}/>
 
                 <Route exact path="/analytics/campaigns" component={Campaigns}/>
                 <Route exact path="/analytics/campaign-settings" component={CampaignSettings}/>
 
+                <Route exact path="/analytics/products" render={() => <Redirect to={'/analytics/products/regular'}/>}/>
+                <Route exact path="/analytics/products/regular" render={() => <Products location={'products-regular'}/>}/>
+                <Route exact path="/analytics/products/parents" render={() => <Products location={'products-parents'}/>}/>
+
                 <Route exact path="/analytics/ad-groups" component={AdGroups}/>
-                <Route exact path="/analytics/products" component={Products}/>
                 <Route exact path="/analytics/overview" component={ProductOverview}/>
                 <Route exact path="/analytics/product-ads" component={ProductAds}/>
                 <Route exact path="/analytics/portfolios" component={Portfolios}/>
                 <Route exact path="/analytics/portfolio-settings" component={PortfolioSettings}/>
                 <Route exact path="/analytics/targetings" component={Targetings}/>
                 <Route exact path="/analytics/negative-targetings" component={NegativeTargetings}/>
-                {/*<Route exact path="/analytics/placements" component={Placements}/>*/}
+                <Route exact path="/analytics/placements" component={Placements}/>
             </section>
-            }
         </div>
     )
 }

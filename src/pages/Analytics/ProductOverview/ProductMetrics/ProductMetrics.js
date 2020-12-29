@@ -19,7 +19,7 @@ import {
 import TableList from "../../components/TableList/TableList"
 import './ProductMetrics.less'
 
-const ProductMetrics = () => {
+const ProductMetrics = ({location}) => {
     const columns = [
         {
             title: 'Campaigns',
@@ -166,6 +166,7 @@ const ProductMetrics = () => {
                 showFilters={false}
                 showPagination={false}
                 showTotal={false}
+                location={location}
             />
         </section>
     )

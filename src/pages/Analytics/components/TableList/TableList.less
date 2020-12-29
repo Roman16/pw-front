@@ -34,7 +34,7 @@
 
     .section-header {
       display: grid;
-      grid-template-areas: 'filters columns expandWorkplace tableOptions  switch date switchChartVisible' 'currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters';
+      grid-template-areas: 'filters segmentFilter columns expandWorkplace tableOptions  switch date switchChartVisible' 'currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters';
       grid-template-columns: 1fr max-content max-content;
       justify-content: space-between;
 
@@ -49,6 +49,10 @@
           cursor: auto;
         }
       }
+    }
+
+    .segment-filter {
+      grid-area: segmentFilter;
     }
 
     .table-options {
@@ -112,6 +116,50 @@
         span {
           font-size: 1rem;
           color: #38454F;
+        }
+      }
+    }
+
+    .segment-filter {
+      &.active {
+        color: #6D6DF6;
+
+        svg {
+          stroke: #6D6DF6;
+        }
+      }
+    }
+
+    .popover-segment-filter {
+      top: 53px !important;
+
+      .ant-popover-inner-content {
+        padding: 3px 0;
+        border-radius: 4px;
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+
+        li {
+          height: 40px;
+          display: flex;
+          align-items: center;
+          padding: 0 18px;
+          font-size: 12px;
+          color: #38454F;
+          cursor: pointer;
+
+
+          &:hover {
+            background: rgba(245, 245, 255, 0.45);
+          }
+
+          &.active {
+            padding: 0 18px 0 14px;
+            border-left: 4px solid #6D6DF6;
+          }
         }
       }
     }
@@ -220,7 +268,7 @@
         margin: 4px 30px 0 0;
       }
 
-        .custom-select {
+      .custom-select {
         width: 175px;
         height: 2.2857143rem;
       }
@@ -416,6 +464,7 @@
           position: relative;
 
           .table-body__field {
+            min-height: 3rem;
             //font-size: 14px;
             padding-left: 12px;
             border-right: 0.5px solid #C9CBD4;
@@ -442,6 +491,26 @@
 
               &:hover {
                 text-decoration: underline;
+              }
+            }
+
+            .asin-link {
+              display: flex;
+              align-items: center;
+              font-size: 1rem;
+
+              span {
+                font-weight: 400;
+              }
+
+              a {
+                color: #6D6DF6;
+                font-weight: 500;
+                margin: 0 0 0 3px;
+
+                &:hover {
+                  text-decoration: underline;
+                }
               }
             }
 
@@ -610,6 +679,46 @@
             }
           }
         }
+
+        .expand-row {
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+
+          & > div {
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+
+            .table-body__field {
+              padding-right: 8px;
+              display: flex;
+              align-items: center;
+
+              &:first-child {
+                position: sticky;
+                left: 0;
+                background: #fff;
+                z-index: 10;
+                padding-left: 50px;
+              }
+
+              &.right {
+                justify-content: flex-end;
+              }
+            }
+          }
+
+          &:hover {
+            & > div {
+              .table-body__field:first-child {
+                background: #FAFAFF;
+              }
+            }
+          }
+        }
       }
 
       .total-data {
@@ -640,6 +749,26 @@
             color: #343C5A;
             font-size: 1rem;
             pointer-events: none;
+          }
+        }
+      }
+
+      &.scrolling {
+        .expand-row {
+          & > div {
+            .table-body__field:first-child {
+              border-color: #fff;
+
+              &:after {
+                content: " ";
+                height: 100%;
+                position: absolute;
+                top: 0;
+                width: 15px;
+                box-shadow: 5px 0 10px -10px inset;
+                right: -15px;
+              }
+            }
           }
         }
       }

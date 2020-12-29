@@ -26,6 +26,8 @@ let source = null
 
 const idKey = {
     'products': 'product',
+    'products-regular': 'product',
+    'products-parents': 'product',
     'portfolios': 'portfolio',
     'campaigns': 'campaign',
     'placements': 'placement',
@@ -38,13 +40,17 @@ const idKey = {
 
 const TableList = ({
                        columns,
-                       fixedColumns,
-                       columnSelect = true,
-                       dateRange = true,
-                       showFilters = true,
-                       showPagination = true,
+                       location,
                        moreActions,
-                       showTotal = true
+                       fixedColumns,
+                       showPagination = true,
+                       columnSelect = true,
+                       showFilters = true,
+                       searchField = true,
+                       showTotal = true,
+                       dateRange = true,
+                       responseFilter = false,
+                       expandedRowRender
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
@@ -63,24 +69,24 @@ const TableList = ({
         })
 
 
-    const {locationKey, mainState, selectedRangeDate, metricsData} = useSelector(state => ({
-        locationKey: state.analytics.location,
+    const {mainState, selectedRangeDate, metricsData, placementSegment} = useSelector(state => ({
         mainState: state.analytics.mainState,
         selectedRangeDate: state.analytics.selectedRangeDate,
-        metricsData: state.analytics.metricsData
+        metricsData: state.analytics.metricsData,
+        placementSegment: state.analytics.placementSegment,
     }))
 
-    const localColumnBlackList = columnsBlackList[locationKey] || [],
-        localSorterColumn = sorterColumn[locationKey] || undefined,
-        localTableOptions = tableOptions[locationKey] || {comparePreviousPeriod: false},
-        filters = useSelector(state => state.analytics.filters[locationKey] || [])
+    const localColumnBlackList = columnsBlackList[location] || [],
+        localSorterColumn = sorterColumn[location] || undefined,
+        localTableOptions = tableOptions[location] || {comparePreviousPeriod: false},
+        filters = useSelector(state => state.analytics.filters[location] || [])
 
 
     const sortChangeHandler = (column) => {
         const setColumn = (data) => {
             setSorterColumn({
                 ...sorterColumn,
-                [locationKey]: data
+                [location]: data
             })
         }
 
@@ -113,14 +119,14 @@ const TableList = ({
     const changeTableOptionsHandler = (value) => {
         setTableOptions({
             ...tableOptions,
-            [locationKey]: value
+            [location]: value
         })
     }
 
     const changeBlackListHandler = (list) => {
         setColumnsBlackList({
             ...columnsBlackList,
-            [locationKey]: list
+            [location]: list
         })
     }
 
@@ -154,7 +160,15 @@ const TableList = ({
                 },
             ]
 
-            const res = await analyticsServices.fetchTableData(locationKey, paginationParams, localSorterColumn, filtersWithState, source.token)
+            if (location === 'placements') {
+                filtersWithState.push({
+                    filterBy: 'segment',
+                    type: 'eq',
+                    value: placementSegment
+                })
+            }
+
+            const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token)
 
             setPaginationParams({
                 ...paginationParams,
@@ -165,7 +179,7 @@ const TableList = ({
                 setTableData(res.response)
 
                 if (localTableOptions.comparePreviousPeriod) {
-                    getPreviousPeriodData(res.response.map(item => item[`${idKey[locationKey]}Id`]))
+                    getPreviousPeriodData(res.response.map(item => item[`${idKey[location]}Id`]))
                 }
             }
             setFetchingStatus(false)
@@ -199,19 +213,30 @@ const TableList = ({
                 },
             ]
 
-            const res = await analyticsServices.fetchTableData(locationKey, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[locationKey]}Id:in=${idList.join(',')}`)
+            const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
 
             if (res.response) {
-                setTableData(prevState => {
-
-                    return prevState.map(item => ({
-                        ...item,
-                        compareWithPrevious: true,
-                        ..._.mapKeys(_.find(res.response, {[`${idKey[locationKey]}Id`]: item[`${idKey[locationKey]}Id`]}), (value, key) => {
-                            return `${key}_prev`
-                        })
-                    }))
-                })
+                if(responseFilter) {
+                    setTableData(prevState => {
+                        return prevState.map(item => ({
+                            ...item,
+                            compareWithPrevious: true,
+                            ..._.mapKeys(_.find(res.response, {placementName: item.placementName}), (value, key) => {
+                                return `${key}_prev`
+                            })
+                        }))
+                    })
+                } else {
+                    setTableData(prevState => {
+                        return prevState.map(item => ({
+                            ...item,
+                            compareWithPrevious: true,
+                            ..._.mapKeys(_.find(res.response, {[`${idKey[location]}Id`]: item[`${idKey[location]}Id`]}), (value, key) => {
+                                return `${key}_prev`
+                            })
+                        }))
+                    })
+                }
             }
         } catch (e) {
 
@@ -220,7 +245,7 @@ const TableList = ({
 
     useEffect(() => {
         getData()
-    }, [locationKey, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate, tableOptions])
+    }, [location, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate, tableOptions])
 
     useEffect(() => {
         setPaginationParams({
@@ -228,7 +253,7 @@ const TableList = ({
             page: 1
         })
         getData()
-    }, [filters])
+    }, [filters, placementSegment])
 
     useEffect(() => {
         localStorage.setItem('analyticsColumnsBlackList', JSON.stringify(columnsBlackList))
@@ -248,7 +273,8 @@ const TableList = ({
                 {showFilters && <TableFilters
                     columns={columns}
                     filters={filters}
-                    locationKey={locationKey}
+                    locationKey={location}
+                    searchField={searchField}
                 />}
 
                 {moreActions}
@@ -273,7 +299,7 @@ const TableList = ({
 
             <CustomTable
                 loading={fetchingStatus}
-                dataSource={tableData}
+                dataSource={responseFilter ? responseFilter(tableData) : tableData}
                 {...showTotal && {
                     totalDataSource: {
                         ..._.mapValues(metricsData, (value) => (+value.value)),
@@ -283,7 +309,7 @@ const TableList = ({
                 sorterColumn={localSorterColumn}
                 columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
                 fixedColumns={fixedColumns}
-
+                expandedRowRender={expandedRowRender}
                 onChangeSorter={sortChangeHandler}
             />
 

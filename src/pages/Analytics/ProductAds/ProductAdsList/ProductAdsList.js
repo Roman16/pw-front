@@ -24,7 +24,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 
-const ProductAdsList = () => {
+const ProductAdsList = ({location}) => {
     const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
         selectedCampaign: state.analytics.mainState.campaignId,
         selectedAdGroup: state.analytics.mainState.adGroupId,
@@ -115,6 +115,7 @@ const ProductAdsList = () => {
             <TableList
                 columns={columns}
                 fixedColumns={[0]}
+                location={location}
             />
         </section>
     )

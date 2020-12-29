@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFacebookSquare, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons"
 
-import logo from '../../../../assets/img/ProfitWhales-logo-dark.svg'
+import logo from '../../../../assets/img/logo/pw-agensy-dark.svg'
 import spnLogo from '../../../../assets/img/logo/amazon-spn-logo-dark.png'
 import advertisingLogo from '../../../../assets/img/logo/amazon-advertising-logo-dark.png'
 
@@ -22,13 +22,13 @@ const Footer = () => (
                         LOG IN
                     </Link>
 
-                    <a
-                        href={'https://calendly.com/lana_profit_whales'}
+                    <Link
+                        to={'/audit'}
                         className={'btn default'}
                         target={'_blank'}
                     >
-                        BOOK A DEMO
-                    </a>
+                        GET A FREE AUDIT
+                    </Link>
                 </div>
             </div>
 
@@ -39,7 +39,7 @@ const Footer = () => (
 
             <div className="menu">
                 <div className="col">
-                    <h4>Products</h4>
+                    <h4>Why Profit Whales?</h4>
 
                     <ul>
                         <li><Link to={'/'}>PPC Optimization</Link></li>
@@ -52,17 +52,20 @@ const Footer = () => (
                 </div>
 
                 <div className="col">
-                    <h4>Resources</h4>
+                    <h4>Learn</h4>
 
                     <ul>
-                        <li><a href="https://blog.profitwhales.com" target="_blank">Blog</a></li>
+                        <li><a href="https://blog.profitwhales.com" target="_blank">BLOG</a></li>
+
                         <li>
-                            <a
-                                href="https://intercom.help/profitwhales/en/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Automate Help Center
+                            <a href="https://blog.profitwhales.com/case-studies/" target="_blank">
+                                Case Studies
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="https://blog.profitwhales.com/podcasts/" target="_blank">
+                                Podcast
                             </a>
                         </li>
                     </ul>
@@ -73,13 +76,20 @@ const Footer = () => (
                 </div>
 
                 <div className="col">
-                    <h4>Contact Us</h4>
+
 
                     <ul>
-                        <li><Link to={'/affiliates'}>Affiliates Program</Link></li>
-                        <li><a className={'email'} href="mailto: info@profitwhales.agency">info@profitwhales.agency</a>
+                        <li><Link to={'/help-support'}>Help & Support</Link></li>
+                        <li><Link to={'/book-a-demo'}>Book a Demo</Link></li>
+                        <li><Link to={'/audit'}>Advertising Audit</Link></li>
+                        <li><Link to={'/partners'}>Become a Partner</Link></li>
+                        <li>
+                            <a className={'email'}
+                               href="mailto: official@profitwhales.com">official@profitwhales.com</a>
                         </li>
-                        <li>Coral Springs, FL 33065</li>
+                        <li><a href={'https://goo.gl/maps/c5iFucpi8GkcfEAK9'} target={'_blank'} className="location">
+                            15805 BISCAYNE BLVD. 201 AVENTURA, FL 33160
+                        </a></li>
                     </ul>
                 </div>
             </div>

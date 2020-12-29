@@ -48,11 +48,16 @@ const ProductOverview = () => {
                 allMetrics={availableMetrics}
             />
 
-            <MainChart allMetrics={availableMetrics}/>
+            <MainChart
+                location={location}
+                allMetrics={availableMetrics}
+            />
 
             {/*<ProductSettings/>*/}
 
-            <ProductMetrics/>
+            <ProductMetrics
+                location={location}
+            />
         </div>
 
     )

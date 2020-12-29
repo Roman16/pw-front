@@ -8,7 +8,19 @@ export const analyticsServices = {
     fetchMetricsData,
     fetchChartData,
     fetchStateInformation,
-    fetchSettingsDetails
+    fetchSettingsDetails,
+    fetchPlacementStatistic
+}
+
+const stateIdValues = {
+    campaignId: 'campaigns',
+    productId: 'products',
+    adGroupId: 'ad-groups',
+    portfolioId: 'portfolios',
+}
+
+const dateRangeToIso = (dateRange) => {
+    return `${dateRange.startDate === 'lifetime' ? '' : moment.tz(`${moment(dateRange.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${dateRange.endDate === 'lifetime' ? '' : moment.tz(`${moment(dateRange.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`
 }
 
 
@@ -17,9 +29,13 @@ const filtersHandler = (filters) => {
 
     filters.forEach(({filterBy, type, value, requestValue}) => {
         if (filterBy === 'datetime') {
-            parameters.unshift(`?datetime:range=${value.startDate === 'lifetime' ? '' : moment.tz(`${moment(value.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${value.endDate === 'lifetime' ? '' : moment.tz(`${moment(value.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
+            parameters.unshift(`?datetime:range=${dateRangeToIso(value)}`)
         } else if (type.key === 'except') {
-            parameters.push(`&type:in=${requestValue.join(',')}`)
+            parameters.push(`&${filterBy}:in=${requestValue.join(',')}`)
+        } else if (filterBy === 'segment') {
+            if (value !== null && !_.find(filters,{filterBy: "campaignId"})) {
+                parameters.push(`&segment_by:eq=${value}`)
+            }
         } else if (type === 'search' && value) {
             parameters.push(`&${filterBy}:contains=${value}`)
         } else if (type.key === 'one_of') {
@@ -43,47 +59,53 @@ const urlGenerator = (url, pagination, sorting, filters) => {
         parameters.push(`&order_by:${sorting.type}=${sorting.column}`)
     }
 
-    if (_.find(filters, {filterBy: 'productView'})) {
-        return `${analyticsUrls.tableData(_.find(filters, {filterBy: 'productView'}).value === 'parent' ? 'products-parents' : 'products')}${filtersHandler(_.reject(filters, {filterBy: 'productView'}))}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
-    } else {
-        return `${url}${filtersHandler(_.reject(filters, {filterBy: 'productView'}))}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
-    }
+    return `${url}${filtersHandler(filters)}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
 
 }
 
 function fetchTableData(locationKey, paginationParams, sortingParams = {}, filters = [], cancelToken, idList = '') {
-    return api('get', urlGenerator(analyticsUrls.tableData(locationKey), paginationParams, sortingParams, filters) + idList, null, null, cancelToken)
+    let key = ''
+    if (locationKey === 'products-regular') key = 'products'
+    else if (locationKey === 'overview') key = 'products'
+    else key = locationKey
+
+    return api('get', urlGenerator(analyticsUrls.tableData(key), paginationParams, sortingParams, filters) + idList, null, null, cancelToken)
 }
 
 function fetchMetricsData({startDate, endDate, locationKey, filters}, cancelToken) {
     let key = ''
-    if (_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent') key = 'products-parents'
+    if (locationKey === 'products-regular') key = 'products'
     else if (locationKey === 'overview') key = 'products'
     else key = locationKey
 
-
-    return api('get', `${analyticsUrls.metricsData(key)}${filtersHandler(filters.filter(item => item.filterBy !== 'productView'))}`, null, null, cancelToken)
+    return api('get', `${analyticsUrls.metricsData(key)}${filtersHandler(filters)}`, null, null, cancelToken)
 }
 
 function fetchChartData(location, metrics, date, filters = [], cancelToken) {
     let key = ''
-    if (_.find(filters, {filterBy: 'productView'}) && _.find(filters, {filterBy: 'productView'}).value === 'parent') key = 'products-parents'
+    if (location === 'products-regular') key = 'products'
     else if (location === 'overview') key = 'products'
     else key = location
 
-    return api('get', `${analyticsUrls.chartData(key)}${filtersHandler(filters.filter(item => item.filterBy !== 'productView'))}&${metrics.filter(item => !!item).map(item => `metric[]=${item}`).join('&')}`, null, null, cancelToken)
+    return api('get', `${analyticsUrls.chartData(key)}${filtersHandler(filters)}&${metrics.filter(item => !!item).map(item => `metric[]=${item}`).join('&')}`, null, null, cancelToken)
 }
 
 function fetchStateInformation(state, id) {
-    const stateParams = {
-        campaignId: 'campaigns',
-        productId: 'products',
-        adGroupId: 'ad-groups',
-        portfolioId: 'portfolios',
-    }
-    return api('get', `${analyticsUrls.stateInformation(stateParams[state], id)}`)
+    return api('get', `${analyticsUrls.stateInformation(stateIdValues[state], id)}`)
 }
 
 function fetchSettingsDetails(page, id) {
     return api('get', `${analyticsUrls.settingsDetails(page, id)}`)
+}
+
+function fetchPlacementStatistic(metric, date, mainState, cancelToken) {
+    const stateValues = []
+
+    Object.keys(mainState).forEach(key => {
+        if (mainState[key] && key !== 'name') {
+            stateValues.push(`${key}:eq=${mainState[key]}`)
+        }
+    })
+
+    return api('get', `${analyticsUrls.placementStatistic}?metric[]=${metric}&datetime:range=${dateRangeToIso(date)}${stateValues.length > 0 ? '&' + stateValues.join('&') : ''}`, null, null, cancelToken)
 }

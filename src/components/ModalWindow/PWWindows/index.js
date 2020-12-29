@@ -23,8 +23,8 @@ const PWWindows = ({pathname}) => {
         if (user.notifications.account_bootstrap.bootstrap_in_progress || (!subscribedProduct.has_access && subscribedProduct.has_pending_payment_tx)) {
             setVisibleWindow('loadingAmazon')
         }
-        // else if (!subscribedProduct.eligible_for_subscription) {
-        //     setVisibleWindow('smallSpend')
+            // else if (!subscribedProduct.eligible_for_subscription) {
+            //     setVisibleWindow('smallSpend')
         // }
         else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')

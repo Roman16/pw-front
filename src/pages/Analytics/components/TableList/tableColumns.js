@@ -15,38 +15,42 @@ import {amazonDefaultImageUrls} from "../../../../components/ProductList/Product
 import noImage from "../../../../assets/img/no-image-available.svg"
 import {RenderMetricChanges} from "../MainMetrics/MetricItem"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
+import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
+
+export const RenderMetricValue = ({number, type}) => {
+    switch (type) {
+        case 'number':
+            return ((number !== null && number !== undefined ? numberMask(number, 0) : '-'))
+
+        case 'percent':
+            return ((number !== null && number !== undefined ? `${round(+number * 100, 2)}%` : '-'))
+
+        case 'roas':
+            return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
+
+        case 'currency':
+            return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
+    }
+}
+
 
 export const renderNumberField = (type = 'number', showDiff = true) => {
-    const Value = ({number}) => {
-        switch (type) {
-            case 'number':
-                return ((number !== null && number !== undefined ? numberMask(number, 0) : '-'))
-
-            case 'percent':
-                return ((number !== null && number !== undefined ? `${round(+number * 100, 2)}%` : '-'))
-
-            case 'roas':
-                return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
-
-            case 'currency':
-                return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
-        }
-    }
 
     return ({
         render: (number, item, array, dataIndex) => {
-            return(<div className={'metric-value'}>
-            <Value number={number}/>
+            return (<div className={'metric-value'}>
+                <RenderMetricValue number={number} type={type}/>
 
-            {item.compareWithPrevious && showDiff && <RenderMetricChanges
-                value={number}
-                prevValue={item[`${dataIndex}_prev`]}
-                diff={+item[`${dataIndex}_prev`] === 0 ? null : (+number - +item[`${dataIndex}_prev`]) / +item[`${dataIndex}_prev`]}
-                type={type}
-                name={dataIndex}
-                getPopupContainer={true}
-            />}
-        </div>)}
+                {item.compareWithPrevious && showDiff && <RenderMetricChanges
+                    value={number}
+                    prevValue={item[`${dataIndex}_prev`]}
+                    diff={+item[`${dataIndex}_prev`] === 0 ? null : (+number - +item[`${dataIndex}_prev`]) / +item[`${dataIndex}_prev`]}
+                    type={type}
+                    name={dataIndex}
+                    getPopupContainer={true}
+                />}
+            </div>)
+        }
     })
 }
 
@@ -154,6 +158,34 @@ export const RenderProduct = ({product, isParent = false}) => {
             </Popover>}
         </div>
     )
+}
+
+export const keywordPTColumn = {
+    render: (text, item) => {
+        if (item.calculatedTargetingMatchType === 'asin' || item.calculatedTargetingMatchType === 'negativeAsin' || item.calculatedTargetingMatchType === 'negativeASIN') {
+            const asin = text.replace('asin="', '').replace('"', '')
+
+            return (<div className="asin-link"><span>ASIN: </span>
+                <a
+                    href={`https://www.amazon.com/dp/${asin}`}
+                    target={'_blank'}
+                >
+                    {asin}
+                </a>
+            </div>)
+        } else {
+            return (<>
+                    <span className={'overflow-text'} title={text}>
+                        {text}
+                     </span>
+
+                {item.calculatedTargetingMatchType === 'auto' && <InformationTooltip
+                    title={text}
+                    description={automatePatDescription[text]}
+                />}
+            </>)
+        }
+    }
 }
 
 export const impressionsColumn = {

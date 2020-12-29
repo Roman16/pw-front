@@ -2,10 +2,13 @@ import React from "react"
 import NegativeTargetingsList from "./NegativeTargetingsList/NegativeTargetingsList"
 
 const NegativeTargetings = () => {
+    const location = 'negative-targetings'
 
     return (
         <div className={'negative-targetings-workplace'}>
-            <NegativeTargetingsList />
+            <NegativeTargetingsList
+                location={location}
+            />
         </div>
     )
 }

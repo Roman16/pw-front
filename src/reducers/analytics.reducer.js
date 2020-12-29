@@ -9,7 +9,8 @@ const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState
 
 const workplacesList = {
     'overview': [],
-    'products': [],
+    'products-regular': [],
+    'products-parents': [],
     'portfolios': [],
     'campaigns': [],
     'placements': [],
@@ -19,9 +20,18 @@ const workplacesList = {
     'product-ads': [],
 }
 
+const defaultChartOptionsValues = {
+    showWeekChart: true,
+    showDailyChart: true,
+    showOptimizationChart: true,
+    selectFourMetrics: false,
+}
+
+
 const initialState = {
     location: undefined,
     visibleChart: localStorage.getItem('analyticsViewChart') ? JSON.parse(localStorage.getItem('analyticsViewChart')) : true,
+    placementSegment: localStorage.getItem('placementSegmentValue') ? JSON.parse(localStorage.getItem('placementSegmentValue')) : null,
     visibleNavigation: true,
     mainState: {
         campaignId: undefined,
@@ -30,6 +40,7 @@ const initialState = {
         portfolioId: undefined,
         name: {}
     },
+    stateDetails: {},
     metricsData: {},
     metricsState: metricsStateFromLocalStorage ? metricsStateFromLocalStorage : _.mapValues(workplacesList, (value, key) => {
         return ({
@@ -37,12 +48,7 @@ const initialState = {
             activeMetrics: undefined,
         })
     }),
-    chartState: chartStateFromLocalStorage ? chartStateFromLocalStorage : _.mapValues(workplacesList, () => ({
-        showWeekChart: true,
-        showDailyChart: true,
-        showOptimizationChart: true,
-        selectFourMetrics: false,
-    })),
+    chartState: chartStateFromLocalStorage ? chartStateFromLocalStorage : _.mapValues(workplacesList, () => ({...defaultChartOptionsValues})),
     filters: filtersListFromLocalStorage ? filtersListFromLocalStorage : workplacesList,
     selectedRangeDate: rangeDateFromLocalStorage ? rangeDateFromLocalStorage : {
         startDate: moment().add(-29, 'days').toISOString(),
@@ -145,6 +151,20 @@ export function analytics(state = initialState, action) {
                         [state.location]: action.payload
                     }
                 }
+            }
+
+        case analyticsConstants.SET_SEGMENT_VALUE:
+            localStorage.setItem('placementSegmentValue', JSON.stringify(action.payload))
+
+            return {
+                ...state,
+                placementSegment: action.payload
+            }
+
+        case analyticsConstants.SET_STATE_DETAILS:
+            return {
+                ...state,
+                stateDetails: action.payload
             }
 
 

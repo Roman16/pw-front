@@ -39,13 +39,13 @@ const ChartHeader = ({chartState, activeMetrics}) => {
                     <span>Daily</span>
                 </div>
 
-                <div className='switch-block optimization-switch'>
-                    <Switch
-                        checked={chartState.showOptimizationChart}
-                        onChange={e => onChangeState('showOptimizationChart', e)}
-                    />
-                    <span>Optimization status</span>
-                </div>
+                {/*<div className='switch-block optimization-switch'>*/}
+                {/*    <Switch*/}
+                {/*        checked={chartState.showOptimizationChart}*/}
+                {/*        onChange={e => onChangeState('showOptimizationChart', e)}*/}
+                {/*    />*/}
+                {/*    <span>Optimization status</span>*/}
+                {/*</div>*/}
 
                 <div className='switch-block optimization-switch'>
                     <Switch

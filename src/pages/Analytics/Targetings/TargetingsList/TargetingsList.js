@@ -13,7 +13,7 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    impressionsColumn, matchTypeColumn,
+    impressionsColumn, keywordPTColumn, matchTypeColumn,
     roasColumn,
     salesShareColumn,
     statusColumn
@@ -35,7 +35,7 @@ export const automatePatDescription = {
 }
 
 
-const TargetingsList = () => {
+const TargetingsList = ({location}) => {
     const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
         selectedCampaign: state.analytics.mainState.campaignId,
         selectedAdGroup: state.analytics.mainState.adGroupId,
@@ -57,16 +57,7 @@ const TargetingsList = () => {
             sorter: true,
             locked: true,
             search: true,
-            render: (text, item) => <>
-                <span className={'overflow-text'} title={text}>
-                    {text}
-                </span>
-
-                {item.calculatedTargetingMatchType === 'auto' && <InformationTooltip
-                    title={text}
-                    description={automatePatDescription[text]}
-                />}
-            </>
+            ...keywordPTColumn
         },
         ...!selectedCampaign ? [{
             ...campaignColumn,
@@ -146,6 +137,7 @@ const TargetingsList = () => {
             <TableList
                 columns={columns}
                 fixedColumns={[0]}
+                location={location}
             />
         </section>
     )

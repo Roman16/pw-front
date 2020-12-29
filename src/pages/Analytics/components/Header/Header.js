@@ -1,18 +1,19 @@
 import React, {memo, useEffect, useState} from "react"
 import './Header.less'
 import {SVG} from "../../../../utils/icons"
-import {analyticsNavigation} from "../Navigation/Navigation"
+import {allMenuItems} from "../Navigation/Navigation"
 import {useDispatch, useSelector} from "react-redux"
 import {history} from "../../../../utils/history"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {analyticsServices} from "../../../../services/analytics.services"
+import queryString from "query-string"
 
 const Header = ({location}) => {
-    const locationDescription = Object.values(analyticsNavigation).reduce((all, item) => ([...all, ...item])).find(item => item.url === location.pathname)
+    const locationDescription = allMenuItems.find(item => item.url === location.pathname)
     const dispatch = useDispatch()
-    const {mainState} = useSelector(state => ({
-        mainState: state.analytics.mainState
-    }))
+    const mainState = useSelector(state => state.analytics.mainState)
+
+    const visibleNavigation = useSelector(state => state.analytics.visibleNavigation)
 
     const [stateName, setStateName] = useState(mainState.name)
 
@@ -32,6 +33,8 @@ const Header = ({location}) => {
             idArr.forEach((key, index) => {
                 stateNameValue[`${key.split('Id')[0]}Name`] = res[index].response.name
             })
+
+            dispatch(analyticsActions.setStateDetails(res.reduce((total, item) => ({...total.response, ...item.response}), {})))
 
             setStateName(stateNameValue)
         } catch (e) {
@@ -54,6 +57,7 @@ const Header = ({location}) => {
             getStateInformation()
         }
     }, [mainState])
+
 
     const StepsRender = () => {
         if (mainState.adGroupId && mainState.campaignId) {
@@ -107,7 +111,18 @@ const Header = ({location}) => {
             )
         } else if (mainState.productId) {
             return (<>
-                <li onClick={() => setMainState(undefined, '/analytics/products')}>
+                <li onClick={() => {
+                    const queryParams = queryString.parse(history.location.search)
+                    let url = ''
+
+                    if (queryParams.isParent === 'true') {
+                        url = '/analytics/products/parents'
+                    } else {
+                        url = '/analytics/products/regular'
+                    }
+
+                    setMainState(undefined, url)
+                }}>
                     Products
 
                     <i>
@@ -155,7 +170,7 @@ const Header = ({location}) => {
     }
 
     return (
-        <section className="analytics-header">
+        <section className={`analytics-header  ${visibleNavigation ? 'visible' : 'hidden'}`}>
             <div className="title" onClick={goToDefaultPage}>
                 <SVG id={'analytics-icon'}/>
                 <h1>Analytics</h1>

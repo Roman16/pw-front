@@ -3,19 +3,27 @@ import MainMetrics from "../components/MainMetrics/MainMetrics"
 import MainChart from "../components/MainChart/MainChart"
 import PlacementsList from "./PlacementsList/PlacementsList"
 import PlacementsStatistics from "./PlacementsStatistics/PlacementsStatistics"
+import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
 
 const Placements = () => {
+    const availableMetrics = [...metricsKeysWithoutOrganic]
     const location = 'placements'
 
     return (
         <div className={'placements-workplace'}>
-            <MainMetrics location={location}/>
+            <MainMetrics
+                allMetrics={availableMetrics}
+                location={location}
+            />
 
-            <MainChart/>
+            <MainChart
+                allMetrics={availableMetrics}
+                location={location}
+            />
 
             <PlacementsStatistics/>
 
-            <PlacementsList/>
+            <PlacementsList location={location}/>
         </div>
     )
 }

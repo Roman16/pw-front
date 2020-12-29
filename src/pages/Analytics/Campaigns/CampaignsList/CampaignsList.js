@@ -27,7 +27,7 @@ import DatePicker from "../../../../components/DatePicker/DatePicker"
 import moment from "moment"
 
 
-const CampaignsList = () => {
+const CampaignsList = ({location}) => {
     const dispatch = useDispatch()
     const {selectedPortfolio} = useSelector(state => ({
         selectedPortfolio: state.analytics.mainState.portfolioId,
@@ -36,6 +36,10 @@ const CampaignsList = () => {
     const setStateHandler = (location, state) => {
         dispatch(analyticsActions.setLocation(location))
         dispatch(analyticsActions.setMainState(state))
+    }
+
+    const setStateDetails = (data) => {
+        dispatch(analyticsActions.setStateDetails(data))
     }
 
     const columns = [
@@ -50,10 +54,13 @@ const CampaignsList = () => {
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
                 className={'state-link'}
-                onClick={() => setStateHandler('ad-groups', {
-                    name: {campaignName: item.name},
-                    campaignId: item.campaignId
-                })}
+                onClick={() => {
+                    setStateHandler('ad-groups', {
+                        name: {campaignName: item.name},
+                        campaignId: item.campaignId
+                    })
+                    setStateDetails(item)
+                }}
                 title={campaign}
             >
                 {campaign}
@@ -165,6 +172,7 @@ const CampaignsList = () => {
             <TableList
                 columns={columns}
                 fixedColumns={[0]}
+                location={location}
             />
         </section>
     )

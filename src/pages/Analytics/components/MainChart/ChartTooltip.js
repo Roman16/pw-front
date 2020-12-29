@@ -4,7 +4,7 @@ import {round} from "../../../../utils/round"
 import {numberMask} from "../../../../utils/numberMask"
 import {SVG} from "../../../../utils/icons"
 
-const days = [
+export const days = [
     'Sunday',
     'Monday',
     'Tuesday',

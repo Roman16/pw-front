@@ -14,14 +14,12 @@ const CancelToken = axios.CancelToken
 let source = null
 let prevActiveMetrics = []
 
-const MainChart = ({allMetrics}) => {
+const MainChart = ({allMetrics, location}) => {
     const [chartData, updateChartData] = useState([])
     const [fetching, switchFetch] = useState(false)
     const [fetchingError, setFetchingError] = useState(false)
     const [productOptimizationDateList, setProductOptimizationDateList] = useState([])
 
-
-    let location = useSelector(state => state.analytics.location)
     location = location === 'campaignSettings' ? 'campaigns' : location
     location = location === 'portfolioSettings' ? 'portfolios' : location
 
@@ -35,9 +33,7 @@ const MainChart = ({allMetrics}) => {
 
     }))
 
-
     const activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : allMetrics.slice(0, 2)
-
 
     const getChartData = async () => {
         if (activeMetrics.filter(metric => !!metric).length > 0) {
@@ -89,21 +85,18 @@ const MainChart = ({allMetrics}) => {
             getChartData()
             prevActiveMetrics = [...activeMetrics]
         }
-    }, [metricsState.activeMetrics])
+    }, [activeMetrics])
 
     useEffect(() => {
         getChartData()
     }, [selectedRangeDate, filters, mainState])
 
-    useEffect(() => {
-
-    }, [])
-
     return <section className={`main-chart ${visibleChart ? 'visible' : 'hidden'}`}>
         <Chart
             showWeekChart={chartState.showWeekChart}
             showDailyChart={chartState.showDailyChart}
-            showOptimizationChart={chartState.showOptimizationChart}
+            // showOptimizationChart={chartState.showOptimizationChart}
+            showOptimizationChart={false}
             activeMetrics={activeMetrics}
             data={chartData}
             selectedRangeDate={selectedRangeDate}
