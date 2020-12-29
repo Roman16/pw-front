@@ -41,7 +41,7 @@ const PlacementsList = ({location}) => {
     const placementResponseFilter = (response) => {
         if (placementSegment === 'advertisingType' && showGroupAdvertising) {
             return Object.values(chartAreaKeys).map(key => {
-                const advertisingGroup = advertisingOrder.map(advertisingKey => _.find(response, item => item.placementName === key && item.advertisingType === advertisingKey))
+                const advertisingGroup = advertisingOrder.map(advertisingKey => _.find(response, item => item.placementName === key && item.advertisingType && item.advertisingType === advertisingKey)).filter(item => item)
 
                 return ({
                     advertisingGroup,
@@ -145,7 +145,6 @@ const PlacementsList = ({location}) => {
                     <div>
                         {columns.map((item, index) => {
                                 const fieldWidth = item.width ? ({width: item.width}) : {flex: 1}
-
                                 return (
                                     <div
                                         className={`table-body__field ${item.align || ''}`}

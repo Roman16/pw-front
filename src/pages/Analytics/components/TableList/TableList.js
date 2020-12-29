@@ -176,14 +176,10 @@ const TableList = ({
             })
 
             if (res.response) {
-                if (responseFilter) {
-                    setTableData(responseFilter(res.response))
-                } else {
-                    setTableData(res.response)
-                }
+                setTableData(res.response)
 
                 if (localTableOptions.comparePreviousPeriod) {
-                    getPreviousPeriodData(res.response.map(item => item[`${idKey[location]}Id`]), responseFilter)
+                    getPreviousPeriodData(res.response.map(item => item[`${idKey[location]}Id`]))
                 }
             }
             setFetchingStatus(false)
@@ -193,7 +189,7 @@ const TableList = ({
         }
     }
 
-    const getPreviousPeriodData = async (idList, responseFilter) => {
+    const getPreviousPeriodData = async (idList) => {
         source && source.cancel()
         source = CancelToken.source()
 
@@ -220,19 +216,18 @@ const TableList = ({
             const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
 
             if (res.response) {
-                setTableData(prevState => {
-
-                    if (responseFilter) {
-                        return responseFilter(prevState.map(item => {
-                            return ({
-                                ...item,
-                                compareWithPrevious: true,
-                                ..._.mapKeys(_.find(res.response, {placementName: item.placementName}), (value, key) => {
-                                    return `${key}_prev`
-                                })
+                if(responseFilter) {
+                    setTableData(prevState => {
+                        return prevState.map(item => ({
+                            ...item,
+                            compareWithPrevious: true,
+                            ..._.mapKeys(_.find(res.response, {placementName: item.placementName}), (value, key) => {
+                                return `${key}_prev`
                             })
                         }))
-                    } else {
+                    })
+                } else {
+                    setTableData(prevState => {
                         return prevState.map(item => ({
                             ...item,
                             compareWithPrevious: true,
@@ -240,8 +235,8 @@ const TableList = ({
                                 return `${key}_prev`
                             })
                         }))
-                    }
-                })
+                    })
+                }
             }
         } catch (e) {
 
@@ -304,7 +299,7 @@ const TableList = ({
 
             <CustomTable
                 loading={fetchingStatus}
-                dataSource={tableData}
+                dataSource={responseFilter ? responseFilter(tableData) : tableData}
                 {...showTotal && {
                     totalDataSource: {
                         ..._.mapValues(metricsData, (value) => (+value.value)),
