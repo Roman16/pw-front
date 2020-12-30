@@ -16,6 +16,7 @@ const menuVariables = {
         subMenu: [
             {
                 title: 'Regular View',
+                headerTitle: 'Products Regular View',
                 url: '/analytics/products/regular',
                 key: 'products-regular',
                 description: {
@@ -25,6 +26,7 @@ const menuVariables = {
             },
             {
                 title: 'Parents View',
+                headerTitle: 'Products Parents View',
                 url: '/analytics/products/parents',
                 key: 'products-parents',
                 description: {

@@ -183,7 +183,7 @@ const Header = ({location}) => {
                 </ul>
 
                 <h4 className="current-location">
-                    {locationDescription && locationDescription.title}
+                    {locationDescription && (locationDescription.headerTitle || locationDescription.title)}
                 </h4>
             </div>
         </section>
