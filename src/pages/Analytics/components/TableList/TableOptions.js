@@ -2,7 +2,7 @@ import React from "react"
 import {Popover, Switch} from "antd"
 import {SVG} from "../../../../utils/icons"
 
-const TableOptions = ({options, onChange}) => {
+const TableOptions = ({options, onChange, selectedRangeDate}) => {
 
     const changeOptionsHandler = (name, value) => {
         onChange({
@@ -19,6 +19,7 @@ const TableOptions = ({options, onChange}) => {
         content={<div className="switches">
             <div className='switch-block optimization-switch'>
                 <Switch
+                    disabled={selectedRangeDate.startDate === 'lifetime'}
                     checked={options.comparePreviousPeriod}
                     onChange={e => changeOptionsHandler('comparePreviousPeriod', e)}
                 />

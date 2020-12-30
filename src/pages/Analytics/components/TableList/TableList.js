@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import CustomTable from "../../../../components/Table/CustomTable"
 import Pagination from "../../../../components/Pagination/Pagination"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import _ from 'lodash'
 import './TableList.less'
 import {analyticsServices} from "../../../../services/analytics.services"
@@ -16,6 +16,7 @@ import moment from "moment"
 import preciseDiff from "moment-precise-range-plugin"
 import SwitchChartVisible from "./SwitchChartVisisble"
 import ExpandWorkplace from "./ExpandWorkplace"
+import {analyticsActions} from "../../../../actions/analytics.actions"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -68,6 +69,7 @@ const TableList = ({
             totalSize: 0,
         })
 
+    const dispatch = useDispatch()
 
     const {mainState, selectedRangeDate, metricsData, placementSegment} = useSelector(state => ({
         mainState: state.analytics.mainState,
@@ -121,6 +123,14 @@ const TableList = ({
             ...tableOptions,
             [location]: value
         })
+    }
+
+    const dateRangeHandler = (startDate, endDate) => {
+        dispatch(analyticsActions.setDateRange({startDate: startDate || 'lifetime', endDate: endDate || 'lifetime'}))
+
+        if (startDate === null) {
+            setTableOptions(_.mapValues(tableOptions, (value) => ({...value, comparePreviousPeriod: false})))
+        }
     }
 
     const changeBlackListHandler = (list) => {
@@ -193,53 +203,55 @@ const TableList = ({
         source && source.cancel()
         source = CancelToken.source()
 
-        const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
+        if (selectedRangeDate.startDate !== 'lifetime') {
+            try {
+                const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
 
-        try {
-            const filtersWithState = [
-                ...filters,
-                ...Object.keys(mainState).map(key => ({
-                    filterBy: key,
-                    type: 'eq',
-                    value: mainState[key]
-                })).filter(item => !!item.value),
-                {
-                    filterBy: 'datetime',
-                    type: 'range',
-                    value: {
-                        startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
-                        endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                const filtersWithState = [
+                    ...filters,
+                    ...Object.keys(mainState).map(key => ({
+                        filterBy: key,
+                        type: 'eq',
+                        value: mainState[key]
+                    })).filter(item => !!item.value),
+                    {
+                        filterBy: 'datetime',
+                        type: 'range',
+                        value: {
+                            startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
+                            endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                        }
+                    },
+                ]
+
+                const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
+
+                if (res.response) {
+                    if (responseFilter) {
+                        setTableData(prevState => {
+                            return prevState.map(item => ({
+                                ...item,
+                                compareWithPrevious: true,
+                                ..._.mapKeys(_.find(res.response, {placementName: item.placementName}), (value, key) => {
+                                    return `${key}_prev`
+                                })
+                            }))
+                        })
+                    } else {
+                        setTableData(prevState => {
+                            return prevState.map(item => ({
+                                ...item,
+                                compareWithPrevious: true,
+                                ..._.mapKeys(_.find(res.response, {[`${idKey[location]}Id`]: item[`${idKey[location]}Id`]}), (value, key) => {
+                                    return `${key}_prev`
+                                })
+                            }))
+                        })
                     }
-                },
-            ]
-
-            const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
-
-            if (res.response) {
-                if(responseFilter) {
-                    setTableData(prevState => {
-                        return prevState.map(item => ({
-                            ...item,
-                            compareWithPrevious: true,
-                            ..._.mapKeys(_.find(res.response, {placementName: item.placementName}), (value, key) => {
-                                return `${key}_prev`
-                            })
-                        }))
-                    })
-                } else {
-                    setTableData(prevState => {
-                        return prevState.map(item => ({
-                            ...item,
-                            compareWithPrevious: true,
-                            ..._.mapKeys(_.find(res.response, {[`${idKey[location]}Id`]: item[`${idKey[location]}Id`]}), (value, key) => {
-                                return `${key}_prev`
-                            })
-                        }))
-                    })
                 }
-            }
-        } catch (e) {
+            } catch (e) {
 
+            }
         }
     }
 
@@ -290,9 +302,14 @@ const TableList = ({
                 <TableOptions
                     options={localTableOptions}
                     onChange={changeTableOptionsHandler}
+                    selectedRangeDate={selectedRangeDate}
                 />
 
-                {dateRange && <DateRange tableOptions={localTableOptions}/>}
+                {dateRange && <DateRange
+                    onChange={dateRangeHandler}
+                    selectedRangeDate={selectedRangeDate}
+                    tableOptions={localTableOptions}
+                />}
 
                 <SwitchChartVisible/>
             </div>
