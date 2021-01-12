@@ -21,6 +21,7 @@ import Placements from "./Placements/Placements"
 import PortfolioSettings from "./PortfolioSettings/PortfolioSettings"
 import ProductOverview from "./ProductOverview/ProductOverview"
 import {debounce} from "throttle-debounce"
+import SearchTerms from "./SearchTerms/SearchTerms"
 
 const Analytics = (props) => {
     const dispatch = useDispatch()
@@ -73,8 +74,10 @@ const Analytics = (props) => {
                 <Route exact path="/analytics/campaign-settings" component={CampaignSettings}/>
 
                 <Route exact path="/analytics/products" render={() => <Redirect to={'/analytics/products/regular'}/>}/>
-                <Route exact path="/analytics/products/regular" render={() => <Products location={'products-regular'}/>}/>
-                <Route exact path="/analytics/products/parents" render={() => <Products location={'products-parents'}/>}/>
+                <Route exact path="/analytics/products/regular"
+                       render={() => <Products location={'products-regular'}/>}/>
+                <Route exact path="/analytics/products/parents"
+                       render={() => <Products location={'products-parents'}/>}/>
 
                 <Route exact path="/analytics/ad-groups" component={AdGroups}/>
                 <Route exact path="/analytics/overview" component={ProductOverview}/>
@@ -84,6 +87,7 @@ const Analytics = (props) => {
                 <Route exact path="/analytics/targetings" component={Targetings}/>
                 <Route exact path="/analytics/negative-targetings" component={NegativeTargetings}/>
                 <Route exact path="/analytics/placements" component={Placements}/>
+                <Route exact path="/analytics/search-terms" component={SearchTerms}/>
             </section>
         </div>
     )

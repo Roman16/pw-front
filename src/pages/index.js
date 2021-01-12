@@ -102,7 +102,7 @@ const AuthorizedUser = (props) => {
         bootstrapInProgress: state.user.notifications && state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
     }))
 
-    const localStorageVersion = '20_1'
+    const localStorageVersion = '20_2'
 
     if(!localStorage.getItem('analyticsLocalStorageVersion') || localStorage.getItem('analyticsLocalStorageVersion') !== localStorageVersion) {
         localStorage.removeItem('analyticsMetricsState')

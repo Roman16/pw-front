@@ -5,11 +5,14 @@ import _ from 'lodash'
 
 export const analyticsServices = {
     fetchTableData,
+    fetchTableDataV2,
     fetchMetricsData,
+    fetchMetricsDataV2,
     fetchChartData,
+    fetchChartDataV2,
     fetchStateInformation,
     fetchSettingsDetails,
-    fetchPlacementStatistic
+    fetchPlacementStatistic,
 }
 
 const stateIdValues = {
@@ -33,7 +36,7 @@ const filtersHandler = (filters) => {
         } else if (type.key === 'except') {
             parameters.push(`&${filterBy}:in=${requestValue.join(',')}`)
         } else if (filterBy === 'segment') {
-            if (value !== null && !_.find(filters,{filterBy: "campaignId"})) {
+            if (value !== null && !_.find(filters, {filterBy: "campaignId"})) {
                 parameters.push(`&segment_by:eq=${value}`)
             }
         } else if (type === 'search' && value) {
@@ -108,4 +111,34 @@ function fetchPlacementStatistic(metric, date, mainState, cancelToken) {
     })
 
     return api('get', `${analyticsUrls.placementStatistic}?metric[]=${metric}&datetime:range=${dateRangeToIso(date)}${stateValues.length > 0 ? '&' + stateValues.join('&') : ''}`, null, null, cancelToken)
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+function fetchMetricsDataV2({startDate, endDate, locationKey, filters}, cancelToken) {
+    getSearchTermsData()
+        .then(res => {
+            return ({
+                response: res.metrics
+            })
+        })
+}
+
+function fetchChartDataV2(location, metrics, date, filters = [], cancelToken) {
+    getSearchTermsData()
+        .then(res => {
+            return ({
+                response: res.chart
+            })
+        })
+}
+
+function fetchTableDataV2(location, metrics, date, filters = [], cancelToken) {
+    return getSearchTermsData()
+        .then(res => {
+            return res.table
+        })
+}
+
+function getSearchTermsData(retrieve, cancelToken) {
+    return api('get', `${analyticsUrls.searchTermsData}?size=10&page=1&retrieve[]=metrics&retrieve[]=table&retrieve[]=chart&metric[]=clicks`, null, null, cancelToken)
 }

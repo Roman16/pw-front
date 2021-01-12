@@ -73,7 +73,9 @@ const api = (method, url, data, type, abortToken) => {
                     } else {
                         localStorage.removeItem('token')
                         localStorage.removeItem('adminToken')
-                        history.push(`/login?redirect=${window.location.pathname}`)
+                        if(window.location.pathname !== '/login') {
+                            history.push(`/login?redirect=${window.location.pathname}`)
+                        }
                     }
                 } else if (error.response && error.response.status === 412) {
                     userService.resendConfirmEmail()

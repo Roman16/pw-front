@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {analyticsAvailableMetricsList} from "./metricsList"
-import MetricItem from "./MetricItem"
+import {analyticsAvailableMetricsList} from "../../components/MainMetrics/metricsList"
+import MetricItem from "../../components/MainMetrics/MetricItem"
 import AddMetric from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetric"
-import './MainMetrics.less'
+import '../../components/MainMetrics/MainMetrics.less'
 import {SVG} from "../../../../utils/icons"
 import AddMetricModal from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetricModal"
-import MetricModal from "./MetricModal"
+import MetricModal from "../../components/MainMetrics/MetricModal"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {analyticsServices} from "../../../../services/analytics.services"
 import _ from 'lodash'
@@ -95,7 +95,7 @@ const MainMetrics = ({allMetrics, location}) => {
                 },
             ]
 
-            const res = await analyticsServices.fetchMetricsData({
+            const res = await analyticsServices.fetchMetricsDataV2({
                 ...selectedRangeDate,
                 locationKey: location,
                 filters: filtersWithState
@@ -199,7 +199,7 @@ const MainMetrics = ({allMetrics, location}) => {
     return (
         <div className="main-metrics metrics-block">
             {selectedMetrics.length > 0 && selectedMetrics.map(selectedKey => {
-                if (_.find(analyticsAvailableMetricsList, {key: selectedKey})) {
+                    if (_.find(analyticsAvailableMetricsList, {key: selectedKey})) {
                         return (
                             <MetricItem
                                 key={selectedKey}
