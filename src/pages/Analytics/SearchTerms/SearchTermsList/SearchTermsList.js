@@ -24,7 +24,7 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import TableList from "../../componentsV2/TableList/TableList"
 
-const SearchTermsList = ({location}) => {
+const SearchTermsList = ({location, metricsData, tableData}) => {
     const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
         selectedCampaign: state.analytics.mainState.campaignId,
         selectedAdGroup: state.analytics.mainState.adGroupId,
@@ -124,9 +124,11 @@ const SearchTermsList = ({location}) => {
     return (
         <section className={'list-section'}>
             <TableList
+                tableData={tableData}
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
+                metricsData={metricsData}
             />
         </section>
     )

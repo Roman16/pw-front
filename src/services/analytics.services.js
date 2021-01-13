@@ -5,14 +5,12 @@ import _ from 'lodash'
 
 export const analyticsServices = {
     fetchTableData,
-    fetchTableDataV2,
     fetchMetricsData,
-    fetchMetricsDataV2,
     fetchChartData,
-    fetchChartDataV2,
     fetchStateInformation,
     fetchSettingsDetails,
     fetchPlacementStatistic,
+    getSearchTermsData
 }
 
 const stateIdValues = {
@@ -114,31 +112,7 @@ function fetchPlacementStatistic(metric, date, mainState, cancelToken) {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function fetchMetricsDataV2({startDate, endDate, locationKey, filters}, cancelToken) {
-    getSearchTermsData()
-        .then(res => {
-            return ({
-                response: res.metrics
-            })
-        })
-}
 
-function fetchChartDataV2(location, metrics, date, filters = [], cancelToken) {
-    getSearchTermsData()
-        .then(res => {
-            return ({
-                response: res.chart
-            })
-        })
-}
-
-function fetchTableDataV2(location, metrics, date, filters = [], cancelToken) {
-    return getSearchTermsData()
-        .then(res => {
-            return res.table
-        })
-}
-
-function getSearchTermsData(retrieve, cancelToken) {
-    return api('get', `${analyticsUrls.searchTermsData}?size=10&page=1&retrieve[]=metrics&retrieve[]=table&retrieve[]=chart&metric[]=clicks`, null, null, cancelToken)
+function getSearchTermsData({activeMetrics}, cancelToken) {
+    return api('get', `${analyticsUrls.searchTermsData}?size=30&page=1&retrieve[]=metrics&retrieve[]=table&retrieve[]=chart&${activeMetrics.filter(item => !!item).map(item => `metric[]=${item}`).join('&')}`, null, null, cancelToken)
 }
