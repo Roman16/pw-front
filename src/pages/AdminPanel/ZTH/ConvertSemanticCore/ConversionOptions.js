@@ -13,6 +13,7 @@ const Option = Select.Option
 const data = Object.keys(CampaignType).filter(item => item !== 'SDRemarketing' &&
     item !== 'SDTPA' &&
     item !== 'SDPA' &&
+    item !== 'SDTCA' &&
     item !== 'SDRA' &&
     item !== 'SDSA' &&
     item !== 'SDCategories')
