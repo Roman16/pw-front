@@ -192,10 +192,10 @@ const CampaignsBids = ({onChange, semanticData}) => {
                                 item === 'PAT' ||
                                 item === 'Broad' ||
                                 item === 'SDRemarketing' ||
-                                item === 'TCA' ||
                                 item === 'SDTPA' ||
                                 item === 'SDPA' ||
                                 item === 'SDRA' ||
+                                item === 'SDTCA' ||
                                 item === 'SDSA' ||
                                 item === 'SDCategories'
                         } else {
