@@ -24,12 +24,14 @@ export const CampaignType = {
     Brands: 'Brands',
 
     // PATs
+    TCA: 'TCA',
     TPA: 'TPA',
     ASINs: 'ASINs',
     Categories: 'Categories',
 
     // SD
     SDRemarketing: 'SDRemarketing',
+    SDTCA: 'SDTCA',
     SDTPA: 'SDTPA',
     SDPA: 'SDPA',
     SDRA: 'SDRA',
@@ -60,6 +62,7 @@ export const AdGroupType = {
     KeywordsWithBrands: 'KeywordsWithBrands',
 
     // PATs
+    TopCompetitorsASINs: 'TopCompetitorsASINs',
     TopPerformingASINs: 'TopPerformingASINs',
     PerformingASINs: 'PerformingASINs',
     RiskASINs: 'RiskASINs',
@@ -68,6 +71,7 @@ export const AdGroupType = {
 
     // SD
     SDRemarketing: 'SDRemarketing',
+    SDTopCompetitorsASINs: 'SDTopCompetitorsASINs',
     SDTopPerformingASINs: 'SDTopPerformingASINs',
     SDPerformingASINs: 'SDPerformingASINs',
     SDRiskASINs: 'SDRiskASINs',
