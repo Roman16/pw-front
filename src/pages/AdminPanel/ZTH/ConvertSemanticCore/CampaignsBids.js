@@ -9,7 +9,7 @@ const Option = Select.Option
 const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
     const [bidsConfig, setBidsConfig] = useState(),
         [exactBid, setExactBid] = useState(),
-        [ppcPlan, setPpcPlan] = useState(zthEnums.enums.PPCPlan[0]),
+        [ppcPlan, setPpcPlan] = useState(semanticData.conversionOptions.zeroToHero.ppcPlan),
         [budgetMultiplier, setBudgetMultiplier] = useState(1),
         [bidsTemplate, setBidsTemplate] = useState({campaigns: {}, adGroups: {}}),
         [budgetsTemplate, setBudgetsTemplate] = useState({}),
