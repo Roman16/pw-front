@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Input} from "antd"
 import './ConvertSemanticCore.less'
 import SemanticInformation from "./SemanticInformation"
@@ -41,9 +41,274 @@ import {saveFile} from "../../../../utils/saveFile"
 //     };
 // }
 
+// const defaultEnums = {
+//     "enums": {
+//         "CampaignType": [
+//             "Auto",
+//             "ExactPhrase",
+//             "PAT",
+//             "AutoCTA",
+//             "AutoNegative",
+//             "TPK",
+//             "DPK",
+//             "Broad",
+//             "CloseVariants",
+//             "Variations",
+//             "ExactSimple",
+//             "ExactOther",
+//             "STESTP",
+//             "Misspellings",
+//             "Brands",
+//             "TCA",
+//             "TPA",
+//             "ASINs",
+//             "Categories",
+//             "SDRemarketing",
+//             "SDTCA",
+//             "SDTPA",
+//             "SDPA",
+//             "SDRA",
+//             "SDSA",
+//             "SDCategories"
+//         ],
+//         "AdGroupType": [
+//             "AutoTargeting",
+//             "RelevantExact",
+//             "SemiRelevantExact",
+//             "LooseRelevantExact",
+//             "Broad",
+//             "ExactLowAcos",
+//             "ExactMediumAcos",
+//             "ExactHighAcos",
+//             "PhraseLowAcos",
+//             "PhraseMediumAcos",
+//             "PhraseHighAcos",
+//             "MyBrand",
+//             "CompetingBrands",
+//             "KeywordsWithBrands",
+//             "TopCompetitorsASINs",
+//             "TopPerformingASINs",
+//             "PerformingASINs",
+//             "RiskASINs",
+//             "SuggestedASINs",
+//             "SuggestedCategories",
+//             "SDRemarketing",
+//             "SDTopCompetitorsASINs",
+//             "SDTopPerformingASINs",
+//             "SDPerformingASINs",
+//             "SDRiskASINs",
+//             "SDSuggestedASINs",
+//             "SDSuggestedCategories"
+//         ],
+//         "CampaignsCompressionStrategy": [
+//             "Wide",
+//             "Compact"
+//         ],
+//         "MarketplaceType": [
+//             "Europe"
+//         ],
+//         "PPCPlan": [
+//             "Medium",
+//             "High"
+//         ],
+//         "Status": [
+//             "Paused"
+//         ]
+//     },
+//     "aggregates": {
+//         "campaignTypesOrdered": [
+//             "Auto",
+//             "ExactPhrase",
+//             "PAT",
+//             "AutoCTA",
+//             "AutoNegative",
+//             "TPK",
+//             "DPK",
+//             "Broad",
+//             "Brands",
+//             "TCA",
+//             "TPA",
+//             "ASINs",
+//             "Categories",
+//             "STESTP",
+//             "Variations",
+//             "CloseVariants",
+//             "ExactSimple",
+//             "ExactOther",
+//             "Misspellings",
+//             "SDRemarketing",
+//             "SDTCA",
+//             "SDTPA",
+//             "SDPA",
+//             "SDRA",
+//             "SDSA",
+//             "SDCategories"
+//         ],
+//         "spCampaignTypesOrdered": [
+//             "Auto",
+//             "ExactPhrase",
+//             "PAT",
+//             "AutoCTA",
+//         ],
+//         "sdCampaignTypesOrdered": [
+//             "SDRemarketing",
+//             "SDTCA",
+//             "SDTPA",
+//             "SDPA",
+//             "SDRA",
+//             "SDSA",
+//             "SDCategories"
+//         ],
+//         "adGroupTypesOrdered": [
+//             "AutoTargeting",
+//             "Broad",
+//             "ExactLowAcos",
+//             "ExactMediumAcos",
+//             "ExactHighAcos",
+//             "PhraseLowAcos",
+//             "PhraseMediumAcos",
+//             "PhraseHighAcos",
+//             "MyBrand",
+//             "CompetingBrands",
+//             "KeywordsWithBrands",
+//             "RelevantExact",
+//             "SemiRelevantExact",
+//             "LooseRelevantExact",
+//             "TopCompetitorsASINs",
+//             "TopPerformingASINs",
+//             "PerformingASINs",
+//             "RiskASINs",
+//             "SuggestedASINs",
+//             "SuggestedCategories",
+//             "SDRemarketing",
+//             "SDTopCompetitorsASINs",
+//             "SDTopPerformingASINs",
+//             "SDPerformingASINs",
+//             "SDRiskASINs",
+//             "SDSuggestedASINs",
+//             "SDSuggestedCategories"
+//         ],
+//         "spAdGroupTypesOrdered": [
+//             "AutoTargeting",
+//             "Broad",
+//             "ExactLowAcos",
+//             "ExactMediumAcos",
+//             "ExactHighAcos",
+//             "PhraseLowAcos",
+//             "PhraseMediumAcos",
+//             "PhraseHighAcos",
+//             "MyBrand",
+//             "CompetingBrands",
+//             "KeywordsWithBrands",
+//             "RelevantExact",
+//             "SemiRelevantExact",
+//             "LooseRelevantExact",
+//             "TopCompetitorsASINs",
+//             "TopPerformingASINs",
+//             "PerformingASINs",
+//             "RiskASINs",
+//             "SuggestedASINs",
+//             "SuggestedCategories"
+//         ],
+//         "sdAdGroupTypesOrdered": [
+//             "SDRemarketing",
+//             "SDTopCompetitorsASINs",
+//             "SDTopPerformingASINs",
+//             "SDPerformingASINs",
+//             "SDRiskASINs",
+//             "SDSuggestedASINs",
+//             "SDSuggestedCategories"
+//         ],
+//         "campaignTypesForCompressionStrategy": {
+//             "Wide": [
+//                 "AutoCTA",
+//                 "AutoNegative",
+//                 "TPK",
+//                 "DPK",
+//                 "Broad",
+//                 "Brands",
+//                 "TCA",
+//                 "TPA",
+//                 "ASINs",
+//                 "Categories",
+//                 "STESTP",
+//                 "Variations",
+//                 "CloseVariants",
+//                 "ExactSimple",
+//                 "ExactOther",
+//                 "Misspellings",
+//                 "SDRemarketing",
+//                 "SDTCA",
+//                 "SDTPA",
+//                 "SDPA",
+//                 "SDRA",
+//                 "SDSA",
+//                 "SDCategories"
+//             ],
+//             "Simple": [
+//                 "AutoCTA",
+//                 "AutoNegative",
+//                 "TPK",
+//                 "DPK",
+//                 "Broad",
+//                 "Brands",
+//                 "TCA",
+//                 "TPA",
+//                 "ASINs",
+//                 "Categories",
+//                 "STESTP",
+//                 "Variations",
+//                 "CloseVariants",
+//                 "ExactSimple",
+//                 "ExactOther",
+//                 "Misspellings",
+//                 "SDRemarketing",
+//                 "SDTCA",
+//                 "SDTPA",
+//                 "SDPA",
+//                 "SDRA",
+//                 "SDSA",
+//                 "SDCategories"
+//             ],
+//             "Compact": [
+//                 "Auto",
+//                 "ExactPhrase",
+//                 "PAT",
+//                 "Broad",
+//                 "SDRemarketing",
+//                 "SDTCA",
+//                 "SDTPA",
+//                 "SDPA",
+//                 "SDRA",
+//                 "SDSA",
+//                 "SDCategories"
+//             ]
+//         }
+//     }
+// }
+
 const ConvertSemanticCore = () => {
     const [semanticInformation, setSemanticInformation] = useState(),
         [semanticUrl, setSemanticUrl] = useState(),
+        [zthEnums, setZthEnums] = useState({
+            enums: {
+                CampaignType: [],
+                AdGroupType: [],
+                CampaignsCompressionStrategy: [],
+                MarketplaceType: [],
+                PPCPlan: [],
+                Status: []
+            },
+            aggregates: {
+                campaignTypesOrdered: [],
+                spCampaignTypesOrdered: [],
+                sdCampaignTypesOrdered: [],
+                adGroupTypesOrdered: [],
+                spAdGroupTypesOrdered: [],
+                sdAdGroupTypesOrdered: [],
+                campaignTypesForCompressionStrategy: {}
+            }
+        }),
         [loadingInformation, setLoadingInformation] = useState(false),
         [semanticData, setSemanticData] = useState({}),
         [uploadProcessing, setUploadProcessing] = useState(false),
@@ -57,6 +322,15 @@ const ConvertSemanticCore = () => {
                 upload: value
             }
         })
+    }
+
+    const getZthEnums = async () => {
+        try {
+            const resEnums = await adminServices.fetchEnums()
+            setZthEnums(resEnums)
+        } catch (e) {
+
+        }
     }
 
     const loadSemanticInformation = async (e) => {
@@ -75,8 +349,8 @@ const ConvertSemanticCore = () => {
                 conversionOptions: {
                     converter: {
                         useInputParametersProductName: true,
-                        campaignsStatus: 'Enabled',
-                        convertForMarketplace: 'USA',
+                        campaignsStatus: zthEnums.enums.Status[0],
+                        convertForMarketplace: zthEnums.enums.MarketplaceType[0],
                         semanticCoreUrls: [semanticUrl]
                     },
                     productInformation: {
@@ -152,6 +426,10 @@ const ConvertSemanticCore = () => {
         }
     }
 
+    useEffect(() => {
+        getZthEnums()
+    }, [])
+
     return (
         <section className={'convert-semantic-core'}>
             <h2>Convert Semantic Core</h2>
@@ -176,11 +454,13 @@ const ConvertSemanticCore = () => {
                 <SemanticInformation
                     semanticInfo={semanticInformation}
                     semanticData={semanticData}
+                    campaignsCompressionStrategyEnums={zthEnums.enums.CampaignsCompressionStrategy}
 
                     onChange={(data) => setSemanticData(data)}
                 />
 
                 <CampaignsBids
+                    zthEnums={zthEnums}
                     semanticData={semanticData}
                     onChange={changeUploadDataHandler}
                 />
@@ -191,10 +471,12 @@ const ConvertSemanticCore = () => {
                 />
 
                 <ConversionOptions
+                    zthEnums={zthEnums}
                     semanticData={semanticData}
                     onChange={(data) => setSemanticData(data)}
                     uploadProcessing={uploadProcessing}
                     convertProcessing={convertProcessing}
+
                     onConvert={convertSemanticHandler}
                     onUpload={uploadSemanticHandler}
                 />

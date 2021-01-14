@@ -3,19 +3,21 @@ import {Checkbox, Input, Select} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import {adminServices} from "../../../../services/admin.services"
 import {getBidsTemplate, getBudgetsTemplateForExactBid} from './bidsProviderService'
-import {AdGroupType, CampaignType} from './constans'
 
 const Option = Select.Option
 
-const CampaignsBids = ({onChange, semanticData}) => {
+const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
     const [bidsConfig, setBidsConfig] = useState(),
         [exactBid, setExactBid] = useState(),
-        [ppcPlan, setPpcPlan] = useState('High'),
+        [ppcPlan, setPpcPlan] = useState(zthEnums.enums.PPCPlan[0]),
         [budgetMultiplier, setBudgetMultiplier] = useState(1),
         [bidsTemplate, setBidsTemplate] = useState({campaigns: {}, adGroups: {}}),
         [budgetsTemplate, setBudgetsTemplate] = useState({}),
         [manuallyExactBid, setManuallyExactBid] = useState(false),
         [manuallyBudgets, setManuallyBudgets] = useState(false)
+
+    const AdGroupType = zthEnums.enums.AdGroupType,
+        CampaignType = zthEnums.enums.CampaignType
 
     const loadExactBidVariations = async () => {
         try {
@@ -29,7 +31,7 @@ const CampaignsBids = ({onChange, semanticData}) => {
     }
 
     const mapBidsTemplates = () => {
-        setBidsTemplate(getBidsTemplate(exactBid, bidsConfig))
+        setBidsTemplate(getBidsTemplate(exactBid, bidsConfig, CampaignType, AdGroupType))
     }
 
     const mapBudgetsTemplates = () => {
@@ -116,9 +118,9 @@ const CampaignsBids = ({onChange, semanticData}) => {
                         value={ppcPlan}
                         className="form-control"
                     >
-                        <Option value={'Low'}>Low</Option>
-                        <Option value={'Medium'}>Medium</Option>
-                        <Option value={'High'}>High</Option>
+                        {zthEnums.enums.PPCPlan.map(item => (
+                            <Option value={item}>{item}</Option>
+                        ))}
                     </CustomSelect>
                 </div>
 
@@ -142,7 +144,7 @@ const CampaignsBids = ({onChange, semanticData}) => {
             <h3>Campaign bids:</h3>
 
             <div className="bids-fields-list">
-                {Object.keys(CampaignType).map(key => (
+                {zthEnums.aggregates.campaignTypesOrdered.map(key => (
                     bidsTemplate.campaigns[key] && bidsTemplate.campaigns[key].shouldBeApplied &&
                     <div className="col-sm-3 form-group">
                         <label>
@@ -163,7 +165,7 @@ const CampaignsBids = ({onChange, semanticData}) => {
             <h3>Ad group bids:</h3>
 
             <div className="bids-fields-list">
-                {Object.keys(AdGroupType).map(key => (
+                {zthEnums.aggregates.adGroupTypesOrdered.map(key => (
                     bidsTemplate.adGroups[key] && bidsTemplate.adGroups[key].shouldBeApplied &&
                     <div className="col-sm-3 form-group">
                         <label>
@@ -184,29 +186,13 @@ const CampaignsBids = ({onChange, semanticData}) => {
             <h3>Campaign daily budgets:</h3>
 
             <div className="bids-fields-list">
-                {Object.keys(CampaignType)
-                    .filter(item => {
-                        if (semanticData.conversionOptions.zeroToHero.campaignsCompressionStrategy === 'Compact') {
-                            return item === 'Auto' ||
-                                item === 'ExactPhrase' ||
-                                item === 'PAT' ||
-                                item === 'Broad' ||
-                                item === 'SDRemarketing' ||
-                                item === 'SDTPA' ||
-                                item === 'SDPA' ||
-                                item === 'SDRA' ||
-                                item === 'SDTCA' ||
-                                item === 'SDSA' ||
-                                item === 'SDCategories'
-                        } else {
-                            return item !== 'Auto' && item !== 'ExactPhrase' && item !== 'PAT'
-                        }
-                    })
+                {zthEnums.aggregates.campaignTypesForCompressionStrategy[semanticData.conversionOptions.zeroToHero.campaignsCompressionStrategy] && zthEnums.aggregates.campaignTypesForCompressionStrategy[semanticData.conversionOptions.zeroToHero.campaignsCompressionStrategy]
                     .map(key => (
                         <div className="col-sm-3 form-group">
                             <label>
                                 {key}:
                             </label>
+
                             <Input
                                 placeholder="Enter number"
                                 type="number"

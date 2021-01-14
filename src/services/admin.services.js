@@ -28,6 +28,7 @@ export const adminServices = {
     zthVersionInformation,
     fetchZthJobs,
     fetchSemanticInformation,
+    fetchEnums,
     fetchExactBids,
     convertSemantic,
     uploadSemantic,
@@ -182,6 +183,10 @@ function fetchZthJobs({page, title, pageSize, status}) {
 
 function fetchSemanticInformation(url) {
     return zthRequest('post', `${adminUrls.semanticInfo}`, url)
+}
+
+function fetchEnums() {
+    return zthRequest('get', `${adminUrls.enums}`)
 }
 
 function fetchExactBids() {

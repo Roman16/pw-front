@@ -53,22 +53,19 @@ const TableList = ({
                        responseFilter = false,
                        expandedRowRender,
                        metricsData,
-                       tableData
+                       tableData,
+                       tableRequestParams,
+                       onChange,
+                       fetching
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
         sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') && JSON.parse(localStorage.getItem('analyticsSorterColumn')),
         tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') && JSON.parse(localStorage.getItem('analyticsTableOptions'))
 
-    const [fetchingStatus, setFetchingStatus] = useState(false),
-        [columnsBlackList, setColumnsBlackList] = useState(columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {}),
+    const [columnsBlackList, setColumnsBlackList] = useState(columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {}),
         [sorterColumn, setSorterColumn] = useState(sorterColumnFromLocalStorage ? sorterColumnFromLocalStorage : {}),
-        [tableOptions, setTableOptions] = useState(tableOptionsFromLocalStorage ? tableOptionsFromLocalStorage : {}),
-        [paginationParams, setPaginationParams] = useState({
-            page: 1,
-            pageSize: 30,
-            totalSize: 0,
-        })
+        [tableOptions, setTableOptions] = useState(tableOptionsFromLocalStorage ? tableOptionsFromLocalStorage : {})
 
     const dispatch = useDispatch()
 
@@ -112,8 +109,8 @@ const TableList = ({
             })
         }
 
-        setPaginationParams({
-            ...paginationParams,
+        onChange({
+            ...tableRequestParams,
             page: 1,
         })
     }
@@ -141,10 +138,10 @@ const TableList = ({
     }
 
     const paginationChangeHandler = (params) => {
-        setPaginationParams(prevState => ({
-            ...prevState,
+        onChange({
+            ...tableRequestParams,
             ...params
-        }))
+        })
     }
 
     // const getData = async () => {
@@ -315,12 +312,12 @@ const TableList = ({
             </div>
 
             <CustomTable
-                loading={fetchingStatus}
-                dataSource={responseFilter ? responseFilter(tableData) : tableData}
+                loading={fetching}
+                dataSource={tableData.response}
                 {...showTotal && {
                     totalDataSource: {
                         ..._.mapValues(metricsData, (value) => (+value.value)),
-                        ...{[columns[0].dataIndex]: `Total: ${paginationParams.totalSize}`}
+                        ...{[columns[0].dataIndex]: `Total: ${tableData.total_count}`}
                     }
                 }}
                 sorterColumn={localSorterColumn}
@@ -330,13 +327,13 @@ const TableList = ({
                 onChangeSorter={sortChangeHandler}
             />
 
-            {paginationParams.totalSize !== 0 && showPagination && <Pagination
-                {...paginationParams}
+            {tableData.total_count !== 0 && showPagination && <Pagination
+                {...{...tableRequestParams, totalSize: tableData.total_count}}
 
                 pageSizeOptions={[10, 30, 50, 100, 200]}
                 showQuickJumper={true}
-                listLength={tableData.length}
-                processing={fetchingStatus}
+                listLength={tableData.response.length}
+                processing={fetching}
 
                 onChange={paginationChangeHandler}
             />}

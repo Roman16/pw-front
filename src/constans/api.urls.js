@@ -93,6 +93,7 @@ export const adminUrls = {
     zthVersion: 'zero-to-hero/get-service-information',
     zthJobs: 'zero-to-hero/upload-jobs',
     semanticInfo: 'zero-to-hero/parse-semantic-data',
+    enums: 'zero-to-hero/get-enums',
     exactBids: 'zero-to-hero/get-bids-provider-config',
     convertSemantic: 'zero-to-hero/convert-semantic-data',
     uploadSemantic: 'zero-to-hero/upload',

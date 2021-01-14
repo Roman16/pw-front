@@ -113,6 +113,8 @@ function fetchPlacementStatistic(metric, date, mainState, cancelToken) {
 
 //----------------------------------------------------------------------------------------------------------------------
 
-function getSearchTermsData({activeMetrics}, cancelToken) {
-    return api('get', `${analyticsUrls.searchTermsData}?size=30&page=1&retrieve[]=metrics&retrieve[]=table&retrieve[]=chart&${activeMetrics.filter(item => !!item).map(item => `metric[]=${item}`).join('&')}`, null, null, cancelToken)
+function getSearchTermsData(params) {
+    const {activeMetrics, page, pageSize} = params
+
+    return api('get', `${analyticsUrls.searchTermsData}?size=${pageSize}&page=${page}&retrieve[]=metrics&retrieve[]=table&retrieve[]=chart&${activeMetrics.filter(item => !!item).map(item => `metric[]=${item}`).join('&')}`)
 }

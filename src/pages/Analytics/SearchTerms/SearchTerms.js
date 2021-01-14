@@ -17,17 +17,24 @@ const SearchTerms = () => {
                 response: []
             }
         }),
-        [fetchingStatus, setFetchingStatus] = useState(false)
+        [tableRequestParams, setTableRequestParams] = useState({
+            page: 1,
+            pageSize: 30,
+        }),
+        [chartFetchingStatus, setChartFetchingStatus] = useState(false),
+        [tableFetchingStatus, setTableFetchingStatus] = useState(false)
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location])
     const activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2)
 
     const getPageData = async () => {
         try {
-            setFetchingStatus(true)
+            setChartFetchingStatus(true)
+            setTableFetchingStatus(true)
 
             const res = await analyticsServices.getSearchTermsData({
-                activeMetrics
+                ...tableRequestParams,
+                activeMetrics,
             })
 
             setPageData(prevState => ({
@@ -35,7 +42,8 @@ const SearchTerms = () => {
                 ...res
             }))
 
-            setFetchingStatus(false)
+            setChartFetchingStatus(false)
+            setTableFetchingStatus(false)
         } catch (e) {
 
         }
@@ -43,7 +51,7 @@ const SearchTerms = () => {
 
     useEffect(() => {
         getPageData()
-    }, [activeMetrics])
+    }, [activeMetrics, tableRequestParams])
 
     return (
         <div className="search-terms-page">
@@ -57,13 +65,16 @@ const SearchTerms = () => {
                 chartData={pageData.chart}
                 allMetrics={availableMetrics}
                 location={location}
-                fetching={fetchingStatus}
+                fetching={chartFetchingStatus}
             />
 
             <SearchTermsList
                 metricsData={pageData.metrics}
-                tableData={pageData.table.response}
+                tableData={pageData.table}
                 location={location}
+                tableRequestParams={tableRequestParams}
+                onChangePagination={(data) => setTableRequestParams(data)}
+                fetching={tableFetchingStatus}
             />
         </div>
     )

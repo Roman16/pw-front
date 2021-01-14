@@ -4,10 +4,9 @@ import CustomSelect from "../../../../components/Select/Select"
 
 const Option = Select.Option
 
-const SemanticInformation = ({semanticInfo = {}, semanticData = {}, onChange}) => {
+const SemanticInformation = ({semanticInfo = {}, semanticData = {}, onChange, campaignsCompressionStrategyEnums}) => {
     const [productName, setProductName] = useState(semanticData.conversionOptions.productInformation.productName),
         [campaignsCompressionStrategy, setCampaignsCompressionStrategy] = useState(semanticData.conversionOptions.zeroToHero.campaignsCompressionStrategy)
-
 
     useEffect(() => {
         onChange({
@@ -60,9 +59,9 @@ const SemanticInformation = ({semanticInfo = {}, semanticData = {}, onChange}) =
                     onChange={value => setCampaignsCompressionStrategy(value)}
                     getPopupContainer={trigger => trigger}
                 >
-                    <Option value={'Wide'}>Wide</Option>
-                    <Option value={'Simple'}>Simple</Option>
-                    <Option value={'Compact'}>Compact</Option>
+                    {campaignsCompressionStrategyEnums.map(item => (
+                        <Option value={item}>{item}</Option>
+                    ))}
                 </CustomSelect>
             </div>
         </div>

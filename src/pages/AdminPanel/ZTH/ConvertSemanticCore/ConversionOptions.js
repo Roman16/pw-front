@@ -10,26 +10,17 @@ import {adminServices} from "../../../../services/admin.services"
 
 const Option = Select.Option
 
-const data = Object.keys(CampaignType).filter(item => item !== 'SDRemarketing' &&
-    item !== 'SDTPA' &&
-    item !== 'SDPA' &&
-    item !== 'SDTCA' &&
-    item !== 'SDRA' &&
-    item !== 'SDSA' &&
-    item !== 'SDCategories')
-    .map(key => ({
-        campaignType: key,
-        generateBulkUpload: true
-    }))
-
 let fullUsersList = []
 
-const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertProcessing, onUpload, onChange}) => {
+const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertProcessing, zthEnums, onUpload, onChange}) => {
     const [actionType, setActionType] = useState('convert'),
         [visibleConfirm, setVisibleConfirm] = useState(false),
         [usersList, setUsersList] = useState([]),
         [selectedUserId, setSelectedUserId] = useState(),
-        [bulkUploadOptions, setBulkUploadOptions] = useState([...data])
+        [bulkUploadOptions, setBulkUploadOptions] = useState([...zthEnums.aggregates.spCampaignTypesOrdered.map(key => ({
+            campaignType: key,
+            generateBulkUpload: true
+        }))])
 
     const getUsersList = async () => {
         try {
@@ -187,8 +178,9 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                         value={semanticData.conversionOptions.converter.campaignsStatus}
                         onChange={value => changeConversionOptionsHandler('converter', 'campaignsStatus', value)}
                     >
-                        <Option value={'Enabled'}>Enabled</Option>
-                        <Option value={'Paused'}>Paused</Option>
+                        {zthEnums.enums.Status.map(item => (
+                            <Option value={item}>{item}</Option>
+                        ))}
                     </CustomSelect>
                 </div>
 
@@ -213,8 +205,9 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                             value={semanticData.conversionOptions.converter.convertForMarketplace}
                             onChange={value => changeConversionOptionsHandler('converter', 'convertForMarketplace', value)}
                         >
-                            <Option value={'USA'}>USA</Option>
-                            <Option value={'Europe'}>Europe</Option>
+                            {zthEnums.enums.MarketplaceType.map(item => (
+                                <Option value={item}>{item}</Option>
+                            ))}
                         </CustomSelect>
                     </div>
 

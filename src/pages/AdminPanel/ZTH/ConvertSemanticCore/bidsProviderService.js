@@ -2,8 +2,6 @@
 // import {BidsTemplate, PPCPlan, BudgetsTemplate} from '../../../../src/shared'
 
 
-import {AdGroupType, CampaignType} from "./constans"
-
 function getDefaultExactBid() {
     return this._config.defaultExactBid
 }
@@ -12,19 +10,20 @@ function getPredefinedExactBids() {
     return [...this._config.predefinedExactBids]
 }
 
-export function getBidsTemplate(exactBid, templates) {
-    // force creation of empty bids template to fill it later
-    // const newTemplate = {
-    //     campaigns: {},
-    //     adGroups: {}
-    // } as BidsTemplate
+let CampaignType = [],
+    AdGroupType = []
+
+export function getBidsTemplate(exactBid, templates, CampaignEnums, AdGroupEnums) {
+
+    CampaignType = CampaignEnums
+    AdGroupType = AdGroupEnums
 
     const newTemplate = {
         campaigns: {},
         adGroups: {}
     }
 
-    Object.keys(CampaignType).forEach((x) => {
+    CampaignType.forEach((x) => {
         const {shouldBeApplied, bidMultiplier} = templates.bidsTemplate.campaigns[x]
 
         newTemplate.campaigns[x] = {
@@ -33,7 +32,7 @@ export function getBidsTemplate(exactBid, templates) {
         }
     })
 
-    Object.keys(AdGroupType).forEach((x) => {
+    AdGroupType.forEach((x) => {
         const {shouldBeApplied, bidMultiplier} = templates.bidsTemplate.adGroups[x]
 
         newTemplate.adGroups[x] = {
@@ -55,7 +54,7 @@ function _getBudgetsTemplate(baseBudget, budgetMultiplier, config) {
     // const newTemplate = {} as BudgetsTemplate
     const newTemplate = {}
 
-    Object.keys(CampaignType).forEach((x) => {
+    CampaignType.forEach((x) => {
         const rawBudgetForCampaign = baseBudget * config.budgetsTemplate[x] * budgetMultiplier
         const normalizedCampaignBudget = _roundByDivider(_roundTo(rawBudgetForCampaign, 0), config.roundBudgetsTo)
         newTemplate[x] = normalizedCampaignBudget <= 0 ? config.roundBudgetsTo : normalizedCampaignBudget
