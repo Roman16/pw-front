@@ -2,6 +2,7 @@ import api from "./request"
 import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
 import _ from 'lodash'
+import {func} from "prop-types"
 
 export const analyticsServices = {
     fetchTableData,
@@ -10,7 +11,8 @@ export const analyticsServices = {
     fetchStateInformation,
     fetchSettingsDetails,
     fetchPlacementStatistic,
-    getSearchTermsData
+    getSearchTermsData,
+    fetchTargetingsDetails
 }
 
 const stateIdValues = {
@@ -21,7 +23,8 @@ const stateIdValues = {
 }
 
 const dateRangeToIso = (dateRange) => {
-    return `${dateRange.startDate === 'lifetime' ? '' : moment.tz(`${moment(dateRange.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${dateRange.endDate === 'lifetime' ? '' : moment.tz(`${moment(dateRange.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`
+    if (dateRange.startDate === 'lifetime') return ''
+    else return `${moment.tz(`${moment(dateRange.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${moment.tz(`${moment(dateRange.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`
 }
 
 
@@ -112,9 +115,13 @@ function fetchPlacementStatistic(metric, date, mainState, cancelToken) {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-
 function getSearchTermsData(params) {
-    const {activeMetrics, page, pageSize} = params
+    const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn} = params
+    return api('get', `${analyticsUrls.searchTermsData}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}`)
+};
 
-    return api('get', `${analyticsUrls.searchTermsData}?size=${pageSize}&page=${page}&retrieve[]=metrics&retrieve[]=table&retrieve[]=chart&${activeMetrics.filter(item => !!item).map(item => `metric[]=${item}`).join('&')}`)
+function fetchTargetingsDetails(id, date) {
+    const filterType = typeof id === 'string' ? 'eq' : 'in'
+
+    return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64:${filterType}=${filterType === 'eq' ? id : id.join(',')}&datetime:range=${dateRangeToIso(date)}`)
 }

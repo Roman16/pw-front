@@ -11,7 +11,8 @@ export const analyticsActions = {
     switchChartView,
     expandWorkplace,
     setSegmentValue,
-    setStateDetails
+    setStateDetails,
+    setSortingColumn
 }
 
 function setMainState(state) {
@@ -108,6 +109,14 @@ function setStateDetails(data) {
     return dispatch => {
         dispatch({
             type: analyticsConstants.SET_STATE_DETAILS,
+            payload: data
+        })
+    }
+}
+function setSortingColumn(data) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.SET_SORTING_COLUMN,
             payload: data
         })
     }

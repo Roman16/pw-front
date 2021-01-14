@@ -22,9 +22,6 @@ String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
 }
 
-const CancelToken = axios.CancelToken
-let source = null
-
 const idKey = {
     'products': 'product',
     'products-regular': 'product',
@@ -50,43 +47,34 @@ const TableList = ({
                        searchField = true,
                        showTotal = true,
                        dateRange = true,
-                       responseFilter = false,
                        expandedRowRender,
                        metricsData,
+                       localTableOptions,
                        tableData,
                        tableRequestParams,
                        onChange,
-                       fetching
+                       fetching,
+                       localSorterColumn,
+                       onChangeSorterColumn,
+                       onChangeTableOptions
                    }) => {
 
-    const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
-        sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') && JSON.parse(localStorage.getItem('analyticsSorterColumn')),
-        tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') && JSON.parse(localStorage.getItem('analyticsTableOptions'))
+    const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList'))
 
-    const [columnsBlackList, setColumnsBlackList] = useState(columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {}),
-        [sorterColumn, setSorterColumn] = useState(sorterColumnFromLocalStorage ? sorterColumnFromLocalStorage : {}),
-        [tableOptions, setTableOptions] = useState(tableOptionsFromLocalStorage ? tableOptionsFromLocalStorage : {})
+    const [columnsBlackList, setColumnsBlackList] = useState(columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {})
 
     const dispatch = useDispatch()
 
-    const {mainState, selectedRangeDate, placementSegment} = useSelector(state => ({
-        mainState: state.analytics.mainState,
+    const {selectedRangeDate} = useSelector(state => ({
         selectedRangeDate: state.analytics.selectedRangeDate,
-        placementSegment: state.analytics.placementSegment,
     }))
 
     const localColumnBlackList = columnsBlackList[location] || [],
-        localSorterColumn = sorterColumn[location] || undefined,
-        localTableOptions = tableOptions[location] || {comparePreviousPeriod: false},
         filters = useSelector(state => state.analytics.filters[location] || [])
-
 
     const sortChangeHandler = (column) => {
         const setColumn = (data) => {
-            setSorterColumn({
-                ...sorterColumn,
-                [location]: data
-            })
+            onChangeSorterColumn(data)
         }
 
         if (localSorterColumn && localSorterColumn.column === column) {
@@ -108,26 +96,15 @@ const TableList = ({
                 type: 'asc'
             })
         }
-
-        onChange({
-            ...tableRequestParams,
-            page: 1,
-        })
     }
 
-    const changeTableOptionsHandler = (value) => {
-        setTableOptions({
-            ...tableOptions,
-            [location]: value
-        })
-    }
 
     const dateRangeHandler = (startDate, endDate) => {
         dispatch(analyticsActions.setDateRange({startDate: startDate || 'lifetime', endDate: endDate || 'lifetime'}))
 
-        if (startDate === null) {
-            setTableOptions(_.mapValues(tableOptions, (value) => ({...value, comparePreviousPeriod: false})))
-        }
+        // if (startDate === null) {
+        //     setTableOptions(_.mapValues(tableOptions, (value) => ({...value, comparePreviousPeriod: false})))
+        // }
     }
 
     const changeBlackListHandler = (list) => {
@@ -268,76 +245,70 @@ const TableList = ({
         localStorage.setItem('analyticsColumnsBlackList', JSON.stringify(columnsBlackList))
     }, [columnsBlackList])
 
-    useEffect(() => {
-        localStorage.setItem('analyticsSorterColumn', JSON.stringify(sorterColumn))
-    }, [sorterColumn])
-
-    useEffect(() => {
-        localStorage.setItem('analyticsTableOptions', JSON.stringify(tableOptions))
-    }, [tableOptions])
-
     return (
-        <div className={'table-section'}>
-            <div className="section-header">
-                {showFilters && <TableFilters
-                    columns={columns}
-                    filters={filters}
-                    locationKey={location}
-                    searchField={searchField}
-                />}
+        <section className={'list-section'}>
+            <div className={'table-section'}>
+                <div className="section-header">
+                    {showFilters && <TableFilters
+                        columns={columns}
+                        filters={filters}
+                        locationKey={location}
+                        searchField={searchField}
+                    />}
 
-                {moreActions}
+                    {moreActions}
 
-                {columnSelect && <ColumnsSelect
-                    columns={columns}
-                    columnsBlackList={localColumnBlackList}
-                    onChangeBlackList={changeBlackListHandler}
-                />}
+                    {columnSelect && <ColumnsSelect
+                        columns={columns}
+                        columnsBlackList={localColumnBlackList}
+                        onChangeBlackList={changeBlackListHandler}
+                    />}
 
-                <ExpandWorkplace/>
+                    <ExpandWorkplace/>
 
-                <TableOptions
-                    options={localTableOptions}
-                    onChange={changeTableOptionsHandler}
-                    selectedRangeDate={selectedRangeDate}
+                    <TableOptions
+                        options={localTableOptions}
+                        onChange={onChangeTableOptions}
+                        selectedRangeDate={selectedRangeDate}
+                    />
+
+                    {dateRange && <DateRange
+                        onChange={dateRangeHandler}
+                        selectedRangeDate={selectedRangeDate}
+                        tableOptions={localTableOptions}
+                    />}
+
+                    <SwitchChartVisible/>
+                </div>
+
+                <CustomTable
+                    loading={fetching}
+                    dataSource={tableData.response}
+                    {...showTotal && {
+                        totalDataSource: {
+                            ..._.mapValues(metricsData, (value) => (+value.value)),
+                            ...{[columns[0].dataIndex]: `Total: ${tableData.total_count}`}
+                        }
+                    }}
+                    sorterColumn={localSorterColumn}
+                    columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
+                    fixedColumns={fixedColumns}
+                    expandedRowRender={expandedRowRender}
+                    onChangeSorter={sortChangeHandler}
                 />
 
-                {dateRange && <DateRange
-                    onChange={dateRangeHandler}
-                    selectedRangeDate={selectedRangeDate}
-                    tableOptions={localTableOptions}
+                {tableData.total_count !== 0 && showPagination && <Pagination
+                    {...{...tableRequestParams, totalSize: tableData.total_count}}
+
+                    pageSizeOptions={[10, 30, 50, 100, 200]}
+                    showQuickJumper={true}
+                    listLength={tableData.response.length}
+                    processing={fetching}
+
+                    onChange={paginationChangeHandler}
                 />}
-
-                <SwitchChartVisible/>
             </div>
-
-            <CustomTable
-                loading={fetching}
-                dataSource={tableData.response}
-                {...showTotal && {
-                    totalDataSource: {
-                        ..._.mapValues(metricsData, (value) => (+value.value)),
-                        ...{[columns[0].dataIndex]: `Total: ${tableData.total_count}`}
-                    }
-                }}
-                sorterColumn={localSorterColumn}
-                columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
-                fixedColumns={fixedColumns}
-                expandedRowRender={expandedRowRender}
-                onChangeSorter={sortChangeHandler}
-            />
-
-            {tableData.total_count !== 0 && showPagination && <Pagination
-                {...{...tableRequestParams, totalSize: tableData.total_count}}
-
-                pageSizeOptions={[10, 30, 50, 100, 200]}
-                showQuickJumper={true}
-                listLength={tableData.response.length}
-                processing={fetching}
-
-                onChange={paginationChangeHandler}
-            />}
-        </div>
+        </section>
     )
 }
 
