@@ -77,4 +77,6 @@ export const AdGroupType = {
     SDRiskASINs: 'SDRiskASINs',
     SDSuggestedASINs: 'SDSuggestedASINs',
     SDSuggestedCategories: 'SDSuggestedCategories',
+
+//
 }
