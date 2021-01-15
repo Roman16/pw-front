@@ -67,6 +67,7 @@ const SearchTerms = () => {
             const res = await analyticsServices.getSearchTermsData({
                 ...tableRequestParams,
                 sorterColumn: localSorterColumn,
+                segment:localSegmentValue,
                 pageParts,
                 filtersWithState,
                 activeMetrics,
@@ -139,7 +140,7 @@ const SearchTerms = () => {
 
     useEffect(() => {
         getPageData(['table'])
-    }, [tableRequestParams])
+    }, [tableRequestParams, localSegmentValue])
 
     useEffect(() => {
         getPageData(['metrics', 'table', 'chart'])
