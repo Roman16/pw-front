@@ -9,6 +9,7 @@ import TableList from "../componentsV2/TableList/TableList"
 import {debounce} from "throttle-debounce"
 import SegmentFilter from "./STTableComponents/SegmentFilter"
 import {analyticsActions} from "../../../actions/analytics.actions"
+import {expandedRowRender} from "./STTableComponents/expandRowRender"
 
 let prevActiveMetrics = []
 
@@ -37,7 +38,8 @@ const SearchTerms = () => {
         [tableFetchingStatus, setTableFetchingStatus] = useState(false),
         [localSorterColumn, setLocalSorterColumn] = useState(sorterColumnFromLocalStorage[location]),
         [localSegmentValue, setLocalSegmentValue] = useState(segmentValueFromLocalStorage || 'none'),
-        [localTableOptions, setLocalTableOptions] = useState(tableOptionsFromLocalStorage[location] || {comparePreviousPeriod: false})
+        [localTableOptions, setLocalTableOptions] = useState(tableOptionsFromLocalStorage[location] || {comparePreviousPeriod: false}),
+        [openedSearchTerms, setOpenedSearchTerms] = useState([])
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location] ? state.analytics.metricsState[location] : {}),
         filters = useSelector(state => state.analytics.filters[location] ? state.analytics.filters[location] : []),
@@ -67,7 +69,7 @@ const SearchTerms = () => {
             const res = await analyticsServices.getSearchTermsData({
                 ...tableRequestParams,
                 sorterColumn: localSorterColumn,
-                segment:localSegmentValue,
+                segment: localSegmentValue,
                 pageParts,
                 filtersWithState,
                 activeMetrics,
@@ -115,21 +117,33 @@ const SearchTerms = () => {
         dispatch(analyticsActions.setMainState(state))
     }
 
-    const getTargetingsDetails = async () => {
-        try {
+    const getTargetingsDetails = async (id) => {
+        if (openedSearchTerms.includes(id)) setOpenedSearchTerms(prevState => [...prevState.filter(i => i !== id)])
+        else try {
             setTableFetchingStatus(true)
 
-            const res = analyticsServices.fetchTargetingsDetails(pageData.table.response.map(i => i.queryCRC64), selectedRangeDate)
+            const res = await analyticsServices.fetchTargetingsDetails(id, selectedRangeDate)
+
+            setPageData(prevState => ({
+                ...prevState,
+                table: {
+                    ...prevState.table,
+                    response: prevState.table.response.map(item => {
+                        if (item.queryCRC64 === id) {
+                            item.targetingsData = res.response
+                        }
+
+                        return item
+                    })
+                }
+            }))
+            setOpenedSearchTerms(prevState => [...prevState, id])
 
             setTableFetchingStatus(false)
         } catch (e) {
 
         }
     }
-
-    useEffect(() => {
-        if (localSegmentValue === 'targetings') getTargetingsDetails()
-    }, [localSegmentValue, pageData.table])
 
     useEffect(() => {
         if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
@@ -146,7 +160,7 @@ const SearchTerms = () => {
         getPageData(['metrics', 'table', 'chart'])
     }, [selectedRangeDate, filters])
 
-    const columns = STColumnsList(localSegmentValue, setStateHandler)
+    const columns = STColumnsList(localSegmentValue, setStateHandler, getTargetingsDetails, openedSearchTerms)
 
     return (
         <div className="search-terms-page">
@@ -176,6 +190,7 @@ const SearchTerms = () => {
                 localSorterColumn={localSorterColumn}
                 localTableOptions={localTableOptions}
                 moreActions={<SegmentFilter segment={localSegmentValue} onChange={changeSegmentHandler}/>}
+                expandedRowRender={expandedRowRender}
 
                 onChange={(data) => setTableRequestParams(data)}
                 onChangeSorterColumn={changeSorterColumnHandler}

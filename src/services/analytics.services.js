@@ -117,11 +117,9 @@ function fetchPlacementStatistic(metric, date, mainState, cancelToken) {
 //----------------------------------------------------------------------------------------------------------------------
 function getSearchTermsData(params) {
     const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn, segment} = params
-    return api('get', `${analyticsUrls.searchTermsData}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=${segment}` : ''}`)
+    return api('get', `${analyticsUrls.searchTermsData}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=targetingId` : ''}`)
 };
 
 function fetchTargetingsDetails(id, date) {
-    const filterType = typeof id === 'string' ? 'eq' : 'in'
-
-    return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64:${filterType}=${filterType === 'eq' ? id : id.join(',')}&datetime:range=${dateRangeToIso(date)}`)
+    return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64:eq=${id}&datetime:range=${dateRangeToIso(date)}`)
 }

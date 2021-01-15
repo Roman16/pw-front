@@ -569,9 +569,16 @@
               align-items: center;
 
               .btn {
-                width: 35px;
-                height: 35px;
+                min-width: 2.5rem;
+                width: 2.5rem;
+                height: 2.5rem;
                 margin: 0 0 0 auto;
+
+                &.active {
+                  svg {
+                    transform: rotate(180deg);
+                  }
+                }
 
                 svg {
                   stroke: #17175a;
