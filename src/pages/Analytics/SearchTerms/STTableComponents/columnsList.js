@@ -26,7 +26,6 @@ import TableList from "../../componentsV2/TableList/TableList"
 import {SVG} from "../../../../utils/icons"
 
 export const STColumnsList = (segment, setStateHandler, getTargetings, openedSearchTerms) => {
-    console.log(segment)
     return [
         {
             title: 'Query',
