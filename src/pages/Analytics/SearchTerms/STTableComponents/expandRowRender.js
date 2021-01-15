@@ -10,13 +10,11 @@ import {
 import React from "react"
 
 export const expandedRowRender = (props) => {
-    console.log(props.targetingsData)
     const columns = [
         {
             width: '400px',
             dataIndex: 'advertisingType',
         },
-
         impressionsColumn,
         clicksColumn,
         ctrColumn,

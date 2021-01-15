@@ -26,6 +26,7 @@ import TableList from "../../componentsV2/TableList/TableList"
 import {SVG} from "../../../../utils/icons"
 
 export const STColumnsList = (segment, setStateHandler, getTargetings, openedSearchTerms) => {
+    console.log(segment)
     return [
         {
             title: 'Query',
@@ -39,12 +40,12 @@ export const STColumnsList = (segment, setStateHandler, getTargetings, openedSea
                 <div className="query-field">
                     <span className={'overflow-text'}>{text}</span>
 
-                    <button
+                   {segment !== 'targetings' && <button
                         className={`btn icon ${openedSearchTerms.includes(item.queryCRC64) ? 'active' : ''}`}
                         onClick={() => getTargetings(item.queryCRC64)}
                     >
                         <SVG id={'select-icon'}/>
-                    </button>
+                    </button>}
                 </div>
             )
         },
