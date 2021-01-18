@@ -286,8 +286,8 @@ const SearchTerms = () => {
                     segment={localSegmentValue}
                     onChange={changeSegmentHandler}
                 />}
-                openedRow={(row) => openedSearchTerms.includes(row.queryCRC64)}
-                expandedRowRender={(props) => expandedRowRender(props, openedSearchTerms.length > 0, setStateHandler)}
+                openedRow={(row) => openedSearchTerms.includes(row.queryCRC64) || localSegmentValue}
+                expandedRowRender={(props) => expandedRowRender(props, openedSearchTerms.length > 0 || localSegmentValue, setStateHandler)}
 
                 onChange={(data) => setTableRequestParams(data)}
                 onChangeSorterColumn={changeSorterColumnHandler}
