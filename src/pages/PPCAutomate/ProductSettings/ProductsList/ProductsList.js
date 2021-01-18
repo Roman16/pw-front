@@ -368,7 +368,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
 
 
         return (
-            props.product.variations.map(productVariation => (
+            props.product.variations && props.product.variations.map(productVariation => (
                     <div>
 
                         {columns.map((item, index) => {
@@ -676,7 +676,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     columns={columns}
                     loading={processing}
                     rowSelection={rowSelection}
-                    openedRow={openedProduct}
+                    openedRow={(product) => product.id === openedProduct}
                     selectedAll={selectedAll}
 
                     expandedRowRender={expandedRowRender}
