@@ -285,8 +285,7 @@ const SearchTerms = () => {
                 moreActions={<SegmentFilter
                     segment={localSegmentValue}
                     onChange={changeSegmentHandler}
-                />
-                }
+                />}
                 openedRow={(row) => openedSearchTerms.includes(row.queryCRC64)}
                 expandedRowRender={(props) => expandedRowRender(props, openedSearchTerms.length > 0, setStateHandler)}
 
