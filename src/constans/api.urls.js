@@ -133,8 +133,11 @@ export const analyticsUrls = {
     negativeTargetingsList: 'analytics/negative-targetings',
     productAdsList: 'analytics/product-ads',
     placementStatistic: 'analytics/placements/percent-stacked-area-charts',
-    metricsData: location =>  `analytics/${location}/metrics`,
+    metricsData: location => `analytics/${location}/metrics`,
     chartData: location => `analytics/${location}/charts`,
     stateInformation: (state, id) => `analytics/${state}/${id}/details`,
     settingsDetails: (page, id) => `analytics/${page}/${id}/settings`,
+
+    searchTermsData: 'analytics/v2/search-terms',
+    targetingsDetails: 'analytics/v2/search-terms/targetings-data',
 }

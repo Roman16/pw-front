@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFacebookSquare, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons"
 
-import logo from '../../../../assets/img/logo/pw-agensy-dark.svg'
+import logo from '../../../../assets/img/logo/pw-agency-dark.svg'
 import spnLogo from '../../../../assets/img/logo/amazon-spn-logo-dark.png'
 import advertisingLogo from '../../../../assets/img/logo/amazon-advertising-logo-dark.png'
 

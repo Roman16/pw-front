@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import './AuditRegistration.less'
-import logo from '../../../assets/img/logo/pw-agensy-white.svg'
+import logo from '../../../assets/img/logo/pw-agency-white.svg'
 import {history} from "../../../utils/history"
 import amazonSpnWhiteLogo from '../../../assets/img/amazon-spn-logo-white.png'
 import advertisingWhiteLogo from '../../../assets/img/logo/amazon-advertising-white.png'

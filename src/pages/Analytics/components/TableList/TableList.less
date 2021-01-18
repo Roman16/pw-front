@@ -507,7 +507,6 @@
               a {
                 color: #6D6DF6;
                 font-weight: 500;
-                margin: 0 0 0 3px;
 
                 &:hover {
                   text-decoration: underline;
@@ -562,6 +561,29 @@
               text-overflow: ellipsis;
               overflow: hidden;
               white-space: nowrap;
+            }
+
+            .query-field {
+              width: 100%;
+              display: flex;
+              align-items: center;
+
+              .btn {
+                min-width: 2.5rem;
+                width: 2.5rem;
+                height: 2.5rem;
+                margin: 0 0 0 auto;
+
+                &.active {
+                  svg {
+                    transform: rotate(180deg);
+                  }
+                }
+
+                svg {
+                  stroke: #17175a;
+                }
+              }
             }
 
             .sku-asin {
@@ -692,6 +714,11 @@
             align-items: center;
             justify-content: flex-start;
             width: 100%;
+            border-bottom: 1px solid #c9cbd4;
+
+            &:last-child {
+              border: 0;
+            }
 
             .table-body__field {
               padding-right: 8px;

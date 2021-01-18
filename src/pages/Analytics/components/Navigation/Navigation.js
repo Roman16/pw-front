@@ -86,6 +86,11 @@ const menuVariables = {
         url: '/analytics/overview',
         key: 'overview'
     },
+    'searchTerms': {
+        title: 'Search Terms',
+        url: '/analytics/search-terms',
+        key: 'searchTerms'
+    },
 }
 
 export const allMenuItems = []
@@ -108,6 +113,7 @@ export const analyticsNavigation = {
         menuVariables.placements,
         menuVariables.adGroups,
         menuVariables.targetings,
+        menuVariables.searchTerms,
         menuVariables.negativeTargeting,
         menuVariables.productAds
     ],
@@ -117,6 +123,7 @@ export const analyticsNavigation = {
         menuVariables.placements,
         menuVariables.productAds,
         menuVariables.targetings,
+        menuVariables.searchTerms,
         menuVariables.negativeTargeting,
         menuVariables.campaignSettings,
     ],
@@ -125,12 +132,14 @@ export const analyticsNavigation = {
         menuVariables.campaigns,
         menuVariables.adGroups,
         menuVariables.targetings,
+        menuVariables.searchTerms,
         menuVariables.negativeTargeting,
         menuVariables.productAds
     ],
     adGroups: [
         menuVariables.productAds,
         menuVariables.targetings,
+        menuVariables.searchTerms,
         menuVariables.negativeTargeting,
     ],
     portfolio: [
@@ -138,6 +147,7 @@ export const analyticsNavigation = {
         menuVariables.placements,
         menuVariables.adGroups,
         menuVariables.targetings,
+        menuVariables.searchTerms,
         menuVariables.negativeTargeting,
         menuVariables.productAds,
         menuVariables.portfolioSettings,

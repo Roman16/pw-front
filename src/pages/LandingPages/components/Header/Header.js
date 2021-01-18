@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react'
-import logoDark from '../../../../assets/img/logo/pw-agensy-dark.svg'
-import logoWhite from '../../../../assets/img/logo/pw-agensy-white.svg'
+import logoDark from '../../../../assets/img/logo/pw-agency-dark.svg'
+import logoWhite from '../../../../assets/img/logo/pw-agency-white.svg'
 import {Link, NavLink} from "react-router-dom"
 import './Header.less'
 import {SVG} from "../../../../utils/icons"

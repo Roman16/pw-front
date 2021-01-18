@@ -2,10 +2,20 @@ import {analyticsConstants} from '../constans/actions.type'
 import moment from "moment"
 import _ from 'lodash'
 
+const localStorageVersion = '20_5'
+
+if (!localStorage.getItem('analyticsLocalStorageVersion') || localStorage.getItem('analyticsLocalStorageVersion') !== localStorageVersion) {
+    localStorage.removeItem('analyticsMetricsState')
+    localStorage.removeItem('analyticsFiltersList')
+    localStorage.removeItem('analyticsChartState')
+    localStorage.setItem('analyticsLocalStorageVersion', localStorageVersion)
+}
+
 const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState') && JSON.parse(localStorage.getItem('analyticsMetricsState')),
     filtersListFromLocalStorage = localStorage.getItem('analyticsFiltersList') && JSON.parse(localStorage.getItem('analyticsFiltersList')),
     chartStateFromLocalStorage = localStorage.getItem('analyticsChartState') && JSON.parse(localStorage.getItem('analyticsChartState')),
-    rangeDateFromLocalStorage = localStorage.getItem('analyticsRangeDate') && JSON.parse(localStorage.getItem('analyticsRangeDate'))
+    rangeDateFromLocalStorage = localStorage.getItem('analyticsRangeDate') && JSON.parse(localStorage.getItem('analyticsRangeDate')),
+    sortingColumnFromLocalStorage = localStorage.getItem('analyticsSortingColumn') && JSON.parse(localStorage.getItem('analyticsSortingColumn'))
 
 const workplacesList = {
     'overview': [],
@@ -14,6 +24,7 @@ const workplacesList = {
     'portfolios': [],
     'campaigns': [],
     'placements': [],
+    'searchTerms': [],
     'ad-groups': [],
     'targetings': [],
     'negative-targetings': [],
@@ -31,6 +42,7 @@ const defaultChartOptionsValues = {
 const initialState = {
     location: undefined,
     visibleChart: localStorage.getItem('analyticsViewChart') ? JSON.parse(localStorage.getItem('analyticsViewChart')) : true,
+    sortingColumns: sortingColumnFromLocalStorage ? sortingColumnFromLocalStorage : {},
     placementSegment: localStorage.getItem('placementSegmentValue') ? JSON.parse(localStorage.getItem('placementSegmentValue')) : null,
     visibleNavigation: true,
     mainState: {

@@ -165,13 +165,14 @@ export const keywordPTColumn = {
         if (item.calculatedTargetingMatchType === 'asin' || item.calculatedTargetingMatchType === 'negativeAsin' || item.calculatedTargetingMatchType === 'negativeASIN') {
             const asin = text.replace('asin="', '').replace('"', '')
 
-            return (<div className="asin-link"><span>asin= </span>
+            return (<div className="asin-link"><span>asin="</span>
                 <a
                     href={`https://www.amazon.com/dp/${asin}`}
                     target={'_blank'}
                 >
                     {asin}
                 </a>
+                "
             </div>)
         } else {
             return (<>

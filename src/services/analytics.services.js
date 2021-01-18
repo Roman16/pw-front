@@ -2,6 +2,7 @@ import api from "./request"
 import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
 import _ from 'lodash'
+import {func} from "prop-types"
 
 export const analyticsServices = {
     fetchTableData,
@@ -9,7 +10,9 @@ export const analyticsServices = {
     fetchChartData,
     fetchStateInformation,
     fetchSettingsDetails,
-    fetchPlacementStatistic
+    fetchPlacementStatistic,
+    getSearchTermsData,
+    fetchTargetingsDetails
 }
 
 const stateIdValues = {
@@ -20,7 +23,8 @@ const stateIdValues = {
 }
 
 const dateRangeToIso = (dateRange) => {
-    return `${dateRange.startDate === 'lifetime' ? '' : moment.tz(`${moment(dateRange.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${dateRange.endDate === 'lifetime' ? '' : moment.tz(`${moment(dateRange.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`
+    if (dateRange.startDate === 'lifetime') return ''
+    else return `${moment.tz(`${moment(dateRange.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${moment.tz(`${moment(dateRange.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`
 }
 
 
@@ -33,7 +37,7 @@ const filtersHandler = (filters) => {
         } else if (type.key === 'except') {
             parameters.push(`&${filterBy}:in=${requestValue.join(',')}`)
         } else if (filterBy === 'segment') {
-            if (value !== null && !_.find(filters,{filterBy: "campaignId"})) {
+            if (value !== null && !_.find(filters, {filterBy: "campaignId"})) {
                 parameters.push(`&segment_by:eq=${value}`)
             }
         } else if (type === 'search' && value) {
@@ -108,4 +112,14 @@ function fetchPlacementStatistic(metric, date, mainState, cancelToken) {
     })
 
     return api('get', `${analyticsUrls.placementStatistic}?metric[]=${metric}&datetime:range=${dateRangeToIso(date)}${stateValues.length > 0 ? '&' + stateValues.join('&') : ''}`, null, null, cancelToken)
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+function getSearchTermsData(params, idList) {
+    const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn, segment} = params
+    return api('get', `${analyticsUrls.searchTermsData}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=targetingId` : ''}${idList || ''}`)
+};
+
+function fetchTargetingsDetails(id, date) {
+    return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64:eq=${id}&datetime:range=${dateRangeToIso(date)}`)
 }

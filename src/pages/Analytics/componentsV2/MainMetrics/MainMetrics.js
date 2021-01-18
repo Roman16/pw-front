@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {analyticsAvailableMetricsList} from "./metricsList"
-import MetricItem from "./MetricItem"
+import {analyticsAvailableMetricsList} from "../../components/MainMetrics/metricsList"
+import MetricItem from "../../components/MainMetrics/MetricItem"
 import AddMetric from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetric"
-import './MainMetrics.less'
+import '../../components/MainMetrics/MainMetrics.less'
 import {SVG} from "../../../../utils/icons"
 import AddMetricModal from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetricModal"
-import MetricModal from "./MetricModal"
+import MetricModal from "../../components/MainMetrics/MetricModal"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {analyticsServices} from "../../../../services/analytics.services"
 import _ from 'lodash'
@@ -20,18 +20,14 @@ const CancelToken = axios.CancelToken
 let source = null
 let prevActivatedIndex = undefined
 
-const MainMetrics = ({allMetrics, location}) => {
+const MainMetrics = ({allMetrics, location, metricsData = {}}) => {
     const dispatch = useDispatch()
-
-    location = location === 'campaignSettings' ? 'campaigns' : location
-    location = location === 'portfolioSettings' ? 'portfolios' : location
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location]),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         selectFourMetrics = useSelector(state => state.analytics.chartState[location].selectFourMetrics || false),
         filters = useSelector(state => state.analytics.filters[location] || []),
-        mainState = useSelector(state => state.analytics.mainState),
-        metricsData = useSelector(state => state.analytics.metricsData || {})
+        mainState = useSelector(state => state.analytics.mainState)
 
     const selectedMetrics = metricsState.selectedMetrics || allMetrics.slice(0, 5),
         activeMetrics = metricsState.activeMetrics || allMetrics.slice(0, 2)
@@ -76,37 +72,37 @@ const MainMetrics = ({allMetrics, location}) => {
         dispatch(analyticsActions.updateMetricsState(data))
     }
 
-    const getMetricsStatistics = async () => {
-        source && source.cancel()
-        source = CancelToken.source()
-
-        try {
-            const filtersWithState = [
-                ...filters,
-                ...Object.keys(mainState).map(key => ({
-                    filterBy: key,
-                    type: 'eq',
-                    value: mainState[key]
-                })).filter(item => !!item.value),
-                {
-                    filterBy: 'datetime',
-                    type: 'range',
-                    value: selectedRangeDate
-                },
-            ]
-
-            const res = await analyticsServices.fetchMetricsData({
-                ...selectedRangeDate,
-                locationKey: location,
-                filters: filtersWithState
-            }, source.token)
-
-            dispatch(analyticsActions.setMetricsData(res.response))
-        } catch (e) {
-            console.log(e)
-            dispatch(analyticsActions.setMetricsData({}))
-        }
-    }
+    // const getMetricsStatistics = async () => {
+    //     source && source.cancel()
+    //     source = CancelToken.source()
+    //
+    //     try {
+    //         const filtersWithState = [
+    //             ...filters,
+    //             ...Object.keys(mainState).map(key => ({
+    //                 filterBy: key,
+    //                 type: 'eq',
+    //                 value: mainState[key]
+    //             })).filter(item => !!item.value),
+    //             {
+    //                 filterBy: 'datetime',
+    //                 type: 'range',
+    //                 value: selectedRangeDate
+    //             },
+    //         ]
+    //
+    //         const res = await analyticsServices.fetchMetricsDataV2({
+    //             ...selectedRangeDate,
+    //             locationKey: location,
+    //             filters: filtersWithState
+    //         }, source.token)
+    //
+    //         dispatch(analyticsActions.setMetricsData(res.response))
+    //     } catch (e) {
+    //         console.log(e)
+    //         dispatch(analyticsActions.setMetricsData({}))
+    //     }
+    // }
 
     const openModal = () => switchModal(true)
     const handleCancel = () => switchModal(false)
@@ -165,9 +161,9 @@ const MainMetrics = ({allMetrics, location}) => {
         updateHiddenList([...allMetrics.filter(metric => !selectedMetrics.includes(metric))])
     }, [metricsState, visibleModal])
 
-    useEffect(() => {
-        getMetricsStatistics()
-    }, [selectedRangeDate, filters, mainState])
+    // useEffect(() => {
+    //     getMetricsStatistics()
+    // }, [selectedRangeDate, filters, mainState])
 
     useEffect(() => {
         if (selectFourMetrics) {
@@ -199,7 +195,7 @@ const MainMetrics = ({allMetrics, location}) => {
     return (
         <div className="main-metrics metrics-block">
             {selectedMetrics.length > 0 && selectedMetrics.map(selectedKey => {
-                if (_.find(analyticsAvailableMetricsList, {key: selectedKey})) {
+                    if (_.find(analyticsAvailableMetricsList, {key: selectedKey})) {
                         return (
                             <MetricItem
                                 key={selectedKey}
